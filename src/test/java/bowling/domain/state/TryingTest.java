@@ -23,14 +23,14 @@ class TryingTest {
     @Test
     @DisplayName("Trying 상태에서 추가 공을 굴려 핀을 모두 쓰러뜨리면 Spare 를 반환한다.")
     void bowlSpare() {
-        State spare = trying.bowl(3);
+        State spare = trying.bowl(()->3);
         assertThat(spare).isInstanceOf(Spare.class);
     }
 
     @Test
     @DisplayName("Trying 상태에서 추가 공을 굴려 핀을 모두 쓰러뜨리지 못하면 Miss 를 반환한다.")
     void bowlMiss() {
-        State miss = trying.bowl(2);
+        State miss = trying.bowl(()->2);
         assertThat(miss).isInstanceOf(Miss.class);
     }
 

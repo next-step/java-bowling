@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pins;
 import bowling.domain.state.*;
 
 public class FinalFrame implements Frame {
@@ -25,12 +26,12 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame bowl(final int fallenPinCount) {
+    public Frame bowl(final Pins pins) {
         if (isFinished()) {
             throw new IllegalStateException(String.format("이미 완료된 %d 프레임 입니다.", frameNumber));
         }
 
-        State result = state.bowl(fallenPinCount);
+        State result = state.bowl(pins);
         if (result instanceof Strike || result instanceof Spare) {
             return new FinalFrame(frameNumber, Bonus.start(result));
         }

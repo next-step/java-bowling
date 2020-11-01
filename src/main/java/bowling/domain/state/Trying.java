@@ -1,16 +1,18 @@
 package bowling.domain.state;
 
-import static bowling.domain.pin.Pin.PIN_COUNT;
+import bowling.domain.pin.Pins;
+
+import static bowling.domain.pin.Pins.PIN_COUNT;
 
 public class Trying implements State {
     private static final String TRYING = "%s";
     private static final int GUTTER_NUMBER = 0;
     private static final String GUTTER_SYMBOL = "-";
-    private final int firstFallenPinCount;
+    private final int firstFallen;
 
-    public Trying(final int firstFallenPinCount) {
-        validate(firstFallenPinCount);
-        this.firstFallenPinCount = firstFallenPinCount;
+    public Trying(final int firstFallen) {
+        validate(firstFallen);
+        this.firstFallen = firstFallen;
     }
 
     private void validate(final int firstFallenPinCount) {
@@ -29,22 +31,19 @@ public class Trying implements State {
     }
 
     @Override
-    public State bowl(final int fallenPinCount) {
-        if (fallenPinCount < 0 || (fallenPinCount + firstFallenPinCount) > PIN_COUNT) {
-            throw new IllegalArgumentException(String.format("쓰러뜨린 핀 개수가 잘못 되었습니다. %d", fallenPinCount));
+    public State bowl(final Pins pins) {
+        int secondFallen = pins.fallen();
+        if (firstFallen + secondFallen == PIN_COUNT) {
+            return new Spare(firstFallen);
         }
-
-        if (firstFallenPinCount + fallenPinCount == 10) {
-            return new Spare(firstFallenPinCount);
-        }
-        return new Miss(firstFallenPinCount, fallenPinCount);
+        return new Miss(firstFallen, secondFallen);
     }
 
     @Override
     public String print() {
-        if (firstFallenPinCount == GUTTER_NUMBER) {
+        if (firstFallen == GUTTER_NUMBER) {
             return String.format(TRYING, GUTTER_SYMBOL);
         }
-        return String.format(TRYING, firstFallenPinCount);
+        return String.format(TRYING, firstFallen);
     }
 }

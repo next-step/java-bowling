@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
-import static bowling.domain.pin.Pin.PIN_COUNT;
+import bowling.domain.pin.Pins;
+
+import static bowling.domain.pin.Pins.PIN_COUNT;
 
 public class Ready implements State {
     private static final String READY = "";
@@ -11,11 +13,8 @@ public class Ready implements State {
     }
 
     @Override
-    public State bowl(final int fallenPinCount) {
-        if (fallenPinCount < 0 || fallenPinCount > PIN_COUNT) {
-            throw new IllegalArgumentException(String.format("쓰러뜨린 핀 개수가 잘못 되었습니다. %d", fallenPinCount));
-        }
-
+    public State bowl(final Pins pins) {
+        int fallenPinCount = pins.fallen();
         if (fallenPinCount == PIN_COUNT) {
             return new Strike();
         }

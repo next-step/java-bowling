@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.pin.Pins;
+
 public class Bonus implements State {
     private static final int TRY_COUNT_LIMIT = 1;
     private final State preState;
@@ -25,11 +27,11 @@ public class Bonus implements State {
     }
 
     @Override
-    public State bowl(final int fallenPinCount) {
+    public State bowl(final Pins pins) {
         if (isFinish()) {
             throw new IllegalStateException("프레임이 완료되어 볼을 던질 수 없습니다.");
         }
-        return new Bonus(preState, tryCount + 1, fallenPinCount);
+        return new Bonus(preState, tryCount + 1, pins.fallen());
     }
 
     @Override

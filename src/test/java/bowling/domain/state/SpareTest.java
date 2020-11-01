@@ -36,7 +36,7 @@ class SpareTest {
     @Test
     @DisplayName("Spare 상태에서는 공을 굴리려 하면 예외가 발생한다.")
     void bowlException() {
-        assertThrows(IllegalStateException.class, () -> spare.bowl(5));
+        assertThrows(IllegalStateException.class, () -> spare.bowl(()->5));
     }
 
     @ParameterizedTest

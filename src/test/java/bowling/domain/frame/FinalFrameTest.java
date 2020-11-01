@@ -42,28 +42,28 @@ class FinalFrameTest {
     @DisplayName("FinalFrame bowl & print")
     void bowlAndPrint() {
         Frame frame = FinalFrame.init();
-        assertThat(frame.bowl(0).print().trim()).isEqualTo("-");                    // Gutter
-        assertThat(frame.bowl(10).print().trim()).isEqualTo("X");                   // Strike
-        assertThat(frame.bowl(5).print().trim()).isEqualTo("5");                    // Trying
-        assertThat(frame.bowl(5).bowl(3).print()).isEqualTo("5|3");                 // Miss
-        assertThat(frame.bowl(5).bowl(5).print()).isEqualTo("5|/");                 // Spare
-        assertThat(frame.bowl(0).bowl(0).print()).isEqualTo("-|-");                 // Gutter
+        assertThat(frame.bowl(() -> 0).print().trim()).isEqualTo("-");                          // Gutter
+        assertThat(frame.bowl(() -> 10).print().trim()).isEqualTo("X");                         // Strike
+        assertThat(frame.bowl(() -> 5).print().trim()).isEqualTo("5");                          // Trying
+        assertThat(frame.bowl(() -> 5).bowl(() -> 3).print()).isEqualTo("5|3");                 // Miss
+        assertThat(frame.bowl(() -> 5).bowl(() -> 5).print()).isEqualTo("5|/");                 // Spare
+        assertThat(frame.bowl(() -> 0).bowl(() -> 0).print()).isEqualTo("-|-");                 // Gutter
 
-        assertThat(frame.bowl(10).bowl(0).print()).isEqualTo("X|-");                // Strike Gutter
-        assertThat(frame.bowl(10).bowl(10).print()).isEqualTo("X|X");               // Strike Strike
-        assertThat(frame.bowl(10).bowl(5).print()).isEqualTo("X|5");               // Strike Number
-        assertThat(frame.bowl(5).bowl(5).bowl(0).print()).isEqualTo("5|/|-");         // Spare Gutter
-        assertThat(frame.bowl(5).bowl(5).bowl(10).print()).isEqualTo("5|/|X");        // Spare Strike
-        assertThat(frame.bowl(5).bowl(5).bowl(5).print()).isEqualTo("5|/|5");        // Spare Number
-        System.out.println(frame.bowl(0).print());
-        System.out.println(frame.bowl(10).print());
-        System.out.println(frame.bowl(5).print());
-        System.out.println(frame.bowl(5).bowl(3).print());
-        System.out.println(frame.bowl(5).bowl(5).print());
-        System.out.println(frame.bowl(0).bowl(0).print());
-        System.out.println(frame.bowl(5).bowl(5).bowl(0).print());
-        System.out.println(frame.bowl(5).bowl(5).bowl(10).print());
-        System.out.println(frame.bowl(5).bowl(5).bowl(5).print());
+        assertThat(frame.bowl(() -> 10).bowl(() -> 0).print()).isEqualTo("X|-");                // Strike Gutter
+        assertThat(frame.bowl(() -> 10).bowl(() -> 10).print()).isEqualTo("X|X");               // Strike Strike
+        assertThat(frame.bowl(() -> 10).bowl(() -> 5).print()).isEqualTo("X|5");                // Strike Number
+        assertThat(frame.bowl(() -> 5).bowl(() -> 5).bowl(() -> 0).print()).isEqualTo("5|/|-");         // Spare Gutter
+        assertThat(frame.bowl(() -> 5).bowl(() -> 5).bowl(() -> 10).print()).isEqualTo("5|/|X");        // Spare Strike
+        assertThat(frame.bowl(() -> 5).bowl(() -> 5).bowl(() -> 5).print()).isEqualTo("5|/|5");         // Spare Number
+        System.out.println(frame.bowl(() -> 0).print());
+        System.out.println(frame.bowl(() -> 10).print());
+        System.out.println(frame.bowl(() -> 5).print());
+        System.out.println(frame.bowl(() -> 5).bowl(() -> 3).print());
+        System.out.println(frame.bowl(() -> 5).bowl(() -> 5).print());
+        System.out.println(frame.bowl(() -> 0).bowl(() -> 0).print());
+        System.out.println(frame.bowl(() -> 5).bowl(() -> 5).bowl(() -> 0).print());
+        System.out.println(frame.bowl(() -> 5).bowl(() -> 5).bowl(() -> 10).print());
+        System.out.println(frame.bowl(() -> 5).bowl(() -> 5).bowl(() -> 5).print());
     }
 
     @Test
@@ -76,7 +76,7 @@ class FinalFrameTest {
             }
         });
 
-        assertThrows(IllegalStateException.class, () -> finishedFrame.bowl(1));
+        assertThrows(IllegalStateException.class, () -> finishedFrame.bowl(() -> 1));
     }
 
 }

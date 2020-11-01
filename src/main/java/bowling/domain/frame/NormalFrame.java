@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pins;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
@@ -31,11 +32,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame bowl(final int fallenPinCount) {
+    public Frame bowl(final Pins pins) {
         if (state.isFinish()) {
             throw new IllegalStateException(String.format("이미 완료된 %d 프레임 입니다.", frameNumber));
         }
-        return new NormalFrame(frameNumber, state.bowl(fallenPinCount));
+        return new NormalFrame(frameNumber, state.bowl(pins));
     }
 
     @Override

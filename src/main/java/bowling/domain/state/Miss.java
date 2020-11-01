@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import static bowling.domain.pin.Pin.PIN_COUNT;
+import static bowling.domain.pin.Pins.PIN_COUNT;
 
 public class Miss extends Finished {
     private static final String MISS = "%s|%s";
