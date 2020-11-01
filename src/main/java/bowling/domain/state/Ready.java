@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import static bowling.domain.BowlingGame.PIN_COUNT;
+import static bowling.domain.pin.Pin.PIN_COUNT;
 
 public class Ready implements State {
     private static final String READY = "";

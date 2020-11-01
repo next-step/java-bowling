@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어 이름은 세글자가 아닐 시 예외 발생")
     void exceptPlayerName() {
-        assertThrows(IllegalArgumentException.class,()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             new Player("ab");
         });
     }

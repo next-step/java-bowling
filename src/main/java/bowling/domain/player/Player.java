@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.player;
 
 public class Player {
     private static final int NAME_LENGTH = 3;
