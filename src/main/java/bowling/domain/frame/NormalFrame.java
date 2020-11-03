@@ -56,4 +56,21 @@ public class NormalFrame implements Frame {
     public int hashCode() {
         return Objects.hash(frameNumber);
     }
+
+    @Override
+    public int number() {
+        return frameNumber;
+    }
+
+    @Override
+    public Frame next() {
+        if (!state.isFinish()) {
+            throw new IllegalStateException("현재 프레임이 끝나지 않았습니다.");
+        }
+
+        if (frameNumber == END_FRAME_NUMBER) {
+            return FinalFrame.init();
+        }
+        return new NormalFrame(frameNumber + 1, new Ready());
+    }
 }

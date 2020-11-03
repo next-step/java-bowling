@@ -8,4 +8,8 @@ public interface Frame {
     Frame bowl(Pins pins);
 
     String print();
+
+    int number();
+
+    Frame next();
 }

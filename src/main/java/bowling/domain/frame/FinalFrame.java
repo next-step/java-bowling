@@ -3,6 +3,8 @@ package bowling.domain.frame;
 import bowling.domain.pin.Pins;
 import bowling.domain.state.*;
 
+import java.util.Objects;
+
 public class FinalFrame implements Frame {
     private static final String FRAME = "%-3s";
     private final int frameNumber;
@@ -41,5 +43,28 @@ public class FinalFrame implements Frame {
     @Override
     public String print() {
         return String.format(FRAME, state.print());
+    }
+
+    @Override
+    public int number() {
+        return frameNumber;
+    }
+
+    @Override
+    public Frame next() {
+        throw new IllegalStateException("마지막 프레임입니다.");
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FinalFrame)) return false;
+        final FinalFrame that = (FinalFrame) o;
+        return frameNumber == that.frameNumber;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber);
     }
 }
