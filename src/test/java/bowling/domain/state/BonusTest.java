@@ -32,7 +32,7 @@ class BonusTest {
         Bonus bonus = Bonus.start(new Strike());
         assertThat(bonus.isFinish()).isFalse();
 
-        State bowledBonus = bonus.bowl(()->7);
+        State bowledBonus = bonus.bowl(() -> 7);
         assertThat(bowledBonus.isFinish()).isTrue();
     }
 
@@ -41,9 +41,17 @@ class BonusTest {
     void exceptOneCoin() {
         assertThrows(IllegalStateException.class, () -> {
             Bonus.start(new Strike())
-                    .bowl(()->7)
-                    .bowl(()->5);
+                    .bowl(() -> 7)
+                    .bowl(() -> 5);
         });
+    }
+
+    @Test
+    @DisplayName("보너스게임에서 한번 더 스트라이크 시 한번 더 시도할 수 있다.")
+    void twoStrikeOneMore() {
+        Bonus bonus = Bonus.start(new Strike());
+        State oneMoreStrike = bonus.bowl(() -> 10).bowl(() -> 10);
+        assertThat(oneMoreStrike.print()).isEqualTo("X|X|X");
     }
 
     @Test
@@ -52,6 +60,6 @@ class BonusTest {
         Bonus bonus = Bonus.start(strike);
         assertThat(bonus.print()).isEqualTo(strike.print());
 
-        assertThat(bonus.bowl(()->7).print()).isEqualTo(strike.print() +"|7");
+        assertThat(bonus.bowl(() -> 7).print()).isEqualTo(strike.print() + "|7");
     }
 }
