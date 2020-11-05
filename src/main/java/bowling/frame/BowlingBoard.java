@@ -66,15 +66,11 @@ public class BowlingBoard {
         return frames;
     }
 
-    public int size() {
-        return frames.size();
-    }
-
     public String getBowlerName() {
         return bowler.getName();
     }
 
-    public boolean isFinished() {
+    public boolean isEnd() {
         return !canMoveNextFrame() && getLastFrame().isFinish();
     }
 

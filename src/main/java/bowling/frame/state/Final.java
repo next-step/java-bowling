@@ -5,16 +5,19 @@ import bowling.score.Pin;
 import java.util.Arrays;
 import java.util.List;
 
-public class Strike extends Done {
+public class Final extends Done {
 
     private final Pin currentPins;
 
-    private Strike(Pin currentPins) {
+    private Final(Pin currentPins) {
         this.currentPins = currentPins;
     }
 
-    public static Strike of(Pin currentPins) {
-        return new Strike(currentPins);
+    public static State from(Pin currentPins) {
+        if (currentPins.isStrike()) {
+            return Strike.of(currentPins);
+        }
+        return new Final(currentPins);
     }
 
     @Override

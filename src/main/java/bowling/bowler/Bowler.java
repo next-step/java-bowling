@@ -12,7 +12,7 @@ public class Bowler {
     private final String name;
 
     private Bowler(String name) {
-        validatePlayerNameisNull(name);
+        validatePlayerNameIsNull(name);
         validatePlayerNameLength(name);
         this.name = name.toUpperCase();
     }
@@ -25,7 +25,7 @@ public class Bowler {
         return name;
     }
 
-    private void validatePlayerNameisNull(String name) {
+    private void validatePlayerNameIsNull(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new NotMatchingBowlerNameException(ExceptionMessage.INVALID_PLAYER_NAME_IS_NULL);
         }

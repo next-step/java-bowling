@@ -2,6 +2,9 @@ package bowling.frame.state;
 
 import bowling.score.Pin;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Next extends Progress {
 
     private final Pin previousPins;
@@ -23,10 +26,8 @@ public class Next extends Progress {
     }
 
     @Override
-    public String toString() {
-        if (previousPins.isGutter()) {
-            return "-";
-        }
-        return String.valueOf(previousPins);
+    public List<String> getBowlResults() {
+        return Arrays.asList(previousPins.toString());
     }
+
 }

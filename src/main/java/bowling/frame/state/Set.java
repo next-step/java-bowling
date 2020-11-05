@@ -2,6 +2,9 @@ package bowling.frame.state;
 
 import bowling.score.Pin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Set extends Progress {
 
     private Set() {
@@ -20,7 +23,8 @@ public class Set extends Progress {
     }
 
     @Override
-    public String toString() {
-        return null;
+    public List<String> getBowlResults() {
+        return new ArrayList<>();
     }
+
 }

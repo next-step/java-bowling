@@ -28,7 +28,8 @@ class MissTest {
         firstPins = Pin.bowl("4");
         secondPins = Pin.bowl("3");
         secondState = Miss.of(firstPins, secondPins);
-        assertThat(secondState.toString()).isEqualTo("4|3");
+        assertThat(secondState.getBowlResults().get(0)).isEqualTo("4");
+        assertThat(secondState.getBowlResults().get(1)).isEqualTo("3");
     }
 
     @Test
@@ -46,7 +47,8 @@ class MissTest {
         firstPins = Pin.bowl("0");
         secondPins = Pin.bowl("5");
         secondState = Next.of(firstPins).bowl(secondPins);
-        assertThat(secondState.toString()).isEqualTo("-|5");
+        assertThat(secondState.getBowlResults().get(0)).isEqualTo("-");
+        assertThat(secondState.getBowlResults().get(1)).isEqualTo("5");
     }
 
     @Test
@@ -55,7 +57,8 @@ class MissTest {
         firstPins = Pin.bowl("5");
         secondPins = Pin.bowl("0");
         secondState = Next.of(firstPins).bowl(secondPins);
-        assertThat(secondState.toString()).isEqualTo("5|-");
+        assertThat(secondState.getBowlResults().get(0)).isEqualTo("5");
+        assertThat(secondState.getBowlResults().get(1)).isEqualTo("-");
     }
 
     @Test
@@ -64,14 +67,16 @@ class MissTest {
         firstPins = Pin.bowl("0");
         secondPins = Pin.bowl("0");
         secondState = Next.of(firstPins).bowl(secondPins);
-        assertThat(secondState.toString()).isEqualTo("-|-");
+        assertThat(secondState.getBowlResults().get(0)).isEqualTo("-");
+        assertThat(secondState.getBowlResults().get(1)).isEqualTo("-");
     }
 
     @Test
     @DisplayName("프레임 종료 후 추가 투구 시 Exception 발생")
     void unSupportedBowl() {
         assertThatExceptionOfType(UnsupportedOperationException.class)
-                .isThrownBy(() -> secondState = Miss.of(Pin.bowl("4"), Pin.bowl("3"))
+                .isThrownBy(() -> secondState = Miss.of(Pin.bowl("4"),
+                                                        Pin.bowl("3"))
                         .bowl(Pin.bowl("5")));
     }
 

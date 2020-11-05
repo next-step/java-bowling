@@ -2,6 +2,9 @@ package bowling.frame.state;
 
 import bowling.score.Pin;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Miss extends Done {
 
     private final Pin previousPins;
@@ -22,16 +25,8 @@ public class Miss extends Done {
     }
 
     @Override
-    public String toString() {
-        if (previousPins.isGutter() && currentPins.isGutter()) {
-            return "-|-";
-        }
-        if (previousPins.isGutter()) {
-            return "-|" + currentPins;
-        }
-        if (currentPins.isGutter()) {
-            return previousPins.toString() + "|-";
-        }
-        return previousPins.toString() + "|" + currentPins;
+    public List<String> getBowlResults() {
+        return Arrays.asList(previousPins.toString(), currentPins.toString());
     }
+
 }

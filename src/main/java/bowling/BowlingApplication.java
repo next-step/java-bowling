@@ -13,7 +13,7 @@ public class BowlingApplication {
         BowlingBoard bowling = BowlingBoard.start(bowler);
         ResultView.printGameBoard(bowling);
 
-        while (!bowling.isFinished()) {
+        while (!bowling.isEnd()) {
             int frameNumber = bowling.getFrameNumber();
             bowling.bowl(InputView.inputPins(frameNumber));
 

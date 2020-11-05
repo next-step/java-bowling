@@ -2,7 +2,12 @@ package bowling.frame.state;
 
 import bowling.score.Pin;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Spare extends Done {
+
+    private static final String MARK_SPARE = "/";
 
     private final Pin previousPins;
     private final Pin currentPins;
@@ -22,10 +27,8 @@ public class Spare extends Done {
     }
 
     @Override
-    public String toString() {
-        if (previousPins.isGutter()) {
-            return "-|/";
-        }
-        return previousPins + "|/";
+    public List<String> getBowlResults() {
+        return Arrays.asList(previousPins.toString(), MARK_SPARE);
     }
+
 }

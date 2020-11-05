@@ -23,14 +23,14 @@ class StrikeTest {
     }
 
     @Test
-    @DisplayName("두번째 볼링 결과 - 스트라이크")
+    @DisplayName("볼링 결과 - 스트라이크")
     void result() {
         assertThat(state instanceof Strike).isTrue();
     }
 
     @Test
-    @DisplayName("두번째 볼링 결과 마크 - 스트라이크")
+    @DisplayName("볼링 결과 마크 - 스트라이크")
     void resultMark() {
-        assertThat(state.toString()).isEqualTo("X");
+        assertThat(state.getBowlResults().get(0)).isEqualTo("X");
     }
 }
