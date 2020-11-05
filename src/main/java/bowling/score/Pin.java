@@ -12,12 +12,14 @@ public class Pin {
 
     private static final int PINS_MIN_VALUE = 0;
     private static final int PINS_MAX_VALUE = 10;
+    private static final String MARK_GUTTER = "-";
+    private static final String MARK_STRIKE = "X";
 
     private final int fellPins;
 
     private Pin(int fellPins) {
         this.fellPins = fellPins;
-        validateOutofPinsRange(fellPins);
+        validateOutOfPinsRange(fellPins);
     }
 
     public static Pin bowl(String fellPins) {
@@ -48,7 +50,7 @@ public class Pin {
         }
     }
 
-    private void validateOutofPinsRange(int fellPins) {
+    private void validateOutOfPinsRange(int fellPins) {
         if (fellPins < PINS_MIN_VALUE || fellPins > PINS_MAX_VALUE) {
             throw new OutOfPinsRangeException(ExceptionMessage.INVALID_PITCH_RANGE);
         }
@@ -69,6 +71,12 @@ public class Pin {
 
     @Override
     public String toString() {
+        if (fellPins == PINS_MIN_VALUE) {
+            return MARK_GUTTER;
+        }
+        if (fellPins == PINS_MAX_VALUE) {
+            return MARK_STRIKE;
+        }
         return String.valueOf(fellPins);
     }
 }
