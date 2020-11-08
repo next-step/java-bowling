@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,7 +41,7 @@ public class Frames {
 		return frames.size() == MAX_FRAME_COUNT;
 	}
 
-	private boolean isEnd() {
+	boolean isEnd() {
 		return isFinalFrame() && getLastFrame().isEnd();
 	}
 
@@ -52,7 +53,7 @@ public class Frames {
 	}
 
 	public List<Frame> getFrames() {
-		return frames;
+		return Collections.unmodifiableList(frames);
 	}
 
 	@Override
