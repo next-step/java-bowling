@@ -1,11 +1,10 @@
 package bowling.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
 	private static final int MAX_FRAME_INDEX = 8;
 	private static final int MAX_PITCH_COUNT = 2;
 	private final int index;
@@ -41,7 +40,7 @@ public class NormalFrame {
 		pins.add(pins.isEmpty() ? new Pin(count) : getLastPin().next(count));
 	}
 
-	private boolean isEnd() {
+	public boolean isEnd() {
 		if (pins.isEmpty()) {
 			return false;
 		}

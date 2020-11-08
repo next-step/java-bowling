@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FinalFrame {
+public class FinalFrame implements Frame {
 	private static final int MAX_PITCH_COUNT = 3;
 	private final int index;
 	private final List<Pin> pins;
@@ -27,7 +27,7 @@ public class FinalFrame {
 		);
 	}
 
-	private boolean isEnd() {
+	public boolean isEnd() {
 		if (pins.isEmpty()) {
 			return false;
 		}
@@ -37,6 +37,11 @@ public class FinalFrame {
 			return true;
 		}
 		return pins.size() >= MAX_PITCH_COUNT;
+	}
+
+	@Override
+	public Frame next() {
+		throw new IllegalArgumentException("최종 프레임은 다음 프레임을 만들 수 없습니다.");
 	}
 
 	List<Pin> getPins() {
