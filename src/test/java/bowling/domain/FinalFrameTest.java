@@ -24,14 +24,16 @@ public class FinalFrameTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"1, 9, 1", "10, 10, 10", "10, 1, 2"})
-	void 보너스가_있고_프레임에_공을_세번_던진다(int first, int second, int third) {
+	@CsvSource(value = {"1, 9, 1, 1, /, 1", "10, 10, 10, X, X, X", "10, 1, 2, X, 1, 3"})
+	void 보너스가_있고_프레임에_공을_세번_던진다(int first, int second, int third, String expectFirstSignal, String expectSecondSignal, String expectThirdSignal) {
 		FinalFrame finalFrame = new FinalFrame();
 		finalFrame.pitch(first);
 		finalFrame.pitch(second);
 		finalFrame.pitch(third);
 		assertThat(finalFrame.getPins())
 			.containsExactly(new Pin(first), new Pin(second), new Pin(third));
+		assertThat(finalFrame.getScore())
+			.containsExactly(expectFirstSignal, expectSecondSignal, expectThirdSignal);
 	}
 
 	@Test
