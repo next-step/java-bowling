@@ -35,4 +35,10 @@ public class PinTest {
 		assertThatThrownBy(() -> pin.next(2))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
+
+	@Test
+	void 핀이_10개가_되면_게임을_끝낸다(){
+		Pin pin = new Pin(10);
+		assertThat(pin.isEnd()).isTrue();
+	}
 }

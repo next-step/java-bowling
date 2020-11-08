@@ -29,6 +29,10 @@ public class Pin {
 		return new Pin(nextCount);
 	}
 
+	public boolean isEnd() {
+		return count == MAX_PIN_COUNT;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
