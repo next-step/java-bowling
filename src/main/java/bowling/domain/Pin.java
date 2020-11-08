@@ -5,10 +5,25 @@ import java.util.Objects;
 public class Pin {
 	public static final int MAX_PIN_COUNT = 10;
 	private final int count;
+	private final int totalCount;
+	private final ScoreSymbol symbol;
 
 	public Pin(int count){
 		this.validate(count);
 		this.count = count;
+		this.totalCount = count;
+		this.symbol = initSymbol(count, true);
+	}
+
+	public Pin(int count, int sumCount) {
+		this.validate(count);
+		this.count = count;
+		this.totalCount = sumCount;
+		this.symbol = initSymbol(count, true);
+	}
+
+	public ScoreSymbol initSymbol(int count, boolean isFirst) {
+		return ScoreSymbol.valueOf(count, isFirst);
 	}
 
 	private void validate(int count) {
@@ -26,11 +41,22 @@ public class Pin {
 			throw new IllegalArgumentException("10보다 클 수 없습니다.");
 		}
 
-		return new Pin(nextCount);
+		return new Pin(nextCount, count + nextCount);
 	}
 
 	public boolean isEnd() {
-		return count == MAX_PIN_COUNT;
+		return totalCount == MAX_PIN_COUNT;
+	}
+
+	public String getSymbolValue() {
+		if (getSymbol().equals(ScoreSymbol.MISS)) {
+			return String.valueOf(totalCount);
+		}
+		return symbol.getValue();
+	}
+
+	public ScoreSymbol getSymbol() {
+		return symbol;
 	}
 
 	public int getCount() {

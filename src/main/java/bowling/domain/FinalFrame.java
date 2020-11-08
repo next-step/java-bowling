@@ -5,6 +5,7 @@ import static bowling.domain.Pin.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 	private static final int MAX_PITCH_COUNT = 3;
@@ -53,6 +54,13 @@ public class FinalFrame implements Frame {
 			throw new IllegalArgumentException("해당 프레임에 핀이 없습니다.");
 		}
 		return pins.get(pins.size() - 1);
+	}
+
+	@Override
+	public List<String> getScore() {
+		return pins.stream()
+			.map(Pin::getSymbolValue)
+			.collect(Collectors.toList());
 	}
 
 	@Override

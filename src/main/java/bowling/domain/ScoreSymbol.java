@@ -23,4 +23,8 @@ public enum ScoreSymbol {
 			.findFirst()
 			.orElse(MISS);
 	}
+
+	public String getValue() {
+		return value;
+	}
 }

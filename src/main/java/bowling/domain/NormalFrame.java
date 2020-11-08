@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class NormalFrame implements Frame {
 	private static final int MAX_FRAME_INDEX = 8;
@@ -78,6 +79,13 @@ public class NormalFrame implements Frame {
 		NormalFrame that = (NormalFrame)o;
 		return index == that.index &&
 			Objects.equals(pins, that.pins);
+	}
+
+	@Override
+	public List<String> getScore() {
+		return pins.stream()
+			.map(Pin::getSymbolValue)
+			.collect(Collectors.toList());
 	}
 
 	@Override
