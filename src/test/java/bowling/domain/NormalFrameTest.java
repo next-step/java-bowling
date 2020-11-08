@@ -37,4 +37,29 @@ public class NormalFrameTest {
 		frame.pitch(10);
 		assertThat(frame.getPins()).containsExactly(new Pin(10));
 	}
+
+	@Test
+	void 하나의_프레임에_두번_공을_던진다() {
+		NormalFrame frame = NormalFrame.firstFrame();
+		frame.pitch(5);
+		frame.pitch(5);
+		assertThat(frame.getPins()).containsExactly(new Pin(5), new Pin(5));
+	}
+
+	@Test
+	void 하나의_프레임에_세번_이상_공을_던질수_없다() {
+		NormalFrame frame = NormalFrame.firstFrame();
+		frame.pitch(1);
+		frame.pitch(2);
+		assertThatThrownBy(() -> frame.pitch(3))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@Test
+	void 하나의_프레임에_핀이_열개_이상이_넘어가면_추가로_플레이할수_없다() {
+		NormalFrame frame = NormalFrame.firstFrame();
+		frame.pitch(10);
+		assertThatThrownBy(() -> frame.pitch(2))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
 }

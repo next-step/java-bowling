@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class NormalFrame {
 	private static final int MAX_FRAME_INDEX = 8;
+	private static final int MAX_PITCH_COUNT = 2;
 	private final int index;
 	private final List<Pin> pins;
 
@@ -34,11 +35,39 @@ public class NormalFrame {
 	}
 
 	public void pitch(int count) {
-		this.pins.add(new Pin(count));
+		if (this.isEnd()) {
+			throw new IllegalArgumentException("해당 프레임의 게임이 끝났으므로 더 이상 플레이할 수 없습니다.");
+		}
+		pins.add(pins.isEmpty() ? new Pin(count) : getLastPin().next(count));
+	}
+
+	private boolean isEnd() {
+		if (pins.isEmpty()) {
+			return false;
+		}
+		if (isLastPinEnded()) {
+			return true;
+		}
+		return pins.size() >= MAX_PITCH_COUNT;
 	}
 
 	public List<Pin> getPins() {
 		return pins;
+	}
+
+	private Pin getLastPin() {
+		if (getPins().isEmpty()) {
+			throw new IllegalArgumentException("no pin");
+		}
+		return pins.get(pins.size() - 1);
+	}
+
+	private boolean isLastPinEnded() {
+		if (getPins().isEmpty()) {
+			throw new IllegalArgumentException("현재 프레임에 핀이 한 개도 존재하지 않습니다.");
+		}
+		Pin lastPin = pins.get(pins.size() - 1);
+		return lastPin.isEnd();
 	}
 
 	@Override
