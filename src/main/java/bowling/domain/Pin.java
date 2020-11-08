@@ -49,7 +49,7 @@ public class Pin {
 	}
 
 	public String getSymbolValue() {
-		if (getSymbol().equals(ScoreSymbol.MISS)) {
+		if (isScoreSymbolMiss()) {
 			return String.valueOf(totalCount);
 		}
 		return symbol.getValue();
@@ -57,6 +57,10 @@ public class Pin {
 
 	public ScoreSymbol getSymbol() {
 		return symbol;
+	}
+
+	public boolean isScoreSymbolMiss() {
+		return getSymbol().equals(ScoreSymbol.MISS);
 	}
 
 	public int getCount() {

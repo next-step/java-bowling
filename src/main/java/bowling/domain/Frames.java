@@ -52,6 +52,13 @@ public class Frames {
 		return frames.get(frames.size() - 1);
 	}
 
+	public int getIndex() {
+		if (frames.isEmpty() || getLastFrame().isEnd()) {
+			return frames.size() + 1;
+		}
+		return frames.size();
+	}
+
 	public List<Frame> getFrames() {
 		return Collections.unmodifiableList(frames);
 	}
