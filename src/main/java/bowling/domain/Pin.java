@@ -33,6 +33,10 @@ public class Pin {
 		return count == MAX_PIN_COUNT;
 	}
 
+	public int getCount() {
+		return count;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
