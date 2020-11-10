@@ -8,30 +8,31 @@ public class Pin {
 	private final int totalCount;
 	private final ScoreSymbol symbol;
 
-	public Pin(int count){
-		this.validate(count);
-		this.count = count;
-		this.totalCount = count;
-		this.symbol = initSymbol(count, true);
+	public Pin(int count) {
+		this(count, count, true);
 	}
 
-	public Pin(int count, int sumCount) {
-		this.validate(count);
+	public Pin(int count, int totalCount) {
+		this(count, totalCount, false);
+	}
+
+	private Pin(int count, int totalCount, boolean isFirst){
+		this.validate(count, totalCount);
 		this.count = count;
-		this.totalCount = sumCount;
-		this.symbol = initSymbol(count, true);
+		this.totalCount = totalCount;
+		this.symbol = initSymbol(totalCount, isFirst);
 	}
 
 	public ScoreSymbol initSymbol(int count, boolean isFirst) {
 		return ScoreSymbol.valueOf(count, isFirst);
 	}
 
-	private void validate(int count) {
+	private void validate(int count, int sumCount) {
 		if (count < 0) {
 			throw new IllegalArgumentException("0보다 작을 수 없습니다.");
 		}
 
-		if (count > MAX_PIN_COUNT) {
+		if (count > MAX_PIN_COUNT || sumCount > MAX_PIN_COUNT) {
 			throw new IllegalArgumentException("10보다 클 수 없습니다.");
 		}
 	}
@@ -50,7 +51,7 @@ public class Pin {
 
 	public String getSymbolValue() {
 		if (isScoreSymbolMiss()) {
-			return String.valueOf(totalCount);
+			return String.valueOf(count);
 		}
 		return symbol.getValue();
 	}
