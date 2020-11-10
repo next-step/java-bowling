@@ -10,22 +10,33 @@ public class OutputView {
 	public static final String VERTICAL_LINE = "|";
 	public static final int MAX_FRAME_COUNT = 10;
 	public static final String SCORE_BOARD_NUMBER = "  |  NAME  |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+	public static final String EMPTY_SPACE = "    ";
 
 	private OutputView() {}
 
 	public static void printScore(String playerName, List<Frame> frames) {
-		// print score header
-		// print score board
+		System.out.println(SCORE_BOARD_NUMBER);
+		printNameSpace(playerName);
+		printScores(frames);
+		printEmptySpace(frames.size());
+		System.out.println(VERTICAL_LINE);
 	}
 
-	private static void printScoreBoard(String playerName, List<Frame> frames) {
-		System.out.printf("%s%3s ", VERTICAL_LINE, playerName);
+	private static void printNameSpace(String playerName) {
+		System.out.printf("%s%4s", VERTICAL_LINE, playerName);
+	}
+
+	private static void printScores(List<Frame> frames) {
 		for (Frame frame : frames) {
-			System.out.printf("%s%s", VERTICAL_LINE, String.join("|", frame.getScore()));
-		}
-		for (int i = frames.size(); i < MAX_FRAME_COUNT; i++) {
-			System.out.printf("%s      ", VERTICAL_LINE);
+			String score = String.join(VERTICAL_LINE, frame.getScore());
+			System.out.printf("%s%-4s", VERTICAL_LINE, score);
 		}
 		System.out.println();
+	}
+
+	private static void printEmptySpace(int size) {
+		for (int i = size; i < MAX_FRAME_COUNT; i++) {
+			System.out.printf("%s%s", VERTICAL_LINE, EMPTY_SPACE);
+		}
 	}
 }
