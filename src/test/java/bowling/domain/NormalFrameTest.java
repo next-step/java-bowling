@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import bowling.exception.GameOverException;
+
 public class NormalFrameTest {
 
 	@Test
@@ -54,7 +56,7 @@ public class NormalFrameTest {
 		frame.pitch(1);
 		frame.pitch(2);
 		assertThatThrownBy(() -> frame.pitch(3))
-			.isInstanceOf(IllegalArgumentException.class);
+			.isInstanceOf(GameOverException.class);
 	}
 
 	@Test
@@ -62,6 +64,6 @@ public class NormalFrameTest {
 		NormalFrame frame = NormalFrame.firstFrame();
 		frame.pitch(10);
 		assertThatThrownBy(() -> frame.pitch(2))
-			.isInstanceOf(IllegalArgumentException.class);
+			.isInstanceOf(GameOverException.class);
 	}
 }

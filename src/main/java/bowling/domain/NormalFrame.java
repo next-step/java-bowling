@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import bowling.exception.GameOverException;
+
 public class NormalFrame implements Frame {
 	private static final int MAX_FRAME_INDEX = 8;
 	private static final int MAX_PITCH_COUNT = 2;
@@ -35,7 +37,7 @@ public class NormalFrame implements Frame {
 
 	public void pitch(int count) {
 		if (this.isEnd()) {
-			throw new IllegalArgumentException("해당 프레임의 게임이 끝났으므로 더 이상 플레이할 수 없습니다.");
+			throw new GameOverException();
 		}
 		pins.pitch(count);
 	}

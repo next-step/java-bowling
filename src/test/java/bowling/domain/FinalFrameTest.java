@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import bowling.exception.GameOverException;
+
 public class FinalFrameTest {
 
 	@Test
@@ -24,7 +26,7 @@ public class FinalFrameTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"1, 9, 1, 1, /, 1", "10, 10, 10, X, X, X", "10, 1, 2, X, 1, 3"})
+	@CsvSource(value = {"1, 9, 1, 1, /, 1", "10, 10, 10, X, X, X", "10, 1, 2, X, 1, 2"})
 	void 보너스가_있고_프레임에_공을_세번_던진다(int first, int second, int third, String expectFirstSignal, String expectSecondSignal, String expectThirdSignal) {
 		FinalFrame finalFrame = new FinalFrame();
 		finalFrame.pitch(first);
@@ -42,7 +44,7 @@ public class FinalFrameTest {
 		finalFrame.pitch(1);
 		finalFrame.pitch(8);
 		assertThatThrownBy(() -> finalFrame.pitch(10))
-			.isInstanceOf(IllegalArgumentException.class);
+			.isInstanceOf(GameOverException.class);
 	}
 
 	@Test
@@ -52,7 +54,7 @@ public class FinalFrameTest {
 		finalFrame.pitch(10);
 		finalFrame.pitch(10);
 		assertThatThrownBy(() -> finalFrame.pitch(10))
-			.isInstanceOf(IllegalArgumentException.class);
+			.isInstanceOf(GameOverException.class);
 	}
 
 	@Test

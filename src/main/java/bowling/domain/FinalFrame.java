@@ -2,26 +2,24 @@ package bowling.domain;
 
 import static bowling.domain.Pin.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
+import bowling.exception.GameOverException;
 
 public class FinalFrame implements Frame {
 	private static final int MIN_PITCH_COUNT = 2;
 	private static final int MAX_PITCH_COUNT = 3;
-	private final int index;
 	private final Pins pins;
 
 	public FinalFrame() {
-		this.index = 9;
 		this.pins = new Pins();
 	}
 
 	public void pitch(int count) {
 		if (this.isEnd()) {
-			throw new IllegalArgumentException("이미 게임이 끝나서 공을 던질 수가 없네요.");
+			throw new GameOverException();
 		}
 		pins.pitch(count);
 	}
@@ -38,18 +36,11 @@ public class FinalFrame implements Frame {
 
 	@Override
 	public Frame next() {
-		throw new IllegalArgumentException("최종 프레임은 다음 프레임을 만들 수 없습니다.");
+		throw new GameOverException();
 	}
 
 	public List<Pin> getPins() {
 		return Collections.unmodifiableList(pins.getPins());
-	}
-
-	private Pin getLastPin() {
-		if (getPins().isEmpty()) {
-			throw new IllegalArgumentException("해당 프레임에 핀이 없습니다.");
-		}
-		return pins.getLastPin();
 	}
 
 	@Override
