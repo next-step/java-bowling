@@ -23,14 +23,7 @@ repositories {
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('org.hibernate:hibernate-java8')
-    runtime('com.h2database:h2')
-    testCompile('org.junit.jupiter:junit-jupiter:5.6.0')
-    testCompile('org.assertj:assertj-core:3.15.0')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-}
-
-test {
-    useJUnitPlatform()
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    testCompile('org.junit.jupiter:junit-jupiter:5.4.2')
+    testCompile('org.assertj:assertj-core:3.11.1')
 }
