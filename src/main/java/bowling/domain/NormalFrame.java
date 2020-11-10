@@ -1,20 +1,19 @@
 package bowling.domain;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class NormalFrame implements Frame {
 	private static final int MAX_FRAME_INDEX = 8;
 	private static final int MAX_PITCH_COUNT = 2;
 	private final int index;
-	private final List<Pin> pins;
+	private final Pins pins;
 
 	public NormalFrame(int index) {
 		this.validate(index);
 		this.index = index;
-		this.pins = new ArrayList<>();
+		this.pins = new Pins();
 	}
 
 	private void validate(int index) {
@@ -38,36 +37,26 @@ public class NormalFrame implements Frame {
 		if (this.isEnd()) {
 			throw new IllegalArgumentException("해당 프레임의 게임이 끝났으므로 더 이상 플레이할 수 없습니다.");
 		}
-		pins.add(pins.isEmpty() ? new Pin(count) : getLastPin().next(count));
+		pins.pitch(count);
 	}
 
 	public boolean isEnd() {
 		if (pins.isEmpty()) {
 			return false;
 		}
-		if (isLastPinEnded()) {
+		if (pins.isEnd()) {
 			return true;
 		}
-		return pins.size() >= MAX_PITCH_COUNT;
+		return pins.overPitching(MAX_PITCH_COUNT);
 	}
 
 	public List<Pin> getPins() {
-		return pins;
+		return Collections.unmodifiableList(pins.getPins());
 	}
 
-	private Pin getLastPin() {
-		if (getPins().isEmpty()) {
-			throw new IllegalArgumentException("no pin");
-		}
-		return pins.get(pins.size() - 1);
-	}
-
-	private boolean isLastPinEnded() {
-		if (getPins().isEmpty()) {
-			throw new IllegalArgumentException("현재 프레임에 핀이 한 개도 존재하지 않습니다.");
-		}
-		Pin lastPin = pins.get(pins.size() - 1);
-		return lastPin.isEnd();
+	@Override
+	public List<String> getScore() {
+		return pins.getScore();
 	}
 
 	@Override
@@ -79,13 +68,6 @@ public class NormalFrame implements Frame {
 		NormalFrame that = (NormalFrame)o;
 		return index == that.index &&
 			Objects.equals(pins, that.pins);
-	}
-
-	@Override
-	public List<String> getScore() {
-		return pins.stream()
-			.map(Pin::getSymbolValue)
-			.collect(Collectors.toList());
 	}
 
 	@Override
