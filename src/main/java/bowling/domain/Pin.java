@@ -67,6 +67,10 @@ public class Pin {
 		return count;
 	}
 
+	public int getTotalCount() {
+		return totalCount;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
