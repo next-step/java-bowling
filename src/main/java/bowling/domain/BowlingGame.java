@@ -3,6 +3,8 @@ package bowling.domain;
 import java.util.List;
 import java.util.Objects;
 
+import bowling.exception.GameOverException;
+
 public class BowlingGame {
 	private final Player player;
 	private final Frames frames;
@@ -14,7 +16,7 @@ public class BowlingGame {
 
 	public void pitch(int count) {
 		if (isEnd()) {
-			throw new IllegalArgumentException("게임이 끝났어요.");
+			throw new GameOverException();
 		}
 		frames.pitch(count);
 	}

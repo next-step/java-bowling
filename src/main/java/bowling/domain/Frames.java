@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import bowling.exception.GameOverException;
+
 public class Frames {
 	private static final int MAX_FRAME_COUNT = 10;
 	private final List<Frame> frames;
@@ -15,7 +17,7 @@ public class Frames {
 
 	public void pitch(int count) {
 		if (isEnd()) {
-			throw new IllegalArgumentException("이미 프레임이 끝났어요.");
+			throw new GameOverException();
 		}
 		Frame frame = findFrame();
 		frame.pitch(count);
@@ -47,7 +49,7 @@ public class Frames {
 
 	private Frame getLastFrame() {
 		if (frames.isEmpty()) {
-			throw new IllegalArgumentException("프레임이 비어있습니다.");
+			throw new GameOverException();
 		}
 		return frames.get(frames.size() - 1);
 	}
