@@ -49,7 +49,11 @@ public class FinalFrame implements Frame {
     }
 
     public Integer getScore() {
-        return score.getScore();
+        try {
+            return score.getScore();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public void calculateScore(int point) {

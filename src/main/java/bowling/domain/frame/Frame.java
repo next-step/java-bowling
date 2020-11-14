@@ -26,4 +26,6 @@ public interface Frame {
 
     void calculateScore(int pins);
 
+    Integer getScore();
+
 }

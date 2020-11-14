@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
-import bowling.domain.score.ScoreConverter;
 
 import java.util.List;
 import java.util.Objects;
@@ -56,7 +55,7 @@ public class NormalFrame implements Frame {
         try {
             return score.getScore();
         } catch (Exception e) {
-            return null;
+            return 0;
         }
     }
 
@@ -69,6 +68,24 @@ public class NormalFrame implements Frame {
     public boolean hasScore() {
         return score != null;
     }
+
+//    public int getScore2() {
+//        if (score.canCalculate()) {
+//            return score.getScore();
+//        }
+//
+//        return calculateAdditionalScores(score);
+//    }
+//
+//    private int calculateAdditionalScores(Score beforeScore) {
+//        // TODO beforeScore에 현재 Frame의 쓰러진 Pin을 추가해 점수를 구하는 로직 구현
+//        if (pins.isStrike() || pins.isSpare()) {
+//
+//        }
+//
+//
+//        return 0;
+//    }
 
     @Override
     public void addScore() {

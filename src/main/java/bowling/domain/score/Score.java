@@ -29,9 +29,9 @@ public class Score {
         return new Score(STRIKE_SCORE, SPARE_LEFT_COUNT);
     }
 
-    public Score calculate(int point) {
+    public Score calculate(int pin) {
         if (leftCount != CAN_CALCULATE_COUNT) {
-            return new Score(score += point, leftCount - 1);
+            return new Score(score += pin, leftCount - 1);
         }
         return this;
     }
@@ -41,6 +41,10 @@ public class Score {
             throw new IllegalArgumentException(CALCULATE_ERROR);
         }
         return this.score;
+    }
+
+    public boolean isRemain() {
+        return leftCount != 0;
     }
 
     public boolean canCalculate() {

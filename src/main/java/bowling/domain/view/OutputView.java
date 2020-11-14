@@ -41,7 +41,7 @@ public class OutputView {
         Integer sumScore = 0;
         for (int i = 0; i < frames.getFrameSize(); i++) {
             sb.append(getScores(frames.getFrame(i), sumScore));
-            sumScore += getSumScore(frames.getFrame(i).getTotal());
+            sumScore += getSumScore(frames.getFrame(i).getScore());
         }
         System.out.println(sb.toString());
     }
@@ -54,7 +54,10 @@ public class OutputView {
     }
 
     private static String getScores(Frame frame, Integer sumScore) {
-        if (frame.hasRolled()) {
+//        if (frame.hasRolled() && (frame.getPins().isStrike() || frame.getPins().isSpare())) {
+//            return makeMargin(STRING_NONE) + BLANK_BLOCK;
+//        } else
+        if (frame.hasRolled()){
             return makeBlockSpace(String.valueOf(frame.getTotal() + sumScore));
         }
         return makeMargin(STRING_NONE) + BLANK_BLOCK;
@@ -102,10 +105,7 @@ public class OutputView {
 
     private static String convertStringScore(Pin pin1, Pin pin2) {
         int totalPins = pin1.getPin() + pin2.getPin();
-        if (totalPins == SPARE_PIN) {
-            return getScoreAndSpare(pin1);
-        }
-        return getOnlyScore(pin1, pin2);
+        return totalPins == SPARE_PIN ? getScoreAndSpare(pin1) : getOnlyScore(pin1, pin2);
     }
 
     private static String getOnlyScore(Pin pin1, Pin pin2) {

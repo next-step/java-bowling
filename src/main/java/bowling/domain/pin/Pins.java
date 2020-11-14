@@ -4,6 +4,7 @@ import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.score.Score;
+import bowling.domain.score.ScoreType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +17,20 @@ public class Pins {
     private static final int FIRST_ROLL = 1;
     private static final int SECOND_ROLL = 2;
     private static final int PINS_LIMIT = 10;
+    private static final int PINS_DOUBLE_STRIKE = 20;
+    private static final int PINS_GUTTER = 0;
 
     private List<Pin> pins;
+    private ScoreType scoreType;
 
     public Pins() {
         this.pins = new ArrayList<>();
+        this.scoreType = ScoreType.NONE;
     }
 
     public Pins(List<Pin> pins) {
         this.pins = pins;
+        this.scoreType = ScoreType.NONE;
     }
 
     public void addPins(Frame frame, int pin) {
@@ -34,7 +40,13 @@ public class Pins {
         if (frame instanceof FinalFrame && isPinOverflowRolledOnce(pin)) {
             throw new IllegalArgumentException(ROLL_COUNT_ERRORS);
         }
+        this.scoreType = scoreCheck();
         this.pins.add(new Pin(pin));
+    }
+
+    public ScoreType getScoreType() {
+        scoreType = scoreCheck();
+        return scoreType;
     }
 
     public boolean isPinReady(Frame frame) {
@@ -66,11 +78,21 @@ public class Pins {
         return pins.size() == FIRST_ROLL && this.getTotalPins() == PINS_LIMIT;
     }
 
+    public boolean isDoubleStrike() {
+        return pins.size() == SECOND_ROLL && this.getTotalPins() == PINS_DOUBLE_STRIKE;
+    }
+
+    public boolean isGutter() {
+        return this.getTotalPins() == PINS_GUTTER;
+    }
+
     public boolean isSpare() {
         return pins.size() == SECOND_ROLL && getTotalPins() == PINS_LIMIT;
     }
 
-    public boolean isFinalSpare() { return pins.size() == SECOND_ROLL && this.isSpare() && !this.isStrike();}
+    public boolean isFinalSpare() {
+        return pins.size() == SECOND_ROLL && this.isSpare() && !this.isStrike();
+    }
 
     private boolean isPinTotalOverTen(int pin) {
         return this.getTotalPins() + pin > PINS_LIMIT;
@@ -121,12 +143,26 @@ public class Pins {
     }
 
     public Score convertScore() {
-        if (isStrike()) {
+        if (ScoreType.STRIKE.equals(scoreType)) {
             return Score.ofStrike();
         }
-        if (isFinalSpare()) {
+        if (ScoreType.SPARE.equals(scoreType)) {
             return Score.ofSpare();
         }
         return Score.ofMiss(getTotalPins());
     }
+
+    public ScoreType scoreCheck() {
+        if (isStrike() || isDoubleStrike()) {
+            return ScoreType.STRIKE;
+        }
+        if (isSpare()) {
+            return ScoreType.SPARE;
+        }
+        if (isGutter()) {
+            return ScoreType.GUTTER;
+        }
+        return ScoreType.MISS;
+    }
+
 }
