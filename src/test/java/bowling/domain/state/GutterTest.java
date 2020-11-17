@@ -1,4 +1,4 @@
-package bowling.domain.score;
+package bowling.domain.state;
 
 import bowling.domain.point.Point;
 import org.junit.jupiter.api.Test;
@@ -10,8 +10,8 @@ class GutterTest {
     @Test
     void gutter() {
         Gutter gutter = new Gutter();
-        Score2 score = gutter.nextScore(Point.of(0));
-        assertThat(score.getScore()).isEqualTo("-");
+        State state = gutter.nextScore(Point.of(0));
+        assertThat(state.getScore()).isEqualTo("-");
     }
 
     @Test
@@ -19,8 +19,8 @@ class GutterTest {
         Gutter gutter = new Gutter();
         gutter.nextScore(Point.of(5));
 
-        Score2 secondScore = gutter.nextScore(Point.of(0));
-        assertThat(secondScore.getScore()).isEqualTo("-");
+        State state = gutter.nextScore(Point.of(0));
+        assertThat(state.getScore()).isEqualTo("-");
     }
 
 

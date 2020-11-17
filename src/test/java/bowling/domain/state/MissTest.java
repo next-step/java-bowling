@@ -1,4 +1,4 @@
-package bowling.domain.score;
+package bowling.domain.state;
 
 import bowling.domain.point.Point;
 import org.junit.jupiter.api.Test;

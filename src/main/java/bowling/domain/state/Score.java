@@ -1,6 +1,4 @@
-package bowling.domain.score;
-
-import bowling.domain.point.Point;
+package bowling.domain.state;
 
 public class Score {
     private static final int MISS_LEFT_COUNT = 0;

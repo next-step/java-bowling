@@ -23,6 +23,7 @@ public class Point {
         if (point < MIN_POINT) {
             throw new IllegalArgumentException(MIN_POINT_ERROR);
         }
+
         if (point > MAX_POINT) {
             throw new IllegalArgumentException(MAX_POINT_ERROR);
         }

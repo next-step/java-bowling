@@ -1,41 +1,33 @@
-package bowling.domain.score;
+package bowling.domain.state;
 
 import bowling.domain.point.Point;
 
-public class Strike implements Score2 {
-    public static final int GUTTER = 0;
-    private static final int STRIKE = 10;
-
+public class Gutter implements State {
     private final Point point;
 
-    public Strike() {
-        this.point = Point.of(STRIKE);
+    public Gutter() {
+        point = Point.of(0);
     }
 
     @Override
-    public Score2 nextScore(Point point) {
-        int totalPoint = this.point.getPoint() + point.getPoint();
+    public State nextScore(Point point) {
         if (point.getPoint() == STRIKE) {
-            return new Strike();
-        }
-        if (totalPoint - 10 == STRIKE) {
             return new Spare(point);
         }
         if (point.getPoint() == GUTTER) {
             return new Gutter();
         }
         return new Normal(point);
-
     }
 
     @Override
     public String getScore() {
-        return "X";
+        return "-";
     }
 
     @Override
     public boolean isStrike() {
-        return true;
+        return false;
     }
 
     @Override

@@ -1,9 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.point.Point;
-import bowling.domain.score.Score2;
-import bowling.domain.score.ScoreGenerator;
-import bowling.domain.score.State;
+import bowling.domain.state.StateGenerator;
+import bowling.domain.state.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,7 @@ public class NormalFrame2 implements Frame2 {
     }
 
     public Frame2 firstRoll(Point point) {
-        State state = ScoreGenerator.of(point);
+        State state = StateGenerator.of(point);
         states.add(state);
 
         if (state.isStrike()) {

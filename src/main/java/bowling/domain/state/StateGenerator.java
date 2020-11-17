@@ -1,8 +1,8 @@
-package bowling.domain.score;
+package bowling.domain.state;
 
 import bowling.domain.point.Point;
 
-public class ScoreGenerator {
+public class StateGenerator {
 
     private static final int STRIKE = 10;
     private static final int GUTTER = 0;

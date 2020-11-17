@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.point.Point;
-import bowling.domain.score.ScoreGenerator;
-import bowling.domain.score.State;
+import bowling.domain.state.StateGenerator;
+import bowling.domain.state.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class FinalFrame2 implements Frame2 {
 
     private Frame2 firstRoll(Point point) {
         int totalPoint = this.point + point.getPoint();
-        State state = ScoreGenerator.of(point);
+        State state = StateGenerator.of(point);
         this.state.add(state);
         if (state.isStrike()) {
             return FinalFrame2.of(this.state, point.getPoint(), rollCount + 1);
