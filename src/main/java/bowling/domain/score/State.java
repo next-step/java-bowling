@@ -1,17 +1,14 @@
 package bowling.domain.score;
 
-import bowling.domain.pin.Pins;
+import bowling.domain.point.Point;
 
 public interface State {
-
-    State roll(Pins pin);
-
-    boolean isGameOver();
-
-    Score calculate(Score baseScore);
-
-    Score getScore();
-
-    boolean canRoll(State state);
+    int STRIKE = 10;
+    int GUTTER = 0;
+    State nextScore(Point point);
+    String getScore();
+    int getPoint();
+    boolean isStrike();
+    boolean isSpare();
 
 }

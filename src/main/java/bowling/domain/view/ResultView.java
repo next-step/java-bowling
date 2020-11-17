@@ -3,8 +3,6 @@ package bowling.domain.view;
 import bowling.domain.frame.Frames2;
 import bowling.domain.player.Player;
 
-import java.util.stream.Stream;
-
 public class ResultView {
     private static final String BOARD_TITLE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String DEFAULT_BOARD = "| %-4s |      |      |      |      |      |      |      |      |      |      |";
@@ -37,7 +35,7 @@ public class ResultView {
     private static void getScore(Player player, Frames2 frames) {
         System.out.print(BLOCK + margin(player.toString()));
         frames.getFrames().stream()
-                .map(frame -> margin(frame.getScores()))
+                .map(frame -> margin(frame.getState()))
                 .forEach(System.out::print);
     }
 

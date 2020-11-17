@@ -75,7 +75,7 @@ public class NormalFrame2 implements Frame2 {
     }
 
     @Override
-    public String getScores() {
+    public String getState() {
         String result = "";
         if (scores.size() == FIRST_ROLL) {
             return scores.get(0).getScore();

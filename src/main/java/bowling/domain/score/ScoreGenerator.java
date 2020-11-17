@@ -7,11 +7,11 @@ public class ScoreGenerator {
     private static final int STRIKE = 10;
     private static final int GUTTER = 0;
 
-    public static Score2 of(Point point) {
+    public static State of(Point point) {
         return getScore(point);
     }
 
-    private static Score2 getScore(Point point) {
+    private static State getScore(Point point) {
         if (isStrike(point)) {
             return new Strike();
         }

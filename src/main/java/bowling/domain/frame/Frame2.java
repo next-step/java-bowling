@@ -12,6 +12,6 @@ public interface Frame2 {
     Frame2 roll(Point point);
     boolean isFinalFrame();
     boolean isLastRoll();
-    String getScores();
+    String getState();
     int getPoint();
 }
