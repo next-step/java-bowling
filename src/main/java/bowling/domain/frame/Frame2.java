@@ -13,5 +13,5 @@ public interface Frame2 {
     boolean isFinalFrame();
     boolean isLastRoll();
     String getScores();
-    String getPoint();
+    int getPoint();
 }

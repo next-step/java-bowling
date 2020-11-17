@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
 import bowling.domain.point.Point;
 import bowling.domain.score.Score2;
 import bowling.domain.score.ScoreGenerator;
@@ -7,7 +8,7 @@ import bowling.domain.score.ScoreGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FinalFrame2 implements Frame2{
+public class FinalFrame2 implements Frame2 {
     private static final String ROLL_COUNT_ERRORS = "더 이상 던질 수 없습니다";
     private static final String ROLL_SIZE_ERROR = "첫 투구가 있어야합니다";
     private static final String BLOCK = "|";
@@ -40,7 +41,7 @@ public class FinalFrame2 implements Frame2{
         if (score.isStrike()) {
             return FinalFrame2.of(scores, rollCount + 1);
         }
-        return FinalFrame2.of(scores, rollCount +1);
+        return FinalFrame2.of(scores, rollCount + 1);
     }
 
     private Frame2 nextRoll(Point point) {
@@ -95,5 +96,16 @@ public class FinalFrame2 implements Frame2{
     @Override
     public boolean isFinalFrame() {
         return true;
+    }
+
+    @Override
+    public int getPoint() {
+        if (rollCount == MAX_FINAL_FRAME_CAN_ROLL) {
+            return scores.stream()
+                    .map(Score2::getPoint)
+                    .mapToInt(Integer::intValue)
+                    .sum();
+        }
+        return 0;
     }
 }

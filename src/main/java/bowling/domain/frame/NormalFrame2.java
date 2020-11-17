@@ -81,10 +81,15 @@ public class NormalFrame2 implements Frame2 {
     }
 
     @Override
-    public String getPoint() {
-        return null;
+    public int getPoint() {
+        if (rollCount == MAX_FINAL_FRAME_CAN_ROLL) {
+            return scores.stream()
+                    .map(Score2::getPoint)
+                    .mapToInt(Integer::intValue)
+                    .sum();
+        }
+        return 0;
     }
-
     public static Frame2 of() {
         List<Score2> scores = new ArrayList<>();
         return new NormalFrame2(scores, 0);
