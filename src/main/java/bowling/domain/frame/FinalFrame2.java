@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.Pin;
 import bowling.domain.point.Point;
 import bowling.domain.score.Score2;
 import bowling.domain.score.ScoreGenerator;
@@ -14,11 +13,13 @@ public class FinalFrame2 implements Frame2 {
     private static final String BLOCK = "|";
     private List<Score2> scores;
     private int rollCount = 0;
+    private int point = 0;
 
-    public FinalFrame2(List<Score2> scores, int rollCount) {
+    public FinalFrame2(List<Score2> scores, int point, int rollCount) {
         validate(rollCount);
         this.scores = scores;
         this.rollCount = rollCount;
+        this.point = point;
     }
 
     private void validate(int rollCount) {
@@ -36,12 +37,13 @@ public class FinalFrame2 implements Frame2 {
     }
 
     private Frame2 firstRoll(Point point) {
+        int totalPoint = this.point + point.getPoint();
         Score2 score = ScoreGenerator.of(point);
         scores.add(score);
         if (score.isStrike()) {
-            return FinalFrame2.of(scores, rollCount + 1);
+            return FinalFrame2.of(scores, point.getPoint(), rollCount + 1);
         }
-        return FinalFrame2.of(scores, rollCount + 1);
+        return FinalFrame2.of(scores, totalPoint, rollCount + 1);
     }
 
     private Frame2 nextRoll(Point point) {
@@ -49,14 +51,15 @@ public class FinalFrame2 implements Frame2 {
         Score2 score = scores.get(rollCount - 1);
         Score2 nextScore = score.nextScore(point);
         scores.add(nextScore);
+        int totalPoint = this.point + point.getPoint();
 
         if (nextScore.isSpare()) {
-            return FinalFrame2.of(scores, rollCount + 1);
+            return FinalFrame2.of(scores, totalPoint, rollCount + 1);
         }
         if (score.isStrike()) {
-            return FinalFrame2.of(scores, rollCount + 1);
+            return FinalFrame2.of(scores, totalPoint, rollCount + 1);
         }
-        return FinalFrame2.of(scores, MAX_FINAL_FRAME_CAN_ROLL);
+        return FinalFrame2.of(scores, totalPoint, MAX_FINAL_FRAME_CAN_ROLL);
     }
 
     private void rollCheck() {
@@ -71,11 +74,11 @@ public class FinalFrame2 implements Frame2 {
 
     public static Frame2 of() {
         List<Score2> scores = new ArrayList<>();
-        return new FinalFrame2(scores, 0);
+        return new FinalFrame2(scores, 0, 0);
     }
 
-    public static Frame2 of(List<Score2> scores, int rollCount) {
-        return new FinalFrame2(scores, rollCount);
+    public static Frame2 of(List<Score2> scores, int point, int rollCount) {
+        return new FinalFrame2(scores, point, rollCount);
     }
 
     @Override
@@ -101,10 +104,7 @@ public class FinalFrame2 implements Frame2 {
     @Override
     public int getPoint() {
         if (rollCount == MAX_FINAL_FRAME_CAN_ROLL) {
-            return scores.stream()
-                    .map(Score2::getPoint)
-                    .mapToInt(Integer::intValue)
-                    .sum();
+            return this.point;
         }
         return 0;
     }

@@ -19,7 +19,5 @@ public class Main {
             ResultView.printResult(player, frames);
             frames.nextFrame();
         }
-
-
     }
 }
