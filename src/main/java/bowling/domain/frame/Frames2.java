@@ -18,14 +18,14 @@ public class Frames2 {
     private static final int LAST_NORMAL_FRAME_INDEX = 8;
 
     private final List<Frame2> frames = new LinkedList<>();
-    private final List<String> points = new LinkedList<>();
+    private final List<Integer> points = new LinkedList<>();
     private int frameIndex;
 
     private Frames2() {
         validate(frameIndex);
         this.frameIndex = BASE_INDEX;
         frames.add(NormalFrame2.of());
-        points.add(convertPoint());
+        points.add(ZERO);
     }
 
     public static Frames2 generate() {
@@ -35,7 +35,7 @@ public class Frames2 {
     public void nextFrame() {
         if (frames.get(frameIndex).isLastRoll()) {
             frames.add(generateNextFrame());
-            points.add(NONE);
+            points.add(ZERO);
             frameIndex++;
         }
     }
@@ -43,7 +43,12 @@ public class Frames2 {
     public Frames2 roll(Point point) {
         Frame2 frame = frames.get(frameIndex).roll(point);
         updateFrame(frame);
+        updatePoint(point);
         return this;
+    }
+
+    private void updatePoint(Point point) {
+        points.add(frameIndex);
     }
 
     private void updateFrame(Frame2 frame) {
@@ -56,23 +61,6 @@ public class Frames2 {
             return FinalFrame2.of();
         }
         return NormalFrame2.of();
-    }
-
-    private String convertPoint() {
-        Frame2 currentFrame = frames.get(frameIndex);
-        if (currentFrame.getScores().equals(STRIKE_SIGN) && currentFrame.isLastRoll()) {
-            return NONE;
-        }
-        if (currentFrame.getScores().equals(SPARE_SIGN) && currentFrame.isLastRoll()) {
-            return NONE;
-        }
-        if (currentFrame.getScores().equals(ZERO) && currentFrame.isLastRoll()) {
-            return String.valueOf(currentFrame.getPoint());
-        }
-        if (currentFrame.isLastRoll()) {
-            return String.valueOf(currentFrame.getPoint());
-        }
-        return NONE;
     }
 
     public boolean isGameOver() {
@@ -90,6 +78,10 @@ public class Frames2 {
         if (frameIndex > MAX_FRAME_INDEX) {
             throw new IllegalArgumentException(FRAME_MAX_ERROR);
         }
+    }
+
+    public List<Integer> getPoints() {
+        return points;
     }
 
     public LinkedList<Frame2> getFrames() {

@@ -14,11 +14,13 @@ public class NormalFrame2 implements Frame2 {
 
     private List<Score2> scores;
     private int rollCount = 0;
+    private int point = 0;
 
-    private NormalFrame2(List<Score2> scores, int rollCount) {
+    private NormalFrame2(List<Score2> scores, int point, int rollCount) {
         validate(rollCount);
         this.scores = scores;
         this.rollCount = rollCount;
+        this.point = point;
     }
 
     private void validate(int rollCount) {
@@ -40,9 +42,9 @@ public class NormalFrame2 implements Frame2 {
         scores.add(score);
 
         if (score.isStrike()) {
-            return NormalFrame2.of(scores, MAX_NORMAL_FRAME_CAN_ROLL);
+            return NormalFrame2.of(scores, score.getPoint(), MAX_NORMAL_FRAME_CAN_ROLL);
         }
-        return NormalFrame2.of(scores, rollCount + 1);
+        return NormalFrame2.of(scores, score.getPoint(), MAX_NORMAL_FRAME_CAN_ROLL);
     }
 
     private Frame2 nextRoll(Point point) {
@@ -50,7 +52,11 @@ public class NormalFrame2 implements Frame2 {
         Score2 firstScore = scores.get(rollCount - 1);
         Score2 nextScore = firstScore.nextScore(point);
         scores.add(nextScore);
-        return NormalFrame2.of(scores, rollCount + 1);
+
+        if (firstScore.isSpare()) {
+            NormalFrame2.of(scores, firstScore.getPoint(), MAX_NORMAL_FRAME_CAN_ROLL);
+        }
+        return NormalFrame2.of(scores, firstScore.getPoint(), MAX_NORMAL_FRAME_CAN_ROLL);
     }
 
     private void rollCheck() {
@@ -83,19 +89,17 @@ public class NormalFrame2 implements Frame2 {
     @Override
     public int getPoint() {
         if (rollCount == MAX_FINAL_FRAME_CAN_ROLL) {
-            return scores.stream()
-                    .map(Score2::getPoint)
-                    .mapToInt(Integer::intValue)
-                    .sum();
+            return this.point;
         }
         return 0;
     }
+
     public static Frame2 of() {
         List<Score2> scores = new ArrayList<>();
-        return new NormalFrame2(scores, 0);
+        return new NormalFrame2(scores, 0, 0);
     }
 
-    public static Frame2 of(List<Score2> scores, int rollCount) {
-        return new NormalFrame2(scores, rollCount);
+    public static Frame2 of(List<Score2> scores, int point, int rollCount) {
+        return new NormalFrame2(scores, point, rollCount);
     }
 }
