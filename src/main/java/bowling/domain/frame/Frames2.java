@@ -43,12 +43,13 @@ public class Frames2 {
     public Frames2 roll(Point point) {
         Frame2 frame = frames.get(frameIndex).roll(point);
         updateFrame(frame);
-        updatePoint(point);
+        updatePoint(frame.getPoint());
         return this;
     }
 
-    private void updatePoint(Point point) {
-        points.add(frameIndex);
+    private void updatePoint(int point) {
+        points.remove(frameIndex);
+        points.add(point);
     }
 
     private void updateFrame(Frame2 frame) {
