@@ -54,11 +54,8 @@ public class OutputView {
     }
 
     private static String getScores(Frame frame, Integer sumScore) {
-//        if (frame.hasRolled() && (frame.getPins().isStrike() || frame.getPins().isSpare())) {
-//            return makeMargin(STRING_NONE) + BLANK_BLOCK;
-//        } else
         if (frame.hasRolled()){
-            return makeBlockSpace(String.valueOf(frame.getTotal() + sumScore));
+            return makeBlockSpace(String.valueOf(frame.getScore() + sumScore));
         }
         return makeMargin(STRING_NONE) + BLANK_BLOCK;
     }

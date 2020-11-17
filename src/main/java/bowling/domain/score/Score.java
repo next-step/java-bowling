@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import bowling.domain.point.Point;
+
 public class Score {
     private static final int MISS_LEFT_COUNT = 0;
     private static final int SPARE_SCORE = 10;
@@ -16,6 +18,26 @@ public class Score {
         this.score = score;
         this.leftCount = leftCount;
     }
+
+    public Score roll(int pin) {
+        return new Score(score += pin, leftCount - 1);
+    }
+
+    public int getScore() {
+        if (!canCalculate()) {
+            throw new IllegalArgumentException(CALCULATE_ERROR);
+        }
+        return this.score;
+    }
+
+    public boolean canCalculate() {
+        return leftCount == CAN_CALCULATE_COUNT;
+    }
+
+
+
+
+
 
     public static Score ofMiss(int score) {
         return new Score(score, MISS_LEFT_COUNT);
@@ -36,19 +58,12 @@ public class Score {
         return this;
     }
 
-    public int getScore() {
-        if (!canCalculate()) {
-            throw new IllegalArgumentException(CALCULATE_ERROR);
-        }
-        return this.score;
-    }
+
 
     public boolean isRemain() {
         return leftCount != 0;
     }
 
-    public boolean canCalculate() {
-        return leftCount == CAN_CALCULATE_COUNT;
-    }
+
 
 }

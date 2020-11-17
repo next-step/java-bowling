@@ -12,4 +12,8 @@ public class Player {
         return englishName.getName();
     }
 
+    @Override
+    public String toString() {
+        return englishName.getName();
+    }
 }

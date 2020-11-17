@@ -1,7 +1,7 @@
 package bowling.domain.view;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.pin.Pin;
+import bowling.domain.point.Point;
 
 import java.util.Scanner;
 
@@ -21,6 +21,11 @@ public class InputView {
     public static Pin inputPinRoll(int frameNumber) {
         System.out.println(frameNumber + CURRENT_FRAME);
         return new Pin(scanner.nextInt());
+    }
+
+    public static Point inputRoll(int frameIndex) {
+        System.out.println(String.format("%d" + CURRENT_FRAME , frameIndex + 1));
+        return Point.of(scanner.nextInt());
     }
 
 

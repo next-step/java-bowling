@@ -1,5 +1,5 @@
 package bowling.domain.score;
 
-public enum ScoreType {
-    STRIKE, SPARE, GUTTER, MISS, NONE;
+public enum  ScoreType {
+    STRIKE, SPARE, NORMAL, GUTTER, MISS, NONE
 }
