@@ -1,19 +1,18 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Score;
+import bowling.domain.score.ScoreData;
 import bowling.domain.score.ScoreType;
 
 import java.util.List;
 
 public class FrameResult {
     private List<Integer> downPins;
-    private ScoreType scoreType;
-    private Score score;
+    private ScoreData scoreData;
 
-    public FrameResult(List<Integer> downPins, ScoreType scoreType, Score score) {
+    public FrameResult(List<Integer> downPins, ScoreData scoreData) {
         this.downPins = downPins;
-        this.scoreType = scoreType;
-        this.score = score;
+        this.scoreData = scoreData;
     }
 
     public List<Integer> getDownPins() {
@@ -21,10 +20,10 @@ public class FrameResult {
     }
 
     public ScoreType getScoreType() {
-        return scoreType;
+        return scoreData.getScoreType();
     }
 
     public Score getScore() {
-        return score;
+        return scoreData.getScore();
     }
 }

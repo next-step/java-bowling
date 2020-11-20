@@ -1,7 +1,6 @@
 package bowling.domain.score;
 
 public class Score {
-
     private int value;
     private ScoreType scoreType;
 

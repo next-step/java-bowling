@@ -4,6 +4,7 @@ import bowling.domain.pin.FinalFramePins;
 import bowling.domain.pin.NormalFramePins;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
+import bowling.domain.score.ScoreData;
 import bowling.domain.score.ScoreType;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class Frame {
     }
 
     public FrameResult getFrameResult() {
-        return new FrameResult(this.pins.getDownPins(), this.pins.getScoreType(), getScore());
+        return new FrameResult(this.pins.getDownPins(), new ScoreData(getScore(), this.pins.getScoreType()));
     }
 
     public Score getScore() {

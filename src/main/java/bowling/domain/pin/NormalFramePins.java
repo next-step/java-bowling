@@ -33,7 +33,7 @@ public class NormalFramePins implements Pins {
         if (pin < MINIMUM_PIN_NUMBER) {
             throw new IllegalArgumentException(PIN_MIN_ERROR);
         }
-        if (totalDownPins() + pin > MAX_PIN_COUNT) {
+        if (sum() + pin > MAX_PIN_COUNT) {
             throw new IllegalArgumentException(PIN_VALIDATION_ERROR);
         }
         if (!canRoll()) {
@@ -46,7 +46,7 @@ public class NormalFramePins implements Pins {
         if (this.downPins.size() == MAX_ROUND) {
             return false;
         }
-        if (totalDownPins() == MAX_PIN_COUNT) {
+        if (sum() == MAX_PIN_COUNT) {
             return false;
         }
         return true;
@@ -84,13 +84,9 @@ public class NormalFramePins implements Pins {
     }
 
     private boolean isSpare() {
-        if (this.downPins.size() == SECOND_ROLL && totalDownPins() == SPARE_POINT) {
+        if (this.downPins.size() == SECOND_ROLL && sum() == SPARE_POINT) {
             return true;
         }
         return false;
-    }
-
-    private int totalDownPins() {
-        return this.downPins.stream().mapToInt(Integer::intValue).sum();
     }
 }

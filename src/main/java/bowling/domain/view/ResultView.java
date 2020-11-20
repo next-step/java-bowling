@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class ResultView {
     private static final String BLANK = "";
     private static final String BLOCK = "|";
-    private static final String MARGIN_BLOCK = "    ";
+    private static final String MARGIN_BLOCK = "|      |";
     private static final int FRAME_COUNT = 10;
     private static final int STRIKE_PIN = 10;
     private static final int GUTTER_PIN = 0;
@@ -90,8 +90,5 @@ public class ResultView {
         return String.valueOf(downPin);
     }
 
-    private static String margin(String input) {
-        return String.format("  %-4s|", input);
-    }
 
 }

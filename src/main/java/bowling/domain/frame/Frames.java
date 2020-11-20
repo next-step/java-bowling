@@ -6,9 +6,7 @@ import java.util.stream.Collectors;
 
 public class Frames {
     private static final int FRAME_COUNT = 10;
-    private static final int ZERO = 0;
     private static final int FIRST_INDEX = 1;
-    private static final int LAST_NORMAL_FRAME_INDEX = 8;
     public static final String FRAME_VALID_ERROR = "10개 프레임이 아닙니다.";
 
     private List<Frame> frames;
