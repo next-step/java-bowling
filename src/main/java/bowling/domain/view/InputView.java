@@ -23,9 +23,9 @@ public class InputView {
         return new Pin(scanner.nextInt());
     }
 
-    public static Point inputRoll(int frameIndex) {
+    public static int inputRoll(int frameIndex) {
         System.out.println(String.format("%d" + CURRENT_FRAME , frameIndex + 1));
-        return Point.of(scanner.nextInt());
+        return Integer.parseInt(scanner.nextLine());
     }
 
 

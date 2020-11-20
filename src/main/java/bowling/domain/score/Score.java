@@ -1,4 +1,4 @@
-package bowling.domain.state;
+package bowling.domain.score;
 
 public class Score {
     private static final int MISS_LEFT_COUNT = 0;

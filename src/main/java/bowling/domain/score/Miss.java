@@ -1,8 +1,8 @@
-package bowling.domain.state;
+package bowling.domain.score;
 
 import bowling.domain.point.Point;
 
-public class Miss implements State {
+public class Miss implements Score2 {
     private static final int BONUS_POINT = 10;
     public static final String ERROR_INPUT = "잘못된 입력입니다.";
     private Point point;
@@ -15,7 +15,7 @@ public class Miss implements State {
     }
 
     @Override
-    public State nextScore(Point point) {
+    public Score2 nextScore(Point point) {
         return new Normal(point);
     }
 

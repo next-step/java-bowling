@@ -2,7 +2,7 @@ package bowling.domain.pin;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.state.ScoreType;
+import bowling.domain.score.ScoreType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

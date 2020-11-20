@@ -1,18 +1,18 @@
-package bowling.domain.state;
+package bowling.domain.score;
 
 import bowling.domain.point.Point;
 
-public class Spare implements State {
+public class Gutter implements Score2 {
     private final Point point;
 
-    public Spare(Point point) {
-        this.point = point;
+    public Gutter() {
+        point = Point.of(0);
     }
 
     @Override
-    public State nextScore(Point point) {
+    public Score2 nextScore(Point point) {
         if (point.getPoint() == STRIKE) {
-            return new Strike();
+            return new Spare(point);
         }
         if (point.getPoint() == GUTTER) {
             return new Gutter();
@@ -22,7 +22,7 @@ public class Spare implements State {
 
     @Override
     public String getScore() {
-        return "/";
+        return "-";
     }
 
     @Override
@@ -32,7 +32,7 @@ public class Spare implements State {
 
     @Override
     public boolean isSpare() {
-        return true;
+        return false;
     }
 
     @Override

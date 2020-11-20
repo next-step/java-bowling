@@ -1,23 +1,22 @@
 package bowling;
 
-import bowling.domain.frame.Frames2;
+import bowling.domain.game.Game2;
 import bowling.domain.player.Player;
-import bowling.domain.point.Point;
 import bowling.domain.view.InputView;
 import bowling.domain.view.ResultView;
 
 public class Main {
     public static void main(String[] args) {
         Player player = new Player(InputView.inputPlayerName());
-        ResultView.getDefaultBoard(player);
-        Frames2 frames = Frames2.generate();
 
-        while(!frames.isGameOver()) {
-            Point point = InputView.inputRoll(frames.getFrameIndex());
-            frames = frames.roll(point);
+        Game2 game = Game2.start();
+        ResultView resultView = new ResultView();
 
-            ResultView.printResult(player, frames);
-            frames.nextFrame();
+        while(!game.isGameOver()) {
+            int frameIndex = game.getFrameIndex();
+            int pin = InputView.inputRoll(frameIndex);
+            game.roll(pin);
+            resultView.printResult(player, game.getResults());
         }
     }
 }

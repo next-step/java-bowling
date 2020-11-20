@@ -1,8 +1,8 @@
-package bowling.domain.state;
+package bowling.domain.score;
 
 import bowling.domain.point.Point;
 
-public class Normal implements State {
+public class Normal implements Score2 {
     private static final String MAX_SCORE_ERROR = "일반 게임에서 합이 10을 넘을 수 없습니다";
     private static final int MAX_SCORE = 10;
     private final Point point;
@@ -12,7 +12,7 @@ public class Normal implements State {
     }
 
     @Override
-    public State nextScore(Point point) {
+    public Score2 nextScore(Point point) {
         int totalPoint = this.point.getPoint() + point.getPoint();
         validate(totalPoint);
         if (totalPoint == STRIKE || (totalPoint - 10 == STRIKE)) {

@@ -1,4 +1,4 @@
-package bowling.domain.state;
+package bowling.domain.score;
 
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;

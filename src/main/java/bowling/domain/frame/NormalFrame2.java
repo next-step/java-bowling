@@ -1,11 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.point.Point;
-import bowling.domain.state.StateGenerator;
-import bowling.domain.state.State;
+import bowling.domain.score.ScoreGenerator;
+import bowling.domain.score.Score2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NormalFrame2 implements Frame2 {
     private static final String ROLL_COUNT_ERRORS = "일반 게임에서는 두번만 던질 수 있습니다.";
@@ -13,13 +14,13 @@ public class NormalFrame2 implements Frame2 {
     private static final String BLOCK = "|";
     private static final String NONE = "";
 
-    private List<State> states;
+    private List<Score2> score;
     private int rollCount = 0;
     private int point = 0;
 
-    private NormalFrame2(List<State> states, int point, int rollCount) {
+    private NormalFrame2(List<Score2> score, int point, int rollCount) {
         validate(rollCount);
-        this.states = states;
+        this.score = score;
         this.rollCount = rollCount;
         this.point = point;
     }
@@ -39,30 +40,30 @@ public class NormalFrame2 implements Frame2 {
     }
 
     public Frame2 firstRoll(Point point) {
-        State state = StateGenerator.of(point);
-        states.add(state);
+        Score2 score2 = ScoreGenerator.of(point);
+        score.add(score2);
 
-        if (state.isStrike()) {
-            return NormalFrame2.of(states, state.getPoint(), MAX_NORMAL_FRAME_CAN_ROLL);
+        if (score2.isStrike()) {
+            return NormalFrame2.of(score, score2.getPoint(), MAX_NORMAL_FRAME_CAN_ROLL);
         }
-        return NormalFrame2.of(states, state.getPoint(), rollCount + 1);
+        return NormalFrame2.of(score, score2.getPoint(), rollCount + 1);
     }
 
     private Frame2 nextRoll(Point point) {
         rollCheck();
-        State firstState = states.get(rollCount - 1);
-        State nextState = firstState.nextScore(point);
-        states.add(nextState);
+        Score2 firstScore2 = score.get(rollCount - 1);
+        Score2 nextScore2 = firstScore2.nextScore(point);
+        score.add(nextScore2);
         int totalPoint = this.point + point.getPoint();
 
-        if (firstState.isSpare()) {
-            NormalFrame2.of(states, totalPoint, MAX_NORMAL_FRAME_CAN_ROLL);
+        if (firstScore2.isSpare()) {
+            NormalFrame2.of(score, totalPoint, MAX_NORMAL_FRAME_CAN_ROLL);
         }
-        return NormalFrame2.of(states, totalPoint, MAX_NORMAL_FRAME_CAN_ROLL);
+        return NormalFrame2.of(score, totalPoint, MAX_NORMAL_FRAME_CAN_ROLL);
     }
 
     private void rollCheck() {
-        if (states.size() == 0) {
+        if (score.size() == 0) {
             throw new IllegalArgumentException(ROLL_SIZE_ERROR);
         }
     }
@@ -77,30 +78,26 @@ public class NormalFrame2 implements Frame2 {
     }
 
     @Override
-    public String getState() {
-        if (states.size() == FIRST_ROLL) {
-            return states.get(0).getScore();
-        }
-        if (states.size() == SECOND_ROLL) {
-            return states.get(0).getScore() + BLOCK + states.get(1).getScore();
-        }
-        return NONE;
+    public String getScores() {
+        return score.stream()
+                .map(Score2::getScore)
+                .collect(Collectors.joining(BLOCK));
     }
 
     @Override
     public int getPoint() {
-        if (rollCount == MAX_FINAL_FRAME_CAN_ROLL) {
+        if (rollCount == MAX_NORMAL_FRAME_CAN_ROLL) {
             return this.point;
         }
         return 0;
     }
 
     public static Frame2 of() {
-        List<State> states = new ArrayList<>();
-        return new NormalFrame2(states, 0, 0);
+        List<Score2> scores = new ArrayList<>();
+        return new NormalFrame2(scores, 0, 0);
     }
 
-    public static Frame2 of(List<State> states, int point, int rollCount) {
-        return new NormalFrame2(states, point, rollCount);
+    public static Frame2 of(List<Score2> scores, int point, int rollCount) {
+        return new NormalFrame2(scores, point, rollCount);
     }
 }

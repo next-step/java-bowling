@@ -3,8 +3,8 @@ package bowling.domain.pin;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.state.Score;
-import bowling.domain.state.ScoreType;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreType;
 
 
 import java.util.ArrayList;
