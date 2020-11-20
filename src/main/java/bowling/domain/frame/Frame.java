@@ -12,8 +12,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class Frame {
-    public static final int BASE_INDEX = 0;
-    public static final int LAST_NORMAL_FRAME_INDEX = 9;
+    private static final int BASE_INDEX = 0;
+    private static final int LAST_NORMAL_FRAME_INDEX = 9;
+    private static final int NEXT_FRAME = 1;
+
     private FrameIndex frameIndex;
     private Pins pins;
     private Frame nextFrame;
@@ -28,7 +30,7 @@ public class Frame {
     }
 
     public Frame next() {
-        this.nextFrame = new Frame(FrameIndex.create(this.frameIndex.getIndex() + 1), new NormalFramePins());
+        this.nextFrame = new Frame(FrameIndex.create(this.frameIndex.getIndex() + NEXT_FRAME), new NormalFramePins());
         return this.nextFrame;
     }
 

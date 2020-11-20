@@ -73,7 +73,9 @@ public class NormalFramePins implements Pins {
 
     @Override
     public int sum() {
-        return this.downPins.stream().mapToInt(Integer::intValue).sum();
+        return this.downPins.stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     private boolean isStrike() {

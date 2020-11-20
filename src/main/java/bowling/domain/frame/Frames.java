@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Frames {
-    private static final int FRAME_COUNT = 10;
+    private static final int TOTAL_FRAMES = 10;
+    private static final int NORMAL_FRAME_COUNT = 9;
     private static final int FIRST_INDEX = 1;
     public static final String FRAME_VALID_ERROR = "10개 프레임이 아닙니다.";
 
@@ -22,7 +23,7 @@ public class Frames {
 
         Frame normalFrame = Frame.first();
         frames.add(normalFrame);
-        for (int i = FIRST_INDEX; i < FRAME_COUNT - 1; i++) {
+        for (int i = FIRST_INDEX; i < NORMAL_FRAME_COUNT; i++) {
             normalFrame = normalFrame.next();
             frames.add(normalFrame);
         }
@@ -44,7 +45,7 @@ public class Frames {
     }
 
     private void validate(List<Frame> frames) {
-        if (frames.size() != FRAME_COUNT) {
+        if (frames.size() != TOTAL_FRAMES) {
             throw new IllegalArgumentException(FRAME_VALID_ERROR);
         }
     }

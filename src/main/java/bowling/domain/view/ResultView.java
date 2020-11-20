@@ -29,12 +29,12 @@ public class ResultView {
     }
 
     private void printBoardTitle() {
-        StringBuilder framesBuilder = new StringBuilder();
-        framesBuilder.append(BOARD_NAME);
+        StringBuilder sb = new StringBuilder();
+        sb.append(BOARD_NAME);
         for (int i = 0; i < FRAME_COUNT; i++) {
-            framesBuilder.append(String.format("  %02d  |", i + 1));
+            sb.append(String.format("  %02d  |", i + 1));
         }
-        System.out.println(framesBuilder.toString());
+        System.out.println(sb.toString());
     }
 
     private void printBoard(String name, List<FrameResult> frameResults) {
@@ -63,8 +63,9 @@ public class ResultView {
             components.add(MARK_SPARE);
             downPinIndex++;
         }
-        for (; downPinIndex < downPins.size(); downPinIndex++) {
+        while (downPinIndex < downPins.size()) {
             components.add(convertMarks(downPins.get(downPinIndex)));
+            downPinIndex++;
         }
         return components.stream().collect(Collectors.joining(BLOCK));
     }
