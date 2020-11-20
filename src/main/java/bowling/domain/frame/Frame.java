@@ -1,31 +1,89 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.Pin;
+import bowling.domain.pin.FinalFramePins;
+import bowling.domain.pin.NormalFramePins;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreType;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public interface Frame {
-    void roll(Pin pin);
+public class Frame {
+    private FrameIndex frameIndex;
+    private Pins pins;
+    private Frame nextFrame;
 
-    int getTotal();
+    public Frame(FrameIndex frameIndex, Pins pins) {
+        this.frameIndex = frameIndex;
+        this.pins = pins;
+    }
 
-    boolean canRoll();
+    public static Frame first() {
+        return new Frame(FrameIndex.create(0), new NormalFramePins());
+    }
 
-    List<Pin> getPinInfo();
+    public Frame next() {
+        this.nextFrame = new Frame(FrameIndex.create(this.frameIndex.getIndex() + 1), new NormalFramePins());
+        return this.nextFrame;
+    }
 
-    Pins getPins();
+    public Frame last() {
+        this.nextFrame = new Frame(FrameIndex.create(9), FinalFramePins.create());
+        return this.nextFrame;
+    }
 
-    void addScore();
+    public void roll(int pin) {
+        this.pins.down(pin);
+    }
 
-    boolean isGameOver();
+    public boolean canRoll() {
+        return pins.canRoll();
+    }
 
-    boolean hasScore();
+    public boolean isDone() {
+        return !pins.canRoll();
+    }
 
-    boolean hasRolled();
+    public FrameResult getFrameResult() {
+        return new FrameResult(this.pins.getDownPins(), this.pins.getScoreType(), getScore());
+    }
 
-    void calculateScore(int pins);
+    public Score getScore() {
+        if (!isDone()) {
+            return Score.of(0, ScoreType.READY);
+        }
+        if (frameIndex.isLast() && isDone()) {
+            return Score.of(this.pins.sum(), ScoreType.READY);
+        }
+        int nextRollCount = this.pins.getScoreType().getBonusRollCount();
+        List<Integer> downPins = getNextDownPins(nextRollCount);
 
-    Integer getScore();
+        if (downPins.size() < nextRollCount) {
+            return Score.of(0, ScoreType.READY);
+        }
+        int score =  this.pins.sum() + downPins.stream().mapToInt(Integer::intValue).sum();
+        return Score.of(score, ScoreType.NORMAL);
+    }
+
+    private List<Integer> getNextDownPins(int count) {
+        if (this.nextFrame == null) {
+            return Collections.emptyList();
+        }
+        List<Integer> nextDownPins = this.nextFrame.getDownPins();
+        if (nextDownPins.isEmpty()) {
+            return new ArrayList<>();
+        }
+        if (nextDownPins.size() >= count) {
+            return nextDownPins.subList(0, count);
+        }
+        nextDownPins.addAll(this.nextFrame.getNextDownPins(count - nextDownPins.size()));
+        return nextDownPins;
+    }
+
+    private List<Integer> getDownPins() {
+        return this.pins.getDownPins();
+    }
 
 }

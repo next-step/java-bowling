@@ -1,29 +1,53 @@
 package bowling.domain.pin;
 
-import bowling.domain.score.ScoreType2;
+import bowling.domain.score.ScoreType;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FinalFramePinsTest {
 
     @Test
+    void strike() {
+        Pins pin = FinalFramePins.create();
+
+        pin.down(10);
+        pin.down(5);
+        pin.down(5);
+
+        assertThat(pin.getScoreType()).isEqualTo(ScoreType.STRIKE);
+    }
+
+    @Test
     void miss() {
-        Pins2 pins = FinalFramePins.create();
+        Pins pins = FinalFramePins.create();
+
         pins.down(3);
         pins.down(4);
 
-        assertThat(pins.getScoreType()).isEqualTo(ScoreType2.MISS);
+        assertThat(pins.getScoreType()).isEqualTo(ScoreType.MISS);
     }
 
     @Test
     void spare() {
-        Pins2 pins = FinalFramePins.create();
+        Pins pins = FinalFramePins.create();
+
         pins.down(5);
         pins.down(5);
         pins.down(5);
 
-        assertThat(pins.getScoreType()).isEqualTo(ScoreType2.SPARE);
+        assertThat(pins.getScoreType()).isEqualTo(ScoreType.SPARE);
+    }
+
+    @Test
+    void miss_down_third() {
+        Pins pins = FinalFramePins.create();
+
+        pins.down(3);
+        pins.down(4);
+
+        assertThatThrownBy(() -> pins.down(3))
+                .isInstanceOf(IllegalStateException.class);
     }
 }

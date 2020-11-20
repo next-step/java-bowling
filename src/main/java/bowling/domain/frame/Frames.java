@@ -1,70 +1,68 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.Pin;
-
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
-    private static final int FINAL_FRAME = 8;
-    private LinkedList<Frame> frames = new LinkedList<>();
+    private static final int MIN_FRAME_INDEX = 0;
+    private static final int MAX_FRAME_INDEX = 10;
+    private static final int FRAME_COUNT = 10;
+    private static final String FRAME_MIN_ERROR = "프레임은 0보다 커야합니다";
+    private static final String FRAME_MAX_ERROR = "프레임은 10보다 클 수 없습니다";
+    private static final int ZERO = 0;
+    private static final int BASE_INDEX = 0;
+    private static final int LAST_NORMAL_FRAME_INDEX = 8;
+    public static final String FRAME_VALID_ERROR = "10개 프레임이 아닙니다.";
 
-    public Frames() {
-        startGame();
+    private List<Frame> frames;
+    private int currentIndex;
+
+    private Frames(List<Frame> frames) {
+        validate(frames);
+        this.frames = frames;
     }
 
-    private void startGame() {
-        for (int i = 0; i <= FINAL_FRAME; i++) {
-            frames.add(new NormalFrame());
+    public static Frames generate() {
+        List<Frame> frames = new ArrayList<>();
+
+        Frame normalFrame = Frame.first();
+        frames.add(normalFrame);
+        for (int i = 1; i < FRAME_COUNT - 1; i++) {
+            normalFrame = normalFrame.next();
+            frames.add(normalFrame);
         }
-        frames.add(new FinalFrame());
+        frames.add(frames.get(frames.size() - 1).last());
+        return new Frames(frames);
     }
 
-    public Frames(LinkedList<Frame> frames) {
-        this.frames = new LinkedList<>(frames);
-    }
+    public void roll(int pin) {
+        Frame frame = this.frames.get(this.currentIndex);
+        frame.roll(pin);
 
-    public void addFrame(Frame frame) {
-        frames.add(frame);
-    }
-
-    public LinkedList<Frame> getFrames() {
-        return frames;
-    }
-
-    public int getFrameIndex(Frame frame) {
-        int frameIndex = 0;
-        Frame targetFrame = frames.get(frameIndex);
-        while (!frame.equals(targetFrame)) {
-            frameIndex++;
-            targetFrame = frames.get(frameIndex);
+        if (!frame.canRoll()) {
+            this.currentIndex++;
         }
-        return frameIndex + 1;
     }
 
-    public Frame getFrame(int index) {
-        return frames.get(index);
+    public int getCurrentIndex() {
+        return currentIndex;
     }
 
-    public Frame getFirstFrame() {
-        return frames.getFirst();
+    private void validate(List<Frame> frames) {
+        if (frames.size() != FRAME_COUNT) {
+            throw new IllegalArgumentException(FRAME_VALID_ERROR);
+        }
     }
 
-    public int getFrameSize() {
-        return frames.size();
+    public boolean isDone() {
+        return !this.frames.get(this.frames.size() - 1).canRoll();
     }
 
-    public Frame getNextFrame() {
-        return frames.stream()
-                .filter(Frame::canRoll)
-                .findFirst()
-                .orElseGet(() -> frames.get(FINAL_FRAME));
+    public List<FrameResult> getFrameResults() {
+        return this.frames.stream()
+                .map(Frame::getFrameResult)
+                .collect(Collectors.toList());
     }
-
-    public void calculateScores(Pin pin) {
-        this.frames.stream()
-                .filter(frame -> frame.hasScore())
-                .forEach(frame -> frame.calculateScore(pin.getPin()));
-    }
-
 
 }

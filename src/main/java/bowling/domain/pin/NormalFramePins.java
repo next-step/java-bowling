@@ -1,11 +1,11 @@
 package bowling.domain.pin;
 
-import bowling.domain.score.ScoreType2;
+import bowling.domain.score.ScoreType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalFramePins implements Pins2 {
+public class NormalFramePins implements Pins {
 
     private static final int MAX_PIN_COUNT = 10;
     public static final int MINIMUM_PIN_NUMBER = 0;
@@ -53,17 +53,17 @@ public class NormalFramePins implements Pins2 {
     }
 
     @Override
-    public ScoreType2 getScoreType() {
+    public ScoreType getScoreType() {
         if (isStrike()) {
-            return ScoreType2.STRIKE;
+            return ScoreType.STRIKE;
         }
         if (isSpare()) {
-            return ScoreType2.SPARE;
+            return ScoreType.SPARE;
         }
         if (!canRoll()) {
-            return ScoreType2.MISS;
+            return ScoreType.MISS;
         }
-        return ScoreType2.READY;
+        return ScoreType.READY;
     }
 
     @Override

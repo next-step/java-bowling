@@ -2,13 +2,11 @@ package bowling.domain.view;
 
 import bowling.domain.frame.FrameResult;
 import bowling.domain.player.Player;
-import bowling.domain.score.Score3;
-import bowling.domain.score.ScoreType2;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ResultView {
@@ -55,8 +53,8 @@ public class ResultView {
         int downPinIndex = 0;
         components.add(createPin(downPins.get(downPinIndex++)));
 
-        ScoreType2 scoreType = frameResult.getScoreType();
-        if (scoreType == ScoreType2.SPARE) {
+        ScoreType scoreType = frameResult.getScoreType();
+        if (scoreType == ScoreType.SPARE) {
             components.add("/");
             downPinIndex++;
         }
@@ -67,13 +65,13 @@ public class ResultView {
     }
 
 
-    private static void printScores(List<Score3> scores) {
+    private static void printScores(List<Score> scores) {
         StringBuilder scoreDisplays = new StringBuilder();
         scoreDisplays.append("|      |");
         int sum = 0;
-        for (Score3 score :scores) {
+        for (Score score :scores) {
             sum += score.getValue();
-            scoreDisplays.append(String.format("  %-4s|", score.getScoreType() != ScoreType2.READY ? sum : ""));
+            scoreDisplays.append(String.format("  %-4s|", score.getScoreType() != ScoreType.READY ? sum : ""));
         }
         System.out.println(scoreDisplays.toString());
     }

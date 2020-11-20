@@ -1,11 +1,11 @@
 package bowling.domain.pin;
 
-import bowling.domain.score.ScoreType2;
+import bowling.domain.score.ScoreType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FinalFramePins implements Pins2 {
+public class FinalFramePins implements Pins {
     public static final int MAXIMUM_PIN_NUMBER = 10;
     public static final int MINIMUM_PIN_NUMBER = 0;
     public static final String MINIMUM_PIN_ERROR = "핀이 0보다 작을 수 없습니다.";
@@ -13,14 +13,14 @@ public class FinalFramePins implements Pins2 {
     public static final String CAN_ROLL_ERROR = "더 이상 던질 수 없습니다";
 
     private List<Integer> downPins;
-    private final Pins2 pins;
+    private final Pins pins;
 
-    public FinalFramePins(Pins2 pins) {
+    public FinalFramePins(Pins pins) {
         this.pins = pins;
         this.downPins = new ArrayList<>();
     }
 
-    public static Pins2 create() {
+    public static Pins create() {
         return new FinalFramePins(new NormalFramePins());
     }
 
@@ -29,8 +29,9 @@ public class FinalFramePins implements Pins2 {
         validate(pin);
         if (this.pins.canRoll()) {
             this.pins.down(pin);
+            return;
         }
-        return;
+        this.downPins.add(pin);
     }
 
     private void validate(int pin) {
@@ -54,7 +55,7 @@ public class FinalFramePins implements Pins2 {
     }
 
     @Override
-    public ScoreType2 getScoreType() {
+    public ScoreType getScoreType() {
         return this.pins.getScoreType();
     }
 

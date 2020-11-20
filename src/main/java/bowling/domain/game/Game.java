@@ -1,48 +1,35 @@
 package bowling.domain.game;
 
-import bowling.domain.frame.Frame;
+import bowling.domain.frame.FrameResult;
 import bowling.domain.frame.Frames;
-import bowling.domain.pin.Pin;
-import bowling.domain.player.Player;
+
+import java.util.List;
 
 public class Game {
-    private static final int FINAL_FRAME = 9;
-
     private final Frames frames;
-    private final Player player;
 
-    public Game(Player player) {
-        this.frames = new Frames();
-        this.player = player;
+    public Game(Frames frames) {
+        this.frames = frames;
     }
 
-    public Frame roll(Pin pin) {
-        Frame frame = frames.getNextFrame();
-        frame.roll(pin);
-        frames.calculateScores(pin);
-        frame.addScore();
-        return frames.getNextFrame();
+    public static Game start() {
+        Frames frame = Frames.generate();
+        return new Game(frame);
     }
 
-    public Player getPlayer() {
-        return player;
+    public void roll(int pin) {
+        this.frames.roll(pin);
     }
 
-    public Frame getFrame(int index) {
-        return frames.getFrame(index);
+    public int getFrameIndex() {
+        return this.frames.getCurrentIndex();
     }
 
-    public int getCurrentFrameIndex() {
-        return frames.getFrameIndex(frames.getNextFrame());
+    public List<FrameResult> getResults() {
+        return this.frames.getFrameResults();
     }
 
-    public Frames getFrames() {
-        return frames;
+    public boolean isGameOver() {
+        return this.frames.isDone();
     }
-
-    public Frame getFirstFrame() {
-        return frames.getFirstFrame();
-    }
-
-
 }
