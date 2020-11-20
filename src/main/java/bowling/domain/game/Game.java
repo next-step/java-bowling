@@ -13,8 +13,8 @@ public class Game {
     }
 
     public static Game start() {
-        Frames frame = Frames.generate();
-        return new Game(frame);
+        Frames frames = Frames.of();
+        return new Game(frames);
     }
 
     public void roll(int pin) {

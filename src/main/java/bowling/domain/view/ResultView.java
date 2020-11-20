@@ -16,16 +16,21 @@ public class ResultView {
     private static final int FRAME_COUNT = 10;
     private static final int STRIKE_PIN = 10;
     private static final int GUTTER_PIN = 0;
+    public static final String MARK_SPARE = "/";
+    public static final String MARK_STRIKE = "X";
+    public static final String MARK_GUTTER = "-";
+    public static final String BOARD_NAME = "| NAME |";
+
     public void printResult(Player player, List<FrameResult> frameResults) {
-        printFrames();
+        printBoardTitle();
         printBoard(player.toString(), frameResults);
         printScores(frameResults.stream().map(FrameResult::getScore).collect(Collectors.toList()));
         System.out.print(System.lineSeparator());
     }
 
-    private void printFrames() {
+    private void printBoardTitle() {
         StringBuilder framesBuilder = new StringBuilder();
-        framesBuilder.append("| NAME |");
+        framesBuilder.append(BOARD_NAME);
         for (int i = 0; i < FRAME_COUNT; i++) {
             framesBuilder.append(String.format("  %02d  |", i + 1));
         }
@@ -46,42 +51,41 @@ public class ResultView {
     private String getScoreSymbol(FrameResult frameResult) {
         List<Integer> downPins = frameResult.getDownPins();
         if(downPins.isEmpty()){
-            return "";
+            return BLANK;
         }
         List<String> components = new ArrayList<>();
 
         int downPinIndex = 0;
-        components.add(createPin(downPins.get(downPinIndex++)));
+        components.add(convertMarks(downPins.get(downPinIndex++)));
 
         ScoreType scoreType = frameResult.getScoreType();
         if (scoreType == ScoreType.SPARE) {
-            components.add("/");
+            components.add(MARK_SPARE);
             downPinIndex++;
         }
         for (; downPinIndex < downPins.size(); downPinIndex++) {
-            components.add(createPin(downPins.get(downPinIndex)));
+            components.add(convertMarks(downPins.get(downPinIndex)));
         }
-        return components.stream().collect(Collectors.joining("|"));
+        return components.stream().collect(Collectors.joining(BLOCK));
     }
-
 
     private static void printScores(List<Score> scores) {
         StringBuilder scoreDisplays = new StringBuilder();
-        scoreDisplays.append("|      |");
+        scoreDisplays.append(MARGIN_BLOCK);
         int sum = 0;
         for (Score score :scores) {
             sum += score.getValue();
-            scoreDisplays.append(String.format("  %-4s|", score.getScoreType() != ScoreType.READY ? sum : ""));
+            scoreDisplays.append(String.format("  %-4s|", score.getScoreType() != ScoreType.READY ? sum : BLANK));
         }
         System.out.println(scoreDisplays.toString());
     }
 
-    private String createPin(int downPin) {
+    private String convertMarks(int downPin) {
         if (downPin == STRIKE_PIN) {
-            return "X";
+            return MARK_STRIKE;
         }
         if (downPin == GUTTER_PIN) {
-            return "-";
+            return MARK_GUTTER;
         }
         return String.valueOf(downPin);
     }

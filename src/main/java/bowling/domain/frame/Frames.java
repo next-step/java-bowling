@@ -5,13 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Frames {
-    private static final int MIN_FRAME_INDEX = 0;
-    private static final int MAX_FRAME_INDEX = 10;
     private static final int FRAME_COUNT = 10;
-    private static final String FRAME_MIN_ERROR = "프레임은 0보다 커야합니다";
-    private static final String FRAME_MAX_ERROR = "프레임은 10보다 클 수 없습니다";
     private static final int ZERO = 0;
-    private static final int BASE_INDEX = 0;
+    private static final int FIRST_INDEX = 1;
     private static final int LAST_NORMAL_FRAME_INDEX = 8;
     public static final String FRAME_VALID_ERROR = "10개 프레임이 아닙니다.";
 
@@ -23,12 +19,12 @@ public class Frames {
         this.frames = frames;
     }
 
-    public static Frames generate() {
+    public static Frames of() {
         List<Frame> frames = new ArrayList<>();
 
         Frame normalFrame = Frame.first();
         frames.add(normalFrame);
-        for (int i = 1; i < FRAME_COUNT - 1; i++) {
+        for (int i = FIRST_INDEX; i < FRAME_COUNT - 1; i++) {
             normalFrame = normalFrame.next();
             frames.add(normalFrame);
         }

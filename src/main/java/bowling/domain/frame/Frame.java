@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Frame {
+    public static final int BASE_INDEX = 0;
+    public static final int LAST_NORMAL_FRAME_INDEX = 9;
     private FrameIndex frameIndex;
     private Pins pins;
     private Frame nextFrame;
@@ -21,7 +23,7 @@ public class Frame {
     }
 
     public static Frame first() {
-        return new Frame(FrameIndex.create(0), new NormalFramePins());
+        return new Frame(FrameIndex.create(BASE_INDEX), new NormalFramePins());
     }
 
     public Frame next() {
@@ -30,7 +32,7 @@ public class Frame {
     }
 
     public Frame last() {
-        this.nextFrame = new Frame(FrameIndex.create(9), FinalFramePins.create());
+        this.nextFrame = new Frame(FrameIndex.create(LAST_NORMAL_FRAME_INDEX), FinalFramePins.of());
         return this.nextFrame;
     }
 
@@ -55,10 +57,10 @@ public class Frame {
             return Score.of(0, ScoreType.READY);
         }
         if (frameIndex.isLast() && isDone()) {
-            return Score.of(this.pins.sum(), ScoreType.READY);
+            return Score.of(this.pins.sum(), ScoreType.NORMAL);
         }
         int nextRollCount = this.pins.getScoreType().getBonusRollCount();
-        List<Integer> downPins = getNextDownPins(nextRollCount);
+        List<Integer> downPins = getNextFrameDownPins(nextRollCount);
 
         if (downPins.size() < nextRollCount) {
             return Score.of(0, ScoreType.READY);
@@ -67,19 +69,19 @@ public class Frame {
         return Score.of(score, ScoreType.NORMAL);
     }
 
-    private List<Integer> getNextDownPins(int count) {
+    private List<Integer> getNextFrameDownPins(int count) {
         if (this.nextFrame == null) {
             return Collections.emptyList();
         }
-        List<Integer> nextDownPins = this.nextFrame.getDownPins();
-        if (nextDownPins.isEmpty()) {
+        List<Integer> downPins = this.nextFrame.getDownPins();
+        if (downPins.isEmpty()) {
             return new ArrayList<>();
         }
-        if (nextDownPins.size() >= count) {
-            return nextDownPins.subList(0, count);
+        if (downPins.size() >= count) {
+            return downPins.subList(0, count);
         }
-        nextDownPins.addAll(this.nextFrame.getNextDownPins(count - nextDownPins.size()));
-        return nextDownPins;
+        downPins.addAll(this.nextFrame.getNextFrameDownPins(count - downPins.size()));
+        return downPins;
     }
 
     private List<Integer> getDownPins() {

@@ -2,9 +2,8 @@ package bowling.domain.frame;
 
 public class FrameIndex {
     private static final int MIN_FRAME_INDEX = 0;
-    private static final int MAX_FRAME_INDEX = 10;
+    private static final int MAX_FRAME_INDEX = 9;
     private static final String FRAME_MIN_INDEX_ERROR = "프레임은 0보다 커야합니다.";
-    private static final String FRAME_MAX_INDEX_ERROR = "프레임은 10보다 클 수 없습니다.";
     private int index;
 
     public FrameIndex(int index) {
@@ -23,7 +22,7 @@ public class FrameIndex {
     }
 
     public boolean isLast() {
-        return this.index == 9;
+        return this.index == MAX_FRAME_INDEX;
     }
 
     @Override
@@ -31,3 +30,4 @@ public class FrameIndex {
         return String.valueOf(index);
     }
 }
+

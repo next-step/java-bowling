@@ -20,7 +20,7 @@ public class FinalFramePins implements Pins {
         this.downPins = new ArrayList<>();
     }
 
-    public static Pins create() {
+    public static Pins of() {
         return new FinalFramePins(new NormalFramePins());
     }
 
@@ -56,7 +56,7 @@ public class FinalFramePins implements Pins {
 
     @Override
     public ScoreType getScoreType() {
-        return this.pins.getScoreType();
+       return this.pins.getScoreType();
     }
 
     @Override

@@ -10,7 +10,7 @@ class FinalFramePinsTest {
 
     @Test
     void strike() {
-        Pins pin = FinalFramePins.create();
+        Pins pin = FinalFramePins.of();
 
         pin.down(10);
         pin.down(5);
@@ -21,7 +21,7 @@ class FinalFramePinsTest {
 
     @Test
     void miss() {
-        Pins pins = FinalFramePins.create();
+        Pins pins = FinalFramePins.of();
 
         pins.down(3);
         pins.down(4);
@@ -31,7 +31,7 @@ class FinalFramePinsTest {
 
     @Test
     void spare() {
-        Pins pins = FinalFramePins.create();
+        Pins pins = FinalFramePins.of();
 
         pins.down(5);
         pins.down(5);
@@ -42,7 +42,7 @@ class FinalFramePinsTest {
 
     @Test
     void miss_down_third() {
-        Pins pins = FinalFramePins.create();
+        Pins pins = FinalFramePins.of();
 
         pins.down(3);
         pins.down(4);

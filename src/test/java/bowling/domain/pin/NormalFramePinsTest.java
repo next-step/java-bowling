@@ -53,6 +53,16 @@ class NormalFramePinsTest {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("핀 음수 발생시 에러")
+    @Test
+    void pin_negative() {
+        Pins pins = new NormalFramePins();
+
+        assertThatThrownBy(() -> {
+            pins.down(-1);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+    
     @DisplayName("핀 합계 유효성 테스트")
     @Test
     void normalFrame_sum_pin() {

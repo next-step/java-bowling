@@ -14,8 +14,7 @@ public class Main {
 
         while(!game.isGameOver()) {
             int frameIndex = game.getFrameIndex();
-            int pin = InputView.inputRoll(frameIndex);
-            game.roll(pin);
+            game.roll(InputView.inputRoll(frameIndex));
             resultView.printResult(player, game.getResults());
         }
     }
