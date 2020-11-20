@@ -56,7 +56,7 @@ public class FinalFramePins implements Pins {
 
     @Override
     public ScoreType getScoreType() {
-       return this.pins.getScoreType();
+        return this.pins.getScoreType();
     }
 
     @Override

@@ -66,7 +66,7 @@ public class Frame {
         if (downPins.size() < nextRollCount) {
             return Score.of(0, ScoreType.READY);
         }
-        int score =  this.pins.sum() + downPins.stream().mapToInt(Integer::intValue).sum();
+        int score = this.pins.sum() + downPins.stream().mapToInt(Integer::intValue).sum();
         return Score.of(score, ScoreType.NORMAL);
     }
 

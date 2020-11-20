@@ -50,7 +50,7 @@ public class ResultView {
 
     private String getScoreSymbol(FrameResult frameResult) {
         List<Integer> downPins = frameResult.getDownPins();
-        if(downPins.isEmpty()){
+        if (downPins.isEmpty()) {
             return BLANK;
         }
         List<String> components = new ArrayList<>();
@@ -73,7 +73,7 @@ public class ResultView {
         StringBuilder scoreDisplays = new StringBuilder();
         scoreDisplays.append(MARGIN_BLOCK);
         int sum = 0;
-        for (Score score :scores) {
+        for (Score score : scores) {
             sum += score.getValue();
             scoreDisplays.append(String.format("  %-4s|", score.getScoreType() != ScoreType.READY ? sum : BLANK));
         }

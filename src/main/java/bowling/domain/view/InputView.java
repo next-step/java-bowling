@@ -16,7 +16,7 @@ public class InputView {
     }
 
     public static int inputRoll(int frameIndex) {
-        System.out.println(String.format("%d" + CURRENT_FRAME , frameIndex + 1));
+        System.out.println(String.format("%d" + CURRENT_FRAME, frameIndex + 1));
         return Integer.parseInt(scanner.nextLine());
     }
 
