@@ -116,7 +116,7 @@ public class Question extends AbstractEntity {
     }
 
     private DeleteHistory getQuestionDeleteHistory() {
-        return DeleteHistory.question(getId(), this.writer);
+        return DeleteHistory.newQuestion(getId(), this.writer);
     }
 
     private void validateUser(User user) {

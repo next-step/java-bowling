@@ -15,6 +15,6 @@ public class AnswersTest {
     public void deleteAnswers() {
         List<DeleteHistory> histories = ANSWERS.delete(UserTest.JAVAJIGI);
 
-        assertThat(histories).containsOnly(DeleteHistory.answer(A1.getId(), A1.getWriter()));
+        assertThat(histories).containsOnly(DeleteHistory.newAnswer(A1.getId(), A1.getWriter()));
     }
 }

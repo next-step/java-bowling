@@ -16,7 +16,7 @@ public class QuestionTest {
     public void deleteQuestion() {
         List<DeleteHistory> history = Q1.delete(UserTest.JAVAJIGI);
 
-        assertThat(history).containsOnly(DeleteHistory.question(Q1.getId(), UserTest.JAVAJIGI));
+        assertThat(history).containsOnly(DeleteHistory.newQuestion(Q1.getId(), UserTest.JAVAJIGI));
         assertThat(Q1.isDeleted()).isEqualTo(true);
     }
 
@@ -35,8 +35,8 @@ public class QuestionTest {
 
         List<DeleteHistory> history = question.delete(UserTest.JAVAJIGI);
 
-        assertThat(history).containsOnly(DeleteHistory.question(question.getId(), UserTest.JAVAJIGI),
-                DeleteHistory.answer(answer.getId(), UserTest.JAVAJIGI)
+        assertThat(history).containsOnly(DeleteHistory.newQuestion(question.getId(), UserTest.JAVAJIGI),
+                DeleteHistory.newAnswer(answer.getId(), UserTest.JAVAJIGI)
         );
         assertThat(question.isDeleted()).isEqualTo(true);
         assertThat(answer.isDeleted()).isEqualTo(true);

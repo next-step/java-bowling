@@ -81,7 +81,7 @@ public class Answer extends AbstractEntity {
     public DeleteHistory delete(User user) {
         validateUser(user);
         setDeleted(true);
-        return DeleteHistory.answer(getId(), this.writer);
+        return DeleteHistory.newAnswer(getId(), this.writer);
     }
 
     private void validateUser(User user) {
