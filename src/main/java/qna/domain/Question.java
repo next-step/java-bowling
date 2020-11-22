@@ -12,7 +12,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,21 +102,21 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> delete(User user, LocalDateTime deleteDateTime) {
+    public List<DeleteHistory> delete(User user) {
         validateUser(user);
         setDeleted(true);
         List<DeleteHistory> histories = new ArrayList<>();
-        histories.add(getQuestionDeleteHistory(deleteDateTime));
-        histories.addAll(deleteAnswers(user, deleteDateTime));
+        histories.add(getQuestionDeleteHistory());
+        histories.addAll(deleteAnswers(user));
         return histories;
     }
 
-    private List<DeleteHistory> deleteAnswers(User user, LocalDateTime deleteDateTime) {
-        return getAnswers().delete(user, deleteDateTime);
+    private List<DeleteHistory> deleteAnswers(User user) {
+        return getAnswers().delete(user);
     }
 
-    private DeleteHistory getQuestionDeleteHistory(LocalDateTime deleteDateTime) {
-        return new DeleteHistory(ContentType.QUESTION, getId(), this.writer, deleteDateTime);
+    private DeleteHistory getQuestionDeleteHistory() {
+        return DeleteHistory.question(getId(), this.writer);
     }
 
     private void validateUser(User user) {

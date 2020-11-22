@@ -1,6 +1,5 @@
 package qna.domain;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,9 +14,9 @@ public class Answers {
         return new Answers(answers);
     }
 
-    public List<DeleteHistory> delete(User user, LocalDateTime deleteDateTime) {
+    public List<DeleteHistory> delete(User user) {
         return answers.stream()
-                .map(answer -> answer.delete(user, deleteDateTime))
+                .map(answer -> answer.delete(user))
                 .collect(Collectors.toList());
     }
 }

@@ -4,8 +4,11 @@ import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -32,11 +35,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -75,10 +78,10 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
-    public DeleteHistory delete(User user, LocalDateTime deleteDateTime) {
+    public DeleteHistory delete(User user) {
         validateUser(user);
         setDeleted(true);
-        return new DeleteHistory(ContentType.ANSWER, getId(), this.writer, deleteDateTime);
+        return DeleteHistory.answer(getId(), this.writer);
     }
 
     private void validateUser(User user) {
