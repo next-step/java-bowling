@@ -1,13 +1,18 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.exceptions.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+    public static final String ERROR_DENIED_DELETE_PERMISSION = "질문을 삭제할 권한이 없습니다.";
+    public static final String ERROR_EXISTS_OTHER_WRITTEN = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다";
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -75,6 +80,20 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
+    public Question deleteQuestion() {
+        if (!this.deleted) {
+            this.deleted = true;
+        }
+        return this;
+    }
+
+    public Question resurrectionQuestion() {
+        if (this.deleted) {
+            this.deleted = false;
+        }
+        return this;
+    }
+
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
@@ -84,12 +103,42 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public Answers getAnswers() {
+        return Answers.from(answers);
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public DeleteHistory makeDeleteHistory() {
+        return DeleteHistory.Builder()
+                .contentType(ContentType.QUESTION)
+                .contentId(super.getId())
+                .deletedBy(writer)
+                .createDate(LocalDateTime.now())
+                .build();
+    }
+
+    public DeleteHistories delete(User user) throws CannotDeleteException {
+        isValidDeletePermission(user);
+        isValidDelete(user);
+
+        deleteQuestion();
+        List<DeleteHistory> histories = getAnswers().deleteAll();
+        return DeleteHistories.of(makeDeleteHistory(), histories);
+    }
+
+    private void isValidDeletePermission(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(ERROR_DENIED_DELETE_PERMISSION);
+        }
+    }
+    private void isValidDelete(User user) throws CannotDeleteException {
+        if (!answers.isEmpty() && answers.stream()
+                .anyMatch(answer -> !answer.isOwner(user))) {
+            throw new CannotDeleteException(ERROR_EXISTS_OTHER_WRITTEN);
+        }
     }
 }
