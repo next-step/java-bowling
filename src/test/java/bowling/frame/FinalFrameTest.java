@@ -36,7 +36,7 @@ class FinalFrameTest {
     @DisplayName("마지막 프레임에서 Strike")
     void strike() {
         frame.bowl("10");
-        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.isFinish()).isFalse();
         assertThat(frame.getState() instanceof Strike).isTrue();
     }
 

@@ -2,6 +2,7 @@ package bowling.frame;
 
 import bowling.frame.state.State;
 import bowling.score.Pin;
+import bowling.score.Score;
 
 import java.util.List;
 
@@ -40,4 +41,15 @@ public class NormalFrame extends Frame {
     public State getState() {
         return this.state;
     }
+
+    @Override
+    public Score getScore() {
+        return state.getScore();
+    }
+
+    @Override
+    public Score calculateScore(Score previousScore) {
+        return state.calculateScore(previousScore);
+    }
+
 }

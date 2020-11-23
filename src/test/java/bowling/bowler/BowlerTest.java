@@ -16,8 +16,8 @@ class BowlerTest {
     @Test
     @DisplayName("플레이어 입력")
     void createBowler() {
-        bowler = Bowler.of("pjs");
-        assertThat(bowler.getName()).isEqualTo("PJS");
+        bowler = Bowler.of("lhg");
+        assertThat(bowler.getName()).isEqualTo("LHG");
     }
 
     @Test

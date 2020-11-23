@@ -4,10 +4,13 @@ import bowling.frame.state.Final;
 import bowling.frame.state.State;
 import bowling.frame.state.Strike;
 import bowling.score.Pin;
+import bowling.score.Score;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static bowling.global.utils.CommonConstant.NUMBER_ONE;
 
 public class FinalFrame extends Frame {
 
@@ -25,7 +28,7 @@ public class FinalFrame extends Frame {
     @Override
     protected Frame bowl(String fellPins) {
         State currentState = states.getLast();
-         Pin pin = Pin.bowl(fellPins);
+        Pin pin = Pin.bowl(fellPins);
 
         if (currentState.isFinish()) {
             states.add(addFinalFrame(fellPins));
@@ -45,12 +48,11 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isFinish() {
-        State lastState = states.getLast();
-//        if (!lastState.isFinish()) {
-//            return false;
-//        }
-        return false;
+    public Score calculateScore(Score previousScore) {
+        for (State state : states) {
+            previousScore = state.calculateScore(previousScore);
+        }
+        return previousScore;
     }
 
     @Override
@@ -61,8 +63,38 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    public boolean isFinish() {
+        State lastState = states.getLast();
+        if (!lastState.isFinish()) {
+            return false;
+        }
+        return getCurrentScore().isCalculateScore();
+    }
+
+    private Score getCurrentScore() {
+        Score score = getFirstScore();
+
+        for (int i = NUMBER_ONE; i < states.size(); i++) {
+            score = states.get(i).calculateScore(score);
+        }
+        return score;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.of(states.stream()
+                .mapToInt(state -> state.getScore().getFellPins())
+                .sum());
+    }
+
+    @Override
     public State getState() {
         return this.states.getLast();
+    }
+
+    private Score getFirstScore() {
+        return states.getFirst()
+                     .getScore();
     }
 
 }

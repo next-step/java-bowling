@@ -13,7 +13,7 @@ public class BowlingBoard {
     private final Bowler bowler;
     private final LinkedList<Frame> frames;
 
-    public BowlingBoard(Bowler bowler) {
+    private BowlingBoard(Bowler bowler) {
         this.bowler = bowler;
         this.frames = new LinkedList<>();
         this.frames.add(NormalFrame.first());

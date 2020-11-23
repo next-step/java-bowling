@@ -1,6 +1,7 @@
 package bowling.frame.state;
 
 import bowling.score.Pin;
+import bowling.score.Score;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +29,11 @@ public class Next extends Progress {
     @Override
     public List<String> getBowlResults() {
         return Arrays.asList(previousPins.toString());
+    }
+
+    @Override
+    public Score getScore() {
+        throw new UnsupportedOperationException();
     }
 
 }

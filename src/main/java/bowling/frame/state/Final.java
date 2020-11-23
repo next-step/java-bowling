@@ -1,6 +1,7 @@
 package bowling.frame.state;
 
 import bowling.score.Pin;
+import bowling.score.Score;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +29,11 @@ public class Final extends Done {
     @Override
     public List<String> getBowlResults() {
         return Arrays.asList(currentPins.toString());
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.of(currentPins.getFellPins());
     }
 
 }

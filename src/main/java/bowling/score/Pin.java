@@ -8,12 +8,13 @@ import org.apache.logging.log4j.util.Strings;
 
 import java.util.Objects;
 
+import static bowling.global.utils.CommonConstant.MARK_GUTTER;
+import static bowling.global.utils.CommonConstant.MARK_STRIKE;
+
 public class Pin {
 
+    public static final int PINS_MAX_VALUE = 10;
     private static final int PINS_MIN_VALUE = 0;
-    private static final int PINS_MAX_VALUE = 10;
-    private static final String MARK_GUTTER = "-";
-    private static final String MARK_STRIKE = "X";
 
     private final int fellPins;
 
@@ -33,7 +34,7 @@ public class Pin {
 
     public boolean isSpare(Pin fellPins) {
         int nextPins = fellPins.getFellPins();
-        return this.fellPins + nextPins == PINS_MAX_VALUE;
+        return (this.fellPins + nextPins) == PINS_MAX_VALUE;
     }
 
     public boolean isGutter() {
@@ -71,11 +72,11 @@ public class Pin {
 
     @Override
     public String toString() {
-        if (fellPins == PINS_MIN_VALUE) {
-            return MARK_GUTTER;
-        }
         if (fellPins == PINS_MAX_VALUE) {
             return MARK_STRIKE;
+        }
+        if (fellPins == PINS_MIN_VALUE) {
+            return MARK_GUTTER;
         }
         return String.valueOf(fellPins);
     }
