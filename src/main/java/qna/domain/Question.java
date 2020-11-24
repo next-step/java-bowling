@@ -30,7 +30,7 @@ public class Question extends AbstractEntity {
     public Question() {
     }
 
-    Question(String title, String contents) {
+    public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
