@@ -49,11 +49,6 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    private Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     private boolean isOwner(User writer) {
         return this.writer.equals(writer);
     }
@@ -64,21 +59,13 @@ public class Answer extends AbstractEntity {
         }
     }
 
-    public User getWriter() {
-        return writer;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
     void toQuestion(Question question) {
         this.question = question;
     }
 
     DeleteHistory delete() {
-        setDeleted(true);
-        return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
+        deleted = true;
+        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }
 
     @Override

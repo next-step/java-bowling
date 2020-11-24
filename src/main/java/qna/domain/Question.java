@@ -15,9 +15,9 @@ public class Question extends AbstractEntity {
     @OrderBy("id ASC")
     private final Answers answers = new Answers();
     @Column(length = 100, nullable = false)
-    private String title;
+    private final String title;
     @Lob
-    private String contents;
+    private final String contents;
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
@@ -32,28 +32,6 @@ public class Question extends AbstractEntity {
         super(id);
         this.title = title;
         this.contents = contents;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
-    public User getWriter() {
-        return writer;
     }
 
     public Question writeBy(User loginUser) {
@@ -81,11 +59,6 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    private Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         checkDeletable(loginUser);
 
@@ -98,8 +71,8 @@ public class Question extends AbstractEntity {
     }
 
     private DeleteHistory delete() {
-        setDeleted(true);
-        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
+        deleted = true;
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 
     @Override
