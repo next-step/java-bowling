@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import qna.CannotDeleteException;
+import qna.exceptions.CannotDeleteException;
 import qna.domain.*;
 
 import java.time.LocalDateTime;
@@ -82,8 +82,16 @@ public class QnaServiceTest {
 
     private void verifyDeleteHistories() {
         List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+                DeleteHistory.Builder().contentId(question.getId())
+                        .contentType(ContentType.QUESTION)
+                        .deletedBy(question.getWriter())
+                        .createDate(LocalDateTime.now())
+                        .build(),
+                DeleteHistory.Builder().contentId(answer.getId())
+                        .contentType(ContentType.ANSWER)
+                        .deletedBy(answer.getWriter())
+                        .createDate(LocalDateTime.now())
+                        .build());
         verify(deleteHistoryService).saveAll(deleteHistories);
     }
 }

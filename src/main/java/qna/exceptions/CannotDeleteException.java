@@ -1,4 +1,4 @@
-package qna;
+package qna.exceptions;
 
 public class CannotDeleteException extends Exception {
     private static final long serialVersionUID = 1L;
