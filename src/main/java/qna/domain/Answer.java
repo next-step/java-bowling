@@ -57,14 +57,14 @@ public class Answer extends AbstractEntity {
         return writer;
     }
 
+    void toQuestion(Question question) {
+        this.question = question;
+    }
+
     void checkDeletable(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
-    }
-
-    void toQuestion(Question question) {
-        this.question = question;
     }
 
     DeleteHistory delete() {
