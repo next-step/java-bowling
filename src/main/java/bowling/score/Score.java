@@ -1,55 +1,55 @@
 package bowling.score;
 
-import bowling.global.exception.InputScoreNullPointerException;
-import bowling.global.exception.OutOfScoreRangeException;
-import bowling.global.utils.ExceptionMessage;
-import bowling.global.utils.StringParser;
-import org.apache.logging.log4j.util.Strings;
+import static bowling.score.Pin.PINS_MAX_VALUE;
 
 public class Score {
 
-    private static final int SCORE_MIN_VALUE = 0;
-    private static final int SCORE_MAX_VALUE = 10;
+    private static final int OPPORTUNITY_STRIKE = 2;
+    private static final int OPPORTUNITY_SPARE = 1;
+    private static final int OPPORTUNITY_CLOSE = 0;
+    private static final int DECREASE_OPPORTUNITY = -1;
 
-    private int score;
+    private int fellPins;
+    private int leftOpportunity;
 
-    private Score(int score) {
-        this.score = score;
-        validateOutofScoreRange();
+    private Score(int fellPins, int leftOpportunity) {
+        this.fellPins = fellPins;
+        this.leftOpportunity = leftOpportunity;
     }
 
-    public static Score from(String score) {
-        validateScoreIsNull(score);
-        int scoreToInt = new StringParser(score).toInt();
-        return new Score(scoreToInt);
+    public static Score of(int score) {
+        return new Score(score, OPPORTUNITY_CLOSE);
     }
 
-    public boolean isStrike() {
-        return this.score == SCORE_MAX_VALUE;
+    public static Score ofStrike() {
+        return new Score(PINS_MAX_VALUE, OPPORTUNITY_STRIKE);
     }
 
-    public boolean isGutter() {
-        return this.score == SCORE_MIN_VALUE;
+    public static Score ofSpare() {
+        return new Score(PINS_MAX_VALUE, OPPORTUNITY_SPARE);
     }
 
-    private static void validateScoreIsNull(String score) {
-        if (Strings.isBlank(score)) {
-            throw new InputScoreNullPointerException(ExceptionMessage.INVALID_PITCH_BALL_IS_NULL);
+    public static Score ofMiss(int score) {
+        return new Score(score, OPPORTUNITY_CLOSE);
+    }
+
+    public Score calculate(Score score) {
+        if (!score.isCalculateScore()) {
+            score.fellPins += this.fellPins;
+            score.leftOpportunity += DECREASE_OPPORTUNITY;
         }
-    }
-
-    private void validateOutofScoreRange() {
-        if (score < SCORE_MIN_VALUE || score > SCORE_MAX_VALUE) {
-            throw new OutOfScoreRangeException(ExceptionMessage.INVALID_PITCH_RANGE);
-        }
-    }
-
-    public int getScore() {
         return score;
     }
 
-    @Override
-    public String toString() {
-        return String.valueOf(score);
+    public boolean isCalculateScore() {
+        return leftOpportunity == OPPORTUNITY_CLOSE;
+    }
+
+    public int getFellPins() {
+        return fellPins;
+    }
+
+    public int getLeftOpportunity() {
+        return leftOpportunity;
     }
 }

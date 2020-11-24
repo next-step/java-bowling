@@ -1,62 +1,38 @@
 package bowling.frame;
 
+import bowling.frame.state.Set;
+import bowling.frame.state.State;
 import bowling.score.Score;
-import bowling.score.Scores;
 
-import java.util.Objects;
+import java.util.List;
 
 public abstract class Frame {
 
     public static final int FIRST_FRAME_NUMBER = 1;
     public static final int FINAL_FRAME_NUMBER = 10;
-    public static final int FINISH_FRAME_NUMBER = 11;
     public static final int INCREASE_FRAME_NUMBER = 1;
 
     protected int frameNumber;
-    protected Scores scores;
+    protected State state;
 
-    public Frame(int frameNumber, Scores scores) {
+    public Frame(int frameNumber) {
         this.frameNumber = frameNumber;
-        this.scores = scores;
+        this.state = Set.init();
     }
 
-    public boolean canPitching() {
-        return scores.canPitching();
-    }
+    protected abstract Frame bowl(String fellPins);
 
-    public abstract Frame next();
-
-    public boolean isFinal() {
-        return this.frameNumber >= FINISH_FRAME_NUMBER;
-    }
+    public abstract boolean isFinish();
 
     public int getFrameNumber() {
         return frameNumber;
     }
 
-    public Scores getScores() {
-        return scores;
-    }
+    public abstract List<String> getBowlResults();
 
-    public void pitch(String inputScore) {
-        scores.add(Score.from(inputScore));
-    }
+    public abstract State getState();
 
-    public boolean isStrikeIgnore() {
-        return (getScores().isFirstCount() && scores.getScore().isStrike());
-    }
+    public abstract Score getScore();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Frame frame = (Frame) o;
-        return frameNumber == frame.frameNumber;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(frameNumber);
-    }
-
+    public abstract Score calculateScore(Score previousScore);
 }

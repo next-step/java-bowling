@@ -1,64 +1,54 @@
 package bowling.score;
 
-import bowling.global.exception.InputScoreNullPointerException;
-import bowling.global.exception.OutOfScoreRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class ScoreTest {
 
     private Score score;
 
     @Test
-    @DisplayName("입력한 값 검증")
-    void score() {
-        score = Score.from("5");
-        assertThat(score.getScore()).isEqualTo(5);
+    @DisplayName("Strike 일 경우 Score 확인")
+    void getScoreIsStrike() {
+        score = Score.ofStrike();
+        assertThat(score.getFellPins()).isEqualTo(10);
+        assertThat(score.getLeftOpportunity()).isEqualTo(2);
     }
 
     @Test
-    @DisplayName("입력한 값의 범위 검증. 0 ~ 10의 값만 허용한다.")
-    void pitch() {
-        score = Score.from("5");
-        assertThat(score.getScore()).isBetween(0, 10);
+    @DisplayName("Spare 일 경우 Score 확인")
+    void getScoreIsSpare() {
+        score = Score.ofSpare();
+        assertThat(score.getFellPins()).isEqualTo(10);
+        assertThat(score.getLeftOpportunity()).isEqualTo(1);
     }
 
     @Test
-    @DisplayName("입력한 값이 Strike이면 True")
-    void strike() {
-        score = Score.from("10");
-        assertThat(score.isStrike()).isTrue();
+    @DisplayName("Miss 일 경우 Score 확인")
+    void getScoreIsMiss() {
+        score = Score.ofMiss(4);
+        assertThat(score.getFellPins()).isEqualTo(4);
+        assertThat(score.getLeftOpportunity()).isEqualTo(0);
     }
 
     @Test
-    @DisplayName("입력한 값이 Gutter이면 True")
-    void gutter() {
-        score = Score.from("0");
-        assertThat(score.isGutter()).isTrue();
+    @DisplayName("Gutter 일 경우 Score 확인")
+    void getScoreIsGutter() {
+        score = Score.ofMiss(0);
+        assertThat(score.getFellPins()).isEqualTo(0);
+        assertThat(score.getLeftOpportunity()).isEqualTo(0);
     }
 
     @Test
-    @DisplayName("입력값의 범위가 0 ~ 10을 벗어나는 경우 Exception 발생")
-    void validateScoreRange() {
-        assertThatExceptionOfType(OutOfScoreRangeException.class)
-                .isThrownBy(() -> {
-                    Score.from("11");
-                });
-    }
+    @DisplayName("이전 스코어에 현재 스코어 계산")
+    void calculateScore() {
+        Score previousScore = Score.of(45);
+        Score score = Score.of(previousScore.getFellPins()).calculate(previousScore);
+        score = Score.of(5).calculate(score);
 
-    @ParameterizedTest
-    @DisplayName("입력값이 null일 경우 Exception 발생")
-    @NullAndEmptySource
-    void validateScoreIsNull(String input) {
-        assertThatExceptionOfType(InputScoreNullPointerException.class)
-                .isThrownBy(() -> {
-                    Score.from(input);
-                });
+        assertThat(score.getFellPins()).isEqualTo(45);
     }
 
 }

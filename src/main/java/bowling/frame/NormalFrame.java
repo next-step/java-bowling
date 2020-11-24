@@ -1,29 +1,55 @@
 package bowling.frame;
 
-import bowling.score.NormalScores;
-import bowling.score.Scores;
+import bowling.frame.state.State;
+import bowling.score.Pin;
+import bowling.score.Score;
+
+import java.util.List;
 
 public class NormalFrame extends Frame {
 
-    public NormalFrame(int frameNumber, Scores scores) {
-        super(frameNumber, scores);
+    private NormalFrame(int frameNumber) {
+        super(frameNumber);
     }
 
-    public static NormalFrame create(int frameNumber) {
-        return new NormalFrame(frameNumber, NormalScores.newInstance());
+    public static Frame first() {
+        return new NormalFrame(FIRST_FRAME_NUMBER);
     }
 
-    public static NormalFrame first() {
-        return new NormalFrame(Frame.FIRST_FRAME_NUMBER, NormalScores.newInstance());
+    public static Frame create(int frameNumber) {
+        return new NormalFrame(frameNumber);
     }
 
     @Override
-    public Frame next() {
-        int nextFrameNumber = getFrameNumber() + INCREASE_FRAME_NUMBER;
-        if (nextFrameNumber < Frame.FINAL_FRAME_NUMBER) {
-            return NormalFrame.create(nextFrameNumber);
-        }
-        return FinalFrame.create(nextFrameNumber);
+    protected Frame bowl(String fellPins) {
+        Pin pin = Pin.bowl(fellPins);
+        state = state.bowl(pin);
+        return this;
+    }
+
+    @Override
+    public boolean isFinish() {
+        return state.isFinish();
+    }
+
+    @Override
+    public List<String> getBowlResults() {
+        return this.state.getBowlResults();
+    }
+
+    @Override
+    public State getState() {
+        return this.state;
+    }
+
+    @Override
+    public Score getScore() {
+        return state.getScore();
+    }
+
+    @Override
+    public Score calculateScore(Score previousScore) {
+        return state.calculateScore(previousScore);
     }
 
 }
