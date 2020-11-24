@@ -28,11 +28,6 @@ public class AnswerTest {
         );
     }
 
-    private boolean delete(Answer A) {
-        A.delete();
-        return A.isDeleted();
-    }
-
     @Test
     @DisplayName("delete 되면 isDeleted 가 true 가 된다.")
     void delete() {
@@ -41,9 +36,15 @@ public class AnswerTest {
                         .isFalse(),
                 () -> assertThat(A2.isDeleted())
                         .isFalse(),
-                () -> assertThat(delete(A1))
+                () -> assertDoesNotThrow(() -> A1.delete()),
+                () -> assertThat(A1.isDeleted())
                         .isTrue(),
-                () -> assertThat(delete(A2))
+                () -> assertThat(A2.isDeleted())
+                        .isFalse(),
+                () -> assertDoesNotThrow(() -> A2.delete()),
+                () -> assertThat(A1.isDeleted())
+                        .isTrue(),
+                () -> assertThat(A2.isDeleted())
                         .isTrue()
         );
     }

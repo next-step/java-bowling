@@ -8,14 +8,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 @Entity
 public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private final List<Answer> answers = new ArrayList<>();
+    private final Answers answers = new Answers();
     @Column(length = 100, nullable = false)
     private String title;
     @Lob
@@ -24,9 +22,6 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
     private boolean deleted = false;
-
-    public Question() {
-    }
 
     Question(String title, String contents) {
         this.title = title;
@@ -79,9 +74,7 @@ public class Question extends AbstractEntity {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-        for (Answer answer : getAnswers()) {
-            answer.checkDeletable(loginUser);
-        }
+        answers.checkDeletable(loginUser);
     }
 
     public boolean isDeleted() {
@@ -93,19 +86,14 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    private List<Answer> getAnswers() {
-        return answers;
-    }
-
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         checkDeletable(loginUser);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(delete());
-        deleteHistories.addAll(getAnswers()
-                .stream()
-                .map(Answer::delete)
-                .collect(toList()));
+        deleteHistories.addAll(
+                answers.delete(loginUser)
+        );
         return deleteHistories;
     }
 
