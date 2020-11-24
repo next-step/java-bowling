@@ -10,18 +10,25 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+    @Column(length = 100, nullable = false)
+    private String title;
+
+    @Lob
+    private String contents;
+
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+    private User writer;
+
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
     private final Answers answers = new Answers();
-    @Column(length = 100, nullable = false)
-    private final String title;
-    @Lob
-    private final String contents;
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
-    private User writer;
+
     private boolean deleted = false;
+
+    public Question() {
+    }
 
     Question(String title, String contents) {
         this.title = title;
@@ -39,7 +46,7 @@ public class Question extends AbstractEntity {
     }
 
     public Question writeBy(User loginUser) {
-        writer = loginUser;
+        this.writer = loginUser;
         return this;
     }
 
@@ -48,7 +55,7 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    private boolean isOwner(User loginUser) {
+    public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
@@ -63,6 +70,11 @@ public class Question extends AbstractEntity {
         answers.checkDeletable(loginUser);
     }
 
+    private DeleteHistory delete() {
+        deleted = true;
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+    }
+
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         checkDeletable(loginUser);
 
@@ -72,11 +84,6 @@ public class Question extends AbstractEntity {
                 answers.delete(loginUser)
         );
         return deleteHistories;
-    }
-
-    private DeleteHistory delete() {
-        deleted = true;
-        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 
     @Override

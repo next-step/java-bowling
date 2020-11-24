@@ -25,18 +25,18 @@ public class Answer extends AbstractEntity {
     public Answer() {
     }
 
-    Answer(User writer, Question question, String contents) {
+    public Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
     }
 
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if (writer == null) {
+        if(writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if (question == null) {
+        if(question == null) {
             throw new NotFoundException();
         }
 
@@ -49,7 +49,7 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    private boolean isOwner(User writer) {
+    public boolean isOwner(User writer) {
         return this.writer.equals(writer);
     }
 
@@ -57,7 +57,7 @@ public class Answer extends AbstractEntity {
         return writer;
     }
 
-    void toQuestion(Question question) {
+    public void toQuestion(Question question) {
         this.question = question;
     }
 
