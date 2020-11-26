@@ -5,12 +5,12 @@ import static bowling.domain.score.ScoreType.STRIKE;
 
 public class Score {
 
-    private static final int MIN_SCORE = 0;
-    private static final int MAX_SCORE = 10;
+    public static final int MIN_SCORE = 0;
+    public static final int MAX_SCORE = 10;
     private final int score;
     private final ScoreType type;
 
-    public Score(int score, ScoreType type) {
+    private Score(int score, ScoreType type) {
         this.score = score;
         this.type = type;
     }
@@ -34,10 +34,10 @@ public class Score {
         if (isSpare) {
             return spare(score);
         }
-        if (score == 0) {
+        if (score == MIN_SCORE) {
             return gutter();
         }
-        if (score == 10) {
+        if (score == MAX_SCORE) {
             return strike();
         }
         return ordinary(score);

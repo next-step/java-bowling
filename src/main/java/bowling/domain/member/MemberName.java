@@ -4,7 +4,7 @@ public class MemberName {
     private static final int FIXED_NAME_LENGTH = 3;
     private final String name;
 
-    public MemberName(String name) {
+    private MemberName(String name) {
         this.name = name;
     }
 

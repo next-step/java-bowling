@@ -9,7 +9,7 @@ public class Frame {
     private final FrameNumber frameNumber;
     private Scores scores;
 
-    public Frame(FrameNumber frameNumber, Scores scores) {
+    private Frame(FrameNumber frameNumber, Scores scores) {
         this.frameNumber = frameNumber;
         this.scores = scores;
     }

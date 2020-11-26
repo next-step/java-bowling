@@ -1,22 +1,23 @@
-package bowling.domain.member;
+package bowling.domain.bowling;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.member.MemberName;
 
 import java.util.List;
 
-public class Member {
+public class Bowling {
 
     private final MemberName memberName;
     private final Frames frames;
 
-    public Member(MemberName memberName, Frames frames) {
+    private Bowling(MemberName memberName, Frames frames) {
         this.memberName = memberName;
         this.frames = frames;
     }
 
-    public static Member of(String name) {
-        return new Member(MemberName.of(name), Frames.create());
+    public static Bowling of(String name) {
+        return new Bowling(MemberName.of(name), Frames.create());
     }
 
     public String getName() {

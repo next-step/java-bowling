@@ -5,7 +5,7 @@ public class FrameNumber {
     private static final int LAST = 10;
     private final int number;
 
-    public FrameNumber(int number) {
+    private FrameNumber(int number) {
         this.number = number;
     }
 

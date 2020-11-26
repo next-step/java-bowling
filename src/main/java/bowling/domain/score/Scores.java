@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Scores {
+    private static final int MAX_TRY_COUNT = 2;
+    private static final int MAX_TRY_COUNT_AT_LAST = 3;
     private final List<Score> scores;
     private final int tryCount;
 
-    public Scores(List<Score> scores) {
+    private Scores(List<Score> scores) {
         this.scores = scores;
         this.tryCount = scores.size();
     }
@@ -41,14 +43,18 @@ public class Scores {
     }
 
     private boolean hasNoSpare(boolean isLast) {
-        return tryCount == 0 || (isLast && tryCount == 2);
+        return tryCount == 0 || (isLast && tryCount == MAX_TRY_COUNT && !isFirstStrike());
     }
 
     private Score makeScore(int score, boolean hasNoSpare) {
         if (hasNoSpare) {
             return Score.of(score, false);
         }
-        return Score.of(score, scores.get(0).getScore() + score == 10);
+        return Score.of(score, getPreviousScore() + score == 10);
+    }
+
+    private int getPreviousScore() {
+        return scores.get(tryCount - 1).getScore();
     }
 
     public boolean isFinished(boolean isLast) {
@@ -59,10 +65,14 @@ public class Scores {
     }
 
     private boolean isFinishedAtLast() {
-        return tryCount == 2 && sum() < 10 || tryCount == 3;
+        return tryCount == MAX_TRY_COUNT && sum() < Score.MAX_SCORE || tryCount == MAX_TRY_COUNT_AT_LAST;
     }
 
     private boolean isFinished() {
-        return (tryCount == 1 && scores.get(0).isStrike()) || tryCount == 2;
+        return (tryCount == 1 && isFirstStrike()) || tryCount == MAX_TRY_COUNT;
+    }
+
+    private boolean isFirstStrike() {
+        return scores.get(0).isStrike();
     }
 }

@@ -10,7 +10,7 @@ public class Frames {
     private final List<Frame> frames;
     private int currentFrameNumber;
 
-    public Frames(List<Frame> frames) {
+    private Frames(List<Frame> frames) {
         this.frames = frames;
         this.currentFrameNumber = 1;
     }

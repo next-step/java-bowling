@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.member.Member;
+import bowling.domain.bowling.Bowling;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -13,21 +13,21 @@ public class BowlingController {
         InputView inputView = new InputView(new Scanner(System.in), output);
         ResultView resultView = new ResultView(output);
 
-        Member member = Member.of(inputView.enterMemberName());
-        showFrames(resultView, member);
-        startBowling(inputView, resultView, member);
+        Bowling bowling = Bowling.of(inputView.enterMemberName());
+        showFrames(resultView, bowling);
+        startBowling(inputView, resultView, bowling);
 
         output.close();
     }
 
-    private static void startBowling(InputView inputView, ResultView resultView, Member member) {
-        while (!member.isFinished()) {
-            member.throwBall(inputView.enterScore(member.getCurrentFrameNumber()));
-            resultView.showFrames(member.getName(), member.getFrames());
+    private static void startBowling(InputView inputView, ResultView resultView, Bowling bowling) {
+        while (!bowling.isFinished()) {
+            bowling.throwBall(inputView.enterScore(bowling.getCurrentFrameNumber()));
+            resultView.showFrames(bowling.getName(), bowling.getFrames());
         }
     }
 
-    private static void showFrames(ResultView resultView, Member member) {
-        resultView.showFrames(member.getName(), member.getFrames());
+    private static void showFrames(ResultView resultView, Bowling bowling) {
+        resultView.showFrames(bowling.getName(), bowling.getFrames());
     }
 }
