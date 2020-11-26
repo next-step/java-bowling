@@ -1,17 +1,27 @@
 package bowling.domain;
 
 import java.util.LinkedList;
-import java.util.List;
 
 class Frames {
-    private final List<Frame> frames = new LinkedList<>();
+    // NOTE: getLast 를 쓰기 위해 LinkedList 로 선언
+    private final LinkedList<Frame> frames = new LinkedList<>();
 
-    void add(Frame frame) {
-        frames.add(frame);
+    int size() {
+        return frames.size();
     }
 
-    List<Integer> scores() {
-        List<Integer> scores = new LinkedList<>();
-        return scores;
+    void add(Roll roll) {
+        if (isLastFinished()) {
+            frames.add(new Frame());
+        }
+        frames.getLast().add(roll);
+    }
+
+    Frame last() {
+        return frames.getLast();
+    }
+
+    private boolean isLastFinished() {
+        return frames.isEmpty() || last().isFinished();
     }
 }

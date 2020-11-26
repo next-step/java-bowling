@@ -1,13 +1,13 @@
 package bowling.dto;
 
 public class CountOfPinsDto {
-    private final int countOfPins;
+    private final int count;
 
-    public CountOfPinsDto(int countOfPins) {
-        this.countOfPins = countOfPins;
+    public CountOfPinsDto(int count) {
+        this.count = count;
     }
 
-    public int getCountOfPins() {
-        return countOfPins;
+    public int getCount() {
+        return count;
     }
 }
