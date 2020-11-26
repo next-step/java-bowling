@@ -4,6 +4,8 @@ import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -41,6 +43,18 @@ public class FrameTest {
         Frame frame = Frame.first();
         frame.record(10);
 
+        assertThat(frame.isFinished()).isEqualTo(true);
+        assertThatThrownBy(() -> {
+            frame.record(10);
+        }).isInstanceOf(InvalidFrameRecordActionException.class);
+    }
+
+    @DisplayName("마지막 프레임 종료 확인 테스트")
+    @Test
+    public void lastFrame() {
+        Frame frame = Frame.of(10, Arrays.asList(Score.strike(), Score.strike(), Score.strike()));
+
+        assertThat(frame.isFinished()).isEqualTo(true);
         assertThatThrownBy(() -> {
             frame.record(10);
         }).isInstanceOf(InvalidFrameRecordActionException.class);

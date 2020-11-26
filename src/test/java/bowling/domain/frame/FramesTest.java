@@ -3,7 +3,13 @@ package bowling.domain.frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -56,5 +62,32 @@ public class FramesTest {
         assertThatThrownBy(() -> {
             record(13);
         }).isInstanceOf(InvalidFrameRecordActionException.class);
+    }
+
+    @DisplayName("10프레임의 다양한 점수 기록")
+    @ParameterizedTest
+    @MethodSource("getScoresForLastFrame")
+    public void lastFrame(List<Integer> scores) {
+        record(9);
+        for (int score : scores) {
+            frames.record(score);
+        }
+        assertThat(frames.isFinished()).isEqualTo(true);
+    }
+
+    private static Stream<Arguments> getScoresForLastFrame() {
+        return Stream.of(Arguments.arguments(Arrays.asList(0, 0)),
+                Arguments.arguments(Arrays.asList(1, 5)),
+                Arguments.arguments(Arrays.asList(5, 0)),
+                Arguments.arguments(Arrays.asList(0, 10, 5)),
+                Arguments.arguments(Arrays.asList(0, 10, 10)),
+                Arguments.arguments(Arrays.asList(5, 5, 5)),
+                Arguments.arguments(Arrays.asList(5, 5, 10)),
+                Arguments.arguments(Arrays.asList(10, 5, 0)),
+                Arguments.arguments(Arrays.asList(10, 5, 5)),
+                Arguments.arguments(Arrays.asList(10, 10, 10)),
+                Arguments.arguments(Arrays.asList(10, 10, 5)),
+                Arguments.arguments(Arrays.asList(10, 10, 0))
+        );
     }
 }
