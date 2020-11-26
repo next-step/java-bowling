@@ -1,16 +1,29 @@
 package step2.domain;
 
 import step2.strategy.PitchesStrategy;
+import step2.type.ResultPitchesType;
 
 public interface Frame {
 
-    void pitches(PitchesStrategy strategy);
+    int pitches(PitchesStrategy strategy);
+
+    int getFrameNo();
 
     int getScore();
 
+    int getFirstScore();
+
+    int getCurrentScore();
+
+    ResultPitchesType getPitchesType();
+
     Frame next();
 
-    void linkNext(Frame frame);
+    boolean hasNext();
 
     Frame makeNext();
+
+    String getResultString();
+
+    boolean isFinished();
 }

@@ -1,6 +1,7 @@
 package step2.type;
 
 import step2.domain.Condition;
+import step2.domain.Extract;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;

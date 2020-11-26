@@ -14,4 +14,5 @@ public class StrategyTest {
     public static final PitchesStrategy T3 = (value) -> 3;
     public static final PitchesStrategy T2 = (value) -> 2;
     public static final PitchesStrategy T1 = (value) -> 1;
+    public static final PitchesStrategy T0 = (value) -> 0;
 }
