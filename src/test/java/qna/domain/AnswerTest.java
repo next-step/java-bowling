@@ -14,7 +14,7 @@ public class AnswerTest {
     public void deleteAnswer() {
         DeleteHistory deleteHistory = A1.delete(UserTest.JAVAJIGI);
 
-        assertThat(deleteHistory).isEqualTo(DeleteHistory.answer(A1.getId(), A1.getWriter()));
+        assertThat(deleteHistory).isEqualTo(DeleteHistory.newAnswer(A1.getId(), A1.getWriter()));
         assertThat(A1.isDeleted()).isEqualTo(true);
     }
 
