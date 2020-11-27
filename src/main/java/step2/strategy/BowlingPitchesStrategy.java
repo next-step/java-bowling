@@ -8,6 +8,13 @@ public class BowlingPitchesStrategy implements PitchesStrategy {
 
     @Override
     public int shot(int prevPoint) {
-        return random.nextInt(BOWLING_MAXIMUM_RANGE - prevPoint)+1;
+        if (isValidPoint(prevPoint)) {
+            return 0;
+        }
+        return random.nextInt(BOWLING_MAXIMUM_RANGE - prevPoint) + 1;
+    }
+
+    private boolean isValidPoint(int prevPoint) {
+        return prevPoint == BOWLING_MAXIMUM_RANGE;
     }
 }
