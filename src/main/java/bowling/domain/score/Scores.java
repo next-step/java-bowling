@@ -3,6 +3,8 @@ package bowling.domain.score;
 import java.util.ArrayList;
 import java.util.List;
 
+import static bowling.domain.score.Score.MAX_SCORE;
+
 public class Scores {
     private static final int MAX_TRY_COUNT = 2;
     private static final int MAX_TRY_COUNT_AT_LAST = 3;
@@ -50,7 +52,7 @@ public class Scores {
         if (hasNoSpare) {
             return Score.of(score, false);
         }
-        return Score.of(score, getPreviousScore() + score == 10);
+        return Score.of(score, getPreviousScore() + score == MAX_SCORE);
     }
 
     private int getPreviousScore() {
@@ -65,7 +67,7 @@ public class Scores {
     }
 
     private boolean isFinishedAtLast() {
-        return tryCount == MAX_TRY_COUNT && sum() < Score.MAX_SCORE || tryCount == MAX_TRY_COUNT_AT_LAST;
+        return tryCount == MAX_TRY_COUNT && sum() < MAX_SCORE || tryCount == MAX_TRY_COUNT_AT_LAST;
     }
 
     private boolean isFinished() {
