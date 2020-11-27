@@ -24,6 +24,7 @@ public class BowlingController {
         while (!bowling.isFinished()) {
             bowling.throwBall(inputView.enterScore(bowling.getCurrentFrameNumber()));
             resultView.showFrames(bowling.getName(), bowling.getFrames());
+            resultView.showCalculatedScores(bowling.calculateScores());
         }
     }
 

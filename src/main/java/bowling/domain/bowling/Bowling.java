@@ -39,4 +39,8 @@ public class Bowling {
     public List<Frame> getFrames() {
         return frames.getFrames();
     }
+
+    public List<Integer> calculateScores() {
+        return frames.calculateScores();
+    }
 }

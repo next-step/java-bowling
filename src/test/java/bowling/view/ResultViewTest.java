@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,5 +37,21 @@ public class ResultViewTest {
 
         assertThat(output.toString()).isEqualTo("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |\n" +
                 "|  PJS |  X   |  8|/ |  7|- |      |      |      |      |      |      |      |\n");
+    }
+
+    @DisplayName("계산된 점수 출력")
+    @Test
+    public void showCalculatedScores() {
+        StringWriter output = new StringWriter();
+        ResultView resultView = new ResultView(new PrintWriter(output));
+
+        resultView.showCalculatedScores(IntStream.range(1, 11).boxed().map(i -> {
+            if (i <= 4) {
+                return 30 * i;
+            }
+            return null;
+        }).collect(Collectors.toList()));
+
+        assertThat(output.toString()).isEqualTo("|      |  30  |  60  |  90  |  120 |      |      |      |      |      |      |\n");
     }
 }
