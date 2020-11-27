@@ -9,13 +9,14 @@ class ModelMapper {
     private ModelMapper() {}
 
     private static Player getPlayer() {
-        return new Player(InputView.askName()
-                .getName());
+        return new Player(InputView.askPlayer()
+                .getName()
+        );
     }
 
-    static Roll getRoll(int frameNo) {
-        return Roll.of(InputView.askCountOfPins(frameNo)
-                .getCount());
+    private static Roll getRoll(int frameNo) {
+        return Roll.of(InputView.askRoll(frameNo)
+                .getCountOfPins());
     }
 
     static Players getPlayers(int sizeOfPlayers) {

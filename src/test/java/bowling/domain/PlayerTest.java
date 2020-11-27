@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.exception.BadNameException;
+import bowling.exception.PlayerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -13,7 +13,7 @@ class PlayerTest {
     @DisplayName("이름이 3개의 영어 글자가 아니면, BadNameException 이 발생한다.")
     @ValueSource(strings = {"세글자", "a", "ab", "abcd"})
     void constructor(String name) {
-        assertThatExceptionOfType(BadNameException.class)
+        assertThatExceptionOfType(PlayerException.class)
                 .isThrownBy(() -> new Player(name));
     }
 }

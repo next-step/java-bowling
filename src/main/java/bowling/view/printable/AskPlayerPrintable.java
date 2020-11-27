@@ -1,6 +1,6 @@
 package bowling.view.printable;
 
-public class AskNamePrintable extends Printable {
+public class AskPlayerPrintable extends Printable {
     @Override
     public void print() {
         print("플레이어 이름은(3 english letters)?: ");

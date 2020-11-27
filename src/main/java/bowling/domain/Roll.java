@@ -1,16 +1,14 @@
 package bowling.domain;
 
-import bowling.exception.BadCountOfPinsException;
+import bowling.exception.RollException;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import static bowling.assets.Const.PIN_NUM;
-import static java.util.stream.Collectors.toList;
-
 public class Roll {
+    private static final int PIN_NUM = 10;
     private static final Map<Integer, Roll> map = new HashMap();
 
     static {
@@ -33,7 +31,7 @@ public class Roll {
         int min = 0;
         int max = PIN_NUM;
         if (count < min || count > max) {
-            throw BadCountOfPinsException.getInstance();
+            throw new RollException("한 프레임에서 쓰러진 핀의 개수는 0 이상 10 이하여야 합니다.");
         }
     }
 
@@ -41,11 +39,5 @@ public class Roll {
         return rolls.stream()
                 .map(roll -> roll.countOfPins)
                 .reduce(0, Integer::sum);
-    }
-
-    static List<Integer> toIntegers(List<Roll> rolls) {
-        return rolls.stream()
-                .map(roll -> roll.countOfPins)
-                .collect(toList());
     }
 }

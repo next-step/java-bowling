@@ -1,10 +1,9 @@
 package bowling.view;
 
-import bowling.dto.CountOfPinsDto;
 import bowling.dto.PlayerDto;
-import bowling.exception.NanException;
-import bowling.view.printable.AskCountOfPinsPrintable;
-import bowling.view.printable.AskNamePrintable;
+import bowling.dto.RollDto;
+import bowling.view.printable.AskPlayerPrintable;
+import bowling.view.printable.AskRollPrintable;
 
 import java.util.Scanner;
 
@@ -13,14 +12,14 @@ public class InputView {
 
     private InputView() {}
 
-    public static PlayerDto askName() {
-        new AskNamePrintable().print();
+    public static PlayerDto askPlayer() {
+        new AskPlayerPrintable().print();
         return new PlayerDto(nextLine());
     }
 
-    public static CountOfPinsDto askCountOfPins(int frameNo) {
-        new AskCountOfPinsPrintable(frameNo).print();
-        return new CountOfPinsDto(nextInt());
+    public static RollDto askRoll(int frameNo) {
+        new AskRollPrintable(frameNo).print();
+        return new RollDto(nextInt());
     }
 
 
@@ -29,11 +28,6 @@ public class InputView {
     }
 
     private static int nextInt() {
-        String numStr = nextLine();
-        try {
-            return Integer.parseInt(numStr);
-        } catch (Exception e) {
-            throw NanException.getInstance();
-        }
+        return Integer.parseInt(nextLine());
     }
 }

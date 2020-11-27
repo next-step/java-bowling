@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.LinkedList;
+import java.util.List;
 
 class Frames {
     // NOTE: getLast 를 쓰기 위해 LinkedList 로 선언
@@ -10,18 +11,20 @@ class Frames {
         return frames.size();
     }
 
-    void add(Roll roll) {
-        if (isLastFinished()) {
-            frames.add(new Frame());
+    List<Frame> subList(int from, int to) {
+        return frames.subList(from, to);
+    }
+
+    void update(Rolls rolls) {
+        if (isLastFinished(rolls)) {
+            frames.add(new Frame(rolls.size() - 1));
         }
-        frames.getLast().add(roll);
+        frames.getLast().increaseOffset();
     }
 
-    Frame last() {
-        return frames.getLast();
-    }
-
-    private boolean isLastFinished() {
-        return frames.isEmpty() || last().isFinished();
+    private boolean isLastFinished(Rolls rolls) {
+        return frames.isEmpty()
+                || frames.getLast()
+                .frameEnum(rolls) != FrameEnum.UNFINISHED;
     }
 }

@@ -1,50 +1,35 @@
 package bowling.domain;
 
-import bowling.exception.CanNotAddRollException;
-
-import java.util.LinkedList;
-import java.util.List;
-
-import static bowling.assets.Const.PIN_NUM;
+import bowling.exception.FrameException;
 
 class Frame {
-    private final List<Roll> rolls = new LinkedList<>();
+    private final int startIndex;
+    private int offset = 1;
 
-    void add(Roll roll) {
-        if (isFinished()) {
-            throw CanNotAddRollException.getInstance();
+    Frame(int startIndex) {
+        this.startIndex = startIndex;
+    }
+
+    void increaseOffset() {
+        if (offset >= 2) {
+            throw new FrameException("한 프레임에서는 두번만 투구할 수 있습니다.");
         }
-        rolls.add(roll);
+        offset++;
     }
 
-    boolean isStrike() {
-        return rolls.size() == 1
-                && Roll.sum(rolls) == PIN_NUM;
+    int score(Rolls rolls) {
+        FrameEnum frameEnum = frameEnum(rolls);
+        return frameEnum == FrameEnum.MISS
+                ? rolls.sum(startIndex, 2)
+                : frameEnum == FrameEnum.SPARE
+                ? rolls.sum(startIndex, 3)
+                : frameEnum == FrameEnum.STRIKE
+                ? rolls.sum(startIndex, 4)
+                : -1;
     }
 
-    boolean isSpare() {
-        return rolls.size() == 2
-                && Roll.sum(rolls) == PIN_NUM;
-    }
-
-    boolean isMiss() {
-        return rolls.size() == 2
-                && Roll.sum(rolls) < PIN_NUM;
-    }
-
-    boolean isFinished() {
-        return isStrike()
-                || isSpare()
-                || isMiss();
-    }
-
-    FrameEnum frameEnum() {
-        return isStrike()
-                ? FrameEnum.STRIKE
-                : isSpare()
-                ? FrameEnum.SPARE
-                : isMiss()
-                ? FrameEnum.MISS
-                : FrameEnum.UNFINISHED;
+    FrameEnum frameEnum(Rolls rolls) {
+        int countOfPins = rolls.sum(startIndex, offset);
+        return FrameEnum.get(offset, countOfPins);
     }
 }
