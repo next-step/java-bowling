@@ -1,13 +1,12 @@
 package step2.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.IntStream;
+import java.util.*;
+
+import static java.util.Collections.singletonList;
 
 public class Frames {
-    public static final int MAXIMUM_FRAME_RANGE = 10;
     public static final String ERROR_NOT_EXISTS_FRAME = "존재하지 않는 프레임입니다.";
+    public static final String NO_MARK = "";
 
     private final int size;
     private final Frame head;
@@ -26,11 +25,11 @@ public class Frames {
     }
 
     public Frame getLast() {
-        return getFrame(size-1);
+        return getFrame(size - 1);
     }
 
     public Frame getFrame(int frameNo) {
-        return  findByFrameNo(frameNo, head);
+        return findByFrameNo(frameNo, head);
     }
 
     private Frame findByFrameNo(int frameNo, Frame current) {
@@ -59,13 +58,36 @@ public class Frames {
         return tail;
     }
 
-    public List<String> getScores(List<String> list, Frame frame) {
+    public List<String> getMarks(Frame frame) {
         Frame current = frame;
+        List<String> list = new ArrayList<>(singletonList(current.getResultString()));
+
         while (current.hasNext()) {
-            list.add(current.getResultString());
             current = current.next();
+            list.add(current.getResultString());
         }
         return list;
+    }
+
+    public List<String> getScores(Frame frame) {
+        Frame current = frame;
+        List<String> list = new ArrayList<>(singletonList(String.valueOf(current.getScore())));
+        int cumulativePoint = 0;
+
+        while (current.hasNext()) {
+            current = current.next();
+            cumulativePoint += current.getScore();
+
+            list.add(formattedScore(cumulativePoint, current));
+        }
+        return list;
+    }
+
+    private String formattedScore(int value, Frame frame) {
+        if (frame.getScore() == 0 && !frame.isFinished()) {
+            return NO_MARK;
+        }
+        return String.valueOf(value);
     }
 
     public static class Builder {
