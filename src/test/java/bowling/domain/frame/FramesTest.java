@@ -96,7 +96,7 @@ public class FramesTest {
     public void spareScoreNotNextFrame() {
         frames.record(1);
         frames.record(9);
-        List<Integer> calculatedScores = frames.calculateScore();
+        List<Integer> calculatedScores = frames.calculateScores();
 
         assertThat(calculatedScores.get(0)).isEqualTo(null);
     }
@@ -107,7 +107,7 @@ public class FramesTest {
         frames.record(1);
         frames.record(9);
         frames.record(5);
-        List<Integer> calculatedScores = frames.calculateScore();
+        List<Integer> calculatedScores = frames.calculateScores();
 
         assertThat(calculatedScores.get(0)).isEqualTo(15);
     }
@@ -119,7 +119,7 @@ public class FramesTest {
         frames.record(9);
         frames.record(1);
         frames.record(5);
-        List<Integer> calculatedScores = frames.calculateScore();
+        List<Integer> calculatedScores = frames.calculateScores();
 
         assertThat(calculatedScores.get(0)).isEqualTo(20);
     }
@@ -130,7 +130,7 @@ public class FramesTest {
         frames.record(10);
         frames.record(10);
         frames.record(6);
-        List<Integer> calculatedScores = frames.calculateScore();
+        List<Integer> calculatedScores = frames.calculateScores();
 
         assertThat(calculatedScores.get(0)).isEqualTo(26);
     }
@@ -142,7 +142,7 @@ public class FramesTest {
         frames.record(1);
         frames.record(2);
 
-        List<Integer> calculatedScores = frames.calculateScore();
+        List<Integer> calculatedScores = frames.calculateScores();
         assertThat(calculatedScores.get(7)).isEqualTo(214);
     }
 
@@ -156,7 +156,7 @@ public class FramesTest {
         frames.record(1);
         frames.record(5);
 
-        List<Integer> calculatedScores = frames.calculateScore();
+        List<Integer> calculatedScores = frames.calculateScores();
         assertThat(calculatedScores.get(8)).isEqualTo(242);
     }
 
@@ -167,7 +167,7 @@ public class FramesTest {
         frames.record(4);
         frames.record(5);
 
-        List<Integer> calculatedScores = frames.calculateScore();
+        List<Integer> calculatedScores = frames.calculateScores();
         assertThat(calculatedScores.get(8)).isEqualTo(253);
     }
 
@@ -180,7 +180,7 @@ public class FramesTest {
             frames.record(score);
         }
 
-        List<Integer> calculatedScores = frames.calculateScore();
+        List<Integer> calculatedScores = frames.calculateScores();
         assertThat(calculatedScores.get(9)).isEqualTo(expectedScore);
     }
 

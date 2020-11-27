@@ -58,7 +58,7 @@ public class FrameTest {
     @ParameterizedTest
     @MethodSource("getScoresForLastFrame")
     public void lastFrame(List<Score> scores) {
-        Frame frame = Frame.of(10, scores);
+        Frame frame = Frame.of(FrameNumber.last().getNumber(), scores);
 
         assertThat(frame.isFinished()).isEqualTo(true);
         assertThatThrownBy(() -> {

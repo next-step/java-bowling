@@ -81,4 +81,18 @@ public class Scores {
     public boolean isSecondSpare() {
         return scores.get(1).isSpare();
     }
+
+    public boolean needNextScores() {
+        return isFirstStrike() || isSecondSpare();
+    }
+
+    public int getNecessaryNextScoresCount() {
+        if (isFirstStrike()) {
+            return 2;
+        }
+        if (isSecondSpare()) {
+            return 1;
+        }
+        return 0;
+    }
 }

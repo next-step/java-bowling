@@ -24,6 +24,10 @@ public class FrameNumber {
         }
     }
 
+    public static FrameNumber last() {
+        return of(LAST);
+    }
+
     public int getNumber() {
         return number;
     }
