@@ -95,4 +95,12 @@ public class ScoresTest {
                 Arguments.arguments(Scores.of(Arrays.asList(Score.gutter(), Score.spare(10), Score.strike())), true)
         );
     }
+
+    @DisplayName("한 프레임에서 두번쨰에 스페어 처리가 되었는지 확인")
+    @Test
+    public void isSecondSpare() {
+        boolean isSecondSpare = Scores.of(Arrays.asList(Score.ordinary(8), Score.spare(2))).isSecondSpare();
+        
+        assertThat(isSecondSpare).isEqualTo(true);
+    }
 }

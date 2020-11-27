@@ -74,7 +74,11 @@ public class Scores {
         return (tryCount == 1 && isFirstStrike()) || tryCount == MAX_TRY_COUNT;
     }
 
-    private boolean isFirstStrike() {
+    public boolean isFirstStrike() {
         return scores.get(0).isStrike();
+    }
+
+    public boolean isSecondSpare() {
+        return scores.get(1).isSpare();
     }
 }

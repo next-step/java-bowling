@@ -1,6 +1,7 @@
 package bowling.domain.score;
 
 import static bowling.domain.score.ScoreType.ORDINARY;
+import static bowling.domain.score.ScoreType.SPARE;
 import static bowling.domain.score.ScoreType.STRIKE;
 
 public class Score {
@@ -48,7 +49,7 @@ public class Score {
     }
 
     public static Score spare(int score) {
-        return of(score, ScoreType.SPARE);
+        return of(score, SPARE);
     }
 
     public static Score gutter() {
@@ -69,6 +70,10 @@ public class Score {
 
     public boolean isOrdinary() {
         return type.equals(ORDINARY);
+    }
+
+    public boolean isSpare() {
+        return SPARE.equals(type);
     }
 
     @Override

@@ -44,4 +44,29 @@ public class Frame {
     public List<Score> getScores() {
         return scores.getScores();
     }
+
+    public int getScoresCount() {
+        return scores.getScores().size();
+    }
+
+    public int getScore(int tryCount) {
+        return scores.getScore(tryCount).getScore();
+    }
+
+    public boolean needNextScores() {
+        return !frameNumber.isLast() && isFinished() && (scores.isFirstStrike() || scores.isSecondSpare());
+    }
+
+    public int getNecessaryNextScoresCount() {
+        if (frameNumber.isLast()) {
+            return 0;
+        }
+        if (scores.isFirstStrike()) {
+            return 2;
+        }
+        if (scores.isSecondSpare()) {
+            return 1;
+        }
+        return 0;
+    }
 }

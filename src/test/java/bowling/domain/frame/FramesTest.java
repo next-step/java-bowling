@@ -90,4 +90,114 @@ public class FramesTest {
                 Arguments.arguments(Arrays.asList(10, 10, 0))
         );
     }
+
+    @DisplayName("스페어에서 다음 프레임 점수가 아직 없을때")
+    @Test
+    public void spareScoreNotNextFrame() {
+        frames.record(1);
+        frames.record(9);
+        List<Integer> calculatedScores = frames.calculateScore();
+
+        assertThat(calculatedScores.get(0)).isEqualTo(null);
+    }
+
+    @DisplayName("스페어에서 다음 프레임 점수 합산")
+    @Test
+    public void spareScore() {
+        frames.record(1);
+        frames.record(9);
+        frames.record(5);
+        List<Integer> calculatedScores = frames.calculateScore();
+
+        assertThat(calculatedScores.get(0)).isEqualTo(15);
+    }
+
+    @DisplayName("스트라이크에서 다음 프레임 점수 합산")
+    @Test
+    public void strikeScore() {
+        frames.record(10);
+        frames.record(9);
+        frames.record(1);
+        frames.record(5);
+        List<Integer> calculatedScores = frames.calculateScore();
+
+        assertThat(calculatedScores.get(0)).isEqualTo(20);
+    }
+
+    @DisplayName("스트라이크에서 다음 스트라이크 이후 점수 합산")
+    @Test
+    public void strikeScoreNextStrike() {
+        frames.record(10);
+        frames.record(10);
+        frames.record(6);
+        List<Integer> calculatedScores = frames.calculateScore();
+
+        assertThat(calculatedScores.get(0)).isEqualTo(26);
+    }
+
+    @DisplayName("8프레임 스트라이크에서 다음 프레임 점수 합산")
+    @Test
+    public void strikeScoreFrom8Frame() {
+        record(8);
+        frames.record(1);
+        frames.record(2);
+
+        List<Integer> calculatedScores = frames.calculateScore();
+        assertThat(calculatedScores.get(7)).isEqualTo(214);
+    }
+
+    @DisplayName("9프레임 스페어에서 다음 프레임 점수 합산")
+    @Test
+    public void spareScoreFrom9Frame() {
+        record(8);
+        frames.record(3);
+        frames.record(7);
+        frames.record(9);
+        frames.record(1);
+        frames.record(5);
+
+        List<Integer> calculatedScores = frames.calculateScore();
+        assertThat(calculatedScores.get(8)).isEqualTo(242);
+    }
+
+    @DisplayName("9프레임 스트라이크에서 다음 프레임 점수 합산")
+    @Test
+    public void strikeScoreFrom9Frame() {
+        record(9);
+        frames.record(4);
+        frames.record(5);
+
+        List<Integer> calculatedScores = frames.calculateScore();
+        assertThat(calculatedScores.get(8)).isEqualTo(253);
+    }
+
+    @DisplayName("마지막 프레임 점수 계산")
+    @ParameterizedTest
+    @MethodSource("getCalculatedScoresForLastFrame")
+    public void scoreFromLastFrame(List<Integer> scores, int expectedScore) {
+        record(9);
+        for (int score : scores) {
+            frames.record(score);
+        }
+
+        List<Integer> calculatedScores = frames.calculateScore();
+        assertThat(calculatedScores.get(9)).isEqualTo(expectedScore);
+    }
+
+    private static Stream<Arguments> getCalculatedScoresForLastFrame() {
+        return Stream.of(Arguments.arguments(Arrays.asList(0, 0), 240),
+                Arguments.arguments(Arrays.asList(1, 5), 253),
+                Arguments.arguments(Arrays.asList(5, 0), 255),
+                Arguments.arguments(Arrays.asList(0, 10, 5), 265),
+                Arguments.arguments(Arrays.asList(0, 10, 10), 270),
+                Arguments.arguments(Arrays.asList(5, 5, 5), 270),
+                Arguments.arguments(Arrays.asList(5, 5, 10), 275),
+                Arguments.arguments(Arrays.asList(10, 5, 0), 280),
+                Arguments.arguments(Arrays.asList(10, 5, 5), 285),
+                Arguments.arguments(Arrays.asList(10, 10, 10), 300),
+                Arguments.arguments(Arrays.asList(10, 10, 5), 295),
+                Arguments.arguments(Arrays.asList(10, 10, 0), 290)
+        );
+    }
+
 }
