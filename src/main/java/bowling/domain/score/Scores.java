@@ -86,7 +86,7 @@ public class Scores {
         return isFirstStrike() || isSecondSpare();
     }
 
-    public int getNecessaryNextScoresCount() {
+    public int getMinimumTryCount() {
         if (isFirstStrike()) {
             return 2;
         }
@@ -94,5 +94,9 @@ public class Scores {
             return 1;
         }
         return 0;
+    }
+
+    public int getTryCount() {
+        return tryCount;
     }
 }

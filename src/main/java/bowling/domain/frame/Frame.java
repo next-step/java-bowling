@@ -53,8 +53,8 @@ public class Frame {
         return scores.getScores();
     }
 
-    public int getScoresCount() {
-        return scores.getScores().size();
+    public int getTryCount() {
+        return scores.getTryCount();
     }
 
     public int getScore(int tryCount) {
@@ -77,39 +77,39 @@ public class Frame {
     }
 
     private Integer calculateScoreWithNext(Integer previousFrameScore) {
-        if (hasNoNextScores()) {
-            return null;
+        if (hasNextScores()) {
+            return calculateWithoutNext(previousFrameScore) + getNextScores();
         }
-        return calculateWithoutNext(previousFrameScore) + getNextScores();
+        return null;
     }
 
-    private boolean hasNoNextScores() {
-        return getNecessaryNextScoresCount() > getCurrentNextScoresCount();
+    private boolean hasNextScores() {
+        return getMinimumTryCount() <= getNextTryCount();
     }
 
-    private int getNecessaryNextScoresCount() {
-        return scores.getNecessaryNextScoresCount();
+    private int getMinimumTryCount() {
+        return scores.getMinimumTryCount();
     }
 
-    private Integer getCurrentNextScoresCount() {
-        return next.getScoresCount() + Optional.ofNullable(next.next())
-                .map(Frame::getScoresCount)
+    private Integer getNextTryCount() {
+        return next.getTryCount() + Optional.ofNullable(next.next())
+                .map(Frame::getTryCount)
                 .orElse(0);
     }
 
     private Integer getNextScores() {
-        int necessaryNextScoresCount = getNecessaryNextScoresCount();
-        if (necessaryNextScoresCount == 1) {
+        int minimumTryCounts = getMinimumTryCount();
+        if (minimumTryCounts == 1) {
             return next.getScore(1);
         }
-        if (necessaryNextScoresCount == 2) {
+        if (minimumTryCounts == 2) {
             return getNextTwoScores();
         }
         return 0;
     }
 
     private Integer getNextTwoScores() {
-        if (next.getScoresCount() == 1) {
+        if (next.getTryCount() == 1) {
             return next.getScore(1) + Optional.ofNullable(next.next())
                     .map(frame -> frame.getScore(1))
                     .orElse(0);
