@@ -53,23 +53,23 @@ public class BowlingResultView implements ResultView {
 
             System.out.printf((MSG_PITCHES_FRAME) + "%n", history.getCurrentFrameNo(), history.getPitchesPoint());
             printHeader();
-            printBody(history.getPlayer(), history.getPoint());
+            printBody(history.getPlayer(), history.getMarks());
             System.out.println();
         });
     }
 
-    private void printBody(Player player, List<String> points) {
-
+    private void printBody(Player player, List<String> strings) {
+        clearStringBuilder();
         appendWall();
         appendFrame(formatted(player.getName()));
         appendWall();
-        appendFrame(points.stream()
+        appendFrame(strings.stream()
                 .map(this::formatted)
                 .collect(Collectors.joining(WALL_STR)));
         appendWall();
 
         sb.append(System.lineSeparator());
-        System.out.println(sb.toString());
+        System.out.print(sb.toString());
     }
 
     private void appendWall() {
