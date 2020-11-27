@@ -1,61 +1,58 @@
 package step2.domain;
 
 import step2.exception.NotExistsNextFrameException;
-import step2.exception.NotFoundPitchesTypeException;
 import step2.strategy.PitchesStrategy;
 import step2.type.ResultPitchesType;
 
-import static step2.type.ResultPitchesType.MISS;
-import static step2.type.ResultPitchesType.SPARE;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static step2.domain.BowlingPoint.*;
+import static step2.type.ResultPitchesType.STRIKE;
 
 public class FinalFrame implements Frame {
     public static final String ERROR_CURRENT_FRAME_IS_FINAL = "해당 프레임이 마지막 프레임입니다.";
-    public static final String ERROR_NOT_REMAIING_PITCHIES_COUNT = "더 이상 투구할 수 없습니다.";
-    public static final String STRIKE_STR = "X";
-    public static final String SPARE_STR = "/";
-    public static final String GUTTER_STR = "-";
+    public static final String WALL_DELIMITER = "|";
 
     private final int frameNo;
-    private int remainingCount;
     private boolean completed;
-    private int firstPoint;
-    private int secondPoint;
-    private int thirdPoint;
+    private BowlingPoint firstPoint;
+    private BowlingPoint secondPoint;
+    private BowlingPoint thirdPoint;
 
     public FinalFrame(int frameNo) {
         this.frameNo = frameNo;
-        this.firstPoint = 0;
-        this.secondPoint = 0;
-        this.thirdPoint = 0;
-        this.remainingCount = 3;
         this.completed = false;
     }
 
     @Override
     public int pitches(PitchesStrategy strategy) {
-        if (remainingCount == 3) {
-            remainingCount--;
-            firstPoint = strategy.shot(0);
-            return firstPoint;
+        if (Objects.isNull(firstPoint)) {
+            firstPoint = BowlingPoint.of(strategy.shot(0));
+            return firstPoint.getPoint();
         }
-        if (remainingCount == 2) {
-            remainingCount--;
-            secondPoint = strategy.shot(firstPoint == 10 ? 0 : firstPoint);
+        if (Objects.isNull(secondPoint)) {
+            secondPoint = BowlingPoint.of(strategy.shot(getAllowStrategyPoint(firstPoint)), firstPoint.getPoint());
             updateComplete();
-            return secondPoint;
+            return secondPoint.getPoint();
         }
-        if (getCurrentScore() == 10 && remainingCount == 1) {
-            remainingCount--;
-            thirdPoint = strategy.shot(secondPoint == 10 ? 0 : secondPoint);
-            updateComplete();
-            return thirdPoint;
+        if (Objects.isNull(thirdPoint) && getCurrentScore() >= 10) {
+            thirdPoint = BowlingPoint.of(strategy.shot(getAllowStrategyPoint(secondPoint)), secondPoint.getPoint());
+            completed = true;
+            return thirdPoint.getPoint();
         }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("더 이상 던질 수 없습니다.");
+    }
+
+    private int getAllowStrategyPoint(BowlingPoint point) {
+        int getPoint = point.getPoint();
+        return getPoint == 10 ? 0 : getPoint;
     }
 
     private void updateComplete() {
-        if (firstPoint + secondPoint < 10 || remainingCount == 0) {
+        if (firstPoint.getPoint() + secondPoint.getPoint() < 10) {
             completed = true;
         }
     }
@@ -71,13 +68,19 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int getCurrentScore() {
-        return firstPoint + secondPoint + thirdPoint;
+    public int getScore(ResultPitchesType prevType) {
+        if (STRIKE.equals(prevType)) {
+            return getScoreByPoint(firstPoint) + getScoreByPoint(secondPoint);
+        }
+        return getScoreByPoint(firstPoint);
     }
 
+
     @Override
-    public ResultPitchesType getPitchesType() {
-        return ResultPitchesType.getType(firstPoint, secondPoint);
+    public int getCurrentScore() {
+        return Stream.of(firstPoint, secondPoint, thirdPoint)
+                .map(this::getScoreByPoint)
+                .reduce(0, Integer::sum);
     }
 
     @Override
@@ -91,44 +94,13 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame makeNext() {
-        return null;
-    }
-
-    @Override
     public String getResultString() {
-        ResultPitchesType type = getPitchesType();
-        if (isStrike(type) && !completed) {
-            return STRIKE_STR;
-        }
-
-        if (isSpare(type) && !completed) {
-            return String.format("%s|%s", checkGutter(firstPoint), SPARE_STR);
-        }
-
-        if (isMiss(type) && !completed) {
-            return String.format("%s|%s", checkGutter(firstPoint), checkGutter(secondPoint));
-        }
-
-        
-
-
-    }
-
-    private String checkGutter(int point) {
-        return point == 0 ? GUTTER_STR : String.valueOf(point);
-    }
-
-    private boolean isStrike(ResultPitchesType pitchesType) {
-        return ResultPitchesType.STRIKE.equals(pitchesType);
-    }
-
-    private boolean isSpare(ResultPitchesType pitchesType) {
-        return SPARE.equals(pitchesType) && remainingCount == 0;
-    }
-
-    private boolean isMiss(ResultPitchesType pitchesType) {
-        return MISS.equals(pitchesType) && remainingCount == 0;
+        return Stream.of(firstPoint, secondPoint, thirdPoint)
+                .filter(point -> Objects.nonNull(point)
+                        && point.isCompleted()
+                        && !point.getMark().equals(NO_MARK))
+                .map(BowlingPoint::getMark)
+                .collect(Collectors.joining(WALL_DELIMITER));
     }
 
     @Override
@@ -136,8 +108,8 @@ public class FinalFrame implements Frame {
         return completed;
     }
 
-    @Override
-    public int getFirstScore() {
-        return firstPoint;
+    private int getScoreByPoint(BowlingPoint point) {
+        return Objects.nonNull(point) ? point.getPoint() : 0;
+
     }
 }

@@ -1,68 +1,94 @@
 package step2.domain;
 
-import step2.exception.NotFoundPitchesTypeException;
 import step2.strategy.PitchesStrategy;
 import step2.type.ResultPitchesType;
 
 import java.util.Objects;
 
+import static java.util.Objects.nonNull;
+import static step2.domain.BowlingPoint.NO_MARK;
+import static step2.domain.BowlingPoint.STRIKE_MARK;
 import static step2.type.ResultPitchesType.*;
 
 public class NormalFrame implements Frame {
     public static final String ERROR_INVALID_SHOT_POINT = "투구 값이 유효하지 않습니다.";
-    public static final String resultForm = "%s|%s";
-    public static final String STRIKE_STR = "X";
-    public static final String SPARE_STR = "/";
-    public static final String GUTTER_STR = "-";
 
     private final int frameNo;
-    private int remainingCount;
+    private BowlingPoint firstPoint;
+    private BowlingPoint secondPoint;
     private boolean completed;
-    private int firstPoint;
-    private int secondPoint;
-
     private final Frame next;
 
-    public NormalFrame(int frameNo) {
-        this.frameNo = frameNo;
-        firstPoint = 0;
-        secondPoint = 0;
-        remainingCount = 2;
-        completed = false;
-
-        this.next = makeNext();
+    public NormalFrame(Builder builder) {
+        this.frameNo = builder.frameNo;
+        this.firstPoint = builder.firstPoint;
+        this.secondPoint = builder.secondPoint;
+        this.completed = builder.completed;
+        this.next = builder.next;
     }
 
-    public NormalFrame(int frameNo, int remainingCount, int firstPoint, int secondPoint, Frame next) {
-        this.frameNo = frameNo;
-        this.remainingCount = remainingCount;
-        this.firstPoint = firstPoint;
-        this.secondPoint = secondPoint;
-        this.next = next;
+    public static NormalFrame of(int frameNo) {
+        return Builder(frameNo, makeNext(frameNo))
+                .completed(false)
+                .build();
+    }
+
+    public static NormalFrame of(int frameNo, Frame next) {
+        return Builder(frameNo, next)
+                .completed(false)
+                .build();
+    }
+
+    public static Builder Builder(int frameNo, Frame next) {
+        return new Builder(frameNo, next);
+    }
+
+    public static class Builder {
+        private final int frameNo;
+        private BowlingPoint firstPoint;
+        private BowlingPoint secondPoint;
+        private boolean completed;
+        private final Frame next;
+
+        public Builder(int frameNo, Frame next) {
+            this.frameNo = frameNo;
+            this.next = next;
+        }
+
+        public Builder firstPoint(BowlingPoint firstPoint) {
+            this.firstPoint = firstPoint;
+            return this;
+        }
+
+        public Builder secondPoint(BowlingPoint secondPoint) {
+            this.secondPoint = secondPoint;
+            return this;
+        }
+
+        public Builder completed(boolean completed) {
+            this.completed = completed;
+            return this;
+        }
+
+        public NormalFrame build() {
+            return new NormalFrame(this);
+        }
+
     }
 
     @Override
     public int pitches(PitchesStrategy strategy) {
-        if (remainingCount == 2) {
-            remainingCount--;
-            firstPoint = checkPoint(secondPoint, strategy.shot(0));
-            return firstPoint;
+        if (Objects.isNull(firstPoint)) {
+            firstPoint = BowlingPoint.of(strategy.shot(0));
+            return firstPoint.getPoint();
         }
 
-        if (remainingCount == 1 && firstPoint != 10) {
-            remainingCount--;
-            secondPoint = checkPoint(firstPoint, strategy.shot(firstPoint));
-            return secondPoint;
+        if (Objects.isNull(secondPoint)) {
+            secondPoint = BowlingPoint.of(strategy.shot(firstPoint.getPoint()), firstPoint.getPoint());
+            return secondPoint.getPoint();
         }
         completed = true;
         return next.pitches(strategy);
-    }
-
-    private int checkPoint(int sourcePoint, int shotPoint) {
-        if (sourcePoint + shotPoint > 10) {
-            throw new IllegalArgumentException(ERROR_INVALID_SHOT_POINT);
-        }
-        return shotPoint;
     }
 
     @Override
@@ -73,51 +99,40 @@ public class NormalFrame implements Frame {
     @Override
     public int getScore() {
         int score = getCurrentScore();
-        ResultPitchesType pitchesType = getPitchesType();
-
-        if (isDouble(pitchesType)) {
-            return score + next.getCurrentScore() + next.next().getFirstScore();
+        ResultPitchesType type = getCurrentType();
+        if (STRIKE.equals(type) || SPARE.equals(type)) {
+            score += next.getScore(type);
         }
-
-        if (isStrike(pitchesType)) {
-            return score + next.getCurrentScore();
-        }
-
-        if (isSpare(pitchesType)) {
-            return score + next.getFirstScore();
-        }
-
         return score;
     }
 
-    public int getFirstScore() {
-        return firstPoint;
+    @Override
+    public int getScore(ResultPitchesType prevType) {
+        ResultPitchesType currentType = getCurrentType();
+        if (STRIKE.equals(prevType) && STRIKE.equals(currentType)) {
+            return getCurrentScore() + next.getCurrentScore();
+        }
+        if (STRIKE.equals(prevType)) {
+            return getCurrentScore();
+        }
+        if (SPARE.equals(prevType)) {
+            return getScoreByPoint(firstPoint);
+        }
+        return 0;
     }
 
-    private boolean isDouble(ResultPitchesType pitchesType) {
-        return ResultPitchesType.STRIKE.equals(pitchesType) && ResultPitchesType.STRIKE.equals(next.getPitchesType());
+    private ResultPitchesType getCurrentType() {
+        return getType(getScoreByPoint(firstPoint), getScoreByPoint(secondPoint));
     }
 
-    private boolean isStrike(ResultPitchesType pitchesType) {
-        return ResultPitchesType.STRIKE.equals(pitchesType) && !ResultPitchesType.STRIKE.equals(next.getPitchesType());
+    private int getScoreByPoint(BowlingPoint point) {
+        return Objects.nonNull(point) ? point.getPoint() : 0;
     }
 
-    private boolean isSpare(ResultPitchesType pitchesType) {
-        return SPARE.equals(pitchesType)&&remainingCount == 0;
-    }
-
-    private boolean isMiss(ResultPitchesType pitchesType) {
-        return MISS.equals(pitchesType)&&remainingCount == 0;
-    }
 
     @Override
     public int getCurrentScore() {
-        return firstPoint + secondPoint;
-    }
-
-    @Override
-    public ResultPitchesType getPitchesType() {
-        return ResultPitchesType.getType(firstPoint, secondPoint);
+        return getScoreByPoint(firstPoint) + getScoreByPoint(secondPoint);
     }
 
 
@@ -128,65 +143,26 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean hasNext() {
-        return Objects.nonNull(next);
+        return nonNull(next);
     }
 
-    @Override
-    public Frame makeNext() {
+    public static Frame makeNext(int frameNo) {
         if (frameNo == BowlingGame.FRAME_LAST_NO) {
             return new FinalFrame(frameNo + 1);
         }
-        return new NormalFrame(frameNo + 1);
+        return NormalFrame.of(frameNo + 1);
     }
 
     @Override
     public String getResultString() {
-        ResultPitchesType type = getPitchesType();
-        if (isStrike(type)) {
-            return STRIKE_STR;
-        }
+        String result = nonNull(firstPoint) ? firstPoint.getMark() : NO_MARK;
+        result += nonNull(secondPoint) && !result.equals(STRIKE_MARK) ? "|" + secondPoint.getMark() : NO_MARK;
 
-        if (isSpare(type)) {
-            return String.format(resultForm, checkGutter(firstPoint), SPARE_STR);
-        }
-
-        if (isMiss(type)) {
-            return String.format(resultForm, checkGutter(firstPoint), checkGutter(secondPoint));
-        }
-
-        if (remainingCount == 2) {
-            return "";
-        }
-
-        if (remainingCount == 1) {
-            return String.valueOf(firstPoint);
-        }
-
-        throw new NotFoundPitchesTypeException();
+        return result;
     }
 
     @Override
     public boolean isFinished() {
         return completed;
-    }
-
-    private String checkGutter(int point) {
-        return point == 0 ? GUTTER_STR : String.valueOf(point);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NormalFrame that = (NormalFrame) o;
-        return frameNo == that.frameNo &&
-                remainingCount == that.remainingCount &&
-                firstPoint == that.firstPoint &&
-                secondPoint == that.secondPoint;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(frameNo, remainingCount, firstPoint, secondPoint);
     }
 }

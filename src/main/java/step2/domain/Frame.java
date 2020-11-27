@@ -11,17 +11,13 @@ public interface Frame {
 
     int getScore();
 
-    int getFirstScore();
+    int getScore(ResultPitchesType type);
 
     int getCurrentScore();
-
-    ResultPitchesType getPitchesType();
 
     Frame next();
 
     boolean hasNext();
-
-    Frame makeNext();
 
     String getResultString();
 
