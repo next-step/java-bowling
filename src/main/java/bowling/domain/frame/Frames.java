@@ -48,9 +48,13 @@ public class Frames {
     }
 
     private void increaseCurrentFrameNumber(Frame currentFrame) {
-        if (currentFrame.isFinished()) {
+        if (frameIsFinished(currentFrame)) {
             currentFrameNumber += 1;
         }
+    }
+
+    private boolean frameIsFinished(Frame currentFrame) {
+        return currentFrame.isFinished();
     }
 
     public List<Frame> getFrames() {
@@ -68,7 +72,7 @@ public class Frames {
     }
 
     private Integer calculateScore(int frameNumber, Integer previousFrameScore) {
-        if (previousFrameScore == null | frameNumber > currentFrameNumber) {
+        if (previousFrameScore == null || frameNumber > currentFrameNumber || !frameIsFinished(getFrame(frameNumber))) {
             return null;
         }
         return getFrame(frameNumber).calculateScore(previousFrameScore);

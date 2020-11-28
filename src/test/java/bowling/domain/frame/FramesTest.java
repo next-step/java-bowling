@@ -101,6 +101,23 @@ public class FramesTest {
         assertThat(calculatedScores.get(0)).isEqualTo(null);
     }
 
+    @DisplayName("완료된 프레임의 점수만 출력")
+    @Test
+    public void finishedScore() {
+        frames.record(10);
+        frames.record(1);
+        frames.record(1);
+
+        List<Integer> calculatedScores = frames.calculateScores();
+
+        assertThat(calculatedScores.get(0)).isEqualTo(12);
+        assertThat(calculatedScores.get(1)).isEqualTo(14);
+        for (int i = 2; i < 10; i++) {
+            assertThat(calculatedScores.get(i)).isEqualTo(null);
+        }
+    }
+
+
     @DisplayName("스페어에서 다음 프레임 점수 합산")
     @Test
     public void spareScore() {
