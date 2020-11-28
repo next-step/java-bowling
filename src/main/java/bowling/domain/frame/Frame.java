@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.LastScores;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 
@@ -12,7 +13,14 @@ public class Frame {
 
     private Frame(FrameNumber frameNumber, Scores scores) {
         this.frameNumber = frameNumber;
-        this.scores = scores;
+        this.scores = getScores(frameNumber, scores);
+    }
+
+    private Scores getScores(FrameNumber frameNumber, Scores scores) {
+        if (frameNumber.isLast()) {
+            return LastScores.of(scores.getScores());
+        }
+        return scores;
     }
 
     public static Frame first() {
@@ -32,11 +40,11 @@ public class Frame {
     }
 
     public void record(int score) {
-        scores = scores.add(score, frameNumber.isLast());
+        scores = scores.add(score);
     }
-
+    
     public boolean isFinished() {
-        return scores.isFinished(frameNumber.isLast());
+        return scores.isFinished();
     }
 
     public List<Score> getScores() {
@@ -44,7 +52,7 @@ public class Frame {
     }
 
     public Integer calculateScore(Integer previousFrameScore, List<Frame> nextFrames) {
-        return scores.calculateScore(previousFrameScore, getNextScores(nextFrames), frameNumber.isLast());
+        return scores.calculateScore(previousFrameScore, getNextScores(nextFrames));
     }
 
     private List<Score> getNextScores(List<Frame> nextFrames) {

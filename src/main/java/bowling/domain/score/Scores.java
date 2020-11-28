@@ -4,17 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static bowling.domain.score.Score.MAX_SCORE;
-
 public class Scores {
     private static final int MAX_TRY_COUNT = 2;
-    private static final int MAX_TRY_COUNT_AT_LAST = 3;
     private static final int MAX_SCORES = 10;
-    private static final int MAX_SCORES_AT_LAST = 30;
-    private final List<Score> scores;
-    private final int tryCount;
+    
+    protected final List<Score> scores;
+    protected final int tryCount;
 
-    private Scores(List<Score> scores) {
+    protected Scores(List<Score> scores) {
         this.scores = scores;
         this.tryCount = scores.size();
     }
@@ -44,57 +41,39 @@ public class Scores {
         return scores.get(tryCount - 1);
     }
 
-    public Scores add(int score, boolean isLast) {
-        validateMaxTryCount(isLast);
-        validateMaxScores(score, isLast);
-        return add(score);
+    public Scores add(int score) {
+        validateMaxTryCount();
+        validateMaxScores(score);
+        return addScore(score);
     }
 
-    private Scores add(int score) {
+    protected Scores addScore(int score) {
         List<Score> scores = new ArrayList<>(this.scores);
         scores.add(Score.of(getScore(tryCount), score));
         return new Scores(scores);
     }
 
-    private void validateMaxTryCount(boolean isLast) {
-        if (isFinished(isLast)) {
+    private void validateMaxTryCount() {
+        if (isFinished()) {
             throw new InvalidScoreAddException();
         }
     }
 
-    private void validateMaxScores(int score, boolean isLast) {
-        if (sum() + score > getMaxScores(isLast)) {
+    private void validateMaxScores(int score) {
+        if (sum() + score > getMaxScores()) {
             throw new InvalidMaxScoresException();
         }
     }
 
-    private int getMaxScores(boolean isLast) {
-        if (isLast) {
-            return MAX_SCORES_AT_LAST;
-        }
+    protected int getMaxScores() {
         return MAX_SCORES;
     }
 
-    public boolean isFinished(boolean isLast) {
-        if (isLast) {
-            return isFinishedAtLast();
-        }
-        return isFinished();
-    }
-
-    private boolean isFinishedAtLast() {
-        return (secondTried() && sum() < MAX_SCORE) || thirdTried();
-    }
-
-    private boolean secondTried() {
+    protected boolean secondTried() {
         return tryCount == MAX_TRY_COUNT;
     }
 
-    private boolean thirdTried() {
-        return tryCount == MAX_TRY_COUNT_AT_LAST;
-    }
-
-    private boolean isFinished() {
+    public boolean isFinished() {
         return (hasFirstStrike()) || secondTried();
     }
 
@@ -106,18 +85,18 @@ public class Scores {
         return tryCount >= 2 && getScore(2).isSpare();
     }
 
-    public Integer calculateScore(Integer previousScore, List<Score> nextScores, boolean isLast) {
-        if (!isFinished(isLast)) {
+    public Integer calculateScore(Integer previousScore, List<Score> nextScores) {
+        if (!isFinished()) {
             return null;
         }
-        if (needNextScores(isLast)) {
+        if (needNextScores()) {
             return calculateScoreWithNext(previousScore, nextScores);
         }
         return calculateWithoutNext(previousScore);
     }
 
-    private boolean needNextScores(boolean isLast) {
-        return !isLast && isFinished() && (hasFirstStrike() || hasSecondSpare());
+    protected boolean needNextScores() {
+        return hasFirstStrike() || hasSecondSpare();
     }
 
     private Integer calculateScoreWithNext(Integer previousScore, List<Score> nextScores) {
