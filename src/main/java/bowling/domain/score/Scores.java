@@ -85,23 +85,23 @@ public class Scores {
         return tryCount >= 2 && getScore(2).isSpare();
     }
 
-    public Integer calculateScore(Integer previousScore, List<Score> nextScores) {
+    public Integer calculate(Integer previousScore, List<Score> nextScores) {
         if (!isFinished()) {
             return null;
         }
         if (needNextScores()) {
-            return calculateScoreWithNext(previousScore, nextScores);
+            return calculateWithNext(previousScore, nextScores);
         }
-        return calculateWithoutNext(previousScore);
+        return calculate(previousScore);
     }
 
     protected boolean needNextScores() {
         return hasFirstStrike() || hasSecondSpare();
     }
 
-    private Integer calculateScoreWithNext(Integer previousScore, List<Score> nextScores) {
+    private Integer calculateWithNext(Integer previousScore, List<Score> nextScores) {
         if (hasEnoughNextScores(nextScores)) {
-            return calculateWithoutNext(previousScore) + sumNextScores(nextScores);
+            return calculate(previousScore) + sumNextScores(nextScores);
         }
         return null;
     }
@@ -127,7 +127,7 @@ public class Scores {
                 .sum();
     }
 
-    private int calculateWithoutNext(Integer previousScore) {
+    private int calculate(Integer previousScore) {
         return previousScore + sum();
     }
 }

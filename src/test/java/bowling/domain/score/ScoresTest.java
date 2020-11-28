@@ -80,7 +80,7 @@ public class ScoresTest {
     @MethodSource("getEmptyScoreParams")
     public void calculateEmptyScore(Integer previousScore, List<Score> nextScores, Integer expectedScore) {
         Scores scores = Scores.empty();
-        assertThat(scores.calculateScore(previousScore, nextScores)).isEqualTo(expectedScore);
+        assertThat(scores.calculate(previousScore, nextScores)).isEqualTo(expectedScore);
     }
 
     private static Stream<Arguments> getEmptyScoreParams() {
@@ -95,7 +95,7 @@ public class ScoresTest {
     @MethodSource("getNotFinishedParam")
     public void calculateNotFinishedScore(Integer previousScore, List<Score> nextScores, Integer expectedScore) {
         Scores scores = Scores.of(Collections.singletonList(Score.ordinary(3)));
-        assertThat(scores.calculateScore(previousScore, nextScores)).isEqualTo(expectedScore);
+        assertThat(scores.calculate(previousScore, nextScores)).isEqualTo(expectedScore);
     }
 
     private static Stream<Arguments> getNotFinishedParam() {
@@ -110,7 +110,7 @@ public class ScoresTest {
     @MethodSource("getOrdinaryScoreParams")
     public void calculateOrdinaryScore(Integer previousScore, List<Score> nextScores, Integer expectedScore) {
         Scores scores = Scores.of(Arrays.asList(Score.ordinary(3), Score.ordinary(4)));
-        assertThat(scores.calculateScore(previousScore, nextScores)).isEqualTo(expectedScore);
+        assertThat(scores.calculate(previousScore, nextScores)).isEqualTo(expectedScore);
     }
 
     private static Stream<Arguments> getOrdinaryScoreParams() {
@@ -125,7 +125,7 @@ public class ScoresTest {
     @MethodSource("getSpareScoreParam")
     public void calculateSpareScore(Integer previousScore, List<Score> nextScores, Integer expectedScore) {
         Scores scores = Scores.of(Arrays.asList(Score.ordinary(3), Score.spare(7)));
-        assertThat(scores.calculateScore(previousScore, nextScores)).isEqualTo(expectedScore);
+        assertThat(scores.calculate(previousScore, nextScores)).isEqualTo(expectedScore);
     }
 
     private static Stream<Arguments> getSpareScoreParam() {
@@ -144,7 +144,7 @@ public class ScoresTest {
     @MethodSource("getStrikeScoreParam")
     public void calculateStrikeScore(Integer previousScore, List<Score> nextScores, Integer expectedScore) {
         Scores scores = Scores.of(Collections.singletonList(Score.strike()));
-        assertThat(scores.calculateScore(previousScore, nextScores)).isEqualTo(expectedScore);
+        assertThat(scores.calculate(previousScore, nextScores)).isEqualTo(expectedScore);
     }
 
     private static Stream<Arguments> getStrikeScoreParam() {

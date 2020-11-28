@@ -59,7 +59,7 @@ public class LastScoresTest {
     @ParameterizedTest
     @MethodSource("getLastScoreParam")
     public void calculateStrikeScore(LastScores lastScores, Integer previousScore, List<Score> nextScores, Integer expectedScore) {
-        assertThat(lastScores.calculateScore(previousScore, nextScores)).isEqualTo(expectedScore);
+        assertThat(lastScores.calculate(previousScore, nextScores)).isEqualTo(expectedScore);
     }
 
     private static Stream<Arguments> getLastScoreParam() {

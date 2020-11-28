@@ -52,7 +52,7 @@ public class Frame {
     }
 
     public Integer calculateScore(Integer previousFrameScore, List<Frame> nextFrames) {
-        return scores.calculateScore(previousFrameScore, getNextScores(nextFrames));
+        return scores.calculate(previousFrameScore, getNextScores(nextFrames));
     }
 
     private List<Score> getNextScores(List<Frame> nextFrames) {
