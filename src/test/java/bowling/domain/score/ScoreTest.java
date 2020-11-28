@@ -69,7 +69,7 @@ public class ScoreTest {
     @DisplayName("스트라이크 점수 by of method")
     @Test
     public void strikeWithNoSpare() {
-        Score score = Score.of(10, false);
+        Score score = Score.of(null, 10);
 
         assertThat(score).isEqualTo(Score.strike());
     }
@@ -77,15 +77,15 @@ public class ScoreTest {
     @DisplayName("스페어 점수 by of method")
     @Test
     public void spareByOf() {
-        Score score = Score.of(4, true);
+        Score score = Score.of(Score.ordinary(6), 4);
 
         assertThat(score).isEqualTo(Score.spare(4));
     }
 
     @DisplayName("일반 점수 by of method")
     @Test
-    public void ordinaryByof() {
-        Score score = Score.of(4, false);
+    public void ordinaryByOf() {
+        Score score = Score.of(null, 4);
 
         assertThat(score).isEqualTo(Score.ordinary(4));
     }
@@ -93,7 +93,7 @@ public class ScoreTest {
     @DisplayName("거터 점수 by of method")
     @Test
     public void gutterByOf() {
-        Score score = Score.of(0, false);
+        Score score = Score.of(null, 0);
 
         assertThat(score).isEqualTo(Score.gutter());
     }

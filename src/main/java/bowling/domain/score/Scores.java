@@ -1,6 +1,7 @@
 package bowling.domain.score;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static bowling.domain.score.Score.MAX_SCORE;
@@ -8,6 +9,8 @@ import static bowling.domain.score.Score.MAX_SCORE;
 public class Scores {
     private static final int MAX_TRY_COUNT = 2;
     private static final int MAX_TRY_COUNT_AT_LAST = 3;
+    private static final int MAX_SCORES = 10;
+    private static final int MAX_SCORES_AT_LAST = 30;
     private final List<Score> scores;
     private final int tryCount;
 
@@ -25,7 +28,7 @@ public class Scores {
     }
 
     public List<Score> getScores() {
-        return scores;
+        return Collections.unmodifiableList(scores);
     }
 
     public int sum() {
@@ -35,36 +38,41 @@ public class Scores {
     }
 
     public Score getScore(int tryCount) {
+        if (tryCount > this.tryCount || tryCount < 1) {
+            return null;
+        }
         return scores.get(tryCount - 1);
     }
 
     public Scores add(int score, boolean isLast) {
+        validateMaxTryCount(isLast);
+        validateMaxScores(score, isLast);
+        return add(score);
+    }
+
+    private Scores add(int score) {
         List<Score> scores = new ArrayList<>(this.scores);
-        scores.add(makeScore(score, isLast));
+        scores.add(Score.of(getScore(tryCount), score));
         return new Scores(scores);
     }
 
-    private boolean canNotBeSpare(boolean isLast) {
-        return isFirstTry() || (isLast && isSecondTry() && !isFirstStrike());
-    }
-
-    private boolean isSecondTry() {
-        return tryCount == MAX_TRY_COUNT;
-    }
-
-    private boolean isFirstTry() {
-        return tryCount == 0;
-    }
-
-    private Score makeScore(int score, boolean isLast) {
-        if (canNotBeSpare(isLast)) {
-            return Score.of(score, false);
+    private void validateMaxTryCount(boolean isLast) {
+        if (isFinished(isLast)) {
+            throw new InvalidScoreAddException();
         }
-        return Score.of(score, isSpare(score));
     }
 
-    private boolean isSpare(int score) {
-        return getScore(tryCount).getScore() + score == MAX_SCORE;
+    private void validateMaxScores(int score, boolean isLast) {
+        if (sum() + score > getMaxScores(isLast)) {
+            throw new InvalidMaxScoresException();
+        }
+    }
+
+    private int getMaxScores(boolean isLast) {
+        if (isLast) {
+            return MAX_SCORES_AT_LAST;
+        }
+        return MAX_SCORES;
     }
 
     public boolean isFinished(boolean isLast) {
@@ -75,22 +83,26 @@ public class Scores {
     }
 
     private boolean isFinishedAtLast() {
-        return (isSecondTry() && sum() < MAX_SCORE) || isThirdTry();
+        return (secondTried() && sum() < MAX_SCORE) || thirdTried();
     }
 
-    private boolean isThirdTry() {
+    private boolean secondTried() {
+        return tryCount == MAX_TRY_COUNT;
+    }
+
+    private boolean thirdTried() {
         return tryCount == MAX_TRY_COUNT_AT_LAST;
     }
 
     private boolean isFinished() {
-        return (isFirstStrike()) || isSecondTry();
+        return (hasFirstStrike()) || secondTried();
     }
 
-    private boolean isFirstStrike() {
+    private boolean hasFirstStrike() {
         return tryCount >= 1 && getScore(1).isStrike();
     }
 
-    private boolean isSecondSpare() {
+    private boolean hasSecondSpare() {
         return tryCount >= 2 && getScore(2).isSpare();
     }
 
@@ -105,7 +117,7 @@ public class Scores {
     }
 
     private boolean needNextScores(boolean isLast) {
-        return !isLast && isFinished() && (isFirstStrike() || isSecondSpare());
+        return !isLast && isFinished() && (hasFirstStrike() || hasSecondSpare());
     }
 
     private Integer calculateScoreWithNext(Integer previousScore, List<Score> nextScores) {
@@ -120,10 +132,10 @@ public class Scores {
     }
 
     private int getMinimumTryCount() {
-        if (isFirstStrike()) {
+        if (hasFirstStrike()) {
             return 2;
         }
-        if (isSecondSpare()) {
+        if (hasSecondSpare()) {
             return 1;
         }
         return 0;

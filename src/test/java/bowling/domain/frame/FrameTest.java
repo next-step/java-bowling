@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.InvalidScoreAddException;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ public class FrameTest {
         assertThat(frame.isFinished()).isEqualTo(true);
         assertThatThrownBy(() -> {
             frame.record(10);
-        }).isInstanceOf(InvalidFrameRecordActionException.class);
+        }).isInstanceOf(InvalidScoreAddException.class);
     }
 
     @DisplayName("마지막 프레임 종료 확인 테스트")
@@ -63,7 +64,7 @@ public class FrameTest {
         assertThat(frame.isFinished()).isEqualTo(true);
         assertThatThrownBy(() -> {
             frame.record(10);
-        }).isInstanceOf(InvalidFrameRecordActionException.class);
+        }).isInstanceOf(InvalidScoreAddException.class);
     }
 
     private static Stream<Arguments> getScoresForLastFrame() {

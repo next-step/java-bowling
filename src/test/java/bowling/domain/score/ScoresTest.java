@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("프레임별 점수 테스트")
 public class ScoresTest {
@@ -36,7 +38,7 @@ public class ScoresTest {
         return Stream.of(
                 Arguments.arguments(Scores.empty(), 8, false, 1, Score.ordinary(8)),
                 Arguments.arguments(Scores.of(Collections.singletonList(Score.ordinary(2))), 8, false, 2, Score.spare(8)),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.ordinary(2), Score.spare(8))), 10, false, 3, Score.strike())
+                Arguments.arguments(Scores.of(Arrays.asList(Score.ordinary(2), Score.spare(8))), 10, true, 3, Score.strike())
         );
     }
 
@@ -211,4 +213,21 @@ public class ScoresTest {
         );
     }
 
+    @DisplayName("일반 프레임 최대 점수 추가")
+    @ParameterizedTest
+    @ValueSource(ints = {8, 9, 10})
+    public void normalFrameMaxScores(int score) {
+        assertThatThrownBy(() -> {
+            Scores.empty().add(3, false).add(score, false);
+        }).isInstanceOf(InvalidMaxScoresException.class);
+    }
+
+    @DisplayName("마지막 프레임 최대 점수 추가")
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 9, 10})
+    public void lastFrameMaxScores(int score) {
+        assertThatThrownBy(() -> {
+            Scores.empty().add(2, true).add(10, true).add(10, true).add(score, true);
+        }).isInstanceOf(InvalidScoreAddException.class);
+    }
 }

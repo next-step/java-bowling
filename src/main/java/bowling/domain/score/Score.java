@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import java.util.Optional;
+
 import static bowling.domain.score.ScoreType.ORDINARY;
 import static bowling.domain.score.ScoreType.SPARE;
 import static bowling.domain.score.ScoreType.STRIKE;
@@ -16,23 +18,8 @@ public class Score {
         this.type = type;
     }
 
-    public static Score ordinary(int score) {
-        return of(score, ScoreType.ORDINARY);
-    }
-
-    public static Score of(int score, ScoreType type) {
-        validateScore(score);
-        return new Score(score, type);
-    }
-
-    private static void validateScore(int score) {
-        if (score < MIN_SCORE || score > MAX_SCORE) {
-            throw new InvalidScoreException();
-        }
-    }
-
-    public static Score of(int score, boolean isSpare) {
-        if (isSpare) {
+    public static Score of(Score previousScore, int score) {
+        if (isSpare(previousScore, score)) {
             return spare(score);
         }
         if (score == MIN_SCORE) {
@@ -44,16 +31,37 @@ public class Score {
         return ordinary(score);
     }
 
-    public static Score strike() {
-        return of(MAX_SCORE, STRIKE);
+    private static Boolean isSpare(Score previousScore, int score) {
+        return Optional.ofNullable(previousScore)
+                .map(prevScore -> prevScore.getScore() + score == MAX_SCORE)
+                .orElse(false);
     }
 
     public static Score spare(int score) {
         return of(score, SPARE);
     }
 
+    private static Score of(int score, ScoreType type) {
+        validateScore(score);
+        return new Score(score, type);
+    }
+
+    private static void validateScore(int score) {
+        if (score < MIN_SCORE || score > MAX_SCORE) {
+            throw new InvalidScoreException();
+        }
+    }
+
     public static Score gutter() {
         return of(0, ScoreType.GUTTER);
+    }
+
+    public static Score strike() {
+        return of(MAX_SCORE, STRIKE);
+    }
+
+    public static Score ordinary(int score) {
+        return of(score, ScoreType.ORDINARY);
     }
 
     public int getScore() {
@@ -69,7 +77,7 @@ public class Score {
     }
 
     public boolean isOrdinary() {
-        return type.equals(ORDINARY);
+        return ORDINARY.equals(type);
     }
 
     public boolean isSpare() {

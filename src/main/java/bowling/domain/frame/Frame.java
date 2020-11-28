@@ -32,9 +32,6 @@ public class Frame {
     }
 
     public void record(int score) {
-        if (isFinished()) {
-            throw new InvalidFrameRecordActionException();
-        }
         scores = scores.add(score, frameNumber.isLast());
     }
 
