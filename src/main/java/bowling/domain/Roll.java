@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.dto.RollDto;
 import bowling.exception.RollException;
 
 import java.util.HashMap;
@@ -39,5 +40,9 @@ public class Roll {
         return rolls.stream()
                 .map(roll -> roll.countOfPins)
                 .reduce(0, Integer::sum);
+    }
+
+    RollDto exportRollDto() {
+        return new RollDto(countOfPins);
     }
 }

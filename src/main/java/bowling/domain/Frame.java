@@ -1,24 +1,40 @@
 package bowling.domain;
 
-import bowling.exception.FrameException;
+import bowling.dto.FrameDto;
 
 class Frame {
     private final int startIndex;
-    private int offset = 1;
+    private FrameEnum frameEnum;
 
-    Frame(int startIndex) {
+    private Frame(int startIndex, FrameEnum frameEnum) {
         this.startIndex = startIndex;
+        this.frameEnum = frameEnum;
     }
 
-    void increaseOffset() {
-        if (offset >= 2) {
-            throw new FrameException("한 프레임에서는 두번만 투구할 수 있습니다.");
-        }
-        offset++;
+    static Frame of(Rolls rolls) {
+        int startIndex = rolls.size() - 1;
+        int countOfRolls = 1;
+        int countOfPins = rolls.sum(startIndex, countOfRolls);
+        FrameEnum frameEnum = FrameEnum.get(countOfRolls, countOfPins);
+        return new Frame(startIndex, frameEnum);
+    }
+
+    void update(Rolls rolls) {
+        int countOfRolls = 2;
+        int countOfPins = rolls.sum(startIndex, countOfRolls);
+        frameEnum = FrameEnum.get(countOfRolls, countOfPins);
+    }
+
+    boolean isFinished() {
+        return frameEnum != FrameEnum.UNFINISHED;
+    }
+
+    boolean isBonus() {
+        return frameEnum == FrameEnum.STRIKE
+                || frameEnum == FrameEnum.SPARE;
     }
 
     int score(Rolls rolls) {
-        FrameEnum frameEnum = frameEnum(rolls);
         return frameEnum == FrameEnum.MISS
                 ? rolls.sum(startIndex, 2)
                 : frameEnum == FrameEnum.SPARE
@@ -28,8 +44,7 @@ class Frame {
                 : -1;
     }
 
-    FrameEnum frameEnum(Rolls rolls) {
-        int countOfPins = rolls.sum(startIndex, offset);
-        return FrameEnum.get(offset, countOfPins);
+    FrameDto exportFrameDto() {
+        return new FrameDto(startIndex, frameEnum);
     }
 }

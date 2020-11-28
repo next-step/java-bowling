@@ -1,9 +1,9 @@
 package bowling.view;
 
-import bowling.dto.PlayerDto;
-import bowling.dto.RollDto;
-import bowling.view.printable.AskPlayerPrintable;
-import bowling.view.printable.AskRollPrintable;
+import bowling.dto.CountOfPinsDto;
+import bowling.dto.NameDto;
+import bowling.view.printable.AskCountOfPinsPrintable;
+import bowling.view.printable.AskNamePrintable;
 
 import java.util.Scanner;
 
@@ -12,14 +12,14 @@ public class InputView {
 
     private InputView() {}
 
-    public static PlayerDto askPlayer() {
-        new AskPlayerPrintable().print();
-        return new PlayerDto(nextLine());
+    public static NameDto askName() {
+        new AskNamePrintable().print();
+        return new NameDto(nextLine());
     }
 
-    public static RollDto askRoll(int frameNo) {
-        new AskRollPrintable(frameNo).print();
-        return new RollDto(nextInt());
+    public static CountOfPinsDto askCountOfPins(int frameNo) {
+        new AskCountOfPinsPrintable(frameNo).print();
+        return new CountOfPinsDto(nextInt());
     }
 
 

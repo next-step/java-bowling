@@ -1,8 +1,11 @@
 package bowling.domain;
 
+import bowling.dto.RollsDto;
+
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 class Rolls {
@@ -26,9 +29,15 @@ class Rolls {
             return -1;
         }
         return Roll.sum(
-                IntStream.range(startIdx, offset)
+                IntStream.range(startIdx, endIdx)
                         .mapToObj(rolls::get)
                         .collect(toList())
         );
+    }
+
+    RollsDto exportRollsDto() {
+        return rolls.stream()
+                .map(Roll::exportRollDto)
+                .collect(collectingAndThen(toList(), RollsDto::new));
     }
 }

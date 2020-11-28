@@ -1,13 +1,15 @@
 package bowling.domain;
 
+import bowling.dto.RollsDto;
+
 import java.util.function.Supplier;
 
-public class RollSubject extends Subject<Rolls> {
+class RollSubject extends Subject<Rolls> {
     private final Rolls rolls = new Rolls();
-    private final Supplier<Roll> supplier;
+    private final Supplier<Roll> strategy;
 
-    RollSubject(Supplier<Roll> supplier) {
-        this.supplier = supplier;
+    RollSubject(Supplier<Roll> strategy) {
+        this.strategy = strategy;
     }
 
     @Override
@@ -17,7 +19,16 @@ public class RollSubject extends Subject<Rolls> {
 
     @Override
     void execute() {
-        rolls.add(supplier.get());
+        rolls.add(strategy.get());
         notifyObservers();
+    }
+
+    void executeZero() {
+        rolls.add(Roll.of(0));
+        notifyObservers();
+    }
+
+    RollsDto exportRollsDto() {
+        return rolls.exportRollsDto();
     }
 }

@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.dto.ScoreDto;
+
 class Score {
     private final int score;
 
@@ -9,5 +11,9 @@ class Score {
 
     boolean isValid() {
         return score >= 0;
+    }
+
+    ScoreDto exportScoreDto() {
+        return new ScoreDto(score);
     }
 }

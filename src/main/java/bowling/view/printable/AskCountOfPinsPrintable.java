@@ -1,10 +1,10 @@
 package bowling.view.printable;
 
-public class AskRollPrintable extends Printable {
+public class AskCountOfPinsPrintable extends Printable {
 
     private final int frameNo;
 
-    public AskRollPrintable(int frameNo) {
+    public AskCountOfPinsPrintable(int frameNo) {
         this.frameNo = frameNo;
     }
 

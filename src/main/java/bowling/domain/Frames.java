@@ -1,13 +1,18 @@
 package bowling.domain;
 
+import bowling.dto.FramesDto;
+
 import java.util.LinkedList;
 import java.util.List;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 class Frames {
     // NOTE: getLast 를 쓰기 위해 LinkedList 로 선언
     private final LinkedList<Frame> frames = new LinkedList<>();
 
-    int size() {
+    int frameNo() {
         return frames.size();
     }
 
@@ -16,15 +21,28 @@ class Frames {
     }
 
     void update(Rolls rolls) {
-        if (isLastFinished(rolls)) {
-            frames.add(new Frame(rolls.size() - 1));
+        if (isLastFinished()) {
+            frames.add(Frame.of(rolls));
         }
-        frames.getLast().increaseOffset();
+        last().update(rolls);
     }
 
-    private boolean isLastFinished(Rolls rolls) {
+    boolean isBonus() {
+        return last().isBonus();
+    }
+
+    boolean isLastFinished() {
         return frames.isEmpty()
-                || frames.getLast()
-                .frameEnum(rolls) != FrameEnum.UNFINISHED;
+                || last().isFinished();
+    }
+
+    private Frame last() {
+        return frames.getLast();
+    }
+
+    FramesDto exportFramesDto() {
+        return frames.stream()
+                .map(Frame::exportFrameDto)
+                .collect(collectingAndThen(toList(), FramesDto::new));
     }
 }
