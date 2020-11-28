@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -48,13 +49,9 @@ public class Frames {
     }
 
     private void increaseCurrentFrameNumber(Frame currentFrame) {
-        if (frameIsFinished(currentFrame)) {
+        if (currentFrame.isFinished()) {
             currentFrameNumber += 1;
         }
-    }
-
-    private boolean frameIsFinished(Frame currentFrame) {
-        return currentFrame.isFinished();
     }
 
     public List<Frame> getFrames() {
@@ -72,10 +69,13 @@ public class Frames {
     }
 
     private Integer calculateScore(int frameNumber, Integer previousFrameScore) {
-        if (previousFrameScore == null || frameNumber > currentFrameNumber || !frameIsFinished(getFrame(frameNumber))) {
-            return null;
-        }
-        return getFrame(frameNumber).calculateScore(previousFrameScore);
+        return Optional.ofNullable(previousFrameScore)
+                .map(previousScore -> getFrame(frameNumber).calculateScore(previousScore, getNextFrames(frameNumber)))
+                .orElse(null);
+    }
+
+    private List<Frame> getNextFrames(int frameNumber) {
+        return frames.subList(frameNumber, Math.min(frameNumber + 2, MAX_FRAME_NUMBER));
     }
 
     private Frame getFrame(int frameNumber) {

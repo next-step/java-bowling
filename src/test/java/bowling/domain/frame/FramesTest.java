@@ -118,6 +118,11 @@ public class FramesTest {
     }
 
 
+    @Test
+    public void subList() {
+        System.out.println(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).subList(10, 10));
+    }
+
     @DisplayName("스페어에서 다음 프레임 점수 합산")
     @Test
     public void spareScore() {

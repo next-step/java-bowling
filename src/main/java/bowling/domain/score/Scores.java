@@ -40,23 +40,31 @@ public class Scores {
 
     public Scores add(int score, boolean isLast) {
         List<Score> scores = new ArrayList<>(this.scores);
-        scores.add(makeScore(score, hasNoSpare(isLast)));
+        scores.add(makeScore(score, isLast));
         return new Scores(scores);
     }
 
-    private boolean hasNoSpare(boolean isLast) {
-        return tryCount == 0 || (isLast && tryCount == MAX_TRY_COUNT && !isFirstStrike());
+    private boolean canNotBeSpare(boolean isLast) {
+        return isFirstTry() || (isLast && isSecondTry() && !isFirstStrike());
     }
 
-    private Score makeScore(int score, boolean hasNoSpare) {
-        if (hasNoSpare) {
+    private boolean isSecondTry() {
+        return tryCount == MAX_TRY_COUNT;
+    }
+
+    private boolean isFirstTry() {
+        return tryCount == 0;
+    }
+
+    private Score makeScore(int score, boolean isLast) {
+        if (canNotBeSpare(isLast)) {
             return Score.of(score, false);
         }
-        return Score.of(score, getPreviousScore() + score == MAX_SCORE);
+        return Score.of(score, isSpare(score));
     }
 
-    private int getPreviousScore() {
-        return scores.get(tryCount - 1).getScore();
+    private boolean isSpare(int score) {
+        return getScore(tryCount).getScore() + score == MAX_SCORE;
     }
 
     public boolean isFinished(boolean isLast) {
@@ -67,26 +75,51 @@ public class Scores {
     }
 
     private boolean isFinishedAtLast() {
-        return tryCount == MAX_TRY_COUNT && sum() < MAX_SCORE || tryCount == MAX_TRY_COUNT_AT_LAST;
+        return (isSecondTry() && sum() < MAX_SCORE) || isThirdTry();
+    }
+
+    private boolean isThirdTry() {
+        return tryCount == MAX_TRY_COUNT_AT_LAST;
     }
 
     private boolean isFinished() {
-        return (tryCount == 1 && isFirstStrike()) || tryCount == MAX_TRY_COUNT;
+        return (isFirstStrike()) || isSecondTry();
     }
 
-    public boolean isFirstStrike() {
-        return scores.get(0).isStrike();
+    private boolean isFirstStrike() {
+        return tryCount >= 1 && getScore(1).isStrike();
     }
 
-    public boolean isSecondSpare() {
-        return scores.get(1).isSpare();
+    private boolean isSecondSpare() {
+        return tryCount >= 2 && getScore(2).isSpare();
     }
 
-    public boolean needNextScores() {
-        return isFirstStrike() || isSecondSpare();
+    public Integer calculateScore(Integer previousScore, List<Score> nextScores, boolean isLast) {
+        if (!isFinished(isLast)) {
+            return null;
+        }
+        if (needNextScores(isLast)) {
+            return calculateScoreWithNext(previousScore, nextScores);
+        }
+        return calculateWithoutNext(previousScore);
     }
 
-    public int getMinimumTryCount() {
+    private boolean needNextScores(boolean isLast) {
+        return !isLast && isFinished() && (isFirstStrike() || isSecondSpare());
+    }
+
+    private Integer calculateScoreWithNext(Integer previousScore, List<Score> nextScores) {
+        if (hasEnoughNextScores(nextScores)) {
+            return calculateWithoutNext(previousScore) + sumNextScores(nextScores);
+        }
+        return null;
+    }
+
+    private boolean hasEnoughNextScores(List<Score> nextScores) {
+        return getMinimumTryCount() <= nextScores.size();
+    }
+
+    private int getMinimumTryCount() {
         if (isFirstStrike()) {
             return 2;
         }
@@ -96,7 +129,14 @@ public class Scores {
         return 0;
     }
 
-    public int getTryCount() {
-        return tryCount;
+    private Integer sumNextScores(List<Score> nextScores) {
+        return nextScores.subList(0, getMinimumTryCount())
+                .stream()
+                .mapToInt(Score::getScore)
+                .sum();
+    }
+
+    private int calculateWithoutNext(Integer previousScore) {
+        return previousScore + sum();
     }
 }
