@@ -97,4 +97,12 @@ public class ScoreTest {
 
         assertThat(score).isEqualTo(Score.gutter());
     }
+
+    @DisplayName("마지막 프레임 스트라이크 이후 점수")
+    @Test
+    public void afterStrikeAtLast() {
+        Score score = Score.of(Score.strike(), 10);
+        
+        assertThat(score).isEqualTo(Score.strike());
+    }
 }
