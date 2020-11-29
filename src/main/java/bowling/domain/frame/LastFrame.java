@@ -8,16 +8,16 @@ import java.util.List;
 
 public class LastFrame extends Frame {
 
-    private LastFrame(FrameNumber frameNumber, Scores scores) {
-        super(frameNumber, scores);
+    private LastFrame(Scores scores) {
+        super(scores);
     }
 
     public static LastFrame empty() {
-        return new LastFrame(FrameNumber.last(), LastScores.empty());
+        return new LastFrame(LastScores.empty());
     }
 
-    public static LastFrame of(int frameNumber, List<Score> scores) {
-        return new LastFrame(FrameNumber.of(frameNumber), LastScores.of(scores));
+    public static LastFrame of(List<Score> scores) {
+        return new LastFrame(LastScores.of(scores));
     }
 
 //    public int getFrameNumber() {

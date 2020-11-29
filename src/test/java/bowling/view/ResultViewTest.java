@@ -23,16 +23,16 @@ public class ResultViewTest {
         ResultView resultView = new ResultView(new PrintWriter(output));
 
         resultView.showFrames("PJS", Arrays.asList(
-                Frame.of(1, Arrays.asList(Score.strike())),
-                Frame.of(2, Arrays.asList(Score.ordinary(8), Score.spare(2))),
-                Frame.of(3, Arrays.asList(Score.ordinary(7), Score.gutter())),
-                Frame.of(4, Collections.emptyList()),
-                Frame.of(5, Collections.emptyList()),
-                Frame.of(6, Collections.emptyList()),
-                Frame.of(7, Collections.emptyList()),
-                Frame.of(8, Collections.emptyList()),
-                Frame.of(9, Collections.emptyList()),
-                Frame.of(10, Collections.emptyList())
+                Frame.of(Collections.singletonList(Score.strike())),
+                Frame.of(Arrays.asList(Score.ordinary(8), Score.spare(2))),
+                Frame.of(Arrays.asList(Score.ordinary(7), Score.gutter())),
+                Frame.of(Collections.emptyList()),
+                Frame.of(Collections.emptyList()),
+                Frame.of(Collections.emptyList()),
+                Frame.of(Collections.emptyList()),
+                Frame.of(Collections.emptyList()),
+                Frame.of(Collections.emptyList()),
+                Frame.of(Collections.emptyList())
         ));
 
         assertThat(output.toString()).isEqualTo("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |\n" +

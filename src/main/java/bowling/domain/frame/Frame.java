@@ -7,34 +7,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Frame {
-    protected final FrameNumber frameNumber;
     protected Scores scores;
 
-    protected Frame(FrameNumber frameNumber, Scores scores) {
-        this.frameNumber = frameNumber;
+    protected Frame(Scores scores) {
         this.scores = scores;
     }
 
-    public static Frame first() {
-        return new Frame(FrameNumber.first(), Scores.empty());
+    public static Frame empty() {
+        return new Frame(Scores.empty());
     }
 
-    public static Frame of(int frameNumber, List<Score> scores) {
-        return new Frame(FrameNumber.of(frameNumber), Scores.of(scores));
-    }
-
-    public int getFrameNumber() {
-        return frameNumber.getNumber();
-    }
-
-    public Frame next() {
-        return new Frame(frameNumber.next(), Scores.empty());
+    public static Frame of(List<Score> scores) {
+        return new Frame(Scores.of(scores));
     }
 
     public void record(int score) {
         scores = scores.add(score);
     }
-    
+
     public boolean isFinished() {
         return scores.isFinished();
     }

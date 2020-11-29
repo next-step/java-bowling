@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 public class Frames {
     private static final int MIN_FRAME_NUMBER = 1;
@@ -23,11 +23,15 @@ public class Frames {
     }
 
     private static List<Frame> createFrames() {
-        List<Frame> frames = Stream.iterate(Frame.first(), Frame::next)
-                .limit(MAX_FRAME_NUMBER - 1)
-                .collect(Collectors.toList());
-        frames.add(LastFrame.empty());
-        return frames;
+        return IntStream.range(MIN_FRAME_NUMBER, MAX_FRAME_NUMBER + 1)
+                .mapToObj(Frames::createFrame).collect(Collectors.toList());
+    }
+
+    private static Frame createFrame(int frameNumber) {
+        if (frameNumber == MAX_FRAME_NUMBER) {
+            return LastFrame.empty();
+        }
+        return Frame.empty();
     }
 
     public int getCurrentFrameNumber() {

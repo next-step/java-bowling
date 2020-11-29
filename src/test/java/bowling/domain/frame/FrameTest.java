@@ -10,26 +10,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("일반 프레임 테스트")
 public class FrameTest {
-    @DisplayName("일반 프레임 생성")
-    @Test
-    public void create() {
-        Frame frame = Frame.first();
-
-        assertThat(frame.getFrameNumber()).isEqualTo(1);
-    }
-
-    @DisplayName("다음 프레임 생성")
-    @Test
-    public void next() {
-        Frame frame = Frame.first().next();
-
-        assertThat(frame.getFrameNumber()).isEqualTo(2);
-    }
-
     @DisplayName("점수 기록")
     @Test
     public void recordScore() {
-        Frame frame = Frame.first();
+        Frame frame = Frame.empty();
 
         frame.record(10);
 
@@ -39,7 +23,7 @@ public class FrameTest {
     @DisplayName("점수기록하면 안되는 경우")
     @Test
     public void invalidRecordScore() {
-        Frame frame = Frame.first();
+        Frame frame = Frame.empty();
         frame.record(10);
 
         assertThat(frame.isFinished()).isEqualTo(true);
