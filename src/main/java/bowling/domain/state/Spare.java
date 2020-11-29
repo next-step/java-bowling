@@ -5,22 +5,22 @@ import bowling.domain.state.last.LastGutter;
 import bowling.domain.state.last.LastOrdinary;
 import bowling.domain.state.last.LastStrike;
 
-import static bowling.domain.score.Score.MAX_SCORE;
-import static bowling.domain.score.Score.MIN_SCORE;
+import static bowling.domain.pin.Pin.MAX_PINS;
+import static bowling.domain.pin.Pin.MIN_PINS;
 
 public class Spare implements State {
-    private final int score;
+    private final int pins;
 
-    public Spare(int score) {
-        this.score = score;
+    public Spare(int pins) {
+        this.pins = pins;
     }
 
     @Override
     public State record(int pins) {
-        if (pins == MAX_SCORE) {
+        if (pins == MAX_PINS) {
             return new LastStrike();
         }
-        if (pins == MIN_SCORE) {
+        if (pins == MIN_PINS) {
             return new LastGutter();
         }
         return new LastOrdinary(pins);
@@ -28,6 +28,6 @@ public class Spare implements State {
 
     @Override
     public Score getScore() {
-        return Score.spare(score);
+        return Score.spare(pins);
     }
 }

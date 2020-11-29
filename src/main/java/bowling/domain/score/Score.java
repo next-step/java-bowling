@@ -5,9 +5,9 @@ import static bowling.domain.score.ScoreType.SPARE;
 import static bowling.domain.score.ScoreType.STRIKE;
 
 public class Score {
-
     public static final int MIN_SCORE = 0;
     public static final int MAX_SCORE = 10;
+    
     private final int score;
     private final ScoreType type;
 

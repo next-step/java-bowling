@@ -3,15 +3,15 @@ package bowling.domain.state.last;
 import bowling.domain.score.Score;
 
 public class LastOrdinary implements LastState {
-    private final int score;
+    private final int pins;
 
-    public LastOrdinary(int score) {
-        this.score = score;
+    public LastOrdinary(int pins) {
+        this.pins = pins;
     }
 
     @Override
     public Score getScore() {
-        return Score.ordinary(score);
+        return Score.ordinary(pins);
     }
 
 }

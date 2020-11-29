@@ -1,39 +1,39 @@
 package bowling.domain.pin;
 
 public class Pin {
-    private static final int MIN_PINS = 0;
-    private static final int MAX_PINS = 10;
+    public static final int MIN_PINS = 0;
+    public static final int MAX_PINS = 10;
 
-    private final int falledPins;
+    private final int pins;
 
-    private Pin(int falledPins) {
-        this.falledPins = falledPins;
+    private Pin(int pins) {
+        this.pins = pins;
     }
 
-    public static Pin of(int falledPins) {
-        validPins(falledPins);
-        return new Pin(falledPins);
+    public static Pin of(int pins) {
+        validPins(pins);
+        return new Pin(pins);
     }
 
-    private static void validPins(int falledPins) {
-        validMax(falledPins);
-        validMin(falledPins);
+    private static void validPins(int pins) {
+        validMax(pins);
+        validMin(pins);
     }
 
-    private static void validMax(int falledPins) {
-        if (falledPins > MAX_PINS) {
-            throw new InvalidMaximumPinException(falledPins);
+    private static void validMax(int pins) {
+        if (pins > MAX_PINS) {
+            throw new InvalidMaximumPinException(pins);
         }
     }
 
-    private static void validMin(int falledPins) {
-        if (falledPins < MIN_PINS) {
-            throw new InvalidMinimumPinException(falledPins);
+    private static void validMin(int pins) {
+        if (pins < MIN_PINS) {
+            throw new InvalidMinimumPinException(pins);
         }
     }
 
-    public int getFalledPins() {
-        return falledPins;
+    public int getPins() {
+        return pins;
     }
 }
 

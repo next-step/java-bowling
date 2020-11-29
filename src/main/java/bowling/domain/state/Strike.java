@@ -5,8 +5,8 @@ import bowling.domain.state.last.LastGutter;
 import bowling.domain.state.last.LastOrdinary;
 import bowling.domain.state.last.LastStrike;
 
-import static bowling.domain.score.Score.MAX_SCORE;
-import static bowling.domain.score.Score.MIN_SCORE;
+import static bowling.domain.pin.Pin.MAX_PINS;
+import static bowling.domain.pin.Pin.MIN_PINS;
 
 public class Strike implements State {
     private final int leftTry;
@@ -20,23 +20,23 @@ public class Strike implements State {
         if (leftTry == MIN_LEFT_TRY) {
             return recordLast(pins);
         }
-        if (pins == MAX_SCORE) {
+        if (pins == MAX_PINS) {
             return new Strike(leftTry - 1);
         }
-        if (pins == MIN_SCORE) {
+        if (pins == MIN_PINS) {
             return new Gutter(leftTry - 1);
         }
         return new Ordinary(pins, leftTry - 1);
     }
 
-    private State recordLast(int score) {
-        if (score == MAX_SCORE) {
+    private State recordLast(int pins) {
+        if (pins == MAX_PINS) {
             return new LastStrike();
         }
-        if (score == MIN_SCORE) {
+        if (pins == MIN_PINS) {
             return new LastGutter();
         }
-        return new LastOrdinary(score);
+        return new LastOrdinary(pins);
     }
 
     @Override

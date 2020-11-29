@@ -6,46 +6,46 @@ import bowling.domain.state.last.LastGutter;
 import bowling.domain.state.last.LastOrdinary;
 import bowling.domain.state.last.LastSpare;
 
-import static bowling.domain.score.Score.MAX_SCORE;
-import static bowling.domain.score.Score.MIN_SCORE;
+import static bowling.domain.pin.Pin.MAX_PINS;
+import static bowling.domain.pin.Pin.MIN_PINS;
 import static bowling.domain.score.Score.ordinary;
 
 public class Ordinary implements State {
-    private final int score;
+    private final int pins;
     private int leftTry = MIN_LEFT_TRY;
 
-    public Ordinary(int score) {
-        this.score = score;
+    public Ordinary(int pins) {
+        this.pins = pins;
     }
 
-    public Ordinary(int score, int leftTry) {
-        this.score = score;
+    public Ordinary(int pins, int leftTry) {
+        this.pins = pins;
         this.leftTry = leftTry;
     }
 
     @Override
     public State record(int pins) {
-        if (pins == MAX_SCORE) {
+        if (pins == MAX_PINS) {
             throw new InvalidFrameRecordActionException();
         }
-        if (this.score + pins == MAX_SCORE) {
+        if (this.pins + pins == MAX_PINS) {
             return recordSpare(pins);
         }
-        if (pins == MIN_SCORE) {
+        if (pins == MIN_PINS) {
             return new LastGutter();
         }
         return new LastOrdinary(pins);
     }
 
-    private State recordSpare(int score) {
+    private State recordSpare(int pins) {
         if (leftTry == MIN_LEFT_TRY) {
-            return new LastSpare(score);
+            return new LastSpare(pins);
         }
-        return new Spare(score);
+        return new Spare(pins);
     }
 
     @Override
     public Score getScore() {
-        return ordinary(score);
+        return ordinary(pins);
     }
 }

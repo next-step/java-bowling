@@ -2,16 +2,16 @@ package bowling.domain.state;
 
 import bowling.domain.state.last.LastStrike;
 
-import static bowling.domain.score.Score.MAX_SCORE;
-import static bowling.domain.score.Score.MIN_SCORE;
+import static bowling.domain.pin.Pin.MAX_PINS;
+import static bowling.domain.pin.Pin.MIN_PINS;
 
 public class FrameReady implements State {
     @Override
     public State record(int pins) {
-        if (pins == MAX_SCORE) {
+        if (pins == MAX_PINS) {
             return new LastStrike();
         }
-        if (pins == MIN_SCORE) {
+        if (pins == MIN_PINS) {
             return new Gutter();
         }
         return new Ordinary(pins);
