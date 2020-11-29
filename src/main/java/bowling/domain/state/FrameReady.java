@@ -1,19 +1,19 @@
-package bowling.domain.frame;
+package bowling.domain.state;
+
+import bowling.domain.state.last.LastStrike;
 
 import static bowling.domain.score.Score.MAX_SCORE;
 import static bowling.domain.score.Score.MIN_SCORE;
 
-public class LastFrameReady implements State {
-    private static final int LEFT_TRY = 2;
-
+public class FrameReady implements State {
     @Override
     public State record(int score) {
         if (score == MAX_SCORE) {
-            return new Strike(LEFT_TRY);
+            return new LastStrike();
         }
         if (score == MIN_SCORE) {
-            return new Gutter(LEFT_TRY);
+            return new Gutter();
         }
-        return new Ordinary(score, LEFT_TRY);
+        return new Ordinary(score);
     }
 }

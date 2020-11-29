@@ -1,7 +1,11 @@
 package bowling.view;
 
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.LastFrame;
 import bowling.domain.score.Score;
+import bowling.domain.state.last.LastGutter;
+import bowling.domain.state.last.LastSpare;
+import bowling.domain.state.last.LastStrike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,16 +27,16 @@ public class ResultViewTest {
         ResultView resultView = new ResultView(new PrintWriter(output));
 
         resultView.showFrames("PJS", Arrays.asList(
-                Frame.of(Collections.singletonList(Score.strike())),
-                Frame.of(Arrays.asList(Score.ordinary(8), Score.spare(2))),
-                Frame.of(Arrays.asList(Score.ordinary(7), Score.gutter())),
-                Frame.of(Collections.emptyList()),
-                Frame.of(Collections.emptyList()),
-                Frame.of(Collections.emptyList()),
-                Frame.of(Collections.emptyList()),
-                Frame.of(Collections.emptyList()),
-                Frame.of(Collections.emptyList()),
-                Frame.of(Collections.emptyList())
+                Frame.of(Collections.singletonList(Score.strike()), new LastStrike()),
+                Frame.of(Arrays.asList(Score.ordinary(8), Score.spare(2)), new LastSpare(2)),
+                Frame.of(Arrays.asList(Score.ordinary(7), Score.gutter()), new LastGutter()),
+                Frame.empty(),
+                Frame.empty(),
+                Frame.empty(),
+                Frame.empty(),
+                Frame.empty(),
+                Frame.empty(),
+                LastFrame.empty()
         ));
 
         assertThat(output.toString()).isEqualTo("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |\n" +

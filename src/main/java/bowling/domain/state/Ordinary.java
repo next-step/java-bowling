@@ -1,6 +1,9 @@
-package bowling.domain.frame;
+package bowling.domain.state;
 
 import bowling.domain.score.Score;
+import bowling.domain.state.last.LastGutter;
+import bowling.domain.state.last.LastOrdinary;
+import bowling.domain.state.last.LastSpare;
 
 import static bowling.domain.score.Score.MAX_SCORE;
 import static bowling.domain.score.Score.MIN_SCORE;

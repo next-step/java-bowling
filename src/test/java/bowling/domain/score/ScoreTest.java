@@ -66,43 +66,4 @@ public class ScoreTest {
         assertThat(score.getType()).isEqualTo(GUTTER);
     }
 
-    @DisplayName("스트라이크 점수 by of method")
-    @Test
-    public void strikeWithNoSpare() {
-        Score score = Score.of(null, 10);
-
-        assertThat(score).isEqualTo(Score.strike());
-    }
-
-    @DisplayName("스페어 점수 by of method")
-    @Test
-    public void spareByOf() {
-        Score score = Score.of(Score.ordinary(6), 4);
-
-        assertThat(score).isEqualTo(Score.spare(4));
-    }
-
-    @DisplayName("일반 점수 by of method")
-    @Test
-    public void ordinaryByOf() {
-        Score score = Score.of(null, 4);
-
-        assertThat(score).isEqualTo(Score.ordinary(4));
-    }
-
-    @DisplayName("거터 점수 by of method")
-    @Test
-    public void gutterByOf() {
-        Score score = Score.of(null, 0);
-
-        assertThat(score).isEqualTo(Score.gutter());
-    }
-
-    @DisplayName("마지막 프레임 스트라이크 이후 점수")
-    @Test
-    public void afterStrikeAtLast() {
-        Score score = Score.of(Score.strike(), 10);
-        
-        assertThat(score).isEqualTo(Score.strike());
-    }
 }

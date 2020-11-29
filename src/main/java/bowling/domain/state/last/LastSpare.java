@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.state.last;
 
 import bowling.domain.score.Score;
 

@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Scores {
-    private static final int MAX_TRY_COUNT = 2;
-    private static final int MAX_SCORES = 10;
-    
     protected final List<Score> scores;
     protected final int tryCount;
 
@@ -29,66 +26,30 @@ public class Scores {
     }
 
     public int sum() {
+        return sum(this.scores);
+    }
+
+    private int sum(List<Score> scores) {
         return scores.stream()
                 .mapToInt(Score::getScore)
                 .sum();
     }
 
-    public Score getScore(int tryCount) {
-        if (tryCount > this.tryCount || tryCount < 1) {
-            return null;
-        }
-        return scores.get(tryCount - 1);
-    }
-
-    public Scores add(int score) {
-        validateMaxTryCount();
-        validateMaxScores(score);
-        return addScore(score);
-    }
-
-    protected Scores addScore(int score) {
+    public Scores add(Score score) {
         List<Score> scores = new ArrayList<>(this.scores);
-        scores.add(Score.of(getScore(tryCount), score));
+        scores.add(score);
         return new Scores(scores);
     }
 
-    private void validateMaxTryCount() {
-        if (isFinished()) {
-            throw new InvalidScoreAddException();
-        }
-    }
-
-    private void validateMaxScores(int score) {
-        if (sum() + score > getMaxScores()) {
-            throw new InvalidMaxScoresException();
-        }
-    }
-
-    protected int getMaxScores() {
-        return MAX_SCORES;
-    }
-
-    protected boolean secondTried() {
-        return tryCount == MAX_TRY_COUNT;
-    }
-
-    public boolean isFinished() {
-        return (hasFirstStrike()) || secondTried();
-    }
-
     private boolean hasFirstStrike() {
-        return tryCount >= 1 && getScore(1).isStrike();
+        return scores.get(0).isStrike();
     }
 
     private boolean hasSecondSpare() {
-        return tryCount >= 2 && getScore(2).isSpare();
+        return scores.get(1).isSpare();
     }
 
     public Integer calculate(Integer previousScore, List<Score> nextScores) {
-        if (!isFinished()) {
-            return null;
-        }
         if (needNextScores()) {
             return calculateWithNext(previousScore, nextScores);
         }
@@ -121,13 +82,10 @@ public class Scores {
     }
 
     private Integer sumNextScores(List<Score> nextScores) {
-        return nextScores.subList(0, getMinimumTryCount())
-                .stream()
-                .mapToInt(Score::getScore)
-                .sum();
+        return sum(nextScores.subList(0, getMinimumTryCount()));
     }
 
-    private int calculate(Integer previousScore) {
+    public int calculate(Integer previousScore) {
         return previousScore + sum();
     }
 }

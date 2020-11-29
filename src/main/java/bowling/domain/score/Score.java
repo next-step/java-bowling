@@ -1,7 +1,5 @@
 package bowling.domain.score;
 
-import java.util.Optional;
-
 import static bowling.domain.score.ScoreType.ORDINARY;
 import static bowling.domain.score.ScoreType.SPARE;
 import static bowling.domain.score.ScoreType.STRIKE;
@@ -16,25 +14,6 @@ public class Score {
     private Score(int score, ScoreType type) {
         this.score = score;
         this.type = type;
-    }
-
-    public static Score of(Score previousScore, int score) {
-        if (isSpare(previousScore, score)) {
-            return spare(score);
-        }
-        if (score == MIN_SCORE) {
-            return gutter();
-        }
-        if (score == MAX_SCORE) {
-            return strike();
-        }
-        return ordinary(score);
-    }
-
-    private static Boolean isSpare(Score previousScore, int score) {
-        return Optional.ofNullable(previousScore)
-                .map(prevScore -> prevScore.getScore() + score == MAX_SCORE)
-                .orElse(false);
     }
 
     public static Score spare(int score) {

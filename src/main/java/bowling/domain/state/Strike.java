@@ -1,6 +1,9 @@
-package bowling.domain.frame;
+package bowling.domain.state;
 
 import bowling.domain.score.Score;
+import bowling.domain.state.last.LastGutter;
+import bowling.domain.state.last.LastOrdinary;
+import bowling.domain.state.last.LastStrike;
 
 import static bowling.domain.score.Score.MAX_SCORE;
 import static bowling.domain.score.Score.MIN_SCORE;
@@ -23,7 +26,7 @@ public class Strike implements State {
         if (score == MIN_SCORE) {
             return new Gutter(leftTry - 1);
         }
-        return new Ordinary(score);
+        return new Ordinary(score, leftTry - 1);
     }
 
     private State recordLast(int score) {

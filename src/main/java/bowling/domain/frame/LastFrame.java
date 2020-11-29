@@ -1,52 +1,35 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.LastScores;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
+import bowling.domain.state.State;
+import bowling.domain.state.last.LastFrameReady;
 
 import java.util.List;
 
 public class LastFrame extends Frame {
 
-    private LastFrame(Scores scores) {
-        super(scores);
+    private static final int MAX_SCORE_AT_LAST = 30;
+
+    private LastFrame(Scores scores, State state) {
+        super(scores, state);
     }
 
     public static LastFrame empty() {
-        return new LastFrame(LastScores.empty());
+        return new LastFrame(Scores.empty(), new LastFrameReady());
     }
 
-    public static LastFrame of(List<Score> scores) {
-        return new LastFrame(LastScores.of(scores));
+    public static LastFrame of(List<Score> scores, State state) {
+        return new LastFrame(Scores.of(scores), state);
     }
 
-//    public int getFrameNumber() {
-//        return frameNumber.getNumber();
-//    }
-//
-//    public LastFrame next() {
-//        return new LastFrame(frameNumber.next(), Scores.empty());
-//    }
-//
-//    public void record(int score) {
-//        scores = scores.add(score);
-//    }
-//
-//    public boolean isFinished() {
-//        return scores.isFinished();
-//    }
-//
-//    public List<Score> getScores() {
-//        return scores.getScores();
-//    }
+    @Override
+    protected int getMaxScore() {
+        return MAX_SCORE_AT_LAST;
+    }
 
-//    public Integer calculateScore(Integer previousFrameScore, List<LastFrame> nextFrames) {
-//        return scores.calculate(previousFrameScore, getNextScores(nextFrames));
-//    }
-
-//    private List<Score> getNextScores(List<LastFrame> nextFrames) {
-//        return nextFrames.stream()
-//                .flatMap(frame -> frame.getScores().stream())
-//                .collect(Collectors.toList());
-//    }
+    @Override
+    protected Integer calculate(Integer previousFrameScore, List<Frame> nextFrames) {
+        return scores.calculate(previousFrameScore);
+    }
 }

@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -196,7 +197,7 @@ public class FramesTest {
     @DisplayName("마지막 프레임 점수 계산")
     @ParameterizedTest
     @MethodSource("getCalculatedScoresForLastFrame")
-    public void scoreFromLastFrame(List<Integer> scores, int expectedScore) {
+    public void scoreFromLastFrame(List<Integer> scores, Integer expectedScore) {
         record(9);
         for (int score : scores) {
             frames.record(score);
@@ -207,7 +208,9 @@ public class FramesTest {
     }
 
     private static Stream<Arguments> getCalculatedScoresForLastFrame() {
-        return Stream.of(Arguments.arguments(Arrays.asList(0, 0), 240),
+        return Stream.of(
+                Arguments.arguments(Collections.singletonList(0), null),
+                Arguments.arguments(Arrays.asList(0, 0), 240),
                 Arguments.arguments(Arrays.asList(1, 5), 253),
                 Arguments.arguments(Arrays.asList(5, 0), 255),
                 Arguments.arguments(Arrays.asList(0, 10, 5), 265),

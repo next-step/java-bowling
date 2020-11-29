@@ -1,32 +1,56 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.InvalidMaxScoresException;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
+import bowling.domain.state.FrameReady;
+import bowling.domain.state.State;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Frame {
     protected Scores scores;
+    protected State state;
 
-    protected Frame(Scores scores) {
+    protected Frame(Scores scores, State state) {
         this.scores = scores;
+        this.state = state;
     }
 
     public static Frame empty() {
-        return new Frame(Scores.empty());
+        return new Frame(Scores.empty(), new FrameReady());
     }
 
-    public static Frame of(List<Score> scores) {
-        return new Frame(Scores.of(scores));
+    public static Frame of(List<Score> scores, State state) {
+        return new Frame(Scores.of(scores), state);
     }
 
     public void record(int score) {
-        scores = scores.add(score);
+        validateMaxScore(score);
+        validateFinished();
+        state = state.record(score);
+        scores = scores.add(state.getScore());
+    }
+
+    private void validateFinished() {
+        if (isFinished()) {
+            throw new InvalidFrameRecordActionException();
+        }
+    }
+
+    private void validateMaxScore(int score) {
+        if (score + scores.sum() > getMaxScore()) {
+            throw new InvalidMaxScoresException();
+        }
+    }
+
+    protected int getMaxScore() {
+        return Score.MAX_SCORE;
     }
 
     public boolean isFinished() {
-        return scores.isFinished();
+        return state.isFinished();
     }
 
     public List<Score> getScores() {
@@ -34,6 +58,13 @@ public class Frame {
     }
 
     public Integer calculateScore(Integer previousFrameScore, List<Frame> nextFrames) {
+        if (state.isFinished()) {
+            return calculate(previousFrameScore, nextFrames);
+        }
+        return null;
+    }
+
+    protected Integer calculate(Integer previousFrameScore, List<Frame> nextFrames) {
         return scores.calculate(previousFrameScore, getNextScores(nextFrames));
     }
 
