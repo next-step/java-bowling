@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Frames {
+    private static final int MIN_FRAME_NUMBER = 1;
     private static final int MAX_FRAME_NUMBER = 10;
     private final List<Frame> frames;
     private Integer currentFrameNumber;
@@ -22,9 +23,11 @@ public class Frames {
     }
 
     private static List<Frame> createFrames() {
-        return Stream.iterate(Frame.first(), Frame::next)
-                .limit(MAX_FRAME_NUMBER)
+        List<Frame> frames = Stream.iterate(Frame.first(), Frame::next)
+                .limit(MAX_FRAME_NUMBER - 1)
                 .collect(Collectors.toList());
+        frames.add(LastFrame.empty());
+        return frames;
     }
 
     public int getCurrentFrameNumber() {
@@ -61,7 +64,7 @@ public class Frames {
     public List<Integer> calculateScores() {
         List<Integer> calculatedScores = new ArrayList<>();
         Integer previousFrameScore = 0;
-        for (int frameNumber = 1; frameNumber <= MAX_FRAME_NUMBER; frameNumber++) {
+        for (int frameNumber = MIN_FRAME_NUMBER; frameNumber <= MAX_FRAME_NUMBER; frameNumber++) {
             previousFrameScore = calculateScore(frameNumber, previousFrameScore);
             calculatedScores.add(previousFrameScore);
         }

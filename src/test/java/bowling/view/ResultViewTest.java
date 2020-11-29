@@ -52,6 +52,6 @@ public class ResultViewTest {
             return null;
         }).collect(Collectors.toList()));
 
-        assertThat(output.toString()).isEqualTo("|      |  30  |  60  |  90  |  120 |      |      |      |      |      |      |\n");
+        assertThat(output.toString()).isEqualTo("|      |  30  |  60  |  90  |  120 |      |      |      |      |      |      |\n\n");
     }
 }

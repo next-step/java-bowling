@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.LastScores;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 
@@ -8,19 +7,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Frame {
-    private final FrameNumber frameNumber;
-    private Scores scores;
+    protected final FrameNumber frameNumber;
+    protected Scores scores;
 
-    private Frame(FrameNumber frameNumber, Scores scores) {
+    protected Frame(FrameNumber frameNumber, Scores scores) {
         this.frameNumber = frameNumber;
-        this.scores = getScores(frameNumber, scores);
-    }
-
-    private Scores getScores(FrameNumber frameNumber, Scores scores) {
-        if (frameNumber.isLast()) {
-            return LastScores.of(scores.getScores());
-        }
-        return scores;
+        this.scores = scores;
     }
 
     public static Frame first() {

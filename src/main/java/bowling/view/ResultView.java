@@ -75,6 +75,7 @@ public class ResultView {
 
     public void showCalculatedScores(List<Integer> scores) {
         output.println(String.format(SCORES_LINE_FORMAT, formatCalculatedScores(scores)));
+        output.println();
     }
 
     private String formatCalculatedScores(List<Integer> scores) {
