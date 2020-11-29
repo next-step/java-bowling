@@ -1,5 +1,6 @@
 package bowling.domain.bowling;
 
+import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ public class BowlingTest {
     @DisplayName("투구")
     @Test
     public void throwBall() {
-        bowling.throwBall(10);
+        bowling.throwBall(Pin.of(10));
 
         assertThat(bowling.getCurrentFrameNumber()).isEqualTo(2);
         assertThat(bowling.getFrames().get(0).getScores().get(0)).isEqualTo(Score.strike());
@@ -38,9 +39,9 @@ public class BowlingTest {
     @DisplayName("점수 계산")
     @Test
     public void calculateScore() {
-        bowling.throwBall(10);
-        bowling.throwBall(1);
-        bowling.throwBall(1);
+        bowling.throwBall(Pin.of(10));
+        bowling.throwBall(Pin.of(1));
+        bowling.throwBall(Pin.of(1));
         List<Integer> scores = bowling.calculateScores();
 
         assertThat(scores.get(0)).isEqualTo(12);

@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.bowling.Bowling;
+import bowling.domain.pin.Pin;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -43,7 +44,7 @@ public class BowlingController {
 
     private static void startBowling(InputView inputView, ResultView resultView, Bowling bowling) {
         while (!bowling.isFinished()) {
-            retryIfErrorThrown(bowling::throwBall, () -> inputView.enterScore(bowling.getCurrentFrameNumber()));
+            retryIfErrorThrown(bowling::throwBall, () -> Pin.of(inputView.enterScore(bowling.getCurrentFrameNumber())));
             resultView.showFrames(bowling.getName(), bowling.getFrames());
             resultView.showCalculatedScores(bowling.calculateScores());
         }

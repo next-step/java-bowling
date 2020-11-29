@@ -3,6 +3,7 @@ package bowling.domain.bowling;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.member.MemberName;
+import bowling.domain.pin.Pin;
 
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class Bowling {
         return frames.getCurrentFrameNumber();
     }
 
-    public void throwBall(int score) {
-        frames.record(score);
+    public void throwBall(Pin pin) {
+        frames.record(pin.getFalledPins());
     }
 
     public List<Frame> getFrames() {
