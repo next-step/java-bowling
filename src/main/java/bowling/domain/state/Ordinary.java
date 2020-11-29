@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.InvalidFrameRecordActionException;
 import bowling.domain.score.Score;
 import bowling.domain.state.last.LastGutter;
 import bowling.domain.state.last.LastOrdinary;
@@ -24,6 +25,9 @@ public class Ordinary implements State {
 
     @Override
     public State record(int score) {
+        if (score == MAX_SCORE) {
+            throw new InvalidFrameRecordActionException();
+        }
         if (this.score + score == MAX_SCORE) {
             return recordSpare(score);
         }
