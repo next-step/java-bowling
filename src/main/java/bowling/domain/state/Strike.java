@@ -16,17 +16,17 @@ public class Strike implements State {
     }
 
     @Override
-    public State record(int score) {
+    public State record(int pins) {
         if (leftTry == MIN_LEFT_TRY) {
-            return recordLast(score);
+            return recordLast(pins);
         }
-        if (score == MAX_SCORE) {
+        if (pins == MAX_SCORE) {
             return new Strike(leftTry - 1);
         }
-        if (score == MIN_SCORE) {
+        if (pins == MIN_SCORE) {
             return new Gutter(leftTry - 1);
         }
-        return new Ordinary(score, leftTry - 1);
+        return new Ordinary(pins, leftTry - 1);
     }
 
     private State recordLast(int score) {

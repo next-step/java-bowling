@@ -42,10 +42,10 @@ public class Frames {
         return currentFrameNumber > MAX_FRAME_NUMBER;
     }
 
-    public void record(int score) {
+    public void record(int pins) {
         validateRecordPossible();
         Frame currentFrame = getFrame(currentFrameNumber);
-        currentFrame.record(score);
+        currentFrame.record(pins);
         increaseCurrentFrameNumber(currentFrame);
     }
 

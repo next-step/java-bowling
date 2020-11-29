@@ -26,10 +26,10 @@ public class Frame {
         return new Frame(Scores.of(scores), state);
     }
 
-    public void record(int score) {
-        validateMaxScore(score);
+    public void record(int pins) {
+        validateMaxScore(pins);
         validateFinished();
-        state = state.record(score);
+        state = state.record(pins);
         scores = scores.add(state.getScore());
     }
 
@@ -39,8 +39,8 @@ public class Frame {
         }
     }
 
-    private void validateMaxScore(int score) {
-        if (score + scores.sum() > getMaxScore()) {
+    private void validateMaxScore(int pins) {
+        if (pins + scores.sum() > getMaxScore()) {
             throw new InvalidMaxScoresException();
         }
     }

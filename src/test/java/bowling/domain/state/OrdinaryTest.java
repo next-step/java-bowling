@@ -21,10 +21,10 @@ public class OrdinaryTest {
     @DisplayName("다음이 마지막 상태가 될 때")
     @ParameterizedTest
     @MethodSource("getRecordForLast")
-    public void nextLast(int score, Class<State> expectedClass) {
+    public void nextLast(int pins, Class<State> expectedClass) {
         State state = new Ordinary(7, 1);
 
-        State nextState = state.record(score);
+        State nextState = state.record(pins);
 
         assertThat(nextState).isInstanceOf(expectedClass);
     }
@@ -40,10 +40,10 @@ public class OrdinaryTest {
     @DisplayName("다음 상태")
     @ParameterizedTest
     @MethodSource("getRecord")
-    public void next(int score, Class<State> expectedClass) {
+    public void next(int pins, Class<State> expectedClass) {
         State state = new Ordinary(7, 2);
 
-        State nextState = state.record(score);
+        State nextState = state.record(pins);
 
         assertThat(nextState).isInstanceOf(expectedClass);
     }

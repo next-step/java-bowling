@@ -21,10 +21,10 @@ public class SpareTest {
     @DisplayName("다음이 마지막 상태가 될 때")
     @ParameterizedTest
     @MethodSource("getRecordForLast")
-    public void nextLast(int score, Class<State> expectedClass) {
-        State state = new Spare(score);
+    public void nextLast(int pins, Class<State> expectedClass) {
+        State state = new Spare(pins);
 
-        State nextState = state.record(score);
+        State nextState = state.record(pins);
 
         assertThat(nextState).isInstanceOf(expectedClass);
     }

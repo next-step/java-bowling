@@ -18,8 +18,8 @@ public class FrameReadyTest {
     @DisplayName("다음 상태")
     @ParameterizedTest
     @MethodSource("getRecord")
-    public void next(int score, Class<State> expectedClass) {
-        State nextState = state.record(score);
+    public void next(int pins, Class<State> expectedClass) {
+        State nextState = state.record(pins);
 
         assertThat(nextState).isInstanceOf(expectedClass);
     }

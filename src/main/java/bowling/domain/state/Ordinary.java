@@ -24,17 +24,17 @@ public class Ordinary implements State {
     }
 
     @Override
-    public State record(int score) {
-        if (score == MAX_SCORE) {
+    public State record(int pins) {
+        if (pins == MAX_SCORE) {
             throw new InvalidFrameRecordActionException();
         }
-        if (this.score + score == MAX_SCORE) {
-            return recordSpare(score);
+        if (this.score + pins == MAX_SCORE) {
+            return recordSpare(pins);
         }
-        if (score == MIN_SCORE) {
+        if (pins == MIN_SCORE) {
             return new LastGutter();
         }
-        return new LastOrdinary(score);
+        return new LastOrdinary(pins);
     }
 
     private State recordSpare(int score) {

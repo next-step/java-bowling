@@ -4,7 +4,7 @@ import bowling.domain.frame.InvalidFrameRecordActionException;
 import bowling.domain.state.State;
 
 public interface LastState extends State {
-    default State record(int score) {
+    default State record(int pins) {
         throw new InvalidFrameRecordActionException();
     }
 
