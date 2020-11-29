@@ -18,9 +18,14 @@ public class BowlingController {
 
         Bowling bowling = retryIfErrorThrown(() -> Bowling.of(inputView.enterMemberName()));
         showFrames(resultView, bowling);
+        showScores(resultView, bowling);
         startBowling(inputView, resultView, bowling);
 
         output.close();
+    }
+
+    private static void showScores(ResultView resultView, Bowling bowling) {
+        resultView.showCalculatedScores(bowling.calculateScores());
     }
 
     private static <T> T retryIfErrorThrown(Supplier<T> supplier) {
