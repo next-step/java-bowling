@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import bowling.domain.pin.Pin;
 import bowling.domain.score.InvalidMaxScoresException;
 import bowling.domain.score.Score;
-import bowling.domain.score.Scores;
 import bowling.domain.state.FrameReady;
 import bowling.domain.state.State;
 
@@ -13,7 +12,6 @@ import java.util.stream.Collectors;
 public class Frame {
     public static int MAX_TRY_COUNT = 2;
 
-    protected Scores scores;
     protected State state;
 
     protected Frame(State state) {
