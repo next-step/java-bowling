@@ -35,12 +35,10 @@ class Frame {
     }
 
     int score(Rolls rolls) {
-        return frameEnum == FrameEnum.MISS
-                ? rolls.sum(startIndex, 2)
-                : frameEnum == FrameEnum.SPARE
+        return isBonus()
                 ? rolls.sum(startIndex, 3)
-                : frameEnum == FrameEnum.STRIKE
-                ? rolls.sum(startIndex, 4)
+                : frameEnum == FrameEnum.MISS
+                ? rolls.sum(startIndex, 2)
                 : -1;
     }
 

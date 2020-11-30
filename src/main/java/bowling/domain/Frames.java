@@ -23,12 +23,14 @@ class Frames {
     void update(Rolls rolls) {
         if (isLastFinished()) {
             frames.add(Frame.of(rolls));
+            return;
         }
         last().update(rolls);
     }
 
     boolean isBonus() {
-        return last().isBonus();
+        return !frames.isEmpty()
+                && last().isBonus();
     }
 
     boolean isLastFinished() {
