@@ -1,12 +1,13 @@
 package bowling.domain.score;
 
 import static bowling.domain.score.ScoreType.ORDINARY;
+import static bowling.domain.score.ScoreType.SPARE;
 import static bowling.domain.score.ScoreType.STRIKE;
 
 public class Score {
-
     public static final int MIN_SCORE = 0;
     public static final int MAX_SCORE = 10;
+    
     private final int score;
     private final ScoreType type;
 
@@ -15,11 +16,11 @@ public class Score {
         this.type = type;
     }
 
-    public static Score ordinary(int score) {
-        return of(score, ScoreType.ORDINARY);
+    public static Score spare(int score) {
+        return of(score, SPARE);
     }
 
-    public static Score of(int score, ScoreType type) {
+    private static Score of(int score, ScoreType type) {
         validateScore(score);
         return new Score(score, type);
     }
@@ -30,29 +31,16 @@ public class Score {
         }
     }
 
-    public static Score of(int score, boolean isSpare) {
-        if (isSpare) {
-            return spare(score);
-        }
-        if (score == MIN_SCORE) {
-            return gutter();
-        }
-        if (score == MAX_SCORE) {
-            return strike();
-        }
-        return ordinary(score);
+    public static Score gutter() {
+        return of(0, ScoreType.GUTTER);
     }
 
     public static Score strike() {
         return of(MAX_SCORE, STRIKE);
     }
 
-    public static Score spare(int score) {
-        return of(score, ScoreType.SPARE);
-    }
-
-    public static Score gutter() {
-        return of(0, ScoreType.GUTTER);
+    public static Score ordinary(int score) {
+        return of(score, ScoreType.ORDINARY);
     }
 
     public int getScore() {
@@ -68,7 +56,11 @@ public class Score {
     }
 
     public boolean isOrdinary() {
-        return type.equals(ORDINARY);
+        return ORDINARY.equals(type);
+    }
+
+    public boolean isSpare() {
+        return SPARE.equals(type);
     }
 
     @Override

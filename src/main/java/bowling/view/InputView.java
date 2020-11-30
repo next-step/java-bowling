@@ -17,11 +17,11 @@ public class InputView {
 
     public String enterMemberName() {
         output.println(MEMBER_NAME_PHRASE);
-        return scanner.next();
+        return scanner.nextLine().trim();
     }
 
     public int enterScore(int frameNumber) {
         output.println(String.format(SCORE_PHRASE, frameNumber));
-        return scanner.nextInt();
+        return Integer.parseInt(scanner.nextLine().trim());
     }
 }

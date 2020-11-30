@@ -1,8 +1,11 @@
 package bowling.domain.bowling;
 
+import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,9 +30,24 @@ public class BowlingTest {
     @DisplayName("투구")
     @Test
     public void throwBall() {
-        bowling.throwBall(10);
+        bowling.throwBall(Pin.of(10));
 
         assertThat(bowling.getCurrentFrameNumber()).isEqualTo(2);
         assertThat(bowling.getFrames().get(0).getScores().get(0)).isEqualTo(Score.strike());
+    }
+
+    @DisplayName("점수 계산")
+    @Test
+    public void calculateScore() {
+        bowling.throwBall(Pin.of(10));
+        bowling.throwBall(Pin.of(1));
+        bowling.throwBall(Pin.of(1));
+        List<Integer> scores = bowling.calculateScores();
+
+        assertThat(scores.get(0)).isEqualTo(12);
+        assertThat(scores.get(1)).isEqualTo(14);
+        for (int i = 0; i < 10; i++) {
+            assertThat(scores.get(2)).isEqualTo(null);
+        }
     }
 }

@@ -1,14 +1,19 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 public class Frames {
+    private static final int MIN_FRAME_NUMBER = 1;
     private static final int MAX_FRAME_NUMBER = 10;
     private final List<Frame> frames;
-    private int currentFrameNumber;
+    private Integer currentFrameNumber;
 
     private Frames(List<Frame> frames) {
         this.frames = frames;
@@ -20,9 +25,15 @@ public class Frames {
     }
 
     private static List<Frame> createFrames() {
-        return Stream.iterate(Frame.first(), Frame::next)
-                .limit(MAX_FRAME_NUMBER)
-                .collect(Collectors.toList());
+        return IntStream.range(MIN_FRAME_NUMBER, MAX_FRAME_NUMBER + 1)
+                .mapToObj(Frames::createFrame).collect(Collectors.toList());
+    }
+
+    private static Frame createFrame(int frameNumber) {
+        if (frameNumber == MAX_FRAME_NUMBER) {
+            return LastFrame.empty();
+        }
+        return Frame.empty();
     }
 
     public int getCurrentFrameNumber() {
@@ -33,10 +44,10 @@ public class Frames {
         return currentFrameNumber > MAX_FRAME_NUMBER;
     }
 
-    public void record(int score) {
+    public void record(Pin pins) {
         validateRecordPossible();
-        Frame currentFrame = frames.get(currentFrameNumber - 1);
-        currentFrame.record(score);
+        Frame currentFrame = getFrame(currentFrameNumber);
+        currentFrame.record(pins);
         increaseCurrentFrameNumber(currentFrame);
     }
 
@@ -54,5 +65,29 @@ public class Frames {
 
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
+    }
+
+    public List<Integer> calculateScores() {
+        List<Integer> calculatedScores = new ArrayList<>();
+        Integer previousFrameScore = 0;
+        for (int frameNumber = MIN_FRAME_NUMBER; frameNumber <= MAX_FRAME_NUMBER; frameNumber++) {
+            previousFrameScore = calculateScore(frameNumber, previousFrameScore);
+            calculatedScores.add(previousFrameScore);
+        }
+        return calculatedScores;
+    }
+
+    private Integer calculateScore(int frameNumber, Integer previousFrameScore) {
+        return Optional.ofNullable(previousFrameScore)
+                .map(previousScore -> getFrame(frameNumber).calculateScore(previousScore, getNextFrames(frameNumber)))
+                .orElse(null);
+    }
+
+    private List<Frame> getNextFrames(int frameNumber) {
+        return frames.subList(frameNumber, Math.min(frameNumber + 2, MAX_FRAME_NUMBER));
+    }
+
+    private Frame getFrame(int frameNumber) {
+        return frames.get(frameNumber - 1);
     }
 }

@@ -1,47 +1,68 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
+import bowling.domain.score.InvalidMaxScoresException;
 import bowling.domain.score.Score;
-import bowling.domain.score.Scores;
+import bowling.domain.state.FrameReady;
+import bowling.domain.state.State;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frame {
-    private final FrameNumber frameNumber;
-    private Scores scores;
+    public static int MAX_TRY_COUNT = 2;
 
-    private Frame(FrameNumber frameNumber, Scores scores) {
-        this.frameNumber = frameNumber;
-        this.scores = scores;
+    protected State state;
+
+    protected Frame(State state) {
+        this.state = state;
     }
 
-    public static Frame first() {
-        return new Frame(FrameNumber.first(), Scores.empty());
+    public static Frame empty() {
+        return new Frame(new FrameReady(MAX_TRY_COUNT));
     }
 
-    public static Frame of(int frameNumber, List<Score> scores) {
-        return new Frame(FrameNumber.of(frameNumber), Scores.of(scores));
+    public static Frame of(State state) {
+        return new Frame(state);
     }
 
-    public int getFrameNumber() {
-        return frameNumber.getNumber();
+    public void record(Pin pins) {
+        validateMaxScore(pins.getPins());
+        validateFinished();
+        state = state.record(pins);
     }
 
-    public Frame next() {
-        return new Frame(frameNumber.next(), Scores.empty());
-    }
-
-    public void record(int score) {
+    private void validateFinished() {
         if (isFinished()) {
             throw new InvalidFrameRecordActionException();
         }
-        scores = scores.add(score, frameNumber.isLast());
+    }
+
+    private void validateMaxScore(int pins) {
+        if (pins + state.sum() > getMaxScore()) {
+            throw new InvalidMaxScoresException();
+        }
+    }
+
+    protected int getMaxScore() {
+        return Score.MAX_SCORE;
     }
 
     public boolean isFinished() {
-        return scores.isFinished(frameNumber.isLast());
+        return state.isFinished();
     }
 
     public List<Score> getScores() {
-        return scores.getScores();
+        return state.getScores();
+    }
+
+    public Integer calculateScore(Integer previousFrameScore, List<Frame> nextFrames) {
+        return state.calculate(previousFrameScore, getNextScores(nextFrames));
+    }
+
+    private List<Score> getNextScores(List<Frame> nextFrames) {
+        return nextFrames.stream()
+                .flatMap(frame -> frame.getScores().stream())
+                .collect(Collectors.toList());
     }
 }

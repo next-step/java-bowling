@@ -1,17 +1,14 @@
 package bowling.domain.score;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Scores {
-    private static final int MAX_TRY_COUNT = 2;
-    private static final int MAX_TRY_COUNT_AT_LAST = 3;
-    private final List<Score> scores;
-    private final int tryCount;
+    protected final List<Score> scores;
 
-    private Scores(List<Score> scores) {
+    protected Scores(List<Score> scores) {
         this.scores = scores;
-        this.tryCount = scores.size();
     }
 
     public static Scores empty() {
@@ -23,56 +20,70 @@ public class Scores {
     }
 
     public List<Score> getScores() {
-        return scores;
+        return Collections.unmodifiableList(scores);
     }
 
     public int sum() {
+        return sum(this.scores);
+    }
+
+    private int sum(List<Score> scores) {
         return scores.stream()
                 .mapToInt(Score::getScore)
                 .sum();
     }
 
-    public Score getScore(int tryCount) {
-        return scores.get(tryCount - 1);
-    }
-
-    public Scores add(int score, boolean isLast) {
+    public Scores add(Score score) {
         List<Score> scores = new ArrayList<>(this.scores);
-        scores.add(makeScore(score, hasNoSpare(isLast)));
+        scores.add(score);
         return new Scores(scores);
     }
 
-    private boolean hasNoSpare(boolean isLast) {
-        return tryCount == 0 || (isLast && tryCount == MAX_TRY_COUNT && !isFirstStrike());
-    }
-
-    private Score makeScore(int score, boolean hasNoSpare) {
-        if (hasNoSpare) {
-            return Score.of(score, false);
-        }
-        return Score.of(score, getPreviousScore() + score == 10);
-    }
-
-    private int getPreviousScore() {
-        return scores.get(tryCount - 1).getScore();
-    }
-
-    public boolean isFinished(boolean isLast) {
-        if (isLast) {
-            return isFinishedAtLast();
-        }
-        return isFinished();
-    }
-
-    private boolean isFinishedAtLast() {
-        return tryCount == MAX_TRY_COUNT && sum() < Score.MAX_SCORE || tryCount == MAX_TRY_COUNT_AT_LAST;
-    }
-
-    private boolean isFinished() {
-        return (tryCount == 1 && isFirstStrike()) || tryCount == MAX_TRY_COUNT;
-    }
-
-    private boolean isFirstStrike() {
+    private boolean hasFirstStrike() {
         return scores.get(0).isStrike();
+    }
+
+    private boolean hasSecondSpare() {
+        return scores.get(1).isSpare();
+    }
+
+    public Integer calculate(Integer previousScore, List<Score> nextScores) {
+        if (needNextScores()) {
+            return calculateWithNext(previousScore, nextScores);
+        }
+        return calculate(previousScore);
+    }
+
+    protected boolean needNextScores() {
+        return hasFirstStrike() || hasSecondSpare();
+    }
+
+    private Integer calculateWithNext(Integer previousScore, List<Score> nextScores) {
+        if (hasEnoughNextScores(nextScores)) {
+            return calculate(previousScore) + sumNextScores(nextScores);
+        }
+        return null;
+    }
+
+    private boolean hasEnoughNextScores(List<Score> nextScores) {
+        return getMinimumTryCount() <= nextScores.size();
+    }
+
+    private int getMinimumTryCount() {
+        if (hasFirstStrike()) {
+            return 2;
+        }
+        if (hasSecondSpare()) {
+            return 1;
+        }
+        return 0;
+    }
+
+    private Integer sumNextScores(List<Score> nextScores) {
+        return sum(nextScores.subList(0, getMinimumTryCount()));
+    }
+
+    public int calculate(Integer previousScore) {
+        return previousScore + sum();
     }
 }

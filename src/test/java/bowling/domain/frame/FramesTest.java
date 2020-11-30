@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,6 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -28,7 +30,7 @@ public class FramesTest {
     @DisplayName("프레임 리스트에 스트라이크 추가")
     @Test
     public void record() {
-        frames.record(10);
+        frames.record(Pin.of(10));
 
         assertThat(frames.getCurrentFrameNumber()).isEqualTo(2);
     }
@@ -36,7 +38,7 @@ public class FramesTest {
     @DisplayName("프레임 리스트에 10보다 작은 점수 추가")
     @Test
     public void recordNotFinished() {
-        frames.record(8);
+        frames.record(Pin.of(8));
 
         assertThat(frames.getCurrentFrameNumber()).isEqualTo(1);
     }
@@ -52,7 +54,7 @@ public class FramesTest {
 
     private void record(int tryCount) {
         for (int i = 0; i < tryCount; i++) {
-            frames.record(10);
+            frames.record(Pin.of(10));
         }
     }
 
@@ -70,7 +72,7 @@ public class FramesTest {
     public void lastFrame(List<Integer> scores) {
         record(9);
         for (int score : scores) {
-            frames.record(score);
+            frames.record(Pin.of(score));
         }
         assertThat(frames.isFinished()).isEqualTo(true);
     }
@@ -90,4 +92,138 @@ public class FramesTest {
                 Arguments.arguments(Arrays.asList(10, 10, 0))
         );
     }
+
+    @DisplayName("스페어에서 다음 프레임 점수가 아직 없을때")
+    @Test
+    public void spareScoreNotNextFrame() {
+        frames.record(Pin.of(1));
+        frames.record(Pin.of(9));
+        List<Integer> calculatedScores = frames.calculateScores();
+
+        assertThat(calculatedScores.get(0)).isEqualTo(null);
+    }
+
+    @DisplayName("완료된 프레임의 점수만 출력")
+    @Test
+    public void finishedScore() {
+        frames.record(Pin.of(10));
+        frames.record(Pin.of(1));
+        frames.record(Pin.of(1));
+
+        List<Integer> calculatedScores = frames.calculateScores();
+
+        assertThat(calculatedScores.get(0)).isEqualTo(12);
+        assertThat(calculatedScores.get(1)).isEqualTo(14);
+        for (int i = 2; i < 10; i++) {
+            assertThat(calculatedScores.get(i)).isEqualTo(null);
+        }
+    }
+
+
+    @Test
+    public void subList() {
+        System.out.println(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).subList(10, 10));
+    }
+
+    @DisplayName("스페어에서 다음 프레임 점수 합산")
+    @Test
+    public void spareScore() {
+        frames.record(Pin.of(1));
+        frames.record(Pin.of(9));
+        frames.record(Pin.of(5));
+        List<Integer> calculatedScores = frames.calculateScores();
+
+        assertThat(calculatedScores.get(0)).isEqualTo(15);
+    }
+
+    @DisplayName("스트라이크에서 다음 프레임 점수 합산")
+    @Test
+    public void strikeScore() {
+        frames.record(Pin.of(10));
+        frames.record(Pin.of(9));
+        frames.record(Pin.of(1));
+        frames.record(Pin.of(5));
+        List<Integer> calculatedScores = frames.calculateScores();
+
+        assertThat(calculatedScores.get(0)).isEqualTo(20);
+    }
+
+    @DisplayName("스트라이크에서 다음 스트라이크 이후 점수 합산")
+    @Test
+    public void strikeScoreNextStrike() {
+        frames.record(Pin.of(10));
+        frames.record(Pin.of(10));
+        frames.record(Pin.of(6));
+        List<Integer> calculatedScores = frames.calculateScores();
+
+        assertThat(calculatedScores.get(0)).isEqualTo(26);
+    }
+
+    @DisplayName("8프레임 스트라이크에서 다음 프레임 점수 합산")
+    @Test
+    public void strikeScoreFrom8Frame() {
+        record(8);
+        frames.record(Pin.of(1));
+        frames.record(Pin.of(2));
+
+        List<Integer> calculatedScores = frames.calculateScores();
+        assertThat(calculatedScores.get(7)).isEqualTo(214);
+    }
+
+    @DisplayName("9프레임 스페어에서 다음 프레임 점수 합산")
+    @Test
+    public void spareScoreFrom9Frame() {
+        record(8);
+        frames.record(Pin.of(3));
+        frames.record(Pin.of(7));
+        frames.record(Pin.of(9));
+        frames.record(Pin.of(1));
+        frames.record(Pin.of(5));
+
+        List<Integer> calculatedScores = frames.calculateScores();
+        assertThat(calculatedScores.get(8)).isEqualTo(242);
+    }
+
+    @DisplayName("9프레임 스트라이크에서 다음 프레임 점수 합산")
+    @Test
+    public void strikeScoreFrom9Frame() {
+        record(9);
+        frames.record(Pin.of(4));
+        frames.record(Pin.of(5));
+
+        List<Integer> calculatedScores = frames.calculateScores();
+        assertThat(calculatedScores.get(8)).isEqualTo(253);
+    }
+
+    @DisplayName("마지막 프레임 점수 계산")
+    @ParameterizedTest
+    @MethodSource("getCalculatedScoresForLastFrame")
+    public void scoreFromLastFrame(List<Integer> scores, Integer expectedScore) {
+        record(9);
+        for (int score : scores) {
+            frames.record(Pin.of(score));
+        }
+
+        List<Integer> calculatedScores = frames.calculateScores();
+        assertThat(calculatedScores.get(9)).isEqualTo(expectedScore);
+    }
+
+    private static Stream<Arguments> getCalculatedScoresForLastFrame() {
+        return Stream.of(
+                Arguments.arguments(Collections.singletonList(0), null),
+                Arguments.arguments(Arrays.asList(0, 0), 240),
+                Arguments.arguments(Arrays.asList(1, 5), 253),
+                Arguments.arguments(Arrays.asList(5, 0), 255),
+                Arguments.arguments(Arrays.asList(0, 10, 5), 265),
+                Arguments.arguments(Arrays.asList(0, 10, 10), 270),
+                Arguments.arguments(Arrays.asList(5, 5, 5), 270),
+                Arguments.arguments(Arrays.asList(5, 5, 10), 275),
+                Arguments.arguments(Arrays.asList(10, 5, 0), 280),
+                Arguments.arguments(Arrays.asList(10, 5, 5), 285),
+                Arguments.arguments(Arrays.asList(10, 10, 10), 300),
+                Arguments.arguments(Arrays.asList(10, 10, 5), 295),
+                Arguments.arguments(Arrays.asList(10, 10, 0), 290)
+        );
+    }
+
 }

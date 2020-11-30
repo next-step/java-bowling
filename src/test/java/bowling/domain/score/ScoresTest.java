@@ -8,45 +8,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("프레임별 점수 테스트")
 public class ScoresTest {
-    @DisplayName("프레임별 첫 점수 생성")
-    @Test
-    public void createFrameScore() {
-        Scores frameScore = Scores.empty().add(10, false);
-
-        assertThat(frameScore.getScore(1)).isEqualTo(Score.strike());
-    }
-
-    @DisplayName("짝수번째 시도에서만 스페어 생성")
-    @ParameterizedTest
-    @MethodSource("getScoresForSpare")
-    public void spareScore(Scores scores, int newScore, boolean isLast, int tryCount, Score expectedScore) {
-        Scores newScores = scores.add(newScore, isLast);
-
-        assertThat(newScores.getScore(tryCount)).isEqualTo(expectedScore);
-    }
-
-    private static Stream<Arguments> getScoresForSpare() {
-        return Stream.of(
-                Arguments.arguments(Scores.empty(), 8, false, 1, Score.ordinary(8)),
-                Arguments.arguments(Scores.of(Collections.singletonList(Score.ordinary(2))), 8, false, 2, Score.spare(8)),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.ordinary(2), Score.spare(8))), 10, false, 3, Score.strike())
-        );
-    }
-
-    @DisplayName("접수 합")
-    @Test
-    public void sumScore() {
-        Scores frameScore = Scores.empty().add(8, false).add(1, false);
-
-        assertThat(frameScore.sum()).isEqualTo(9);
-    }
-
     @DisplayName("빈 점수리스트 합")
     @Test
     public void sumEmptyScore() {
@@ -55,44 +23,69 @@ public class ScoresTest {
         assertThat(frameScore.sum()).isEqualTo(0);
     }
 
-    @DisplayName("해당 프레임에서 더 점수를 추가할 수 있는지 확인")
-    @ParameterizedTest
-    @MethodSource("getScores")
-    public void isFinished(Scores scores, boolean isFinished) {
-        assertThat(scores.isFinished(false)).isEqualTo(isFinished);
+    @DisplayName("접수 합")
+    @Test
+    public void sumScore() {
+        Scores frameScore = Scores.of(Arrays.asList(Score.ordinary(1), Score.ordinary(8)));
+
+        assertThat(frameScore.sum()).isEqualTo(9);
     }
 
-    private static Stream<Arguments> getScores() {
-        return Stream.of(Arguments.arguments(Scores.empty(), false),
-                Arguments.arguments(Scores.of(Collections.singletonList(Score.strike())), true),
-                Arguments.arguments(Scores.of(Collections.singletonList(Score.ordinary(9))), false),
-                Arguments.arguments(Scores.of(Collections.singletonList(Score.gutter())), false),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.gutter(), Score.gutter())), true),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.gutter(), Score.ordinary(1))), true),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.gutter(), Score.spare(10))), true)
+    @DisplayName("프레임이 다음 프레임 점수가 필요 없을 때 점수 계산")
+    @ParameterizedTest
+    @MethodSource("getOrdinaryScoreParams")
+    public void calculateOrdinaryScore(Integer previousScore, List<Score> nextScores, Integer expectedScore) {
+        Scores scores = Scores.of(Arrays.asList(Score.ordinary(3), Score.ordinary(4)));
+        assertThat(scores.calculate(previousScore, nextScores)).isEqualTo(expectedScore);
+    }
+
+    private static Stream<Arguments> getOrdinaryScoreParams() {
+        return Stream.of(
+                Arguments.arguments(10, Collections.emptyList(), 17),
+                Arguments.arguments(10, Arrays.asList(Score.ordinary(1), Score.spare(9)), 17)
         );
     }
 
-    @DisplayName("마지막 프레임에서 더 점수를 추가할 수 있는지 확인")
+    @DisplayName("프레임이 스페어일 때 점수 계산")
     @ParameterizedTest
-    @MethodSource("getScoresAtLast")
-    public void isFinishedAtLast(Scores scores, boolean isFinished) {
-        assertThat(scores.isFinished(true)).isEqualTo(isFinished);
+    @MethodSource("getSpareScoreParam")
+    public void calculateSpareScore(Integer previousScore, List<Score> nextScores, Integer expectedScore) {
+        Scores scores = Scores.of(Arrays.asList(Score.ordinary(3), Score.spare(7)));
+        assertThat(scores.calculate(previousScore, nextScores)).isEqualTo(expectedScore);
     }
 
-    private static Stream<Arguments> getScoresAtLast() {
-        return Stream.of(Arguments.arguments(Scores.empty(), false),
-                Arguments.arguments(Scores.of(Collections.singletonList(Score.strike())), false),
-                Arguments.arguments(Scores.of(Collections.singletonList(Score.ordinary(9))), false),
-                Arguments.arguments(Scores.of(Collections.singletonList(Score.gutter())), false),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.ordinary(7), Score.ordinary(2))), true),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.gutter(), Score.spare(10))), false),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.strike(), Score.strike())), false),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.gutter(), Score.gutter())), true),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.gutter(), Score.ordinary(1))), true),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.strike(), Score.strike(), Score.strike())), true),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.strike(), Score.strike(), Score.ordinary(10))), true),
-                Arguments.arguments(Scores.of(Arrays.asList(Score.gutter(), Score.spare(10), Score.strike())), true)
+    private static Stream<Arguments> getSpareScoreParam() {
+        return Stream.of(
+                Arguments.arguments(10, Collections.emptyList(), null),
+                Arguments.arguments(10, Arrays.asList(Score.gutter(), Score.spare(9)), 20),
+                Arguments.arguments(10, Arrays.asList(Score.ordinary(1), Score.ordinary(4)), 21),
+                Arguments.arguments(10, Arrays.asList(Score.ordinary(1), Score.spare(9)), 21),
+                Arguments.arguments(10, Arrays.asList(Score.strike(), Score.ordinary(9), Score.spare(1)), 30),
+                Arguments.arguments(10, Arrays.asList(Score.strike(), Score.strike(), Score.strike()), 30)
         );
     }
+
+    @DisplayName("프레임이 스트라이크일 때 점수 계산")
+    @ParameterizedTest
+    @MethodSource("getStrikeScoreParam")
+    public void calculateStrikeScore(Integer previousScore, List<Score> nextScores, Integer expectedScore) {
+        Scores scores = Scores.of(Collections.singletonList(Score.strike()));
+        assertThat(scores.calculate(previousScore, nextScores)).isEqualTo(expectedScore);
+    }
+
+    private static Stream<Arguments> getStrikeScoreParam() {
+        return Stream.of(
+                Arguments.arguments(10, Collections.emptyList(), null),
+                Arguments.arguments(10, Collections.singletonList(Score.ordinary(1)), null),
+                Arguments.arguments(10, Collections.singletonList(Score.gutter()), null),
+                Arguments.arguments(10, Collections.singletonList(Score.strike()), null),
+                Arguments.arguments(10, Arrays.asList(Score.gutter(), Score.spare(9)), 29),
+                Arguments.arguments(10, Arrays.asList(Score.ordinary(1), Score.ordinary(4)), 25),
+                Arguments.arguments(10, Arrays.asList(Score.ordinary(1), Score.spare(9)), 30),
+                Arguments.arguments(10, Arrays.asList(Score.strike(), Score.ordinary(9), Score.spare(1)), 39),
+                Arguments.arguments(10, Arrays.asList(Score.strike(), Score.strike(), Score.strike()), 40)
+        );
+    }
+
+
 }
