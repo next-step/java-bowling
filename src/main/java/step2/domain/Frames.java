@@ -1,6 +1,8 @@
 package step2.domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import static java.util.Collections.singletonList;
 
@@ -89,6 +91,15 @@ public class Frames {
         }
         return String.valueOf(value);
     }
+
+    public boolean isFinished() {
+        return getLast().isFinished();
+    }
+
+    public Frame getCurrentFrame() {
+        return getLastCompletedFrame(head);
+    }
+
 
     public static class Builder {
 

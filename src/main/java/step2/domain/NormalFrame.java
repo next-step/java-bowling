@@ -1,94 +1,48 @@
 package step2.domain;
 
-import step2.strategy.PitchesStrategy;
+import step2.exception.InvalidPitchesException;
 import step2.type.ResultPitchesType;
 
-import java.util.Objects;
-
 import static java.util.Objects.nonNull;
-import static step2.domain.BowlingPoint.NO_MARK;
-import static step2.domain.BowlingPoint.STRIKE_MARK;
-import static step2.type.ResultPitchesType.*;
+import static step2.type.PitchesOrderType.FIRST;
+import static step2.type.PitchesOrderType.SECOND;
+import static step2.type.ResultPitchesType.SPARE;
+import static step2.type.ResultPitchesType.STRIKE;
 
 public class NormalFrame implements Frame {
-    public static final String ERROR_INVALID_SHOT_POINT = "투구 값이 유효하지 않습니다.";
+    public static final int MAX_PITCHES = 2;
+    public static final String ERROR_INVALID_PITCHES = "유효하지 않은 투구수입니다.";
 
     private final int frameNo;
-    private BowlingPoint firstPoint;
-    private BowlingPoint secondPoint;
-    private boolean completed;
+    private final BowlingPoints bowlingPoints;
     private final Frame next;
 
-    public NormalFrame(Builder builder) {
-        this.frameNo = builder.frameNo;
-        this.firstPoint = builder.firstPoint;
-        this.secondPoint = builder.secondPoint;
-        this.completed = builder.completed;
-        this.next = builder.next;
+    public NormalFrame(int frameNo) {
+        this(frameNo, makeNext(frameNo));
     }
 
-    public static NormalFrame of(int frameNo) {
-        return Builder(frameNo, makeNext(frameNo))
-                .completed(false)
-                .build();
-    }
-
-    public static NormalFrame of(int frameNo, Frame next) {
-        return Builder(frameNo, next)
-                .completed(false)
-                .build();
-    }
-
-    public static Builder Builder(int frameNo, Frame next) {
-        return new Builder(frameNo, next);
-    }
-
-    public static class Builder {
-        private final int frameNo;
-        private BowlingPoint firstPoint;
-        private BowlingPoint secondPoint;
-        private boolean completed;
-        private final Frame next;
-
-        public Builder(int frameNo, Frame next) {
-            this.frameNo = frameNo;
-            this.next = next;
-        }
-
-        public Builder firstPoint(BowlingPoint firstPoint) {
-            this.firstPoint = firstPoint;
-            return this;
-        }
-
-        public Builder secondPoint(BowlingPoint secondPoint) {
-            this.secondPoint = secondPoint;
-            return this;
-        }
-
-        public Builder completed(boolean completed) {
-            this.completed = completed;
-            return this;
-        }
-
-        public NormalFrame build() {
-            return new NormalFrame(this);
-        }
+    public NormalFrame(int frameNo, Frame next) {
+        this.frameNo = frameNo;
+        this.next = next;
+        this.bowlingPoints = BowlingPoints.of(MAX_PITCHES);
 
     }
 
     @Override
-    public int pitches(PitchesStrategy strategy) {
-        if (Objects.isNull(firstPoint)) {
-            firstPoint = BowlingPoint.of(strategy.shot(0));
-            return firstPoint.getPoint();
+    public int pitches(int pitchesCount) throws InvalidPitchesException {
+        if (!bowlingPoints.isCompleted()) {
+            isValidPitchesCount(pitchesCount);
+            bowlingPoints.push(pitchesCount);
+            return pitchesCount;
         }
 
-        if (Objects.isNull(secondPoint)) {
-            secondPoint = BowlingPoint.of(strategy.shot(firstPoint.getPoint()), firstPoint.getPoint());
-            return secondPoint.getPoint();
+        return next.pitches(pitchesCount);
+    }
+
+    private void isValidPitchesCount(int pitchesCount) {
+        if (getScore() + pitchesCount > 10) {
+            throw new IllegalArgumentException(ERROR_INVALID_PITCHES);
         }
-        completed = true;
-        return next.pitches(strategy);
     }
 
     @Override
@@ -99,7 +53,7 @@ public class NormalFrame implements Frame {
     @Override
     public int getScore() {
         int score = getCurrentScore();
-        ResultPitchesType type = getCurrentType();
+        ResultPitchesType type = bowlingPoints.getType(FIRST, SECOND);
         if (STRIKE.equals(type) || SPARE.equals(type)) {
             score += next.getScore(type);
         }
@@ -108,33 +62,23 @@ public class NormalFrame implements Frame {
 
     @Override
     public int getScore(ResultPitchesType prevType) {
-        ResultPitchesType currentType = getCurrentType();
+        ResultPitchesType currentType = bowlingPoints.getType(FIRST, SECOND);
         if (STRIKE.equals(prevType) && STRIKE.equals(currentType)) {
             return getCurrentScore() + next.getCurrentScore();
         }
         if (STRIKE.equals(prevType)) {
-            return getCurrentScore();
+            return bowlingPoints.getScore();
         }
         if (SPARE.equals(prevType)) {
-            return getScoreByPoint(firstPoint);
+            return bowlingPoints.getScore(FIRST);
         }
         return 0;
     }
 
-    private ResultPitchesType getCurrentType() {
-        return getType(getScoreByPoint(firstPoint), getScoreByPoint(secondPoint));
-    }
-
-    private int getScoreByPoint(BowlingPoint point) {
-        return Objects.nonNull(point) ? point.getPoint() : 0;
-    }
-
-
     @Override
     public int getCurrentScore() {
-        return getScoreByPoint(firstPoint) + getScoreByPoint(secondPoint);
+        return bowlingPoints.getScore();
     }
-
 
     @Override
     public Frame next() {
@@ -150,19 +94,16 @@ public class NormalFrame implements Frame {
         if (frameNo == BowlingGame.FRAME_LAST_NO) {
             return new FinalFrame(frameNo + 1);
         }
-        return NormalFrame.of(frameNo + 1);
+        return new NormalFrame(frameNo + 1);
     }
 
     @Override
     public String getResultString() {
-        String result = nonNull(firstPoint) ? firstPoint.getMark() : NO_MARK;
-        result += nonNull(secondPoint) && !result.equals(STRIKE_MARK) ? "|" + secondPoint.getMark() : NO_MARK;
-
-        return result;
+        return bowlingPoints.getMark();
     }
 
     @Override
     public boolean isFinished() {
-        return completed;
+        return bowlingPoints.isCompleted();
     }
 }
