@@ -52,7 +52,7 @@ class BoardTest {
     void scenario_empty() {
         assertAll(
                 () -> assertThat(board.frameNo())
-                        .isEqualTo(0),
+                        .isEqualTo(1),
                 () -> assertThat(board.isStrike())
                         .isFalse(),
                 () -> assertThat(board.isSpare())
@@ -75,7 +75,7 @@ class BoardTest {
         addRoll(Roll.of(10));
         assertAll(
                 () -> assertThat(board.frameNo())
-                        .isEqualTo(1),
+                        .isEqualTo(2),
                 () -> assertThat(board.isStrike())
                         .isTrue(),
                 () -> assertThat(board.isSpare())
@@ -100,7 +100,7 @@ class BoardTest {
         addRoll(Roll.of(9));
         assertAll(
                 () -> assertThat(board.frameNo())
-                        .isEqualTo(2),
+                        .isEqualTo(3),
                 () -> assertThat(board.isStrike())
                         .isFalse(),
                 () -> assertThat(board.isSpare())
@@ -128,7 +128,7 @@ class BoardTest {
         addRoll(Roll.of(5));
         assertAll(
                 () -> assertThat(board.frameNo())
-                        .isEqualTo(3),
+                        .isEqualTo(4),
                 () -> assertThat(board.isStrike())
                         .isFalse(),
                 () -> assertThat(board.isSpare())

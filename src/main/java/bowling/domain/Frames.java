@@ -5,6 +5,7 @@ import bowling.dto.FramesDto;
 import java.util.LinkedList;
 import java.util.List;
 
+import static bowling.asset.Const.MAX_FRAME_NO;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
@@ -16,11 +17,21 @@ class Frames {
         return frames.size();
     }
 
+    int frameNo() {
+        if (isLastFinished()) {
+            return size() + 1;
+        }
+        return size();
+    }
+
     List<Frame> subList(int from, int to) {
         return frames.subList(from, to);
     }
 
     void update(Rolls rolls) {
+        if (isGameOver()) {
+            return;
+        }
         if (isLastFinished()) {
             frames.add(Frame.of(rolls));
             return;
@@ -39,6 +50,11 @@ class Frames {
     boolean isLastFinished() {
         return frames.isEmpty()
                 || last().isFinished();
+    }
+
+    private boolean isGameOver() {
+        return size() > MAX_FRAME_NO
+                || size() == MAX_FRAME_NO && last().isFinished();
     }
 
     private Frame last() {

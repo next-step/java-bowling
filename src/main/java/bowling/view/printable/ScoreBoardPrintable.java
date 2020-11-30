@@ -5,14 +5,12 @@ import bowling.dto.*;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.IntStream;
 
+import static bowling.asset.Const.MAX_FRAME_NO;
 import static java.util.Map.Entry;
 
 public class ScoreBoardPrintable extends Printable {
     private static final String header = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final int MAX_FRAME_NO = 10;
-
     private final ScoreBoardDto dto;
 
     public ScoreBoardPrintable(ScoreBoardDto scoreBoardDto) {
@@ -21,11 +19,11 @@ public class ScoreBoardPrintable extends Printable {
 
     @Override
     public void print() {
-        print(lineSeparator);
         print(header);
         dto.getScoreBoard()
                 .entrySet()
                 .forEach(this::print);
+        print(lineSeparator);
     }
 
     private void print(Entry<PlayerDto, PlayerStatusDto> entry) {
@@ -51,11 +49,9 @@ public class ScoreBoardPrintable extends Printable {
     }
 
     private void printBlank(int size) {
-        if (MAX_FRAME_NO <= size) {
-            return;
+        for (int i = 0; i < MAX_FRAME_NO - size; i++) {
+            print("      |");
         }
-        IntStream.range(0, MAX_FRAME_NO - size)
-                .forEach(i -> print("      |"));
     }
 
     private void print(FrameDto frameDto, Iterator<RollDto> rollItr) {
@@ -74,6 +70,9 @@ public class ScoreBoardPrintable extends Printable {
             str = String.format("%s|%s",
                     rollToStr(rollItr.next()),
                     rollToStr(rollItr.next()));
+        }
+        if (frameEnum == FrameEnum.UNFINISHED) {
+            str = rollToStr(rollItr.next());
         }
         print(spacing(str));
     }

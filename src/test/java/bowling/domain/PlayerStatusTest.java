@@ -19,7 +19,7 @@ class PlayerStatusTest {
     @Test
     @DisplayName("playFrame 으로 인한 Board 결과 테스트")
     void playFrame() {
-        PlayerStatus status = PlayerStatus.of(num -> Roll.of(num));
+        PlayerStatus status = PlayerStatus.of(num -> Roll.of(num), Arrays.asList());
         status.playFrame();
         status.playFrame();
         status.playFrame();
@@ -32,18 +32,18 @@ class PlayerStatusTest {
 
         assertAll(
                 () -> assertThat(rolls)
-                        .isEqualTo(Arrays.asList(0, 1, 1, 2, 2, 3, 3, 4, 4, 5)),
+                        .isEqualTo(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4, 5, 5)),
                 () -> assertThat(frames)
-                        .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, MISS)),
+                        .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, SPARE)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(1, 3, 5, 7, 9))
+                        .isEqualTo(Arrays.asList(2, 4, 6, 8))
         );
     }
 
     @Test
     @DisplayName("마지막이 Strike 일 때, playBonus 으로 인한 Board 결과 테스트")
     void playBonus_STRIKE() {
-        PlayerStatus status = PlayerStatus.of(num -> Roll.of(10));
+        PlayerStatus status = PlayerStatus.of(num -> Roll.of(10), Arrays.asList());
         status.playFrame();
         status.playFrame();
         status.playBonus();
@@ -65,7 +65,7 @@ class PlayerStatusTest {
     @Test
     @DisplayName("마지막이 SPARE 일 때, playBonus 으로 인한 Board 결과 테스트")
     void playBonus_SPARE() {
-        PlayerStatus status = PlayerStatus.of(num -> Roll.of(5));
+        PlayerStatus status = PlayerStatus.of(num -> Roll.of(5), Arrays.asList());
         status.playFrame();
         status.playFrame();
         status.playBonus();

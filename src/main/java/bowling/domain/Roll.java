@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import static bowling.asset.Const.PIN_NUM;
+
 public class Roll {
-    private static final int PIN_NUM = 10;
     private static final Map<Integer, Roll> map = new HashMap();
 
     static {

@@ -9,7 +9,7 @@ class Board {
     private final Scores scores = new Scores();
 
     int frameNo() {
-        return frames.size();
+        return frames.frameNo();
     }
 
     void update(Rolls rolls) {

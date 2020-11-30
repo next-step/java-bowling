@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import static bowling.asset.Const.MAX_FRAME_NO;
 import static bowling.domain.FrameEnum.*;
 import static java.util.Map.Entry;
 import static java.util.stream.Collectors.toList;
@@ -22,7 +23,8 @@ class GameTest {
 
     @BeforeEach
     void setUp() {
-        game = new Game();
+        game = new Game(subject -> {
+        });
         player = new Player("GHO");
     }
 
@@ -53,11 +55,13 @@ class GameTest {
                                 STRIKE,
                                 STRIKE,
                                 STRIKE,
-                                STRIKE,
-                                STRIKE,
-                                UNFINISHED)),
+                                STRIKE)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(30, 30, 30, 30, 30, 30, 30, 30, 30, 20))
+                        .isEqualTo(Arrays.asList(30, 30, 30, 30, 30, 30, 30, 30, 30, 20)),
+                () -> assertThat(frames.size())
+                        .isEqualTo(MAX_FRAME_NO),
+                () -> assertThat(scores.size())
+                        .isEqualTo(MAX_FRAME_NO)
         );
     }
 
@@ -89,10 +93,13 @@ class GameTest {
                                 SPARE,
                                 SPARE,
                                 SPARE,
-                                SPARE,
-                                UNFINISHED)),
+                                SPARE)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(15, 15, 15, 15, 15, 15, 15, 15, 15, 15))
+                        .isEqualTo(Arrays.asList(15, 15, 15, 15, 15, 15, 15, 15, 15, 15)),
+                () -> assertThat(frames.size())
+                        .isEqualTo(MAX_FRAME_NO),
+                () -> assertThat(scores.size())
+                        .isEqualTo(MAX_FRAME_NO)
         );
     }
 
@@ -116,7 +123,11 @@ class GameTest {
                 () -> assertThat(frames)
                         .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(2, 2, 2, 2, 2, 2, 2, 2, 2, 2))
+                        .isEqualTo(Arrays.asList(2, 2, 2, 2, 2, 2, 2, 2, 2, 2)),
+                () -> assertThat(frames.size())
+                        .isEqualTo(MAX_FRAME_NO),
+                () -> assertThat(scores.size())
+                        .isEqualTo(MAX_FRAME_NO)
         );
     }
 
@@ -173,11 +184,13 @@ class GameTest {
                                 STRIKE,
                                 STRIKE,
                                 STRIKE,
-                                STRIKE,
-                                STRIKE,
-                                UNFINISHED)),
+                                STRIKE)),
                 () -> assertThat(scores1)
                         .isEqualTo(Arrays.asList(30, 30, 30, 30, 30, 30, 30, 30, 30, 20)),
+                () -> assertThat(frames1.size())
+                        .isEqualTo(MAX_FRAME_NO),
+                () -> assertThat(scores1.size())
+                        .isEqualTo(MAX_FRAME_NO),
 
                 () -> assertThat(player2.getName())
                         .isEqualTo(name2),
@@ -193,10 +206,13 @@ class GameTest {
                                 SPARE,
                                 SPARE,
                                 SPARE,
-                                SPARE,
-                                UNFINISHED)),
+                                SPARE)),
                 () -> assertThat(scores2)
                         .isEqualTo(Arrays.asList(15, 15, 15, 15, 15, 15, 15, 15, 15, 15)),
+                () -> assertThat(frames2.size())
+                        .isEqualTo(MAX_FRAME_NO),
+                () -> assertThat(scores2.size())
+                        .isEqualTo(MAX_FRAME_NO),
 
                 () -> assertThat(player3.getName())
                         .isEqualTo(name3),
@@ -205,7 +221,11 @@ class GameTest {
                 () -> assertThat(frames3)
                         .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS)),
                 () -> assertThat(scores3)
-                        .isEqualTo(Arrays.asList(2, 2, 2, 2, 2, 2, 2, 2, 2, 2))
+                        .isEqualTo(Arrays.asList(2, 2, 2, 2, 2, 2, 2, 2, 2, 2)),
+                () -> assertThat(frames3.size())
+                        .isEqualTo(MAX_FRAME_NO),
+                () -> assertThat(scores3.size())
+                        .isEqualTo(MAX_FRAME_NO)
         );
     }
 

@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.dto.PlayerStatusDto;
 
+import java.util.List;
 import java.util.function.Function;
 
 class PlayerStatus {
@@ -13,10 +14,11 @@ class PlayerStatus {
         this.board = board;
     }
 
-    static PlayerStatus of(Function<Integer, Roll> rollGenerator) {
+    static PlayerStatus of(Function<Integer, Roll> rollGenerator, List<Observer> rollObservers) {
         Board board = new Board();
         RollSubject subject = new RollSubject(() -> rollGenerator.apply(board.frameNo()));
         subject.register(new BoardObserver(board));
+        rollObservers.forEach(subject::register);
         return new PlayerStatus(
                 subject,
                 board
