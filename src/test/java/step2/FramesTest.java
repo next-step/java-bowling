@@ -42,10 +42,10 @@ public class FramesTest {
         Frames frames = BowlingGame.build();
         Frame head = frames.getHead();
 
-        head.pitches(StrategyTest.T10);
-        head.pitches(StrategyTest.T10);
-        head.pitches(StrategyTest.T10);
-        head.pitches(StrategyTest.T5);
+        head.pitches(10);
+        head.pitches(10);
+        head.pitches(10);
+        head.pitches(5);
 
         assertThat(head.getScore()).isEqualTo(30);
         assertThat(frames.getFrame(3).getScore()).isEqualTo(5);

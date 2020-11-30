@@ -17,8 +17,8 @@ public class FrameTest {
     @DisplayName("프레임 투구 테스트")
     @Test
     void pitches() {
-        NormalFrame frame = NormalFrame.of(1);
-        frame.pitches(StrategyTest.T4);
+        NormalFrame frame = new NormalFrame(1);
+        frame.pitches(4);
         assertThat(frame.getScore()).isEqualTo(frame.getCurrentScore());
 
     }
@@ -26,13 +26,13 @@ public class FrameTest {
     @DisplayName("프레임 투구 예외 테스트")
     @Test
     void pitchesWithException() {
-        NormalFrame frame = NormalFrame.of(1);
+        NormalFrame frame = new NormalFrame(1);
         assertThatThrownBy(()->{
-            frame.pitches(StrategyTest.T9);
-            frame.pitches(StrategyTest.T9);
+            frame.pitches(9);
+            frame.pitches(9);
         })
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(NormalFrame.ERROR_INVALID_SHOT_POINT);
+                .hasMessage(NormalFrame.ERROR_INVALID_PITCHES);
     }
 
     @DisplayName("프레임 결과 출력 테스트")
@@ -44,24 +44,24 @@ public class FrameTest {
     }
 
     private static Stream<Arguments> provideFrameAndString() {
-        Frame strikeFrame = NormalFrame.of(1);
-        strikeFrame.pitches(StrategyTest.T10);
+        Frame strikeFrame = new NormalFrame(1);
+        strikeFrame.pitches(10);
 
-        Frame spareFrame = NormalFrame.of(2);
-        spareFrame.pitches(StrategyTest.T7);
-        spareFrame.pitches(StrategyTest.T3);
+        Frame spareFrame = new NormalFrame(2);
+        spareFrame.pitches(7);
+        spareFrame.pitches(3);
 
-        Frame missFrame = NormalFrame.of(3);
-        missFrame.pitches(StrategyTest.T6);
-        missFrame.pitches(StrategyTest.T3);
+        Frame missFrame = new NormalFrame(3);
+        missFrame.pitches(6);
+        missFrame.pitches(3);
 
-        Frame prevGutterFrame = NormalFrame.of(4);
-        prevGutterFrame.pitches(StrategyTest.T0);
-        prevGutterFrame.pitches(StrategyTest.T5);
+        Frame prevGutterFrame = new NormalFrame(4);
+        prevGutterFrame.pitches(0);
+        prevGutterFrame.pitches(5);
 
-        Frame afterGutterFrame = NormalFrame.of(4);
-        afterGutterFrame.pitches(StrategyTest.T5);
-        afterGutterFrame.pitches(StrategyTest.T0);
+        Frame afterGutterFrame = new NormalFrame(4);
+        afterGutterFrame.pitches(5);
+        afterGutterFrame.pitches(0);
 
         return Stream.of(
                 Arguments.of(strikeFrame, "X"),
@@ -80,27 +80,27 @@ public class FrameTest {
     }
 
     private static Stream<Arguments> provideNormalFrame() {
-        NormalFrame frame = NormalFrame.of(0);
-        frame.pitches(StrategyTest.T10);
+        NormalFrame frame = new NormalFrame(0);
+        frame.pitches(0);
 
-        NormalFrame frame2 = NormalFrame.of(1);
-        frame2.pitches(StrategyTest.T9);
-        frame2.pitches(StrategyTest.T1);
+        NormalFrame frame2 = new NormalFrame(1);
+        frame2.pitches(9);
+        frame2.pitches(1);
 
-        NormalFrame frame3 = NormalFrame.of(1);
-        frame3.pitches(StrategyTest.T0);
-        frame3.pitches(StrategyTest.T10);
+        NormalFrame frame3 = new NormalFrame(1);
+        frame3.pitches(0);
+        frame3.pitches(10);
 
-        NormalFrame frame4 = NormalFrame.of(1);
-        frame4.pitches(StrategyTest.T5);
-        frame4.pitches(StrategyTest.T4);
+        NormalFrame frame4 = new NormalFrame(1);
+        frame4.pitches(5);
+        frame4.pitches(4);
 
-        NormalFrame frame5 = NormalFrame.of(1);
-        frame5.pitches(StrategyTest.T5);
-        frame5.pitches(StrategyTest.T0);
+        NormalFrame frame5 = new NormalFrame(1);
+        frame5.pitches(5);
+        frame5.pitches(0);
 
         return Stream.of(
-                Arguments.of(frame, "X"),
+                Arguments.of(frame, "-"),
                 Arguments.of(frame2, "9|/"),
                 Arguments.of(frame3, "-|/"),
                 Arguments.of(frame4, "5|4"),
@@ -119,19 +119,17 @@ public class FrameTest {
         FinalFrame frame1 = new FinalFrame(10);
         FinalFrame frame2 = new FinalFrame(10);
 
-        frame1.pitches(StrategyTest.T10);
-        frame1.pitches(StrategyTest.T5);
-        frame1.pitches(StrategyTest.T5);
+        frame1.pitches(10);
+        frame1.pitches(5);
+        frame1.pitches(5);
 
-        frame2.pitches(StrategyTest.T0);
-        frame2.pitches(StrategyTest.T10);
-        frame2.pitches(StrategyTest.T10);
+        frame2.pitches(0);
+        frame2.pitches(10);
+        frame2.pitches(10);
 
         return Stream.of(
                 Arguments.of(frame1, "X|5|/"),
                 Arguments.of(frame2, "-|/|X")
         );
     }
-
-
 }
