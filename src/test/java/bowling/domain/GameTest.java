@@ -23,8 +23,7 @@ class GameTest {
 
     @BeforeEach
     void setUp() {
-        game = new Game(subject -> {
-        });
+        game = new Game();
         player = new Player("GHO");
     }
 

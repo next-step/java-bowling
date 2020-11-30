@@ -20,7 +20,7 @@ public class Game {
     private final Map<Player, PlayerStatus> map = new LinkedHashMap<>();
     private final List<Observer> observers = new LinkedList<>();
 
-    public Game(Consumer<ScoreBoardDto> consumer) {
+    public void registerScoreBoardPrinter(Consumer<ScoreBoardDto> consumer) {
         observers.add(subject -> consumer.accept(exportScoreBoardDto()));
     }
 
