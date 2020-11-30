@@ -4,15 +4,9 @@ import bowling.domain.FrameEnum;
 
 public class FrameDto {
     private final FrameEnum frameEnum;
-    private final int startIndex;
 
-    public FrameDto(int startIndex, FrameEnum frameEnum) {
-        this.startIndex = startIndex;
+    public FrameDto(FrameEnum frameEnum) {
         this.frameEnum = frameEnum;
-    }
-
-    public int getStartIndex() {
-        return startIndex;
     }
 
     public FrameEnum getFrameEnum() {

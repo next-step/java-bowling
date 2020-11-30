@@ -1,17 +1,17 @@
 package bowling.domain;
 
+import java.util.LinkedList;
 import java.util.List;
 
 abstract class Subject<T> {
-    private List<Observer> observers;
+    private final List<Observer> observers = new LinkedList<>();
 
     void register(Observer observer) {
         observers.add(observer);
     }
 
     void notifyObservers() {
-        observers.stream()
-                .forEach(observer -> observer.update(this));
+        observers.forEach(observer -> observer.update(this));
     }
 
     abstract T get();

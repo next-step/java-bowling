@@ -10,6 +10,7 @@ public class AskCountOfPinsPrintable extends Printable {
 
     @Override
     public void print() {
-        print(frameNo + "프레임 투구 : ");
+        print(lineSeparator);
+        print(String.format("%d프레임 투구 : ", frameNo));
     }
 }

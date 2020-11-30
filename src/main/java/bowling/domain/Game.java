@@ -50,7 +50,6 @@ public class Game {
 
     private void play(Consumer<Entry> consumer) {
         subjectMap.entrySet()
-                .stream()
                 .forEach(consumer);
     }
 

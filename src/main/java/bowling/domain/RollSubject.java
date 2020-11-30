@@ -12,6 +12,7 @@ class RollSubject extends Subject<Rolls> {
         this.strategy = strategy;
     }
 
+
     @Override
     Rolls get() {
         return rolls;

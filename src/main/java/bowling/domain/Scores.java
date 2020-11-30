@@ -15,14 +15,10 @@ class Scores {
         return scores.size();
     }
 
-    void update(Rolls rolls, Frames frames) {
-        scores.addAll(
-                frames.subList(scores.size(), frames.frameNo())
-                        .stream()
-                        .map(frame -> frame.score(rolls))
-                        .map(Score::new)
-                        .filter(Score::isValid)
-                        .collect(toList())
+    void addValidOnly(List<Score> scoreList) {
+        scores.addAll(scoreList.stream()
+                .filter(Score::isValid)
+                .collect(toList())
         );
     }
 

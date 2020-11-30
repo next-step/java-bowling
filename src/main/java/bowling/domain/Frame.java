@@ -45,6 +45,6 @@ class Frame {
     }
 
     FrameDto exportFrameDto() {
-        return new FrameDto(startIndex, frameEnum);
+        return new FrameDto(frameEnum);
     }
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class PlayerTest {
@@ -15,5 +16,13 @@ class PlayerTest {
     void constructor(String name) {
         assertThatExceptionOfType(PlayerException.class)
                 .isThrownBy(() -> new Player(name));
+    }
+
+    @ParameterizedTest
+    @DisplayName("exportPlayerDto 테스트")
+    @ValueSource(strings = {"abc", "DEF", "gHi"})
+    void exportPlayerDto(String name) {
+        assertThat(new Player(name).exportPlayerDto().getName())
+                .isEqualTo(name);
     }
 }

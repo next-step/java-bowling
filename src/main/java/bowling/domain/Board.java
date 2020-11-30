@@ -2,17 +2,23 @@ package bowling.domain;
 
 import bowling.dto.BoardDto;
 
+import static java.util.stream.Collectors.toList;
+
 class Board {
     private final Frames frames = new Frames();
     private final Scores scores = new Scores();
 
     int frameNo() {
-        return frames.frameNo();
+        return frames.size();
     }
 
     void update(Rolls rolls) {
         frames.update(rolls);
-        scores.update(rolls, frames);
+        scores.addValidOnly(frames.subList(scores.size(), frames.size())
+                .stream()
+                .map(frame -> frame.score(rolls))
+                .map(Score::new)
+                .collect(toList()));
     }
 
     boolean isFrameFinished() {
