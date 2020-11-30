@@ -1,6 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.pin.InvalidPinException;
 import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
@@ -43,7 +42,7 @@ public class OrdinaryTest {
     public void invalidState() {
         assertThatThrownBy(() -> {
             state.record(Pin.of(10));
-        }).isInstanceOf(InvalidPinException.class);
+        }).isInstanceOf(InvalidRecordInOrdinaryException.class);
     }
 
     @DisplayName("종료 여부")
