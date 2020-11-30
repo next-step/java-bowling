@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -52,7 +53,7 @@ class FramesTest {
                         .isTrue(),
                 () -> assertThat(
                         toFrameEnumList(frames)
-                ).isEqualTo(Arrays.asList())
+                ).isEqualTo(emptyList())
         );
     }
 

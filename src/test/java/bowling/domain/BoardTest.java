@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -61,10 +62,10 @@ class BoardTest {
                         .isTrue(),
                 () -> assertThat(
                         toFrameEnumList(board)
-                ).isEqualTo(Arrays.asList()),
+                ).isEqualTo(emptyList()),
                 () -> assertThat(
                         toScoreList(board)
-                ).isEqualTo(Arrays.asList())
+                ).isEqualTo(emptyList())
         );
     }
 
@@ -87,7 +88,7 @@ class BoardTest {
                 ).isEqualTo(Arrays.asList(FrameEnum.STRIKE)),
                 () -> assertThat(
                         toScoreList(board)
-                ).isEqualTo(Arrays.asList())
+                ).isEqualTo(emptyList())
         );
     }
 

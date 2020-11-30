@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static bowling.domain.FrameEnum.*;
+import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -19,7 +20,7 @@ class PlayerStatusTest {
     @Test
     @DisplayName("playFrame 으로 인한 Board 결과 테스트")
     void playFrame() {
-        PlayerStatus status = PlayerStatus.of(num -> Roll.of(num), Arrays.asList());
+        PlayerStatus status = PlayerStatus.of(num -> Roll.of(num), emptyList());
         status.playFrame();
         status.playFrame();
         status.playFrame();
@@ -43,7 +44,7 @@ class PlayerStatusTest {
     @Test
     @DisplayName("마지막이 Strike 일 때, playBonus 으로 인한 Board 결과 테스트")
     void playBonus_STRIKE() {
-        PlayerStatus status = PlayerStatus.of(num -> Roll.of(10), Arrays.asList());
+        PlayerStatus status = PlayerStatus.of(num -> Roll.of(10), emptyList());
         status.playFrame();
         status.playFrame();
         status.playBonus();
@@ -65,7 +66,7 @@ class PlayerStatusTest {
     @Test
     @DisplayName("마지막이 SPARE 일 때, playBonus 으로 인한 Board 결과 테스트")
     void playBonus_SPARE() {
-        PlayerStatus status = PlayerStatus.of(num -> Roll.of(5), Arrays.asList());
+        PlayerStatus status = PlayerStatus.of(num -> Roll.of(5), emptyList());
         status.playFrame();
         status.playFrame();
         status.playBonus();
