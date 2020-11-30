@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("거터 상태 테스트")
 public class GutterTest {
 
-    State state = new Gutter(1);
+    State state = new Gutter(1, Scores.empty());
 
     @DisplayName("다음이 마지막 상태가 될 때")
     @ParameterizedTest
@@ -37,7 +38,7 @@ public class GutterTest {
     @ParameterizedTest
     @MethodSource("getRecord")
     public void next(int pins, Class<State> expectedClass) {
-        State state = new Gutter(2);
+        State state = new Gutter(2, Scores.empty());
 
         State nextState = state.record(pins);
 

@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.LastFrame;
 import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 import bowling.domain.state.Gutter;
 import bowling.domain.state.Spare;
 import bowling.domain.state.Strike;
@@ -27,9 +28,9 @@ public class ResultViewTest {
         ResultView resultView = new ResultView(new PrintWriter(output));
 
         resultView.showFrames("PJS", Arrays.asList(
-                Frame.of(Collections.singletonList(Score.strike()), new Strike(0)),
-                Frame.of(Arrays.asList(Score.ordinary(8), Score.spare(2)), new Spare(2, 0)),
-                Frame.of(Arrays.asList(Score.ordinary(7), Score.gutter()), new Gutter(0)),
+                Frame.of(new Strike(0, Scores.empty())),
+                Frame.of(new Spare(2, 0, Scores.of(Collections.singletonList(Score.ordinary(8))))),
+                Frame.of(new Gutter(0, Scores.of(Collections.singletonList(Score.ordinary(7))))),
                 Frame.empty(),
                 Frame.empty(),
                 Frame.empty(),

@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.frame.InvalidFrameRecordActionException;
 import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +20,7 @@ public class OrdinaryTest {
     @ParameterizedTest
     @MethodSource("getRecordForLast")
     public void nextLast(int pins, Class<State> expectedClass) {
-        State state = new Ordinary(7, 1);
+        State state = new Ordinary(7, 1, Scores.empty());
 
         State nextState = state.record(pins);
 
@@ -38,7 +39,7 @@ public class OrdinaryTest {
     @ParameterizedTest
     @MethodSource("getRecord")
     public void next(int pins, Class<State> expectedClass) {
-        State state = new Ordinary(7, 2);
+        State state = new Ordinary(7, 2, Scores.empty());
 
         State nextState = state.record(pins);
 
@@ -56,7 +57,7 @@ public class OrdinaryTest {
     @DisplayName("잘못된 상태")
     @Test
     public void invalidState() {
-        State state = new Ordinary(7, 2);
+        State state = new Ordinary(7, 2, Scores.empty());
 
         assertThatThrownBy(() -> {
             state.record(10);
@@ -66,7 +67,7 @@ public class OrdinaryTest {
     @DisplayName("점수")
     @Test
     public void score() {
-        State state = new Ordinary(1, 1);
+        State state = new Ordinary(1, 1, Scores.empty());
 
         assertThat(state.getScore()).isEqualTo(Score.ordinary(1));
     }
@@ -74,7 +75,7 @@ public class OrdinaryTest {
     @DisplayName("종료 여부")
     @Test
     public void isFinished() {
-        State state = new Ordinary(1, 1);
+        State state = new Ordinary(1, 1, Scores.empty());
 
         assertThat(state.isFinished()).isEqualTo(false);
     }

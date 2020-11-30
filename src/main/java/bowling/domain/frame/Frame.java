@@ -15,24 +15,22 @@ public class Frame {
     protected Scores scores;
     protected State state;
 
-    protected Frame(Scores scores, State state) {
-        this.scores = scores;
+    protected Frame(State state) {
         this.state = state;
     }
 
     public static Frame empty() {
-        return new Frame(Scores.empty(), new FrameReady(MAX_TRY_COUNT));
+        return new Frame(new FrameReady(MAX_TRY_COUNT));
     }
 
-    public static Frame of(List<Score> scores, State state) {
-        return new Frame(Scores.of(scores), state);
+    public static Frame of(State state) {
+        return new Frame(state);
     }
 
     public void record(int pins) {
         validateMaxScore(pins);
         validateFinished();
         state = state.record(pins);
-        scores = scores.add(state.getScore());
     }
 
     private void validateFinished() {
@@ -42,7 +40,7 @@ public class Frame {
     }
 
     private void validateMaxScore(int pins) {
-        if (pins + scores.sum() > getMaxScore()) {
+        if (pins + state.sum() > getMaxScore()) {
             throw new InvalidMaxScoresException();
         }
     }
@@ -56,18 +54,11 @@ public class Frame {
     }
 
     public List<Score> getScores() {
-        return scores.getScores();
+        return state.getScores();
     }
 
     public Integer calculateScore(Integer previousFrameScore, List<Frame> nextFrames) {
-        if (state.isFinished()) {
-            return calculate(previousFrameScore, nextFrames);
-        }
-        return null;
-    }
-
-    protected Integer calculate(Integer previousFrameScore, List<Frame> nextFrames) {
-        return scores.calculate(previousFrameScore, getNextScores(nextFrames));
+        return state.calculate(previousFrameScore, getNextScores(nextFrames));
     }
 
     private List<Score> getNextScores(List<Frame> nextFrames) {
