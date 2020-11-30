@@ -1,9 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Score;
-import bowling.domain.state.last.LastGutter;
-import bowling.domain.state.last.LastOrdinary;
-import bowling.domain.state.last.LastSpare;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,9 +27,9 @@ public class GutterTest {
 
     private static Stream<Arguments> getRecordForLast() {
         return Stream.of(
-                Arguments.arguments(10, LastSpare.class),
-                Arguments.arguments(0, LastGutter.class),
-                Arguments.arguments(3, LastOrdinary.class)
+                Arguments.arguments(10, Spare.class),
+                Arguments.arguments(0, Gutter.class),
+                Arguments.arguments(3, Ordinary.class)
         );
     }
 
@@ -50,8 +47,8 @@ public class GutterTest {
     private static Stream<Arguments> getRecord() {
         return Stream.of(
                 Arguments.arguments(10, Spare.class),
-                Arguments.arguments(0, LastGutter.class),
-                Arguments.arguments(3, LastOrdinary.class)
+                Arguments.arguments(0, Gutter.class),
+                Arguments.arguments(3, Ordinary.class)
         );
     }
 

@@ -1,9 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Score;
-import bowling.domain.state.last.LastGutter;
-import bowling.domain.state.last.LastOrdinary;
-import bowling.domain.state.last.LastStrike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,13 +13,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("스페어 상태 테스트")
 public class SpareTest {
-    State state = new Spare(1);
+    State state = new Spare(1, 1);
 
     @DisplayName("다음이 마지막 상태가 될 때")
     @ParameterizedTest
     @MethodSource("getRecordForLast")
     public void nextLast(int pins, Class<State> expectedClass) {
-        State state = new Spare(pins);
+        State state = new Spare(pins, 1);
 
         State nextState = state.record(pins);
 
@@ -31,9 +28,9 @@ public class SpareTest {
 
     private static Stream<Arguments> getRecordForLast() {
         return Stream.of(
-                Arguments.arguments(10, LastStrike.class),
-                Arguments.arguments(0, LastGutter.class),
-                Arguments.arguments(3, LastOrdinary.class)
+                Arguments.arguments(10, Strike.class),
+                Arguments.arguments(0, Gutter.class),
+                Arguments.arguments(3, Ordinary.class)
         );
     }
 

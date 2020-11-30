@@ -1,9 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Score;
-import bowling.domain.state.last.LastGutter;
-import bowling.domain.state.last.LastOrdinary;
-import bowling.domain.state.last.LastStrike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,9 +27,9 @@ public class StrikeTest {
 
     private static Stream<Arguments> getRecordForLast() {
         return Stream.of(
-                Arguments.arguments(10, LastStrike.class),
-                Arguments.arguments(0, LastGutter.class),
-                Arguments.arguments(3, LastOrdinary.class)
+                Arguments.arguments(10, Strike.class),
+                Arguments.arguments(0, Gutter.class),
+                Arguments.arguments(3, Ordinary.class)
         );
     }
 

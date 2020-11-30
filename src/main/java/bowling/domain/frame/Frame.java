@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Frame {
+    public static int MAX_TRY_COUNT = 2;
+
     protected Scores scores;
     protected State state;
 
@@ -19,7 +21,7 @@ public class Frame {
     }
 
     public static Frame empty() {
-        return new Frame(Scores.empty(), new FrameReady());
+        return new Frame(Scores.empty(), new FrameReady(MAX_TRY_COUNT));
     }
 
     public static Frame of(List<Score> scores, State state) {

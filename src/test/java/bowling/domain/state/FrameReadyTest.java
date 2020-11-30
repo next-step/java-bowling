@@ -1,6 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.state.last.LastStrike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,11 +8,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static bowling.domain.frame.Frame.MAX_TRY_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("일반 프레임 준비 상태 테스트")
 public class FrameReadyTest {
-    State state = new FrameReady();
+    State state = new FrameReady(MAX_TRY_COUNT);
 
     @DisplayName("다음 상태")
     @ParameterizedTest
@@ -26,7 +26,7 @@ public class FrameReadyTest {
 
     private static Stream<Arguments> getRecord() {
         return Stream.of(
-                Arguments.arguments(10, LastStrike.class),
+                Arguments.arguments(10, Strike.class),
                 Arguments.arguments(0, Gutter.class),
                 Arguments.arguments(3, Ordinary.class)
         );

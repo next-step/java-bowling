@@ -2,16 +2,19 @@ package bowling.domain.state;
 
 import bowling.domain.score.Score;
 
-public interface State {
-    int MIN_LEFT_TRY = 1;
+public abstract class State {
+    public static int MIN_LEFT_TRY = 0;
+    protected int leftTry;
 
-    State record(int pins);
-
-    default Score getScore() {
-        return null;
+    protected State(int leftTry) {
+        this.leftTry = leftTry;
     }
 
-    default boolean isFinished() {
-        return false;
+    public abstract State record(int pins);
+
+    public abstract Score getScore();
+
+    public boolean isFinished() {
+        return leftTry == MIN_LEFT_TRY;
     }
 }

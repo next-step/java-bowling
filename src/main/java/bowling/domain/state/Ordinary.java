@@ -2,25 +2,17 @@ package bowling.domain.state;
 
 import bowling.domain.frame.InvalidFrameRecordActionException;
 import bowling.domain.score.Score;
-import bowling.domain.state.last.LastGutter;
-import bowling.domain.state.last.LastOrdinary;
-import bowling.domain.state.last.LastSpare;
 
 import static bowling.domain.pin.Pin.MAX_PINS;
 import static bowling.domain.pin.Pin.MIN_PINS;
 import static bowling.domain.score.Score.ordinary;
 
-public class Ordinary implements State {
+public class Ordinary extends State {
     private final int pins;
-    private int leftTry = MIN_LEFT_TRY;
-
-    public Ordinary(int pins) {
-        this.pins = pins;
-    }
 
     public Ordinary(int pins, int leftTry) {
+        super(leftTry);
         this.pins = pins;
-        this.leftTry = leftTry;
     }
 
     @Override
@@ -29,19 +21,12 @@ public class Ordinary implements State {
             throw new InvalidFrameRecordActionException();
         }
         if (this.pins + pins == MAX_PINS) {
-            return recordSpare(pins);
+            return new Spare(pins, leftTry - 1);
         }
         if (pins == MIN_PINS) {
-            return new LastGutter();
+            return new Gutter(MIN_LEFT_TRY);
         }
-        return new LastOrdinary(pins);
-    }
-
-    private State recordSpare(int pins) {
-        if (leftTry == MIN_LEFT_TRY) {
-            return new LastSpare(pins);
-        }
-        return new Spare(pins);
+        return new Ordinary(pins, MIN_LEFT_TRY);
     }
 
     @Override
