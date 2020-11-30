@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,7 +44,7 @@ public class Frames {
         return currentFrameNumber > MAX_FRAME_NUMBER;
     }
 
-    public void record(int pins) {
+    public void record(Pin pins) {
         validateRecordPossible();
         Frame currentFrame = getFrame(currentFrameNumber);
         currentFrame.record(pins);

@@ -28,9 +28,9 @@ public class ResultViewTest {
         ResultView resultView = new ResultView(new PrintWriter(output));
 
         resultView.showFrames("PJS", Arrays.asList(
-                Frame.of(new Strike(0, Scores.empty())),
-                Frame.of(new Spare(2, 0, Scores.of(Collections.singletonList(Score.ordinary(8))))),
-                Frame.of(new Gutter(0, Scores.of(Collections.singletonList(Score.ordinary(7))))),
+                Frame.of(new Strike(0, Scores.of(Collections.singletonList(Score.strike())))),
+                Frame.of(new Spare(0, Scores.of(Arrays.asList(Score.ordinary(8), Score.spare(2))))),
+                Frame.of(new Gutter(0, Scores.of(Arrays.asList(Score.ordinary(7), Score.gutter())))),
                 Frame.empty(),
                 Frame.empty(),
                 Frame.empty(),

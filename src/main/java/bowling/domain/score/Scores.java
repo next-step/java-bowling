@@ -6,11 +6,9 @@ import java.util.List;
 
 public class Scores {
     protected final List<Score> scores;
-    protected final int tryCount;
 
     protected Scores(List<Score> scores) {
         this.scores = scores;
-        this.tryCount = scores.size();
     }
 
     public static Scores empty() {

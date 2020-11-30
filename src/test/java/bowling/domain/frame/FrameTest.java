@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
 import bowling.domain.score.InvalidMaxScoresException;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,7 @@ public class FrameTest {
     @DisplayName("점수 기록")
     @Test
     public void recordScore() {
-        frame.record(10);
+        frame.record(Pin.of(10));
 
         assertThat(frame.getScores().get(0)).isEqualTo(Score.strike());
     }
@@ -32,12 +33,12 @@ public class FrameTest {
     @DisplayName("점수기록하면 안되는 경우")
     @Test
     public void invalidRecordScore() {
-        frame.record(3);
-        frame.record(3);
+        frame.record(Pin.of(3));
+        frame.record(Pin.of(3));
 
         assertThat(frame.isFinished()).isEqualTo(true);
         assertThatThrownBy(() -> {
-            frame.record(3);
+            frame.record(Pin.of(3));
         }).isInstanceOf(InvalidFrameRecordActionException.class);
     }
 
@@ -52,7 +53,7 @@ public class FrameTest {
 
     private void record(List<Integer> scores) {
         for (int score : scores) {
-            frame.record(score);
+            frame.record(Pin.of(score));
         }
     }
 
@@ -83,7 +84,7 @@ public class FrameTest {
     @DisplayName("프레임이 끝나지 않았을 때 점수 계산")
     @Test
     public void calculateNotFinishedScore() {
-        frame.record(3);
+        frame.record(Pin.of(3));
         assertThat(frame.calculateScore(10, Arrays.asList(Frame.empty(), Frame.empty()))).isEqualTo(null);
     }
 
@@ -91,9 +92,9 @@ public class FrameTest {
     @ParameterizedTest
     @ValueSource(ints = {8, 9, 10})
     public void normalFrameMaxScores(int score) {
-        frame.record(3);
+        frame.record(Pin.of(3));
         assertThatThrownBy(() -> {
-            frame.record(score);
+            frame.record(Pin.of(score));
         }).isInstanceOf(InvalidMaxScoresException.class);
     }
 }

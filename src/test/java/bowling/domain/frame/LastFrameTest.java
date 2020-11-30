@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
 import bowling.domain.score.InvalidMaxScoresException;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +29,7 @@ public class LastFrameTest {
 
         assertThat(frame.isFinished()).isEqualTo(true);
         assertThatThrownBy(() -> {
-            frame.record(0);
+            frame.record(Pin.of(0));
         }).isInstanceOf(InvalidFrameRecordActionException.class);
     }
 
@@ -81,9 +82,9 @@ public class LastFrameTest {
         );
     }
 
-    private void record(List<Integer> scores) {
-        for (int score : scores) {
-            frame.record(score);
+    private void record(List<Integer> pins) {
+        for (int pin : pins) {
+            frame.record(Pin.of(pin));
         }
     }
 
@@ -118,7 +119,7 @@ public class LastFrameTest {
         record(Arrays.asList(10, 10, 10));
 
         assertThatThrownBy(() -> {
-            frame.record(score);
+            frame.record(Pin.of(score));
         }).isInstanceOf(InvalidMaxScoresException.class);
 
     }

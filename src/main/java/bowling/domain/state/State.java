@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 
@@ -10,25 +11,22 @@ public abstract class State {
     protected int leftTry;
     protected Scores scores;
 
-    protected State(int leftTry) {
-        this.leftTry = leftTry;
-    }
-
     protected State(int leftTry, Scores scores) {
+        validate(leftTry);
         this.leftTry = leftTry;
         this.scores = scores;
     }
 
-    public abstract State record(int pins);
+    private void validate(int leftTry) {
+        if (leftTry < MIN_LEFT_TRY) {
+            throw new InvalidLeftTryException();
+        }
+    }
 
-    public abstract Score getScore();
+    public abstract State record(Pin pins);
 
     public boolean isFinished() {
         return leftTry == MIN_LEFT_TRY;
-    }
-
-    protected void addScore() {
-        scores = scores.add(getScore());
     }
 
     public List<Score> getScores() {

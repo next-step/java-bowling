@@ -35,5 +35,17 @@ public class Pin {
     public int getPins() {
         return pins;
     }
+
+    public boolean isGutter() {
+        return pins == MIN_PINS;
+    }
+
+    public boolean isStrike() {
+        return pins == MAX_PINS;
+    }
+
+    public boolean isSpare(int nextPins) {
+        return pins + nextPins == MAX_PINS;
+    }
 }
 

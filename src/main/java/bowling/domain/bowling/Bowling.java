@@ -34,7 +34,7 @@ public class Bowling {
     }
 
     public void throwBall(Pin pin) {
-        frames.record(pin.getPins());
+        frames.record(pin);
     }
 
     public List<Frame> getFrames() {

@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.pin.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +20,7 @@ public class FrameReadyTest {
     @ParameterizedTest
     @MethodSource("getRecord")
     public void next(int pins, Class<State> expectedClass) {
-        State nextState = state.record(pins);
+        State nextState = state.record(Pin.of(pins));
 
         assertThat(nextState).isInstanceOf(expectedClass);
     }
@@ -30,12 +31,6 @@ public class FrameReadyTest {
                 Arguments.arguments(0, Gutter.class),
                 Arguments.arguments(3, Ordinary.class)
         );
-    }
-
-    @DisplayName("점수")
-    @Test
-    public void score() {
-        assertThat(state.getScore()).isEqualTo(null);
     }
 
     @DisplayName("종료 여부")

@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 import org.junit.jupiter.api.DisplayName;
@@ -8,21 +9,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("스페어 상태 테스트")
 public class SpareTest {
-    State state = new Spare(1, 1, Scores.empty());
+    State state = new Spare(1, Scores.of(Arrays.asList(Score.ordinary(3), Score.spare(7))));
 
-    @DisplayName("다음이 마지막 상태가 될 때")
+    @DisplayName("다음 상태")
     @ParameterizedTest
     @MethodSource("getRecordForLast")
     public void nextLast(int pins, Class<State> expectedClass) {
-        State state = new Spare(pins, 1, Scores.empty());
-
-        State nextState = state.record(pins);
+        State nextState = state.record(Pin.of(pins));
 
         assertThat(nextState).isInstanceOf(expectedClass);
     }
@@ -33,12 +33,6 @@ public class SpareTest {
                 Arguments.arguments(0, Gutter.class),
                 Arguments.arguments(3, Ordinary.class)
         );
-    }
-
-    @DisplayName("점수")
-    @Test
-    public void score() {
-        assertThat(state.getScore()).isEqualTo(Score.spare(1));
     }
 
     @DisplayName("종료 여부")
