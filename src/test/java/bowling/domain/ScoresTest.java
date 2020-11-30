@@ -48,14 +48,14 @@ class ScoresTest {
                 .stream()
                 .map(ScoreDto::getScore)
                 .collect(toList()))
-                .isEqualTo(scoreList);
+                .isEqualTo(Arrays.asList(0, 1, 4, 10, 22));
     }
 
     @Test
     @DisplayName("음수는 scores 에 추가되어서는 안된다.")
     void addValidOnly() {
         List<Integer> scoreList = Arrays.asList(-12, -6, -3, -1, 0, 1, 3, 6, 12);
-        List<Integer> expected = Arrays.asList(0, 1, 3, 6, 12);
+        List<Integer> expected = Arrays.asList(0, 1, 4, 10, 22);
         scores.addValidOnly(scoreList.stream()
                 .map(Score::new)
                 .collect(toList()));

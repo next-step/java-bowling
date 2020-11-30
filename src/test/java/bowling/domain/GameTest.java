@@ -57,7 +57,7 @@ class GameTest {
                                 STRIKE,
                                 STRIKE)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(30, 30, 30, 30, 30, 30, 30, 30, 30, 20)),
+                        .isEqualTo(Arrays.asList(30, 60, 90, 120, 150, 180, 210, 240, 270, 290)),
                 () -> assertThat(frames.size())
                         .isEqualTo(MAX_FRAME_NO),
                 () -> assertThat(scores.size())
@@ -95,7 +95,7 @@ class GameTest {
                                 SPARE,
                                 SPARE)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(15, 15, 15, 15, 15, 15, 15, 15, 15, 15)),
+                        .isEqualTo(Arrays.asList(15, 30, 45, 60, 75, 90, 105, 120, 135, 150)),
                 () -> assertThat(frames.size())
                         .isEqualTo(MAX_FRAME_NO),
                 () -> assertThat(scores.size())
@@ -123,7 +123,7 @@ class GameTest {
                 () -> assertThat(frames)
                         .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(2, 2, 2, 2, 2, 2, 2, 2, 2, 2)),
+                        .isEqualTo(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 18, 20)),
                 () -> assertThat(frames.size())
                         .isEqualTo(MAX_FRAME_NO),
                 () -> assertThat(scores.size())
@@ -186,7 +186,7 @@ class GameTest {
                                 STRIKE,
                                 STRIKE)),
                 () -> assertThat(scores1)
-                        .isEqualTo(Arrays.asList(30, 30, 30, 30, 30, 30, 30, 30, 30, 20)),
+                        .isEqualTo(Arrays.asList(30, 60, 90, 120, 150, 180, 210, 240, 270, 290)),
                 () -> assertThat(frames1.size())
                         .isEqualTo(MAX_FRAME_NO),
                 () -> assertThat(scores1.size())
@@ -208,7 +208,7 @@ class GameTest {
                                 SPARE,
                                 SPARE)),
                 () -> assertThat(scores2)
-                        .isEqualTo(Arrays.asList(15, 15, 15, 15, 15, 15, 15, 15, 15, 15)),
+                        .isEqualTo(Arrays.asList(15, 30, 45, 60, 75, 90, 105, 120, 135, 150)),
                 () -> assertThat(frames2.size())
                         .isEqualTo(MAX_FRAME_NO),
                 () -> assertThat(scores2.size())
@@ -221,7 +221,7 @@ class GameTest {
                 () -> assertThat(frames3)
                         .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS)),
                 () -> assertThat(scores3)
-                        .isEqualTo(Arrays.asList(2, 2, 2, 2, 2, 2, 2, 2, 2, 2)),
+                        .isEqualTo(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 18, 20)),
                 () -> assertThat(frames3.size())
                         .isEqualTo(MAX_FRAME_NO),
                 () -> assertThat(scores3.size())

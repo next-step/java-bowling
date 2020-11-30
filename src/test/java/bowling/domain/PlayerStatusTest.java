@@ -36,7 +36,7 @@ class PlayerStatusTest {
                 () -> assertThat(frames)
                         .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, SPARE)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(2, 4, 6, 8))
+                        .isEqualTo(Arrays.asList(2, 6, 12, 20))
         );
     }
 
@@ -58,7 +58,7 @@ class PlayerStatusTest {
                 () -> assertThat(frames)
                         .isEqualTo(Arrays.asList(STRIKE, STRIKE, STRIKE, UNFINISHED)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(30, 20))
+                        .isEqualTo(Arrays.asList(30, 50))
         );
     }
 
@@ -80,7 +80,7 @@ class PlayerStatusTest {
                 () -> assertThat(frames)
                         .isEqualTo(Arrays.asList(SPARE, SPARE, UNFINISHED)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(15, 15))
+                        .isEqualTo(Arrays.asList(15, 30))
         );
     }
 

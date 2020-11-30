@@ -13,6 +13,10 @@ class Score {
         return score >= 0;
     }
 
+    Score sum(Score score) {
+        return new Score(this.score + score.score);
+    }
+
     ScoreDto exportScoreDto() {
         return new ScoreDto(score);
     }

@@ -140,7 +140,7 @@ class BoardTest {
                 ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS)),
                 () -> assertThat(
                         toScoreList(board)
-                ).isEqualTo(Arrays.asList(20, 14, 9))
+                ).isEqualTo(Arrays.asList(20, 34, 43))
         );
     }
 
@@ -170,7 +170,7 @@ class BoardTest {
                 ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS, FrameEnum.UNFINISHED)),
                 () -> assertThat(
                         toScoreList(board)
-                ).isEqualTo(Arrays.asList(20, 14, 9))
+                ).isEqualTo(Arrays.asList(20, 34, 43))
         );
     }
 }

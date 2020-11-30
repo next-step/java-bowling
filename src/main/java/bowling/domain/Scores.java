@@ -9,17 +9,24 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 class Scores {
-    private final List<Score> scores = new LinkedList<>();
+    private final LinkedList<Score> scores = new LinkedList<>();
 
     int size() {
         return scores.size();
     }
 
     void addValidOnly(List<Score> scoreList) {
-        scores.addAll(scoreList.stream()
+        scoreList.stream()
                 .filter(Score::isValid)
-                .collect(toList())
-        );
+                .forEach(this::cumulate);
+    }
+
+    private void cumulate(Score score) {
+        Score cumulated = size() < 1
+                ? score
+                : scores.getLast()
+                .sum(score);
+        scores.add(cumulated);
     }
 
     ScoresDto exportScoresDto() {

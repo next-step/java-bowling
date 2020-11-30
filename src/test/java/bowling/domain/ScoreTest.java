@@ -24,4 +24,17 @@ class ScoreTest {
         assertThat(new Score(score).exportScoreDto().getScore())
                 .isEqualTo(score);
     }
+
+    @ParameterizedTest
+    @DisplayName("sum 테스트")
+    @CsvSource(value = {"2$3", "5$1"}, delimiter = '$')
+    void isValid(int num1, int num2) {
+        Score score1 = new Score(num1);
+        Score score2 = new Score(num2);
+        int sum = score1.sum(score2)
+                .exportScoreDto()
+                .getScore();
+        assertThat(sum)
+                .isEqualTo(num1 + num2);
+    }
 }
