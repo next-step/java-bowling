@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -54,16 +53,18 @@ class BoardTest {
         assertAll(
                 () -> assertThat(board.frameNo())
                         .isEqualTo(0),
-                () -> assertThat(board.isBonus())
+                () -> assertThat(board.isStrike())
+                        .isFalse(),
+                () -> assertThat(board.isSpare())
                         .isFalse(),
                 () -> assertThat(board.isFrameFinished())
                         .isTrue(),
                 () -> assertThat(
                         toFrameEnumList(board)
-                ).isEqualTo(new LinkedList<>()),
+                ).isEqualTo(Arrays.asList()),
                 () -> assertThat(
                         toScoreList(board)
-                ).isEqualTo(new LinkedList<>())
+                ).isEqualTo(Arrays.asList())
         );
     }
 
@@ -75,8 +76,10 @@ class BoardTest {
         assertAll(
                 () -> assertThat(board.frameNo())
                         .isEqualTo(1),
-                () -> assertThat(board.isBonus())
+                () -> assertThat(board.isStrike())
                         .isTrue(),
+                () -> assertThat(board.isSpare())
+                        .isFalse(),
                 () -> assertThat(board.isFrameFinished())
                         .isTrue(),
                 () -> assertThat(
@@ -84,7 +87,7 @@ class BoardTest {
                 ).isEqualTo(Arrays.asList(FrameEnum.STRIKE)),
                 () -> assertThat(
                         toScoreList(board)
-                ).isEqualTo(new LinkedList<>())
+                ).isEqualTo(Arrays.asList())
         );
     }
 
@@ -98,7 +101,9 @@ class BoardTest {
         assertAll(
                 () -> assertThat(board.frameNo())
                         .isEqualTo(2),
-                () -> assertThat(board.isBonus())
+                () -> assertThat(board.isStrike())
+                        .isFalse(),
+                () -> assertThat(board.isSpare())
                         .isTrue(),
                 () -> assertThat(board.isFrameFinished())
                         .isTrue(),
@@ -124,7 +129,9 @@ class BoardTest {
         assertAll(
                 () -> assertThat(board.frameNo())
                         .isEqualTo(3),
-                () -> assertThat(board.isBonus())
+                () -> assertThat(board.isStrike())
+                        .isFalse(),
+                () -> assertThat(board.isSpare())
                         .isFalse(),
                 () -> assertThat(board.isFrameFinished())
                         .isTrue(),
@@ -152,7 +159,9 @@ class BoardTest {
         assertAll(
                 () -> assertThat(board.frameNo())
                         .isEqualTo(4),
-                () -> assertThat(board.isBonus())
+                () -> assertThat(board.isStrike())
+                        .isFalse(),
+                () -> assertThat(board.isSpare())
                         .isFalse(),
                 () -> assertThat(board.isFrameFinished())
                         .isFalse(),

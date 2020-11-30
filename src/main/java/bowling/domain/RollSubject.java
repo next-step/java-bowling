@@ -6,12 +6,11 @@ import java.util.function.Supplier;
 
 class RollSubject extends Subject<Rolls> {
     private final Rolls rolls = new Rolls();
-    private final Supplier<Roll> strategy;
+    private final Supplier<Roll> supplier;
 
-    RollSubject(Supplier<Roll> strategy) {
-        this.strategy = strategy;
+    RollSubject(Supplier<Roll> supplier) {
+        this.supplier = supplier;
     }
-
 
     @Override
     Rolls get() {
@@ -20,7 +19,7 @@ class RollSubject extends Subject<Rolls> {
 
     @Override
     void execute() {
-        rolls.add(strategy.get());
+        rolls.add(supplier.get());
         notifyObservers();
     }
 

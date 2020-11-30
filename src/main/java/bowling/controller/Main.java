@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         int sizeOfPlayers = 1;
         Game game = new Game();
-        IntStream.rangeClosed(0, sizeOfPlayers)
+        IntStream.range(0, sizeOfPlayers)
                 .forEach(i -> game.addPlayer(
                         ModelMapper.getPlayer(),
                         frameNo -> ModelMapper.getRoll(frameNo)

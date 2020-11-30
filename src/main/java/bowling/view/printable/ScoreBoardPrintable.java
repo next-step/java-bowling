@@ -28,10 +28,10 @@ public class ScoreBoardPrintable extends Printable {
                 .forEach(this::print);
     }
 
-    private void print(Entry<PlayerDto, RollsAndBoardDto> entry) {
-        RollsAndBoardDto rollsAndBoardDto = entry.getValue();
-        RollsDto rollsDto = rollsAndBoardDto.getRollsDto();
-        BoardDto boardDto = rollsAndBoardDto.getBoardDto();
+    private void print(Entry<PlayerDto, PlayerStatusDto> entry) {
+        PlayerStatusDto playerStatusDto = entry.getValue();
+        RollsDto rollsDto = playerStatusDto.getRollsDto();
+        BoardDto boardDto = playerStatusDto.getBoardDto();
 
         print(lineSeparator);
         print(String.format("|  %s |", entry.getKey()
@@ -40,18 +40,21 @@ public class ScoreBoardPrintable extends Printable {
         List<FrameDto> frames = boardDto.getFramesDto()
                 .getFrames();
         frames.forEach(frameDto -> print(frameDto, rollItr));
-        printBlank(MAX_FRAME_NO - frames.size());
+        printBlank(frames.size());
 
         print(lineSeparator);
         print("|      |");
         List<ScoreDto> scores = boardDto.getScoresDto()
                 .getScores();
         scores.forEach(this::print);
-        printBlank(MAX_FRAME_NO - scores.size());
+        printBlank(scores.size());
     }
 
-    private void printBlank(int loop) {
-        IntStream.range(0, loop)
+    private void printBlank(int size) {
+        if (MAX_FRAME_NO <= size) {
+            return;
+        }
+        IntStream.range(0, MAX_FRAME_NO - size)
                 .forEach(i -> print("      |"));
     }
 

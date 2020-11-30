@@ -1,8 +1,10 @@
 package bowling.domain;
 
-import bowling.dto.*;
+import bowling.dto.PlayerDto;
+import bowling.dto.PlayerStatusDto;
+import bowling.dto.ScoreBoardDto;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -13,65 +15,42 @@ import static java.util.Map.Entry;
 public class Game {
     private static final int MAX_FRAME_NO = 10;
 
-    private final Map<Player, Board> boardMap = new HashMap<>();
-    private final Map<Player, RollSubject> subjectMap = new HashMap<>();
+    // NOTE: 넣은 순서대로 출력 및 테스트를 하기 위해 LinkedHashMap 자료구조를 이용한다.
+    private final Map<Player, PlayerStatus> map = new LinkedHashMap<>();
 
     public void addPlayer(Player player, Function<Integer, Roll> rollGenerator) {
-        Board board = new Board();
-        RollSubject subject = new RollSubject(() -> rollGenerator.apply(board.frameNo()));
-        subject.register(new BoardObserver(board));
-        boardMap.put(player, board);
-        subjectMap.put(player, subject);
+        map.put(player, PlayerStatus.of(rollGenerator));
     }
 
     public ScoreBoardDto exportScoreBoardDto() {
-        Map<PlayerDto, RollsAndBoardDto> scoreBoard = new HashMap<>();
-        subjectMap.entrySet()
+        Map<PlayerDto, PlayerStatusDto> scoreBoard = new LinkedHashMap<>();
+        map.entrySet()
                 .stream()
-                .map(Entry::getKey)
-                .forEach(player -> scoreBoard.put(
-                        player.exportPlayerDto(),
-                        exportRollsAndBoardDto(player)
+                .forEach(entry -> scoreBoard.put(
+                        entry.getKey().exportPlayerDto(),
+                        entry.getValue().exportPlayerStatusDto()
                 ));
         return new ScoreBoardDto(scoreBoard);
     }
 
-    private RollsAndBoardDto exportRollsAndBoardDto(Player player) {
-        RollsDto rollsDto = subjectMap.get(player).exportRollsDto();
-        BoardDto boardDto = boardMap.get(player).exportBoardDto();
-        return new RollsAndBoardDto(rollsDto, boardDto);
-    }
-
     public void play() {
         IntStream.range(0, MAX_FRAME_NO)
-                .forEach(i -> play(this::playFrame));
-        play(this::playBonus);
+                .forEach(i -> playFrame());
+        playBonus();
     }
 
-    private void play(Consumer<Entry> consumer) {
-        subjectMap.entrySet()
+    private void playFrame() {
+        play(PlayerStatus::playFrame);
+    }
+
+    private void playBonus() {
+        play(PlayerStatus::playBonus);
+    }
+
+    private void play(Consumer<PlayerStatus> consumer) {
+        map.entrySet()
+                .stream()
+                .map(Entry::getValue)
                 .forEach(consumer);
-    }
-
-    private void playFrame(Entry<Player, RollSubject> entry) {
-        Player player = entry.getKey();
-        RollSubject subject = entry.getValue();
-        subject.execute();
-        boolean isFrameFinished = boardMap.get(player)
-                .isFrameFinished();
-        if (!isFrameFinished) {
-            subject.execute();
-        }
-    }
-
-    private void playBonus(Entry<Player, RollSubject> entry) {
-        Player player = entry.getKey();
-        RollSubject subject = entry.getValue();
-        boolean isBonus = boardMap.get(player)
-                .isBonus();
-        if (isBonus) {
-            subject.execute();
-            subject.executeZero();
-        }
     }
 }

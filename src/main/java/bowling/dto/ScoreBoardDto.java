@@ -3,13 +3,13 @@ package bowling.dto;
 import java.util.Map;
 
 public class ScoreBoardDto {
-    private final Map<PlayerDto, RollsAndBoardDto> scoreBoard;
+    private final Map<PlayerDto, PlayerStatusDto> scoreBoard;
 
-    public ScoreBoardDto(Map<PlayerDto, RollsAndBoardDto> scoreBoard) {
+    public ScoreBoardDto(Map<PlayerDto, PlayerStatusDto> scoreBoard) {
         this.scoreBoard = scoreBoard;
     }
 
-    public Map<PlayerDto, RollsAndBoardDto> getScoreBoard() {
+    public Map<PlayerDto, PlayerStatusDto> getScoreBoard() {
         return scoreBoard;
     }
 }

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -43,13 +42,15 @@ class FramesTest {
         assertAll(
                 () -> assertThat(frames.size())
                         .isEqualTo(0),
-                () -> assertThat(frames.isBonus())
+                () -> assertThat(frames.isStrike())
+                        .isFalse(),
+                () -> assertThat(frames.isSpare())
                         .isFalse(),
                 () -> assertThat(frames.isLastFinished())
                         .isTrue(),
                 () -> assertThat(
                         toFrameEnumList(frames)
-                ).isEqualTo(new LinkedList<>())
+                ).isEqualTo(Arrays.asList())
         );
     }
 
@@ -60,8 +61,10 @@ class FramesTest {
         assertAll(
                 () -> assertThat(frames.size())
                         .isEqualTo(1),
-                () -> assertThat(frames.isBonus())
+                () -> assertThat(frames.isStrike())
                         .isTrue(),
+                () -> assertThat(frames.isSpare())
+                        .isFalse(),
                 () -> assertThat(frames.isLastFinished())
                         .isTrue(),
                 () -> assertThat(
@@ -80,7 +83,9 @@ class FramesTest {
         assertAll(
                 () -> assertThat(frames.size())
                         .isEqualTo(2),
-                () -> assertThat(frames.isBonus())
+                () -> assertThat(frames.isStrike())
+                        .isFalse(),
+                () -> assertThat(frames.isSpare())
                         .isTrue(),
                 () -> assertThat(frames.isLastFinished())
                         .isTrue(),
@@ -103,7 +108,9 @@ class FramesTest {
         assertAll(
                 () -> assertThat(frames.size())
                         .isEqualTo(3),
-                () -> assertThat(frames.isBonus())
+                () -> assertThat(frames.isStrike())
+                        .isFalse(),
+                () -> assertThat(frames.isSpare())
                         .isFalse(),
                 () -> assertThat(frames.isLastFinished())
                         .isTrue(),
@@ -128,7 +135,9 @@ class FramesTest {
         assertAll(
                 () -> assertThat(frames.size())
                         .isEqualTo(4),
-                () -> assertThat(frames.isBonus())
+                () -> assertThat(frames.isStrike())
+                        .isFalse(),
+                () -> assertThat(frames.isSpare())
                         .isFalse(),
                 () -> assertThat(frames.isLastFinished())
                         .isFalse(),

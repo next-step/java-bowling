@@ -27,7 +27,9 @@ class FrameTest {
                         .isEqualTo(FrameEnum.UNFINISHED),
                 () -> assertThat(frame.isFinished())
                         .isFalse(),
-                () -> assertThat(frame.isBonus())
+                () -> assertThat(frame.isStrike())
+                        .isFalse(),
+                () -> assertThat(frame.isSpare())
                         .isFalse(),
                 () -> assertThat(frame.score(rolls))
                         .isEqualTo(-1)
@@ -44,8 +46,10 @@ class FrameTest {
                         .isEqualTo(FrameEnum.STRIKE),
                 () -> assertThat(frame.isFinished())
                         .isTrue(),
-                () -> assertThat(frame.isBonus())
+                () -> assertThat(frame.isStrike())
                         .isTrue(),
+                () -> assertThat(frame.isSpare())
+                        .isFalse(),
                 () -> assertThat(frame.score(rolls))
                         .isEqualTo(-1),
                 () -> assertDoesNotThrow(() -> {
@@ -71,7 +75,9 @@ class FrameTest {
                         .isEqualTo(FrameEnum.SPARE),
                 () -> assertThat(frame.isFinished())
                         .isTrue(),
-                () -> assertThat(frame.isBonus())
+                () -> assertThat(frame.isStrike())
+                        .isFalse(),
+                () -> assertThat(frame.isSpare())
                         .isTrue(),
                 () -> assertThat(frame.score(rolls))
                         .isEqualTo(-1),
@@ -98,7 +104,9 @@ class FrameTest {
                         .isEqualTo(FrameEnum.MISS),
                 () -> assertThat(frame.isFinished())
                         .isTrue(),
-                () -> assertThat(frame.isBonus())
+                () -> assertThat(frame.isStrike())
+                        .isFalse(),
+                () -> assertThat(frame.isSpare())
                         .isFalse(),
                 () -> assertThat(frame.score(rolls))
                         .isEqualTo(9),

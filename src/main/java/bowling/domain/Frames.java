@@ -28,9 +28,12 @@ class Frames {
         last().update(rolls);
     }
 
-    boolean isBonus() {
-        return !frames.isEmpty()
-                && last().isBonus();
+    boolean isStrike() {
+        return !frames.isEmpty() && last().isStrike();
+    }
+
+    boolean isSpare() {
+        return !frames.isEmpty() && last().isSpare();
     }
 
     boolean isLastFinished() {

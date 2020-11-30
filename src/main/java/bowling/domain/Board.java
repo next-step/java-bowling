@@ -25,8 +25,12 @@ class Board {
         return frames.isLastFinished();
     }
 
-    boolean isBonus() {
-        return frames.isBonus();
+    boolean isStrike() {
+        return frames.isStrike();
+    }
+
+    boolean isSpare() {
+        return frames.isSpare();
     }
 
     BoardDto exportBoardDto() {

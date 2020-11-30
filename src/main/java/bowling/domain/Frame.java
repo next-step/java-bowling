@@ -3,25 +3,25 @@ package bowling.domain;
 import bowling.dto.FrameDto;
 
 class Frame {
-    private final int startIndex;
+    private final int rollIndex;
     private FrameEnum frameEnum;
 
-    private Frame(int startIndex, FrameEnum frameEnum) {
-        this.startIndex = startIndex;
+    private Frame(int rollIndex, FrameEnum frameEnum) {
+        this.rollIndex = rollIndex;
         this.frameEnum = frameEnum;
     }
 
     static Frame of(Rolls rolls) {
-        int startIndex = rolls.size() - 1;
+        int rollIndex = rolls.size() - 1;
         int countOfRolls = 1;
-        int countOfPins = rolls.sum(startIndex, countOfRolls);
+        int countOfPins = rolls.sum(rollIndex, countOfRolls);
         FrameEnum frameEnum = FrameEnum.get(countOfRolls, countOfPins);
-        return new Frame(startIndex, frameEnum);
+        return new Frame(rollIndex, frameEnum);
     }
 
     void update(Rolls rolls) {
         int countOfRolls = 2;
-        int countOfPins = rolls.sum(startIndex, countOfRolls);
+        int countOfPins = rolls.sum(rollIndex, countOfRolls);
         frameEnum = FrameEnum.get(countOfRolls, countOfPins);
     }
 
@@ -29,16 +29,19 @@ class Frame {
         return frameEnum != FrameEnum.UNFINISHED;
     }
 
-    boolean isBonus() {
-        return frameEnum == FrameEnum.STRIKE
-                || frameEnum == FrameEnum.SPARE;
+    boolean isStrike() {
+        return frameEnum == FrameEnum.STRIKE;
+    }
+
+    boolean isSpare() {
+        return frameEnum == FrameEnum.SPARE;
     }
 
     int score(Rolls rolls) {
-        return isBonus()
-                ? rolls.sum(startIndex, 3)
+        return isStrike() || isSpare()
+                ? rolls.sum(rollIndex, 3)
                 : frameEnum == FrameEnum.MISS
-                ? rolls.sum(startIndex, 2)
+                ? rolls.sum(rollIndex, 2)
                 : -1;
     }
 
