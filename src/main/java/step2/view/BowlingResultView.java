@@ -1,10 +1,6 @@
 package step2.view;
 
-import step2.domain.Frame;
-import step2.domain.Frames;
-import step2.domain.GameHistories;
 import step2.domain.Player;
-import step2.domain.dto.PlayerDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +10,6 @@ public class BowlingResultView implements ResultView {
     public static final String lineEmptyBodyString = "|%6.6s|      |      |      |      |      |      |      |      |      |      |";
     private static final StringBuilder sb = new StringBuilder();
     public static final String WALL_STR = "|";
-    public static final String MSG_PITCHES_FRAME = "%d 프레임 투구: %s";
 
 
     private void printEmptyBody(String name) {
@@ -29,33 +24,11 @@ public class BowlingResultView implements ResultView {
     }
 
     @Override
-    public void drawFrames(PlayerDTO playerDTO) {
+    public void drawFrame(Player player, List<String> marks) {
         clearStringBuilder();
         printHeader();
-
-        Player player = playerDTO.getPlayer();
-        appendFrame(player.getName());
-
-        Frames frames = playerDTO.getFrames();
-        Frame frame = frames.getHead();
-        while (frame.hasNext()) {
-            appendFrame(frame.getResultString());
-            frame = frame.next();
-        }
-
-        System.out.println(sb.toString());
-    }
-
-    @Override
-    public void drawFrames(GameHistories histories) {
-        histories.forEach(history -> {
-            clearStringBuilder();
-
-            System.out.printf((MSG_PITCHES_FRAME) + "%n", history.getCurrentFrameNo(), history.getPitchesPoint());
-            printHeader();
-            printBody(history.getPlayer(), history.getMarks());
-            System.out.println();
-        });
+        printBody(player, marks);
+        System.out.println();
     }
 
     private void printBody(Player player, List<String> strings) {

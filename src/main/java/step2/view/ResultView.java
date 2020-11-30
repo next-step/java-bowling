@@ -1,15 +1,14 @@
 package step2.view;
 
-import step2.domain.GameHistories;
-import step2.domain.dto.PlayerDTO;
+import step2.domain.Player;
+
+import java.util.List;
 
 public interface ResultView {
 
     void drawHeaderFrame(int frameNo, int pitchesCount);
 
-    void drawFrames(PlayerDTO playerDTO);
-
-    void drawFrames(GameHistories histories);
+    void drawFrame(Player player, List<String> marks);
 
     void drawEmptyLine(String name);
 }

@@ -1,8 +1,9 @@
 package step2.view;
 
-import step2.domain.GameHistories;
+import step2.domain.Frame;
 import step2.domain.Player;
-import step2.domain.dto.PlayerDTO;
+
+import java.util.List;
 
 public class ConsoleViewImpl implements View{
     private final InputView inputView;
@@ -26,6 +27,17 @@ public class ConsoleViewImpl implements View{
     }
 
     @Override
+    public int getPitchesCount(Frame frame) {
+        try{
+            int pitchesCount = inputView.getPitchesCount(frame);
+            return pitchesCount;
+        }catch(Exception error){
+            System.out.println(error.getMessage());
+            return getPitchesCount(frame);
+        }
+    }
+
+    @Override
     public void drawHeaderFrame(int frameNo, int pitchesCount) {
         try{
             resultView.drawHeaderFrame(frameNo, pitchesCount);
@@ -35,18 +47,9 @@ public class ConsoleViewImpl implements View{
     }
 
     @Override
-    public void drawFrames(PlayerDTO playerDTO) {
+    public void drawFrame(Player player, List<String> marks) {
         try{
-            resultView.drawFrames(playerDTO);
-        }catch(Exception error){
-            System.out.println(error.getMessage());
-        }
-    }
-
-    @Override
-    public void drawFrames(GameHistories histories) {
-        try{
-            resultView.drawFrames(histories);
+            resultView.drawFrame(player, marks);
         }catch(Exception error){
             System.out.println(error.getMessage());
         }
