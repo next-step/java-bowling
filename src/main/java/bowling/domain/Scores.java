@@ -15,7 +15,7 @@ class Scores {
         return scores.size();
     }
 
-    void addValidOnly(List<Score> scoreList) {
+    void cumulateValidOnly(List<Score> scoreList) {
         scoreList.stream()
                 .filter(Score::isValid)
                 .forEach(this::cumulate);

@@ -14,7 +14,7 @@ class Board {
 
     void update(Rolls rolls) {
         frames.update(rolls);
-        scores.addValidOnly(frames.subList(scores.size(), frames.size())
+        scores.cumulateValidOnly(frames.subList(scores.size(), frames.size())
                 .stream()
                 .map(frame -> frame.score(rolls))
                 .map(Score::new)
