@@ -1,8 +1,8 @@
 package bowling.view;
 
-import bowling.dto.CountOfPinsDto;
 import bowling.dto.GameDto;
-import bowling.dto.NameDto;
+import bowling.dto.PlayerDto;
+import bowling.dto.RollDto;
 import bowling.dto.SizeOfPlayersDto;
 
 import java.util.Scanner;
@@ -21,14 +21,14 @@ public class View {
         return new SizeOfPlayersDto(nextInt());
     }
 
-    public static NameDto askName() {
-        new AskNamePrintable().print();
-        return new NameDto(nextLine());
+    public static PlayerDto askPlayer() {
+        new AskPlayerPrintable().print();
+        return new PlayerDto(nextLine());
     }
 
-    public static CountOfPinsDto askCountOfPins(String prefix) {
-        new AskCountOfPinsPrintable(prefix).print();
-        return new CountOfPinsDto(nextInt());
+    public static RollDto askRoll(String prefix) {
+        new AskRollPrintable(prefix).print();
+        return new RollDto(nextInt());
     }
 
 

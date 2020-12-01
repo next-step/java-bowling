@@ -25,13 +25,13 @@ class ModelMapper {
     }
 
     private static Player getPlayer() {
-        return new Player(View.askName()
+        return new Player(View.askPlayer()
                 .getName()
         );
     }
 
     private static Roll getRoll(String prefix) {
-        return Roll.of(View.askCountOfPins(prefix)
+        return Roll.of(View.askRoll(prefix)
                 .getCountOfPins());
     }
 }
