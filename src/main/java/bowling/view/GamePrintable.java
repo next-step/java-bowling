@@ -1,4 +1,4 @@
-package bowling.view.printable;
+package bowling.view;
 
 import bowling.domain.FrameEnum;
 import bowling.dto.*;
@@ -13,7 +13,7 @@ public class GamePrintable extends Printable {
     private static final String header = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private final GameDto dto;
 
-    public GamePrintable(GameDto gameDto) {
+    GamePrintable(GameDto gameDto) {
         dto = gameDto;
     }
 

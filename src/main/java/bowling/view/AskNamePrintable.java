@@ -1,4 +1,4 @@
-package bowling.view.printable;
+package bowling.view;
 
 public class AskNamePrintable extends Printable {
     @Override

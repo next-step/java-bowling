@@ -1,4 +1,4 @@
-package bowling.view.printable;
+package bowling.view;
 
 public abstract class Printable {
     static final String lineSeparator = System.lineSeparator();

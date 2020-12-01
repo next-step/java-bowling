@@ -1,6 +1,6 @@
-package bowling.view.printable;
+package bowling.view;
 
-public class AskSizeOfPlayers extends Printable {
+public class AskSizeOfPlayersPrintable extends Printable {
     @Override
     public void print() {
         print(lineSeparator);

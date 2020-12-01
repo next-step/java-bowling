@@ -1,21 +1,23 @@
 package bowling.view;
 
 import bowling.dto.CountOfPinsDto;
+import bowling.dto.GameDto;
 import bowling.dto.NameDto;
 import bowling.dto.SizeOfPlayersDto;
-import bowling.view.printable.AskCountOfPinsPrintable;
-import bowling.view.printable.AskNamePrintable;
-import bowling.view.printable.AskSizeOfPlayers;
 
 import java.util.Scanner;
 
-public class InputView {
+public class View {
     private static final Scanner scanner = new Scanner(System.in);
 
-    private InputView() {}
+    private View() {}
+
+    public static void printGame(GameDto gameDto) {
+        new GamePrintable(gameDto).print();
+    }
 
     public static SizeOfPlayersDto askSizeOfPlayers() {
-        new AskSizeOfPlayers().print();
+        new AskSizeOfPlayersPrintable().print();
         return new SizeOfPlayersDto(nextInt());
     }
 

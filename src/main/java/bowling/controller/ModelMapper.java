@@ -4,8 +4,7 @@ import bowling.domain.Game;
 import bowling.domain.Player;
 import bowling.domain.Players;
 import bowling.domain.Roll;
-import bowling.view.InputView;
-import bowling.view.OutputView;
+import bowling.view.View;
 
 class ModelMapper {
     private ModelMapper() {}
@@ -13,7 +12,7 @@ class ModelMapper {
     static Game getGame() {
         Game game = new Game();
         getPlayers().addToGame(game, ModelMapper::getRoll);
-        game.registerGamePrinter(OutputView::printGame);
+        game.registerGamePrinter(View::printGame);
         return game;
     }
 
@@ -26,13 +25,13 @@ class ModelMapper {
     }
 
     private static Player getPlayer() {
-        return new Player(InputView.askName()
+        return new Player(View.askName()
                 .getName()
         );
     }
 
     private static Roll getRoll(String prefix) {
-        return Roll.of(InputView.askCountOfPins(prefix)
+        return Roll.of(View.askCountOfPins(prefix)
                 .getCountOfPins());
     }
 }

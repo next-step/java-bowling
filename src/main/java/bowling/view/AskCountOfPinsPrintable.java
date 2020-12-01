@@ -1,10 +1,10 @@
-package bowling.view.printable;
+package bowling.view;
 
 public class AskCountOfPinsPrintable extends Printable {
 
     private final String prefix;
 
-    public AskCountOfPinsPrintable(String prefix) {
+    AskCountOfPinsPrintable(String prefix) {
         this.prefix = prefix;
     }
 
