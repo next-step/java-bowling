@@ -52,9 +52,8 @@ class Frames {
                 .collect(collectingAndThen(toList(), FramesDto::new));
     }
 
-    private boolean isGameOver() {
-        return size() > MAX_FRAME_NO
-                || size() == MAX_FRAME_NO && last().isFinished();
+    boolean isGameOver() {
+        return frameNo() > MAX_FRAME_NO;
     }
 
     private boolean isLastFinished() {
