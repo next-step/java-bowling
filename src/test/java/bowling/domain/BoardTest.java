@@ -52,7 +52,7 @@ class BoardTest {
     @DisplayName("볼링을 치지 않은 시나리오 테스트")
     void scenario_empty() {
         assertAll(
-                () -> assertThat(board.prefix())
+                () -> assertThat(board.frameNo())
                         .isEqualTo(1),
                 () -> assertThat(board.isStrike())
                         .isFalse(),
@@ -75,7 +75,7 @@ class BoardTest {
     void scenario_strike() {
         addRoll(Roll.of(10));
         assertAll(
-                () -> assertThat(board.prefix())
+                () -> assertThat(board.frameNo())
                         .isEqualTo(2),
                 () -> assertThat(board.isStrike())
                         .isTrue(),
@@ -100,7 +100,7 @@ class BoardTest {
         addRoll(Roll.of(1));
         addRoll(Roll.of(9));
         assertAll(
-                () -> assertThat(board.prefix())
+                () -> assertThat(board.frameNo())
                         .isEqualTo(3),
                 () -> assertThat(board.isStrike())
                         .isFalse(),
@@ -128,7 +128,7 @@ class BoardTest {
         addRoll(Roll.of(4));
         addRoll(Roll.of(5));
         assertAll(
-                () -> assertThat(board.prefix())
+                () -> assertThat(board.frameNo())
                         .isEqualTo(4),
                 () -> assertThat(board.isStrike())
                         .isFalse(),
@@ -158,7 +158,7 @@ class BoardTest {
 
         addRoll(Roll.of(8));
         assertAll(
-                () -> assertThat(board.prefix())
+                () -> assertThat(board.frameNo())
                         .isEqualTo(4),
                 () -> assertThat(board.isStrike())
                         .isFalse(),

@@ -8,8 +8,8 @@ class Board {
     private final Frames frames = new Frames();
     private final Scores scores = new Scores();
 
-    String prefix() {
-        return Integer.toString(frames.frameNo());
+    int frameNo() {
+        return frames.frameNo();
     }
 
     void update(Rolls rolls) {
