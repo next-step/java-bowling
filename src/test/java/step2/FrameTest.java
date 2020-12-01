@@ -128,8 +128,22 @@ public class FrameTest {
         frame2.pitches(10);
 
         return Stream.of(
-                Arguments.of(frame1, "X|5|/"),
-                Arguments.of(frame2, "-|/|X")
-        );
+                /*Arguments.of(frame2, "-|/|X"),*/
+                Arguments.of(frame1, "X|5|/")
+                );
+    }
+
+
+    @Test
+    void test() {
+        /*BowlingSymbol build = BowlingSymbol.Builder(2).firstPoint(10).build();
+        assertThat(build.getSymbol()).isEqualTo("X");*/
+
+        BowlingSymbol build1 = BowlingSymbol.Builder(3, 1)
+                .firstPoint(10)
+                .build();
+        assertThat(build1.getSymbol()).isEqualTo("X");
+
+
     }
 }

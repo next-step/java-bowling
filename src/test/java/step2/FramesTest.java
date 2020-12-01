@@ -22,7 +22,6 @@ public class FramesTest {
     void checkFirstAndLastFrame() {
         Frames frames = BowlingGame.build();
         assertThat(frames.getHead()).isInstanceOf(NormalFrame.class);
-        assertThat(frames.getTail()).isInstanceOf(FinalFrame.class);
     }
 
     @DisplayName("특정 프레임 조회 테스트")
@@ -32,7 +31,6 @@ public class FramesTest {
         Frames frames = BowlingGame.build();
 
         assertThat(frames.getFrame(frameNo).getFrameNo()).isEqualTo(frameNo);
-        assertThat(frames.getTail()).isInstanceOf(FinalFrame.class);
         assertThat(frames.getFrame(8).next()).isInstanceOf(FinalFrame.class);
     }
 

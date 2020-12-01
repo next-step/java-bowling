@@ -13,10 +13,10 @@ class BowlingPointTest {
     @Test
     void create() {
         BowlingPoint of = BowlingPoint.of(4, 6);
-        assertThat(BowlingPoint.of(10)).isEqualTo(new BowlingPoint(10, "X"));
-        assertThat(BowlingPoint.of(9)).isEqualTo(new BowlingPoint(9, "9"));
-        assertThat(BowlingPoint.of(4, 6)).isEqualTo(new BowlingPoint(4, "/"));
-        assertThat(BowlingPoint.of(0)).isEqualTo(new BowlingPoint(0, "-"));
+        assertThat(BowlingPoint.of(10)).isEqualTo(new BowlingPoint(10));
+        assertThat(BowlingPoint.of(9)).isEqualTo(new BowlingPoint(9));
+        assertThat(BowlingPoint.of(4, 6)).isEqualTo(new BowlingPoint(4));
+        assertThat(BowlingPoint.of(0)).isEqualTo(new BowlingPoint(0));
     }
 
     @DisplayName("볼링점수 예외 발생 테스트")
