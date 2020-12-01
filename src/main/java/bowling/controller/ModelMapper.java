@@ -12,8 +12,8 @@ class ModelMapper {
 
     static Game getGame() {
         Game game = new Game();
-        game.registerScoreBoardPrinter(OutputView::printScoreBoard);
         getPlayers().addToGame(game, ModelMapper::getRoll);
+        game.registerScoreBoardPrinter(OutputView::printScoreBoard);
         return game;
     }
 
