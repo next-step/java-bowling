@@ -23,7 +23,7 @@ public class Game {
                                 consumer.accept(exportGameDto())));
     }
 
-    void addPlayer(Player player, Function<Integer, Roll> rollGenerator) {
+    void addPlayer(Player player, Function<String, Roll> rollGenerator) {
         map.put(player, PlayerStatus.of(rollGenerator));
     }
 

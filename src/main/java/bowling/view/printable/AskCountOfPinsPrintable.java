@@ -2,15 +2,15 @@ package bowling.view.printable;
 
 public class AskCountOfPinsPrintable extends Printable {
 
-    private final int frameNo;
+    private final String prefix;
 
-    public AskCountOfPinsPrintable(int frameNo) {
-        this.frameNo = frameNo;
+    public AskCountOfPinsPrintable(String prefix) {
+        this.prefix = prefix;
     }
 
     @Override
     public void print() {
         print(lineSeparator);
-        print(String.format("%d프레임 투구 : ", frameNo));
+        print(String.format("%s프레임 투구 : ", prefix));
     }
 }

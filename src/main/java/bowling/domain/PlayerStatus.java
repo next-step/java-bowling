@@ -13,9 +13,9 @@ class PlayerStatus {
         this.board = board;
     }
 
-    static PlayerStatus of(Function<Integer, Roll> rollGenerator) {
+    static PlayerStatus of(Function<String, Roll> rollGenerator) {
         Board board = new Board();
-        RollSubject subject = new RollSubject(() -> rollGenerator.apply(board.frameNo()));
+        RollSubject subject = new RollSubject(() -> rollGenerator.apply(Integer.toString(board.frameNo())));
         subject.register(new BoardObserver(board));
         return new PlayerStatus(
                 subject,

@@ -24,7 +24,7 @@ public class InputView {
         return new NameDto(nextLine());
     }
 
-    public static CountOfPinsDto askCountOfPins(int frameNo) {
+    public static CountOfPinsDto askCountOfPins(String frameNo) {
         new AskCountOfPinsPrintable(frameNo).print();
         return new CountOfPinsDto(nextInt());
     }

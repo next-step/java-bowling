@@ -36,7 +36,7 @@ class PlayerStatusTest {
     @Test
     @DisplayName("playFrame 으로 인한 Board 결과 테스트")
     void playFrame() {
-        PlayerStatus status = PlayerStatus.of(Roll::of);
+        PlayerStatus status = PlayerStatus.of(str -> Roll.of(2));
         status.playFrame();
         status.playFrame();
         status.playFrame();
@@ -49,11 +49,11 @@ class PlayerStatusTest {
 
         assertAll(
                 () -> assertThat(rolls)
-                        .isEqualTo(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4, 5, 5)),
+                        .isEqualTo(Arrays.asList(2, 2, 2, 2, 2, 2, 2, 2, 2, 2)),
                 () -> assertThat(frames)
-                        .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, SPARE)),
+                        .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, MISS)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(2, 6, 12, 20))
+                        .isEqualTo(Arrays.asList(4, 8, 12, 16, 20))
         );
     }
 

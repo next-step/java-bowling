@@ -31,7 +31,7 @@ class ModelMapper {
         );
     }
 
-    private static Roll getRoll(int frameNo) {
+    private static Roll getRoll(String frameNo) {
         return Roll.of(InputView.askCountOfPins(frameNo)
                 .getCountOfPins());
     }

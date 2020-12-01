@@ -25,7 +25,7 @@ class PlayersTest {
     void addToGame(int sizeOfPlayers) {
         Players players = Players.of(sizeOfPlayers, () -> new Player("GHO"));
         Game game = new Game();
-        players.addToGame(game, num -> Roll.of(num));
+        players.addToGame(game, str -> Roll.of(0));
         assertThat(game.exportGameDto()
                 .getGame()
                 .entrySet()

@@ -21,7 +21,7 @@ public class Players {
         return playersObj;
     }
 
-    public void addToGame(Game game, Function<Integer, Roll> rollGenerator) {
+    public void addToGame(Game game, Function<String, Roll> rollGenerator) {
         players.forEach(player -> game.addPlayer(
                 player,
                 rollGenerator));
