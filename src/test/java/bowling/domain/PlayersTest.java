@@ -26,8 +26,8 @@ class PlayersTest {
         Players players = Players.of(sizeOfPlayers, () -> new Player("GHO"));
         Game game = new Game();
         players.addToGame(game, num -> Roll.of(num));
-        assertThat(game.exportScoreBoardDto()
-                .getScoreBoard()
+        assertThat(game.exportGameDto()
+                .getGame()
                 .entrySet()
                 .size()
         ).isEqualTo(sizeOfPlayers);

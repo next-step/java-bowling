@@ -13,7 +13,7 @@ class ModelMapper {
     static Game getGame() {
         Game game = new Game();
         getPlayers().addToGame(game, ModelMapper::getRoll);
-        game.registerScoreBoardPrinter(OutputView::printScoreBoard);
+        game.registerGamePrinter(OutputView::printGame);
         return game;
     }
 

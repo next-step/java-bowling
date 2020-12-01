@@ -9,18 +9,18 @@ import java.util.List;
 import static bowling.asset.Const.MAX_FRAME_NO;
 import static java.util.Map.Entry;
 
-public class ScoreBoardPrintable extends Printable {
+public class GamePrintable extends Printable {
     private static final String header = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private final ScoreBoardDto dto;
+    private final GameDto dto;
 
-    public ScoreBoardPrintable(ScoreBoardDto scoreBoardDto) {
-        dto = scoreBoardDto;
+    public GamePrintable(GameDto gameDto) {
+        dto = gameDto;
     }
 
     @Override
     public void print() {
         print(header);
-        dto.getScoreBoard()
+        dto.getGame()
                 .entrySet()
                 .forEach(this::print);
         print(lineSeparator);

@@ -1,12 +1,12 @@
 package bowling.view;
 
-import bowling.dto.ScoreBoardDto;
-import bowling.view.printable.ScoreBoardPrintable;
+import bowling.dto.GameDto;
+import bowling.view.printable.GamePrintable;
 
 public class OutputView {
     private OutputView() {}
 
-    public static void printScoreBoard(ScoreBoardDto scoreBoardDto) {
-        new ScoreBoardPrintable(scoreBoardDto).print();
+    public static void printGame(GameDto gameDto) {
+        new GamePrintable(gameDto).print();
     }
 }

@@ -32,8 +32,8 @@ class GameTest {
     void strike() {
         game.addPlayer(player, num -> Roll.of(10));
         game.play();
-        PlayerStatusDto status = game.exportScoreBoardDto()
-                .getScoreBoard()
+        PlayerStatusDto status = game.exportGameDto()
+                .getGame()
                 .entrySet()
                 .iterator()
                 .next()
@@ -69,8 +69,8 @@ class GameTest {
     void spare() {
         game.addPlayer(player, num -> Roll.of(5));
         game.play();
-        PlayerStatusDto status = game.exportScoreBoardDto()
-                .getScoreBoard()
+        PlayerStatusDto status = game.exportGameDto()
+                .getGame()
                 .entrySet()
                 .iterator()
                 .next()
@@ -107,8 +107,8 @@ class GameTest {
     void miss() {
         game.addPlayer(player, num -> Roll.of(1));
         game.play();
-        PlayerStatusDto status = game.exportScoreBoardDto()
-                .getScoreBoard()
+        PlayerStatusDto status = game.exportGameDto()
+                .getGame()
                 .entrySet()
                 .iterator()
                 .next()
@@ -141,8 +141,8 @@ class GameTest {
         game.addPlayer(new Player(name2), num -> Roll.of(5));
         game.addPlayer(new Player(name3), num -> Roll.of(1));
         game.play();
-        Iterator<Entry<PlayerDto, PlayerStatusDto>> itr = game.exportScoreBoardDto()
-                .getScoreBoard()
+        Iterator<Entry<PlayerDto, PlayerStatusDto>> itr = game.exportGameDto()
+                .getGame()
                 .entrySet()
                 .iterator();
 
