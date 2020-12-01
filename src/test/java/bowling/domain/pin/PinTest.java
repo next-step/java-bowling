@@ -2,9 +2,11 @@ package bowling.domain.pin;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DisplayName("쓰러진 핀 테스트")
 public class PinTest {
@@ -25,4 +27,26 @@ public class PinTest {
             Pin.of(pins);
         }).isInstanceOf(InvalidMaximumPinException.class);
     }
+
+    @DisplayName("스트라이크 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"0:false", "1:false", "9:false", "10:true"}, delimiter = ':')
+    public void isStrike(int pins, boolean expectedResult) {
+        assertThat(Pin.of(pins).isStrike()).isEqualTo(expectedResult);
+    }
+
+    @DisplayName("거터 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"0:true", "1:false", "9:false", "10:false"}, delimiter = ':')
+    public void isGutter(int pins, boolean expectedResult) {
+        assertThat(Pin.of(pins).isGutter()).isEqualTo(expectedResult);
+    }
+
+    @DisplayName("스페어 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"0:false", "1:false", "9:true", "10:false"}, delimiter = ':')
+    public void isSpare(int pins, boolean expectedResult) {
+        assertThat(Pin.of(1).isSpare(pins)).isEqualTo(expectedResult);
+    }
+
 }
