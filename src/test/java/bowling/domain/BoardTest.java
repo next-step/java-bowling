@@ -63,12 +63,10 @@ class BoardTest {
                         .isFalse(),
                 () -> assertThat(board.isGameOver())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(board)
-                ).isEqualTo(emptyList()),
-                () -> assertThat(
-                        toScoreList(board)
-                ).isEqualTo(emptyList())
+                () -> assertThat(toFrameEnumList(board))
+                        .isEqualTo(emptyList()),
+                () -> assertThat(toScoreList(board))
+                        .isEqualTo(emptyList())
         );
     }
 
@@ -86,12 +84,10 @@ class BoardTest {
                         .isFalse(),
                 () -> assertThat(board.isGameOver())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(board)
-                ).isEqualTo(Arrays.asList(FrameEnum.STRIKE)),
-                () -> assertThat(
-                        toScoreList(board)
-                ).isEqualTo(emptyList())
+                () -> assertThat(toFrameEnumList(board))
+                        .isEqualTo(Arrays.asList(FrameEnum.STRIKE)),
+                () -> assertThat(toScoreList(board))
+                        .isEqualTo(emptyList())
         );
     }
 
@@ -111,12 +107,10 @@ class BoardTest {
                         .isTrue(),
                 () -> assertThat(board.isGameOver())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(board)
-                ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE)),
-                () -> assertThat(
-                        toScoreList(board)
-                ).isEqualTo(Arrays.asList(20))
+                () -> assertThat(toFrameEnumList(board))
+                        .isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE)),
+                () -> assertThat(toScoreList(board))
+                        .isEqualTo(Arrays.asList(20))
         );
     }
 
@@ -139,12 +133,10 @@ class BoardTest {
                         .isFalse(),
                 () -> assertThat(board.isGameOver())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(board)
-                ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS)),
-                () -> assertThat(
-                        toScoreList(board)
-                ).isEqualTo(Arrays.asList(20, 34, 43))
+                () -> assertThat(toFrameEnumList(board))
+                        .isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS)),
+                () -> assertThat(toScoreList(board))
+                        .isEqualTo(Arrays.asList(20, 34, 43))
         );
     }
 
@@ -169,12 +161,10 @@ class BoardTest {
                         .isFalse(),
                 () -> assertThat(board.isGameOver())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(board)
-                ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS, FrameEnum.UNFINISHED)),
-                () -> assertThat(
-                        toScoreList(board)
-                ).isEqualTo(Arrays.asList(20, 34, 43))
+                () -> assertThat(toFrameEnumList(board))
+                        .isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS, FrameEnum.UNFINISHED)),
+                () -> assertThat(toScoreList(board))
+                        .isEqualTo(Arrays.asList(20, 34, 43))
         );
     }
 

@@ -54,9 +54,8 @@ class FramesTest {
                         .isFalse(),
                 () -> assertThat(frames.isGameOver())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(frames)
-                ).isEqualTo(emptyList())
+                () -> assertThat(toFrameEnumList(frames))
+                        .isEqualTo(emptyList())
         );
     }
 
@@ -75,9 +74,8 @@ class FramesTest {
                         .isFalse(),
                 () -> assertThat(frames.isGameOver())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(frames)
-                ).isEqualTo(Arrays.asList(FrameEnum.STRIKE))
+                () -> assertThat(toFrameEnumList(frames))
+                        .isEqualTo(Arrays.asList(FrameEnum.STRIKE))
         );
     }
 
@@ -99,9 +97,8 @@ class FramesTest {
                         .isTrue(),
                 () -> assertThat(frames.isGameOver())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(frames)
-                ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE))
+                () -> assertThat(toFrameEnumList(frames))
+                        .isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE))
         );
     }
 
@@ -126,9 +123,8 @@ class FramesTest {
                         .isFalse(),
                 () -> assertThat(frames.isGameOver())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(frames)
-                ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS))
+                () -> assertThat(toFrameEnumList(frames))
+                        .isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS))
         );
     }
 
@@ -155,9 +151,8 @@ class FramesTest {
                         .isFalse(),
                 () -> assertThat(frames.isGameOver())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(frames)
-                ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS, FrameEnum.UNFINISHED))
+                () -> assertThat(toFrameEnumList(frames))
+                        .isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS, FrameEnum.UNFINISHED))
         );
     }
 

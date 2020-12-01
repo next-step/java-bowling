@@ -72,12 +72,10 @@ class BoardObserverTest {
                         .isFalse(),
                 () -> assertThat(board.isSpare())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(board)
-                ).isEqualTo(emptyList()),
-                () -> assertThat(
-                        toScoreList(board)
-                ).isEqualTo(emptyList())
+                () -> assertThat(toFrameEnumList(board))
+                        .isEqualTo(emptyList()),
+                () -> assertThat(toScoreList(board))
+                        .isEqualTo(emptyList())
         );
     }
 
@@ -93,12 +91,10 @@ class BoardObserverTest {
                         .isTrue(),
                 () -> assertThat(board.isSpare())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(board)
-                ).isEqualTo(Arrays.asList(FrameEnum.STRIKE)),
-                () -> assertThat(
-                        toScoreList(board)
-                ).isEqualTo(emptyList())
+                () -> assertThat(toFrameEnumList(board))
+                        .isEqualTo(Arrays.asList(FrameEnum.STRIKE)),
+                () -> assertThat(toScoreList(board))
+                        .isEqualTo(emptyList())
         );
     }
 
@@ -116,12 +112,10 @@ class BoardObserverTest {
                         .isFalse(),
                 () -> assertThat(board.isSpare())
                         .isTrue(),
-                () -> assertThat(
-                        toFrameEnumList(board)
-                ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE)),
-                () -> assertThat(
-                        toScoreList(board)
-                ).isEqualTo(Arrays.asList(20))
+                () -> assertThat(toFrameEnumList(board))
+                        .isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE)),
+                () -> assertThat(toScoreList(board))
+                        .isEqualTo(Arrays.asList(20))
         );
     }
 
@@ -142,12 +136,10 @@ class BoardObserverTest {
                         .isFalse(),
                 () -> assertThat(board.isSpare())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(board)
-                ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS)),
-                () -> assertThat(
-                        toScoreList(board)
-                ).isEqualTo(Arrays.asList(20, 34, 43))
+                () -> assertThat(toFrameEnumList(board))
+                        .isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS)),
+                () -> assertThat(toScoreList(board))
+                        .isEqualTo(Arrays.asList(20, 34, 43))
         );
     }
 
@@ -170,12 +162,10 @@ class BoardObserverTest {
                         .isFalse(),
                 () -> assertThat(board.isSpare())
                         .isFalse(),
-                () -> assertThat(
-                        toFrameEnumList(board)
-                ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS, FrameEnum.UNFINISHED)),
-                () -> assertThat(
-                        toScoreList(board)
-                ).isEqualTo(Arrays.asList(20, 34, 43))
+                () -> assertThat(toFrameEnumList(board))
+                        .isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS, FrameEnum.UNFINISHED)),
+                () -> assertThat(toScoreList(board))
+                        .isEqualTo(Arrays.asList(20, 34, 43))
         );
     }
 }
