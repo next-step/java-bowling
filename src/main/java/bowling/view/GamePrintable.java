@@ -9,26 +9,13 @@ import java.util.List;
 import static bowling.asset.Const.MAX_FRAME_NO;
 import static java.util.Map.Entry;
 
-public class GamePrintable extends Printable {
-    private final StringBuilder sb = new StringBuilder();
-    private final GameDto dto;
-
+class GamePrintable extends Printable {
     GamePrintable(GameDto gameDto) {
-        dto = gameDto;
-    }
-
-    @Override
-    public void print() {
         append("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-        dto.getGame()
+        gameDto.getGame()
                 .entrySet()
                 .forEach(this::append);
         append(lineSeparator);
-        print(sb);
-    }
-
-    private void append(String str) {
-        sb.append(str);
     }
 
     private void append(Entry<PlayerDto, PlayerStatusDto> entry) {

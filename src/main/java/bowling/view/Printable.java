@@ -1,11 +1,14 @@
 package bowling.view;
 
-public abstract class Printable {
+class Printable {
     static final String lineSeparator = System.lineSeparator();
+    private final StringBuilder sb = new StringBuilder();
 
-    static void print(Object obj) {
-        System.out.print(obj);
+    void append(Object obj) {
+        sb.append(obj);
     }
 
-    public abstract void print();
+    void print() {
+        System.out.print(sb);
+    }
 }
