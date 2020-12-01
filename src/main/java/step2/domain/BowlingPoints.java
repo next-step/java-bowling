@@ -5,18 +5,15 @@ import step2.type.ResultPitchesType;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
-import static step2.domain.BowlingPoint.*;
+import static step2.domain.BowlingPoint.EMPTY_BOWLING_POINT;
 import static step2.type.PitchesOrderType.*;
 
 public class BowlingPoints {
     public static final String ERROR_NOT_PITCHES = "더 이상 투구할 수 없습니다.";
     public static final String ERROR_ALREADY_EXISTS_VALUE = "이미 존재하는 값을 추가할 수 없습니다.";
-
-    public static final String WALL_DELIMITER = "|";
+    public static final String ERROR_NOT_CREATE_OBJECT = "BowlingPoint 를 생성할 수 없습니다.";
     public static final int ZERO_SCORE = 0;
     public static final int NORMAL_MAX_PITCHES = 2;
     public static final int FINAL_MAX_PITCHES = 3;
@@ -42,33 +39,45 @@ public class BowlingPoints {
         }}, maxPitches, false);
     }
 
-    public void push(int pitchesCount) throws IllegalArgumentException {
-
+    public BowlingPoints push(int pitchesCount) throws IllegalArgumentException {
         BowlingPoint bowlingPoint = makeBowlingPoint(pitchesCount);
-
         PitchesOrderType type = PitchesOrderType.nextType(this);
-        push(type, bowlingPoint);
+
+        return push(type, bowlingPoint);
     }
 
     private BowlingPoint makeBowlingPoint(int pitchesCount) {
         PitchesOrderType type = PitchesOrderType.getType(size());
 
-        if (maxPitches == NORMAL_MAX_PITCHES) {
+        if (isNormalType()) {
             return makePoint((current) -> current.equals(EMPTY_BOWLING_POINT), pitchesCount);
         }
 
-        if (maxPitches == FINAL_MAX_PITCHES && type.equals(NONE)) {
+        if (isFinalFirst(type)) {
             return BowlingPoint.of(pitchesCount);
         }
 
-        if (maxPitches == FINAL_MAX_PITCHES
-                && (type.equals(FIRST)
-                || type.equals(SECOND)
-                && getScore() >= STRIKE_VALUE)) {
-            return makePoint((current) -> current.getPoint() == STRIKE_VALUE, pitchesCount);
+        if (isAllowFinalCreate(type)) {
+            return makePoint((current) -> current.getPoint() == STRIKE_VALUE || getScore() >= 10, pitchesCount);
         }
 
-        throw new IllegalArgumentException("BowlingPoint를 생성할 수 없습니다.");
+        throw new IllegalArgumentException(ERROR_NOT_CREATE_OBJECT);
+    }
+
+    private boolean isNormalType() {
+        return maxPitches == NORMAL_MAX_PITCHES;
+    }
+
+    private boolean isFinalFirst(PitchesOrderType type) {
+        return isFinalType() && type.equals(NONE);
+    }
+
+    private boolean isFinalType() {
+        return maxPitches == FINAL_MAX_PITCHES;
+    }
+
+    private boolean isAllowFinalCreate(PitchesOrderType type) {
+        return isFinalType() && (type.equals(FIRST) || type.equals(SECOND) && getScore() >= STRIKE_VALUE);
     }
 
     private BowlingPoint makePoint(Function<BowlingPoint, Boolean> function, int pitchesCount) {
@@ -76,31 +85,46 @@ public class BowlingPoints {
         BowlingPoint current = get(type);
         Boolean result = function.apply(current);
 
-        return result
-                ? BowlingPoint.of(pitchesCount)
-                : BowlingPoint.of(pitchesCount, current.getPoint());
+        if (result) {
+            return BowlingPoint.of(pitchesCount);
+        }
 
+        return BowlingPoint.of(pitchesCount, current.getPoint());
     }
 
 
-    public void push(PitchesOrderType type, BowlingPoint point) throws IllegalArgumentException {
+    public BowlingPoints push(PitchesOrderType type, BowlingPoint point) throws IllegalArgumentException {
         isAllowType(type);
         isValid();
         bowlingPoints.put(type, point);
-
         updateComplete();
+
+        return this;
     }
 
     private void updateComplete() {
-        if (size() == maxPitches
-                || (maxPitches == NORMAL_MAX_PITCHES && getScore(FIRST) >= STRIKE_VALUE)
-                || (maxPitches == FINAL_MAX_PITCHES && size() == 2 && getScore(FIRST, SECOND) < STRIKE_VALUE)) {
+        if (isMaximumSize() || isCompleteConditionByNormal() || isCompleteConditionByFinal()) {
             completed = true;
         }
     }
 
+    private boolean isCompleteConditionByFinal() {
+        return isFinalType()
+                && size() == 2
+                && getScore(FIRST, SECOND) < STRIKE_VALUE;
+    }
+
+    private boolean isCompleteConditionByNormal() {
+        return isNormalType()
+                && getScore(FIRST) >= STRIKE_VALUE;
+    }
+
+    private boolean isMaximumSize() {
+        return size() == maxPitches;
+    }
+
     private void isValid() {
-        if (size() == maxPitches) {
+        if (isMaximumSize()) {
             throw new IllegalArgumentException(ERROR_NOT_PITCHES);
         }
     }
@@ -142,19 +166,19 @@ public class BowlingPoints {
 
 
     public String getMark() {
-        return Stream.of(FIRST, SECOND, THIRD)
-                .filter(type-> !get(type).equals(EMPTY_BOWLING_POINT))
-                .map(type-> get(type).getMark())
-                .collect(Collectors.joining(WALL_DELIMITER));
-    }
+        BowlingSymbol.Builder builder = BowlingSymbol.Builder(maxPitches, size());
+        if (size() >= 1) {
+            builder.firstPoint(get(FIRST).getPoint());
+        }
+        if (size() >= 2) {
+            builder.secondPoint(get(SECOND).getPoint());
+        }
+        if (size() == 3) {
+            builder.thirdPoint(get(THIRD).getPoint());
+        }
 
-
-    private boolean isSpare(BowlingPoint point) {
-        return point.getMark().equals(SPARE_MARK);
-    }
-
-    private boolean isStrike(BowlingPoint point) {
-        return point.getMark().equals(STRIKE_MARK);
+        BowlingSymbol symbol = builder.build();
+        return symbol.getSymbol();
     }
 
     public int getScore(PitchesOrderType... types) {
@@ -166,5 +190,20 @@ public class BowlingPoints {
                 .map(entry -> entry.getValue().getPoint())
                 .reduce(Integer::sum)
                 .orElse(ZERO_SCORE);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BowlingPoints that = (BowlingPoints) o;
+        return completed == that.completed &&
+                maxPitches == that.maxPitches &&
+                Objects.equals(bowlingPoints, that.bowlingPoints);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bowlingPoints, completed, maxPitches);
     }
 }
