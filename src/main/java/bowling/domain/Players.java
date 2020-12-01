@@ -11,10 +11,10 @@ public class Players {
     private final List<Player> players = new LinkedList<>();
 
     public static Players of(int sizeOfPlayers, Supplier<Player> supplier) {
-        Players playersObj = new Players();
         if (sizeOfPlayers < 1) {
             throw new BadSizeOfPlayersException("플레이어는 한명 이상이어야 합니다.");
         }
+        Players playersObj = new Players();
         for (int i = 0; i < sizeOfPlayers; i++) {
             playersObj.add(supplier.get());
         }
