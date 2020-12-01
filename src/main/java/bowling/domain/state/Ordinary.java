@@ -14,7 +14,7 @@ public class Ordinary extends State {
 
     @Override
     public State record(Pin pins) {
-        if (pins.isStrike()) {
+        if (pins.isStrike() || this.pins.getPins() + pins.getPins() > Pin.MAX_PINS) {
             throw new InvalidRecordInOrdinaryException(pins.getPins());
         }
         if (this.pins.isSpare(pins.getPins())) {
