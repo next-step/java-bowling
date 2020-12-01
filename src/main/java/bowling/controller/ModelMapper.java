@@ -18,8 +18,7 @@ class ModelMapper {
 
     private static Players getPlayers() {
         return Players.of(
-//                InputView.askSizeOfPlayers().getSize(),
-                1,
+                1, // View.askSizeOfPlayers().getSize(),
                 ModelMapper::getPlayer
         );
     }
