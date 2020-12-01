@@ -21,6 +21,10 @@ public class Bowling {
         return new Bowling(MemberName.of(name), Frames.create());
     }
 
+    public static Bowling of(String name, List<Frame> frames) {
+        return new Bowling(MemberName.of(name), Frames.of(frames));
+    }
+
     public String getName() {
         return memberName.getName();
     }
@@ -33,8 +37,8 @@ public class Bowling {
         return frames.getCurrentFrameNumber();
     }
 
-    public void throwBall(Pin pin) {
-        frames.record(pin);
+    public boolean throwBall(Pin pin) {
+        return frames.record(pin);
     }
 
     public List<Frame> getFrames() {

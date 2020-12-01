@@ -26,10 +26,11 @@ public class Frame {
         return new Frame(state);
     }
 
-    public void record(Pin pins) {
+    public boolean record(Pin pins) {
         validateMaxScore(pins.getPins());
         validateFinished();
         state = state.record(pins);
+        return isFinished();
     }
 
     private void validateFinished() {
