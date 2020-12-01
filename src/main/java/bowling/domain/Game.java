@@ -12,30 +12,27 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static bowling.asset.Const.MAX_FRAME_NO;
-import static java.util.Map.Entry;
 
 public class Game {
 
     // NOTE: 넣은 순서대로 출력 및 테스트를 하기 위해 LinkedHashMap 자료구조를 이용한다.
     private final Map<Player, PlayerStatus> map = new LinkedHashMap<>();
-    private final List<Observer> observers = new LinkedList<>();
+    private final List<Observer<Rolls>> observers = new LinkedList<>();
 
     public void registerScoreBoardPrinter(Consumer<ScoreBoardDto> consumer) {
         observers.add(subject -> consumer.accept(exportScoreBoardDto()));
     }
 
-    public void addPlayer(Player player, Function<Integer, Roll> rollGenerator) {
+    void addPlayer(Player player, Function<Integer, Roll> rollGenerator) {
         map.put(player, PlayerStatus.of(rollGenerator, observers));
     }
 
     ScoreBoardDto exportScoreBoardDto() {
         Map<PlayerDto, PlayerStatusDto> scoreBoard = new LinkedHashMap<>();
-        map.entrySet()
-                .stream()
-                .forEach(entry -> scoreBoard.put(
-                        entry.getKey().exportPlayerDto(),
-                        entry.getValue().exportPlayerStatusDto()
-                ));
+        map.forEach((key, value) -> scoreBoard.put(
+                key.exportPlayerDto(),
+                value.exportPlayerStatusDto()
+        ));
         return new ScoreBoardDto(scoreBoard);
     }
 
@@ -55,9 +52,7 @@ public class Game {
     }
 
     private void play(Consumer<PlayerStatus> consumer) {
-        map.entrySet()
-                .stream()
-                .map(Entry::getValue)
+        map.values()
                 .forEach(consumer);
     }
 }
