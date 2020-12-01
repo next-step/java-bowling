@@ -12,7 +12,6 @@ public class Frames {
 
     private final int size;
     private final Frame head;
-    private final Frame tail;
 
 
     public static Builder Builder() {
@@ -20,7 +19,7 @@ public class Frames {
     }
 
     public Frame getLastCompletedFrame(Frame frame) {
-        if (!frame.isFinished() || (frame.isFinished() && frame instanceof FinalFrame)) {
+        if (!frame.isFinished()) {
             return frame;
         }
         return getLastCompletedFrame(frame.next());
@@ -54,10 +53,6 @@ public class Frames {
 
     public Frame getHead() {
         return head;
-    }
-
-    public Frame getTail() {
-        return tail;
     }
 
     public List<String> getMarks(Frame frame) {
@@ -105,7 +100,6 @@ public class Frames {
 
         private int size;
         private Frame head;
-        private Frame tail;
 
         public Builder() {
         }
@@ -120,11 +114,6 @@ public class Frames {
             return this;
         }
 
-        public Builder tail(Frame tail) {
-            this.tail = tail;
-            return this;
-        }
-
         public Frames build() {
             return new Frames(this);
         }
@@ -133,6 +122,5 @@ public class Frames {
     public Frames(Builder builder) {
         this.size = builder.size;
         this.head = builder.head;
-        this.tail = getLast();
     }
 }
