@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.dto.FrameNoDto;
 import bowling.dto.GameDto;
 import bowling.dto.PlayerDto;
 import bowling.dto.PlayerStatusDto;
@@ -16,7 +17,7 @@ public class Game {
     // NOTE: 넣은 순서대로 출력 및 테스트를 하기 위해 LinkedHashMap 자료구조를 이용한다.
     private final Map<Player, PlayerStatus> map = new LinkedHashMap<>();
 
-    void addPlayer(Player player, Function<String, Roll> rollGenerator) {
+    public void addPlayer(Player player, Function<FrameNoDto, Roll> rollGenerator) {
         map.put(player, PlayerStatus.of(rollGenerator));
     }
 

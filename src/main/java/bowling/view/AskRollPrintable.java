@@ -1,8 +1,10 @@
 package bowling.view;
 
+import bowling.dto.FrameNoDto;
+
 class AskRollPrintable extends Printable {
-    AskRollPrintable(String prefix) {
+    AskRollPrintable(FrameNoDto frameNoDto) {
         append(lineSeparator);
-        append(String.format("%s프레임 투구 : ", prefix));
+        append(String.format("%d프레임 투구 : ", frameNoDto.getFrameNo()));
     }
 }

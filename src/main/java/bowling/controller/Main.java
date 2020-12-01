@@ -4,6 +4,7 @@ import bowling.domain.Game;
 import bowling.domain.Player;
 import bowling.domain.Players;
 import bowling.domain.Roll;
+import bowling.dto.FrameNoDto;
 import bowling.view.View;
 
 public class Main {
@@ -16,7 +17,7 @@ public class Main {
 
     private static Game getGame() {
         Game game = new Game();
-        getPlayers().addToGame(game, Main::getRoll);
+        getPlayers().forEach(player -> game.addPlayer(player, Main::getRoll));
         game.registerGamePrinter(View::printGame);
         return game;
     }
@@ -34,8 +35,8 @@ public class Main {
         );
     }
 
-    private static Roll getRoll(String prefix) {
-        return Roll.of(View.askRoll(prefix)
+    private static Roll getRoll(FrameNoDto frameNoDto) {
+        return Roll.of(View.askRoll(frameNoDto)
                 .getCountOfPins());
     }
 }

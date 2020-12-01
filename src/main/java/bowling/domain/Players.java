@@ -4,7 +4,7 @@ import bowling.exception.BadSizeOfPlayersException;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class Players {
@@ -21,10 +21,8 @@ public class Players {
         return playersObj;
     }
 
-    public void addToGame(Game game, Function<String, Roll> rollGenerator) {
-        players.forEach(player -> game.addPlayer(
-                player,
-                rollGenerator));
+    public void forEach(Consumer<Player> consumer) {
+        players.forEach(consumer);
     }
 
     private void add(Player player) {

@@ -1,9 +1,6 @@
 package bowling.view;
 
-import bowling.dto.GameDto;
-import bowling.dto.PlayerDto;
-import bowling.dto.RollDto;
-import bowling.dto.SizeOfPlayersDto;
+import bowling.dto.*;
 
 import java.util.Scanner;
 
@@ -26,8 +23,8 @@ public class View {
         return new PlayerDto(nextLine());
     }
 
-    public static RollDto askRoll(String prefix) {
-        new AskRollPrintable(prefix).print();
+    public static RollDto askRoll(FrameNoDto frameNoDto) {
+        new AskRollPrintable(frameNoDto).print();
         return new RollDto(nextInt());
     }
 

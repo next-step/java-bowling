@@ -46,7 +46,7 @@ class FramesTest {
         assertAll(
                 () -> assertThat(frames.size())
                         .isEqualTo(0),
-                () -> assertThat(frames.frameNo())
+                () -> assertThat(frames.getFrameNo())
                         .isEqualTo(1),
                 () -> assertThat(frames.isStrike())
                         .isFalse(),
@@ -66,7 +66,7 @@ class FramesTest {
         assertAll(
                 () -> assertThat(frames.size())
                         .isEqualTo(1),
-                () -> assertThat(frames.frameNo())
+                () -> assertThat(frames.getFrameNo())
                         .isEqualTo(2),
                 () -> assertThat(frames.isStrike())
                         .isTrue(),
@@ -89,7 +89,7 @@ class FramesTest {
         assertAll(
                 () -> assertThat(frames.size())
                         .isEqualTo(2),
-                () -> assertThat(frames.frameNo())
+                () -> assertThat(frames.getFrameNo())
                         .isEqualTo(3),
                 () -> assertThat(frames.isStrike())
                         .isFalse(),
@@ -115,7 +115,7 @@ class FramesTest {
         assertAll(
                 () -> assertThat(frames.size())
                         .isEqualTo(3),
-                () -> assertThat(frames.frameNo())
+                () -> assertThat(frames.getFrameNo())
                         .isEqualTo(4),
                 () -> assertThat(frames.isStrike())
                         .isFalse(),
@@ -143,7 +143,7 @@ class FramesTest {
         assertAll(
                 () -> assertThat(frames.size())
                         .isEqualTo(4),
-                () -> assertThat(frames.frameNo())
+                () -> assertThat(frames.getFrameNo())
                         .isEqualTo(4),
                 () -> assertThat(frames.isStrike())
                         .isFalse(),

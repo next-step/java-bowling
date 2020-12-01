@@ -17,8 +17,8 @@ class Board {
                 .collect(toList()));
     }
 
-    int frameNo() {
-        return frames.frameNo();
+    int getFrameNo() {
+        return frames.getFrameNo();
     }
 
     boolean isStrike() {

@@ -5,6 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -20,16 +23,13 @@ class PlayersTest {
     }
 
     @ParameterizedTest
-    @DisplayName("만들어진 플레이어의 숫자와 게임 결과가 일치하는지 확인")
+    @DisplayName("만들어진 플레이어의 숫자대로 forEach 함수가 실행되는지 확인")
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
-    void addToGame(int sizeOfPlayers) {
+    void forEach(int sizeOfPlayers) {
         Players players = Players.of(sizeOfPlayers, () -> new Player("GHO"));
-        Game game = new Game();
-        players.addToGame(game, str -> Roll.of(0));
-        assertThat(game.exportGameDto()
-                .getGame()
-                .entrySet()
-                .size()
-        ).isEqualTo(sizeOfPlayers);
+        List<Player> playerList = new LinkedList<>();
+        players.forEach(playerList::add);
+        assertThat(playerList.size())
+                .isEqualTo(sizeOfPlayers);
     }
 }

@@ -21,7 +21,7 @@ class Frames {
         return frames.size();
     }
 
-    int frameNo() {
+    int getFrameNo() {
         return isLastFinished()
                 ? size() + 1
                 : size();
@@ -47,7 +47,7 @@ class Frames {
     }
 
     boolean isGameOver() {
-        return frameNo() > MAX_FRAME_NO;
+        return getFrameNo() > MAX_FRAME_NO;
     }
 
     private boolean isLastFinished() {

@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.dto.FrameNoDto;
 import bowling.dto.PlayerStatusDto;
 
 import java.util.function.Function;
@@ -13,12 +14,10 @@ class PlayerStatus {
         this.board = board;
     }
 
-    static PlayerStatus of(Function<String, Roll> rollGenerator) {
+    static PlayerStatus of(Function<FrameNoDto, Roll> rollGenerator) {
         Board board = new Board();
-        RollSubject subject = new RollSubject(() -> {
-            String prefix = Integer.toString(board.frameNo());
-            return rollGenerator.apply(prefix);
-        });
+        RollSubject subject = new RollSubject(() ->
+                rollGenerator.apply(new FrameNoDto(board.getFrameNo())));
         subject.register(new BoardObserver(board));
         return new PlayerStatus(
                 subject,
