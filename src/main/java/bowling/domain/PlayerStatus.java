@@ -30,7 +30,7 @@ class PlayerStatus {
         subject.register(observer);
     }
 
-    void playFrame() {
+    void play() {
         subject.execute();
         if (!board.isStrike()) {
             subject.execute();

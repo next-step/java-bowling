@@ -27,7 +27,7 @@ class PlayerStatusTest {
         PlayerStatus status = PlayerStatus.of(num -> Roll.of(10));
         status.register(subject -> list.add(0));
         for (int i = 0; i < playTimes; i++) {
-            status.playFrame();
+            status.play();
         }
         assertThat(list.size())
                 .isEqualTo(playTimes);
@@ -37,11 +37,11 @@ class PlayerStatusTest {
     @DisplayName("playFrame 으로 인한 Board 결과 테스트")
     void playFrame() {
         PlayerStatus status = PlayerStatus.of(str -> Roll.of(2));
-        status.playFrame();
-        status.playFrame();
-        status.playFrame();
-        status.playFrame();
-        status.playFrame();
+        status.play();
+        status.play();
+        status.play();
+        status.play();
+        status.play();
 
         List<Integer> rolls = toRolls(status);
         List<FrameEnum> frames = toFrames(status);
@@ -61,8 +61,8 @@ class PlayerStatusTest {
     @DisplayName("마지막이 Strike 일 때, playBonus 으로 인한 Board 결과 테스트")
     void playBonus_STRIKE() {
         PlayerStatus status = PlayerStatus.of(num -> Roll.of(10));
-        status.playFrame();
-        status.playFrame();
+        status.play();
+        status.play();
         status.playBonus();
 
         List<Integer> rolls = toRolls(status);
@@ -83,8 +83,8 @@ class PlayerStatusTest {
     @DisplayName("마지막이 SPARE 일 때, playBonus 으로 인한 Board 결과 테스트")
     void playBonus_SPARE() {
         PlayerStatus status = PlayerStatus.of(num -> Roll.of(5));
-        status.playFrame();
-        status.playFrame();
+        status.play();
+        status.play();
         status.playBonus();
 
         List<Integer> rolls = toRolls(status);

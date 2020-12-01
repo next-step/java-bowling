@@ -4,6 +4,7 @@ import bowling.dto.GameDto;
 import bowling.dto.PlayerDto;
 import bowling.dto.PlayerStatusDto;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -29,30 +30,18 @@ public class Game {
 
     GameDto exportGameDto() {
         Map<PlayerDto, PlayerStatusDto> game = new LinkedHashMap<>();
-        map.forEach((key, value) -> game.put(
-                key.exportPlayerDto(),
-                value.exportPlayerStatusDto()
+        map.forEach((player, status) -> game.put(
+                player.exportPlayerDto(),
+                status.exportPlayerStatusDto()
         ));
         return new GameDto(game);
     }
 
     public void play() {
+        Collection<PlayerStatus> statuses = map.values();
         for (int i = 0; i < MAX_FRAME_NO; i++) {
-            playFrame();
+            statuses.forEach(PlayerStatus::play);
         }
-        playBonus();
-    }
-
-    private void playFrame() {
-        play(PlayerStatus::playFrame);
-    }
-
-    private void playBonus() {
-        play(PlayerStatus::playBonus);
-    }
-
-    private void play(Consumer<PlayerStatus> consumer) {
-        map.values()
-                .forEach(consumer);
+        statuses.forEach(PlayerStatus::playBonus);
     }
 }
