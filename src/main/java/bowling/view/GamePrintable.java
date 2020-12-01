@@ -10,7 +10,7 @@ import static bowling.asset.Const.MAX_FRAME_NO;
 import static java.util.Map.Entry;
 
 public class GamePrintable extends Printable {
-    private static final String header = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+    private final StringBuilder sb = new StringBuilder();
     private final GameDto dto;
 
     GamePrintable(GameDto gameDto) {
@@ -19,42 +19,47 @@ public class GamePrintable extends Printable {
 
     @Override
     public void print() {
-        print(header);
+        append("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
         dto.getGame()
                 .entrySet()
-                .forEach(this::print);
-        print(lineSeparator);
+                .forEach(this::append);
+        append(lineSeparator);
+        print(sb);
     }
 
-    private void print(Entry<PlayerDto, PlayerStatusDto> entry) {
+    private void append(String str) {
+        sb.append(str);
+    }
+
+    private void append(Entry<PlayerDto, PlayerStatusDto> entry) {
         PlayerStatusDto playerStatusDto = entry.getValue();
         RollsDto rollsDto = playerStatusDto.getRollsDto();
         BoardDto boardDto = playerStatusDto.getBoardDto();
 
-        print(lineSeparator);
-        print(String.format("|  %s |", entry.getKey()
+        append(lineSeparator);
+        append(String.format("|  %s |", entry.getKey()
                 .getName()));
         Iterator<RollDto> rollItr = rollsDto.getRolls().iterator();
         List<FrameDto> frames = boardDto.getFramesDto()
                 .getFrames();
-        frames.forEach(frameDto -> print(frameDto, rollItr));
-        printBlank(frames.size());
+        frames.forEach(frameDto -> append(frameDto, rollItr));
+        appendBlank(frames.size());
 
-        print(lineSeparator);
-        print("|      |");
+        append(lineSeparator);
+        append("|      |");
         List<ScoreDto> scores = boardDto.getScoresDto()
                 .getScores();
-        scores.forEach(this::print);
-        printBlank(scores.size());
+        scores.forEach(this::append);
+        appendBlank(scores.size());
     }
 
-    private void printBlank(int size) {
+    private void appendBlank(int size) {
         for (int i = 0; i < MAX_FRAME_NO - size; i++) {
-            print("      |");
+            append("      |");
         }
     }
 
-    private void print(FrameDto frameDto, Iterator<RollDto> rollItr) {
+    private void append(FrameDto frameDto, Iterator<RollDto> rollItr) {
         FrameEnum frameEnum = frameDto.getFrameEnum();
         String str = "";
         if (frameEnum == FrameEnum.STRIKE) {
@@ -74,11 +79,11 @@ public class GamePrintable extends Printable {
         if (frameEnum == FrameEnum.UNFINISHED) {
             str = rollToStr(rollItr.next());
         }
-        print(spacing(str));
+        append(spacing(str));
     }
 
-    private void print(ScoreDto scoreDto) {
-        print(spacing(Integer.toString(
+    private void append(ScoreDto scoreDto) {
+        append(spacing(Integer.toString(
                 scoreDto.getScore()
         )));
     }
