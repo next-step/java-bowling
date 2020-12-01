@@ -49,8 +49,6 @@ class FramesTest {
                         .isFalse(),
                 () -> assertThat(frames.isSpare())
                         .isFalse(),
-                () -> assertThat(frames.isLastFinished())
-                        .isTrue(),
                 () -> assertThat(
                         toFrameEnumList(frames)
                 ).isEqualTo(emptyList())
@@ -70,8 +68,6 @@ class FramesTest {
                         .isTrue(),
                 () -> assertThat(frames.isSpare())
                         .isFalse(),
-                () -> assertThat(frames.isLastFinished())
-                        .isTrue(),
                 () -> assertThat(
                         toFrameEnumList(frames)
                 ).isEqualTo(Arrays.asList(FrameEnum.STRIKE))
@@ -93,8 +89,6 @@ class FramesTest {
                 () -> assertThat(frames.isStrike())
                         .isFalse(),
                 () -> assertThat(frames.isSpare())
-                        .isTrue(),
-                () -> assertThat(frames.isLastFinished())
                         .isTrue(),
                 () -> assertThat(
                         toFrameEnumList(frames)
@@ -121,8 +115,6 @@ class FramesTest {
                         .isFalse(),
                 () -> assertThat(frames.isSpare())
                         .isFalse(),
-                () -> assertThat(frames.isLastFinished())
-                        .isTrue(),
                 () -> assertThat(
                         toFrameEnumList(frames)
                 ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS))
@@ -149,8 +141,6 @@ class FramesTest {
                 () -> assertThat(frames.isStrike())
                         .isFalse(),
                 () -> assertThat(frames.isSpare())
-                        .isFalse(),
-                () -> assertThat(frames.isLastFinished())
                         .isFalse(),
                 () -> assertThat(
                         toFrameEnumList(frames)

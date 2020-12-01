@@ -46,9 +46,10 @@ class Frames {
         return !frames.isEmpty() && last().isSpare();
     }
 
-    boolean isLastFinished() {
-        return frames.isEmpty()
-                || last().isFinished();
+    FramesDto exportFramesDto() {
+        return frames.stream()
+                .map(Frame::exportFrameDto)
+                .collect(collectingAndThen(toList(), FramesDto::new));
     }
 
     private boolean isGameOver() {
@@ -56,13 +57,12 @@ class Frames {
                 || size() == MAX_FRAME_NO && last().isFinished();
     }
 
-    private Frame last() {
-        return frames.getLast();
+    private boolean isLastFinished() {
+        return frames.isEmpty()
+                || last().isFinished();
     }
 
-    FramesDto exportFramesDto() {
-        return frames.stream()
-                .map(Frame::exportFrameDto)
-                .collect(collectingAndThen(toList(), FramesDto::new));
+    private Frame last() {
+        return frames.getLast();
     }
 }

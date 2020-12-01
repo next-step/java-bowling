@@ -58,8 +58,6 @@ class BoardTest {
                         .isFalse(),
                 () -> assertThat(board.isSpare())
                         .isFalse(),
-                () -> assertThat(board.isFrameFinished())
-                        .isTrue(),
                 () -> assertThat(
                         toFrameEnumList(board)
                 ).isEqualTo(emptyList()),
@@ -81,8 +79,6 @@ class BoardTest {
                         .isTrue(),
                 () -> assertThat(board.isSpare())
                         .isFalse(),
-                () -> assertThat(board.isFrameFinished())
-                        .isTrue(),
                 () -> assertThat(
                         toFrameEnumList(board)
                 ).isEqualTo(Arrays.asList(FrameEnum.STRIKE)),
@@ -105,8 +101,6 @@ class BoardTest {
                 () -> assertThat(board.isStrike())
                         .isFalse(),
                 () -> assertThat(board.isSpare())
-                        .isTrue(),
-                () -> assertThat(board.isFrameFinished())
                         .isTrue(),
                 () -> assertThat(
                         toFrameEnumList(board)
@@ -134,8 +128,6 @@ class BoardTest {
                         .isFalse(),
                 () -> assertThat(board.isSpare())
                         .isFalse(),
-                () -> assertThat(board.isFrameFinished())
-                        .isTrue(),
                 () -> assertThat(
                         toFrameEnumList(board)
                 ).isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS)),
@@ -163,8 +155,6 @@ class BoardTest {
                 () -> assertThat(board.isStrike())
                         .isFalse(),
                 () -> assertThat(board.isSpare())
-                        .isFalse(),
-                () -> assertThat(board.isFrameFinished())
                         .isFalse(),
                 () -> assertThat(
                         toFrameEnumList(board)

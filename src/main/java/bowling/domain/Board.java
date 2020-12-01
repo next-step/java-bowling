@@ -21,10 +21,6 @@ class Board {
                 .collect(toList()));
     }
 
-    boolean isFrameFinished() {
-        return frames.isLastFinished();
-    }
-
     boolean isStrike() {
         return frames.isStrike();
     }

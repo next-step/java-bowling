@@ -32,7 +32,7 @@ class PlayerStatus {
 
     void playFrame() {
         subject.execute();
-        if (!board.isFrameFinished()) {
+        if (!board.isStrike()) {
             subject.execute();
         }
     }
