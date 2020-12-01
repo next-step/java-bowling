@@ -42,6 +42,5 @@ public class Game {
         for (int i = 0; i < MAX_FRAME_NO; i++) {
             statuses.forEach(PlayerStatus::play);
         }
-        statuses.forEach(PlayerStatus::playBonus);
     }
 }

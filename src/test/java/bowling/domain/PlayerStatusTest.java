@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import static bowling.asset.Const.MAX_FRAME_NO;
 import static bowling.domain.FrameEnum.*;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,12 +37,10 @@ class PlayerStatusTest {
     @Test
     @DisplayName("playFrame 으로 인한 Board 결과 테스트")
     void playFrame() {
-        PlayerStatus status = PlayerStatus.of(str -> Roll.of(2));
-        status.play();
-        status.play();
-        status.play();
-        status.play();
-        status.play();
+        PlayerStatus status = PlayerStatus.of(str -> Roll.of(1));
+        for (int i = 0; i < MAX_FRAME_NO; i++) {
+            status.play();
+        }
 
         List<Integer> rolls = toRolls(status);
         List<FrameEnum> frames = toFrames(status);
@@ -49,11 +48,15 @@ class PlayerStatusTest {
 
         assertAll(
                 () -> assertThat(rolls)
-                        .isEqualTo(Arrays.asList(2, 2, 2, 2, 2, 2, 2, 2, 2, 2)),
+                        .isEqualTo(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)),
                 () -> assertThat(frames)
-                        .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, MISS)),
+                        .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(4, 8, 12, 16, 20))
+                        .isEqualTo(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 18, 20)),
+                () -> assertThat(frames.size())
+                        .isEqualTo(MAX_FRAME_NO),
+                () -> assertThat(scores.size())
+                        .isEqualTo(MAX_FRAME_NO)
         );
     }
 
@@ -61,9 +64,9 @@ class PlayerStatusTest {
     @DisplayName("마지막이 Strike 일 때, playBonus 으로 인한 Board 결과 테스트")
     void playBonus_STRIKE() {
         PlayerStatus status = PlayerStatus.of(num -> Roll.of(10));
-        status.play();
-        status.play();
-        status.playBonus();
+        for (int i = 0; i < MAX_FRAME_NO; i++) {
+            status.play();
+        }
 
         List<Integer> rolls = toRolls(status);
         List<FrameEnum> frames = toFrames(status);
@@ -71,11 +74,24 @@ class PlayerStatusTest {
 
         assertAll(
                 () -> assertThat(rolls)
-                        .isEqualTo(Arrays.asList(10, 10, 10, 10)),
+                        .isEqualTo(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10)),
                 () -> assertThat(frames)
-                        .isEqualTo(Arrays.asList(STRIKE, STRIKE, STRIKE, STRIKE)),
+                        .isEqualTo(Arrays.asList(STRIKE,
+                                STRIKE,
+                                STRIKE,
+                                STRIKE,
+                                STRIKE,
+                                STRIKE,
+                                STRIKE,
+                                STRIKE,
+                                STRIKE,
+                                STRIKE)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(30, 60))
+                        .isEqualTo(Arrays.asList(30, 60, 90, 120, 150, 180, 210, 240, 270, 300)),
+                () -> assertThat(frames.size())
+                        .isEqualTo(MAX_FRAME_NO),
+                () -> assertThat(scores.size())
+                        .isEqualTo(MAX_FRAME_NO)
         );
     }
 
@@ -83,9 +99,9 @@ class PlayerStatusTest {
     @DisplayName("마지막이 SPARE 일 때, playBonus 으로 인한 Board 결과 테스트")
     void playBonus_SPARE() {
         PlayerStatus status = PlayerStatus.of(num -> Roll.of(5));
-        status.play();
-        status.play();
-        status.playBonus();
+        for (int i = 0; i < MAX_FRAME_NO; i++) {
+            status.play();
+        }
 
         List<Integer> rolls = toRolls(status);
         List<FrameEnum> frames = toFrames(status);
@@ -93,11 +109,24 @@ class PlayerStatusTest {
 
         assertAll(
                 () -> assertThat(rolls)
-                        .isEqualTo(Arrays.asList(5, 5, 5, 5, 5)),
+                        .isEqualTo(Arrays.asList(5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5)),
                 () -> assertThat(frames)
-                        .isEqualTo(Arrays.asList(SPARE, SPARE, UNFINISHED)),
+                        .isEqualTo(Arrays.asList(SPARE,
+                                SPARE,
+                                SPARE,
+                                SPARE,
+                                SPARE,
+                                SPARE,
+                                SPARE,
+                                SPARE,
+                                SPARE,
+                                SPARE)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(15, 30))
+                        .isEqualTo(Arrays.asList(15, 30, 45, 60, 75, 90, 105, 120, 135, 150)),
+                () -> assertThat(frames.size())
+                        .isEqualTo(MAX_FRAME_NO),
+                () -> assertThat(scores.size())
+                        .isEqualTo(MAX_FRAME_NO)
         );
     }
 
