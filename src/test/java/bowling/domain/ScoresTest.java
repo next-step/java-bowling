@@ -27,7 +27,7 @@ class ScoresTest {
     @DisplayName("size 테스트")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
     void size(int size) {
-        scores.cumulateValidOnly(IntStream
+        scores.accumulateOnlyValid(IntStream
                 .range(0, size)
                 .mapToObj(Score::new)
                 .collect(toList()));
@@ -39,7 +39,7 @@ class ScoresTest {
     @DisplayName("exportScoresDto 테스트")
     void exportScoresDto() {
         List<Integer> scoreList = Arrays.asList(0, 1, 3, 6, 12);
-        scores.cumulateValidOnly(scoreList.stream()
+        scores.accumulateOnlyValid(scoreList.stream()
                 .map(Score::new)
                 .collect(toList()));
         assertThat(scores
@@ -56,7 +56,7 @@ class ScoresTest {
     void addValidOnly() {
         List<Integer> scoreList = Arrays.asList(-12, -6, -3, -1, 0, 1, 3, 6, 12);
         List<Integer> expected = Arrays.asList(0, 1, 4, 10, 22);
-        scores.cumulateValidOnly(scoreList.stream()
+        scores.accumulateOnlyValid(scoreList.stream()
                 .map(Score::new)
                 .collect(toList()));
         assertThat(scores

@@ -15,13 +15,13 @@ class Scores {
         return scores.size();
     }
 
-    void cumulateValidOnly(List<Score> scoreList) {
+    void accumulateOnlyValid(List<Score> scoreList) {
         scoreList.stream()
                 .filter(Score::isValid)
-                .forEach(this::cumulate);
+                .forEach(this::accumulate);
     }
 
-    private void cumulate(Score score) {
+    private void accumulate(Score score) {
         Score cumulated = size() < 1
                 ? score
                 : scores.getLast()

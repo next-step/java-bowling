@@ -13,6 +13,10 @@ class Frames {
     // NOTE: getLast 를 쓰기 위해 LinkedList 로 선언
     private final LinkedList<Frame> frames = new LinkedList<>();
 
+    List<Frame> subList(int from, int to) {
+        return frames.subList(from, to);
+    }
+
     int size() {
         return frames.size();
     }
@@ -21,10 +25,6 @@ class Frames {
         return isLastFinished()
                 ? size() + 1
                 : size();
-    }
-
-    List<Frame> subList(int from, int to) {
-        return frames.subList(from, to);
     }
 
     void update(Rolls rolls) {
@@ -46,12 +46,6 @@ class Frames {
         return !frames.isEmpty() && last().isSpare();
     }
 
-    FramesDto exportFramesDto() {
-        return frames.stream()
-                .map(Frame::exportFrameDto)
-                .collect(collectingAndThen(toList(), FramesDto::new));
-    }
-
     boolean isGameOver() {
         return frameNo() > MAX_FRAME_NO;
     }
@@ -63,5 +57,11 @@ class Frames {
 
     private Frame last() {
         return frames.getLast();
+    }
+
+    FramesDto exportFramesDto() {
+        return frames.stream()
+                .map(Frame::exportFrameDto)
+                .collect(collectingAndThen(toList(), FramesDto::new));
     }
 }

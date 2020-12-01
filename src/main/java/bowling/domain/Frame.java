@@ -25,16 +25,16 @@ class Frame {
         frameEnum = FrameEnum.get(countOfRolls, countOfPins);
     }
 
-    boolean isFinished() {
-        return frameEnum != FrameEnum.UNFINISHED;
-    }
-
     boolean isStrike() {
         return frameEnum == FrameEnum.STRIKE;
     }
 
     boolean isSpare() {
         return frameEnum == FrameEnum.SPARE;
+    }
+
+    boolean isFinished() {
+        return frameEnum != FrameEnum.UNFINISHED;
     }
 
     int score(Rolls rolls) {

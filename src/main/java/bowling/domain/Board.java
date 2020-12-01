@@ -8,17 +8,17 @@ class Board {
     private final Frames frames = new Frames();
     private final Scores scores = new Scores();
 
-    int frameNo() {
-        return frames.frameNo();
-    }
-
     void update(Rolls rolls) {
         frames.update(rolls);
-        scores.cumulateValidOnly(frames.subList(scores.size(), frames.size())
+        scores.accumulateOnlyValid(frames.subList(scores.size(), frames.size())
                 .stream()
                 .map(frame -> frame.score(rolls))
                 .map(Score::new)
                 .collect(toList()));
+    }
+
+    int frameNo() {
+        return frames.frameNo();
     }
 
     boolean isStrike() {
