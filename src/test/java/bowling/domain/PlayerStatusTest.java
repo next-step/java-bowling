@@ -5,22 +5,38 @@ import bowling.dto.RollDto;
 import bowling.dto.ScoreDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import static bowling.domain.FrameEnum.*;
-import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PlayerStatusTest {
 
+    @ParameterizedTest
+    @DisplayName("콜백 함수의 register 테스트")
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void register(int playTimes) {
+        List<Integer> list = new LinkedList<>();
+        PlayerStatus status = PlayerStatus.of(num -> Roll.of(10));
+        status.register(subject -> list.add(0));
+        for (int i = 0; i < playTimes; i++) {
+            status.playFrame();
+        }
+        assertThat(list.size())
+                .isEqualTo(playTimes);
+    }
+
     @Test
     @DisplayName("playFrame 으로 인한 Board 결과 테스트")
     void playFrame() {
-        PlayerStatus status = PlayerStatus.of(num -> Roll.of(num), emptyList());
+        PlayerStatus status = PlayerStatus.of(Roll::of);
         status.playFrame();
         status.playFrame();
         status.playFrame();
@@ -44,7 +60,7 @@ class PlayerStatusTest {
     @Test
     @DisplayName("마지막이 Strike 일 때, playBonus 으로 인한 Board 결과 테스트")
     void playBonus_STRIKE() {
-        PlayerStatus status = PlayerStatus.of(num -> Roll.of(10), emptyList());
+        PlayerStatus status = PlayerStatus.of(num -> Roll.of(10));
         status.playFrame();
         status.playFrame();
         status.playBonus();
@@ -66,7 +82,7 @@ class PlayerStatusTest {
     @Test
     @DisplayName("마지막이 SPARE 일 때, playBonus 으로 인한 Board 결과 테스트")
     void playBonus_SPARE() {
-        PlayerStatus status = PlayerStatus.of(num -> Roll.of(5), emptyList());
+        PlayerStatus status = PlayerStatus.of(num -> Roll.of(5));
         status.playFrame();
         status.playFrame();
         status.playBonus();

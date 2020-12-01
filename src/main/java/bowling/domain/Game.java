@@ -5,8 +5,6 @@ import bowling.dto.PlayerStatusDto;
 import bowling.dto.ScoreBoardDto;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -17,14 +15,16 @@ public class Game {
 
     // NOTE: 넣은 순서대로 출력 및 테스트를 하기 위해 LinkedHashMap 자료구조를 이용한다.
     private final Map<Player, PlayerStatus> map = new LinkedHashMap<>();
-    private final List<Observer<Rolls>> observers = new LinkedList<>();
 
     public void registerScoreBoardPrinter(Consumer<ScoreBoardDto> consumer) {
-        observers.add(subject -> consumer.accept(exportScoreBoardDto()));
+        map.values()
+                .forEach(status ->
+                        status.register(subject ->
+                                consumer.accept(exportScoreBoardDto())));
     }
 
     void addPlayer(Player player, Function<Integer, Roll> rollGenerator) {
-        map.put(player, PlayerStatus.of(rollGenerator, observers));
+        map.put(player, PlayerStatus.of(rollGenerator));
     }
 
     ScoreBoardDto exportScoreBoardDto() {
