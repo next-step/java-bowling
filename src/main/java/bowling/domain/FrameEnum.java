@@ -8,7 +8,7 @@ public enum FrameEnum {
     MISS,
     UNFINISHED;
 
-    public static final int ROLL_NUM_PER_FRAME = 2;
+    private static final int ROLL_NUM_PER_FRAME = 2;
 
     static FrameEnum get(int countOfRolls, int countOfPins) {
         return countOfRolls >= ROLL_NUM_PER_FRAME && countOfPins >= PIN_NUM
