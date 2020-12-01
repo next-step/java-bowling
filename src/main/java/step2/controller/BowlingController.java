@@ -3,7 +3,7 @@ package step2.controller;
 import step2.domain.BowlingGame;
 import step2.domain.Frame;
 import step2.domain.Frames;
-import step2.domain.Player;
+import step2.domain.*;
 import step2.domain.dto.PlayerDTO;
 import step2.exception.InvalidPitchesException;
 import step2.view.ConsoleViewImpl;
@@ -35,17 +35,21 @@ public class BowlingController {
     private void pitches(PlayerDTO dto) {
         Frames frames = dto.getFrames();
         try{
-            while (!frames.isFinished()) {
-                Frame currentFrame = frames.getCurrentFrame();
-                int pitchesCount = view.getPitchesCount(currentFrame);
-
-                List<String> marks = BowlingGame.pitches(frames, pitchesCount);
-
-                view.drawFrame(dto.getPlayer(), marks);
-            }
+            loopPitches(dto, frames);
         }catch(InvalidPitchesException | IllegalArgumentException error){
             System.out.println(error.getMessage());
             pitches(dto);
+        }
+    }
+
+    private void loopPitches(PlayerDTO dto, Frames frames) {
+        while (!frames.isFinished()) {
+            Frame currentFrame = frames.getCurrentFrame();
+            int pitchesCount = view.getPitchesCount(currentFrame);
+
+            List<String> marks = BowlingGame.pitches(frames, pitchesCount);
+
+            view.drawFrame(dto.getPlayer(), marks);
         }
     }
 }
