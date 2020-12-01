@@ -6,9 +6,10 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum ResultPitchesType {
+    DOUBLE( (first, second)-> Integer.sum(first, second) == 20),
     STRIKE((first, second)-> first == 10),
     SPARE((first, second)-> (first != 10) && (first + second == 10)),
-    MISS((first, second)->(first != 10) && (first + second != 10));
+    MISS((first, second)->(first != 10) && (first + second < 10));
 
     private final Condition condition;
 
