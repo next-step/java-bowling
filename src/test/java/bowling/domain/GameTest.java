@@ -43,7 +43,7 @@ class GameTest {
         List<Integer> scores = toScores(status);
         assertAll(
                 () -> assertThat(rolls)
-                        .isEqualTo(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0)),
+                        .isEqualTo(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10)),
                 () -> assertThat(frames)
                         .isEqualTo(Arrays.asList(STRIKE,
                                 STRIKE,
@@ -56,7 +56,7 @@ class GameTest {
                                 STRIKE,
                                 STRIKE)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(30, 60, 90, 120, 150, 180, 210, 240, 270, 290)),
+                        .isEqualTo(Arrays.asList(30, 60, 90, 120, 150, 180, 210, 240, 270, 300)),
                 () -> assertThat(frames.size())
                         .isEqualTo(MAX_FRAME_NO),
                 () -> assertThat(scores.size())
@@ -172,7 +172,7 @@ class GameTest {
                 () -> assertThat(player1.getName())
                         .isEqualTo(name1),
                 () -> assertThat(rolls1)
-                        .isEqualTo(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0)),
+                        .isEqualTo(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10)),
                 () -> assertThat(frames1)
                         .isEqualTo(Arrays.asList(STRIKE,
                                 STRIKE,
@@ -185,7 +185,7 @@ class GameTest {
                                 STRIKE,
                                 STRIKE)),
                 () -> assertThat(scores1)
-                        .isEqualTo(Arrays.asList(30, 60, 90, 120, 150, 180, 210, 240, 270, 290)),
+                        .isEqualTo(Arrays.asList(30, 60, 90, 120, 150, 180, 210, 240, 270, 300)),
                 () -> assertThat(frames1.size())
                         .isEqualTo(MAX_FRAME_NO),
                 () -> assertThat(scores1.size())

@@ -20,15 +20,13 @@ class RollSubjectTest {
         subject.execute();
         subject.execute();
         subject.execute();
-        subject.executeZero();
-        subject.executeZero();
 
         assertThat(subject.exportRollsDto()
                 .getRolls()
                 .stream()
                 .map(RollDto::getCountOfPins)
                 .collect(toList())
-        ).isEqualTo(Arrays.asList(0, 1, 2, 3, 0, 0));
+        ).isEqualTo(Arrays.asList(0, 1, 2, 3));
     }
 
     @Test
@@ -38,8 +36,6 @@ class RollSubjectTest {
         subject.execute();
         subject.execute();
         subject.execute();
-        subject.executeZero();
-        subject.executeZero();
 
         assertThat(subject.get()
                 .exportRollsDto()
@@ -47,6 +43,6 @@ class RollSubjectTest {
                 .stream()
                 .map(RollDto::getCountOfPins)
                 .collect(toList())
-        ).isEqualTo(Arrays.asList(0, 1, 2, 3, 0, 0));
+        ).isEqualTo(Arrays.asList(0, 1, 2, 3));
     }
 }

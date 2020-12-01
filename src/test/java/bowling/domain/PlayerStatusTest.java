@@ -71,11 +71,11 @@ class PlayerStatusTest {
 
         assertAll(
                 () -> assertThat(rolls)
-                        .isEqualTo(Arrays.asList(10, 10, 10, 0)),
+                        .isEqualTo(Arrays.asList(10, 10, 10, 10)),
                 () -> assertThat(frames)
-                        .isEqualTo(Arrays.asList(STRIKE, STRIKE, STRIKE, UNFINISHED)),
+                        .isEqualTo(Arrays.asList(STRIKE, STRIKE, STRIKE, STRIKE)),
                 () -> assertThat(scores)
-                        .isEqualTo(Arrays.asList(30, 50))
+                        .isEqualTo(Arrays.asList(30, 60))
         );
     }
 

@@ -23,11 +23,6 @@ class RollSubject extends Subject<Rolls> {
         notifyObservers();
     }
 
-    void executeZero() {
-        rolls.add(Roll.of(0));
-        notifyObservers();
-    }
-
     RollsDto exportRollsDto() {
         return rolls.exportRollsDto();
     }
