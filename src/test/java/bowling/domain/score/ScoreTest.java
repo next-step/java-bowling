@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static bowling.domain.score.ScoreType.GUTTER;
+import static bowling.domain.score.ScoreType.ORDINARY;
 import static bowling.domain.score.ScoreType.SPARE;
 import static bowling.domain.score.ScoreType.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,6 +47,7 @@ public class ScoreTest {
 
         assertThat(score.getScore()).isEqualTo(10);
         assertThat(score.getType()).isEqualTo(STRIKE);
+        assertThat(score.isStrike()).isEqualTo(true);
     }
 
     @DisplayName("스페어 점수")
@@ -55,6 +57,7 @@ public class ScoreTest {
 
         assertThat(score.getScore()).isEqualTo(4);
         assertThat(score.getType()).isEqualTo(SPARE);
+        assertThat(score.isSpare()).isEqualTo(true);
     }
 
     @DisplayName("거터 점수")
@@ -64,6 +67,16 @@ public class ScoreTest {
 
         assertThat(score.getScore()).isEqualTo(0);
         assertThat(score.getType()).isEqualTo(GUTTER);
+    }
+
+    @DisplayName("일반 점수")
+    @Test
+    public void ordinary() {
+        Score score = Score.ordinary(3);
+
+        assertThat(score.getScore()).isEqualTo(3);
+        assertThat(score.getType()).isEqualTo(ORDINARY);
+        assertThat(score.isOrdinary()).isEqualTo(true);
     }
 
 }
