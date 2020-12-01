@@ -18,10 +18,9 @@ class Frames {
     }
 
     int frameNo() {
-        if (isLastFinished()) {
-            return size() + 1;
-        }
-        return size();
+        return isLastFinished()
+                ? size() + 1
+                : size();
     }
 
     List<Frame> subList(int from, int to) {

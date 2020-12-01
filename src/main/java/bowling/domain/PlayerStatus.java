@@ -35,12 +35,12 @@ class PlayerStatus {
     }
 
     void playBonus() {
-        if (board.isSpare()) {
-            subject.execute();
-        }
         if (board.isStrike()) {
             subject.execute();
             subject.executeZero();
+        }
+        if (board.isSpare()) {
+            subject.execute();
         }
     }
 

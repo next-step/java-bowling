@@ -22,10 +22,9 @@ class Rolls {
 
     int sum(int startIdx, int offset) {
         int endIdx = startIdx + offset;
-        if (startIdx < 0 || offset < 0 || endIdx > rolls.size()) {
-            return -1;
-        }
-        return Roll.sum(
+        return startIdx < 0 || offset < 0 || endIdx > rolls.size()
+                ? -1
+                : Roll.sum(
                 IntStream.range(startIdx, endIdx)
                         .mapToObj(rolls::get)
                         .collect(toList())

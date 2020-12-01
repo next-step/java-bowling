@@ -85,10 +85,9 @@ public class ScoreBoardPrintable extends Printable {
 
     private String rollToStr(RollDto rollDto) {
         int count = rollDto.getCountOfPins();
-        if (count <= 0) {
-            return "-";
-        }
-        return Integer.toString(count);
+        return count <= 0
+                ? "-"
+                : Integer.toString(count);
     }
 
     private String spacing(String str) {
