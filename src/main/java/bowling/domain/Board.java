@@ -25,10 +25,6 @@ class Board {
         return frames.isSpare();
     }
 
-    boolean isGameOver() {
-        return frames.isGameOver();
-    }
-
     BoardDto exportBoardDto() {
         return new BoardDto(
                 frames.exportFramesDto(),

@@ -22,7 +22,8 @@ class Frames {
     }
 
     void update(Rolls rolls) {
-        if (isGameOver()) {
+        if (size() > MAX_FRAME_NO
+                || size() == MAX_FRAME_NO && isLastFinished()) {
             return;
         }
         if (isLastFinished()) {
@@ -38,11 +39,6 @@ class Frames {
 
     boolean isSpare() {
         return !frames.isEmpty() && last().isSpare();
-    }
-
-    boolean isGameOver() {
-        return size() > MAX_FRAME_NO
-                || size() == MAX_FRAME_NO && isLastFinished();
     }
 
     private boolean isLastFinished() {

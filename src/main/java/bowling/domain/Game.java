@@ -24,7 +24,7 @@ public class Game {
     public void play() {
         Collection<PlayerStatus> statuses = map.values();
         while (frameNo <= MAX_FRAME_NO) {
-            statuses.forEach(PlayerStatus::play);
+            statuses.forEach(status -> status.play(frameNo));
             frameNo++;
         }
     }

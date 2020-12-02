@@ -4,6 +4,8 @@ import bowling.dto.PlayerStatusDto;
 
 import java.util.function.Supplier;
 
+import static bowling.asset.Const.MAX_FRAME_NO;
+
 class PlayerStatus {
     private final RollSubject subject;
     private final Board board;
@@ -27,12 +29,12 @@ class PlayerStatus {
         subject.register(runnable);
     }
 
-    void play() {
+    void play(int frameNo) {
         subject.execute();
         if (!board.isStrike()) {
             subject.execute();
         }
-        if (board.isGameOver()) {
+        if (frameNo == MAX_FRAME_NO) {
             playBonus();
         }
     }

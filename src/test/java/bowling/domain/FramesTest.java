@@ -4,13 +4,10 @@ import bowling.dto.FrameDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static bowling.asset.Const.MAX_FRAME_NO;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,8 +47,6 @@ class FramesTest {
                         .isFalse(),
                 () -> assertThat(frames.isSpare())
                         .isFalse(),
-                () -> assertThat(frames.isGameOver())
-                        .isFalse(),
                 () -> assertThat(toFrameEnumList(frames))
                         .isEqualTo(emptyList())
         );
@@ -67,8 +62,6 @@ class FramesTest {
                 () -> assertThat(frames.isStrike())
                         .isTrue(),
                 () -> assertThat(frames.isSpare())
-                        .isFalse(),
-                () -> assertThat(frames.isGameOver())
                         .isFalse(),
                 () -> assertThat(toFrameEnumList(frames))
                         .isEqualTo(Arrays.asList(FrameEnum.STRIKE))
@@ -89,8 +82,6 @@ class FramesTest {
                         .isFalse(),
                 () -> assertThat(frames.isSpare())
                         .isTrue(),
-                () -> assertThat(frames.isGameOver())
-                        .isFalse(),
                 () -> assertThat(toFrameEnumList(frames))
                         .isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE))
         );
@@ -112,8 +103,6 @@ class FramesTest {
                 () -> assertThat(frames.isStrike())
                         .isFalse(),
                 () -> assertThat(frames.isSpare())
-                        .isFalse(),
-                () -> assertThat(frames.isGameOver())
                         .isFalse(),
                 () -> assertThat(toFrameEnumList(frames))
                         .isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS))
@@ -139,8 +128,6 @@ class FramesTest {
                         .isFalse(),
                 () -> assertThat(frames.isSpare())
                         .isFalse(),
-                () -> assertThat(frames.isGameOver())
-                        .isFalse(),
                 () -> assertThat(toFrameEnumList(frames))
                         .isEqualTo(Arrays.asList(FrameEnum.STRIKE, FrameEnum.SPARE, FrameEnum.MISS, FrameEnum.UNFINISHED))
         );
@@ -164,28 +151,5 @@ class FramesTest {
                 .map(Frame::exportFrameDto)
                 .map(FrameDto::getFrameEnum)
         ).isEqualTo(Arrays.asList(FrameEnum.SPARE, FrameEnum.MISS));
-    }
-
-    @ParameterizedTest
-    @DisplayName("MAX_FRAME_NO 이하이면 Game Over 가 아니다.")
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
-    void isGameOver_false(int frameNo) {
-        for (int i = 0; i < frameNo; i++) {
-            addRoll(Roll.of(10));
-        }
-
-        assertThat(frames.isGameOver())
-                .isFalse();
-    }
-
-    @Test
-    @DisplayName("MAX_FRAME_NO 을 넘기면 Game Over 가 된다.")
-    void isGameOver_true() {
-        for (int i = 0; i < MAX_FRAME_NO; i++) {
-            addRoll(Roll.of(10));
-        }
-
-        assertThat(frames.isGameOver())
-                .isTrue();
     }
 }
