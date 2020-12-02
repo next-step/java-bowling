@@ -25,7 +25,7 @@ class PlayerStatusTest {
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
     void register(int playTimes) {
         List<Integer> list = new LinkedList<>();
-        PlayerStatus status = PlayerStatus.of(num -> Roll.of(10));
+        PlayerStatus status = PlayerStatus.of(() -> Roll.of(10));
         status.register(subject -> list.add(0));
         for (int i = 0; i < playTimes; i++) {
             status.play();
@@ -37,7 +37,7 @@ class PlayerStatusTest {
     @Test
     @DisplayName("playFrame 으로 인한 Board 결과 테스트")
     void playFrame() {
-        PlayerStatus status = PlayerStatus.of(str -> Roll.of(1));
+        PlayerStatus status = PlayerStatus.of(() -> Roll.of(1));
         for (int i = 0; i < MAX_FRAME_NO; i++) {
             status.play();
         }
@@ -63,7 +63,7 @@ class PlayerStatusTest {
     @Test
     @DisplayName("마지막이 Strike 일 때, playBonus 으로 인한 Board 결과 테스트")
     void playBonus_STRIKE() {
-        PlayerStatus status = PlayerStatus.of(num -> Roll.of(10));
+        PlayerStatus status = PlayerStatus.of(() -> Roll.of(10));
         for (int i = 0; i < MAX_FRAME_NO; i++) {
             status.play();
         }
@@ -98,7 +98,7 @@ class PlayerStatusTest {
     @Test
     @DisplayName("마지막이 SPARE 일 때, playBonus 으로 인한 Board 결과 테스트")
     void playBonus_SPARE() {
-        PlayerStatus status = PlayerStatus.of(num -> Roll.of(5));
+        PlayerStatus status = PlayerStatus.of(() -> Roll.of(5));
         for (int i = 0; i < MAX_FRAME_NO; i++) {
             status.play();
         }

@@ -1,9 +1,8 @@
 package bowling.domain;
 
-import bowling.dto.FrameNoDto;
 import bowling.dto.PlayerStatusDto;
 
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 class PlayerStatus {
     private final RollSubject subject;
@@ -14,10 +13,9 @@ class PlayerStatus {
         this.board = board;
     }
 
-    static PlayerStatus of(Function<FrameNoDto, Roll> rollGenerator) {
+    static PlayerStatus of(Supplier<Roll> rollGenerator) {
         Board board = new Board();
-        RollSubject subject = new RollSubject(() ->
-                rollGenerator.apply(new FrameNoDto(board.getFrameNo())));
+        RollSubject subject = new RollSubject(() -> rollGenerator.get());
         subject.register(new BoardObserver(board));
         return new PlayerStatus(
                 subject,

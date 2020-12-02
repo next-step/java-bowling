@@ -30,7 +30,7 @@ class GameTest {
     @Test
     @DisplayName("STRIKE 만 나오는 볼림 게임 플레이 테스트")
     void strike() {
-        game.addPlayer(player, num -> Roll.of(10));
+        game.addPlayer(player, () -> Roll.of(10));
         game.play();
         PlayerStatusDto status = game.exportGameDto()
                 .getGame()
@@ -41,6 +41,8 @@ class GameTest {
         List<Integer> rolls = toRolls(status);
         List<FrameEnum> frames = toFrames(status);
         List<Integer> scores = toScores(status);
+        int frameNo = game.exportFrameNoDto().getFrameNo();
+
         assertAll(
                 () -> assertThat(rolls)
                         .isEqualTo(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10)),
@@ -57,17 +59,19 @@ class GameTest {
                                 STRIKE)),
                 () -> assertThat(scores)
                         .isEqualTo(Arrays.asList(30, 60, 90, 120, 150, 180, 210, 240, 270, 300)),
+                () -> assertThat(scores.size())
+                        .isEqualTo(MAX_FRAME_NO),
                 () -> assertThat(frames.size())
                         .isEqualTo(MAX_FRAME_NO),
-                () -> assertThat(scores.size())
-                        .isEqualTo(MAX_FRAME_NO)
+                () -> assertThat(frameNo)
+                        .isEqualTo(11)
         );
     }
 
     @Test
     @DisplayName("SPARE 만 나오는 볼림 게임 플레이 테스트")
     void spare() {
-        game.addPlayer(player, num -> Roll.of(5));
+        game.addPlayer(player, () -> Roll.of(5));
         game.play();
         PlayerStatusDto status = game.exportGameDto()
                 .getGame()
@@ -78,6 +82,7 @@ class GameTest {
         List<Integer> rolls = toRolls(status);
         List<FrameEnum> frames = toFrames(status);
         List<Integer> scores = toScores(status);
+        int frameNo = game.exportFrameNoDto().getFrameNo();
 
         assertAll(
                 () -> assertThat(rolls)
@@ -95,17 +100,19 @@ class GameTest {
                                 SPARE)),
                 () -> assertThat(scores)
                         .isEqualTo(Arrays.asList(15, 30, 45, 60, 75, 90, 105, 120, 135, 150)),
+                () -> assertThat(scores.size())
+                        .isEqualTo(MAX_FRAME_NO),
                 () -> assertThat(frames.size())
                         .isEqualTo(MAX_FRAME_NO),
-                () -> assertThat(scores.size())
-                        .isEqualTo(MAX_FRAME_NO)
+                () -> assertThat(frameNo)
+                        .isEqualTo(11)
         );
     }
 
     @Test
     @DisplayName("MISS 만 나오는 볼림 게임 플레이 테스트")
     void miss() {
-        game.addPlayer(player, num -> Roll.of(1));
+        game.addPlayer(player, () -> Roll.of(1));
         game.play();
         PlayerStatusDto status = game.exportGameDto()
                 .getGame()
@@ -116,6 +123,8 @@ class GameTest {
         List<Integer> rolls = toRolls(status);
         List<FrameEnum> frames = toFrames(status);
         List<Integer> scores = toScores(status);
+        int frameNo = game.exportFrameNoDto().getFrameNo();
+
         assertAll(
                 () -> assertThat(rolls)
                         .isEqualTo(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)),
@@ -123,10 +132,12 @@ class GameTest {
                         .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS)),
                 () -> assertThat(scores)
                         .isEqualTo(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 18, 20)),
+                () -> assertThat(scores.size())
+                        .isEqualTo(MAX_FRAME_NO),
                 () -> assertThat(frames.size())
                         .isEqualTo(MAX_FRAME_NO),
-                () -> assertThat(scores.size())
-                        .isEqualTo(MAX_FRAME_NO)
+                () -> assertThat(frameNo)
+                        .isEqualTo(11)
         );
     }
 
@@ -137,9 +148,9 @@ class GameTest {
         String name2 = "JYP";
         String name3 = "POB";
 
-        game.addPlayer(new Player(name1), num -> Roll.of(10));
-        game.addPlayer(new Player(name2), num -> Roll.of(5));
-        game.addPlayer(new Player(name3), num -> Roll.of(1));
+        game.addPlayer(new Player(name1), () -> Roll.of(10));
+        game.addPlayer(new Player(name2), () -> Roll.of(5));
+        game.addPlayer(new Player(name3), () -> Roll.of(1));
         game.play();
         Iterator<Entry<PlayerDto, PlayerStatusDto>> itr = game.exportGameDto()
                 .getGame()
@@ -167,8 +178,12 @@ class GameTest {
         List<FrameEnum> frames3 = toFrames(status3);
         List<Integer> scores3 = toScores(status3);
 
+        int frameNo = game.exportFrameNoDto().getFrameNo();
 
         assertAll(
+                () -> assertThat(frameNo)
+                        .isEqualTo(11),
+
                 () -> assertThat(player1.getName())
                         .isEqualTo(name1),
                 () -> assertThat(rolls1)
