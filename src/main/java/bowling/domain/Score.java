@@ -3,7 +3,7 @@ package bowling.domain;
 import bowling.dto.ScoreDto;
 import bowling.exception.BadScoreException;
 
-class Score {
+public class Score {
     private final int score;
 
     Score(int score) {
@@ -13,11 +13,11 @@ class Score {
         this.score = score;
     }
 
-    Score sum(Score score) {
+    public Score sum(Score score) {
         return new Score(this.score + score.score);
     }
 
-    ScoreDto exportScoreDto() {
+    public ScoreDto exportScoreDto() {
         return new ScoreDto(score);
     }
 }

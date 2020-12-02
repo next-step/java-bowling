@@ -1,18 +1,15 @@
 package bowling.domain;
 
+import bowling.domain.scores.ScoresContext;
 import bowling.dto.ScoresDto;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
 class Scores {
-    private final LinkedList<Score> scores = new LinkedList<>();
+    private final ScoresContext context = new ScoresContext();
 
     int size() {
-        return scores.size();
+        return context.size();
     }
 
     void accumulate(List<Integer> scoreList) {
@@ -22,15 +19,10 @@ class Scores {
     }
 
     private void accumulate(Score score) {
-        Score accumulated = size() < 1
-                ? score
-                : scores.getLast().sum(score);
-        scores.add(accumulated);
+        context.accumulate(score);
     }
 
     ScoresDto exportScoresDto() {
-        return scores.stream()
-                .map(Score::exportScoreDto)
-                .collect(collectingAndThen(toList(), ScoresDto::new));
+        return context.exportScoresDto();
     }
 }

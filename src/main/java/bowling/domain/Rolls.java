@@ -23,9 +23,11 @@ public class Rolls {
 
     public int sum(int startIdx, int offset) {
         int endIdx = startIdx + offset;
-        return startIdx < 0 || offset < 0 || endIdx > rolls.size()
-                ? -1
-                : IntStream.range(startIdx, endIdx)
+        boolean isOutOfRange = startIdx < 0 || offset < 0 || endIdx > rolls.size();
+        if (isOutOfRange) {
+            return -1;
+        }
+        return IntStream.range(startIdx, endIdx)
                 .mapToObj(rolls::get)
                 .map(Roll::getCountOfPins)
                 .reduce(0, Integer::sum);
