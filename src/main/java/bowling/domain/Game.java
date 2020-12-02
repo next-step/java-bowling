@@ -18,7 +18,7 @@ public class Game {
     private int frameNo = 1;
 
     public void addPlayer(Player player, Supplier<Roll> rollGenerator) {
-        map.put(player, PlayerStatus.of(() -> rollGenerator.get()));
+        map.put(player, PlayerStatus.of(rollGenerator::get));
     }
 
     public void play() {

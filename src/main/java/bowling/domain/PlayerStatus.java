@@ -18,8 +18,8 @@ class PlayerStatus {
 
     static PlayerStatus of(Supplier<Roll> rollGenerator) {
         Board board = new Board();
-        RollSubject subject = new RollSubject(() -> rollGenerator.get());
-        subject.register(new BoardObserver(board));
+        RollSubject subject = new RollSubject(rollGenerator::get);
+        subject.register(board);
         return new PlayerStatus(
                 subject,
                 board

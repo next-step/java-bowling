@@ -18,16 +18,28 @@ class BoardTest {
 
     private Board board;
     private Rolls rolls;
+    private final Subject<Rolls> subject = new Subject<Rolls>() {
+        @Override
+        Rolls get() {
+            return rolls;
+        }
+
+        @Override
+        void execute() {
+            notifyObservers();
+        }
+    };
 
     @BeforeEach
     void setUp() {
         board = new Board();
         rolls = new Rolls();
+        subject.register(board);
     }
 
     private void addRoll(Roll roll) {
         rolls.add(roll);
-        board.update(rolls);
+        subject.execute();
     }
 
     private List<FrameEnum> toFrameEnumList(Board board) {
@@ -46,6 +58,17 @@ class BoardTest {
                 .stream()
                 .map(ScoreDto::getScore)
                 .collect(toList());
+    }
+
+    @Test
+    @DisplayName("볼링을 치지 않은 시나리오 테스트")
+    void scenario_empty_update() {
+        assertAll(
+                () -> assertThat(toFrameEnumList(board))
+                        .isEqualTo(emptyList()),
+                () -> assertThat(toScoreList(board))
+                        .isEqualTo(emptyList())
+        );
     }
 
     @Test
