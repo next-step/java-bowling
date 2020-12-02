@@ -26,7 +26,7 @@ class PlayerStatusTest {
     void register(int playTimes) {
         List<Integer> list = new LinkedList<>();
         PlayerStatus status = PlayerStatus.of(() -> Roll.of(10));
-        status.register(subject -> list.add(0));
+        status.register(() -> list.add(0));
         for (int i = 0; i < playTimes; i++) {
             status.play();
         }

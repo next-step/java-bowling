@@ -18,7 +18,7 @@ public class Main {
     private static Game getGame() {
         Game game = new Game();
         getPlayers().forEach(player -> game.addPlayer(player, () -> getRoll(game.exportFrameNoDto())));
-        game.registerGamePrinter(View::printGame);
+        game.register(() -> View.printGame(game.exportGameDto()));
         return game;
     }
 

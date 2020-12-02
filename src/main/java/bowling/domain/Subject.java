@@ -10,6 +10,8 @@ abstract class Subject<T> {
         observers.add(observer);
     }
 
+    void register(Runnable runnable) { register(t -> runnable.run()); }
+
     void notifyObservers() {
         observers.forEach(observer -> observer.update(this));
     }

@@ -23,8 +23,8 @@ class PlayerStatus {
         );
     }
 
-    void register(Observer<Rolls> observer) {
-        subject.register(observer);
+    void register(Runnable runnable) {
+        subject.register(runnable);
     }
 
     void play() {

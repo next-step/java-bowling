@@ -8,7 +8,6 @@ import bowling.dto.PlayerStatusDto;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static bowling.asset.Const.MAX_FRAME_NO;
@@ -30,18 +29,15 @@ public class Game {
         }
     }
 
-    public void registerGamePrinter(Consumer<GameDto> consumer) {
-        map.values()
-                .forEach(status ->
-                        status.register(subject ->
-                                consumer.accept(exportGameDto())));
+    public void register(Runnable runnable) {
+        map.values().forEach(status -> status.register(runnable));
     }
 
     public FrameNoDto exportFrameNoDto() {
         return new FrameNoDto(frameNo);
     }
 
-    GameDto exportGameDto() {
+    public GameDto exportGameDto() {
         Map<PlayerDto, PlayerStatusDto> game = new LinkedHashMap<>();
         map.forEach((player, status) -> game.put(
                 player.exportPlayerDto(),
