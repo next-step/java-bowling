@@ -25,12 +25,6 @@ class FrameTest {
         assertAll(
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.UNFINISHED),
-                () -> assertThat(frame.isFinished())
-                        .isFalse(),
-                () -> assertThat(frame.isStrike())
-                        .isFalse(),
-                () -> assertThat(frame.isSpare())
-                        .isFalse(),
                 () -> assertThat(frame.score(rolls))
                         .isEqualTo(-1)
         );
@@ -44,12 +38,6 @@ class FrameTest {
         assertAll(
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.STRIKE),
-                () -> assertThat(frame.isFinished())
-                        .isTrue(),
-                () -> assertThat(frame.isStrike())
-                        .isTrue(),
-                () -> assertThat(frame.isSpare())
-                        .isFalse(),
                 () -> assertThat(frame.score(rolls))
                         .isEqualTo(-1),
                 () -> assertDoesNotThrow(() -> {
@@ -73,12 +61,6 @@ class FrameTest {
         assertAll(
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.SPARE),
-                () -> assertThat(frame.isFinished())
-                        .isTrue(),
-                () -> assertThat(frame.isStrike())
-                        .isFalse(),
-                () -> assertThat(frame.isSpare())
-                        .isTrue(),
                 () -> assertThat(frame.score(rolls))
                         .isEqualTo(-1),
                 () -> assertDoesNotThrow(() -> {
@@ -102,12 +84,6 @@ class FrameTest {
         assertAll(
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.MISS),
-                () -> assertThat(frame.isFinished())
-                        .isTrue(),
-                () -> assertThat(frame.isStrike())
-                        .isFalse(),
-                () -> assertThat(frame.isSpare())
-                        .isFalse(),
                 () -> assertThat(frame.score(rolls))
                         .isEqualTo(9),
                 () -> assertDoesNotThrow(() -> {

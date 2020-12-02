@@ -17,14 +17,6 @@ class Board {
                 .collect(toList()));
     }
 
-    boolean isStrike() {
-        return frames.isStrike();
-    }
-
-    boolean isSpare() {
-        return frames.isSpare();
-    }
-
     BoardDto exportBoardDto() {
         return new BoardDto(
                 frames.exportFramesDto(),

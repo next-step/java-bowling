@@ -33,17 +33,9 @@ class Frames {
         last().update(rolls);
     }
 
-    boolean isStrike() {
-        return !frames.isEmpty() && last().isStrike();
-    }
-
-    boolean isSpare() {
-        return !frames.isEmpty() && last().isSpare();
-    }
-
     private boolean isLastFinished() {
         return frames.isEmpty()
-                || last().isFinished();
+                || last().getFrameEnum() != FrameEnum.UNFINISHED;
     }
 
     private Frame last() {

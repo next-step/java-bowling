@@ -5,6 +5,7 @@ import bowling.dto.PlayerStatusDto;
 import java.util.function.Supplier;
 
 import static bowling.asset.Const.MAX_FRAME_NO;
+import static bowling.asset.Const.PIN_NUM;
 
 class PlayerStatus {
     private final RollSubject subject;
@@ -31,7 +32,8 @@ class PlayerStatus {
 
     void play(int frameNo) {
         subject.execute();
-        if (!board.isStrike()) {
+        Rolls rolls = subject.get();
+        if (rolls.sum(rolls.size() - 1, 1) != PIN_NUM) {
             subject.execute();
         }
         if (frameNo == MAX_FRAME_NO) {
@@ -40,11 +42,12 @@ class PlayerStatus {
     }
 
     private void playBonus() {
-        if (board.isStrike()) {
+        Rolls rolls = subject.get();
+        if (rolls.sum(rolls.size() - 1, 1) == PIN_NUM) {
             subject.execute();
             subject.execute();
         }
-        if (board.isSpare()) {
+        if (rolls.sum(rolls.size() - 2, 2) == PIN_NUM) {
             subject.execute();
         }
     }
