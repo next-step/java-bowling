@@ -4,26 +4,26 @@ import bowling.dto.RollsDto;
 
 import java.util.function.Supplier;
 
-class RollSubject extends Subject<Rolls> {
+public class RollSubject extends Subject<Rolls> {
     private final Rolls rolls = new Rolls();
     private final Supplier<Roll> supplier;
 
-    RollSubject(Supplier<Roll> supplier) {
+    public RollSubject(Supplier<Roll> supplier) {
         this.supplier = supplier;
     }
 
     @Override
-    Rolls get() {
+    public Rolls get() {
         return rolls;
     }
 
     @Override
-    void execute() {
+    public void execute() {
         rolls.add(supplier.get());
         notifyObservers();
     }
 
-    RollsDto exportRollsDto() {
+    public RollsDto exportRollsDto() {
         return rolls.exportRollsDto();
     }
 }

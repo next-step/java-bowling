@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-class Rolls {
+public class Rolls {
     // NOTE: get 에서의 bigO 를 1로 보장하기 위해, ArrayList 사용
     private final List<Roll> rolls = new ArrayList<>();
 
@@ -17,11 +17,11 @@ class Rolls {
         rolls.add(roll);
     }
 
-    int size() {
+    public int size() {
         return rolls.size();
     }
 
-    int sum(int startIdx, int offset) {
+    public int sum(int startIdx, int offset) {
         int endIdx = startIdx + offset;
         return startIdx < 0 || offset < 0 || endIdx > rolls.size()
                 ? -1

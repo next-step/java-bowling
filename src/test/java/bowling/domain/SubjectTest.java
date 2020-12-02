@@ -17,12 +17,12 @@ class SubjectTest {
         private int num = 0;
 
         @Override
-        Integer get() {
+        public Integer get() {
             return num;
         }
 
         @Override
-        void execute() {
+        public void execute() {
             num++;
             notifyObservers();
         }

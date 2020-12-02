@@ -20,12 +20,12 @@ class BoardTest {
     private Rolls rolls;
     private final Subject<Rolls> subject = new Subject<Rolls>() {
         @Override
-        Rolls get() {
+        public Rolls get() {
             return rolls;
         }
 
         @Override
-        void execute() {
+        public void execute() {
             notifyObservers();
         }
     };
