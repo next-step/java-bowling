@@ -11,8 +11,7 @@ public class Frame {
     }
 
     public static Frame of(Rolls rolls) {
-        FrameContext context = new FrameContext(rolls.size() - 1);
-        context.update(rolls);
+        FrameContext context = FrameContext.of(rolls);
         return new Frame(context);
     }
 

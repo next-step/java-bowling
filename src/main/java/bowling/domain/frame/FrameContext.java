@@ -8,8 +8,14 @@ public class FrameContext {
     private final int rollIndex;
     private FrameState state = InitialFrameState.getInstance();
 
-    public FrameContext(int rollIndex) {
+    private FrameContext(int rollIndex) {
         this.rollIndex = rollIndex;
+    }
+
+    public static FrameContext of(Rolls rolls) {
+        FrameContext context = new FrameContext(rolls.size() - 1);
+        context.update(rolls);
+        return context;
     }
 
     void setState(FrameState state) {
