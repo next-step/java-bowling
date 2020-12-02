@@ -4,8 +4,6 @@ import bowling.domain.FrameEnum;
 import bowling.domain.Rolls;
 
 public class MissFrameState implements FrameState {
-    private final int offset = 2;
-
     private MissFrameState() {}
 
     static MissFrameState getInstance() {
@@ -19,6 +17,7 @@ public class MissFrameState implements FrameState {
 
     @Override
     public int getScore(FrameContext context, Rolls rolls) {
+        final int offset = 2;
         return rolls.sum(
                 context.getRollIndex(),
                 offset
