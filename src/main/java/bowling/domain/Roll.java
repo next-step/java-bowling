@@ -4,7 +4,6 @@ import bowling.dto.RollDto;
 import bowling.exception.RollException;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -31,10 +30,8 @@ public class Roll {
         return map.get(count);
     }
 
-    static int sum(List<Roll> rolls) {
-        return rolls.stream()
-                .map(roll -> roll.countOfPins)
-                .reduce(0, Integer::sum);
+    int getCountOfPins() {
+        return countOfPins;
     }
 
     RollDto exportRollDto() {

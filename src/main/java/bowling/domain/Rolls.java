@@ -25,11 +25,10 @@ class Rolls {
         int endIdx = startIdx + offset;
         return startIdx < 0 || offset < 0 || endIdx > rolls.size()
                 ? -1
-                : Roll.sum(
-                IntStream.range(startIdx, endIdx)
-                        .mapToObj(rolls::get)
-                        .collect(toList())
-        );
+                : IntStream.range(startIdx, endIdx)
+                .mapToObj(rolls::get)
+                .map(Roll::getCountOfPins)
+                .reduce(0, Integer::sum);
     }
 
     RollsDto exportRollsDto() {
