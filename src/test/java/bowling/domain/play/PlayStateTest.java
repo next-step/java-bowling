@@ -37,6 +37,7 @@ class PlayStateTest {
         RollSubject subject = new RollSubject(() -> Roll.of(10));
         PlayContext context = new PlayContext(subject);
         context.execute();
+        context.execute();
         assertAll(
                 () -> assertThat(state.isStrike(context))
                         .isTrue(),

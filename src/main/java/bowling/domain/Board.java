@@ -18,8 +18,8 @@ class Board implements Observer<Rolls> {
         frames.update(rolls);
         scores.accumulate(frames.subList(scores.size(), frames.size())
                 .stream()
-                .map(frame -> frame.score(rolls))
-                .filter(score -> score >= 0)
+                .filter(frame -> frame.hasScore(rolls))
+                .map(frame -> frame.getScore(rolls))
                 .collect(toList()));
     }
 

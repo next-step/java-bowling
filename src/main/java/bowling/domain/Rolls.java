@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.dto.RollsDto;
+import bowling.exception.RollsOutOfRangeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Rolls {
         int endIdx = startIdx + offset;
         boolean isOutOfRange = startIdx < 0 || offset < 0 || endIdx > rolls.size();
         if (isOutOfRange) {
-            return -1;
+            throw new RollsOutOfRangeException("rolls 의 범위를 벗어난 index 입니다.");
         }
         return IntStream.range(startIdx, endIdx)
                 .mapToObj(rolls::get)

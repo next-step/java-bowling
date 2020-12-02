@@ -24,8 +24,12 @@ public class Frame {
         return context.getFrameEnum();
     }
 
-    int score(Rolls rolls) {
+    int getScore(Rolls rolls) {
         return context.getScore(rolls);
+    }
+
+    boolean hasScore(Rolls rolls) {
+        return context.hasScore(rolls);
     }
 
     public FrameDto exportFrameDto() {

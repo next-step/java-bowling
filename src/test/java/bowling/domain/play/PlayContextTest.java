@@ -3,6 +3,7 @@ package bowling.domain.play;
 import bowling.domain.Roll;
 import bowling.domain.RollSubject;
 import bowling.dto.RollDto;
+import bowling.exception.RollsOutOfRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PlayContextTest {
@@ -44,8 +46,9 @@ class PlayContextTest {
         assertAll(
                 () -> assertThat(context.getCountOfPins(1))
                         .isEqualTo(10),
-                () -> assertThat(context.getCountOfPins(2))
-                        .isEqualTo(-1),
+                () -> assertThatExceptionOfType(RollsOutOfRangeException.class)
+                        .isThrownBy(() -> context.getCountOfPins(2))
+                        .withMessage("rolls 의 범위를 벗어난 index 입니다."),
                 () -> assertThat(toRolls(context))
                         .isEqualTo(Arrays.asList(10))
         );

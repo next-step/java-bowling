@@ -1,10 +1,12 @@
 package bowling.domain;
 
+import bowling.exception.RollsOutOfRangeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -25,7 +27,9 @@ class FrameTest {
         assertAll(
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.UNFINISHED),
-                () -> assertThat(frame.score(rolls))
+                () -> assertThat(frame.hasScore(rolls))
+                        .isFalse(),
+                () -> assertThat(frame.getScore(rolls))
                         .isEqualTo(-1)
         );
     }
@@ -38,15 +42,18 @@ class FrameTest {
         assertAll(
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.STRIKE),
-                () -> assertThat(frame.score(rolls))
-                        .isEqualTo(-1),
+                () -> assertThat(frame.hasScore(rolls))
+                        .isFalse(),
+                () -> assertThatExceptionOfType(RollsOutOfRangeException.class)
+                        .isThrownBy(() -> frame.getScore(rolls))
+                        .withMessage("rolls 의 범위를 벗어난 index 입니다."),
                 () -> assertDoesNotThrow(() -> {
                     rolls.add(Roll.of(10));
                     rolls.add(Roll.of(5));
                     rolls.add(Roll.of(3));
                     frame.update(rolls);
                 }),
-                () -> assertThat(frame.score(rolls))
+                () -> assertThat(frame.getScore(rolls))
                         .isEqualTo(25)
         );
     }
@@ -61,15 +68,18 @@ class FrameTest {
         assertAll(
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.SPARE),
-                () -> assertThat(frame.score(rolls))
-                        .isEqualTo(-1),
+                () -> assertThat(frame.hasScore(rolls))
+                        .isFalse(),
+                () -> assertThatExceptionOfType(RollsOutOfRangeException.class)
+                        .isThrownBy(() -> frame.getScore(rolls))
+                        .withMessage("rolls 의 범위를 벗어난 index 입니다."),
                 () -> assertDoesNotThrow(() -> {
                     rolls.add(Roll.of(10));
                     rolls.add(Roll.of(5));
                     rolls.add(Roll.of(3));
                     frame.update(rolls);
                 }),
-                () -> assertThat(frame.score(rolls))
+                () -> assertThat(frame.getScore(rolls))
                         .isEqualTo(20)
         );
     }
@@ -84,7 +94,9 @@ class FrameTest {
         assertAll(
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.MISS),
-                () -> assertThat(frame.score(rolls))
+                () -> assertThat(frame.hasScore(rolls))
+                        .isTrue(),
+                () -> assertThat(frame.getScore(rolls))
                         .isEqualTo(9),
                 () -> assertDoesNotThrow(() -> {
                     rolls.add(Roll.of(10));
@@ -92,7 +104,7 @@ class FrameTest {
                     rolls.add(Roll.of(3));
                     frame.update(rolls);
                 }),
-                () -> assertThat(frame.score(rolls))
+                () -> assertThat(frame.getScore(rolls))
                         .isEqualTo(9)
         );
     }

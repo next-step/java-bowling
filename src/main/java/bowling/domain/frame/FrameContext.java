@@ -24,6 +24,10 @@ public class FrameContext {
         return state.getScore(this, rolls);
     }
 
+    public boolean hasScore(Rolls rolls) {
+        return state.hasScore(this, rolls);
+    }
+
     public void update(Rolls rolls) {
         state.update(this, rolls);
     }

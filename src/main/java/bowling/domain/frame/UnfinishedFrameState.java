@@ -24,6 +24,11 @@ public class UnfinishedFrameState implements FrameState {
     }
 
     @Override
+    public boolean hasScore(FrameContext context, Rolls rolls) {
+        return false;
+    }
+
+    @Override
     public void update(FrameContext context, Rolls rolls) {
         int countOfPins = rolls.sum(context.getRollIndex(), 2);
         if (countOfPins < 0 || countOfPins > PIN_NUM) {

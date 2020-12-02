@@ -8,5 +8,7 @@ interface FrameState {
 
     int getScore(FrameContext context, Rolls rolls);
 
+    boolean hasScore(FrameContext context, Rolls rolls);
+
     void update(FrameContext context, Rolls rolls);
 }
