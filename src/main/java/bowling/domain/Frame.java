@@ -1,43 +1,34 @@
 package bowling.domain;
 
+import bowling.domain.frame.FrameContext;
 import bowling.dto.FrameDto;
 
-class Frame {
-    private final int rollIndex;
-    private FrameEnum frameEnum;
+public class Frame {
+    private final FrameContext context;
 
-    private Frame(int rollIndex, FrameEnum frameEnum) {
-        this.rollIndex = rollIndex;
-        this.frameEnum = frameEnum;
+    private Frame(FrameContext context) {
+        this.context = context;
     }
 
-    static Frame of(Rolls rolls) {
-        int rollIndex = rolls.size() - 1;
-        int countOfRolls = 1;
-        int countOfPins = rolls.sum(rollIndex, countOfRolls);
-        FrameEnum frameEnum = FrameEnum.get(countOfRolls, countOfPins);
-        return new Frame(rollIndex, frameEnum);
+    public static Frame of(Rolls rolls) {
+        FrameContext context = new FrameContext(rolls.size() - 1);
+        context.update(rolls);
+        return new Frame(context);
     }
 
-    void update(Rolls rolls) {
-        int countOfRolls = 2;
-        int countOfPins = rolls.sum(rollIndex, countOfRolls);
-        frameEnum = FrameEnum.get(countOfRolls, countOfPins);
+    public void update(Rolls rolls) {
+        context.update(rolls);
     }
 
     public FrameEnum getFrameEnum() {
-        return frameEnum;
+        return context.getFrameEnum();
     }
 
     int score(Rolls rolls) {
-        return frameEnum == FrameEnum.STRIKE || frameEnum == FrameEnum.SPARE
-                ? rolls.sum(rollIndex, 3)
-                : frameEnum == FrameEnum.MISS
-                ? rolls.sum(rollIndex, 2)
-                : -1;
+        return context.getScore(rolls);
     }
 
-    FrameDto exportFrameDto() {
-        return new FrameDto(frameEnum);
+    public FrameDto exportFrameDto() {
+        return context.exportFrameDto();
     }
 }
