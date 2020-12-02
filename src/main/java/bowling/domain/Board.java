@@ -10,14 +10,11 @@ class Board {
 
     void update(Rolls rolls) {
         frames.update(rolls);
-        scores.accumulateOnlyValid(frames.subList(scores.size(), frames.size())
+        scores.accumulate(frames.subList(scores.size(), frames.size())
                 .stream()
                 .map(frame -> frame.score(rolls))
+                .filter(score -> score >= 0)
                 .collect(toList()));
-    }
-
-    int getFrameNo() {
-        return frames.getFrameNo();
     }
 
     boolean isStrike() {

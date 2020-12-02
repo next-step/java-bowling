@@ -10,24 +10,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class ScoreTest {
-
     @ParameterizedTest
-    @DisplayName("음수이거나, 300을 넘으면 score 가 invalid 하다.")
-    @CsvSource(value = {"-1$false", "0$true", "1$true", "300$true", "301$false"}, delimiter = '$')
-    void isValid(int score, boolean isValid) {
-        assertThat(Score.isValid(score))
-                .isEqualTo(isValid);
-    }
-
-    @ParameterizedTest
-    @DisplayName("invalid 한 score 를 생성하려하면, BadScoreException 이 발생한다..")
-    @CsvSource(value = {"-1$false", "0$true", "1$true", "300$true", "301$false"}, delimiter = '$')
-    void constructor(int score, boolean isValid) {
-        if (!isValid) {
-            assertThatExceptionOfType(BadScoreException.class)
-                    .isThrownBy(() -> new Score(score))
-                    .withMessage("score 는 0 이상, 300 이하여야 합니다.");
-        }
+    @DisplayName("음수이거나, 300을 넘으면, BadScoreException 이 발생한다..")
+    @ValueSource(ints = {-1, 301})
+    void constructor(int score) {
+        assertThatExceptionOfType(BadScoreException.class)
+                .isThrownBy(() -> new Score(score))
+                .withMessage("score 는 0 이상, 300 이하여야 합니다.");
     }
 
     @ParameterizedTest

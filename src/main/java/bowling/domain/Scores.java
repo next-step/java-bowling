@@ -15,19 +15,17 @@ class Scores {
         return scores.size();
     }
 
-    void accumulateOnlyValid(List<Integer> scoreList) {
+    void accumulate(List<Integer> scoreList) {
         scoreList.stream()
-                .filter(Score::isValid)
                 .map(Score::new)
                 .forEach(this::accumulate);
     }
 
     private void accumulate(Score score) {
-        Score cumulated = size() < 1
+        Score accumulated = size() < 1
                 ? score
-                : scores.getLast()
-                .sum(score);
-        scores.add(cumulated);
+                : scores.getLast().sum(score);
+        scores.add(accumulated);
     }
 
     ScoresDto exportScoresDto() {

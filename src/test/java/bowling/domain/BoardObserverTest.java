@@ -66,8 +66,6 @@ class BoardObserverTest {
     @DisplayName("볼링을 치지 않은 시나리오 테스트")
     void scenario_empty() {
         assertAll(
-                () -> assertThat(board.getFrameNo())
-                        .isEqualTo(1),
                 () -> assertThat(board.isStrike())
                         .isFalse(),
                 () -> assertThat(board.isSpare())
@@ -85,8 +83,6 @@ class BoardObserverTest {
     void scenario_strike() {
         addRoll(Roll.of(10));
         assertAll(
-                () -> assertThat(board.getFrameNo())
-                        .isEqualTo(2),
                 () -> assertThat(board.isStrike())
                         .isTrue(),
                 () -> assertThat(board.isSpare())
@@ -106,8 +102,6 @@ class BoardObserverTest {
         addRoll(Roll.of(1));
         addRoll(Roll.of(9));
         assertAll(
-                () -> assertThat(board.getFrameNo())
-                        .isEqualTo(3),
                 () -> assertThat(board.isStrike())
                         .isFalse(),
                 () -> assertThat(board.isSpare())
@@ -130,8 +124,6 @@ class BoardObserverTest {
         addRoll(Roll.of(4));
         addRoll(Roll.of(5));
         assertAll(
-                () -> assertThat(board.getFrameNo())
-                        .isEqualTo(4),
                 () -> assertThat(board.isStrike())
                         .isFalse(),
                 () -> assertThat(board.isSpare())
@@ -156,8 +148,6 @@ class BoardObserverTest {
 
         addRoll(Roll.of(8));
         assertAll(
-                () -> assertThat(board.getFrameNo())
-                        .isEqualTo(4),
                 () -> assertThat(board.isStrike())
                         .isFalse(),
                 () -> assertThat(board.isSpare())

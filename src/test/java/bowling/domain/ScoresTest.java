@@ -27,7 +27,7 @@ class ScoresTest {
     @DisplayName("size 테스트")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
     void size(int size) {
-        scores.accumulateOnlyValid(IntStream
+        scores.accumulate(IntStream
                 .range(0, size)
                 .boxed()
                 .collect(toList()));
@@ -36,10 +36,10 @@ class ScoresTest {
     }
 
     @Test
-    @DisplayName("exportScoresDto 테스트")
+    @DisplayName("scores 가 누적되어 추가되어야 한다.")
     void exportScoresDto() {
         List<Integer> scoreList = Arrays.asList(0, 1, 3, 6, 12);
-        scores.accumulateOnlyValid(scoreList.stream()
+        scores.accumulate(scoreList.stream()
                 .collect(toList()));
         assertThat(scores
                 .exportScoresDto()
@@ -48,21 +48,5 @@ class ScoresTest {
                 .map(ScoreDto::getScore)
                 .collect(toList()))
                 .isEqualTo(Arrays.asList(0, 1, 4, 10, 22));
-    }
-
-    @Test
-    @DisplayName("음수는 scores 에 추가되어서는 안된다.")
-    void addValidOnly() {
-        List<Integer> scoreList = Arrays.asList(-12, -6, -3, -1, 0, 1, 3, 6, 12);
-        List<Integer> expected = Arrays.asList(0, 1, 4, 10, 22);
-        scores.accumulateOnlyValid(scoreList.stream()
-                .collect(toList()));
-        assertThat(scores
-                .exportScoresDto()
-                .getScores()
-                .stream()
-                .map(ScoreDto::getScore)
-                .collect(toList()))
-                .isEqualTo(expected);
     }
 }

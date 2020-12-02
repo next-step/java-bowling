@@ -21,12 +21,6 @@ class Frames {
         return frames.size();
     }
 
-    int getFrameNo() {
-        return isLastFinished()
-                ? size() + 1
-                : size();
-    }
-
     void update(Rolls rolls) {
         if (isGameOver()) {
             return;
@@ -47,7 +41,8 @@ class Frames {
     }
 
     boolean isGameOver() {
-        return getFrameNo() > MAX_FRAME_NO;
+        return size() > MAX_FRAME_NO
+                || size() == MAX_FRAME_NO && isLastFinished();
     }
 
     private boolean isLastFinished() {
