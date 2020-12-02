@@ -11,13 +11,13 @@ public class Gutter extends State {
 
     @Override
     public State record(Pin pins) {
-        if (pins.isStrike()) {
-            return new Spare(leftTry - 1, scores.add(Score.spare(pins.getPins())));
+        if (pins.isAllFell()) {
+            return new Spare(leftTry - 1, scores.add(Score.spare(pins.getFellPins())));
         }
-        if (pins.isGutter()) {
+        if (pins.isNoneFell()) {
             return new Gutter(MIN_LEFT_TRY, scores.add(Score.gutter()));
         }
-        return new Ordinary(pins, MIN_LEFT_TRY, scores.add(Score.ordinary(pins.getPins())));
+        return new Ordinary(pins, MIN_LEFT_TRY, scores.add(Score.ordinary(pins.getFellPins())));
     }
 
 }

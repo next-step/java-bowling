@@ -27,7 +27,7 @@ public class Frame {
     }
 
     public boolean record(Pin pins) {
-        validateMaxScore(pins.getPins());
+        validateMaxScore(pins.getFellPins());
         validateFinished();
         state = state.record(pins);
         return isFinished();

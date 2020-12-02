@@ -14,16 +14,16 @@ public class Ordinary extends State {
 
     @Override
     public State record(Pin pins) {
-        if (pins.isStrike() || this.pins.getPins() + pins.getPins() > Pin.MAX_PINS) {
-            throw new InvalidRecordInOrdinaryException(pins.getPins());
+        if (pins.isAllFell() || this.pins.getFellPins() + pins.getFellPins() > Pin.MAX_FELL_PINS) {
+            throw new InvalidRecordInOrdinaryException(pins.getFellPins());
         }
-        if (this.pins.isSpare(pins.getPins())) {
-            return new Spare(leftTry - 1, scores.add(Score.spare(pins.getPins())));
+        if (this.pins.isRestFell(pins.getFellPins())) {
+            return new Spare(leftTry - 1, scores.add(Score.spare(pins.getFellPins())));
         }
-        if (pins.isGutter()) {
+        if (pins.isNoneFell()) {
             return new Gutter(MIN_LEFT_TRY, scores.add(Score.gutter()));
         }
-        return new Ordinary(pins, MIN_LEFT_TRY, scores.add(Score.ordinary(pins.getPins())));
+        return new Ordinary(pins, MIN_LEFT_TRY, scores.add(Score.ordinary(pins.getFellPins())));
     }
 
 }

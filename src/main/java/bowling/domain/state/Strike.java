@@ -11,12 +11,12 @@ public class Strike extends State {
 
     @Override
     public State record(Pin pins) {
-        if (pins.isStrike()) {
+        if (pins.isAllFell()) {
             return new Strike(leftTry - 1, scores.add(Score.strike()));
         }
-        if (pins.isGutter()) {
+        if (pins.isNoneFell()) {
             return new Gutter(leftTry - 1, scores.add(Score.gutter()));
         }
-        return new Ordinary(pins, leftTry - 1, scores.add(Score.ordinary(pins.getPins())));
+        return new Ordinary(pins, leftTry - 1, scores.add(Score.ordinary(pins.getFellPins())));
     }
 }
