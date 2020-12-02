@@ -13,7 +13,6 @@ class Board {
         scores.accumulateOnlyValid(frames.subList(scores.size(), frames.size())
                 .stream()
                 .map(frame -> frame.score(rolls))
-                .map(Score::new)
                 .collect(toList()));
     }
 

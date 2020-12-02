@@ -15,9 +15,10 @@ class Scores {
         return scores.size();
     }
 
-    void accumulateOnlyValid(List<Score> scoreList) {
+    void accumulateOnlyValid(List<Integer> scoreList) {
         scoreList.stream()
                 .filter(Score::isValid)
+                .map(Score::new)
                 .forEach(this::accumulate);
     }
 

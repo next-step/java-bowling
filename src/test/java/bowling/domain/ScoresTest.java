@@ -29,7 +29,7 @@ class ScoresTest {
     void size(int size) {
         scores.accumulateOnlyValid(IntStream
                 .range(0, size)
-                .mapToObj(Score::new)
+                .boxed()
                 .collect(toList()));
         assertThat(scores.size())
                 .isEqualTo(size);
@@ -40,7 +40,6 @@ class ScoresTest {
     void exportScoresDto() {
         List<Integer> scoreList = Arrays.asList(0, 1, 3, 6, 12);
         scores.accumulateOnlyValid(scoreList.stream()
-                .map(Score::new)
                 .collect(toList()));
         assertThat(scores
                 .exportScoresDto()
@@ -57,7 +56,6 @@ class ScoresTest {
         List<Integer> scoreList = Arrays.asList(-12, -6, -3, -1, 0, 1, 3, 6, 12);
         List<Integer> expected = Arrays.asList(0, 1, 4, 10, 22);
         scores.accumulateOnlyValid(scoreList.stream()
-                .map(Score::new)
                 .collect(toList()));
         assertThat(scores
                 .exportScoresDto()
