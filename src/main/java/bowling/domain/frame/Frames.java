@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.exception.InvalidFrameRecordActionException;
 import bowling.domain.pin.Pin;
 
 import java.util.ArrayList;

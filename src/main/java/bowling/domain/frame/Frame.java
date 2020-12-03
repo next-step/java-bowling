@@ -1,8 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.exception.InvalidFrameRecordActionException;
 import bowling.domain.pin.Pin;
-import bowling.domain.score.InvalidMaxScoresException;
 import bowling.domain.score.Score;
+import bowling.domain.score.exception.InvalidMaxScoresException;
 import bowling.domain.state.FrameReady;
 import bowling.domain.state.State;
 

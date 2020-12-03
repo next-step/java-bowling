@@ -1,11 +1,14 @@
-package bowling.domain.state;
+package bowling.domain.state.all;
 
 import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
+import bowling.domain.state.State;
+import bowling.domain.state.rest.Gutter;
+import bowling.domain.state.rest.Ordinary;
 
-public class Strike extends State {
-    public Strike(int leftTry, Scores scores) {
+public class AllPinsFell extends State {
+    protected AllPinsFell(int leftTry, Scores scores) {
         super(leftTry, scores);
     }
 

@@ -1,5 +1,6 @@
 package bowling.domain.member;
 
+import bowling.domain.member.exception.InvalidMemberNameLengthException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

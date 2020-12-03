@@ -5,9 +5,9 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.LastFrame;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
-import bowling.domain.state.Gutter;
-import bowling.domain.state.Spare;
-import bowling.domain.state.Strike;
+import bowling.domain.state.all.Spare;
+import bowling.domain.state.all.Strike;
+import bowling.domain.state.rest.Gutter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

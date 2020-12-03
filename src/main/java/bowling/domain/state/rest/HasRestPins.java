@@ -1,20 +1,23 @@
-package bowling.domain.state;
+package bowling.domain.state.rest;
 
 import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
+import bowling.domain.state.State;
+import bowling.domain.state.all.Spare;
+import bowling.domain.state.exception.InvalidRecordInOrdinaryException;
 
-public class Ordinary extends State {
+public class HasRestPins extends State {
     private final Pin pins;
 
-    public Ordinary(Pin pins, int leftTry, Scores scores) {
+    protected HasRestPins(Pin pins, int leftTry, Scores scores) {
         super(leftTry, scores);
         this.pins = pins;
     }
 
     @Override
     public State record(Pin pins) {
-        if (pins.isAllFell() || this.pins.getFellPins() + pins.getFellPins() > Pin.MAX_FELL_PINS) {
+        if (this.pins.getFellPins() + pins.getFellPins() > Pin.MAX_FELL_PINS) {
             throw new InvalidRecordInOrdinaryException(pins.getFellPins());
         }
         if (this.pins.isRestFell(pins.getFellPins())) {

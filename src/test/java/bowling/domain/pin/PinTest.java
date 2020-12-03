@@ -1,5 +1,7 @@
 package bowling.domain.pin;
 
+import bowling.domain.pin.exception.InvalidMaximumPinException;
+import bowling.domain.pin.exception.InvalidMinimumPinException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

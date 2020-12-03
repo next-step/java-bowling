@@ -1,8 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.exception.InvalidFrameRecordActionException;
 import bowling.domain.pin.Pin;
-import bowling.domain.score.InvalidMaxScoresException;
 import bowling.domain.score.Score;
+import bowling.domain.score.exception.InvalidMaxScoresException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

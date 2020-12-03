@@ -1,5 +1,8 @@
 package bowling.domain.pin;
 
+import bowling.domain.pin.exception.InvalidMaximumPinException;
+import bowling.domain.pin.exception.InvalidMinimumPinException;
+
 public class Pin {
     public static final int MIN_FELL_PINS = 0;
     public static final int MAX_FELL_PINS = 10;
