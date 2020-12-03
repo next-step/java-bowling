@@ -118,32 +118,25 @@ public class FrameTest {
     private static Stream<Arguments> provideFinalFrame() {
         FinalFrame frame1 = new FinalFrame(10);
         FinalFrame frame2 = new FinalFrame(10);
+        FinalFrame frame3 = new FinalFrame(10);
 
         frame1.pitches(10);
-        frame1.pitches(5);
-        frame1.pitches(5);
+        frame1.pitches(0);
+        frame1.pitches(10);
 
         frame2.pitches(0);
         frame2.pitches(10);
         frame2.pitches(10);
 
+        frame3.pitches(10);
+        frame3.pitches(10);
+        frame3.pitches(2);
+
         return Stream.of(
-                /*Arguments.of(frame2, "-|/|X"),*/
-                Arguments.of(frame1, "X|5|/")
+                Arguments.of(frame1, "X|-|/"),
+                Arguments.of(frame2, "-|/|X"),
+                Arguments.of(frame3, "X|X|2")
                 );
     }
 
-
-    @Test
-    void test() {
-        /*BowlingSymbol build = BowlingSymbol.Builder(2).firstPoint(10).build();
-        assertThat(build.getSymbol()).isEqualTo("X");*/
-
-        BowlingSymbol build1 = BowlingSymbol.Builder(3, 1)
-                .firstPoint(10)
-                .build();
-        assertThat(build1.getSymbol()).isEqualTo("X");
-
-
-    }
 }

@@ -95,29 +95,7 @@ public class BowlingPointsTest {
         );
     }
 
-    @DisplayName("getMark 테스트")
-    @ParameterizedTest
-    @MethodSource("provideBowlingPointsInfos")
-    void getMark(int size, List<Integer> numbers, String resultMark) {
-        BowlingPoints points = BowlingPoints.of(size);
-        numbers.forEach(points::push);
-        assertThat(points.getMark()).isEqualTo(resultMark);
-    }
 
-    private static Stream<Arguments> provideBowlingPointsInfos() {
-        return Stream.of(
-                Arguments.of(3, Arrays.asList(5,5,10), "5|/|X"),
-                Arguments.of(3, Arrays.asList(5,5,5), "5|/|5"),
-                Arguments.of(2, Arrays.asList(10), "X"),
-                Arguments.of(2, Arrays.asList(4,6), "4|/"),
-                Arguments.of(2, Arrays.asList(0,10), "-|/"),
-                Arguments.of(2, Arrays.asList(1,0), "1|-"),
-                Arguments.of(3, Arrays.asList(10,10,10), "X|X|X"),
-                Arguments.of(3, Arrays.asList(0,10,10), "-|/|X"),
-                Arguments.of(3, Arrays.asList(1,0), "1|-"),
-                Arguments.of(3, Arrays.asList(10,0,10), "X|-|/")
-                );
-    }
 
     @DisplayName("완료 확인 테스트")
     @Test

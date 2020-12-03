@@ -37,16 +37,16 @@ public class PitchesOrderTypeTest {
     void currentType() {
         BowlingPoints points = BowlingPoints.of(3);
 
-        assertThat(PitchesOrderType.currentType(points)).isEqualTo(NONE);
+        assertThat(PitchesOrderType.currentType(points.size())).isEqualTo(NONE);
 
         points.push(5);
-        assertThat(PitchesOrderType.currentType(points)).isEqualTo(FIRST);
+        assertThat(PitchesOrderType.currentType(points.size())).isEqualTo(FIRST);
 
         points.push(5);
-        assertThat(PitchesOrderType.currentType(points)).isEqualTo(SECOND);
+        assertThat(PitchesOrderType.currentType(points.size())).isEqualTo(SECOND);
 
         points.push(5);
-        assertThat(PitchesOrderType.currentType(points)).isEqualTo(THIRD);
+        assertThat(PitchesOrderType.currentType(points.size())).isEqualTo(THIRD);
     }
 
     @DisplayName("nextType 테스트")
@@ -54,17 +54,17 @@ public class PitchesOrderTypeTest {
     void nextType() {
         BowlingPoints points = BowlingPoints.of(3);
 
-        assertThat(PitchesOrderType.nextType(points)).isEqualTo(FIRST);
+        assertThat(PitchesOrderType.nextType(points.size())).isEqualTo(FIRST);
 
         points.push(5);
-        assertThat(PitchesOrderType.nextType(points)).isEqualTo(SECOND);
+        assertThat(PitchesOrderType.nextType(points.size())).isEqualTo(SECOND);
 
         points.push(5);
-        assertThat(PitchesOrderType.nextType(points)).isEqualTo(THIRD);
+        assertThat(PitchesOrderType.nextType(points.size())).isEqualTo(THIRD);
 
         points.push(5);
         assertThatIllegalArgumentException()
-                .isThrownBy(()-> PitchesOrderType.nextType(points))
+                .isThrownBy(()-> PitchesOrderType.nextType(points.size()))
                 .withMessage(PitchesOrderType.ERROR_NO_SUCH_MATCH_TYPE);
     }
 
