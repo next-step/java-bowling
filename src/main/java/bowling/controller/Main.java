@@ -17,7 +17,8 @@ public class Main {
 
     private static Game getGame() {
         Game game = new Game();
-        getPlayers().forEach(player -> game.addPlayer(player, () -> getRoll(game.exportFrameNoDto())));
+        getPlayers().forEach(player -> game.addPlayer(player,
+                () -> getRoll(game.exportFrameNoDto()))); // NOTE: 4단계를 진행할때는 PlayerDto 를 전달한다.
         game.register(() -> View.printGame(game.exportGameDto()));
         return game;
     }
