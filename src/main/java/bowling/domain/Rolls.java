@@ -34,6 +34,10 @@ public class Rolls {
                 .reduce(0, Integer::sum);
     }
 
+    public Roll getLast() {
+        return rolls.get(size() - 1);
+    }
+
     RollsDto exportRollsDto() {
         return rolls.stream()
                 .map(Roll::exportRollDto)

@@ -1,37 +1,24 @@
 package bowling.domain.play;
 
-class NormalPlayState extends PlayState {
-    private NormalPlayState() {}
+import static bowling.asset.Const.MAX_FRAME_NO;
+import static bowling.asset.Const.PIN_NUM;
 
-    static NormalPlayState getInstance() {
-        return SingletonHelper.instance;
+abstract class NormalPlayState implements PlayState {
+    private int countOfPins;
+
+    NormalPlayState(int countOfPins) {
+        this.countOfPins = countOfPins;
     }
 
-    @Override
-    void playFirst(PlayContext context) {
-        context.execute();
-        if (isAllPinDown(context, 1)) {
-            context.setState(StrikePlayState.getInstance());
-        }
+    void increaseCountOfPins(int countOfPins) {
+        this.countOfPins += countOfPins;
     }
 
-    @Override
-    void playSecond(PlayContext context, int frameNo) {
-        context.execute();
-        boolean isLast = isLast(frameNo);
-        if (isLast && isAllPinDown(context, 2)) {
-            context.setState(LastSparePlayState.getInstance());
-            return;
-        }
-        if (isLast) {
-            context.setState(GameOverPlayState.getInstance());
-        }
+    boolean isLast(int frameNo) {
+        return frameNo >= MAX_FRAME_NO;
     }
 
-    @Override
-    void playBonus(PlayContext context) {}
-
-    private static class SingletonHelper {
-        private static final NormalPlayState instance = new NormalPlayState();
+    boolean isAllPinDown() {
+        return countOfPins >= PIN_NUM;
     }
 }

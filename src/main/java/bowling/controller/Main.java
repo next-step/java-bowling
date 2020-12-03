@@ -1,11 +1,7 @@
 package bowling.controller;
 
-import bowling.domain.Game;
 import bowling.domain.Player;
 import bowling.domain.Players;
-import bowling.domain.Roll;
-import bowling.dto.FrameNoDto;
-import bowling.dto.PlayerDto;
 import bowling.view.View;
 
 public class Main {
@@ -18,10 +14,7 @@ public class Main {
 
     private static Game getGame() {
         Game game = new Game();
-        getPlayers().forEach(player -> game.addPlayer(player, () ->
-                getRoll(game.exportFrameNoDto()) // getRoll(player.exportPlayerDto())
-        ));
-        game.register(() -> View.printGame(game.exportGameDto()));
+        getPlayers().forEach(game::addPlayer);
         return game;
     }
 
@@ -36,15 +29,5 @@ public class Main {
         return new Player(View.askPlayer()
                 .getName()
         );
-    }
-
-    private static Roll getRoll(FrameNoDto frameNoDto) {
-        return Roll.of(View.askRoll(frameNoDto)
-                .getCountOfPins());
-    }
-
-    private static Roll getRoll(PlayerDto playerDto) {
-        return Roll.of(View.askRoll(playerDto)
-                .getCountOfPins());
     }
 }

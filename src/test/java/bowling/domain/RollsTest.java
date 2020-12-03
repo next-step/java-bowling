@@ -35,6 +35,13 @@ class RollsTest {
                 .isEqualTo(11);
     }
 
+    @Test
+    @DisplayName("getLast 테스트")
+    void getLast() {
+        assertThat(rolls.getLast())
+                .isEqualTo(Roll.of(10));
+    }
+
     @ParameterizedTest
     @DisplayName("sum 테스트")
     @CsvSource(value = {"1$5", "0$3", "6$1"}, delimiter = '$')
