@@ -1,38 +1,17 @@
 package bowling.domain;
 
-import bowling.domain.play.PlayContext;
 import bowling.dto.PlayerStatusDto;
 
-import java.util.function.Supplier;
-
 class PlayerStatus {
-    private final PlayContext playContext;
-    private final Board board;
+    private final Rolls rolls = new Rolls();
+    private final Board board = new Board();
 
-    private PlayerStatus(PlayContext playContext, Board board) {
-        this.playContext = playContext;
-        this.board = board;
-    }
-
-    static PlayerStatus of(Supplier<Roll> rollGenerator) {
-        Board board = new Board();
-        RollSubject subject = new RollSubject(rollGenerator);
-        subject.register(board);
-        return new PlayerStatus(
-                new PlayContext(subject),
-                board
-        );
-    }
-
-    void register(Runnable runnable) {
-        playContext.register(runnable);
-    }
-
-    void play(int frameNo) {
-        playContext.play(frameNo);
+    void addRoll(Roll roll) {
+        rolls.add(roll);
+        board.update(rolls);
     }
 
     PlayerStatusDto exportPlayerStatusDto() {
-        return new PlayerStatusDto(playContext.exportRollsDto(), board.exportBoardDto());
+        return new PlayerStatusDto(rolls.exportRollsDto(), board.exportBoardDto());
     }
 }

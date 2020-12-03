@@ -25,7 +25,7 @@ public class Roll {
 
     public static Roll of(int count) {
         if (count < 0 || count > PIN_NUM) {
-            throw new RollException("한 프레임에서 쓰러진 핀의 개수는 0 이상 10 이하여야 합니다.");
+            throw new RollException("핀의 개수는 0 이상 10 이하여야 합니다.");
         }
         return map.get(count);
     }

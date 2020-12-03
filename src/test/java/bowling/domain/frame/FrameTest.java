@@ -22,6 +22,17 @@ class FrameTest {
     }
 
     @Test
+    @DisplayName("한 프레임에 쓰러트린 핀 갯수가 10개를 넘으면 BadCountOfPinsException 이 발생한다.")
+    void badCountOfPins() {
+        rolls.add(Roll.of(9));
+        Frame frame = Frame.of(rolls);
+        rolls.add(Roll.of(9));
+        assertThatExceptionOfType(BadCountOfPinsException.class)
+                .isThrownBy(() -> frame.update(rolls))
+                .withMessage("한 프레임에서 쓰러트린 핀의 개수는 0 이상 10 이하여야 합니다.");
+    }
+
+    @Test
     @DisplayName("프레임이 UNFINISHED")
     void unfinished() {
         rolls.add(Roll.of(9));
@@ -34,17 +45,6 @@ class FrameTest {
                 () -> assertThat(frame.getScore(rolls))
                         .isEqualTo(-1)
         );
-    }
-
-    @Test
-    @DisplayName("한 프레임에 쓰러트린 핀 갯수가 10개를 넘으면 BadCountOfPinsException 이 발생한다.")
-    void badCoutOfPins() {
-        rolls.add(Roll.of(9));
-        Frame frame = Frame.of(rolls);
-        rolls.add(Roll.of(9));
-        assertThatExceptionOfType(BadCountOfPinsException.class)
-                .isThrownBy(() -> frame.update(rolls))
-                .withMessage("한 프레임에서 쓰러트린 핀의 갯수는 0이상 10이하 여야 합니다.");
     }
 
     @Test

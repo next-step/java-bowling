@@ -31,7 +31,7 @@ public class UnfinishedFrameState implements FrameState {
     public void update(Frame context, Rolls rolls) {
         int countOfPins = rolls.sum(context.getRollIndex(), 2);
         if (countOfPins < 0 || countOfPins > PIN_NUM) {
-            throw new BadCountOfPinsException("한 프레임에서 쓰러트린 핀의 갯수는 0이상 10이하 여야 합니다.");
+            throw new BadCountOfPinsException("한 프레임에서 쓰러트린 핀의 개수는 0 이상 10 이하여야 합니다.");
         }
         FrameState nextState = countOfPins == PIN_NUM
                 ? SpareFrameState.getInstance()
