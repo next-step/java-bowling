@@ -34,15 +34,15 @@ class PlayMediator {
         }
     }
 
-    static boolean isLast(int frameNo) {
+    private static boolean isLast(int frameNo) {
         return frameNo >= MAX_FRAME_NO;
     }
 
-    static boolean isStrike(Rolls rolls) {
+    private static boolean isStrike(Rolls rolls) {
         return getCountOfPins(rolls, 1) == PIN_NUM;
     }
 
-    static boolean isSpare(Rolls rolls) {
+    private static boolean isSpare(Rolls rolls) {
         return getCountOfPins(rolls, 2) == PIN_NUM;
     }
 
