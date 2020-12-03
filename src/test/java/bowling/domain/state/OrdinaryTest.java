@@ -4,7 +4,7 @@ import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 import bowling.domain.state.all.Spare;
-import bowling.domain.state.exception.InvalidRecordInOrdinaryException;
+import bowling.domain.state.exception.InvalidRestPinsRecordException;
 import bowling.domain.state.rest.Gutter;
 import bowling.domain.state.rest.Ordinary;
 import org.junit.jupiter.api.DisplayName;
@@ -48,7 +48,7 @@ public class OrdinaryTest {
     public void invalidState(int pins) {
         assertThatThrownBy(() -> {
             state.record(Pin.of(pins));
-        }).isInstanceOf(InvalidRecordInOrdinaryException.class);
+        }).isInstanceOf(InvalidRestPinsRecordException.class);
     }
 
     @DisplayName("종료 여부")
