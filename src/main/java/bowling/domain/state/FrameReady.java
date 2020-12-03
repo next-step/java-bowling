@@ -3,6 +3,9 @@ package bowling.domain.state;
 import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
+import bowling.domain.state.all.Strike;
+import bowling.domain.state.rest.Gutter;
+import bowling.domain.state.rest.Ordinary;
 
 import static bowling.domain.frame.Frame.MAX_TRY_COUNT;
 
@@ -13,13 +16,13 @@ public class FrameReady extends State {
 
     @Override
     public State record(Pin pins) {
-        if (pins.isStrike()) {
+        if (pins.isAllFell()) {
             return recordStrike();
         }
-        if (pins.isGutter()) {
+        if (pins.isNoneFell()) {
             return new Gutter(leftTry - 1, scores.add(Score.gutter()));
         }
-        return new Ordinary(pins, leftTry - 1, scores.add(Score.ordinary(pins.getPins())));
+        return new Ordinary(pins, leftTry - 1, scores.add(Score.ordinary(pins.getFellPins())));
     }
 
     private Strike recordStrike() {

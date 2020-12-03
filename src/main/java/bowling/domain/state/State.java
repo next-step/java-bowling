@@ -3,6 +3,7 @@ package bowling.domain.state;
 import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
+import bowling.domain.state.exception.InvalidLeftTryException;
 
 import java.util.List;
 

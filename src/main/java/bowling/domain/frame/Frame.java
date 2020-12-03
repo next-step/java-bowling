@@ -1,8 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.exception.InvalidFrameRecordActionException;
 import bowling.domain.pin.Pin;
-import bowling.domain.score.InvalidMaxScoresException;
 import bowling.domain.score.Score;
+import bowling.domain.score.exception.InvalidMaxScoresException;
 import bowling.domain.state.FrameReady;
 import bowling.domain.state.State;
 
@@ -26,10 +27,11 @@ public class Frame {
         return new Frame(state);
     }
 
-    public void record(Pin pins) {
-        validateMaxScore(pins.getPins());
+    public boolean record(Pin pins) {
+        validateMaxScore(pins.getFellPins());
         validateFinished();
         state = state.record(pins);
+        return isFinished();
     }
 
     private void validateFinished() {

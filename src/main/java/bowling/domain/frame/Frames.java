@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.exception.InvalidFrameRecordActionException;
 import bowling.domain.pin.Pin;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.stream.IntStream;
 
 public class Frames {
     private static final int MIN_FRAME_NUMBER = 1;
-    private static final int MAX_FRAME_NUMBER = 10;
+    public static final int MAX_FRAME_NUMBER = 10;
     private final List<Frame> frames;
     private Integer currentFrameNumber;
 
@@ -36,30 +37,32 @@ public class Frames {
         return Frame.empty();
     }
 
+    public static Frames of(List<Frame> frames) {
+        return new Frames(frames);
+    }
+
     public int getCurrentFrameNumber() {
         return currentFrameNumber;
     }
 
     public boolean isFinished() {
-        return currentFrameNumber > MAX_FRAME_NUMBER;
+        return frames.stream()
+                .allMatch(Frame::isFinished);
     }
 
-    public void record(Pin pins) {
+    public boolean record(Pin pins) {
         validateRecordPossible();
         Frame currentFrame = getFrame(currentFrameNumber);
-        currentFrame.record(pins);
-        increaseCurrentFrameNumber(currentFrame);
+        if (currentFrame.record(pins)) {
+            currentFrameNumber += 1;
+            return true;
+        }
+        return false;
     }
 
     private void validateRecordPossible() {
         if (isFinished()) {
             throw new InvalidFrameRecordActionException();
-        }
-    }
-
-    private void increaseCurrentFrameNumber(Frame currentFrame) {
-        if (currentFrame.isFinished()) {
-            currentFrameNumber += 1;
         }
     }
 

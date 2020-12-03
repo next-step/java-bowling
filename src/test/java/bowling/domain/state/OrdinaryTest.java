@@ -3,11 +3,16 @@ package bowling.domain.state;
 import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
+import bowling.domain.state.all.Spare;
+import bowling.domain.state.exception.InvalidRestPinsRecordException;
+import bowling.domain.state.rest.Gutter;
+import bowling.domain.state.rest.Ordinary;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Collections;
 import java.util.stream.Stream;
@@ -31,18 +36,19 @@ public class OrdinaryTest {
 
     private static Stream<Arguments> getRecord() {
         return Stream.of(
-                Arguments.arguments(7, Ordinary.class),
+                Arguments.arguments(2, Ordinary.class),
                 Arguments.arguments(0, Gutter.class),
                 Arguments.arguments(3, Spare.class)
         );
     }
 
     @DisplayName("잘못된 상태")
-    @Test
-    public void invalidState() {
+    @ParameterizedTest
+    @ValueSource(ints = {4, 5, 10})
+    public void invalidState(int pins) {
         assertThatThrownBy(() -> {
-            state.record(Pin.of(10));
-        }).isInstanceOf(InvalidRecordInOrdinaryException.class);
+            state.record(Pin.of(pins));
+        }).isInstanceOf(InvalidRestPinsRecordException.class);
     }
 
     @DisplayName("종료 여부")

@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import bowling.domain.score.exception.InvalidScoreException;
+
 import static bowling.domain.score.ScoreType.ORDINARY;
 import static bowling.domain.score.ScoreType.SPARE;
 import static bowling.domain.score.ScoreType.STRIKE;

@@ -1,51 +1,54 @@
 package bowling.domain.pin;
 
+import bowling.domain.pin.exception.InvalidMaximumPinException;
+import bowling.domain.pin.exception.InvalidMinimumPinException;
+
 public class Pin {
-    public static final int MIN_PINS = 0;
-    public static final int MAX_PINS = 10;
+    public static final int MIN_FELL_PINS = 0;
+    public static final int MAX_FELL_PINS = 10;
 
-    private final int pins;
+    private final int fellPins;
 
-    private Pin(int pins) {
-        this.pins = pins;
+    private Pin(int fellPins) {
+        this.fellPins = fellPins;
     }
 
-    public static Pin of(int pins) {
-        validPins(pins);
-        return new Pin(pins);
+    public static Pin of(int fellPins) {
+        validPins(fellPins);
+        return new Pin(fellPins);
     }
 
-    private static void validPins(int pins) {
-        validMax(pins);
-        validMin(pins);
+    private static void validPins(int fellPins) {
+        validMax(fellPins);
+        validMin(fellPins);
     }
 
-    private static void validMax(int pins) {
-        if (pins > MAX_PINS) {
-            throw new InvalidMaximumPinException(pins);
+    private static void validMax(int fellPins) {
+        if (fellPins > MAX_FELL_PINS) {
+            throw new InvalidMaximumPinException(fellPins);
         }
     }
 
-    private static void validMin(int pins) {
-        if (pins < MIN_PINS) {
-            throw new InvalidMinimumPinException(pins);
+    private static void validMin(int fellPins) {
+        if (fellPins < MIN_FELL_PINS) {
+            throw new InvalidMinimumPinException(fellPins);
         }
     }
 
-    public int getPins() {
-        return pins;
+    public int getFellPins() {
+        return fellPins;
     }
 
-    public boolean isGutter() {
-        return pins == MIN_PINS;
+    public boolean isNoneFell() {
+        return fellPins == MIN_FELL_PINS;
     }
 
-    public boolean isStrike() {
-        return pins == MAX_PINS;
+    public boolean isAllFell() {
+        return fellPins == MAX_FELL_PINS;
     }
 
-    public boolean isSpare(int nextPins) {
-        return pins + nextPins == MAX_PINS;
+    public boolean isRestFell(int nextPins) {
+        return fellPins + nextPins == MAX_FELL_PINS;
     }
 }
 

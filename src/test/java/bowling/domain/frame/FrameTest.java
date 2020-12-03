@@ -1,12 +1,14 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.exception.InvalidFrameRecordActionException;
 import bowling.domain.pin.Pin;
-import bowling.domain.score.InvalidMaxScoresException;
 import bowling.domain.score.Score;
+import bowling.domain.score.exception.InvalidMaxScoresException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -28,6 +30,15 @@ public class FrameTest {
         frame.record(Pin.of(10));
 
         assertThat(frame.getScores().get(0)).isEqualTo(Score.strike());
+    }
+    
+    @DisplayName("점수 기록 후 해당 프레임이 종료되었는지 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"10:true", "3:false"}, delimiter = ':')
+    public void isFinishedAfterRecord(int pins, boolean expectedResult) {
+        boolean result = frame.record(Pin.of(pins));
+
+        assertThat(result).isEqualTo(expectedResult);
     }
 
     @DisplayName("점수기록하면 안되는 경우")

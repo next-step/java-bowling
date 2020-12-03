@@ -1,4 +1,4 @@
-package bowling.domain.pin;
+package bowling.domain.pin.exception;
 
 public class InvalidMaximumPinException extends RuntimeException {
     private static final String MESSAGE = "볼링 핀은 최대 10을 넘을 수 없습니다. 현재 쓰러진 핀 수는 %d";

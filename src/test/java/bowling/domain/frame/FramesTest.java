@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.exception.InvalidFrameRecordActionException;
 import bowling.domain.pin.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,17 @@ public class FramesTest {
 
         assertThat(frames.getCurrentFrameNumber()).isEqualTo(2);
     }
+
+    @DisplayName("점수 기록 후 다음프레임으로 이동하고, 이전 프레임이 종료되었는지 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"10:true:2", "3:false:1"}, delimiter = ':')
+    public void isFinishedAfterRecord(int pins, boolean expectedIsFinished, int expectedCurrentFrameNumber) {
+        boolean result = frames.record(Pin.of(pins));
+
+        assertThat(result).isEqualTo(expectedIsFinished);
+        assertThat(frames.getCurrentFrameNumber()).isEqualTo(expectedCurrentFrameNumber);
+    }
+
 
     @DisplayName("프레임 리스트에 10보다 작은 점수 추가")
     @Test

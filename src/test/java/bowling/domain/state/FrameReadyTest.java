@@ -1,6 +1,9 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.Pin;
+import bowling.domain.state.all.Strike;
+import bowling.domain.state.rest.Gutter;
+import bowling.domain.state.rest.Ordinary;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

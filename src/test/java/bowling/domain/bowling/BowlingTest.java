@@ -4,6 +4,8 @@ import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
@@ -34,6 +36,15 @@ public class BowlingTest {
 
         assertThat(bowling.getCurrentFrameNumber()).isEqualTo(2);
         assertThat(bowling.getFrames().get(0).getScores().get(0)).isEqualTo(Score.strike());
+    }
+
+    @DisplayName("투구 후에 해당 프레임이 종료되었는지 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"10:true", "3:false"}, delimiter = ':')
+    public void throwBallAndIsFinished(int pins, boolean expectedResult) {
+        boolean isFinished = bowling.throwBall(Pin.of(pins));
+
+        assertThat(isFinished).isEqualTo(expectedResult);
     }
 
     @DisplayName("점수 계산")
