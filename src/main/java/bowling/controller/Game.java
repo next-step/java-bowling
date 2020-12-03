@@ -30,10 +30,10 @@ class Game {
     }
 
     private void play(Player player, PlayStatus status) {
-        while (status.isContinue(frameNo)) {
-            // Roll roll = getRoll(player.exportPlayerDto());
-            Roll roll = getRoll(new FrameNoDto(frameNo));
-            status.addRoll(roll);
+        while (status.isPlayable(frameNo)) {
+            status.addRoll(
+                    getRoll(new FrameNoDto(frameNo)) // getRoll(player.exportPlayerDto())
+            );
             View.printGame(exportGameDto());
         }
     }

@@ -8,7 +8,7 @@ public class InitialPlayState implements PlayState {
     }
 
     @Override
-    public boolean isContinue(PlayStatus context, int frameNo) {
+    public boolean isPlayable(PlayStatus context, int frameNo) {
         context.setState(new FirstPlayState());
         return true;
     }

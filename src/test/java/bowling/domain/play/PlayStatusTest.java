@@ -22,7 +22,7 @@ public class PlayStatusTest {
     @DisplayName("initial 에는 항상 true 이다.")
     @ValueSource(ints = {-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14})
     void initial(int frameNo) {
-        assertThat(status.isContinue(frameNo))
+        assertThat(status.isPlayable(frameNo))
                 .isTrue();
     }
 
@@ -32,11 +32,11 @@ public class PlayStatusTest {
         int frameNo = 3;
         assertAll(
                 () -> {
-                    assertThat(status.isContinue(frameNo))
+                    assertThat(status.isPlayable(frameNo))
                             .isTrue();
                     status.addRoll(Roll.of(10));
                 },
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isFalse()
         );
     }
@@ -48,11 +48,11 @@ public class PlayStatusTest {
         int frameNo = 3;
         assertAll(
                 () -> {
-                    assertThat(status.isContinue(frameNo))
+                    assertThat(status.isPlayable(frameNo))
                             .isTrue();
                     status.addRoll(Roll.of(roll));
                 },
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isTrue()
         );
     }
@@ -63,17 +63,17 @@ public class PlayStatusTest {
     void twice(int roll) {
         int frameNo = 3;
         assertAll(
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isTrue(),
                 () -> {
                     status.addRoll(Roll.of(roll));
-                    assertThat(status.isContinue(frameNo))
+                    assertThat(status.isPlayable(frameNo))
                             .isTrue();
                     status.addRoll(Roll.of(roll));
                 },
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isFalse(),
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isTrue()
         );
     }
@@ -84,17 +84,17 @@ public class PlayStatusTest {
         int frameNo = 10;
         assertAll(
                 () -> {
-                    assertThat(status.isContinue(frameNo))
+                    assertThat(status.isPlayable(frameNo))
                             .isTrue();
                     status.addRoll(Roll.of(10));
                 },
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isTrue(),
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isTrue(),
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isFalse(),
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isFalse()
         );
     }
@@ -104,21 +104,21 @@ public class PlayStatusTest {
     void last_spare() {
         int frameNo = 10;
         assertAll(
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isTrue(),
                 () -> {
                     status.addRoll(Roll.of(5));
-                    assertThat(status.isContinue(frameNo))
+                    assertThat(status.isPlayable(frameNo))
                             .isTrue();
                     status.addRoll(Roll.of(5));
                 },
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isTrue(),
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isFalse(),
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isFalse(),
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isFalse()
         );
     }
@@ -128,21 +128,21 @@ public class PlayStatusTest {
     void last_miss() {
         int frameNo = 10;
         assertAll(
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isTrue(),
                 () -> {
                     status.addRoll(Roll.of(3));
-                    assertThat(status.isContinue(frameNo))
+                    assertThat(status.isPlayable(frameNo))
                             .isTrue();
                     status.addRoll(Roll.of(2));
                 },
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isFalse(),
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isFalse(),
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isFalse(),
-                () -> assertThat(status.isContinue(frameNo))
+                () -> assertThat(status.isPlayable(frameNo))
                         .isFalse()
         );
     }

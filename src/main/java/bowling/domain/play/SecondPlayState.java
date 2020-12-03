@@ -6,7 +6,7 @@ public class SecondPlayState extends NormalPlayState {
     }
 
     @Override
-    public boolean isContinue(PlayStatus context, int frameNo) {
+    public boolean isPlayable(PlayStatus context, int frameNo) {
         increaseCountOfPins(context.getLastCountOfPins());
         boolean isLast = isLast(frameNo);
         PlayState nextState = isLast

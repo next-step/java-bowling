@@ -20,8 +20,8 @@ public class PlayStatus {
         return status.getLastCountOfPins();
     }
 
-    public boolean isContinue(int frameNo) {
-        return state.isContinue(this, frameNo);
+    public boolean isPlayable(int frameNo) {
+        return state.isPlayable(this, frameNo);
     }
 
     public PlayerStatusDto exportPlayerStatusDto() {

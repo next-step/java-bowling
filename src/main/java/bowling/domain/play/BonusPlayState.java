@@ -9,7 +9,7 @@ class BonusPlayState implements PlayState {
     }
 
     @Override
-    public boolean isContinue(PlayStatus context, int frameNo) {
+    public boolean isPlayable(PlayStatus context, int frameNo) {
         context.setState(GameOverPlayState.getInstance());
         return true;
     }
