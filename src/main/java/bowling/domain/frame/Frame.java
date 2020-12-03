@@ -1,19 +1,18 @@
 package bowling.domain.frame;
 
-import bowling.domain.FrameEnum;
 import bowling.domain.Rolls;
 import bowling.dto.FrameDto;
 
-public class FrameContext {
+public class Frame {
     private final int rollIndex;
     private FrameState state = InitialFrameState.getInstance();
 
-    private FrameContext(int rollIndex) {
+    private Frame(int rollIndex) {
         this.rollIndex = rollIndex;
     }
 
-    public static FrameContext of(Rolls rolls) {
-        FrameContext context = new FrameContext(rolls.size() - 1);
+    public static Frame of(Rolls rolls) {
+        Frame context = new Frame(rolls.size() - 1);
         context.update(rolls);
         return context;
     }

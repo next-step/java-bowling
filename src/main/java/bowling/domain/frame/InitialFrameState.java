@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.FrameEnum;
 import bowling.domain.Rolls;
 import bowling.exception.BadCountOfPinsException;
 
@@ -19,17 +18,17 @@ public class InitialFrameState implements FrameState {
     }
 
     @Override
-    public int getScore(FrameContext context, Rolls rolls) {
+    public int getScore(Frame context, Rolls rolls) {
         return -1;
     }
 
     @Override
-    public boolean hasScore(FrameContext context, Rolls rolls) {
+    public boolean hasScore(Frame context, Rolls rolls) {
         return false;
     }
 
     @Override
-    public void update(FrameContext context, Rolls rolls) {
+    public void update(Frame context, Rolls rolls) {
         final int offset = 1;
         int countOfPins = rolls.sum(context.getRollIndex(), offset);
         if (countOfPins < 0 || countOfPins > PIN_NUM) {

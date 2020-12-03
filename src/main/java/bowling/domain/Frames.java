@@ -1,12 +1,13 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
 import bowling.domain.frames.FramesContext;
 import bowling.dto.FramesDto;
 
 import java.util.List;
 
 class Frames {
-    private FramesContext context = new FramesContext();
+    private final FramesContext context = new FramesContext();
 
     List<Frame> subList(int from, int to) {
         return context.subList(from, to);

@@ -1,7 +1,7 @@
 package bowling.domain.frames;
 
-import bowling.domain.Frame;
 import bowling.domain.Rolls;
+import bowling.domain.frame.Frame;
 import bowling.dto.FramesDto;
 
 import java.util.LinkedList;

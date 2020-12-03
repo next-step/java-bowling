@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.FrameEnum;
 import bowling.domain.Rolls;
 
 public class MissFrameState implements FrameState {
@@ -16,7 +15,7 @@ public class MissFrameState implements FrameState {
     }
 
     @Override
-    public int getScore(FrameContext context, Rolls rolls) {
+    public int getScore(Frame context, Rolls rolls) {
         final int offset = 2;
         return rolls.sum(
                 context.getRollIndex(),
@@ -25,12 +24,12 @@ public class MissFrameState implements FrameState {
     }
 
     @Override
-    public boolean hasScore(FrameContext context, Rolls rolls) {
+    public boolean hasScore(Frame context, Rolls rolls) {
         return true;
     }
 
     @Override
-    public void update(FrameContext context, Rolls rolls) {}
+    public void update(Frame context, Rolls rolls) {}
 
     private static class SingletonHelper {
         private static final MissFrameState instance = new MissFrameState();

@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.FrameEnum;
 import bowling.dto.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import static bowling.asset.Const.MAX_FRAME_NO;
-import static bowling.domain.FrameEnum.*;
+import static bowling.domain.frame.FrameEnum.*;
 import static java.util.Map.Entry;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;

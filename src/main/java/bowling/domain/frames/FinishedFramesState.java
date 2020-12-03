@@ -1,8 +1,8 @@
 package bowling.domain.frames;
 
-import bowling.domain.Frame;
-import bowling.domain.FrameEnum;
 import bowling.domain.Rolls;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.FrameEnum;
 
 import static bowling.asset.Const.MAX_FRAME_NO;
 

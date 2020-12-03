@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Roll;
+import bowling.domain.Rolls;
 import bowling.exception.BadCountOfPinsException;
 import bowling.exception.RollsOutOfRangeException;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class FrameTest {
-
     private Rolls rolls;
 
     @BeforeEach
@@ -120,5 +121,4 @@ class FrameTest {
                         .isEqualTo(9)
         );
     }
-
 }

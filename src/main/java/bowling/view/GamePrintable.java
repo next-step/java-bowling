@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.FrameEnum;
+import bowling.domain.frame.FrameEnum;
 import bowling.dto.*;
 
 import java.util.Iterator;

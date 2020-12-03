@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.FrameEnum;
 import bowling.dto.FrameDto;
 import bowling.dto.ScoreDto;
 import org.junit.jupiter.api.BeforeEach;

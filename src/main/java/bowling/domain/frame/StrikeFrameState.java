@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.FrameEnum;
 import bowling.domain.Rolls;
 
 public class StrikeFrameState implements FrameState {
@@ -18,7 +17,7 @@ public class StrikeFrameState implements FrameState {
     }
 
     @Override
-    public int getScore(FrameContext context, Rolls rolls) {
+    public int getScore(Frame context, Rolls rolls) {
         return rolls.sum(
                 context.getRollIndex(),
                 offset
@@ -26,12 +25,12 @@ public class StrikeFrameState implements FrameState {
     }
 
     @Override
-    public boolean hasScore(FrameContext context, Rolls rolls) {
+    public boolean hasScore(Frame context, Rolls rolls) {
         return context.getRollIndex() + offset <= rolls.size();
     }
 
     @Override
-    public void update(FrameContext context, Rolls rolls) {}
+    public void update(Frame context, Rolls rolls) {}
 
     private static class SingletonHelper {
         private static final StrikeFrameState instance = new StrikeFrameState();
