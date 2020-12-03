@@ -1,6 +1,8 @@
 package qna.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,13 +10,17 @@ import java.util.stream.Collectors;
 public class Answers {
     private final List<Answer> value;
 
-    public Answers(List<Answer> answers) {
-        this.value = answers;
+    public Answers() {
+        value = new ArrayList<>();
     }
 
-    public boolean hasOtherOwnerDifferentFrom(User loginUser) {
+    public Answers(Answer... answers) {
+        value = Arrays.asList(answers);
+    }
+
+    public boolean hasOtherOwnerDifferentFrom(User user) {
         return value.stream()
-                .anyMatch(ans -> !ans.isOwner(loginUser));
+                .anyMatch(ans -> !ans.isOwner(user));
     }
 
     public List<DeleteHistory> deleteAll() {
