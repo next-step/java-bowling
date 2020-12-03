@@ -1,5 +1,6 @@
 package step2.domain;
 
+import step2.domain.dto.PointDTO;
 import step2.type.PitchesOrderType;
 import step2.type.ResultPitchesType;
 
@@ -41,7 +42,7 @@ public class BowlingPoints {
 
     public BowlingPoints push(int pitchesCount) throws IllegalArgumentException {
         BowlingPoint bowlingPoint = makeBowlingPoint(pitchesCount);
-        PitchesOrderType type = PitchesOrderType.nextType(this);
+        PitchesOrderType type = PitchesOrderType.nextType(size());
 
         return push(type, bowlingPoint);
     }
@@ -91,7 +92,6 @@ public class BowlingPoints {
 
         return BowlingPoint.of(pitchesCount, current.getPoint());
     }
-
 
     public BowlingPoints push(PitchesOrderType type, BowlingPoint point) throws IllegalArgumentException {
         isAllowType(type);
@@ -151,8 +151,8 @@ public class BowlingPoints {
                 .orElse(ZERO_SCORE);
     }
 
-    public ResultPitchesType getType(PitchesOrderType first, PitchesOrderType second) {
-        return ResultPitchesType.getType(get(first).getPoint(), get(second).getPoint());
+    public ResultPitchesType getType() {
+        return ResultPitchesType.getType(getPointDTO());
     }
 
     private BowlingPoint get(PitchesOrderType type) {
@@ -164,23 +164,6 @@ public class BowlingPoints {
         return get(type).getPoint();
     }
 
-
-    public String getMark() {
-        BowlingSymbol.Builder builder = BowlingSymbol.Builder(maxPitches, size());
-        if (size() >= 1) {
-            builder.firstPoint(get(FIRST).getPoint());
-        }
-        if (size() >= 2) {
-            builder.secondPoint(get(SECOND).getPoint());
-        }
-        if (size() == 3) {
-            builder.thirdPoint(get(THIRD).getPoint());
-        }
-
-        BowlingSymbol symbol = builder.build();
-        return symbol.getSymbol();
-    }
-
     public int getScore(PitchesOrderType... types) {
         List<PitchesOrderType> pitchesOrderTypes = asList(types);
 
@@ -190,6 +173,21 @@ public class BowlingPoints {
                 .map(entry -> entry.getValue().getPoint())
                 .reduce(Integer::sum)
                 .orElse(ZERO_SCORE);
+    }
+
+    public PointDTO getPointDTO() {
+        int currentSize = size();
+        PointDTO.Builder builder = PointDTO.Builder(currentSize, maxPitches);
+        if (currentSize >= 1) {
+            builder = builder.first(getScore(FIRST));
+        }
+        if (currentSize >= 2) {
+            builder = builder.second(getScore(SECOND));
+        }
+        if (currentSize == 3) {
+            builder = builder.third(getScore(THIRD));
+        }
+        return builder.build();
     }
 
     @Override

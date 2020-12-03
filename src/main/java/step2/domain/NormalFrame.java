@@ -15,6 +15,7 @@ public class NormalFrame implements Frame {
 
     private final int frameNo;
     private final BowlingPoints bowlingPoints;
+    private final BowlingSymbols bowlingSymbols;
     private final Frame next;
 
     public NormalFrame(int frameNo) {
@@ -25,7 +26,7 @@ public class NormalFrame implements Frame {
         this.frameNo = frameNo;
         this.next = next;
         this.bowlingPoints = BowlingPoints.of(MAX_PITCHES);
-
+        this.bowlingSymbols = BowlingSymbols.of(MAX_PITCHES);
     }
 
     @Override
@@ -33,6 +34,7 @@ public class NormalFrame implements Frame {
         if (!bowlingPoints.isCompleted()) {
             isValidPitchesCount(pitchesCount);
             bowlingPoints.push(pitchesCount);
+            bowlingSymbols.push(pitchesCount);
             return pitchesCount;
         }
 
@@ -53,7 +55,7 @@ public class NormalFrame implements Frame {
     @Override
     public int getScore() {
         int score = getCurrentScore();
-        ResultPitchesType type = bowlingPoints.getType(FIRST, SECOND);
+        ResultPitchesType type = bowlingPoints.getType();
         if (STRIKE.equals(type) || SPARE.equals(type)) {
             score += next.getScore(type);
         }
@@ -62,7 +64,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public int getScore(ResultPitchesType prevType) {
-        ResultPitchesType currentType = bowlingPoints.getType(FIRST, SECOND);
+        ResultPitchesType currentType = bowlingPoints.getType();
         if (STRIKE.equals(prevType) && STRIKE.equals(currentType)) {
             return getCurrentScore() + next.getCurrentScore();
         }
@@ -99,7 +101,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public String getResultString() {
-        return bowlingPoints.getMark();
+        return bowlingSymbols.getSymbol();
     }
 
     @Override

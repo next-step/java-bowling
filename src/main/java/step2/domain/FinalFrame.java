@@ -13,16 +13,19 @@ public class FinalFrame implements Frame {
 
     private final int frameNo;
     private final BowlingPoints bowlingPoints;
+    private final BowlingSymbols bowlingSymbols;
 
     public FinalFrame(int frameNo) {
         this.frameNo = frameNo;
         this.bowlingPoints = BowlingPoints.of(MAX_PITCHES);
+        this.bowlingSymbols =BowlingSymbols.of(MAX_PITCHES);
     }
 
     @Override
     public int pitches(int pitchesCount) {
         if (!bowlingPoints.isCompleted()) {
             bowlingPoints.push(pitchesCount);
+            bowlingSymbols.push(pitchesCount);
             return pitchesCount;
         }
 
@@ -66,7 +69,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public String getResultString() {
-        return bowlingPoints.getMark();
+        return bowlingSymbols.getSymbol();
     }
 
     @Override
