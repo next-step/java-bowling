@@ -12,7 +12,7 @@ public class Frames {
 
     private final int size;
     private final Frame head;
-
+    private Frame cursor;
 
     public static Builder Builder() {
         return new Builder();
@@ -23,6 +23,10 @@ public class Frames {
             return frame;
         }
         return getLastCompletedFrame(frame.next());
+    }
+
+    public Frame getCursor() {
+        return cursor;
     }
 
     public Frame getLast() {
@@ -95,6 +99,10 @@ public class Frames {
         return getLastCompletedFrame(head);
     }
 
+    public void updateCursor() {
+        cursor = getLastCompletedFrame(cursor);
+    }
+
 
     public static class Builder {
 
@@ -122,5 +130,6 @@ public class Frames {
     public Frames(Builder builder) {
         this.size = builder.size;
         this.head = builder.head;
+        this.cursor = builder.head;
     }
 }

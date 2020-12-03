@@ -26,30 +26,27 @@ public class BowlingController {
 
         view.drawEmptyLine(playerName);
 
-        PlayerDTO playerDTO = new PlayerDTO(new Player(playerName), frames);
-
-        pitches(playerDTO);
+        pitches(new Player(playerName), frames);
 
     }
 
-    private void pitches(PlayerDTO dto) {
-        Frames frames = dto.getFrames();
+    private void pitches(Player player, Frames frames) {
         try{
-            loopPitches(dto, frames);
+            loopPitches(player, frames);
         }catch(InvalidPitchesException | IllegalArgumentException error){
             System.out.println(error.getMessage());
-            pitches(dto);
+            pitches(player, frames);
         }
     }
 
-    private void loopPitches(PlayerDTO dto, Frames frames) {
+    private void loopPitches(Player player, Frames frames) {
         while (!frames.isFinished()) {
             Frame currentFrame = frames.getCurrentFrame();
             int pitchesCount = view.getPitchesCount(currentFrame);
 
             List<String> marks = BowlingGame.pitches(frames, pitchesCount);
 
-            view.drawFrame(dto.getPlayer(), marks);
+            view.drawFrame(player, marks);
         }
     }
 }

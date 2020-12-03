@@ -18,11 +18,11 @@ public class BowlingGame {
     }
 
     public static List<String> pitches(Frames frames, int pitchesCount) throws InvalidPitchesException {
-        Frame headFrame = frames.getHead();
-        Frame frame = frames.getLastCompletedFrame(headFrame);
+        Frame frame = frames.getCursor();
+        frames.updateCursor();
         frame.pitches(pitchesCount);
 
-        return frames.getMarks(headFrame);
+        return frames.getMarks(frames.getHead());
 
     }
 }
