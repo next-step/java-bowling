@@ -18,12 +18,12 @@ public enum PitchesOrderType {
         this.orderNumber = orderNumber;
     }
 
-    public static PitchesOrderType currentType(BowlingPoints points) {
-        return getType(points.size());
+    public static PitchesOrderType currentType(int source) {
+        return getType(source);
     }
 
-    public static PitchesOrderType nextType(BowlingPoints points) {
-        return getType(points.size() + 1);
+    public static PitchesOrderType nextType(int source) {
+        return getType(source + 1);
     }
 
     public static PitchesOrderType getType(int source) {
