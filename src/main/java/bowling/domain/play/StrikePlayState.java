@@ -14,9 +14,7 @@ public class StrikePlayState implements PlayState {
     }
 
     @Override
-    public void playSecond(PlayContext context, int frameNo) {
-        PlayMediator.notifySecond(context, frameNo);
-    }
+    public void playSecond(PlayContext context, int frameNo) {}
 
     @Override
     public void playBonus(PlayContext context, int frameNo) {}

@@ -12,7 +12,7 @@ public class UnfinishedFramesState implements FramesState {
     @Override
     public void update(FramesContext context, Rolls rolls) {
         context.getLast().update(rolls);
-        context.setState(FinishedFramesState.getInstance());
+        FramesMediator.notify(context);
     }
 
     private static class SingletonHelper {

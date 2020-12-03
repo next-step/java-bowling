@@ -1,7 +1,6 @@
 package bowling.domain.frames;
 
 import bowling.domain.Frame;
-import bowling.domain.FrameEnum;
 import bowling.domain.Rolls;
 
 import static bowling.asset.Const.MAX_FRAME_NO;
@@ -21,11 +20,7 @@ public class FinishedFramesState implements FramesState {
         }
         Frame frame = Frame.of(rolls);
         context.addFrame(frame);
-
-        FramesState nextState = frame.getFrameEnum() == FrameEnum.UNFINISHED
-                ? UnfinishedFramesState.getInstance()
-                : FinishedFramesState.getInstance();
-        context.setState(nextState);
+        FramesMediator.notify(context, frame);
     }
 
     private static class SingletonHelper {

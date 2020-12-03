@@ -30,16 +30,15 @@ class StrikePlayStateTest {
     }
 
     @Test
-    @DisplayName("두번째에서 frameNo 가 10이면, LastStrikeState 로 변화한다.")
+    @DisplayName("playSecond 를 해도 변화가 없다.")
     void playSecond() {
-        subject = new RollSubject(() -> Roll.of(5));
+        subject = new RollSubject(() -> Roll.of(1));
         context = new PlayContext(subject);
-        state.playSecond(context, 10);
         for (int i = 0; i < 100; i++) {
-            context.play(i);
+            state.playSecond(context, 5);
         }
         assertThat(toRolls(context))
-                .isEqualTo(Arrays.asList(5, 5));
+                .isEqualTo(emptyList());
     }
 
     @Test

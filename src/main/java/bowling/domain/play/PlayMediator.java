@@ -6,9 +6,13 @@ import static bowling.asset.Const.MAX_FRAME_NO;
 import static bowling.asset.Const.PIN_NUM;
 
 class PlayMediator {
+    private PlayMediator() {}
+
     static void notifyFirst(PlayContext context, int frameNo) {
         Rolls rolls = context.getRolls();
-        PlayState nextState = isStrike(rolls)
+        PlayState nextState = isLast(frameNo) && isStrike(rolls)
+                ? LastStrikePlayState.getInstance()
+                : isStrike(rolls)
                 ? StrikePlayState.getInstance()
                 : NormalPlayState.getInstance();
         context.setState(nextState);
@@ -16,9 +20,7 @@ class PlayMediator {
 
     static void notifySecond(PlayContext context, int frameNo) {
         Rolls rolls = context.getRolls();
-        PlayState nextState = isLast(frameNo) && isStrike(rolls)
-                ? LastStrikePlayState.getInstance()
-                : isLast(frameNo) && isSpare(rolls)
+        PlayState nextState = isLast(frameNo) && isSpare(rolls)
                 ? LastSparePlayState.getInstance()
                 : isLast(frameNo)
                 ? GameOverPlayState.getInstance()
