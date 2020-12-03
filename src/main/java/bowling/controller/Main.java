@@ -43,8 +43,8 @@ public class Main {
                 .getCountOfPins());
     }
 
-    private static Roll getRoll(PlayerDto frameNoDto) {
-        return Roll.of(View.askRoll(frameNoDto)
+    private static Roll getRoll(PlayerDto playerDto) {
+        return Roll.of(View.askRoll(playerDto)
                 .getCountOfPins());
     }
 }
