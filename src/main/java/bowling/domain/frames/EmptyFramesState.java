@@ -12,7 +12,7 @@ public class EmptyFramesState implements FramesState {
     }
 
     @Override
-    public void update(FramesContext context, Rolls rolls) {
+    public void update(Frames context, Rolls rolls) {
         Frame frame = Frame.of(rolls);
         context.addFrame(frame);
         FramesState nextState = frame.getFrameEnum() == FrameEnum.UNFINISHED

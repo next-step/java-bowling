@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.frames;
 
+import bowling.domain.Roll;
+import bowling.domain.Rolls;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameEnum;
 import bowling.dto.FrameDto;
@@ -16,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class FramesTest {
-
     private Frames frames;
     private Rolls rolls;
 

@@ -12,7 +12,7 @@ public class UnfinishedFramesState implements FramesState {
     }
 
     @Override
-    public void update(FramesContext context, Rolls rolls) {
+    public void update(Frames context, Rolls rolls) {
         context.getLast().update(rolls);
         FramesState nextState = context.size() < MAX_FRAME_NO
                 ? FinishedFramesState.getInstance()

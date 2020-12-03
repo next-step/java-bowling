@@ -10,7 +10,7 @@ import java.util.List;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-public class FramesContext {
+public class Frames {
     private final LinkedList<Frame> frames = new LinkedList<>();
     private FramesState state = EmptyFramesState.getInstance();
 

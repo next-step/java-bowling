@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frames.Frames;
 import bowling.domain.scores.Scores;
 import bowling.dto.BoardDto;
 
