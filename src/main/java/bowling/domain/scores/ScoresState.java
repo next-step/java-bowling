@@ -1,7 +1,5 @@
 package bowling.domain.scores;
 
-import bowling.domain.Score;
-
-interface ScoresState {
-    void accumulate(ScoresContext context, Score score);
+abstract class ScoresState {
+    abstract void accumulate(Scores context, Score score);
 }

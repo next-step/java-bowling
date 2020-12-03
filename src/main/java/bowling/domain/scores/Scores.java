@@ -1,14 +1,14 @@
 package bowling.domain.scores;
 
-import bowling.domain.Score;
 import bowling.dto.ScoresDto;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-public class ScoresContext {
+public class Scores {
     private final LinkedList<Score> scores = new LinkedList<>();
     private ScoresState state = EmptyScoresState.getInstance();
 
@@ -28,7 +28,13 @@ public class ScoresContext {
         return scores.size();
     }
 
-    public void accumulate(Score score) {
+    public void accumulate(List<Integer> scoreList) {
+        scoreList.stream()
+                .map(Score::new)
+                .forEach(this::accumulate);
+    }
+
+    private void accumulate(Score score) {
         state.accumulate(this, score);
     }
 

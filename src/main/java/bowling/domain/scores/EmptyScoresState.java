@@ -1,8 +1,6 @@
 package bowling.domain.scores;
 
-import bowling.domain.Score;
-
-public class EmptyScoresState implements ScoresState {
+class EmptyScoresState extends ScoresState {
     private EmptyScoresState() {}
 
     static EmptyScoresState getInstance() {
@@ -10,7 +8,7 @@ public class EmptyScoresState implements ScoresState {
     }
 
     @Override
-    public void accumulate(ScoresContext context, Score score) {
+    void accumulate(Scores context, Score score) {
         context.addScore(score);
         context.setState(NormalScoresState.getInstance());
     }

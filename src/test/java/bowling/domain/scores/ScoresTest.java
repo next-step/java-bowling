@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.scores;
 
 import bowling.dto.ScoreDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,6 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoresTest {
-
     private Scores scores;
 
     @BeforeEach
