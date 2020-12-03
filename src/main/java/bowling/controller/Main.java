@@ -5,6 +5,7 @@ import bowling.domain.Player;
 import bowling.domain.Players;
 import bowling.domain.Roll;
 import bowling.dto.FrameNoDto;
+import bowling.dto.PlayerDto;
 import bowling.view.View;
 
 public class Main {
@@ -17,8 +18,9 @@ public class Main {
 
     private static Game getGame() {
         Game game = new Game();
-        getPlayers().forEach(player -> game.addPlayer(player,
-                () -> getRoll(game.exportFrameNoDto()))); // NOTE: 4단계를 진행할때는 PlayerDto 를 전달한다.
+        getPlayers().forEach(player -> game.addPlayer(player, () ->
+                getRoll(game.exportFrameNoDto()) // getRoll(player.exportPlayerDto())
+        ));
         game.register(() -> View.printGame(game.exportGameDto()));
         return game;
     }
@@ -37,6 +39,11 @@ public class Main {
     }
 
     private static Roll getRoll(FrameNoDto frameNoDto) {
+        return Roll.of(View.askRoll(frameNoDto)
+                .getCountOfPins());
+    }
+
+    private static Roll getRoll(PlayerDto frameNoDto) {
         return Roll.of(View.askRoll(frameNoDto)
                 .getCountOfPins());
     }

@@ -28,6 +28,10 @@ public class View {
         return new RollDto(nextInt());
     }
 
+    public static RollDto askRoll(PlayerDto playerDto) {
+        new AskRollPrintable(playerDto).print();
+        return new RollDto(nextInt());
+    }
 
     private static String nextLine() {
         return scanner.nextLine();

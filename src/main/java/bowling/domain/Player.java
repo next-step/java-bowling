@@ -18,7 +18,7 @@ public class Player {
         this.name = name;
     }
 
-    PlayerDto exportPlayerDto() {
+    public PlayerDto exportPlayerDto() {
         return new PlayerDto(name);
     }
 }
