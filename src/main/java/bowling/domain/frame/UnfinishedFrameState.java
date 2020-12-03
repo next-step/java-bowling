@@ -34,11 +34,10 @@ public class UnfinishedFrameState implements FrameState {
         if (countOfPins < 0 || countOfPins > PIN_NUM) {
             throw new BadCountOfPinsException("한 프레임에서 쓰러트린 핀의 갯수는 0이상 10이하 여야 합니다.");
         }
-        if (countOfPins == PIN_NUM) {
-            context.setState(SpareFrameState.getInstance());
-            return;
-        }
-        context.setState(MissFrameState.getInstance());
+        FrameState nextState = countOfPins == PIN_NUM
+                ? SpareFrameState.getInstance()
+                : MissFrameState.getInstance();
+        context.setState(nextState);
     }
 
     private static class SingletonHelper {

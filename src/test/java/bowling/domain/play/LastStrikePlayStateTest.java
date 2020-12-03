@@ -29,7 +29,7 @@ class LastStrikePlayStateTest {
     @DisplayName("playFirst 를 해도 변화가 없다.")
     void playFirst() {
         for (int i = 0; i < 100; i++) {
-            state.playFirst(context);
+            state.playFirst(context, i);
         }
         assertThat(toRolls(context))
                 .isEqualTo(emptyList());
@@ -46,10 +46,10 @@ class LastStrikePlayStateTest {
     }
 
     @Test
-    @DisplayName("playBonus 를 하면 GameOverPlayState 로 변화한다.")
+    @DisplayName("마지막 프레임에서 playBonus 를 하면 GameOverPlayState 로 변화한다.")
     void playBonus() {
-        state.playBonus(context);
-        state.playBonus(context);
+        state.playBonus(context, 10);
+        state.playBonus(context, 10);
         for (int i = 0; i < 100; i++) {
             context.play(i);
         }

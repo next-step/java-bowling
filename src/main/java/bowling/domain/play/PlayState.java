@@ -1,24 +1,9 @@
 package bowling.domain.play;
 
-import static bowling.asset.Const.MAX_FRAME_NO;
-import static bowling.asset.Const.PIN_NUM;
+interface PlayState {
+    void playFirst(PlayContext context, int frameNo);
 
-abstract class PlayState {
-    abstract void playFirst(PlayContext context);
+    void playSecond(PlayContext context, int frameNo);
 
-    abstract void playSecond(PlayContext context, int frameNo);
-
-    abstract void playBonus(PlayContext context);
-
-    boolean isLast(int frameNo) {
-        return frameNo == MAX_FRAME_NO;
-    }
-
-    boolean isStrike(PlayContext context) {
-        return context.getCountOfPins(1) == PIN_NUM;
-    }
-
-    boolean isSpare(PlayContext context) {
-        return context.getCountOfPins(2) == PIN_NUM;
-    }
+    void playBonus(PlayContext context, int frameNo);
 }

@@ -3,7 +3,6 @@ package bowling.domain.play;
 import bowling.domain.Roll;
 import bowling.domain.RollSubject;
 import bowling.dto.RollDto;
-import bowling.exception.RollsOutOfRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,8 +14,6 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PlayContextTest {
     @ParameterizedTest
@@ -43,15 +40,8 @@ class PlayContextTest {
         for (int frameNo = 1; frameNo <= playTimes; frameNo++) {
             context.play(frameNo);
         }
-        assertAll(
-                () -> assertThat(context.getCountOfPins(1))
-                        .isEqualTo(10),
-                () -> assertThatExceptionOfType(RollsOutOfRangeException.class)
-                        .isThrownBy(() -> context.getCountOfPins(2))
-                        .withMessage("rolls 의 범위를 벗어난 index 입니다."),
-                () -> assertThat(toRolls(context))
-                        .isEqualTo(Arrays.asList(10))
-        );
+        assertThat(toRolls(context))
+                .isEqualTo(Arrays.asList(10));
     }
 
     @Test
@@ -63,14 +53,8 @@ class PlayContextTest {
         for (int frameNo = 1; frameNo <= playTimes; frameNo++) {
             context.play(frameNo);
         }
-        assertAll(
-                () -> assertThat(context.getCountOfPins(1))
-                        .isEqualTo(10),
-                () -> assertThat(context.getCountOfPins(2))
-                        .isEqualTo(20),
-                () -> assertThat(toRolls(context))
-                        .isEqualTo(Arrays.asList(10, 10))
-        );
+        assertThat(toRolls(context))
+                .isEqualTo(Arrays.asList(10, 10));
     }
 
     @Test
@@ -82,14 +66,8 @@ class PlayContextTest {
         for (int frameNo = 1; frameNo <= playTimes; frameNo++) {
             context.play(frameNo);
         }
-        assertAll(
-                () -> assertThat(context.getCountOfPins(1))
-                        .isEqualTo(10),
-                () -> assertThat(context.getCountOfPins(2))
-                        .isEqualTo(20),
-                () -> assertThat(toRolls(context))
-                        .isEqualTo(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10))
-        );
+        assertThat(toRolls(context))
+                .isEqualTo(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10));
     }
 
     @Test
@@ -101,14 +79,8 @@ class PlayContextTest {
         for (int frameNo = 1; frameNo <= playTimes; frameNo++) {
             context.play(frameNo);
         }
-        assertAll(
-                () -> assertThat(context.getCountOfPins(1))
-                        .isEqualTo(10),
-                () -> assertThat(context.getCountOfPins(2))
-                        .isEqualTo(20),
-                () -> assertThat(toRolls(context))
-                        .isEqualTo(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10))
-        );
+        assertThat(toRolls(context))
+                .isEqualTo(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10));
     }
 
     @Test
@@ -120,14 +92,8 @@ class PlayContextTest {
         for (int frameNo = 1; frameNo <= playTimes; frameNo++) {
             context.play(frameNo);
         }
-        assertAll(
-                () -> assertThat(context.getCountOfPins(1))
-                        .isEqualTo(5),
-                () -> assertThat(context.getCountOfPins(2))
-                        .isEqualTo(10),
-                () -> assertThat(toRolls(context))
-                        .isEqualTo(Arrays.asList(5, 5))
-        );
+        assertThat(toRolls(context))
+                .isEqualTo(Arrays.asList(5, 5));
     }
 
     @Test
@@ -139,14 +105,8 @@ class PlayContextTest {
         for (int frameNo = 1; frameNo <= playTimes; frameNo++) {
             context.play(frameNo);
         }
-        assertAll(
-                () -> assertThat(context.getCountOfPins(1))
-                        .isEqualTo(5),
-                () -> assertThat(context.getCountOfPins(2))
-                        .isEqualTo(10),
-                () -> assertThat(toRolls(context))
-                        .isEqualTo(Arrays.asList(5, 5, 5, 5))
-        );
+        assertThat(toRolls(context))
+                .isEqualTo(Arrays.asList(5, 5, 5, 5));
     }
 
     @Test
@@ -158,14 +118,8 @@ class PlayContextTest {
         for (int frameNo = 1; frameNo <= playTimes; frameNo++) {
             context.play(frameNo);
         }
-        assertAll(
-                () -> assertThat(context.getCountOfPins(1))
-                        .isEqualTo(5),
-                () -> assertThat(context.getCountOfPins(2))
-                        .isEqualTo(10),
-                () -> assertThat(toRolls(context))
-                        .isEqualTo(Arrays.asList(5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5))
-        );
+        assertThat(toRolls(context))
+                .isEqualTo(Arrays.asList(5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5));
     }
 
     @Test
@@ -177,14 +131,8 @@ class PlayContextTest {
         for (int frameNo = 1; frameNo <= playTimes; frameNo++) {
             context.play(frameNo);
         }
-        assertAll(
-                () -> assertThat(context.getCountOfPins(1))
-                        .isEqualTo(5),
-                () -> assertThat(context.getCountOfPins(2))
-                        .isEqualTo(10),
-                () -> assertThat(toRolls(context))
-                        .isEqualTo(Arrays.asList(5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5))
-        );
+        assertThat(toRolls(context))
+                .isEqualTo(Arrays.asList(5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5));
     }
 
     @Test
@@ -196,14 +144,8 @@ class PlayContextTest {
         for (int frameNo = 1; frameNo <= playTimes; frameNo++) {
             context.play(frameNo);
         }
-        assertAll(
-                () -> assertThat(context.getCountOfPins(1))
-                        .isEqualTo(1),
-                () -> assertThat(context.getCountOfPins(2))
-                        .isEqualTo(2),
-                () -> assertThat(toRolls(context))
-                        .isEqualTo(Arrays.asList(1, 1))
-        );
+        assertThat(toRolls(context))
+                .isEqualTo(Arrays.asList(1, 1));
     }
 
     @Test
@@ -215,14 +157,8 @@ class PlayContextTest {
         for (int frameNo = 1; frameNo <= playTimes; frameNo++) {
             context.play(frameNo);
         }
-        assertAll(
-                () -> assertThat(context.getCountOfPins(1))
-                        .isEqualTo(1),
-                () -> assertThat(context.getCountOfPins(2))
-                        .isEqualTo(2),
-                () -> assertThat(toRolls(context))
-                        .isEqualTo(Arrays.asList(1, 1, 1, 1))
-        );
+        assertThat(toRolls(context))
+                .isEqualTo(Arrays.asList(1, 1, 1, 1));
     }
 
     @Test
@@ -234,14 +170,8 @@ class PlayContextTest {
         for (int frameNo = 1; frameNo <= playTimes; frameNo++) {
             context.play(frameNo);
         }
-        assertAll(
-                () -> assertThat(context.getCountOfPins(1))
-                        .isEqualTo(1),
-                () -> assertThat(context.getCountOfPins(2))
-                        .isEqualTo(2),
-                () -> assertThat(toRolls(context))
-                        .isEqualTo(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1))
-        );
+        assertThat(toRolls(context))
+                .isEqualTo(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     }
 
     @Test
@@ -253,14 +183,8 @@ class PlayContextTest {
         for (int frameNo = 1; frameNo <= playTimes; frameNo++) {
             context.play(frameNo);
         }
-        assertAll(
-                () -> assertThat(context.getCountOfPins(1))
-                        .isEqualTo(1),
-                () -> assertThat(context.getCountOfPins(2))
-                        .isEqualTo(2),
-                () -> assertThat(toRolls(context))
-                        .isEqualTo(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1))
-        );
+        assertThat(toRolls(context))
+                .isEqualTo(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
     }
 
     private List<Integer> toRolls(PlayContext context) {

@@ -1,6 +1,6 @@
 package bowling.domain.play;
 
-class NormalPlayState extends PlayState {
+class NormalPlayState implements PlayState {
     private NormalPlayState() {}
 
     static NormalPlayState getInstance() {
@@ -8,28 +8,19 @@ class NormalPlayState extends PlayState {
     }
 
     @Override
-    void playFirst(PlayContext context) {
+    public void playFirst(PlayContext context, int frameNo) {
         context.execute();
-        if (isStrike(context)) {
-            context.setState(StrikePlayState.getInstance());
-        }
+        PlayMediator.notifyFirst(context, frameNo);
     }
 
     @Override
-    void playSecond(PlayContext context, int frameNo) {
+    public void playSecond(PlayContext context, int frameNo) {
         context.execute();
-        if (isLast(frameNo) && isSpare(context)) {
-            context.setState(LastSparePlayState.getInstance());
-            return;
-        }
-        if (isLast(frameNo)) {
-            context.setState(GameOverPlayState.getInstance());
-            return;
-        }
+        PlayMediator.notifySecond(context, frameNo);
     }
 
     @Override
-    public void playBonus(PlayContext context) {}
+    public void playBonus(PlayContext context, int frameNo) {}
 
     private static class SingletonHelper {
         private static final NormalPlayState instance = new NormalPlayState();

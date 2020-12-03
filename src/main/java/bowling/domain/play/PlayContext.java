@@ -25,15 +25,13 @@ public class PlayContext {
     }
 
     public void play(int frameNo) {
-        state.playFirst(this);
+        state.playFirst(this, frameNo);
         state.playSecond(this, frameNo);
-        state.playBonus(this);
+        state.playBonus(this, frameNo);
     }
 
-    int getCountOfPins(int countOfRolls) {
-        Rolls rolls = subject.get();
-        int rollIndex = rolls.size() - countOfRolls;
-        return rolls.sum(rollIndex, countOfRolls);
+    Rolls getRolls() {
+        return subject.get();
     }
 
     public RollsDto exportRollsDto() {

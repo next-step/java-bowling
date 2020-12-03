@@ -23,7 +23,7 @@ class NormalPlayStateTest {
     void playFirst() {
         subject = new RollSubject(() -> Roll.of(10));
         context = new PlayContext(subject);
-        state.playFirst(context);
+        state.playFirst(context, 5);
         context.play(5);
         assertThat(toRolls(context))
                 .isEqualTo(Arrays.asList(10, 10));
@@ -44,17 +44,19 @@ class NormalPlayStateTest {
     }
 
     @Test
-    @DisplayName("두번째에서 frameNo 가 10이고 Spare 이면, LastSparePlayState 로 변화한다.")
+    @DisplayName("마지막 프레임이고 Spare 이면, LastSparePlayState 로 변화한다.")
     void playSecond_LastSpare() {
         subject = new RollSubject(() -> Roll.of(5));
         context = new PlayContext(subject);
-        state.playSecond(context, 5);
+        context.play(9);
         state.playSecond(context, 10);
+        state.playSecond(context, 10);
+        context.play(10);
         for (int i = 0; i < 100; i++) {
             context.play(i);
         }
         assertThat(toRolls(context))
-                .isEqualTo(Arrays.asList(5, 5, 5));
+                .isEqualTo(Arrays.asList(5, 5, 5, 5, 5));
     }
 
     @Test
@@ -63,7 +65,7 @@ class NormalPlayStateTest {
         subject = new RollSubject(() -> Roll.of(1));
         context = new PlayContext(subject);
         for (int i = 0; i < 100; i++) {
-            state.playBonus(context);
+            state.playBonus(context, 5);
         }
         assertThat(toRolls(context))
                 .isEqualTo(emptyList());

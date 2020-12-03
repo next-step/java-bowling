@@ -14,7 +14,7 @@ public class Rolls {
     // NOTE: get 에서의 bigO 를 1로 보장하기 위해, ArrayList 사용
     private final List<Roll> rolls = new ArrayList<>();
 
-    void add(Roll roll) {
+    public void add(Roll roll) {
         rolls.add(roll);
     }
 
