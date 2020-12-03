@@ -62,16 +62,4 @@ public class SymbolTest {
                 .isThrownBy(()->ResultPitchesType.getType(dto))
                 .withMessage(ERROR_INVALID_OBJECT);
     }
-
-    @DisplayName("지원함수 supported 테스트")
-    @ParameterizedTest
-    @MethodSource("provideSymbolInfo")
-    void supported() {
-        
-    }
-
-    private static Stream<Arguments> provideSymbolInfo() {
-        return null;
-    }
-
 }
