@@ -25,9 +25,9 @@ public class PlayContext {
     }
 
     public void play(int frameNo) {
-        state.playFirst(this, frameNo);
+        state.playFirst(this);
         state.playSecond(this, frameNo);
-        state.playBonus(this, frameNo);
+        state.playBonus(this);
     }
 
     Rolls getRolls() {

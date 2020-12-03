@@ -23,7 +23,7 @@ class StrikePlayStateTest {
     void playFirst() {
         subject = new RollSubject(() -> Roll.of(5));
         context = new PlayContext(subject);
-        state.playFirst(context, 5);
+        state.playFirst(context);
         context.play(5);
         assertThat(toRolls(context))
                 .isEqualTo(Arrays.asList(5, 5, 5));
@@ -47,7 +47,7 @@ class StrikePlayStateTest {
         subject = new RollSubject(() -> Roll.of(1));
         context = new PlayContext(subject);
         for (int i = 0; i < 100; i++) {
-            state.playBonus(context, 5);
+            state.playBonus(context);
         }
         assertThat(toRolls(context))
                 .isEqualTo(emptyList());

@@ -2,6 +2,8 @@ package bowling.domain.frames;
 
 import bowling.domain.Rolls;
 
+import static bowling.asset.Const.MAX_FRAME_NO;
+
 public class UnfinishedFramesState implements FramesState {
     private UnfinishedFramesState() {}
 
@@ -12,7 +14,10 @@ public class UnfinishedFramesState implements FramesState {
     @Override
     public void update(FramesContext context, Rolls rolls) {
         context.getLast().update(rolls);
-        FramesMediator.notify(context);
+        FramesState nextState = context.size() < MAX_FRAME_NO
+                ? FinishedFramesState.getInstance()
+                : GameOverFramesState.getInstance();
+        context.setState(nextState);
     }
 
     private static class SingletonHelper {

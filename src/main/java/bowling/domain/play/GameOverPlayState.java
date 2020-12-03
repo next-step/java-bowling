@@ -1,7 +1,7 @@
 package bowling.domain.play;
 
 // NOTE: 더이상 play 하지 않는 상태를 {} 로 표현
-class GameOverPlayState implements PlayState {
+class GameOverPlayState extends PlayState {
     private GameOverPlayState() {}
 
     static GameOverPlayState getInstance() {
@@ -9,13 +9,13 @@ class GameOverPlayState implements PlayState {
     }
 
     @Override
-    public void playFirst(PlayContext context, int frameNo) {}
+    void playFirst(PlayContext context) {}
 
     @Override
-    public void playSecond(PlayContext context, int frameNo) {}
+    void playSecond(PlayContext context, int frameNo) {}
 
     @Override
-    public void playBonus(PlayContext context, int frameNo) {}
+    void playBonus(PlayContext context) {}
 
     private static class SingletonHelper {
         private static final GameOverPlayState instance = new GameOverPlayState();

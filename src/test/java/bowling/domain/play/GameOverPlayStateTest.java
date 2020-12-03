@@ -28,7 +28,7 @@ class GameOverPlayStateTest {
     @DisplayName("playFirst 를 해도 변화가 없다.")
     void playFirst() {
         for (int i = 0; i < 100; i++) {
-            state.playFirst(context, i);
+            state.playFirst(context);
         }
         assertThat(toRolls(context))
                 .isEqualTo(emptyList());
@@ -48,7 +48,7 @@ class GameOverPlayStateTest {
     @DisplayName("playBonus 를 해도 변화가 없다.")
     void playBonus() {
         for (int i = 0; i < 100; i++) {
-            state.playBonus(context, i);
+            state.playBonus(context);
         }
         assertThat(toRolls(context))
                 .isEqualTo(emptyList());
