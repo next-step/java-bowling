@@ -5,6 +5,10 @@ import bowling.domain.Rolls;
 import static bowling.asset.Const.MAX_FRAME_NO;
 import static bowling.asset.Const.PIN_NUM;
 
+/**
+ * NOTE: Mediator 에는 Context 의 State 를 바꾸는 로직만 있어야 한다.
+ * 다른 상태나 객체값을 변화시키지 않도록 조심하자.
+ */
 class PlayMediator {
     private PlayMediator() {}
 
