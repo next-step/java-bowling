@@ -43,7 +43,7 @@ public class PlayStatusTest {
 
     @ParameterizedTest
     @DisplayName("strike 가 아닌 경우에는 true 이다.")
-    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
     void not_strike(int roll) {
         int frameNo = 3;
         assertAll(
@@ -52,6 +52,27 @@ public class PlayStatusTest {
                             .isTrue();
                     status.addRoll(Roll.of(roll));
                 },
+                () -> assertThat(status.isContinue(frameNo))
+                        .isTrue()
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("두번 치고 나면 false 를 반환 후 initial 로 되돌아간다.")
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5})
+    void twice(int roll) {
+        int frameNo = 3;
+        assertAll(
+                () -> assertThat(status.isContinue(frameNo))
+                        .isTrue(),
+                () -> {
+                    status.addRoll(Roll.of(roll));
+                    assertThat(status.isContinue(frameNo))
+                            .isTrue();
+                    status.addRoll(Roll.of(roll));
+                },
+                () -> assertThat(status.isContinue(frameNo))
+                        .isFalse(),
                 () -> assertThat(status.isContinue(frameNo))
                         .isTrue()
         );
