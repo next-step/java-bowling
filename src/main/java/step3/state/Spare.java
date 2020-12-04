@@ -1,13 +1,15 @@
 package step3.state;
 
 import step3.domain.dto.PointDTO;
+import step3.type.ResultPitchesType;
 
 import static step3.state.Symbol.*;
 
-public class SpareSymbol implements Symbol {
+public class Spare implements Symbol {
+    public static ResultPitchesType type = ResultPitchesType.SPARE;
     private final int point;
 
-    public SpareSymbol(int point) {
+    public Spare(int point) {
         this.point = point;
     }
 
@@ -19,6 +21,11 @@ public class SpareSymbol implements Symbol {
     @Override
     public int getPoint() {
         return point;
+    }
+
+    @Override
+    public ResultPitchesType getType() {
+        return type;
     }
 
     public static boolean supported(PointDTO dto) {

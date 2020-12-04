@@ -1,6 +1,7 @@
 package step3.state;
 
 import step3.domain.dto.PointDTO;
+import step3.type.ResultPitchesType;
 
 import java.util.Arrays;
 
@@ -11,12 +12,14 @@ public interface Symbol {
 
     int getPoint();
 
+    ResultPitchesType getType();
+
     static boolean supported(PointDTO dto) {
         return false;
     }
 
     static Symbol defaultSymbol() {
-        return new EmptySymbol(0);
+        return new Empty(0);
     }
 
     static boolean isDouble(int first, int second) {

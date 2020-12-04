@@ -1,23 +1,32 @@
 package step3.state;
 
 import step3.domain.dto.PointDTO;
-import static step3.state.Symbol.*;
+import step3.type.ResultPitchesType;
 
-public class MissSymbol implements Symbol {
+import static step3.state.Symbol.isGutter;
+import static step3.state.Symbol.isStrike;
+
+public class Gutter implements Symbol {
+    public static ResultPitchesType type = ResultPitchesType.GUTTER;
     private final int point;
 
-    public MissSymbol(int point) {
+    public Gutter(int point) {
         this.point = point;
     }
 
     @Override
     public String getSymbol() {
-        return String.valueOf(point);
+        return "-";
     }
 
     @Override
     public int getPoint() {
         return point;
+    }
+
+    @Override
+    public ResultPitchesType getType() {
+        return type;
     }
 
     public static boolean supported(PointDTO dto) {
@@ -29,16 +38,17 @@ public class MissSymbol implements Symbol {
                 third = dto.getThird();
 
         if (currentSize == 3) {
-            return !isMiss(first, second) && isMiss(third);
+            return isGutter(third);
         }
 
         if (currentSize == 2 && maxPitches == 3) {
-            return isStrike(first) && isMiss(second);
+            return isGutter(second);
         }
 
-        if (currentSize == 2 && maxPitches == 2) {
-            return !isStrike(first) && isMiss(second);
+        if (currentSize == 2) {
+            return isGutter(second) && !isStrike(first);
         }
-        return isMiss(first);
+
+        return isGutter(first);
     }
 }

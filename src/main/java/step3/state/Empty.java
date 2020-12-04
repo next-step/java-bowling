@@ -1,14 +1,16 @@
 package step3.state;
 
 import step3.domain.dto.PointDTO;
+import step3.type.ResultPitchesType;
 
 import java.util.Objects;
 
-public class EmptySymbol implements Symbol{
+public class Empty implements Symbol{
+    public static ResultPitchesType type = ResultPitchesType.NONE;
     public static final String NO_MARK = "";
     private static final int point = -1;
 
-    public EmptySymbol(int i) { }
+    public Empty(int i) { }
 
     @Override
     public String getSymbol() {
@@ -20,6 +22,11 @@ public class EmptySymbol implements Symbol{
         return point;
     }
 
+    @Override
+    public ResultPitchesType getType() {
+        return type;
+    }
+
     public static boolean supported(PointDTO dto) {
         return true;
     }
@@ -28,8 +35,8 @@ public class EmptySymbol implements Symbol{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EmptySymbol emptySymbol = (EmptySymbol) o;
-        return emptySymbol.getPoint() == EmptySymbol.point &&
+        Empty emptySymbol = (Empty) o;
+        return emptySymbol.getPoint() == Empty.point &&
                 Objects.equals(point, emptySymbol.getPoint());
     }
 

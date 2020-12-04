@@ -1,19 +1,31 @@
 package step3.state;
 
 import step3.domain.dto.PointDTO;
+import step3.type.ResultPitchesType;
 
 import static step3.state.Symbol.*;
 
-public class StrikeSymbol implements Symbol {
+public class Miss implements Symbol {
+    public static ResultPitchesType type = ResultPitchesType.MISS;
     private final int point;
 
-    public StrikeSymbol(int point) {
+    public Miss(int point) {
         this.point = point;
+    }
+
+    @Override
+    public String getSymbol() {
+        return String.valueOf(point);
     }
 
     @Override
     public int getPoint() {
         return point;
+    }
+
+    @Override
+    public ResultPitchesType getType() {
+        return type;
     }
 
     public static boolean supported(PointDTO dto) {
@@ -25,25 +37,16 @@ public class StrikeSymbol implements Symbol {
                 third = dto.getThird();
 
         if (currentSize == 3) {
-            return (isSpare(first, second) || isDouble(first, second)) && isStrike(third);
+            return !isMiss(first, second) && isMiss(third);
         }
 
         if (currentSize == 2 && maxPitches == 3) {
-            return isDouble(first, second);
+            return isStrike(first) && isMiss(second);
         }
 
-        if (currentSize == 1) {
-            return isStrike(first);
+        if (currentSize == 2 && maxPitches == 2) {
+            return !isStrike(first) && isMiss(second);
         }
-
-
-        return false;
+        return isMiss(first);
     }
-
-
-    @Override
-    public String getSymbol() {
-        return "X";
-    }
-
 }
