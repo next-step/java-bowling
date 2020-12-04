@@ -1,4 +1,4 @@
-package bowling.score;
+package bowling.domain.score;
 
 import bowling.exception.ExceptionMessage;
 import org.junit.jupiter.api.DisplayName;

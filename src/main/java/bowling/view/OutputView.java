@@ -1,10 +1,10 @@
 package bowling.view;
 
 import bowling.domain.BowlResult;
-import bowling.domain.Frame;
-import bowling.domain.Frames;
-import bowling.score.Score;
-import bowling.score.Scores;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
+import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 
 import java.util.List;
 import java.util.Objects;

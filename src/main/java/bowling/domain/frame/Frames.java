@@ -1,6 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.score.Score;
+import bowling.domain.Player;
+import bowling.domain.score.Score;
 
 import java.util.Collections;
 import java.util.LinkedList;

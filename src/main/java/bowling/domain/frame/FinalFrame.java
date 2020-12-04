@@ -1,7 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.score.FinalScores;
-import bowling.score.Scores;
+import bowling.domain.score.FinalScores;
+import bowling.domain.score.Scores;
 
 public class FinalFrame extends Frame {
 

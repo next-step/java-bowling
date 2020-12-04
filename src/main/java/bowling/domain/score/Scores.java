@@ -1,4 +1,4 @@
-package bowling.score;
+package bowling.domain.score;
 
 import java.util.List;
 

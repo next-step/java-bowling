@@ -1,8 +1,11 @@
 package bowling.domain;
 
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import bowling.exception.ExceptionMessage;
-import bowling.score.NormalScores;
-import bowling.score.Score;
+import bowling.domain.score.NormalScores;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
