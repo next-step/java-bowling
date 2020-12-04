@@ -1,7 +1,7 @@
 package bowling;
 
 import bowling.domain.*;
-import bowling.domain.frame.Frames;
+import bowling.domain.score.Score;
 import bowling.view.InputView;
 
 public class BowlingGame {
@@ -10,10 +10,19 @@ public class BowlingGame {
         String name = InputView.scanPlayer();
         Player player = Player.from(name);
 
-        Frames frames = Frames.init(player);
-        Bowling bowling = new Bowling(frames);
+        Bowling bowling = Bowling.of(player);
 
-        bowling.start();
+        // TODO : 빈 보드 출력
+
+        while(bowling.isNotEnd()) {
+            int frameNumber = bowling.getFrameNumber();
+            Score score = Score.of(InputView.scanBowl(frameNumber));
+
+            bowling.bowl(score);
+
+            // TODO : 보드 출력
+        }
+
     }
 
 }

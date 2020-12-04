@@ -17,7 +17,10 @@ public class Frames {
     }
 
     public static Frames init(Player player) {
-        return new Frames(player, new LinkedList<>());
+        LinkedList<Frame> firstFrames = new LinkedList<>();
+        firstFrames.add(NormalFrame.first());
+
+        return new Frames(player, firstFrames);
     }
 
     public static Frames of(Frames previousFrames, Frame frame) {
@@ -25,6 +28,10 @@ public class Frames {
         nowFrames.add(frame);
 
         return new Frames(previousFrames.player, nowFrames);
+    }
+
+    public  boolean isNotEnd() {
+        return frames.size() <= Frame.LAST_FRAME;
     }
 
     public List<Score> getResult(int frameNumber) {
@@ -37,5 +44,19 @@ public class Frames {
 
     public String getPlayerName() {
         return player.getName();
+    }
+
+    public int getLastNumber() {
+        return frames.size();
+    }
+
+    public void bowl(Score score) {
+        Frame frame = frames.getLast();
+        frame.bowl(score);
+
+        if (!frame.canBowl()) {
+            frame = frame.next();
+            frames.add(frame);
+        }
     }
 }

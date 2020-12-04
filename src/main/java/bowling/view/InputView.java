@@ -1,7 +1,5 @@
 package bowling.view;
 
-import bowling.domain.frame.Frame;
-
 import java.util.Scanner;
 
 public final class InputView {
@@ -18,8 +16,8 @@ public final class InputView {
         return scanner.nextLine();
     }
 
-    public static String scanBowl(Frame frame) {
-        System.out.println(String.format(ASK_FIRST_BOWL, frame.getNumber()));
+    public static String scanBowl(int frameNumber) {
+        System.out.println(String.format(ASK_FIRST_BOWL, frameNumber));
 
         return scanner.nextLine();
     }
