@@ -1,5 +1,6 @@
 package step3.state;
 
+import step3.domain.BowlingPoint;
 import step3.domain.dto.PointDTO;
 import step3.type.ResultPitchesType;
 
@@ -8,7 +9,7 @@ import java.util.Objects;
 public class Empty implements Symbol{
     public static ResultPitchesType type = ResultPitchesType.NONE;
     public static final String NO_MARK = "";
-    private static final int point = -1;
+    private static final BowlingPoint point = BowlingPoint.EMPTY_BOWLING_POINT;
 
     public Empty(int i) { }
 
@@ -19,7 +20,7 @@ public class Empty implements Symbol{
 
     @Override
     public int getPoint() {
-        return point;
+        return point.getPoint();
     }
 
     @Override
@@ -36,7 +37,7 @@ public class Empty implements Symbol{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Empty emptySymbol = (Empty) o;
-        return emptySymbol.getPoint() == Empty.point &&
+        return emptySymbol.getPoint() == Empty.point.getPoint() &&
                 Objects.equals(point, emptySymbol.getPoint());
     }
 

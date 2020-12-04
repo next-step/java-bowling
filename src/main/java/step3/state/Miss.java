@@ -1,5 +1,6 @@
 package step3.state;
 
+import step3.domain.BowlingPoint;
 import step3.domain.dto.PointDTO;
 import step3.type.ResultPitchesType;
 
@@ -7,9 +8,13 @@ import static step3.state.Symbol.*;
 
 public class Miss implements Symbol {
     public static ResultPitchesType type = ResultPitchesType.MISS;
-    private final int point;
+    private final BowlingPoint point;
 
     public Miss(int point) {
+        this(BowlingPoint.of(point));
+    }
+
+    public Miss(BowlingPoint point) {
         this.point = point;
     }
 
@@ -20,7 +25,7 @@ public class Miss implements Symbol {
 
     @Override
     public int getPoint() {
-        return point;
+        return point.getPoint();
     }
 
     @Override

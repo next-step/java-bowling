@@ -1,5 +1,6 @@
 package step3.state;
 
+import step3.domain.BowlingPoint;
 import step3.domain.dto.PointDTO;
 import step3.type.ResultPitchesType;
 
@@ -7,9 +8,13 @@ import static step3.state.Symbol.*;
 
 public class Spare implements Symbol {
     public static ResultPitchesType type = ResultPitchesType.SPARE;
-    private final int point;
+    private final BowlingPoint point;
 
     public Spare(int point) {
+        this(BowlingPoint.of(point));
+    }
+
+    public Spare(BowlingPoint point) {
         this.point = point;
     }
 
@@ -20,7 +25,7 @@ public class Spare implements Symbol {
 
     @Override
     public int getPoint() {
-        return point;
+        return point.getPoint();
     }
 
     @Override

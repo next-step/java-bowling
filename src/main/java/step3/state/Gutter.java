@@ -1,5 +1,6 @@
 package step3.state;
 
+import step3.domain.BowlingPoint;
 import step3.domain.dto.PointDTO;
 import step3.type.ResultPitchesType;
 
@@ -8,9 +9,13 @@ import static step3.state.Symbol.isStrike;
 
 public class Gutter implements Symbol {
     public static ResultPitchesType type = ResultPitchesType.GUTTER;
-    private final int point;
+    private final BowlingPoint point;
 
     public Gutter(int point) {
+        this(BowlingPoint.of(point));
+    }
+
+    public Gutter(BowlingPoint point) {
         this.point = point;
     }
 
@@ -21,7 +26,7 @@ public class Gutter implements Symbol {
 
     @Override
     public int getPoint() {
-        return point;
+        return point.getPoint();
     }
 
     @Override
