@@ -1,11 +1,7 @@
-package qna.service;
+package qna.domain;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import qna.domain.Answer;
-import qna.domain.Answers;
-import qna.domain.Question;
-import qna.domain.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
