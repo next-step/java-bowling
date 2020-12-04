@@ -3,6 +3,7 @@ package step3.domain;
 import step3.domain.dto.PointDTO;
 import step3.state.Symbol;
 import step3.type.PitchesOrderType;
+import step3.type.ResultPitchesType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -108,5 +109,9 @@ public class BowlingSymbols {
             builder = builder.third(getScore(THIRD));
         }
         return builder;
+    }
+
+    public ResultPitchesType getType(PitchesOrderType type) {
+        return get(type).getType();
     }
 }

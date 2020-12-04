@@ -16,28 +16,25 @@ public class BowlingPoints {
     public static final String ERROR_ALREADY_EXISTS_VALUE = "이미 존재하는 값을 추가할 수 없습니다.";
     public static final String ERROR_NOT_CREATE_OBJECT = "BowlingPoint 를 생성할 수 없습니다.";
     public static final int ZERO_SCORE = 0;
-    public static final int NORMAL_MAX_PITCHES = 2;
-    public static final int FINAL_MAX_PITCHES = 3;
     public static final int STRIKE_VALUE = 10;
 
     private final Map<PitchesOrderType, BowlingPoint> bowlingPoints;
-    private boolean completed;
+//    private boolean completed;
     private final int maxPitches;
 
-    public BowlingPoints(Map<PitchesOrderType, BowlingPoint> bowlingPoints, int maxPitches, boolean completed) {
+    public BowlingPoints(Map<PitchesOrderType, BowlingPoint> bowlingPoints, int maxPitches) {
         this.bowlingPoints = bowlingPoints;
-        this.completed = completed;
         this.maxPitches = maxPitches;
     }
 
     public static BowlingPoints of(int maxPitches) {
-        return new BowlingPoints(new HashMap<>(), maxPitches, false);
+        return new BowlingPoints(new HashMap<>(), maxPitches);
     }
 
     public static BowlingPoints of(BowlingPoint bowlingPoint, int maxPitches) {
         return new BowlingPoints(new HashMap<PitchesOrderType, BowlingPoint>() {{
             put(FIRST, bowlingPoint);
-        }}, maxPitches, false);
+        }}, maxPitches);
     }
 
     public BowlingPoints push(int pitchesCount) throws IllegalArgumentException {
@@ -66,7 +63,7 @@ public class BowlingPoints {
     }
 
     private boolean isNormalType() {
-        return maxPitches == NORMAL_MAX_PITCHES;
+        return maxPitches == NormalFrame.MAX_PITCHES;
     }
 
     private boolean isFinalFirst(PitchesOrderType type) {
@@ -74,7 +71,7 @@ public class BowlingPoints {
     }
 
     private boolean isFinalType() {
-        return maxPitches == FINAL_MAX_PITCHES;
+        return maxPitches == FinalFrame.MAX_PITCHES;
     }
 
     private boolean isAllowFinalCreate(PitchesOrderType type) {
@@ -97,16 +94,16 @@ public class BowlingPoints {
         isAllowType(type);
         isValid();
         bowlingPoints.put(type, point);
-        updateComplete();
+        //updateComplete();
 
         return this;
     }
 
-    private void updateComplete() {
+    /*private void updateComplete() {
         if (isMaximumSize() || isCompleteConditionByNormal() || isCompleteConditionByFinal()) {
             completed = true;
         }
-    }
+    }*/
 
     private boolean isCompleteConditionByFinal() {
         return isFinalType()
@@ -139,9 +136,9 @@ public class BowlingPoints {
         return bowlingPoints.size();
     }
 
-    public boolean isCompleted() {
+    /*public boolean isCompleted() {
         return completed;
-    }
+    }*/
 
     public int getScore() {
         return bowlingPoints.values()
@@ -195,13 +192,12 @@ public class BowlingPoints {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BowlingPoints that = (BowlingPoints) o;
-        return completed == that.completed &&
-                maxPitches == that.maxPitches &&
+        return maxPitches == that.maxPitches &&
                 Objects.equals(bowlingPoints, that.bowlingPoints);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bowlingPoints, completed, maxPitches);
+        return Objects.hash(bowlingPoints, maxPitches);
     }
 }

@@ -14,6 +14,7 @@ public class FinalFrame implements Frame {
     private final int frameNo;
     private final BowlingPoints bowlingPoints;
     private final BowlingSymbols bowlingSymbols;
+    private boolean completed;
 
     public FinalFrame(int frameNo) {
         this.frameNo = frameNo;
@@ -23,15 +24,27 @@ public class FinalFrame implements Frame {
 
     @Override
     public int pitches(int pitchesCount) {
-        if (!bowlingPoints.isCompleted()) {
+        if (!isFinished()) {
             bowlingPoints.push(pitchesCount);
             bowlingSymbols.push(pitchesCount);
+            updateComplete();
+
             return pitchesCount;
         }
 
         throw new IllegalArgumentException("더 이상 던질 수 없습니다.");
     }
 
+    private void updateComplete() {
+        if (bowlingPoints.size() == MAX_PITCHES || isFinalCompletedCondition()) {
+            completed = true;
+        }
+    }
+
+    private boolean isFinalCompletedCondition() {
+        return bowlingPoints.size() == 2
+                && bowlingPoints.getScore(FIRST, SECOND) < BowlingPoints.STRIKE_VALUE;
+    }
 
     @Override
     public int getFrameNo() {
@@ -74,7 +87,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        return bowlingPoints.isCompleted();
+        return completed;
     }
 
 }

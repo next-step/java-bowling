@@ -25,13 +25,11 @@ public class BowlingPointsTest {
     @Test
     void createBowlingPoints() {
         BowlingPoints bowlingPoints = BowlingPoints.of(2);
-        assertThat(bowlingPoints.isCompleted()).isFalse();
         assertThat(bowlingPoints.size()).isEqualTo(0);
         assertThat(bowlingPoints).isEqualTo(
                 new BowlingPoints(
                         new HashMap<>(),
-                        2,
-                        false));
+                        2));
     }
 
     @DisplayName("push 테스트")
@@ -47,7 +45,7 @@ public class BowlingPointsTest {
         points.push(first);
         points.push(second);
 
-        BowlingPoints bowlingPoints = new BowlingPoints(map, 2, true);
+        BowlingPoints bowlingPoints = new BowlingPoints(map, 2);
 
         assertThat(points).isEqualTo(bowlingPoints);
     }
@@ -94,35 +92,4 @@ public class BowlingPointsTest {
                 Arguments.of(3, Arrays.asList(5,4,5), IllegalArgumentException.class)
         );
     }
-
-
-
-    @DisplayName("완료 확인 테스트")
-    @Test
-    void complete() {
-        BowlingPoints normalPoints = BowlingPoints.of(2);
-        BowlingPoints finalPoints = BowlingPoints.of(3);
-        BowlingPoints finalPoints2 = BowlingPoints.of(3);
-        normalPoints.push(3);
-        assertThat(normalPoints.isCompleted()).isFalse();
-
-        normalPoints.push(5);
-        assertThat(normalPoints.isCompleted()).isTrue();
-
-        finalPoints.push(4);
-        assertThat(finalPoints.isCompleted()).isFalse();
-
-        finalPoints.push(6);
-        assertThat(finalPoints.isCompleted()).isFalse();
-
-        finalPoints.push(4);
-        assertThat(finalPoints.isCompleted()).isTrue();
-
-        finalPoints2.push(5);
-        finalPoints2.push(4);
-        assertThat(finalPoints2.isCompleted()).isTrue();
-    }
-
-
-
 }

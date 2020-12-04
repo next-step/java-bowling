@@ -9,11 +9,11 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public enum ResultPitchesType {
-    STRIKE(StrikeSymbol::supported, StrikeSymbol::new),
-    SPARE(SpareSymbol::supported, SpareSymbol::new),
-    MISS(MissSymbol::supported, MissSymbol::new),
-    GUTTER(GutterSymbol::supported, GutterSymbol::new),
-    NONE(EmptySymbol::supported, EmptySymbol::new);
+    STRIKE(Strike::supported, Strike::new),
+    SPARE(Spare::supported, Spare::new),
+    MISS(Miss::supported, Miss::new),
+    GUTTER(Gutter::supported, Gutter::new),
+    NONE(Empty::supported, Empty::new);
 
     public static final String ERROR_INVALID_OBJECT = "유효하지 않은 객체입니다.";
     private final Condition condition;

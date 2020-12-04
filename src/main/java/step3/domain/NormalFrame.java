@@ -16,6 +16,7 @@ public class NormalFrame implements Frame {
     private final BowlingPoints bowlingPoints;
     private final BowlingSymbols bowlingSymbols;
     private final Frame next;
+    private boolean completed;
 
     public NormalFrame(int frameNo) {
         this(frameNo, makeNext(frameNo));
@@ -26,18 +27,27 @@ public class NormalFrame implements Frame {
         this.next = next;
         this.bowlingPoints = BowlingPoints.of(MAX_PITCHES);
         this.bowlingSymbols = BowlingSymbols.of(MAX_PITCHES);
+        this.completed = false;
     }
 
     @Override
     public int pitches(int pitchesCount) throws InvalidPitchesException {
-        if (!bowlingPoints.isCompleted()) {
+        if (!isFinished()) {
             isValidPitchesCount(pitchesCount);
             bowlingPoints.push(pitchesCount);
             bowlingSymbols.push(pitchesCount);
+            updateCompleted();
+
             return pitchesCount;
         }
 
         return next.pitches(pitchesCount);
+    }
+
+    private void updateCompleted() {
+        if (bowlingPoints.size() == 2 || bowlingSymbols.getType(FIRST).equals(STRIKE)) {
+            completed = true;
+        }
     }
 
     private void isValidPitchesCount(int pitchesCount) {
@@ -105,6 +115,6 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        return bowlingPoints.isCompleted();
+        return completed;
     }
 }
