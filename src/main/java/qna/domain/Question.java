@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -57,12 +56,13 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
         validateDelete(loginUser);
+
         deleted = true;
-        List<DeleteHistory> deleteHistories = getDeleteHistories();
-        deleteHistories.addAll(answers.deleteAll());
-        return deleteHistories;
+        List<DeleteHistory> answersDeleteHistories = answers.deleteAll();
+
+        return createDeleteHistories(answersDeleteHistories);
     }
 
     private void validateDelete(User loginUser) throws CannotDeleteException {
@@ -75,9 +75,11 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private List<DeleteHistory> getDeleteHistories() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, super.getId(), writer, LocalDateTime.now()));
+    private DeleteHistories createDeleteHistories(List<DeleteHistory> answersDeleteHistories) {
+        DeleteHistories deleteHistories = new DeleteHistories();
+        DeleteHistory questionDeleteHistory = new DeleteHistory(ContentType.QUESTION, super.getId(), writer, LocalDateTime.now());
+        deleteHistories.add(questionDeleteHistory);
+        deleteHistories.addAll(answersDeleteHistories);
         return deleteHistories;
     }
 

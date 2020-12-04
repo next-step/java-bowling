@@ -1,11 +1,9 @@
 package qna.domain.mock;
 
 import qna.CannotDeleteException;
-import qna.domain.DeleteHistory;
+import qna.domain.DeleteHistories;
 import qna.domain.Question;
 import qna.domain.User;
-
-import java.util.List;
 
 public class TestQuestion extends Question {
     private boolean deleted;
@@ -16,7 +14,7 @@ public class TestQuestion extends Question {
     }
 
     @Override
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
         deleted = true;
         return super.delete(loginUser);
     }
