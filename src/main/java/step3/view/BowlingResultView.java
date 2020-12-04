@@ -1,5 +1,6 @@
 package step3.view;
 
+import step3.domain.GameHistory;
 import step3.domain.Player;
 
 import java.util.List;
@@ -24,10 +25,11 @@ public class BowlingResultView implements ResultView {
     }
 
     @Override
-    public void drawFrame(Player player, List<String> marks) {
+    public void drawFrame(Player player, GameHistory gameHistory) {
         clearStringBuilder();
         printHeader();
-        printBody(player, marks);
+        printBody(player, gameHistory.getMarks());
+        printBody(player, gameHistory.getPoints());
         System.out.println();
     }
 

@@ -17,12 +17,12 @@ public class BowlingGame {
                 .build();
     }
 
-    public static List<String> pitches(Frames frames, int pitchesCount) throws InvalidPitchesException {
+    public static GameHistory pitches(Frames frames, int pitchesCount) throws InvalidPitchesException {
         Frame frame = frames.getCursor();
         frames.updateCursor();
         frame.pitches(pitchesCount);
 
-        return frames.getMarks(frames.getHead());
+        return new GameHistory(frames.getMarks(frames.getHead()), frames.getScores(frames.getHead()));
 
     }
 }

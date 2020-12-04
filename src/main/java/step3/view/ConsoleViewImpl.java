@@ -1,6 +1,7 @@
 package step3.view;
 
 import step3.domain.Frame;
+import step3.domain.GameHistory;
 import step3.domain.Player;
 
 import java.util.List;
@@ -29,8 +30,7 @@ public class ConsoleViewImpl implements View{
     @Override
     public int getPitchesCount(Frame frame) {
         try{
-            int pitchesCount = inputView.getPitchesCount(frame);
-            return pitchesCount;
+            return inputView.getPitchesCount(frame);
         }catch(Exception error){
             System.out.println(error.getMessage());
             return getPitchesCount(frame);
@@ -47,9 +47,9 @@ public class ConsoleViewImpl implements View{
     }
 
     @Override
-    public void drawFrame(Player player, List<String> marks) {
+    public void drawFrame(Player player, GameHistory gameHistory) {
         try{
-            resultView.drawFrame(player, marks);
+            resultView.drawFrame(player, gameHistory);
         }catch(Exception error){
             System.out.println(error.getMessage());
         }

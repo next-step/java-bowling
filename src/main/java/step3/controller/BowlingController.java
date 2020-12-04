@@ -43,9 +43,9 @@ public class BowlingController {
             Frame currentFrame = frames.getCurrentFrame();
             int pitchesCount = view.getPitchesCount(currentFrame);
 
-            List<String> marks = BowlingGame.pitches(frames, pitchesCount);
+            GameHistory gameHistory = BowlingGame.pitches(frames, pitchesCount);
 
-            view.drawFrame(player, marks);
+            view.drawFrame(player, gameHistory);
         }
     }
 }
