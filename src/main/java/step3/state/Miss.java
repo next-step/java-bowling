@@ -20,7 +20,7 @@ public class Miss implements Symbol {
 
     @Override
     public String getSymbol() {
-        return String.valueOf(point);
+        return String.valueOf(getPoint());
     }
 
     @Override

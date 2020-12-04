@@ -38,7 +38,7 @@ public class Empty implements Symbol{
         if (o == null || getClass() != o.getClass()) return false;
         Empty emptySymbol = (Empty) o;
         return emptySymbol.getPoint() == Empty.point.getPoint() &&
-                Objects.equals(point, emptySymbol.getPoint());
+                Objects.equals(point.getPoint(), emptySymbol.getPoint());
     }
 
     @Override
