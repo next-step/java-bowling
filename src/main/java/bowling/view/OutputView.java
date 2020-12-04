@@ -56,14 +56,18 @@ public final class OutputView {
         List<Score> scores = frames.getResult(frameNumber);
 
         return IntStream.range(0, scores.size())
-                .mapToObj(index -> scores.get(index) == null
-                        ? null
-                        : getScoreResult(scores, index))
+                .mapToObj(index -> getScoreResult(scores, index))
                 .filter(Objects::nonNull)
                 .collect(Collectors.joining(SCORE_DELIMITER));
     }
 
     private static String getScoreResult(List<Score> scores, int index) {
+        return scores.get(index) == null
+                ? null
+                : getScoreExpression(scores, index);
+    }
+
+    private static String getScoreExpression(List<Score> scores, int index) {
         if (scores.get(index).isStrike()) {
             return BowlResult.STRIKE.getExpression();
         }
