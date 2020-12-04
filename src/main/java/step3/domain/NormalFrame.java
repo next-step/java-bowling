@@ -11,6 +11,7 @@ import static step3.type.ResultPitchesType.STRIKE;
 public class NormalFrame implements Frame {
     public static final int MAX_PITCHES = 2;
     public static final String ERROR_INVALID_PITCHES = "유효하지 않은 투구수입니다.";
+    public static final String frameType = NORMAL;
 
     private final int frameNo;
     private final BowlingPoints bowlingPoints;
@@ -74,7 +75,12 @@ public class NormalFrame implements Frame {
     @Override
     public int getScore(ResultPitchesType prevType) {
         ResultPitchesType currentType = bowlingPoints.getType();
-        if (STRIKE.equals(prevType) && STRIKE.equals(currentType)) {
+
+        if (isDouble(prevType, currentType) && next.getFrameType().equals(FINAL)) {
+            return getCurrentScore() + next.getFirstScore();
+        }
+
+        if (isDouble(prevType, currentType)) {
             return getCurrentScore() + next.getCurrentScore();
         }
         if (STRIKE.equals(prevType)) {
@@ -86,9 +92,23 @@ public class NormalFrame implements Frame {
         return 0;
     }
 
+    private boolean isDouble(ResultPitchesType prevType, ResultPitchesType currentType) {
+        return STRIKE.equals(prevType) && STRIKE.equals(currentType);
+    }
+
+    @Override
+    public ResultPitchesType getType() {
+        return bowlingPoints.getType();
+    }
+
     @Override
     public int getCurrentScore() {
         return bowlingPoints.getScore();
+    }
+
+    @Override
+    public int getFirstScore() {
+        return bowlingPoints.getScore(FIRST);
     }
 
     @Override
@@ -116,5 +136,10 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isFinished() {
         return completed;
+    }
+
+    @Override
+    public String getFrameType() {
+        return frameType;
     }
 }

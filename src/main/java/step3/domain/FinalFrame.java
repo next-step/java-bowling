@@ -10,6 +10,7 @@ import static step3.type.ResultPitchesType.STRIKE;
 public class FinalFrame implements Frame {
     public static final String ERROR_CURRENT_FRAME_IS_FINAL = "해당 프레임이 마지막 프레임입니다.";
     public static final int MAX_PITCHES = 3;
+    public static final String frameType = FINAL;
 
     private final int frameNo;
     private final BowlingPoints bowlingPoints;
@@ -64,6 +65,15 @@ public class FinalFrame implements Frame {
         return bowlingPoints.getScore(FIRST);
     }
 
+    @Override
+    public ResultPitchesType getType() {
+        return bowlingPoints.getType();
+    }
+
+    @Override
+    public int getFirstScore() {
+        return bowlingPoints.getScore(FIRST);
+    }
 
     @Override
     public int getCurrentScore() {
@@ -90,4 +100,8 @@ public class FinalFrame implements Frame {
         return completed;
     }
 
+    @Override
+    public String getFrameType() {
+        return frameType;
+    }
 }

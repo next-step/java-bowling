@@ -70,10 +70,22 @@ public class Frames {
         return list;
     }
 
+    public int getScores() {
+        Frame current = head;
+        int totalPoint = head.getScore();
+
+        while (current.hasNext()) {
+            current = current.next();
+            totalPoint += current.getScore();
+        }
+
+        return totalPoint;
+    }
+
     public List<String> getScores(Frame frame) {
         Frame current = frame;
         List<String> list = new ArrayList<>(singletonList(String.valueOf(current.getScore())));
-        int cumulativePoint = 0;
+        int cumulativePoint = current.getScore();
 
         while (current.hasNext()) {
             current = current.next();
