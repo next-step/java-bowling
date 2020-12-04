@@ -26,7 +26,7 @@ public class Question extends AbstractEntity {
     private User writer;
 
     @Embedded
-    private Answers answers2 = new Answers();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -50,7 +50,7 @@ public class Question extends AbstractEntity {
     }
 
     public void addAnswer(Answer answer) {
-        answers2.addAnswer(this, answer);
+        answers.addAnswer(this, answer);
     }
 
     public boolean isOwner(User loginUser) {
@@ -61,7 +61,7 @@ public class Question extends AbstractEntity {
         validateDelete(loginUser);
         deleted = true;
         List<DeleteHistory> deleteHistories = getDeleteHistories();
-        deleteHistories.addAll(answers2.deleteAll());
+        deleteHistories.addAll(answers.deleteAll());
         return deleteHistories;
     }
 
@@ -70,7 +70,7 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
-        if (answers2.hasOtherOwnerDifferentFrom(loginUser)) {
+        if (answers.hasOtherOwnerDifferentFrom(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
