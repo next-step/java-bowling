@@ -34,14 +34,6 @@ public class BowlingGame {
         processFinalFrame(frames, frame);
     }
 
-    private static void processFinalFrame(Frames frames, Frame frame) {
-        while (frame.canBowl()) {
-            Score score = Score.of(InputView.scanBowl(frame));
-            frame.bowl(score);
-            OutputView.printFrame(frames);
-        }
-    }
-
     private static Frame processNormalFrame(Frames frames, Frame frame) {
         Score score = Score.of(InputView.scanBowl(frame));
         frame.bowl(score);
@@ -53,6 +45,14 @@ public class BowlingGame {
             OutputView.printFrame(frames);
         }
         return frame.next();
+    }
+
+    private static void processFinalFrame(Frames frames, Frame frame) {
+        while (frame.canBowl()) {
+            Score score = Score.of(InputView.scanBowl(frame));
+            frame.bowl(score);
+            OutputView.printFrame(frames);
+        }
     }
 
 }
