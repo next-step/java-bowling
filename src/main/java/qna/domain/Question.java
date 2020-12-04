@@ -20,11 +20,6 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
-
     @Embedded
     private Answers answers2 = new Answers();
 
@@ -44,62 +39,17 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
-    public User getWriter() {
-        return writer;
-    }
-
     public Question writeBy(User loginUser) {
         this.writer = loginUser;
         return this;
     }
 
     public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
-    }
-
-    public void addAnswer2(Answer answer) {
         answers2.addAnswer(this, answer);
     }
 
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
-    }
-
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    @Override
-    public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
@@ -124,5 +74,10 @@ public class Question extends AbstractEntity {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, super.getId(), writer, LocalDateTime.now()));
         return deleteHistories;
+    }
+
+    @Override
+    public String toString() {
+        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 }

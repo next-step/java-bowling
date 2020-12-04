@@ -28,8 +28,8 @@ public class QuestionTest {
     @Test
     public void delete_다른_사람이_쓴_글() throws CannotDeleteException {
         User loginUser = UserTest.JAVAJIGI;
-        Q1.addAnswer2(AnswerTest.A1);
-        Q1.addAnswer2(AnswerTest.A2);
+        Q1.addAnswer(AnswerTest.A1);
+        Q1.addAnswer(AnswerTest.A2);
 
         assertThatExceptionOfType(CannotDeleteException.class)
                 .isThrownBy(() -> Q1.delete(loginUser))
@@ -40,7 +40,7 @@ public class QuestionTest {
     public void delete_성공_질문자_답변자_같음() throws CannotDeleteException {
         TestQuestion testQuestion = new TestQuestion("title1", "contents1");
         testQuestion.writeBy(UserTest.JAVAJIGI);
-        testQuestion.addAnswer2(AnswerTest.A1);
+        testQuestion.addAnswer(AnswerTest.A1);
 
         assertAll(
                 () -> assertThatCode(() -> testQuestion.delete(UserTest.JAVAJIGI))
@@ -52,8 +52,8 @@ public class QuestionTest {
     @Test
     public void delete_답변_중_다른_사람이_쓴_글() throws CannotDeleteException {
         User invalidLoginUser = UserTest.SANJIGI;
-        Q1.addAnswer2(AnswerTest.A1);
-        Q1.addAnswer2(AnswerTest.A2);
+        Q1.addAnswer(AnswerTest.A1);
+        Q1.addAnswer(AnswerTest.A2);
 
         assertThatExceptionOfType(CannotDeleteException.class)
                 .isThrownBy(() -> Q1.delete(invalidLoginUser))
