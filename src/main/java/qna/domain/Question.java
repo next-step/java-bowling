@@ -2,30 +2,17 @@ package qna.domain;
 
 import qna.CannotDeleteException;
 
-import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
-    @Column(length = 100, nullable = false)
-    private String title;
-
-    @Lob
-    private String contents;
-
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
-    private User writer;
-
     @Embedded
-    private Answers answers = new Answers();
+    private QuestionArticle questionArticle;
+    @Embedded
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -33,23 +20,21 @@ public class Question extends AbstractEntity {
     }
 
     public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
+        questionArticle = new QuestionArticle(title, contents);
     }
 
     public Question(long id, String title, String contents) {
         super(id);
-        this.title = title;
-        this.contents = contents;
+        questionArticle = new QuestionArticle(title, contents);
     }
 
     public Question writeBy(User loginUser) {
-        this.writer = loginUser;
+        this.questionArticle.writeBy(loginUser);
         return this;
     }
 
     User getWriter() {
-        return writer;
+        return questionArticle.getWriter();
     }
 
     public void addAnswer(Answer answer) {
@@ -57,7 +42,7 @@ public class Question extends AbstractEntity {
     }
 
     public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
+        return questionArticle.isOwner(loginUser);
     }
 
     public DeleteHistories delete(User loginUser) throws CannotDeleteException {
@@ -80,6 +65,10 @@ public class Question extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+        return "Question{" +
+                "questionArticle=" + questionArticle +
+                ", answers=" + answers +
+                ", deleted=" + deleted +
+                '}';
     }
 }
