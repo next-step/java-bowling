@@ -30,8 +30,8 @@ public class Pin {
         return map.get(count);
     }
 
-    int getCountOfPins() {
-        return countOfPins;
+    public int sum(int countOfPins) {
+        return countOfPins + this.countOfPins;
     }
 
     PinDto exportPinDto() {

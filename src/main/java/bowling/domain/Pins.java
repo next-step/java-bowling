@@ -30,8 +30,7 @@ public class Pins {
         }
         return IntStream.range(startIdx, endIdx)
                 .mapToObj(pins::get)
-                .map(Pin::getCountOfPins)
-                .reduce(0, Integer::sum);
+                .reduce(0, (acc, pin) -> pin.sum(acc), Integer::sum);
     }
 
     Pin getLast() {

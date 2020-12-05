@@ -11,8 +11,8 @@ public class PlayerStatus {
         board.update(pins);
     }
 
-    public int getLastCountOfPins() {
-        return pins.getLast().getCountOfPins();
+    public Pin getLastPin() {
+        return pins.getLast();
     }
 
     public PlayerStatusDto exportPlayerStatusDto() {

@@ -103,8 +103,8 @@ class PlayerStatusTest {
         status.addPin(Pin.of(10));
         status.addPin(Pin.of(10));
         assertAll(
-                () -> assertThat(status.getLastCountOfPins())
-                        .isEqualTo(10),
+                () -> assertThat(status.getLastPin())
+                        .isEqualTo(Pin.of(10)),
                 () -> assertThat(toRollList(status))
                         .isEqualTo(Arrays.asList(10, 10)),
                 () -> assertThat(toFrameList(status))
@@ -123,8 +123,8 @@ class PlayerStatusTest {
         status.addPin(Pin.of(1));
         status.addPin(Pin.of(9));
         assertAll(
-                () -> assertThat(status.getLastCountOfPins())
-                        .isEqualTo(9),
+                () -> assertThat(status.getLastPin())
+                        .isEqualTo(Pin.of(9)),
                 () -> assertThat(toRollList(status))
                         .isEqualTo(Arrays.asList(10, 10, 1, 9)),
                 () -> assertThat(toFrameList(status))
@@ -145,8 +145,8 @@ class PlayerStatusTest {
         status.addPin(Pin.of(4));
         status.addPin(Pin.of(5));
         assertAll(
-                () -> assertThat(status.getLastCountOfPins())
-                        .isEqualTo(5),
+                () -> assertThat(status.getLastPin())
+                        .isEqualTo(Pin.of(5)),
                 () -> assertThat(toRollList(status))
                         .isEqualTo(Arrays.asList(10, 1, 9, 4, 5)),
                 () -> assertThat(toFrameList(status))
@@ -171,8 +171,8 @@ class PlayerStatusTest {
 
         status.addPin(Pin.of(8));
         assertAll(
-                () -> assertThat(status.getLastCountOfPins())
-                        .isEqualTo(8),
+                () -> assertThat(status.getLastPin())
+                        .isEqualTo(Pin.of(8)),
                 () -> assertThat(toRollList(status))
                         .isEqualTo(Arrays.asList(10, 1, 9, 4, 5, 10, 8)),
                 () -> assertThat(toFrameList(status))
@@ -194,8 +194,8 @@ class PlayerStatusTest {
         List<FrameEnum> frameList = toFrameList(status);
         List<Integer> scoreList = toScoreList(status);
         assertAll(
-                () -> assertThat(status.getLastCountOfPins())
-                        .isEqualTo(10),
+                () -> assertThat(status.getLastPin())
+                        .isEqualTo(Pin.of(10)),
                 () -> assertThat(toRollList(status))
                         .isEqualTo(rollList),
                 () -> assertThat(frameList)
@@ -221,8 +221,8 @@ class PlayerStatusTest {
         List<FrameEnum> frameList = toFrameList(status);
         List<Integer> scoreList = toScoreList(status);
         assertAll(
-                () -> assertThat(status.getLastCountOfPins())
-                        .isEqualTo(5),
+                () -> assertThat(status.getLastPin())
+                        .isEqualTo(Pin.of(5)),
                 () -> assertThat(toRollList(status))
                         .isEqualTo(rollList),
                 () -> assertThat(frameList)
@@ -248,8 +248,8 @@ class PlayerStatusTest {
         List<FrameEnum> frameList = toFrameList(status);
         List<Integer> scoreList = toScoreList(status);
         assertAll(
-                () -> assertThat(status.getLastCountOfPins())
-                        .isEqualTo(3),
+                () -> assertThat(status.getLastPin())
+                        .isEqualTo(Pin.of(3)),
                 () -> assertThat(toRollList(status))
                         .isEqualTo(rollList),
                 () -> assertThat(frameList)

@@ -16,8 +16,8 @@ public class Bowl {
         status.addPin(pin);
     }
 
-    int getLastCountOfPins() {
-        return status.getLastCountOfPins();
+    Pin getLastPin() {
+        return status.getLastPin();
     }
 
     public boolean isPlayable(int frameNo) {

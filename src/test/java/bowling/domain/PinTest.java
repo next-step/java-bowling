@@ -35,10 +35,11 @@ class PinTest {
     }
 
     @ParameterizedTest
-    @DisplayName("getCountOfPins 테스트")
+    @DisplayName("sum 테스트")
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void getCountOfPins(int count) {
-        assertThat(Pin.of(count).getCountOfPins())
-                .isEqualTo(count);
+        int num = 100;
+        assertThat(Pin.of(count).sum(num))
+                .isEqualTo(num + count);
     }
 }

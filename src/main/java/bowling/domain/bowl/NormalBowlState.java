@@ -1,17 +1,23 @@
 package bowling.domain.bowl;
 
+import bowling.domain.Pin;
+
 import static bowling.asset.Const.MAX_FRAME_NO;
 import static bowling.asset.Const.PIN_NUM;
 
 abstract class NormalBowlState implements BowlState {
     private int countOfPins;
 
-    NormalBowlState(int countOfPins) {
-        this.countOfPins = countOfPins;
+    NormalBowlState() {
+        countOfPins = 0;
     }
 
-    void increaseCountOfPins(int countOfPins) {
-        this.countOfPins += countOfPins;
+    NormalBowlState(NormalBowlState state) {
+        countOfPins = state.countOfPins;
+    }
+
+    void increaseCountOfPins(Pin pin) {
+        countOfPins = pin.sum(countOfPins);
     }
 
     boolean isLast(int frameNo) {
