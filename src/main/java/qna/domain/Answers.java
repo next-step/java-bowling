@@ -40,8 +40,8 @@ public class Answers {
 
     public List<DeleteHistory> deleteAll() {
         return value.stream()
-                .peek(ans -> ans.setDeleted(true))
-                .map(ans -> new DeleteHistory(ContentType.ANSWER, ans.getId(), ans.getWriter(), LocalDateTime.now()))
+                .peek(Answer::deleted)
+                .map(answer -> new DeleteHistory(answer, LocalDateTime.now()))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
     }
 }

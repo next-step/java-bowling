@@ -80,7 +80,7 @@ public class Question extends AbstractEntity {
     }
 
     private DeleteHistories createDeleteHistories(List<DeleteHistory> answersDeleteHistories) {
-        DeleteHistory questionDeleteHistory = new DeleteHistory(ContentType.QUESTION, super.getId(), writer, LocalDateTime.now());
+        DeleteHistory questionDeleteHistory = new DeleteHistory(this, LocalDateTime.now());
         return DeleteHistories.of(questionDeleteHistory, answersDeleteHistories);
     }
 
