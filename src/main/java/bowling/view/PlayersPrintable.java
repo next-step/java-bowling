@@ -7,25 +7,22 @@ import java.util.Iterator;
 import java.util.List;
 
 import static bowling.asset.Const.MAX_FRAME_NO;
-import static java.util.Map.Entry;
 
-class GamePrintable extends Printable {
-    GamePrintable(GameDto gameDto) {
+class PlayersPrintable extends Printable {
+    PlayersPrintable(PlayersDto playersDto) {
         append("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-        gameDto.getGame()
-                .entrySet()
+        playersDto.getPlayers()
                 .forEach(this::append);
         append(lineSeparator);
     }
 
-    private void append(Entry<PlayerDto, PlayerStatusDto> entry) {
-        PlayerStatusDto playerStatusDto = entry.getValue();
+    private void append(PlayerDto player) {
+        PlayerStatusDto playerStatusDto = player.getStatus();
         PinsDto pinsDto = playerStatusDto.getPinsDto();
         BoardDto boardDto = playerStatusDto.getBoardDto();
 
         append(lineSeparator);
-        append(String.format("|  %s |", entry.getKey()
-                .getName()));
+        append(String.format("|  %s |", player.getName()));
         Iterator<PinDto> itr = pinsDto.getPins().iterator();
         List<FrameDto> frames = boardDto.getFramesDto()
                 .getFrames();

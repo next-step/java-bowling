@@ -9,8 +9,8 @@ public class View {
 
     private View() {}
 
-    public static void printGame(GameDto gameDto) {
-        new GamePrintable(gameDto).print();
+    public static void printPlayers(PlayersDto playersDto) {
+        new PlayersPrintable(playersDto).print();
     }
 
     public static SizeOfPlayersDto askSizeOfPlayers() {

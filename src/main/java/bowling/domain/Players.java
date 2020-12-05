@@ -24,7 +24,7 @@ public class Players {
         return playersObj;
     }
 
-    void forEach(Consumer<Player> consumer) {
+    public void forEach(Consumer<Player> consumer) {
         players.forEach(consumer);
     }
 
