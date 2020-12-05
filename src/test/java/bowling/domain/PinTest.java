@@ -19,7 +19,7 @@ class PinTest {
     }
 
     @ParameterizedTest
-    @DisplayName("count 가 같다면, of 가 리턴하는 Roll 도 같아야 한다.")
+    @DisplayName("count 가 같다면, of 가 리턴하는 Pin 도 같아야 한다.")
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void of(int count) {
         assertThat(Pin.of(count))
@@ -27,9 +27,9 @@ class PinTest {
     }
 
     @ParameterizedTest
-    @DisplayName("exportRollDto 테스트")
+    @DisplayName("exportPinDto 테스트")
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
-    void exportRollDto(int count) {
+    void exportPinDto(int count) {
         assertThat(Pin.of(count).exportPinDto().getCountOfPins())
                 .isEqualTo(count);
     }

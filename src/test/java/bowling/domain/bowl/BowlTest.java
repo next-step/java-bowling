@@ -44,13 +44,13 @@ public class BowlTest {
     @ParameterizedTest
     @DisplayName("strike 가 아닌 경우에는 true 이다.")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
-    void not_strike(int roll) {
+    void not_strike(int pin) {
         int frameNumber = 3;
         assertAll(
                 () -> {
                     assertThat(bowl.isPlayable(frameNumber))
                             .isTrue();
-                    bowl.addPin(Pin.of(roll));
+                    bowl.addPin(Pin.of(pin));
                 },
                 () -> assertThat(bowl.isPlayable(frameNumber))
                         .isTrue()
@@ -60,16 +60,16 @@ public class BowlTest {
     @ParameterizedTest
     @DisplayName("두번 치고 나면 false 를 반환 후 initial 로 되돌아간다.")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-    void twice(int roll) {
+    void twice(int pin) {
         int frameNumber = 3;
         assertAll(
                 () -> assertThat(bowl.isPlayable(frameNumber))
                         .isTrue(),
                 () -> {
-                    bowl.addPin(Pin.of(roll));
+                    bowl.addPin(Pin.of(pin));
                     assertThat(bowl.isPlayable(frameNumber))
                             .isTrue();
-                    bowl.addPin(Pin.of(roll));
+                    bowl.addPin(Pin.of(pin));
                 },
                 () -> assertThat(bowl.isPlayable(frameNumber))
                         .isFalse(),

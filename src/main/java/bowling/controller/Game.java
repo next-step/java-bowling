@@ -7,6 +7,7 @@ import bowling.dto.FrameNumberDto;
 import bowling.dto.GameDto;
 import bowling.dto.PlayerDto;
 import bowling.dto.PlayerStatusDto;
+import bowling.exception.BadSizeOfPlayersException;
 import bowling.view.View;
 
 import java.util.LinkedHashMap;
@@ -18,8 +19,15 @@ class Game {
     private final Map<Player, Bowl> map = new LinkedHashMap<>();
     private int frameNumber = 1;
 
-    void addPlayer(Player player) {
-        map.put(player, new Bowl());
+    Game() {
+        // int sizeOfPlayers = View.askSizeOfPlayers().getSize();
+        int sizeOfPlayers = 1;
+        if (sizeOfPlayers < 1) {
+            throw new BadSizeOfPlayersException("플레이어는 한명 이상이어야 합니다.");
+        }
+        for (int i = 0; i < sizeOfPlayers; i++) {
+            map.put(getPlayer(), new Bowl());
+        }
     }
 
     void play() {
@@ -32,19 +40,26 @@ class Game {
     private void play(Player player, Bowl bowl) {
         while (bowl.isPlayable(frameNumber)) {
             bowl.addPin(
-                    getRoll(new FrameNumberDto(frameNumber)) // getRoll(player.exportPlayerDto())
+                    // getPin(player)
+                    getPin(frameNumber)
             );
             View.printGame(exportGameDto());
         }
     }
 
-    private Pin getRoll(FrameNumberDto frameNumberDto) {
-        return Pin.of(View.askRoll(frameNumberDto)
+    private Player getPlayer() {
+        return new Player(View.askName()
+                .getName()
+        );
+    }
+
+    private Pin getPin(int frameNumber) {
+        return Pin.of(View.askPin(new FrameNumberDto(frameNumber))
                 .getCountOfPins());
     }
 
-    private Pin getRoll(PlayerDto playerDto) {
-        return Pin.of(View.askRoll(playerDto)
+    private Pin getPin(Player player) {
+        return Pin.of(View.askPin(player.exportPlayerDto())
                 .getCountOfPins());
     }
 

@@ -18,18 +18,18 @@ public class View {
         return new SizeOfPlayersDto(nextInt());
     }
 
-    public static PlayerDto askPlayer() {
-        new AskPlayerPrintable().print();
-        return new PlayerDto(nextLine());
+    public static NameDto askName() {
+        new AskNamePrintable().print();
+        return new NameDto(nextLine());
     }
 
-    public static PinDto askRoll(FrameNumberDto frameNumberDto) {
-        new AskRollPrintable(frameNumberDto).print();
+    public static PinDto askPin(FrameNumberDto frameNumberDto) {
+        new AskPinPrintable(frameNumberDto).print();
         return new PinDto(nextInt());
     }
 
-    public static PinDto askRoll(PlayerDto playerDto) {
-        new AskRollPrintable(playerDto).print();
+    public static PinDto askPin(PlayerDto playerDto) {
+        new AskPinPrintable(playerDto).print();
         return new PinDto(nextInt());
     }
 

@@ -32,10 +32,10 @@ class PlayerStatusTest {
         status = new PlayerStatus();
     }
 
-    private List<Integer> toRollList(PlayerStatus status) {
+    private List<Integer> toPinList(PlayerStatus status) {
         return status.exportPlayerStatusDto()
-                .getRollsDto()
-                .getRolls()
+                .getPinsDto()
+                .getPins()
                 .stream()
                 .map(PinDto::getCountOfPins)
                 .collect(toList());
@@ -62,24 +62,24 @@ class PlayerStatusTest {
     }
 
     @ParameterizedTest
-    @DisplayName("핀 갯수가 음수이면, RollException 이 발생한다.")
+    @DisplayName("핀 갯수가 음수이면, PinException 이 발생한다.")
     @CsvSource(value = {"-8$3", "10$-1", "11$3", "4$12"}, delimiter = '$')
-    void scenario_negative(int roll1, int roll2) {
+    void scenario_negative(int pin1, int pin2) {
         assertThatExceptionOfType(PinException.class)
                 .isThrownBy(() -> {
-                    status.addPin(Pin.of(roll1));
-                    status.addPin(Pin.of(roll2));
+                    status.addPin(Pin.of(pin1));
+                    status.addPin(Pin.of(pin2));
                 }).withMessage("핀의 개수는 0 이상 10 이하여야 합니다.");
     }
 
     @ParameterizedTest
     @DisplayName("적절하지 않은 핀 갯수이면, BadCountOfPinsException 이 발생한다.")
     @CsvSource(value = {"9$2", "4$7"}, delimiter = '$')
-    void scenario_badCountOfPins(int roll1, int roll2) {
+    void scenario_badCountOfPins(int pin1, int pin2) {
         assertThatExceptionOfType(BadCountOfPinsException.class)
                 .isThrownBy(() -> {
-                    status.addPin(Pin.of(roll1));
-                    status.addPin(Pin.of(roll2));
+                    status.addPin(Pin.of(pin1));
+                    status.addPin(Pin.of(pin2));
                 }).withMessage("한 프레임에서 쓰러트린 핀의 개수는 0 이상 10 이하여야 합니다.");
     }
 
@@ -87,7 +87,7 @@ class PlayerStatusTest {
     @DisplayName("볼링을 치지 않은 시나리오 테스트")
     void scenario_empty() {
         assertAll(
-                () -> assertThat(toRollList(status))
+                () -> assertThat(toPinList(status))
                         .isEqualTo(emptyList()),
                 () -> assertThat(toFrameList(status))
                         .isEqualTo(emptyList()),
@@ -105,7 +105,7 @@ class PlayerStatusTest {
         assertAll(
                 () -> assertThat(status.getLastPin())
                         .isEqualTo(Pin.of(10)),
-                () -> assertThat(toRollList(status))
+                () -> assertThat(toPinList(status))
                         .isEqualTo(Arrays.asList(10, 10)),
                 () -> assertThat(toFrameList(status))
                         .isEqualTo(Arrays.asList(STRIKE, STRIKE)),
@@ -125,7 +125,7 @@ class PlayerStatusTest {
         assertAll(
                 () -> assertThat(status.getLastPin())
                         .isEqualTo(Pin.of(9)),
-                () -> assertThat(toRollList(status))
+                () -> assertThat(toPinList(status))
                         .isEqualTo(Arrays.asList(10, 10, 1, 9)),
                 () -> assertThat(toFrameList(status))
                         .isEqualTo(Arrays.asList(STRIKE, STRIKE, SPARE)),
@@ -147,7 +147,7 @@ class PlayerStatusTest {
         assertAll(
                 () -> assertThat(status.getLastPin())
                         .isEqualTo(Pin.of(5)),
-                () -> assertThat(toRollList(status))
+                () -> assertThat(toPinList(status))
                         .isEqualTo(Arrays.asList(10, 1, 9, 4, 5)),
                 () -> assertThat(toFrameList(status))
                         .isEqualTo(Arrays.asList(STRIKE, SPARE, MISS)),
@@ -173,7 +173,7 @@ class PlayerStatusTest {
         assertAll(
                 () -> assertThat(status.getLastPin())
                         .isEqualTo(Pin.of(8)),
-                () -> assertThat(toRollList(status))
+                () -> assertThat(toPinList(status))
                         .isEqualTo(Arrays.asList(10, 1, 9, 4, 5, 10, 8)),
                 () -> assertThat(toFrameList(status))
                         .isEqualTo(Arrays.asList(STRIKE, SPARE, MISS, STRIKE, UNFINISHED)),
@@ -185,19 +185,19 @@ class PlayerStatusTest {
     @Test
     @DisplayName("STRIKE 100번 추가하는 시나리오 테스트")
     void scenario_strike_100() {
-        List<Integer> rollList = new LinkedList<>();
-        int roll = 10;
+        List<Integer> pinList = new LinkedList<>();
+        int pin = 10;
         for (int i = 0; i < 100; i++) {
-            status.addPin(Pin.of(roll));
-            rollList.add(roll);
+            status.addPin(Pin.of(pin));
+            pinList.add(pin);
         }
         List<FrameEnum> frameList = toFrameList(status);
         List<Integer> scoreList = toScoreList(status);
         assertAll(
                 () -> assertThat(status.getLastPin())
                         .isEqualTo(Pin.of(10)),
-                () -> assertThat(toRollList(status))
-                        .isEqualTo(rollList),
+                () -> assertThat(toPinList(status))
+                        .isEqualTo(pinList),
                 () -> assertThat(frameList)
                         .isEqualTo(Arrays.asList(STRIKE, STRIKE, STRIKE, STRIKE, STRIKE, STRIKE, STRIKE, STRIKE, STRIKE, STRIKE)),
                 () -> assertThat(scoreList)
@@ -212,19 +212,19 @@ class PlayerStatusTest {
     @Test
     @DisplayName("SPARE 100번 추가하는 시나리오 테스트")
     void scenario_spare_100() {
-        List<Integer> rollList = new LinkedList<>();
-        int roll = 5;
+        List<Integer> pinList = new LinkedList<>();
+        int pin = 5;
         for (int i = 0; i < 100; i++) {
-            status.addPin(Pin.of(roll));
-            rollList.add(roll);
+            status.addPin(Pin.of(pin));
+            pinList.add(pin);
         }
         List<FrameEnum> frameList = toFrameList(status);
         List<Integer> scoreList = toScoreList(status);
         assertAll(
                 () -> assertThat(status.getLastPin())
                         .isEqualTo(Pin.of(5)),
-                () -> assertThat(toRollList(status))
-                        .isEqualTo(rollList),
+                () -> assertThat(toPinList(status))
+                        .isEqualTo(pinList),
                 () -> assertThat(frameList)
                         .isEqualTo(Arrays.asList(SPARE, SPARE, SPARE, SPARE, SPARE, SPARE, SPARE, SPARE, SPARE, SPARE)),
                 () -> assertThat(scoreList)
@@ -239,19 +239,19 @@ class PlayerStatusTest {
     @Test
     @DisplayName("MISS 100번 추가하는 시나리오 테스트")
     void scenario_miss_100() {
-        List<Integer> rollList = new LinkedList<>();
-        int roll = 3;
+        List<Integer> pinList = new LinkedList<>();
+        int pin = 3;
         for (int i = 0; i < 100; i++) {
-            status.addPin(Pin.of(roll));
-            rollList.add(roll);
+            status.addPin(Pin.of(pin));
+            pinList.add(pin);
         }
         List<FrameEnum> frameList = toFrameList(status);
         List<Integer> scoreList = toScoreList(status);
         assertAll(
                 () -> assertThat(status.getLastPin())
                         .isEqualTo(Pin.of(3)),
-                () -> assertThat(toRollList(status))
-                        .isEqualTo(rollList),
+                () -> assertThat(toPinList(status))
+                        .isEqualTo(pinList),
                 () -> assertThat(frameList)
                         .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS)),
                 () -> assertThat(scoreList)

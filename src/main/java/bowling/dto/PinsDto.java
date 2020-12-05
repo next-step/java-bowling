@@ -3,13 +3,13 @@ package bowling.dto;
 import java.util.List;
 
 public class PinsDto {
-    private final List<PinDto> rolls;
+    private final List<PinDto> pins;
 
-    public PinsDto(List<PinDto> rolls) {
-        this.rolls = rolls;
+    public PinsDto(List<PinDto> pins) {
+        this.pins = pins;
     }
 
-    public List<PinDto> getRolls() {
-        return rolls;
+    public List<PinDto> getPins() {
+        return pins;
     }
 }

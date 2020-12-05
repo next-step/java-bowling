@@ -52,7 +52,7 @@ class PinsTest {
     }
 
     @ParameterizedTest
-    @DisplayName("sum 에서 index 의 범위가 벗어나면, RollsOutOfRangeException 이 발생한다.")
+    @DisplayName("sum 에서 index 의 범위가 벗어나면, PinsOutOfRangeException 이 발생한다.")
     @CsvSource(value = {"-1$5", "0$-3", "100$1000"}, delimiter = '$')
     void sum_exception(int startIdx, int offset) {
         assertThatExceptionOfType(PinsOutOfRangeException.class)
@@ -61,10 +61,10 @@ class PinsTest {
     }
 
     @Test
-    @DisplayName("exportRollsDto 테스트")
-    void exportRollsDto() {
+    @DisplayName("exportPinsDto 테스트")
+    void exportPinsDto() {
         assertThat(pins.exportPinsDto()
-                .getRolls()
+                .getPins()
                 .stream()
                 .map(PinDto::getCountOfPins)
                 .collect(toList())

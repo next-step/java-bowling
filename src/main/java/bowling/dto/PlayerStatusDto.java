@@ -9,7 +9,7 @@ public class PlayerStatusDto {
         this.boardDto = boardDto;
     }
 
-    public PinsDto getRollsDto() {
+    public PinsDto getPinsDto() {
         return pinsDto;
     }
 

@@ -32,7 +32,7 @@ class BoardTest {
         board = new Board();
     }
 
-    private void addRoll(Pin pin) {
+    private void addPin(Pin pin) {
         pins.add(pin);
         board.update(pins);
     }
@@ -56,24 +56,24 @@ class BoardTest {
     }
 
     @ParameterizedTest
-    @DisplayName("핀 갯수가 음수이면, RollException 이 발생한다.")
+    @DisplayName("핀 갯수가 음수이면, PinException 이 발생한다.")
     @CsvSource(value = {"-8$3", "10$-1", "11$3", "4$12"}, delimiter = '$')
-    void scenario_negative(int roll1, int roll2) {
+    void scenario_negative(int pin1, int pin2) {
         assertThatExceptionOfType(PinException.class)
                 .isThrownBy(() -> {
-                    addRoll(Pin.of(roll1));
-                    addRoll(Pin.of(roll2));
+                    addPin(Pin.of(pin1));
+                    addPin(Pin.of(pin2));
                 }).withMessage("핀의 개수는 0 이상 10 이하여야 합니다.");
     }
 
     @ParameterizedTest
     @DisplayName("적절하지 않은 핀 갯수이면, BadCountOfPinsException 이 발생한다.")
     @CsvSource(value = {"9$2", "4$7"}, delimiter = '$')
-    void scenario_badCountOfPins(int roll1, int roll2) {
+    void scenario_badCountOfPins(int pin1, int pin2) {
         assertThatExceptionOfType(BadCountOfPinsException.class)
                 .isThrownBy(() -> {
-                    addRoll(Pin.of(roll1));
-                    addRoll(Pin.of(roll2));
+                    addPin(Pin.of(pin1));
+                    addPin(Pin.of(pin2));
                 }).withMessage("한 프레임에서 쓰러트린 핀의 개수는 0 이상 10 이하여야 합니다.");
     }
 
@@ -92,8 +92,8 @@ class BoardTest {
     @Test
     @DisplayName("STRIKE 를 두번 치는 시나리오 테스트")
     void scenario_strike() {
-        addRoll(Pin.of(10));
-        addRoll(Pin.of(10));
+        addPin(Pin.of(10));
+        addPin(Pin.of(10));
         assertAll(
                 () -> assertThat(toFrameList(board))
                         .isEqualTo(Arrays.asList(STRIKE, STRIKE)),
@@ -105,11 +105,11 @@ class BoardTest {
     @Test
     @DisplayName("STRIKE, STRIKE, SPARE 를 치는 시나리오 테스트")
     void scenario_strike_spare() {
-        addRoll(Pin.of(10));
-        addRoll(Pin.of(10));
+        addPin(Pin.of(10));
+        addPin(Pin.of(10));
 
-        addRoll(Pin.of(1));
-        addRoll(Pin.of(9));
+        addPin(Pin.of(1));
+        addPin(Pin.of(9));
         assertAll(
                 () -> assertThat(toFrameList(board))
                         .isEqualTo(Arrays.asList(STRIKE, STRIKE, SPARE)),
@@ -121,13 +121,13 @@ class BoardTest {
     @Test
     @DisplayName("STRIKE, SPARE, MISS 를 치는 시나리오 테스트")
     void scenario_strike_spare_miss() {
-        addRoll(Pin.of(10));
+        addPin(Pin.of(10));
 
-        addRoll(Pin.of(1));
-        addRoll(Pin.of(9));
+        addPin(Pin.of(1));
+        addPin(Pin.of(9));
 
-        addRoll(Pin.of(4));
-        addRoll(Pin.of(5));
+        addPin(Pin.of(4));
+        addPin(Pin.of(5));
         assertAll(
                 () -> assertThat(toFrameList(board))
                         .isEqualTo(Arrays.asList(STRIKE, SPARE, MISS)),
@@ -139,17 +139,17 @@ class BoardTest {
     @Test
     @DisplayName("UNFINISHED 시나리오 테스트")
     void scenario_unfinished() {
-        addRoll(Pin.of(10));
+        addPin(Pin.of(10));
 
-        addRoll(Pin.of(1));
-        addRoll(Pin.of(9));
+        addPin(Pin.of(1));
+        addPin(Pin.of(9));
 
-        addRoll(Pin.of(4));
-        addRoll(Pin.of(5));
+        addPin(Pin.of(4));
+        addPin(Pin.of(5));
 
-        addRoll(Pin.of(10));
+        addPin(Pin.of(10));
 
-        addRoll(Pin.of(8));
+        addPin(Pin.of(8));
         assertAll(
                 () -> assertThat(toFrameList(board))
                         .isEqualTo(Arrays.asList(STRIKE, SPARE, MISS, STRIKE, UNFINISHED)),
@@ -162,7 +162,7 @@ class BoardTest {
     @DisplayName("STRIKE 100번 추가하는 시나리오 테스트")
     void scenario_strike_100() {
         for (int i = 0; i < 100; i++) {
-            addRoll(Pin.of(10));
+            addPin(Pin.of(10));
         }
         List<FrameEnum> frameList = toFrameList(board);
         List<Integer> scoreList = toScoreList(board);
@@ -182,7 +182,7 @@ class BoardTest {
     @DisplayName("SPARE 100번 추가하는 시나리오 테스트")
     void scenario_spare_100() {
         for (int i = 0; i < 100; i++) {
-            addRoll(Pin.of(5));
+            addPin(Pin.of(5));
         }
         List<FrameEnum> frameList = toFrameList(board);
         List<Integer> scoreList = toScoreList(board);
@@ -202,7 +202,7 @@ class BoardTest {
     @DisplayName("MISS 100번 추가하는 시나리오 테스트")
     void scenario_miss_100() {
         for (int i = 0; i < 100; i++) {
-            addRoll(Pin.of(3));
+            addPin(Pin.of(3));
         }
         List<FrameEnum> frameList = toFrameList(board);
         List<Integer> scoreList = toScoreList(board);

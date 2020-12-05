@@ -20,16 +20,16 @@ class GamePrintable extends Printable {
 
     private void append(Entry<PlayerDto, PlayerStatusDto> entry) {
         PlayerStatusDto playerStatusDto = entry.getValue();
-        PinsDto pinsDto = playerStatusDto.getRollsDto();
+        PinsDto pinsDto = playerStatusDto.getPinsDto();
         BoardDto boardDto = playerStatusDto.getBoardDto();
 
         append(lineSeparator);
         append(String.format("|  %s |", entry.getKey()
                 .getName()));
-        Iterator<PinDto> rollItr = pinsDto.getRolls().iterator();
+        Iterator<PinDto> itr = pinsDto.getPins().iterator();
         List<FrameDto> frames = boardDto.getFramesDto()
                 .getFrames();
-        frames.forEach(frameDto -> append(frameDto, rollItr));
+        frames.forEach(frameDto -> append(frameDto, itr));
         appendBlank(frames.size());
 
         append(lineSeparator);
@@ -46,25 +46,25 @@ class GamePrintable extends Printable {
         }
     }
 
-    private void append(FrameDto frameDto, Iterator<PinDto> rollItr) {
+    private void append(FrameDto frameDto, Iterator<PinDto> itr) {
         FrameEnum frameEnum = frameDto.getFrameEnum();
         String str = "";
         if (frameEnum == FrameEnum.STRIKE) {
             str = " X";
-            rollItr.next();
+            itr.next();
         }
         if (frameEnum == FrameEnum.SPARE) {
             str = String.format("%s|/",
-                    rollToStr(rollItr.next()));
-            rollItr.next();
+                    toString(itr.next()));
+            itr.next();
         }
         if (frameEnum == FrameEnum.MISS) {
             str = String.format("%s|%s",
-                    rollToStr(rollItr.next()),
-                    rollToStr(rollItr.next()));
+                    toString(itr.next()),
+                    toString(itr.next()));
         }
         if (frameEnum == FrameEnum.UNFINISHED) {
-            str = rollToStr(rollItr.next());
+            str = toString(itr.next());
         }
         append(spacing(str));
     }
@@ -75,7 +75,7 @@ class GamePrintable extends Printable {
         )));
     }
 
-    private String rollToStr(PinDto pinDto) {
+    private String toString(PinDto pinDto) {
         int count = pinDto.getCountOfPins();
         return count <= 0
                 ? "-"
