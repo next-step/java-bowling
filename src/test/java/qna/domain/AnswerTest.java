@@ -8,17 +8,18 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnswerTest {
-    
-    public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-    public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
+
 
     @Test
     @DisplayName("답변 삭제")
     public void deleteSelf() {
-        LocalDateTime deleteDate=LocalDateTime.now();
-        DeleteHistory deleteHistory = A1.deleteSelf(deleteDate);
+        User user = new User();
+        Answer answer = new Answer(user, new Question().writeBy(user), "Answers Contents1");
+        LocalDateTime deleteDate = LocalDateTime.now();
 
-        DeleteHistory deleteHistoryExpected = new DeleteHistory(ContentType.ANSWER, A1.getId(), UserTest.JAVAJIGI, deleteDate);
+        DeleteHistory deleteHistory = answer.deleteSelf(deleteDate);
+
+        DeleteHistory deleteHistoryExpected = new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), deleteDate);
         assertThat(deleteHistory).isEqualTo(deleteHistoryExpected);
     }
 }

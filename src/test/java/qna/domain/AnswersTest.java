@@ -4,26 +4,25 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static qna.domain.AnswerTest.A1;
-import static qna.domain.AnswerTest.A2;
 
 class AnswersTest {
 
-    private static final List<Answer> answerList = Arrays.asList(A1, A2);
-
     @Test
     void deleteSelf() {
-        Answers answers = new Answers(answerList);
+        User writer = new User();
+        Question question = new Question();
+        Answer answer1 = new Answer(writer, question, "Answers Contents1");
+        Answer answer2 = new Answer(writer, question, "Answers Contents2");
+        Answers answers = new Answers(Arrays.asList(answer1, answer2));
         LocalDateTime deleteDate = LocalDateTime.now();
 
         DeleteHistories deleteHistories = answers.deleteSelf(deleteDate);
 
         DeleteHistories deleteHistoriesExpected = new DeleteHistories(Arrays.asList(
-                new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), deleteDate),
-                new DeleteHistory(ContentType.ANSWER, A2.getId(), A2.getWriter(), deleteDate)));
+                new DeleteHistory(ContentType.ANSWER, answer1.getId(), answer1.getWriter(), deleteDate),
+                new DeleteHistory(ContentType.ANSWER, answer2.getId(), answer2.getWriter(), deleteDate)));
         assertThat(deleteHistories).isEqualTo(deleteHistoriesExpected);
     }
 }
