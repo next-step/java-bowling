@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Answer extends AbstractEntity implements DeleteHistoryRecordable {
+public class Answer extends AbstractEntity {
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -52,8 +52,8 @@ public class Answer extends AbstractEntity implements DeleteHistoryRecordable {
     }
 
     public DeleteHistory deleteSelf(LocalDateTime deleteDate) {
-        setDeleted();
-        return DeleteHistory.from(this, deleteDate);
+        setDeleted(true);
+        return new DeleteHistory(contentType, getId(), writer, deleteDate);
     }
 
     public boolean isDeleted() {
@@ -70,10 +70,6 @@ public class Answer extends AbstractEntity implements DeleteHistoryRecordable {
 
     public User getWriter() {
         return writer;
-    }
-
-    public String getContents() {
-        return contents;
     }
 
     public void toQuestion(Question question) {

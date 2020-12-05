@@ -32,7 +32,8 @@ public class QuestionTest {
 
         DeleteHistories deleteHistories = question.deleteSelf(javajigi, now);
 
-        DeleteHistories deleteHistoriesExpected = new DeleteHistories(Collections.singletonList(DeleteHistory.from(question, now)));
+        DeleteHistory deleteHistory = new DeleteHistory(question.getContentType(), question.getId(), question.getWriter(), now);
+        DeleteHistories deleteHistoriesExpected = new DeleteHistories(Collections.singletonList(deleteHistory));
         assertThat(deleteHistories).isEqualTo(deleteHistoriesExpected);
     }
 
@@ -44,7 +45,9 @@ public class QuestionTest {
 
         DeleteHistories deleteHistories = question.deleteSelf(javajigi, now);
 
-        DeleteHistories deleteHistoriesExpected = new DeleteHistories(Arrays.asList(DeleteHistory.from(question, now), DeleteHistory.from(answer, now)));
+        DeleteHistory questionDeleteHistory = new DeleteHistory(question.getContentType(), question.getId(), question.getWriter(), now);
+        DeleteHistory answerDeleteHistory = new DeleteHistory(answer.getContentType(), answer.getId(), answer.getWriter(), now);
+        DeleteHistories deleteHistoriesExpected = new DeleteHistories(Arrays.asList(questionDeleteHistory, answerDeleteHistory));
         assertThat(deleteHistories).isEqualTo(deleteHistoriesExpected);
     }
 

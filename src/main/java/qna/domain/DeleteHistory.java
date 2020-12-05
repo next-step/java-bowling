@@ -31,11 +31,6 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public static DeleteHistory from(DeleteHistoryRecordable deleteHistoryRecordable, LocalDateTime createDate) {
-        return new DeleteHistory(deleteHistoryRecordable.getContentType(), deleteHistoryRecordable.getId(),
-                deleteHistoryRecordable.getWriter(), createDate);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

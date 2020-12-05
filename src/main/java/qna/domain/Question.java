@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
-public class Question extends AbstractEntity implements DeleteHistoryRecordable {
+public class Question extends AbstractEntity {
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -71,7 +71,7 @@ public class Question extends AbstractEntity implements DeleteHistoryRecordable 
         checkIsWriter(loginUser);
 
         setDeleted(true);
-        DeleteHistory questionDeleteHistory = DeleteHistory.from(this, deleteDate);
+        DeleteHistory questionDeleteHistory = new DeleteHistory(contentType, getId(), writer, deleteDate);
         DeleteHistories deleteHistories = new DeleteHistories(Collections.singletonList(questionDeleteHistory));
 
         DeleteHistories answerDeleteHistories = deleteAnswers(loginUser, deleteDate);
