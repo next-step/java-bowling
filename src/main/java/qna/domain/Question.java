@@ -1,13 +1,16 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
-public class Question extends AbstractEntity {
+public class Question extends AbstractEntity implements DeleteHistoryRecordable {
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -25,6 +28,9 @@ public class Question extends AbstractEntity {
 
     private boolean deleted = false;
 
+    @Transient
+    private ContentType contentType = ContentType.QUESTION;
+
     public Question() {
     }
 
@@ -39,22 +45,8 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
+    public ContentType getContentType() {
+        return contentType;
     }
 
     public User getWriter() {
@@ -75,13 +67,47 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public DeleteHistories deleteSelf(User loginUser, LocalDateTime deleteDate) throws CannotDeleteException {
+        checkDeletable(loginUser);
+
+        setDeleted(true);
+        DeleteHistory questionDeleteHistory = DeleteHistory.from(this, deleteDate);
+        DeleteHistories deleteHistories = new DeleteHistories(Collections.singletonList(questionDeleteHistory));
+
+        DeleteHistories answerDeleteHistories = deleteAnswers(deleteDate);
+        return deleteHistories.join(answerDeleteHistories);
+    }
+
+    private DeleteHistories deleteAnswers(LocalDateTime deleteDate) {
+        Answers answers = new Answers(getAnswers());
+        return answers.deleteSelf(deleteDate);
+    }
+
+    private void checkDeletable(User loginUser) throws CannotDeleteException {
+        checkIsWriter(loginUser);
+        checkHavingOtherAnswerWriter(loginUser);
+    }
+
+    private void checkHavingOtherAnswerWriter(User loginUser) throws CannotDeleteException {
+        boolean hasOtherAnswerOwner = getAnswers().stream().anyMatch(answer -> !answer.isOwner(loginUser));
+        if (hasOtherAnswerOwner) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
+    private void checkIsWriter(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
     }
 
     public boolean isDeleted() {
         return deleted;
+    }
+
+    public Question setDeleted(boolean deleted) {
+        this.deleted = deleted;
+        return this;
     }
 
     public List<Answer> getAnswers() {
