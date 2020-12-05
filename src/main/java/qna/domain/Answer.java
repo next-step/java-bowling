@@ -4,6 +4,7 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -20,6 +21,9 @@ public class Answer extends AbstractEntity {
 
     private boolean deleted = false;
 
+    @Transient
+    private ContentType contentType = ContentType.ANSWER;
+
     public Answer() {
     }
 
@@ -30,11 +34,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -43,13 +47,21 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public ContentType getContentType() {
+        return contentType;
+    }
+
+    public DeleteHistory deleteSelf(LocalDateTime deleteDate) {
+        setDeleted(true);
+        return new DeleteHistory(contentType, getId(), writer, deleteDate);
     }
 
     public boolean isDeleted() {
         return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public boolean isOwner(User writer) {
@@ -58,10 +70,6 @@ public class Answer extends AbstractEntity {
 
     public User getWriter() {
         return writer;
-    }
-
-    public String getContents() {
-        return contents;
     }
 
     public void toQuestion(Question question) {
