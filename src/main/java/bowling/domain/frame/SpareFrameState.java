@@ -17,20 +17,20 @@ public class SpareFrameState implements FrameState {
     }
 
     @Override
-    public int getScore(Frame context, Pins pins) {
+    public int getScore(Frame frame, Pins pins) {
         return pins.sum(
-                context.getPinsIndex(),
+                frame.getPinsIndex(),
                 offset
         );
     }
 
     @Override
-    public boolean hasScore(Frame context, Pins pins) {
-        return context.getPinsIndex() + offset <= pins.size();
+    public boolean hasScore(Frame frame, Pins pins) {
+        return frame.getPinsIndex() + offset <= pins.size();
     }
 
     @Override
-    public void update(Frame context, Pins pins) {}
+    public void update(Frame frame, Pins pins) {}
 
     private static class SingletonHelper {
         private static final SpareFrameState instance = new SpareFrameState();

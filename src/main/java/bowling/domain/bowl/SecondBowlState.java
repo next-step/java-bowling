@@ -6,13 +6,13 @@ public class SecondBowlState extends NormalBowlState {
     }
 
     @Override
-    public boolean isPlayable(Bowl context, int frameNo) {
-        increaseCountOfPins(context.getLastPin());
+    public boolean isPlayable(Bowl bowl, int frameNo) {
+        increaseCountOfPins(bowl.getLastPin());
         boolean isLast = isLast(frameNo);
         BowlState nextState = isLast
                 ? GameOverBowlState.getInstance()
                 : ReadyBowlState.getInstance();
-        context.setState(nextState);
+        bowl.setState(nextState);
         return isLast && isAllPinDown();
     }
 }

@@ -12,9 +12,9 @@ public class Frame {
     }
 
     public static Frame of(Pins pins) {
-        Frame context = new Frame(pins.size() - 1);
-        context.update(pins);
-        return context;
+        Frame frame = new Frame(pins.size() - 1);
+        frame.update(pins);
+        return frame;
     }
 
     void setState(FrameState state) {

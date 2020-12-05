@@ -10,7 +10,7 @@ public class GameOverFramesState implements FramesState {
     }
 
     @Override
-    public void update(Frames context, Pins pins) {}
+    public void update(Frames frames, Pins pins) {}
 
     private static class SingletonHelper {
         private static final GameOverFramesState instance = new GameOverFramesState();

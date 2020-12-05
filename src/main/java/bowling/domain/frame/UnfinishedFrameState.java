@@ -18,25 +18,25 @@ public class UnfinishedFrameState implements FrameState {
     }
 
     @Override
-    public int getScore(Frame context, Pins pins) {
+    public int getScore(Frame frame, Pins pins) {
         return -1;
     }
 
     @Override
-    public boolean hasScore(Frame context, Pins pins) {
+    public boolean hasScore(Frame frame, Pins pins) {
         return false;
     }
 
     @Override
-    public void update(Frame context, Pins pins) {
-        int countOfPins = pins.sum(context.getPinsIndex(), 2);
+    public void update(Frame frame, Pins pins) {
+        int countOfPins = pins.sum(frame.getPinsIndex(), 2);
         if (countOfPins < 0 || countOfPins > PIN_NUM) {
             throw new BadCountOfPinsException("한 프레임에서 쓰러트린 핀의 개수는 0 이상 10 이하여야 합니다.");
         }
         FrameState nextState = countOfPins == PIN_NUM
                 ? SpareFrameState.getInstance()
                 : MissFrameState.getInstance();
-        context.setState(nextState);
+        frame.setState(nextState);
     }
 
     private static class SingletonHelper {

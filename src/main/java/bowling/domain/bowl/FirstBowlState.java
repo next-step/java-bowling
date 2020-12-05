@@ -2,8 +2,8 @@ package bowling.domain.bowl;
 
 public class FirstBowlState extends NormalBowlState {
     @Override
-    public boolean isPlayable(Bowl context, int frameNo) {
-        increaseCountOfPins(context.getLastPin());
+    public boolean isPlayable(Bowl bowl, int frameNo) {
+        increaseCountOfPins(bowl.getLastPin());
         boolean isLast = isLast(frameNo);
         boolean isAllPinDown = isAllPinDown();
         BowlState nextState = isLast && isAllPinDown
@@ -11,7 +11,7 @@ public class FirstBowlState extends NormalBowlState {
                 : isAllPinDown
                 ? ReadyBowlState.getInstance()
                 : new SecondBowlState(this);
-        context.setState(nextState);
+        bowl.setState(nextState);
         return !isAllPinDown || isLast;
     }
 }

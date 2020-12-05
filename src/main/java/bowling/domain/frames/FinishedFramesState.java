@@ -14,15 +14,15 @@ public class FinishedFramesState implements FramesState {
     }
 
     @Override
-    public void update(Frames context, Pins pins) {
+    public void update(Frames frames, Pins pins) {
         Frame frame = Frame.of(pins);
-        context.addFrame(frame);
+        frames.addFrame(frame);
         FramesState nextState = frame.getFrameEnum() == FrameEnum.UNFINISHED
                 ? UnfinishedFramesState.getInstance()
-                : context.size() < MAX_FRAME_NO
+                : frames.size() < MAX_FRAME_NO
                 ? FinishedFramesState.getInstance()
                 : GameOverFramesState.getInstance();
-        context.setState(nextState);
+        frames.setState(nextState);
     }
 
     private static class SingletonHelper {

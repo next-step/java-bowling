@@ -8,9 +8,9 @@ class NormalScoresState extends ScoresState {
     }
 
     @Override
-    void accumulate(Scores context, Score score) {
-        context.addScore(
-                context.getLast().sum(score)
+    void accumulate(Scores scores, Score score) {
+        scores.addScore(
+                scores.getLast().sum(score)
         );
     }
 

@@ -8,7 +8,7 @@ public class GameOverBowlState implements BowlState {
     }
 
     @Override
-    public boolean isPlayable(Bowl context, int frameNo) {
+    public boolean isPlayable(Bowl bowl, int frameNo) {
         return false;
     }
 

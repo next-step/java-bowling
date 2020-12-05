@@ -8,8 +8,8 @@ public class ReadyBowlState implements BowlState {
     }
 
     @Override
-    public boolean isPlayable(Bowl context, int frameNo) {
-        context.setState(new FirstBowlState());
+    public boolean isPlayable(Bowl bowl, int frameNo) {
+        bowl.setState(new FirstBowlState());
         return true;
     }
 

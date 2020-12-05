@@ -8,9 +8,9 @@ class EmptyScoresState extends ScoresState {
     }
 
     @Override
-    void accumulate(Scores context, Score score) {
-        context.addScore(score);
-        context.setState(NormalScoresState.getInstance());
+    void accumulate(Scores scores, Score score) {
+        scores.addScore(score);
+        scores.setState(NormalScoresState.getInstance());
     }
 
     private static class SingletonHelper {
