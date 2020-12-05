@@ -3,6 +3,7 @@ package bowling;
 import bowling.domain.*;
 import bowling.domain.score.Score;
 import bowling.view.InputView;
+import bowling.view.OutputView;
 
 public class BowlingGame {
 
@@ -11,8 +12,7 @@ public class BowlingGame {
         Player player = Player.from(name);
 
         Bowling bowling = Bowling.of(player);
-
-        // TODO : 빈 보드 출력
+        OutputView.printFrame(bowling);
 
         while(bowling.isNotEnd()) {
             int frameNumber = bowling.getFrameNumber();
@@ -20,7 +20,7 @@ public class BowlingGame {
 
             bowling.bowl(score);
 
-            // TODO : 보드 출력
+            OutputView.printFrame(bowling);
         }
 
     }

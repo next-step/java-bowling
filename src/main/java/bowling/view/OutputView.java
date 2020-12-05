@@ -1,8 +1,8 @@
 package bowling.view;
 
 import bowling.domain.BowlResult;
+import bowling.domain.Bowling;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 
@@ -18,10 +18,11 @@ public final class OutputView {
     private static final String FRAME_RESULT_TEXT = "  %s|";
     private static final String SCORE_DELIMITER = "|";
     private static final String TEXT_BLANK = " ";
+    private static final String NEW_LINE = System.lineSeparator();
 
-    public static void printFrame(Frames frames) {
+    public static void printFrame(Bowling bowling) {
         printFrameTop();
-        printFrameResult(frames);
+        printFrameResult(bowling);
     }
 
     private static void printFrameTop() {
@@ -32,16 +33,16 @@ public final class OutputView {
         System.out.println(NAME_TEXT + topText);
     }
 
-    private static void printFrameResult(Frames frames) {
-        String playerName = String.format(PLAYER_NAME_TEXT, frames.getPlayerName());
+    private static void printFrameResult(Bowling bowling) {
+        String playerName = String.format(PLAYER_NAME_TEXT, bowling.getPlayerName());
 
         String playerResult = IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME + 1)
-                .mapToObj(frameNumber -> makeScoreExpression(frames, frameNumber))
+                .mapToObj(frameNumber -> makeScoreExpression(bowling, frameNumber))
                 .map(OutputView::attachBlank)
                 .map(result -> String.format(FRAME_RESULT_TEXT, result))
                 .collect(Collectors.joining());
 
-        System.out.println(playerName + playerResult);
+        System.out.println(playerName + playerResult + NEW_LINE);
     }
 
     private static String attachBlank(String result) {
@@ -52,8 +53,8 @@ public final class OutputView {
         return result + blank;
     }
 
-    private static String makeScoreExpression(Frames frames, int frameNumber) {
-        List<Score> scores = frames.getResult(frameNumber);
+    private static String makeScoreExpression(Bowling bowling, int frameNumber) {
+        List<Score> scores = bowling.getResult(frameNumber);
 
         return IntStream.range(0, scores.size())
                 .mapToObj(index -> getScoreResult(scores, index))

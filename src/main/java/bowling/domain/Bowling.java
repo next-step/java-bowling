@@ -3,6 +3,8 @@ package bowling.domain;
 import bowling.domain.frame.Frames;
 import bowling.domain.score.Score;
 
+import java.util.List;
+
 public class Bowling {
     private Frames frames;
 
@@ -28,4 +30,11 @@ public class Bowling {
         frames.bowl(score);
     }
 
+    public String getPlayerName() {
+        return frames.getPlayerName();
+    }
+
+    public List<Score> getResult(int frameNumber) {
+        return frames.getResult(frameNumber);
+    }
 }
