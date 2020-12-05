@@ -23,8 +23,8 @@ public class View {
         return new PlayerDto(nextLine());
     }
 
-    public static PinDto askRoll(FrameNoDto frameNoDto) {
-        new AskRollPrintable(frameNoDto).print();
+    public static PinDto askRoll(FrameNumberDto frameNumberDto) {
+        new AskRollPrintable(frameNumberDto).print();
         return new PinDto(nextInt());
     }
 

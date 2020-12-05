@@ -20,8 +20,8 @@ abstract class NormalBowlState implements BowlState {
         countOfPins = pin.sum(countOfPins);
     }
 
-    boolean isLast(int frameNo) {
-        return frameNo >= MAX_FRAME_NO;
+    boolean isLast(int frameNumber) {
+        return frameNumber >= MAX_FRAME_NO;
     }
 
     boolean isAllPinDown() {

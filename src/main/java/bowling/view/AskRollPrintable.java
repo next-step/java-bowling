@@ -1,12 +1,12 @@
 package bowling.view;
 
-import bowling.dto.FrameNoDto;
+import bowling.dto.FrameNumberDto;
 import bowling.dto.PlayerDto;
 
 class AskRollPrintable extends Printable {
-    AskRollPrintable(FrameNoDto frameNoDto) {
+    AskRollPrintable(FrameNumberDto frameNumberDto) {
         append(lineSeparator);
-        append(String.format("%d프레임 투구 : ", frameNoDto.getFrameNo()));
+        append(String.format("%d프레임 투구 : ", frameNumberDto.getFrameNumber()));
     }
 
     AskRollPrintable(PlayerDto playerDto) {

@@ -3,7 +3,7 @@ package bowling.controller;
 import bowling.domain.Pin;
 import bowling.domain.Player;
 import bowling.domain.bowl.Bowl;
-import bowling.dto.FrameNoDto;
+import bowling.dto.FrameNumberDto;
 import bowling.dto.GameDto;
 import bowling.dto.PlayerDto;
 import bowling.dto.PlayerStatusDto;
@@ -16,30 +16,30 @@ import static bowling.asset.Const.MAX_FRAME_NO;
 
 class Game {
     private final Map<Player, Bowl> map = new LinkedHashMap<>();
-    private int frameNo = 1;
+    private int frameNumber = 1;
 
     void addPlayer(Player player) {
         map.put(player, new Bowl());
     }
 
     void play() {
-        while (frameNo <= MAX_FRAME_NO) {
+        while (frameNumber <= MAX_FRAME_NO) {
             map.forEach(this::play);
-            frameNo++;
+            frameNumber++;
         }
     }
 
     private void play(Player player, Bowl bowl) {
-        while (bowl.isPlayable(frameNo)) {
+        while (bowl.isPlayable(frameNumber)) {
             bowl.addPin(
-                    getRoll(new FrameNoDto(frameNo)) // getRoll(player.exportPlayerDto())
+                    getRoll(new FrameNumberDto(frameNumber)) // getRoll(player.exportPlayerDto())
             );
             View.printGame(exportGameDto());
         }
     }
 
-    private Pin getRoll(FrameNoDto frameNoDto) {
-        return Pin.of(View.askRoll(frameNoDto)
+    private Pin getRoll(FrameNumberDto frameNumberDto) {
+        return Pin.of(View.askRoll(frameNumberDto)
                 .getCountOfPins());
     }
 

@@ -20,8 +20,8 @@ public class Bowl {
         return status.getLastPin();
     }
 
-    public boolean isPlayable(int frameNo) {
-        return state.isPlayable(this, frameNo);
+    public boolean isPlayable(int frameNumber) {
+        return state.isPlayable(this, frameNumber);
     }
 
     public PlayerStatusDto exportPlayerStatusDto() {

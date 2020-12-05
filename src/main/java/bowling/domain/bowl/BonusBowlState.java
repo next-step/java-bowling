@@ -9,7 +9,7 @@ class BonusBowlState implements BowlState {
     }
 
     @Override
-    public boolean isPlayable(Bowl bowl, int frameNo) {
+    public boolean isPlayable(Bowl bowl, int frameNumber) {
         bowl.setState(GameOverBowlState.getInstance());
         return true;
     }
