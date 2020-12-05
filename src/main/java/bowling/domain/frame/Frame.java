@@ -3,12 +3,12 @@ package bowling.domain.frame;
 import bowling.domain.Pins;
 import bowling.dto.FrameDto;
 
+// TODO: Score 하고 합치기
 public class Frame {
-    private final int pinsIndex;
-    private FrameState state = InitialFrameState.getInstance();
+    private FrameState state;
 
     private Frame(int pinsIndex) {
-        this.pinsIndex = pinsIndex;
+        state = new InitialFrameState(pinsIndex);
     }
 
     public static Frame of(Pins pins) {
@@ -22,7 +22,7 @@ public class Frame {
     }
 
     int getPinsIndex() {
-        return pinsIndex;
+        return state.getPinsIndex();
     }
 
     public int getScore(Pins pins) {

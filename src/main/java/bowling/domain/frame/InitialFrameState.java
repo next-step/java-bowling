@@ -5,42 +5,36 @@ import bowling.exception.BadCountOfPinsException;
 
 import static bowling.asset.Const.PIN_NUM;
 
-public class InitialFrameState implements FrameState {
-    private InitialFrameState() {}
-
-    static InitialFrameState getInstance() {
-        return SingletonHelper.instance;
+class InitialFrameState extends FrameState {
+    InitialFrameState(int pinsIndex) {
+        super(pinsIndex);
     }
 
     @Override
-    public FrameEnum getFrameEnum() {
+    FrameEnum getFrameEnum() {
         return FrameEnum.UNFINISHED;
     }
 
     @Override
-    public int getScore(Frame frame, Pins pins) {
+    int getScore(Frame frame, Pins pins) {
         return -1;
     }
 
     @Override
-    public boolean hasScore(Frame frame, Pins pins) {
+    boolean hasScore(Frame frame, Pins pins) {
         return false;
     }
 
     @Override
-    public void update(Frame frame, Pins pins) {
+    void update(Frame frame, Pins pins) {
         final int offset = 1;
         int countOfPins = pins.sum(frame.getPinsIndex(), offset);
         if (countOfPins < 0 || countOfPins > PIN_NUM) {
             throw new BadCountOfPinsException("한 프레임에서 쓰러트린 핀의 개수는 0 이상 10 이하여야 합니다.");
         }
         FrameState nextState = countOfPins == PIN_NUM
-                ? StrikeFrameState.getInstance()
-                : UnfinishedFrameState.getInstance();
+                ? new StrikeFrameState(this)
+                : new UnfinishedFrameState(this);
         frame.setState(nextState);
-    }
-
-    private static class SingletonHelper {
-        private static final InitialFrameState instance = new InitialFrameState();
     }
 }
