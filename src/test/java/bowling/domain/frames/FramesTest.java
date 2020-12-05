@@ -1,12 +1,12 @@
 package bowling.domain.frames;
 
-import bowling.domain.Roll;
-import bowling.domain.Rolls;
+import bowling.domain.Pin;
+import bowling.domain.Pins;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameEnum;
 import bowling.dto.FrameDto;
 import bowling.exception.BadCountOfPinsException;
-import bowling.exception.RollException;
+import bowling.exception.PinException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,17 +26,17 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class FramesTest {
     private Frames frames;
-    private Rolls rolls;
+    private Pins pins;
 
     @BeforeEach
     void setUp() {
         frames = new Frames();
-        rolls = new Rolls();
+        pins = new Pins();
     }
 
-    private void addRoll(Roll roll) {
-        rolls.add(roll);
-        frames.update(rolls);
+    private void addRoll(Pin pin) {
+        pins.add(pin);
+        frames.update(pins);
     }
 
     private List<FrameEnum> toFrameList(Frames frames) {
@@ -50,15 +50,15 @@ class FramesTest {
     @Test
     @DisplayName("sublist 테스트")
     void sublist() {
-        addRoll(Roll.of(10));
+        addRoll(Pin.of(10));
 
-        addRoll(Roll.of(1));
-        addRoll(Roll.of(9));
+        addRoll(Pin.of(1));
+        addRoll(Pin.of(9));
 
-        addRoll(Roll.of(4));
-        addRoll(Roll.of(5));
+        addRoll(Pin.of(4));
+        addRoll(Pin.of(5));
 
-        addRoll(Roll.of(8));
+        addRoll(Pin.of(8));
 
         assertThat(frames.subList(1, 3)
                 .stream()
@@ -71,10 +71,10 @@ class FramesTest {
     @DisplayName("핀 갯수가 음수이면, RollException 이 발생한다.")
     @CsvSource(value = {"-8$3", "10$-1", "11$3", "4$12"}, delimiter = '$')
     void scenario_negative(int roll1, int roll2) {
-        assertThatExceptionOfType(RollException.class)
+        assertThatExceptionOfType(PinException.class)
                 .isThrownBy(() -> {
-                    addRoll(Roll.of(roll1));
-                    addRoll(Roll.of(roll2));
+                    addRoll(Pin.of(roll1));
+                    addRoll(Pin.of(roll2));
                 }).withMessage("핀의 개수는 0 이상 10 이하여야 합니다.");
     }
 
@@ -84,8 +84,8 @@ class FramesTest {
     void scenario_badCountOfPins(int roll1, int roll2) {
         assertThatExceptionOfType(BadCountOfPinsException.class)
                 .isThrownBy(() -> {
-                    addRoll(Roll.of(roll1));
-                    addRoll(Roll.of(roll2));
+                    addRoll(Pin.of(roll1));
+                    addRoll(Pin.of(roll2));
                 }).withMessage("한 프레임에서 쓰러트린 핀의 개수는 0 이상 10 이하여야 합니다.");
     }
 
@@ -102,8 +102,8 @@ class FramesTest {
     @Test
     @DisplayName("STRIKE 를 두번 치는 시나리오 테스트")
     void scenario_strike() {
-        addRoll(Roll.of(10));
-        addRoll(Roll.of(10));
+        addRoll(Pin.of(10));
+        addRoll(Pin.of(10));
         assertAll(
                 () -> assertThat(toFrameList(frames))
                         .isEqualTo(Arrays.asList(STRIKE, STRIKE))
@@ -113,11 +113,11 @@ class FramesTest {
     @Test
     @DisplayName("STRIKE, STRIKE, SPARE 를 치는 시나리오 테스트")
     void scenario_strike_spare() {
-        addRoll(Roll.of(10));
-        addRoll(Roll.of(10));
+        addRoll(Pin.of(10));
+        addRoll(Pin.of(10));
 
-        addRoll(Roll.of(1));
-        addRoll(Roll.of(9));
+        addRoll(Pin.of(1));
+        addRoll(Pin.of(9));
         assertAll(
                 () -> assertThat(toFrameList(frames))
                         .isEqualTo(Arrays.asList(STRIKE, STRIKE, SPARE))
@@ -127,13 +127,13 @@ class FramesTest {
     @Test
     @DisplayName("STRIKE, SPARE, MISS 를 치는 시나리오 테스트")
     void scenario_strike_spare_miss() {
-        addRoll(Roll.of(10));
+        addRoll(Pin.of(10));
 
-        addRoll(Roll.of(1));
-        addRoll(Roll.of(9));
+        addRoll(Pin.of(1));
+        addRoll(Pin.of(9));
 
-        addRoll(Roll.of(4));
-        addRoll(Roll.of(5));
+        addRoll(Pin.of(4));
+        addRoll(Pin.of(5));
         assertAll(
                 () -> assertThat(toFrameList(frames))
                         .isEqualTo(Arrays.asList(STRIKE, SPARE, MISS))
@@ -143,17 +143,17 @@ class FramesTest {
     @Test
     @DisplayName("UNFINISHED 시나리오 테스트")
     void scenario_unfinished() {
-        addRoll(Roll.of(10));
+        addRoll(Pin.of(10));
 
-        addRoll(Roll.of(1));
-        addRoll(Roll.of(9));
+        addRoll(Pin.of(1));
+        addRoll(Pin.of(9));
 
-        addRoll(Roll.of(4));
-        addRoll(Roll.of(5));
+        addRoll(Pin.of(4));
+        addRoll(Pin.of(5));
 
-        addRoll(Roll.of(10));
+        addRoll(Pin.of(10));
 
-        addRoll(Roll.of(8));
+        addRoll(Pin.of(8));
         assertAll(
                 () -> assertThat(toFrameList(frames))
                         .isEqualTo(Arrays.asList(STRIKE, SPARE, MISS, STRIKE, UNFINISHED))
@@ -164,7 +164,7 @@ class FramesTest {
     @DisplayName("STRIKE 100번 추가하는 시나리오 테스트")
     void scenario_strike_100() {
         for (int i = 0; i < 100; i++) {
-            addRoll(Roll.of(10));
+            addRoll(Pin.of(10));
         }
         List<FrameEnum> frameList = toFrameList(frames);
         assertAll(
@@ -179,7 +179,7 @@ class FramesTest {
     @DisplayName("SPARE 100번 추가하는 시나리오 테스트")
     void scenario_spare_100() {
         for (int i = 0; i < 100; i++) {
-            addRoll(Roll.of(5));
+            addRoll(Pin.of(5));
         }
         List<FrameEnum> frameList = toFrameList(frames);
         assertAll(
@@ -194,7 +194,7 @@ class FramesTest {
     @DisplayName("MISS 100번 추가하는 시나리오 테스트")
     void scenario_miss_100() {
         for (int i = 0; i < 100; i++) {
-            addRoll(Roll.of(3));
+            addRoll(Pin.of(3));
         }
         List<FrameEnum> frameList = toFrameList(frames);
         assertAll(

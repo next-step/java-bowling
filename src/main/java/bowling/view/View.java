@@ -23,14 +23,14 @@ public class View {
         return new PlayerDto(nextLine());
     }
 
-    public static RollDto askRoll(FrameNoDto frameNoDto) {
+    public static PinDto askRoll(FrameNoDto frameNoDto) {
         new AskRollPrintable(frameNoDto).print();
-        return new RollDto(nextInt());
+        return new PinDto(nextInt());
     }
 
-    public static RollDto askRoll(PlayerDto playerDto) {
+    public static PinDto askRoll(PlayerDto playerDto) {
         new AskRollPrintable(playerDto).print();
-        return new RollDto(nextInt());
+        return new PinDto(nextInt());
     }
 
     private static String nextLine() {

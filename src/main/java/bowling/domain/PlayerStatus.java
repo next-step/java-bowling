@@ -3,19 +3,19 @@ package bowling.domain;
 import bowling.dto.PlayerStatusDto;
 
 public class PlayerStatus {
-    private final Rolls rolls = new Rolls();
+    private final Pins pins = new Pins();
     private final Board board = new Board();
 
-    public void addRoll(Roll roll) {
-        rolls.add(roll);
-        board.update(rolls);
+    public void addPin(Pin pin) {
+        pins.add(pin);
+        board.update(pins);
     }
 
     public int getLastCountOfPins() {
-        return rolls.getLast().getCountOfPins();
+        return pins.getLast().getCountOfPins();
     }
 
     public PlayerStatusDto exportPlayerStatusDto() {
-        return new PlayerStatusDto(rolls.exportRollsDto(), board.exportBoardDto());
+        return new PlayerStatusDto(pins.exportPinsDto(), board.exportBoardDto());
     }
 }

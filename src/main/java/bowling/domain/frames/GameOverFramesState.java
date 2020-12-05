@@ -1,6 +1,6 @@
 package bowling.domain.frames;
 
-import bowling.domain.Rolls;
+import bowling.domain.Pins;
 
 public class GameOverFramesState implements FramesState {
     private GameOverFramesState() {}
@@ -10,7 +10,7 @@ public class GameOverFramesState implements FramesState {
     }
 
     @Override
-    public void update(Frames context, Rolls rolls) {}
+    public void update(Frames context, Pins pins) {}
 
     private static class SingletonHelper {
         private static final GameOverFramesState instance = new GameOverFramesState();

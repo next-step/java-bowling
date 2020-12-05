@@ -20,13 +20,13 @@ class GamePrintable extends Printable {
 
     private void append(Entry<PlayerDto, PlayerStatusDto> entry) {
         PlayerStatusDto playerStatusDto = entry.getValue();
-        RollsDto rollsDto = playerStatusDto.getRollsDto();
+        PinsDto pinsDto = playerStatusDto.getRollsDto();
         BoardDto boardDto = playerStatusDto.getBoardDto();
 
         append(lineSeparator);
         append(String.format("|  %s |", entry.getKey()
                 .getName()));
-        Iterator<RollDto> rollItr = rollsDto.getRolls().iterator();
+        Iterator<PinDto> rollItr = pinsDto.getRolls().iterator();
         List<FrameDto> frames = boardDto.getFramesDto()
                 .getFrames();
         frames.forEach(frameDto -> append(frameDto, rollItr));
@@ -46,7 +46,7 @@ class GamePrintable extends Printable {
         }
     }
 
-    private void append(FrameDto frameDto, Iterator<RollDto> rollItr) {
+    private void append(FrameDto frameDto, Iterator<PinDto> rollItr) {
         FrameEnum frameEnum = frameDto.getFrameEnum();
         String str = "";
         if (frameEnum == FrameEnum.STRIKE) {
@@ -75,8 +75,8 @@ class GamePrintable extends Printable {
         )));
     }
 
-    private String rollToStr(RollDto rollDto) {
-        int count = rollDto.getCountOfPins();
+    private String rollToStr(PinDto pinDto) {
+        int count = pinDto.getCountOfPins();
         return count <= 0
                 ? "-"
                 : Integer.toString(count);

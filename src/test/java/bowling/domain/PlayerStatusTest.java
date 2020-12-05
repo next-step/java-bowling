@@ -2,10 +2,10 @@ package bowling.domain;
 
 import bowling.domain.frame.FrameEnum;
 import bowling.dto.FrameDto;
-import bowling.dto.RollDto;
+import bowling.dto.PinDto;
 import bowling.dto.ScoreDto;
 import bowling.exception.BadCountOfPinsException;
-import bowling.exception.RollException;
+import bowling.exception.PinException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class PlayerStatusTest {
                 .getRollsDto()
                 .getRolls()
                 .stream()
-                .map(RollDto::getCountOfPins)
+                .map(PinDto::getCountOfPins)
                 .collect(toList());
     }
 
@@ -65,10 +65,10 @@ class PlayerStatusTest {
     @DisplayName("핀 갯수가 음수이면, RollException 이 발생한다.")
     @CsvSource(value = {"-8$3", "10$-1", "11$3", "4$12"}, delimiter = '$')
     void scenario_negative(int roll1, int roll2) {
-        assertThatExceptionOfType(RollException.class)
+        assertThatExceptionOfType(PinException.class)
                 .isThrownBy(() -> {
-                    status.addRoll(Roll.of(roll1));
-                    status.addRoll(Roll.of(roll2));
+                    status.addPin(Pin.of(roll1));
+                    status.addPin(Pin.of(roll2));
                 }).withMessage("핀의 개수는 0 이상 10 이하여야 합니다.");
     }
 
@@ -78,8 +78,8 @@ class PlayerStatusTest {
     void scenario_badCountOfPins(int roll1, int roll2) {
         assertThatExceptionOfType(BadCountOfPinsException.class)
                 .isThrownBy(() -> {
-                    status.addRoll(Roll.of(roll1));
-                    status.addRoll(Roll.of(roll2));
+                    status.addPin(Pin.of(roll1));
+                    status.addPin(Pin.of(roll2));
                 }).withMessage("한 프레임에서 쓰러트린 핀의 개수는 0 이상 10 이하여야 합니다.");
     }
 
@@ -100,8 +100,8 @@ class PlayerStatusTest {
     @Test
     @DisplayName("STRIKE 를 두번 치는 시나리오 테스트")
     void scenario_strike() {
-        status.addRoll(Roll.of(10));
-        status.addRoll(Roll.of(10));
+        status.addPin(Pin.of(10));
+        status.addPin(Pin.of(10));
         assertAll(
                 () -> assertThat(status.getLastCountOfPins())
                         .isEqualTo(10),
@@ -117,11 +117,11 @@ class PlayerStatusTest {
     @Test
     @DisplayName("STRIKE, STRIKE, SPARE 를 치는 시나리오 테스트")
     void scenario_strike_spare() {
-        status.addRoll(Roll.of(10));
-        status.addRoll(Roll.of(10));
+        status.addPin(Pin.of(10));
+        status.addPin(Pin.of(10));
 
-        status.addRoll(Roll.of(1));
-        status.addRoll(Roll.of(9));
+        status.addPin(Pin.of(1));
+        status.addPin(Pin.of(9));
         assertAll(
                 () -> assertThat(status.getLastCountOfPins())
                         .isEqualTo(9),
@@ -137,13 +137,13 @@ class PlayerStatusTest {
     @Test
     @DisplayName("STRIKE, SPARE, MISS 를 치는 시나리오 테스트")
     void scenario_strike_spare_miss() {
-        status.addRoll(Roll.of(10));
+        status.addPin(Pin.of(10));
 
-        status.addRoll(Roll.of(1));
-        status.addRoll(Roll.of(9));
+        status.addPin(Pin.of(1));
+        status.addPin(Pin.of(9));
 
-        status.addRoll(Roll.of(4));
-        status.addRoll(Roll.of(5));
+        status.addPin(Pin.of(4));
+        status.addPin(Pin.of(5));
         assertAll(
                 () -> assertThat(status.getLastCountOfPins())
                         .isEqualTo(5),
@@ -159,17 +159,17 @@ class PlayerStatusTest {
     @Test
     @DisplayName("UNFINISHED 시나리오 테스트")
     void scenario_unfinished() {
-        status.addRoll(Roll.of(10));
+        status.addPin(Pin.of(10));
 
-        status.addRoll(Roll.of(1));
-        status.addRoll(Roll.of(9));
+        status.addPin(Pin.of(1));
+        status.addPin(Pin.of(9));
 
-        status.addRoll(Roll.of(4));
-        status.addRoll(Roll.of(5));
+        status.addPin(Pin.of(4));
+        status.addPin(Pin.of(5));
 
-        status.addRoll(Roll.of(10));
+        status.addPin(Pin.of(10));
 
-        status.addRoll(Roll.of(8));
+        status.addPin(Pin.of(8));
         assertAll(
                 () -> assertThat(status.getLastCountOfPins())
                         .isEqualTo(8),
@@ -188,7 +188,7 @@ class PlayerStatusTest {
         List<Integer> rollList = new LinkedList<>();
         int roll = 10;
         for (int i = 0; i < 100; i++) {
-            status.addRoll(Roll.of(roll));
+            status.addPin(Pin.of(roll));
             rollList.add(roll);
         }
         List<FrameEnum> frameList = toFrameList(status);
@@ -215,7 +215,7 @@ class PlayerStatusTest {
         List<Integer> rollList = new LinkedList<>();
         int roll = 5;
         for (int i = 0; i < 100; i++) {
-            status.addRoll(Roll.of(roll));
+            status.addPin(Pin.of(roll));
             rollList.add(roll);
         }
         List<FrameEnum> frameList = toFrameList(status);
@@ -242,7 +242,7 @@ class PlayerStatusTest {
         List<Integer> rollList = new LinkedList<>();
         int roll = 3;
         for (int i = 0; i < 100; i++) {
-            status.addRoll(Roll.of(roll));
+            status.addPin(Pin.of(roll));
             rollList.add(roll);
         }
         List<FrameEnum> frameList = toFrameList(status);

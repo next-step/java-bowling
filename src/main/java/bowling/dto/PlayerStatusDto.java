@@ -1,16 +1,16 @@
 package bowling.dto;
 
 public class PlayerStatusDto {
-    private final RollsDto rollsDto;
+    private final PinsDto pinsDto;
     private final BoardDto boardDto;
 
-    public PlayerStatusDto(RollsDto rollsDto, BoardDto boardDto) {
-        this.rollsDto = rollsDto;
+    public PlayerStatusDto(PinsDto pinsDto, BoardDto boardDto) {
+        this.pinsDto = pinsDto;
         this.boardDto = boardDto;
     }
 
-    public RollsDto getRollsDto() {
-        return rollsDto;
+    public PinsDto getRollsDto() {
+        return pinsDto;
     }
 
     public BoardDto getBoardDto() {

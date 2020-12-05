@@ -1,7 +1,7 @@
 package bowling.domain;
 
-import bowling.dto.RollDto;
-import bowling.exception.RollException;
+import bowling.dto.PinDto;
+import bowling.exception.PinException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,23 +9,23 @@ import java.util.stream.IntStream;
 
 import static bowling.asset.Const.PIN_NUM;
 
-public class Roll {
-    private static final Map<Integer, Roll> map = new HashMap<>();
+public class Pin {
+    private static final Map<Integer, Pin> map = new HashMap<>();
 
     static {
         IntStream.rangeClosed(0, PIN_NUM)
-                .forEach(count -> map.put(count, new Roll(count)));
+                .forEach(count -> map.put(count, new Pin(count)));
     }
 
     private final int countOfPins;
 
-    private Roll(int countOfPins) {
+    private Pin(int countOfPins) {
         this.countOfPins = countOfPins;
     }
 
-    public static Roll of(int count) {
+    public static Pin of(int count) {
         if (count < 0 || count > PIN_NUM) {
-            throw new RollException("핀의 개수는 0 이상 10 이하여야 합니다.");
+            throw new PinException("핀의 개수는 0 이상 10 이하여야 합니다.");
         }
         return map.get(count);
     }
@@ -34,7 +34,7 @@ public class Roll {
         return countOfPins;
     }
 
-    RollDto exportRollDto() {
-        return new RollDto(countOfPins);
+    PinDto exportPinDto() {
+        return new PinDto(countOfPins);
     }
 }

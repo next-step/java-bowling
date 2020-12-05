@@ -1,9 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.Roll;
-import bowling.domain.Rolls;
+import bowling.domain.Pin;
+import bowling.domain.Pins;
 import bowling.exception.BadCountOfPinsException;
-import bowling.exception.RollsOutOfRangeException;
+import bowling.exception.PinsOutOfRangeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,35 +14,35 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class FrameTest {
-    private Rolls rolls;
+    private Pins pins;
 
     @BeforeEach
     void setUp() {
-        rolls = new Rolls();
+        pins = new Pins();
     }
 
     @Test
     @DisplayName("한 프레임에 쓰러트린 핀 갯수가 10개를 넘으면 BadCountOfPinsException 이 발생한다.")
     void badCountOfPins() {
-        rolls.add(Roll.of(9));
-        Frame frame = Frame.of(rolls);
-        rolls.add(Roll.of(9));
+        pins.add(Pin.of(9));
+        Frame frame = Frame.of(pins);
+        pins.add(Pin.of(9));
         assertThatExceptionOfType(BadCountOfPinsException.class)
-                .isThrownBy(() -> frame.update(rolls))
+                .isThrownBy(() -> frame.update(pins))
                 .withMessage("한 프레임에서 쓰러트린 핀의 개수는 0 이상 10 이하여야 합니다.");
     }
 
     @Test
     @DisplayName("프레임이 UNFINISHED")
     void unfinished() {
-        rolls.add(Roll.of(9));
-        Frame frame = Frame.of(rolls);
+        pins.add(Pin.of(9));
+        Frame frame = Frame.of(pins);
         assertAll(
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.UNFINISHED),
-                () -> assertThat(frame.hasScore(rolls))
+                () -> assertThat(frame.hasScore(pins))
                         .isFalse(),
-                () -> assertThat(frame.getScore(rolls))
+                () -> assertThat(frame.getScore(pins))
                         .isEqualTo(-1)
         );
     }
@@ -50,23 +50,23 @@ class FrameTest {
     @Test
     @DisplayName("프레임이 STRIKE")
     void strike() {
-        rolls.add(Roll.of(10));
-        Frame frame = Frame.of(rolls);
+        pins.add(Pin.of(10));
+        Frame frame = Frame.of(pins);
         assertAll(
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.STRIKE),
-                () -> assertThat(frame.hasScore(rolls))
+                () -> assertThat(frame.hasScore(pins))
                         .isFalse(),
-                () -> assertThatExceptionOfType(RollsOutOfRangeException.class)
-                        .isThrownBy(() -> frame.getScore(rolls))
+                () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
+                        .isThrownBy(() -> frame.getScore(pins))
                         .withMessage("rolls 의 범위를 벗어난 index 입니다."),
                 () -> assertDoesNotThrow(() -> {
-                    rolls.add(Roll.of(10));
-                    rolls.add(Roll.of(5));
-                    rolls.add(Roll.of(3));
-                    frame.update(rolls);
+                    pins.add(Pin.of(10));
+                    pins.add(Pin.of(5));
+                    pins.add(Pin.of(3));
+                    frame.update(pins);
                 }),
-                () -> assertThat(frame.getScore(rolls))
+                () -> assertThat(frame.getScore(pins))
                         .isEqualTo(25)
         );
     }
@@ -74,25 +74,25 @@ class FrameTest {
     @Test
     @DisplayName("프레임이 SPARE")
     void spare() {
-        rolls.add(Roll.of(0));
-        Frame frame = Frame.of(rolls);
-        rolls.add(Roll.of(10));
-        frame.update(rolls);
+        pins.add(Pin.of(0));
+        Frame frame = Frame.of(pins);
+        pins.add(Pin.of(10));
+        frame.update(pins);
         assertAll(
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.SPARE),
-                () -> assertThat(frame.hasScore(rolls))
+                () -> assertThat(frame.hasScore(pins))
                         .isFalse(),
-                () -> assertThatExceptionOfType(RollsOutOfRangeException.class)
-                        .isThrownBy(() -> frame.getScore(rolls))
+                () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
+                        .isThrownBy(() -> frame.getScore(pins))
                         .withMessage("rolls 의 범위를 벗어난 index 입니다."),
                 () -> assertDoesNotThrow(() -> {
-                    rolls.add(Roll.of(10));
-                    rolls.add(Roll.of(5));
-                    rolls.add(Roll.of(3));
-                    frame.update(rolls);
+                    pins.add(Pin.of(10));
+                    pins.add(Pin.of(5));
+                    pins.add(Pin.of(3));
+                    frame.update(pins);
                 }),
-                () -> assertThat(frame.getScore(rolls))
+                () -> assertThat(frame.getScore(pins))
                         .isEqualTo(20)
         );
     }
@@ -100,24 +100,24 @@ class FrameTest {
     @Test
     @DisplayName("프레임이 MISS")
     void miss() {
-        rolls.add(Roll.of(0));
-        Frame frame = Frame.of(rolls);
-        rolls.add(Roll.of(9));
-        frame.update(rolls);
+        pins.add(Pin.of(0));
+        Frame frame = Frame.of(pins);
+        pins.add(Pin.of(9));
+        frame.update(pins);
         assertAll(
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.MISS),
-                () -> assertThat(frame.hasScore(rolls))
+                () -> assertThat(frame.hasScore(pins))
                         .isTrue(),
-                () -> assertThat(frame.getScore(rolls))
+                () -> assertThat(frame.getScore(pins))
                         .isEqualTo(9),
                 () -> assertDoesNotThrow(() -> {
-                    rolls.add(Roll.of(10));
-                    rolls.add(Roll.of(5));
-                    rolls.add(Roll.of(3));
-                    frame.update(rolls);
+                    pins.add(Pin.of(10));
+                    pins.add(Pin.of(5));
+                    pins.add(Pin.of(3));
+                    frame.update(pins);
                 }),
-                () -> assertThat(frame.getScore(rolls))
+                () -> assertThat(frame.getScore(pins))
                         .isEqualTo(9)
         );
     }

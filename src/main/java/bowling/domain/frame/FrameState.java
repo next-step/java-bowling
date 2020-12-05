@@ -1,13 +1,13 @@
 package bowling.domain.frame;
 
-import bowling.domain.Rolls;
+import bowling.domain.Pins;
 
 interface FrameState {
     FrameEnum getFrameEnum();
 
-    int getScore(Frame context, Rolls rolls);
+    int getScore(Frame context, Pins pins);
 
-    boolean hasScore(Frame context, Rolls rolls);
+    boolean hasScore(Frame context, Pins pins);
 
-    void update(Frame context, Rolls rolls);
+    void update(Frame context, Pins pins);
 }

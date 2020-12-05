@@ -1,7 +1,7 @@
 package bowling.domain.bowl;
 
+import bowling.domain.Pin;
 import bowling.domain.PlayerStatus;
-import bowling.domain.Roll;
 import bowling.dto.PlayerStatusDto;
 
 public class Bowl {
@@ -12,8 +12,8 @@ public class Bowl {
         this.state = state;
     }
 
-    public void addRoll(Roll roll) {
-        status.addRoll(roll);
+    public void addPin(Pin pin) {
+        status.addPin(pin);
     }
 
     int getLastCountOfPins() {

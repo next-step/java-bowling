@@ -1,6 +1,6 @@
 package bowling.domain.frames;
 
-import bowling.domain.Rolls;
+import bowling.domain.Pins;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameEnum;
 
@@ -12,8 +12,8 @@ public class EmptyFramesState implements FramesState {
     }
 
     @Override
-    public void update(Frames context, Rolls rolls) {
-        Frame frame = Frame.of(rolls);
+    public void update(Frames context, Pins pins) {
+        Frame frame = Frame.of(pins);
         context.addFrame(frame);
         FramesState nextState = frame.getFrameEnum() == FrameEnum.UNFINISHED
                 ? UnfinishedFramesState.getInstance()

@@ -1,6 +1,6 @@
 package bowling.domain.frames;
 
-import bowling.domain.Rolls;
+import bowling.domain.Pins;
 import bowling.domain.frame.Frame;
 import bowling.dto.FramesDto;
 
@@ -34,8 +34,8 @@ public class Frames {
         return frames.getLast();
     }
 
-    public void update(Rolls rolls) {
-        state.update(this, rolls);
+    public void update(Pins pins) {
+        state.update(this, pins);
     }
 
     public FramesDto exportFramesDto() {

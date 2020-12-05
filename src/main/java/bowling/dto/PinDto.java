@@ -1,9 +1,9 @@
 package bowling.dto;
 
-public class RollDto {
+public class PinDto {
     private final int countOfPins;
 
-    public RollDto(int countOfPins) {
+    public PinDto(int countOfPins) {
         this.countOfPins = countOfPins;
     }
 

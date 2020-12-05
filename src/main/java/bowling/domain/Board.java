@@ -10,12 +10,12 @@ class Board {
     private final Frames frames = new Frames();
     private final Scores scores = new Scores();
 
-    void update(Rolls rolls) {
-        frames.update(rolls);
+    void update(Pins pins) {
+        frames.update(pins);
         scores.accumulate(frames.subList(scores.size(), frames.size())
                 .stream()
-                .filter(frame -> frame.hasScore(rolls))
-                .map(frame -> frame.getScore(rolls))
+                .filter(frame -> frame.hasScore(pins))
+                .map(frame -> frame.getScore(pins))
                 .collect(toList()));
     }
 

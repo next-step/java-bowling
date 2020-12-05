@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Rolls;
+import bowling.domain.Pins;
 
 public class SpareFrameState implements FrameState {
     private final int offset = 3;
@@ -17,20 +17,20 @@ public class SpareFrameState implements FrameState {
     }
 
     @Override
-    public int getScore(Frame context, Rolls rolls) {
-        return rolls.sum(
-                context.getRollIndex(),
+    public int getScore(Frame context, Pins pins) {
+        return pins.sum(
+                context.getPinsIndex(),
                 offset
         );
     }
 
     @Override
-    public boolean hasScore(Frame context, Rolls rolls) {
-        return context.getRollIndex() + offset <= rolls.size();
+    public boolean hasScore(Frame context, Pins pins) {
+        return context.getPinsIndex() + offset <= pins.size();
     }
 
     @Override
-    public void update(Frame context, Rolls rolls) {}
+    public void update(Frame context, Pins pins) {}
 
     private static class SingletonHelper {
         private static final SpareFrameState instance = new SpareFrameState();

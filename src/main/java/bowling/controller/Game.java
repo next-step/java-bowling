@@ -1,7 +1,7 @@
 package bowling.controller;
 
+import bowling.domain.Pin;
 import bowling.domain.Player;
-import bowling.domain.Roll;
 import bowling.domain.bowl.Bowl;
 import bowling.dto.FrameNoDto;
 import bowling.dto.GameDto;
@@ -31,20 +31,20 @@ class Game {
 
     private void play(Player player, Bowl bowl) {
         while (bowl.isPlayable(frameNo)) {
-            bowl.addRoll(
+            bowl.addPin(
                     getRoll(new FrameNoDto(frameNo)) // getRoll(player.exportPlayerDto())
             );
             View.printGame(exportGameDto());
         }
     }
 
-    private Roll getRoll(FrameNoDto frameNoDto) {
-        return Roll.of(View.askRoll(frameNoDto)
+    private Pin getRoll(FrameNoDto frameNoDto) {
+        return Pin.of(View.askRoll(frameNoDto)
                 .getCountOfPins());
     }
 
-    private Roll getRoll(PlayerDto playerDto) {
-        return Roll.of(View.askRoll(playerDto)
+    private Pin getRoll(PlayerDto playerDto) {
+        return Pin.of(View.askRoll(playerDto)
                 .getCountOfPins());
     }
 

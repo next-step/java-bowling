@@ -1,6 +1,6 @@
 package bowling.domain.frames;
 
-import bowling.domain.Rolls;
+import bowling.domain.Pins;
 
 import static bowling.asset.Const.MAX_FRAME_NO;
 
@@ -12,8 +12,8 @@ public class UnfinishedFramesState implements FramesState {
     }
 
     @Override
-    public void update(Frames context, Rolls rolls) {
-        context.getLast().update(rolls);
+    public void update(Frames context, Pins pins) {
+        context.getLast().update(pins);
         FramesState nextState = context.size() < MAX_FRAME_NO
                 ? FinishedFramesState.getInstance()
                 : GameOverFramesState.getInstance();

@@ -1,6 +1,6 @@
 package bowling.domain.bowl;
 
-import bowling.domain.Roll;
+import bowling.domain.Pin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ public class BowlTest {
                 () -> {
                     assertThat(bowl.isPlayable(frameNo))
                             .isTrue();
-                    bowl.addRoll(Roll.of(10));
+                    bowl.addPin(Pin.of(10));
                 },
                 () -> assertThat(bowl.isPlayable(frameNo))
                         .isFalse()
@@ -50,7 +50,7 @@ public class BowlTest {
                 () -> {
                     assertThat(bowl.isPlayable(frameNo))
                             .isTrue();
-                    bowl.addRoll(Roll.of(roll));
+                    bowl.addPin(Pin.of(roll));
                 },
                 () -> assertThat(bowl.isPlayable(frameNo))
                         .isTrue()
@@ -66,10 +66,10 @@ public class BowlTest {
                 () -> assertThat(bowl.isPlayable(frameNo))
                         .isTrue(),
                 () -> {
-                    bowl.addRoll(Roll.of(roll));
+                    bowl.addPin(Pin.of(roll));
                     assertThat(bowl.isPlayable(frameNo))
                             .isTrue();
-                    bowl.addRoll(Roll.of(roll));
+                    bowl.addPin(Pin.of(roll));
                 },
                 () -> assertThat(bowl.isPlayable(frameNo))
                         .isFalse(),
@@ -86,7 +86,7 @@ public class BowlTest {
                 () -> {
                     assertThat(bowl.isPlayable(frameNo))
                             .isTrue();
-                    bowl.addRoll(Roll.of(10));
+                    bowl.addPin(Pin.of(10));
                 },
                 () -> assertThat(bowl.isPlayable(frameNo))
                         .isTrue(),
@@ -107,10 +107,10 @@ public class BowlTest {
                 () -> assertThat(bowl.isPlayable(frameNo))
                         .isTrue(),
                 () -> {
-                    bowl.addRoll(Roll.of(5));
+                    bowl.addPin(Pin.of(5));
                     assertThat(bowl.isPlayable(frameNo))
                             .isTrue();
-                    bowl.addRoll(Roll.of(5));
+                    bowl.addPin(Pin.of(5));
                 },
                 () -> assertThat(bowl.isPlayable(frameNo))
                         .isTrue(),
@@ -131,10 +131,10 @@ public class BowlTest {
                 () -> assertThat(bowl.isPlayable(frameNo))
                         .isTrue(),
                 () -> {
-                    bowl.addRoll(Roll.of(3));
+                    bowl.addPin(Pin.of(3));
                     assertThat(bowl.isPlayable(frameNo))
                             .isTrue();
-                    bowl.addRoll(Roll.of(2));
+                    bowl.addPin(Pin.of(2));
                 },
                 () -> assertThat(bowl.isPlayable(frameNo))
                         .isFalse(),
