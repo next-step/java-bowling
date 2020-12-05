@@ -94,9 +94,8 @@ public class Question extends AbstractEntity implements DeleteHistoryRecordable 
         return deleted;
     }
 
-    public Question setDeleted(boolean deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-        return this;
     }
 
     public List<Answer> getAnswers() {

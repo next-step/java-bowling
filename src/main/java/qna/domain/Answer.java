@@ -52,7 +52,7 @@ public class Answer extends AbstractEntity implements DeleteHistoryRecordable {
     }
 
     public DeleteHistory deleteSelf(LocalDateTime deleteDate) {
-        setDeleted(true);
+        setDeleted();
         return DeleteHistory.from(this, deleteDate);
     }
 
@@ -60,9 +60,8 @@ public class Answer extends AbstractEntity implements DeleteHistoryRecordable {
         return deleted;
     }
 
-    public Answer setDeleted(boolean deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-        return this;
     }
 
     public boolean isOwner(User writer) {
