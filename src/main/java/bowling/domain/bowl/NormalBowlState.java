@@ -1,12 +1,12 @@
-package bowling.domain.play;
+package bowling.domain.bowl;
 
 import static bowling.asset.Const.MAX_FRAME_NO;
 import static bowling.asset.Const.PIN_NUM;
 
-abstract class NormalPlayState implements PlayState {
+abstract class NormalBowlState implements BowlState {
     private int countOfPins;
 
-    NormalPlayState(int countOfPins) {
+    NormalBowlState(int countOfPins) {
         this.countOfPins = countOfPins;
     }
 

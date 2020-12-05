@@ -2,7 +2,7 @@ package bowling.controller;
 
 import bowling.domain.Player;
 import bowling.domain.Roll;
-import bowling.domain.play.PlayStatus;
+import bowling.domain.bowl.Bowl;
 import bowling.dto.FrameNoDto;
 import bowling.dto.GameDto;
 import bowling.dto.PlayerDto;
@@ -15,11 +15,11 @@ import java.util.Map;
 import static bowling.asset.Const.MAX_FRAME_NO;
 
 class Game {
-    private final Map<Player, PlayStatus> map = new LinkedHashMap<>();
+    private final Map<Player, Bowl> map = new LinkedHashMap<>();
     private int frameNo = 1;
 
     void addPlayer(Player player) {
-        map.put(player, new PlayStatus());
+        map.put(player, new Bowl());
     }
 
     void play() {
@@ -29,9 +29,9 @@ class Game {
         }
     }
 
-    private void play(Player player, PlayStatus status) {
-        while (status.isPlayable(frameNo)) {
-            status.addRoll(
+    private void play(Player player, Bowl bowl) {
+        while (bowl.isPlayable(frameNo)) {
+            bowl.addRoll(
                     getRoll(new FrameNoDto(frameNo)) // getRoll(player.exportPlayerDto())
             );
             View.printGame(exportGameDto());

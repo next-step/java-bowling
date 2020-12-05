@@ -1,14 +1,14 @@
-package bowling.domain.play;
+package bowling.domain.bowl;
 
 import bowling.domain.PlayerStatus;
 import bowling.domain.Roll;
 import bowling.dto.PlayerStatusDto;
 
-public class PlayStatus {
+public class Bowl {
     private final PlayerStatus status = new PlayerStatus();
-    private PlayState state = InitialPlayState.getInstance();
+    private BowlState state = ReadyBowlState.getInstance();
 
-    void setState(PlayState state) {
+    void setState(BowlState state) {
         this.state = state;
     }
 
