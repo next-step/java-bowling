@@ -38,10 +38,10 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public DeleteHistory(Answer answer, LocalDateTime createDate) {
+    public DeleteHistory(Answer answer, User deletedBy, LocalDateTime createDate) {
         this.contentType = ContentType.ANSWER;
         this.contentId = answer.getId();
-        this.deletedBy = answer.getWriter();
+        this.deletedBy = deletedBy;
         this.createDate = createDate;
     }
 

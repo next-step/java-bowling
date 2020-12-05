@@ -33,7 +33,7 @@ public class Answers {
         validateDelete(loginUser);
         return value.stream()
                 .peek(Answer::deleted)
-                .map(answer -> new DeleteHistory(answer, LocalDateTime.now()))
+                .map(answer -> new DeleteHistory(answer, loginUser, LocalDateTime.now()))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
     }
 
