@@ -35,4 +35,25 @@ class AnswersTest {
 
     }
 
+    @Test
+    @DisplayName("다른 사람의 답변이 있는지 확인한다.")
+    void test_hasOtherOwnedAnswer_true() {
+        // Given
+        answers.addAnswer(AnswerTest.A1);
+        answers.addAnswer(AnswerTest.A2);
+
+        // When & Then
+        assertTrue(answers.hasOtherOwnedAnswer(UserTest.JAVAJIGI));
+    }
+
+    @Test
+    @DisplayName("다른 사람의 답변이 있는지 확인한다.")
+    void test_hasOtherOwnedAnswer_false() {
+        // Given
+        answers.addAnswer(AnswerTest.A1);
+
+        // When & Then
+        assertFalse(answers.hasOtherOwnedAnswer(UserTest.JAVAJIGI));
+    }
+
 }

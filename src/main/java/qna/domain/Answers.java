@@ -29,4 +29,9 @@ public class Answers {
         }
         return deleteHistories;
     }
+
+    public boolean hasOtherOwnedAnswer(User loginUser) {
+        return answers.stream()
+                .anyMatch(answer -> !answer.isOwner(loginUser));
+    }
 }
