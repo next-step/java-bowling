@@ -1,6 +1,13 @@
 package qna.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -28,6 +35,20 @@ public class DeleteHistory {
         this.contentType = contentType;
         this.contentId = contentId;
         this.deletedBy = deletedBy;
+        this.createDate = createDate;
+    }
+
+    public DeleteHistory(Question question, LocalDateTime createDate) {
+        this.contentType = ContentType.QUESTION;
+        this.contentId = question.getId();
+        this.deletedBy = question.getWriter();
+        this.createDate = createDate;
+    }
+
+    public DeleteHistory(Answer answer, LocalDateTime createDate) {
+        this.contentType = ContentType.ANSWER;
+        this.contentId = answer.getId();
+        this.deletedBy = answer.getWriter();
         this.createDate = createDate;
     }
 

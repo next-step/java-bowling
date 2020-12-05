@@ -48,6 +48,10 @@ public class Question extends AbstractEntity {
         return this;
     }
 
+    User getWriter() {
+        return writer;
+    }
+
     public void addAnswer(Answer answer) {
         answers.addAnswer(this, answer);
     }
