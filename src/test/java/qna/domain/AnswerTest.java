@@ -13,8 +13,8 @@ public class AnswerTest {
     @Test
     @DisplayName("답변 삭제")
     public void deleteSelf() {
-        User user = new User();
-        Answer answer = new Answer(user, new Question().writeBy(user), "Answers Contents1");
+        User javajigi = new User(1L, "javajigi", "password", "name", "javajigi@slipp.net");
+        Answer answer = new Answer(javajigi, new Question().writeBy(javajigi), "Answers Contents1");
         LocalDateTime deleteDate = LocalDateTime.now();
 
         DeleteHistory deleteHistory = answer.deleteSelf(deleteDate);
