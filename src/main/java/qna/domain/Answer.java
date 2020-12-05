@@ -52,20 +52,8 @@ public class Answer extends AbstractEntity {
         return this;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
     public boolean isOwner(User writer) {
         return this.writer.equals(writer);
-    }
-
-    User getWriter() {
-        return writer;
-    }
-
-    public String getContents() {
-        return contents;
     }
 
     public void toQuestion(Question question) {
