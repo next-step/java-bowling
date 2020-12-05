@@ -6,16 +6,15 @@ import java.util.List;
 public class DeleteHistories {
     private final List<DeleteHistory> value;
 
-    public DeleteHistories() {
-        value = new ArrayList<>();
+    private DeleteHistories(List<DeleteHistory> deleteHistories) {
+        value = deleteHistories;
     }
 
-    public void add(DeleteHistory deleteHistory) {
-        value.add(deleteHistory);
-    }
-
-    public void addAll(List<DeleteHistory> deleteHistories) {
-        value.addAll(deleteHistories);
+    public static DeleteHistories of(DeleteHistory questionDeleteHistory, List<DeleteHistory> answersDeleteHistories) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(questionDeleteHistory);
+        deleteHistories.addAll(answersDeleteHistories);
+        return new DeleteHistories(deleteHistories);
     }
 
     public List<DeleteHistory> getValue() {

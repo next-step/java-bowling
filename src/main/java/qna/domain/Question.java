@@ -76,11 +76,8 @@ public class Question extends AbstractEntity {
     }
 
     private DeleteHistories createDeleteHistories(List<DeleteHistory> answersDeleteHistories) {
-        DeleteHistories deleteHistories = new DeleteHistories();
         DeleteHistory questionDeleteHistory = new DeleteHistory(ContentType.QUESTION, super.getId(), writer, LocalDateTime.now());
-        deleteHistories.add(questionDeleteHistory);
-        deleteHistories.addAll(answersDeleteHistories);
-        return deleteHistories;
+        return DeleteHistories.of(questionDeleteHistory, answersDeleteHistories);
     }
 
     @Override
