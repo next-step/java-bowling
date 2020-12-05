@@ -57,7 +57,7 @@ class PinsTest {
     void sum_exception(int startIdx, int offset) {
         assertThatExceptionOfType(PinsOutOfRangeException.class)
                 .isThrownBy(() -> pins.sum(startIdx, offset))
-                .withMessage("rolls 의 범위를 벗어난 index 입니다.");
+                .withMessage("pins 의 범위를 벗어난 index 입니다.");
     }
 
     @Test

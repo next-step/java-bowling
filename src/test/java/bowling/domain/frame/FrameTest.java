@@ -59,7 +59,7 @@ class FrameTest {
                         .isFalse(),
                 () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
                         .isThrownBy(() -> frame.getScore(pins))
-                        .withMessage("rolls 의 범위를 벗어난 index 입니다."),
+                        .withMessage("pins 의 범위를 벗어난 index 입니다."),
                 () -> assertDoesNotThrow(() -> {
                     pins.add(Pin.of(10));
                     pins.add(Pin.of(5));
@@ -85,7 +85,7 @@ class FrameTest {
                         .isFalse(),
                 () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
                         .isThrownBy(() -> frame.getScore(pins))
-                        .withMessage("rolls 의 범위를 벗어난 index 입니다."),
+                        .withMessage("pins 의 범위를 벗어난 index 입니다."),
                 () -> assertDoesNotThrow(() -> {
                     pins.add(Pin.of(10));
                     pins.add(Pin.of(5));
