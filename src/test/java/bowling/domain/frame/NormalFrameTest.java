@@ -1,8 +1,5 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
 import bowling.exception.ExceptionMessage;
 import bowling.domain.score.NormalScores;
 import bowling.domain.score.Score;

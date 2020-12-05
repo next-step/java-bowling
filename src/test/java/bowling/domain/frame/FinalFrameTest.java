@@ -1,7 +1,5 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
 import bowling.domain.score.FinalScores;
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreTest;
