@@ -1,9 +1,10 @@
 package qna.domain;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class DeleteHistories {
+public class DeleteHistories implements Iterable<DeleteHistory> {
     private final List<DeleteHistory> value;
 
     private DeleteHistories(List<DeleteHistory> deleteHistories) {
@@ -17,7 +18,8 @@ public class DeleteHistories {
         return new DeleteHistories(deleteHistories);
     }
 
-    public List<DeleteHistory> getValue() {
-        return value;
+    @Override
+    public Iterator<DeleteHistory> iterator() {
+        return value.iterator();
     }
 }
