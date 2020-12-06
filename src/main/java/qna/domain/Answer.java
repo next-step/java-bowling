@@ -56,6 +56,11 @@ public class Answer extends AbstractEntity {
         return this.writer.equals(writer);
     }
 
+    public boolean isNotOwner(User writer) {
+        return !isOwner(writer);
+    }
+    
+
     public User getWriter() {
         return writer;
     }

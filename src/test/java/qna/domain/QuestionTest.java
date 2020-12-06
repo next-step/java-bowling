@@ -16,9 +16,9 @@ public class QuestionTest {
     @Test
     void delete_success() {
         // when 
-        final Throwable thrown = catchThrowable(() -> {
-            QUESTION_WRITE_BY_JAVAJIGI.delete(UserTest.JAVAJIGI);
-        });
+        final Throwable thrown = catchThrowable(() ->
+                QUESTION_WRITE_BY_JAVAJIGI.delete(UserTest.JAVAJIGI)
+        );
 
         // then
         assertThat(thrown).isNull();
@@ -28,9 +28,9 @@ public class QuestionTest {
     @Test
     void delete_throw_exception_when_ask_user_not_question_owner() {
         // when 
-        final Throwable thrown = catchThrowable(() -> {
-            QUESTION_WRITE_BY_JAVAJIGI.delete(UserTest.SUNGMIN);
-        });
+        final Throwable thrown = catchThrowable(() ->
+                QUESTION_WRITE_BY_JAVAJIGI.delete(UserTest.SUNGMIN)
+        );
 
         // then
         assertThat(thrown).isInstanceOf(CannotDeleteException.class)
