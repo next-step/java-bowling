@@ -8,6 +8,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -47,9 +48,9 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer deleted() {
+    public DeleteHistory delete(User user) {
         deleted = true;
-        return this;
+        return new DeleteHistory(this, user, LocalDateTime.now());
     }
 
     public boolean isOwner(User writer) {

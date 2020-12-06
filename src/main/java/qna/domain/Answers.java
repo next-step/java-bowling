@@ -7,7 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,8 +31,7 @@ public class Answers {
     public List<DeleteHistory> deleteAll(User loginUser) throws CannotDeleteException {
         validateDelete(loginUser);
         return value.stream()
-                .peek(Answer::deleted)
-                .map(answer -> new DeleteHistory(answer, loginUser, LocalDateTime.now()))
+                .map(answer -> answer.delete(loginUser))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
     }
 
