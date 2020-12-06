@@ -48,7 +48,7 @@ public class AnswersTest {
 
         // when 
         final Throwable thrown = catchThrowable(() ->
-                anotherUserAnswers.delete(UserTest.JAVAJIGI)
+                anotherUserAnswers.delete(UserTest.JAVAJIGI, DeleteHistories.of())
         );
 
         // then
@@ -65,7 +65,7 @@ public class AnswersTest {
 
         // when 
         final Throwable thrown = catchThrowable(() ->
-                anotherUserAnswers.delete(UserTest.JAVAJIGI)
+                anotherUserAnswers.delete(UserTest.JAVAJIGI, DeleteHistories.of())
         );
 
         // then

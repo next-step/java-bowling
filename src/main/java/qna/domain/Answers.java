@@ -23,11 +23,15 @@ public class Answers {
         return new Answers(answerList);
     }
 
-    public void delete(final User user) throws CannotDeleteException {
+    public void delete(final User user, final DeleteHistories deleteHistories) throws CannotDeleteException {
         if (existAnswerWriteByAnother(user)) {
             throw new CannotDeleteException(EXIST_ANOTHER_USER_ANSWER);
         }
-        answers.forEach(answer -> answer.setDeleted(true));
+
+        answers.forEach(answer -> {
+            answer.setDeleted(true);
+            deleteHistories.save(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        });
     }
 
     private boolean existAnswerWriteByAnother(final User user) {
