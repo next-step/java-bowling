@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import step3.domain.BowlingPoints;
+import step3.domain.BowlingSymbols;
 import step3.type.PitchesOrderType;
 
 import java.util.stream.Stream;
@@ -35,7 +35,7 @@ public class PitchesOrderTypeTest {
     @DisplayName("currentType테스트")
     @Test
     void currentType() {
-        BowlingPoints points = BowlingPoints.of(3);
+        BowlingSymbols points = BowlingSymbols.of(3);
 
         assertThat(PitchesOrderType.currentType(points.size())).isEqualTo(NONE);
 
@@ -52,7 +52,7 @@ public class PitchesOrderTypeTest {
     @DisplayName("nextType 테스트")
     @Test
     void nextType() {
-        BowlingPoints points = BowlingPoints.of(3);
+        BowlingSymbols points = BowlingSymbols.of(3);
 
         assertThat(PitchesOrderType.nextType(points.size())).isEqualTo(FIRST);
 
