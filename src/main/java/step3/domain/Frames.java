@@ -3,6 +3,7 @@ package step3.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import static java.util.Collections.singletonList;
 
@@ -111,8 +112,11 @@ public class Frames {
         return getLastCompletedFrame(head);
     }
 
-    public void updateCursor() {
-        cursor = getLastCompletedFrame(cursor);
+    public void updateCursor(Frame frame) {
+        if (Objects.isNull(frame)) {
+            cursor = getLastCompletedFrame(cursor);
+        }
+        cursor = frame;
     }
 
 

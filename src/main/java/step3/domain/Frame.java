@@ -3,10 +3,8 @@ package step3.domain;
 import step3.type.ResultPitchesType;
 
 public interface Frame {
-    String NORMAL = "normal";
-    String FINAL = "final";
 
-    int pitches(int pitchesCount);
+    Frame pitches(int pitchesCount);
 
     int getFrameNo();
 
@@ -19,8 +17,6 @@ public interface Frame {
     int getCurrentScore();
 
     int getFirstScore();
-
-    String getFrameType();
 
     Frame next();
 

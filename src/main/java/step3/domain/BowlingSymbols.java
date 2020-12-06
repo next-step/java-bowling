@@ -5,20 +5,18 @@ import step3.state.Symbol;
 import step3.type.PitchesOrderType;
 import step3.type.ResultPitchesType;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.Arrays.asList;
 import static step3.type.PitchesOrderType.*;
 import static step3.type.ResultPitchesType.createSymbol;
 
 public class BowlingSymbols {
     public static final String ERROR_ALREADY_EXISTS_VALUE = "이미 존재하는 값을 추가할 수 없습니다.";
     public static final String ERROR_NOT_PITCHES = "더 이상 투구할 수 없습니다.";
-
+    public static final int ZERO_SCORE = 0;
 
     private final Map<PitchesOrderType, Symbol> bowlingSymbols;
     private final int maxPitches;
@@ -85,6 +83,30 @@ public class BowlingSymbols {
     public int size() {
         return bowlingSymbols.size();
     }
+
+    public ResultPitchesType getType() {
+        return ResultPitchesType.getType(getPointDTO());
+    }
+
+    public int getScore() {
+        return bowlingSymbols.values()
+                .stream()
+                .map(Symbol::getPoint)
+                .reduce(Integer::sum)
+                .orElse(ZERO_SCORE);
+    }
+
+    public int getScore(PitchesOrderType... types) {
+        List<PitchesOrderType> pitchesOrderTypes = asList(types);
+
+        return bowlingSymbols.entrySet()
+                .stream()
+                .filter(entry -> pitchesOrderTypes.contains(entry.getKey()))
+                .map(entry -> entry.getValue().getPoint())
+                .reduce(Integer::sum)
+                .orElse(ZERO_SCORE);
+    }
+
     public PointDTO getPointDTO(int pitchesCount) {
         PointDTO.Builder builder = createPointDTOBuilder();
         return builder.fill(pitchesCount).build();
@@ -113,5 +135,19 @@ public class BowlingSymbols {
 
     public ResultPitchesType getType(PitchesOrderType type) {
         return get(type).getType();
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BowlingSymbols)) return false;
+        BowlingSymbols that = (BowlingSymbols) o;
+        return maxPitches == that.maxPitches && Objects.equals(bowlingSymbols, that.bowlingSymbols);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bowlingSymbols, maxPitches);
     }
 }
