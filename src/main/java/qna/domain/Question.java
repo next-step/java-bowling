@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
-    public static final String PERMISSION_NOT_ALLOWED = "질문을 삭제할 권한이 없습니다.";
+    public static final String DELETE_PERMISSION_NOT_ALLOWED = "질문을 삭제할 권한이 없습니다.";
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -103,7 +103,7 @@ public class Question extends AbstractEntity {
 
     public void delete(final User user, final DeleteHistories deleteHistories) throws CannotDeleteException {
         if (isNotOwner(user)) {
-            throw new CannotDeleteException(PERMISSION_NOT_ALLOWED);
+            throw new CannotDeleteException(DELETE_PERMISSION_NOT_ALLOWED);
         }
         deleteQuestion(deleteHistories);
         deleteAnswers(user, deleteHistories);

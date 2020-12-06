@@ -6,7 +6,7 @@ import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static qna.domain.Question.PERMISSION_NOT_ALLOWED;
+import static qna.domain.Question.DELETE_PERMISSION_NOT_ALLOWED;
 
 public class QuestionTest {
     public static final Question QUESTION_WRITE_BY_JAVAJIGI = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -34,7 +34,7 @@ public class QuestionTest {
 
         // then
         assertThat(thrown).isInstanceOf(CannotDeleteException.class)
-                .hasMessage(PERMISSION_NOT_ALLOWED);
+                .hasMessage(DELETE_PERMISSION_NOT_ALLOWED);
     }
 
 }
