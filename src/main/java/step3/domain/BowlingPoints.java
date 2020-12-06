@@ -1,3 +1,4 @@
+/*
 package step3.domain;
 
 import step3.domain.dto.PointDTO;
@@ -19,7 +20,6 @@ public class BowlingPoints {
     public static final int STRIKE_VALUE = 10;
 
     private final Map<PitchesOrderType, BowlingPoint> bowlingPoints;
-//    private boolean completed;
     private final int maxPitches;
 
     public BowlingPoints(Map<PitchesOrderType, BowlingPoint> bowlingPoints, int maxPitches) {
@@ -94,26 +94,8 @@ public class BowlingPoints {
         isAllowType(type);
         isValid();
         bowlingPoints.put(type, point);
-        //updateComplete();
 
         return this;
-    }
-
-    /*private void updateComplete() {
-        if (isMaximumSize() || isCompleteConditionByNormal() || isCompleteConditionByFinal()) {
-            completed = true;
-        }
-    }*/
-
-    private boolean isCompleteConditionByFinal() {
-        return isFinalType()
-                && size() == 2
-                && getScore(FIRST, SECOND) < STRIKE_VALUE;
-    }
-
-    private boolean isCompleteConditionByNormal() {
-        return isNormalType()
-                && getScore(FIRST) >= STRIKE_VALUE;
     }
 
     private boolean isMaximumSize() {
@@ -136,18 +118,6 @@ public class BowlingPoints {
         return bowlingPoints.size();
     }
 
-    /*public boolean isCompleted() {
-        return completed;
-    }*/
-
-    public int getScore() {
-        return bowlingPoints.values()
-                .stream()
-                .map(BowlingPoint::getPoint)
-                .reduce(Integer::sum)
-                .orElse(ZERO_SCORE);
-    }
-
     public ResultPitchesType getType() {
         return ResultPitchesType.getType(getPointDTO());
     }
@@ -155,6 +125,14 @@ public class BowlingPoints {
     private BowlingPoint get(PitchesOrderType type) {
         return Optional.ofNullable(bowlingPoints.get(type))
                 .orElse(EMPTY_BOWLING_POINT);
+    }
+
+    public int getScore() {
+        return bowlingPoints.values()
+                .stream()
+                .map(BowlingPoint::getPoint)
+                .reduce(Integer::sum)
+                .orElse(ZERO_SCORE);
     }
 
     public int getScore(PitchesOrderType type) {
@@ -201,3 +179,4 @@ public class BowlingPoints {
         return Objects.hash(bowlingPoints, maxPitches);
     }
 }
+*/
