@@ -4,6 +4,7 @@ import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,11 +97,12 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void delete(final User user) throws CannotDeleteException {
+    public void delete(final User user, final DeleteHistories deleteHistories) throws CannotDeleteException {
         // 테스트 가능
         if (!this.isOwner(user)) {
             throw new CannotDeleteException(PERMISSION_NOT_ALLOWED);
         }
         setDeleted(true);
+        deleteHistories.save(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
     }
 }

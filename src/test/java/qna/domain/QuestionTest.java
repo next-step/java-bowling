@@ -17,7 +17,7 @@ public class QuestionTest {
     void delete_success() {
         // when 
         final Throwable thrown = catchThrowable(() ->
-                QUESTION_WRITE_BY_JAVAJIGI.delete(UserTest.JAVAJIGI)
+                QUESTION_WRITE_BY_JAVAJIGI.delete(UserTest.JAVAJIGI, DeleteHistories.of())
         );
 
         // then
@@ -29,7 +29,7 @@ public class QuestionTest {
     void delete_throw_exception_when_ask_user_not_question_owner() {
         // when 
         final Throwable thrown = catchThrowable(() ->
-                QUESTION_WRITE_BY_JAVAJIGI.delete(UserTest.SUNGMIN)
+                QUESTION_WRITE_BY_JAVAJIGI.delete(UserTest.SUNGMIN, DeleteHistories.of())
         );
 
         // then
