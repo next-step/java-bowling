@@ -36,7 +36,7 @@ public class QnaServiceTest {
     @Before
     public void setUp() throws Exception {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.QUESTION_WRITE_BY_JAVAJIGI, "Answers Contents1");
         question.addAnswer(answer);
     }
 
@@ -56,7 +56,7 @@ public class QnaServiceTest {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
+            qnAService.deleteQuestion(UserTest.SUNGMIN, question.getId());
         }).isInstanceOf(CannotDeleteException.class);
     }
 
@@ -76,7 +76,7 @@ public class QnaServiceTest {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
+            qnAService.deleteQuestion(UserTest.SUNGMIN, question.getId());
         }).isInstanceOf(CannotDeleteException.class);
     }
 
