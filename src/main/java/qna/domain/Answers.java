@@ -30,7 +30,7 @@ public class Answers {
         answers.forEach(answer -> answer.setDeleted(true));
     }
 
-    public boolean existAnswerWriteByAnother(final User user) {
+    private boolean existAnswerWriteByAnother(final User user) {
         return answers.stream()
                 .anyMatch(answer -> answer.isNotOwner(user));
     }

@@ -39,14 +39,14 @@ public class QnAService {
         
         final Answers answers = Answers.valueOf(question.getAnswers());
         answers.delete(loginUser);
+
+        DeleteHistories deleteHistories = DeleteHistories.of();
         
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
+        deleteHistories.save(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
         for (Answer answer : answers.getAnswers()) {
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+            deleteHistories.save(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
-        // 테스트 불가능
-        deleteHistoryService.saveAll(deleteHistories);
+        
+        deleteHistoryService.saveAll(deleteHistories.getDeleteHistories());
     }
 }
