@@ -2,6 +2,7 @@ package qna.domain;
 
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,13 +27,14 @@ public class Answers {
         if (existAnswerWriteByAnother(user)) {
             throw new CannotDeleteException(EXIST_ANOTHER_USER_ANSWER);
         }
+        answers.forEach(answer -> answer.setDeleted(true));
     }
 
     public boolean existAnswerWriteByAnother(final User user) {
         return answers.stream()
                 .anyMatch(answer -> answer.isNotOwner(user));
     }
-    
+
     public List<Answer> getAnswers() {
         return answers;
     }

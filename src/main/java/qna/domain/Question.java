@@ -101,5 +101,6 @@ public class Question extends AbstractEntity {
         if (!this.isOwner(user)) {
             throw new CannotDeleteException(PERMISSION_NOT_ALLOWED);
         }
+        setDeleted(true);
     }
 }
