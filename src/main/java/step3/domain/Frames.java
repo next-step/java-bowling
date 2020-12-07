@@ -85,8 +85,12 @@ public class Frames {
 
     public List<String> getScores(Frame frame) {
         Frame current = frame;
-        List<String> list = new ArrayList<>(singletonList(String.valueOf(current.getScore())));
-        int cumulativePoint = current.getScore();
+        List<String> list = new ArrayList<>();
+        int cumulativePoint = 0;
+        if (current.isAllowAggregate()) {
+            cumulativePoint = current.getScore();
+            list.add(formattedScore(cumulativePoint, current));
+        }
 
         while (current.hasNext()) {
             current = current.next();
@@ -98,7 +102,7 @@ public class Frames {
     }
 
     private String formattedScore(int value, Frame frame) {
-        if (frame.getScore() == 0 && !frame.isFinished()) {
+        if (!frame.isAllowAggregate()) {
             return NO_MARK;
         }
         return String.valueOf(value);

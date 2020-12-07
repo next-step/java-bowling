@@ -46,7 +46,7 @@ public class FramesTest {
         head.pitches(5);
 
         assertThat(head.getScore()).isEqualTo(30);
-        assertThat(frames.getFrame(3).getScore()).isEqualTo(0);
+        assertThat(frames.getFrame(3).getScore()).isEqualTo(5);
     }
 
 }
