@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
+    public static final Player TEST_PLAYER = Player.from("NOW");
 
     @DisplayName("Player 생성 테스트")
     @ParameterizedTest

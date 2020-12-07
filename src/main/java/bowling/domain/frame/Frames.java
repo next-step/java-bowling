@@ -59,4 +59,8 @@ public class Frames {
             frames.add(frame);
         }
     }
+
+    public int getScore() {
+        return 0;
+    }
 }
