@@ -2,7 +2,7 @@ package qna.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import qna.CannotDeleteException;
+import qna.exception.CannotDeleteException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
