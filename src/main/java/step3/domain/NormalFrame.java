@@ -4,18 +4,18 @@ import step3.exception.InvalidPitchesException;
 import step3.type.PitchesOrderType;
 import step3.type.ResultPitchesType;
 
+import java.util.Arrays;
+
 import static java.util.Objects.nonNull;
 import static step3.type.PitchesOrderType.FIRST;
+import static step3.type.PitchesOrderType.SECOND;
 import static step3.type.ResultPitchesType.SPARE;
 import static step3.type.ResultPitchesType.STRIKE;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
     public static final int MAX_PITCHES = 2;
     public static final String ERROR_INVALID_PITCHES = "유효하지 않은 투구수입니다.";
-    public static final int STRIKE_VALUE = 10;
 
-    private final int frameNo;
-    private final BowlingSymbols bowlingSymbols;
     private final Frame next;
 
     public NormalFrame(int frameNo) {
@@ -23,16 +23,15 @@ public class NormalFrame implements Frame {
     }
 
     public NormalFrame(int frameNo, Frame next) {
-        this.frameNo = frameNo;
+        super(frameNo, BowlingSymbols.of(MAX_PITCHES));
         this.next = next;
-        this.bowlingSymbols = BowlingSymbols.of(MAX_PITCHES);
     }
 
     @Override
     public Frame pitches(int pitchesCount) throws InvalidPitchesException {
         if (!isFinished()) {
             isValidPitchesCount(pitchesCount);
-            bowlingSymbols.push(pitchesCount);
+            super.bowlingSymbols.push(pitchesCount);
 
             return this;
         }
@@ -47,15 +46,10 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int getFrameNo() {
-        return frameNo;
-    }
-
-    @Override
     public int getScore() {
         int score = getCurrentScore();
         ResultPitchesType type = bowlingSymbols.getType();
-        if (STRIKE.equals(type) || SPARE.equals(type)) {
+        if (isStrikeOrSpare(type)) {
             score += next.getScore(type);
         }
         return score;
@@ -66,11 +60,11 @@ public class NormalFrame implements Frame {
         ResultPitchesType currentType = bowlingSymbols.getType();
 
         if (isDouble(prevType, currentType) && !next.hasNext()) {
-            return getCurrentScore() + next.getFirstScore();
+            return getCurrentScore() + next.getScoreByOrderType(FIRST);
         }
 
         if (isDouble(prevType, currentType)) {
-            return getCurrentScore() + next.getCurrentScore();
+            return getCurrentScore() + next.getScoreByOrderType(FIRST);
         }
 
         if (STRIKE.equals(prevType)) {
@@ -78,7 +72,7 @@ public class NormalFrame implements Frame {
         }
 
         if (SPARE.equals(prevType)) {
-            return getCurrentScore(FIRST);
+            return getScoreByOrderType(FIRST);
         }
         return 0;
     }
@@ -87,33 +81,6 @@ public class NormalFrame implements Frame {
         return STRIKE.equals(prevType) && STRIKE.equals(currentType);
     }
 
-    @Override
-    public ResultPitchesType getType() {
-        return bowlingSymbols.getType();
-    }
-
-    @Override
-    public int getCurrentScore() {
-        if (!isFinished()) {
-            return 0;
-        }
-        return bowlingSymbols.getScore();
-    }
-
-    private int getCurrentScore(PitchesOrderType type) {
-        if (!isFinished()) {
-            return 0;
-        }
-        return bowlingSymbols.getScore(type);
-    }
-
-    @Override
-    public int getFirstScore() {
-        if (!isFinished()) {
-            return 0;
-        }
-        return bowlingSymbols.getScore(FIRST);
-    }
 
     @Override
     public Frame next() {
@@ -132,15 +99,35 @@ public class NormalFrame implements Frame {
         return new NormalFrame(frameNo + 1);
     }
 
-    @Override
-    public String getResultString() {
-        return bowlingSymbols.getSymbol();
-    }
 
     @Override
     public boolean isFinished() {
         return bowlingSymbols.size() == 2 || bowlingSymbols.getType(FIRST).equals(STRIKE);
     }
 
+    @Override
+    public boolean isAllowAggregate() {
+        ResultPitchesType type = bowlingSymbols.getType();
+        if (isStrikeOrSpare(type)) {
+            return next.isAllowAggregate(type);
+        }
+        return isFinished();
+    }
+
+    @Override
+    public boolean isAllowAggregate(ResultPitchesType prevType) {
+        ResultPitchesType currentType = bowlingSymbols.getType();
+        if (isDouble(prevType, currentType)) {
+            return next.existsSymbol(FIRST);
+        }
+        if (STRIKE.equals(prevType)) {
+            return existsSymbol(SECOND);
+        }
+        return existsSymbol(FIRST);
+    }
+
+    private boolean isStrikeOrSpare(ResultPitchesType type) {
+        return Arrays.asList(STRIKE, SPARE).contains(type);
+    }
 
 }

@@ -150,4 +150,9 @@ public class BowlingSymbols {
     public int hashCode() {
         return Objects.hash(bowlingSymbols, maxPitches);
     }
+
+    public boolean existsSymbol(PitchesOrderType orderType) {
+        Symbol symbol = get(orderType);
+        return !symbol.equals(Symbol.defaultSymbol());
+    }
 }

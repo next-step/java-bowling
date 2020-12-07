@@ -1,23 +1,20 @@
 package step3.domain;
 
 import step3.exception.NotExistsNextFrameException;
+import step3.type.PitchesOrderType;
 import step3.type.ResultPitchesType;
 
 import static step3.type.PitchesOrderType.FIRST;
 import static step3.type.PitchesOrderType.SECOND;
 import static step3.type.ResultPitchesType.STRIKE;
 
-public class FinalFrame implements Frame {
+public class FinalFrame extends Frame {
     public static final String ERROR_CURRENT_FRAME_IS_FINAL = "해당 프레임이 마지막 프레임입니다.";
     public static final int MAX_PITCHES = 3;
     public static final int STRIKE_VALUE = 10;
 
-    private final int frameNo;
-    private final BowlingSymbols bowlingSymbols;
-
     public FinalFrame(int frameNo) {
-        this.frameNo = frameNo;
-        this.bowlingSymbols =BowlingSymbols.of(MAX_PITCHES);
+        super(frameNo, BowlingSymbols.of(MAX_PITCHES));
     }
 
     @Override
@@ -36,10 +33,6 @@ public class FinalFrame implements Frame {
                 && bowlingSymbols.getScore(FIRST, SECOND) < STRIKE_VALUE;
     }
 
-    @Override
-    public int getFrameNo() {
-        return frameNo;
-    }
 
     @Override
     public int getScore() {
@@ -54,23 +47,6 @@ public class FinalFrame implements Frame {
         return bowlingSymbols.getScore(FIRST);
     }
 
-    @Override
-    public ResultPitchesType getType() {
-        return bowlingSymbols.getType();
-    }
-
-    @Override
-    public int getFirstScore() {
-        return bowlingSymbols.getScore(FIRST);
-    }
-
-    @Override
-    public int getCurrentScore() {
-        if (!isFinished()) {
-            return 0;
-        }
-        return bowlingSymbols.getScore();
-    }
 
     @Override
     public Frame next() {
@@ -82,14 +58,23 @@ public class FinalFrame implements Frame {
         return false;
     }
 
-    @Override
-    public String getResultString() {
-        return bowlingSymbols.getSymbol();
-    }
 
     @Override
     public boolean isFinished() {
         return bowlingSymbols.size() == MAX_PITCHES || isFinalCompletedCondition();
+    }
+
+    @Override
+    public boolean isAllowAggregate() {
+        return isFinished();
+    }
+
+    @Override
+    public boolean isAllowAggregate(ResultPitchesType prevType) {
+        if (STRIKE.equals(prevType)) {
+            return existsSymbol(FIRST) && existsSymbol(SECOND);
+        }
+        return existsSymbol(FIRST);
     }
 
 }

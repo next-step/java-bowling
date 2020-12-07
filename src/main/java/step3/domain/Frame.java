@@ -1,28 +1,55 @@
 package step3.domain;
 
+import step3.type.PitchesOrderType;
 import step3.type.ResultPitchesType;
 
-public interface Frame {
+public abstract class Frame {
 
-    Frame pitches(int pitchesCount);
+    protected final int frameNo;
+    protected final BowlingSymbols bowlingSymbols;
 
-    int getFrameNo();
+    public Frame(int frameNo, BowlingSymbols bowlingSymbols) {
+        this.frameNo = frameNo;
+        this.bowlingSymbols = bowlingSymbols;
+    }
 
-    int getScore();
+    public int getFrameNo() {
+        return frameNo;
+    }
 
-    int getScore(ResultPitchesType prevType);
+    public ResultPitchesType getType() {
+        return bowlingSymbols.getType();
+    }
 
-    ResultPitchesType getType();
+    public boolean existsSymbol(PitchesOrderType first) {
+        return bowlingSymbols.existsSymbol(first);
+    }
 
-    int getCurrentScore();
+    public int getCurrentScore() {
+        return bowlingSymbols.getScore();
+    }
 
-    int getFirstScore();
+    public String getResultString() {
+        return bowlingSymbols.getSymbol();
+    }
 
-    Frame next();
+    public int getScoreByOrderType(PitchesOrderType type) {
+        return bowlingSymbols.getScore(type);
+    }
 
-    boolean hasNext();
+    public abstract Frame pitches(int pitchesCount);
 
-    String getResultString();
+    public abstract int getScore();
 
-    boolean isFinished();
+    public abstract int getScore(ResultPitchesType prevType);
+
+    public abstract Frame next();
+
+    public abstract boolean hasNext();
+
+    public abstract boolean isFinished();
+
+    public abstract boolean isAllowAggregate();
+
+    public abstract boolean isAllowAggregate(ResultPitchesType type);
 }
