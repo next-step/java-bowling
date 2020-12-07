@@ -33,5 +33,5 @@
 ### 1단계 피드백
 - [ ] Q2는 사용하지 않는것으로 보입니다. MethodSource를 사용해서 테스트 코드를 작성해보세요 :)
 - [x] deleted()는 setter로 보이네요 😯 deleted()에서 DeleteHistory 자체를 리턴해주면 어떨까요? 🤔
-- [ ] Answers의 테스트 코드도 작성해보면 좋을 것 같아요 ~🙂
+- [x] Answers의 테스트 코드도 작성해보면 좋을 것 같아요 ~🙂
 - [ ] delete()의 반환 값 (DeleteHistories)에 대한 검사도 해주면 좋을 것 같습니다 :) 
