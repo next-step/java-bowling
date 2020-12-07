@@ -1,5 +1,6 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -48,9 +49,16 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public DeleteHistory delete(User user) {
+    public DeleteHistory delete(User user) throws CannotDeleteException {
+        validateDelete(user);
         deleted = true;
         return new DeleteHistory(this, user, LocalDateTime.now());
+    }
+
+    private void validateDelete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
     }
 
     public boolean isOwner(User writer) {
