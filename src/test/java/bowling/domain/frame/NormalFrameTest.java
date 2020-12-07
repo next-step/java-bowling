@@ -92,4 +92,77 @@ public class NormalFrameTest {
                 Arguments.of(11, FinalFrame.class)
         );
     }
+
+    @DisplayName("Frame Score(점수) 반환 테스트 - 추가 합산 점수 없는 경우")
+    @ParameterizedTest
+    @MethodSource("makeScoreNoBonusData")
+    void getScore_no_bonus_score(Score firstScore, Score secondScore, Score thirdScore, int expectedResult) {
+        Frame frame = NormalFrame.of(Frame.FIRST_FRAME, NormalScores.init());
+        frame.bowl(firstScore);
+        frame.bowl(secondScore);
+
+        Frame nextFrame = frame.next();
+        nextFrame.bowl(thirdScore);
+
+        int actualResult = frame.getScore();
+
+        assertThat(actualResult).isEqualTo(expectedResult);
+    }
+
+    private static Stream<Arguments> makeScoreNoBonusData() {
+        return Stream.of(
+                Arguments.of(Score.of("2"), Score.of("3"), Score.of("10"), 5),
+                Arguments.of(Score.of("4"), Score.of("3"), Score.of("7"), 8)
+        );
+    }
+
+    @DisplayName("Frame Score(점수) 반환 테스트 - 추가 합산 점수 있는 경우 (스트라이크)")
+    @ParameterizedTest
+    @MethodSource("makeScoreStrikeData")
+    void getScore_strike(Score firstScore, Score secondScore, Score thirdScore, int expectedResult) {
+        Frame frame = NormalFrame.of(Frame.FIRST_FRAME, NormalScores.init());
+        frame.bowl(firstScore);
+
+        Frame nextFrame = frame.next();
+        nextFrame.bowl(secondScore);
+        nextFrame.bowl(thirdScore);
+
+        int actualResult = frame.getScore();
+
+        assertThat(actualResult).isEqualTo(expectedResult);
+    }
+
+    private static Stream<Arguments> makeScoreStrikeData() {
+        return Stream.of(
+                Arguments.of(Score.of("10"), Score.of("3"), Score.of("6"), 19),
+                Arguments.of(Score.of("10"), Score.of("1"), Score.of("1"), 12)
+        );
+    }
+
+    @DisplayName("Frame Score(점수) 반환 테스트 - 추가 합산 점수 있는 경우 (스페어)")
+    @ParameterizedTest
+    @MethodSource("makeScoreSpareData")
+    void getScore_spare(Score firstScore, Score secondScore, Score thirdScore, Score fourthScore, int expectedResult) {
+        Frame frame = NormalFrame.of(Frame.FIRST_FRAME, NormalScores.init());
+        frame.bowl(firstScore);
+        frame.bowl(secondScore);
+
+        Frame nextFrame = frame.next();
+        nextFrame.bowl(thirdScore);
+
+        if(fourthScore != null) {
+            nextFrame.bowl(fourthScore);
+        }
+
+        int actualResult = frame.getScore();
+
+        assertThat(actualResult).isEqualTo(expectedResult);
+    }
+
+    private static Stream<Arguments> makeScoreSpareData() {
+        return Stream.of(
+                Arguments.of(Score.of("2"), Score.of("8"), Score.of("6"), Score.of("3"), 16),
+                Arguments.of(Score.of("6"), Score.of("4"), Score.of("7"), null, 17)
+        );
+    }
 }

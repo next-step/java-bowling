@@ -10,7 +10,8 @@ public abstract class Frame {
     public static final int LAST_FRAME = 10;
 
     protected int frameNumber;
-    Scores scores;
+    private Scores scores;
+    Frame next;
 
     Frame(int frameNumber, Scores scores) {
         this.frameNumber = frameNumber;
@@ -38,4 +39,6 @@ public abstract class Frame {
     }
 
     public abstract Frame next();
+
+    public abstract int getScore();
 }

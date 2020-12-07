@@ -21,8 +21,20 @@ public class NormalFrame extends Frame {
     @Override
     public Frame next() {
         int nextFrameNumber = this.frameNumber + 1;
-        return nextFrameNumber < Frame.LAST_FRAME
+        Frame nextFrame = nextFrameNumber < Frame.LAST_FRAME
                 ? NormalFrame.of(nextFrameNumber, NormalScores.init())
                 : FinalFrame.of(nextFrameNumber, FinalScores.init());
+
+        addNext(nextFrame);
+        return nextFrame;
+    }
+
+    private void addNext(Frame nextFrame) {
+        this.next = nextFrame;
+    }
+
+    @Override
+    public int getScore() {
+        return 0;
     }
 }

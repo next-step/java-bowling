@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FrameTest {
 
-    @DisplayName("Frame Scores 반환 테스트")
+    @DisplayName("Frame Score expression 반환 테스트")
     @ParameterizedTest
     @MethodSource("makeBowlResultData")
     void getResult(Score firstValue, Score secondValue) {

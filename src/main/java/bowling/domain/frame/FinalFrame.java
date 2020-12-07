@@ -20,4 +20,9 @@ public class FinalFrame extends Frame {
         return FinalFrame.of(nextFrameNumber, FinalScores.init());
     }
 
+    @Override
+    public int getScore() {
+        return 0;
+    }
+
 }
