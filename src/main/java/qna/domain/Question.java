@@ -66,7 +66,7 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) {
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
