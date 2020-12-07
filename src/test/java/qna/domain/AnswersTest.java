@@ -1,9 +1,15 @@
 package qna.domain;
 
 import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import qna.CannotDeleteException;
 
+import java.util.stream.Stream;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 
 public class AnswersTest {
@@ -17,10 +23,17 @@ public class AnswersTest {
         assertThat(sizeAfter - sizeBefore).isEqualTo(1);
     }
 
-    @Test
-    public void deleteAllTest() throws CannotDeleteException {
-        Answers answers = new Answers(AnswerTest.A1, AnswerTest.A3);
+    @ParameterizedTest
+    @MethodSource("answers")
+    public void deleteAllTest(Answers answers, User loginUser) throws CannotDeleteException {
+        assertThatCode(() -> answers.deleteAll(loginUser))
+                .doesNotThrowAnyException();
+    }
 
-        answers.deleteAll(UserTest.JAVAJIGI);
+    private static Stream<Arguments> answers() {
+        return Stream.of(
+                Arguments.of(AnswerTest.A1, UserTest.JAVAJIGI),
+                Arguments.of(AnswerTest.A2, UserTest.SANJIGI)
+        );
     }
 }
