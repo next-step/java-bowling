@@ -8,6 +8,11 @@ import qna.domain.User;
 public class TestQuestion extends Question {
     private boolean deleted;
 
+    public TestQuestion(Question question) {
+        super(question);
+        deleted = false;
+    }
+
     public TestQuestion(String title, String contents) {
         super(title, contents);
         deleted = false;

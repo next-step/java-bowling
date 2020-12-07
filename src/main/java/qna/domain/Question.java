@@ -23,9 +23,17 @@ public class Question extends AbstractEntity {
         questionArticle = new QuestionArticle(title, contents);
     }
 
+    public Question(QuestionArticle questionArticle) {
+        this.questionArticle = questionArticle;
+    }
+
     public Question(long id, String title, String contents) {
         super(id);
         questionArticle = new QuestionArticle(title, contents);
+    }
+
+    public Question(Question question) {
+        this(question.questionArticle);
     }
 
     public Question writeBy(User loginUser) {
