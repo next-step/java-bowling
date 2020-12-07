@@ -1,8 +1,11 @@
 package qna.domain;
 
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import qna.CannotDeleteException;
 import qna.domain.mock.TestAnswer;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -43,5 +46,14 @@ public class AnswerTest {
                         .doesNotThrowAnyException(),
                 () -> assertThat(testAnswer.isDeleted()).isTrue()
         );
+    }
+
+    @Test
+    @DisplayName("Answer 삭제로 반환받은 DeleteHistory 검증")
+    public void deleteHistory() {
+        User loginUser = UserTest.JAVAJIGI;
+        DeleteHistory deleteHistory = AnswerTest.A1.delete(loginUser);
+
+        assertThat(deleteHistory).isEqualTo(new DeleteHistory(AnswerTest.A1, UserTest.JAVAJIGI, LocalDateTime.now()));
     }
 }

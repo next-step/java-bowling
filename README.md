@@ -34,4 +34,5 @@
 - [ ] Q2는 사용하지 않는것으로 보입니다. MethodSource를 사용해서 테스트 코드를 작성해보세요 :)
 - [x] deleted()는 setter로 보이네요 😯 deleted()에서 DeleteHistory 자체를 리턴해주면 어떨까요? 🤔
 - [x] Answers의 테스트 코드도 작성해보면 좋을 것 같아요 ~🙂
-- [ ] delete()의 반환 값 (DeleteHistories)에 대한 검사도 해주면 좋을 것 같습니다 :) 
+- [x] delete()의 반환 값 (DeleteHistories)에 대한 검사도 해주면 좋을 것 같습니다 :) 
+    - 반환된 DeleteHisotries에 특정 값이 포함되었는지 확인하고 싶었는데 외부로 노출하는건 iterator 뿐이고, 테스트만을 위해서 getter를 추가하는게 탐탁치 않아 iterator를 list로 변환후에 테스트를 진행했습니다. 이 부분은 어떤거 같나요? 

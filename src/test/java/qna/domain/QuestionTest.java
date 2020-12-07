@@ -4,6 +4,11 @@ import org.junit.Test;
 import qna.CannotDeleteException;
 import qna.domain.mock.TestQuestion;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -58,5 +63,17 @@ public class QuestionTest {
         assertThatExceptionOfType(CannotDeleteException.class)
                 .isThrownBy(() -> Q1.delete(invalidLoginUser))
                 .withMessage("질문을 삭제할 권한이 없습니다.");
+    }
+
+    @Test
+    public void deleteHistories() {
+        User loginUser = UserTest.JAVAJIGI;
+        Q1.addAnswer(AnswerTest.A1);
+        Q1.addAnswer(AnswerTest.A3);
+
+        DeleteHistories deleteHistories = Q1.delete(loginUser);
+        List<DeleteHistory> collect = StreamSupport.stream(deleteHistories.spliterator(), false)
+                .collect(Collectors.toList());
+        assertThat(collect).contains(new DeleteHistory(Q1, LocalDateTime.now()));
     }
 }
