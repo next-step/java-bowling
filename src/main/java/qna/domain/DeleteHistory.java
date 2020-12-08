@@ -6,6 +6,7 @@ import java.util.Objects;
 
 @Entity
 public class DeleteHistory {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -21,14 +22,21 @@ public class DeleteHistory {
 
     private LocalDateTime createDate = LocalDateTime.now();
 
-    public DeleteHistory() {
-    }
+    private DeleteHistory() {}
 
     public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
         this.contentType = contentType;
         this.contentId = contentId;
         this.deletedBy = deletedBy;
         this.createDate = createDate;
+    }
+
+    public static DeleteHistory initQuestion(Long id, User writer) {
+        return new DeleteHistory(ContentType.QUESTION, id, writer, LocalDateTime.now());
+    }
+
+    public static DeleteHistory initAnswer(Long id, User writer) {
+        return new DeleteHistory(ContentType.ANSWER, id, writer, LocalDateTime.now());
     }
 
     @Override
@@ -52,4 +60,5 @@ public class DeleteHistory {
         return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
                 + deletedBy + ", createDate=" + createDate + "]";
     }
+
 }

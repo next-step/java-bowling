@@ -1,6 +1,8 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.exception.CannotDeleteException;
+import qna.exception.NotOwnedChildContentException;
+import qna.exception.NotOwnedContentException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -18,15 +21,12 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
-    public Question() {
-    }
+    private Question() {}
 
     public Question(String title, String contents) {
         this.title = title;
@@ -37,24 +37,6 @@ public class Question extends AbstractEntity {
         super(id);
         this.title = title;
         this.contents = contents;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
     }
 
     public User getWriter() {
@@ -68,28 +50,47 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        answers.addAnswer(answer);
     }
 
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
+
+    public List<DeleteHistory> delete(User loginUser) {
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        throwIfNotOwnedQuestion(loginUser);
+        throwIfHaveNotOwnedAnswer(loginUser);
+
+        this.deleted = true;
+
+        deleteHistories.add(DeleteHistory.initQuestion(getId(), getWriter()));
+        deleteHistories.addAll(answers.deleteAll(loginUser));
+
+        return deleteHistories;
+    }
+
+    private void throwIfNotOwnedQuestion(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new NotOwnedContentException();
+        }
+    }
+
+    private void throwIfHaveNotOwnedAnswer(User loginUser) {
+        if (answers.hasOtherOwnedAnswer(loginUser)) {
+            throw new NotOwnedChildContentException();
+        }
+    }
+
 }
