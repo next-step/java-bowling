@@ -24,11 +24,18 @@ public class Frame {
         }
 
         if (secondPitching == null) {
+            if (firstPitching == 0) {
+                return "-";
+            }
             return String.valueOf(firstPitching);
         }
 
         if (firstPitching + secondPitching == 10) {
             return firstPitching + "|/";
+        }
+
+        if (secondPitching == 0) {
+            return firstPitching + "|-";
         }
 
         return firstPitching + "|" + secondPitching;

@@ -38,7 +38,7 @@ public class FrameTest {
     public void gutterTest() {
         Frame frame = new Frame();
         frame.setKnockDownPins(3);
-        frame.setKnockDownPins(7);
+        frame.setKnockDownPins(0);
         assertThat(frame.getStatus()).isEqualTo("3|-");
     }
 }
