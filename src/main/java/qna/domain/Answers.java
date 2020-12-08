@@ -31,13 +31,12 @@ public class Answers {
         return Collections.unmodifiableList(answers);
     }
 
-    public void deleteAnswers(final User loginUser ,final DeleteHistories deleteHistories)  {
-        answers.forEach(answer -> {
-            try {
-                answer.deleteAnswer(loginUser , deleteHistories);
-            } catch (CannotDeleteException e) {
-                e.printStackTrace();
-            }
-        });
+    public List<DeleteHistory> deleteAnswers(final User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        for (Answer answer : answers) {
+            deleteHistories.add(answer.deleteAnswer(loginUser));
+        }
+        return deleteHistories;
+
     }
 }

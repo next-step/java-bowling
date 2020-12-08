@@ -29,6 +29,9 @@ public class DeleteHistories {
         deleteHistories.add(deleteHistory);
     }
 
+    public void saveAll(List<DeleteHistory> deleteAnswers) {
+        deleteHistories.addAll(deleteAnswers);
+    }
     public List<DeleteHistory> getDeleteHistories() {
         return Collections.unmodifiableList(deleteHistories);
     }
@@ -45,4 +48,5 @@ public class DeleteHistories {
     public int hashCode() {
         return Objects.hash(getDeleteHistories());
     }
+
 }

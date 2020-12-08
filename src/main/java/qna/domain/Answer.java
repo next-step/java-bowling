@@ -6,6 +6,8 @@ import qna.exception.UnAuthorizedException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -69,13 +71,12 @@ public class Answer extends AbstractEntity {
     }
 
 
-    public boolean deleteAnswer(final User loginUser, final DeleteHistories deleteHistories) throws CannotDeleteException {
+    public DeleteHistory deleteAnswer(final User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("삭제할수 없습니다.");
         }
         this.deleted = true;
-        deleteHistories.save(new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now()));
-        return this.deleted;
+        return new DeleteHistory(ContentType.ANSWER, getId(), this.writer, LocalDateTime.now());
     }
 
     @Override

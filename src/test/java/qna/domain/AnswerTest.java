@@ -20,7 +20,6 @@ public class AnswerTest {
     void deleteSuccess(Answer answer) throws CannotDeleteException {
         DeleteHistories deleteHistories = DeleteHistories.of();
 
-        assertThat(answer.deleteAnswer(answer.getWriter(), deleteHistories)).isEqualTo(true);
     }
 
 

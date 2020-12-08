@@ -22,7 +22,7 @@ public class QuestionTest {
     @MethodSource("injectDeleteHistories")
     void throwNotOwnDelete(Question question, User writer, DeleteHistories deleteHistories) {
 
-        assertThatThrownBy(() -> question.delete(writer, deleteHistories))
+        assertThatThrownBy(() -> question.delete(writer))
                 .isInstanceOf(CannotDeleteException.class);
     }
 
@@ -50,7 +50,7 @@ public class QuestionTest {
     @ParameterizedTest
     @MethodSource("injectNotOwn")
     void throwNotOwnDelete(Question question, User writer) {
-        assertThatThrownBy(() -> question.delete(writer, DeleteHistories.of()))
+        assertThatThrownBy(() -> question.delete(writer))
                 .isInstanceOf(CannotDeleteException.class);
     }
 
@@ -70,7 +70,7 @@ public class QuestionTest {
     @DisplayName("질문 삭제할때 질문한 작성자가 다를경우 삭제할수 없음")
     @MethodSource("injectQuestionNotWriter")
     void deleteSuccess(Question question, User writer) {
-        assertThatThrownBy(() -> question.delete(writer, DeleteHistories.of())).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> question.delete(writer)).isInstanceOf(CannotDeleteException.class);
     }
 
     private static Stream<Arguments> injectQuestionNotWriter() {
