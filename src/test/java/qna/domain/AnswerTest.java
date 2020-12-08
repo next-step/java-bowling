@@ -1,31 +1,35 @@
 package qna.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import qna.exception.CannotDeleteException;
 
-import static org.assertj.core.api.Assertions.*;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
     public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("injectAnswer")
     @DisplayName("삭제를 성공한다.")
-    void deleteSuccess() {
+    void deleteSuccess(Answer answer) throws CannotDeleteException {
+        DeleteHistories deleteHistories = DeleteHistories.of();
 
+        assertThat(answer.deleteAnswer(answer.getWriter(), deleteHistories)).isEqualTo(true);
     }
 
-    @Test
-    @DisplayName("다른 사람이 쓴 글은 삭제할수 없다.")
-    void throwAnotherWrite() {
-    }
 
-    @Test
-    @DisplayName("질문자와 답변자가 같을경우 삭제가 가능하다.")
-    void deleteSuccessSameUser() {
+    private static Stream<Arguments> injectAnswer() {
+        return Stream.of(
+                Arguments.of(A1),
+                Arguments.of(A2)
+        );
     }
-
 
 
 }
