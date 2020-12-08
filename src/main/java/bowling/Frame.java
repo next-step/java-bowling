@@ -1,10 +1,17 @@
 package bowling;
 
 public class Frame {
-    public void setKnockDownPins(int i) {
+    private int score;
+
+    public void setKnockDownPins(int knockDownPins) {
+        score = knockDownPins;
     }
 
-    public boolean getStatus() {
-        return false;
+    public String getStatus() {
+        if (score == 10) {
+            return "X";
+        }
+
+        return String.valueOf(score);
     }
 }
