@@ -9,6 +9,7 @@ import qna.exception.CannotDeleteException;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
@@ -30,5 +31,20 @@ public class AnswerTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("injectAnswerAnotherWriterDelete")
+    @DisplayName("질문자 이외에 다른사람이 답변단걸 삭제할경우 익셉션 발생.")
+    void throwDeleteAnotherWriter(Answer answer, User writer) throws CannotDeleteException {
+        assertThatThrownBy(() -> answer.deleteAnswer(writer))
+                .isInstanceOf(CannotDeleteException.class);
+    }
+
+
+    private static Stream<Arguments> injectAnswerAnotherWriterDelete() {
+        return Stream.of(
+                Arguments.of(A1, UserTest.SANJIGI),
+                Arguments.of(A2, UserTest.JAVAJIGI)
+        );
+    }
 
 }
