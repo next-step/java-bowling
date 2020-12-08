@@ -1,8 +1,10 @@
 package bowling.frame;
 
 import bowling.bowler.Bowler;
+import bowling.bowler.Bowlers;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 import static bowling.frame.Frame.FINAL_FRAME_NUMBER;
@@ -10,17 +12,17 @@ import static bowling.frame.Frame.INCREASE_FRAME_NUMBER;
 
 public class BowlingBoard {
 
-    private final Bowler bowler;
+    private final Bowlers bowlers;
     private final LinkedList<Frame> frames;
 
-    private BowlingBoard(Bowler bowler) {
-        this.bowler = bowler;
+    private BowlingBoard(Bowlers bowlers) {
+        this.bowlers = bowlers;
         this.frames = new LinkedList<>();
         this.frames.add(NormalFrame.first());
     }
 
-    public static BowlingBoard start(Bowler bowler) {
-        return new BowlingBoard(bowler);
+    public static BowlingBoard start(Bowlers bowlers) {
+        return new BowlingBoard(bowlers);
     }
 
     public Frame bowl(String fellPins) {
@@ -66,8 +68,8 @@ public class BowlingBoard {
         return frames;
     }
 
-    public String getBowlerName() {
-        return bowler.getName();
+    public List<Bowler> getBowlers() {
+        return bowlers.getBowlers();
     }
 
     public boolean isEnd() {
@@ -79,11 +81,11 @@ public class BowlingBoard {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BowlingBoard that = (BowlingBoard) o;
-        return Objects.equals(bowler, that.bowler);
+        return bowlers.equals(that.bowlers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bowler);
+        return Objects.hash(bowlers);
     }
 }

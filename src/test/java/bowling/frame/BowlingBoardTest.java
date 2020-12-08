@@ -1,21 +1,24 @@
 package bowling.frame;
 
 import bowling.bowler.Bowler;
+import bowling.bowler.Bowlers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BowlingBoardTest {
 
-    private Bowler bowler;
     private BowlingBoard bowling;
 
     @BeforeEach
     void setUp() {
-        bowler = Bowler.of("LHG");
-        bowling = BowlingBoard.start(bowler);
+        Bowler bowler1 = Bowler.of("LHG");
+        Bowler bowler2 = Bowler.of("PJS");
+        bowling = BowlingBoard.start(Bowlers.from(Arrays.asList(bowler1, bowler2)));
     }
 
     @Test
