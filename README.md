@@ -25,7 +25,9 @@
 * 참여자
     * 이름
 * 핀
-    * hit 한 핀 갯수
+    * 넘어진 핀 갯수
+* Frames
+    * Frame 일급 컬렉션
 * Frame
     * NormalFrame
         * 1~9 프레임
