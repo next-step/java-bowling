@@ -75,8 +75,8 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public Question deleteQuestion() {
+        this.deleted = true;
         return this;
     }
 
