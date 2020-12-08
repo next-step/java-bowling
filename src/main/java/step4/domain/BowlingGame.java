@@ -19,7 +19,7 @@ public class BowlingGame {
         Frame frame = frames.getCursor();
         frames.updateCursor(frame.pitches(pitchesCount));
 
-        return new GameHistory(frames.getMarks(frames.getHead()), frames.getScores(frames.getHead()));
+        return new GameHistory(frames.getMarks(), frames.getScores());
 
     }
 }

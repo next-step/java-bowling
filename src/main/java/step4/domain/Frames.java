@@ -60,8 +60,8 @@ public class Frames {
         return head;
     }
 
-    public List<String> getMarks(Frame frame) {
-        Frame current = frame;
+    public List<String> getMarks() {
+        Frame current = head;
         List<String> list = new ArrayList<>(singletonList(current.getResultString()));
 
         while (current.hasNext()) {
@@ -71,7 +71,7 @@ public class Frames {
         return list;
     }
 
-    public int getScores() {
+    public int getTotalScores() {
         Frame current = head;
         int totalPoint = head.getScore();
 
@@ -83,8 +83,8 @@ public class Frames {
         return totalPoint;
     }
 
-    public List<String> getScores(Frame frame) {
-        Frame current = frame;
+    public List<String> getScores() {
+        Frame current = head;
         List<String> list = new ArrayList<>();
         int cumulativePoint = 0;
         if (current.isAllowAggregate()) {
