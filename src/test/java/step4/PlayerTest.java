@@ -13,8 +13,8 @@ public class PlayerTest {
     @DisplayName("플레이어 생성 테스트")
     @Test
     void createPlayer() {
-        Player cat = new Player("cat");
-        assertThat(cat).isEqualTo(new Player("cat"));
+        Player cat = new Player("cat", null);
+        assertThat(cat).isEqualTo(new Player("cat", null));
         assertThat(cat.getName()).isEqualTo("cat");
     }
 
@@ -23,6 +23,6 @@ public class PlayerTest {
     @ValueSource(strings = {"123", "catsbi", ""})
     void createPlayerWithException(String input) {
         assertThatIllegalArgumentException()
-                .isThrownBy(()-> new Player(input)).withMessage(Player.ERROR_INVALID_NAME);
+                .isThrownBy(()-> new Player(input, null)).withMessage(Player.ERROR_INVALID_NAME);
     }
 }

@@ -19,7 +19,7 @@ public class FramePointTest {
     @ParameterizedTest
     @MethodSource("provideAllStrikeFrames")
     void allStrikePoint(Frames frames, int totalPoint, List<String> strings) {
-        assertThat(frames.getScores()).isEqualTo(totalPoint);
+        assertThat(frames.getTotalScores()).isEqualTo(totalPoint);
 
         assertThat(frames.getScores())
                 .isEqualTo(strings);
@@ -43,7 +43,7 @@ public class FramePointTest {
     @MethodSource("provideBowlingScoreInfo")
     void calculateBowlingScores(Frames frames, int totalScore, List<String> result) {
         assertThat(frames.getTotalScores()).isEqualTo(totalScore);
-        assertThat(frames.getTotalScores()).isEqualTo(result);
+        assertThat(frames.getScores()).isEqualTo(result);
 
     }
 
