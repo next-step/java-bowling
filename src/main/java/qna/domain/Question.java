@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -75,7 +76,10 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question deleteQuestion() {
+    public Question deleteQuestion(User loginUser) throws CannotDeleteException {
+        if(loginUser != writer){
+            throw new CannotDeleteException("질문자와 답변자가 달라서 삭제할수 없습니다.");
+        }
         this.deleted = true;
         return this;
     }
