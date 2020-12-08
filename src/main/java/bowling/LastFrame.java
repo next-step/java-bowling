@@ -13,47 +13,79 @@ public class LastFrame implements Frame {
             return;
         }
 
-        secondPitching = knockDownPins;
+        if (secondPitching == null) {
+            secondPitching = knockDownPins;
+            return;
+        }
+
+        //todo 1,2번째 투구에 스트라이크나 스페어를 못하였으면 예외처리
+        thirdPitching = knockDownPins;
     }
 
     @Override
     public String getStatus() {
+        StringBuilder sb = new StringBuilder();
         if (firstPitching == null) {
-            return "";
+            return sb.toString();
         }
 
         if (firstPitching == 10) {
-            return "X";
+            sb.append("X");
+        } else if (firstPitching == 0) {
+            sb.append("-");
+        } else {
+            sb.append(firstPitching);
         }
 
         if (secondPitching == null) {
-            if (firstPitching == 0) {
-                return "-";
-            }
-            return String.valueOf(firstPitching);
+            return sb.toString();
         }
 
-        if (firstPitching + secondPitching == 10) {
-            return firstPitching + "|/";
+        sb.append("|");
+
+        if (secondPitching == 10) {
+            sb.append("X");
+        } else if (secondPitching == 0) {
+            sb.append("-");
+        } else if (firstPitching + secondPitching == 10) {
+            sb.append("/");
+        } else {
+            sb.append(secondPitching);
         }
 
-        if (secondPitching == 0) {
-            return firstPitching + "|-";
+        if (thirdPitching == null) {
+            return sb.toString();
         }
 
-        return firstPitching + "|" + secondPitching;
+        sb.append("|");
+
+        if (thirdPitching == 10) {
+            sb.append("X");
+        } else if (thirdPitching == 0) {
+            sb.append("-");
+        } else if (secondPitching + thirdPitching == 10) {
+            sb.append("/");
+        } else {
+            sb.append(thirdPitching);
+        }
+
+        return sb.toString();
     }
 
     @Override
     public boolean isEnd() {
-        if (firstPitching == null) {
+        if (firstPitching == null || secondPitching == null) {
             return false;
         }
 
-        if (firstPitching == 10) {
-            return true;
+        if (hasThirdChance() && thirdPitching == null) {
+            return false;
         }
 
-        return secondPitching != null;
+        return true;
+    }
+
+    private boolean hasThirdChance() {
+        return firstPitching + secondPitching >= 10;
     }
 }

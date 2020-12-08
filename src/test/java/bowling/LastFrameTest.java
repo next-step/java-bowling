@@ -21,7 +21,7 @@ public class LastFrameTest {
     }
 
     @Test
-    @DisplayName("한 프레임의 모든 투구에서 10개의 핀을 모두 쓰러트리지 못한 경우 점수만 표기, 프레임 계속 진행")
+    @DisplayName("한 프레임의 모든 투구에서 10개의 핀을 모두 쓰러트리지 못한 경우 점수만 표기, 프레임 종료")
     public void scoreTest() {
         LastFrame frame = new LastFrame();
         frame.setKnockDownPins(3);
@@ -29,7 +29,7 @@ public class LastFrameTest {
 
         assertAll(
                 () -> assertThat(frame.getStatus()).isEqualTo("3|5"),
-                () -> assertThat(frame.isEnd()).isFalse()
+                () -> assertThat(frame.isEnd()).isTrue()
         );
     }
 
@@ -56,7 +56,7 @@ public class LastFrameTest {
 
         assertAll(
                 () -> assertThat(frame.getStatus()).isEqualTo("3|-"),
-                () -> assertThat(frame.isEnd()).isFalse()
+                () -> assertThat(frame.isEnd()).isTrue()
         );
     }
 
@@ -65,11 +65,11 @@ public class LastFrameTest {
     public void gutterTest_thirdPitching() {
         LastFrame frame = new LastFrame();
         frame.setKnockDownPins(3);
-        frame.setKnockDownPins(0);
+        frame.setKnockDownPins(7);
         frame.setKnockDownPins(0);
 
         assertAll(
-                () -> assertThat(frame.getStatus()).isEqualTo("3|-|-"),
+                () -> assertThat(frame.getStatus()).isEqualTo("3|/|-"),
                 () -> assertThat(frame.isEnd()).isTrue()
         );
     }
