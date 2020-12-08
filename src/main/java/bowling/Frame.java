@@ -15,8 +15,16 @@ public class Frame {
     }
 
     public String getStatus() {
+        if (firstPitching == null) {
+            return "";
+        }
+
         if (firstPitching == 10) {
             return "X";
+        }
+
+        if (secondPitching == null) {
+            return String.valueOf(firstPitching);
         }
 
         return firstPitching + "|" + secondPitching;
