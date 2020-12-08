@@ -15,18 +15,18 @@ public class AnswerTest {
     public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
     @ParameterizedTest
-    @MethodSource("injectAnswer")
+    @MethodSource("injectAnswerWriter")
     @DisplayName("삭제를 성공한다.")
-    void deleteSuccess(Answer answer) throws CannotDeleteException {
-        DeleteHistories deleteHistories = DeleteHistories.of();
-
+    void deleteSuccess(Answer answer, User writer) throws CannotDeleteException {
+        answer.deleteAnswer(writer);
+        assertThat(answer.isDeleted()).isTrue();
     }
 
 
-    private static Stream<Arguments> injectAnswer() {
+    private static Stream<Arguments> injectAnswerWriter() {
         return Stream.of(
-                Arguments.of(A1),
-                Arguments.of(A2)
+                Arguments.of(A1, UserTest.JAVAJIGI),
+                Arguments.of(A2, UserTest.SANJIGI)
         );
     }
 
