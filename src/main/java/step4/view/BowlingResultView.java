@@ -1,7 +1,6 @@
 package step4.view;
 
-import step4.domain.GameHistory;
-import step4.domain.Player;
+import step4.domain.GameHistories;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +14,7 @@ public class BowlingResultView implements ResultView {
 
     private void printEmptyBody(String name) {
         System.out.printf((lineEmptyBodyString) + "%n", name);
-        System.out.println();
+        System.out.printf((lineEmptyBodyString) + "%n", "");
     }
 
     @Override
@@ -25,18 +24,21 @@ public class BowlingResultView implements ResultView {
     }
 
     @Override
-    public void drawFrame(Player player, GameHistory gameHistory) {
+    public void drawFrame(GameHistories histories) {
         clearStringBuilder();
         printHeader();
-        printBody(player, gameHistory.getMarks());
-        printBody(player, gameHistory.getPoints());
+        histories.forEach(gameHistory -> {
+            printBody(gameHistory.getPlayerName(), gameHistory.getMarks());
+            printBody(gameHistory.getPlayerName(), gameHistory.getPoints());
+        });
+
         System.out.println();
     }
 
-    private void printBody(Player player, List<String> strings) {
+    private void printBody(String playerName, List<String> strings) {
         clearStringBuilder();
         appendWall();
-        appendFrame(formatted(player.getName()));
+        appendFrame(formatted(playerName));
         appendWall();
         appendFrame(strings.stream()
                 .map(this::formatted)
@@ -52,9 +54,9 @@ public class BowlingResultView implements ResultView {
     }
 
     @Override
-    public void drawEmptyLine(String name) {
+    public void drawEmptyLine(List<String> names) {
         printHeader();
-        printEmptyBody(name);
+        names.forEach(this::printEmptyBody);
     }
 
     private String formatted(String content) {

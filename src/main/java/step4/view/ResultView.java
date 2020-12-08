@@ -1,13 +1,14 @@
 package step4.view;
 
-import step4.domain.GameHistory;
-import step4.domain.Player;
+import step4.domain.GameHistories;
+
+import java.util.List;
 
 public interface ResultView {
 
     void drawHeaderFrame(int frameNo, int pitchesCount);
 
-    void drawFrame(Player player, GameHistory gameHistory);
+    void drawFrame(GameHistories histories);
 
-    void drawEmptyLine(String name);
+    void drawEmptyLine(List<String> names);
 }

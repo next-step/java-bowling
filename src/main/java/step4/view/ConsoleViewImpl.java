@@ -1,8 +1,9 @@
 package step4.view;
 
-import step4.domain.Frame;
-import step4.domain.GameHistory;
+import step4.domain.GameHistories;
 import step4.domain.Player;
+
+import java.util.List;
 
 public class ConsoleViewImpl implements View{
     private final InputView inputView;
@@ -14,24 +15,34 @@ public class ConsoleViewImpl implements View{
     }
 
     @Override
-    public String getPlayerName() {
+    public String getPlayerName(int index) {
         try{
-            String playerName = inputView.getPlayerName();
+            String playerName = inputView.getPlayerName(index);
             Player.isValidName(playerName);
             return playerName;
         }catch(IllegalArgumentException error){
             System.out.println(error.getMessage());
-            return getPlayerName();
+            return getPlayerName(index);
         }
     }
 
     @Override
-    public int getPitchesCount(Frame frame) {
+    public int getPitchesCount(Player player) {
         try{
-            return inputView.getPitchesCount(frame);
+            return inputView.getPitchesCount(player);
         }catch(Exception error){
             System.out.println(error.getMessage());
-            return getPitchesCount(frame);
+            return getPitchesCount(player);
+        }
+    }
+
+    @Override
+    public int getNumberOfParticipants() {
+        try{
+            return inputView.getNumberOfParticipants();
+        }catch(Exception error){
+            System.out.println(error.getMessage());
+            return getNumberOfParticipants();
         }
     }
 
@@ -45,18 +56,18 @@ public class ConsoleViewImpl implements View{
     }
 
     @Override
-    public void drawFrame(Player player, GameHistory gameHistory) {
+    public void drawFrame(GameHistories histories) {
         try{
-            resultView.drawFrame(player, gameHistory);
+            resultView.drawFrame(histories);
         }catch(Exception error){
             System.out.println(error.getMessage());
         }
     }
 
     @Override
-    public void drawEmptyLine(String name) {
+    public void drawEmptyLine(List<String> names) {
         try{
-            resultView.drawEmptyLine(name);
+            resultView.drawEmptyLine(names);
         }catch(Exception error){
             System.out.println(error.getMessage());
         }

@@ -1,10 +1,12 @@
 package step4.view;
 
-import step4.domain.Frame;
+import step4.domain.Player;
 
 public interface InputView {
 
-    String getPlayerName();
+    String getPlayerName(int index);
 
-    int getPitchesCount(Frame frameNo);
+    int getPitchesCount(Player player);
+
+    int getNumberOfParticipants();
 }
