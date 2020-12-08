@@ -1,14 +1,16 @@
 package step4.controller;
 
-import step4.domain.BowlingGame;
-import step4.domain.Frame;
-import step4.domain.Frames;
 import step4.domain.*;
 import step4.exception.InvalidPitchesException;
 import step4.view.ConsoleViewImpl;
 import step4.view.InputView;
 import step4.view.ResultView;
 import step4.view.View;
+
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BowlingController {
     private final View view;
@@ -18,32 +20,52 @@ public class BowlingController {
     }
 
     public void gameStart() {
-        String playerName = view.getPlayerName();
-        Frames frames = BowlingGame.build();
+        int participantsCount = view.getNumberOfParticipants();
+        Players players = getPlayers(participantsCount);
 
-        view.drawEmptyLine(playerName);
+        view.drawEmptyLine(players.names());
 
-        pitches(new Player(playerName), frames);
+        pitches(players);
 
     }
 
-    private void pitches(Player player, Frames frames) {
+    private Players getPlayers(int participantsCount) {
+        return IntStream.range(0, participantsCount)
+                .mapToObj(index -> {
+                    String playerName = view.getPlayerName(index + 1);
+                    return new Player(playerName, BowlingGame.build());
+                }).collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
+    }
+
+    private void pitches(Players players) {
         try {
-            loopPitches(player, frames);
+            loopPitches(players);
         } catch (InvalidPitchesException | IllegalArgumentException error) {
             System.out.println(error.getMessage());
-            pitches(player, frames);
+            pitches(players);
         }
     }
 
-    private void loopPitches(Player player, Frames frames) {
-        while (!frames.isFinished()) {
-            Frame currentFrame = frames.getCurrentFrame();
-            int pitchesCount = view.getPitchesCount(currentFrame);
-
-            GameHistory gameHistory = BowlingGame.pitches(frames, pitchesCount);
-
-            view.drawFrame(player, gameHistory);
+    private void loopPitches(Players players) {
+        while (!players.isAllFinished()) {
+            players.filteredForEach(isFinishedCondition(), pitchesAndDrawConsumer(players));
         }
+    }
+
+    private Predicate<Player> isFinishedCondition() {
+        return player -> !player.isFinished();
+    }
+
+    private Consumer<Player> pitchesAndDrawConsumer(Players players) {
+        return player -> {
+            Frames frames = player.getFrames();
+            int pitchesCount = view.getPitchesCount(player);
+
+            BowlingGame.pitches(frames, pitchesCount);
+
+            GameHistories histories = players.createFramesHistories();
+
+            view.drawFrame(histories);
+        };
     }
 }

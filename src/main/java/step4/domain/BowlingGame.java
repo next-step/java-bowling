@@ -15,11 +15,8 @@ public class BowlingGame {
                 .build();
     }
 
-    public static GameHistory pitches(Frames frames, int pitchesCount) throws InvalidPitchesException {
+    public static void pitches(Frames frames, int pitchesCount) throws InvalidPitchesException {
         Frame frame = frames.getCursor();
         frames.updateCursor(frame.pitches(pitchesCount));
-
-        return new GameHistory(frames.getMarks(), frames.getScores());
-
     }
 }
