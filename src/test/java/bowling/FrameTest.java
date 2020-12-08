@@ -32,4 +32,13 @@ public class FrameTest {
         frame.setKnockDownPins(7);
         assertThat(frame.getStatus()).isEqualTo("3|/");
     }
+
+    @Test
+    @DisplayName("핀을 하나도 쓰러트리지 못한 투구의 경우 거터(-)")
+    public void gutterTest() {
+        Frame frame = new Frame();
+        frame.setKnockDownPins(3);
+        frame.setKnockDownPins(7);
+        assertThat(frame.getStatus()).isEqualTo("3|-");
+    }
 }
