@@ -10,4 +10,10 @@ public class Preconditions {
             throw new IllegalArgumentException(String.valueOf(errorMessage));
         }
     }
+
+    public static void checkArgument(final boolean expression, final RuntimeException e) {
+        if (!expression) {
+            throw e;
+        }
+    }
 }
