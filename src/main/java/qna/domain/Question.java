@@ -1,11 +1,9 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-import qna.CannotDeleteException;
+import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -19,14 +17,11 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
-    public Question() {
+    protected Question() {
     }
 
     public Question(String title, String contents) {
@@ -52,28 +47,42 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        answers.addAnswer(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
 
-    public Question deleteQuestion(User loginUser) throws CannotDeleteException {
-        if(loginUser != writer){
+    public Question delete(User loginUser, DeleteHistories deleteHistories) throws CannotDeleteException {
+        if (loginUser != writer) {
             throw new CannotDeleteException("질문자와 답변자가 달라서 삭제할수 없습니다.");
         }
-        this.deleted = true;
+        if (isAnswersOwner()) {
+            throw new CannotDeleteException("질문의 작성자가 아닌 유저가 답변을 달았을경우 삭제가 불가능합니다.");
+        }
+
+        deleteQuestion(deleteHistories);
+        deleteAnswer(loginUser, deleteHistories);
         return this;
+    }
+
+    private void deleteQuestion(DeleteHistories deleteHistories) {
+        deleteHistories.save(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        this.deleted = true;
+    }
+
+    private void deleteAnswer(User loginUser, DeleteHistories deleteHistories) {
+        answers.deleteAnswers(loginUser, deleteHistories);
+
+    }
+
+    private boolean isAnswersOwner() {
+        return answers.getAnswers().stream()
+                .anyMatch(answer -> !answer.isOwner(writer));
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
 
     @Override
     public String toString() {

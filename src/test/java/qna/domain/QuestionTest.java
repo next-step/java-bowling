@@ -4,11 +4,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import qna.CannotDeleteException;
+import qna.exception.CannotDeleteException;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -21,8 +20,9 @@ public class QuestionTest {
     @DisplayName("질문을 삭제했을경우 답변도 같이 잘 삭제 되는지 확인")
     @ParameterizedTest
     @MethodSource("injectDeleteHistories")
-    void throwNotOwnDelete(Question question, User writer, List<DeleteHistory> deleteHistories) {
-        assertThatThrownBy(() -> question.deleteQuestion(writer))
+    void throwNotOwnDelete(Question question, User writer, DeleteHistories deleteHistories) {
+
+        assertThatThrownBy(() -> question.delete(writer, deleteHistories))
                 .isInstanceOf(CannotDeleteException.class);
     }
 
@@ -33,16 +33,16 @@ public class QuestionTest {
         Q1.addAnswer(A1);
         Q2.addAnswer(A2);
         return Stream.of(
-                Arguments.arguments(Q1, UserTest.JAVAJIGI ,
-                        Arrays.asList(
-                                new DeleteHistory(ContentType.QUESTION , Q1.getId() , Q1.getWriter() , LocalDateTime.now()),
-                                new DeleteHistory(ContentType.ANSWER , A1.getId() , A1.getWriter() , LocalDateTime.now())
-                        )),
-                Arguments.arguments(Q2, UserTest.SANJIGI ,
-                        Arrays.asList(
-                                new DeleteHistory(ContentType.QUESTION , Q2.getId() , Q2.getWriter() , LocalDateTime.now()),
-                                new DeleteHistory(ContentType.ANSWER , A2.getId() , A2.getWriter() , LocalDateTime.now())
-                        ))
+                Arguments.arguments(Q1, UserTest.JAVAJIGI,
+                        DeleteHistories.of(Arrays.asList(
+                                new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now()),
+                                new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now())
+                        ))),
+                Arguments.arguments(Q2, UserTest.SANJIGI,
+                        DeleteHistories.of(Arrays.asList(
+                                new DeleteHistory(ContentType.QUESTION, Q2.getId(), Q2.getWriter(), LocalDateTime.now()),
+                                new DeleteHistory(ContentType.ANSWER, A2.getId(), A2.getWriter(), LocalDateTime.now())
+                        )))
         );
     }
 
@@ -50,7 +50,7 @@ public class QuestionTest {
     @ParameterizedTest
     @MethodSource("injectNotOwn")
     void throwNotOwnDelete(Question question, User writer) {
-        assertThatThrownBy(() -> question.deleteQuestion(writer))
+        assertThatThrownBy(() -> question.delete(writer, DeleteHistories.of()))
                 .isInstanceOf(CannotDeleteException.class);
     }
 
@@ -70,7 +70,7 @@ public class QuestionTest {
     @DisplayName("질문 삭제할때 질문한 작성자가 다를경우 삭제할수 없음")
     @MethodSource("injectQuestionNotWriter")
     void deleteSuccess(Question question, User writer) {
-        assertThatThrownBy(() -> question.deleteQuestion(writer)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> question.delete(writer, DeleteHistories.of())).isInstanceOf(CannotDeleteException.class);
     }
 
     private static Stream<Arguments> injectQuestionNotWriter() {

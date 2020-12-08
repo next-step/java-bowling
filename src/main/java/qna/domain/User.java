@@ -1,10 +1,7 @@
 package qna.domain;
 
-import qna.UnAuthorizedException;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.util.Objects;
 
 @Entity
 public class User extends AbstractEntity {
@@ -21,7 +18,7 @@ public class User extends AbstractEntity {
 
     private String email;
 
-    public User() {
+    protected User() {
     }
 
 
