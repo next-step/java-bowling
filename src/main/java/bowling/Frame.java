@@ -27,6 +27,10 @@ public class Frame {
             return String.valueOf(firstPitching);
         }
 
+        if (firstPitching + secondPitching == 10) {
+            return firstPitching + "|/";
+        }
+
         return firstPitching + "|" + secondPitching;
     }
 }
