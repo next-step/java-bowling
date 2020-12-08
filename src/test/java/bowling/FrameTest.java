@@ -35,7 +35,15 @@ public class FrameTest {
 
     @Test
     @DisplayName("핀을 하나도 쓰러트리지 못한 투구의 경우 거터(-)")
-    public void gutterTest() {
+    public void gutterTest_firstPitcing() {
+        Frame frame = new Frame();
+        frame.setKnockDownPins(0);
+        assertThat(frame.getStatus()).isEqualTo("-");
+    }
+
+    @Test
+    @DisplayName("핀을 하나도 쓰러트리지 못한 투구의 경우 거터(-)")
+    public void gutterTest_secondPitcing() {
         Frame frame = new Frame();
         frame.setKnockDownPins(3);
         frame.setKnockDownPins(0);
