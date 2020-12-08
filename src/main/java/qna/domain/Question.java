@@ -4,6 +4,7 @@ import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -51,7 +52,7 @@ public class Question extends AbstractEntity {
     }
 
 
-    public Question delete(User loginUser, DeleteHistories deleteHistories) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
         if (loginUser != writer) {
             throw new CannotDeleteException("질문자와 답변자가 달라서 삭제할수 없습니다.");
         }
@@ -59,19 +60,20 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문의 작성자가 아닌 유저가 답변을 달았을경우 삭제가 불가능합니다.");
         }
 
-        deleteQuestion(deleteHistories);
-        deleteAnswer(loginUser, deleteHistories);
-        return this;
+        DeleteHistories deleteHistories = DeleteHistories.of();
+        deleteHistories.save( deleteQuestion());
+        deleteHistories.saveAll(deleteAnswers(loginUser));
+
+        return deleteHistories;
     }
 
-    private void deleteQuestion(DeleteHistories deleteHistories) {
-        deleteHistories.save(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+    private DeleteHistory deleteQuestion() {
         this.deleted = true;
+        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
     }
 
-    private void deleteAnswer(User loginUser, DeleteHistories deleteHistories) {
-        answers.deleteAnswers(loginUser, deleteHistories);
-
+    private List<DeleteHistory> deleteAnswers(final User loginUser) throws CannotDeleteException {
+        return answers.deleteAnswers(loginUser);
     }
 
     private boolean isAnswersOwner() {
