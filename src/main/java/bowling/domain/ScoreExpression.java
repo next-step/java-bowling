@@ -1,6 +1,6 @@
 package bowling.domain;
 
-public enum BowlResult {
+public enum ScoreExpression {
     STRIKE("X"),
     SPARE("/"),
     GUTTER("-")
@@ -8,7 +8,7 @@ public enum BowlResult {
 
     private String expression;
 
-    BowlResult(String expression) {
+    ScoreExpression(String expression) {
         this.expression = expression;
     }
 

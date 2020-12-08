@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.BowlResult;
+import bowling.domain.ScoreExpression;
 import bowling.domain.Bowling;
 import bowling.domain.frame.Frame;
 import bowling.domain.score.Score;
@@ -70,15 +70,15 @@ public final class OutputView {
 
     private static String getScoreExpression(List<Score> scores, int index) {
         if (scores.get(index).isStrike()) {
-            return BowlResult.STRIKE.getExpression();
+            return ScoreExpression.STRIKE.getExpression();
         }
 
         if (scores.get(index).isGutter()) {
-            return BowlResult.GUTTER.getExpression();
+            return ScoreExpression.GUTTER.getExpression();
         }
 
         if (index == 1 && Scores.isSpare(scores)) {
-            return BowlResult.SPARE.getExpression();
+            return ScoreExpression.SPARE.getExpression();
         }
 
         return scores.get(index).toString();
