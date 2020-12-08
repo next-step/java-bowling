@@ -8,10 +8,12 @@ public class Player {
     public static final String ERROR_INVALID_NAME = "이름이 유효하지 않습니다.";
 
     private final String name;
+    private final Frames frames;
 
-    public Player(String name) {
+    public Player(String name, Frames frames) {
         isValidName(name);
         this.name = name;
+        this.frames = frames;
     }
 
 
@@ -24,6 +26,14 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public Frames getFrames() {
+        return frames;
+    }
+
+    public boolean isFinished() {
+        return frames.isFinished();
     }
 
     @Override
