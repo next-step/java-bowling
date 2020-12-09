@@ -1,10 +1,15 @@
 package bowling;
 
 public class LastFrame implements Frame {
+    private int index;
     private int score;
     private Integer firstPitching;
     private Integer secondPitching;
     private Integer thirdPitching;
+
+    public LastFrame(int index) {
+        this.index = index;
+    }
 
     @Override
     public void setKnockDownPins(int knockDownPins) {

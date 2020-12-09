@@ -1,9 +1,14 @@
 package bowling;
 
 public class NormalFrame implements Frame {
+    private int index;
     private int score;
     private Integer firstPitching;
     private Integer secondPitching;
+
+    public NormalFrame(int index) {
+        this.index = index;
+    }
 
     @Override
     public void setKnockDownPins(int knockDownPins) {
