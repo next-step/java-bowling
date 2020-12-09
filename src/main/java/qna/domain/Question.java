@@ -5,6 +5,10 @@ import qna.exception.CannotDeleteException;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -60,11 +64,11 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문의 작성자가 아닌 유저가 답변을 달았을경우 삭제가 불가능합니다.");
         }
 
-        DeleteHistories deleteHistories = DeleteHistories.of();
-        deleteHistories.save( deleteQuestion());
-        deleteHistories.saveAll(deleteAnswers(loginUser));
 
-        return deleteHistories;
+        return Stream.concat(
+                Stream.of(deleteQuestion()),
+                deleteAnswers(loginUser).stream())
+                .collect(collectingAndThen(toList(), DeleteHistories::of));
     }
 
     private DeleteHistory deleteQuestion() {

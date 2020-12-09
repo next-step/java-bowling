@@ -31,9 +31,6 @@ public class DeleteHistories {
         deleteHistories.add(deleteHistory);
     }
 
-    public void saveAll(List<DeleteHistory> deleteAnswers) {
-        deleteHistories.addAll(deleteAnswers);
-    }
     public List<DeleteHistory> findDeleteHistories() {
         return Collections.unmodifiableList(deleteHistories);
     }
