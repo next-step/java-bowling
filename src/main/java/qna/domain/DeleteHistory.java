@@ -19,7 +19,7 @@ public class DeleteHistory {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_deletehistory_to_user"))
     private User deletedBy;
 
-    private LocalDateTime createDate = LocalDateTime.now();
+    private LocalDateTime createDate;
 
     public DeleteHistory() {
     }
@@ -30,6 +30,7 @@ public class DeleteHistory {
         this.deletedBy = deletedBy;
         this.createDate = createDate;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -49,7 +50,12 @@ public class DeleteHistory {
 
     @Override
     public String toString() {
-        return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
-                + deletedBy + ", createDate=" + createDate + "]";
+        return "DeleteHistory{" +
+                "id=" + id +
+                ", contentType=" + contentType +
+                ", contentId=" + contentId +
+                ", deletedBy=" + deletedBy +
+                ", createDate=" + createDate +
+                '}';
     }
 }

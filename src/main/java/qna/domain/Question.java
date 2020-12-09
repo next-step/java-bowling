@@ -1,10 +1,16 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.exception.CannotDeleteException;
+import qna.exception.LoginUserNotMatchWriterException;
+import qna.exception.NotOwnAnswersException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -18,14 +24,11 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
-    public Question() {
+    protected Question() {
     }
 
     public Question(String title, String contents) {
@@ -39,23 +42,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
 
     public User getWriter() {
         return writer;
@@ -68,25 +54,50 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        answers.addAnswer(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
+
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+        validLoginUserNotMatchWriter(loginUser);
+        validNotOwnAnswers();
+
+
+        return Stream.concat(
+                Stream.of(deleteQuestion()),
+                deleteAnswers(loginUser).stream())
+                .collect(collectingAndThen(toList(), DeleteHistories::of));
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    private void validNotOwnAnswers() throws CannotDeleteException {
+        if (isAnswersOwner()) {
+            throw new NotOwnAnswersException();
+        }
+    }
+
+    private void validLoginUserNotMatchWriter(User loginUser) throws CannotDeleteException {
+        if (loginUser != writer) {
+            throw new LoginUserNotMatchWriterException();
+        }
+    }
+
+    private DeleteHistory deleteQuestion() {
+        this.deleted = true;
+        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
+    }
+
+    private List<DeleteHistory> deleteAnswers(final User loginUser) throws CannotDeleteException {
+        return answers.deleteAnswers(loginUser);
+    }
+
+    private boolean isAnswersOwner() {
+        return answers.contains(writer);
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
 
     @Override
     public String toString() {
