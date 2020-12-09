@@ -1,6 +1,7 @@
 package qna.domain;
 
 import qna.exception.CannotDeleteException;
+import qna.exception.NotOwnAnswersException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -57,18 +58,26 @@ public class Question extends AbstractEntity {
 
 
     public DeleteHistories delete(User loginUser) throws CannotDeleteException {
-        if (loginUser != writer) {
-            throw new CannotDeleteException("질문자와 답변자가 달라서 삭제할수 없습니다.");
-        }
-        if (isAnswersOwner()) {
-            throw new CannotDeleteException("질문의 작성자가 아닌 유저가 답변을 달았을경우 삭제가 불가능합니다.");
-        }
+        validLoginUserNotMatchWriter(loginUser);
+        validNotOwnAnswers();
 
 
         return Stream.concat(
                 Stream.of(deleteQuestion()),
                 deleteAnswers(loginUser).stream())
                 .collect(collectingAndThen(toList(), DeleteHistories::of));
+    }
+
+    private void validNotOwnAnswers() throws CannotDeleteException {
+        if (isAnswersOwner()) {
+            throw new NotOwnAnswersException();
+        }
+    }
+
+    private void validLoginUserNotMatchWriter(User loginUser) throws CannotDeleteException {
+        if (loginUser != writer) {
+            throw new CannotDeleteException("질문자와 답변자가 달라서 삭제할수 없습니다.");
+        }
     }
 
     private DeleteHistory deleteQuestion() {
