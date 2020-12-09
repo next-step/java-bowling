@@ -1,6 +1,7 @@
 package qna.domain;
 
 import qna.exception.CannotDeleteException;
+import qna.exception.LoginUserNotMatchWriterException;
 import qna.exception.NotOwnAnswersException;
 
 import javax.persistence.*;
@@ -76,7 +77,7 @@ public class Question extends AbstractEntity {
 
     private void validLoginUserNotMatchWriter(User loginUser) throws CannotDeleteException {
         if (loginUser != writer) {
-            throw new CannotDeleteException("질문자와 답변자가 달라서 삭제할수 없습니다.");
+            throw new LoginUserNotMatchWriterException();
         }
     }
 
