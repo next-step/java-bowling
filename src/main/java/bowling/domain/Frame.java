@@ -33,4 +33,36 @@ public abstract class Frame {
     private boolean isBeforeFinal() {
         return index == FINAL_FRAME_INDEX - 1;
     }
+
+    public abstract void pitch(Pins pins);
+
+    public abstract boolean isPitchable();
+
+    public enum State {
+        BEFORE_FIRST_PITCHING,
+        BEFORE_SECOND_PITCHING,
+        STRIKE,
+        SPARE,
+        MISS,
+        ;
+
+        public boolean isPitchable() {
+            return this == BEFORE_FIRST_PITCHING || this == BEFORE_SECOND_PITCHING;
+        }
+
+        public static State nextState(final Pins firstPitching, final Pins secondPitching) {
+            if (Pins.MAX.equals(firstPitching)) {
+                return STRIKE;
+            }
+
+            if (secondPitching == null) {
+                return BEFORE_SECOND_PITCHING;
+            }
+
+            if (Pins.MAX.equals(firstPitching.sum(secondPitching))) {
+                return SPARE;
+            }
+            return MISS;
+        }
+    }
 }
