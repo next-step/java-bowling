@@ -32,10 +32,6 @@ public class AbstractEntity {
         return id;
     }
 
-    public AbstractEntity setId(Long id) {
-        this.id = id;
-        return this;
-    }
 
     @Override
     public int hashCode() {
