@@ -81,8 +81,7 @@ public class Question extends AbstractEntity {
     }
 
     private boolean isAnswersOwner() {
-        return answers.getAnswers().stream()
-                .anyMatch(answer -> !answer.isOwner(writer));
+        return answers.contains(writer);
     }
 
     public boolean isDeleted() {

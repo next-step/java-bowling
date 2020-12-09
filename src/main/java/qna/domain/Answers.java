@@ -39,4 +39,9 @@ public class Answers {
         return deleteHistories;
 
     }
+
+    public boolean contains(User writer) {
+        return answers.stream()
+                .anyMatch(answer -> !answer.isOwner(writer));
+    }
 }
