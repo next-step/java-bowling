@@ -1,11 +1,13 @@
 package qna.domain;
 
+import javax.persistence.Embeddable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 
+@Embeddable
 public class DeleteHistories {
     private final List<DeleteHistory> deleteHistories;
 
@@ -32,7 +34,7 @@ public class DeleteHistories {
     public void saveAll(List<DeleteHistory> deleteAnswers) {
         deleteHistories.addAll(deleteAnswers);
     }
-    public List<DeleteHistory> getDeleteHistories() {
+    public List<DeleteHistory> findDeleteHistories() {
         return Collections.unmodifiableList(deleteHistories);
     }
 
@@ -41,12 +43,12 @@ public class DeleteHistories {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeleteHistories that = (DeleteHistories) o;
-        return Objects.equals(getDeleteHistories(), that.getDeleteHistories());
+        return Objects.equals(findDeleteHistories(), that.findDeleteHistories());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getDeleteHistories());
+        return Objects.hash(findDeleteHistories());
     }
 
 }
