@@ -12,11 +12,13 @@ public class BowlingGame {
     }
 
     public void initFrames() {
-        for (int index = 1; index < MAX_FRAME_SIZE; index++) {
-            frames.add(new NormalFrame(index));
-        }
+        Frame frame = NormalFrame.getFirstFrame();
+        frames.add(frame);
 
-        frames.add(new LastFrame(MAX_FRAME_SIZE));
+        while (size() < MAX_FRAME_SIZE) {
+            frame = frame.getNextFrame();
+            frames.add(frame);
+        }
     }
 
     public int size() {
