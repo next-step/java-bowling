@@ -32,6 +32,7 @@ public class PitchingTest {
     public void getPitchingTest_failureCase() {
         int invalidKnockDownPins =  -1;
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> Pitching.getPitching(invalidKnockDownPins));
+                .isThrownBy(() -> Pitching.getPitching(invalidKnockDownPins))
+                .withMessage(Pitching.INVALID_KNOCK_DOWN_PINS_ARGUMENT);
     }
 }
