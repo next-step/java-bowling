@@ -5,10 +5,9 @@ import java.util.List;
 
 public class NormalFrame implements Frame {
     public static final int NORMAL_FRAME_MAX_PITCHING_SIZE = 2;
-    private int index;
-    private int score;
-    private LinkedList<Pitching> pitchings;
-    
+    private final int index;
+    private final LinkedList<Pitching> pitchings;
+
     public NormalFrame(int index) {
         this.index = index;
         pitchings = new LinkedList<>();
@@ -46,7 +45,6 @@ public class NormalFrame implements Frame {
     public String toString() {
         return "NormalFrame{" +
                 "index=" + index +
-                ", score=" + score +
                 ", pitchings=" + pitchings +
                 '}';
     }

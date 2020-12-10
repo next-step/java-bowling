@@ -5,9 +5,8 @@ import java.util.List;
 
 public class LastFrame implements Frame {
     public static final int LAST_FRAME_MAX_PITCHING_SIZE = 3;
-    private int index;
-    private int score;
-    private LinkedList<Pitching> pitchings;
+    private final int index;
+    private final LinkedList<Pitching> pitchings;
 
     public LastFrame(int index) {
         this.index = index;
