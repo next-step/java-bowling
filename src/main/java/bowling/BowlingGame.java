@@ -1,74 +1,32 @@
 package bowling;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BowlingGame {
-    public static final int MAX_FRAME_SIZE = 10;
-    private final List<Frame> frames;
-    private String playerName;
-    private Frame currentFrame;
+    private final ConsoleInputView consoleInputView;
+    private final ConsoleResultView consoleResultView;
 
-    private BowlingGame() {
-        frames = new ArrayList<>();
-        initFrames();
-        currentFrame = frames.get(0);
+    public BowlingGame(ConsoleInputView consoleInputView, ConsoleResultView consoleResultView) {
+        this.consoleInputView = consoleInputView;
+        this.consoleResultView = consoleResultView;
     }
 
-    private BowlingGame(String playerName) {
-        frames = new ArrayList<>();
-        this.playerName = playerName;
-        initFrames();
-        currentFrame = frames.get(0);
-    }
+    public void run() {
+        String playerName = ValidInputHelper.get(consoleInputView::getPlayerName, consoleInputView::printError);
 
-    public static BowlingGame init() {
-        return new BowlingGame();
-    }
+        Frames frames = Frames.init(playerName);
 
-    public static BowlingGame init(String playerName) {
-        return new BowlingGame(playerName);
-    }
-
-    public void initFrames() {
-        Frame frame = NormalFrame.getFirstFrame();
-        frames.add(frame);
-
-        while (size() < MAX_FRAME_SIZE) {
-            frame = frame.initNextFrame();
-            frames.add(frame);
+        while (!frames.isEnd()) {
+            setKnockDownPins(frames);
+            consoleResultView.print(frames);
         }
     }
 
-    public int size() {
-        return frames.size();
-    }
-
-    public boolean isEnd() {
-        return frames.get(MAX_FRAME_SIZE - 1).isEnd();
-    }
-
-    public void setKnockDownPins(int knockDownPins) {
-        currentFrame.setKnockDownPins(knockDownPins);
-
-        if (currentFrame.isEnd() && isNotLastFrame()) {
-            currentFrame = currentFrame.getNextFrame();
+    private void setKnockDownPins(Frames frames) {
+        try {
+            int knockDownPins = consoleInputView.getKnockDownPins(frames.getCurrentFrameIndex());
+            frames.setKnockDownPins(knockDownPins);
+        } catch (RuntimeException e) {
+            consoleInputView.printError(e);
+            setKnockDownPins(frames);
         }
-    }
-
-    private boolean isNotLastFrame() {
-        return currentFrame.getIndex() != MAX_FRAME_SIZE;
-    }
-
-    public List<Frame> getFrames() {
-        return frames;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public int getCurrentFrameIndex() {
-        return currentFrame.getIndex();
     }
 }

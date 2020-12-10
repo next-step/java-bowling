@@ -34,8 +34,8 @@ public class NormalFrame implements Frame {
     @Override
     public Frame initNextFrame() {
         int nextFrameIndex = index + 1;
-        if (nextFrameIndex == BowlingGame.MAX_FRAME_SIZE) {
-            return nextFrame = new LastFrame(BowlingGame.MAX_FRAME_SIZE, this);
+        if (nextFrameIndex == Frames.MAX_FRAME_SIZE) {
+            return nextFrame = new LastFrame(Frames.MAX_FRAME_SIZE, this);
         }
 
         return nextFrame = new NormalFrame(nextFrameIndex, this);

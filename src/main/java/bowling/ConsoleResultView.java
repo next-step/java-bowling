@@ -25,7 +25,7 @@ public class ConsoleResultView {
         stringByPitching.put(Pitching.SPARE, "/");
     }
 
-    public void print(BowlingGame bowlingGame) {
+    public void print(Frames bowlingGame) {
         List<Frame> frames = bowlingGame.getFrames();
         StringBuilder sb = new StringBuilder();
         sb.append("| NAME |");

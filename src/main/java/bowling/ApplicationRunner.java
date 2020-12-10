@@ -2,12 +2,12 @@ package bowling;
 
 public class ApplicationRunner {
     public static void main(String[] args) {
-        BowlingGameRunner bowlingGameRunner = getBowlingGameRunner();
-        bowlingGameRunner.run();
+        BowlingGame bowlingGame = getBowlingGameRunner();
+        bowlingGame.run();
     }
 
-    private static BowlingGameRunner getBowlingGameRunner() {
-        return new BowlingGameRunner(getConsoleInputView(), getConsoleResultView());
+    private static BowlingGame getBowlingGameRunner() {
+        return new BowlingGame(getConsoleInputView(), getConsoleResultView());
     }
 
     private static ConsoleInputView getConsoleInputView() {
