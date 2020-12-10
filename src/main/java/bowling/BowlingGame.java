@@ -49,11 +49,11 @@ public class BowlingGame {
     }
 
     public void setKnockDownPins(int knockDownPins) {
+        currentFrame.setKnockDownPins(knockDownPins);
+
         if (currentFrame.isEnd()) {
             currentFrame = currentFrame.getNextFrame();
         }
-
-        currentFrame.setKnockDownPins(knockDownPins);
     }
 
     public List<Frame> getFrames() {
@@ -62,5 +62,9 @@ public class BowlingGame {
 
     public String getPlayerName() {
         return playerName;
+    }
+
+    public int getCurrentFrameIndex() {
+        return currentFrame.getIndex();
     }
 }

@@ -1,7 +1,6 @@
 package bowling;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class BowlingGameRunner {
     public static void main(String[] args) {
@@ -10,9 +9,8 @@ public class BowlingGameRunner {
 
         BowlingGame bowlingGame = BowlingGame.init(playerName);
 
-        Scanner scanner = new Scanner(System.in);
         while (!bowlingGame.isEnd()) {
-            int knockDownPins = Integer.parseInt(scanner.nextLine());
+            int knockDownPins = consoleInputView.getKnockDownPins(bowlingGame.getCurrentFrameIndex());
             bowlingGame.setKnockDownPins(knockDownPins);
             print(bowlingGame);
         }

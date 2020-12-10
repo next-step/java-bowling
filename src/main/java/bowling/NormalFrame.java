@@ -77,4 +77,9 @@ public class NormalFrame implements Frame {
                 ", pitchings=" + pitchings +
                 '}';
     }
+
+    @Override
+    public int getIndex() {
+        return index;
+    }
 }

@@ -66,6 +66,11 @@ public class LastFrame implements Frame {
         return !hasThirdChance() || pitchings.size() >= LAST_FRAME_MAX_PITCHING_SIZE;
     }
 
+    @Override
+    public int getIndex() {
+        return index;
+    }
+
     private boolean hasThirdChance() {
         return pitchings.contains(Pitching.STRIKE) || pitchings.contains(Pitching.SPARE);
     }

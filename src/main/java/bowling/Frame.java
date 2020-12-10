@@ -12,4 +12,6 @@ public interface Frame {
     boolean isEnd();
 
     Frame getNextFrame();
+
+    int getIndex();
 }
