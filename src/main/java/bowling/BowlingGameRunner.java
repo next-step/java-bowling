@@ -1,26 +1,32 @@
 package bowling;
 
 public class BowlingGameRunner {
-    public static void main(String[] args) {
-        ConsoleInputView consoleInputView = new ConsoleInputView();
-        ConsoleResultView consoleResultView = new ConsoleResultView();
+    private final ConsoleInputView consoleInputView;
+    private final ConsoleResultView consoleResultView;
+
+    public BowlingGameRunner(ConsoleInputView consoleInputView, ConsoleResultView consoleResultView) {
+        this.consoleInputView = consoleInputView;
+        this.consoleResultView = consoleResultView;
+    }
+
+    public void run() {
         String playerName = ValidInputHelper.get(consoleInputView::getPlayerName, consoleInputView::printError);
 
         BowlingGame bowlingGame = BowlingGame.init(playerName);
 
         while (!bowlingGame.isEnd()) {
-            setKnockDownPins(bowlingGame, consoleInputView);
+            setKnockDownPins(bowlingGame);
             consoleResultView.print(bowlingGame);
         }
     }
 
-    private static void setKnockDownPins(BowlingGame bowlingGame, ConsoleInputView consoleInputView) {
+    private void setKnockDownPins(BowlingGame bowlingGame) {
         try {
             int knockDownPins = consoleInputView.getKnockDownPins(bowlingGame.getCurrentFrameIndex());
             bowlingGame.setKnockDownPins(knockDownPins);
         } catch (RuntimeException e) {
             consoleInputView.printError(e);
-            setKnockDownPins(bowlingGame, consoleInputView);
+            setKnockDownPins(bowlingGame);
         }
     }
 }
