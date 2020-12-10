@@ -51,9 +51,13 @@ public class BowlingGame {
     public void setKnockDownPins(int knockDownPins) {
         currentFrame.setKnockDownPins(knockDownPins);
 
-        if (currentFrame.isEnd()) {
+        if (currentFrame.isEnd() && isNotLastFrame()) {
             currentFrame = currentFrame.getNextFrame();
         }
+    }
+
+    private boolean isNotLastFrame() {
+        return currentFrame.getIndex() != MAX_FRAME_SIZE;
     }
 
     public List<Frame> getFrames() {

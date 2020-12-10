@@ -12,7 +12,7 @@ public class BowlingGameTest {
     }
 
     @Test
-    public void bowlingGameText() {
+    public void bowlingGameTest() {
         BowlingGame bowlingGame = BowlingGame.init();
 
         for (int i = 1; i <= BowlingGame.MAX_FRAME_SIZE + 2; i++) {
