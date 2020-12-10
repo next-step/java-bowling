@@ -5,8 +5,7 @@ import java.util.Scanner;
 
 public class BowlingGameRunner {
     public static void main(String[] args) {
-        BowlingGame bowlingGame = new BowlingGame();
-        bowlingGame.initFrames();
+        BowlingGame bowlingGame = BowlingGame.init();
 
         Scanner scanner = new Scanner(System.in);
         while (!bowlingGame.isEnd()) {

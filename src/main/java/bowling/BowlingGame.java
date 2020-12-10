@@ -8,8 +8,13 @@ public class BowlingGame {
     private final List<Frame> frames;
     private Frame currentFrame;
 
-    public BowlingGame() {
+    private BowlingGame() {
         frames = new ArrayList<>();
+        initFrames();
+    }
+
+    public static BowlingGame init() {
+        return new BowlingGame();
     }
 
     public void initFrames() {
