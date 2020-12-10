@@ -13,11 +13,11 @@ public class FinalScores extends Scores {
 
     @Override
     public boolean canBowl() {
-        if(isStrike() || isSpare()) {
+        if(scores.size() == FIRST_SCORE) {
             return true;
         }
 
-        return scores.size() != BONUS_SCORE;
+        return isSpare();
     }
 
 }

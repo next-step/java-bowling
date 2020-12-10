@@ -1,7 +1,6 @@
 package bowling.domain.score;
 
 import java.util.List;
-import java.util.Optional;
 
 public class NormalScores extends Scores {
 
@@ -19,9 +18,7 @@ public class NormalScores extends Scores {
             return false;
         }
 
-        return !Optional.ofNullable(scores.get(FIRST_SCORE))
-                .map(Score::isStrike)
-                .orElse(false);
+        return !isStrike();
     }
 
     @Override
