@@ -31,6 +31,9 @@ public enum Pitching {
     }
 
     public static Pitching getPitching(int knockDownPins) {
+        if (knockDownPins < GUTTER.score || knockDownPins > STRIKE.score) {
+            throw new IllegalArgumentException("유효하지 않은 knockDownPins 입력값입니다.");
+        }
         return pitchingByScore.get(knockDownPins);
     }
 
