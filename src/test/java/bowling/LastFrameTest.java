@@ -72,4 +72,18 @@ public class LastFrameTest {
                 () -> assertThat(frame.isEnd()).isTrue()
         );
     }
+
+    @Test
+    @DisplayName("3번째 투구에서 스페어가 나오는 경우")
+    public void lastPitchingSpareTest() {
+        LastFrame frame = new LastFrame(10);
+        frame.setKnockDownPins(10);
+        frame.setKnockDownPins(5);
+        frame.setKnockDownPins(5);
+
+        assertAll(
+                () -> assertThat(frame.getStatus()).containsExactly(Pitching.STRIKE, Pitching.FIVE_PINS, Pitching.SPARE),
+                () -> assertThat(frame.isEnd()).isTrue()
+        );
+    }
 }

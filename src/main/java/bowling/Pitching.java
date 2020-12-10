@@ -43,6 +43,10 @@ public enum Pitching {
     }
 
     public static Pitching getPitching(int knockDownPins, Pitching previousPitching) {
+        if (previousPitching == SPARE) {
+            return getPitching(knockDownPins);
+        }
+
         if (knockDownPins + previousPitching.score == STRIKE.score) {
             return SPARE;
         }

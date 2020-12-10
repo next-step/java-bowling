@@ -45,7 +45,8 @@ public class LastFrame implements Frame {
         }
 
         if (hasThirdChance()) {
-            pitchings.add(Pitching.getPitching(knockDownPins));
+            Pitching previousPitching = pitchings.getLast();
+            pitchings.add(Pitching.getPitching(knockDownPins, previousPitching));
             return;
         }
 
