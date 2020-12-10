@@ -1,37 +1,23 @@
 package bowling;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class BowlingGameRunner {
     public static void main(String[] args) {
-        List<Frame> frames = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            frames.add(new NormalFrame(i + 1));
-        }
-
-        frames.add(new LastFrame(10));
+        BowlingGame bowlingGame = new BowlingGame();
+        bowlingGame.initFrames();
 
         Scanner scanner = new Scanner(System.in);
-        int frameIndex = 0;
-        while (true) {
-            if (frameIndex >= frames.size()) {
-                break;
-            }
-            Frame frame = frames.get(frameIndex);
-            if (frame.isEnd()) {
-                frameIndex++;
-                continue;
-            }
-
+        while (!bowlingGame.isEnd()) {
             int knockDownPins = Integer.parseInt(scanner.nextLine());
-            frame.setKnockDownPins(knockDownPins);
-            print(frames);
+            bowlingGame.setKnockDownPins(knockDownPins);
+            print(bowlingGame);
         }
     }
 
-    private static void print(List<Frame> frames) {
+    private static void print(BowlingGame bowlingGame) {
+        List<Frame> frames = bowlingGame.getFrames();
         StringBuilder sb = new StringBuilder();
         sb.append("| NAME |");
         for (int i = 1; i <= frames.size(); i++) {

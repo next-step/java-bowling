@@ -22,6 +22,11 @@ public class LastFrame implements Frame {
     }
 
     @Override
+    public Frame initNextFrame() {
+        throw new IllegalStateException();
+    }
+
+    @Override
     public Frame getNextFrame() {
         throw new IllegalStateException();
     }

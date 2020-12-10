@@ -28,6 +28,11 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame getNextFrame() {
+        return nextFrame;
+    }
+
+    @Override
+    public Frame initNextFrame() {
         int nextFrameIndex = index + 1;
         if (nextFrameIndex == BowlingGame.MAX_FRAME_SIZE) {
             return nextFrame = new LastFrame(BowlingGame.MAX_FRAME_SIZE, this);
