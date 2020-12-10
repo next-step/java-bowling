@@ -1,111 +1,55 @@
 package bowling;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class LastFrame implements Frame {
+    public static final int LAST_FRAME_MAX_PITCHING_SIZE = 3;
     private int index;
     private int score;
-    private Integer firstPitching;
-    private Integer secondPitching;
-    private Integer thirdPitching;
-
-    public LastFrame() {
-    }
+    private LinkedList<Pitching> pitchings;
 
     public LastFrame(int index) {
         this.index = index;
+        pitchings = new LinkedList<>();
     }
 
     @Override
     public void setKnockDownPins(int knockDownPins) {
-        if (firstPitching == null) {
-            firstPitching = knockDownPins;
+        if (pitchings.isEmpty()) {
+            pitchings.add(Pitching.getPitching(knockDownPins));
             return;
         }
 
-        if (secondPitching == null) {
-            secondPitching = knockDownPins;
+        if (pitchings.size() < LAST_FRAME_MAX_PITCHING_SIZE - 1) {
+            Pitching previousPitching = pitchings.getLast();
+            pitchings.add(Pitching.getPitching(knockDownPins, previousPitching));
             return;
         }
 
-        //todo 1,2번째 투구에 스트라이크나 스페어를 못하였으면 예외처리
-        thirdPitching = knockDownPins;
+        if (hasThirdChance()) {
+            pitchings.add(Pitching.getPitching(knockDownPins));
+            return;
+        }
+
+        throw new IllegalMonitorStateException();
     }
 
     @Override
-    public void setKnockDownPins2(int knockDownPins) {
-
-    }
-
-    @Override
-    public List<Pitching> getStatus2() {
-        return null;
-    }
-
-    @Override
-    public String getStatus() {
-        StringBuilder sb = new StringBuilder();
-        if (firstPitching == null) {
-            return sb.toString();
-        }
-
-        if (firstPitching == 10) {
-            sb.append("X");
-        } else if (firstPitching == 0) {
-            sb.append("-");
-        } else {
-            sb.append(firstPitching);
-        }
-
-        if (secondPitching == null) {
-            return sb.toString();
-        }
-
-        sb.append("|");
-
-        if (secondPitching == 10) {
-            sb.append("X");
-        } else if (secondPitching == 0) {
-            sb.append("-");
-        } else if (firstPitching + secondPitching == 10) {
-            sb.append("/");
-        } else {
-            sb.append(secondPitching);
-        }
-
-        if (thirdPitching == null) {
-            return sb.toString();
-        }
-
-        sb.append("|");
-
-        if (thirdPitching == 10) {
-            sb.append("X");
-        } else if (thirdPitching == 0) {
-            sb.append("-");
-        } else if (secondPitching + thirdPitching == 10) {
-            sb.append("/");
-        } else {
-            sb.append(thirdPitching);
-        }
-
-        return sb.toString();
+    public List<Pitching> getStatus() {
+        return pitchings;
     }
 
     @Override
     public boolean isEnd() {
-        if (firstPitching == null || secondPitching == null) {
+        if (pitchings.size() < LAST_FRAME_MAX_PITCHING_SIZE - 1) {
             return false;
         }
 
-        if (hasThirdChance() && thirdPitching == null) {
-            return false;
-        }
-
-        return true;
+        return !hasThirdChance() || pitchings.size() >= LAST_FRAME_MAX_PITCHING_SIZE;
     }
 
     private boolean hasThirdChance() {
-        return firstPitching + secondPitching >= 10;
+        return pitchings.contains(Pitching.STRIKE) || pitchings.contains(Pitching.SPARE);
     }
 }

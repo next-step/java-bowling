@@ -41,7 +41,7 @@ public class BowlingGame {
 
         sb.append("|  JSY |");
         for (Frame frame : frames) {
-            sb.append(centerString(6, frame.getStatus())).append("|");
+            sb.append(centerString(6, frame.getStatus().toString())).append("|");
         }
 
         System.out.println(sb.toString());

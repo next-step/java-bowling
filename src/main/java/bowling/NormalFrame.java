@@ -8,12 +8,7 @@ public class NormalFrame implements Frame {
     private int index;
     private int score;
     private LinkedList<Pitching> pitchings;
-    private Integer firstPitching;
-    private Integer secondPitching;
-
-    public NormalFrame() {
-    }
-
+    
     public NormalFrame(int index) {
         this.index = index;
         pitchings = new LinkedList<>();
@@ -21,16 +16,6 @@ public class NormalFrame implements Frame {
 
     @Override
     public void setKnockDownPins(int knockDownPins) {
-        if (firstPitching == null) {
-            firstPitching = knockDownPins;
-            return;
-        }
-
-        secondPitching = knockDownPins;
-    }
-
-    @Override
-    public void setKnockDownPins2(int knockDownPins) {
         if (pitchings.isEmpty()) {
             pitchings.add(Pitching.getPitching(knockDownPins));
             return;
@@ -41,52 +26,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String getStatus() {
-        if (firstPitching == null) {
-            return "";
-        }
-
-        if (firstPitching == 10) {
-            return "X";
-        }
-
-        if (secondPitching == null) {
-            if (firstPitching == 0) {
-                return "-";
-            }
-            return String.valueOf(firstPitching);
-        }
-
-        if (firstPitching + secondPitching == 10) {
-            return firstPitching + "|/";
-        }
-
-        if (secondPitching == 0) {
-            return firstPitching + "|-";
-        }
-
-        return firstPitching + "|" + secondPitching;
-    }
-
-    @Override
-    public List<Pitching> getStatus2(){
+    public List<Pitching> getStatus(){
         return pitchings;
     }
 
-    @Override
     public boolean isEnd() {
-        if (firstPitching == null) {
-            return false;
-        }
-
-        if (firstPitching == 10) {
-            return true;
-        }
-
-        return secondPitching != null;
-    }
-
-    public boolean isEnd2() {
         if (pitchings.isEmpty()) {
             return false;
         }
@@ -96,5 +40,14 @@ public class NormalFrame implements Frame {
         }
 
         return pitchings.size() == NORMAL_FRAME_MAX_PITCHING_SIZE;
+    }
+
+    @Override
+    public String toString() {
+        return "NormalFrame{" +
+                "index=" + index +
+                ", score=" + score +
+                ", pitchings=" + pitchings +
+                '}';
     }
 }
