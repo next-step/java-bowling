@@ -12,12 +12,14 @@ public class BowlingGame {
     private BowlingGame() {
         frames = new ArrayList<>();
         initFrames();
+        currentFrame = frames.get(0);
     }
 
     private BowlingGame(String playerName) {
         frames = new ArrayList<>();
         this.playerName = playerName;
         initFrames();
+        currentFrame = frames.get(0);
     }
 
     public static BowlingGame init() {
@@ -30,7 +32,6 @@ public class BowlingGame {
 
     public void initFrames() {
         Frame frame = NormalFrame.getFirstFrame();
-        currentFrame = frame;
         frames.add(frame);
 
         while (size() < MAX_FRAME_SIZE) {
