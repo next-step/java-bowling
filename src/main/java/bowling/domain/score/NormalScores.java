@@ -5,12 +5,12 @@ import java.util.Optional;
 
 public class NormalScores extends Scores {
 
-    private NormalScores(Score firstScore, Score secondScore) {
-        super(firstScore, secondScore);
+    private NormalScores() {
+        super();
     }
 
     public static Scores init() {
-        return new NormalScores(null, null);
+        return new NormalScores();
     }
 
     @Override
