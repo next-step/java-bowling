@@ -1,5 +1,6 @@
 package bowling;
 
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -34,5 +35,13 @@ public class PitchingTest {
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> Pitching.getPitching(invalidKnockDownPins))
                 .withMessage(Pitching.INVALID_KNOCK_DOWN_PINS_ARGUMENT);
+    }
+
+    @Test
+    public void getSpareTest() {
+        Pitching previousPitching = Pitching.ONE_PIN;
+        int knockDownPins = 9;
+
+        assertThat(Pitching.getPitching(knockDownPins, previousPitching)).isEqualTo(Pitching.SPARE);
     }
 }
