@@ -1,11 +1,16 @@
 package bowling;
 
+import java.util.List;
+
 public class LastFrame implements Frame {
     private int index;
     private int score;
     private Integer firstPitching;
     private Integer secondPitching;
     private Integer thirdPitching;
+
+    public LastFrame() {
+    }
 
     public LastFrame(int index) {
         this.index = index;
@@ -25,6 +30,16 @@ public class LastFrame implements Frame {
 
         //todo 1,2번째 투구에 스트라이크나 스페어를 못하였으면 예외처리
         thirdPitching = knockDownPins;
+    }
+
+    @Override
+    public void setKnockDownPins2(int knockDownPins) {
+
+    }
+
+    @Override
+    public List<Pitching> getStatus2() {
+        return null;
     }
 
     @Override
