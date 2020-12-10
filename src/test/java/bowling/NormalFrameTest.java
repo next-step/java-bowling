@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 
@@ -70,15 +69,5 @@ public class NormalFrameTest {
                 () -> assertThat(frame.getStatus()).containsExactly(Pitching.THREE_PINS, Pitching.GUTTER),
                 () -> assertThat(frame.isEnd()).isTrue()
         );
-    }
-
-    @Test
-    @DisplayName("스트라이크가 아닌 첫번째 투구와 두번째 투구의 쓰러트린 핀의 갯수가 10을 초과하면 throw Exception")
-    public void invalidTotalPins() {
-        NormalFrame frame = new NormalFrame(1);
-        frame.setKnockDownPins(9);
-
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> frame.setKnockDownPins(2));
     }
 }

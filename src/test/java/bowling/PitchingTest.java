@@ -1,5 +1,6 @@
 package bowling;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,7 +31,7 @@ public class PitchingTest {
 
     @ParameterizedTest
     @ValueSource(ints = {-1, 11})
-    @DisplayName("유효한 knockDownPins이 아닌 경우 throw Exception")
+    @DisplayName("유효한 knockDownPins가 아닌 경우 throw Exception")
     public void getPitchingTest_failureCase(int invalidKnockDownPins) {
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> Pitching.getPitching(invalidKnockDownPins))
@@ -43,5 +44,15 @@ public class PitchingTest {
         int knockDownPins = 9;
 
         assertThat(Pitching.getPitching(knockDownPins, previousPitching)).isEqualTo(Pitching.SPARE);
+    }
+
+    @Test
+    @DisplayName("스트라이크가 아닌 이전 투구와 현재 투구의 쓰러트린 핀의 갯수가 10을 초과하면 throw Exception")
+    public void invalidTotalPins() {
+        Pitching previousPitching = Pitching.NINE_PINS;
+        int knockDownPins = 2;
+
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> Pitching.getPitching(knockDownPins, previousPitching));
     }
 }
