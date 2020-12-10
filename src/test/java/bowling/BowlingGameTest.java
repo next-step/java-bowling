@@ -11,4 +11,15 @@ public class BowlingGameTest {
         bowlingGame.initFrames();
         assertThat(bowlingGame.size()).isEqualTo(10);
     }
+
+    @Test
+    public void bowlingGameText() {
+        BowlingGame bowlingGame = new BowlingGame();
+        bowlingGame.initFrames();
+
+        for (int i = 1; i < BowlingGame.MAX_FRAME_SIZE + 3; i++) {
+            bowlingGame.setKnockDownPins(10);
+        }
+        assertThat(bowlingGame.isEnd()).isTrue();
+    }
 }
