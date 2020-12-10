@@ -1,11 +1,11 @@
 package bowling.domain;
 
-public class FinalFrame extends Frame{
+public class FinalFrame extends Frame {
     private Pins firstPitching;
     private Pins secondPitching;
     private Pins bonusPitching;
     private State state = State.BEFORE_FIRST_PITCHING;
-    
+
     public FinalFrame(final int index) {
         super(index);
     }
@@ -30,7 +30,7 @@ public class FinalFrame extends Frame{
                 || state == State.BEFORE_SECOND_PITCHING
                 || isBonusPitchable();
     }
-    
+
     private boolean isBonusPitchable() {
         return state == State.STRIKE || state == State.SPARE;
     }
