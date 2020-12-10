@@ -59,4 +59,8 @@ public class BowlingGame {
     public List<Frame> getFrames() {
         return frames;
     }
+
+    public String getPlayerName() {
+        return playerName;
+    }
 }
