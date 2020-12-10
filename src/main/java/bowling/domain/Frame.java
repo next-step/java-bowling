@@ -6,7 +6,8 @@ import static util.Preconditions.checkArgument;
 
 public abstract class Frame {
     private static final int FINAL_FRAME_INDEX = 9;
-
+    protected Pins firstPitching;
+    protected Pins secondPitching;
     private final int index;
     private Frame nextFrame;
 

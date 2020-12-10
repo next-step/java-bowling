@@ -1,8 +1,6 @@
 package bowling.domain;
 
 public class FinalFrame extends Frame {
-    private Pins firstPitching;
-    private Pins secondPitching;
     private Pins bonusPitching;
     private State state = State.BEFORE_FIRST_PITCHING;
 

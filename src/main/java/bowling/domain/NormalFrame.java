@@ -1,8 +1,6 @@
 package bowling.domain;
 
 public class NormalFrame extends Frame {
-    private Pins firstPitching;
-    private Pins secondPitching;
     private State state = State.BEFORE_FIRST_PITCHING;
 
     public NormalFrame(final int index) {
