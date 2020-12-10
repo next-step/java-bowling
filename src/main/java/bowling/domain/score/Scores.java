@@ -3,12 +3,14 @@ package bowling.domain.score;
 import java.util.List;
 
 public abstract class Scores {
-    protected Score firstScore;
-    protected Score secondScore;
+    static final int SECOND_SCORE = 2;
+    static final int FIRST_SCORE = 1;
+
+    protected List<Score> scores;
 
     protected Scores(Score firstScore, Score secondScore) {
-        this.firstScore = firstScore;
-        this.secondScore = secondScore;
+        scores.add(firstScore);
+        scores.add(secondScore);
     }
 
     public static boolean isSpare(List<Score> scores) {
@@ -21,17 +23,14 @@ public abstract class Scores {
                 .isStrike();
     }
 
-    protected boolean hasFirstScore() {
-        return firstScore != null;
+    public void add(Score score) {
+        scores.add(score);
     }
 
-    protected boolean hasSecondScore() {
-        return secondScore != null;
+    public List<Score> getResult() {
+        return scores;
     }
-
-    public abstract void add(Score score);
 
     public abstract boolean canBowl();
 
-    public abstract List<Score> getResult();
 }
