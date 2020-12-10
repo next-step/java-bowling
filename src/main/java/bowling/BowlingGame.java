@@ -1,5 +1,10 @@
 package bowling;
 
+import bowling.domain.Frames;
+import bowling.helper.ValidInputHelper;
+import bowling.view.ConsoleInputView;
+import bowling.view.ConsoleResultView;
+
 public class BowlingGame {
     private final ConsoleInputView consoleInputView;
     private final ConsoleResultView consoleResultView;

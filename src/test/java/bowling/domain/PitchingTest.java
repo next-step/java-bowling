@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;

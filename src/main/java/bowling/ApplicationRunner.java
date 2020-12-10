@@ -1,5 +1,8 @@
 package bowling;
 
+import bowling.view.ConsoleInputView;
+import bowling.view.ConsoleResultView;
+
 public class ApplicationRunner {
     public static void main(String[] args) {
         BowlingGame bowlingGame = getBowlingGameRunner();
