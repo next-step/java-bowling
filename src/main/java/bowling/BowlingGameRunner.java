@@ -5,7 +5,10 @@ import java.util.Scanner;
 
 public class BowlingGameRunner {
     public static void main(String[] args) {
-        BowlingGame bowlingGame = BowlingGame.init();
+        ConsoleInputView consoleInputView = new ConsoleInputView();
+        String playerName = consoleInputView.getPlayerName();
+
+        BowlingGame bowlingGame = BowlingGame.init(playerName);
 
         Scanner scanner = new Scanner(System.in);
         while (!bowlingGame.isEnd()) {

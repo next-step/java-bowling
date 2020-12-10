@@ -6,6 +6,7 @@ import java.util.List;
 public class BowlingGame {
     public static final int MAX_FRAME_SIZE = 10;
     private final List<Frame> frames;
+    private String playerName;
     private Frame currentFrame;
 
     private BowlingGame() {
@@ -13,8 +14,18 @@ public class BowlingGame {
         initFrames();
     }
 
+    private BowlingGame(String playerName) {
+        frames = new ArrayList<>();
+        this.playerName = playerName;
+        initFrames();
+    }
+
     public static BowlingGame init() {
         return new BowlingGame();
+    }
+
+    public static BowlingGame init(String playerName) {
+        return new BowlingGame(playerName);
     }
 
     public void initFrames() {
