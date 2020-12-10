@@ -3,6 +3,7 @@ package bowling;
 import java.util.Scanner;
 
 public class ConsoleInputView {
+    public static final String ERROR_MSG_PREFIX = "[ERROR] ";
     private final Scanner scanner;
 
     public ConsoleInputView() {
@@ -17,5 +18,9 @@ public class ConsoleInputView {
     public int getKnockDownPins(int frameIndex) {
         System.out.print(frameIndex +"프레임 투구 : ");
         return Integer.parseInt(scanner.nextLine());
+    }
+
+    public void printError(RuntimeException e) {
+        System.out.println(ERROR_MSG_PREFIX + e.getMessage());
     }
 }
