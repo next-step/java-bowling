@@ -21,6 +21,18 @@ public class NormalFrameTest {
     }
 
     @Test
+    @DisplayName("첫번째 투구에서 10개의 핀을 모두 쓰러트리면 스트라이크(X), 프레임 종료")
+    public void strikeTest2() {
+        NormalFrame frame = new NormalFrame(1);
+        frame.setKnockDownPins2(10);
+
+        assertAll(
+                () -> assertThat(frame.getStatus2()).containsExactly(Pitching.STRIKE),
+                () -> assertThat(frame.isEnd2()).isTrue()
+        );
+    }
+
+    @Test
     @DisplayName("한 프레임의 모든 투구에서 10개의 핀을 모두 쓰러트리지 못한 경우 점수만 표기, 프레임 종료")
     public void scoreTest() {
         NormalFrame frame = new NormalFrame();
@@ -30,6 +42,19 @@ public class NormalFrameTest {
         assertAll(
                 () -> assertThat(frame.getStatus()).isEqualTo("3|5"),
                 () -> assertThat(frame.isEnd()).isTrue()
+        );
+    }
+
+    @Test
+    @DisplayName("한 프레임의 모든 투구에서 10개의 핀을 모두 쓰러트리지 못한 경우 점수만 표기, 프레임 종료")
+    public void scoreTest2() {
+        NormalFrame frame = new NormalFrame(1);
+        frame.setKnockDownPins2(3);
+        frame.setKnockDownPins2(5);
+
+        assertAll(
+                () -> assertThat(frame.getStatus2()).containsExactly(Pitching.THREE_PINS, Pitching.FIVE_PINS),
+                () -> assertThat(frame.isEnd2()).isTrue()
         );
     }
 
@@ -47,6 +72,19 @@ public class NormalFrameTest {
     }
 
     @Test
+    @DisplayName("한 프레임의 두번째 투구에서 10개의 핀을 모두 쓰러트린 경우 스페어(/), 프레임 종료")
+    public void spareTest2() {
+        NormalFrame frame = new NormalFrame(1);
+        frame.setKnockDownPins2(3);
+        frame.setKnockDownPins2(7);
+
+        assertAll(
+                () -> assertThat(frame.getStatus2()).containsExactly(Pitching.THREE_PINS, Pitching.SPARE),
+                () -> assertThat(frame.isEnd2()).isTrue()
+        );
+    }
+
+    @Test
     @DisplayName("핀을 하나도 쓰러트리지 못한 투구의 경우 거터(-), 프레임 진행")
     public void gutterTest_firstPitcing() {
         NormalFrame frame = new NormalFrame();
@@ -55,6 +93,18 @@ public class NormalFrameTest {
         assertAll(
                 () -> assertThat(frame.getStatus()).isEqualTo("-"),
                 () -> assertThat(frame.isEnd()).isFalse()
+        );
+    }
+
+    @Test
+    @DisplayName("핀을 하나도 쓰러트리지 못한 투구의 경우 거터(-), 프레임 진행")
+    public void gutterTest_firstPitcing2() {
+        NormalFrame frame = new NormalFrame(1);
+        frame.setKnockDownPins2(0);
+
+        assertAll(
+                () -> assertThat(frame.getStatus2()).containsExactly(Pitching.GUTTER),
+                () -> assertThat(frame.isEnd2()).isFalse()
         );
     }
 
@@ -68,6 +118,19 @@ public class NormalFrameTest {
         assertAll(
                 () -> assertThat(frame.getStatus()).isEqualTo("3|-"),
                 () -> assertThat(frame.isEnd()).isTrue()
+        );
+    }
+
+    @Test
+    @DisplayName("핀을 하나도 쓰러트리지 못한 투구의 경우 거터(-), 프레임 종료")
+    public void gutterTest_secondPitcing2() {
+        NormalFrame frame = new NormalFrame(1);
+        frame.setKnockDownPins2(3);
+        frame.setKnockDownPins2(0);
+
+        assertAll(
+                () -> assertThat(frame.getStatus2()).containsExactly(Pitching.THREE_PINS, Pitching.GUTTER),
+                () -> assertThat(frame.isEnd2()).isTrue()
         );
     }
 }

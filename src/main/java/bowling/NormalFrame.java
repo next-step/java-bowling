@@ -1,13 +1,13 @@
 package bowling;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class NormalFrame implements Frame {
     public static final int NORMAL_FRAME_MAX_PITCHING_SIZE = 2;
     private int index;
     private int score;
-    private List<Pitching> pitchings;
+    private LinkedList<Pitching> pitchings;
     private Integer firstPitching;
     private Integer secondPitching;
 
@@ -16,7 +16,7 @@ public class NormalFrame implements Frame {
 
     public NormalFrame(int index) {
         this.index = index;
-        pitchings = new ArrayList<>(NORMAL_FRAME_MAX_PITCHING_SIZE);
+        pitchings = new LinkedList<>();
     }
 
     @Override
@@ -31,12 +31,13 @@ public class NormalFrame implements Frame {
 
     @Override
     public void setKnockDownPins2(int knockDownPins) {
-        if (firstPitching == null) {
-            firstPitching = knockDownPins;
+        if (pitchings.isEmpty()) {
+            pitchings.add(Pitching.getPitching(knockDownPins));
             return;
         }
 
-        secondPitching = knockDownPins;
+        Pitching previousPitching = pitchings.getLast();
+        pitchings.add(Pitching.getPitching(knockDownPins, previousPitching));
     }
 
     @Override
@@ -69,7 +70,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public List<Pitching> getStatus2(){
-        return null;
+        return pitchings;
     }
 
     @Override
@@ -83,5 +84,17 @@ public class NormalFrame implements Frame {
         }
 
         return secondPitching != null;
+    }
+
+    public boolean isEnd2() {
+        if (pitchings.isEmpty()) {
+            return false;
+        }
+
+        if (pitchings.getFirst() == Pitching.STRIKE) {
+            return true;
+        }
+
+        return pitchings.size() == NORMAL_FRAME_MAX_PITCHING_SIZE;
     }
 }
