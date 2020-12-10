@@ -51,6 +51,10 @@ public enum Pitching {
             return SPARE;
         }
 
+        if (previousPitching != STRIKE && knockDownPins + previousPitching.score > STRIKE.score) {
+            throw new IllegalArgumentException("남은 볼링 핀의 갯수보다 많은 핀을 쓰러트릴 수 없습니다.");
+        }
+
         return getPitching(knockDownPins);
     }
 }
