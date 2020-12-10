@@ -38,7 +38,7 @@ public class ConsoleResultView {
         }
         sb.append(System.lineSeparator());
 
-        sb.append("|").append(centerString(bowlingGame.getPlayerName())).append("|");
+        sb.append("|").append(centerString(bowlingGame.getPlayerName().getValue())).append("|");
         for (Frame frame : frames) {
             List<Pitching> status = frame.getStatus();
             String result = status.stream()

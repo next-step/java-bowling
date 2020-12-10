@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.Frames;
+import bowling.domain.PlayerName;
 import bowling.helper.ValidInputHelper;
 import bowling.view.ConsoleInputView;
 import bowling.view.ConsoleResultView;
@@ -15,14 +16,18 @@ public class BowlingGame {
     }
 
     public void run() {
-        String playerName = ValidInputHelper.get(consoleInputView::getPlayerName, consoleInputView::printError);
-
+        PlayerName playerName = ValidInputHelper.get(this::getPlayerName, consoleInputView::printError);
         Frames frames = Frames.init(playerName);
 
         while (!frames.isEnd()) {
             setKnockDownPins(frames);
             consoleResultView.print(frames);
         }
+    }
+
+    private PlayerName getPlayerName() {
+        String inputPlayerName = ValidInputHelper.get(consoleInputView::getPlayerName, consoleInputView::printError);
+        return PlayerName.valueOf(inputPlayerName);
     }
 
     private void setKnockDownPins(Frames frames) {

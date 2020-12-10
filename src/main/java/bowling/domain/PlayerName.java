@@ -19,4 +19,8 @@ public class PlayerName {
     public static PlayerName valueOf(String value) {
         return new PlayerName(value);
     }
+
+    public String getValue() {
+        return value;
+    }
 }

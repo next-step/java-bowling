@@ -6,7 +6,7 @@ import java.util.List;
 public class Frames {
     public static final int MAX_FRAME_SIZE = 10;
     private final List<Frame> frames;
-    private String playerName;
+    private PlayerName playerName;
     private Frame currentFrame;
 
     private Frames() {
@@ -15,7 +15,7 @@ public class Frames {
         currentFrame = frames.get(0);
     }
 
-    private Frames(String playerName) {
+    private Frames(PlayerName playerName) {
         frames = new ArrayList<>();
         this.playerName = playerName;
         initFrames();
@@ -26,7 +26,7 @@ public class Frames {
         return new Frames();
     }
 
-    public static Frames init(String playerName) {
+    public static Frames init(PlayerName playerName) {
         return new Frames(playerName);
     }
 
@@ -64,7 +64,7 @@ public class Frames {
         return frames;
     }
 
-    public String getPlayerName() {
+    public PlayerName getPlayerName() {
         return playerName;
     }
 
