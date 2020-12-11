@@ -57,27 +57,25 @@ public class NormalFrame extends Frame {
     @Override
     public int getScore(ResultPitchesType prevType) {
         ResultPitchesType currentType = bowlingSymbols.getType();
+        int score = 0;
 
-        if (isDouble(prevType, currentType) && !next.hasNext()) {
-            return getCurrentScore() + next.getScoreByOrderType(FIRST);
+        if (prevType.isStrike()) {
+            score += getCurrentScore();
+        }
+
+        if (prevType.isSpare()) {
+            score += getScoreByOrderType(FIRST);
         }
 
         if (isDouble(prevType, currentType)) {
-            return getCurrentScore() + next.getScoreByOrderType(FIRST);
+            score += next.getScoreByOrderType(FIRST);
         }
 
-        if (STRIKE.equals(prevType)) {
-            return getCurrentScore();
-        }
-
-        if (SPARE.equals(prevType)) {
-            return getScoreByOrderType(FIRST);
-        }
-        return 0;
+        return score;
     }
 
     private boolean isDouble(ResultPitchesType prevType, ResultPitchesType currentType) {
-        return STRIKE.equals(prevType) && STRIKE.equals(currentType);
+        return prevType.isStrike() && currentType.isStrike();
     }
 
 
@@ -92,7 +90,7 @@ public class NormalFrame extends Frame {
     }
 
     public static Frame makeNext(int frameNo) {
-        if (frameNo == BowlingGame.FRAME_LAST_NO) {
+        if (frameNo == Player.FRAME_LAST_NO) {
             return new FinalFrame(frameNo + 1);
         }
         return new NormalFrame(frameNo + 1);

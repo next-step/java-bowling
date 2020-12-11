@@ -52,4 +52,14 @@ public enum ResultPitchesType {
 
         return type.supply.create(dto.getThird());
     }
+
+    public boolean isStrike() {
+        return this.equals(STRIKE);
+    }
+
+    public boolean isSpare() {
+        return this.equals(SPARE);
+    }
+
+
 }
