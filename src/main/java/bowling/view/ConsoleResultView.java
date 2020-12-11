@@ -31,7 +31,7 @@ public class ConsoleResultView implements ResultView {
 
     @Override
     public void print(Frames bowlingGame) {
-        List<Frame> frames = bowlingGame.getFrames();
+        List<Frame> frames = bowlingGame.getValue();
         StringBuilder sb = new StringBuilder();
         sb.append("| NAME |");
         for (int i = 1; i <= frames.size(); i++) {

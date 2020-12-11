@@ -5,42 +5,46 @@ import java.util.List;
 
 public class Frames {
     public static final int MAX_FRAME_SIZE = 10;
-    private final List<Frame> frames;
-    private PlayerName playerName;
+    private final PlayerName playerName;
+    private final List<Frame> value;
     private Frame currentFrame;
 
     private Frames(PlayerName playerName) {
-        frames = new ArrayList<>();
         this.playerName = playerName;
-        initFrames();
-        currentFrame = frames.get(0);
+        value = initFrames();
+        currentFrame = value.get(0);
     }
 
     public static Frames init(PlayerName playerName) {
         return new Frames(playerName);
     }
 
-    public void initFrames() {
+    public List<Frame> initFrames() {
+        List<Frame> frames = new ArrayList<>();
         Frame frame = NormalFrame.getFirstFrame();
         frames.add(frame);
-
         while (size() < MAX_FRAME_SIZE) {
             frame = frame.initNextFrame();
             frames.add(frame);
         }
+        return frames;
     }
 
     public int size() {
-        return frames.size();
+        return value.size();
     }
 
     public boolean isEnd() {
-        return frames.get(MAX_FRAME_SIZE - 1).isEnd();
+        Frame lastFrame = value.get(MAX_FRAME_SIZE - 1);
+        return lastFrame.isEnd();
     }
 
     public void setKnockDownPins(KnockDownPins knockDownPins) {
         currentFrame.setKnockDownPins(knockDownPins);
+        adjustCurrentFrame();
+    }
 
+    private void adjustCurrentFrame() {
         if (currentFrame.isEnd() && isNotLastFrame()) {
             currentFrame = currentFrame.getNextFrame();
         }
@@ -50,8 +54,8 @@ public class Frames {
         return currentFrame.getIndex() != MAX_FRAME_SIZE;
     }
 
-    public List<Frame> getFrames() {
-        return frames;
+    public List<Frame> getValue() {
+        return new ArrayList<>(value);
     }
 
     public PlayerName getPlayerName() {
