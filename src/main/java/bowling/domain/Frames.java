@@ -23,7 +23,7 @@ public class Frames {
         List<Frame> frames = new ArrayList<>();
         Frame frame = NormalFrame.getFirstFrame();
         frames.add(frame);
-        while (size() < MAX_FRAME_SIZE) {
+        while (frames.size() < MAX_FRAME_SIZE) {
             frame = frame.initNextFrame();
             frames.add(frame);
         }
