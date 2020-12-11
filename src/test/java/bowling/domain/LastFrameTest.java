@@ -4,73 +4,56 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
-//todo isEnd 검증과 stauts 검증 분리
 public class LastFrameTest {
     @Test
-    @DisplayName("첫번째 투구에서 10개의 핀을 모두 쓰러트리면 스트라이크(X), 프레임 계속 진행")
+    @DisplayName("첫번째 투구에서 10개의 핀을 모두 쓰러트리면 스트라이크(X)")
     public void strikeTest() {
         Frame frame = LastFrame.getInstance(10);
         frame.setKnockDownPins(KnockDownPins.valueOf(10));
 
-        assertAll(
-                () -> assertThat(frame.getPitchings()).containsExactly(Pitching.STRIKE),
-                () -> assertThat(frame.isEnd()).isFalse()
-        );
+        assertThat(frame.getPitchings()).containsExactly(Pitching.STRIKE);
     }
 
     @Test
-    @DisplayName("한 프레임의 모든 투구에서 10개의 핀을 모두 쓰러트리지 못한 경우 점수만 표기, 프레임 종료")
+    @DisplayName("한 프레임의 모든 투구에서 10개의 핀을 모두 쓰러트리지 못한 경우 점수만 표기")
     public void scoreTest() {
         Frame frame = LastFrame.getInstance(10);
         frame.setKnockDownPins(KnockDownPins.valueOf(3));
         frame.setKnockDownPins(KnockDownPins.valueOf(5));
 
-        assertAll(
-                () -> assertThat(frame.getPitchings()).containsExactly(Pitching.THREE_PINS, Pitching.FIVE_PINS),
-                () -> assertThat(frame.isEnd()).isTrue()
-        );
+        assertThat(frame.getPitchings()).containsExactly(Pitching.THREE_PINS, Pitching.FIVE_PINS);
     }
 
     @Test
-    @DisplayName("한 프레임의 두번째 투구에서 10개의 핀을 모두 쓰러트린 경우 스페어(/), 프레임 계속 진행")
+    @DisplayName("한 프레임의 두번째 투구에서 10개의 핀을 모두 쓰러트린 경우 스페어(/)")
     public void spareTest() {
         Frame frame = LastFrame.getInstance(10);
         frame.setKnockDownPins(KnockDownPins.valueOf(3));
         frame.setKnockDownPins(KnockDownPins.valueOf(7));
 
-        assertAll(
-                () -> assertThat(frame.getPitchings()).containsExactly(Pitching.THREE_PINS, Pitching.SPARE),
-                () -> assertThat(frame.isEnd()).isFalse()
-        );
+        assertThat(frame.getPitchings()).containsExactly(Pitching.THREE_PINS, Pitching.SPARE);
     }
 
     @Test
-    @DisplayName("핀을 하나도 쓰러트리지 못한 투구의 경우 거터(-), 프레임 계속 진행")
+    @DisplayName("핀을 하나도 쓰러트리지 못한 투구의 경우 거터(-)")
     public void gutterTest_secondPitching() {
         Frame frame = LastFrame.getInstance(10);
         frame.setKnockDownPins(KnockDownPins.valueOf(3));
         frame.setKnockDownPins(KnockDownPins.valueOf(0));
 
-        assertAll(
-                () -> assertThat(frame.getPitchings()).containsExactly(Pitching.THREE_PINS, Pitching.GUTTER),
-                () -> assertThat(frame.isEnd()).isTrue()
-        );
+        assertThat(frame.getPitchings()).containsExactly(Pitching.THREE_PINS, Pitching.GUTTER);
     }
 
     @Test
-    @DisplayName("핀을 하나도 쓰러트리지 못한 투구의 경우 거터(-), 프레임 종료")
+    @DisplayName("핀을 하나도 쓰러트리지 못한 투구의 경우 거터(-)")
     public void gutterTest_thirdPitching() {
         Frame frame = LastFrame.getInstance(10);
         frame.setKnockDownPins(KnockDownPins.valueOf(3));
         frame.setKnockDownPins(KnockDownPins.valueOf(7));
         frame.setKnockDownPins(KnockDownPins.valueOf(0));
 
-        assertAll(
-                () -> assertThat(frame.getPitchings()).containsExactly(Pitching.THREE_PINS, Pitching.SPARE, Pitching.GUTTER),
-                () -> assertThat(frame.isEnd()).isTrue()
-        );
+        assertThat(frame.getPitchings()).containsExactly(Pitching.THREE_PINS, Pitching.SPARE, Pitching.GUTTER);
     }
 
     @Test
@@ -81,9 +64,47 @@ public class LastFrameTest {
         frame.setKnockDownPins(KnockDownPins.valueOf(5));
         frame.setKnockDownPins(KnockDownPins.valueOf(5));
 
-        assertAll(
-                () -> assertThat(frame.getPitchings()).containsExactly(Pitching.STRIKE, Pitching.FIVE_PINS, Pitching.SPARE),
-                () -> assertThat(frame.isEnd()).isTrue()
-        );
+        assertThat(frame.getPitchings()).containsExactly(Pitching.STRIKE, Pitching.FIVE_PINS, Pitching.SPARE);
+    }
+
+    @Test
+    @DisplayName("첫번째 투구에서 스트라이크를 했다면 프레임 계속 진행")
+    public void frameEndTestStrike() {
+        Frame frame = LastFrame.getInstance(10);
+        frame.setKnockDownPins(KnockDownPins.valueOf(10));
+        frame.setKnockDownPins(KnockDownPins.valueOf(5));
+
+        assertThat(frame.isEnd()).isFalse();
+    }
+
+    @Test
+    @DisplayName("두번째 투구에서 스페어를 했다면 프레임 계속 진행")
+    public void frameEndTestSpare() {
+        Frame frame = LastFrame.getInstance(10);
+        frame.setKnockDownPins(KnockDownPins.valueOf(5));
+        frame.setKnockDownPins(KnockDownPins.valueOf(5));
+
+        assertThat(frame.isEnd()).isFalse();
+    }
+
+    @Test
+    @DisplayName("첫번째 두번째 투구에서 스트라이크나 스페어를 하지 못하면 프레임 종료")
+    public void frameEndTest() {
+        Frame frame = LastFrame.getInstance(10);
+        frame.setKnockDownPins(KnockDownPins.valueOf(3));
+        frame.setKnockDownPins(KnockDownPins.valueOf(5));
+
+        assertThat(frame.isEnd()).isTrue();
+    }
+
+    @Test
+    @DisplayName("세번째 투구까지 한다면 프레임 종료")
+    public void frameEndThird() {
+        Frame frame = LastFrame.getInstance(10);
+        frame.setKnockDownPins(KnockDownPins.valueOf(5));
+        frame.setKnockDownPins(KnockDownPins.valueOf(5));
+        frame.setKnockDownPins(KnockDownPins.valueOf(5));
+
+        assertThat(frame.isEnd()).isTrue();
     }
 }
