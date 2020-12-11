@@ -1,11 +1,9 @@
 package bowling.view;
 
 import bowling.domain.Pitching;
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -33,31 +31,28 @@ public class ConsoleResultView implements ResultView {
 
     @Override
     public void print(Frames frames) {
-        StringBuilder sb = new StringBuilder();
-        appendHeader(frames, sb);
-        appendResults(frames, sb);
-        System.out.println(sb.toString());
+        StringBuilder resultBuilder = new StringBuilder();
+        appendHeader(frames, resultBuilder);
+        appendResults(frames, resultBuilder);
+        System.out.println(resultBuilder.toString());
     }
 
-    private void appendResults(Frames frames, StringBuilder sb) {
-        List<Frame> value = frames.getValue();
-        sb.append(DELIMITER).append(centerString(frames.getPlayerName().getValue())).append(DELIMITER);
-        for (Frame frame : value) {
-            List<Pitching> status = frame.getPitchings();
-            String result = status.stream()
+    private void appendHeader(Frames frames, StringBuilder resultBuilder) {
+        resultBuilder.append(DELIMITER).append(centerString(LABEL_NAME)).append(DELIMITER);
+        frames.stream().forEach(frame -> {
+            resultBuilder.append(centerString(String.format("%02d", frame.getIndex()))).append(DELIMITER);
+        });
+        resultBuilder.append(System.lineSeparator());
+    }
+
+    private void appendResults(Frames frames, StringBuilder resultBuilder) {
+        resultBuilder.append(DELIMITER).append(centerString(frames.getPlayerName().getValue())).append(DELIMITER);
+        frames.stream().forEach(frame -> {
+            String result = frame.getPitchings().stream()
                     .map(stringByPitching::get)
                     .collect(Collectors.joining(DELIMITER));
-            sb.append(centerString(result)).append(DELIMITER);
-        }
-    }
-
-    private void appendHeader(Frames frames, StringBuilder sb) {
-        List<Frame> value = frames.getValue();
-        sb.append(DELIMITER).append(centerString(LABEL_NAME)).append(DELIMITER);
-        for (int i = 1; i <= value.size(); i++) {
-            sb.append(centerString(String.format("%02d", i))).append(DELIMITER);
-        }
-        sb.append(System.lineSeparator());
+            resultBuilder.append(centerString(result)).append(DELIMITER);
+        });
     }
 
     private String centerString(String s) {

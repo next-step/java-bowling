@@ -5,6 +5,7 @@ import bowling.domain.PlayerName;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Frames {
     public static final int MAX_FRAME_SIZE = 10;
@@ -53,15 +54,15 @@ public class Frames {
         }
     }
 
-    public List<Frame> getValue() {
-        return new ArrayList<>(value);
-    }
-
     public PlayerName getPlayerName() {
         return playerName;
     }
 
     public int getCurrentFrameIndex() {
         return currentFrame.getIndex();
+    }
+
+    public Stream<Frame> stream() {
+        return value.stream();
     }
 }
