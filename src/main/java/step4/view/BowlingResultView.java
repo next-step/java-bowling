@@ -1,6 +1,7 @@
 package step4.view;
 
 import step4.domain.GameHistories;
+import step4.utils.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,7 +61,7 @@ public class BowlingResultView implements ResultView {
     }
 
     private String formatted(String content) {
-        return String.format("%6.6s", content);
+        return String.format("%6s", StringUtils.center(content, 6));
     }
 
     private void appendFrame(String content) {
