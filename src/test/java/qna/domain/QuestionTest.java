@@ -46,6 +46,16 @@ public class QuestionTest {
     }
 
 
+    @Test
+    public void delete_성공_질문자_답변자_같음() throws Exception {
+
+        List<DeleteHistory> deleteHistories = question.delete(UserTest.JAVAJIGI);
+
+        assertThat(question.isDeleted()).isTrue();
+        assertThat(answer.isDeleted()).isTrue();
+        verifyDeleteHistories(deleteHistories);
+    }
+
     private void verifyDeleteHistories(List<DeleteHistory> deleteHistories) {
         assertThat(deleteHistories).containsExactly(
                 new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
