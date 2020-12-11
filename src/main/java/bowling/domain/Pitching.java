@@ -17,7 +17,6 @@ public enum Pitching {
     STRIKE(10),
     SPARE(null);
 
-    public static final String INVALID_KNOCK_DOWN_PINS_ARGUMENT = "유효하지 않은 knockDownPins 입력값입니다.";
     private final Integer score;
 
     Pitching(Integer score) {
@@ -32,14 +31,7 @@ public enum Pitching {
     }
 
     public static Pitching getPitching(int knockDownPins) {
-        validateKnockDownPinsInput(knockDownPins);
         return pitchingByScore.get(knockDownPins);
-    }
-
-    private static void validateKnockDownPinsInput(int knockDownPins) {
-        if (knockDownPins < GUTTER.score || knockDownPins > STRIKE.score) {
-            throw new IllegalArgumentException(INVALID_KNOCK_DOWN_PINS_ARGUMENT);
-        }
     }
 
     public static Pitching getPitching(int knockDownPins, Pitching previousPitching) {
