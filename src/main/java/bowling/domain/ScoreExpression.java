@@ -3,7 +3,8 @@ package bowling.domain;
 public enum ScoreExpression {
     STRIKE("X"),
     SPARE("/"),
-    GUTTER("-")
+    GUTTER("-"),
+    MISS("")
     ;
 
     private String expression;

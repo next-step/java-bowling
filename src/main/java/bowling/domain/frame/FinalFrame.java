@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.FinalScores;
+import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 
 public class FinalFrame extends Frame {
@@ -21,8 +22,8 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public int getScore() {
-        return 0;
+    public Score getTotalScore() {
+        return Score.INVALID_SCORE;
     }
 
 }

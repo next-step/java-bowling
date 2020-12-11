@@ -1,66 +1,35 @@
 package bowling.domain.score;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.stream.IntStream;
 
 public class FinalScores extends Scores {
-    private Score bonusScore;
+    private final static int BONUS_SCORE = 3;
 
-    private FinalScores(Score firstScore, Score secondScore) {
-        super(firstScore, secondScore);
-        this.bonusScore = null;
+    private FinalScores() {
+        super();
     }
 
     public static Scores init() {
-        return new FinalScores(null, null);
-    }
-
-    @Override
-    public void add(Score score) {
-        if (firstScore == null) {
-            firstScore = score;
-            return;
-        }
-
-        if (secondScore == null && !firstScore.isStrike()) {
-            secondScore = score;
-            return;
-        }
-
-        bonusScore = score;
+        return new FinalScores();
     }
 
     @Override
     public boolean canBowl() {
-        if (!hasFirstScore()) {
+        if(scores.size() == FIRST_SCORE) {
             return true;
         }
-        if (!hasSecondScore() && !hasBonusScore()) {
-            return true;
-        }
-        if (FinalScores.isSpare(this) && !hasBonusScore()) {
-            return true;
-        }
-        return false;
-    }
 
-    private static boolean isSpare(Scores scores) {
-        Score firstScore = scores.firstScore;
-        Score secondScore = scores.secondScore;
-
-        if (firstScore != null && secondScore != null) {
-            return firstScore.sum(secondScore).isStrike();
-        }
-
-        return false;
-    }
-
-    private boolean hasBonusScore() {
-        return bonusScore != null;
+        return isSpare();
     }
 
     @Override
-    public List<Score> getResult() {
-        return Arrays.asList(firstScore, secondScore, bonusScore);
+    public Score getScore(int bonusScoreCount) {
+        if(bonusScoreCount == 2) {
+            return getTotalScore();
+        }
+
+        return IntStream.range(0, bonusScoreCount)
+                .mapToObj(index -> scores.get(index))
+                .reduce(Score.ZERO_SCORE, Score::sum);
     }
 }

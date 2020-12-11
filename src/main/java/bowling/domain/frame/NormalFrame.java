@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.FinalScores;
 import bowling.domain.score.NormalScores;
+import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 
 public class NormalFrame extends Frame {
@@ -34,7 +35,26 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public int getScore() {
-        return 0;
+    public Score getTotalScore() {
+        if(canCalculateTotalScore()) {
+            int bonusScoreCount = scores.getBonusScoreCount();
+            Score currentScore = scores.getTotalScore();
+
+            return next.addBonus(currentScore, bonusScoreCount);
+        }
+
+        return Score.INVALID_SCORE;
+    }
+
+    private boolean canCalculateTotalScore() {
+        if(canBowl()) {
+            return false;
+        }
+
+        if(scores.isStrike() && next.canBowl()) {
+            return false;
+        }
+
+        return !scores.isSpare() || next.hasFirstScore();
     }
 }

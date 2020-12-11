@@ -7,6 +7,8 @@ import java.util.Objects;
 public class Score {
     public static final int MIN_SCORE = 0;
     public static final int MAX_SCORE = 10;
+    public static final Score ZERO_SCORE = new Score(0);
+    public static final Score INVALID_SCORE = new Score(-1);
 
     private int score;
 

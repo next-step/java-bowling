@@ -10,7 +10,7 @@ public abstract class Frame {
     public static final int LAST_FRAME = 10;
 
     protected int frameNumber;
-    private Scores scores;
+    protected Scores scores;
     Frame next;
 
     Frame(int frameNumber, Scores scores) {
@@ -40,5 +40,19 @@ public abstract class Frame {
 
     public abstract Frame next();
 
-    public abstract int getScore();
+    public abstract Score getTotalScore();
+
+    protected Score getScore(int bonusScoreCount) {
+        return scores.getScore(bonusScoreCount);
+    }
+
+    Score addBonus(Score currentScore, int bonusScoreCount) {
+        Score bonusScore = getScore(bonusScoreCount);
+
+        return currentScore.sum(bonusScore);
+    }
+
+    boolean hasFirstScore() {
+        return scores.hasFirstScore();
+    }
 }

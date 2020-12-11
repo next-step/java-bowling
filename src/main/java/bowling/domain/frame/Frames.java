@@ -60,7 +60,11 @@ public class Frames {
         }
     }
 
-    public int getScore() {
-        return 0;
+    public Score getTotalScore(int frameNumber) {
+        if(frames.size() <= frameNumber - 1) {
+            return Score.INVALID_SCORE;
+        }
+        return frames.get(frameNumber - 1)
+                .getTotalScore();
     }
 }

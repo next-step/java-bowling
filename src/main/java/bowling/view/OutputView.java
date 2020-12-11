@@ -13,9 +13,10 @@ import java.util.stream.IntStream;
 
 public final class OutputView {
     private static final String NAME_TEXT = "| NAME |";
+    private static final String SCORE_TEXT = "|      |";
     private static final String PLAYER_NAME_TEXT = "|  %s |";
     private static final String FRAME_NUMBER_TEXT = "  %02d  |";
-    private static final String FRAME_RESULT_TEXT = "  %s|";
+    private static final String FRAME_STRING_TEXT = "  %s|";
     private static final String SCORE_DELIMITER = "|";
     private static final String TEXT_BLANK = " ";
     private static final String NEW_LINE = System.lineSeparator();
@@ -23,6 +24,7 @@ public final class OutputView {
     public static void printFrame(Bowling bowling) {
         printFrameTop();
         printFrameResult(bowling);
+        printFrameScore(bowling);
     }
 
     private static void printFrameTop() {
@@ -39,10 +41,10 @@ public final class OutputView {
         String playerResult = IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME + 1)
                 .mapToObj(frameNumber -> makeScoreExpression(bowling, frameNumber))
                 .map(OutputView::attachBlank)
-                .map(result -> String.format(FRAME_RESULT_TEXT, result))
+                .map(result -> String.format(FRAME_STRING_TEXT, result))
                 .collect(Collectors.joining());
 
-        System.out.println(playerName + playerResult + NEW_LINE);
+        System.out.println(playerName + playerResult);
     }
 
     private static String attachBlank(String result) {
@@ -82,5 +84,15 @@ public final class OutputView {
         }
 
         return scores.get(index).toString();
+    }
+
+    private static void printFrameScore(Bowling bowling) {
+        String totalScore = IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME)
+                .mapToObj(bowling::getTotalScore)
+                .map(score -> score.equals(Score.INVALID_SCORE) ? "  " : score.toString())
+                .map(score -> String.format(FRAME_STRING_TEXT, score))
+                .collect(Collectors.joining(""));
+
+        System.out.println(SCORE_TEXT + totalScore + NEW_LINE);
     }
 }

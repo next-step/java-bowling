@@ -37,4 +37,8 @@ public class Bowling {
     public List<Score> getResult(int frameNumber) {
         return frames.getResult(frameNumber);
     }
+
+    public Score getTotalScore(int frameNumber) {
+        return frames.getTotalScore(frameNumber);
+    }
 }
