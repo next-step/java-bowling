@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ConsoleResultView {
+public class ConsoleResultView implements ResultView {
     private static final String DELIMITER = "|";
     private final Map<Pitching, String> stringByPitching;
 
@@ -29,6 +29,7 @@ public class ConsoleResultView {
         stringByPitching.put(Pitching.SPARE, "/");
     }
 
+    @Override
     public void print(Frames bowlingGame) {
         List<Frame> frames = bowlingGame.getFrames();
         StringBuilder sb = new StringBuilder();

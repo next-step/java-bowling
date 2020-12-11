@@ -2,6 +2,8 @@ package bowling;
 
 import bowling.view.ConsoleInputView;
 import bowling.view.ConsoleResultView;
+import bowling.view.InputView;
+import bowling.view.ResultView;
 
 public class ApplicationRunner {
     public static void main(String[] args) {
@@ -10,14 +12,14 @@ public class ApplicationRunner {
     }
 
     private static BowlingGame getBowlingGameRunner() {
-        return new BowlingGame(getConsoleInputView(), getConsoleResultView());
+        return new BowlingGame(getInputView(), getResultView());
     }
 
-    private static ConsoleInputView getConsoleInputView() {
+    private static InputView getInputView() {
         return new ConsoleInputView();
     }
 
-    private static ConsoleResultView getConsoleResultView() {
+    private static ResultView getResultView() {
         return new ConsoleResultView();
     }
 }

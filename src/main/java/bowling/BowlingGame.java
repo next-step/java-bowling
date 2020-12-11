@@ -3,39 +3,39 @@ package bowling;
 import bowling.domain.Frames;
 import bowling.domain.PlayerName;
 import bowling.helper.ValidInputHelper;
-import bowling.view.ConsoleInputView;
-import bowling.view.ConsoleResultView;
+import bowling.view.InputView;
+import bowling.view.ResultView;
 
 public class BowlingGame {
-    private final ConsoleInputView consoleInputView;
-    private final ConsoleResultView consoleResultView;
+    private final InputView inputView;
+    private final ResultView resultView;
 
-    public BowlingGame(ConsoleInputView consoleInputView, ConsoleResultView consoleResultView) {
-        this.consoleInputView = consoleInputView;
-        this.consoleResultView = consoleResultView;
+    public BowlingGame(InputView inputView, ResultView resultView) {
+        this.inputView = inputView;
+        this.resultView = resultView;
     }
 
     public void run() {
-        PlayerName playerName = ValidInputHelper.get(this::getPlayerName, consoleInputView::printError);
+        PlayerName playerName = ValidInputHelper.get(this::getPlayerName, inputView::printError);
         Frames frames = Frames.init(playerName);
 
         while (!frames.isEnd()) {
             setKnockDownPins(frames);
-            consoleResultView.print(frames);
+            resultView.print(frames);
         }
     }
 
     private PlayerName getPlayerName() {
-        String inputPlayerName = ValidInputHelper.get(consoleInputView::getPlayerName, consoleInputView::printError);
+        String inputPlayerName = ValidInputHelper.get(inputView::getPlayerName, inputView::printError);
         return PlayerName.valueOf(inputPlayerName);
     }
 
     private void setKnockDownPins(Frames frames) {
         try {
-            int knockDownPins = consoleInputView.getKnockDownPins(frames.getCurrentFrameIndex());
+            int knockDownPins = inputView.getKnockDownPins(frames.getCurrentFrameIndex());
             frames.setKnockDownPins(knockDownPins);
         } catch (RuntimeException e) {
-            consoleInputView.printError(e);
+            inputView.printError(e);
             setKnockDownPins(frames);
         }
     }
