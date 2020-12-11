@@ -1,8 +1,8 @@
 package bowling.view;
 
-import bowling.domain.Frame;
-import bowling.domain.Frames;
 import bowling.domain.Pitching;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 
 import java.util.EnumMap;
 import java.util.List;

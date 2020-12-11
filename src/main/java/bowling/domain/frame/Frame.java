@@ -1,4 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.KnockDownPins;
+import bowling.domain.Pitching;
 
 import java.util.List;
 

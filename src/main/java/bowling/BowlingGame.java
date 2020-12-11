@@ -1,8 +1,8 @@
 package bowling;
 
-import bowling.domain.Frames;
 import bowling.domain.KnockDownPins;
 import bowling.domain.PlayerName;
+import bowling.domain.frame.Frames;
 import bowling.helper.ValidInputHelper;
 import bowling.view.InputView;
 import bowling.view.ResultView;
