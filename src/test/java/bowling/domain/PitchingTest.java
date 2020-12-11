@@ -5,10 +5,8 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 public class PitchingTest {
     @ParameterizedTest
@@ -27,15 +25,6 @@ public class PitchingTest {
             delimiter = ':')
     public void getPitchingTest(int knockDownPins, Pitching pitching) {
         assertThat(Pitching.getPitching(knockDownPins)).isEqualTo(pitching);
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {-1, 11})
-    @DisplayName("유효한 knockDownPins가 아닌 경우 throw Exception")
-    public void getPitchingTest_failureCase(int invalidKnockDownPins) {
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> Pitching.getPitching(invalidKnockDownPins))
-                .withMessage(Pitching.INVALID_KNOCK_DOWN_PINS_ARGUMENT);
     }
 
     @Test
