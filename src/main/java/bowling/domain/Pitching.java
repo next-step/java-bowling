@@ -24,15 +24,17 @@ public enum Pitching {
         this.score = score;
     }
 
-    public static final Map<Integer, Pitching> pitchingByScore = new HashMap<>();
+    static final Map<Integer, Pitching> pitchingByScore = new HashMap<>();
     static {
         for (Pitching pitching : Pitching.values()) {
-            pitchingByScore.put(pitching.score, pitching);
+            Integer score = pitching.score;
+            pitchingByScore.put(score, pitching);
         }
     }
 
     public static Pitching getPitching(KnockDownPins knockDownPins) {
-        return pitchingByScore.get(knockDownPins.getValue());
+        int knockDownPinsValue = knockDownPins.getValue();
+        return pitchingByScore.get(knockDownPinsValue);
     }
 
     public static Pitching getPitching(KnockDownPins knockDownPins, Pitching previousPitching) {
@@ -40,14 +42,25 @@ public enum Pitching {
             return getPitching(knockDownPins);
         }
 
-        if (knockDownPins.getValue() + previousPitching.score == STRIKE.score) {
+        if (isSpare(knockDownPins, previousPitching)) {
             return SPARE;
         }
 
-        if (previousPitching != STRIKE && knockDownPins.getValue() + previousPitching.score > STRIKE.score) {
-            throw new IllegalArgumentException(INVALID_REMAIN_PINS_SIZE_INPUT_ERR_MSG);
-        }
+        validateRemainPinSize(knockDownPins, previousPitching);
 
         return getPitching(knockDownPins);
+    }
+
+    private static boolean isSpare(KnockDownPins knockDownPins, Pitching previousPitching) {
+        return knockDownPins.getValue() + previousPitching.score == STRIKE.score;
+    }
+
+    private static void validateRemainPinSize(KnockDownPins knockDownPins, Pitching previousPitching) {
+        int knockDownPinsValue = knockDownPins.getValue();
+        int previousPitchingScore = previousPitching.score;
+        int StrikeScore = STRIKE.score;
+        if (previousPitching != STRIKE && knockDownPinsValue + previousPitchingScore > StrikeScore) {
+            throw new IllegalArgumentException(INVALID_REMAIN_PINS_SIZE_INPUT_ERR_MSG);
+        }
     }
 }
