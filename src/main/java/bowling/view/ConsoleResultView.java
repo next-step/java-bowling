@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 public class ConsoleResultView implements ResultView {
     private static final String DELIMITER = "|";
+    public static final int CELL_WITH = 6;
+    public static final String LABEL_NAME = "NAME";
     private final Map<Pitching, String> stringByPitching;
 
     public ConsoleResultView() {
@@ -30,28 +32,35 @@ public class ConsoleResultView implements ResultView {
     }
 
     @Override
-    public void print(Frames bowlingGame) {
-        List<Frame> frames = bowlingGame.getValue();
+    public void print(Frames frames) {
         StringBuilder sb = new StringBuilder();
-        sb.append("| NAME |");
-        for (int i = 1; i <= frames.size(); i++) {
-            sb.append("  ").append(String.format("%02d", i)).append("  |");
-        }
-        sb.append(System.lineSeparator());
+        appendHeader(frames, sb);
+        appendResults(frames, sb);
+        System.out.println(sb.toString());
+    }
 
-        sb.append("|").append(centerString(bowlingGame.getPlayerName().getValue())).append("|");
-        for (Frame frame : frames) {
+    private void appendResults(Frames frames, StringBuilder sb) {
+        List<Frame> value = frames.getValue();
+        sb.append(DELIMITER).append(centerString(frames.getPlayerName().getValue())).append(DELIMITER);
+        for (Frame frame : value) {
             List<Pitching> status = frame.getPitchings();
             String result = status.stream()
                     .map(stringByPitching::get)
                     .collect(Collectors.joining(DELIMITER));
-            sb.append(centerString(result)).append("|");
+            sb.append(centerString(result)).append(DELIMITER);
         }
+    }
 
-        System.out.println(sb.toString());
+    private void appendHeader(Frames frames, StringBuilder sb) {
+        List<Frame> value = frames.getValue();
+        sb.append(DELIMITER).append(centerString(LABEL_NAME)).append(DELIMITER);
+        for (int i = 1; i <= value.size(); i++) {
+            sb.append(centerString(String.format("%02d", i))).append(DELIMITER);
+        }
+        sb.append(System.lineSeparator());
     }
 
     private String centerString(String s) {
-        return String.format("%-" + 6 + "s", String.format("%" + (s.length() + ((6 - s.length()) / 2) + 1) + "s", s));
+        return String.format("%-" + CELL_WITH + "s", String.format("%" + (s.length() + ((CELL_WITH - s.length()) / 2) + 1) + "s", s));
     }
 }
