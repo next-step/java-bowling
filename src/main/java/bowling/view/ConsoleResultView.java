@@ -41,7 +41,7 @@ public class ConsoleResultView implements ResultView {
 
         sb.append("|").append(centerString(bowlingGame.getPlayerName().getValue())).append("|");
         for (Frame frame : frames) {
-            List<Pitching> status = frame.getStatus();
+            List<Pitching> status = frame.getPitchings();
             String result = status.stream()
                     .map(stringByPitching::get)
                     .collect(Collectors.joining(DELIMITER));

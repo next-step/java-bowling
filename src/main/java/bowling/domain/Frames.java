@@ -45,13 +45,9 @@ public class Frames {
     }
 
     private void adjustCurrentFrame() {
-        if (currentFrame.isEnd() && isNotLastFrame()) {
+        if (currentFrame.isEnd() && !currentFrame.isLastFrame()) {
             currentFrame = currentFrame.getNextFrame();
         }
-    }
-
-    private boolean isNotLastFrame() {
-        return currentFrame.getIndex() != MAX_FRAME_SIZE;
     }
 
     public List<Frame> getValue() {

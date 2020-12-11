@@ -1,25 +1,17 @@
 package bowling.domain;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NormalFrame implements Frame {
     public static final int NORMAL_FRAME_MAX_PITCHING_SIZE = 2;
     private final int index;
-    private final LinkedList<Pitching> pitchings;
-    private final Frame previousFrame;
+    private final List<Pitching> pitchings;
     private Frame nextFrame;
 
-    public NormalFrame(int index) {
+    private NormalFrame(int index) {
         this.index = index;
-        pitchings = new LinkedList<>();
-        this.previousFrame = null;
-    }
-
-    public NormalFrame(int index, Frame previousFrame) {
-        this.index = index;
-        pitchings = new LinkedList<>();
-        this.previousFrame = previousFrame;
+        pitchings = new ArrayList<>();
     }
 
     public static Frame getFirstFrame() {
@@ -34,27 +26,41 @@ public class NormalFrame implements Frame {
     @Override
     public Frame initNextFrame() {
         int nextFrameIndex = index + 1;
-        if (nextFrameIndex == Frames.MAX_FRAME_SIZE) {
-            return nextFrame = new LastFrame(Frames.MAX_FRAME_SIZE, this);
+        int lastFrameIndex = Frames.MAX_FRAME_SIZE;
+        if (nextFrameIndex == lastFrameIndex) {
+            nextFrame = LastFrame.getInstance(lastFrameIndex);
+            return nextFrame;
         }
 
-        return nextFrame = new NormalFrame(nextFrameIndex, this);
+        nextFrame = new NormalFrame(nextFrameIndex);
+        return nextFrame;
     }
 
     @Override
     public void setKnockDownPins(KnockDownPins knockDownPins) {
         if (pitchings.isEmpty()) {
-            pitchings.add(Pitching.getPitching(knockDownPins));
+            setFirstPitching(knockDownPins);
             return;
         }
 
-        Pitching previousPitching = pitchings.getLast();
-        pitchings.add(Pitching.getPitching(knockDownPins, previousPitching));
+        setSecondPitching(knockDownPins);
+    }
+
+    private void setFirstPitching(KnockDownPins knockDownPins) {
+        Pitching pitching = Pitching.getPitching(knockDownPins);
+        pitchings.add(pitching);
+    }
+
+    private void setSecondPitching(KnockDownPins knockDownPins) {
+        int lastIndex = pitchings.size() - 1;
+        Pitching previousPitching = pitchings.get(lastIndex);
+        Pitching pitching = Pitching.getPitching(knockDownPins, previousPitching);
+        pitchings.add(pitching);
     }
 
     @Override
-    public List<Pitching> getStatus(){
-        return pitchings;
+    public List<Pitching> getPitchings(){
+        return new ArrayList<>(pitchings);
     }
 
     @Override
@@ -63,11 +69,26 @@ public class NormalFrame implements Frame {
             return false;
         }
 
-        if (pitchings.getFirst() == Pitching.STRIKE) {
+        if (isFirstPitchingStrike()) {
             return true;
         }
 
         return pitchings.size() == NORMAL_FRAME_MAX_PITCHING_SIZE;
+    }
+
+    private boolean isFirstPitchingStrike() {
+        Pitching firstPitching = pitchings.get(0);
+        return firstPitching == Pitching.STRIKE;
+    }
+
+    @Override
+    public boolean isLastFrame() {
+        return false;
+    }
+
+    @Override
+    public int getIndex() {
+        return index;
     }
 
     @Override
@@ -76,10 +97,5 @@ public class NormalFrame implements Frame {
                 "index=" + index +
                 ", pitchings=" + pitchings +
                 '}';
-    }
-
-    @Override
-    public int getIndex() {
-        return index;
     }
 }

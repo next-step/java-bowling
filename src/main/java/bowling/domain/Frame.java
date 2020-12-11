@@ -7,11 +7,13 @@ public interface Frame {
 
     void setKnockDownPins(KnockDownPins knockDownPins);
 
-    List<Pitching> getStatus();
+    List<Pitching> getPitchings();
 
     boolean isEnd();
 
     Frame getNextFrame();
 
     int getIndex();
+
+    boolean isLastFrame();
 }
