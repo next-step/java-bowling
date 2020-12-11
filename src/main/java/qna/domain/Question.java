@@ -86,6 +86,10 @@ public class Question extends AbstractEntity {
                 throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
             }
         }
+        setDeleted(true);
+        for (Answer answer : answers) {
+            answer.setDeleted(true);
+        }
 
     }
 
