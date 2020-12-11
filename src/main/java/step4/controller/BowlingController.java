@@ -33,7 +33,7 @@ public class BowlingController {
         return IntStream.range(0, participantsCount)
                 .mapToObj(index -> {
                     String playerName = view.getPlayerName(index + 1);
-                    return new Player(playerName, BowlingGame.build());
+                    return Player.of(playerName);
                 }).collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
@@ -58,10 +58,9 @@ public class BowlingController {
 
     private Consumer<Player> pitchesAndDrawConsumer(Players players) {
         return player -> {
-            Frames frames = player.getFrames();
             int pitchesCount = view.getPitchesCount(player);
 
-            BowlingGame.pitches(frames, pitchesCount);
+            player.pitches(pitchesCount);
 
             GameHistories histories = players.createFramesHistories();
 

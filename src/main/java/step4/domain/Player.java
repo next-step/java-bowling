@@ -1,11 +1,16 @@
 package step4.domain;
 
+import step4.controller.BowlingController;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Player {
     public static final Pattern pattern = Pattern.compile("[^a-zA-Z]");
     public static final String ERROR_INVALID_NAME = "이름이 유효하지 않습니다.";
+    public static final int FRAME_FIRST_NO = 0;
+    public static final int FRAME_LAST_NO = 8;
+    public static final int FRAME_SIZE = 10;
 
     private final String name;
     private final Frames frames;
@@ -14,6 +19,13 @@ public class Player {
         isValidName(name);
         this.name = name;
         this.frames = frames;
+    }
+
+    public static Player of(String name) {
+        return new Player(name, Frames.Builder()
+                .size(FRAME_SIZE)
+                .head(new NormalFrame(FRAME_FIRST_NO))
+                .build());
     }
 
 
@@ -47,5 +59,10 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public void pitches(int pitchesCount) {
+        Frame frame = frames.getCursor();
+        frames.updateCursor(frame.pitches(pitchesCount));
     }
 }
