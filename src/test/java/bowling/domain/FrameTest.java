@@ -13,7 +13,7 @@ public class FrameTest {
     @Test
     void create_first() {
         // when
-        final Frame frame = Frame.first();
+        final Frame frame = Frame.createFirst();
 
         // then
         assertThat(frame).isNotNull();
@@ -23,10 +23,10 @@ public class FrameTest {
     @Test
     void create_next() {
         // given
-        final Frame firstFrame = Frame.first();
+        final Frame firstFrame = Frame.createFirst();
 
         // when
-        final Frame nextFrame = firstFrame.next();
+        final Frame nextFrame = firstFrame.createNext();
 
         // then
         assertThat(nextFrame).isNotNull();
@@ -39,7 +39,7 @@ public class FrameTest {
         final Frame beforeFinal = new NormalFrame(8);
 
         // when
-        final Frame finalFrame = beforeFinal.next();
+        final Frame finalFrame = beforeFinal.createNext();
 
         // then
         assertThat(finalFrame).isNotNull();
@@ -52,7 +52,7 @@ public class FrameTest {
         final Frame finalFrame = new FinalFrame(9);
 
         // when 
-        final Throwable thrown = catchThrowable(finalFrame::next);
+        final Throwable thrown = catchThrowable(finalFrame::createNext);
 
         // then
         AssertionsForClassTypes.assertThat(thrown).isInstanceOf(InvalidFrameIndexException.class);

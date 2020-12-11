@@ -12,7 +12,7 @@ public class NormalFrameTest {
     @Test
     void should_return_pitchable_true_when_first_fallen_pin_below_than_10() {
         // given
-        final Frame normalFrame = NormalFrame.first();
+        final Frame normalFrame = NormalFrame.createFirst();
         final Pins pins = Pins.of(9);
 
         // when
@@ -26,7 +26,7 @@ public class NormalFrameTest {
     @Test
     void should_return_pitchable_false_when_first_fallen_pin_10() {
         // given
-        final Frame normalFrame = NormalFrame.first();
+        final Frame normalFrame = NormalFrame.createFirst();
 
         // when
         normalFrame.pitch(Pins.MAX);
@@ -39,7 +39,7 @@ public class NormalFrameTest {
     @Test
     void should_throw_exception_when_first_second_fallen_pin_sum_is_grater_than_10() {
         // given
-        final Frame normalFrame = NormalFrame.first();
+        final Frame normalFrame = NormalFrame.createFirst();
         final Pins first = Pins.of(5);
         final Pins second = Pins.of(6);
 
