@@ -4,23 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NormalFrame implements Frame {
-    public static final int NORMAL_FRAME_MAX_PITCHING_SIZE = 2;
     private final int index;
-    private final List<Pitching> pitchings;
+    private final NormalFramePitchings pitchings;
     private Frame nextFrame;
 
     private NormalFrame(int index) {
         this.index = index;
-        pitchings = new ArrayList<>();
+        pitchings = NormalFramePitchings.getInstance();
     }
 
     public static Frame getFirstFrame() {
         return new NormalFrame(1);
-    }
-
-    @Override
-    public Frame getNextFrame() {
-        return nextFrame;
     }
 
     @Override
@@ -37,48 +31,23 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public Frame getNextFrame() {
+        return nextFrame;
+    }
+
+    @Override
     public void setKnockDownPins(KnockDownPins knockDownPins) {
-        if (pitchings.isEmpty()) {
-            setFirstPitching(knockDownPins);
-            return;
-        }
-
-        setSecondPitching(knockDownPins);
-    }
-
-    private void setFirstPitching(KnockDownPins knockDownPins) {
-        Pitching pitching = Pitching.getPitching(knockDownPins);
-        pitchings.add(pitching);
-    }
-
-    private void setSecondPitching(KnockDownPins knockDownPins) {
-        int lastIndex = pitchings.size() - 1;
-        Pitching previousPitching = pitchings.get(lastIndex);
-        Pitching pitching = Pitching.getPitching(knockDownPins, previousPitching);
-        pitchings.add(pitching);
+        pitchings.addPitching(knockDownPins);
     }
 
     @Override
     public List<Pitching> getPitchings(){
-        return new ArrayList<>(pitchings);
+        return new ArrayList<>(pitchings.getValue());
     }
 
     @Override
     public boolean isEnd() {
-        if (pitchings.isEmpty()) {
-            return false;
-        }
-
-        if (isFirstPitchingStrike()) {
-            return true;
-        }
-
-        return pitchings.size() == NORMAL_FRAME_MAX_PITCHING_SIZE;
-    }
-
-    private boolean isFirstPitchingStrike() {
-        Pitching firstPitching = pitchings.get(0);
-        return firstPitching == Pitching.STRIKE;
+       return pitchings.isEnd();
     }
 
     @Override
