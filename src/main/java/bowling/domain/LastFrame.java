@@ -5,6 +5,7 @@ import java.util.List;
 
 public class LastFrame implements Frame {
     public static final String INVALID_PITCHING_CHANCE_ERR_MSG = "투구 기회가 없습니다.";
+    private static final String NEXT_FRAME_INVOKE_ERR_MSG = "LastFrame은 NextFrame이 존재하지 않습니다.";
     private static final int LAST_FRAME_MAX_PITCHING_SIZE = 3;
     private final int index;
     private final List<Pitching> pitchings;
@@ -20,12 +21,12 @@ public class LastFrame implements Frame {
 
     @Override
     public Frame initNextFrame() {
-        throw new IllegalStateException();
+        throw new IllegalStateException(NEXT_FRAME_INVOKE_ERR_MSG);
     }
 
     @Override
     public Frame getNextFrame() {
-        throw new IllegalStateException();
+        throw new IllegalStateException(NEXT_FRAME_INVOKE_ERR_MSG);
     }
 
     @Override
