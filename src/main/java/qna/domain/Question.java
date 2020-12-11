@@ -82,20 +82,13 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
-        for (Answer answer : answers) {
-            answer.delete(loginUser);
-        }
-
         setDeleted(true);
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-        }
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+
         for (Answer answer : answers) {
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+            deleteHistories.add(answer.delete(loginUser));
         }
 
         return deleteHistories;
