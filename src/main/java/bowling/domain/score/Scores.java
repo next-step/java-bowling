@@ -1,18 +1,14 @@
 package bowling.domain.score;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Scores {
-    static final int SECOND_SCORE = 2;
-    static final int FIRST_SCORE = 1;
+    protected Score firstScore;
+    protected Score secondScore;
 
-    protected List<Score> scores;
-    private int bonusScoreCount;
-
-    protected Scores() {
-        scores = new ArrayList<>();
-        bonusScoreCount = 0;
+    protected Scores(Score firstScore, Score secondScore) {
+        this.firstScore = firstScore;
+        this.secondScore = secondScore;
     }
 
     public static boolean isSpare(List<Score> scores) {
@@ -25,38 +21,17 @@ public abstract class Scores {
                 .isStrike();
     }
 
-    public void add(Score score) {
-        scores.add(score);
-
-        if(isStrike()) {
-            bonusScoreCount = 2;
-        }
-        if(isSpare()) {
-            bonusScoreCount = 1;
-        }
+    protected boolean hasFirstScore() {
+        return firstScore != null;
     }
 
-    boolean isSpare() {
-        if(scores.size() == SECOND_SCORE) {
-            return scores.get(FIRST_SCORE - 1)
-                    .sum(scores.get(SECOND_SCORE - 1))
-                    .isStrike();
-        }
-        return false;
+    protected boolean hasSecondScore() {
+        return secondScore != null;
     }
 
-    boolean isStrike() {
-        if(scores.size() == FIRST_SCORE) {
-            return scores.get(FIRST_SCORE - 1)
-                    .isStrike();
-        }
-        return false;
-    }
-
-    public List<Score> getResult() {
-        return scores;
-    }
+    public abstract void add(Score score);
 
     public abstract boolean canBowl();
 
+    public abstract List<Score> getResult();
 }

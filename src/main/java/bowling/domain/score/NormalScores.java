@@ -1,28 +1,51 @@
 package bowling.domain.score;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class NormalScores extends Scores {
 
-    private NormalScores() {
-        super();
+    private NormalScores(Score firstScore, Score secondScore) {
+        super(firstScore, secondScore);
     }
 
     public static Scores init() {
-        return new NormalScores();
+        return new NormalScores(null, null);
+    }
+
+    @Override
+    public void add(Score score) {
+        if (firstScore == null) {
+            firstScore = score;
+            return;
+        }
+
+        secondScore = score;
     }
 
     @Override
     public boolean canBowl() {
-        if(scores.size() == SECOND_SCORE) {
+        if (!hasFirstScore()) {
+            return true;
+        }
+
+        if (isStrike()) {
             return false;
         }
 
-        return !isStrike();
+        return !isDone();
+    }
+
+    private boolean isDone() {
+        return hasFirstScore() && hasSecondScore();
+    }
+
+    private boolean isStrike() {
+        return firstScore != null && firstScore.isStrike();
     }
 
     @Override
     public List<Score> getResult() {
-        return scores;
+        return Arrays.asList(firstScore, secondScore);
     }
 }

@@ -1,15 +1,14 @@
 package bowling.domain;
 
 public enum ScoreExpression {
-    STRIKE("X", 2),
-    SPARE("/", 1),
-    GUTTER("-", 0),
-    MISS("", 0)
+    STRIKE("X"),
+    SPARE("/"),
+    GUTTER("-")
     ;
 
     private String expression;
 
-    ScoreExpression(String expression, int bonusScoreCount) {
+    ScoreExpression(String expression) {
         this.expression = expression;
     }
 
