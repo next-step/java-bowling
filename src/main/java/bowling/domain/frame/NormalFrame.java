@@ -6,7 +6,7 @@ import bowling.domain.pitchings.Pitchings;
 
 public class NormalFrame implements Frame {
     private final int index;
-    private final NormalFramePitchings pitchings;
+    private final Pitchings pitchings;
     private Frame nextFrame;
 
     private NormalFrame(int index) {
@@ -32,28 +32,22 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame getNextFrame() {
-        return nextFrame;
-    }
-
-    @Override
-    public void setKnockDownPins(KnockDownPins knockDownPins) {
+    public Frame setKnockDownPins(KnockDownPins knockDownPins) {
         pitchings.addPitching(knockDownPins);
+        if (pitchings.isEnd()) {
+            return nextFrame;
+        }
+        return this;
     }
 
     @Override
-    public Pitchings getPitchings(){
+    public Pitchings getPitchings() {
         return pitchings;
     }
 
     @Override
     public boolean isEnd() {
-       return pitchings.isEnd();
-    }
-
-    @Override
-    public boolean isLastFrame() {
-        return false;
+        return pitchings.isEnd();
     }
 
     @Override

@@ -44,14 +44,7 @@ public class Frames {
     }
 
     public void setKnockDownPins(KnockDownPins knockDownPins) {
-        currentFrame.setKnockDownPins(knockDownPins);
-        adjustCurrentFrame();
-    }
-
-    private void adjustCurrentFrame() {
-        if (currentFrame.isEnd() && !currentFrame.isLastFrame()) {
-            currentFrame = currentFrame.getNextFrame();
-        }
+        currentFrame = currentFrame.setKnockDownPins(knockDownPins);
     }
 
     public PlayerName getPlayerName() {

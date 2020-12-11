@@ -7,7 +7,7 @@ import bowling.domain.pitchings.Pitchings;
 public class LastFrame implements Frame {
     private static final String NEXT_FRAME_INVOKE_ERR_MSG = "LastFrame은 NextFrame이 존재하지 않습니다.";
     private final int index;
-    private final LastFramePitchings pitchings;
+    private final Pitchings pitchings;
 
     private LastFrame(int index) {
         this.index = index;
@@ -24,13 +24,9 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public Frame getNextFrame() {
-        throw new IllegalStateException(NEXT_FRAME_INVOKE_ERR_MSG);
-    }
-
-    @Override
-    public void setKnockDownPins(KnockDownPins knockDownPins) {
+    public Frame setKnockDownPins(KnockDownPins knockDownPins) {
         pitchings.addPitching(knockDownPins);
+        return this;
     }
 
     @Override
@@ -41,11 +37,6 @@ public class LastFrame implements Frame {
     @Override
     public boolean isEnd() {
         return pitchings.isEnd();
-    }
-
-    @Override
-    public boolean isLastFrame() {
-        return true;
     }
 
     @Override
