@@ -2,11 +2,13 @@ package qna.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import qna.CannotDeleteException;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * * 답변이 없는 경우 삭제가 가능하다. v
@@ -36,9 +38,19 @@ public class QuestionTest {
         verifyDeleteHistories(deleteHistories);
     }
 
+    @Test
+    public void delete_다른_사람이_쓴_글() throws Exception {
+        assertThatThrownBy(() -> {
+            question.delete(UserTest.SANJIGI);
+        }).isInstanceOf(CannotDeleteException.class);
+    }
+
+
     private void verifyDeleteHistories(List<DeleteHistory> deleteHistories) {
         assertThat(deleteHistories).containsExactly(
                 new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
                 new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
     }
+
+
 }
