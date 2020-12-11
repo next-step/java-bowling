@@ -17,6 +17,7 @@ public enum Pitching {
     STRIKE(10),
     SPARE(null);
 
+    public static final String INVALID_REMAIN_PINS_SIZE_INPUT_ERR_MSG = "남은 볼링 핀의 갯수보다 많은 핀을 쓰러트릴 수 없습니다.";
     private final Integer score;
 
     Pitching(Integer score) {
@@ -44,7 +45,7 @@ public enum Pitching {
         }
 
         if (previousPitching != STRIKE && knockDownPins.getValue() + previousPitching.score > STRIKE.score) {
-            throw new IllegalArgumentException("남은 볼링 핀의 갯수보다 많은 핀을 쓰러트릴 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_REMAIN_PINS_SIZE_INPUT_ERR_MSG);
         }
 
         return getPitching(knockDownPins);

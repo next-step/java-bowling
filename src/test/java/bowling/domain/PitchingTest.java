@@ -42,6 +42,7 @@ public class PitchingTest {
         KnockDownPins knockDownPins = KnockDownPins.valueOf(2);
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> Pitching.getPitching(knockDownPins, previousPitching));
+                .isThrownBy(() -> Pitching.getPitching(knockDownPins, previousPitching))
+                .withMessage(Pitching.INVALID_REMAIN_PINS_SIZE_INPUT_ERR_MSG);
     }
 }
