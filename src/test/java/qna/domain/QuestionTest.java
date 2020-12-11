@@ -56,6 +56,17 @@ public class QuestionTest {
         verifyDeleteHistories(deleteHistories);
     }
 
+    @Test
+    public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
+        question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        answer = new Answer(11L, UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents1");
+        question.addAnswer(answer);
+
+        assertThatThrownBy(() -> {
+            question.delete(UserTest.JAVAJIGI);
+        }).isInstanceOf(CannotDeleteException.class);
+    }
+
     private void verifyDeleteHistories(List<DeleteHistory> deleteHistories) {
         assertThat(deleteHistories).containsExactly(
                 new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
