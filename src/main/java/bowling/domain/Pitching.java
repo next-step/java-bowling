@@ -58,8 +58,8 @@ public enum Pitching {
     private static void validateRemainPinSize(KnockDownPins knockDownPins, Pitching previousPitching) {
         int knockDownPinsValue = knockDownPins.getValue();
         int previousPitchingScore = previousPitching.score;
-        int StrikeScore = STRIKE.score;
-        if (previousPitching != STRIKE && knockDownPinsValue + previousPitchingScore > StrikeScore) {
+        int strikeScore = STRIKE.score;
+        if (previousPitching != STRIKE && knockDownPinsValue + previousPitchingScore > strikeScore) {
             throw new IllegalArgumentException(INVALID_REMAIN_PINS_SIZE_INPUT_ERR_MSG);
         }
     }
