@@ -29,13 +29,6 @@ public class Players {
                 .allMatch(Frames::isFinished);
     }
 
-    public List<GameHistory> filteredMap(Predicate<Player> filter, Function<Player, GameHistory> function) {
-        return players.stream()
-                .filter(filter)
-                .map(function)
-                .collect(Collectors.toList());
-    }
-
     public void filteredForEach(Predicate<Player> filter, Consumer<Player> consumer) {
         players.stream()
                 .filter(filter)
