@@ -5,7 +5,7 @@ import java.util.List;
 public interface Frame {
     Frame initNextFrame();
 
-    void setKnockDownPins(int knockDownPins);
+    void setKnockDownPins(KnockDownPins knockDownPins);
 
     List<Pitching> getStatus();
 

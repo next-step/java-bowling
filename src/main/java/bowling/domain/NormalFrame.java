@@ -42,7 +42,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public void setKnockDownPins(int knockDownPins) {
+    public void setKnockDownPins(KnockDownPins knockDownPins) {
         if (pitchings.isEmpty()) {
             pitchings.add(Pitching.getPitching(knockDownPins));
             return;

@@ -9,21 +9,11 @@ public class Frames {
     private PlayerName playerName;
     private Frame currentFrame;
 
-    private Frames() {
-        frames = new ArrayList<>();
-        initFrames();
-        currentFrame = frames.get(0);
-    }
-
     private Frames(PlayerName playerName) {
         frames = new ArrayList<>();
         this.playerName = playerName;
         initFrames();
         currentFrame = frames.get(0);
-    }
-
-    public static Frames init() {
-        return new Frames();
     }
 
     public static Frames init(PlayerName playerName) {
@@ -48,7 +38,7 @@ public class Frames {
         return frames.get(MAX_FRAME_SIZE - 1).isEnd();
     }
 
-    public void setKnockDownPins(int knockDownPins) {
+    public void setKnockDownPins(KnockDownPins knockDownPins) {
         currentFrame.setKnockDownPins(knockDownPins);
 
         if (currentFrame.isEnd() && isNotLastFrame()) {

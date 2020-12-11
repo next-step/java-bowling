@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.Frames;
+import bowling.domain.KnockDownPins;
 import bowling.domain.PlayerName;
 import bowling.helper.ValidInputHelper;
 import bowling.view.InputView;
@@ -32,11 +33,16 @@ public class BowlingGame {
 
     private void setKnockDownPins(Frames frames) {
         try {
-            int knockDownPins = inputView.getKnockDownPins(frames.getCurrentFrameIndex());
+            KnockDownPins knockDownPins = ValidInputHelper.get(() -> getKnockDownPins(frames), inputView::printError);
             frames.setKnockDownPins(knockDownPins);
         } catch (RuntimeException e) {
             inputView.printError(e);
             setKnockDownPins(frames);
         }
+    }
+
+    private KnockDownPins getKnockDownPins(Frames frames) {
+        Integer knockDownPins = ValidInputHelper.get(() -> inputView.getKnockDownPins(frames.getCurrentFrameIndex()), inputView::printError);
+        return KnockDownPins.valueOf(knockDownPins);
     }
 }

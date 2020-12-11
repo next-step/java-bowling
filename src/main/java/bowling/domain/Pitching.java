@@ -30,20 +30,20 @@ public enum Pitching {
         }
     }
 
-    public static Pitching getPitching(int knockDownPins) {
-        return pitchingByScore.get(knockDownPins);
+    public static Pitching getPitching(KnockDownPins knockDownPins) {
+        return pitchingByScore.get(knockDownPins.getValue());
     }
 
-    public static Pitching getPitching(int knockDownPins, Pitching previousPitching) {
+    public static Pitching getPitching(KnockDownPins knockDownPins, Pitching previousPitching) {
         if (previousPitching == SPARE) {
             return getPitching(knockDownPins);
         }
 
-        if (knockDownPins + previousPitching.score == STRIKE.score) {
+        if (knockDownPins.getValue() + previousPitching.score == STRIKE.score) {
             return SPARE;
         }
 
-        if (previousPitching != STRIKE && knockDownPins + previousPitching.score > STRIKE.score) {
+        if (previousPitching != STRIKE && knockDownPins.getValue() + previousPitching.score > STRIKE.score) {
             throw new IllegalArgumentException("남은 볼링 핀의 갯수보다 많은 핀을 쓰러트릴 수 없습니다.");
         }
 
