@@ -1,10 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.KnockDownPins;
-import bowling.domain.Pitching;
-
-import java.util.ArrayList;
-import java.util.List;
+import bowling.domain.pitchings.NormalFramePitchings;
+import bowling.domain.pitchings.Pitchings;
 
 public class NormalFrame implements Frame {
     private final int index;
@@ -44,8 +42,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public List<Pitching> getPitchings(){
-        return new ArrayList<>(pitchings.getValue());
+    public Pitchings getPitchings(){
+        return pitchings;
     }
 
     @Override

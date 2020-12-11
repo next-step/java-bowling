@@ -1,10 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.KnockDownPins;
-import bowling.domain.Pitching;
-
-import java.util.ArrayList;
-import java.util.List;
+import bowling.domain.pitchings.LastFramePitchings;
+import bowling.domain.pitchings.Pitchings;
 
 public class LastFrame implements Frame {
     private static final String NEXT_FRAME_INVOKE_ERR_MSG = "LastFrame은 NextFrame이 존재하지 않습니다.";
@@ -36,8 +34,8 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public List<Pitching> getPitchings() {
-        return new ArrayList<>(pitchings.getValue());
+    public Pitchings getPitchings() {
+        return pitchings;
     }
 
     @Override

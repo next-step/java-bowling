@@ -1,12 +1,14 @@
-package bowling.domain.frame;
+package bowling.domain.pitchings;
 
 import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
-class NormalFramePitchings {
+public class NormalFramePitchings implements Pitchings {
     private static final int NORMAL_FRAME_MAX_PITCHING_SIZE = 2;
     private final List<Pitching> value;
 
@@ -18,7 +20,8 @@ class NormalFramePitchings {
         return new NormalFramePitchings();
     }
 
-    void addPitching(KnockDownPins knockDownPins) {
+    @Override
+    public void addPitching(KnockDownPins knockDownPins) {
         if (value.isEmpty()) {
             setFirstPitching(knockDownPins);
             return;
@@ -39,7 +42,8 @@ class NormalFramePitchings {
         value.add(pitching);
     }
 
-    boolean isEnd() {
+    @Override
+    public boolean isEnd() {
         if (value.isEmpty()) {
             return false;
         }
@@ -56,7 +60,13 @@ class NormalFramePitchings {
         return firstPitching == Pitching.STRIKE;
     }
 
-    public List<Pitching> getValue() {
-        return value;
+    @Override
+    public Iterator<Pitching> iterator() {
+        return value.iterator();
+    }
+
+    @Override
+    public Stream<Pitching> stream() {
+        return value.stream();
     }
 }

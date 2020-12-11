@@ -1,12 +1,14 @@
-package bowling.domain.frame;
+package bowling.domain.pitchings;
 
 import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
-class LastFramePitchings {
+public class LastFramePitchings implements Pitchings {
     private static final String INVALID_PITCHING_CHANCE_ERR_MSG = "투구 기회가 없습니다.";
     private static final int LAST_FRAME_MAX_PITCHING_SIZE = 3;
     private final List<Pitching> value;
@@ -19,7 +21,8 @@ class LastFramePitchings {
         return new LastFramePitchings();
     }
 
-    void addPitching(KnockDownPins knockDownPins) {
+    @Override
+    public void addPitching(KnockDownPins knockDownPins) {
         if (value.isEmpty()) {
             setFirstPitching(knockDownPins);
             return;
@@ -74,7 +77,8 @@ class LastFramePitchings {
         value.add(Pitching.getPitching(knockDownPins, previousPitching));
     }
 
-    boolean isEnd() {
+    @Override
+    public boolean isEnd() {
         if (hasPitchingChance()) {
             return false;
         }
@@ -90,7 +94,13 @@ class LastFramePitchings {
         return value.size() < LAST_FRAME_MAX_PITCHING_SIZE - 1;
     }
 
-    public List<Pitching> getValue() {
-        return value;
+    @Override
+    public Iterator<Pitching> iterator() {
+        return value.iterator();
+    }
+
+    @Override
+    public Stream<Pitching> stream() {
+        return value.stream();
     }
 }

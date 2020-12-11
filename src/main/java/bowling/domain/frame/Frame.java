@@ -1,16 +1,14 @@
 package bowling.domain.frame;
 
 import bowling.domain.KnockDownPins;
-import bowling.domain.Pitching;
-
-import java.util.List;
+import bowling.domain.pitchings.Pitchings;
 
 public interface Frame {
     Frame initNextFrame();
 
     void setKnockDownPins(KnockDownPins knockDownPins);
 
-    List<Pitching> getPitchings();
+    Pitchings getPitchings();
 
     boolean isEnd();
 
