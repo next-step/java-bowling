@@ -1,13 +1,25 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
-import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
+
+    private static final String DONT_HAVE_OWNERSHIP_TO_DELETE_QUESTION = "질문을 삭제할 권한이 없습니다.";
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -86,6 +98,28 @@ public class Question extends AbstractEntity {
 
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    public void validateQuestionOwner(User loginUser) throws CannotDeleteException {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException(DONT_HAVE_OWNERSHIP_TO_DELETE_QUESTION);
+        }
+    }
+
+    public DeleteHistories delete(User user) throws CannotDeleteException {
+        validateQuestionOwner(user);
+        this.deleted = true;
+        DeleteHistories deletedQuestion = new DeleteHistories(new DeleteHistory(ContentType.QUESTION, super.getId(), writer, LocalDateTime.now()));
+        return DeleteHistories.concat(deletedQuestion, deleteBondedAnswers(user));
+    }
+
+    private DeleteHistories deleteBondedAnswers(User user) throws CannotDeleteException {
+        Answers answers = getBondedAnswers();
+        return answers.deleteAnswers(user);
+    }
+
+    private Answers getBondedAnswers() {
+        return new Answers(answers);
     }
 
     @Override
