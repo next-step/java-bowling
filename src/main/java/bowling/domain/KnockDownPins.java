@@ -9,8 +9,8 @@ public class KnockDownPins {
     private static final int MAX_VALUE = 10;
     private static final Map<Integer, KnockDownPins> knockDownPinsByInteger = new HashMap<>();
     static {
-        for (int i = MIN_VALUE; i <= MAX_VALUE; i++) {
-            knockDownPinsByInteger.put(i, new KnockDownPins(i));
+        for (int value = MIN_VALUE; value <= MAX_VALUE; value++) {
+            knockDownPinsByInteger.put(value, new KnockDownPins(value));
         }
     }
 
