@@ -9,8 +9,9 @@ import java.util.stream.Collectors;
 
 public class ConsoleResultView implements ResultView {
     private static final String DELIMITER = "|";
-    public static final int CELL_WITH = 6;
-    public static final String LABEL_NAME = "NAME";
+    private static final int CELL_WIDTH = 6;
+    private static final String NAME_LABEL = "NAME";
+    public static final String FRAME_INDEX_FORMAT = "%02d";
     private final Map<Pitching, String> stringByPitching;
 
     public ConsoleResultView() {
@@ -33,29 +34,49 @@ public class ConsoleResultView implements ResultView {
     public void print(Frames frames) {
         StringBuilder resultBuilder = new StringBuilder();
         appendHeader(frames, resultBuilder);
-        appendResults(frames, resultBuilder);
+        appendBody(frames, resultBuilder);
         System.out.println(resultBuilder.toString());
     }
 
     private void appendHeader(Frames frames, StringBuilder resultBuilder) {
-        resultBuilder.append(DELIMITER).append(centerString(LABEL_NAME)).append(DELIMITER);
-        frames.stream().forEach(frame -> {
-            resultBuilder.append(centerString(String.format("%02d", frame.getIndex()))).append(DELIMITER);
-        });
+        appendNameLabel(resultBuilder);
+        appendFrameIndex(frames, resultBuilder);
         resultBuilder.append(System.lineSeparator());
     }
 
+    private void appendNameLabel(StringBuilder resultBuilder) {
+        String formattedNameLabel = centerString(NAME_LABEL);
+        resultBuilder.append(DELIMITER).append(formattedNameLabel).append(DELIMITER);
+    }
+
+    private void appendFrameIndex(Frames frames, StringBuilder resultBuilder) {
+        frames.stream().forEach(frame -> {
+            String formattedFrameIndex = centerString(String.format(FRAME_INDEX_FORMAT, frame.getIndex()));
+            resultBuilder.append(formattedFrameIndex).append(DELIMITER);
+        });
+    }
+
+    private void appendBody(Frames frames, StringBuilder resultBuilder) {
+        appendPlayerName(frames, resultBuilder);
+        appendResults(frames, resultBuilder);
+    }
+
+    private void appendPlayerName(Frames frames, StringBuilder resultBuilder) {
+        String formattedPlayerName = centerString(frames.getPlayerName().getValue());
+        resultBuilder.append(DELIMITER).append(formattedPlayerName).append(DELIMITER);
+    }
+
     private void appendResults(Frames frames, StringBuilder resultBuilder) {
-        resultBuilder.append(DELIMITER).append(centerString(frames.getPlayerName().getValue())).append(DELIMITER);
         frames.stream().forEach(frame -> {
             String result = frame.getPitchings().stream()
                     .map(stringByPitching::get)
                     .collect(Collectors.joining(DELIMITER));
-            resultBuilder.append(centerString(result)).append(DELIMITER);
+            String formattedResult = centerString(result);
+            resultBuilder.append(formattedResult).append(DELIMITER);
         });
     }
 
     private String centerString(String s) {
-        return String.format("%-" + CELL_WITH + "s", String.format("%" + (s.length() + ((CELL_WITH - s.length()) / 2) + 1) + "s", s));
+        return String.format("%-" + CELL_WIDTH + "s", String.format("%" + (s.length() + ((CELL_WIDTH - s.length()) / 2) + 1) + "s", s));
     }
 }
