@@ -76,7 +76,9 @@ public class ConsoleResultView implements ResultView {
         });
     }
 
-    private String centerString(String s) {
-        return String.format("%-" + CELL_WIDTH + "s", String.format("%" + (s.length() + ((CELL_WIDTH - s.length()) / 2) + 1) + "s", s));
+    private String centerString(String value) {
+        int width = value.length() + ((CELL_WIDTH - value.length()) / 2) + 1;
+        String formattedValue = String.format("%" + width + "s", value);
+        return String.format("%-" + CELL_WIDTH + "s", formattedValue);
     }
 }
