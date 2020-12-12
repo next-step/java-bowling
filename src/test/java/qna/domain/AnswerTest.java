@@ -3,9 +3,6 @@ package qna.domain;
 import org.junit.jupiter.api.Test;
 import qna.exception.CannotDeleteException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -15,16 +12,14 @@ public class AnswerTest {
 
     @Test
     void deleteTest() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        A1.delete(UserTest.JAVAJIGI, deleteHistories);
+        A1.delete(UserTest.JAVAJIGI);
         assertThat(A1.isDeleted()).isTrue();
     }
 
     @Test
     void delete_다른_사람의_답변_존재() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
         assertThatThrownBy(
-                () -> A1.delete(UserTest.SANJIGI, deleteHistories)
+                () -> A1.delete(UserTest.SANJIGI)
         ).isInstanceOf(CannotDeleteException.class);
     }
 }
