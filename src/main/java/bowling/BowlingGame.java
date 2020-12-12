@@ -1,28 +1,31 @@
-package bowling.frame;
+package bowling;
 
 import bowling.bowler.Bowler;
-import bowling.bowler.Bowlers;
+import bowling.frame.FinalFrame;
+import bowling.frame.Frame;
+import bowling.frame.NormalFrame;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 import static bowling.frame.Frame.FINAL_FRAME_NUMBER;
 import static bowling.frame.Frame.INCREASE_FRAME_NUMBER;
 
-public class BowlingBoard {
+public class BowlingGame {
 
-    private final Bowlers bowlers;
+    private static final String MESSAGE_GAME_OVER = "게임이 종료되었습니다.";
+
+    private final Bowler bowler;
     private final LinkedList<Frame> frames;
 
-    private BowlingBoard(Bowlers bowlers) {
-        this.bowlers = bowlers;
+    private BowlingGame(Bowler bowler) {
+        this.bowler = bowler;
         this.frames = new LinkedList<>();
         this.frames.add(NormalFrame.first());
     }
 
-    public static BowlingBoard start(Bowlers bowlers) {
-        return new BowlingBoard(bowlers);
+    public static BowlingGame create(Bowler bowler) {
+        return new BowlingGame(bowler);
     }
 
     public Frame bowl(String fellPins) {
@@ -44,8 +47,12 @@ public class BowlingBoard {
 
     private void validateNextFrame() {
         if (!canMoveNextFrame()) {
-            throw new RuntimeException("게임이 종료되었습니다.");
+            throw new RuntimeException(MESSAGE_GAME_OVER);
         }
+    }
+
+    public boolean equalsBowler(Bowler bowler) {
+        return this.bowler.equals(bowler);
     }
 
     private boolean canMoveNextFrame() {
@@ -68,8 +75,8 @@ public class BowlingBoard {
         return frames;
     }
 
-    public List<Bowler> getBowlers() {
-        return bowlers.getBowlers();
+    public Bowler getBowler() {
+        return bowler;
     }
 
     public boolean isEnd() {
@@ -80,12 +87,12 @@ public class BowlingBoard {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BowlingBoard that = (BowlingBoard) o;
-        return bowlers.equals(that.bowlers);
+        BowlingGame that = (BowlingGame) o;
+        return bowler.equals(that.bowler);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bowlers);
+        return Objects.hash(bowler);
     }
 }

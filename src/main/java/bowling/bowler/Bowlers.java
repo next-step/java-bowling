@@ -20,10 +20,6 @@ public class Bowlers {
         return Collections.unmodifiableList(bowlers);
     }
 
-    public String getBowlerName(int index) {
-        return bowlers.get(index).getName();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
