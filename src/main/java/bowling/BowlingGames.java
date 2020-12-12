@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.bowler.Bowler;
 import bowling.frame.Frame;
+import bowling.frame.Frames;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +42,8 @@ public class BowlingGames {
 
     public boolean isEnd() {
         return bowlingGames.stream()
-                .allMatch(BowlingGame::isEnd);
+                .map(BowlingGame::getFrames)
+                .allMatch(Frames::isEnd);
     }
 
     public int size() {

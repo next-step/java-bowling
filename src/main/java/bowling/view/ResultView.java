@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.BowlingGame;
 import bowling.BowlingGames;
 import bowling.frame.Frame;
+import bowling.frame.Frames;
 import bowling.score.Score;
 import org.apache.logging.log4j.util.Strings;
 
@@ -48,7 +49,9 @@ public class ResultView {
         String bowlerName = bowlingGame.getBowlerName();
         System.out.printf(PRINT_BODY_PLAYER_NAME_COLUMN, bowlerName);
 
-        List<String> scoreResults = printStateMark(bowlingGame.getFrames());
+        Frames frames = bowlingGame.getFrames();
+        List<String> scoreResults = printStateMark(frames.getFrames());
+
         printProgressedFrameMark(scoreResults);
         printBlankFrameMark(bowlingGame);
 
@@ -73,7 +76,7 @@ public class ResultView {
     }
 
     private static void printBlankFrameMark(BowlingGame bowlingGame) {
-        IntStream.range(bowlingGame.getFrames().size(), Frame.FINAL_FRAME_NUMBER)
+        IntStream.range(bowlingGame.getFramesSize(), Frame.FINAL_FRAME_NUMBER)
                 .mapToObj(result -> printMarkBlankRatio(null))
                 .forEach(System.out::print);
     }
@@ -97,7 +100,9 @@ public class ResultView {
     }
 
     private static List<Integer> getScores(BowlingGame bowlingGame) {
-        List<Frame> frames = bowlingGame.getFrames().stream()
+        List<Frame> frames = bowlingGame.getFrames()
+                .getFrames()
+                .stream()
                 .filter(Frame::isFinish)
                 .collect(Collectors.toList());
 

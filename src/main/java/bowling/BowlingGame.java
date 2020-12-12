@@ -1,91 +1,52 @@
 package bowling;
 
 import bowling.bowler.Bowler;
-import bowling.frame.FinalFrame;
 import bowling.frame.Frame;
-import bowling.frame.NormalFrame;
+import bowling.frame.Frames;
 
 import java.util.LinkedList;
 import java.util.Objects;
 
-import static bowling.frame.Frame.FINAL_FRAME_NUMBER;
-import static bowling.global.utils.ExceptionMessage.MESSAGE_GAME_OVER;
-
 public class BowlingGame {
 
-    private final int DECREASE_FRAME_NUMBER = 1;
-
     private final Bowler bowler;
-    private final LinkedList<Frame> frames;
+    private final Frames frames;
 
-    private BowlingGame(Bowler bowler) {
+    private BowlingGame(Bowler bowler, Frames frames) {
         this.bowler = bowler;
-        this.frames = new LinkedList<>();
-        this.frames.add(NormalFrame.first());
+        this.frames = frames;
     }
 
     public static BowlingGame create(Bowler bowler) {
-        return new BowlingGame(bowler);
+        return new BowlingGame(bowler, Frames.from(new LinkedList<>()));
     }
 
     public Frame bowl(String fellPins) {
-        Frame frame = getLastFrame().bowl(fellPins);
-
-        if (canMoveNextFrame() && getLastFrame().isFinish()) {
-            frames.add(next(getNextFrameNumber()));
-        }
-        return frame;
+        return frames.bowl(fellPins);
     }
 
-    public Frame next(int nextFrameNumber) {
-        validateNextFrame();
-        if (nextFrameNumber == FINAL_FRAME_NUMBER) {
-            return FinalFrame.create();
-        }
-        return NormalFrame.create(nextFrameNumber);
-    }
-
-    private void validateNextFrame() {
-        if (!canMoveNextFrame()) {
-            throw new RuntimeException(MESSAGE_GAME_OVER);
-        }
+    public boolean isCurrentFrameFinish(int currentFrameNumber) {
+        return frames.isCurrentFrameFinish(currentFrameNumber);
     }
 
     public boolean equalsBowler(Bowler bowler) {
         return this.bowler.equals(bowler);
     }
 
-    private boolean canMoveNextFrame() {
-        return getNextFrameNumber() <= FINAL_FRAME_NUMBER;
-    }
-
-    private int getNextFrameNumber() {
-        return getFrameNumber() + DECREASE_FRAME_NUMBER;
-    }
-
     public int getFrameNumber() {
-        return getLastFrame().getFrameNumber();
-    }
-
-    public Frame getLastFrame() {
-        return frames.getLast();
-    }
-
-    public LinkedList<Frame> getFrames() {
-        return frames;
+        return frames.getFrameNumber();
     }
 
     public String getBowlerName() {
         return bowler.getName();
     }
 
-    public boolean isEnd() {
-        return !canMoveNextFrame() && getLastFrame().isFinish();
+    public Frames getFrames() {
+        return frames;
     }
 
-    public boolean isCurrentFrameFinish(int frameNumber) {
-        return frames.get(frameNumber - DECREASE_FRAME_NUMBER)
-                .isFinish();
+    public int getFramesSize() {
+        return frames.size();
     }
 
     @Override
@@ -100,4 +61,5 @@ public class BowlingGame {
     public int hashCode() {
         return Objects.hash(bowler);
     }
+
 }

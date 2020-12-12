@@ -37,7 +37,7 @@ class BowlingGamesTest {
         BowlingGame bowlingGame = bowlingGames.getBowlingGames().get(0);
 
         assertThat(bowlingGame.getBowlerName()).isEqualTo("LHG");
-        assertThat(bowlingGame.getLastFrame().getFrameNumber()).isEqualTo(2);
+        assertThat(bowlingGame.getFrameNumber()).isEqualTo(2);
     }
 
     @Test
