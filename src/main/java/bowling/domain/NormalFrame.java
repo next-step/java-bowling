@@ -1,10 +1,21 @@
 package bowling.domain;
 
-public class NormalFrame extends Frame {
-    private State state = State.BEFORE_FIRST_PITCHING;
+import bowling.InvalidFrameIndexException;
 
-    public NormalFrame(final int index) {
+import static util.Preconditions.checkArgument;
+
+public class NormalFrame extends Frame {
+    public static final int NORMAL_FRAME_MAXIMUM_INDEX = 8;
+    
+    private State state = State.BEFORE_FIRST_PITCHING;
+    
+    private NormalFrame(final int index) {
         super(index);
+    }
+    
+    public static NormalFrame of(final int index) {
+        checkArgument(index <= NORMAL_FRAME_MAXIMUM_INDEX, new InvalidFrameIndexException());
+        return new NormalFrame(index);
     }
 
     @Override

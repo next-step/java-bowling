@@ -1,13 +1,11 @@
 package bowling.domain;
 
-import bowling.InvalidFrameIndexException;
-
 import java.util.Optional;
 
-import static util.Preconditions.checkArgument;
+import static bowling.domain.NormalFrame.NORMAL_FRAME_MAXIMUM_INDEX;
 
 public abstract class Frame {
-    public static final int FINAL_FRAME_INDEX = 9;
+
     protected Pins firstPitching;
     protected Pins secondPitching;
     private final int index;
@@ -18,23 +16,21 @@ public abstract class Frame {
     }
 
     public static Frame createFirst() {
-        return new NormalFrame(0);
+        return NormalFrame.of(0);
     }
 
     public Frame createNext() {
-        checkArgument(index < FINAL_FRAME_INDEX, new InvalidFrameIndexException());
-
         if (isBeforeFinal()) {
-            nextFrame = new FinalFrame(index + 1);
+            nextFrame = FinalFrame.of(index + 1);
             return nextFrame;
         }
 
-        nextFrame = new NormalFrame(index + 1);
+        nextFrame = NormalFrame.of(index + 1);
         return nextFrame;
     }
 
     private boolean isBeforeFinal() {
-        return index == FINAL_FRAME_INDEX - 1;
+        return index == NORMAL_FRAME_MAXIMUM_INDEX;
     }
 
     public abstract void pitch(Pins pins);
@@ -44,6 +40,10 @@ public abstract class Frame {
     }
 
     public abstract boolean isPitchable();
+
+    public Optional<Frame> next() {
+        return Optional.ofNullable(nextFrame);
+    }
 
     public enum State {
         BEFORE_FIRST_PITCHING,
