@@ -20,7 +20,7 @@ public class NormalScoresTest {
         normalScores.add(firstScore);
 
         assertThat(normalScores.hasFirstScore()).isTrue();
-        assertThat(normalScores.hasSecondScore()).isFalse();
+        assertThat(normalScores.scores.size()).isEqualTo(1);
     }
 
     @DisplayName("2구 시 add 테스트")
@@ -35,9 +35,9 @@ public class NormalScoresTest {
         normalScores.add(secondScore);
 
         assertThat(normalScores.hasFirstScore()).isTrue();
-        assertThat(normalScores.hasSecondScore()).isTrue();
-        assertThat(normalScores.firstScore).isEqualTo(firstScore);
-        assertThat(normalScores.secondScore).isEqualTo(secondScore);
+        assertThat(normalScores.scores.size()).isEqualTo(2);
+        assertThat(normalScores.scores.get(0)).isEqualTo(firstScore);
+        assertThat(normalScores.scores.get(1)).isEqualTo(secondScore);
     }
 
     @DisplayName("strike 시 투구 가능 테스트")

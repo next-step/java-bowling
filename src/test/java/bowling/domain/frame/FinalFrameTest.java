@@ -66,22 +66,22 @@ public class FinalFrameTest {
     @DisplayName("Frame Score(점수) 반환 테스트 (게임 전체 결과 합산)")
     @ParameterizedTest
     @MethodSource("makeScoreData")
-    void getScore(Score firstScore, Score secondScore, Score bonusScore, int expectedResult) {
+    void getScore(Score firstScore, Score secondScore, Score bonusScore, Score expectedResult) {
         Frame frame = FinalFrame.of(Frame.LAST_FRAME, FinalScores.init());
         frame.bowl(firstScore);
         frame.bowl(secondScore);
         frame.bowl(bonusScore);
 
-        int actualResult = frame.getScore();
+        Score actualResult = frame.getTotalScore();
 
         assertThat(actualResult).isEqualTo(expectedResult);
     }
 
     private static Stream<Arguments> makeScoreData() {
         return Stream.of(
-                Arguments.of(Score.of("3"), Score.of("7"), Score.of("7"), 17),
-                Arguments.of(Score.of("0"), Score.of("3"), null, 3),
-                Arguments.of(Score.of("10"), Score.of("5"), null, 15)
+                Arguments.of(Score.of("3"), Score.of("7"), Score.of("7"), Score.of("17")),
+                Arguments.of(Score.of("0"), Score.of("3"), null, Score.of("3")),
+                Arguments.of(Score.of("10"), Score.of("5"), null, Score.of("15"))
         );
     }
 

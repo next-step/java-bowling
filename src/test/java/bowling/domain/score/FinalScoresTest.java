@@ -22,8 +22,8 @@ public class FinalScoresTest {
         finalScores.add(bonusScore);
 
         assertThat(finalScores.hasFirstScore()).isTrue();
-        assertThat(finalScores.hasSecondScore()).isFalse();
-        assertThat(finalScores.getResult()).containsExactly(ScoreTest.MAX_SCORE, null, bonusScore);
+        assertThat(finalScores.scores.size()).isEqualTo(2);
+        assertThat(finalScores.getResult()).containsExactly(ScoreTest.MAX_SCORE, bonusScore);
     }
 
     @DisplayName("2구 시 add 테스트")
@@ -38,8 +38,8 @@ public class FinalScoresTest {
         finalScores.add(secondScore);
 
         assertThat(finalScores.hasFirstScore()).isTrue();
-        assertThat(finalScores.hasSecondScore()).isTrue();
-        assertThat(finalScores.getResult()).containsExactly(firstScore, secondScore, null);
+        assertThat(finalScores.scores.size()).isEqualTo(2);
+        assertThat(finalScores.getResult()).containsExactly(firstScore, secondScore);
     }
 
     @DisplayName("strike 시 다음 투구 가능 테스트")
