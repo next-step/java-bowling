@@ -49,6 +49,10 @@ public class BowlingGames {
                 .allMatch(BowlingGame::isEnd);
     }
 
+    public int size() {
+        return bowlingGames.size();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

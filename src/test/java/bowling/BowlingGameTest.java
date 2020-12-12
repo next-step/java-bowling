@@ -46,4 +46,13 @@ class BowlingGameTest {
         assertThat(bowlingGame.getFrameNumber()).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("볼링 종료")
+    void bowlingEnd() {
+        for (int i = 0; i < 12; i++) {
+            bowlingGame.bowl("10");
+        }
+        assertThat(bowlingGame.isEnd()).isTrue();
+    }
+
 }
