@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.domain.ScoreExpression;
 import bowling.domain.Bowling;
-import bowling.domain.frame.Frame;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 
@@ -10,7 +9,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
+
+import static bowling.domain.frame.Frame.FIRST_FRAME;
+import static bowling.domain.frame.Frame.LAST_FRAME;
 
 public final class OutputView {
     private static final String NAME_TEXT = "| NAME |";
@@ -29,7 +30,7 @@ public final class OutputView {
     }
 
     private static void printFrameTop() {
-        String topText = IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME + 1)
+        String topText = IntStream.range(FIRST_FRAME, LAST_FRAME + 1)
                 .mapToObj(frameNumber -> String.format(FRAME_NUMBER_TEXT, frameNumber))
                 .collect(Collectors.joining());
 
@@ -39,7 +40,7 @@ public final class OutputView {
     private static void printFrameResult(Bowling bowling) {
         String playerName = String.format(PLAYER_NAME_TEXT, bowling.getPlayerName());
 
-        String playerResult = IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME + 1)
+        String playerResult = IntStream.range(FIRST_FRAME, LAST_FRAME + 1)
                 .mapToObj(frameNumber -> makeScoreExpression(bowling, frameNumber))
                 .map(OutputView::attachBlank)
                 .map(result -> String.format(FRAME_STRING_TEXT, result))
@@ -91,28 +92,28 @@ public final class OutputView {
         List<Integer> accumulatedScore = getAccumulatedScore(bowling);
 
         printScore(accumulatedScore);
-        printBlankScore(Frame.LAST_FRAME - accumulatedScore.size());
+        printBlankScore(LAST_FRAME - accumulatedScore.size());
     }
 
     private static List<Integer> getAccumulatedScore(Bowling bowling) {
         List<Integer> scoresByFrame = getScoresByFrame(bowling);
 
-        return IntStream.range(1, scoresByFrame.size() + 1)
-                .mapToObj(i -> getAccumulatedScore(scoresByFrame, i))
+        return IntStream.range(FIRST_FRAME, scoresByFrame.size() + 1)
+                .mapToObj(frameNumber -> getAccumulatedScore(scoresByFrame, frameNumber))
                 .collect(Collectors.toList());
     }
 
     private static List<Integer> getScoresByFrame(Bowling bowling) {
-        return IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME + 1)
+        return IntStream.range(FIRST_FRAME, LAST_FRAME + 1)
                 .mapToObj(bowling::getTotalScore)
                 .filter(totalScore -> !Score.INVALID_SCORE.equals(totalScore))
                 .map(score -> Integer.valueOf(score.toString()))
                 .collect(Collectors.toList());
     }
 
-    private static int getAccumulatedScore(List<Integer> scores, int i) {
+    private static int getAccumulatedScore(List<Integer> scores, int frameNumber) {
         return scores.stream()
-                .limit(i)
+                .limit(frameNumber)
                 .reduce(0, Integer::sum);
     }
 
