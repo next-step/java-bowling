@@ -4,14 +4,13 @@ import bowling.bowler.Bowler;
 import bowling.frame.Frame;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class BowlingGames {
+import static bowling.global.utils.ExceptionMessage.INVALID_BOWLER;
 
-    private static final String MESSAGE_INVALID_BOWLER = "볼링에 참여한 참가자 동일하지 않습니다.";
+public class BowlingGames {
 
     private final List<BowlingGame> bowlingGames;
 
@@ -33,11 +32,7 @@ public class BowlingGames {
         return bowlingGames.stream()
                 .filter(bowlingGame -> bowlingGame.equalsBowler(bowler))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(MESSAGE_INVALID_BOWLER));
-    }
-
-    public LinkedList<Frame> getFramesByBowler(Bowler bowler) {
-        return getBowler(bowler).getFrames();
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_BOWLER));
     }
 
     public List<BowlingGame> getBowlingGames() {

@@ -33,11 +33,4 @@ public class Bowlers {
         return Objects.hash(bowlers);
     }
 
-    @Override
-    public String toString() {
-        return "Bowlers{" +
-                bowlers +
-                '}';
-    }
-
 }

@@ -9,11 +9,11 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 import static bowling.frame.Frame.FINAL_FRAME_NUMBER;
-import static bowling.frame.Frame.INCREASE_FRAME_NUMBER;
+import static bowling.global.utils.ExceptionMessage.MESSAGE_GAME_OVER;
 
 public class BowlingGame {
 
-    private static final String MESSAGE_GAME_OVER = "게임이 종료되었습니다.";
+    private final int DECREASE_FRAME_NUMBER = 1;
 
     private final Bowler bowler;
     private final LinkedList<Frame> frames;
@@ -60,7 +60,7 @@ public class BowlingGame {
     }
 
     private int getNextFrameNumber() {
-        return getFrameNumber() + INCREASE_FRAME_NUMBER;
+        return getFrameNumber() + DECREASE_FRAME_NUMBER;
     }
 
     public int getFrameNumber() {
@@ -81,6 +81,11 @@ public class BowlingGame {
 
     public boolean isEnd() {
         return !canMoveNextFrame() && getLastFrame().isFinish();
+    }
+
+    public boolean isCurrentFrameFinish(int frameNumber) {
+        return frames.get(frameNumber - DECREASE_FRAME_NUMBER)
+                .isFinish();
     }
 
     @Override

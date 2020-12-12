@@ -1,23 +1,39 @@
 package bowling;
 
-import bowling.bowler.Bowler;
-import bowling.frame.BowlingBoard;
+import bowling.bowler.Bowlers;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingApplication {
 
     public static void main(String[] args) {
-        Bowler bowler = Bowler.of(InputView.inputPlayerName());
+        int bowlersNumber = InputView.inputPlayerNumber();
+        Bowlers bowlers = Bowlers.from(InputView.getBowlers(bowlersNumber));
 
-        BowlingBoard bowling = BowlingBoard.start(bowler);
-        ResultView.printGameBoard(bowling);
+        BowlingGames bowlingGames = BowlingGames.start(bowlers.getBowlers());
 
-        while (!bowling.isEnd()) {
-            int frameNumber = bowling.getFrameNumber();
-            bowling.bowl(InputView.inputPins(frameNumber));
+        ResultView.printGameBoard(bowlingGames);
 
-            ResultView.printGameBoard(bowling);
+        while (!bowlingGames.isEnd()) {
+            playBowling(bowlingGames);
+        }
+
+    }
+
+    private static void playBowling(BowlingGames bowlingGames) {
+        for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
+            bowlByBowler(bowlingGames, bowlingGame);
+        }
+    }
+
+    private static void bowlByBowler(BowlingGames bowlingGames, BowlingGame bowlingGame) {
+        int currentFrameNumber = bowlingGame.getFrameNumber();
+
+        while (!bowlingGame.isCurrentFrameFinish(currentFrameNumber)) {
+            String bowlerName = bowlingGame.getBowlerName();
+            bowlingGame.bowl(InputView.inputPins(bowlerName));
+
+            ResultView.printGameBoard(bowlingGames);
         }
     }
 

@@ -7,6 +7,9 @@ public class ExceptionMessage {
     public static final String INVALID_PITCH_BALL_IS_NULL = "투구 값을 입력해주세요.";
     public static final String INVALID_PITCH_RANGE = "투구 범위는 0 ~ 10 입니다.";
     public static final String INVALID_INPUT_PLAYER_NUMBER = "게임 참여 인원은 숫자만 입력 가능합니다.";
+    public static final String INVALID_BOWLER = "볼링에 참여한 참가자 동일하지 않습니다.";
+
+    public static final String MESSAGE_GAME_OVER = "게임이 종료되었습니다.";
 
     private ExceptionMessage() {
     }
