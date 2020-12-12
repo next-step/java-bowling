@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public final class OutputView {
     private static final String NAME_TEXT = "| NAME |";
@@ -87,13 +88,52 @@ public final class OutputView {
     }
 
     private static void printFrameScore(Bowling bowling) {
-        String totalScore = IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME + 1)
+        List<Integer> accumulatedScore = getAccumulatedScore(bowling);
+
+        printScore(accumulatedScore);
+        printBlankScore(Frame.LAST_FRAME - accumulatedScore.size());
+    }
+
+    private static List<Integer> getAccumulatedScore(Bowling bowling) {
+        List<Integer> scoresByFrame = getScoresByFrame(bowling);
+
+        return IntStream.range(1, scoresByFrame.size() + 1)
+                .mapToObj(i -> getAccumulatedScore(scoresByFrame, i))
+                .collect(Collectors.toList());
+    }
+
+    private static List<Integer> getScoresByFrame(Bowling bowling) {
+        return IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME + 1)
                 .mapToObj(bowling::getTotalScore)
-                .map(score -> score.equals(Score.INVALID_SCORE) ? "" : score.toString())
+                .filter(totalScore -> !Score.INVALID_SCORE.equals(totalScore))
+                .map(score -> Integer.valueOf(score.toString()))
+                .collect(Collectors.toList());
+    }
+
+    private static int getAccumulatedScore(List<Integer> scores, int i) {
+        return scores.stream()
+                .limit(i)
+                .reduce(0, Integer::sum);
+    }
+
+    private static void printScore(List<Integer> accumulatedScore) {
+        String accumulatedScoreString = accumulatedScore.stream()
+                .map(Object::toString)
                 .map(OutputView::attachBlank)
                 .map(score -> String.format(FRAME_STRING_TEXT, score))
                 .collect(Collectors.joining(""));
 
-        System.out.println(SCORE_TEXT + totalScore + NEW_LINE);
+        System.out.print(SCORE_TEXT + accumulatedScoreString);
     }
+
+    private static void printBlankScore(int blankFrameCount) {
+        String blankScore = IntStream.range(0, blankFrameCount)
+                .mapToObj(count -> attachBlank(TEXT_BLANK))
+                .map(OutputView::attachBlank)
+                .map(score -> String.format(FRAME_STRING_TEXT, score))
+                .collect(Collectors.joining());
+
+        System.out.println(blankScore + NEW_LINE);
+    }
+
 }

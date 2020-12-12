@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Frame {
     public static final int FIRST_FRAME = 1;
-    public static final int LAST_FRAME = 6;
+    public static final int LAST_FRAME = 10;
     public static final int SPARE_BONUS_COUNT = 1;
 
     protected int frameNumber;
