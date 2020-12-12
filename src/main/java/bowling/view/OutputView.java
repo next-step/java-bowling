@@ -87,9 +87,10 @@ public final class OutputView {
     }
 
     private static void printFrameScore(Bowling bowling) {
-        String totalScore = IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME)
+        String totalScore = IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME + 1)
                 .mapToObj(bowling::getTotalScore)
-                .map(score -> score.equals(Score.INVALID_SCORE) ? "  " : score.toString())
+                .map(score -> score.equals(Score.INVALID_SCORE) ? "" : score.toString())
+                .map(OutputView::attachBlank)
                 .map(score -> String.format(FRAME_STRING_TEXT, score))
                 .collect(Collectors.joining(""));
 

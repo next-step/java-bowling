@@ -35,26 +35,39 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Score getTotalScore() {
-        if(canCalculateTotalScore()) {
-            int bonusScoreCount = scores.getBonusScoreCount();
-            Score currentScore = scores.getTotalScore();
-
-            return next.addBonus(currentScore, bonusScoreCount);
+    protected Score getSpareTotalScore() {
+        if (!next.hasFirstScore()) {
+            return Score.INVALID_SCORE;
         }
 
-        return Score.INVALID_SCORE;
+        return scores.getTotalScore()
+                .sum(next
+                        .getScore(SPARE_BONUS_COUNT));
     }
 
-    private boolean canCalculateTotalScore() {
-        if(canBowl()) {
-            return false;
+    @Override
+    protected Score getStrikeTotalScore() {
+        if (next.canBowl()) {
+            return Score.INVALID_SCORE;
         }
 
-        if(scores.isStrike() && next.canBowl()) {
-            return false;
+        if (next.scores.isStrike()) {
+            return next.getTwoStrikeTotalScore(scores.getTotalScore());
         }
 
-        return !scores.isSpare() || next.hasFirstScore();
+        return scores.getTotalScore()
+                .sum(next.scores
+                        .getTotalScore());
+    }
+
+    @Override
+    protected Score getTwoStrikeTotalScore(Score lastTotalScore) {
+        if (next.canBowl()) {
+            return Score.INVALID_SCORE;
+        }
+
+        return lastTotalScore
+                .sum(scores.getTotalScore())
+                .sum(next.scores.getTotalScore());
     }
 }

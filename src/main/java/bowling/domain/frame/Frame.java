@@ -7,7 +7,8 @@ import java.util.List;
 
 public abstract class Frame {
     public static final int FIRST_FRAME = 1;
-    public static final int LAST_FRAME = 10;
+    public static final int LAST_FRAME = 6;
+    public static final int SPARE_BONUS_COUNT = 1;
 
     protected int frameNumber;
     protected Scores scores;
@@ -40,16 +41,26 @@ public abstract class Frame {
 
     public abstract Frame next();
 
-    public abstract Score getTotalScore();
+    public Score getTotalScore() {
+        if(scores.isSpare()) {
+            return getSpareTotalScore();
+        }
+
+        if(scores.isStrike()) {
+            return getStrikeTotalScore();
+        }
+        
+        return canBowl() ? Score.INVALID_SCORE : scores.getTotalScore();
+    }
+
+    protected abstract Score getStrikeTotalScore();
+
+    protected abstract Score getSpareTotalScore();
+
+    protected abstract Score getTwoStrikeTotalScore(Score lastTotalScore);
 
     protected Score getScore(int bonusScoreCount) {
         return scores.getScore(bonusScoreCount);
-    }
-
-    Score addBonus(Score currentScore, int bonusScoreCount) {
-        Score bonusScore = getScore(bonusScoreCount);
-
-        return currentScore.sum(bonusScore);
     }
 
     boolean hasFirstScore() {

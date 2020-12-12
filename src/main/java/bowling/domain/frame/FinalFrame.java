@@ -22,8 +22,27 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public Score getTotalScore() {
-        return Score.INVALID_SCORE;
+    protected Score getSpareTotalScore() {
+        if(scores.canBowl()) {
+            return Score.INVALID_SCORE;
+        }
+
+        return scores.getTotalScore();
+    }
+
+    @Override
+    protected Score getStrikeTotalScore() {
+        return getSpareTotalScore();
+    }
+
+    @Override
+    protected Score getTwoStrikeTotalScore(Score lastTotalScore) {
+        if (next.canBowl()) {
+            return Score.INVALID_SCORE;
+        }
+
+        return lastTotalScore
+                .sum(scores.getTotalScore());
     }
 
 }
