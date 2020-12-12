@@ -3,8 +3,12 @@ package bowling.domain.score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -68,5 +72,32 @@ public class FinalScoresTest {
         boolean actual = finalScores.canBowl();
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("Scores 전체 점수 합산 결과 확인 테스트")
+    @ParameterizedTest
+    @MethodSource("makeGetTwoTestScore")
+    void getTotalScore(Score firstScore, Score secondScore, Score bonusScore, Score expectedTotalScore) {
+        Scores scores = FinalScores.init();
+        scores.add(firstScore);
+
+        if (secondScore != null) {
+            scores.add(secondScore);
+        }
+        if (bonusScore != null) {
+            scores.add(bonusScore);
+        }
+
+        Score actualTotalScore = scores.getTotalScore();
+
+        assertThat(actualTotalScore).isEqualTo(expectedTotalScore);
+    }
+
+    private static Stream<Arguments> makeGetTwoTestScore() {
+        return Stream.of(
+                Arguments.of(Score.of("7"), Score.of("3"), Score.of("8"), Score.of("18")),
+                Arguments.of(Score.of("7"), null, null, Score.of("7")),
+                Arguments.of(Score.of("10"), Score.of("8"), null, Score.of("18"))
+        );
     }
 }

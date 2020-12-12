@@ -3,8 +3,12 @@ package bowling.domain.score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -67,4 +71,29 @@ public class NormalScoresTest {
 
         assertThat(actual).isFalse();
     }
+
+    @DisplayName("Scores 전체 점수 합산 결과 확인 테스트")
+    @ParameterizedTest
+    @MethodSource("makeGetTwoTestScore")
+    void getTotalScore(Score firstScore, Score secondScore, Score expectedTotalScore) {
+        Scores scores = NormalScores.init();
+        scores.add(firstScore);
+
+        if (secondScore != null) {
+            scores.add(secondScore);
+        }
+
+        Score actualTotalScore = scores.getTotalScore();
+
+        assertThat(actualTotalScore).isEqualTo(expectedTotalScore);
+    }
+
+    private static Stream<Arguments> makeGetTwoTestScore() {
+        return Stream.of(
+                Arguments.of(Score.of("2"), Score.of("3"), Score.of("5")),
+                Arguments.of(Score.of("10"), null, Score.of("10")),
+                Arguments.of(Score.of("8"), Score.of("2"), Score.of("10"))
+        );
+    }
+
 }
