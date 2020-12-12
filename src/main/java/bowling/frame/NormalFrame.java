@@ -21,7 +21,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    protected Frame bowl(String fellPins) {
+    public Frame bowl(String fellPins) {
         Pin pin = Pin.bowl(fellPins);
         state = state.bowl(pin);
         return this;

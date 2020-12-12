@@ -75,8 +75,8 @@ public class BowlingGame {
         return frames;
     }
 
-    public Bowler getBowler() {
-        return bowler;
+    public String getBowlerName() {
+        return bowler.getName();
     }
 
     public boolean isEnd() {

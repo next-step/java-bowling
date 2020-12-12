@@ -20,7 +20,7 @@ public abstract class Frame {
         this.state = Set.init();
     }
 
-    protected abstract Frame bowl(String fellPins);
+    public abstract Frame bowl(String fellPins);
 
     public abstract boolean isFinish();
 
