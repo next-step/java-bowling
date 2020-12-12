@@ -16,7 +16,7 @@ public class FrameFactoryTest {
     }
 
     @Test
-    void create() {
+    void creates_all_frame() {
         // when
         final Frame frame = FrameFactory.creates();
 
