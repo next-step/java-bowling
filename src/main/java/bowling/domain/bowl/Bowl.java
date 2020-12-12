@@ -47,10 +47,12 @@ public class Bowl {
     }
 
     private ScoresDto exportScoresDto() {
-        return frames.stream()
+        Scores scores = new Scores();
+        frames.stream()
                 .filter(Frame::hasScore)
-                .map(Frame::exportScoreDto)
-                .collect(collectingAndThen(toList(), ScoresDto::new));
+                .map(Frame::getCountOfPins)
+                .forEach(scores::accumulate);
+        return scores.exportScoresDto();
     }
 
     public BowlDto exportBowlDto() {

@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.bowl;
 
 import bowling.exception.BadScoreException;
 import org.junit.jupiter.api.DisplayName;

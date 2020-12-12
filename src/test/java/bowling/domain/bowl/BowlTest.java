@@ -89,6 +89,8 @@ class BowlTest {
     @DisplayName("볼링을 치지 않은 시나리오 테스트")
     void scenario_empty() {
         assertAll(
+                () -> assertThat(bowl.getFrameNumber())
+                        .isEqualTo(1),
                 () -> assertThat(toPinList(bowl))
                         .isEqualTo(emptyList()),
                 () -> assertThat(toFrameList(bowl))
@@ -105,6 +107,8 @@ class BowlTest {
         bowl.addPin(Pin.of(10));
         bowl.addPin(Pin.of(10));
         assertAll(
+                () -> assertThat(bowl.getFrameNumber())
+                        .isEqualTo(3),
                 () -> assertThat(toPinList(bowl))
                         .isEqualTo(Arrays.asList(10, 10)),
                 () -> assertThat(toFrameList(bowl))
@@ -123,6 +127,8 @@ class BowlTest {
         bowl.addPin(Pin.of(1));
         bowl.addPin(Pin.of(9));
         assertAll(
+                () -> assertThat(bowl.getFrameNumber())
+                        .isEqualTo(4),
                 () -> assertThat(toPinList(bowl))
                         .isEqualTo(Arrays.asList(10, 10, 1, 9)),
                 () -> assertThat(toFrameList(bowl))
@@ -143,6 +149,8 @@ class BowlTest {
         bowl.addPin(Pin.of(4));
         bowl.addPin(Pin.of(5));
         assertAll(
+                () -> assertThat(bowl.getFrameNumber())
+                        .isEqualTo(4),
                 () -> assertThat(toPinList(bowl))
                         .isEqualTo(Arrays.asList(10, 1, 9, 4, 5)),
                 () -> assertThat(toFrameList(bowl))
@@ -167,10 +175,12 @@ class BowlTest {
 
         bowl.addPin(Pin.of(8));
         assertAll(
+                () -> assertThat(bowl.getFrameNumber())
+                        .isEqualTo(5),
                 () -> assertThat(toPinList(bowl))
                         .isEqualTo(Arrays.asList(10, 1, 9, 4, 5, 10, 8)),
                 () -> assertThat(toFrameList(bowl))
-                        .isEqualTo(Arrays.asList(STRIKE, SPARE, MISS, STRIKE, UNFINISHED)),
+                        .isEqualTo(Arrays.asList(STRIKE, SPARE, MISS, STRIKE)),
                 () -> assertThat(toScoreList(bowl))
                         .isEqualTo(Arrays.asList(20, 34, 43))
         );

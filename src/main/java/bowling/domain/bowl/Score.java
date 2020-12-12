@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.bowl;
 
 import bowling.dto.ScoreDto;
 import bowling.exception.BadScoreException;
