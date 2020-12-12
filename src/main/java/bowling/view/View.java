@@ -23,13 +23,8 @@ public class View {
         return new NameDto(nextLine());
     }
 
-    public static PinDto askPin(FrameNumberDto frameNumberDto) {
-        new AskPinPrintable(frameNumberDto).print();
-        return new PinDto(nextInt());
-    }
-
-    public static PinDto askPin(PlayerDto playerDto) {
-        new AskPinPrintable(playerDto).print();
+    public static PinDto askPin(AskPinDto askPinDto) {
+        new AskPinPrintable(askPinDto).print();
         return new PinDto(nextInt());
     }
 

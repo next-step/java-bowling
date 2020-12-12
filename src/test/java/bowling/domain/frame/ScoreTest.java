@@ -1,9 +1,8 @@
-package bowling.domain.scores;
+package bowling.domain.frame;
 
 import bowling.exception.BadScoreException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,18 +24,5 @@ class ScoreTest {
     void exportScoreDto(int score) {
         assertThat(new Score(score).exportScoreDto().getScore())
                 .isEqualTo(score);
-    }
-
-    @ParameterizedTest
-    @DisplayName("sum 테스트")
-    @CsvSource(value = {"2$3", "5$1"}, delimiter = '$')
-    void isValid(int num1, int num2) {
-        Score score1 = new Score(num1);
-        Score score2 = new Score(num2);
-        int sum = score1.sum(score2)
-                .exportScoreDto()
-                .getScore();
-        assertThat(sum)
-                .isEqualTo(num1 + num2);
     }
 }

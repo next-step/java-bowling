@@ -1,47 +1,57 @@
 package bowling.domain.frame;
 
-import bowling.domain.Pins;
-import bowling.dto.FrameDto;
+import bowling.dto.FrameEnumDto;
+import bowling.dto.PinsDto;
+import bowling.dto.ScoreDto;
 
-// TODO: Score 하고 합치기
 public class Frame {
+    private final int accumulated;
     private FrameState state;
 
-    private Frame(int pinsIndex) {
-        state = new InitialFrameState(pinsIndex);
+    public Frame() {
+        accumulated = 0;
+        state = new InitialFrameState(new Pins(), 0);
     }
 
-    public static Frame of(Pins pins) {
-        Frame frame = new Frame(pins.size() - 1);
-        frame.update(pins);
-        return frame;
+    private Frame(int accumulated, FrameState state) {
+        this.accumulated = accumulated;
+        this.state = state;
     }
 
     void setState(FrameState state) {
         this.state = state;
     }
 
-    int getPinsIndex() {
-        return state.getPinsIndex();
+    public void addPin(Pin pin) {
+        state.addPin(pin);
+        state.updateState(this);
     }
 
-    public int getScore(Pins pins) {
-        return state.getScore(this, pins);
+    public Frame generateNextFrame() {
+        Pins pins = state.getPins();
+        return new Frame(
+                accumulated + state.getCountOfPins()
+                , new InitialFrameState(pins, pins.size()));
     }
 
-    public boolean hasScore(Pins pins) {
-        return state.hasScore(this, pins);
-    }
-
-    public void update(Pins pins) {
-        state.update(this, pins);
+    public boolean hasScore() {
+        return state.hasScore();
     }
 
     public FrameEnum getFrameEnum() {
         return state.getFrameEnum();
     }
 
-    public FrameDto exportFrameDto() {
-        return new FrameDto(getFrameEnum());
+    public FrameEnumDto exportFrameDto() {
+        return new FrameEnumDto(getFrameEnum());
+    }
+
+    public ScoreDto exportScoreDto() {
+        return new Score(accumulated + state.getCountOfPins())
+                .exportScoreDto();
+    }
+
+    public PinsDto exportPinsDto() {
+        return state.getPins().exportPinsDto();
     }
 }

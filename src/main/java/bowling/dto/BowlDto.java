@@ -1,10 +1,10 @@
 package bowling.dto;
 
-public class BoardDto {
+public class BowlDto {
     private final FramesDto framesDto;
     private final ScoresDto scoresDto;
 
-    public BoardDto(FramesDto framesDto, ScoresDto scoresDto) {
+    public BowlDto(FramesDto framesDto, ScoresDto scoresDto) {
         this.framesDto = framesDto;
         this.scoresDto = scoresDto;
     }

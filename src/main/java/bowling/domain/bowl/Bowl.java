@@ -1,30 +1,59 @@
 package bowling.domain.bowl;
 
-import bowling.domain.Pin;
-import bowling.domain.PlayerStatus;
-import bowling.dto.PlayerStatusDto;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Pin;
+import bowling.dto.BowlDto;
+import bowling.dto.FrameEnumsDto;
+import bowling.dto.FramesDto;
+import bowling.dto.ScoresDto;
+
+import java.util.LinkedList;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 public class Bowl {
-    private final PlayerStatus status = new PlayerStatus();
-    private BowlState state = ReadyBowlState.getInstance();
+    private final LinkedList<Frame> frames = new LinkedList<>();
+    private BowlState state = new FirstBowlState();
 
     void setState(BowlState state) {
         this.state = state;
     }
 
+    void addFrame(Frame frame) {
+        frames.add(frame);
+    }
+
     public void addPin(Pin pin) {
-        status.addPin(pin);
+        state.addPin(pin, this);
     }
 
-    Pin getLastPin() {
-        return status.getLastPin();
+    public boolean isPlayable() {
+        return state.isPlayable(this);
     }
 
-    public boolean isPlayable(int frameNumber) {
-        return state.isPlayable(this, frameNumber);
+    public int getFrameNumber() {
+        return state.getFrameNumber();
     }
 
-    public PlayerStatusDto exportPlayerStatusDto() {
-        return status.exportPlayerStatusDto();
+    private FrameEnumsDto exportFrameEnumsDto() {
+        return frames.stream()
+                .map(Frame::exportFrameDto)
+                .collect(collectingAndThen(toList(), FrameEnumsDto::new));
+    }
+
+    private FramesDto exportFramesDto() {
+        return new FramesDto(state.exportPinsDto(), exportFrameEnumsDto());
+    }
+
+    private ScoresDto exportScoresDto() {
+        return frames.stream()
+                .filter(Frame::hasScore)
+                .map(Frame::exportScoreDto)
+                .collect(collectingAndThen(toList(), ScoresDto::new));
+    }
+
+    public BowlDto exportBowlDto() {
+        return new BowlDto(exportFramesDto(), exportScoresDto());
     }
 }

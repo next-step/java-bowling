@@ -1,8 +1,12 @@
 package bowling.domain;
 
 import bowling.domain.bowl.Bowl;
+import bowling.domain.frame.Pin;
+import bowling.dto.AskPinDto;
 import bowling.dto.PlayerDto;
 import bowling.exception.PlayerException;
+
+import java.util.function.Function;
 
 public class Player {
     private final String name;
@@ -15,15 +19,19 @@ public class Player {
         this.name = name;
     }
 
-    public boolean isPlayable(int frameNumber) {
-        return bowl.isPlayable(frameNumber);
+    public boolean isPlayable() {
+        return bowl.isPlayable();
     }
 
-    public void addPin(Pin pin) {
-        bowl.addPin(pin);
+    public void addPin(Function<Player, Pin> function) {
+        bowl.addPin(function.apply(this));
     }
 
-    public PlayerDto exportPlayerDto() {
-        return new PlayerDto(name, bowl.exportPlayerStatusDto());
+    PlayerDto exportPlayerDto() {
+        return new PlayerDto(name, bowl.exportBowlDto());
+    }
+
+    public AskPinDto exportAskPinDto() {
+        return new AskPinDto(name, bowl.getFrameNumber());
     }
 }

@@ -1,16 +1,12 @@
 package bowling.controller;
 
-import bowling.domain.Pin;
 import bowling.domain.Player;
 import bowling.domain.Players;
-import bowling.dto.FrameNumberDto;
+import bowling.domain.frame.Pin;
 import bowling.view.View;
-
-import static bowling.asset.Const.MAX_FRAME_NO;
 
 class Game {
     private final Players players;
-    private int frameNumber = 1;
 
     Game() {
         // int sizeOfPlayers = View.askSizeOfPlayers().getSize();
@@ -19,18 +15,14 @@ class Game {
     }
 
     void play() {
-        while (frameNumber <= MAX_FRAME_NO) {
+        while (players.isPlayable()) {
             players.forEach(this::play);
-            frameNumber++;
         }
     }
 
     private void play(Player player) {
-        while (player.isPlayable(frameNumber)) {
-            player.addPin(
-                    // getPin(player)
-                    getPin(frameNumber)
-            );
+        while (player.isPlayable()) {
+            player.addPin(this::getPin);
             View.printPlayers(players.exportPlayersDto());
         }
     }
@@ -40,13 +32,8 @@ class Game {
                 .getName());
     }
 
-    private Pin getPin(int frameNumber) {
-        return Pin.of(View.askPin(new FrameNumberDto(frameNumber))
-                .getCountOfPins());
-    }
-
     private Pin getPin(Player player) {
-        return Pin.of(View.askPin(player.exportPlayerDto())
+        return Pin.of(View.askPin(player.exportAskPinDto())
                 .getCountOfPins());
     }
 }

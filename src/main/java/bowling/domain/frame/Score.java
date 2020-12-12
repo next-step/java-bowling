@@ -1,4 +1,4 @@
-package bowling.domain.scores;
+package bowling.domain.frame;
 
 import bowling.dto.ScoreDto;
 import bowling.exception.BadScoreException;
@@ -11,10 +11,6 @@ class Score {
             throw new BadScoreException("score 는 0 이상, 300 이하여야 합니다.");
         }
         this.score = score;
-    }
-
-    Score sum(Score score) {
-        return new Score(this.score + score.score);
     }
 
     ScoreDto exportScoreDto() {

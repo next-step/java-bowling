@@ -1,17 +1,27 @@
 package bowling.domain.bowl;
 
-public class FirstBowlState extends NormalBowlState {
+public class FirstBowlState extends BowlState {
+    FirstBowlState() {
+        super();
+    }
+
+    FirstBowlState(BowlState state) {
+        super(state);
+    }
+
     @Override
-    public boolean isPlayable(Bowl bowl, int frameNumber) {
-        increaseCountOfPins(bowl.getLastPin());
-        boolean isLast = isLast(frameNumber);
-        boolean isAllPinDown = isAllPinDown();
-        BowlState nextState = isLast && isAllPinDown
-                ? BonusBowlState.getInstance()
-                : isAllPinDown
-                ? ReadyBowlState.getInstance()
-                : new SecondBowlState(this);
-        bowl.setState(nextState);
-        return !isAllPinDown || isLast;
+    public boolean isPlayable(Bowl bowl) {
+        return true;
+    }
+
+    @Override
+    void updateState(Bowl bowl) {
+        if (!isStrike()) {
+            bowl.setState(new SecondBowlState(this));
+            return;
+        }
+        if (isLast()) {
+            bowl.setState(new StrikeBonusBowlState(this));
+        }
     }
 }

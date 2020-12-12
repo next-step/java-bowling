@@ -1,27 +1,38 @@
 package bowling.domain.frame;
 
-import bowling.domain.Pins;
-
 abstract class FrameState {
+    private final Pins pins;
     private final int pinsIndex;
 
-    FrameState(int pinsIndex) {
+    FrameState(Pins pins, int pinsIndex) {
+        this.pins = pins;
         this.pinsIndex = pinsIndex;
     }
 
     FrameState(FrameState state) {
+        pins = state.pins;
         pinsIndex = state.pinsIndex;
     }
 
-    public int getPinsIndex() {
-        return pinsIndex;
+    Pins getPins() {
+        return pins;
     }
+
+    void addPin(Pin pin) {
+        pins.add(pin);
+    }
+
+    boolean hasScore() {
+        return pinsIndex + getOffset() <= pins.size();
+    }
+
+    int getCountOfPins() {
+        return pins.sum(pinsIndex, getOffset());
+    }
+
+    abstract int getOffset();
 
     abstract FrameEnum getFrameEnum();
 
-    abstract int getScore(Frame frame, Pins pins);
-
-    abstract boolean hasScore(Frame frame, Pins pins);
-
-    abstract void update(Frame frame, Pins pins);
+    abstract void updateState(Frame frame);
 }

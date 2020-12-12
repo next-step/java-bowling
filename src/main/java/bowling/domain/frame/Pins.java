@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.dto.PinsDto;
 import bowling.exception.PinsOutOfRangeException;
@@ -22,7 +22,7 @@ public class Pins {
         return pins.size();
     }
 
-    public int sum(int startIdx, int offset) {
+    int sum(int startIdx, int offset) {
         int endIdx = startIdx + offset;
         boolean isOutOfRange = startIdx < 0 || offset < 0 || endIdx > pins.size();
         if (isOutOfRange) {
@@ -31,10 +31,6 @@ public class Pins {
         return IntStream.range(startIdx, endIdx)
                 .mapToObj(pins::get)
                 .reduce(0, (acc, pin) -> pin.sum(acc), Integer::sum);
-    }
-
-    Pin getLast() {
-        return pins.get(size() - 1);
     }
 
     PinsDto exportPinsDto() {

@@ -17,21 +17,21 @@ class PlayersPrintable extends Printable {
     }
 
     private void append(PlayerDto player) {
-        PlayerStatusDto playerStatusDto = player.getStatus();
-        PinsDto pinsDto = playerStatusDto.getPinsDto();
-        BoardDto boardDto = playerStatusDto.getBoardDto();
+        BowlDto bowlDto = player.getBowlDto();
+        FramesDto framesDto = bowlDto.getFramesDto();
+        PinsDto pinsDto = framesDto.getPinsDto();
+        FrameEnumsDto frameEnumsDto = framesDto.getFrameEnumsDto();
 
         append(lineSeparator);
         append(String.format("|  %s |", player.getName()));
         Iterator<PinDto> itr = pinsDto.getPins().iterator();
-        List<FrameDto> frames = boardDto.getFramesDto()
-                .getFrames();
-        frames.forEach(frameDto -> append(frameDto, itr));
-        appendBlank(frames.size());
+        List<FrameEnumDto> frameEnums = frameEnumsDto.getFrameEnums();
+        frameEnums.forEach(frameEnumDto -> append(frameEnumDto, itr));
+        appendBlank(frameEnums.size());
 
         append(lineSeparator);
         append("|      |");
-        List<ScoreDto> scores = boardDto.getScoresDto()
+        List<ScoreDto> scores = bowlDto.getScoresDto()
                 .getScores();
         scores.forEach(this::append);
         appendBlank(scores.size());
@@ -43,8 +43,8 @@ class PlayersPrintable extends Printable {
         }
     }
 
-    private void append(FrameDto frameDto, Iterator<PinDto> itr) {
-        FrameEnum frameEnum = frameDto.getFrameEnum();
+    private void append(FrameEnumDto frameEnumDto, Iterator<PinDto> itr) {
+        FrameEnum frameEnum = frameEnumDto.getFrameEnum();
         String str = "";
         if (frameEnum == FrameEnum.STRIKE) {
             str = " X";

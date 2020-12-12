@@ -32,6 +32,13 @@ public class Players {
         players.add(player);
     }
 
+    public boolean isPlayable() {
+        return players.stream()
+                .map(Player::isPlayable)
+                .reduce(Boolean::logicalOr)
+                .orElse(false);
+    }
+
     public PlayersDto exportPlayersDto() {
         return new PlayersDto(players
                 .stream()

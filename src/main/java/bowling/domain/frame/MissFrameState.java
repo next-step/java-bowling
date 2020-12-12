@@ -1,10 +1,13 @@
 package bowling.domain.frame;
 
-import bowling.domain.Pins;
-
 class MissFrameState extends FrameState {
     MissFrameState(FrameState state) {
         super(state);
+    }
+
+    @Override
+    int getOffset() {
+        return 2;
     }
 
     @Override
@@ -13,19 +16,5 @@ class MissFrameState extends FrameState {
     }
 
     @Override
-    int getScore(Frame frame, Pins pins) {
-        final int offset = 2;
-        return pins.sum(
-                frame.getPinsIndex(),
-                offset
-        );
-    }
-
-    @Override
-    boolean hasScore(Frame frame, Pins pins) {
-        return true;
-    }
-
-    @Override
-    void update(Frame frame, Pins pins) {}
+    void updateState(Frame frame) {}
 }

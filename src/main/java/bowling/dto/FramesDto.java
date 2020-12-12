@@ -1,15 +1,19 @@
 package bowling.dto;
 
-import java.util.List;
-
 public class FramesDto {
-    private final List<FrameDto> frames;
+    private final PinsDto pinsDto;
+    private final FrameEnumsDto frameEnumsDto;
 
-    public FramesDto(List<FrameDto> frames) {
-        this.frames = frames;
+    public FramesDto(PinsDto pinsDto, FrameEnumsDto frameEnumsDto) {
+        this.pinsDto = pinsDto;
+        this.frameEnumsDto = frameEnumsDto;
     }
 
-    public List<FrameDto> getFrames() {
-        return frames;
+    public PinsDto getPinsDto() {
+        return pinsDto;
+    }
+
+    public FrameEnumsDto getFrameEnumsDto() {
+        return frameEnumsDto;
     }
 }

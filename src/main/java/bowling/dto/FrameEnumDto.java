@@ -2,10 +2,10 @@ package bowling.dto;
 
 import bowling.domain.frame.FrameEnum;
 
-public class FrameDto {
+public class FrameEnumDto {
     private final FrameEnum frameEnum;
 
-    public FrameDto(FrameEnum frameEnum) {
+    public FrameEnumDto(FrameEnum frameEnum) {
         this.frameEnum = frameEnum;
     }
 

@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.dto.PinDto;
 import bowling.exception.PinsOutOfRangeException;
@@ -33,13 +33,6 @@ class PinsTest {
     void size() {
         assertThat(pins.size())
                 .isEqualTo(11);
-    }
-
-    @Test
-    @DisplayName("getLast 테스트")
-    void getLast() {
-        assertThat(pins.getLast())
-                .isEqualTo(Pin.of(10));
     }
 
     @ParameterizedTest

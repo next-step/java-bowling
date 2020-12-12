@@ -1,20 +1,22 @@
 package bowling.domain.bowl;
 
-class BonusBowlState implements BowlState {
+class BonusBowlState extends BowlState {
+    private int leftBonus;
 
-    private BonusBowlState() {}
-
-    static BonusBowlState getInstance() {
-        return SingletonHelper.instance;
+    BonusBowlState(BowlState state, int leftBonus) {
+        super(state);
+        this.leftBonus = leftBonus;
     }
 
     @Override
-    public boolean isPlayable(Bowl bowl, int frameNumber) {
-        bowl.setState(GameOverBowlState.getInstance());
+    boolean isPlayable(Bowl bowl) {
         return true;
     }
 
-    private static class SingletonHelper {
-        private static final BonusBowlState instance = new BonusBowlState();
+    @Override
+    void updateState(Bowl bowl) {
+        if (leftBonus-- <= 0) {
+            bowl.setState(new GameOverBowlState(this));
+        }
     }
 }
