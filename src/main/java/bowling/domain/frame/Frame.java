@@ -42,14 +42,14 @@ public abstract class Frame {
     public abstract Frame next();
 
     public Score getTotalScore() {
-        if(scores.isSpare()) {
+        if (scores.isSpare()) {
             return getSpareTotalScore();
         }
 
-        if(scores.isStrike()) {
+        if (scores.isStrike()) {
             return getStrikeTotalScore();
         }
-        
+
         return canBowl() ? Score.INVALID_SCORE : scores.getTotalScore();
     }
 

@@ -23,7 +23,7 @@ public class FinalFrame extends Frame {
 
     @Override
     protected Score getSpareTotalScore() {
-        if(scores.canBowl()) {
+        if (scores.canBowl()) {
             return Score.INVALID_SCORE;
         }
 

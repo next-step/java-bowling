@@ -30,7 +30,7 @@ public abstract class Scores {
     }
 
     public boolean isSpare() {
-        if(scores.size() == SECOND_SCORE) {
+        if (scores.size() == SECOND_SCORE) {
             return scores.get(FIRST_SCORE - 1)
                     .sum(scores.get(SECOND_SCORE - 1))
                     .isStrike();
@@ -39,7 +39,7 @@ public abstract class Scores {
     }
 
     public boolean isStrike() {
-        if(scores.size() == FIRST_SCORE) {
+        if (scores.size() == FIRST_SCORE) {
             return scores.get(FIRST_SCORE - 1)
                     .isStrike();
         }
