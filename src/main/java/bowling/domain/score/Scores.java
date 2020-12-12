@@ -15,6 +15,10 @@ public abstract class Scores {
 
     public abstract boolean canBowl();
 
+    public void add(Score score) {
+        scores.add(score);
+    }
+
     public static boolean isSpare(List<Score> scores) {
         if (scores.get(0) == null || scores.get(1) == null) {
             return false;
@@ -23,10 +27,6 @@ public abstract class Scores {
         return Score.of(scores.get(0).toString())
                 .sum(Score.of(scores.get(1).toString()))
                 .isStrike();
-    }
-
-    public void add(Score score) {
-        scores.add(score);
     }
 
     public boolean isSpare() {
@@ -46,12 +46,17 @@ public abstract class Scores {
         return false;
     }
 
+    public boolean hasFirstScore() {
+        return scores.size() >= FIRST_SCORE;
+    }
+
     public List<Score> getResult() {
         return scores;
     }
 
-    public boolean hasFirstScore() {
-        return scores.size() >= FIRST_SCORE;
+    public Score getTotalScore() {
+        return scores.stream()
+                .reduce(Score.ZERO_SCORE, Score::sum);
     }
 
     public Score getScore(int bonusScoreCount) {
@@ -59,11 +64,6 @@ public abstract class Scores {
 
         return scores.stream()
                 .limit(addCount)
-                .reduce(Score.ZERO_SCORE, Score::sum);
-    }
-
-    public Score getTotalScore() {
-        return scores.stream()
                 .reduce(Score.ZERO_SCORE, Score::sum);
     }
 }
