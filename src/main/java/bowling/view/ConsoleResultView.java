@@ -11,7 +11,7 @@ public class ConsoleResultView implements ResultView {
     private static final String DELIMITER = "|";
     private static final int CELL_WIDTH = 6;
     private static final String NAME_LABEL = "NAME";
-    public static final String FRAME_INDEX_FORMAT = "%02d";
+    private static final String FRAME_INDEX_FORMAT = "%02d";
     private final Map<Pitching, String> stringByPitching;
 
     public ConsoleResultView() {
@@ -77,7 +77,7 @@ public class ConsoleResultView implements ResultView {
     }
 
     private String centerString(String value) {
-        int width = value.length() + ((CELL_WIDTH - value.length()) / 2) + 1;
+        int width = value.length() + ((CELL_WIDTH - value.length()) / 2);
         String formattedValue = String.format("%" + width + "s", value);
         return String.format("%-" + CELL_WIDTH + "s", formattedValue);
     }
