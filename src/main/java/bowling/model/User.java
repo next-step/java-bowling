@@ -1,4 +1,4 @@
-package bowling;
+package bowling.model;
 
 import static utils.StringUtils.isAllEnglishLetter;
 
@@ -45,5 +45,10 @@ public class User {
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return name.toUpperCase();
     }
 }

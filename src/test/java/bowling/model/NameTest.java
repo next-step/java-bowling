@@ -1,5 +1,6 @@
-package bowling;
+package bowling.model;
 
+import bowling.model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
