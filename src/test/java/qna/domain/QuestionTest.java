@@ -8,15 +8,14 @@ import qna.CannotDeleteException;
 import qna.domain.mock.TestQuestion;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Arrays;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -109,9 +108,7 @@ public class QuestionTest {
     @DisplayName("반환된 deleteHistories 중 Question DeleteHistory가 포함된다.")
     public void deleteHistoriesTest(Question question, User loginUser) {
         DeleteHistories deleteHistories = question.delete(loginUser);
-        List<DeleteHistory> collect = StreamSupport.stream(deleteHistories.spliterator(), false)
-                .collect(Collectors.toList());
-        assertThat(collect).contains(new DeleteHistory(question, LocalDateTime.now()));
+        assertIterableEquals(deleteHistories, Arrays.asList(new DeleteHistory(question, LocalDateTime.now())));
     }
 
     private static Stream<Arguments> deleteHistories() {

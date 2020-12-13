@@ -32,8 +32,8 @@ public class AnswersTest {
 
     private static Stream<Arguments> answers() {
         return Stream.of(
-                Arguments.of(AnswerTest.A1, UserTest.JAVAJIGI),
-                Arguments.of(AnswerTest.A2, UserTest.SANJIGI)
+                Arguments.of(new Answers(AnswerTest.A1), UserTest.JAVAJIGI),
+                Arguments.of(new Answers(AnswerTest.A2), UserTest.SANJIGI)
         );
     }
 }
