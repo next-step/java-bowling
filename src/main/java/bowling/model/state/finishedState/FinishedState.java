@@ -26,6 +26,10 @@ public abstract class FinishedState extends State {
 
     @Override
     public String toString() {
+        if(previousScore.isMinScore()){
+            return "-" + DELIMITER + expression;
+        }
+
         return previousScore + DELIMITER + expression;
     }
 }
