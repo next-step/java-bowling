@@ -7,12 +7,12 @@ import bowling.view.ResultView;
 
 public class ApplicationRunner {
     public static void main(String[] args) {
-        BowlingGame bowlingGame = getBowlingGame();
-        bowlingGame.run();
+        GameHandler gameHandler = getGameHandler();
+        gameHandler.run();
     }
 
-    private static BowlingGame getBowlingGame() {
-        return new BowlingGame(getInputView(), getResultView());
+    private static GameHandler getGameHandler() {
+        return new GameHandler(getInputView(), getResultView());
     }
 
     private static InputView getInputView() {

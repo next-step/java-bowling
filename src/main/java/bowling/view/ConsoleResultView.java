@@ -1,7 +1,7 @@
 package bowling.view;
 
+import bowling.domain.BowlingGame;
 import bowling.domain.Pitching;
-import bowling.domain.frame.Frames;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -31,16 +31,16 @@ public class ConsoleResultView implements ResultView {
     }
 
     @Override
-    public void print(Frames frames) {
+    public void print(BowlingGame bowlingGame) {
         StringBuilder resultBuilder = new StringBuilder();
-        appendHeader(frames, resultBuilder);
-        appendBody(frames, resultBuilder);
+        appendHeader(bowlingGame, resultBuilder);
+        appendBody(bowlingGame, resultBuilder);
         System.out.println(resultBuilder.toString());
     }
 
-    private void appendHeader(Frames frames, StringBuilder resultBuilder) {
+    private void appendHeader(BowlingGame bowlingGame, StringBuilder resultBuilder) {
         appendNameLabel(resultBuilder);
-        appendFrameIndex(frames, resultBuilder);
+        appendFrameIndex(bowlingGame, resultBuilder);
         resultBuilder.append(System.lineSeparator());
     }
 
@@ -49,25 +49,25 @@ public class ConsoleResultView implements ResultView {
         resultBuilder.append(DELIMITER).append(formattedNameLabel).append(DELIMITER);
     }
 
-    private void appendFrameIndex(Frames frames, StringBuilder resultBuilder) {
-        frames.stream().forEach(frame -> {
+    private void appendFrameIndex(BowlingGame bowlingGame, StringBuilder resultBuilder) {
+        bowlingGame.framesStream().forEach(frame -> {
             String formattedFrameIndex = centerString(String.format(FRAME_INDEX_FORMAT, frame.getIndex()));
             resultBuilder.append(formattedFrameIndex).append(DELIMITER);
         });
     }
 
-    private void appendBody(Frames frames, StringBuilder resultBuilder) {
-        appendPlayerName(frames, resultBuilder);
-        appendResults(frames, resultBuilder);
+    private void appendBody(BowlingGame bowlingGame, StringBuilder resultBuilder) {
+        appendPlayerName(bowlingGame, resultBuilder);
+        appendResults(bowlingGame, resultBuilder);
     }
 
-    private void appendPlayerName(Frames frames, StringBuilder resultBuilder) {
-        String formattedPlayerName = centerString(frames.getPlayerName().getValue());
+    private void appendPlayerName(BowlingGame bowlingGame, StringBuilder resultBuilder) {
+        String formattedPlayerName = centerString(bowlingGame.getPlayerName().getValue());
         resultBuilder.append(DELIMITER).append(formattedPlayerName).append(DELIMITER);
     }
 
-    private void appendResults(Frames frames, StringBuilder resultBuilder) {
-        frames.stream().forEach(frame -> {
+    private void appendResults(BowlingGame bowlingGame, StringBuilder resultBuilder) {
+        bowlingGame.framesStream().forEach(frame -> {
             String result = frame.getPitchings().stream()
                     .map(stringByPitching::get)
                     .collect(Collectors.joining(DELIMITER));
