@@ -4,14 +4,13 @@ import bowling.domain.KnockDownPins;
 import bowling.domain.pitchings.NormalFramePitchings;
 import bowling.domain.pitchings.Pitchings;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
     private final int index;
-    private final Pitchings pitchings;
     private Frame nextFrame;
 
     private NormalFrame(int index) {
+        super(NormalFramePitchings.getInstance());
         this.index = index;
-        pitchings = NormalFramePitchings.getInstance();
     }
 
     public static Frame getFirstFrame() {
@@ -33,21 +32,12 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame setKnockDownPins(KnockDownPins knockDownPins) {
+        Pitchings pitchings = super.getPitchings();
         pitchings.addPitching(knockDownPins);
         if (pitchings.isEnd()) {
             return nextFrame;
         }
         return this;
-    }
-
-    @Override
-    public Pitchings getPitchings() {
-        return pitchings;
-    }
-
-    @Override
-    public boolean isEnd() {
-        return pitchings.isEnd();
     }
 
     @Override
@@ -59,7 +49,7 @@ public class NormalFrame implements Frame {
     public String toString() {
         return "NormalFrame{" +
                 "index=" + index +
-                ", pitchings=" + pitchings +
+                ", pitchings=" + super.getPitchings() +
                 '}';
     }
 }

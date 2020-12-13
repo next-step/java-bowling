@@ -3,14 +3,24 @@ package bowling.domain.frame;
 import bowling.domain.KnockDownPins;
 import bowling.domain.pitchings.Pitchings;
 
-public interface Frame {
-    Frame initNextFrame();
+public abstract class Frame {
+    private final Pitchings pitchings;
 
-    Frame setKnockDownPins(KnockDownPins knockDownPins);
+    public Frame(Pitchings pitchings) {
+        this.pitchings = pitchings;
+    }
 
-    Pitchings getPitchings();
+    abstract public Frame initNextFrame();
 
-    boolean isEnd();
+    abstract public Frame setKnockDownPins(KnockDownPins knockDownPins);
 
-    int getIndex();
+    abstract public int getIndex();
+
+    public Pitchings getPitchings() {
+        return pitchings;
+    }
+
+    public boolean isEnd() {
+        return pitchings.isEnd();
+    }
 }
