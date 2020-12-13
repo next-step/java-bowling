@@ -12,9 +12,9 @@ public abstract class Frame {
 
     abstract public Frame initNextFrame();
 
-    abstract public Frame setKnockDownPins(KnockDownPins knockDownPins);
-
-    abstract public int getIndex();
+    public void setKnockDownPins(KnockDownPins knockDownPins) {
+        pitchings.addPitching(knockDownPins);
+    }
 
     public Pitchings getPitchings() {
         return pitchings;

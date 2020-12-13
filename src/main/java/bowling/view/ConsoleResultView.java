@@ -2,10 +2,12 @@ package bowling.view;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.Pitching;
+import bowling.domain.frame.Frames;
 
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ConsoleResultView implements ResultView {
     private static final String DELIMITER = "|";
@@ -33,14 +35,14 @@ public class ConsoleResultView implements ResultView {
     @Override
     public void print(BowlingGame bowlingGame) {
         StringBuilder resultBuilder = new StringBuilder();
-        appendHeader(bowlingGame, resultBuilder);
+        appendHeader(resultBuilder);
         appendBody(bowlingGame, resultBuilder);
         System.out.println(resultBuilder.toString());
     }
 
-    private void appendHeader(BowlingGame bowlingGame, StringBuilder resultBuilder) {
+    private void appendHeader(StringBuilder resultBuilder) {
         appendNameLabel(resultBuilder);
-        appendFrameIndex(bowlingGame, resultBuilder);
+        appendFrameIndex(resultBuilder);
         resultBuilder.append(System.lineSeparator());
     }
 
@@ -49,11 +51,12 @@ public class ConsoleResultView implements ResultView {
         resultBuilder.append(DELIMITER).append(formattedNameLabel).append(DELIMITER);
     }
 
-    private void appendFrameIndex(BowlingGame bowlingGame, StringBuilder resultBuilder) {
-        bowlingGame.framesStream().forEach(frame -> {
-            String formattedFrameIndex = centerString(String.format(FRAME_INDEX_FORMAT, frame.getIndex()));
-            resultBuilder.append(formattedFrameIndex).append(DELIMITER);
-        });
+    private void appendFrameIndex(StringBuilder resultBuilder) {
+        IntStream.rangeClosed(1, Frames.MAX_FRAME_SIZE)
+                .forEach(index -> {
+                    String formattedFrameIndex = centerString(String.format(FRAME_INDEX_FORMAT, index));
+                    resultBuilder.append(formattedFrameIndex).append(DELIMITER);
+                });
     }
 
     private void appendBody(BowlingGame bowlingGame, StringBuilder resultBuilder) {

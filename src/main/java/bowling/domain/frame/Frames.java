@@ -9,11 +9,11 @@ import java.util.stream.Stream;
 public class Frames {
     public static final int MAX_FRAME_SIZE = 10;
     private final List<Frame> value;
-    private Frame currentFrame;
+    private int currentIndex;
 
     private Frames() {
         value = initFrames();
-        currentFrame = value.get(0);
+        currentIndex = 0;
     }
 
     public static Frames init() {
@@ -41,11 +41,15 @@ public class Frames {
     }
 
     public void setKnockDownPins(KnockDownPins knockDownPins) {
-        currentFrame = currentFrame.setKnockDownPins(knockDownPins);
+        Frame currenctFrame = value.get(currentIndex);
+        currenctFrame.setKnockDownPins(knockDownPins);
+        if (currenctFrame.isEnd()) {
+            currentIndex++;
+        }
     }
 
     public int getCurrentFrameIndex() {
-        return currentFrame.getIndex();
+        return currentIndex + 1;
     }
 
     public Stream<Frame> stream() {

@@ -1,8 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.KnockDownPins;
 import bowling.domain.pitchings.NormalFramePitchings;
-import bowling.domain.pitchings.Pitchings;
 
 public class NormalFrame extends Frame {
     private final int index;
@@ -28,21 +26,6 @@ public class NormalFrame extends Frame {
 
         nextFrame = new NormalFrame(nextFrameIndex);
         return nextFrame;
-    }
-
-    @Override
-    public Frame setKnockDownPins(KnockDownPins knockDownPins) {
-        Pitchings pitchings = super.getPitchings();
-        pitchings.addPitching(knockDownPins);
-        if (pitchings.isEnd()) {
-            return nextFrame;
-        }
-        return this;
-    }
-
-    @Override
-    public int getIndex() {
-        return index;
     }
 
     @Override
