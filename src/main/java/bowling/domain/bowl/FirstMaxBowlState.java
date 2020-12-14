@@ -4,18 +4,14 @@ import bowling.domain.frame.Pin;
 
 import static bowling.domain.frame.FrameEnum.STRIKE;
 
-class FirstBowlState extends BowlState {
-    FirstBowlState() {
-        super();
-    }
-
-    FirstBowlState(BowlState state) {
+class FirstMaxBowlState extends BowlState {
+    FirstMaxBowlState(BowlState state) {
         super(state);
     }
 
     @Override
     int getFrameNumberAdder() {
-        return 1;
+        return 0;
     }
 
     @Override
@@ -32,8 +28,8 @@ class FirstBowlState extends BowlState {
     @Override
     void updateState(Bowl bowl) {
         BowlState nextState = getFrameEnum() == STRIKE
-                ? new FinishedBowlState(this)
-                : new SecondBowlState(this);
+                ? new StrikeBonusBowlState(this)
+                : new SecondMaxBowlState(this);
         bowl.setState(nextState);
     }
 }

@@ -39,11 +39,11 @@ public class Bowl {
     }
 
     public int getFrameNumber() {
-        return frames.size() + 1;
+        return frames.size() + state.getFrameNumberAdder();
     }
 
-    boolean isOverMaxFrame() {
-        return getFrameNumber() > MAX_FRAME_NUMBER;
+    boolean isMaxFrame() {
+        return getFrameNumber() + 1 >= MAX_FRAME_NUMBER;
     }
 
     private FrameEnumsDto exportFrameEnumsDto() {

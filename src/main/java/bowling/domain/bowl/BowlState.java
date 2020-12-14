@@ -29,6 +29,8 @@ abstract class BowlState {
         return currentFrame.getFrameEnum();
     }
 
+    abstract int getFrameNumberAdder();
+
     abstract boolean isPlayable();
 
     abstract void addPin(Pin pin, Bowl bowl);

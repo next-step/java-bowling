@@ -2,20 +2,16 @@ package bowling.domain.bowl;
 
 import bowling.domain.frame.Pin;
 
-import static bowling.domain.frame.FrameEnum.STRIKE;
+import static bowling.domain.frame.FrameEnum.SPARE;
 
-class FirstBowlState extends BowlState {
-    FirstBowlState() {
-        super();
-    }
-
-    FirstBowlState(BowlState state) {
+class SecondMaxBowlState extends BowlState {
+    SecondMaxBowlState(BowlState state) {
         super(state);
     }
 
     @Override
     int getFrameNumberAdder() {
-        return 1;
+        return 0;
     }
 
     @Override
@@ -25,15 +21,14 @@ class FirstBowlState extends BowlState {
 
     @Override
     void addPin(Pin pin, Bowl bowl) {
-        addNextFrame(bowl);
         updateCurrentFrame(pin);
     }
 
     @Override
     void updateState(Bowl bowl) {
-        BowlState nextState = getFrameEnum() == STRIKE
-                ? new FinishedBowlState(this)
-                : new SecondBowlState(this);
+        BowlState nextState = getFrameEnum() == SPARE
+                ? new SpareBonusBowlState(this)
+                : new GameOverBowlState(this);
         bowl.setState(nextState);
     }
 }

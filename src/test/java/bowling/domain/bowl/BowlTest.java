@@ -189,7 +189,7 @@ class BowlTest {
         bowl.addPin(Pin.of(8));
         assertAll(
                 () -> assertThat(bowl.getFrameNumber())
-                        .isEqualTo(6),
+                        .isEqualTo(5),
                 () -> assertThat(toPinList(bowl))
                         .isEqualTo(Arrays.asList(10, 1, 9, 4, 5, 10, 8)),
                 () -> assertThat(toFrameList(bowl))

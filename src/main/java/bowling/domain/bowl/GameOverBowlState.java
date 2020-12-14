@@ -8,6 +8,11 @@ class GameOverBowlState extends BowlState {
     }
 
     @Override
+    int getFrameNumberAdder() {
+        return 0;
+    }
+
+    @Override
     boolean isPlayable() {
         return false;
     }
