@@ -19,7 +19,7 @@ public class QuestionTest {
 
     @Test
     void delete() throws CannotDeleteException {
-        assertThat(question.delete(UserTest.JAVAJIGI, 1L)).hasSize(1);
+        assertThat(question.delete(UserTest.JAVAJIGI)).hasSize(1);
         assertThat(question.isDeleted()).isTrue();
     }
 }

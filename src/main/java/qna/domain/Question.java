@@ -77,12 +77,12 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public List<DeleteHistory> delete(User loginUser, long questionId)
+    public List<DeleteHistory> delete(User loginUser)
             throws CannotDeleteException {
         validateAuthorized(loginUser);
         hasAnswers(loginUser);
         setDeleted();
-        return setDeleteHistories(questionId);
+        return setDeleteHistories(super.getId());
     }
 
     private void validateAuthorized(User loginUser) throws CannotDeleteException {
