@@ -66,6 +66,7 @@ public class NormalFrame extends Frame {
                 .sum();
     }
 
+    @Override
     public Pitching getNextPitching() {
         List<Pitching> value = getPitchings().getValue();
         if (value.isEmpty()) {
@@ -74,6 +75,7 @@ public class NormalFrame extends Frame {
         return value.get(0);
     }
 
+    @Override
     public Pitching getNextAndNextPitching() {
         List<Pitching> value = getPitchings().getValue();
         if (!value.isEmpty() && value.get(0) == Pitching.STRIKE) {

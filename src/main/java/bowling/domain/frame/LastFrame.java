@@ -3,6 +3,8 @@ package bowling.domain.frame;
 import bowling.domain.Pitching;
 import bowling.domain.pitchings.LastFramePitchings;
 
+import java.util.List;
+
 public class LastFrame extends Frame {
     private static final String NEXT_FRAME_INVOKE_ERR_MSG = "LastFrame은 NextFrame이 존재하지 않습니다.";
     private final int index;
@@ -23,17 +25,32 @@ public class LastFrame extends Frame {
 
     @Override
     public Pitching getNextPitching() {
-        return null;
+        List<Pitching> value = getPitchings().getValue();
+        if (value.isEmpty()) {
+            return null;
+        }
+        return value.get(0);
     }
 
     @Override
     public Pitching getNextAndNextPitching() {
-        return null;
+        List<Pitching> value = getPitchings().getValue();
+        if (value.size() < 2) {
+            return null;
+        }
+        return value.get(1);
     }
 
     @Override
     public Integer getScore() {
-        return 0;
+        List<Pitching> value = getPitchings().getValue();
+        if ((value.contains(Pitching.STRIKE) || value.contains(Pitching.SPARE)) && value.size() < 3) {
+            return null;
+        }
+
+        return value.stream()
+                .mapToInt(Pitching::getScore)
+                .sum();
     }
 
     @Override

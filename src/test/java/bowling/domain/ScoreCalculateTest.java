@@ -172,6 +172,6 @@ public class ScoreCalculateTest {
         frame9.setKnockDownPins(KnockDownPins.valueOf(5));
         frame9.setKnockDownPins(KnockDownPins.valueOf(5));
 
-        assertThat(lastFrame.getScore()).isEqualTo(null);
+        assertThat(frame9.getScore()).isEqualTo(null);
     }
 }
