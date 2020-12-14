@@ -1,8 +1,10 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.service.Answers;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,12 +86,17 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public Answers getAnswers() {
+        return new Answers(this, answers);
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public DeleteHistory delete() {
+        setDeleted(true);
+        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
     }
 }
