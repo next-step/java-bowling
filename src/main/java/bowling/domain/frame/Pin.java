@@ -30,7 +30,7 @@ public class Pin {
         return map.get(count);
     }
 
-    public int sum(int countOfPins) {
+    int sum(int countOfPins) {
         return countOfPins + this.countOfPins;
     }
 

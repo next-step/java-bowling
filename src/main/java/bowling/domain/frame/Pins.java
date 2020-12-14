@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-public class Pins {
+class Pins {
     // NOTE: get 에서의 bigO 를 1로 보장하기 위해, ArrayList 사용
     private final List<Pin> pins = new ArrayList<>();
 
@@ -18,7 +18,7 @@ public class Pins {
         pins.add(pin);
     }
 
-    public int size() {
+    int size() {
         return pins.size();
     }
 

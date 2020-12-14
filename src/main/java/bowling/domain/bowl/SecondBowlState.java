@@ -2,13 +2,13 @@ package bowling.domain.bowl;
 
 import bowling.domain.frame.Pin;
 
-public class SecondBowlState extends BowlState {
+class SecondBowlState extends BowlState {
     SecondBowlState(BowlState state) {
         super(state);
     }
 
     @Override
-    public boolean isPlayable() {
+    boolean isPlayable() {
         return true;
     }
 

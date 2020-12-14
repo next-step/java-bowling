@@ -2,7 +2,7 @@ package bowling.domain.bowl;
 
 import bowling.domain.frame.Pin;
 
-public class FirstBowlState extends BowlState {
+class FirstBowlState extends BowlState {
     FirstBowlState() {
         super();
     }
@@ -12,7 +12,7 @@ public class FirstBowlState extends BowlState {
     }
 
     @Override
-    public boolean isPlayable() {
+    boolean isPlayable() {
         return true;
     }
 
