@@ -27,6 +27,10 @@ public class Player {
         bowl.addPin(function.apply(this));
     }
 
+    public void updateBowl() {
+        bowl.update();
+    }
+
     PlayerDto exportPlayerDto() {
         return new PlayerDto(name, bowl.exportBowlDto());
     }

@@ -1,5 +1,7 @@
 package bowling.domain.bowl;
 
+import bowling.domain.frame.Pin;
+
 public class SecondBowlState extends BowlState {
 
     SecondBowlState(BowlState state) {
@@ -12,13 +14,15 @@ public class SecondBowlState extends BowlState {
     }
 
     @Override
+    void addPin(Pin pin, Bowl bowl) {
+        updateCurrentFrame(pin);
+    }
+
+    @Override
     void updateState(Bowl bowl) {
-        boolean isLast = isLast();
-        BowlState nextState = isLast && isSpare()
-                ? new SpareBonusBowlState(this)
-                : isLast
-                ? new GameOverBowlState(this)
-                : new FirstBowlState(this);
+        BowlState nextState = isSpare()
+                ? new SpareFinishedBowlState(this)
+                : new MissFinishedBowlState(this);
         bowl.setState(nextState);
     }
 }

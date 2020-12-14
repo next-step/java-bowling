@@ -26,6 +26,11 @@ public class Bowl {
 
     public void addPin(Pin pin) {
         state.addPin(pin, this);
+        update();
+    }
+
+    public void update() {
+        state.updateState(this);
     }
 
     public boolean isPlayable() {
@@ -33,11 +38,13 @@ public class Bowl {
     }
 
     public int getFrameNumber() {
-        return state.getFrameNumber();
+        return frames.size() + 1;
     }
 
     private FrameEnumsDto exportFrameEnumsDto() {
-        return frames.stream()
+        return (frames.size() > 10
+                ? frames.subList(0, 10)
+                : frames).stream()
                 .map(Frame::exportFrameDto)
                 .collect(collectingAndThen(toList(), FrameEnumsDto::new));
     }

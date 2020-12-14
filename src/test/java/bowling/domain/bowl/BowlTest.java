@@ -20,6 +20,7 @@ import java.util.List;
 import static bowling.asset.Const.MAX_FRAME_NO;
 import static bowling.domain.frame.FrameEnum.*;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -105,7 +106,9 @@ class BowlTest {
     @DisplayName("STRIKE 를 두번 치는 시나리오 테스트")
     void scenario_strike() {
         bowl.addPin(Pin.of(10));
+        bowl.update();
         bowl.addPin(Pin.of(10));
+        bowl.update();
         assertAll(
                 () -> assertThat(bowl.getFrameNumber())
                         .isEqualTo(3),
@@ -122,10 +125,13 @@ class BowlTest {
     @DisplayName("STRIKE, STRIKE, SPARE 를 치는 시나리오 테스트")
     void scenario_strike_spare() {
         bowl.addPin(Pin.of(10));
+        bowl.update();
         bowl.addPin(Pin.of(10));
+        bowl.update();
 
         bowl.addPin(Pin.of(1));
         bowl.addPin(Pin.of(9));
+        bowl.update();
         assertAll(
                 () -> assertThat(bowl.getFrameNumber())
                         .isEqualTo(4),
@@ -142,12 +148,15 @@ class BowlTest {
     @DisplayName("STRIKE, SPARE, MISS 를 치는 시나리오 테스트")
     void scenario_strike_spare_miss() {
         bowl.addPin(Pin.of(10));
+        bowl.update();
 
         bowl.addPin(Pin.of(1));
         bowl.addPin(Pin.of(9));
+        bowl.update();
 
         bowl.addPin(Pin.of(4));
         bowl.addPin(Pin.of(5));
+        bowl.update();
         assertAll(
                 () -> assertThat(bowl.getFrameNumber())
                         .isEqualTo(4),
@@ -164,34 +173,99 @@ class BowlTest {
     @DisplayName("UNFINISHED 시나리오 테스트")
     void scenario_unfinished() {
         bowl.addPin(Pin.of(10));
+        bowl.update();
 
         bowl.addPin(Pin.of(1));
         bowl.addPin(Pin.of(9));
+        bowl.update();
 
         bowl.addPin(Pin.of(4));
         bowl.addPin(Pin.of(5));
+        bowl.update();
 
         bowl.addPin(Pin.of(10));
+        bowl.update();
 
         bowl.addPin(Pin.of(8));
         assertAll(
                 () -> assertThat(bowl.getFrameNumber())
-                        .isEqualTo(5),
+                        .isEqualTo(6),
                 () -> assertThat(toPinList(bowl))
                         .isEqualTo(Arrays.asList(10, 1, 9, 4, 5, 10, 8)),
                 () -> assertThat(toFrameList(bowl))
-                        .isEqualTo(Arrays.asList(STRIKE, SPARE, MISS, STRIKE)),
+                        .isEqualTo(Arrays.asList(STRIKE, SPARE, MISS, STRIKE, UNFINISHED)),
                 () -> assertThat(toScoreList(bowl))
                         .isEqualTo(Arrays.asList(20, 34, 43))
         );
     }
 
     @Test
-    @DisplayName("STRIKE 만 끝까지 치는 시나리오 테스트")
-    void scenario_strike_full() {
+    @DisplayName("STRIKE 만 finish 까지 치는 시나리오 테스트")
+    void scenario_strike_finish() {
         int countOfPins = 10;
         while (bowl.isPlayable()) {
             bowl.addPin(Pin.of(countOfPins));
+        }
+        List<FrameEnum> frameList = toFrameList(bowl);
+        List<Integer> scoreList = toScoreList(bowl);
+
+        assertAll(
+                () -> assertThat(toPinList(bowl))
+                        .isEqualTo(singletonList(10)),
+                () -> assertThat(frameList)
+                        .isEqualTo(singletonList(STRIKE)),
+                () -> assertThat(scoreList)
+                        .isEqualTo(emptyList())
+        );
+    }
+
+    @Test
+    @DisplayName("SPARE 만 finish 까지 치는 시나리오 테스트")
+    void scenario_spare_finish() {
+        int countOfPins = 5;
+        while (bowl.isPlayable()) {
+            bowl.addPin(Pin.of(countOfPins));
+        }
+        List<FrameEnum> frameList = toFrameList(bowl);
+        List<Integer> scoreList = toScoreList(bowl);
+
+        assertAll(
+                () -> assertThat(toPinList(bowl))
+                        .isEqualTo(Arrays.asList(5, 5)),
+                () -> assertThat(frameList)
+                        .isEqualTo(singletonList(SPARE)),
+                () -> assertThat(scoreList)
+                        .isEqualTo(emptyList())
+        );
+    }
+
+    @Test
+    @DisplayName("MISS 만 finish 까지 치는 시나리오 테스트")
+    void scenario_miss_finish() {
+        int countOfPins = 3;
+        while (bowl.isPlayable()) {
+            bowl.addPin(Pin.of(countOfPins));
+        }
+        List<FrameEnum> frameList = toFrameList(bowl);
+        List<Integer> scoreList = toScoreList(bowl);
+
+        assertAll(
+                () -> assertThat(toPinList(bowl))
+                        .isEqualTo(Arrays.asList(3, 3)),
+                () -> assertThat(frameList)
+                        .isEqualTo(singletonList(MISS)),
+                () -> assertThat(scoreList)
+                        .isEqualTo(singletonList(6))
+        );
+    }
+
+
+    @Test
+    @DisplayName("STRIKE 만 game_over 까지 치는 시나리오 테스트")
+    void scenario_strike_game_over() {
+        int countOfPins = 10;
+        while (bowl.isPlayable()) {
+            play(countOfPins, bowl);
         }
         List<Integer> pinList = new LinkedList<>();
         List<FrameEnum> frameList = toFrameList(bowl);
@@ -215,11 +289,11 @@ class BowlTest {
     }
 
     @Test
-    @DisplayName("SPARE 만 끝까지 치는 시나리오 테스트")
-    void scenario_spare_full() {
+    @DisplayName("SPARE 만 game_over 까지 치는 시나리오 테스트")
+    void scenario_spare_game_over() {
         int countOfPins = 5;
         while (bowl.isPlayable()) {
-            bowl.addPin(Pin.of(countOfPins));
+            play(countOfPins, bowl);
         }
         List<Integer> pinList = new LinkedList<>();
         List<FrameEnum> frameList = toFrameList(bowl);
@@ -239,11 +313,11 @@ class BowlTest {
     }
 
     @Test
-    @DisplayName("MISS 만 끝까지 치는 시나리오 테스트")
-    void scenario_miss_full() {
+    @DisplayName("MISS 만 game_over 까지 치는 시나리오 테스트")
+    void scenario_miss_game_over() {
         int countOfPins = 3;
         while (bowl.isPlayable()) {
-            bowl.addPin(Pin.of(countOfPins));
+            play(countOfPins, bowl);
         }
         List<Integer> pinList = new LinkedList<>();
         List<FrameEnum> frameList = toFrameList(bowl);
@@ -260,5 +334,12 @@ class BowlTest {
                 () -> assertThat(scoreList)
                         .isEqualTo(Arrays.asList(6, 12, 18, 24, 30, 36, 42, 48, 54, 60))
         );
+    }
+
+    private void play(int countOfPins, Bowl bowl) {
+        while (bowl.isPlayable()) {
+            bowl.addPin(Pin.of(countOfPins));
+        }
+        bowl.update();
     }
 }

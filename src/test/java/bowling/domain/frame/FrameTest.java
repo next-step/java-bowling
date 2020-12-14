@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.exception.BadCountOfPinsException;
+import bowling.exception.PinsOutOfRangeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,10 @@ class FrameTest {
                 () -> assertThat(frame.exportFrameDto().getFrameEnum())
                         .isEqualTo(FrameEnum.UNFINISHED),
                 () -> assertThat(frame.hasScore())
-                        .isFalse()
+                        .isFalse(),
+                () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
+                        .isThrownBy(() -> frame.getCountOfPins())
+                        .withMessage("pins 의 범위를 벗어난 index 입니다.")
         );
     }
 
@@ -50,11 +54,22 @@ class FrameTest {
                         .isEqualTo(FrameEnum.STRIKE),
                 () -> assertThat(frame.hasScore())
                         .isFalse(),
+                () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
+                        .isThrownBy(() -> frame.getCountOfPins())
+                        .withMessage("pins 의 범위를 벗어난 index 입니다."),
+
                 () -> assertDoesNotThrow(() -> {
                     frame.addPin(Pin.of(10));
                     frame.addPin(Pin.of(5));
                     frame.addPin(Pin.of(3));
-                })
+                }),
+
+                () -> assertThat(frame.exportFrameDto().getFrameEnum())
+                        .isEqualTo(FrameEnum.STRIKE),
+                () -> assertThat(frame.hasScore())
+                        .isTrue(),
+                () -> assertThat(frame.getCountOfPins())
+                        .isEqualTo(25)
         );
     }
 
@@ -68,11 +83,22 @@ class FrameTest {
                         .isEqualTo(FrameEnum.SPARE),
                 () -> assertThat(frame.hasScore())
                         .isFalse(),
+                () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
+                        .isThrownBy(() -> frame.getCountOfPins())
+                        .withMessage("pins 의 범위를 벗어난 index 입니다."),
+
                 () -> assertDoesNotThrow(() -> {
                     frame.addPin(Pin.of(10));
                     frame.addPin(Pin.of(5));
                     frame.addPin(Pin.of(3));
-                })
+                }),
+
+                () -> assertThat(frame.exportFrameDto().getFrameEnum())
+                        .isEqualTo(FrameEnum.SPARE),
+                () -> assertThat(frame.hasScore())
+                        .isTrue(),
+                () -> assertThat(frame.getCountOfPins())
+                        .isEqualTo(20)
         );
     }
 
@@ -86,11 +112,21 @@ class FrameTest {
                         .isEqualTo(FrameEnum.MISS),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
+                () -> assertThat(frame.getCountOfPins())
+                        .isEqualTo(9),
+
                 () -> assertDoesNotThrow(() -> {
                     frame.addPin(Pin.of(10));
                     frame.addPin(Pin.of(5));
                     frame.addPin(Pin.of(3));
-                })
+                }),
+
+                () -> assertThat(frame.exportFrameDto().getFrameEnum())
+                        .isEqualTo(FrameEnum.MISS),
+                () -> assertThat(frame.hasScore())
+                        .isTrue(),
+                () -> assertThat(frame.getCountOfPins())
+                        .isEqualTo(9)
         );
     }
 }

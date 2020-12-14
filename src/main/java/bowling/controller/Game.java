@@ -25,6 +25,7 @@ class Game {
             player.addPin(this::getPin);
             View.printPlayers(players.exportPlayersDto());
         }
+        player.updateBowl();
     }
 
     private Player getPlayer() {

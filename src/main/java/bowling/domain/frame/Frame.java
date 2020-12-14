@@ -25,8 +25,7 @@ public class Frame {
 
     public Frame generateNextFrame() {
         Pins pins = state.getPins();
-        FrameState nextState = new InitialFrameState(pins, pins.size());
-        return new Frame(nextState);
+        return new Frame(new InitialFrameState(pins, pins.size()));
     }
 
     public boolean hasScore() {

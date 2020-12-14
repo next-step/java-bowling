@@ -8,8 +8,8 @@ import bowling.dto.PinsDto;
 import static bowling.asset.Const.MAX_FRAME_NO;
 
 abstract class BowlState {
-    private int frameNumber = 1;
     private Frame currentFrame;
+    private int frameNumber = 1;
 
     BowlState() {
         currentFrame = new Frame();
@@ -20,18 +20,14 @@ abstract class BowlState {
         currentFrame = state.currentFrame;
     }
 
-    int getFrameNumber() {
-        return frameNumber;
+    void updateCurrentFrame(Pin pin) {
+        currentFrame.addPin(pin);
     }
 
-    void addPin(Pin pin, Bowl bowl) {
-        currentFrame.addPin(pin);
-        if (isFinished()) {
-            bowl.addFrame(currentFrame);
-            currentFrame = currentFrame.generateNextFrame();
-            frameNumber++;
-        }
-        updateState(bowl);
+    void addNextFrame(Bowl bowl) {
+        currentFrame = currentFrame.generateNextFrame();
+        bowl.addFrame(currentFrame);
+        frameNumber = bowl.getFrameNumber();
     }
 
     boolean isLast() {
@@ -46,11 +42,9 @@ abstract class BowlState {
         return currentFrame.getFrameEnum() == FrameEnum.SPARE;
     }
 
-    private boolean isFinished() {
-        return currentFrame.getFrameEnum() != FrameEnum.UNFINISHED;
-    }
-
     abstract boolean isPlayable();
+
+    abstract void addPin(Pin pin, Bowl bowl);
 
     abstract void updateState(Bowl bowl);
 

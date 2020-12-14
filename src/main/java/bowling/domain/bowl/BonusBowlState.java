@@ -1,5 +1,7 @@
 package bowling.domain.bowl;
 
+import bowling.domain.frame.Pin;
+
 class BonusBowlState extends BowlState {
     private int leftBonus;
 
@@ -11,6 +13,11 @@ class BonusBowlState extends BowlState {
     @Override
     boolean isPlayable() {
         return true;
+    }
+
+    @Override
+    void addPin(Pin pin, Bowl bowl) {
+        updateCurrentFrame(pin);
     }
 
     @Override
