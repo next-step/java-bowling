@@ -12,7 +12,7 @@ class FramesTest {
     @Test
     void bowling_프레임_마지막_직전_까지_소진() {
         Frames frames = new Frames();
-        for(int i = FrameNumber.MIN_FRAME_NUMBER; i<FrameNumber.MAX_FRAME_NUMBER; i++){
+        for (int i = FrameNumber.MIN_FRAME_NUMBER; i < FrameNumber.MAX_FRAME_NUMBER; i++) {
             assertThat(frames.nowFrameNumber()).isEqualTo(i);
             frames.bowling(10);
             assertThat(frames.isFinished()).isFalse();
@@ -38,6 +38,18 @@ class FramesTest {
         assertThat(frames.nowFrameNumber()).isEqualTo(FrameNumber.MAX_FRAME_NUMBER);
         frames.bowling(10);
         frames.bowling(10);
+        frames.bowling(10);
+        assertThat(frames.isFinished()).isTrue();
+    }
+
+    @Test
+    void bowling_프레임_모두_소진_시_정상_스페어_후_미스() {
+        Frames frames = getBeforeLastFrames();
+
+        assertThat(frames.nowFrameNumber()).isEqualTo(FrameNumber.MAX_FRAME_NUMBER);
+        frames.bowling(9);
+        frames.bowling(1);
+        frames.bowling(9);
         assertThat(frames.isFinished()).isTrue();
     }
 
@@ -52,9 +64,9 @@ class FramesTest {
         assertThat(frames.isFinished()).isTrue();
     }
 
-    private Frames getBeforeLastFrames(){
+    private Frames getBeforeLastFrames() {
         Frames frames = new Frames();
-        for(int i = FrameNumber.MIN_FRAME_NUMBER; i<FrameNumber.MAX_FRAME_NUMBER; i++){
+        for (int i = FrameNumber.MIN_FRAME_NUMBER; i < FrameNumber.MAX_FRAME_NUMBER; i++) {
             frames.bowling(10);
         }
         return frames;

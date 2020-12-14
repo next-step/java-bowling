@@ -35,10 +35,10 @@ class NormalFrameTest {
     @Test
     void bowling_마지막_frmae_반환() {
         Frame frame = NormalFrame.createFirstFrame();
-        for(int i = FrameNumber.MIN_FRAME_NUMBER; i <FrameNumber.MAX_FRAME_NUMBER; i++){
+        for (int i = FrameNumber.MIN_FRAME_NUMBER; i < FrameNumber.MAX_FRAME_NUMBER; i++) {
             frame = frame.bowling(10);
         }
 
-        assertThat(frame instanceof FinalFrame).isTrue();
+        assertThat(frame).isInstanceOf(FinalFrame.class);
     }
 }

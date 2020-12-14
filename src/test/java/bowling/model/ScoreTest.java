@@ -20,7 +20,7 @@ class ScoreTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1,11})
+    @ValueSource(ints = {-1, 11})
     void from_비정상(int errorNumber) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Score.from(errorNumber))
@@ -42,4 +42,30 @@ class ScoreTest {
                 .isThrownBy(() -> score.add(1))
                 .withMessage("허용할 수 없는 값입니다.");
     }
+
+    @Test
+    void subtraction_정상() {
+        Score score = Score.from(10);
+
+        IntStream.rangeClosed(0, 10)
+                .forEach(
+                        number -> assertThat(subtraction(score, number))
+                                .isEqualTo(Score.from(10 - number))
+                );
+
+
+    }
+
+    private Score subtraction(Score score, int number) {
+        return score.subtraction(Score.from(number));
+    }
+
+    @Test
+    void subtraction_비정상() {
+        Score score = Score.from(9);
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> score.subtraction(Score.from(10)))
+                .withMessage("허용할 수 없는 값입니다.");
+    }
+
 }

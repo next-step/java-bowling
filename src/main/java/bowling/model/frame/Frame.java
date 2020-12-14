@@ -1,21 +1,24 @@
 package bowling.model.frame;
 
-import bowling.model.state.Start;
-import bowling.model.state.State;
+import bowling.model.state.States;
 
 public abstract class Frame implements Comparable<Frame> {
     protected FrameNumber frameNumber;
-    protected State state = new Start();
+    protected States states = new States();
 
     public abstract Frame bowling(int fallenPins);
 
-    public boolean isFinished(){
-        return state.isFinished();
+    public boolean isFinished() {
+        return states.isFinished();
+    }
+
+    public boolean isStartFrame() {
+        return states.isStart();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Frame){
+        if (obj instanceof Frame) {
             return frameNumber.equals(((Frame) obj).frameNumber);
         }
 
@@ -29,6 +32,11 @@ public abstract class Frame implements Comparable<Frame> {
 
     @Override
     public int compareTo(Frame o) {
-        return FrameNumber.compare(this.frameNumber, o.frameNumber);
+        return frameNumber.compareTo(o.frameNumber);
+    }
+
+    @Override
+    public String toString() {
+        return states.toString();
     }
 }

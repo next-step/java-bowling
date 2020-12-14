@@ -9,7 +9,7 @@ import bowling.view.ResultView;
 
 public class BowlingController {
 
-    public void run(){
+    public void run() {
         String userName = InputView.printInputUserNameMessage();
         User user = User.from(userName);
         FrameResult frameResult = FrameResult.empty;
@@ -19,7 +19,7 @@ public class BowlingController {
 
         Frames frames = new Frames();
 
-        while (!frames.isFinished()){
+        while (!frames.isFinished()) {
             int fallenPins = InputView.printInputFallenPinsMessage(frames.nowFrameNumber());
             frames.bowling(fallenPins);
             frameResult = frames.result();

@@ -57,6 +57,6 @@ public class Frames {
     }
 
     private boolean isNotStartState(Frame frame) {
-        return !(frame.state instanceof Start) || frame instanceof FinalFrame;
+        return !frame.isStartFrame();
     }
 }

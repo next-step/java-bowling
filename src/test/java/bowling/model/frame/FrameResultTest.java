@@ -30,7 +30,7 @@ class FrameResultTest {
 
         boolean allDummyResult = FrameResult.empty.stream()
                 .map(result -> result.length() == 0)
-                .reduce((x,y) -> x && y)
+                .reduce((x, y) -> x && y)
                 .orElse(false);
 
         assertThat(allDummyResult).isTrue();

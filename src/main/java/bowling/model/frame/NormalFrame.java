@@ -1,27 +1,27 @@
 package bowling.model.frame;
 
-public class NormalFrame extends Frame{
+public class NormalFrame extends Frame {
 
-    private NormalFrame(FrameNumber frameNumber){
+    private NormalFrame(FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
     }
 
-    public static NormalFrame createFirstFrame(){
+    public static NormalFrame createFirstFrame() {
         return new NormalFrame(FrameNumber.from(1));
     }
 
-    private NormalFrame next(){
+    private NormalFrame next() {
         return new NormalFrame(frameNumber.next());
     }
 
-    public Frame bowling(int fallenPins){
-        state = state.bowling(fallenPins);
+    public Frame bowling(int fallenPins) {
+        states.bowling(fallenPins);
 
-        if(frameNumber.beforeLast() && state.isFinished()){
+        if (frameNumber.beforeLast() && states.isFinished()) {
             return new FinalFrame();
         }
 
-        if(state.isFinished()){
+        if (states.isFinished()) {
             return next();
         }
 
@@ -30,6 +30,6 @@ public class NormalFrame extends Frame{
 
     @Override
     public String toString() {
-        return state.toString();
+        return states.toString();
     }
 }

@@ -5,7 +5,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class FrameNumber {
+public class FrameNumber implements Comparable<FrameNumber> {
     private static final String FRAME_NUMBER_ERROR = "범위를 벗어난 프레임 수 입니다.";
     private static final int PLACE_VALUE = 2;
 
@@ -46,8 +46,8 @@ public class FrameNumber {
         return String.format("%0" + PLACE_VALUE + "d", frameNumber);
     }
 
-
-    public static int compare(FrameNumber o1, FrameNumber o2) {
-        return o1.frameNumber - o2.frameNumber;
+    @Override
+    public int compareTo(FrameNumber o) {
+        return Integer.compare(this.frameNumber, o.frameNumber);
     }
 }

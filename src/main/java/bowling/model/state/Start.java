@@ -4,13 +4,13 @@ import bowling.model.Score;
 import bowling.model.state.finishedState.Strike;
 
 public class Start extends State {
-    private final static String EXPRESSION = " ";
+    private static final String EXPRESSION = " ";
 
     @Override
     public State bowling(int fallenPin) {
         score = Score.from(fallenPin);
 
-        if(score.isMaxScore()){
+        if (score.isMaxScore()) {
             return Strike.from(score);
         }
 

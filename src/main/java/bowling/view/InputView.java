@@ -3,10 +3,11 @@ package bowling.view;
 import java.util.Scanner;
 
 public class InputView {
-    private final static Scanner SCANNER = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
     private static final String INPUT_USER_NAME_MESSAGE = "플레이어 이름은(3 english letters)?: ";
     private static final String INPUT_SCORE_MESSAGE = "프레임 투구 : ";
+
     private InputView() {
     }
 
@@ -15,7 +16,7 @@ public class InputView {
         return getStringFromUserInput();
     }
 
-    public static int printInputFallenPinsMessage(int frameNumber){
+    public static int printInputFallenPinsMessage(int frameNumber) {
         System.out.print(frameNumber + INPUT_SCORE_MESSAGE);
         return getIntFromUserInput();
     }
@@ -23,7 +24,8 @@ public class InputView {
     private static String getStringFromUserInput() {
         return SCANNER.nextLine();
     }
-    private static int getIntFromUserInput(){
+
+    private static int getIntFromUserInput() {
         return SCANNER.nextInt();
     }
 }
