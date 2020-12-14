@@ -7,7 +7,7 @@ public class SecondBowlState extends BowlState {
     }
 
     @Override
-    public boolean isPlayable(Bowl bowl) {
+    public boolean isPlayable() {
         return true;
     }
 

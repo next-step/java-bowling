@@ -29,7 +29,7 @@ public class Bowl {
     }
 
     public boolean isPlayable() {
-        return state.isPlayable(this);
+        return state.isPlayable();
     }
 
     public int getFrameNumber() {

@@ -35,7 +35,7 @@ abstract class BowlState {
     }
 
     boolean isLast() {
-        return frameNumber >= MAX_FRAME_NO;
+        return frameNumber > MAX_FRAME_NO;
     }
 
     boolean isStrike() {
@@ -50,7 +50,7 @@ abstract class BowlState {
         return currentFrame.getFrameEnum() != FrameEnum.UNFINISHED;
     }
 
-    abstract boolean isPlayable(Bowl bowl);
+    abstract boolean isPlayable();
 
     abstract void updateState(Bowl bowl);
 

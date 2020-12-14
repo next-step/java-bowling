@@ -9,13 +9,13 @@ class BonusBowlState extends BowlState {
     }
 
     @Override
-    boolean isPlayable(Bowl bowl) {
+    boolean isPlayable() {
         return true;
     }
 
     @Override
     void updateState(Bowl bowl) {
-        if (leftBonus-- <= 0) {
+        if (--leftBonus <= 0) {
             bowl.setState(new GameOverBowlState(this));
         }
     }

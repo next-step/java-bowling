@@ -6,7 +6,7 @@ public class GameOverBowlState extends BowlState {
     }
 
     @Override
-    public boolean isPlayable(Bowl bowl) {
+    public boolean isPlayable() {
         return false;
     }
 

@@ -187,16 +187,19 @@ class BowlTest {
     }
 
     @Test
-    @DisplayName("STRIKE 100번 추가하는 시나리오 테스트")
-    void scenario_strike_100() {
-        List<Integer> pinList = new LinkedList<>();
-        int pin = 10;
-        for (int i = 0; i < 100; i++) {
-            bowl.addPin(Pin.of(pin));
-            pinList.add(pin);
+    @DisplayName("STRIKE 만 끝까지 치는 시나리오 테스트")
+    void scenario_strike_full() {
+        int countOfPins = 10;
+        while (bowl.isPlayable()) {
+            bowl.addPin(Pin.of(countOfPins));
         }
+        List<Integer> pinList = new LinkedList<>();
         List<FrameEnum> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
+
+        for (int i = 0; i < MAX_FRAME_NO + 2; i++) {
+            pinList.add(countOfPins);
+        }
         assertAll(
                 () -> assertThat(toPinList(bowl))
                         .isEqualTo(pinList),
@@ -212,52 +215,50 @@ class BowlTest {
     }
 
     @Test
-    @DisplayName("SPARE 100번 추가하는 시나리오 테스트")
-    void scenario_spare_100() {
-        List<Integer> pinList = new LinkedList<>();
-        int pin = 5;
-        for (int i = 0; i < 100; i++) {
-            bowl.addPin(Pin.of(pin));
-            pinList.add(pin);
+    @DisplayName("SPARE 만 끝까지 치는 시나리오 테스트")
+    void scenario_spare_full() {
+        int countOfPins = 5;
+        while (bowl.isPlayable()) {
+            bowl.addPin(Pin.of(countOfPins));
         }
+        List<Integer> pinList = new LinkedList<>();
         List<FrameEnum> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
+
+        for (int i = 0; i < MAX_FRAME_NO * 2 + 1; i++) {
+            pinList.add(countOfPins);
+        }
         assertAll(
                 () -> assertThat(toPinList(bowl))
                         .isEqualTo(pinList),
                 () -> assertThat(frameList)
                         .isEqualTo(Arrays.asList(SPARE, SPARE, SPARE, SPARE, SPARE, SPARE, SPARE, SPARE, SPARE, SPARE)),
                 () -> assertThat(scoreList)
-                        .isEqualTo(Arrays.asList(15, 30, 45, 60, 75, 90, 105, 120, 135, 150)),
-                () -> assertThat(scoreList.size())
-                        .isEqualTo(MAX_FRAME_NO),
-                () -> assertThat(frameList.size())
-                        .isEqualTo(MAX_FRAME_NO)
+                        .isEqualTo(Arrays.asList(15, 30, 45, 60, 75, 90, 105, 120, 135, 150))
         );
     }
 
     @Test
-    @DisplayName("MISS 100번 추가하는 시나리오 테스트")
-    void scenario_miss_100() {
-        List<Integer> pinList = new LinkedList<>();
-        int pin = 3;
-        for (int i = 0; i < 100; i++) {
-            bowl.addPin(Pin.of(pin));
-            pinList.add(pin);
+    @DisplayName("MISS 만 끝까지 치는 시나리오 테스트")
+    void scenario_miss_full() {
+        int countOfPins = 3;
+        while (bowl.isPlayable()) {
+            bowl.addPin(Pin.of(countOfPins));
         }
+        List<Integer> pinList = new LinkedList<>();
         List<FrameEnum> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
+
+        for (int i = 0; i < MAX_FRAME_NO * 2; i++) {
+            pinList.add(countOfPins);
+        }
         assertAll(
                 () -> assertThat(toPinList(bowl))
                         .isEqualTo(pinList),
                 () -> assertThat(frameList)
                         .isEqualTo(Arrays.asList(MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS, MISS)),
                 () -> assertThat(scoreList)
-                        .isEqualTo(Arrays.asList(6, 12, 18, 24, 30, 36, 42, 48, 54, 60)),
-                () -> assertThat(scoreList.size())
-                        .isEqualTo(MAX_FRAME_NO),
-                () -> assertThat(frameList.size())
-                        .isEqualTo(MAX_FRAME_NO)
+                        .isEqualTo(Arrays.asList(6, 12, 18, 24, 30, 36, 42, 48, 54, 60))
         );
     }
 }
