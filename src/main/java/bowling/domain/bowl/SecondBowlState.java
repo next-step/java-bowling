@@ -3,7 +3,6 @@ package bowling.domain.bowl;
 import bowling.domain.frame.Pin;
 
 public class SecondBowlState extends BowlState {
-
     SecondBowlState(BowlState state) {
         super(state);
     }
