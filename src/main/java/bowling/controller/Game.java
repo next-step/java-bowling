@@ -9,8 +9,8 @@ class Game {
     private final Players players;
 
     Game() {
-        // int sizeOfPlayers = View.askSizeOfPlayers().getSize();
-        int sizeOfPlayers = 1;
+        int sizeOfPlayers = View.askSizeOfPlayers().getSize();
+        // int sizeOfPlayers = 1;
         players = Players.of(sizeOfPlayers, this::getPlayer);
     }
 
