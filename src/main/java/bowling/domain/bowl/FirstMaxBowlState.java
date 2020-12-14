@@ -11,7 +11,7 @@ class FirstMaxBowlState extends BowlState {
 
     @Override
     int getFrameNumberAdder() {
-        return 0;
+        return 1;
     }
 
     @Override
