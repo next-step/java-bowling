@@ -32,7 +32,7 @@ abstract class FrameState {
 
     abstract int getOffset();
 
-    abstract FrameEnum getFrameEnum();
+    abstract FrameStatus getFrameStatus();
 
     abstract void updateState(Frame frame);
 }

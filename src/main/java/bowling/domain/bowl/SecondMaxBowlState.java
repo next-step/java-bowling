@@ -2,7 +2,7 @@ package bowling.domain.bowl;
 
 import bowling.domain.frame.Pin;
 
-import static bowling.domain.frame.FrameEnum.SPARE;
+import static bowling.domain.frame.FrameStatus.SPARE;
 
 class SecondMaxBowlState extends BowlState {
     SecondMaxBowlState(BowlState state) {
@@ -26,7 +26,7 @@ class SecondMaxBowlState extends BowlState {
 
     @Override
     void updateState(Bowl bowl) {
-        BowlState nextState = getFrameEnum() == SPARE
+        BowlState nextState = getFrameStatus() == SPARE
                 ? new SpareBonusBowlState(this)
                 : new GameOverBowlState(this);
         bowl.setState(nextState);

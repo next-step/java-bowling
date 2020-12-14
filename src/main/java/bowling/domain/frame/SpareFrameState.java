@@ -11,8 +11,8 @@ class SpareFrameState extends FrameState {
     }
 
     @Override
-    FrameEnum getFrameEnum() {
-        return FrameEnum.SPARE;
+    FrameStatus getFrameStatus() {
+        return FrameStatus.SPARE;
     }
 
     @Override

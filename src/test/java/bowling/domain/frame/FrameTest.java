@@ -35,8 +35,8 @@ class FrameTest {
     void unfinished() {
         frame.addPin(Pin.of(9));
         assertAll(
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.UNFINISHED),
+                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.UNFINISHED),
                 () -> assertThat(frame.hasScore())
                         .isFalse(),
                 () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
@@ -50,8 +50,8 @@ class FrameTest {
     void strike() {
         frame.addPin(Pin.of(10));
         assertAll(
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.STRIKE),
+                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.STRIKE),
                 () -> assertThat(frame.hasScore())
                         .isFalse(),
                 () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
@@ -64,8 +64,8 @@ class FrameTest {
                     frame.addPin(Pin.of(3));
                 }),
 
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.STRIKE),
+                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.STRIKE),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
                 () -> assertThat(frame.getCountOfDownPins())
@@ -79,8 +79,8 @@ class FrameTest {
         frame.addPin(Pin.of(0));
         frame.addPin(Pin.of(10));
         assertAll(
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.SPARE),
+                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.SPARE),
                 () -> assertThat(frame.hasScore())
                         .isFalse(),
                 () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
@@ -93,8 +93,8 @@ class FrameTest {
                     frame.addPin(Pin.of(3));
                 }),
 
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.SPARE),
+                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.SPARE),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
                 () -> assertThat(frame.getCountOfDownPins())
@@ -108,8 +108,8 @@ class FrameTest {
         frame.addPin(Pin.of(0));
         frame.addPin(Pin.of(9));
         assertAll(
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.MISS),
+                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.MISS),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
                 () -> assertThat(frame.getCountOfDownPins())
@@ -121,8 +121,8 @@ class FrameTest {
                     frame.addPin(Pin.of(3));
                 }),
 
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.MISS),
+                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.MISS),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
                 () -> assertThat(frame.getCountOfDownPins())

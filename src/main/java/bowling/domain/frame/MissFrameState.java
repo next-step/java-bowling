@@ -11,8 +11,8 @@ class MissFrameState extends FrameState {
     }
 
     @Override
-    FrameEnum getFrameEnum() {
-        return FrameEnum.MISS;
+    FrameStatus getFrameStatus() {
+        return FrameStatus.MISS;
     }
 
     @Override

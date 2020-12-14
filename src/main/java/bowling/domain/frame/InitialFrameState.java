@@ -13,8 +13,8 @@ class InitialFrameState extends FrameState {
     }
 
     @Override
-    FrameEnum getFrameEnum() {
-        return FrameEnum.UNFINISHED;
+    FrameStatus getFrameStatus() {
+        return FrameStatus.UNFINISHED;
     }
 
     @Override

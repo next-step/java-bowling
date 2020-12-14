@@ -1,8 +1,8 @@
 package bowling.domain.bowl;
 
-import bowling.domain.frame.FrameEnum;
+import bowling.domain.frame.FrameStatus;
 import bowling.domain.frame.Pin;
-import bowling.dto.FrameEnumDto;
+import bowling.dto.FrameStatusDto;
 import bowling.dto.PinDto;
 import bowling.dto.ScoreDto;
 import bowling.exception.BadCountOfDownPinsException;
@@ -18,7 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static bowling.asset.Const.MAX_FRAME_NUMBER;
-import static bowling.domain.frame.FrameEnum.*;
+import static bowling.domain.frame.FrameStatus.*;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
@@ -45,13 +45,13 @@ class BowlTest {
                 .collect(toList());
     }
 
-    private List<FrameEnum> toFrameList(Bowl bowl) {
+    private List<FrameStatus> toFrameList(Bowl bowl) {
         return bowl.exportBowlDto()
                 .getFramesDto()
-                .getFrameEnumsDto()
-                .getFrameEnums()
+                .getFrameStatusesDto()
+                .getFrameStatuses()
                 .stream()
-                .map(FrameEnumDto::getFrameEnum)
+                .map(FrameStatusDto::getFrameStatus)
                 .collect(toList());
     }
 
@@ -206,7 +206,7 @@ class BowlTest {
         while (bowl.isPlayable()) {
             bowl.addPin(Pin.of(countOfDownPins));
         }
-        List<FrameEnum> frameList = toFrameList(bowl);
+        List<FrameStatus> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
         assertAll(
@@ -226,7 +226,7 @@ class BowlTest {
         while (bowl.isPlayable()) {
             bowl.addPin(Pin.of(countOfDownPins));
         }
-        List<FrameEnum> frameList = toFrameList(bowl);
+        List<FrameStatus> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
         assertAll(
@@ -246,7 +246,7 @@ class BowlTest {
         while (bowl.isPlayable()) {
             bowl.addPin(Pin.of(countOfDownPins));
         }
-        List<FrameEnum> frameList = toFrameList(bowl);
+        List<FrameStatus> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
         assertAll(
@@ -268,7 +268,7 @@ class BowlTest {
             play(countOfDownPins, bowl);
         }
         List<Integer> pinList = new LinkedList<>();
-        List<FrameEnum> frameList = toFrameList(bowl);
+        List<FrameStatus> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
         for (int i = 0; i < MAX_FRAME_NUMBER + 2; i++) {
@@ -296,7 +296,7 @@ class BowlTest {
             play(countOfDownPins, bowl);
         }
         List<Integer> pinList = new LinkedList<>();
-        List<FrameEnum> frameList = toFrameList(bowl);
+        List<FrameStatus> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
         for (int i = 0; i < MAX_FRAME_NUMBER * 2 + 1; i++) {
@@ -320,7 +320,7 @@ class BowlTest {
             play(countOfDownPins, bowl);
         }
         List<Integer> pinList = new LinkedList<>();
-        List<FrameEnum> frameList = toFrameList(bowl);
+        List<FrameStatus> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
         for (int i = 0; i < MAX_FRAME_NUMBER * 2; i++) {
