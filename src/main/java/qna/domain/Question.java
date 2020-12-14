@@ -23,7 +23,7 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private final List<Answer> answerList = new ArrayList<>();
+    private final List<Answer> originAnswers = new ArrayList<>();
 
     private Answers answers;
     private boolean deleted = false;
@@ -31,18 +31,18 @@ public class Question extends AbstractEntity {
     public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.answers = new Answers(answerList);
+        this.answers = new Answers(originAnswers);
     }
 
     public Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
-        this.answers = new Answers(answerList);
+        this.answers = new Answers(originAnswers);
     }
 
     public Question() {
-        this.answers = new Answers(answerList);
+        this.answers = new Answers(originAnswers);
     }
 
     public String getTitle() {
