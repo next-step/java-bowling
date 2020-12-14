@@ -57,5 +57,4 @@ class FinalFrameStateTest {
         assertThat(bonus instanceof FinalFrameBonusState).isTrue();
         assertThat(bonus.isDone()).isTrue();
     }
-
 }

@@ -17,4 +17,12 @@ class FallingPinCountTest {
             .isInstanceOf(BowlingException.class)
             .hasMessage(String.format("넘어진 핀 수는 0 이상 10 이하의 자연수입니다. 입력 된 수 : %d", given));
     }
+
+    @DisplayName("넘어진 볼링핀의 합이 10을 넘을 경우 Exception")
+    @Test
+    void failSumCount() {
+        assertThatThrownBy(() -> FallingPinCount.sum(FallingPinCount.fromFallingCount(9), FallingPinCount.fromFallingCount(2)))
+            .isInstanceOf(BowlingException.class)
+            .hasMessage("볼링핀은 10개를 넘을 수 없습니다!");
+    }
 }

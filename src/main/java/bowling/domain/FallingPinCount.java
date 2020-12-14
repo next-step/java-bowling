@@ -11,6 +11,7 @@ public class FallingPinCount {
     private static final int MIN_DOWN_COUNT = 0;
     private static final int MAX_DOWN_COUNT = 10;
     private static final String INVALID_COUNT = "넘어진 핀 수는 0 이상 10 이하의 자연수입니다. 입력 된 수 : %d";
+    private static final String INVALID_SUM_COUNT = "볼링핀은 10개를 넘을 수 없습니다!";
 
     private final int count;
 
@@ -27,7 +28,14 @@ public class FallingPinCount {
 
     public static FallingPinCount sum(FallingPinCount one, FallingPinCount theOther) {
         int sum = one.count + theOther.count;
+        validatePinSum(sum);
         return new FallingPinCount(sum);
+    }
+
+    private static void validatePinSum(int sum) {
+        if (MAX_DOWN_COUNT < sum) {
+            throw new BowlingException(INVALID_SUM_COUNT);
+        }
     }
 
     @Override

@@ -6,7 +6,7 @@ import bowling.domain.FallingPinCount;
 
 public class InitState implements State {
 
-    public static final String EMPTY = "";
+    private static final String EMPTY = "";
     private static final State INIT = new InitState();
 
     protected InitState() {

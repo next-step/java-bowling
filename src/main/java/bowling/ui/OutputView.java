@@ -1,7 +1,5 @@
 package bowling.ui;
 
-import static bowling.domain.state.InitState.EMPTY;
-
 import bowling.domain.game.BowlingGame;
 import bowling.domain.state.State;
 import java.util.Map;
@@ -11,6 +9,7 @@ import java.util.stream.IntStream;
 public class OutputView {
 
     private static final String AREA_PER_FRAME = "      ";
+    private static final String EMPTY = "";
     private static final String FRAME_EDGE = "|";
     private static final String NAME_HEADER = "NAME";
     private static final int DOUBLE_DIGIT_START_VALUE = 10;
