@@ -22,13 +22,14 @@ class Game {
 
     private void play(Player player) {
         while (player.isPlayable()) {
-            addPin(player, getPin(player));
+            Pin pin = getPin(player);
+            player.addPin(pin);
+            printGame();
         }
         player.updateBowl();
     }
 
-    private void addPin(Player player, Pin pin) {
-        player.addPin(pin);
+    private void printGame() {
         View.printPlayers(players.exportPlayersDto());
     }
 
