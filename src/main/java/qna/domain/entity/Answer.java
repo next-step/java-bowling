@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
+
     private static final String DELETE_ERROR = "답변을 삭제할 권한이 없습니다.";
 
     @ManyToOne(optional = false)
