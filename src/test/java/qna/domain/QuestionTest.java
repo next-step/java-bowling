@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class QuestionTest {

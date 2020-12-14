@@ -106,7 +106,7 @@ public class Question extends AbstractEntity {
     private List<DeleteHistory> setDeleteHistories(long questionId) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, writer, LocalDateTime.now()));
-        answers.delete(deleteHistories);
+        deleteHistories.addAll(answers.delete());
         return deleteHistories;
     }
 

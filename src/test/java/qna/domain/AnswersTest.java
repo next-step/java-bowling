@@ -45,9 +45,8 @@ class AnswersTest {
     }
 
     @Test
-    void name() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        answers.delete(deleteHistories);
+    void answersDelete() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>(answers.delete());
         assertThat(deleteHistories).hasSize(1);
     }
 }
