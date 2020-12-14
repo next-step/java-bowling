@@ -65,6 +65,9 @@ public enum Pitching {
     }
 
     public Integer getScore() {
+        if (this == SPARE) {
+            return 10;
+        }
         return score;
     }
 }

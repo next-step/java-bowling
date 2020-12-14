@@ -64,6 +64,9 @@ public class NormalFrame extends Frame {
 
     public Pitching getNextPitching() {
         List<Pitching> value = getPitchings().getValue();
+        if (value.isEmpty()) {
+            return null;
+        }
         return value.get(0);
     }
 
@@ -71,6 +74,10 @@ public class NormalFrame extends Frame {
         List<Pitching> value = getPitchings().getValue();
         if (!value.isEmpty() && value.get(0) == Pitching.STRIKE) {
             return nextFrame.getNextPitching();
+        }
+
+        if (value.size() < 1) {
+            return null;
         }
 
         return value.get(1);
