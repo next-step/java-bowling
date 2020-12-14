@@ -2,10 +2,8 @@ package qna.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static qna.domain.QuestionTest.Q1;
 
 public class AnswerTest {
@@ -16,18 +14,12 @@ public class AnswerTest {
 
     @BeforeEach
     void setUp() {
-        answer = new Answer(UserTest.JAVAJIGI, Q1,"");
+        answer = new Answer(UserTest.JAVAJIGI, Q1, "");
     }
 
     @Test
-    void owner() throws CannotDeleteException {
+    void owner() {
         assertThat(answer.isOwner(UserTest.JAVAJIGI)).isTrue();
     }
 
-    @Test
-    void isNotOwner() {
-        assertThatThrownBy(() -> answer.isOwner(UserTest.SANJIGI))
-                .withFailMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.")
-                .isInstanceOf(CannotDeleteException.class);
-    }
 }

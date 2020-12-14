@@ -39,9 +39,9 @@ class AnswersTest {
 
     @Test
     void givenAnotherUser_thenThrowException() {
-        assertThatThrownBy(() -> answers.isOwner(UserTest.SANJIGI))
-                .withFailMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.")
-                .isInstanceOf(CannotDeleteException.class);
+        Answer answer2 = new Answer(11L, UserTest.SANJIGI, QuestionTest.Q2, "Answers Contents2");
+        answers.add(answer2);
+        assertThat(answers.hasOthers(UserTest.JAVAJIGI)).isTrue();
     }
 
     @Test

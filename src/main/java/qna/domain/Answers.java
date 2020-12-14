@@ -1,7 +1,5 @@
 package qna.domain;
 
-import qna.CannotDeleteException;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +19,11 @@ public class Answers {
         answers.add(answer);
     }
 
-    public void isOwner(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            answer.isOwner(loginUser);
+    public boolean hasOthers(User loginUser) {
+        if (! answers.isEmpty()) {
+            return ! answers.stream().allMatch(answer -> answer.isOwner(loginUser));
         }
+        return false;
     }
 
     public List<DeleteHistory> delete() {

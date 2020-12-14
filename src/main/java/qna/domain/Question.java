@@ -80,7 +80,7 @@ public class Question extends AbstractEntity {
     public List<DeleteHistory> delete(User loginUser)
             throws CannotDeleteException {
         validateAuthorized(loginUser);
-        hasAnswers(loginUser);
+        validateHasAnswers(loginUser);
         setDeleted();
         return setDeleteHistories(super.getId());
     }
@@ -91,8 +91,10 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private void hasAnswers(User loginUser) throws CannotDeleteException {
-        answers.isOwner(loginUser);
+    private void validateHasAnswers(User loginUser) throws CannotDeleteException {
+        if (answers.hasOthers(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
     }
 
     private void setDeleted() {
