@@ -5,9 +5,11 @@ import bowling.domain.pitchings.Pitchings;
 
 public abstract class Frame {
     private final Pitchings pitchings;
+    private int score;
 
     public Frame(Pitchings pitchings) {
         this.pitchings = pitchings;
+        score = 0;
     }
 
     abstract public Frame initNextFrame();
@@ -23,4 +25,8 @@ public abstract class Frame {
     public boolean isEnd() {
         return pitchings.isEnd();
     }
+
+    public int getScore(){
+        return 30;
+    };
 }
