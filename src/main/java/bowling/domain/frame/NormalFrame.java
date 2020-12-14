@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pitching;
 import bowling.domain.pitchings.NormalFramePitchings;
+
+import java.util.List;
 
 public class NormalFrame extends Frame {
     private final int index;
@@ -26,6 +29,51 @@ public class NormalFrame extends Frame {
 
         nextFrame = new NormalFrame(nextFrameIndex);
         return nextFrame;
+    }
+
+    @Override
+    public Integer getScore() {
+        List<Pitching> value = super.getPitchings().getValue();
+        if (value.contains(Pitching.STRIKE)) {
+            Pitching nextPitching = nextFrame.getNextPitching();
+            Pitching nextAndNextPitching = nextFrame.getNextAndNextPitching();
+            if (nextPitching == null || nextAndNextPitching == null) {
+                return null;
+            }
+
+            if (nextAndNextPitching == Pitching.SPARE) {
+                return Pitching.STRIKE.getScore() + nextAndNextPitching.getScore();
+            }
+
+            return Pitching.STRIKE.getScore() + nextPitching.getScore() + nextAndNextPitching.getScore();
+        }
+
+        if (value.contains(Pitching.SPARE)) {
+            Pitching nextPitching = nextFrame.getNextPitching();
+            if (nextPitching == null) {
+                return null;
+            }
+
+            return Pitching.SPARE.getScore() + nextPitching.getScore();
+        }
+
+        return value.stream()
+                .mapToInt(Pitching::getScore)
+                .sum();
+    }
+
+    public Pitching getNextPitching() {
+        List<Pitching> value = getPitchings().getValue();
+        return value.get(0);
+    }
+
+    public Pitching getNextAndNextPitching() {
+        List<Pitching> value = getPitchings().getValue();
+        if (!value.isEmpty() && value.get(0) == Pitching.STRIKE) {
+            return nextFrame.getNextPitching();
+        }
+
+        return value.get(1);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.KnockDownPins;
+import bowling.domain.Pitching;
 import bowling.domain.pitchings.Pitchings;
 
 public abstract class Frame {
@@ -26,7 +27,9 @@ public abstract class Frame {
         return pitchings.isEnd();
     }
 
-    public int getScore(){
-        return 30;
-    };
+    public abstract Integer getScore();
+
+    public abstract Pitching getNextPitching();
+
+    public abstract Pitching getNextAndNextPitching();
 }

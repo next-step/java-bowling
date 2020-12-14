@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pitching;
 import bowling.domain.pitchings.LastFramePitchings;
 
 public class LastFrame extends Frame {
@@ -18,6 +19,21 @@ public class LastFrame extends Frame {
     @Override
     public Frame initNextFrame() {
         throw new IllegalStateException(NEXT_FRAME_INVOKE_ERR_MSG);
+    }
+
+    @Override
+    public Pitching getNextPitching() {
+        return null;
+    }
+
+    @Override
+    public Pitching getNextAndNextPitching() {
+        return null;
+    }
+
+    @Override
+    public Integer getScore() {
+        return 0;
     }
 
     @Override

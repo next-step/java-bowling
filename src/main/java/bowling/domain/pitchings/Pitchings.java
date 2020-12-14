@@ -3,6 +3,7 @@ package bowling.domain.pitchings;
 import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 public interface Pitchings extends Iterable<Pitching> {
@@ -11,4 +12,6 @@ public interface Pitchings extends Iterable<Pitching> {
     boolean isEnd();
 
     Stream<Pitching> stream();
+
+    List<Pitching> getValue();
 }

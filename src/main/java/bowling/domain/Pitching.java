@@ -63,4 +63,8 @@ public enum Pitching {
             throw new IllegalArgumentException(INVALID_REMAIN_PINS_SIZE_INPUT_ERR_MSG);
         }
     }
+
+    public Integer getScore() {
+        return score;
+    }
 }
