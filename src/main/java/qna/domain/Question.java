@@ -103,7 +103,8 @@ public class Question extends AbstractEntity {
     }
 
     private List<DeleteHistory> historiesWithoutAnswers() {
-        return Stream.of(deleteQuestion()).collect(Collectors.toList());
+        return Stream.of(deleteQuestion())
+                    .collect(Collectors.toList());
     }
 
     private List<DeleteHistory> historiesWithAnswers() {
