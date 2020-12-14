@@ -22,7 +22,7 @@ class Game {
 
     private void play(Player player) {
         while (player.isPlayable()) {
-            player.addPin(this::getPin);
+            player.addPin(getPin(player));
             View.printPlayers(players.exportPlayersDto());
         }
         player.updateBowl();

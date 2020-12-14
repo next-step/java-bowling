@@ -6,8 +6,6 @@ import bowling.dto.AskPinDto;
 import bowling.dto.PlayerDto;
 import bowling.exception.PlayerException;
 
-import java.util.function.Function;
-
 public class Player {
     private final String name;
     private final Bowl bowl = new Bowl();
@@ -23,8 +21,8 @@ public class Player {
         return bowl.isPlayable();
     }
 
-    public void addPin(Function<Player, Pin> function) {
-        bowl.addPin(function.apply(this));
+    public void addPin(Pin pin) {
+        bowl.addPin(pin);
     }
 
     public void updateBowl() {
