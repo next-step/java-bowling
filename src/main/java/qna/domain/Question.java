@@ -4,8 +4,7 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -13,7 +12,6 @@ import java.util.stream.Stream;
 public class Question extends AbstractEntity {
 
     public static final String ERROR_DELETE_QUESTION_AUTHORITY_MISMATCH = "질문을 삭제할 권한이 없습니다.";
-    public static final String ERROR_DELETE_ANSWERS_AUTHORITY_MISMATCH = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -26,7 +24,7 @@ public class Question extends AbstractEntity {
     private User writer;
 
     @Embedded
-    private Answers answers; // nullable
+    private Answers answers = new Answers(); // nullable
 
     private boolean deleted = false;
 
@@ -70,9 +68,14 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void addAnswer(Answer answer) {
+    public Question addAnswer(Answer answer) {
         answer.toQuestion(this);
         answers.addAnswer(answer);
+        return this;
+    }
+
+    public Optional<List<Answer>> getAnswers() {
+        return Optional.ofNullable(answers.getAnswers());
     }
 
     public boolean isOwner(User loginUser) {
@@ -89,10 +92,21 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
-        // validate question and answers
         validateWriter(loginUser);
-        validateAnswersWriter(loginUser);
 
+        if (Objects.isNull(this.answers)) {
+            return historiesWithoutAnswers();
+        }
+
+        validateAnswersWriter(loginUser);
+        return historiesWithAnswers();
+    }
+
+    private List<DeleteHistory> historiesWithoutAnswers() {
+        return Stream.of(deleteQuestion()).collect(Collectors.toList());
+    }
+
+    private List<DeleteHistory> historiesWithAnswers() {
         return Stream
                 .concat(Stream.of(deleteQuestion()),
                         deleteAnswers().stream())
@@ -116,12 +130,12 @@ public class Question extends AbstractEntity {
 
     private void validateAnswersWriter(User loginUser) throws CannotDeleteException {
         if (answers.isDifferentWriter(loginUser)) {
-            throw new CannotDeleteException(ERROR_DELETE_ANSWERS_AUTHORITY_MISMATCH);
+            throw new CannotDeleteException(Answer.ERROR_DELETE_ANSWER_AUTHORITY_MISMATCH);
         }
     }
 
 
-    @Override //FIXME 수정?
+    @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
