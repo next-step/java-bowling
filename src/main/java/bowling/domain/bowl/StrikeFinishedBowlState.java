@@ -7,7 +7,7 @@ class StrikeFinishedBowlState extends FinishedBowlState {
 
     @Override
     void updateState(Bowl bowl) {
-        BowlState nextState = isLast()
+        BowlState nextState = bowl.isOverMaxFrame()
                 ? new StrikeBonusBowlState(this)
                 : new FirstBowlState(this);
         bowl.setState(nextState);

@@ -6,7 +6,7 @@ import bowling.dto.*;
 import java.util.Iterator;
 import java.util.List;
 
-import static bowling.asset.Const.MAX_FRAME_NO;
+import static bowling.asset.Const.MAX_FRAME_NUMBER;
 
 class PlayersPrintable extends Printable {
     PlayersPrintable(PlayersDto playersDto) {
@@ -38,7 +38,7 @@ class PlayersPrintable extends Printable {
     }
 
     private void appendBlank(int size) {
-        for (int i = 0; i < MAX_FRAME_NO - size; i++) {
+        for (int i = 0; i < MAX_FRAME_NUMBER - size; i++) {
             append("      |");
         }
     }

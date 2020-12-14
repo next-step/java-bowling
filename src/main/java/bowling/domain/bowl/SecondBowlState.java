@@ -2,6 +2,8 @@ package bowling.domain.bowl;
 
 import bowling.domain.frame.Pin;
 
+import static bowling.domain.frame.FrameEnum.SPARE;
+
 class SecondBowlState extends BowlState {
     SecondBowlState(BowlState state) {
         super(state);
@@ -19,7 +21,7 @@ class SecondBowlState extends BowlState {
 
     @Override
     void updateState(Bowl bowl) {
-        BowlState nextState = isSpare()
+        BowlState nextState = getFrameEnum() == SPARE
                 ? new SpareFinishedBowlState(this)
                 : new MissFinishedBowlState(this);
         bowl.setState(nextState);

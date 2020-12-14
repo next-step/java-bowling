@@ -9,7 +9,7 @@ import bowling.dto.ScoresDto;
 
 import java.util.LinkedList;
 
-import static bowling.asset.Const.MAX_FRAME_NO;
+import static bowling.asset.Const.MAX_FRAME_NUMBER;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
@@ -42,9 +42,13 @@ public class Bowl {
         return frames.size() + 1;
     }
 
+    boolean isOverMaxFrame() {
+        return getFrameNumber() > MAX_FRAME_NUMBER;
+    }
+
     private FrameEnumsDto exportFrameEnumsDto() {
-        return (frames.size() > MAX_FRAME_NO
-                ? frames.subList(0, MAX_FRAME_NO)
+        return (frames.size() > MAX_FRAME_NUMBER
+                ? frames.subList(0, MAX_FRAME_NUMBER)
                 : frames).stream()
                 .map(Frame::exportFrameDto)
                 .collect(collectingAndThen(toList(), FrameEnumsDto::new));

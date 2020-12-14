@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import static bowling.asset.Const.MAX_FRAME_NO;
+import static bowling.asset.Const.MAX_FRAME_NUMBER;
 import static bowling.domain.frame.FrameEnum.*;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
@@ -271,7 +271,7 @@ class BowlTest {
         List<FrameEnum> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
-        for (int i = 0; i < MAX_FRAME_NO + 2; i++) {
+        for (int i = 0; i < MAX_FRAME_NUMBER + 2; i++) {
             pinList.add(countOfPins);
         }
         assertAll(
@@ -282,9 +282,9 @@ class BowlTest {
                 () -> assertThat(scoreList)
                         .isEqualTo(Arrays.asList(30, 60, 90, 120, 150, 180, 210, 240, 270, 300)),
                 () -> assertThat(scoreList.size())
-                        .isEqualTo(MAX_FRAME_NO),
+                        .isEqualTo(MAX_FRAME_NUMBER),
                 () -> assertThat(frameList.size())
-                        .isEqualTo(MAX_FRAME_NO)
+                        .isEqualTo(MAX_FRAME_NUMBER)
         );
     }
 
@@ -299,7 +299,7 @@ class BowlTest {
         List<FrameEnum> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
-        for (int i = 0; i < MAX_FRAME_NO * 2 + 1; i++) {
+        for (int i = 0; i < MAX_FRAME_NUMBER * 2 + 1; i++) {
             pinList.add(countOfPins);
         }
         assertAll(
@@ -323,7 +323,7 @@ class BowlTest {
         List<FrameEnum> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
-        for (int i = 0; i < MAX_FRAME_NO * 2; i++) {
+        for (int i = 0; i < MAX_FRAME_NUMBER * 2; i++) {
             pinList.add(countOfPins);
         }
         assertAll(

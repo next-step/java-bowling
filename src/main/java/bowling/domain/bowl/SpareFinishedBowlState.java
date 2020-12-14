@@ -7,7 +7,7 @@ class SpareFinishedBowlState extends FinishedBowlState {
 
     @Override
     void updateState(Bowl bowl) {
-        BowlState nextState = isLast()
+        BowlState nextState = bowl.isOverMaxFrame()
                 ? new SpareBonusBowlState(this)
                 : new FirstBowlState(this);
         bowl.setState(nextState);
