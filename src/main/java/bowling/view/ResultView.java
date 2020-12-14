@@ -1,7 +1,9 @@
 package bowling.view;
 
-import bowling.frame.BowlingBoard;
+import bowling.BowlingGame;
+import bowling.BowlingGames;
 import bowling.frame.Frame;
+import bowling.frame.Frames;
 import bowling.score.Score;
 import org.apache.logging.log4j.util.Strings;
 
@@ -24,10 +26,12 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printGameBoard(BowlingBoard bowling) {
+    public static void printGameBoard(BowlingGames bowlingGames) {
         printHeader();
-        printBody(bowling);
-        printFooter(getScores(bowling));
+        for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
+            printBody(bowlingGame);
+            printFooter(getScores(bowlingGame));
+        }
     }
 
     private static void printHeader() {
@@ -41,14 +45,18 @@ public class ResultView {
                 .forEach(frameNumber -> System.out.printf(PRINT_HEADER_FRAME_NUMBER_COLUMN, frameNumber));
     }
 
-    private static void printBody(BowlingBoard bowling) {
-        System.out.printf(PRINT_BODY_PLAYER_NAME_COLUMN, bowling.getBowlerName());
+    private static void printBody(BowlingGame bowlingGame) {
+        String bowlerName = bowlingGame.getBowlerName();
+        System.out.printf(PRINT_BODY_PLAYER_NAME_COLUMN, bowlerName);
 
-        List<String> scoreResults = printStateMark(bowling.getFrames());
+        Frames frames = bowlingGame.getFrames();
+        List<String> scoreResults = printStateMark(frames.getFrames());
+
         printProgressedFrameMark(scoreResults);
-        printBlankFrameMark(bowling);
+        printBlankFrameMark(bowlingGame);
 
         System.out.println();
+
     }
 
     private static List<String> printStateMark(List<Frame> frames) {
@@ -67,8 +75,8 @@ public class ResultView {
                 .forEach(System.out::print);
     }
 
-    private static void printBlankFrameMark(BowlingBoard bowling) {
-        IntStream.range(bowling.getFrames().size(), Frame.FINAL_FRAME_NUMBER)
+    private static void printBlankFrameMark(BowlingGame bowlingGame) {
+        IntStream.range(bowlingGame.getFramesSize(), Frame.FINAL_FRAME_NUMBER)
                 .mapToObj(result -> printMarkBlankRatio(null))
                 .forEach(System.out::print);
     }
@@ -91,8 +99,10 @@ public class ResultView {
                 .forEach(frame -> System.out.print(printScoreResultRatio(frame, scores)));
     }
 
-    private static List<Integer> getScores(BowlingBoard bowling) {
-        List<Frame> frames = bowling.getFrames().stream()
+    private static List<Integer> getScores(BowlingGame bowlingGame) {
+        List<Frame> frames = bowlingGame.getFrames()
+                .getFrames()
+                .stream()
                 .filter(Frame::isFinish)
                 .collect(Collectors.toList());
 

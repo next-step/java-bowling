@@ -26,7 +26,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    protected Frame bowl(String fellPins) {
+    public Frame bowl(String fellPins) {
         State currentState = states.getLast();
         Pin pin = Pin.bowl(fellPins);
 

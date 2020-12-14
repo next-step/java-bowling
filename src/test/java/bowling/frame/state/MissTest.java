@@ -1,5 +1,6 @@
 package bowling.frame.state;
 
+import bowling.global.exception.OutOfScoreRangeException;
 import bowling.score.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -78,6 +79,13 @@ class MissTest {
                 .isThrownBy(() -> secondState = Miss.of(Pin.bowl("4"),
                                                         Pin.bowl("3"))
                         .bowl(Pin.bowl("5")));
+    }
+
+    @Test
+    @DisplayName("두번의 투구 총 합이 10이 넘을 경우 Exception 발생")
+    void invalidScoreRange() {
+        assertThatExceptionOfType(OutOfScoreRangeException.class)
+                .isThrownBy(() -> Miss.of(Pin.bowl("5"), Pin.bowl("6")));
     }
 
 }
