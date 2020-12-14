@@ -35,6 +35,6 @@ class Game {
 
     private Pin getPin(Player player) {
         return Pin.of(View.askPin(player.exportAskPinDto())
-                .getCountOfPins());
+                .getCountOfDownPins());
     }
 }

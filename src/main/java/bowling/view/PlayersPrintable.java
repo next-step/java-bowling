@@ -73,7 +73,7 @@ class PlayersPrintable extends Printable {
     }
 
     private String toString(PinDto pinDto) {
-        int count = pinDto.getCountOfPins();
+        int count = pinDto.getCountOfDownPins();
         return count <= 0
                 ? "-"
                 : Integer.toString(count);

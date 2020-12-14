@@ -32,8 +32,8 @@ public class Frame {
         return state.hasScore();
     }
 
-    public int getCountOfPins() {
-        return state.getCountOfPins();
+    public int getCountOfDownPins() {
+        return state.getCountOfDownPins();
     }
 
     public FrameEnum getFrameEnum() {

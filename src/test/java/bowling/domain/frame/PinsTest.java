@@ -59,7 +59,7 @@ class PinsTest {
         assertThat(pins.exportPinsDto()
                 .getPins()
                 .stream()
-                .map(PinDto::getCountOfPins)
+                .map(PinDto::getCountOfDownPins)
                 .collect(toList())
         ).isEqualTo(IntStream.rangeClosed(0, 10)
                 .boxed()

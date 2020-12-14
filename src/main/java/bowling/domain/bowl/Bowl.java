@@ -47,9 +47,7 @@ public class Bowl {
     }
 
     private FrameEnumsDto exportFrameEnumsDto() {
-        return (frames.size() > MAX_FRAME_NUMBER
-                ? frames.subList(0, MAX_FRAME_NUMBER)
-                : frames).stream()
+        return frames.stream()
                 .map(Frame::exportFrameDto)
                 .collect(collectingAndThen(toList(), FrameEnumsDto::new));
     }
@@ -62,7 +60,7 @@ public class Bowl {
         Scores scores = new Scores();
         frames.stream()
                 .filter(Frame::hasScore)
-                .map(Frame::getCountOfPins)
+                .map(Frame::getCountOfDownPins)
                 .forEach(scores::accumulate);
         return scores.exportScoresDto();
     }
