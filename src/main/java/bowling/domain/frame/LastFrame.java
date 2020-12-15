@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.Pitching;
 import bowling.domain.pitchings.LastFramePitchings;
+import bowling.domain.pitchings.Pitchings;
 
 import java.util.List;
 
@@ -45,11 +46,12 @@ public class LastFrame extends Frame {
 
     @Override
     public Integer calculateScore() {
-        List<Pitching> value = getPitchings().getValue();
-        if ((value.contains(Pitching.STRIKE) || value.contains(Pitching.SPARE)) && value.size() < 3) {
+        if (!isEnd()) {
             return null;
         }
 
+        Pitchings pitchings = super.getPitchings();
+        List<Pitching> value = pitchings.getValue();
         return value.stream()
                 .mapToInt(Pitching::getScore)
                 .sum();

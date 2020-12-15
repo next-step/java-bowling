@@ -39,6 +39,10 @@ public class NormalFrame extends Frame {
 
     @Override
     public Integer calculateScore() {
+        if (!isEnd()) {
+            return null;
+        }
+
         List<Pitching> value = super.getPitchings().getValue();
         if (value.contains(Pitching.STRIKE)) {
             Pitching nextPitching = nextFrame.getNextPitching();
