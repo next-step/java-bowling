@@ -125,11 +125,11 @@ public class BallThrowTest {
         }
 
         public BallThrow(int fallingPins, boolean lastFrame) {
-            this.lastFrame = lastFrame;
             if (fallingPins > MAX_PINS || fallingPins < MIN_FINS) {
                 throw new IllegalFallingPinsException();
             }
             this.fallingPins = fallingPins;
+            this.lastFrame = lastFrame;
         }
 
         public BallThrow throwSecond(int secondFallingPins) {
