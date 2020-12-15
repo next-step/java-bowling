@@ -51,7 +51,6 @@ public class BallThrowTest {
         assertThat(new BallThrow(5).throwSecond(2)).isEqualTo(new BallThrow(2));
     }
 
-
     private static class BallThrow {
         public static final int MAX_PINS = 10;
         public static final int MIN_FINS = 0;
@@ -64,10 +63,11 @@ public class BallThrowTest {
             }
         }
 
-        public void throwSecond(int secondFallingPins) {
+        public BallThrow throwSecond(int secondFallingPins) {
             if (this.fallingPins + secondFallingPins > MAX_PINS) {
                 throw new IllegalFallingPinsException();
             }
+            return new BallThrow(secondFallingPins);
         }
 
         @Override
