@@ -45,6 +45,13 @@ public class BallThrowTest {
                 .isInstanceOf(IllegalFallingPinsException.class);
     }
 
+    @DisplayName("두번째 투구를 할 수 있다")
+    @Test
+    void secondThrow() {
+        assertThat(new BallThrow(5).throwSecond(2)).isEqualTo(new BallThrow(2));
+    }
+
+
     private static class BallThrow {
         public static final int MAX_PINS = 10;
         public static final int MIN_FINS = 0;
