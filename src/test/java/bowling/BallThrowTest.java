@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.*;
  * [x] 한 프레임내의 두번째 투구는 첫번재 투구의 핀수를 더해서 10을 초과할 수 없다
  * [x] 마지막 프레임의 두번째 투구는 첫번째 투구가 10개의 핀수를 가진다면 또다시 10개의 핀수를 가질 수 있다
  * [x] 마지막 프레임의 두번째 투구는 첫번째 투구가 10개 미만의 핀수를 가진다면 첫번째 투구의 핀수를 더해서 10을 초과할 수 없다
- * * 마지막 프레임의 세번째 투구는 첫번째 투구의 핀수가 10인경우에만 존재한다
+ * [x] 마지막 프레임의 세번째 투구는 첫번째 투구의 핀수가 10인경우에만 존재한다
  * * 마지막 프레임의 세번째 투구는 두번째 투구가 10개의 핀수를 가진다면 또다시 10개의 투구를 가질 수 있다.
  * * 마지막 프레임의 세번째 투구는 두번째 투구가 10개 미만의 핀수를 가진다면 두번째 투구의 핀수를 더해서 10을 초과할 수 없다
  */
@@ -73,24 +73,28 @@ public class BallThrowTest {
     @DisplayName("마지막 프레임의 세번째 투구를 던질 수 있다")
     @Test
     void lastFrameThirdThrow() {
-        BallThrow ballThrow = new BallThrow(10, true).throwSecond(2);
-        assertThat(ballThrow.throwThird(3)).isEqualTo(new BallThrow(3));
+        BallThrow first = new BallThrow(10, true);
+        BallThrow second = first.throwSecond(2);
+        assertThat(second.throwThird(3, first)).isEqualTo(new BallThrow(3));
     }
 
     @DisplayName("마지막 프레임이 아니면 세번째 투구를 던질 수 없다")
     @Test
     void nonLastFrameCannotThirdThrow() {
-        BallThrow ballThrow = new BallThrow(10, false).throwSecond(2);
-        assertThatThrownBy(() -> ballThrow.throwThird(3))
+        BallThrow first = new BallThrow(2, false);
+        BallThrow second = first.throwSecond(2);
+        assertThatThrownBy(() -> second.throwThird(3, first))
                 .isInstanceOf(IllegalBallThrownException.class);
     }
 
     @DisplayName("마지막 프레임의 세번째 투구는 첫번째 투구의 핀수가 10보다 작으면 존재할 수 없다")
     @Test
     void thirdThrowExists() {
-        BallThrow ballThrow = new BallThrow(1, true).throwSecond(2);
-        assertThatThrownBy(() -> ballThrow.throwThird(3))
+        BallThrow first = new BallThrow(1, true);
+        BallThrow second = first.throwSecond(2);
+        assertThatThrownBy(() -> second.throwThird(3, first))
                 .isInstanceOf(IllegalBallThrownException.class);
+
     }
 
     private static class BallThrow {
@@ -135,8 +139,11 @@ public class BallThrowTest {
             return new BallThrow(secondFallingPins, 2, lastFrame);
         }
 
-        public BallThrow throwThird(int fallingPins) {
+        public BallThrow throwThird(int fallingPins, BallThrow firstBallThrow) {
             if (!lastFrame && orderOfThrow == 2) {
+                throw new IllegalBallThrownException();
+            }
+            if (lastFrame && firstBallThrow.fallingPins != 10) {
                 throw new IllegalBallThrownException();
             }
             return new BallThrow(fallingPins, 3);
