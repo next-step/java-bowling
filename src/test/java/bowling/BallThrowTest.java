@@ -108,6 +108,10 @@ public class BallThrowTest {
             return new BallThrow(secondFallingPins);
         }
 
+        public BallThrow throwThird(int fallingPins) {
+            return new BallThrow(fallingPins);
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o)
