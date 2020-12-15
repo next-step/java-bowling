@@ -7,3 +7,20 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+<br>
+
+### step1: 질문 삭제하기 기능 리팩토링
+
+- [x] 삭제 상태로 변경
+- [x] 일급컬렉션: Answers
+  - `@Embedded` / `@Embeddable` 사용  
+    [참고 blog](https://wbluke.tistory.com/23)
+- [x] service -> domain 으로 책임 이동
+  -  Question
+    - [x] 로그인 유저와 작성자 validation 
+    - [x] answer 없는 경우 
+    - [x] answer 있는 경우 -> answer 작성자 체크, 삭제상태로 변경.
+     
+
+
