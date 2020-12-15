@@ -3,6 +3,7 @@ package bowling;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
@@ -17,8 +18,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
  */
 public class BallThrowTest {
     @Test
-    void create() {
-        new BallThrow(0);
+    void createAndEquals() {
+        assertThat(new BallThrow(0)).isEqualTo(new BallThrow(0));
     }
 
     @DisplayName("10개 초과의 핀을 쓰러뜨릴 수 없다")
