@@ -77,6 +77,14 @@ public class BallThrowTest {
         assertThat(ballThrow.throwThird(3)).isEqualTo(new BallThrow(3));
     }
 
+    @DisplayName("마지막 프레임이 아니면 세번째 투구를 던질 수 없다")
+    @Test
+    void nonLastFrameCannotThirdThrow() {
+        BallThrow ballThrow = new BallThrow(1, false).throwSecond(2);
+        assertThatThrownBy(() -> ballThrow.throwThird(3))
+                .isInstanceOf(IllegalBallThrownException.class);
+    }
+
     private static class BallThrow {
         public static final int MAX_PINS = 10;
         public static final int MIN_FINS = 0;
