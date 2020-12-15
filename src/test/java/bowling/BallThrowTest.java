@@ -89,18 +89,29 @@ public class BallThrowTest {
         public static final int MAX_PINS = 10;
         public static final int MIN_FINS = 0;
         private final int fallingPins;
+        private final int orderOfThrow;
         private final boolean lastFrame;
 
+
         public BallThrow(int fallingPins) {
-            this(fallingPins, false);
+            this(fallingPins, 1);
+        }
+
+        public BallThrow(int fallingPins, int orderOfThrow) {
+            this(fallingPins, orderOfThrow, false);
         }
 
         public BallThrow(int fallingPins, boolean lastFrame) {
+            this(fallingPins, 1, lastFrame);
+        }
+
+        public BallThrow(int fallingPins, int orderOfThrow,  boolean lastFrame) {
             this.lastFrame = lastFrame;
             if (fallingPins > MAX_PINS || fallingPins < MIN_FINS) {
                 throw new IllegalFallingPinsException();
             }
             this.fallingPins = fallingPins;
+            this.orderOfThrow = orderOfThrow;
         }
 
         public BallThrow throwSecond(int secondFallingPins) {
@@ -113,11 +124,14 @@ public class BallThrowTest {
             if (this.fallingPins == MAX_PINS && !lastFrame) {
                 throw new IllegalBallThrownException();
             }
-            return new BallThrow(secondFallingPins);
+            return new BallThrow(secondFallingPins, 2, lastFrame);
         }
 
         public BallThrow throwThird(int fallingPins) {
-            return new BallThrow(fallingPins);
+            if (!lastFrame && orderOfThrow == 2) {
+                throw new IllegalBallThrownException();
+            }
+            return new BallThrow(fallingPins, 3);
         }
 
         @Override
