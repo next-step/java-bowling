@@ -14,8 +14,8 @@ import static org.assertj.core.api.Assertions.*;
  * [x] 마지막 프레임의 두번째 투구는 첫번째 투구가 10개의 핀수를 가진다면 또다시 10개의 핀수를 가질 수 있다
  * [x] 마지막 프레임의 두번째 투구는 첫번째 투구가 10개 미만의 핀수를 가진다면 첫번째 투구의 핀수를 더해서 10을 초과할 수 없다
  * [x] 마지막 프레임의 세번째 투구는 첫번째 투구의 핀수가 10인경우에만 존재한다
- * * 마지막 프레임의 세번째 투구는 두번째 투구가 10개의 핀수를 가진다면 또다시 10개의 투구를 가질 수 있다.
- * * 마지막 프레임의 세번째 투구는 두번째 투구가 10개 미만의 핀수를 가진다면 두번째 투구의 핀수를 더해서 10을 초과할 수 없다
+ * [x] 마지막 프레임의 세번째 투구는 두번째 투구가 10개의 핀수를 가진다면 또다시 10개의 투구를 가질 수 있다.
+ * [x] 마지막 프레임의 세번째 투구는 두번째 투구가 10개 미만의 핀수를 가진다면 두번째 투구의 핀수를 더해서 10을 초과할 수 없다
  */
 public class BallThrowTest {
     @Test
@@ -156,14 +156,17 @@ public class BallThrowTest {
             return new BallThrow(secondFallingPins, 2, lastFrame);
         }
 
-        public BallThrow throwThird(int fallingPins, BallThrow firstBallThrow) {
+        public BallThrow throwThird(int thirdFallingPins, BallThrow firstBallThrow) {
             if (!lastFrame && orderOfThrow == 2) {
                 throw new IllegalBallThrownException();
             }
             if (lastFrame && firstBallThrow.fallingPins != 10) {
                 throw new IllegalBallThrownException();
             }
-            return new BallThrow(fallingPins, 3);
+            if (this.fallingPins + thirdFallingPins > MAX_PINS && this.fallingPins < MAX_PINS) {
+                throw new IllegalFallingPinsException();
+            }
+            return new BallThrow(thirdFallingPins, 3);
         }
 
         @Override
