@@ -1,6 +1,6 @@
 package bowling.model.state.finishedState;
 
-import bowling.model.Score;
+import bowling.model.Pins;
 import bowling.model.state.State;
 
 public abstract class FinishedState extends State {
@@ -8,8 +8,8 @@ public abstract class FinishedState extends State {
 
     protected String expression;
 
-    protected FinishedState(Score score) {
-        super(score);
+    protected FinishedState(Pins pins) {
+        super(pins);
     }
 
     @Override

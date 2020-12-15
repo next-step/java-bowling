@@ -1,14 +1,14 @@
 package bowling.model.state;
 
-import bowling.model.Score;
+import bowling.model.Pins;
 
 public abstract class State {
-    protected Score score = Score.zero();
+    protected Pins pins = Pins.zero();
 
     protected State(){}
 
-    protected State(Score score){
-        this.score = score;
+    protected State(Pins pins){
+        this.pins = pins;
     }
 
     public boolean isFinished() {
@@ -18,10 +18,10 @@ public abstract class State {
     public abstract State bowling(int fallenPin);
 
     public int score(){
-        return score.getScore();
+        return pins.getScore();
     }
 
     public boolean isMaxScore() {
-        return score.isMaxScore();
+        return pins.isMaxScore();
     }
 }

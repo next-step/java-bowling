@@ -1,6 +1,6 @@
 package bowling.model.state;
 
-import bowling.model.Score;
+import bowling.model.Pins;
 import bowling.model.state.finishedState.Strike;
 
 public class Start extends State {
@@ -8,7 +8,7 @@ public class Start extends State {
 
     @Override
     public State bowling(int fallenPin) {
-        Score firstScore = Score.from(fallenPin);
+        Pins firstScore = Pins.from(fallenPin);
 
         if (firstScore.isMaxScore()) {
             return Strike.from(firstScore);

@@ -6,21 +6,21 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Score implements Comparable<Score> {
+public class Pins implements Comparable<Pins> {
     private static final String SCORE_ERROR = "허용할 수 없는 값입니다.";
     private static final int MIN_SCORE = 0;
     private static final int MAX_SCORE = 10;
 
-    private static final Map<Integer, Score> cache;
+    private static final Map<Integer, Pins> cache;
     private final int score;
 
     static {
         cache = IntStream.rangeClosed(MIN_SCORE, MAX_SCORE)
                 .boxed()
-                .collect(Collectors.toMap(Function.identity(), Score::new));
+                .collect(Collectors.toMap(Function.identity(), Pins::new));
     }
 
-    private Score(int fallenPin) {
+    private Pins(int fallenPin) {
         this.score = fallenPin;
     }
 
@@ -28,17 +28,17 @@ public class Score implements Comparable<Score> {
         return score;
     }
 
-    public static Score zero() {
+    public static Pins zero() {
         return cache.get(MIN_SCORE);
     }
 
-    public static Score from(int fallenPin) {
+    public static Pins from(int fallenPin) {
         validScore(fallenPin);
         return cache.get(fallenPin);
     }
 
-    public Score add(Score score) {
-        int totalScore = this.score + score.score;
+    public Pins add(Pins pins) {
+        int totalScore = this.score + pins.score;
         validScore(totalScore);
 
         return cache.get(totalScore);
@@ -67,14 +67,14 @@ public class Score implements Comparable<Score> {
     }
 
     @Override
-    public int compareTo(Score o) {
+    public int compareTo(Pins o) {
         return Integer.compare(this.score, o.score);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Score) {
-            return this.score == ((Score) obj).score;
+        if (obj instanceof Pins) {
+            return this.score == ((Pins) obj).score;
         }
 
         return false;
