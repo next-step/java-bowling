@@ -31,7 +31,8 @@ class ScoreTest {
     void add_정상() {
         Score score = Score.from(0);
         IntStream.rangeClosed(0, 10)
-                .forEach(number -> assertThat(score.add(number)).isEqualTo(Score.from(number)));
+                .mapToObj(Score::from)
+                .forEach(secondScore -> assertThat(score.add(secondScore)).isEqualTo(secondScore));
 
     }
 
@@ -39,33 +40,7 @@ class ScoreTest {
     void add_비정상() {
         Score score = Score.from(10);
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> score.add(1))
+                .isThrownBy(() -> score.add(Score.from(1)))
                 .withMessage("허용할 수 없는 값입니다.");
     }
-
-    @Test
-    void subtraction_정상() {
-        Score score = Score.from(10);
-
-        IntStream.rangeClosed(0, 10)
-                .forEach(
-                        number -> assertThat(subtraction(score, number))
-                                .isEqualTo(Score.from(10 - number))
-                );
-
-
-    }
-
-    private Score subtraction(Score score, int number) {
-        return score.subtraction(Score.from(number));
-    }
-
-    @Test
-    void subtraction_비정상() {
-        Score score = Score.from(9);
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> score.subtraction(Score.from(10)))
-                .withMessage("허용할 수 없는 값입니다.");
-    }
-
 }

@@ -5,17 +5,11 @@ import bowling.model.state.State;
 
 public abstract class FinishedState extends State {
     private static final String PITCHING_ERROR = "해당 프레임에서는 더 이상 던질 수 없습니다.";
-    private static final String TOTAL_SCORE_ERROR = "이전 스코어는 합보다 클 수 없습니다.";
 
     protected String expression;
-    protected Score previousScore;
 
-    protected FinishedState(Score previousScore, Score totalScore) {
-        if (totalScore.compareTo(previousScore) < 0) {
-            throw new IllegalArgumentException(TOTAL_SCORE_ERROR);
-        }
-        this.score = totalScore;
-        this.previousScore = previousScore;
+    protected FinishedState(Score score) {
+        super(score);
     }
 
     @Override
@@ -23,6 +17,7 @@ public abstract class FinishedState extends State {
         return true;
     }
 
+    @Override
     public State bowling(int fallenPin) {
         throw new IllegalArgumentException(PITCHING_ERROR);
     }

@@ -8,13 +8,13 @@ public class Start extends State {
 
     @Override
     public State bowling(int fallenPin) {
-        score = Score.from(fallenPin);
+        Score firstScore = Score.from(fallenPin);
 
-        if (score.isMaxScore()) {
-            return Strike.from(score);
+        if (firstScore.isMaxScore()) {
+            return Strike.from(firstScore);
         }
 
-        return Open.from(score);
+        return Open.from(firstScore);
     }
 
     @Override

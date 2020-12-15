@@ -24,7 +24,11 @@ public class Score implements Comparable<Score> {
         this.score = fallenPin;
     }
 
-    public static Score min() {
+    public int getScore() {
+        return score;
+    }
+
+    public static Score zero() {
         return cache.get(MIN_SCORE);
     }
 
@@ -33,17 +37,11 @@ public class Score implements Comparable<Score> {
         return cache.get(fallenPin);
     }
 
-    public Score add(int fallenPin) {
-        int totalScore = this.score + fallenPin;
+    public Score add(Score score) {
+        int totalScore = this.score + score.score;
         validScore(totalScore);
 
         return cache.get(totalScore);
-    }
-
-    public Score subtraction(Score score) {
-        int subtractionScore = this.score - score.score;
-        validScore(subtractionScore);
-        return cache.get(subtractionScore);
     }
 
     public boolean isMaxScore() {
@@ -75,7 +73,7 @@ public class Score implements Comparable<Score> {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Score){
+        if (obj instanceof Score) {
             return this.score == ((Score) obj).score;
         }
 

@@ -26,5 +26,6 @@ public class BowlingController {
             ResultView.printHeadFrame();
             ResultView.printFrame(user, frameResult);
         }
+
     }
 }

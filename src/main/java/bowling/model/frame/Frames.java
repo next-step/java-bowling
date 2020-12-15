@@ -1,29 +1,25 @@
 package bowling.model.frame;
 
 import java.util.List;
-import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 
 public class Frames {
-    private final Set<Frame> frames = new TreeSet<>();
+    private final SortedSet<Frame> frames = new TreeSet<>();
+
+    public Frames(){
+        Frame firstFrame = NormalFrame.createFirstFrame();
+        frames.add(firstFrame);
+    }
 
     public void bowling(int fallenPins) {
-        if (frames.isEmpty()) {
-            Frame firstFrame = NormalFrame.createFirstFrame();
-            frames.add(firstFrame);
-        }
-
         Frame nowFrame = lastFrame();
         frames.add(nowFrame.bowling(fallenPins));
     }
 
     public int nowFrameNumber() {
-        if (frames.isEmpty()) {
-            return 1;
-        }
-
         int frameNumber = Integer.parseInt(lastFrame().frameNumber.toString());
 
         if (isFinished()) {
@@ -34,15 +30,11 @@ public class Frames {
     }
 
     public boolean isFinished() {
-        if (frames.isEmpty()) {
-            return false;
-        }
-
         return lastFrame().isFinished();
     }
 
     private Frame lastFrame() {
-        return ((TreeSet<Frame>) frames).last();
+        return frames.last();
     }
 
     public FrameResult result() {

@@ -5,16 +5,15 @@ import bowling.model.state.finishedState.*;
 
 public class BonusOpen extends State {
     private static final String BONUS_OPEN_ERROR = "보너스 오픈 상태는 이전 상태가 스트라이크 혹은 스페어여야합니다.";
-    private FinishedState previousState;
+    private FinishedState state;
 
     private BonusOpen(FinishedState previousState) {
-        validPreviousState(previousState);
-        this.previousState = previousState;
-        score = Score.from(0);
+        validState(previousState);
+        this.state = previousState;
     }
 
-    private void validPreviousState(FinishedState previousState) {
-        if (!previousState.score.isMaxScore()) {
+    private void validState(FinishedState state) {
+        if (!state.isMaxScore()) {
             throw new IllegalArgumentException(BONUS_OPEN_ERROR);
         }
     }
@@ -25,17 +24,23 @@ public class BonusOpen extends State {
 
     @Override
     public State bowling(int fallenPin) {
-        Score totalScore = score.add(fallenPin);
+        Score bonusScore = Score.from(fallenPin);
 
-        if (totalScore.isMaxScore()) {
-            return Strike.of(score, totalScore);
+        if (bonusScore.isMaxScore()) {
+            return Strike.from(bonusScore);
         }
 
-        return Miss.of(score, totalScore);
+        return Miss.from(bonusScore);
+    }
+
+    @Override
+    public int score(){
+        return state.score
+                .getScore();
     }
 
     @Override
     public String toString() {
-        return previousState.toString();
+        return state.toString();
     }
 }

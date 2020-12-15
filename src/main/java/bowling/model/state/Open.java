@@ -12,7 +12,7 @@ public class Open extends State {
     }
 
     public static Open from(Score score) {
-        if (score.equals(Score.from(10))) {
+        if (score.isMaxScore()) {
             throw new IllegalArgumentException(OPEN_STRIKE_ERROR);
         }
         return new Open(score);
@@ -20,13 +20,14 @@ public class Open extends State {
 
     @Override
     public State bowling(int fallenPin) {
-        Score totalScore = score.add(fallenPin);
+        Score secondScore = Score.from(fallenPin);
+        Score totalScore = score.add(secondScore);
 
         if (totalScore.isMaxScore()) {
-            return Spare.of(score, totalScore);
+            return Spare.of(secondScore, totalScore);
         }
 
-        return Miss.of(score, totalScore);
+        return Miss.from(secondScore);
     }
 
     @Override

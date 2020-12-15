@@ -21,6 +21,10 @@ public class States {
         return add(bowlingResult);
     }
 
+    public void addAll(States states){
+        this.states.addAll(states.states);
+    }
+
     private State add(State state) {
         states.add(state);
         return state;
