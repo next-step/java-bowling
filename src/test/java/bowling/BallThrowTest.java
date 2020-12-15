@@ -70,6 +70,13 @@ public class BallThrowTest {
                 .isInstanceOf(IllegalFallingPinsException.class);
     }
 
+    @DisplayName("마지막 프레임의 세번째 투구를 던질 수 있다")
+    @Test
+    void lastFrameThirdThrow() {
+        BallThrow ballThrow = new BallThrow(1, true).throwSecond(2);
+        assertThat(ballThrow.throwThird(3)).isEqualTo(new BallThrow(3));
+    }
+
     private static class BallThrow {
         public static final int MAX_PINS = 10;
         public static final int MIN_FINS = 0;
