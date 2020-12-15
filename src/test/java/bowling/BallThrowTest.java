@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * #### 투구
@@ -49,6 +48,13 @@ public class BallThrowTest {
     @Test
     void secondThrow() {
         assertThat(new BallThrow(5).throwSecond(2)).isEqualTo(new BallThrow(2));
+    }
+
+    @DisplayName("첫번째 투구에서 10개를 쓰러뜨리면 두번째 투구는 실행 할 수 없다")
+    @Test
+    void illegalSecondThrow() {
+        assertThatThrownBy(() -> new BallThrow(10).throwSecond(0))
+                .isInstanceOf(IllegalBallThrownException.class);
     }
 
     private static class BallThrow {
