@@ -42,9 +42,17 @@ public abstract class Pitchings implements Iterable<Pitching> {
     }
 
     public int calculateTotalScore() {
+        if (isSpare()) {
+            return Pitching.SPARE.getScore();
+        }
+
         return value.stream()
                 .mapToInt(Pitching::getScore)
                 .sum();
+    }
+
+    private boolean isSpare() {
+        return value.contains(Pitching.SPARE);
     }
 
     protected void setFirstPitching(KnockDownPins knockDownPins) {

@@ -6,11 +6,12 @@ import bowling.domain.pitchings.Pitchings;
 
 public abstract class Frame {
     private final Pitchings pitchings;
+    private final Frame previousFrame;
     protected Integer totalScore;
 
-    public Frame(Pitchings pitchings) {
+    public Frame(Pitchings pitchings, Frame previousFrame) {
         this.pitchings = pitchings;
-        totalScore = null;
+        this.previousFrame = previousFrame;
     }
 
     abstract public Frame initNextFrame();
@@ -29,7 +30,23 @@ public abstract class Frame {
 
     public abstract Integer calculateScore();
 
-    public abstract Integer getTotalScore();
+    public Integer getTotalScore() {
+        if (!isEnd()) {
+            return null;
+        }
+
+        if (isFirstFrame()) {
+            totalScore = calculateScore();
+            return totalScore;
+        }
+
+        totalScore = previousFrame.getTotalScore() + calculateScore();
+        return totalScore;
+    }
+
+    private boolean isFirstFrame() {
+        return previousFrame == null;
+    }
 
     public abstract Pitching getFirstPitching();
 

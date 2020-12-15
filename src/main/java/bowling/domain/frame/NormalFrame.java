@@ -6,13 +6,11 @@ import bowling.domain.pitchings.Pitchings;
 
 public class NormalFrame extends Frame {
     private final int index;
-    private Frame previousFrame;
     private Frame nextFrame;
 
     private NormalFrame(int index, Frame previousFrame) {
-        super(NormalFramePitchings.getInstance());
+        super(NormalFramePitchings.getInstance(), previousFrame);
         this.index = index;
-        this.previousFrame = previousFrame;
     }
 
     public static Frame getFirstFrame() {
@@ -86,21 +84,6 @@ public class NormalFrame extends Frame {
             return nextFrame.getFirstPitching();
         }
         return pitchings.getSecondPitching();
-    }
-
-    @Override
-    public Integer getTotalScore() {
-        if (!isEnd() || calculateScore() == null) {
-            return null;
-        }
-
-        if (previousFrame == null) {
-            totalScore = calculateScore();
-            return totalScore;
-        }
-
-        totalScore = previousFrame.getTotalScore() + calculateScore();
-        return totalScore;
     }
 
     @Override

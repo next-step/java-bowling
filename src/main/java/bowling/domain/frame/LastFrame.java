@@ -7,12 +7,10 @@ import bowling.domain.pitchings.Pitchings;
 public class LastFrame extends Frame {
     private static final String NEXT_FRAME_INVOKE_ERR_MSG = "LastFrame은 NextFrame이 존재하지 않습니다.";
     private final int index;
-    private Frame previousFrame;
 
     private LastFrame(int index, Frame previousFrame) {
-        super(LastFramePitchings.getInstance());
+        super(LastFramePitchings.getInstance(), previousFrame);
         this.index = index;
-        this.previousFrame = previousFrame;
     }
 
     public static Frame of(int index, Frame previousFrame) {
@@ -44,21 +42,6 @@ public class LastFrame extends Frame {
 
         Pitchings pitchings = super.getPitchings();
         return pitchings.calculateTotalScore();
-    }
-
-    @Override
-    public Integer getTotalScore() {
-        if (!isEnd() || calculateScore() == null) {
-            return null;
-        }
-
-        if (previousFrame == null) {
-            totalScore = calculateScore();
-            return totalScore;
-        }
-
-        totalScore = previousFrame.getTotalScore() + calculateScore();
-        return totalScore;
     }
 
     @Override
