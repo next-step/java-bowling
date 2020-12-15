@@ -35,6 +35,13 @@ public class BallThrowTest {
                 .isInstanceOf(IllegalFallingPinsException.class);
     }
 
+    @DisplayName("두번째 투구는 첫번째 투구에서 쓰러뜨린 핀수를 포함하여 10을 넘을 수 없다")
+    @Test
+    void secondThrow() {
+        assertThatCode(() -> new BallThrow(5).throwSecond(6))
+                .isInstanceOf(IllegalFallingPinsException.class);
+    }
+
     private static class BallThrow {
         public static final int MAX_PINS = 10;
         public static final int MIN_FINS = 0;
