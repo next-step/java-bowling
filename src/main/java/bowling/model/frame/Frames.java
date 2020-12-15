@@ -1,7 +1,5 @@
 package bowling.model.frame;
 
-import bowling.model.state.Start;
-
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;

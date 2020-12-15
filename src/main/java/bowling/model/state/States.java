@@ -40,7 +40,7 @@ public class States {
 
     public void changeLastToBonusFrame() {
         State lastState = last();
-        
+
         if (!lastState.isFinished() || !lastState.isMaxScore()) {
             throw new IllegalArgumentException(CHANGE_LAST_TO_BONUS_FRAME_ERROR);
         }

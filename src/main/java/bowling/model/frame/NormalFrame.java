@@ -14,6 +14,7 @@ public class NormalFrame extends Frame {
         return new NormalFrame(frameNumber.next());
     }
 
+    @Override
     public Frame bowling(int fallenPins) {
         states.bowling(fallenPins);
 
