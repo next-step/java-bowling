@@ -31,7 +31,7 @@ public abstract class Frame {
 
     public abstract Integer getTotalScore();
 
-    public abstract Pitching getNextPitching();
+    public abstract Pitching getFirstPitching();
 
-    public abstract Pitching getNextAndNextPitching();
+    public abstract Pitching getSecondPitching();
 }

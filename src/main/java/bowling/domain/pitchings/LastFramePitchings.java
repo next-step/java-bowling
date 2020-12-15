@@ -71,4 +71,14 @@ public class LastFramePitchings extends Pitchings {
     private boolean hasPitchingChance() {
         return value.size() < LAST_FRAME_MAX_PITCHING_SIZE - 1;
     }
+
+    @Override
+    public Integer calculateTotalScoreWithStrikeBonus(Pitching nextPitching, Pitching nextAndNextPitching) {
+        throw new IllegalStateException();
+    }
+
+    @Override
+    public Integer calculateTotalScoreWithSpareBonus(Pitching nextPitching) {
+        throw new IllegalStateException();
+    }
 }

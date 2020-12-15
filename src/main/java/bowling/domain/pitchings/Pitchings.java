@@ -19,14 +19,14 @@ public abstract class Pitchings implements Iterable<Pitching> {
 
     public abstract boolean isEnd();
 
-    public Pitching getNextPitching() {
+    public Pitching getFirstPitching() {
         if (value.isEmpty()) {
             return null;
         }
         return value.get(0);
     }
 
-    public Pitching getNextAndNextPitching() {
+    public Pitching getSecondPitching() {
         if (value.size() < 2) {
             return null;
         }
@@ -41,7 +41,7 @@ public abstract class Pitchings implements Iterable<Pitching> {
         return value.contains(pitching);
     }
 
-    public int getTotalScore() {
+    public int calculateTotalScore() {
         return value.stream()
                 .mapToInt(Pitching::getScore)
                 .sum();
@@ -64,4 +64,8 @@ public abstract class Pitchings implements Iterable<Pitching> {
     public Iterator<Pitching> iterator() {
         return value.iterator();
     }
+
+    public abstract Integer calculateTotalScoreWithStrikeBonus(Pitching nextPitching, Pitching nextAndNextPitching);
+
+    public abstract Integer calculateTotalScoreWithSpareBonus(Pitching nextPitching);
 }

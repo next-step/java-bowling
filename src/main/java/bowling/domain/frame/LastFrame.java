@@ -25,15 +25,15 @@ public class LastFrame extends Frame {
     }
 
     @Override
-    public Pitching getNextPitching() {
+    public Pitching getFirstPitching() {
         Pitchings pitchings = super.getPitchings();
-        return pitchings.getNextPitching();
+        return pitchings.getFirstPitching();
     }
 
     @Override
-    public Pitching getNextAndNextPitching() {
+    public Pitching getSecondPitching() {
         Pitchings pitchings = super.getPitchings();
-        return pitchings.getNextAndNextPitching();
+        return pitchings.getSecondPitching();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class LastFrame extends Frame {
         }
 
         Pitchings pitchings = super.getPitchings();
-        return pitchings.getTotalScore();
+        return pitchings.calculateTotalScore();
     }
 
     @Override

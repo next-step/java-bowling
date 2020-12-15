@@ -43,45 +43,49 @@ public class NormalFrame extends Frame {
         }
 
         Pitchings pitchings = super.getPitchings();
-        if (pitchings.contains(Pitching.STRIKE)) {
-            Pitching nextPitching = nextFrame.getNextPitching();
-            Pitching nextAndNextPitching = nextFrame.getNextAndNextPitching();
-            if (nextPitching == null || nextAndNextPitching == null) {
-                return null;
-            }
-
-            if (nextAndNextPitching == Pitching.SPARE) {
-                return Pitching.STRIKE.getScore() + nextAndNextPitching.getScore();
-            }
-
-            return Pitching.STRIKE.getScore() + nextPitching.getScore() + nextAndNextPitching.getScore();
+        if (isStrike(pitchings)) {
+            Pitching nextPitching = getNextPitching();
+            Pitching nextAndNextPitching = getNextAndNextPitching();
+            return pitchings.calculateTotalScoreWithStrikeBonus(nextPitching, nextAndNextPitching);
         }
 
-        if (pitchings.contains(Pitching.SPARE)) {
-            Pitching nextPitching = nextFrame.getNextPitching();
-            if (nextPitching == null) {
-                return null;
-            }
-
-            return Pitching.SPARE.getScore() + nextPitching.getScore();
+        if (isSpare(pitchings)) {
+            Pitching nextPitching = getNextPitching();
+            return pitchings.calculateTotalScoreWithSpareBonus(nextPitching);
         }
 
-        return pitchings.getTotalScore();
+        return pitchings.calculateTotalScore();
+    }
+
+    private boolean isSpare(Pitchings pitchings) {
+        return pitchings.contains(Pitching.SPARE);
+    }
+
+    private boolean isStrike(Pitchings pitchings) {
+        return pitchings.contains(Pitching.STRIKE);
+    }
+
+    private Pitching getNextAndNextPitching() {
+        return nextFrame.getSecondPitching();
+    }
+
+    private Pitching getNextPitching() {
+        return nextFrame.getFirstPitching();
     }
 
     @Override
-    public Pitching getNextPitching() {
+    public Pitching getFirstPitching() {
         Pitchings pitchings = super.getPitchings();
-        return pitchings.getNextPitching();
+        return pitchings.getFirstPitching();
     }
 
     @Override
-    public Pitching getNextAndNextPitching() {
+    public Pitching getSecondPitching() {
         Pitchings pitchings = super.getPitchings();
-        if (pitchings.contains(Pitching.STRIKE)) {
-            return nextFrame.getNextPitching();
+        if (isStrike(pitchings)) {
+            return nextFrame.getFirstPitching();
         }
-        return pitchings.getNextAndNextPitching();
+        return pitchings.getSecondPitching();
     }
 
     @Override

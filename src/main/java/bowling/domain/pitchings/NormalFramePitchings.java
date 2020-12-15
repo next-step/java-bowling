@@ -37,4 +37,26 @@ public class NormalFramePitchings extends Pitchings {
         Pitching firstPitching = value.get(0);
         return firstPitching == Pitching.STRIKE;
     }
+
+    @Override
+    public Integer calculateTotalScoreWithStrikeBonus(Pitching nextPitching, Pitching nextAndNextPitching) {
+        if (nextPitching == null || nextAndNextPitching == null) {
+            return null;
+        }
+
+        if (nextAndNextPitching == Pitching.SPARE) {
+            return calculateTotalScore() + nextAndNextPitching.getScore();
+        }
+
+        return calculateTotalScore() + nextPitching.getScore() + nextAndNextPitching.getScore();
+    }
+
+    @Override
+    public Integer calculateTotalScoreWithSpareBonus(Pitching nextPitching) {
+        if (nextPitching == null) {
+            return null;
+        }
+
+        return calculateTotalScore() + nextPitching.getScore();
+    }
 }
