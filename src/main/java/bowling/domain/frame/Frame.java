@@ -2,18 +2,12 @@ package bowling.domain.frame;
 
 import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
-import bowling.domain.pitchings.NormalFramePitchings;
 import bowling.domain.pitchings.Pitchings;
 
 public abstract class Frame {
     private final Pitchings pitchings;
     private final Frame previousFrame;
     protected Integer totalScore;
-
-    public Frame() {
-        pitchings = NormalFramePitchings.getInstance();
-        previousFrame = null;
-    }
 
     public Frame(Pitchings pitchings, Frame previousFrame) {
         this.pitchings = pitchings;

@@ -8,10 +8,6 @@ public class NormalFrame extends Frame {
     private final int index;
     private Frame nextFrame;
 
-    public NormalFrame() {
-        index = 0;
-    }
-
     protected NormalFrame(int index, Frame previousFrame) {
         super(NormalFramePitchings.getInstance(), previousFrame);
         this.index = index;
