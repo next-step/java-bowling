@@ -40,7 +40,7 @@ public class BallThrowTest {
 
     @DisplayName("두번째 투구는 첫번째 투구에서 쓰러뜨린 핀수를 포함하여 10을 넘을 수 없다")
     @Test
-    void secondThrow() {
+    void secondThrowOver10() {
         assertThatCode(() -> new BallThrow(5).throwSecond(6))
                 .isInstanceOf(IllegalFallingPinsException.class);
     }
