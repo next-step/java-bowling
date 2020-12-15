@@ -17,10 +17,6 @@ public class NormalFrame extends Frame {
         return new NormalFrame(1, null);
     }
 
-    public static Frame getFrame(int index) {
-        return new NormalFrame(index, null);
-    }
-
     @Override
     public Frame initNextFrame() {
         int nextFrameIndex = index + 1;
