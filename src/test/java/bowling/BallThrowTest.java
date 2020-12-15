@@ -36,8 +36,11 @@ public class BallThrowTest {
     }
 
     private static class BallThrow {
+        public static final int MAX_PINS = 10;
+        public static final int MIN_FINS = 0;
+
         public BallThrow(int fallingPins) {
-            if (fallingPins > 10 || fallingPins < 0) {
+            if (fallingPins > MAX_PINS || fallingPins < MIN_FINS) {
                 throw new IllegalFallingPinsException();
             }
         }
