@@ -73,14 +73,22 @@ public class BallThrowTest {
     @DisplayName("마지막 프레임의 세번째 투구를 던질 수 있다")
     @Test
     void lastFrameThirdThrow() {
-        BallThrow ballThrow = new BallThrow(1, true).throwSecond(2);
+        BallThrow ballThrow = new BallThrow(10, true).throwSecond(2);
         assertThat(ballThrow.throwThird(3)).isEqualTo(new BallThrow(3));
     }
 
     @DisplayName("마지막 프레임이 아니면 세번째 투구를 던질 수 없다")
     @Test
     void nonLastFrameCannotThirdThrow() {
-        BallThrow ballThrow = new BallThrow(1, false).throwSecond(2);
+        BallThrow ballThrow = new BallThrow(10, false).throwSecond(2);
+        assertThatThrownBy(() -> ballThrow.throwThird(3))
+                .isInstanceOf(IllegalBallThrownException.class);
+    }
+
+    @DisplayName("마지막 프레임의 세번째 투구는 첫번째 투구의 핀수가 10보다 작으면 존재할 수 없다")
+    @Test
+    void thirdThrowExists() {
+        BallThrow ballThrow = new BallThrow(1, true).throwSecond(2);
         assertThatThrownBy(() -> ballThrow.throwThird(3))
                 .isInstanceOf(IllegalBallThrownException.class);
     }
