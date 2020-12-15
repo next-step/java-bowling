@@ -1,6 +1,7 @@
 package bowling.model.frame;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -49,5 +50,18 @@ public class FrameNumber implements Comparable<FrameNumber> {
     @Override
     public int compareTo(FrameNumber o) {
         return Integer.compare(this.frameNumber, o.frameNumber);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof FrameNumber){
+            return this.frameNumber == ((FrameNumber) obj).frameNumber;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber);
     }
 }

@@ -1,6 +1,7 @@
 package bowling.model;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -70,5 +71,19 @@ public class Score implements Comparable<Score> {
     @Override
     public int compareTo(Score o) {
         return Integer.compare(this.score, o.score);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Score){
+            return this.score == ((Score) obj).score;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }
