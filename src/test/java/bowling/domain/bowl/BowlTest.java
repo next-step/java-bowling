@@ -65,18 +65,18 @@ class BowlTest {
     }
 
     @ParameterizedTest
-    @DisplayName("핀 갯수가 음수이면, PinException 이 발생한다.")
+    @DisplayName("쓰러트린 핀 개수가 음수이면, PinException 이 발생한다.")
     @CsvSource(value = {"-8$3", "10$-1", "11$3", "4$12"}, delimiter = '$')
     void scenario_negative(int pin1, int pin2) {
         assertThatExceptionOfType(PinException.class)
                 .isThrownBy(() -> {
                     bowl.addPin(Pin.of(pin1));
                     bowl.addPin(Pin.of(pin2));
-                }).withMessage("핀의 개수는 0 이상 10 이하여야 합니다.");
+                }).withMessage("쓰러트린 핀의 개수는 0 이상 10 이하여야 합니다.");
     }
 
     @ParameterizedTest
-    @DisplayName("적절하지 않은 핀 갯수이면, BadCountOfDownPinsException 이 발생한다.")
+    @DisplayName("쓰러트린 핀 개수가 적절치 않으면, BadCountOfDownPinsException 이 발생한다.")
     @CsvSource(value = {"9$2", "4$7"}, delimiter = '$')
     void scenario_badCountOfDownPins(int pin1, int pin2) {
         assertThatExceptionOfType(BadCountOfDownPinsException.class)

@@ -20,7 +20,7 @@ class FrameTest {
     }
 
     @Test
-    @DisplayName("한 프레임에 쓰러트린 핀 갯수가 10개를 넘으면 BadCountOfDownPinsException 이 발생한다.")
+    @DisplayName("한 프레임에 쓰러트린 핀 개수가 10개를 넘으면 BadCountOfDownPinsException 이 발생한다.")
     void badCountOfDownPins() {
         assertThatExceptionOfType(BadCountOfDownPinsException.class)
                 .isThrownBy(() -> {

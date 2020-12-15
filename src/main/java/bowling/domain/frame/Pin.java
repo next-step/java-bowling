@@ -25,7 +25,7 @@ public class Pin {
 
     public static Pin of(int count) {
         if (count < 0 || count > MAX_PIN_NUMBER) {
-            throw new PinException("핀의 개수는 0 이상 10 이하여야 합니다.");
+            throw new PinException("쓰러트린 핀의 개수는 0 이상 10 이하여야 합니다.");
         }
         return map.get(count);
     }

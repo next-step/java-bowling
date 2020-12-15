@@ -7,7 +7,7 @@
 - Player: Bowl 을 통해 자신이 플레이하는 차례인지 isPlayable 값으로 확인 후, Bowl 에게 쓰러트린 countOfDownPins 를 전달
 - Bowl: 볼링을 플레이 가능한지 판단하여, Frame 에게 countOfDownPins 를 전달. 플레이하며 쌓인 Frame 을 리스트 자료형으로 저장
 - Frame: 전달받은 countOfDownPins 를 통해, STRIKE, SPARE, MISS, UNFINISHED 중에 어떤 상태인지 판단
-- Pin: 쓰러트린 핀의 갯수를 저장하는 value object
+- Pin: 쓰러트린 핀의 개수를 저장하는 value object
 - Scores: 볼링 점수를 누적하여 저장하는 일급 콜렉션
 
 ## 2단계 - 볼링 점수판(그리기)
