@@ -97,6 +97,14 @@ public class BallThrowTest {
 
     }
 
+    @DisplayName("마지막 프레임의 세번째 투구는 두번째 투구가 10개의 핀수를 가진다면 또다시 10개의 투구를 가질 수 있다")
+    @Test
+    void thirdThrow10Pins() {
+        BallThrow first = new BallThrow(10, true);
+        BallThrow second = first.throwSecond(10);
+        assertThat(second.throwThird(10, first)).isEqualTo(new BallThrow(10));
+    }
+
     private static class BallThrow {
         public static final int MAX_PINS = 10;
         public static final int MIN_FINS = 0;
