@@ -3,21 +3,65 @@ package bowling.domain.pitchings;
 import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Stream;
 
-//todo abstract class
-public interface Pitchings extends Iterable<Pitching> {
-    void addPitching(KnockDownPins knockDownPins);
+public abstract class Pitchings implements Iterable<Pitching> {
+    protected final List<Pitching> value;
 
-    boolean isEnd();
+    public Pitchings() {
+        value = new ArrayList<>();
+    }
 
-    Stream<Pitching> stream();
+    public abstract void addPitching(KnockDownPins knockDownPins);
 
-    boolean contains(Pitching pitching);
+    public abstract boolean isEnd();
 
-    int getTotalScore();
+    public Pitching getNextPitching() {
+        if (value.isEmpty()) {
+            return null;
+        }
+        return value.get(0);
+    }
 
-    Pitching getNextPitching();
+    public Pitching getNextAndNextPitching() {
+        if (value.size() < 2) {
+            return null;
+        }
+        return value.get(1);
+    }
 
-    Pitching getNextAndNextPitching();
+    public Stream<Pitching> stream() {
+        return value.stream();
+    }
+
+    public boolean contains(Pitching pitching) {
+        return value.contains(pitching);
+    }
+
+    public int getTotalScore() {
+        return value.stream()
+                .mapToInt(Pitching::getScore)
+                .sum();
+    }
+
+    protected void setFirstPitching(KnockDownPins knockDownPins) {
+        Pitching pitching = Pitching.getPitching(knockDownPins);
+        value.add(pitching);
+    }
+
+    protected void setSecondPitching(KnockDownPins knockDownPins) {
+        int lastIndex = value.size() - 1;
+        Pitching previousPitching = value.get(lastIndex);
+        Pitching pitching = Pitching.getPitching(knockDownPins, previousPitching);
+        value.add(pitching);
+    }
+
+
+    @Override
+    public Iterator<Pitching> iterator() {
+        return value.iterator();
+    }
 }
