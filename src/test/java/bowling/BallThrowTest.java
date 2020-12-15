@@ -59,8 +59,15 @@ public class BallThrowTest {
 
     @DisplayName("마지막 프레임의 두번째 투구는 첫번째 투구가 10개의 핀수를 가진다면 또다시 10개의 핀수를 가질 수 있다")
     @Test
-    void lastSecondThrowCouldHave10Pins() {
+    void lastFrameSecondThrowCouldHave10PinsWhenFirstThrowEquals10() {
         assertThat(new BallThrow(10, true).throwSecond(10)).isEqualTo(new BallThrow(10));
+    }
+
+    @DisplayName("마지막 프레임의 두번째 투구는 첫번째 투구가 10개 미만의 핀수를 가진다면 첫번째 투구의 핀수를 더해서 10을 초과할 수 없다")
+    @Test
+    void lastFrameSecondThrowShouldUnder10PinsWhenFirstThrowUnder10() {
+        assertThatCode(() -> new BallThrow(9, true).throwSecond(2))
+                .isInstanceOf(IllegalFallingPinsException.class);
     }
 
     private static class BallThrow {
