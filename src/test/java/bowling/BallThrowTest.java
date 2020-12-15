@@ -3,6 +3,8 @@ package bowling;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -59,6 +61,21 @@ public class BallThrowTest {
             if (this.fallingPins + secondFallingPins > MAX_PINS) {
                 throw new IllegalFallingPinsException();
             }
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o)
+                return true;
+            if (o == null || getClass() != o.getClass())
+                return false;
+            BallThrow ballThrow = (BallThrow) o;
+            return fallingPins == ballThrow.fallingPins;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(fallingPins);
         }
     }
 
