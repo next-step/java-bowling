@@ -9,6 +9,11 @@ public abstract class Frame {
     private final Frame previousFrame;
     protected Integer totalScore;
 
+    public Frame() {
+        pitchings = null;
+        previousFrame = null;
+    }
+
     public Frame(Pitchings pitchings, Frame previousFrame) {
         this.pitchings = pitchings;
         this.previousFrame = previousFrame;
@@ -28,7 +33,7 @@ public abstract class Frame {
         return pitchings.isEnd();
     }
 
-    public abstract Integer calculateScore();
+    protected abstract Integer calculateScore();
 
     public Integer getTotalScore() {
         if (!isEnd()) {

@@ -34,8 +34,7 @@ public class LastFrame extends Frame {
         return pitchings.getSecondPitching();
     }
 
-    @Override
-    public Integer calculateScore() {
+    protected Integer calculateScore() {
         if (!isEnd()) {
             return null;
         }

@@ -8,7 +8,11 @@ public class NormalFrame extends Frame {
     private final int index;
     private Frame nextFrame;
 
-    private NormalFrame(int index, Frame previousFrame) {
+    public NormalFrame() {
+        index = 0;
+    }
+
+    protected NormalFrame(int index, Frame previousFrame) {
         super(NormalFramePitchings.getInstance(), previousFrame);
         this.index = index;
     }
@@ -34,8 +38,7 @@ public class NormalFrame extends Frame {
         return nextFrame;
     }
 
-    @Override
-    public Integer calculateScore() {
+    protected Integer calculateScore() {
         if (!isEnd()) {
             return null;
         }
