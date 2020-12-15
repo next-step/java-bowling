@@ -41,9 +41,9 @@ public class Frames {
     }
 
     public void setKnockDownPins(KnockDownPins knockDownPins) {
-        Frame currenctFrame = value.get(currentIndex);
-        currenctFrame.setKnockDownPins(knockDownPins);
-        if (currenctFrame.isEnd()) {
+        Frame currentFrame = value.get(currentIndex);
+        currentFrame.setKnockDownPins(knockDownPins);
+        if (currentFrame.isEnd()) {
             currentIndex++;
         }
     }
