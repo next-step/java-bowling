@@ -105,6 +105,15 @@ public class BallThrowTest {
         assertThat(second.throwThird(10, first)).isEqualTo(new BallThrow(10));
     }
 
+    @DisplayName("마지막 프레임의 세번째 투구는 두번째 투구가 10 미만의 핀수를 가진다면 또다시 10개의 투구를 가질 수 없다")
+    @Test
+    void thirdThrowCannotHave10PinsWhenSecondPinUnder10() {
+        BallThrow first = new BallThrow(10, true);
+        BallThrow second = first.throwSecond(5);
+        assertThatThrownBy(() -> second.throwThird(10, first))
+                .isInstanceOf(IllegalFallingPinsException.class);
+    }
+
     private static class BallThrow {
         public static final int MAX_PINS = 10;
         public static final int MIN_FINS = 0;
