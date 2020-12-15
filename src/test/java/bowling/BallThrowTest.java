@@ -118,29 +118,18 @@ public class BallThrowTest {
         public static final int MAX_PINS = 10;
         public static final int MIN_FINS = 0;
         private final int fallingPins;
-        private final int orderOfThrow;
         private final boolean lastFrame;
 
-
         public BallThrow(int fallingPins) {
-            this(fallingPins, 1);
-        }
-
-        public BallThrow(int fallingPins, int orderOfThrow) {
-            this(fallingPins, orderOfThrow, false);
+            this(fallingPins, false);
         }
 
         public BallThrow(int fallingPins, boolean lastFrame) {
-            this(fallingPins, 1, lastFrame);
-        }
-
-        public BallThrow(int fallingPins, int orderOfThrow,  boolean lastFrame) {
             this.lastFrame = lastFrame;
             if (fallingPins > MAX_PINS || fallingPins < MIN_FINS) {
                 throw new IllegalFallingPinsException();
             }
             this.fallingPins = fallingPins;
-            this.orderOfThrow = orderOfThrow;
         }
 
         public BallThrow throwSecond(int secondFallingPins) {
@@ -153,20 +142,20 @@ public class BallThrowTest {
             if (this.fallingPins == MAX_PINS && !lastFrame) {
                 throw new IllegalBallThrownException();
             }
-            return new BallThrow(secondFallingPins, 2, lastFrame);
+            return new BallThrow(secondFallingPins, lastFrame);
         }
 
         public BallThrow throwThird(int thirdFallingPins, BallThrow firstBallThrow) {
-            if (!lastFrame && orderOfThrow == 2) {
+            if (!lastFrame) {
                 throw new IllegalBallThrownException();
             }
-            if (lastFrame && firstBallThrow.fallingPins != 10) {
+            if (firstBallThrow.fallingPins != MAX_PINS) {
                 throw new IllegalBallThrownException();
             }
             if (this.fallingPins + thirdFallingPins > MAX_PINS && this.fallingPins < MAX_PINS) {
                 throw new IllegalFallingPinsException();
             }
-            return new BallThrow(thirdFallingPins, 3);
+            return new BallThrow(thirdFallingPins);
         }
 
         @Override
