@@ -14,4 +14,6 @@ public interface Pitchings extends Iterable<Pitching> {
     Stream<Pitching> stream();
 
     List<Pitching> getValue();
+
+    boolean isEmpty();
 }

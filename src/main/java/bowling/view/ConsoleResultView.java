@@ -62,6 +62,8 @@ public class ConsoleResultView implements ResultView {
     private void appendBody(BowlingGame bowlingGame, StringBuilder resultBuilder) {
         appendPlayerName(bowlingGame, resultBuilder);
         appendResults(bowlingGame, resultBuilder);
+        resultBuilder.append(System.lineSeparator());
+        appendScore(bowlingGame, resultBuilder);
     }
 
     private void appendPlayerName(BowlingGame bowlingGame, StringBuilder resultBuilder) {
@@ -77,6 +79,21 @@ public class ConsoleResultView implements ResultView {
             String formattedResult = centerString(result);
             resultBuilder.append(formattedResult).append(DELIMITER);
         });
+    }
+
+    private void appendScore(BowlingGame bowlingGame, StringBuilder resultBuilder) {
+        resultBuilder.append(DELIMITER).append(centerString("")).append(DELIMITER);
+        bowlingGame.framesStream().forEach(frame -> {
+            Integer score = frame.getTotalScore();
+            resultBuilder.append(formatScore(score)).append(DELIMITER);
+        });
+    }
+
+    private String formatScore(Integer score) {
+        if (score == null) {
+            return centerString("");
+        }
+        return centerString(String.valueOf(score));
     }
 
     private String centerString(String value) {

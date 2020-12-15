@@ -108,4 +108,9 @@ public class LastFramePitchings implements Pitchings {
     public List<Pitching> getValue() {
         return value;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return value.isEmpty();
+    }
 }

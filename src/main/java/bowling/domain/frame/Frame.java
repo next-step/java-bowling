@@ -6,11 +6,11 @@ import bowling.domain.pitchings.Pitchings;
 
 public abstract class Frame {
     private final Pitchings pitchings;
-    private int score;
+    protected Integer totalScore;
 
     public Frame(Pitchings pitchings) {
         this.pitchings = pitchings;
-        score = 0;
+        totalScore = null;
     }
 
     abstract public Frame initNextFrame();
@@ -28,6 +28,8 @@ public abstract class Frame {
     }
 
     public abstract Integer getScore();
+
+    public abstract Integer getTotalScore();
 
     public abstract Pitching getNextPitching();
 
