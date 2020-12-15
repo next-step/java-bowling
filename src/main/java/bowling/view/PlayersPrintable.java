@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.frame.FrameEnum;
+import bowling.domain.frame.FrameStatus;
 import bowling.dto.*;
 
 import java.util.Iterator;
@@ -20,14 +20,14 @@ class PlayersPrintable extends Printable {
         BowlDto bowlDto = player.getBowlDto();
         FramesDto framesDto = bowlDto.getFramesDto();
         PinsDto pinsDto = framesDto.getPinsDto();
-        FrameEnumsDto frameEnumsDto = framesDto.getFrameEnumsDto();
+        FrameStatusesDto frameStatusesDto = framesDto.getFrameStatusesDto();
 
         append(lineSeparator);
         append(String.format("|  %s |", player.getName()));
         Iterator<PinDto> itr = pinsDto.getPins().iterator();
-        List<FrameEnumDto> frameEnums = frameEnumsDto.getFrameEnums();
-        frameEnums.forEach(frameEnumDto -> append(frameEnumDto, itr));
-        appendBlank(frameEnums.size());
+        List<FrameStatusDto> frameStatuses = frameStatusesDto.getFrameStatuses();
+        frameStatuses.forEach(frameStatusDto -> append(frameStatusDto, itr));
+        appendBlank(frameStatuses.size());
 
         append(lineSeparator);
         append("|      |");
@@ -43,24 +43,24 @@ class PlayersPrintable extends Printable {
         }
     }
 
-    private void append(FrameEnumDto frameEnumDto, Iterator<PinDto> itr) {
-        FrameEnum frameEnum = frameEnumDto.getFrameEnum();
+    private void append(FrameStatusDto frameStatusDto, Iterator<PinDto> itr) {
+        FrameStatus frameStatus = frameStatusDto.getFrameStatus();
         String str = "";
-        if (frameEnum == FrameEnum.STRIKE) {
+        if (frameStatus == FrameStatus.STRIKE) {
             str = " X";
             itr.next();
         }
-        if (frameEnum == FrameEnum.SPARE) {
+        if (frameStatus == FrameStatus.SPARE) {
             str = String.format("%s|/",
                     toString(itr.next()));
             itr.next();
         }
-        if (frameEnum == FrameEnum.MISS) {
+        if (frameStatus == FrameStatus.MISS) {
             str = String.format("%s|%s",
                     toString(itr.next()),
                     toString(itr.next()));
         }
-        if (frameEnum == FrameEnum.UNFINISHED) {
+        if (frameStatus == FrameStatus.UNFINISHED) {
             str = toString(itr.next());
         }
         append(spacing(str));
@@ -73,7 +73,7 @@ class PlayersPrintable extends Printable {
     }
 
     private String toString(PinDto pinDto) {
-        int count = pinDto.getCountOfPins();
+        int count = pinDto.getCountOfDownPins();
         return count <= 0
                 ? "-"
                 : Integer.toString(count);

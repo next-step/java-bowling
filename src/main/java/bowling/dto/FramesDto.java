@@ -2,18 +2,18 @@ package bowling.dto;
 
 public class FramesDto {
     private final PinsDto pinsDto;
-    private final FrameEnumsDto frameEnumsDto;
+    private final FrameStatusesDto frameStatusesDto;
 
-    public FramesDto(PinsDto pinsDto, FrameEnumsDto frameEnumsDto) {
+    public FramesDto(PinsDto pinsDto, FrameStatusesDto frameStatusesDto) {
         this.pinsDto = pinsDto;
-        this.frameEnumsDto = frameEnumsDto;
+        this.frameStatusesDto = frameStatusesDto;
     }
 
     public PinsDto getPinsDto() {
         return pinsDto;
     }
 
-    public FrameEnumsDto getFrameEnumsDto() {
-        return frameEnumsDto;
+    public FrameStatusesDto getFrameStatusesDto() {
+        return frameStatusesDto;
     }
 }

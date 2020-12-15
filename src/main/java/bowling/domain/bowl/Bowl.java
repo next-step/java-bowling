@@ -3,7 +3,7 @@ package bowling.domain.bowl;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Pin;
 import bowling.dto.BowlDto;
-import bowling.dto.FrameEnumsDto;
+import bowling.dto.FrameStatusesDto;
 import bowling.dto.FramesDto;
 import bowling.dto.ScoresDto;
 
@@ -46,23 +46,21 @@ public class Bowl {
         return getFrameNumber() + 1 >= MAX_FRAME_NUMBER;
     }
 
-    private FrameEnumsDto exportFrameEnumsDto() {
-        return (frames.size() > MAX_FRAME_NUMBER
-                ? frames.subList(0, MAX_FRAME_NUMBER)
-                : frames).stream()
-                .map(Frame::exportFrameDto)
-                .collect(collectingAndThen(toList(), FrameEnumsDto::new));
+    private FrameStatusesDto exportFrameStatusesDto() {
+        return frames.stream()
+                .map(Frame::exportFrameStatusDto)
+                .collect(collectingAndThen(toList(), FrameStatusesDto::new));
     }
 
     private FramesDto exportFramesDto() {
-        return new FramesDto(state.exportPinsDto(), exportFrameEnumsDto());
+        return new FramesDto(state.exportPinsDto(), exportFrameStatusesDto());
     }
 
     private ScoresDto exportScoresDto() {
         Scores scores = new Scores();
         frames.stream()
                 .filter(Frame::hasScore)
-                .map(Frame::getCountOfPins)
+                .map(Frame::getCountOfDownPins)
                 .forEach(scores::accumulate);
         return scores.exportScoresDto();
     }

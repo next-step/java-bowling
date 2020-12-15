@@ -1,11 +1,11 @@
 package bowling.domain.bowl;
 
-import bowling.domain.frame.FrameEnum;
+import bowling.domain.frame.FrameStatus;
 import bowling.domain.frame.Pin;
-import bowling.dto.FrameEnumDto;
+import bowling.dto.FrameStatusDto;
 import bowling.dto.PinDto;
 import bowling.dto.ScoreDto;
-import bowling.exception.BadCountOfPinsException;
+import bowling.exception.BadCountOfDownPinsException;
 import bowling.exception.PinException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static bowling.asset.Const.MAX_FRAME_NUMBER;
-import static bowling.domain.frame.FrameEnum.*;
+import static bowling.domain.frame.FrameStatus.*;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
@@ -41,17 +41,17 @@ class BowlTest {
                 .getPinsDto()
                 .getPins()
                 .stream()
-                .map(PinDto::getCountOfPins)
+                .map(PinDto::getCountOfDownPins)
                 .collect(toList());
     }
 
-    private List<FrameEnum> toFrameList(Bowl bowl) {
+    private List<FrameStatus> toFrameList(Bowl bowl) {
         return bowl.exportBowlDto()
                 .getFramesDto()
-                .getFrameEnumsDto()
-                .getFrameEnums()
+                .getFrameStatusesDto()
+                .getFrameStatuses()
                 .stream()
-                .map(FrameEnumDto::getFrameEnum)
+                .map(FrameStatusDto::getFrameStatus)
                 .collect(toList());
     }
 
@@ -65,21 +65,21 @@ class BowlTest {
     }
 
     @ParameterizedTest
-    @DisplayName("핀 갯수가 음수이면, PinException 이 발생한다.")
+    @DisplayName("쓰러트린 핀 개수가 음수이면, PinException 이 발생한다.")
     @CsvSource(value = {"-8$3", "10$-1", "11$3", "4$12"}, delimiter = '$')
     void scenario_negative(int pin1, int pin2) {
         assertThatExceptionOfType(PinException.class)
                 .isThrownBy(() -> {
                     bowl.addPin(Pin.of(pin1));
                     bowl.addPin(Pin.of(pin2));
-                }).withMessage("핀의 개수는 0 이상 10 이하여야 합니다.");
+                }).withMessage("쓰러트린 핀의 개수는 0 이상 10 이하여야 합니다.");
     }
 
     @ParameterizedTest
-    @DisplayName("적절하지 않은 핀 갯수이면, BadCountOfPinsException 이 발생한다.")
+    @DisplayName("쓰러트린 핀 개수가 적절치 않으면, BadCountOfDownPinsException 이 발생한다.")
     @CsvSource(value = {"9$2", "4$7"}, delimiter = '$')
-    void scenario_badCountOfPins(int pin1, int pin2) {
-        assertThatExceptionOfType(BadCountOfPinsException.class)
+    void scenario_badCountOfDownPins(int pin1, int pin2) {
+        assertThatExceptionOfType(BadCountOfDownPinsException.class)
                 .isThrownBy(() -> {
                     bowl.addPin(Pin.of(pin1));
                     bowl.addPin(Pin.of(pin2));
@@ -202,11 +202,11 @@ class BowlTest {
     @Test
     @DisplayName("STRIKE 만 finish 까지 치는 시나리오 테스트")
     void scenario_strike_finish() {
-        int countOfPins = 10;
+        int countOfDownPins = 10;
         while (bowl.isPlayable()) {
-            bowl.addPin(Pin.of(countOfPins));
+            bowl.addPin(Pin.of(countOfDownPins));
         }
-        List<FrameEnum> frameList = toFrameList(bowl);
+        List<FrameStatus> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
         assertAll(
@@ -222,11 +222,11 @@ class BowlTest {
     @Test
     @DisplayName("SPARE 만 finish 까지 치는 시나리오 테스트")
     void scenario_spare_finish() {
-        int countOfPins = 5;
+        int countOfDownPins = 5;
         while (bowl.isPlayable()) {
-            bowl.addPin(Pin.of(countOfPins));
+            bowl.addPin(Pin.of(countOfDownPins));
         }
-        List<FrameEnum> frameList = toFrameList(bowl);
+        List<FrameStatus> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
         assertAll(
@@ -242,11 +242,11 @@ class BowlTest {
     @Test
     @DisplayName("MISS 만 finish 까지 치는 시나리오 테스트")
     void scenario_miss_finish() {
-        int countOfPins = 3;
+        int countOfDownPins = 3;
         while (bowl.isPlayable()) {
-            bowl.addPin(Pin.of(countOfPins));
+            bowl.addPin(Pin.of(countOfDownPins));
         }
-        List<FrameEnum> frameList = toFrameList(bowl);
+        List<FrameStatus> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
         assertAll(
@@ -263,16 +263,16 @@ class BowlTest {
     @Test
     @DisplayName("STRIKE 만 game_over 까지 치는 시나리오 테스트")
     void scenario_strike_game_over() {
-        int countOfPins = 10;
+        int countOfDownPins = 10;
         while (bowl.isPlayable()) {
-            play(countOfPins, bowl);
+            play(countOfDownPins, bowl);
         }
         List<Integer> pinList = new LinkedList<>();
-        List<FrameEnum> frameList = toFrameList(bowl);
+        List<FrameStatus> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
         for (int i = 0; i < MAX_FRAME_NUMBER + 2; i++) {
-            pinList.add(countOfPins);
+            pinList.add(countOfDownPins);
         }
         assertAll(
                 () -> assertThat(toPinList(bowl))
@@ -291,16 +291,16 @@ class BowlTest {
     @Test
     @DisplayName("SPARE 만 game_over 까지 치는 시나리오 테스트")
     void scenario_spare_game_over() {
-        int countOfPins = 5;
+        int countOfDownPins = 5;
         while (bowl.isPlayable()) {
-            play(countOfPins, bowl);
+            play(countOfDownPins, bowl);
         }
         List<Integer> pinList = new LinkedList<>();
-        List<FrameEnum> frameList = toFrameList(bowl);
+        List<FrameStatus> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
         for (int i = 0; i < MAX_FRAME_NUMBER * 2 + 1; i++) {
-            pinList.add(countOfPins);
+            pinList.add(countOfDownPins);
         }
         assertAll(
                 () -> assertThat(toPinList(bowl))
@@ -315,16 +315,16 @@ class BowlTest {
     @Test
     @DisplayName("MISS 만 game_over 까지 치는 시나리오 테스트")
     void scenario_miss_game_over() {
-        int countOfPins = 3;
+        int countOfDownPins = 3;
         while (bowl.isPlayable()) {
-            play(countOfPins, bowl);
+            play(countOfDownPins, bowl);
         }
         List<Integer> pinList = new LinkedList<>();
-        List<FrameEnum> frameList = toFrameList(bowl);
+        List<FrameStatus> frameList = toFrameList(bowl);
         List<Integer> scoreList = toScoreList(bowl);
 
         for (int i = 0; i < MAX_FRAME_NUMBER * 2; i++) {
-            pinList.add(countOfPins);
+            pinList.add(countOfDownPins);
         }
         assertAll(
                 () -> assertThat(toPinList(bowl))
@@ -336,9 +336,9 @@ class BowlTest {
         );
     }
 
-    private void play(int countOfPins, Bowl bowl) {
+    private void play(int countOfDownPins, Bowl bowl) {
         while (bowl.isPlayable()) {
-            bowl.addPin(Pin.of(countOfPins));
+            bowl.addPin(Pin.of(countOfDownPins));
         }
         bowl.update();
     }

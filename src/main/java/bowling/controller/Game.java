@@ -9,8 +9,8 @@ class Game {
     private final Players players;
 
     Game() {
-        // int sizeOfPlayers = View.askSizeOfPlayers().getSize();
-        int sizeOfPlayers = 1;
+        int sizeOfPlayers = View.askSizeOfPlayers().getSize();
+        // int sizeOfPlayers = 1;
         players = Players.of(sizeOfPlayers, this::getPlayer);
     }
 
@@ -22,10 +22,15 @@ class Game {
 
     private void play(Player player) {
         while (player.isPlayable()) {
-            player.addPin(getPin(player));
-            View.printPlayers(players.exportPlayersDto());
+            Pin pin = getPin(player);
+            player.addPin(pin);
+            printGame();
         }
         player.updateBowl();
+    }
+
+    private void printGame() {
+        View.printPlayers(players.exportPlayersDto());
     }
 
     private Player getPlayer() {
@@ -35,6 +40,6 @@ class Game {
 
     private Pin getPin(Player player) {
         return Pin.of(View.askPin(player.exportAskPinDto())
-                .getCountOfPins());
+                .getCountOfDownPins());
     }
 }

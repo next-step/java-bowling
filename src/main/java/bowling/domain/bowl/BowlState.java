@@ -1,7 +1,7 @@
 package bowling.domain.bowl;
 
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.FrameEnum;
+import bowling.domain.frame.FrameStatus;
 import bowling.domain.frame.Pin;
 import bowling.dto.PinsDto;
 
@@ -25,8 +25,8 @@ abstract class BowlState {
         bowl.addFrame(currentFrame);
     }
 
-    FrameEnum getFrameEnum() {
-        return currentFrame.getFrameEnum();
+    FrameStatus getFrameStatus() {
+        return currentFrame.getFrameStatus();
     }
 
     abstract int getFrameNumberAdder();

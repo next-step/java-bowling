@@ -11,8 +11,8 @@ class StrikeFrameState extends FrameState {
     }
 
     @Override
-    FrameEnum getFrameEnum() {
-        return FrameEnum.STRIKE;
+    FrameStatus getFrameStatus() {
+        return FrameStatus.STRIKE;
     }
 
     @Override

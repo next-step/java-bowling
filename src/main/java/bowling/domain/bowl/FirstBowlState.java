@@ -2,7 +2,7 @@ package bowling.domain.bowl;
 
 import bowling.domain.frame.Pin;
 
-import static bowling.domain.frame.FrameEnum.STRIKE;
+import static bowling.domain.frame.FrameStatus.STRIKE;
 
 class FirstBowlState extends BowlState {
     FirstBowlState() {
@@ -31,7 +31,7 @@ class FirstBowlState extends BowlState {
 
     @Override
     void updateState(Bowl bowl) {
-        BowlState nextState = getFrameEnum() == STRIKE
+        BowlState nextState = getFrameStatus() == STRIKE
                 ? new FinishedBowlState(this)
                 : new SecondBowlState(this);
         bowl.setState(nextState);

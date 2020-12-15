@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.dto.FrameEnumDto;
+import bowling.dto.FrameStatusDto;
 import bowling.dto.PinsDto;
 
 public class Frame {
@@ -32,16 +32,16 @@ public class Frame {
         return state.hasScore();
     }
 
-    public int getCountOfPins() {
-        return state.getCountOfPins();
+    public int getCountOfDownPins() {
+        return state.getCountOfDownPins();
     }
 
-    public FrameEnum getFrameEnum() {
-        return state.getFrameEnum();
+    public FrameStatus getFrameStatus() {
+        return state.getFrameStatus();
     }
 
-    public FrameEnumDto exportFrameDto() {
-        return new FrameEnumDto(getFrameEnum());
+    public FrameStatusDto exportFrameStatusDto() {
+        return new FrameStatusDto(getFrameStatus());
     }
 
     public PinsDto exportPinsDto() {

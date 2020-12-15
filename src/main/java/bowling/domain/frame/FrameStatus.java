@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-public enum FrameEnum {
+public enum FrameStatus {
     STRIKE,
     SPARE,
     MISS,

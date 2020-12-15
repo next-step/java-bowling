@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import static bowling.asset.Const.PIN_NUMBER;
+import static bowling.asset.Const.MAX_PIN_NUMBER;
 
 class InitialFrameState extends FrameState {
     InitialFrameState(Pins pins, int pinsIndex) {
@@ -13,13 +13,13 @@ class InitialFrameState extends FrameState {
     }
 
     @Override
-    FrameEnum getFrameEnum() {
-        return FrameEnum.UNFINISHED;
+    FrameStatus getFrameStatus() {
+        return FrameStatus.UNFINISHED;
     }
 
     @Override
     void updateState(Frame frame) {
-        FrameState nextState = getCountOfPins() == PIN_NUMBER
+        FrameState nextState = getCountOfDownPins() == MAX_PIN_NUMBER
                 ? new StrikeFrameState(this)
                 : new UnfinishedFrameState(this);
         frame.setState(nextState);

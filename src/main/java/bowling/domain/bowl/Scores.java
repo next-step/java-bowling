@@ -12,8 +12,8 @@ class Scores {
     private final List<Score> scores = new LinkedList<>();
     private int accumulated = 0;
 
-    void accumulate(int countOfPins) {
-        accumulated += countOfPins;
+    void accumulate(int countOfDownPins) {
+        accumulated += countOfDownPins;
         scores.add(new Score(accumulated));
     }
 

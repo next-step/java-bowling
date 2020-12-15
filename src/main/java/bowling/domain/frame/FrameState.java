@@ -26,13 +26,13 @@ abstract class FrameState {
         return pinsIndex + getOffset() <= pins.size();
     }
 
-    int getCountOfPins() {
+    int getCountOfDownPins() {
         return pins.sum(pinsIndex, getOffset());
     }
 
     abstract int getOffset();
 
-    abstract FrameEnum getFrameEnum();
+    abstract FrameStatus getFrameStatus();
 
     abstract void updateState(Frame frame);
 }

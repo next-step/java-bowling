@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class PinTest {
     @ParameterizedTest
-    @DisplayName("count 가 0부터 10의 숫자가 아니면, BadCountOfPinsException 이 발생한다.")
+    @DisplayName("count 가 0부터 10의 숫자가 아니면, BadCountOfDownPinsException 이 발생한다.")
     @ValueSource(ints = {-1, 11})
     void constructor(int count) {
         assertThatExceptionOfType(PinException.class)
@@ -30,14 +30,14 @@ class PinTest {
     @DisplayName("exportPinDto 테스트")
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void exportPinDto(int count) {
-        assertThat(Pin.of(count).exportPinDto().getCountOfPins())
+        assertThat(Pin.of(count).exportPinDto().getCountOfDownPins())
                 .isEqualTo(count);
     }
 
     @ParameterizedTest
     @DisplayName("sum 테스트")
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
-    void getCountOfPins(int count) {
+    void getCountOfDownPins(int count) {
         int num = 100;
         assertThat(Pin.of(count).sum(num))
                 .isEqualTo(num + count);

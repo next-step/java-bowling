@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.exception.BadCountOfPinsException;
+import bowling.exception.BadCountOfDownPinsException;
 import bowling.exception.PinsOutOfRangeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,9 +20,9 @@ class FrameTest {
     }
 
     @Test
-    @DisplayName("한 프레임에 쓰러트린 핀 갯수가 10개를 넘으면 BadCountOfPinsException 이 발생한다.")
-    void badCountOfPins() {
-        assertThatExceptionOfType(BadCountOfPinsException.class)
+    @DisplayName("한 프레임에 쓰러트린 핀 개수가 10개를 넘으면 BadCountOfDownPinsException 이 발생한다.")
+    void badCountOfDownPins() {
+        assertThatExceptionOfType(BadCountOfDownPinsException.class)
                 .isThrownBy(() -> {
                     frame.addPin(Pin.of(9));
                     frame.addPin(Pin.of(9));
@@ -35,12 +35,12 @@ class FrameTest {
     void unfinished() {
         frame.addPin(Pin.of(9));
         assertAll(
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.UNFINISHED),
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.UNFINISHED),
                 () -> assertThat(frame.hasScore())
                         .isFalse(),
                 () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
-                        .isThrownBy(() -> frame.getCountOfPins())
+                        .isThrownBy(() -> frame.getCountOfDownPins())
                         .withMessage("pins 의 범위를 벗어난 index 입니다.")
         );
     }
@@ -50,12 +50,12 @@ class FrameTest {
     void strike() {
         frame.addPin(Pin.of(10));
         assertAll(
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.STRIKE),
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.STRIKE),
                 () -> assertThat(frame.hasScore())
                         .isFalse(),
                 () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
-                        .isThrownBy(() -> frame.getCountOfPins())
+                        .isThrownBy(() -> frame.getCountOfDownPins())
                         .withMessage("pins 의 범위를 벗어난 index 입니다."),
 
                 () -> assertDoesNotThrow(() -> {
@@ -64,11 +64,11 @@ class FrameTest {
                     frame.addPin(Pin.of(3));
                 }),
 
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.STRIKE),
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.STRIKE),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
-                () -> assertThat(frame.getCountOfPins())
+                () -> assertThat(frame.getCountOfDownPins())
                         .isEqualTo(25)
         );
     }
@@ -79,12 +79,12 @@ class FrameTest {
         frame.addPin(Pin.of(0));
         frame.addPin(Pin.of(10));
         assertAll(
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.SPARE),
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.SPARE),
                 () -> assertThat(frame.hasScore())
                         .isFalse(),
                 () -> assertThatExceptionOfType(PinsOutOfRangeException.class)
-                        .isThrownBy(() -> frame.getCountOfPins())
+                        .isThrownBy(() -> frame.getCountOfDownPins())
                         .withMessage("pins 의 범위를 벗어난 index 입니다."),
 
                 () -> assertDoesNotThrow(() -> {
@@ -93,11 +93,11 @@ class FrameTest {
                     frame.addPin(Pin.of(3));
                 }),
 
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.SPARE),
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.SPARE),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
-                () -> assertThat(frame.getCountOfPins())
+                () -> assertThat(frame.getCountOfDownPins())
                         .isEqualTo(20)
         );
     }
@@ -108,11 +108,11 @@ class FrameTest {
         frame.addPin(Pin.of(0));
         frame.addPin(Pin.of(9));
         assertAll(
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.MISS),
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.MISS),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
-                () -> assertThat(frame.getCountOfPins())
+                () -> assertThat(frame.getCountOfDownPins())
                         .isEqualTo(9),
 
                 () -> assertDoesNotThrow(() -> {
@@ -121,11 +121,11 @@ class FrameTest {
                     frame.addPin(Pin.of(3));
                 }),
 
-                () -> assertThat(frame.exportFrameDto().getFrameEnum())
-                        .isEqualTo(FrameEnum.MISS),
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
+                        .isEqualTo(FrameStatus.MISS),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
-                () -> assertThat(frame.getCountOfPins())
+                () -> assertThat(frame.getCountOfDownPins())
                         .isEqualTo(9)
         );
     }
