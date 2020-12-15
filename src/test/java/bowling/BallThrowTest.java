@@ -63,10 +63,10 @@ public class BallThrowTest {
         private final int fallingPins;
 
         public BallThrow(int fallingPins) {
-            this.fallingPins = fallingPins;
             if (fallingPins > MAX_PINS || fallingPins < MIN_FINS) {
                 throw new IllegalFallingPinsException();
             }
+            this.fallingPins = fallingPins;
         }
 
         public BallThrow throwSecond(int secondFallingPins) {
