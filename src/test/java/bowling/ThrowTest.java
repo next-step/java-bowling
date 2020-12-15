@@ -7,4 +7,9 @@ public class ThrowTest {
     void create() {
         new Throw(0);
     }
+
+    private static class Throw {
+        public Throw(int fallingPins) {
+        }
+    }
 }
