@@ -21,10 +21,17 @@ public class BallThrowTest {
         new BallThrow(0);
     }
 
-    @DisplayName("10개 이상의 핀을 쓰러뜨릴 수 없다")
+    @DisplayName("10개 초과의 핀을 쓰러뜨릴 수 없다")
     @Test
     void fallingPinsOver10() {
         assertThatCode(() -> new BallThrow(11))
+                .isInstanceOf(IllegalFallingPinsException.class);
+    }
+
+    @DisplayName("0개 미만의 핀을 쓰러뜨릴 수 없다")
+    @Test
+    void fallingPinsUnder0() {
+        assertThatCode(() -> new BallThrow(-1))
                 .isInstanceOf(IllegalFallingPinsException.class);
     }
 
