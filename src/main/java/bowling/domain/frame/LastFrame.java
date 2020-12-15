@@ -4,8 +4,6 @@ import bowling.domain.Pitching;
 import bowling.domain.pitchings.LastFramePitchings;
 import bowling.domain.pitchings.Pitchings;
 
-import java.util.List;
-
 public class LastFrame extends Frame {
     private static final String NEXT_FRAME_INVOKE_ERR_MSG = "LastFrame은 NextFrame이 존재하지 않습니다.";
     private final int index;
@@ -28,20 +26,14 @@ public class LastFrame extends Frame {
 
     @Override
     public Pitching getNextPitching() {
-        List<Pitching> value = getPitchings().getValue();
-        if (value.isEmpty()) {
-            return null;
-        }
-        return value.get(0);
+        Pitchings pitchings = super.getPitchings();
+        return pitchings.getNextPitching();
     }
 
     @Override
     public Pitching getNextAndNextPitching() {
-        List<Pitching> value = getPitchings().getValue();
-        if (value.size() < 2) {
-            return null;
-        }
-        return value.get(1);
+        Pitchings pitchings = super.getPitchings();
+        return pitchings.getNextAndNextPitching();
     }
 
     @Override
@@ -51,10 +43,7 @@ public class LastFrame extends Frame {
         }
 
         Pitchings pitchings = super.getPitchings();
-        List<Pitching> value = pitchings.getValue();
-        return value.stream()
-                .mapToInt(Pitching::getScore)
-                .sum();
+        return pitchings.getTotalScore();
     }
 
     @Override

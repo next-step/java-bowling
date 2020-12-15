@@ -105,12 +105,30 @@ public class LastFramePitchings implements Pitchings {
     }
 
     @Override
-    public List<Pitching> getValue() {
-        return value;
+    public boolean contains(Pitching pitching) {
+        return value.contains(pitching);
     }
 
     @Override
-    public boolean isEmpty() {
-        return value.isEmpty();
+    public int getTotalScore() {
+        return value.stream()
+                .mapToInt(Pitching::getScore)
+                .sum();
+    }
+
+    @Override
+    public Pitching getNextPitching() {
+        if (value.isEmpty()) {
+            return null;
+        }
+        return value.get(0);
+    }
+
+    @Override
+    public Pitching getNextAndNextPitching() {
+        if (value.size() < 2) {
+            return null;
+        }
+        return value.get(1);
     }
 }

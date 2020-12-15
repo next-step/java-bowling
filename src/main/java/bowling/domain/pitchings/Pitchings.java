@@ -3,9 +3,9 @@ package bowling.domain.pitchings;
 import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 
-import java.util.List;
 import java.util.stream.Stream;
 
+//todo abstract class
 public interface Pitchings extends Iterable<Pitching> {
     void addPitching(KnockDownPins knockDownPins);
 
@@ -13,7 +13,11 @@ public interface Pitchings extends Iterable<Pitching> {
 
     Stream<Pitching> stream();
 
-    List<Pitching> getValue();
+    boolean contains(Pitching pitching);
 
-    boolean isEmpty();
+    int getTotalScore();
+
+    Pitching getNextPitching();
+
+    Pitching getNextAndNextPitching();
 }

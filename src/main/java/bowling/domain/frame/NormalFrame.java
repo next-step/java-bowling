@@ -2,8 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.Pitching;
 import bowling.domain.pitchings.NormalFramePitchings;
-
-import java.util.List;
+import bowling.domain.pitchings.Pitchings;
 
 public class NormalFrame extends Frame {
     private final int index;
@@ -43,8 +42,8 @@ public class NormalFrame extends Frame {
             return null;
         }
 
-        List<Pitching> value = super.getPitchings().getValue();
-        if (value.contains(Pitching.STRIKE)) {
+        Pitchings pitchings = super.getPitchings();
+        if (pitchings.contains(Pitching.STRIKE)) {
             Pitching nextPitching = nextFrame.getNextPitching();
             Pitching nextAndNextPitching = nextFrame.getNextAndNextPitching();
             if (nextPitching == null || nextAndNextPitching == null) {
@@ -58,7 +57,7 @@ public class NormalFrame extends Frame {
             return Pitching.STRIKE.getScore() + nextPitching.getScore() + nextAndNextPitching.getScore();
         }
 
-        if (value.contains(Pitching.SPARE)) {
+        if (pitchings.contains(Pitching.SPARE)) {
             Pitching nextPitching = nextFrame.getNextPitching();
             if (nextPitching == null) {
                 return null;
@@ -67,32 +66,22 @@ public class NormalFrame extends Frame {
             return Pitching.SPARE.getScore() + nextPitching.getScore();
         }
 
-        return value.stream()
-                .mapToInt(Pitching::getScore)
-                .sum();
+        return pitchings.getTotalScore();
     }
 
     @Override
     public Pitching getNextPitching() {
-        List<Pitching> value = getPitchings().getValue();
-        if (value.isEmpty()) {
-            return null;
-        }
-        return value.get(0);
+        Pitchings pitchings = super.getPitchings();
+        return pitchings.getNextPitching();
     }
 
     @Override
     public Pitching getNextAndNextPitching() {
-        List<Pitching> value = getPitchings().getValue();
-        if (!value.isEmpty() && value.get(0) == Pitching.STRIKE) {
+        Pitchings pitchings = super.getPitchings();
+        if (pitchings.contains(Pitching.STRIKE)) {
             return nextFrame.getNextPitching();
         }
-
-        if (value.size() < 2) {
-            return null;
-        }
-
-        return value.get(1);
+        return pitchings.getNextAndNextPitching();
     }
 
     @Override
