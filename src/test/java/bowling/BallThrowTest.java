@@ -1,10 +1,9 @@
 package bowling;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * #### 투구
@@ -31,6 +30,12 @@ public class BallThrowTest {
 
     private static class BallThrow {
         public BallThrow(int fallingPins) {
+            if (fallingPins > 10) {
+                throw new IllegalFallingPinsException();
+            }
         }
+    }
+
+    private static class IllegalFallingPinsException extends RuntimeException {
     }
 }
