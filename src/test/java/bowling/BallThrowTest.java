@@ -95,7 +95,7 @@ public class BallThrowTest {
             if (this.fallingPins + secondFallingPins > MAX_PINS && lastFrame && this.fallingPins < MAX_PINS) {
                 throw new IllegalFallingPinsException();
             }
-            if (this.fallingPins == 10 && !lastFrame) {
+            if (this.fallingPins == MAX_PINS && !lastFrame) {
                 throw new IllegalBallThrownException();
             }
             return new BallThrow(secondFallingPins);
