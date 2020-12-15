@@ -27,7 +27,7 @@ public abstract class Frame {
         return pitchings.isEnd();
     }
 
-    public abstract Integer getScore();
+    public abstract Integer calculateScore();
 
     public abstract Integer getTotalScore();
 

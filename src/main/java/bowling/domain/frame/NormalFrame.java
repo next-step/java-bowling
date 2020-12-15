@@ -38,7 +38,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Integer getScore() {
+    public Integer calculateScore() {
         List<Pitching> value = super.getPitchings().getValue();
         if (value.contains(Pitching.STRIKE)) {
             Pitching nextPitching = nextFrame.getNextPitching();
@@ -93,16 +93,16 @@ public class NormalFrame extends Frame {
 
     @Override
     public Integer getTotalScore() {
-        if (!isEnd() || getScore() == null) {
+        if (!isEnd() || calculateScore() == null) {
             return null;
         }
 
         if (previousFrame == null) {
-            totalScore = getScore();
+            totalScore = calculateScore();
             return totalScore;
         }
 
-        totalScore = previousFrame.getTotalScore() + getScore();
+        totalScore = previousFrame.getTotalScore() + calculateScore();
         return totalScore;
     }
 
