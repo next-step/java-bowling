@@ -48,7 +48,7 @@ public class Bowl {
 
     private FrameStatusesDto exportFrameStatusesDto() {
         return frames.stream()
-                .map(Frame::exportFrameDto)
+                .map(Frame::exportFrameStatusDto)
                 .collect(collectingAndThen(toList(), FrameStatusesDto::new));
     }
 

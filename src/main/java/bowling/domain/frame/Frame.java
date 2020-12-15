@@ -40,7 +40,7 @@ public class Frame {
         return state.getFrameStatus();
     }
 
-    public FrameStatusDto exportFrameDto() {
+    public FrameStatusDto exportFrameStatusDto() {
         return new FrameStatusDto(getFrameStatus());
     }
 

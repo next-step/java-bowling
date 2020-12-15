@@ -35,7 +35,7 @@ class FrameTest {
     void unfinished() {
         frame.addPin(Pin.of(9));
         assertAll(
-                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
                         .isEqualTo(FrameStatus.UNFINISHED),
                 () -> assertThat(frame.hasScore())
                         .isFalse(),
@@ -50,7 +50,7 @@ class FrameTest {
     void strike() {
         frame.addPin(Pin.of(10));
         assertAll(
-                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
                         .isEqualTo(FrameStatus.STRIKE),
                 () -> assertThat(frame.hasScore())
                         .isFalse(),
@@ -64,7 +64,7 @@ class FrameTest {
                     frame.addPin(Pin.of(3));
                 }),
 
-                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
                         .isEqualTo(FrameStatus.STRIKE),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
@@ -79,7 +79,7 @@ class FrameTest {
         frame.addPin(Pin.of(0));
         frame.addPin(Pin.of(10));
         assertAll(
-                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
                         .isEqualTo(FrameStatus.SPARE),
                 () -> assertThat(frame.hasScore())
                         .isFalse(),
@@ -93,7 +93,7 @@ class FrameTest {
                     frame.addPin(Pin.of(3));
                 }),
 
-                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
                         .isEqualTo(FrameStatus.SPARE),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
@@ -108,7 +108,7 @@ class FrameTest {
         frame.addPin(Pin.of(0));
         frame.addPin(Pin.of(9));
         assertAll(
-                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
                         .isEqualTo(FrameStatus.MISS),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
@@ -121,7 +121,7 @@ class FrameTest {
                     frame.addPin(Pin.of(3));
                 }),
 
-                () -> assertThat(frame.exportFrameDto().getFrameStatus())
+                () -> assertThat(frame.exportFrameStatusDto().getFrameStatus())
                         .isEqualTo(FrameStatus.MISS),
                 () -> assertThat(frame.hasScore())
                         .isTrue(),
