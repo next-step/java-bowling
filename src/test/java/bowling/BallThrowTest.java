@@ -1,6 +1,10 @@
 package bowling;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * #### 투구
@@ -16,6 +20,13 @@ public class BallThrowTest {
     @Test
     void create() {
         new BallThrow(0);
+    }
+
+    @DisplayName("10개 이상의 핀을 쓰러뜨릴 수 없다")
+    @Test
+    void fallingPinsOver10() {
+        assertThatCode(() -> new BallThrow(11))
+                .isInstanceOf(IllegalFallingPinsException.class);
     }
 
     private static class BallThrow {
