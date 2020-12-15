@@ -71,14 +71,12 @@ public class NormalFrame extends Frame {
         return nextFrame.getFirstPitching();
     }
 
-    @Override
-    public Pitching getFirstPitching() {
+    Pitching getFirstPitching() {
         Pitchings pitchings = super.getPitchings();
         return pitchings.getFirstPitching();
     }
 
-    @Override
-    public Pitching getSecondPitching() {
+    Pitching getSecondPitching() {
         Pitchings pitchings = super.getPitchings();
         if (isStrike(pitchings)) {
             return nextFrame.getFirstPitching();

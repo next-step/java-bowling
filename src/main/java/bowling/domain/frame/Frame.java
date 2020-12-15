@@ -48,7 +48,7 @@ public abstract class Frame {
         return previousFrame == null;
     }
 
-    public abstract Pitching getFirstPitching();
+    abstract Pitching getFirstPitching();
 
-    public abstract Pitching getSecondPitching();
+    abstract Pitching getSecondPitching();
 }
