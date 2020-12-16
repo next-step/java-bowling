@@ -30,14 +30,18 @@ public abstract class Frame implements FrameService, FrameViewDto {
             return Optional.empty();
         }
 
+        if (!getScore().isPresent()) {
+            return Optional.empty();
+        }
+
         if (isFirstFrame()) {
-            totalScore = getScore().orElseThrow(NullPointerException::new);
+            totalScore = getScore().get();
             return Optional.of(totalScore);
         }
 
         Frame previousFrame = getPreviousFrame();
         Optional<Integer> previousFrameTotalScore = previousFrame.getTotalScore();
-        totalScore = previousFrameTotalScore.orElse(0) + getScore().orElseThrow(NullPointerException::new);
+        totalScore = previousFrameTotalScore.orElse(0) + getScore().get();
         return Optional.of(totalScore);
     }
 

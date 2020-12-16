@@ -94,7 +94,7 @@ public class ConsoleResultView implements ResultView {
         if (!totalScore.isPresent()) {
             return centerString("");
         }
-        return centerString(String.valueOf(totalScore));
+        return centerString(String.valueOf(totalScore.get()));
     }
 
     private String centerString(String value) {

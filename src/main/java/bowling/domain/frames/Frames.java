@@ -52,7 +52,7 @@ public class Frames implements FramesService, FramesViewDto {
         List<FrameViewDto> frameViewDtos = new ArrayList<>();
 
         Frame currentFrame = firstAndLastFrame.getFirst();
-        while (currentFrame.index <= FramesViewDto.MAX_FRAME_SIZE) {
+        while (currentFrame != null && currentFrame.index <= FramesViewDto.MAX_FRAME_SIZE) {
             frameViewDtos.add(currentFrame);
             currentFrame = currentFrame.getNextFrame();
         }
