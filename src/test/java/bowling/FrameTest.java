@@ -107,10 +107,15 @@ public class FrameTest {
         public Frame throwBall(int fallingPins) {
             if (firstThrow == null) {
                 firstThrow = new BallThrow(fallingPins);
-                return this;
+                if (getScoring().filter(Scoring::isStrike).isPresent()) {
+                    return new Frame();
+                } else {
+                    return this;
+                }
             }
+
             secondThrow = firstThrow.throwSecond(fallingPins);
-            return null;
+            return new Frame();
         }
 
         public Optional<Scoring> getScoring() {
@@ -141,6 +146,10 @@ public class FrameTest {
     }
 
     protected enum Scoring {
-        STRIKE, MISS, GUTTER, SPARE
+        STRIKE, MISS, GUTTER, SPARE;
+
+        public static boolean isStrike(Scoring scoring) {
+            return scoring == STRIKE;
+        }
     }
 }
