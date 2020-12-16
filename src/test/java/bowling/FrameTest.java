@@ -1,8 +1,10 @@
 package bowling;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * #### 프레임
@@ -21,7 +23,16 @@ public class FrameTest {
     void createAndThrowBall() {
         Frame frame = new Frame();
         frame.throwBall(10);
-        Assertions.assertThat(frame.getScoring()).isEqualTo(Scoring.STRIKE);
+        assertThat(frame.getScoring()).isEqualTo(Scoring.STRIKE);
+    }
+
+    @DisplayName("스트라이크이면 두번째 투구를 할 수 없다")
+    @Test
+    void strike() {
+        Frame frame = new Frame();
+        frame.throwBall(10);
+        assertThatThrownBy(() -> frame.throwBall(10))
+                .isInstanceOf(IllegalBallThrownException.class);
     }
 
 
