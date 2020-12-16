@@ -42,7 +42,7 @@ public class NormalFramePitchings extends Pitchings {
 
     @Override
     public Optional<Integer> getTotalScoreWithStrikeBonus(Optional<Pitching> optionalNextPitching, Optional<Pitching> optionalNextAndNextPitching) {
-        if (!optionalNextPitching.isPresent() || !optionalNextAndNextPitching.isPresent()) {
+        if (canNotCalculateStrikeBonus(optionalNextPitching, optionalNextAndNextPitching)) {
             return Optional.empty();
         }
 
@@ -51,6 +51,10 @@ public class NormalFramePitchings extends Pitchings {
 
         Integer totalScore = calculateTotalScoreWithStrikeBonus(nextPitching, nextAndNextPitching);
         return Optional.of(totalScore);
+    }
+
+    private boolean canNotCalculateStrikeBonus(Optional<Pitching> optionalNextPitching, Optional<Pitching> optionalNextAndNextPitching) {
+        return !optionalNextPitching.isPresent() || !optionalNextAndNextPitching.isPresent();
     }
 
     private Integer calculateTotalScoreWithStrikeBonus(Pitching nextPitching, Pitching nextAndNextPitching) {
@@ -63,7 +67,7 @@ public class NormalFramePitchings extends Pitchings {
 
     @Override
     public Optional<Integer> calculateTotalScoreWithSpareBonus(Optional<Pitching> optionalNextPitching) {
-        if (!optionalNextPitching.isPresent()) {
+        if (canNotCalculateSpareBonus(optionalNextPitching)) {
             return Optional.empty();
         }
 
@@ -71,5 +75,9 @@ public class NormalFramePitchings extends Pitchings {
 
         int score = calculateTotalScore() + nextPitching.getScore();
         return Optional.of(score);
+    }
+
+    private boolean canNotCalculateSpareBonus(Optional<Pitching> optionalNextPitching) {
+        return !optionalNextPitching.isPresent();
     }
 }

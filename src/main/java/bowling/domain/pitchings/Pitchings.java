@@ -16,10 +16,6 @@ public abstract class Pitchings implements Iterable<Pitching> {
         value = new ArrayList<>();
     }
 
-    public abstract void addPitching(KnockDownPins knockDownPins);
-
-    public abstract boolean isEnd();
-
     public Optional<Pitching> getFirstPitching() {
         if (value.isEmpty()) {
             return Optional.empty();
@@ -68,11 +64,14 @@ public abstract class Pitchings implements Iterable<Pitching> {
         value.add(pitching);
     }
 
-
     @Override
     public Iterator<Pitching> iterator() {
         return value.iterator();
     }
+
+    public abstract void addPitching(KnockDownPins knockDownPins);
+
+    public abstract boolean isEnd();
 
     public abstract Optional<Integer> getTotalScoreWithStrikeBonus(Optional<Pitching> nextPitching, Optional<Pitching> nextAndNextPitching);
 
