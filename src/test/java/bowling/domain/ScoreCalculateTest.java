@@ -14,8 +14,8 @@ public class ScoreCalculateTest {
     @DisplayName("Strike 한 경우 다음 2번의 투구의 점수를 합한다. (2번의 투구가 스트라이크인 경우)")
     public void strikeScoreTest() {
         TestFrame frame1 = TestFrame.getFirstFrame();
-        Frame frame2 = frame1.initNextFrame();
-        Frame frame3 = frame2.initNextFrame();
+        Frame frame2 = frame1.getNextFrame();
+        Frame frame3 = frame2.getNextFrame();
 
         frame1.setKnockDownPins(KnockDownPins.valueOf(10));
         frame2.setKnockDownPins(KnockDownPins.valueOf(10));
@@ -28,8 +28,7 @@ public class ScoreCalculateTest {
     @DisplayName("Strike 한 경우 다음 2번의 투구의 점수를 합한다.")
     public void strikeScoreWithScoreTest() {
         TestFrame frame1 = TestFrame.getFirstFrame();
-        Frame frame2 = frame1.initNextFrame();
-        Frame frame3 = frame2.initNextFrame();
+        Frame frame2 = frame1.getNextFrame();
 
         frame1.setKnockDownPins(KnockDownPins.valueOf(10));
         frame2.setKnockDownPins(KnockDownPins.valueOf(3));
@@ -42,8 +41,7 @@ public class ScoreCalculateTest {
     @DisplayName("Strike 한 경우 다음 2번의 투구의 점수를 합한다. (2번째 투구가 스페어인 경우)")
     public void strikeScoreWithSpareTest() {
         TestFrame frame1 = TestFrame.getFirstFrame();
-        Frame frame2 = frame1.initNextFrame();
-        Frame frame3 = frame2.initNextFrame();
+        Frame frame2 = frame1.getNextFrame();
 
         frame1.setKnockDownPins(KnockDownPins.valueOf(10));
         frame2.setKnockDownPins(KnockDownPins.valueOf(5));
@@ -56,8 +54,7 @@ public class ScoreCalculateTest {
     @DisplayName("Strike 한 경우 다음 2번의 투구가 존재하지 않으면 null")
     public void strikeScoreNullTest() {
         TestFrame frame1 = TestFrame.getFirstFrame();
-        Frame frame2 = frame1.initNextFrame();
-        Frame frame3 = frame2.initNextFrame();
+        Frame frame2 = frame1.getNextFrame();
 
         frame1.setKnockDownPins(KnockDownPins.valueOf(10));
         frame2.setKnockDownPins(KnockDownPins.valueOf(10));
@@ -69,7 +66,7 @@ public class ScoreCalculateTest {
     @DisplayName("Spare 한 경우 다음번의 투구의 점수를 합한다.")
     public void spareScoreTest() {
         TestFrame frame1 = TestFrame.getFirstFrame();
-        Frame frame2 = frame1.initNextFrame();
+        Frame frame2 = frame1.getNextFrame();
 
         frame1.setKnockDownPins(KnockDownPins.valueOf(5));
         frame1.setKnockDownPins(KnockDownPins.valueOf(5));
@@ -82,7 +79,7 @@ public class ScoreCalculateTest {
     @DisplayName("Spare 한 경우 다음번의 투구가 존재하지 않으면 null")
     public void spareScoreNullTest() {
         TestFrame frame1 = TestFrame.getFirstFrame();
-        Frame frame2 = frame1.initNextFrame();
+        Frame frame2 = frame1.getNextFrame();
 
         frame1.setKnockDownPins(KnockDownPins.valueOf(5));
         frame1.setKnockDownPins(KnockDownPins.valueOf(5));
@@ -105,7 +102,7 @@ public class ScoreCalculateTest {
     @DisplayName("Strike 한 경우 다음 2번의 투구의 점수를 합한다. (2번의 투구가 스트라이크인 경우)")
     public void strikeScoreTest_lastFrame() {
         TestFrame frame9 = TestFrame.getFrame(9);
-        Frame lastFrame = frame9.initNextFrame();
+        Frame lastFrame = frame9.getNextFrame();
 
         frame9.setKnockDownPins(KnockDownPins.valueOf(10));
         lastFrame.setKnockDownPins(KnockDownPins.valueOf(10));
@@ -118,7 +115,7 @@ public class ScoreCalculateTest {
     @DisplayName("Strike 한 경우 다음 2번의 투구의 점수를 합한다.")
     public void strikeScoreWithScoreTest_lastFrame() {
         TestFrame frame9 = TestFrame.getFrame(9);
-        Frame lastFrame = frame9.initNextFrame();
+        Frame lastFrame = frame9.getNextFrame();
 
         frame9.setKnockDownPins(KnockDownPins.valueOf(10));
         lastFrame.setKnockDownPins(KnockDownPins.valueOf(3));
@@ -131,7 +128,7 @@ public class ScoreCalculateTest {
     @DisplayName("Strike 한 경우 다음 2번의 투구의 점수를 합한다. (2번째 투구가 스페어인 경우)")
     public void strikeScoreWithSpareTest_lastFrame() {
         TestFrame frame9 = TestFrame.getFrame(9);
-        Frame lastFrame = frame9.initNextFrame();
+        Frame lastFrame = frame9.getNextFrame();
 
         frame9.setKnockDownPins(KnockDownPins.valueOf(10));
         lastFrame.setKnockDownPins(KnockDownPins.valueOf(5));
@@ -144,7 +141,7 @@ public class ScoreCalculateTest {
     @DisplayName("Strike 한 경우 다음 2번의 투구가 존재하지 않으면 null")
     public void strikeScoreNullTest_lastFrame() {
         TestFrame frame9 = TestFrame.getFrame(9);
-        Frame lastFrame = frame9.initNextFrame();
+        Frame lastFrame = frame9.getNextFrame();
 
         frame9.setKnockDownPins(KnockDownPins.valueOf(10));
         lastFrame.setKnockDownPins(KnockDownPins.valueOf(5));
@@ -156,7 +153,7 @@ public class ScoreCalculateTest {
     @DisplayName("Spare 한 경우 다음번의 투구의 점수를 합한다.")
     public void spareScoreTest_lastFrame() {
         TestFrame frame9 = TestFrame.getFrame(9);
-        Frame lastFrame = frame9.initNextFrame();
+        Frame lastFrame = frame9.getNextFrame();
 
         frame9.setKnockDownPins(KnockDownPins.valueOf(5));
         frame9.setKnockDownPins(KnockDownPins.valueOf(5));
@@ -169,7 +166,7 @@ public class ScoreCalculateTest {
     @DisplayName("Spare 한 경우 다음번의 투구가 존재하지 않으면 null")
     public void spareScoreNullTest_lastFrame() {
         TestFrame frame9 = TestFrame.getFrame(9);
-        Frame lastFrame = frame9.initNextFrame();
+        Frame lastFrame = frame9.getNextFrame();
 
         frame9.setKnockDownPins(KnockDownPins.valueOf(5));
         frame9.setKnockDownPins(KnockDownPins.valueOf(5));

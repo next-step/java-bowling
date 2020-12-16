@@ -54,7 +54,7 @@ public class NormalFramePitchings extends Pitchings {
     }
 
     private Integer calculateTotalScoreWithStrikeBonus(Pitching nextPitching, Pitching nextAndNextPitching) {
-        if (nextPitching == Pitching.SPARE) {
+        if (nextAndNextPitching == Pitching.SPARE) {
             return calculateTotalScore() + nextAndNextPitching.getScore();
         }
 

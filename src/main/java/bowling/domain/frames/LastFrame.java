@@ -2,16 +2,20 @@ package bowling.domain.frames;
 
 import bowling.domain.Pitching;
 import bowling.domain.pitchings.LastFramePitchings;
+import bowling.domain.pitchings.Pitchings;
 
 import java.util.Optional;
 
 public class LastFrame extends Frame {
     private static final String NEXT_FRAME_INVOKE_ERR_MSG = "LastFrame은 NextFrame이 존재하지 않습니다.";
-    private final int index;
+    protected final Pitchings pitchings;
+    private final AdjacentFrame adjacentFrame;
+
 
     private LastFrame(int index, Frame previousFrame) {
-        super(LastFramePitchings.getInstance(), previousFrame);
-        this.index = index;
+        super(index);
+        pitchings = LastFramePitchings.getInstance();
+        adjacentFrame = AdjacentFrame.of(previousFrame, null);
     }
 
     public static Frame of(int index, Frame previousFrame) {
@@ -40,6 +44,26 @@ public class LastFrame extends Frame {
 
         int score = pitchings.calculateTotalScore();
         return Optional.of(score);
+    }
+
+    @Override
+    public Frame getLastFrame() {
+        return this;
+    }
+
+    @Override
+    public Frame getNextFrame() {
+        return null;
+    }
+
+    @Override
+    protected Frame getPreviousFrame() {
+        return adjacentFrame.getPreviousFrame();
+    }
+
+    @Override
+    public Pitchings getPitchings() {
+        return pitchings;
     }
 
     @Override

@@ -8,56 +8,55 @@ import java.util.stream.Stream;
 
 public class Frames implements FramesService, FramesViewDto {
     public static final int MAX_FRAME_SIZE = 10;
-    private final List<Frame> value;
-    private int currentIndex;
+    private final FirstAndLastFrame firstAndLastFrame;
+    private Frame currentFrame;
 
     private Frames() {
-        value = initFrames();
-        currentIndex = 0;
+        firstAndLastFrame = initFrames();
+        currentFrame = firstAndLastFrame.getFirst();
     }
 
     public static Frames init() {
         return new Frames();
     }
 
-    private List<Frame> initFrames() {
-        List<Frame> frames = new ArrayList<>();
-        Frame frame = NormalFrame.getFirstFrame();
-        frames.add(frame);
-        while (frames.size() < MAX_FRAME_SIZE) {
-            frame = frame.initNextFrame();
-            frames.add(frame);
-        }
-        return frames;
+    private FirstAndLastFrame initFrames() {
+        Frame firstFrame = NormalFrame.getFirstFrame();
+        return FirstAndLastFrame.of(firstFrame, firstFrame.getLastFrame());
     }
 
     public int size() {
-        return value.size();
+        return firstAndLastFrame.getLast().index;
     }
 
     @Override
     public boolean isEnd() {
-        Frame lastFrame = value.get(MAX_FRAME_SIZE - 1);
-        return lastFrame.isEnd();
+        return firstAndLastFrame.getLast().isEnd();
     }
 
     @Override
     public void setKnockDownPins(KnockDownPins knockDownPins) {
-        Frame currentFrame = value.get(currentIndex);
         currentFrame.setKnockDownPins(knockDownPins);
         if (currentFrame.isEnd()) {
-            currentIndex++;
+            currentFrame = currentFrame.getNextFrame();
         }
     }
 
     @Override
     public int getCurrentFrameIndex() {
-        return currentIndex + 1;
+        return currentFrame.index;
     }
 
     @Override
     public Stream<FrameViewDto> viewDtoStream() {
-        return value.stream()
-                .map(frame -> frame);
+        List<FrameViewDto> frameViewDtos = new ArrayList<>();
+
+        Frame currentFrame = firstAndLastFrame.getFirst();
+        while (currentFrame.index <= FramesViewDto.MAX_FRAME_SIZE) {
+            frameViewDtos.add(currentFrame);
+            currentFrame = currentFrame.getNextFrame();
+        }
+
+        return frameViewDtos.stream();
     }
 }

@@ -7,12 +7,13 @@ import bowling.domain.pitchings.Pitchings;
 import java.util.Optional;
 
 public class NormalFrame extends Frame {
-    private final int index;
-    private Frame nextFrame;
+    protected final Pitchings pitchings;
+    private final AdjacentFrame adjacentFrame;
 
     protected NormalFrame(int index, Frame previousFrame) {
-        super(NormalFramePitchings.getInstance(), previousFrame);
-        this.index = index;
+        super(index);
+        pitchings = NormalFramePitchings.getInstance();
+        adjacentFrame = AdjacentFrame.of(previousFrame, initNextFrame());
     }
 
     public static Frame getFirstFrame() {
@@ -20,16 +21,20 @@ public class NormalFrame extends Frame {
     }
 
     @Override
+    public Frame getLastFrame() {
+        Frame nextFrame = adjacentFrame.getNextFrame();
+        return nextFrame.getLastFrame();
+    }
+
+    @Override
     public Frame initNextFrame() {
         int nextFrameIndex = index + 1;
         int lastFrameIndex = Frames.MAX_FRAME_SIZE;
         if (nextFrameIndex == lastFrameIndex) {
-            nextFrame = LastFrame.of(lastFrameIndex, this);
-            return nextFrame;
+            return LastFrame.of(lastFrameIndex, this);
         }
 
-        nextFrame = new NormalFrame(nextFrameIndex, this);
-        return nextFrame;
+        return new NormalFrame(nextFrameIndex, this);
     }
 
     protected Optional<Integer> getScore() {
@@ -65,11 +70,11 @@ public class NormalFrame extends Frame {
     }
 
     private Optional<Pitching> getNextAndNextPitching() {
-        return nextFrame.getSecondPitching();
+        return adjacentFrame.getNextFrame().getSecondPitching();
     }
 
     private Optional<Pitching> getNextPitching() {
-        return nextFrame.getFirstPitching();
+        return adjacentFrame.getNextFrame().getFirstPitching();
     }
 
     Optional<Pitching> getFirstPitching() {
@@ -78,9 +83,24 @@ public class NormalFrame extends Frame {
 
     Optional<Pitching> getSecondPitching() {
         if (isStrike(pitchings)) {
-            return nextFrame.getFirstPitching();
+            return adjacentFrame.getNextFrame().getFirstPitching();
         }
         return pitchings.getSecondPitching();
+    }
+
+    @Override
+    public Frame getNextFrame() {
+        return adjacentFrame.getNextFrame();
+    }
+
+    @Override
+    protected Frame getPreviousFrame() {
+        return adjacentFrame.getPreviousFrame();
+    }
+
+    @Override
+    public Pitchings getPitchings() {
+        return pitchings;
     }
 
     @Override
