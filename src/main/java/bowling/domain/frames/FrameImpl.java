@@ -53,17 +53,17 @@ public abstract class FrameImpl implements Frame, FrameViewDto {
         return index == 1;
     }
 
-    protected abstract Optional<Integer> getScore();
-
-    abstract public FrameImpl initNextFrame();
-
-    abstract Optional<Pitching> getFirstPitching();
-
-    abstract Optional<Pitching> getSecondPitching();
+    public abstract FrameImpl initNextFrame();
 
     public abstract FrameImpl getLastFrame();
 
     public abstract FrameImpl getNextFrame();
 
+    protected abstract Optional<Integer> getScore();
+
     protected abstract Integer getPreviousTotalScore();
+
+    abstract Optional<Pitching> getFirstPitching();
+
+    abstract Optional<Pitching> getSecondPitching();
 }
