@@ -32,13 +32,19 @@ public class FrameTest {
         Frame frame = new Frame();
         frame.throwBall(10);
         assertThatThrownBy(() -> frame.throwBall(10))
-                .isInstanceOf(IllegalBallThrownException.class);
+                .isInstanceOf(IllegalFallingPinsException.class);
     }
 
-
     private static class Frame {
-        public void throwBall(int fallingPins) {
+        private BallThrow firstThrow;
+        private BallThrow secondThrow;
 
+        public void throwBall(int fallingPins) {
+            if (firstThrow == null) {
+                firstThrow = new BallThrow(fallingPins);
+                return;
+            }
+            secondThrow = firstThrow.throwSecond(fallingPins);
         }
 
         public Scoring getScoring() {
