@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * #### 프레임
- * * 1~9 프레임은 1..2 개의 투구를 가진다
+ * [x] 1~9 프레임은 1..2 개의 투구를 가진다
  * * 마지막 프래임은 1..3 개의 투구를 가진다
  * * 각 프레임은 1부터 시작하는 자신의 프레임 넘버를 가진다
  * * 각 프레임은 프래임내 투구 결과에 따라 스트라이크/스페어/미스/거터의 상태를 가진다
@@ -20,14 +20,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * * 마지막 프레임은 더이상 투구할 수 없으면 종료한다.
  */
 public class FrameTest {
-    @DisplayName("볼을 던지면 상태를 알 수 있다")
-    @Test
-    void createAndThrowBall() {
-        Frame frame = new Frame();
-        frame.throwBall(10);
-        assertThat(frame.getScoring()).isEqualTo(Scoring.STRIKE);
-    }
-
     @DisplayName("스트라이크이면 두번째 투구를 할 수 없다")
     @Test
     void strikeAndSecondThrow() {
@@ -44,6 +36,14 @@ public class FrameTest {
         frame.throwBall(5);
         frame.throwBall(5);
         assertThat(frame.sumOfFallingPins()).isEqualTo(10);
+    }
+
+    @DisplayName("10개를 쓰러뜨리면 스트라이크")
+    @Test
+    void strike() {
+        Frame frame = new Frame();
+        frame.throwBall(10);
+        assertThat(frame.getScoring()).isEqualTo(Scoring.STRIKE);
     }
 
     private static class Frame {
