@@ -2,8 +2,8 @@ package bowling.domain.bowlinggame;
 
 import bowling.domain.KnockDownPins;
 import bowling.domain.PlayerName;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
+import bowling.domain.frames.Frame;
+import bowling.domain.frames.Frames;
 
 import java.util.stream.Stream;
 

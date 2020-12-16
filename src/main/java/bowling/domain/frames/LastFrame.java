@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.frames;
 
 import bowling.domain.Pitching;
 import bowling.domain.pitchings.LastFramePitchings;

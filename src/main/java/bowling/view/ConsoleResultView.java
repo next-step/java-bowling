@@ -2,7 +2,7 @@ package bowling.view;
 
 import bowling.domain.Pitching;
 import bowling.domain.bowlinggame.BowlingGameViewDto;
-import bowling.domain.frame.Frames;
+import bowling.domain.frames.Frames;
 
 import java.util.EnumMap;
 import java.util.Map;

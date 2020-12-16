@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.frames;
 
 import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;

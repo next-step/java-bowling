@@ -1,7 +1,7 @@
 package bowling.domain.mock;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
+import bowling.domain.frames.Frame;
+import bowling.domain.frames.NormalFrame;
 
 public class TestFrame extends NormalFrame {
     public TestFrame(int index, Frame previousFrame) {

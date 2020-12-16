@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
+import bowling.domain.frames.Frame;
 import bowling.domain.mock.TestFrame;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
