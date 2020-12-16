@@ -1,5 +1,6 @@
 package bowling;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,10 +21,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * * 마지막 프레임은 더이상 투구할 수 없으면 종료한다.
  */
 public class FrameTest {
+
+    private Frame frame;
+
+    @BeforeEach
+    void setUp() {
+        frame = new Frame();
+    }
+
     @DisplayName("스트라이크이면 두번째 투구를 할 수 없다")
     @Test
     void strikeAndSecondThrow() {
-        Frame frame = new Frame();
         frame.throwBall(10);
         assertThatThrownBy(() -> frame.throwBall(10))
                 .isInstanceOf(IllegalFallingPinsException.class);
@@ -32,7 +40,6 @@ public class FrameTest {
     @DisplayName("스트라이크가 아니면 두번째 투구가 가능하다")
     @Test
     void secondThrow() {
-        Frame frame = new Frame();
         frame.throwBall(5);
         frame.throwBall(5);
         assertThat(frame.sumOfFallingPins()).isEqualTo(10);
@@ -41,7 +48,6 @@ public class FrameTest {
     @DisplayName("10개를 쓰러뜨리면 스트라이크")
     @Test
     void strike() {
-        Frame frame = new Frame();
         frame.throwBall(10);
         assertThat(frame.getScoring()).isEqualTo(Scoring.STRIKE);
     }
