@@ -118,6 +118,15 @@ public class FrameTest {
     private static class Frame {
         private BallThrow firstThrow;
         private BallThrow secondThrow;
+        private final int number;
+
+        public Frame() {
+            this(1);
+        }
+
+        private Frame(int number) {
+            this.number = number;
+        }
 
         public Frame throwBall(int fallingPins) {
             assignBallThrow(fallingPins);
@@ -149,7 +158,7 @@ public class FrameTest {
         }
 
         private Frame getNextFrame() {
-            return getScoring().map(__ -> new Frame())
+            return getScoring().map(__ -> new Frame(number + 1))
                     .orElse(this);
         }
 
@@ -161,6 +170,10 @@ public class FrameTest {
             return Optional.ofNullable(firstThrow)
                     .map(ballThrow -> ballThrow.add(secondThrow))
                     .orElse(0);
+        }
+
+        public int getNumber() {
+            return number;
         }
     }
 
