@@ -78,7 +78,7 @@ public class FrameTest {
         assertThat(frame.getScoring()).isEqualTo(Optional.of(GUTTER));
     }
 
-    @DisplayName("아직 프레임이 끝나지 않은 경우")
+    @DisplayName("프레임이 끝나지 않으면 반환할 상태가 없다")
     @Test
     void incomplete() {
         assertThat(frame.getScoring()).isEqualTo(Optional.empty());
@@ -88,9 +88,16 @@ public class FrameTest {
 
     @DisplayName("프레임이 끝나지 않으면 같은 프레임을 반환한다")
     @Test
-    void nextFrame() {
+    void nextFrameIsSame() {
         Frame nextFrame = frame.throwBall(0);
         assertThat(nextFrame).isEqualTo(frame);
+    }
+
+    @DisplayName("스트라이크이면 새로운 프레임을 반환한다")
+    @Test
+    void nextFrameIsNew() {
+        Frame nextFrame = frame.throwBall(10);
+        assertThat(nextFrame).isNotEqualTo(frame);
     }
 
     private static class Frame {
