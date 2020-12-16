@@ -52,6 +52,14 @@ public class FrameTest {
         assertThat(frame.getScoring()).isEqualTo(Scoring.STRIKE);
     }
 
+    @DisplayName("9/1 개를 쓰러뜨리면 스페어")
+    @Test
+    void spare() {
+        frame.throwBall(9);
+        frame.throwBall(1);
+        assertThat(frame.getScoring()).isEqualTo(Scoring.SPARE);
+    }
+
     private static class Frame {
         private BallThrow firstThrow;
         private BallThrow secondThrow;
@@ -76,6 +84,6 @@ public class FrameTest {
     }
 
     private enum Scoring {
-        STRIKE
+        STRIKE, SPARE
     }
 }
