@@ -3,6 +3,8 @@ package bowling.domain.pitchings;
 import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 
+import java.util.Optional;
+
 public class NormalFramePitchings extends Pitchings {
     private static final int NORMAL_FRAME_MAX_PITCHING_SIZE = 2;
 
@@ -39,12 +41,20 @@ public class NormalFramePitchings extends Pitchings {
     }
 
     @Override
-    public Integer calculateTotalScoreWithStrikeBonus(Pitching nextPitching, Pitching nextAndNextPitching) {
-        if (nextPitching == null || nextAndNextPitching == null) {
-            return null;
+    public Optional<Integer> getTotalScoreWithStrikeBonus(Optional<Pitching> optionalNextPitching, Optional<Pitching> optionalNextAndNextPitching) {
+        if (!optionalNextPitching.isPresent() || !optionalNextAndNextPitching.isPresent()) {
+            return Optional.empty();
         }
 
-        if (nextAndNextPitching == Pitching.SPARE) {
+        Pitching nextPitching = optionalNextPitching.get();
+        Pitching nextAndNextPitching = optionalNextAndNextPitching.get();
+
+        Integer totalScore = calculateTotalScoreWithStrikeBonus(nextPitching, nextAndNextPitching);
+        return Optional.of(totalScore);
+    }
+
+    private Integer calculateTotalScoreWithStrikeBonus(Pitching nextPitching, Pitching nextAndNextPitching) {
+        if (nextPitching == Pitching.SPARE) {
             return calculateTotalScore() + nextAndNextPitching.getScore();
         }
 
@@ -52,11 +62,14 @@ public class NormalFramePitchings extends Pitchings {
     }
 
     @Override
-    public Integer calculateTotalScoreWithSpareBonus(Pitching nextPitching) {
-        if (nextPitching == null) {
-            return null;
+    public Optional<Integer> calculateTotalScoreWithSpareBonus(Optional<Pitching> optionalNextPitching) {
+        if (!optionalNextPitching.isPresent()) {
+            return Optional.empty();
         }
 
-        return calculateTotalScore() + nextPitching.getScore();
+        Pitching nextPitching = optionalNextPitching.get();
+
+        int score = calculateTotalScore() + nextPitching.getScore();
+        return Optional.of(score);
     }
 }

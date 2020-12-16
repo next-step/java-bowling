@@ -3,6 +3,8 @@ package bowling.domain.mock;
 import bowling.domain.frames.Frame;
 import bowling.domain.frames.NormalFrame;
 
+import java.util.Optional;
+
 public class TestFrame extends NormalFrame {
     public TestFrame(int index, Frame previousFrame) {
         super(index, previousFrame);
@@ -16,7 +18,7 @@ public class TestFrame extends NormalFrame {
         return new TestFrame(index, null);
     }
 
-    public Integer getCalculatedScore() {
-        return super.calculateScore();
+    public Optional<Integer> getCalculatedScore() {
+        return super.getScore();
     }
 }

@@ -6,6 +6,7 @@ import bowling.domain.Pitching;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public abstract class Pitchings implements Iterable<Pitching> {
@@ -19,18 +20,18 @@ public abstract class Pitchings implements Iterable<Pitching> {
 
     public abstract boolean isEnd();
 
-    public Pitching getFirstPitching() {
+    public Optional<Pitching> getFirstPitching() {
         if (value.isEmpty()) {
-            return null;
+            return Optional.empty();
         }
-        return value.get(0);
+        return Optional.of(value.get(0));
     }
 
-    public Pitching getSecondPitching() {
+    public Optional<Pitching> getSecondPitching() {
         if (value.size() < 2) {
-            return null;
+            return Optional.empty();
         }
-        return value.get(1);
+        return Optional.of(value.get(1));
     }
 
     public Stream<Pitching> stream() {
@@ -73,7 +74,7 @@ public abstract class Pitchings implements Iterable<Pitching> {
         return value.iterator();
     }
 
-    public abstract Integer calculateTotalScoreWithStrikeBonus(Pitching nextPitching, Pitching nextAndNextPitching);
+    public abstract Optional<Integer> getTotalScoreWithStrikeBonus(Optional<Pitching> nextPitching, Optional<Pitching> nextAndNextPitching);
 
-    public abstract Integer calculateTotalScoreWithSpareBonus(Pitching nextPitching);
+    public abstract Optional<Integer> calculateTotalScoreWithSpareBonus(Optional<Pitching> nextPitching);
 }

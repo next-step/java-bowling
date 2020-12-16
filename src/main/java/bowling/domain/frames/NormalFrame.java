@@ -4,6 +4,8 @@ import bowling.domain.Pitching;
 import bowling.domain.pitchings.NormalFramePitchings;
 import bowling.domain.pitchings.Pitchings;
 
+import java.util.Optional;
+
 public class NormalFrame extends Frame {
     private final int index;
     private Frame nextFrame;
@@ -30,23 +32,28 @@ public class NormalFrame extends Frame {
         return nextFrame;
     }
 
-    protected Integer calculateScore() {
+    protected Optional<Integer> getScore() {
         if (!isEnd()) {
-            return null;
+            return Optional.empty();
         }
 
+        return calculateScore();
+    }
+
+    private Optional<Integer> calculateScore() {
         if (isStrike(pitchings)) {
-            Pitching nextPitching = getNextPitching();
-            Pitching nextAndNextPitching = getNextAndNextPitching();
-            return pitchings.calculateTotalScoreWithStrikeBonus(nextPitching, nextAndNextPitching);
+            Optional<Pitching> nextPitching = getNextPitching();
+            Optional<Pitching> nextAndNextPitching = getNextAndNextPitching();
+            return pitchings.getTotalScoreWithStrikeBonus(nextPitching, nextAndNextPitching);
         }
 
         if (isSpare(pitchings)) {
-            Pitching nextPitching = getNextPitching();
+            Optional<Pitching> nextPitching = getNextPitching();
             return pitchings.calculateTotalScoreWithSpareBonus(nextPitching);
         }
 
-        return pitchings.calculateTotalScore();
+        int totalScore = pitchings.calculateTotalScore();
+        return Optional.of(totalScore);
     }
 
     private boolean isSpare(Pitchings pitchings) {
@@ -57,19 +64,19 @@ public class NormalFrame extends Frame {
         return pitchings.contains(Pitching.STRIKE);
     }
 
-    private Pitching getNextAndNextPitching() {
+    private Optional<Pitching> getNextAndNextPitching() {
         return nextFrame.getSecondPitching();
     }
 
-    private Pitching getNextPitching() {
+    private Optional<Pitching> getNextPitching() {
         return nextFrame.getFirstPitching();
     }
 
-    Pitching getFirstPitching() {
+    Optional<Pitching> getFirstPitching() {
         return pitchings.getFirstPitching();
     }
 
-    Pitching getSecondPitching() {
+    Optional<Pitching> getSecondPitching() {
         if (isStrike(pitchings)) {
             return nextFrame.getFirstPitching();
         }

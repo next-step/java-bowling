@@ -6,6 +6,7 @@ import bowling.domain.frames.FramesViewDto;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -84,16 +85,16 @@ public class ConsoleResultView implements ResultView {
     private void appendScore(BowlingGameViewDto bowlingGame, StringBuilder resultBuilder) {
         resultBuilder.append(DELIMITER).append(centerString("")).append(DELIMITER);
         bowlingGame.framesViewDtoStream().forEach(frame -> {
-            Integer score = frame.getTotalScore();
-            resultBuilder.append(formatScore(score)).append(DELIMITER);
+            Optional<Integer> totalScore = frame.getTotalScore();
+            resultBuilder.append(formatScore(totalScore)).append(DELIMITER);
         });
     }
 
-    private String formatScore(Integer score) {
-        if (score == null) {
+    private String formatScore(Optional<Integer> totalScore) {
+        if (!totalScore.isPresent()) {
             return centerString("");
         }
-        return centerString(String.valueOf(score));
+        return centerString(String.valueOf(totalScore));
     }
 
     private String centerString(String value) {

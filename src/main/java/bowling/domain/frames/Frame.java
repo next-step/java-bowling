@@ -4,6 +4,8 @@ import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 import bowling.domain.pitchings.Pitchings;
 
+import java.util.Optional;
+
 public abstract class Frame implements FrameService, FrameViewDto {
     protected final Pitchings pitchings;
     protected Integer totalScore;
@@ -25,18 +27,19 @@ public abstract class Frame implements FrameService, FrameViewDto {
     }
 
     @Override
-    public Integer getTotalScore() {
+    public Optional<Integer> getTotalScore() {
         if (!isEnd()) {
-            return null;
+            return Optional.empty();
         }
 
         if (isFirstFrame()) {
-            totalScore = calculateScore();
-            return totalScore;
+            totalScore = getScore().orElseThrow(NullPointerException::new);
+            return Optional.of(totalScore);
         }
 
-        totalScore = previousFrame.getTotalScore() + calculateScore();
-        return totalScore;
+        Optional<Integer> previousFrameTotalScore = previousFrame.getTotalScore();
+        totalScore = previousFrameTotalScore.orElse(0) + getScore().orElseThrow(NullPointerException::new);
+        return Optional.of(totalScore);
     }
 
     private boolean isFirstFrame() {
@@ -48,11 +51,11 @@ public abstract class Frame implements FrameService, FrameViewDto {
         return pitchings;
     }
 
-    protected abstract Integer calculateScore();
+    protected abstract Optional<Integer> getScore();
 
     abstract public Frame initNextFrame();
 
-    abstract Pitching getFirstPitching();
+    abstract Optional<Pitching> getFirstPitching();
 
-    abstract Pitching getSecondPitching();
+    abstract Optional<Pitching> getSecondPitching();
 }

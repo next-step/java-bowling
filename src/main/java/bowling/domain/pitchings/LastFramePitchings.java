@@ -3,6 +3,8 @@ package bowling.domain.pitchings;
 import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 
+import java.util.Optional;
+
 public class LastFramePitchings extends Pitchings {
     private static final String INVALID_PITCHING_CHANCE_ERR_MSG = "투구 기회가 없습니다.";
     private static final int LAST_FRAME_MAX_PITCHING_SIZE = 3;
@@ -73,12 +75,12 @@ public class LastFramePitchings extends Pitchings {
     }
 
     @Override
-    public Integer calculateTotalScoreWithStrikeBonus(Pitching nextPitching, Pitching nextAndNextPitching) {
+    public Optional<Integer> getTotalScoreWithStrikeBonus(Optional<Pitching> nextPitching, Optional<Pitching> nextAndNextPitching) {
         throw new IllegalStateException();
     }
 
     @Override
-    public Integer calculateTotalScoreWithSpareBonus(Pitching nextPitching) {
+    public Optional<Integer> calculateTotalScoreWithSpareBonus(Optional<Pitching> nextPitching) {
         throw new IllegalStateException();
     }
 }
