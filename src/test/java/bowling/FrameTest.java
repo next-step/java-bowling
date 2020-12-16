@@ -3,6 +3,8 @@ package bowling;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -58,6 +60,12 @@ public class FrameTest {
 
         public Scoring getScoring() {
             return Scoring.STRIKE;
+        }
+
+        public int sumOfFallingPins() {
+            return Optional.ofNullable(firstThrow)
+                    .map(ballThrow -> ballThrow.add(secondThrow))
+                    .orElse(0);
         }
     }
 
