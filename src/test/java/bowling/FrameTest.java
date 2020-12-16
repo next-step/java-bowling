@@ -1,5 +1,8 @@
 package bowling;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 /**
  * #### 프레임
  * * 1~9 프레임은 1..2 개의 투구를 가진다
@@ -12,4 +15,11 @@ package bowling;
  * * 마지막 프레임은 더이상 투구할 수 없으면 종료한다.
  */
 public class FrameTest {
+    @DisplayName("볼을 던지면 상태를 알 수 있다")
+    @Test
+    void createAndThrowBall() {
+        Frame frame = new Frame();
+        frame.throwBall(new BallThrow(10));
+        assertThat(frame.getStatus()).isEqualTo(Scoring.STRIKE);
+    }
 }
