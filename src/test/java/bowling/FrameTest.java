@@ -28,11 +28,20 @@ public class FrameTest {
 
     @DisplayName("스트라이크이면 두번째 투구를 할 수 없다")
     @Test
-    void strike() {
+    void strikeAndSecondThrow() {
         Frame frame = new Frame();
         frame.throwBall(10);
         assertThatThrownBy(() -> frame.throwBall(10))
                 .isInstanceOf(IllegalFallingPinsException.class);
+    }
+
+    @DisplayName("스트라이크가 아니면 두번째 투구가 가능하다")
+    @Test
+    void secondThrow() {
+        Frame frame = new Frame();
+        frame.throwBall(5);
+        frame.throwBall(5);
+        assertThat(frame.sumOfFallingPins()).isEqualTo(10);
     }
 
     private static class Frame {
