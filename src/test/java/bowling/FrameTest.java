@@ -86,6 +86,13 @@ public class FrameTest {
         assertThat(frame.getScoring()).isEqualTo(Optional.empty());
     }
 
+    @DisplayName("프레임이 끝나지 않으면 같은 프레임을 반환한다")
+    @Test
+    void nextFrame() {
+        Frame nextFrame = frame.throwBall(0);
+        assertThat(nextFrame).isEqualTo(frame);
+    }
+
     private static class Frame {
         private BallThrow firstThrow;
         private BallThrow secondThrow;
