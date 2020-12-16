@@ -109,20 +109,6 @@ public class FrameTest {
             return getNextFrame();
         }
 
-        private void assignBallThrow(int fallingPins) {
-            if (firstThrow == null) {
-                firstThrow = new BallThrow(fallingPins);
-                return;
-            }
-            secondThrow = firstThrow.throwSecond(fallingPins);
-        }
-
-        private Frame getNextFrame() {
-            return getScoring().filter(Scoring::isStrike)
-                    .map(__ -> new Frame())
-                    .orElse(this);
-        }
-
         public Optional<Scoring> getScoring() {
             if (isIncomplete()) {
                 return Optional.empty();
@@ -137,6 +123,20 @@ public class FrameTest {
                 return Optional.of(GUTTER);
             }
             return Optional.of(MISS);
+        }
+
+        private void assignBallThrow(int fallingPins) {
+            if (firstThrow == null) {
+                firstThrow = new BallThrow(fallingPins);
+                return;
+            }
+            secondThrow = firstThrow.throwSecond(fallingPins);
+        }
+
+        private Frame getNextFrame() {
+            return getScoring().filter(Scoring::isStrike)
+                    .map(__ -> new Frame())
+                    .orElse(this);
         }
 
         private boolean isIncomplete() {
