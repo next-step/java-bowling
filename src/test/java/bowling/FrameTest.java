@@ -78,6 +78,13 @@ public class FrameTest {
         assertThat(frame.getScoring()).isEqualTo(Scoring.GUTTER);
     }
 
+    @DisplayName("아직 프레임이 끝나지 않은 경우")
+    @Test
+    void incomplete() {
+        frame.throwBall(0);
+        assertThat(frame.getScoring()).isEqualTo(Optional.empty());
+    }
+
     private static class Frame {
         private BallThrow firstThrow;
         private BallThrow secondThrow;
