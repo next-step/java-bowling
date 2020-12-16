@@ -149,6 +149,16 @@ public class FrameTest {
             return Optional.of(MISS);
         }
 
+        public int sumOfFallingPins() {
+            return Optional.ofNullable(firstThrow)
+                    .map(ballThrow -> ballThrow.add(secondThrow))
+                    .orElse(0);
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
         private void assignBallThrow(int fallingPins) {
             if (firstThrow == null) {
                 firstThrow = new BallThrow(fallingPins);
@@ -164,16 +174,6 @@ public class FrameTest {
 
         private boolean isIncomplete() {
             return firstThrow == null || !firstThrow.isStrike() && secondThrow == null;
-        }
-
-        public int sumOfFallingPins() {
-            return Optional.ofNullable(firstThrow)
-                    .map(ballThrow -> ballThrow.add(secondThrow))
-                    .orElse(0);
-        }
-
-        public int getNumber() {
-            return number;
         }
     }
 
