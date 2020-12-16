@@ -107,15 +107,17 @@ public class FrameTest {
         public Frame throwBall(int fallingPins) {
             if (firstThrow == null) {
                 firstThrow = new BallThrow(fallingPins);
-                if (getScoring().filter(Scoring::isStrike).isPresent()) {
-                    return new Frame();
-                } else {
-                    return this;
-                }
+                return getNextFrame();
             }
 
             secondThrow = firstThrow.throwSecond(fallingPins);
             return new Frame();
+        }
+
+        private Frame getNextFrame() {
+            return getScoring().filter(Scoring::isStrike)
+                    .map(__ -> new Frame())
+                    .orElse(this);
         }
 
         public Optional<Scoring> getScoring() {
