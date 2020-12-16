@@ -6,24 +6,24 @@ import bowling.domain.pitchings.Pitchings;
 
 import java.util.Optional;
 
-public class LastFrame extends Frame {
+public class LastFrame extends FrameImpl {
     private static final String NEXT_FRAME_INVOKE_ERR_MSG = "LastFrame은 NextFrame이 존재하지 않습니다.";
     protected final Pitchings pitchings;
     private final AdjacentFrame adjacentFrame;
 
 
-    private LastFrame(int index, Frame previousFrame) {
+    private LastFrame(int index, FrameImpl previousFrame) {
         super(index);
         pitchings = LastFramePitchings.getInstance();
         adjacentFrame = AdjacentFrame.of(previousFrame, null);
     }
 
-    public static Frame of(int index, Frame previousFrame) {
+    public static FrameImpl of(int index, FrameImpl previousFrame) {
         return new LastFrame(index, previousFrame);
     }
 
     @Override
-    public Frame initNextFrame() {
+    public FrameImpl initNextFrame() {
         throw new IllegalStateException(NEXT_FRAME_INVOKE_ERR_MSG);
     }
 
@@ -47,17 +47,17 @@ public class LastFrame extends Frame {
     }
 
     @Override
-    public Frame getLastFrame() {
+    public FrameImpl getLastFrame() {
         return this;
     }
 
     @Override
-    public Frame getNextFrame() {
+    public FrameImpl getNextFrame() {
         return null;
     }
 
     @Override
-    protected Frame getPreviousFrame() {
+    protected FrameImpl getPreviousFrame() {
         return adjacentFrame.getPreviousFrame();
     }
 

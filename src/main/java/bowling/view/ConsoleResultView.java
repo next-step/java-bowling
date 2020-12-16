@@ -2,7 +2,7 @@ package bowling.view;
 
 import bowling.domain.Pitching;
 import bowling.domain.bowlinggame.BowlingGameViewDto;
-import bowling.domain.frames.FramesViewDto;
+import bowling.domain.frames.FramesImpl;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -53,7 +53,7 @@ public class ConsoleResultView implements ResultView {
     }
 
     private void appendFrameIndex(StringBuilder resultBuilder) {
-        IntStream.rangeClosed(1, FramesViewDto.MAX_FRAME_SIZE)
+        IntStream.rangeClosed(1, FramesImpl.MAX_FRAME_SIZE)
                 .forEach(index -> {
                     String formattedFrameIndex = centerString(String.format(FRAME_INDEX_FORMAT, index));
                     resultBuilder.append(formattedFrameIndex).append(DELIMITER);

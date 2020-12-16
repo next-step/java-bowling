@@ -1,23 +1,23 @@
 package bowling.domain.frames;
 
 public class AdjacentFrame {
-    private final Frame previousFrame;
-    private final Frame nextFrame;
+    private final FrameImpl previousFrame;
+    private final FrameImpl nextFrame;
 
-    private AdjacentFrame(Frame previousFrame, Frame nextFrame) {
+    private AdjacentFrame(FrameImpl previousFrame, FrameImpl nextFrame) {
         this.previousFrame = previousFrame;
         this.nextFrame = nextFrame;
     }
 
-    public static AdjacentFrame of(Frame previousFrame, Frame nextFrame) {
+    public static AdjacentFrame of(FrameImpl previousFrame, FrameImpl nextFrame) {
         return new AdjacentFrame(previousFrame, nextFrame);
     }
 
-    public Frame getPreviousFrame() {
+    public FrameImpl getPreviousFrame() {
         return previousFrame;
     }
 
-    public Frame getNextFrame() {
+    public FrameImpl getNextFrame() {
         return nextFrame;
     }
 }

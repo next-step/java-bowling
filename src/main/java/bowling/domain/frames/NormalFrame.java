@@ -6,30 +6,30 @@ import bowling.domain.pitchings.Pitchings;
 
 import java.util.Optional;
 
-public class NormalFrame extends Frame {
+public class NormalFrame extends FrameImpl {
     protected final Pitchings pitchings;
     private final AdjacentFrame adjacentFrame;
 
-    protected NormalFrame(int index, Frame previousFrame) {
+    protected NormalFrame(int index, FrameImpl previousFrame) {
         super(index);
         pitchings = NormalFramePitchings.getInstance();
         adjacentFrame = AdjacentFrame.of(previousFrame, initNextFrame());
     }
 
-    public static Frame getFirstFrame() {
+    public static FrameImpl getFirstFrame() {
         return new NormalFrame(1, null);
     }
 
     @Override
-    public Frame getLastFrame() {
-        Frame nextFrame = adjacentFrame.getNextFrame();
+    public FrameImpl getLastFrame() {
+        FrameImpl nextFrame = adjacentFrame.getNextFrame();
         return nextFrame.getLastFrame();
     }
 
     @Override
-    public Frame initNextFrame() {
+    public FrameImpl initNextFrame() {
         int nextFrameIndex = index + 1;
-        int lastFrameIndex = Frames.MAX_FRAME_SIZE;
+        int lastFrameIndex = FramesImpl.MAX_FRAME_SIZE;
         if (nextFrameIndex == lastFrameIndex) {
             return LastFrame.of(lastFrameIndex, this);
         }
@@ -89,12 +89,12 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame getNextFrame() {
+    public FrameImpl getNextFrame() {
         return adjacentFrame.getNextFrame();
     }
 
     @Override
-    protected Frame getPreviousFrame() {
+    protected FrameImpl getPreviousFrame() {
         return adjacentFrame.getPreviousFrame();
     }
 

@@ -1,23 +1,23 @@
 package bowling.domain.frames;
 
 public class FirstAndLastFrame {
-    private final Frame first;
-    private final Frame last;
+    private final FrameImpl first;
+    private final FrameImpl last;
 
-    private FirstAndLastFrame(Frame first, Frame last) {
+    private FirstAndLastFrame(FrameImpl first, FrameImpl last) {
         this.first = first;
         this.last = last;
     }
 
-    public static FirstAndLastFrame of(Frame first, Frame last) {
+    public static FirstAndLastFrame of(FrameImpl first, FrameImpl last) {
         return new FirstAndLastFrame(first, last);
     }
 
-    public Frame getFirst() {
+    public FrameImpl getFirst() {
         return first;
     }
 
-    public Frame getLast() {
+    public FrameImpl getLast() {
         return last;
     }
 }
