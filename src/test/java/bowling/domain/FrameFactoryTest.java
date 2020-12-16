@@ -14,6 +14,14 @@ public class FrameFactoryTest {
         }
         FINAL = frame;
     }
+    
+    public static Frame createFinal() {
+        Frame frame = Frame.createFirst();
+        for (int i = 1; i < 10; i++) {
+            frame = frame.createNext();
+        }
+        return frame;
+    }
 
     @Test
     void creates_all_frame() {

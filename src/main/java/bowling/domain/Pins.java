@@ -25,6 +25,10 @@ public class Pins {
     public Pins sum(final Pins that) {
         return of(this.fallenPin + that.fallenPin);
     }
+    
+    public int getFallenPin() {
+        return fallenPin;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -37,5 +41,10 @@ public class Pins {
     @Override
     public int hashCode() {
         return Objects.hash(fallenPin);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(fallenPin);
     }
 }

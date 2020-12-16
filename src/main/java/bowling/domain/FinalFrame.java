@@ -6,9 +6,7 @@ import static util.Preconditions.checkArgument;
 
 public class FinalFrame extends Frame {
     public static final int FINAL_FRAME_INDEX = 9;
-
-    private Pins bonusPitching;
-    private State state = State.BEFORE_FIRST_PITCHING;
+    private FinalFrameState state = FinalFrameState.FIRST_PITCHING;
 
     private FinalFrame(final int index) {
         super(index);
@@ -21,26 +19,17 @@ public class FinalFrame extends Frame {
 
     @Override
     public void pitch(final Pins pins) {
-        if (state == State.BEFORE_FIRST_PITCHING) {
-            this.firstPitching = pins;
-        }
-        if (state == State.BEFORE_SECOND_PITCHING) {
-            this.secondPitching = pins;
-        }
-        if (isBonusPitchable()) {
-            this.bonusPitching = pins;
-        }
-        this.state = State.nextState(firstPitching, secondPitching);
+        pitchingResults.add(pins);
+        this.state = FinalFrameState.nextState(pitchingResults.get(0), pitchingResults.get(1), state);
     }
 
     @Override
-    public boolean isPitchable() {
-        return state == State.BEFORE_FIRST_PITCHING
-                || state == State.BEFORE_SECOND_PITCHING
-                || isBonusPitchable();
+    public boolean isPlayable() {
+        return state.isPitchable();
     }
 
-    private boolean isBonusPitchable() {
-        return state == State.STRIKE || state == State.SPARE;
+    @Override
+    public boolean isFinishedAll() {
+        return !isPlayable();
     }
 }

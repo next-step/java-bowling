@@ -1,18 +1,19 @@
 package bowling.domain;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static bowling.domain.NormalFrame.NORMAL_FRAME_MAXIMUM_INDEX;
 
 public abstract class Frame {
-
-    protected Pins firstPitching;
-    protected Pins secondPitching;
     private final int index;
+    protected final PitchingResults pitchingResults;
     private Frame nextFrame;
 
     protected Frame(final int index) {
         this.index = index;
+        this.pitchingResults = PitchingResults.of();
     }
 
     public static Frame createFirst() {
@@ -35,41 +36,42 @@ public abstract class Frame {
 
     public abstract void pitch(Pins pins);
 
-    public boolean isPitchdisable() {
-        return !isPitchable();
+    public boolean isNotPlayable() {
+        return !isPlayable();
     }
 
-    public abstract boolean isPitchable();
+    public abstract boolean isPlayable();
 
-    public Optional<Frame> next() {
-        return Optional.ofNullable(nextFrame);
+    public int getIndex() {
+        return index;
     }
 
-    public enum State {
-        BEFORE_FIRST_PITCHING,
-        BEFORE_SECOND_PITCHING,
-        STRIKE,
-        SPARE,
-        MISS,
-        ;
+    public Frame next() {
+        return nextFrame;
+    }
 
-        public boolean isPitchable() {
-            return this == BEFORE_FIRST_PITCHING || this == BEFORE_SECOND_PITCHING;
+    public abstract boolean isFinishedAll();
+
+    public List<Integer> getAllFallenPin() {
+        return pitchingResults.getAllFallenPin();
+    }
+
+    public List<Frame> toFrames() {
+        if (isNotFirstFrame()) {
+            throw new IllegalStateException();
         }
-
-        public static State nextState(final Pins firstPitching, final Pins secondPitching) {
-            if (Pins.MAX.equals(firstPitching)) {
-                return STRIKE;
-            }
-
-            if (secondPitching == null) {
-                return BEFORE_SECOND_PITCHING;
-            }
-
-            if (Pins.MAX.equals(firstPitching.sum(secondPitching))) {
-                return SPARE;
-            }
-            return MISS;
+        final List<Frame> frames = new ArrayList<>(10);
+        Frame frame = this;
+        frames.add(frame);
+        while (frame.next() != null) {
+            frame = frame.next();
+            frames.add(frame);
         }
+        return Collections.unmodifiableList(frames);
     }
+
+    private boolean isNotFirstFrame() {
+        return this.index != 0;
+    }
+
 }

@@ -19,7 +19,7 @@ public class NormalFrameTest {
         normalFrame.pitch(pins);
 
         // then
-        assertThat(normalFrame.isPitchable()).isTrue();
+        assertThat(normalFrame.isPlayable()).isTrue();
     }
 
     @DisplayName("10개의 핀이 쓰러진 경우 다음 투구 불가")
@@ -32,7 +32,7 @@ public class NormalFrameTest {
         normalFrame.pitch(Pins.MAX);
 
         // then
-        assertThat(normalFrame.isPitchable()).isFalse();
+        assertThat(normalFrame.isPlayable()).isFalse();
     }
 
     @DisplayName("첫 번째, 두 번째 투구의 쓰러진 볼링 핀 합이 10개가 넘는 경우")

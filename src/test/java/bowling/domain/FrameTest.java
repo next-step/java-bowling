@@ -5,8 +5,6 @@ import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -66,9 +64,25 @@ public class FrameTest {
         final Frame finalFrame = FrameFactoryTest.FINAL;
         
         // when
-        final Optional<Frame> frame = finalFrame.next();
+        final Frame frame = finalFrame.next();
         
         // then
-        assertThat(frame.isPresent()).isFalse();
+        assertThat(frame).isNull();
+    }
+
+    @DisplayName("첫 번째, 두 번째 투구의 쓰러진 볼링 핀 합이 10개가 넘는 경우")
+    @Test
+    void should_throw_exception_when_first_second_fallen_pin_sum_is_grater_than_10() {
+        // given
+        final Frame normalFrame = NormalFrame.createFirst();
+        final Pins first = Pins.of(5);
+        final Pins second = Pins.of(6);
+
+        // when
+        normalFrame.pitch(first);
+        final Throwable thrown = catchThrowable(() -> normalFrame.pitch(second));
+
+        // then
+        AssertionsForClassTypes.assertThat(thrown).isInstanceOf(IllegalArgumentException.class);
     }
 }

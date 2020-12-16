@@ -6,13 +6,13 @@ import static util.Preconditions.checkArgument;
 
 public class NormalFrame extends Frame {
     public static final int NORMAL_FRAME_MAXIMUM_INDEX = 8;
-    
-    private State state = State.BEFORE_FIRST_PITCHING;
-    
+
+    private NormalFrameState state = NormalFrameState.FIRST_PITCHING;
+
     private NormalFrame(final int index) {
         super(index);
     }
-    
+
     public static NormalFrame of(final int index) {
         checkArgument(index <= NORMAL_FRAME_MAXIMUM_INDEX, new InvalidFrameIndexException());
         return new NormalFrame(index);
@@ -20,17 +20,17 @@ public class NormalFrame extends Frame {
 
     @Override
     public void pitch(final Pins pins) {
-        if (state == State.BEFORE_FIRST_PITCHING) {
-            this.firstPitching = pins;
-        }
-        if (state == State.BEFORE_SECOND_PITCHING) {
-            this.secondPitching = pins;
-        }
-        this.state = State.nextState(firstPitching, secondPitching);
+        pitchingResults.add(pins);
+        this.state = NormalFrameState.nextState(pitchingResults.get(0), pitchingResults.get(1));
     }
 
     @Override
-    public boolean isPitchable() {
+    public boolean isPlayable() {
         return state.isPitchable();
+    }
+
+    @Override
+    public boolean isFinishedAll() {
+        return false;
     }
 }
