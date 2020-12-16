@@ -28,7 +28,7 @@ public class FrameTest {
 
     @BeforeEach
     void setUp() {
-        frame = new Frame();
+        frame = new NormalFrame();
     }
 
     @DisplayName("스트라이크이면 두번째 투구를 할 수 없다")
@@ -118,28 +118,61 @@ public class FrameTest {
     @DisplayName("9번째 프레임이 끝나면 LastFrame 을 리턴한다")
     @Test
     void lastFrame() {
-        assertThat(new Frame(9).throwBall(10))
+        assertThat(new NormalFrame(9).throwBall(10))
                 .isInstanceOf(LastFrame.class);
     }
 
-    private static class Frame {
+    interface Frame {
+        Frame throwBall(int fallingPins);
+
+        Optional<Scoring> getScoring();
+
+        int getNumber();
+
+        int sumOfFallingPins();
+    }
+
+    private static class LastFrame implements Frame {
+        @Override
+        public Frame throwBall(int fallingPins) {
+            return null;
+        }
+
+        @Override
+        public Optional<Scoring> getScoring() {
+            return Optional.empty();
+        }
+
+        @Override
+        public int getNumber() {
+            return 0;
+        }
+
+        @Override
+        public int sumOfFallingPins() {
+            return 0;
+        }
+    }
+    private static class NormalFrame implements Frame {
         private BallThrow firstThrow;
         private BallThrow secondThrow;
         private final int number;
 
-        public Frame() {
+        public NormalFrame() {
             this(1);
         }
 
-        private Frame(int number) {
+        private NormalFrame(int number) {
             this.number = number;
         }
 
+        @Override
         public Frame throwBall(int fallingPins) {
             assignBallThrow(fallingPins);
             return getNextFrame();
         }
 
+        @Override
         public Optional<Scoring> getScoring() {
             if (isIncomplete()) {
                 return Optional.empty();
@@ -175,8 +208,12 @@ public class FrameTest {
         }
 
         private Frame getNextFrame() {
-            return getScoring().map(__ -> new Frame(number + 1))
-                    .orElse(this);
+            return getScoring().map(__ -> {
+                if (number < 9) {
+                    return new NormalFrame(number + 1);
+                }
+                return new LastFrame();
+            }).orElse(this);
         }
 
         private boolean isIncomplete() {
