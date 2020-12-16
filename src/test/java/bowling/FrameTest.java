@@ -69,6 +69,14 @@ public class FrameTest {
         assertThat(frame.getScoring()).isEqualTo(Scoring.MISS);
     }
 
+    @DisplayName("아무것도 쓰러뜨리지 못하면 거터")
+    @Test
+    void gutter() {
+        frame.throwBall(0);
+        frame.throwBall(0);
+        assertThat(frame.getScoring()).isEqualTo(Scoring.GUTTER);
+    }
+
     private static class Frame {
         private BallThrow firstThrow;
         private BallThrow secondThrow;
@@ -99,6 +107,6 @@ public class FrameTest {
     }
 
     private enum Scoring {
-        STRIKE, MISS, SPARE
+        STRIKE, MISS, GUTTER, SPARE
     }
 }
