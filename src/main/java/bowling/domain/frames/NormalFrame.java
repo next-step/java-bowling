@@ -35,7 +35,6 @@ public class NormalFrame extends Frame {
             return null;
         }
 
-        Pitchings pitchings = super.getPitchings();
         if (isStrike(pitchings)) {
             Pitching nextPitching = getNextPitching();
             Pitching nextAndNextPitching = getNextAndNextPitching();
@@ -67,12 +66,10 @@ public class NormalFrame extends Frame {
     }
 
     Pitching getFirstPitching() {
-        Pitchings pitchings = super.getPitchings();
         return pitchings.getFirstPitching();
     }
 
     Pitching getSecondPitching() {
-        Pitchings pitchings = super.getPitchings();
         if (isStrike(pitchings)) {
             return nextFrame.getFirstPitching();
         }
@@ -83,7 +80,7 @@ public class NormalFrame extends Frame {
     public String toString() {
         return "NormalFrame{" +
                 "index=" + index +
-                ", pitchings=" + super.getPitchings() +
+                ", pitchings=" + pitchings +
                 '}';
     }
 }

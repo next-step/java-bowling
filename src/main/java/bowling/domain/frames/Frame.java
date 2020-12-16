@@ -4,32 +4,27 @@ import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 import bowling.domain.pitchings.Pitchings;
 
-public abstract class Frame {
-    private final Pitchings pitchings;
-    private final Frame previousFrame;
+public abstract class Frame implements FrameService, FrameViewDto {
+    protected final Pitchings pitchings;
     protected Integer totalScore;
+    private final Frame previousFrame;
 
     public Frame(Pitchings pitchings, Frame previousFrame) {
         this.pitchings = pitchings;
         this.previousFrame = previousFrame;
     }
 
-    abstract public Frame initNextFrame();
-
+    @Override
     public void setKnockDownPins(KnockDownPins knockDownPins) {
         pitchings.addPitching(knockDownPins);
     }
 
-    public Pitchings getPitchings() {
-        return pitchings;
-    }
-
+    @Override
     public boolean isEnd() {
         return pitchings.isEnd();
     }
 
-    protected abstract Integer calculateScore();
-
+    @Override
     public Integer getTotalScore() {
         if (!isEnd()) {
             return null;
@@ -47,6 +42,15 @@ public abstract class Frame {
     private boolean isFirstFrame() {
         return previousFrame == null;
     }
+
+    @Override
+    public Pitchings getPitchings() {
+        return pitchings;
+    }
+
+    protected abstract Integer calculateScore();
+
+    abstract public Frame initNextFrame();
 
     abstract Pitching getFirstPitching();
 

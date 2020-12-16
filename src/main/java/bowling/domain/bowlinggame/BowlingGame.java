@@ -2,7 +2,7 @@ package bowling.domain.bowlinggame;
 
 import bowling.domain.KnockDownPins;
 import bowling.domain.PlayerName;
-import bowling.domain.frames.Frame;
+import bowling.domain.frames.FrameViewDto;
 import bowling.domain.frames.Frames;
 
 import java.util.stream.Stream;
@@ -36,8 +36,8 @@ public class BowlingGame implements BowlingGameService, BowlingGameViewDto {
     }
 
     @Override
-    public Stream<Frame> framesStream() {
-        return frames.stream();
+    public Stream<FrameViewDto> framesViewDtoStream() {
+        return frames.viewDtoStream();
     }
 
     @Override

@@ -72,8 +72,8 @@ public class ConsoleResultView implements ResultView {
     }
 
     private void appendResults(BowlingGameViewDto bowlingGame, StringBuilder resultBuilder) {
-        bowlingGame.framesStream().forEach(frame -> {
-            String result = frame.getPitchings().stream()
+        bowlingGame.framesViewDtoStream().forEach(frameViewDto -> {
+            String result = frameViewDto.getPitchings().stream()
                     .map(stringByPitching::get)
                     .collect(Collectors.joining(DELIMITER));
             String formattedResult = centerString(result);
@@ -83,7 +83,7 @@ public class ConsoleResultView implements ResultView {
 
     private void appendScore(BowlingGameViewDto bowlingGame, StringBuilder resultBuilder) {
         resultBuilder.append(DELIMITER).append(centerString("")).append(DELIMITER);
-        bowlingGame.framesStream().forEach(frame -> {
+        bowlingGame.framesViewDtoStream().forEach(frame -> {
             Integer score = frame.getTotalScore();
             resultBuilder.append(formatScore(score)).append(DELIMITER);
         });
