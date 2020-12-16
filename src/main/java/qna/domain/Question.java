@@ -106,5 +106,8 @@ public class Question extends AbstractEntity {
         }
 
         deleted = true;
+        for (Answer answer : answers) {
+            answer.delete();
+        }
     }
 }
