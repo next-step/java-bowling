@@ -20,12 +20,13 @@ public class FrameTest {
     @Test
     void createAndThrowBall() {
         Frame frame = new Frame();
-        frame.throwBall(new BallThrow(10));
+        frame.throwBall(10);
         Assertions.assertThat(frame.getScoring()).isEqualTo(Scoring.STRIKE);
     }
 
+
     private static class Frame {
-        public void throwBall(BallThrow ballThrow) {
+        public void throwBall(int fallingPins) {
 
         }
 
