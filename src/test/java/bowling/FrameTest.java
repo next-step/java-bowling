@@ -1,5 +1,6 @@
 package bowling;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +21,20 @@ public class FrameTest {
     void createAndThrowBall() {
         Frame frame = new Frame();
         frame.throwBall(new BallThrow(10));
-        assertThat(frame.getStatus()).isEqualTo(Scoring.STRIKE);
+        Assertions.assertThat(frame.getScoring()).isEqualTo(Scoring.STRIKE);
+    }
+
+    private static class Frame {
+        public void throwBall(BallThrow ballThrow) {
+
+        }
+
+        public Scoring getScoring() {
+            return Scoring.STRIKE;
+        }
+    }
+
+    private enum Scoring {
+        STRIKE
     }
 }
