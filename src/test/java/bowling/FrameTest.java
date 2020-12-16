@@ -115,6 +115,13 @@ public class FrameTest {
         assertThat(nextFrame.getNumber()).isEqualTo(2);
     }
 
+    @DisplayName("9번째 프레임이 끝나면 LastFrame 을 리턴한다")
+    @Test
+    void lastFrame() {
+        assertThat(new Frame(9).throwBall(10))
+                .isInstanceOf(LastFrame.class);
+    }
+
     private static class Frame {
         private BallThrow firstThrow;
         private BallThrow secondThrow;
