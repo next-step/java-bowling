@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
@@ -43,5 +44,32 @@ public class QuestionTest {
         assertThatThrownBy(
                 () -> questionThatHaveOtherUsersAnswer.delete(questionOwnerUser)
         ).isInstanceOf(CannotDeleteException.class);
+    }
+
+    @Test
+    @DisplayName("정상적으로 질문이 삭제 마킹이 되는지에 대한 테스트(답변 없음)")
+    void testNoAnswerQuestionDelete() throws CannotDeleteException {
+        Question questionThatHasNoAnswer = new Question("title", "content").writeBy(questionOwnerUser);
+
+        questionThatHasNoAnswer.delete(questionOwnerUser);
+
+        assertThat(questionThatHasNoAnswer.isDeleted())
+                .isTrue();
+    }
+
+    @Test
+    @DisplayName("정상적으로 질문이 삭제 마킹 되는지에 대한 테스트(답변이 모두 질문자의 답변일 때)")
+    void testQuestionDelete() throws CannotDeleteException {
+        Question questionThatHaveAnswersOwnerWrite = new Question("title", "content").writeBy(questionOwnerUser);
+
+        questionThatHaveAnswersOwnerWrite.addAnswer(
+                new Answer(questionOwnerUser, questionThatHaveAnswersOwnerWrite, "Answers Contents1"));
+        questionThatHaveAnswersOwnerWrite.addAnswer(
+                new Answer(questionOwnerUser, questionThatHaveAnswersOwnerWrite, "Answers Contents2"));
+
+        questionThatHaveAnswersOwnerWrite.delete(questionOwnerUser);
+
+        assertThat(questionThatHaveAnswersOwnerWrite.isDeleted())
+                .isTrue();
     }
 }
