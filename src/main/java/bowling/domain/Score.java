@@ -7,7 +7,6 @@ public class Score {
     private static final int MIN_SCORE_COUNT = 0;
     private static final int MAX_SCORE_COUNT = 10;
 
-
     private final int point;
 
     private Score(int point) {
@@ -28,4 +27,9 @@ public class Score {
             throw new ScorePointRangeOutBoundException();
         }
     }
+
+    public Score sumScore(int value) {
+        return valueOf(point + value);
+    }
+
 }
