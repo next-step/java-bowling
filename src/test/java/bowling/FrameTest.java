@@ -105,13 +105,16 @@ public class FrameTest {
         private BallThrow secondThrow;
 
         public Frame throwBall(int fallingPins) {
+            assignBallThrow(fallingPins);
+            return getNextFrame();
+        }
+
+        private void assignBallThrow(int fallingPins) {
             if (firstThrow == null) {
                 firstThrow = new BallThrow(fallingPins);
-                return getNextFrame();
+                return;
             }
-
             secondThrow = firstThrow.throwSecond(fallingPins);
-            return new Frame();
         }
 
         private Frame getNextFrame() {
