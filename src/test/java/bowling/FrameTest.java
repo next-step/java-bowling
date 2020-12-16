@@ -107,6 +107,14 @@ public class FrameTest {
         assertThat(nextFrame).isNotEqualTo(frame);
     }
 
+    @DisplayName("각 프레임은 1부터 시작하는 자신의 프레임 넘버를 가진다")
+    @Test
+    void frameNumber() {
+        assertThat(frame.getNumber()).isEqualTo(1);
+        Frame nextFrame = frame.throwBall(10);
+        assertThat(nextFrame.getNumber()).isEqualTo(2);
+    }
+
     private static class Frame {
         private BallThrow firstThrow;
         private BallThrow secondThrow;
