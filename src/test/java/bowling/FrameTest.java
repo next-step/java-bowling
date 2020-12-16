@@ -73,7 +73,10 @@ public class FrameTest {
         }
 
         public Scoring getScoring() {
-            return Scoring.STRIKE;
+            if (firstThrow.isStrike()) {
+                return Scoring.STRIKE;
+            }
+            return Scoring.SPARE;
         }
 
         public int sumOfFallingPins() {

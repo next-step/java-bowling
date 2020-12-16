@@ -5,7 +5,7 @@ import java.util.Optional;
 
 class BallThrow {
     public static final int MAX_PINS = 10;
-    public static final int MIN_FINS = 0;
+    public static final int MIN_PINS = 0;
     private final int fallingPins;
     private final boolean lastFrame;
 
@@ -14,7 +14,7 @@ class BallThrow {
     }
 
     public BallThrow(int fallingPins, boolean lastFrame) {
-        if (fallingPins > MAX_PINS || fallingPins < MIN_FINS) {
+        if (fallingPins > MAX_PINS || fallingPins < MIN_PINS) {
             throw new IllegalFallingPinsException();
         }
         this.fallingPins = fallingPins;
@@ -51,6 +51,10 @@ class BallThrow {
         return fallingPins + Optional.ofNullable(ballThrows)
                 .map(ballThrow -> ballThrow.fallingPins)
                 .orElse(0);
+    }
+
+    public boolean isStrike() {
+        return fallingPins == MAX_PINS;
     }
 
     @Override
