@@ -5,6 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -71,5 +74,24 @@ public class QuestionTest {
 
         assertThat(questionThatHaveAnswersOwnerWrite.isDeleted())
                 .isTrue();
+    }
+
+    @Test
+    @DisplayName("답변이 모두 질문자의 답변일 때 답변 모두 정상적으로 삭제되는 지 확인")
+    void testAnswerDelete() throws CannotDeleteException {
+        Question sampleQuestion = new Question("title", "content").writeBy(questionOwnerUser);
+
+        List<Answer> answers = Arrays.asList(
+                new Answer(questionOwnerUser, sampleQuestion, "Answers Content1"),
+                new Answer(questionOwnerUser, sampleQuestion, "Answers Content2"),
+                new Answer(questionOwnerUser, sampleQuestion, "Answers Content3"),
+                new Answer(questionOwnerUser, sampleQuestion, "Answers Content4")
+        );
+
+        sampleQuestion.delete(questionOwnerUser);
+
+        for (Answer answer : answers) {
+            assertThat(answer.isDeleted()).isTrue();
+        }
     }
 }
