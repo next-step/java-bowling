@@ -1,11 +1,13 @@
-package bowling.domain;
+package bowling.domain.bowlinggame;
 
+import bowling.domain.KnockDownPins;
+import bowling.domain.PlayerName;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
 import java.util.stream.Stream;
 
-public class BowlingGame {
+public class BowlingGame implements BowlingGameService, BowlingGameViewDto {
     private final Frames frames;
     private final PlayerName playerName;
 
@@ -18,22 +20,27 @@ public class BowlingGame {
         return new BowlingGame(Frames.init(), playerName);
     }
 
+    @Override
     public void setKnockDownPins(KnockDownPins knockDownPins) {
         frames.setKnockDownPins(knockDownPins);
     }
 
-    public int getCurrentFrameIndex() {
-        return frames.getCurrentFrameIndex();
-    }
-
+    @Override
     public boolean isEnd() {
         return frames.isEnd();
     }
 
+    @Override
+    public int getCurrentFrameIndex() {
+        return frames.getCurrentFrameIndex();
+    }
+
+    @Override
     public Stream<Frame> framesStream() {
         return frames.stream();
     }
 
+    @Override
     public PlayerName getPlayerName() {
         return playerName;
     }

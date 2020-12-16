@@ -1,8 +1,10 @@
 package bowling;
 
-import bowling.domain.BowlingGame;
 import bowling.domain.KnockDownPins;
 import bowling.domain.PlayerName;
+import bowling.domain.bowlinggame.BowlingGame;
+import bowling.domain.bowlinggame.BowlingGameService;
+import bowling.domain.bowlinggame.BowlingGameViewDto;
 import bowling.helper.ValidInputHelper;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -18,11 +20,11 @@ public class GameHandler {
 
     public void run() {
         PlayerName playerName = ValidInputHelper.get(this::getPlayerName, inputView::printError);
-        BowlingGame bowlingGame = BowlingGame.init(playerName);
+        BowlingGameService bowlingGame = BowlingGame.init(playerName);
 
         while (!bowlingGame.isEnd()) {
             setKnockDownPins(bowlingGame);
-            resultView.print(bowlingGame);
+            resultView.print((BowlingGameViewDto) bowlingGame);
         }
     }
 
@@ -31,7 +33,7 @@ public class GameHandler {
         return PlayerName.valueOf(inputPlayerName);
     }
 
-    private void setKnockDownPins(BowlingGame bowlingGame) {
+    private void setKnockDownPins(BowlingGameService bowlingGame) {
         try {
             KnockDownPins knockDownPins = ValidInputHelper.get(() -> getKnockDownPins(bowlingGame), inputView::printError);
             bowlingGame.setKnockDownPins(knockDownPins);
@@ -41,7 +43,7 @@ public class GameHandler {
         }
     }
 
-    private KnockDownPins getKnockDownPins(BowlingGame bowlingGame) {
+    private KnockDownPins getKnockDownPins(BowlingGameService bowlingGame) {
         Integer knockDownPins = ValidInputHelper.get(() -> inputView.getKnockDownPins(bowlingGame.getCurrentFrameIndex()), inputView::printError);
         return KnockDownPins.valueOf(knockDownPins);
     }

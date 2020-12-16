@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.domain.BowlingGame;
 import bowling.domain.Pitching;
+import bowling.domain.bowlinggame.BowlingGameViewDto;
 import bowling.domain.frame.Frames;
 
 import java.util.EnumMap;
@@ -33,7 +33,7 @@ public class ConsoleResultView implements ResultView {
     }
 
     @Override
-    public void print(BowlingGame bowlingGame) {
+    public void print(BowlingGameViewDto bowlingGame) {
         StringBuilder resultBuilder = new StringBuilder();
         appendHeader(resultBuilder);
         appendBody(bowlingGame, resultBuilder);
@@ -59,19 +59,19 @@ public class ConsoleResultView implements ResultView {
                 });
     }
 
-    private void appendBody(BowlingGame bowlingGame, StringBuilder resultBuilder) {
+    private void appendBody(BowlingGameViewDto bowlingGame, StringBuilder resultBuilder) {
         appendPlayerName(bowlingGame, resultBuilder);
         appendResults(bowlingGame, resultBuilder);
         resultBuilder.append(System.lineSeparator());
         appendScore(bowlingGame, resultBuilder);
     }
 
-    private void appendPlayerName(BowlingGame bowlingGame, StringBuilder resultBuilder) {
+    private void appendPlayerName(BowlingGameViewDto bowlingGame, StringBuilder resultBuilder) {
         String formattedPlayerName = centerString(bowlingGame.getPlayerName().getValue());
         resultBuilder.append(DELIMITER).append(formattedPlayerName).append(DELIMITER);
     }
 
-    private void appendResults(BowlingGame bowlingGame, StringBuilder resultBuilder) {
+    private void appendResults(BowlingGameViewDto bowlingGame, StringBuilder resultBuilder) {
         bowlingGame.framesStream().forEach(frame -> {
             String result = frame.getPitchings().stream()
                     .map(stringByPitching::get)
@@ -81,7 +81,7 @@ public class ConsoleResultView implements ResultView {
         });
     }
 
-    private void appendScore(BowlingGame bowlingGame, StringBuilder resultBuilder) {
+    private void appendScore(BowlingGameViewDto bowlingGame, StringBuilder resultBuilder) {
         resultBuilder.append(DELIMITER).append(centerString("")).append(DELIMITER);
         bowlingGame.framesStream().forEach(frame -> {
             Integer score = frame.getTotalScore();
