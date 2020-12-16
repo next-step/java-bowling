@@ -1,29 +1,37 @@
 package bowling.model.state.finishedState;
 
 import bowling.model.Pins;
+import bowling.model.Score;
 import bowling.model.state.State;
 
 public class Spare extends FinishedState {
     private static final String SPARE_TOTAL_SCORE_ERROR = "Spare의 조건에 맞지 않습니다.";
     private static final String EXPRESSION = "/";
 
-    private final Pins totalScore;
+    private final Pins firstFallenPins;
 
-    private Spare(Pins pins, Pins totalScore) {
-        super(pins);
+    private Spare(Pins firstFallenPins, Pins secondPins) {
+        super(secondPins);
         this.expression = EXPRESSION;
-        this.totalScore = totalScore;
+        this.firstFallenPins = firstFallenPins;
     }
 
-    public static State of(Pins pins, Pins totalScore) {
-        if (!totalScore.isMaxScore() || pins.isMaxScore()) {
+    public static State of(Pins firstFallenPins, Pins secondFallenPins) {
+        Pins totalScore = firstFallenPins.add(secondFallenPins);
+
+        if (!totalScore.isMaxScore() || firstFallenPins.isMaxScore()) {
             throw new IllegalArgumentException(SPARE_TOTAL_SCORE_ERROR);
         }
-        return new Spare(pins, totalScore);
+        return new Spare(firstFallenPins, secondFallenPins);
+    }
+
+    @Override
+    public Score score() {
+        return Score.spare();
     }
 
     @Override
     public boolean isMaxScore() {
-        return totalScore.isMaxScore();
+        return true;
     }
 }

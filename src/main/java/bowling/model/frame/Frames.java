@@ -1,32 +1,25 @@
 package bowling.model.frame;
 
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class Frames {
-    private final SortedSet<Frame> frames = new TreeSet<>();
-
-    public Frames(){
-        Frame firstFrame = NormalFrame.createFirstFrame();
-        frames.add(firstFrame);
-    }
+    private final LinkedList<Frame> frames = Stream.of(NormalFrame.createFirstFrame())
+        .collect(Collectors.toCollection(LinkedList::new));
 
     public void bowling(int fallenPins) {
-        Frame nowFrame = lastFrame();
-        frames.add(nowFrame.bowling(fallenPins));
+        Frame afterBowling = lastFrame().bowling(fallenPins);
+
+        if(afterBowling.isStartFrame()){
+            frames.add(afterBowling);
+        }
     }
 
     public int nowFrameNumber() {
         int frameNumber = Integer.parseInt(lastFrame().frameNumber.toString());
-
-        if (isFinished()) {
-            return frameNumber + 1;
-        }
-
-        return frameNumber;
+        return isFinished() ? frameNumber + 1 : frameNumber;
     }
 
     public boolean isFinished() {
@@ -34,7 +27,7 @@ public class Frames {
     }
 
     private Frame lastFrame() {
-        return frames.last();
+        return frames.getLast();
     }
 
     public FrameResult result() {
@@ -44,6 +37,14 @@ public class Frames {
                 .collect(Collectors.toList());
 
         return FrameResult.from(results);
+    }
+
+    public List<String> getScores(){
+        return frames.stream()
+                .map(Frame::getScore)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     private boolean isNotStartState(Frame frame) {

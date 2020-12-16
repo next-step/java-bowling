@@ -1,6 +1,7 @@
 package bowling.model.state;
 
 import bowling.model.Pins;
+import bowling.model.Score;
 import bowling.model.state.finishedState.Miss;
 import bowling.model.state.finishedState.Spare;
 
@@ -20,14 +21,19 @@ public class Open extends State {
 
     @Override
     public State bowling(int fallenPin) {
-        Pins secondScore = Pins.from(fallenPin);
-        Pins totalScore = pins.add(secondScore);
+        Pins secondFallenPins = Pins.from(fallenPin);
+        Pins totalScore = pins.add(secondFallenPins);
 
         if (totalScore.isMaxScore()) {
-            return Spare.of(secondScore, totalScore);
+            return Spare.of(pins, secondFallenPins);
         }
 
-        return Miss.from(secondScore);
+        return Miss.of(pins, secondFallenPins);
+    }
+
+    @Override
+    public Score score() {
+        return Score.of(pins.getScore(),1);
     }
 
     @Override

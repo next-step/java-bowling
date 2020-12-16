@@ -1,11 +1,15 @@
 package bowling.model.frame;
 
-public class FinalFrame extends Frame {
+import bowling.model.Score;
 
+import java.util.Optional;
+
+public class FinalFrame extends Frame {
     private int countOfTry = 0;
+    private Score score = Score.of(0, 2);
 
     public FinalFrame() {
-        frameNumber = FrameNumber.from(FrameNumber.MAX_FRAME_NUMBER);
+        super(FrameNumber.from(FrameNumber.MAX_FRAME_NUMBER));
     }
 
     @Override
@@ -13,14 +17,28 @@ public class FinalFrame extends Frame {
         countOfTry++;
         states.bowling(fallenPins);
 
-        if (isAbleToBonusFrame()) {
-            states.changeLastToBonusFrame();
+        if(isBonusStart()){
+            states.changeLastToBonusStart();
+        }
+
+        if(isBonusOpen()){
+            states.changeLastToBonusOpen();
         }
 
         return this;
     }
 
-    private boolean isAbleToBonusFrame() {
-        return countOfTry < 3 && states.isMaxScore();
+    @Override
+    public Optional<String> getScore() {
+        Score calculatedScore = states.calculate(score);
+        return calculatedScore.canCalculate() ? Optional.of(calculatedScore.toString()) : Optional.empty();
+    }
+
+    private boolean isBonusStart(){
+        return states.isFinished() && countOfTry == 1;
+    }
+
+    private boolean isBonusOpen(){
+        return states.isFinished() && states.isMaxScore() && countOfTry == 2;
     }
 }

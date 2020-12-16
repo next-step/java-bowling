@@ -17,30 +17,29 @@ class SpareTest {
         assertThat(Spare.of(Pins.from(0), Pins.from(10)));
     }
 
-    @ParameterizedTest
-    @MethodSource("spareParams")
-    void of_Spare의_조건에_맞지_않는_경우(Pins previous, Pins totalScore) {
+    @Test
+    void of_Spare의_조건에_맞지_않는_경우() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Spare.of(previous, totalScore))
+                .isThrownBy(() -> Spare.of(Pins.from(10), Pins.from(0)))
                 .withMessage("Spare의 조건에 맞지 않습니다.");
     }
 
     @Test
     void isFinished() {
-        assertThat(Spare.of(Pins.from(8), Pins.from(10)).isFinished()).isTrue();
+        assertThat(Spare.of(Pins.from(8), Pins.from(2)).isFinished()).isTrue();
     }
 
     @Test
     void bowling() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Spare.of(Pins.from(8), Pins.from(10)).bowling(1))
+                .isThrownBy(() -> Spare.of(Pins.from(8), Pins.from(2)).bowling(1))
                 .withMessage("해당 프레임에서는 더 이상 던질 수 없습니다.");
     }
 
     private static Stream<Arguments> spareParams() {
         return Stream.of(
                 Arguments.of(Pins.from(10), Pins.from(10)),
-                Arguments.of(Pins.from(1), Pins.from(9))
+                Arguments.of(Pins.from(10), Pins.from(0))
         );
     }
 }

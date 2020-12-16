@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 public class Pins implements Comparable<Pins> {
     private static final String SCORE_ERROR = "허용할 수 없는 값입니다.";
+
     private static final int MIN_SCORE = 0;
     private static final int MAX_SCORE = 10;
 

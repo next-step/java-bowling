@@ -1,6 +1,7 @@
 package bowling.model.state.finishedState;
 
 import bowling.model.Pins;
+import bowling.model.Score;
 
 public class Strike extends FinishedState {
     private static final String STRIKE_TOTAL_SCORE_ERROR = "Strike의 조건에 맞지 않습니다.";
@@ -9,6 +10,11 @@ public class Strike extends FinishedState {
     private Strike(Pins pins) {
         super(pins);
         this.expression = EXPRESSION;
+    }
+
+    @Override
+    public Score score() {
+        return Score.strike();
     }
 
     public static Strike from(Pins pins) {

@@ -1,5 +1,7 @@
 package bowling.model.state;
 
+import bowling.model.state.bonusState.BonusOpen;
+import bowling.model.state.bonusState.BonusStart;
 import bowling.model.state.finishedState.Strike;
 import org.junit.jupiter.api.Test;
 
@@ -34,28 +36,54 @@ class StatesTest {
     }
 
     @Test
-    void changeLastToBonusFrame_스트라이크_후_보너스로_전환() {
+    void changeLastToBonusFrame_스트라이크_후_보너스_오픈으로_전환() {
         States states = new States();
         states.bowling(10);
-        states.changeLastToBonusFrame();
+        states.changeLastToBonusOpen();
         assertThat(states.last()).isInstanceOf(BonusOpen.class);
     }
 
     @Test
-    void changeLastToBonusFrame_스페어_후_보너스로_전환() {
+    void changeLastToBonusFrame_스페어_후_보너스_오픈으로_전환() {
         States states = new States();
         states.bowling(9);
         states.bowling(1);
-        states.changeLastToBonusFrame();
+        states.changeLastToBonusOpen();
         assertThat(states.last()).isInstanceOf(BonusOpen.class);
     }
 
     @Test
-    void changeLastToBonusFrame_비정상() {
+    void changeLastToBonusFrame_스트라이크_후_보너스_시작으로_전환() {
+        States states = new States();
+        states.bowling(10);
+        states.changeLastToBonusStart();
+        assertThat(states.last()).isInstanceOf(BonusStart.class);
+    }
+
+    @Test
+    void changeLastToBonusFrame_스페어_후_보너스_시작으로_전환() {
+        States states = new States();
+        states.bowling(9);
+        states.bowling(1);
+        states.changeLastToBonusStart();
+        assertThat(states.last()).isInstanceOf(BonusStart.class);
+    }
+
+    @Test
+    void changeLastToBonusOpen_비정상() {
         States states = new States();
         states.bowling(9);
         assertThatIllegalArgumentException()
-                .isThrownBy(states::changeLastToBonusFrame)
+                .isThrownBy(states::changeLastToBonusOpen)
+                .withMessage("Strike 혹은 Spare만 보너스 프레임이 가능합니다.");
+    }
+
+    @Test
+    void changeLastToBonusStart_비정상() {
+        States states = new States();
+        states.bowling(9);
+        assertThatIllegalArgumentException()
+                .isThrownBy(states::changeLastToBonusStart)
                 .withMessage("Strike 혹은 Spare만 보너스 프레임이 가능합니다.");
     }
 

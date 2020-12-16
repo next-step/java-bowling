@@ -1,12 +1,25 @@
 package bowling.model.frame;
 
+import bowling.model.Score;
 import bowling.model.state.States;
 
+import java.util.Optional;
+
 public abstract class Frame implements Comparable<Frame> {
-    protected FrameNumber frameNumber;
-    protected States states = new States();
+    protected final FrameNumber frameNumber;
+    protected final States states = new States();
+
+    Frame(FrameNumber frameNumber){
+        this.frameNumber = frameNumber;
+    }
 
     public abstract Frame bowling(int fallenPins);
+
+    protected Score addScore(Score score) {
+        return states.calculate(score);
+    }
+
+    public abstract Optional<String> getScore();
 
     public boolean isFinished() {
         return states.isFinished();
