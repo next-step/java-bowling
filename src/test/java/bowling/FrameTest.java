@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import static bowling.BallThrow.MAX_PINS;
+import static bowling.BallThrow.MIN_PINS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -95,6 +96,9 @@ public class FrameTest {
             }
             if (sumOfFallingPins() == MAX_PINS) {
                 return Scoring.SPARE;
+            }
+            if (sumOfFallingPins() == MIN_PINS) {
+                return Scoring.GUTTER;
             }
             return Scoring.MISS;
         }
