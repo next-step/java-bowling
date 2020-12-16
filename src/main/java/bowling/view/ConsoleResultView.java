@@ -15,6 +15,7 @@ public class ConsoleResultView implements ResultView {
     private static final int CELL_WIDTH = 6;
     private static final String NAME_LABEL = "NAME";
     private static final String FRAME_INDEX_FORMAT = "%02d";
+    private static final String EMPTY_VALUE = "";
     private final Map<Pitching, String> stringByPitching;
 
     public ConsoleResultView() {
@@ -83,16 +84,16 @@ public class ConsoleResultView implements ResultView {
     }
 
     private void appendScore(BowlingGameViewDto bowlingGame, StringBuilder resultBuilder) {
-        resultBuilder.append(DELIMITER).append(centerString("")).append(DELIMITER);
-        bowlingGame.framesViewDtoStream().forEach(frame -> {
-            Optional<Integer> totalScore = frame.getTotalScore();
+        resultBuilder.append(DELIMITER).append(centerString(EMPTY_VALUE)).append(DELIMITER);
+        bowlingGame.framesViewDtoStream().forEach(frameViewDto -> {
+            Optional<Integer> totalScore = frameViewDto.getTotalScore();
             resultBuilder.append(formatScore(totalScore)).append(DELIMITER);
         });
     }
 
     private String formatScore(Optional<Integer> totalScore) {
         if (!totalScore.isPresent()) {
-            return centerString("");
+            return centerString(EMPTY_VALUE);
         }
         return centerString(String.valueOf(totalScore.get()));
     }
