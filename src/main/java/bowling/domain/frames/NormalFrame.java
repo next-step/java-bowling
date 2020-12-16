@@ -70,11 +70,11 @@ public class NormalFrame extends FrameImpl {
     }
 
     private Optional<Pitching> getNextAndNextPitching() {
-        return adjacentFrame.getNextFrame().getSecondPitching();
+        return adjacentFrame.getNextAndNextPitching();
     }
 
     private Optional<Pitching> getNextPitching() {
-        return adjacentFrame.getNextFrame().getFirstPitching();
+        return adjacentFrame.getNextPitching();
     }
 
     Optional<Pitching> getFirstPitching() {
@@ -83,7 +83,7 @@ public class NormalFrame extends FrameImpl {
 
     Optional<Pitching> getSecondPitching() {
         if (isStrike(pitchings)) {
-            return adjacentFrame.getNextFrame().getFirstPitching();
+            return adjacentFrame.getNextPitching();
         }
         return pitchings.getSecondPitching();
     }
@@ -94,8 +94,8 @@ public class NormalFrame extends FrameImpl {
     }
 
     @Override
-    protected FrameImpl getPreviousFrame() {
-        return adjacentFrame.getPreviousFrame();
+    protected Integer getPreviousTotalScore() {
+        return adjacentFrame.getPreviousTotalScore();
     }
 
     @Override

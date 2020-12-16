@@ -25,23 +25,28 @@ public abstract class FrameImpl implements Frame, FrameViewDto {
 
     @Override
     public Optional<Integer> getTotalScore() {
-        if (!isEnd()) {
+        if (canNotCalculate()) {
             return Optional.empty();
         }
 
-        if (!getScore().isPresent()) {
-            return Optional.empty();
-        }
-
-        if (isFirstFrame()) {
-            totalScore = getScore().get();
-            return Optional.of(totalScore);
-        }
-
-        FrameImpl previousFrame = getPreviousFrame();
-        Optional<Integer> previousFrameTotalScore = previousFrame.getTotalScore();
-        totalScore = previousFrameTotalScore.orElse(0) + getScore().get();
+        Integer totalScore = calculateTotalScore();
         return Optional.of(totalScore);
+    }
+
+    private Integer calculateTotalScore() {
+        Integer score = getScore().orElseThrow(IllegalStateException::new);
+        if (isFirstFrame()) {
+            totalScore = score;
+            return totalScore;
+        }
+
+        Integer previousFrameTotalScore = getPreviousTotalScore();
+        totalScore = previousFrameTotalScore + score;
+        return totalScore;
+    }
+
+    private boolean canNotCalculate() {
+        return !getScore().isPresent();
     }
 
     private boolean isFirstFrame() {
@@ -60,5 +65,5 @@ public abstract class FrameImpl implements Frame, FrameViewDto {
 
     public abstract FrameImpl getNextFrame();
 
-    protected abstract FrameImpl getPreviousFrame();
+    protected abstract Integer getPreviousTotalScore();
 }

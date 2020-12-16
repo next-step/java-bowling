@@ -26,12 +26,12 @@ public class FramesImpl implements Frames, FramesViewDto {
     }
 
     public int size() {
-        return firstAndLastFrame.getLast().index;
+        return firstAndLastFrame.getLastFrameIndex();
     }
 
     @Override
     public boolean isEnd() {
-        return firstAndLastFrame.getLast().isEnd();
+        return firstAndLastFrame.isEnd();
     }
 
     @Override
@@ -52,11 +52,15 @@ public class FramesImpl implements Frames, FramesViewDto {
         List<FrameViewDto> frameViewDtos = new ArrayList<>();
 
         FrameImpl currentFrame = firstAndLastFrame.getFirst();
-        while (currentFrame != null && currentFrame.index <= FramesImpl.MAX_FRAME_SIZE) {
+        while (existFrame(currentFrame)) {
             frameViewDtos.add(currentFrame);
             currentFrame = currentFrame.getNextFrame();
         }
 
         return frameViewDtos.stream();
+    }
+
+    private boolean existFrame(FrameImpl currentFrame) {
+        return currentFrame != null;
     }
 }

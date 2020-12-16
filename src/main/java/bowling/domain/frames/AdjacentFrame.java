@@ -1,5 +1,9 @@
 package bowling.domain.frames;
 
+import bowling.domain.Pitching;
+
+import java.util.Optional;
+
 public class AdjacentFrame {
     private final FrameImpl previousFrame;
     private final FrameImpl nextFrame;
@@ -13,11 +17,20 @@ public class AdjacentFrame {
         return new AdjacentFrame(previousFrame, nextFrame);
     }
 
-    public FrameImpl getPreviousFrame() {
-        return previousFrame;
+    public Integer getPreviousTotalScore() {
+        Optional<Integer> optionalPreviousFrameTotalScore = previousFrame.getTotalScore();
+        return optionalPreviousFrameTotalScore.orElseThrow(IllegalStateException::new);
     }
 
     public FrameImpl getNextFrame() {
         return nextFrame;
+    }
+
+    public Optional<Pitching> getNextPitching() {
+        return nextFrame.getFirstPitching();
+    }
+
+    public Optional<Pitching> getNextAndNextPitching() {
+        return nextFrame.getSecondPitching();
     }
 }

@@ -57,8 +57,8 @@ public class LastFrame extends FrameImpl {
     }
 
     @Override
-    protected FrameImpl getPreviousFrame() {
-        return adjacentFrame.getPreviousFrame();
+    protected Integer getPreviousTotalScore() {
+        return adjacentFrame.getPreviousTotalScore();
     }
 
     @Override

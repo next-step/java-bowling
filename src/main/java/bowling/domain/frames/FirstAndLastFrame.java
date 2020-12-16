@@ -17,7 +17,11 @@ public class FirstAndLastFrame {
         return first;
     }
 
-    public FrameImpl getLast() {
-        return last;
+    public int getLastFrameIndex() {
+        return last.index;
+    }
+
+    public boolean isEnd() {
+        return last.isEnd();
     }
 }
