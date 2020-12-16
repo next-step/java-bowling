@@ -1,28 +1,30 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import static java.util.Collections.unmodifiableList;
-
 public class Frames {
+    public static final int FRAME_SIZE = 10;
 
     private final List<Frame> frames;
 
-    private Frames() {
-        this.frames = new ArrayList<>();
+    private Frames(List<Frame> frames) {
+        this.frames = frames;
     }
 
-    public static Frames of() {
-        return new Frames();
+    private static Frames of(List<Frame> frames) {
+        return new Frames(frames);
     }
 
-    public void inputFrame(Frame frame) {
-        frames.add(frame);
+    public static Frames init() {
+        return of(new ArrayList<>());
     }
+
 
     public List<Frame> getFrames() {
-        return unmodifiableList(frames);
+        return Collections.unmodifiableList(frames);
     }
-
 }
