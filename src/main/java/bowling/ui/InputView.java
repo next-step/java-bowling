@@ -1,6 +1,6 @@
 package bowling.ui;
 
-import bowling.domain.FallingPinCount;
+import bowling.domain.frame.Point;
 import bowling.domain.player.Player;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -12,14 +12,17 @@ public class InputView {
     private static final String PLEASE_INPUT_N_FRAME_PITCH_RESULT = "%d프레임 투구 : ";
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static Player getPlayer() {
-        System.out.print(PLEASE_INPUT_PLAYER_NAME);
-        return new Player(getStringValue());
+    private InputView() {
     }
 
-    public static FallingPinCount getCurrentFramePitch(int currentFrameSequence) {
-        System.out.print(String.format(PLEASE_INPUT_N_FRAME_PITCH_RESULT, currentFrameSequence));
-        return FallingPinCount.fromFallingCount(getIntValue());
+    public static Player getPlayer() {
+        System.out.print(PLEASE_INPUT_PLAYER_NAME);
+        return Player.create(getStringValue());
+    }
+
+    public static Point getCurrentFramePitch(int currentFrameSequence) {
+        System.out.print(String.format(PLEASE_INPUT_N_FRAME_PITCH_RESULT, currentFrameSequence + 1));
+        return Point.inputPoint(getIntValue());
     }
 
     private static int getIntValue() {

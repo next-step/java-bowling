@@ -1,19 +1,24 @@
 package bowling;
 
-import bowling.domain.FallingPinCount;
-import bowling.domain.game.BowlingGame;
+import bowling.domain.frame.Frames;
+import bowling.domain.frame.Point;
+import bowling.domain.player.Player;
 import bowling.ui.InputView;
 import bowling.ui.OutputView;
 
 public class RunGame {
 
     public static void main(String[] args) {
-        BowlingGame game = new BowlingGame(InputView.getPlayer());
-        OutputView.showInitializedGame(game);
-        while (!game.isGameFinished()) {
-            FallingPinCount currentFramePitch = InputView.getCurrentFramePitch(game.getCurrentFrameSequence());
-            game.play(currentFramePitch);
-            OutputView.showDashBoard(game);
+        Player player = InputView.getPlayer();
+        OutputView.showInitializedGame(player);
+        Frames frames = Frames.create();
+
+        while (!frames.isLast()) {
+            Point point = InputView.getCurrentFramePitch(frames.getFrameIndex());
+            frames = frames.pitch(point);
+
+            OutputView.showDashBoard(player, frames);
+            frames.next();
         }
     }
 }

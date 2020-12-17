@@ -15,13 +15,13 @@ public class Player {
 
     private final String name;
 
-    public Player(String name) {
+    private Player(String name) {
         validateName(name);
         this.name = name.toUpperCase();
     }
 
-    public String name() {
-        return name;
+    public static Player create(String name) {
+        return new Player(name);
     }
 
     private void validateName(String name) {
@@ -52,5 +52,10 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

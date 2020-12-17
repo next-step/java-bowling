@@ -9,11 +9,10 @@ import bowling.exception.BowlingException;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
-
     @Test
     void 이름길이_조건_테스트() {
         String given = "TESTNAME";
-        assertThatThrownBy(() -> new Player(given))
+        assertThatThrownBy(() -> Player.create(given))
             .isInstanceOf(BowlingException.class)
             .hasMessage(String.format(MAX_NAME_LENGTH, MAX_LENGTH));
     }
@@ -21,7 +20,7 @@ class PlayerTest {
     @Test
     void 영문이름_조건_테스트() {
         String given = "테스트";
-        assertThatThrownBy(() -> new Player(given))
+        assertThatThrownBy(() -> Player.create(given))
             .isInstanceOf(BowlingException.class)
             .hasMessage(NAME_SHOULD_BE_ALPHABET);
     }
