@@ -32,4 +32,12 @@ public class Answers {
             answer.isMatchOwner(loginUser);
         }
     }
+
+    public DeleteHistory delete() {
+        DeleteHistory deleteHistory = new DeleteHistory();
+        for (Answer answer : this.answers) {
+            deleteHistory = answer.delete();
+        }
+        return deleteHistory;
+    }
 }
