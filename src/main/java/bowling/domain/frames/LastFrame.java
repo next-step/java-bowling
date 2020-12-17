@@ -3,27 +3,28 @@ package bowling.domain.frames;
 import bowling.domain.Pitching;
 import bowling.domain.pitchings.LastFramePitchings;
 import bowling.domain.pitchings.Pitchings;
+import bowling.dto.FrameDto;
 
 import java.util.Optional;
 
-public class LastFrame extends FrameImpl {
+public class LastFrame extends Frame {
     private static final String NEXT_FRAME_INVOKE_ERR_MSG = "LastFrame은 NextFrame이 존재하지 않습니다.";
     protected final Pitchings pitchings;
     private final AdjacentFrame adjacentFrame;
 
 
-    private LastFrame(int index, FrameImpl previousFrame) {
+    private LastFrame(int index, Frame previousFrame) {
         super(index);
         pitchings = LastFramePitchings.getInstance();
         adjacentFrame = AdjacentFrame.of(previousFrame, null);
     }
 
-    public static FrameImpl of(int index, FrameImpl previousFrame) {
+    public static Frame of(int index, Frame previousFrame) {
         return new LastFrame(index, previousFrame);
     }
 
     @Override
-    public FrameImpl initNextFrame() {
+    public Frame initNextFrame() {
         throw new IllegalStateException(NEXT_FRAME_INVOKE_ERR_MSG);
     }
 
@@ -47,12 +48,12 @@ public class LastFrame extends FrameImpl {
     }
 
     @Override
-    public FrameImpl getLastFrame() {
+    public Frame getLastFrame() {
         return this;
     }
 
     @Override
-    public FrameImpl getNextFrame() {
+    public Frame getNextFrame() {
         return null;
     }
 
@@ -62,6 +63,11 @@ public class LastFrame extends FrameImpl {
     }
 
     @Override
+    public FrameDto convertToFrameDto() {
+        //todo getTotalScore 메서드를 없앨수 있지 않을까?
+        return FrameDto.of(pitchings, getTotalScore());
+    }
+
     public Pitchings getPitchings() {
         return pitchings;
     }

@@ -3,33 +3,34 @@ package bowling.domain.frames;
 import bowling.domain.Pitching;
 import bowling.domain.pitchings.NormalFramePitchings;
 import bowling.domain.pitchings.Pitchings;
+import bowling.dto.FrameDto;
 
 import java.util.Optional;
 
-public class NormalFrame extends FrameImpl {
+public class NormalFrame extends Frame {
     protected final Pitchings pitchings;
     private final AdjacentFrame adjacentFrame;
 
-    protected NormalFrame(int index, FrameImpl previousFrame) {
+    protected NormalFrame(int index, Frame previousFrame) {
         super(index);
         pitchings = NormalFramePitchings.getInstance();
         adjacentFrame = AdjacentFrame.of(previousFrame, initNextFrame());
     }
 
-    public static FrameImpl getFirstFrame() {
+    public static Frame getFirstFrame() {
         return new NormalFrame(1, null);
     }
 
     @Override
-    public FrameImpl getLastFrame() {
-        FrameImpl nextFrame = adjacentFrame.getNextFrame();
+    public Frame getLastFrame() {
+        Frame nextFrame = adjacentFrame.getNextFrame();
         return nextFrame.getLastFrame();
     }
 
     @Override
-    public FrameImpl initNextFrame() {
+    public Frame initNextFrame() {
         int nextFrameIndex = index + 1;
-        int lastFrameIndex = FramesImpl.MAX_FRAME_SIZE;
+        int lastFrameIndex = Frames.MAX_FRAME_SIZE;
         if (nextFrameIndex == lastFrameIndex) {
             return LastFrame.of(lastFrameIndex, this);
         }
@@ -89,7 +90,7 @@ public class NormalFrame extends FrameImpl {
     }
 
     @Override
-    public FrameImpl getNextFrame() {
+    public Frame getNextFrame() {
         return adjacentFrame.getNextFrame();
     }
 
@@ -98,9 +99,14 @@ public class NormalFrame extends FrameImpl {
         return adjacentFrame.getPreviousTotalScore();
     }
 
-    @Override
     public Pitchings getPitchings() {
         return pitchings;
+    }
+
+    @Override
+    public FrameDto convertToFrameDto() {
+        //todo getTotalScore 메서드를 없앨수 있지 않을까?
+        return FrameDto.of(pitchings, getTotalScore());
     }
 
     @Override

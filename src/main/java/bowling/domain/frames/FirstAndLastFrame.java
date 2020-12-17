@@ -1,19 +1,19 @@
 package bowling.domain.frames;
 
 public class FirstAndLastFrame {
-    private final FrameImpl first;
-    private final FrameImpl last;
+    private final Frame first;
+    private final Frame last;
 
-    private FirstAndLastFrame(FrameImpl first, FrameImpl last) {
+    private FirstAndLastFrame(Frame first, Frame last) {
         this.first = first;
         this.last = last;
     }
 
-    public static FirstAndLastFrame of(FrameImpl first, FrameImpl last) {
+    public static FirstAndLastFrame of(Frame first, Frame last) {
         return new FirstAndLastFrame(first, last);
     }
 
-    public FrameImpl getFirst() {
+    public Frame getFirst() {
         return first;
     }
 
