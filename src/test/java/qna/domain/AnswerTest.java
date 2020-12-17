@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
@@ -46,5 +47,13 @@ public class AnswerTest {
         List<DeleteHistory> result = new ArrayList<>();
 
         assertThat(sample.delete(result)).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("login 유저가 소유자가 아닐 때의 예외 처리")
+    void testValidate() {
+        assertThatThrownBy(
+                () -> new Answer(1L, UserTest.JAVAJIGI, QuestionTest.Q1, "ABCD").validateOwnership(UserTest.SANJIGI)
+        );
     }
 }
