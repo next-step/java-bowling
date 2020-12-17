@@ -16,3 +16,9 @@
 
 * qna.service.QnaService 의 deleteQuestion()는 앞의 질문 삭제 기능을 구현한 코드이다. 이 메소드는 단위 테스트하기 어려운 코드와 단위 테스트 가능한 코드가 섞여 있다.
 * 단위 테스트하기 어려운 코드와 단위 테스트 가능한 코드를 분리해 단위 테스트 가능한 코드에 대해 단위 테스트를 구현한다.
+
+### 피드백
+
+* Answer 의 유효성 검사 위치
+* DeleteHistory 의 정적 팩토리 메서드를 활용한 가독성 향상
+* Answer 의 delete 메서드에서 List<DeleteHistory> 를 받는 부분
