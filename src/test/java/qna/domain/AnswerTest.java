@@ -3,6 +3,8 @@ package qna.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnswerTest {
@@ -19,5 +21,17 @@ public class AnswerTest {
         sample.delete();
 
         assertThat(sample.isDeleted()).isTrue();
+    }
+
+    @Test
+    @DisplayName("삭제시 정상적으로 히스토리를 반환하는 지 테스트")
+    void testDeleteHistoryReturn() {
+        Answer sample = new Answer(1L, UserTest.JAVAJIGI, QuestionTest.Q1, "ABCD");
+
+        DeleteHistory history = sample.delete();
+
+        DeleteHistory expected = new DeleteHistory(ContentType.ANSWER, sample.getId(), sample.getWriter(), LocalDateTime.now());
+
+        assertThat(history).isEqualTo(expected);
     }
 }
