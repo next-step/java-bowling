@@ -16,12 +16,13 @@ public class Frame {
     private Score score;
 
     public Frame(int frameNo) {
+        System.out.println(frameNo);
         this.frameNo = frameNo;
     }
 
     public Frame bowl(int downPins) {
         if (isFinalFrame()) {
-            return new FinalFrame();
+            return new FinalFrame(downPins);
         }
         if (isStrike(downPins)) {
             this.score = new Score(downPins);
@@ -40,16 +41,17 @@ public class Frame {
         return this.frameNo == FINAL_FRAME_NO;
     }
 
-    public boolean isStrike(int pins) {
-        return pins == Symbol.STRIKE.getScore();
+    public boolean isStrike(int downPins) {
+        return downPins == Symbol.STRIKE.getScore();
     }
 
     private boolean isSecond() {
         return score != null;
     }
 
-    public String getFrameNo() {
-        return frameNo < 10 ? "0" + frameNo : String.valueOf(frameNo);
+    public int getFrameNo() {
+//        return frameNo < 10 ? "0" + frameNo : String.valueOf(frameNo);
+        return frameNo;
     }
 
     public Score getScore() {

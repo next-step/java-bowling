@@ -7,9 +7,10 @@ package bowling.domain;
 public class Score {
     private final int first;
     private int second;
+    private int tenFrameBonus;
 
-    public Score(int pins) {
-        this.first = pins;
+    public Score(int downPins) {
+        this.first = downPins;
         this.second = Frame.INIT;
     }
 
@@ -21,8 +22,12 @@ public class Score {
         return first;
     }
 
-    public void setSecond(int pins) {
-        this.second = pins;
+    public void setSecond(int downPins) {
+        this.second = downPins;
+    }
+
+    public void setTenFrameBonus(int downPins) {
+        this.tenFrameBonus = downPins;
     }
 
     @Override
@@ -30,6 +35,7 @@ public class Score {
         return "Score{" +
                 "first=" + first +
                 ", second=" + second +
+                ", tenFrameBonus=" + tenFrameBonus +
                 '}';
     }
 }

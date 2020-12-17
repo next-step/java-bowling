@@ -17,5 +17,6 @@ class FramesTest {
     void name() {
         Frames frames = new Frames();
         frames.getFrames().stream().forEach(System.out::println);
+        System.out.println(frames.size());
     }
 }
