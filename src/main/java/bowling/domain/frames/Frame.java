@@ -44,10 +44,6 @@ public abstract class Frame {
         return totalScore;
     }
 
-    public abstract Pitchings getPitchings();
-
-    public abstract FrameDto convertToFrameDto();
-
     private boolean canNotCalculate() {
         return !getScore().isPresent();
     }
@@ -55,6 +51,12 @@ public abstract class Frame {
     private boolean isFirstFrame() {
         return index == 1;
     }
+
+    public FrameDto convertToFrameDto() {
+        return FrameDto.of(getPitchings(), getTotalScore());
+    }
+
+    public abstract Pitchings getPitchings();
 
     public abstract Frame initNextFrame();
 

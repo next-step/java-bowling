@@ -3,7 +3,6 @@ package bowling.domain.frames;
 import bowling.domain.Pitching;
 import bowling.domain.pitchings.LastFramePitchings;
 import bowling.domain.pitchings.Pitchings;
-import bowling.dto.FrameDto;
 
 import java.util.Optional;
 
@@ -63,11 +62,6 @@ public class LastFrame extends Frame {
     }
 
     @Override
-    public FrameDto convertToFrameDto() {
-        //todo getTotalScore 메서드를 없앨수 있지 않을까?
-        return FrameDto.of(pitchings, getTotalScore());
-    }
-
     public Pitchings getPitchings() {
         return pitchings;
     }
