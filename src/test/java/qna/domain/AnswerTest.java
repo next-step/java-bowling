@@ -21,6 +21,4 @@ public class AnswerTest {
             answer.isMatchOwner(question.getWriter());
         }).isInstanceOf(CannotDeleteException.class);
     }
-
-
 }
