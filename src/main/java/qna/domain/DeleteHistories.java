@@ -18,4 +18,5 @@ public class DeleteHistories {
     public List<DeleteHistory> getDeleteHistories() {
         return Collections.unmodifiableList(deleteHistories);
     }
+
 }
