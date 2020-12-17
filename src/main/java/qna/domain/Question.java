@@ -95,19 +95,19 @@ public class Question extends AbstractEntity {
         validateWriter(loginUser);
 
         if (Objects.isNull(this.answers)) {
-            return historiesWithoutAnswers();
+            return getHistoriesWithoutAnswers();
         }
 
         validateAnswersWriter(loginUser);
-        return historiesWithAnswers();
+        return getHistoriesWithAnswers();
     }
 
-    private List<DeleteHistory> historiesWithoutAnswers() {
+    private List<DeleteHistory> getHistoriesWithoutAnswers() {
         return Stream.of(deleteQuestion())
                     .collect(Collectors.toList());
     }
 
-    private List<DeleteHistory> historiesWithAnswers() {
+    private List<DeleteHistory> getHistoriesWithAnswers() {
         return Stream
                 .concat(Stream.of(deleteQuestion()),
                         deleteAnswers().stream())
