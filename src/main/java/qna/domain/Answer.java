@@ -4,7 +4,6 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -77,7 +76,7 @@ public class Answer extends AbstractEntity {
 
     public DeleteHistory delete() {
         deleted = true;
-        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
+        return DeleteHistory.ofAnswer(getId(), writer);
     }
 
     @Override

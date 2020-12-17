@@ -20,5 +20,5 @@
 ### 피드백
 
 * Answer 의 유효성 검사 위치
-* DeleteHistory 의 정적 팩토리 메서드를 활용한 가독성 향상
+* [X] DeleteHistory 의 정적 팩토리 메서드를 활용한 가독성 향상
 * Answer 의 delete 메서드에서 List<DeleteHistory> 를 받는 부분

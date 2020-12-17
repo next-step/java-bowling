@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -114,11 +113,11 @@ public class QuestionTest {
 
         // DeleteHistory 의 equals()는 createDate 를 이용하지 않는다.
         List<DeleteHistory> expected = new ArrayList<>();
-        expected.add(new DeleteHistory(ContentType.QUESTION, 1L, questionOwnerUser, LocalDateTime.now()));
-        expected.add(new DeleteHistory(ContentType.ANSWER, 1L, questionOwnerUser, LocalDateTime.now()));
-        expected.add(new DeleteHistory(ContentType.ANSWER, 2L, questionOwnerUser, LocalDateTime.now()));
-        expected.add(new DeleteHistory(ContentType.ANSWER, 3L, questionOwnerUser, LocalDateTime.now()));
-        expected.add(new DeleteHistory(ContentType.ANSWER, 4L, questionOwnerUser, LocalDateTime.now()));
+        expected.add(DeleteHistory.ofQuestion(1L, questionOwnerUser));
+        expected.add(DeleteHistory.ofAnswer(1L, questionOwnerUser));
+        expected.add(DeleteHistory.ofAnswer(2L, questionOwnerUser));
+        expected.add(DeleteHistory.ofAnswer(3L, questionOwnerUser));
+        expected.add(DeleteHistory.ofAnswer(4L, questionOwnerUser));
 
         List<DeleteHistory> histories = sampleQuestion.delete(questionOwnerUser);
 

@@ -3,7 +3,6 @@ package qna.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +32,7 @@ public class AnswerTest {
 
         DeleteHistory history = sample.delete();
 
-        DeleteHistory expected = new DeleteHistory(ContentType.ANSWER, sample.getId(), sample.getWriter(), LocalDateTime.now());
+        DeleteHistory expected = DeleteHistory.ofAnswer(sample.getId(), sample.getWriter());
 
         assertThat(history).isEqualTo(expected);
     }
@@ -42,7 +41,7 @@ public class AnswerTest {
     @DisplayName("DeleteHistory 반환 방식 추가")
     void testAdditionalDeleteHistoryReturnMethod() {
         Answer sample = new Answer(1L, UserTest.JAVAJIGI, QuestionTest.Q1, "ABCD");
-        List<DeleteHistory> expected = Arrays.asList(new DeleteHistory(ContentType.ANSWER, sample.getId(), sample.getWriter(), LocalDateTime.now()));
+        List<DeleteHistory> expected = Arrays.asList(DeleteHistory.ofAnswer(sample.getId(), sample.getWriter()));
 
         List<DeleteHistory> result = new ArrayList<>();
 
