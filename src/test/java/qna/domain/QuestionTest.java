@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -93,5 +95,32 @@ public class QuestionTest {
         for (Answer answer : answers) {
             assertThat(answer.isDeleted()).isTrue();
         }
+    }
+
+    @Test
+    @DisplayName("Question 이 삭제된 모든 질문과 답변을 정상적으로 반환하는지 테스트")
+    void testDeletedAll() throws CannotDeleteException {
+        Question sampleQuestion = new Question(1L, "title", "content").writeBy(questionOwnerUser);
+
+        List<Answer> answers = Arrays.asList(
+                new Answer(1L, questionOwnerUser, sampleQuestion, "Answers Content1"),
+                new Answer(2L, questionOwnerUser, sampleQuestion, "Answers Content2"),
+                new Answer(3L, questionOwnerUser, sampleQuestion, "Answers Content3"),
+                new Answer(4L, questionOwnerUser, sampleQuestion, "Answers Content4")
+        );
+
+        answers.forEach(sampleQuestion::addAnswer);
+
+        // DeleteHistory 의 equals()는 createDate 를 이용하지 않는다.
+        List<DeleteHistory> expected = new ArrayList<>();
+        expected.add(new DeleteHistory(ContentType.QUESTION, 1L, questionOwnerUser, LocalDateTime.now()));
+        expected.add(new DeleteHistory(ContentType.ANSWER, 1L, questionOwnerUser, LocalDateTime.now()));
+        expected.add(new DeleteHistory(ContentType.ANSWER, 2L, questionOwnerUser, LocalDateTime.now()));
+        expected.add(new DeleteHistory(ContentType.ANSWER, 3L, questionOwnerUser, LocalDateTime.now()));
+        expected.add(new DeleteHistory(ContentType.ANSWER, 4L, questionOwnerUser, LocalDateTime.now()));
+
+        List<DeleteHistory> histories = sampleQuestion.delete(questionOwnerUser);
+
+        assertThat(histories).isEqualTo(expected);
     }
 }
