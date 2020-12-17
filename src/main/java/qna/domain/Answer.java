@@ -5,6 +5,7 @@ import qna.UnAuthorizedException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -67,6 +68,11 @@ public class Answer extends AbstractEntity {
 
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    public List<DeleteHistory> delete(List<DeleteHistory> deleteHistories) {
+        deleteHistories.add(delete());
+        return deleteHistories;
     }
 
     public DeleteHistory delete() {
