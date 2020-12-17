@@ -100,21 +100,18 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
 
         validateQuestionOwner(loginUser);
         validateAnswersOwner();
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(deleteQuestion());
-
-        return Stream.of(deleteHistories, deleteAnswers(loginUser))
-                        .flatMap(Collection::stream)
-                        .collect(Collectors.toList());
+        return DeleteHistories.of(
+                Stream.concat(Stream.of(deleteQuestion()), deleteAnswers(loginUser).getDeleteHistories().stream())
+                        .collect(Collectors.toList()));
 
     }
 
-    private List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException{
+    private DeleteHistories deleteAnswers(User loginUser) throws CannotDeleteException{
         return answers.deleteAnswers(loginUser);
     }
 

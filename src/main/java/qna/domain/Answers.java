@@ -23,14 +23,14 @@ public class Answers {
     }
 
 
-    public List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
+    public DeleteHistories deleteAnswers(User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
         for(Answer answer : answers){
             deleteHistories.add(answer.delete(loginUser));
         }
 
-        return deleteHistories;
+        return DeleteHistories.of(deleteHistories);
     }
 
     public boolean hasOtherUsersAnswer(User questionWriter) {
