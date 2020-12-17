@@ -1,77 +1,79 @@
 package bowling.domain;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.Objects;
 
 /**
  * Created : 2020-12-16 오전 9:30
  * Developer : Seo
  */
 public class Frame {
-    private static final Random random = new Random();
-    public static final String NORMAL_FRAME_NO_PREFIX = "0";
+
     public static final int INIT = 0;
-    public static final int NEXT = 1;
-    public static final int FINAL = 10;
-    public static final int PINS = 10;
+    public static final int NEXT_NO = 1;
+    public static final int FINAL_FRAME_NO = 10;
 
-    protected final int frameNo;
-    protected final Score score;
+    private final int frameNo;
+    private Score score;
 
-    public Frame(int frameNo, Score score) {
+    public Frame(int frameNo) {
         this.frameNo = frameNo;
-        this.score = score;
-        if (frameNo < 11) {
-            shot();
-            System.out.println(frameNo + " : " + score.get());
+    }
+
+    public Frame bowl(int downPins) {
+        if (isFinalFrame()) {
+            return new FinalFrame();
         }
-    }
-
-    private Frame shot() {
-        if (isStrike()) {
-            return nextFrame(bowl());
+        if (isStrike(downPins)) {
+            this.score = new Score(downPins);
+            return new Frame(frameNo + NEXT_NO);
         }
-        secondShot(bowl());
-        return nextFrame(bowl());
+        if (isSecond()) {
+            this.score.setSecond(downPins);
+            return new Frame(frameNo + NEXT_NO);
+        }
+
+        this.score = new Score(downPins);
+        return this;
     }
 
-    public Frame(Score score) {
-        this.frameNo = FINAL;
-        this.score = score;
+    private boolean isFinalFrame() {
+        return this.frameNo == FINAL_FRAME_NO;
     }
 
-    public Frame() {
-        this.frameNo = INIT;
-        this.score = new Score(INIT);
-        nextFrame(score);
+    public boolean isStrike(int pins) {
+        return pins == Symbol.STRIKE.getScore();
     }
 
-    public static List<Frame> init() {
-        List<Frame> frames = new LinkedList<>();
-        frames.add(new Frame());
-        return frames;
+    private boolean isSecond() {
+        return score != null;
     }
 
-    public boolean isStrike() {
-        return score.get() == Symbol.STRIKE.getScore();
+    public String getFrameNo() {
+        return frameNo < 10 ? "0" + frameNo : String.valueOf(frameNo);
     }
 
-    public boolean isSpare(Score second) {
-        return score.get() != Symbol.STRIKE.getScore()
-                && score.get() + second.get() == Symbol.SPARE.getScore();
+    public Score getScore() {
+        return score;
     }
 
-    public Frame nextFrame(Score score) {
-        //return frameNo + NEXT < FINAL ? new NormalFrame(frameNo + NEXT, score) : new FinalFrame(score);
-        return new Frame(frameNo + NEXT, score);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frame frame = (Frame) o;
+        return frameNo == frame.frameNo && score.equals(frame.score);
     }
 
-    public Score bowl() {
-        return new Score(random.nextInt(PINS + NEXT));
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNo, score);
     }
 
-    public void secondShot(Score second) {
-        this.score.set(second.get());
+    @Override
+    public String toString() {
+        return "Frame{" +
+                "frameNo=" + frameNo +
+                ", score=" + score +
+                '}';
     }
 }

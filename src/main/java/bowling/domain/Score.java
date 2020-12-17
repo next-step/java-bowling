@@ -8,8 +8,8 @@ public class Score {
     private final int first;
     private int second;
 
-    public Score(int score) {
-        this.first = score;
+    public Score(int pins) {
+        this.first = pins;
         this.second = Frame.INIT;
     }
 
@@ -17,7 +17,19 @@ public class Score {
         return first + second;
     }
 
-    public void set(int score) {
-        this.second = score;
+    public int getFirst() {
+        return first;
+    }
+
+    public void setSecond(int pins) {
+        this.second = pins;
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "first=" + first +
+                ", second=" + second +
+                '}';
     }
 }
