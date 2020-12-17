@@ -75,6 +75,13 @@ public class LastFramePitchings extends Pitchings {
     }
 
     @Override
+    public int calculateTotalScore() {
+        return value.stream()
+                .mapToInt(Pitching::getScore)
+                .sum();
+    }
+
+    @Override
     public Optional<Integer> getTotalScoreWithStrikeBonus(Optional<Pitching> nextPitching, Optional<Pitching> nextAndNextPitching) {
         throw new IllegalStateException();
     }

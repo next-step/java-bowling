@@ -80,4 +80,19 @@ public class NormalFramePitchings extends Pitchings {
     private boolean canNotCalculateSpareBonus(Optional<Pitching> optionalNextPitching) {
         return !optionalNextPitching.isPresent();
     }
+
+    @Override
+    public int calculateTotalScore() {
+        if (isSpare()) {
+            return Pitching.SPARE.getScore();
+        }
+
+        return value.stream()
+                .mapToInt(Pitching::getScore)
+                .sum();
+    }
+
+    private boolean isSpare() {
+        return value.contains(Pitching.SPARE);
+    }
 }

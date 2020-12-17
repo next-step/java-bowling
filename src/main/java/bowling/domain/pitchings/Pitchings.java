@@ -38,19 +38,7 @@ public abstract class Pitchings implements Iterable<Pitching> {
         return value.contains(pitching);
     }
 
-    public int calculateTotalScore() {
-        if (isSpare()) {
-            return Pitching.SPARE.getScore();
-        }
-
-        return value.stream()
-                .mapToInt(Pitching::getScore)
-                .sum();
-    }
-
-    private boolean isSpare() {
-        return value.contains(Pitching.SPARE);
-    }
+    public abstract int calculateTotalScore();
 
     protected void setFirstPitching(KnockDownPins knockDownPins) {
         Pitching pitching = Pitching.getPitching(knockDownPins);
