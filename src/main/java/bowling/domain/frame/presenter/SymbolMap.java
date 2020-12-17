@@ -1,4 +1,4 @@
-package bowling.view.output;
+package bowling.domain.frame.presenter;
 
 import java.util.Arrays;
 
@@ -13,7 +13,7 @@ public enum SymbolMap {
     SEVEN(7, "7"),
     EIGHT(8, "8"),
     NINE(9, "9"),
-    TEN(10, OutputView.STRIKE),
+    TEN(10, "X"),
     ;
 
     private final int key;

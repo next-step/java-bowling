@@ -1,11 +1,16 @@
-package bowling.view.output;
+package bowling.domain.frame.presenter;
 
 import java.util.List;
 
-import static bowling.view.output.OutputView.SPARE;
-
 public class NormalFramePresenter {
+    public static final String STRIKE = "X";
+    public static final String SPARE = "/";
+    
     public static String present(final List<Integer> fallenPins) {
+        if (fallenPins.isEmpty()) {
+            return "";
+        }
+
         if (fallenPins.size() == 1) {
             return presentFirstPitching(fallenPins);
         }

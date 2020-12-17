@@ -1,9 +1,4 @@
-package bowling.view.output;
-
-import bowling.domain.Frame;
-import bowling.domain.NormalFrame;
-import bowling.domain.dto.ResultDTO;
-import bowling.view.Printer;
+package bowling.view;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -12,14 +7,12 @@ public class OutputView {
     private static final String DELIMITER = "|";
     private static final String NAME_TITLE = "NAME";
     private static final int BLOCK_LENGTH = 6;
-    public static final String STRIKE = "X";
-    public static final String SPARE = "/";
 
-    public static void printResult(final ResultDTO resultDTO) {
+    public static void printResult(final String name, final List<String> fallenPinsSymbol) {
         printNameTitle();
         printFrames();
-        printUsername(resultDTO.getUsername());
-        printFramesResults(resultDTO);
+        printUsername(name);
+        printFramesResults2(fallenPinsSymbol);
     }
 
     public static void printNameTitle() {
@@ -40,29 +33,15 @@ public class OutputView {
         Printer.print(DELIMITER + centerOrdering(username) + DELIMITER);
     }
 
-    private static void printFramesResults(ResultDTO resultDTO) {
-        resultDTO.getFrames().stream()
-                .map(OutputView::createFramesResult)
+    private static void printFramesResults2(final List<String> fallenPinsSymbol) {
+        fallenPinsSymbol.stream()
                 .map(OutputView::appendDelimiter)
                 .map(OutputView::centerOrdering)
                 .map(str -> str + DELIMITER)
                 .forEach(Printer::print);
         Printer.printNewLine(2);
     }
-
-    private static String createFramesResult(final Frame frame) {
-        final List<Integer> fallenPins = frame.getAllFallenPin();
-        if (fallenPins.isEmpty()) {
-            return "";
-        }
-
-        if (frame instanceof NormalFrame) {
-            return NormalFramePresenter.present(fallenPins);
-        }
-
-        return FinalFramePresenter.present(fallenPins);
-    }
-
+    
     private static String appendDelimiter(final String word) {
         if (word.length() == 0) {
             return "";

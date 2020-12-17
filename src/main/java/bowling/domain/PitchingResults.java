@@ -32,14 +32,18 @@ public class PitchingResults {
         }
         return pitchingResults.get(index);
     }
-    
+
     private int lastIndex() {
         return pitchingResults.size() - 1;
     }
-    
+
     public List<Integer> getAllFallenPin() {
         return pitchingResults.stream()
                 .map(Pins::getFallenPin)
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList));
+    }
+
+    public boolean isEmpty() {
+        return pitchingResults.size() == 0;
     }
 }

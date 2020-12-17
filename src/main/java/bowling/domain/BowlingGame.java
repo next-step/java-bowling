@@ -1,7 +1,14 @@
 package bowling.domain;
 
 import bowling.NotPlayableException;
-import bowling.domain.dto.ResultDTO;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.FrameFactory;
+
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 public class BowlingGame {
     private final User user;
@@ -21,7 +28,7 @@ public class BowlingGame {
     public boolean isNotFinished() {
         return !isFinished();
     }
-    
+
     public boolean isFinished() {
         return nowFrame.isFinishedAll();
     }
@@ -30,20 +37,25 @@ public class BowlingGame {
         return nowFrame.getIndex() + 1;
     }
 
-    public ResultDTO pitch(final Pins pins) {
+    public void pitch(final Pins pins) {
         if (isFinished()) {
             throw new NotPlayableException();
         }
-        
+
         if (nowFrame.isNotPlayable()) {
             nowFrame = nowFrame.next();
         }
-        
+
         nowFrame.pitch(pins);
-        return getResultDTO();
+    }
+
+    public List<String> symbols() {
+        return firstFrame.toFrames().stream()
+                .map(Frame::getSymbol)
+                .collect(collectingAndThen(toList(), Collections::unmodifiableList));
     }
     
-    public ResultDTO getResultDTO() {
-        return new ResultDTO(user, firstFrame);
+    public String name() {
+        return user.getName();
     }
 }

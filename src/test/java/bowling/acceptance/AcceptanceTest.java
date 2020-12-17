@@ -3,11 +3,9 @@ package bowling.acceptance;
 import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGameMockFactory;
 import bowling.domain.Pins;
-import bowling.view.output.OutputView;
+import bowling.view.OutputView;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,9 +17,10 @@ public class AcceptanceTest {
         final BowlingGame bowlingGame = BowlingGameMockFactory.create("HSM");
 
         // when
-        Stream.generate(() -> bowlingGame.pitch(Pins.MAX))
-                .limit(12)
-                .forEach(OutputView::printResult);
+        for (int i = 0 ; i < 12; i ++) {
+            bowlingGame.pitch(Pins.MAX);
+            OutputView.printResult(bowlingGame.name(), bowlingGame.symbols());
+        }
 
         // then
         assertThat(bowlingGame.isFinished()).isTrue();

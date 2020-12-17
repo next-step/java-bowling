@@ -1,6 +1,8 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.InvalidFrameIndexException;
+import bowling.domain.Pins;
+import bowling.domain.frame.presenter.NormalFramePresenter;
 
 import static util.Preconditions.checkArgument;
 
@@ -32,5 +34,10 @@ public class NormalFrame extends Frame {
     @Override
     public boolean isFinishedAll() {
         return false;
+    }
+
+    @Override
+    public String getSymbol() {
+        return NormalFramePresenter.present(pitchingResults.getAllFallenPin());
     }
 }

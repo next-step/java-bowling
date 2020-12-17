@@ -1,11 +1,14 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.InvalidFrameIndexException;
+import bowling.domain.Pins;
+import bowling.domain.frame.presenter.FinalFramePresenter;
 
 import static util.Preconditions.checkArgument;
 
 public class FinalFrame extends Frame {
     public static final int FINAL_FRAME_INDEX = 9;
+    
     private FinalFrameState state = FinalFrameState.FIRST_PITCHING;
 
     private FinalFrame(final int index) {
@@ -31,5 +34,10 @@ public class FinalFrame extends Frame {
     @Override
     public boolean isFinishedAll() {
         return !isPlayable();
+    }
+
+    @Override
+    public String getSymbol() {
+        return FinalFramePresenter.present(pitchingResults.getAllFallenPin());
     }
 }

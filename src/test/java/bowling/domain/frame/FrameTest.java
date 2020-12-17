@@ -1,6 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.InvalidFrameIndexException;
+import bowling.domain.Pins;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

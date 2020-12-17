@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Pins;
+import bowling.domain.frame.FinalFrameState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -7,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static bowling.domain.FinalFrameState.*;
+import static bowling.domain.frame.FinalFrameState.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FinalFrameStateTest {
