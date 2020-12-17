@@ -26,4 +26,12 @@ public class QuestionTest {
             question.isOwnerMatch(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
+
+    @Test
+    @DisplayName("질문 삭제")
+    public void 질문_삭제() {
+        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question.delete();
+        assertTrue(question.isDeleted());
+    }
 }

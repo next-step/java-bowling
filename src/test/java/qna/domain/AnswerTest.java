@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertTrue;
 
 public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
@@ -20,5 +21,13 @@ public class AnswerTest {
         assertThatThrownBy(() -> {
             answer.isMatchOwner(question.getWriter());
         }).isInstanceOf(CannotDeleteException.class);
+    }
+
+    @Test
+    @DisplayName("답변 삭제")
+    public void 답변_삭제() {
+        Answer answer = new Answer(11L, UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents1");
+        answer.delete();
+        assertTrue(answer.isDeleted());
     }
 }
