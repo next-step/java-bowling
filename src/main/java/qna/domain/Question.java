@@ -23,10 +23,12 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    /*@OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private List<Answer> answers = new ArrayList<>();*/
+
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -73,7 +75,7 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        answers.addAnswer(answer);
     }
 
     public boolean isOwner(User loginUser) {
@@ -89,9 +91,9 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+   /* public List<Answer> getAnswers() {
         return answers;
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -106,14 +108,14 @@ public class Question extends AbstractEntity {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(deleteQuestion());
 
-        return Stream.of(deleteHistories, deleteAnswers())
+        return Stream.of(deleteHistories, deleteAnswers(loginUser))
                         .flatMap(Collection::stream)
                         .collect(Collectors.toList());
 
     }
 
-    private List<DeleteHistory> deleteAnswers() {
-        return answers.stream().map(answer -> answer.delete()).collect(Collectors.toList());
+    private List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException{
+        return answers.deleteAnswers(loginUser);
     }
 
     private DeleteHistory deleteQuestion() {
@@ -122,14 +124,9 @@ public class Question extends AbstractEntity {
     }
 
     private void validateAnswersOwner() throws CannotDeleteException {
-        boolean hasOtherUserAnswer = answers.stream()
-                .anyMatch(answer -> !answer.isOwner(this.writer));
-
-        if(hasOtherUserAnswer){
+        if(answers.hasOtherUsersAnswer(this.writer)){
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
-
-
     }
 
     private void validateQuestionOwner(User loginUser) throws CannotDeleteException {
