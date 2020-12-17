@@ -7,12 +7,12 @@ import java.util.stream.Stream;
 
 public class Frames {
     private final LinkedList<Frame> frames = Stream.of(NormalFrame.createFirstFrame())
-        .collect(Collectors.toCollection(LinkedList::new));
+            .collect(Collectors.toCollection(LinkedList::new));
 
     public void bowling(int fallenPins) {
         Frame afterBowling = lastFrame().bowling(fallenPins);
 
-        if(afterBowling.isStartFrame()){
+        if (afterBowling.isNewFrame()) {
             frames.add(afterBowling);
         }
     }
@@ -23,7 +23,7 @@ public class Frames {
     }
 
     public boolean isFinished() {
-        return lastFrame().isFinished();
+        return frames.size() == FrameNumber.MAX_FRAME_NUMBER && frames.getLast().isFinished();
     }
 
     private Frame lastFrame() {
@@ -32,22 +32,25 @@ public class Frames {
 
     public FrameResult result() {
         List<String> results = frames.stream()
-                .filter(this::isNotStartState)
                 .map(Frame::toString)
                 .collect(Collectors.toList());
 
         return FrameResult.from(results);
     }
 
-    public List<String> getScores(){
-        return frames.stream()
+    public FrameResult getScores() {
+        Integer[] totalScore = frames.stream()
                 .map(Frame::getScore)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .collect(Collectors.toList());
-    }
+                .toArray(Integer[]::new);
 
-    private boolean isNotStartState(Frame frame) {
-        return !frame.isStartFrame();
+        Arrays.parallelPrefix(totalScore, Integer::sum);
+
+        List<String> result = Arrays.stream(totalScore)
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+
+        return FrameResult.from(result);
     }
 }

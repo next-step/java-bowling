@@ -29,10 +29,6 @@ public class Pins implements Comparable<Pins> {
         return score;
     }
 
-    public static Pins zero() {
-        return cache.get(MIN_SCORE);
-    }
-
     public static Pins from(int fallenPin) {
         validScore(fallenPin);
         return cache.get(fallenPin);

@@ -1,4 +1,4 @@
-package bowling.model.state.finishedState;
+package bowling.model.state.finished;
 
 import bowling.model.Pins;
 import org.junit.jupiter.api.Test;

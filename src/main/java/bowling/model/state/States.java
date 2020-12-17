@@ -1,90 +1,76 @@
 package bowling.model.state;
 
 import bowling.model.Score;
-import bowling.model.state.bonusState.BonusOpen;
-import bowling.model.state.bonusState.BonusStart;
-import bowling.model.state.finishedState.FinishedState;
+import bowling.model.frame.FinalFrame;
 
 import java.util.LinkedList;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class States {
-    private static final String CHANGE_LAST_TO_BONUS_FRAME_ERROR = "Strike 혹은 Spare만 보너스 프레임이 가능합니다.";
     private static final String DELIMITER = "|";
 
-    private final LinkedList<State> states = Stream.of(new Start())
-            .collect(Collectors.toCollection(LinkedList::new));
+    private final LinkedList<State> states = new LinkedList<>();
 
     public State bowling(int fallenPins) {
-        State bowlingResult = last().bowling(fallenPins);
+        State bowlingResult = states.isEmpty() ? Start.bowling(fallenPins) : last().bowling(fallenPins);
 
         states.add(bowlingResult);
 
         return bowlingResult;
     }
 
-    public void add(State state) {
-        states.add(state);
+    public void changeLastStateToBonus(int fallenPins) {
+        states.add(Start.bowling(fallenPins));
     }
 
     public State last() {
         return states.getLast();
     }
 
-    public boolean isBeforeMaxScore() {
-        int size = states.size();
-        return size != 1 && states.get(size - 2).isMaxScore();
-    }
-
     public boolean isFinished() {
-        return last().isFinished();
-    }
-
-    public boolean isMaxScore() {
-        return last().isMaxScore();
-    }
-
-    public void changeLastToBonusOpen() {
-        validBonus();
-        states.set(states.size() - 1, BonusOpen.from((FinishedState) last()));
-    }
-
-    public void changeLastToBonusStart() {
-        validBonus();
-        states.set(states.size() - 1, BonusStart.from((FinishedState) last()));
-    }
-
-    private void validBonus(){
-        State lastState = last();
-
-        if (!lastState.isFinished() || !lastState.isMaxScore()) {
-            throw new IllegalArgumentException(CHANGE_LAST_TO_BONUS_FRAME_ERROR);
-        }
+        return !states.isEmpty() && last().isFinished();
     }
 
     public Score calculate(Score score) {
-        Score accumulator = score;
-
-        for (int i = 1; i < states.size() || accumulator.canCalculate(); i++) {
-            accumulator = accumulator.add(states.get(i).score());
-        }
-
-        return accumulator;
+        return last().calculateScore(score);
     }
 
-    public boolean isStart() {
-        return states.size() == 1;
+    public int sumScore() {
+        int result = states.stream().filter(State::isFinished)
+                .map(state -> state.score().getScore())
+                .reduce(Integer::sum)
+                .orElse(0);
+
+        return shouldAddLastOne() ? result + lastScore() : result;
+    }
+
+    private boolean shouldAddLastOne() {
+        return states.size() == FinalFrame.MAX_BONUS_COUNT && !states.get(FinalFrame.MAX_BONUS_COUNT - 1).isFinished();
+    }
+
+    private int lastScore() {
+        return states.getLast().score().getScore();
     }
 
     @Override
     public String toString() {
-        if (states.size() == 1) {
-            return "";
-        }
-
-        return states.subList(1, states.size()).stream()
+        return states.stream()
                 .map(State::toString)
                 .collect(Collectors.joining(DELIMITER));
+    }
+
+    public boolean isEmpty() {
+        return states.isEmpty();
+    }
+
+    public int size() {
+        return states.size();
+    }
+
+
+    public boolean canLastCalculate(){
+        return states.getLast()
+                .score()
+                .canCalculate();
     }
 }

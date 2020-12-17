@@ -1,4 +1,4 @@
-package bowling.model.state.finishedState;
+package bowling.model.state.finished;
 
 import bowling.model.Pins;
 import bowling.model.Score;
@@ -10,6 +10,11 @@ public class Strike extends FinishedState {
     private Strike(Pins pins) {
         super(pins);
         this.expression = EXPRESSION;
+    }
+
+    @Override
+    public Score calculateScore(Score score) {
+        return score.add(pins.getScore());
     }
 
     @Override

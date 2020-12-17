@@ -54,7 +54,7 @@ public class FrameNumber implements Comparable<FrameNumber> {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof FrameNumber){
+        if (obj instanceof FrameNumber) {
             return this.frameNumber == ((FrameNumber) obj).frameNumber;
         }
         return false;

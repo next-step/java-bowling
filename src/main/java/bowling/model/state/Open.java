@@ -2,14 +2,15 @@ package bowling.model.state;
 
 import bowling.model.Pins;
 import bowling.model.Score;
-import bowling.model.state.finishedState.Miss;
-import bowling.model.state.finishedState.Spare;
+import bowling.model.state.finished.Miss;
+import bowling.model.state.finished.Spare;
 
-public class Open extends State {
+public class Open implements State {
     private static final String OPEN_STRIKE_ERROR = "오픈 상태는 스트라이크를 가질 수 없습니다.";
+    private Pins pins;
 
     private Open(Pins firstScore) {
-        pins = firstScore;
+        this.pins = firstScore;
     }
 
     public static Open from(Pins pins) {
@@ -17,6 +18,17 @@ public class Open extends State {
             throw new IllegalArgumentException(OPEN_STRIKE_ERROR);
         }
         return new Open(pins);
+    }
+
+    @Override
+    public Score calculateScore(Score score) {
+        Score totalScore = score.add(pins.getScore());
+        return totalScore.canCalculate() ? totalScore : score;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 
     @Override
@@ -33,7 +45,7 @@ public class Open extends State {
 
     @Override
     public Score score() {
-        return Score.of(pins.getScore(),1);
+        return Score.of(pins.getScore(), 1);
     }
 
     @Override

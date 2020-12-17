@@ -5,7 +5,7 @@ import bowling.model.Score;
 import java.util.Optional;
 
 public class NormalFrame extends Frame {
-    private Score score = Score.of(0 ,2);
+    private Score score = Score.init();
     private Frame next;
 
     private NormalFrame(FrameNumber frameNumber) {
@@ -25,7 +25,7 @@ public class NormalFrame extends Frame {
     public Frame bowling(int fallenPins) {
         states.bowling(fallenPins);
 
-        if(states.isFinished()){
+        if (states.isFinished()) {
             score = states.last().score();
         }
 
@@ -38,20 +38,35 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Optional<String> getScore() {
-        if(score.canCalculate()){
-            return Optional.of(score.toString());
+    public Optional<Integer> getScore() {
+        if (score.canCalculate()) {
+            return Optional.of(score.getScore());
         }
 
-        if(next != null){
+        if (canNextCalculate()) {
             score = next.addScore(score);
         }
 
-        return score.canCalculate() ? Optional.of(score.toString()) : Optional.empty();
+        return score.canCalculate() ? Optional.of(score.getScore()) : Optional.empty();
+    }
+
+    protected Score addScore(Score score) {
+        Score result = states.calculate(score);
+
+        if (result.canCalculate()) {
+            return result;
+        }
+
+        return canNextCalculate() ? next.addScore(result) : result;
+    }
+
+    private boolean canNextCalculate() {
+        return next != null && !next.isNewFrame();
     }
 
     @Override
     public String toString() {
         return states.toString();
     }
+
 }

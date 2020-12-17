@@ -1,10 +1,9 @@
 package bowling.model.state;
 
-import bowling.model.state.finishedState.Strike;
+import bowling.model.state.finished.Strike;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class StartTest {
 

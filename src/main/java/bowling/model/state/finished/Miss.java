@@ -1,4 +1,4 @@
-package bowling.model.state.finishedState;
+package bowling.model.state.finished;
 
 import bowling.model.Pins;
 import bowling.model.Score;
@@ -15,7 +15,7 @@ public class Miss extends FinishedState {
 
     @Override
     public Score score() {
-        return Score.miss(pins.getScore());
+        return Score.miss(firstFallenPins.add(pins).getScore());
     }
 
     public static Miss of(Pins firstFallenPins, Pins secondFallenPins) {
@@ -26,6 +26,12 @@ public class Miss extends FinishedState {
         }
 
         return new Miss(firstFallenPins, secondFallenPins);
+    }
+
+    @Override
+    public Score calculateScore(Score score) {
+        Score firstAddition = score.add(firstFallenPins.getScore());
+        return firstAddition.canCalculate() ? firstAddition : firstAddition.add(pins.getScore());
     }
 
     @Override

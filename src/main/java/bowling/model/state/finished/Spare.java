@@ -1,4 +1,4 @@
-package bowling.model.state.finishedState;
+package bowling.model.state.finished;
 
 import bowling.model.Pins;
 import bowling.model.Score;
@@ -31,7 +31,8 @@ public class Spare extends FinishedState {
     }
 
     @Override
-    public boolean isMaxScore() {
-        return true;
+    public Score calculateScore(Score score) {
+        Score firstAddition = score.add(firstFallenPins.getScore());
+        return firstAddition.canCalculate() ? firstAddition : firstAddition.add(pins.getScore());
     }
 }

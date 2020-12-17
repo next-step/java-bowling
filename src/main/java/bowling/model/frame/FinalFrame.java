@@ -1,12 +1,9 @@
 package bowling.model.frame;
 
-import bowling.model.Score;
-
 import java.util.Optional;
 
 public class FinalFrame extends Frame {
-    private int countOfTry = 0;
-    private Score score = Score.of(0, 2);
+    public static final int MAX_BONUS_COUNT = 3;
 
     public FinalFrame() {
         super(FrameNumber.from(FrameNumber.MAX_FRAME_NUMBER));
@@ -14,31 +11,27 @@ public class FinalFrame extends Frame {
 
     @Override
     public Frame bowling(int fallenPins) {
-        countOfTry++;
+        if (canBonusBowling()) {
+            states.changeLastStateToBonus(fallenPins);
+            return this;
+        }
+
         states.bowling(fallenPins);
-
-        if(isBonusStart()){
-            states.changeLastToBonusStart();
-        }
-
-        if(isBonusOpen()){
-            states.changeLastToBonusOpen();
-        }
-
         return this;
     }
 
+    private boolean canBonusBowling(){
+        return states.isFinished() && !states.canLastCalculate();
+    }
+
     @Override
-    public Optional<String> getScore() {
-        Score calculatedScore = states.calculate(score);
-        return calculatedScore.canCalculate() ? Optional.of(calculatedScore.toString()) : Optional.empty();
+    public Optional<Integer> getScore() {
+        int totalScore = states.sumScore();
+        return isFinished() ? Optional.of(totalScore) : Optional.empty();
     }
 
-    private boolean isBonusStart(){
-        return states.isFinished() && countOfTry == 1;
-    }
-
-    private boolean isBonusOpen(){
-        return states.isFinished() && states.isMaxScore() && countOfTry == 2;
+    @Override
+    public boolean isFinished() {
+        return states.isFinished() && states.canLastCalculate() || states.size() == MAX_BONUS_COUNT;
     }
 }
