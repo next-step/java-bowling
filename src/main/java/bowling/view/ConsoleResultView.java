@@ -1,8 +1,8 @@
 package bowling.view;
 
 import bowling.domain.Pitching;
-import bowling.domain.bowlinggame.BowlingGameViewDto;
 import bowling.domain.frames.FramesImpl;
+import bowling.dto.BowlingGameDto;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -35,10 +35,10 @@ public class ConsoleResultView implements ResultView {
     }
 
     @Override
-    public void print(BowlingGameViewDto bowlingGame) {
+    public void print(BowlingGameDto bowlingGameDto) {
         StringBuilder resultBuilder = new StringBuilder();
         appendHeader(resultBuilder);
-        appendBody(bowlingGame, resultBuilder);
+        appendBody(bowlingGameDto, resultBuilder);
         System.out.println(resultBuilder.toString());
     }
 
@@ -61,20 +61,20 @@ public class ConsoleResultView implements ResultView {
                 });
     }
 
-    private void appendBody(BowlingGameViewDto bowlingGame, StringBuilder resultBuilder) {
-        appendPlayerName(bowlingGame, resultBuilder);
-        appendResults(bowlingGame, resultBuilder);
+    private void appendBody(BowlingGameDto bowlingGameDto, StringBuilder resultBuilder) {
+        appendPlayerName(bowlingGameDto, resultBuilder);
+        appendResults(bowlingGameDto, resultBuilder);
         resultBuilder.append(System.lineSeparator());
-        appendScore(bowlingGame, resultBuilder);
+        appendScore(bowlingGameDto, resultBuilder);
     }
 
-    private void appendPlayerName(BowlingGameViewDto bowlingGame, StringBuilder resultBuilder) {
-        String formattedPlayerName = centerString(bowlingGame.getPlayerName().getValue());
+    private void appendPlayerName(BowlingGameDto bowlingGameDto, StringBuilder resultBuilder) {
+        String formattedPlayerName = centerString(bowlingGameDto.getPlayerName().getValue());
         resultBuilder.append(DELIMITER).append(formattedPlayerName).append(DELIMITER);
     }
 
-    private void appendResults(BowlingGameViewDto bowlingGame, StringBuilder resultBuilder) {
-        bowlingGame.framesViewDtoStream().forEach(frameViewDto -> {
+    private void appendResults(BowlingGameDto bowlingGameDto, StringBuilder resultBuilder) {
+        bowlingGameDto.framesViewDtoStream().forEach(frameViewDto -> {
             String result = frameViewDto.getPitchings().stream()
                     .map(stringByPitching::get)
                     .collect(Collectors.joining(DELIMITER));
@@ -83,9 +83,9 @@ public class ConsoleResultView implements ResultView {
         });
     }
 
-    private void appendScore(BowlingGameViewDto bowlingGame, StringBuilder resultBuilder) {
+    private void appendScore(BowlingGameDto bowlingGameDto, StringBuilder resultBuilder) {
         resultBuilder.append(DELIMITER).append(centerString(EMPTY_VALUE)).append(DELIMITER);
-        bowlingGame.framesViewDtoStream().forEach(frameViewDto -> {
+        bowlingGameDto.framesViewDtoStream().forEach(frameViewDto -> {
             Optional<Integer> totalScore = frameViewDto.getTotalScore();
             resultBuilder.append(formatScore(totalScore)).append(DELIMITER);
         });
