@@ -3,10 +3,6 @@ package qna.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -36,17 +32,6 @@ public class AnswerTest {
         DeleteHistory expected = DeleteHistory.ofAnswer(sample.getId(), sample.getWriter());
 
         assertThat(history).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("DeleteHistory 반환 방식 추가")
-    void testAdditionalDeleteHistoryReturnMethod() {
-        Answer sample = new Answer(1L, UserTest.JAVAJIGI, QuestionTest.Q1, "ABCD");
-        List<DeleteHistory> expected = Arrays.asList(DeleteHistory.ofAnswer(sample.getId(), sample.getWriter()));
-
-        List<DeleteHistory> result = new ArrayList<>();
-
-        assertThat(sample.delete(result)).isEqualTo(expected);
     }
 
     @Test
