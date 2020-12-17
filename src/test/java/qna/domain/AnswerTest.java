@@ -4,6 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,5 +36,16 @@ public class AnswerTest {
         DeleteHistory expected = new DeleteHistory(ContentType.ANSWER, sample.getId(), sample.getWriter(), LocalDateTime.now());
 
         assertThat(history).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("DeleteHistory 반환 방식 추가")
+    void testAdditionalDeleteHistoryReturnMethod() {
+        Answer sample = new Answer(1L, UserTest.JAVAJIGI, QuestionTest.Q1, "ABCD");
+        List<DeleteHistory> expected = Arrays.asList(new DeleteHistory(ContentType.ANSWER, sample.getId(), sample.getWriter(), LocalDateTime.now()));
+
+        List<DeleteHistory> result = new ArrayList<>();
+
+        assertThat(sample.delete(result)).isEqualTo(expected);
     }
 }
