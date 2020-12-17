@@ -32,7 +32,7 @@ public class QnAService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    @Transactional
+    /*@Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
         if (!question.isOwner(loginUser)) {
@@ -54,5 +54,15 @@ public class QnAService {
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
         deleteHistoryService.saveAll(deleteHistories);
+    }*/
+
+    @Transactional
+    public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
+        Question question = findQuestionById(questionId);
+
+        List<DeleteHistory> deleteHistories = question.delete(loginUser);
+
+        deleteHistoryService.saveAll(deleteHistories);
     }
+
 }
