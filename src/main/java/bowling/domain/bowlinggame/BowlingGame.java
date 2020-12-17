@@ -31,6 +31,6 @@ public class BowlingGame {
     }
 
     public BowlingGameDto convertToDto() {
-        return BowlingGameDto.of(frames.convertToDto(), playerName);
+        return BowlingGameDto.of(frames.convertToDto(), playerName.getValue());
     }
 }

@@ -69,7 +69,7 @@ public class ConsoleResultView implements ResultView {
     }
 
     private void appendPlayerName(BowlingGameDto bowlingGameDto, StringBuilder resultBuilder) {
-        String formattedPlayerName = centerString(bowlingGameDto.getPlayerName().getValue());
+        String formattedPlayerName = centerString(bowlingGameDto.getPlayerName());
         resultBuilder.append(DELIMITER).append(formattedPlayerName).append(DELIMITER);
     }
 

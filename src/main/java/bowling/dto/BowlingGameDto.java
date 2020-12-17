@@ -1,19 +1,17 @@
 package bowling.dto;
 
-import bowling.domain.PlayerName;
-
 import java.util.stream.Stream;
 
 public class BowlingGameDto {
     private final FramesDto frames;
-    private final PlayerName playerName;
+    private final String playerName;
 
-    private BowlingGameDto(FramesDto frames, PlayerName playerName) {
+    private BowlingGameDto(FramesDto frames, String playerName) {
         this.frames = frames;
         this.playerName = playerName;
     }
 
-    public static BowlingGameDto of(FramesDto frames, PlayerName playerName) {
+    public static BowlingGameDto of(FramesDto frames, String playerName) {
         return new BowlingGameDto(frames, playerName);
     }
 
@@ -21,7 +19,7 @@ public class BowlingGameDto {
         return frames.viewDtoStream();
     }
 
-    public PlayerName getPlayerName() {
+    public String getPlayerName() {
         return playerName;
     }
 }
