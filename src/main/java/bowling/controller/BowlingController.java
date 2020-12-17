@@ -1,29 +1,34 @@
 package bowling.controller;
 
-import bowling.domain.Frames;
-import bowling.domain.Player;
-import bowling.domain.Type;
+import bowling.domain.*;
 import bowling.view.InputView;
-import bowling.view.ResultView;
+import bowling.view.OutputView;
 
 public class BowlingController {
 
     public static void runBowlingGame() {
-        String playerName = InputView.inputPlayerName();
+        Player player = InputView.inputPlayerName();
 
-        Player player = Player.of(playerName);
+        BowlingGameResult bowlingGameResult = BowlingGameResult.of(player, Frames.init());
 
-        Frames frames = Frames.of();
-        Frame frame;
-        for (int i = 1; i <= 10; i++) {
-            frame = Frame.of();
-            Type firstType = frame.first(InputView.inputPitchBowl(i));
-            if (firstType == Type.STRIKE) {
-                continue;
-            }
-            frame.second(InputView.inputPitchBowl(i));
-            frames.inputFrame(frame);
-            ResultView.printBowlResult(frames);
+        OutputView.printResult(player, bowlingGameResult);
+
+
+        Frame frame = BasicFrame.of(BasicScores.init(), null);
+        while (frame instanceof BasicFrame) {
+            frame = initBasicFrame(bowlingGameResult, frame);
         }
+        initLastFrame(bowlingGameResult, frame);
+
+
     }
+
+    private static void initLastFrame(BowlingGameResult bowlingGameResult, Frame frame) {
+
+    }
+
+    private static Frame initBasicFrame(BowlingGameResult bowlingGameResult, Frame frame) {
+        return null;
+    }
+
 }
