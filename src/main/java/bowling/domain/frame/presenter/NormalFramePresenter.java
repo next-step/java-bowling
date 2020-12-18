@@ -5,6 +5,7 @@ import java.util.List;
 public class NormalFramePresenter {
     public static final String STRIKE = "X";
     public static final String SPARE = "/";
+    public static int TEN_FALLEN_PINS = 10;
     
     public static String present(final List<Integer> fallenPins) {
         if (fallenPins.isEmpty()) {
@@ -25,7 +26,7 @@ public class NormalFramePresenter {
     private static String presentSecondPitching(final List<Integer> fallenPins) {
         final int first = fallenPins.get(0);
         final int second = fallenPins.get(1);
-        if (first + second == 10) {
+        if (first + second == TEN_FALLEN_PINS) {
             return SymbolMap.getSymbol(first) + SPARE;
         }
         return SymbolMap.getSymbol(first) + SymbolMap.getSymbol(second);

@@ -5,6 +5,7 @@ import java.util.List;
 import static bowling.domain.frame.presenter.NormalFramePresenter.*;
 
 public class FinalFramePresenter {
+    
     public static String present(final List<Integer> fallenPins) {
         if (fallenPins.isEmpty()) {
             return "";
@@ -24,10 +25,10 @@ public class FinalFramePresenter {
     private static String presentSecondPitching(final List<Integer> fallenPins) {
         final int first = fallenPins.get(0);
         final int second = fallenPins.get(1);
-        if (first == 10) {
+        if (first == TEN_FALLEN_PINS) {
             return STRIKE + SymbolMap.getSymbol(second);
         }
-        if (first + second == 10) {
+        if (first + second == TEN_FALLEN_PINS) {
             return SymbolMap.getSymbol(first) + SPARE;
         }
         return SymbolMap.getSymbol(first) + SymbolMap.getSymbol(second);
@@ -38,11 +39,11 @@ public class FinalFramePresenter {
         final int second = fallenPins.get(1);
         final int third = fallenPins.get(2);
         
-        if (first == 10 && second == 10) {
+        if (first == TEN_FALLEN_PINS && second == TEN_FALLEN_PINS) {
             return STRIKE + STRIKE + SymbolMap.getSymbol(fallenPins.get(2));
         }
 
-        if (first == 10 && second + third == 10) {
+        if (first == TEN_FALLEN_PINS && second + third == TEN_FALLEN_PINS) {
             return STRIKE + SymbolMap.getSymbol(second) + SPARE;
         }
 
