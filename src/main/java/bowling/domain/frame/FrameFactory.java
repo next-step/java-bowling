@@ -1,7 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.Frame;
-
 public class FrameFactory {
     public static Frame creates() {
         Frame first = Frame.createFirst();
