@@ -66,25 +66,21 @@ public abstract class Pitchings2 implements Iterable<Pitching> {
 
     public abstract boolean isEnd();
 
-    @Override
-    public Iterator<Pitching> iterator() {
-        return value.iterator();
+    public void addBonusScoreTo(Pitchings2 previousPitchings) {
+        Iterator<Pitching> iterator = value.iterator();
+        while (iterator.hasNext() && previousPitchings.leftBonusApplyChance()) {
+            Pitching pitching = iterator.next();
+            int bonusScore = getBonusScore(pitching);
+            previousPitchings.score.addBonusScore(bonusScore);
+        }
     }
 
-    public void addBonusScoreTo(Pitchings2 previousPitchings) {
-        if (value.isEmpty()) {
-            return;
+    private int getBonusScore(Pitching pitching) {
+        if (pitching == Pitching.SPARE) {
+            Pitching firstPitching = value.get(0);
+            return 10 - firstPitching.getScore();
         }
-
-        for (Pitching pitching : value) {
-            if (previousPitchings.leftBonusApplyChance()) {
-                if (pitching == Pitching.SPARE) {
-                    previousPitchings.score.addBonusScore(10 - value.get(0).getScore());
-                    continue;
-                }
-                previousPitchings.score.addBonusScore(pitching.getScore());
-            }
-        }
+        return pitching.getScore();
     }
 
     public Score getScore() {
@@ -93,6 +89,11 @@ public abstract class Pitchings2 implements Iterable<Pitching> {
 
     public Stream<Pitching> stream() {
         return value.stream();
+    }
+
+    @Override
+    public Iterator<Pitching> iterator() {
+        return value.iterator();
     }
 
     @Override
