@@ -2,7 +2,6 @@ package bowling.acceptance;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGameMockFactory;
-import bowling.domain.Pins;
 import bowling.view.OutputView;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ public class AcceptanceTest {
 
         // when
         for (int i = 0 ; i < 12; i ++) {
-            bowlingGame.pitch(Pins.MAX);
+            bowlingGame.pitch(10);
             OutputView.printResult(bowlingGame.name(), bowlingGame.symbols());
         }
 

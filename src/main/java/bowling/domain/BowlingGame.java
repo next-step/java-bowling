@@ -37,7 +37,7 @@ public class BowlingGame {
         return nowFrame.getIndex() + 1;
     }
 
-    public void pitch(final Pins pins) {
+    public void pitch(final int fallenPins) {
         if (isFinished()) {
             throw new NotPlayableException();
         }
@@ -46,7 +46,7 @@ public class BowlingGame {
             nowFrame = nowFrame.next();
         }
 
-        nowFrame.pitch(pins);
+        nowFrame.pitch(Pins.of(fallenPins));
     }
 
     public List<String> symbols() {

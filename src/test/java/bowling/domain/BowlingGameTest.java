@@ -57,7 +57,7 @@ public class BowlingGameTest {
         final BowlingGame bowlingGame = BowlingGame.of(user);
 
         // when
-        bowlingGame.pitch(Pins.MAX);
+        bowlingGame.pitch(10);
     }
 
     @DisplayName("경기가 끝난 이후 공을 던진 경우 예외 반환")
@@ -66,11 +66,11 @@ public class BowlingGameTest {
         // given
         final BowlingGame bowlingGame = BowlingGameMockFactory.create("HSM");
         for (int i = 0; i < 12; i++) {
-            bowlingGame.pitch(Pins.MAX);
+            bowlingGame.pitch(10);
         }
 
         // when
-        final Throwable thrown = catchThrowable(() -> bowlingGame.pitch(Pins.MAX));
+        final Throwable thrown = catchThrowable(() -> bowlingGame.pitch(10));
 
         // then
         AssertionsForClassTypes.assertThat(thrown).isInstanceOf(NotPlayableException.class);

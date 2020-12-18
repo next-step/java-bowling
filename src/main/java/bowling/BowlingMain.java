@@ -17,7 +17,7 @@ public class BowlingMain {
         while (bowlingGame.isNotFinished()) {
             final int nowFrameNo = bowlingGame.nowFrameNo();
             final int fallenPins = InputView.plzEnterFallenPins(nowFrameNo);
-            bowlingGame.pitch(Pins.of(fallenPins));
+            bowlingGame.pitch(fallenPins);
             OutputView.printResult(bowlingGame.name(), bowlingGame.symbols());
         }
     }
