@@ -1,7 +1,10 @@
 package bowling.ui;
 
-import bowling.domain.frame.Frames;
+import bowling.domain.frame.FrameResult;
 import bowling.domain.player.Player;
+import bowling.domain.score.ScoreType;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -13,7 +16,8 @@ public class OutputView {
     private static final String NAME_HEADER = "NAME";
     private static final int DOUBLE_DIGIT_START_VALUE = 10;
     private static final String DOUBLE_DIGIT_FORMAT_PREFIX = "0";
-    public static final int MAX_FRAME_SIZE = 10;
+    private static final int STRIKE_PIN = 10;
+    private static final int GUTTER_PIN = 0;
 
     private OutputView() {
     }
@@ -23,9 +27,9 @@ public class OutputView {
         System.out.println(getInitValueAreaText(player.toString()));
     }
 
-    public static void showDashBoard(Player player, Frames frames) {
+    public static void showDashBoard(Player player, List<FrameResult> frameResults) {
         System.out.println(getHeaderAreaText());
-        System.out.println(getCurrentValueAreaText(player.toString(), frames));
+        System.out.println(getCurrentValueAreaText(player.toString(), frameResults));
     }
 
     private static String getHeaderAreaText() {
@@ -36,8 +40,8 @@ public class OutputView {
         return buildStartFrame(playerName) + getEmptyValueTextPerFrame();
     }
 
-    private static String getCurrentValueAreaText(String playerName, Frames frames) {
-        return buildStartFrame(playerName) + getCurrentValueTextPerFrame(frames);
+    private static String getCurrentValueAreaText(String playerName, List<FrameResult> frameResults) {
+        return buildStartFrame(playerName) + getCurrentValueTextPerFrame(frameResults);
     }
 
     private static String getHeaderTitlePerFrame() {
@@ -52,19 +56,49 @@ public class OutputView {
             .collect(Collectors.joining());
     }
 
-    private static String getCurrentValueTextPerFrame(Frames frames) {
-        int recordFrameSize = frames.size();
-        String recordVal = IntStream.range(0, recordFrameSize)
-            .mapToObj(index ->
-                buildNoneStartFrame(frames.frameOfIndex(index).getScores()))
+    private static String getCurrentValueTextPerFrame(List<FrameResult> frameResults) {
+        return frameResults.stream()
+            .map(frameResult -> buildNoneStartFrame(bowlingSymbol(frameResult)))
             .collect(Collectors.joining());
+    }
 
-        if (recordFrameSize != MAX_FRAME_SIZE) {
-            recordVal += IntStream.range(recordFrameSize, 10)
-                .mapToObj(index -> buildNoneStartFrame(EMPTY))
-                .collect(Collectors.joining());
+    private static String bowlingSymbol(FrameResult frameResult) {
+        List<Integer> downPins = frameResult.getDownPins();
+        if (downPins.isEmpty()) {
+            return EMPTY;
         }
-        return recordVal;
+
+        List<String> components = new ArrayList<>();
+
+        int downPinIndex = 0;
+        components.add(pinToSymbol(downPins.get(downPinIndex++)));
+
+        ScoreType scoreType = frameResult.getScoreType();
+        if (scoreType == ScoreType.SPARE) {
+            components.add("/");
+            downPinIndex++;
+        }
+
+        for (; downPinIndex < downPins.size(); downPinIndex++) {
+            components.add(pinToSymbol(downPins.get(downPinIndex)));
+        }
+
+        if (scoreType == ScoreType.STRIKE_AND_SPARE) {
+            components.set(2, "/");
+        }
+        return String.join("|", components);
+    }
+
+    private static String pinToSymbol(int downPin) {
+        if (downPin == GUTTER_PIN) {
+            return "-";
+        }
+
+        if (downPin == STRIKE_PIN) {
+            return "X";
+        }
+
+        return String.valueOf(downPin);
     }
 
     private static String buildStartFrame(String value) {

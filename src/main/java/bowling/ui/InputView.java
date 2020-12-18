@@ -1,6 +1,5 @@
 package bowling.ui;
 
-import bowling.domain.frame.Point;
 import bowling.domain.player.Player;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -20,9 +19,9 @@ public class InputView {
         return Player.create(getStringValue());
     }
 
-    public static Point getCurrentFramePitch(int currentFrameSequence) {
+    public static int getCurrentFramePitch(int currentFrameSequence) {
         System.out.print(String.format(PLEASE_INPUT_N_FRAME_PITCH_RESULT, currentFrameSequence + 1));
-        return Point.inputPoint(getIntValue());
+        return getIntValue();
     }
 
     private static int getIntValue() {

@@ -7,15 +7,10 @@ import org.junit.jupiter.api.Test;
 class FramesTest {
 
     @Test
-    void createFramesTest() {
+    void frame_create_test() {
         Frames frames = Frames.create();
-        assertThat(frames).isNotNull();
-    }
 
-    @Test
-    void framesPitchTest() {
-        Frames frames = Frames.create();
-        Frames firstFrames = frames.pitch(Point.inputPoint(5));
-        assertThat(firstFrames.frameOfIndex(0).getScores()).isEqualTo("5");
+        assertThat(frames.isFinished()).isFalse();
+        assertThat(frames.getCurrentFrameNumber()).isEqualTo(0);
     }
 }
