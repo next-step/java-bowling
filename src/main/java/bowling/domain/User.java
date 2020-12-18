@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -17,7 +18,9 @@ public class User {
     }
 
     private void validate(String name) {
-        if (!Pattern.matches(NAME_PATTERN, name)) {
+        Pattern p = Pattern.compile(NAME_PATTERN);
+        Matcher m = p.matcher(name);
+        if (!m.matches()) {
             throw new IllegalArgumentException("3자 영문으로 입력해주십시요.");
         }
     }
