@@ -21,19 +21,19 @@ public abstract class Pitchings2 implements Iterable<Pitching> {
     public void addPitching(KnockDownPins knockDownPins) {
         Pitching pitching = getPitching(knockDownPins);
         value.add(pitching);
-        renewScore();
+        score = renewScore();
     }
 
-    private void renewScore() {
+    private Score renewScore() {
         if (isStrike()) {
-            score = Score.ofStrike();
+            return Score.ofStrike();
         }
 
         if (isSpare()) {
-            score = Score.ofSpare();
+            return Score.ofSpare();
         }
 
-        score = Score.ofMiss(calculatePitchingScore());
+        return Score.ofMiss(calculatePitchingScore());
     }
 
     private int calculatePitchingScore() {
