@@ -22,17 +22,13 @@ public class Frames2 {
     }
 
     public void setKnockDownPins(KnockDownPins knockDownPins) {
-        Frame2 currentFrame = getCurrentFrame();
-        currentFrame.setKnockDownPins(knockDownPins);
-    }
-
-    private Frame2 getCurrentFrame() {
         Frame2 currentFrame = value.getLast();
-        if (currentFrame.isEnd()) {
-            currentFrame = currentFrame.getNextFrame();
-        }
+        currentFrame.setKnockDownPins(knockDownPins);
 
-        return currentFrame;
+        if (currentFrame.isEnd()) {
+            Frame2 nextFrame = currentFrame.getNextFrame();
+            value.add(nextFrame);
+        }
     }
 
     public boolean isEnd() {
