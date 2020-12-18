@@ -19,13 +19,22 @@ public abstract class Frame {
         this.pitchingResults = PitchingResults.of();
     }
 
+    public static Frame creates() {
+        final Frame first = Frame.createFirst();
+        Frame frame = first;
+        for (int i = 0; i < FinalFrame.INDEX; i++) {
+            frame = frame.createNext();
+        }
+        return first;
+    }
+    
     public static Frame createFirst() {
         return NormalFrame.of(0);
     }
 
     public Frame createNext() {
         if (index == NORMAL_FRAME_MAXIMUM_INDEX) {
-            nextFrame = FinalFrame.of(index + 1);
+            nextFrame = FinalFrame.of();
             return nextFrame;
         }
 

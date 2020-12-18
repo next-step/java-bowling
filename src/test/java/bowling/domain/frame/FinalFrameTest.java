@@ -11,7 +11,7 @@ public class FinalFrameTest {
     @Test
     void should_return_pitchable_true_when_first_fallen_pin_below_than_10() {
         // given
-        final Frame finalFrame = FrameFactoryTest.createFinal();
+        final Frame finalFrame = FinalFrame.of();
         final Pins pins = Pins.of(9);
 
         // when
@@ -25,7 +25,7 @@ public class FinalFrameTest {
     @Test
     void should_return_pitchable_true_when_first_fallen_pin_10() {
         // given
-        final Frame finalFrame = FrameFactoryTest.createFinal();
+        final Frame finalFrame = FinalFrame.of();
 
         // when
         finalFrame.pitch(Pins.MAX);
@@ -38,7 +38,7 @@ public class FinalFrameTest {
     @Test
     void should_return_pitchable_true_when_first_second_fallen_pin_sum_is_10() {
         // given
-        final Frame finalFrame = FrameFactoryTest.createFinal();
+        final Frame finalFrame = FinalFrame.of();
         final Pins first = Pins.of(5);
         final Pins second = Pins.of(5);
 
@@ -54,7 +54,7 @@ public class FinalFrameTest {
     @Test
     void should_return_pitchable_false_when_bonus_pitching_is_finished() {
         // given
-        final Frame finalFrame = FrameFactoryTest.createFinal();
+        final Frame finalFrame = FinalFrame.of();
         final Pins first = Pins.of(5);
         final Pins second = Pins.of(5);
         final Pins bonus = Pins.of(5);
@@ -72,7 +72,7 @@ public class FinalFrameTest {
     @Test
     void final_frame_strike_spare() {
         // given
-        final FinalFrame finalFrame = FinalFrame.of(9);
+        final FinalFrame finalFrame = FinalFrame.of();
         finalFrame.pitch(Pins.MAX);
         finalFrame.pitch(Pins.of(9));
         finalFrame.pitch(Pins.of(1));
@@ -88,7 +88,7 @@ public class FinalFrameTest {
     @Test
     void final_frame_strike_gutter_spare() {
         // given
-        final FinalFrame finalFrame = FinalFrame.of(9);
+        final FinalFrame finalFrame = FinalFrame.of();
         finalFrame.pitch(Pins.MAX);
         finalFrame.pitch(Pins.of(0));
         finalFrame.pitch(Pins.MAX);
@@ -104,7 +104,7 @@ public class FinalFrameTest {
     @Test
     void final_frame_spare_strike() {
         // given
-        final FinalFrame finalFrame = FinalFrame.of(9);
+        final FinalFrame finalFrame = FinalFrame.of();
         finalFrame.pitch(Pins.of(1));
         finalFrame.pitch(Pins.of(9));
         finalFrame.pitch(Pins.MAX);
@@ -120,7 +120,7 @@ public class FinalFrameTest {
     @Test
     void final_frame_spare_gutter() {
         // given
-        final FinalFrame finalFrame = FinalFrame.of(9);
+        final FinalFrame finalFrame = FinalFrame.of();
         finalFrame.pitch(Pins.of(0));
         finalFrame.pitch(Pins.MAX);
         finalFrame.pitch(Pins.of(0));
@@ -136,7 +136,7 @@ public class FinalFrameTest {
     @Test
     void final_frame_miss() {
         // given
-        final FinalFrame finalFrame = FinalFrame.of(9);
+        final FinalFrame finalFrame = FinalFrame.of();
         finalFrame.pitch(Pins.of(0));
         finalFrame.pitch(Pins.of(9));
 

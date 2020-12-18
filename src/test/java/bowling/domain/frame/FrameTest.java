@@ -10,6 +10,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class FrameTest {
+    
+    @DisplayName("볼링에 사용되는 10개의 프레임을 생성하고 첫 번째 프레임을 반환")
+    @Test
+    void creates_all_frame() {
+        // when
+        final Frame frame = Frame.creates();
+
+        // then
+        assertThat(frame).isNotNull();
+    }
+    
     @DisplayName("첫 번째 Frame 생성")
     @Test
     void create_first() {
@@ -50,7 +61,7 @@ public class FrameTest {
     @Test
     void throw_exception_when_final_frame_call_createNext() {
         // given
-        final Frame finalFrame = FrameFactoryTest.FINAL;
+        final Frame finalFrame = FinalFrame.of();
 
         // when 
         final Throwable thrown = catchThrowable(finalFrame::createNext);
@@ -62,7 +73,7 @@ public class FrameTest {
     @DisplayName("마지막 Frame은 next Frame을 가지고 있지 않음")
     @Test
     void next_test() {
-        final Frame finalFrame = FrameFactoryTest.FINAL;
+        final Frame finalFrame = FinalFrame.of();
         
         // when
         final Frame frame = finalFrame.next();

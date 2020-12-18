@@ -2,7 +2,6 @@ package bowling.domain;
 
 import bowling.NotPlayableException;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.FrameFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +21,7 @@ public class BowlingGame {
     }
 
     public static BowlingGame of(final User user) {
-        return new BowlingGame(user, FrameFactory.creates());
+        return new BowlingGame(user, Frame.creates());
     }
 
     public boolean isNotFinished() {

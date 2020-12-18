@@ -1,10 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.InvalidFrameIndexException;
 import bowling.domain.Pins;
 import bowling.domain.frame.presenter.FinalFramePresenter;
-
-import static util.Preconditions.checkArgument;
 
 public class FinalFrame extends Frame {
     public static final int INDEX = 9;
@@ -15,9 +12,8 @@ public class FinalFrame extends Frame {
         super(index);
     }
     
-    public static FinalFrame of(final int index) {
-        checkArgument(index == INDEX, new InvalidFrameIndexException());
-        return new FinalFrame(index);
+    public static FinalFrame of() {
+        return new FinalFrame(INDEX);
     }
 
     @Override
