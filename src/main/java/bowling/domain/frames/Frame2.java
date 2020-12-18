@@ -51,14 +51,18 @@ public class Frame2 {
             nextFrame.applyBonusScore(pitchings);
         }
 
+        if (pitchings.leftBonusApplyChance()) {
+            return null;
+        }
+
         return pitchings.getScore();
     }
 
-    private void applyBonusScore(Pitchings2 pitchings) {
-        this.pitchings.addBonusScoreTo(pitchings);
+    private void applyBonusScore(Pitchings2 previousPitchings) {
+        pitchings.addBonusScoreTo(previousPitchings);
 
-        if (pitchings.leftBonusApplyChance() && nextFrame != null) {
-            nextFrame.applyBonusScore(pitchings);
+        if (previousPitchings.leftBonusApplyChance() && nextFrame != null) {
+            nextFrame.applyBonusScore(previousPitchings);
         }
     }
 

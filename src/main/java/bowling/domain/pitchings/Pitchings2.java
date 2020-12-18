@@ -78,6 +78,10 @@ public abstract class Pitchings2 implements Iterable<Pitching> {
 
         for (Pitching pitching : value) {
             if (previousPitchings.leftBonusApplyChance()) {
+                if (pitching == Pitching.SPARE) {
+                    previousPitchings.score.addBonusScore(10 - value.get(0).getScore());
+                    continue;
+                }
                 previousPitchings.score.addBonusScore(pitching.getScore());
             }
         }

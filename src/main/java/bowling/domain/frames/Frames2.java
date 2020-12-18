@@ -39,6 +39,15 @@ public class Frames2 {
         return value.size();
     }
 
+    //todo 테스트용 클래스로 뺄지 고민
+    public Integer getScoreIndexOf(int frameIndex) {
+        try {
+            return value.get(frameIndex - 1).getScore().getValue();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public Frames2Dto convertToDto() {
         List<Frame2Dto> frame2Dtos = new ArrayList<>();
         Integer previousTotalScore = 0;
