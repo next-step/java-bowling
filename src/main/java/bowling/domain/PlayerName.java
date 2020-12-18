@@ -23,4 +23,11 @@ public class PlayerName {
     public String getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerName{" +
+                "value='" + value + '\'' +
+                '}';
+    }
 }

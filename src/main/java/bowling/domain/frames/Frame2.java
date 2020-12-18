@@ -69,4 +69,13 @@ public class Frame2 {
     private Integer getTotalScore(Integer previousFrameTotalScore) {
         return previousFrameTotalScore + getScore().getValue();
     }
+
+    @Override
+    public String toString() {
+        return "Frame2{" +
+                "pitchings=" + pitchings +
+                ", index=" + index +
+                ", nextFrame=" + nextFrame +
+                '}';
+    }
 }

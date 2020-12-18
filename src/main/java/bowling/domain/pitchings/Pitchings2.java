@@ -89,4 +89,13 @@ public abstract class Pitchings2 implements Iterable<Pitching> {
     public Stream<Pitching> stream() {
         return value.stream();
     }
+
+    @Override
+    public String toString() {
+        return "Pitchings2{" +
+                "value=" + value +
+                ", score=" + score +
+                ", isEnd()=" + isEnd() +
+                '}';
+    }
 }

@@ -49,4 +49,11 @@ public class Frames2 {
         }
         return Frames2Dto.of(frame2Dtos);
     }
+
+    @Override
+    public String toString() {
+        return "Frames2{" +
+                "value=" + value +
+                '}';
+    }
 }

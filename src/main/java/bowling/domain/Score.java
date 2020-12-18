@@ -33,4 +33,12 @@ public class Score {
     public int getValue() {
         return score;
     }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "score=" + score +
+                ", bonusApplyChance=" + bonusApplyChance +
+                '}';
+    }
 }
