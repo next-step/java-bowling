@@ -1,7 +1,5 @@
-package bowling.domain.frames;
+package bowling.domain;
 
-import bowling.domain.KnockDownPins;
-import bowling.domain.Score;
 import bowling.domain.pitchings.LastFramePitchings;
 import bowling.domain.pitchings.NormalFramePitchings;
 import bowling.domain.pitchings.Pitchings;

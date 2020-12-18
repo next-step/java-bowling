@@ -1,8 +1,5 @@
-package bowling.domain.bowlinggame;
+package bowling.domain;
 
-import bowling.domain.KnockDownPins;
-import bowling.domain.PlayerName;
-import bowling.domain.frames.Frames;
 import bowling.dto.BowlingGameDto;
 
 public class BowlingGame {

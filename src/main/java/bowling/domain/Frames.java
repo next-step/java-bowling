@@ -1,6 +1,5 @@
-package bowling.domain.frames;
+package bowling.domain;
 
-import bowling.domain.KnockDownPins;
 import bowling.dto.FrameDto;
 import bowling.dto.FramesDto;
 
