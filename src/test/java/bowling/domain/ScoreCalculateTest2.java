@@ -3,21 +3,36 @@ package bowling.domain;
 import bowling.domain.frames.Frames2;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScoreCalculateTest2 {
-    @Test
+    @ParameterizedTest
+    @MethodSource("strikeScoreTestPitchings")
     @DisplayName("Strike 한 경우 다음 2번의 투구의 점수를 합한다. (2번의 투구가 스트라이크인 경우)")
-    public void strikeScoreTest() {
+    public void strikeScoreTest(Integer pitching, Integer bonus1, Integer bonus2, Integer expectedScore) {
         Frames2 frames = Frames2.init();
 
-        frames.setKnockDownPins(KnockDownPins.valueOf(10));
-        frames.setKnockDownPins(KnockDownPins.valueOf(10));
-        frames.setKnockDownPins(KnockDownPins.valueOf(10));
+        frames.setKnockDownPins(KnockDownPins.valueOf(pitching));
+        frames.setKnockDownPins(KnockDownPins.valueOf(bonus1));
+        frames.setKnockDownPins(KnockDownPins.valueOf(bonus2));
 
         int frame1Score = frames.getScoreIndexOf(1);
-        assertThat(frame1Score).isEqualTo(30);
+        assertThat(frame1Score).isEqualTo(expectedScore);
+    }
+
+    private static Stream<Arguments> strikeScoreTestPitchings() {
+        return Stream.of(
+                Arguments.of(10, 10, 10, 30),
+                Arguments.of(10, 10, 5, 25),
+                Arguments.of(10, 5, 5, 20),
+                Arguments.of(10, 3, 3, 16)
+        );
     }
 
     @Test
