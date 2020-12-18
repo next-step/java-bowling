@@ -27,4 +27,8 @@ public class DeleteHistories {
     public List<DeleteHistory> getDeleteHistories() {
         return deleteHistories;
     }
+
+    public User getFirstUser() {
+        return deleteHistories.get(0).getDeletedBy();
+    }
 }

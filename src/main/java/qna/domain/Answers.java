@@ -34,4 +34,9 @@ public class Answers {
         }
         return deleteHistories;
     }
+
+    public DeleteHistories delete(User loginUser, DeleteHistories deleteHistories) throws CannotDeleteException {
+        checkOwners(loginUser);
+        return setDeleteStatus(deleteHistories);
+    }
 }

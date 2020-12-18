@@ -10,6 +10,7 @@ import qna.domain.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
@@ -33,15 +34,11 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
-        question.checkLoginUser(loginUser);
+        DeleteHistories deleteHistories = question.delete(loginUser);
 
         Answers answers = Answers.from(question.getAnswers());
-        answers.checkOwners(loginUser);
+        DeleteHistories deleted = answers.delete(loginUser, deleteHistories);
 
-        DeleteHistories deleteHistories = new DeleteHistories();
-
-        question.setDeletedTrue();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        deleteHistoryService.saveAll(answers.setDeleteStatus(deleteHistories).getDeleteHistories());
+        deleteHistoryService.saveAll(deleted.getDeleteHistories());
     }
 }

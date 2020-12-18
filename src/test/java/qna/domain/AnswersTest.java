@@ -38,4 +38,14 @@ class AnswersTest {
 
         Assertions.assertThat(answers.setDeleteStatus(deleteHistories).getSize()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("삭제")
+    void delete() throws CannotDeleteException {
+        Answers answers = Answers.from(Arrays.asList(A1, A3));
+        DeleteHistories deleteHistories = new DeleteHistories();
+        User user = UserTest.JAVAJIGI;
+
+        Assertions.assertThat(answers.delete(user, deleteHistories).getSize()).isEqualTo(2);
+    }
 }

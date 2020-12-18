@@ -28,6 +28,10 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+    public User getDeletedBy() {
+        return deletedBy;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
