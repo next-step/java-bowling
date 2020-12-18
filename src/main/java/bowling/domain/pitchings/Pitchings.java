@@ -4,17 +4,16 @@ import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 import bowling.domain.Score;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.stream.Stream;
 
 public abstract class Pitchings implements Iterable<Pitching> {
-    final List<Pitching> value;
+    final LinkedList<Pitching> value;
     public Score score;
 
     protected Pitchings() {
-        this.value = new ArrayList<>();
+        this.value = new LinkedList<>();
         score = Score.ofMiss(0);
     }
 
@@ -47,8 +46,7 @@ public abstract class Pitchings implements Iterable<Pitching> {
             return Pitching.getPitching(knockDownPins);
         }
 
-        int lastIndex = value.size() - 1;
-        Pitching previousPitching = value.get(lastIndex);
+        Pitching previousPitching = value.getLast();
         return Pitching.getPitching(knockDownPins, previousPitching);
     }
 

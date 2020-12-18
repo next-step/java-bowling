@@ -26,8 +26,8 @@ public class BowlingGame {
         return frames.isEnd();
     }
 
-    public int getCurrentFrameIndex() {
-        return frames.getCurrentFrameIndex();
+    public int getCurrentFrameNo() {
+        return frames.getCurrentFrameNo();
     }
 
     public BowlingGameDto convertToDto() {

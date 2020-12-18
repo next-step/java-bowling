@@ -26,8 +26,8 @@ public class Frames {
         currentFrame.setKnockDownPins(knockDownPins);
 
         if (currentFrame.isEnd() && value.size() < MAX_FRAME_SIZE) {
-            int currentFrameIndex = getCurrentFrameIndex();
-            Frame nextFrame = currentFrame.getNextFrame(currentFrameIndex + 1);
+            int currentFrameNo = getCurrentFrameNo();
+            Frame nextFrame = currentFrame.getNextFrame(currentFrameNo + 1);
             value.add(nextFrame);
         }
     }
@@ -36,7 +36,7 @@ public class Frames {
         return value.size() == MAX_FRAME_SIZE && value.getLast().isEnd();
     }
 
-    public int getCurrentFrameIndex() {
+    public int getCurrentFrameNo() {
         return value.size();
     }
 

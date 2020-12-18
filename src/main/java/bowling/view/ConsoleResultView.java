@@ -15,7 +15,7 @@ public class ConsoleResultView implements ResultView {
     private static final String DELIMITER = "|";
     private static final int CELL_WIDTH = 6;
     private static final String NAME_LABEL = "NAME";
-    private static final String FRAME_INDEX_FORMAT = "%02d";
+    private static final String FRAME_NO_FORMAT = "%02d";
     private static final String EMPTY_VALUE = "";
     private final Map<Pitching, String> stringByPitching;
 
@@ -45,7 +45,7 @@ public class ConsoleResultView implements ResultView {
 
     private void appendHeader(StringBuilder resultBuilder) {
         appendNameLabel(resultBuilder);
-        appendFrameIndex(resultBuilder);
+        appendFrameNo(resultBuilder);
         resultBuilder.append(System.lineSeparator());
     }
 
@@ -54,11 +54,11 @@ public class ConsoleResultView implements ResultView {
         resultBuilder.append(DELIMITER).append(formattedNameLabel).append(DELIMITER);
     }
 
-    private void appendFrameIndex(StringBuilder resultBuilder) {
+    private void appendFrameNo(StringBuilder resultBuilder) {
         IntStream.rangeClosed(1, Frames.MAX_FRAME_SIZE)
-                .forEach(index -> {
-                    String formattedFrameIndex = centerString(String.format(FRAME_INDEX_FORMAT, index));
-                    resultBuilder.append(formattedFrameIndex).append(DELIMITER);
+                .forEach(frameNo -> {
+                    String formattedFrameNo = centerString(String.format(FRAME_NO_FORMAT, frameNo));
+                    resultBuilder.append(formattedFrameNo).append(DELIMITER);
                 });
     }
 

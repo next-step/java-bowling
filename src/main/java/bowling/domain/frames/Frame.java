@@ -11,12 +11,12 @@ public class Frame {
     private final Pitchings pitchings;
     private Frame nextFrame;
 
-    public Frame(int index) {
-        pitchings = initPitchings(index);
+    public Frame(int frameNo) {
+        pitchings = initPitchings(frameNo);
     }
 
-    private Pitchings initPitchings(int index) {
-        if (index == Frames.MAX_FRAME_SIZE) {
+    private Pitchings initPitchings(int frameNo) {
+        if (frameNo == Frames.MAX_FRAME_SIZE) {
             return LastFramePitchings.getInstance();
         }
 
@@ -35,8 +35,8 @@ public class Frame {
         return pitchings.isEnd();
     }
 
-    public Frame getNextFrame(int index) {
-        nextFrame = new Frame(index);
+    public Frame getNextFrame(int frameNo) {
+        nextFrame = new Frame(frameNo);
         return nextFrame;
     }
 
