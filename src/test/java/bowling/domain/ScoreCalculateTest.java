@@ -22,7 +22,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(bonus1));
         frames.setKnockDownPins(KnockDownPins.valueOf(bonus2));
 
-        int frame1Score = frames.getScoreIndexOf(1);
+        Integer frame1Score = frames.convertToDto().get(1).getTotalScore();
         assertThat(frame1Score).isEqualTo(expectedScore);
     }
 
@@ -44,7 +44,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(3));
         frames.setKnockDownPins(KnockDownPins.valueOf(3));
 
-        int frame1Score = frames.getScoreIndexOf(1);
+        Integer frame1Score = frames.convertToDto().get(1).getTotalScore();
         assertThat(frame1Score).isEqualTo(16);
     }
 
@@ -57,7 +57,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
 
-        int frame1Score = frames.getScoreIndexOf(1);
+        Integer frame1Score = frames.convertToDto().get(1).getTotalScore();
         assertThat(frame1Score).isEqualTo(20);
     }
 
@@ -69,7 +69,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(10));
         frames.setKnockDownPins(KnockDownPins.valueOf(10));
 
-        Integer frame1Score = frames.getScoreIndexOf(1);
+        Integer frame1Score = frames.convertToDto().get(1).getTotalScore();
         assertThat(frame1Score).isNull();
     }
 
@@ -82,7 +82,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
         frames.setKnockDownPins(KnockDownPins.valueOf(10));
 
-        int frame1Score = frames.getScoreIndexOf(1);
+        Integer frame1Score = frames.convertToDto().get(1).getTotalScore();
         assertThat(frame1Score).isEqualTo(20);
     }
 
@@ -94,7 +94,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
 
-        Integer frame1Score = frames.getScoreIndexOf(1);
+        Integer frame1Score = frames.convertToDto().get(1).getTotalScore();
         assertThat(frame1Score).isNull();
     }
 
@@ -106,7 +106,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(3));
         frames.setKnockDownPins(KnockDownPins.valueOf(3));
 
-        int frame1Score = frames.getScoreIndexOf(1);
+        Integer frame1Score = frames.convertToDto().get(1).getTotalScore();
         assertThat(frame1Score).isEqualTo(6);
     }
 
@@ -120,7 +120,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(10));
         frames.setKnockDownPins(KnockDownPins.valueOf(10));
 
-        int frame9Score = frames.getScoreIndexOf(9);
+        Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
         assertThat(frame9Score).isEqualTo(30);
     }
 
@@ -145,7 +145,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(3));
         frames.setKnockDownPins(KnockDownPins.valueOf(3));
 
-        int frame9Score = frames.getScoreIndexOf(9);
+        Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
         assertThat(frame9Score).isEqualTo(16);
     }
 
@@ -159,7 +159,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
 
-        int frame9Score = frames.getScoreIndexOf(9);
+        Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
         assertThat(frame9Score).isEqualTo(20);
     }
 
@@ -172,7 +172,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(10));
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
 
-        Integer frame9Score = frames.getScoreIndexOf(9);
+        Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
         assertThat(frame9Score).isNull();
     }
 
@@ -186,7 +186,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
         frames.setKnockDownPins(KnockDownPins.valueOf(10));
 
-        int frame9Score = frames.getScoreIndexOf(9);
+        Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
         assertThat(frame9Score).isEqualTo(20);
     }
 
@@ -199,7 +199,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
 
-        Integer frame9Score = frames.getScoreIndexOf(9);
+        Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
         assertThat(frame9Score).isNull();
     }
 }
