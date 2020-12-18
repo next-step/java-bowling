@@ -70,13 +70,15 @@ public class Frame {
     }
 
     Integer getTotalScore(Integer previousFrameTotalScore) {
-        if (previousFrameTotalScore == null || getScore() == null) {
+        Score score = getScore();
+        if (canNotCalculateTotalScore(previousFrameTotalScore, score)) {
             return null;
         }
-        if (!isEnd()) {
-            return null;
-        }
-        return previousFrameTotalScore + getScore().getValue();
+        return previousFrameTotalScore + score.getValue();
+    }
+
+    private boolean canNotCalculateTotalScore(Integer previousFrameTotalScore, Score score) {
+        return previousFrameTotalScore == null || score == null || !isEnd();
     }
 
     @Override

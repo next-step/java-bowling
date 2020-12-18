@@ -33,7 +33,8 @@ public class Frames {
     }
 
     public boolean isEnd() {
-        return value.size() == MAX_FRAME_SIZE && value.getLast().isEnd();
+        Frame last = value.getLast();
+        return value.size() == MAX_FRAME_SIZE && last.isEnd();
     }
 
     public int getCurrentFrameNo() {
