@@ -1,26 +1,39 @@
 package bowling.model.frame;
 
-public class FinalFrame extends Frame {
+import bowling.model.Pins;
 
-    private int countOfTry = 0;
+import java.util.Optional;
+
+public class FinalFrame extends Frame {
+    public static final int MAX_BONUS_COUNT = 3;
 
     public FinalFrame() {
-        frameNumber = FrameNumber.from(FrameNumber.MAX_FRAME_NUMBER);
+        super(FrameNumber.from(FrameNumber.MAX_FRAME_NUMBER));
     }
 
     @Override
-    public Frame bowling(int fallenPins) {
-        countOfTry++;
-        states.bowling(fallenPins);
-
-        if (isAbleToBonusFrame()) {
-            states.changeLastToBonusFrame();
+    public Frame bowling(Pins fallenPins) {
+        if (canBonusBowling()) {
+            states.changeLastStateToBonus(fallenPins);
+            return this;
         }
 
+        states.bowling(fallenPins);
         return this;
     }
 
-    private boolean isAbleToBonusFrame() {
-        return countOfTry < 3 && states.isMaxScore();
+    private boolean canBonusBowling(){
+        return states.isFinished() && !states.canLastCalculate();
+    }
+
+    @Override
+    public Optional<Integer> getScore() {
+        int totalScore = states.sumScore();
+        return isFinished() ? Optional.of(totalScore) : Optional.empty();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return states.isFinished() && states.canLastCalculate() || states.size() == MAX_BONUS_COUNT;
     }
 }

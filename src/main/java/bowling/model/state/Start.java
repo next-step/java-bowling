@@ -1,24 +1,14 @@
 package bowling.model.state;
 
-import bowling.model.Score;
-import bowling.model.state.finishedState.Strike;
+import bowling.model.Pins;
+import bowling.model.state.finished.Strike;
 
-public class Start extends State {
-    private static final String EXPRESSION = " ";
-
-    @Override
-    public State bowling(int fallenPin) {
-        score = Score.from(fallenPin);
-
-        if (score.isMaxScore()) {
-            return Strike.from(score);
+public class Start {
+    public static State bowling(Pins fallenPin) {
+        if (fallenPin.isMaxScore()) {
+            return Strike.from(fallenPin);
         }
 
-        return Open.from(score);
-    }
-
-    @Override
-    public String toString() {
-        return EXPRESSION;
+        return Open.from(fallenPin);
     }
 }

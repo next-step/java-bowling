@@ -1,62 +1,62 @@
 package bowling.model.frame;
 
-import bowling.model.state.Start;
+import bowling.model.Pins;
 
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class Frames {
-    private final Set<Frame> frames = new TreeSet<>();
+    private final LinkedList<Frame> frames = Stream.of(NormalFrame.createFirstFrame())
+            .collect(Collectors.toCollection(LinkedList::new));
 
     public void bowling(int fallenPins) {
-        if (frames.isEmpty()) {
-            Frame firstFrame = NormalFrame.createFirstFrame();
-            frames.add(firstFrame);
-        }
+        Frame afterBowling = lastFrame().bowling(Pins.from(fallenPins));
 
-        Frame nowFrame = lastFrame();
-        frames.add(nowFrame.bowling(fallenPins));
+        if (afterBowling.isNewFrame()) {
+            frames.add(afterBowling);
+        }
     }
 
     public int nowFrameNumber() {
-        if (frames.isEmpty()) {
-            return 1;
-        }
-
         int frameNumber = Integer.parseInt(lastFrame().frameNumber.toString());
-
-        if (isFinished()) {
-            return frameNumber + 1;
-        }
-
-        return frameNumber;
+        return isFinished() ? frameNumber + 1 : frameNumber;
     }
 
     public boolean isFinished() {
-        if (frames.isEmpty()) {
-            return false;
-        }
-
-        return lastFrame().isFinished();
+        return frames.size() == FrameNumber.MAX_FRAME_NUMBER && frames.getLast().isFinished();
     }
 
     private Frame lastFrame() {
-        return ((TreeSet<Frame>) frames).last();
+        return frames.getLast();
     }
 
     public FrameResult result() {
         List<String> results = frames.stream()
-                .filter(this::isNotStartState)
                 .map(Frame::toString)
                 .collect(Collectors.toList());
 
         return FrameResult.from(results);
     }
 
-    private boolean isNotStartState(Frame frame) {
-        return !frame.isStartFrame();
+    public FrameResult getScores() {
+        Integer[] frameScores = getFrameScores();
+
+        Arrays.parallelPrefix(frameScores, Integer::sum);
+
+        List<String> result = Arrays.stream(frameScores)
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+
+        return FrameResult.from(result);
+    }
+
+    private Integer[] getFrameScores(){
+        return frames.stream()
+                .map(Frame::getScore)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toArray(Integer[]::new);
     }
 }

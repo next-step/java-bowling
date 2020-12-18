@@ -25,6 +25,8 @@ public class BowlingController {
             frameResult = frames.result();
             ResultView.printHeadFrame();
             ResultView.printFrame(user, frameResult);
+            ResultView.printFrame(user, frames.getScores());
         }
+
     }
 }
