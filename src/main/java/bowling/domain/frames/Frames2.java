@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Frames2 {
     public static final int MAX_FRAME_SIZE = 10;
-    private LinkedList<Frame2> value;
+    private final LinkedList<Frame2> value;
 
     private Frames2() {
         value = new LinkedList<>();
@@ -25,14 +25,15 @@ public class Frames2 {
         Frame2 currentFrame = value.getLast();
         currentFrame.setKnockDownPins(knockDownPins);
 
-        if (currentFrame.isEnd()) {
-            Frame2 nextFrame = currentFrame.getNextFrame();
+        if (currentFrame.isEnd() && value.size() < MAX_FRAME_SIZE) {
+            int currentFrameIndex = getCurrentFrameIndex();
+            Frame2 nextFrame = currentFrame.getNextFrame(currentFrameIndex + 1);
             value.add(nextFrame);
         }
     }
 
     public boolean isEnd() {
-        return value.size() > MAX_FRAME_SIZE;
+        return value.size() == MAX_FRAME_SIZE && value.getLast().isEnd();
     }
 
     public int getCurrentFrameIndex() {
