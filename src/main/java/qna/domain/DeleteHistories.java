@@ -5,26 +5,26 @@ import java.util.List;
 
 public class DeleteHistories {
 
-    private List<DeleteHistory> deleteHistoriesList;
+    private List<DeleteHistory> deleteHistories;
 
     public DeleteHistories() {
-        deleteHistoriesList = new ArrayList<>();
+        deleteHistories = new ArrayList<>();
     }
 
-    private DeleteHistories(List<DeleteHistory> deleteHistoriesList) {
-        this.deleteHistoriesList = deleteHistoriesList;
+    private DeleteHistories(List<DeleteHistory> deleteHistories) {
+        this.deleteHistories = deleteHistories;
     }
 
     public DeleteHistories add(DeleteHistory deleteHistory) {
-        deleteHistoriesList.add(deleteHistory);
-        return new DeleteHistories(deleteHistoriesList);
+        deleteHistories.add(deleteHistory);
+        return new DeleteHistories(deleteHistories);
     }
 
     public int getSize() {
-        return deleteHistoriesList.size();
+        return deleteHistories.size();
     }
 
-    public List<DeleteHistory> getDeleteHistoriesList() {
-        return deleteHistoriesList;
+    public List<DeleteHistory> getDeleteHistories() {
+        return deleteHistories;
     }
 }

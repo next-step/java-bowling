@@ -10,8 +10,6 @@ import qna.domain.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
@@ -44,6 +42,6 @@ public class QnAService {
 
         question.setDeletedTrue();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        deleteHistoryService.saveAll(answers.setDeleteStatus(deleteHistories).getDeleteHistoriesList());
+        deleteHistoryService.saveAll(answers.setDeleteStatus(deleteHistories).getDeleteHistories());
     }
 }
