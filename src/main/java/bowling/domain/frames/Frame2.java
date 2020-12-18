@@ -47,7 +47,7 @@ public class Frame2 {
             return pitchings.getScore();
         }
 
-        if (pitchings.leftBonusApplyChance()) {
+        if (pitchings.leftBonusApplyChance() && nextFrame != null) {
             nextFrame.applyBonusScore(pitchings);
         }
 
@@ -71,6 +71,9 @@ public class Frame2 {
     }
 
     private Integer getTotalScore(Integer previousFrameTotalScore) {
+        if (previousFrameTotalScore == null || getScore() == null) {
+            return null;
+        }
         return previousFrameTotalScore + getScore().getValue();
     }
 
