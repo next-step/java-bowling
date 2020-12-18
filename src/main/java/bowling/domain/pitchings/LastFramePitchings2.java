@@ -3,7 +3,7 @@ package bowling.domain.pitchings;
 import bowling.domain.Pitching;
 
 public class LastFramePitchings2 extends Pitchings2 {
-    private static final int LAST_FRAME_MAX_PITCHING_SIZE = 2;
+    private static final int LAST_FRAME_MAX_PITCHING_SIZE = 3;
 
     public static LastFramePitchings2 getInstance() {
         return new LastFramePitchings2();
