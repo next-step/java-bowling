@@ -2,7 +2,7 @@ package bowling;
 
 import bowling.domain.KnockDownPins;
 import bowling.domain.PlayerName;
-import bowling.domain.bowlinggame.BowlingGame;
+import bowling.domain.bowlinggame.BowlingGame2;
 import bowling.helper.ValidInputHelper;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -18,7 +18,7 @@ public class GameHandler {
 
     public void run() {
         PlayerName playerName = ValidInputHelper.get(this::getPlayerName, inputView::printError);
-        BowlingGame bowlingGame = BowlingGame.init(playerName);
+        BowlingGame2 bowlingGame = BowlingGame2.init(playerName);
 
         while (!bowlingGame.isEnd()) {
             setKnockDownPins(bowlingGame);
@@ -31,7 +31,7 @@ public class GameHandler {
         return PlayerName.valueOf(inputPlayerName);
     }
 
-    private void setKnockDownPins(BowlingGame bowlingGame) {
+    private void setKnockDownPins(BowlingGame2 bowlingGame) {
         try {
             KnockDownPins knockDownPins = ValidInputHelper.get(() -> getKnockDownPins(bowlingGame), inputView::printError);
             bowlingGame.setKnockDownPins(knockDownPins);
@@ -41,7 +41,7 @@ public class GameHandler {
         }
     }
 
-    private KnockDownPins getKnockDownPins(BowlingGame bowlingGame) {
+    private KnockDownPins getKnockDownPins(BowlingGame2 bowlingGame) {
         Integer knockDownPins = ValidInputHelper.get(() -> inputView.getKnockDownPins(bowlingGame.getCurrentFrameIndex()), inputView::printError);
         return KnockDownPins.valueOf(knockDownPins);
     }
