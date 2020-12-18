@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.frames.Frames;
 import bowling.domain.frames.Frames2;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -13,8 +12,7 @@ public class Frames2Test {
     public void bowlingGameTest() {
         Frames2 frames = Frames2.init();
 
-        for (int i = 1; i <= Frames.MAX_FRAME_SIZE + 2; i++) {
-            System.out.println("frames.getCurrentFrameIndex() = " + frames.getCurrentFrameIndex());
+        for (int i = 1; i <= Frames2.MAX_FRAME_SIZE + 2; i++) {
             frames.setKnockDownPins(KnockDownPins.valueOf(10));
         }
         assertThat(frames.isEnd()).isTrue();
