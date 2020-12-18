@@ -15,7 +15,7 @@ public enum NormalFrameState {
     }
 
     public static NormalFrameState nextState(final Pins firstPitching, final Pins secondPitching) {
-        if (isStrike(firstPitching)) {
+        if (firstPitching.isStrike()) {
             return STRIKE;
         }
 
@@ -23,17 +23,9 @@ public enum NormalFrameState {
             return SECOND_PITCHING;
         }
 
-        if (isSpare(firstPitching, secondPitching)) {
+        if (firstPitching.isSpare(secondPitching)) {
             return SPARE;
         }
         return MISS;
-    }
-
-    private static boolean isStrike(final Pins pitching) {
-        return Pins.MAX.equals(pitching);
-    }
-
-    private static boolean isSpare(final Pins firstPitching, final Pins secondPitching) {
-        return Pins.MAX.equals(firstPitching.sum(secondPitching));
     }
 }

@@ -21,15 +21,23 @@ public class Pins {
         checkArgument(fallenPin >= MINIMUM_COUNT && fallenPin <= MAXIMUM_COUNT, INVALID_PIN_COUNT);
         return new Pins(fallenPin);
     }
-
-    public Pins sum(final Pins that) {
-        return of(this.fallenPin + that.fallenPin);
-    }
     
     public int getFallenPin() {
         return fallenPin;
     }
 
+    public boolean isStrike() {
+        return Pins.MAX.equals(this);
+    }
+
+    public boolean isSpare(final Pins secondPitching) {
+        return Pins.MAX.equals(this.sum(secondPitching));
+    }
+
+    private Pins sum(final Pins that) {
+        return of(this.fallenPin + that.fallenPin);
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
