@@ -27,7 +27,7 @@ public class DeleteHistories {
     }
 
     public List<DeleteHistory> transformToCollection() {
-        return deleteHistories;
+        return Collections.unmodifiableList(deleteHistories);
     }
 
     @Override
