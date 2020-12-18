@@ -57,7 +57,7 @@ public class Frame2 {
     private void applyBonusScore(Pitchings2 pitchings) {
         this.pitchings.addBonusScoreTo(pitchings);
 
-        if (pitchings.leftBonusApplyChance()) {
+        if (pitchings.leftBonusApplyChance() && nextFrame != null) {
             nextFrame.applyBonusScore(pitchings);
         }
     }
