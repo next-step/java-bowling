@@ -1,8 +1,8 @@
 package bowling.domain;
 
 public class Score {
-    private int score;
-    private int bonusApplyChance;
+    private final int score;
+    private final int bonusApplyChance;
 
     private Score(int score, int bonusApplyChance) {
         this.score = score;
@@ -25,9 +25,8 @@ public class Score {
         return bonusApplyChance > 0;
     }
 
-    public void addBonusScore(Integer bonusScore) {
-        this.score += bonusScore;
-        bonusApplyChance--;
+    public Score addBonusScore(int bonusScore) {
+        return new Score(score + bonusScore, bonusApplyChance - 1);
     }
 
     public int getValue() {

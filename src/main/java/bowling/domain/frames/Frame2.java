@@ -42,34 +42,35 @@ public class Frame2 {
 
     public Score getScore() {
         //todo 다형성으로
+        Score score = pitchings.getScore();
         if (pitchings instanceof LastFramePitchings2) {
-            return pitchings.getScore();
+            return score;
         }
 
-        if (pitchings.leftBonusApplyChance() && nextFrame != null) {
-            nextFrame.applyBonusScore(pitchings);
+        if (canApplyBonusScore(score)) {
+            return nextFrame.applyBonusScoreTo(score);
         }
 
-        if (pitchings.leftBonusApplyChance()) {
-            return null;
-        }
-
-        return pitchings.getScore();
+        return score;
     }
 
-    private void applyBonusScore(Pitchings2 previousPitchings) {
-        pitchings.addBonusScoreTo(previousPitchings);
+    private boolean canApplyBonusScore(Score score) {
+        return score.leftBonusApplyChance() && nextFrame != null;
+    }
 
-        if (previousPitchings.leftBonusApplyChance() && nextFrame != null) {
-            nextFrame.applyBonusScore(previousPitchings);
+    private Score applyBonusScoreTo(Score score) {
+        Score bonusAppliedScore = pitchings.applyBonusScoreTo(score);
+        if (canApplyBonusScore(bonusAppliedScore)) {
+            bonusAppliedScore = nextFrame.applyBonusScoreTo(bonusAppliedScore);
         }
+        return bonusAppliedScore;
     }
 
     public Frame2Dto convertToFrameDto(Integer previousFrameTotalScore) {
         return Frame2Dto.of(pitchings, getTotalScore(previousFrameTotalScore));
     }
 
-    private Integer getTotalScore(Integer previousFrameTotalScore) {
+    Integer getTotalScore(Integer previousFrameTotalScore) {
         if (previousFrameTotalScore == null || getScore() == null) {
             return null;
         }

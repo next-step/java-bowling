@@ -52,10 +52,6 @@ public abstract class Pitchings2 implements Iterable<Pitching> {
         return Pitching.getPitching(knockDownPins, previousPitching);
     }
 
-    public boolean leftBonusApplyChance() {
-        return score != null && score.leftBonusApplyChance();
-    }
-
     boolean isStrike() {
         return value.contains(Pitching.STRIKE);
     }
@@ -66,13 +62,14 @@ public abstract class Pitchings2 implements Iterable<Pitching> {
 
     public abstract boolean isEnd();
 
-    public void addBonusScoreTo(Pitchings2 previousPitchings) {
+    public Score applyBonusScoreTo(Score previousScore) {
         Iterator<Pitching> iterator = value.iterator();
-        while (iterator.hasNext() && previousPitchings.leftBonusApplyChance()) {
+        while (iterator.hasNext() && previousScore.leftBonusApplyChance()) {
             Pitching pitching = iterator.next();
             int bonusScore = getBonusScore(pitching);
-            previousPitchings.score.addBonusScore(bonusScore);
+            previousScore = previousScore.addBonusScore(bonusScore);
         }
+        return previousScore;
     }
 
     private int getBonusScore(Pitching pitching) {

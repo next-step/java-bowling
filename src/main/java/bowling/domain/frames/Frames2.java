@@ -41,9 +41,9 @@ public class Frames2 {
     }
 
     //todo 테스트용 클래스로 뺄지 고민
-    public Integer getScoreIndexOf(int frameIndex) {
+    public Integer getScoreIndexOf(int frameNo) {
         try {
-            return value.get(frameIndex - 1).getScore().getValue();
+            return value.get(frameNo - 1).getTotalScore(0);
         } catch (Exception e) {
             return null;
         }
