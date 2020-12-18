@@ -15,15 +15,16 @@ public abstract class Pitchings2 implements Iterable<Pitching> {
 
     protected Pitchings2() {
         this.value = new ArrayList<>();
+        score = Score.ofMiss(0);
     }
 
     public void addPitching(KnockDownPins knockDownPins) {
         Pitching pitching = getPitching(knockDownPins);
         value.add(pitching);
-        setScore();
+        renewScore();
     }
 
-    private void setScore() {
+    private void renewScore() {
         if (isStrike()) {
             score = Score.ofStrike();
         }
@@ -52,7 +53,7 @@ public abstract class Pitchings2 implements Iterable<Pitching> {
     }
 
     public boolean leftBonusApplyChance() {
-        return score.leftBonusApplyChance();
+        return score != null && score.leftBonusApplyChance();
     }
 
     boolean isStrike() {
