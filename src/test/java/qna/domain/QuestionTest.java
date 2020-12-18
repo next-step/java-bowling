@@ -92,7 +92,7 @@ public class QuestionTest {
         sampleQuestion.delete(questionOwnerUser);
 
         for (Answer answer : answers) {
-            answer.delete();
+            answer.delete(questionOwnerUser);
             assertThat(answer.isDeleted()).isTrue();
         }
     }
