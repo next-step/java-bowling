@@ -41,7 +41,8 @@ public class QnAService {
         answers.checkOwners(loginUser);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        question.setDeleted(true);
+        question.setDeletedTrue();
+//        question.setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
 //        for (Answer answer : answers) {
 //            answer.setDeleted(true);
