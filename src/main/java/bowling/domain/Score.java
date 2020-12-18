@@ -1,11 +1,11 @@
 package bowling.domain;
 
 public class Score {
-    private final int score;
+    private final int value;
     private final int bonusApplyChance;
 
-    private Score(int score, int bonusApplyChance) {
-        this.score = score;
+    private Score(int value, int bonusApplyChance) {
+        this.value = value;
         this.bonusApplyChance = bonusApplyChance;
     }
 
@@ -26,17 +26,17 @@ public class Score {
     }
 
     public Score addBonusScore(int bonusScore) {
-        return new Score(score + bonusScore, bonusApplyChance - 1);
+        return new Score(value + bonusScore, bonusApplyChance - 1);
     }
 
     public int getValue() {
-        return score;
+        return value;
     }
 
     @Override
     public String toString() {
         return "Score{" +
-                "score=" + score +
+                "score=" + value +
                 ", bonusApplyChance=" + bonusApplyChance +
                 '}';
     }
