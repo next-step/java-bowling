@@ -32,7 +32,7 @@ public class Frames2 {
     }
 
     public boolean isEnd() {
-        return value.size()  == MAX_FRAME_SIZE;
+        return value.size() > MAX_FRAME_SIZE;
     }
 
     public int getCurrentFrameIndex() {
