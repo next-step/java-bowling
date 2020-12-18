@@ -62,18 +62,6 @@ public class ScoreCalculateTest {
     }
 
     @Test
-    @DisplayName("Strike 한 경우 다음 2번의 투구가 존재하지 않으면 null")
-    void strikeScoreNullTest() {
-        Frames frames = Frames.init();
-
-        frames.setKnockDownPins(KnockDownPins.valueOf(10));
-        frames.setKnockDownPins(KnockDownPins.valueOf(10));
-
-        Integer frame1Score = frames.convertToDto().get(1).getTotalScore();
-        assertThat(frame1Score).isNull();
-    }
-
-    @Test
     @DisplayName("Spare 한 경우 다음번의 투구의 점수를 합한다.")
     void spareScoreTest() {
         Frames frames = Frames.init();
@@ -84,18 +72,6 @@ public class ScoreCalculateTest {
 
         Integer frame1Score = frames.convertToDto().get(1).getTotalScore();
         assertThat(frame1Score).isEqualTo(20);
-    }
-
-    @Test
-    @DisplayName("Spare 한 경우 다음번의 투구가 존재하지 않으면 null")
-    void spareScoreNullTest() {
-        Frames frames = Frames.init();
-
-        frames.setKnockDownPins(KnockDownPins.valueOf(5));
-        frames.setKnockDownPins(KnockDownPins.valueOf(5));
-
-        Integer frame1Score = frames.convertToDto().get(1).getTotalScore();
-        assertThat(frame1Score).isNull();
     }
 
     @Test
@@ -120,8 +96,9 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(10));
         frames.setKnockDownPins(KnockDownPins.valueOf(10));
 
+        Integer frame8Score = frames.convertToDto().get(8).getTotalScore();
         Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
-        assertThat(frame9Score).isEqualTo(30);
+        assertThat(frame9Score - frame8Score).isEqualTo(30);
     }
 
     private void setUpToFrame8(Frames frames) {
@@ -146,7 +123,7 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(3));
 
         Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
-        assertThat(frame9Score).isEqualTo(16);
+        assertThat(frame9Score).isEqualTo(249);
     }
 
     @Test
@@ -159,21 +136,9 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
 
+        Integer frame8Score = frames.convertToDto().get(8).getTotalScore();
         Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
-        assertThat(frame9Score).isEqualTo(20);
-    }
-
-    @Test
-    @DisplayName("Strike 한 경우 다음 2번의 투구가 존재하지 않으면 null")
-    void strikeScoreNullTest_lastFrame() {
-        Frames frames = Frames.init();
-
-        setUpToFrame8(frames);
-        frames.setKnockDownPins(KnockDownPins.valueOf(10));
-        frames.setKnockDownPins(KnockDownPins.valueOf(5));
-
-        Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
-        assertThat(frame9Score).isNull();
+        assertThat(frame9Score - frame8Score).isEqualTo(20);
     }
 
     @Test
@@ -186,20 +151,8 @@ public class ScoreCalculateTest {
         frames.setKnockDownPins(KnockDownPins.valueOf(5));
         frames.setKnockDownPins(KnockDownPins.valueOf(10));
 
+        Integer frame8Score = frames.convertToDto().get(8).getTotalScore();
         Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
-        assertThat(frame9Score).isEqualTo(20);
-    }
-
-    @Test
-    @DisplayName("Spare 한 경우 다음번의 투구가 존재하지 않으면 null")
-    void spareScoreNullTest_lastFrame() {
-        Frames frames = Frames.init();
-
-        setUpToFrame8(frames);
-        frames.setKnockDownPins(KnockDownPins.valueOf(5));
-        frames.setKnockDownPins(KnockDownPins.valueOf(5));
-
-        Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
-        assertThat(frame9Score).isNull();
+        assertThat(frame9Score - frame8Score).isEqualTo(20);
     }
 }
