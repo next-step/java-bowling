@@ -2,20 +2,20 @@ package bowling.domain.bowlinggame;
 
 import bowling.domain.KnockDownPins;
 import bowling.domain.PlayerName;
-import bowling.domain.frames.Frames2;
-import bowling.dto.BowlingGame2Dto;
+import bowling.domain.frames.Frames;
+import bowling.dto.BowlingGameDto;
 
-public class BowlingGame2 {
-    private final Frames2 frames;
+public class BowlingGame {
+    private final Frames frames;
     private final PlayerName playerName;
 
-    private BowlingGame2(Frames2 frames, PlayerName playerName) {
+    private BowlingGame(Frames frames, PlayerName playerName) {
         this.frames = frames;
         this.playerName = playerName;
     }
 
-    public static BowlingGame2 init(PlayerName playerName) {
-        return new BowlingGame2(Frames2.init(), playerName);
+    public static BowlingGame init(PlayerName playerName) {
+        return new BowlingGame(Frames.init(), playerName);
     }
 
     public void setKnockDownPins(KnockDownPins knockDownPins) {
@@ -30,7 +30,7 @@ public class BowlingGame2 {
         return frames.getCurrentFrameIndex();
     }
 
-    public BowlingGame2Dto convertToDto() {
-        return BowlingGame2Dto.of(frames.convertToDto(), playerName.getValue());
+    public BowlingGameDto convertToDto() {
+        return BowlingGameDto.of(frames.convertToDto(), playerName.getValue());
     }
 }

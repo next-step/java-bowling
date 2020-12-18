@@ -1,10 +1,10 @@
 package bowling.domain.pitchings;
 
-public class LastFramePitchings2 extends Pitchings2 {
+public class LastFramePitchings extends Pitchings {
     private static final int LAST_FRAME_MAX_PITCHING_SIZE = 3;
 
-    public static LastFramePitchings2 getInstance() {
-        return new LastFramePitchings2();
+    public static LastFramePitchings getInstance() {
+        return new LastFramePitchings();
     }
 
     @Override

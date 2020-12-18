@@ -1,33 +1,33 @@
 package bowling.domain.frames;
 
 import bowling.domain.KnockDownPins;
-import bowling.dto.Frame2Dto;
-import bowling.dto.Frames2Dto;
+import bowling.dto.FrameDto;
+import bowling.dto.FramesDto;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Frames2 {
+public class Frames {
     public static final int MAX_FRAME_SIZE = 10;
-    private final LinkedList<Frame2> value;
+    private final LinkedList<Frame> value;
 
-    private Frames2() {
+    private Frames() {
         value = new LinkedList<>();
-        value.add(Frame2.getFirstFrame());
+        value.add(Frame.getFirstFrame());
     }
 
-    public static Frames2 init() {
-        return new Frames2();
+    public static Frames init() {
+        return new Frames();
     }
 
     public void setKnockDownPins(KnockDownPins knockDownPins) {
-        Frame2 currentFrame = value.getLast();
+        Frame currentFrame = value.getLast();
         currentFrame.setKnockDownPins(knockDownPins);
 
         if (currentFrame.isEnd() && value.size() < MAX_FRAME_SIZE) {
             int currentFrameIndex = getCurrentFrameIndex();
-            Frame2 nextFrame = currentFrame.getNextFrame(currentFrameIndex + 1);
+            Frame nextFrame = currentFrame.getNextFrame(currentFrameIndex + 1);
             value.add(nextFrame);
         }
     }
@@ -49,15 +49,15 @@ public class Frames2 {
         }
     }
 
-    public Frames2Dto convertToDto() {
-        List<Frame2Dto> frame2Dtos = new ArrayList<>();
+    public FramesDto convertToDto() {
+        List<FrameDto> frameDtos = new ArrayList<>();
         Integer previousTotalScore = 0;
-        for (Frame2 frame2 : value) {
-            Frame2Dto frame2Dto = frame2.convertToFrameDto(previousTotalScore);
-            frame2Dtos.add(frame2Dto);
-            previousTotalScore = frame2Dto.getTotalScore();
+        for (Frame frame : value) {
+            FrameDto frameDto = frame.convertToFrameDto(previousTotalScore);
+            frameDtos.add(frameDto);
+            previousTotalScore = frameDto.getTotalScore();
         }
-        return Frames2Dto.of(frame2Dtos);
+        return FramesDto.of(frameDtos);
     }
 
     @Override

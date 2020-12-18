@@ -2,29 +2,29 @@ package bowling.domain.frames;
 
 import bowling.domain.KnockDownPins;
 import bowling.domain.Score;
-import bowling.domain.pitchings.LastFramePitchings2;
-import bowling.domain.pitchings.NormalFramePitchings2;
-import bowling.domain.pitchings.Pitchings2;
-import bowling.dto.Frame2Dto;
+import bowling.domain.pitchings.LastFramePitchings;
+import bowling.domain.pitchings.NormalFramePitchings;
+import bowling.domain.pitchings.Pitchings;
+import bowling.dto.FrameDto;
 
-public class Frame2 {
-    private final Pitchings2 pitchings;
-    private Frame2 nextFrame;
+public class Frame {
+    private final Pitchings pitchings;
+    private Frame nextFrame;
 
-    public Frame2(int index) {
+    public Frame(int index) {
         pitchings = initPitchings(index);
     }
 
-    private Pitchings2 initPitchings(int index) {
-        if (index == Frames2.MAX_FRAME_SIZE) {
-            return LastFramePitchings2.getInstance();
+    private Pitchings initPitchings(int index) {
+        if (index == Frames.MAX_FRAME_SIZE) {
+            return LastFramePitchings.getInstance();
         }
 
-        return NormalFramePitchings2.getInstance();
+        return NormalFramePitchings.getInstance();
     }
 
-    public static Frame2 getFirstFrame() {
-        return new Frame2(1);
+    public static Frame getFirstFrame() {
+        return new Frame(1);
     }
 
     public void setKnockDownPins(KnockDownPins knockDownPins) {
@@ -35,15 +35,15 @@ public class Frame2 {
         return pitchings.isEnd();
     }
 
-    public Frame2 getNextFrame(int index) {
-        nextFrame = new Frame2(index);
+    public Frame getNextFrame(int index) {
+        nextFrame = new Frame(index);
         return nextFrame;
     }
 
     public Score getScore() {
         Score score = pitchings.getScore();
 
-        if (pitchings instanceof LastFramePitchings2) {
+        if (pitchings instanceof LastFramePitchings) {
             return score;
         }
 
@@ -65,8 +65,8 @@ public class Frame2 {
         return bonusAppliedScore;
     }
 
-    public Frame2Dto convertToFrameDto(Integer previousFrameTotalScore) {
-        return Frame2Dto.of(pitchings, getTotalScore(previousFrameTotalScore));
+    public FrameDto convertToFrameDto(Integer previousFrameTotalScore) {
+        return FrameDto.of(pitchings, getTotalScore(previousFrameTotalScore));
     }
 
     Integer getTotalScore(Integer previousFrameTotalScore) {

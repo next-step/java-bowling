@@ -9,11 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-public abstract class Pitchings2 implements Iterable<Pitching> {
+public abstract class Pitchings implements Iterable<Pitching> {
     final List<Pitching> value;
     public Score score;
 
-    protected Pitchings2() {
+    protected Pitchings() {
         this.value = new ArrayList<>();
         score = Score.ofMiss(0);
     }
