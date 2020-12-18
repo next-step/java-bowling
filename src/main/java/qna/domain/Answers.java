@@ -9,7 +9,7 @@ public class Answers {
 
     private final List<Answer> answerList;
 
-    public Answers(List<Answer> answerList) {
+    private Answers(List<Answer> answerList) {
         this.answerList = answerList;
     }
 
