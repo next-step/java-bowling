@@ -8,12 +8,10 @@ import bowling.domain.pitchings.Pitchings2;
 import bowling.dto.Frame2Dto;
 
 public class Frame2 {
-    private Pitchings2 pitchings;
-    private final int index;
+    private final Pitchings2 pitchings;
     private Frame2 nextFrame;
 
     public Frame2(int index) {
-        this.index = index;
         pitchings = initPitchings(index);
     }
 
@@ -37,13 +35,14 @@ public class Frame2 {
         return pitchings.isEnd();
     }
 
-    public Frame2 getNextFrame() {
-        nextFrame = new Frame2(index + 1);
+    public Frame2 getNextFrame(int index) {
+        nextFrame = new Frame2(index);
         return nextFrame;
     }
 
     public Score getScore() {
-        if (index == Frames2.MAX_FRAME_SIZE) {
+        //todo 다형성으로
+        if (pitchings instanceof LastFramePitchings2) {
             return pitchings.getScore();
         }
 
@@ -81,7 +80,6 @@ public class Frame2 {
     public String toString() {
         return "Frame2{" +
                 "pitchings=" + pitchings +
-                ", index=" + index +
                 ", nextFrame=" + nextFrame +
                 '}';
     }
