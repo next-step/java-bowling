@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public abstract class Pitchings implements Iterable<Pitching> {
     final LinkedList<Pitching> value;
-    public Score score;
+    private Score score;
 
     protected Pitchings() {
         this.value = new LinkedList<>();
