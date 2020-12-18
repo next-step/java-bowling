@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
@@ -27,5 +28,14 @@ class AnswersTest {
         Answers answers = Answers.from(Arrays.asList(A1, A2));
         assertThrows(CannotDeleteException.class,
                 () -> answers.checkOwners(UserTest.JAVAJIGI));
+    }
+
+    @Test
+    @DisplayName("삭제 상태로 만들기")
+    void setDeleteStatus() {
+        Answers answers = Answers.from(Arrays.asList(A1, A3));
+        DeleteHistories deleteHistories = new DeleteHistories();
+
+        Assertions.assertThat(answers.setDeleteStatus(deleteHistories).getSize()).isEqualTo(2);
     }
 }
