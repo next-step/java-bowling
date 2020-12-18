@@ -41,18 +41,22 @@ public class Frames {
     }
 
     public FrameResult getScores() {
-        Integer[] totalScore = frames.stream()
-                .map(Frame::getScore)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .toArray(Integer[]::new);
+        Integer[] frameScores = getFrameScores();
 
-        Arrays.parallelPrefix(totalScore, Integer::sum);
+        Arrays.parallelPrefix(frameScores, Integer::sum);
 
-        List<String> result = Arrays.stream(totalScore)
+        List<String> result = Arrays.stream(frameScores)
                 .map(String::valueOf)
                 .collect(Collectors.toList());
 
         return FrameResult.from(result);
+    }
+
+    private Integer[] getFrameScores(){
+        return frames.stream()
+                .map(Frame::getScore)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toArray(Integer[]::new);
     }
 }

@@ -13,11 +13,18 @@ public class States {
     private final LinkedList<State> states = new LinkedList<>();
 
     public State bowling(Pins fallenPins) {
-        State bowlingResult = states.isEmpty() ? Start.bowling(fallenPins) : last().bowling(fallenPins);
+        State bowlingResult = nextState(fallenPins);
 
         states.add(bowlingResult);
 
         return bowlingResult;
+    }
+
+    private State nextState(Pins fallenPins){
+        if(states.isEmpty()){
+            return Start.bowling(fallenPins);
+        }
+        return last().bowling(fallenPins);
     }
 
     public void changeLastStateToBonus(Pins fallenPins) {

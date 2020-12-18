@@ -15,7 +15,7 @@ public class Miss extends FinishedState {
 
     @Override
     public Score score() {
-        return Score.miss(firstFallenPins.add(pins).getScore());
+        return Score.of(firstFallenPins.add(pins).getScore(), 0);
     }
 
     public static Miss of(Pins firstFallenPins, Pins secondFallenPins) {

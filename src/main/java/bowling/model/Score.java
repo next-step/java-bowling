@@ -9,18 +9,6 @@ public class Score {
         this.leftCount = leftCount;
     }
 
-    public static Score miss(int score) {
-        return new Score(score, 0);
-    }
-
-    public static Score spare() {
-        return new Score(10, 1);
-    }
-
-    public static Score strike() {
-        return new Score(10, 2);
-    }
-
     public static Score init() {
         return new Score(0, 2);
     }

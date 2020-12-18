@@ -27,7 +27,7 @@ public class Spare extends FinishedState {
 
     @Override
     public Score score() {
-        return Score.spare();
+        return Score.of(10,1);
     }
 
     @Override

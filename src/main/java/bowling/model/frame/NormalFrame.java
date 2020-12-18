@@ -18,7 +18,7 @@ public class NormalFrame extends Frame {
     }
 
     private Frame next() {
-        next = new NormalFrame(frameNumber.next());
+        next = frameNumber.beforeLast() ? new FinalFrame() : new NormalFrame(frameNumber.next());
         return next;
     }
 
@@ -26,16 +26,15 @@ public class NormalFrame extends Frame {
     public Frame bowling(Pins fallenPins) {
         states.bowling(fallenPins);
 
-        if (states.isFinished()) {
-            score = states.last().score();
-        }
-
-        if (frameNumber.beforeLast() && states.isFinished()) {
-            next = new FinalFrame();
-            return next;
-        }
+        updateScore();
 
         return states.isFinished() ? next() : this;
+    }
+
+    private void updateScore(){
+        if(states.isFinished()){
+            score = states.last().score();
+        }
     }
 
     @Override
