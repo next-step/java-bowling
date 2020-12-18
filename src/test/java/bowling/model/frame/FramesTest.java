@@ -81,6 +81,26 @@ class FramesTest {
     }
 
     @Test
+    void bowling_STRIKE_STRIKE_STRIKE_OPEN() {
+        Frames frames = new Frames();
+        frames.bowling(10);
+        frames.getScores();
+        frames.bowling(10);
+        frames.getScores();
+        frames.bowling(10);
+        frames.getScores();
+        frames.bowling(5);
+        frames.getScores();
+
+        String[] totalScore = frames.getScores()
+                .stream()
+                .filter(score -> 0 < score.length())
+                .toArray(String[]::new);
+
+        assertThat(totalScore).containsExactly("30","55");
+    }
+
+    @Test
     void bowling_STRIKE_OPEN_MISS() {
         Frames frames = new Frames();
         frames.bowling(10);

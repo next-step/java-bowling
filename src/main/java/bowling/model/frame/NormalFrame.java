@@ -43,11 +43,9 @@ public class NormalFrame extends Frame {
             return Optional.of(score.getScore());
         }
 
-        if (canNextCalculate()) {
-            score = next.addScore(score);
-        }
+        Score result = canNextCalculate() ? next.addScore(score) : score;
 
-        return score.canCalculate() ? Optional.of(score.getScore()) : Optional.empty();
+        return result.canCalculate() ? Optional.of(result.getScore()) : Optional.empty();
     }
 
     protected Score addScore(Score score) {
