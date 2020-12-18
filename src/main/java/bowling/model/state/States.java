@@ -1,5 +1,6 @@
 package bowling.model.state;
 
+import bowling.model.Pins;
 import bowling.model.Score;
 import bowling.model.frame.FinalFrame;
 
@@ -11,7 +12,7 @@ public class States {
 
     private final LinkedList<State> states = new LinkedList<>();
 
-    public State bowling(int fallenPins) {
+    public State bowling(Pins fallenPins) {
         State bowlingResult = states.isEmpty() ? Start.bowling(fallenPins) : last().bowling(fallenPins);
 
         states.add(bowlingResult);
@@ -19,7 +20,7 @@ public class States {
         return bowlingResult;
     }
 
-    public void changeLastStateToBonus(int fallenPins) {
+    public void changeLastStateToBonus(Pins fallenPins) {
         states.add(Start.bowling(fallenPins));
     }
 

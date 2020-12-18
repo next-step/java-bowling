@@ -1,5 +1,7 @@
 package bowling.model.frame;
 
+import bowling.model.Pins;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -10,7 +12,7 @@ public class Frames {
             .collect(Collectors.toCollection(LinkedList::new));
 
     public void bowling(int fallenPins) {
-        Frame afterBowling = lastFrame().bowling(fallenPins);
+        Frame afterBowling = lastFrame().bowling(Pins.from(fallenPins));
 
         if (afterBowling.isNewFrame()) {
             frames.add(afterBowling);

@@ -4,13 +4,11 @@ import bowling.model.Pins;
 import bowling.model.state.finished.Strike;
 
 public class Start {
-    public static State bowling(int fallenPin) {
-        Pins firstScore = Pins.from(fallenPin);
-
-        if (firstScore.isMaxScore()) {
-            return Strike.from(firstScore);
+    public static State bowling(Pins fallenPin) {
+        if (fallenPin.isMaxScore()) {
+            return Strike.from(fallenPin);
         }
 
-        return Open.from(firstScore);
+        return Open.from(fallenPin);
     }
 }

@@ -1,5 +1,6 @@
 package bowling.model.state;
 
+import bowling.model.Pins;
 import bowling.model.Score;
 
 public interface State {
@@ -8,7 +9,7 @@ public interface State {
 
     boolean isFinished();
 
-    State bowling(int fallenPin);
+    State bowling(Pins fallenPin);
 
     Score score();
 }

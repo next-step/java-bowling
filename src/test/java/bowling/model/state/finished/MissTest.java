@@ -28,7 +28,7 @@ class MissTest {
     @Test
     void bowling() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Miss.of(Pins.from(0), Pins.from(9)).bowling(1))
+                .isThrownBy(() -> Miss.of(Pins.from(0), Pins.from(9)).bowling(Pins.from(1)))
                 .withMessage("해당 프레임에서는 더 이상 던질 수 없습니다.");
     }
 }

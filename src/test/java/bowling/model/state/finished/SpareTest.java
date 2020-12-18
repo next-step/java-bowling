@@ -27,7 +27,7 @@ class SpareTest {
     @Test
     void bowling() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Spare.of(Pins.from(8), Pins.from(2)).bowling(1))
+                .isThrownBy(() -> Spare.of(Pins.from(8), Pins.from(2)).bowling(Pins.from(1)))
                 .withMessage("해당 프레임에서는 더 이상 던질 수 없습니다.");
     }
 }

@@ -35,7 +35,7 @@ class StrikeTest {
     @Test
     void bowling() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Strike.from(Pins.from(10)).bowling(1))
+                .isThrownBy(() -> Strike.from(Pins.from(10)).bowling(Pins.from(1)))
                 .withMessage("해당 프레임에서는 더 이상 던질 수 없습니다.");
     }
 

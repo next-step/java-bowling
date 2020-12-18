@@ -22,7 +22,7 @@ public abstract class FinishedState implements State {
     }
 
     @Override
-    public State bowling(int fallenPin) {
+    public State bowling(Pins fallenPin) {
         throw new IllegalArgumentException(PITCHING_ERROR);
     }
 

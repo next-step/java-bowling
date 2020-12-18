@@ -1,5 +1,7 @@
 package bowling.model.frame;
 
+import bowling.model.Pins;
+
 import java.util.Optional;
 
 public class FinalFrame extends Frame {
@@ -10,7 +12,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public Frame bowling(int fallenPins) {
+    public Frame bowling(Pins fallenPins) {
         if (canBonusBowling()) {
             states.changeLastStateToBonus(fallenPins);
             return this;

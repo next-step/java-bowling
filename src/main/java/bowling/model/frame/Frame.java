@@ -1,5 +1,6 @@
 package bowling.model.frame;
 
+import bowling.model.Pins;
 import bowling.model.Score;
 import bowling.model.state.States;
 
@@ -13,7 +14,7 @@ public abstract class Frame implements Comparable<Frame> {
         this.frameNumber = frameNumber;
     }
 
-    public abstract Frame bowling(int fallenPins);
+    public abstract Frame bowling(Pins pins);
 
     protected Score addScore(Score score) {
         return states.calculate(score);

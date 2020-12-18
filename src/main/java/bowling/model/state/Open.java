@@ -32,15 +32,14 @@ public class Open implements State {
     }
 
     @Override
-    public State bowling(int fallenPin) {
-        Pins secondFallenPins = Pins.from(fallenPin);
-        Pins totalScore = pins.add(secondFallenPins);
+    public State bowling(Pins fallenPin) {
+        Pins totalScore = pins.add(fallenPin);
 
         if (totalScore.isMaxScore()) {
-            return Spare.of(pins, secondFallenPins);
+            return Spare.of(pins, fallenPin);
         }
 
-        return Miss.of(pins, secondFallenPins);
+        return Miss.of(pins, fallenPin);
     }
 
     @Override

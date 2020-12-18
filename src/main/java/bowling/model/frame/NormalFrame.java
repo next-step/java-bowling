@@ -1,5 +1,6 @@
 package bowling.model.frame;
 
+import bowling.model.Pins;
 import bowling.model.Score;
 
 import java.util.Optional;
@@ -22,7 +23,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame bowling(int fallenPins) {
+    public Frame bowling(Pins fallenPins) {
         states.bowling(fallenPins);
 
         if (states.isFinished()) {
