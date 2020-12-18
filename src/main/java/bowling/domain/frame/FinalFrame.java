@@ -7,7 +7,7 @@ import bowling.domain.frame.presenter.FinalFramePresenter;
 import static util.Preconditions.checkArgument;
 
 public class FinalFrame extends Frame {
-    public static final int FINAL_FRAME_INDEX = 9;
+    public static final int INDEX = 9;
     
     private FinalFrameState state = FinalFrameState.FIRST_PITCHING;
 
@@ -16,7 +16,7 @@ public class FinalFrame extends Frame {
     }
     
     public static FinalFrame of(final int index) {
-        checkArgument(index == FINAL_FRAME_INDEX, new InvalidFrameIndexException());
+        checkArgument(index == INDEX, new InvalidFrameIndexException());
         return new FinalFrame(index);
     }
 
