@@ -1,7 +1,6 @@
 package bowling.dto;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Frames2Dto {
     private final List<Frame2Dto> value;
@@ -14,7 +13,12 @@ public class Frames2Dto {
         return new Frames2Dto(value);
     }
 
-    public Stream<Frame2Dto> viewDtoStream() {
-        return value.stream();
+    public Frame2Dto get(int frameNo) {
+        if (frameNo <= value.size()) {
+            int index = frameNo - 1;
+            return value.get(index);
+        }
+
+        return null;
     }
 }

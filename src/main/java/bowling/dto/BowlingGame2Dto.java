@@ -1,7 +1,5 @@
 package bowling.dto;
 
-import java.util.stream.Stream;
-
 public class BowlingGame2Dto {
     private final Frames2Dto frames;
     private final String playerName;
@@ -15,8 +13,8 @@ public class BowlingGame2Dto {
         return new BowlingGame2Dto(frames, playerName);
     }
 
-    public Stream<Frame2Dto> framesViewDtoStream() {
-        return frames.viewDtoStream();
+    public Frames2Dto getFrames() {
+        return frames;
     }
 
     public String getPlayerName() {

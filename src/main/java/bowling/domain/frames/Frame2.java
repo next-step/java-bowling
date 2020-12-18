@@ -41,8 +41,8 @@ public class Frame2 {
     }
 
     public Score getScore() {
-        //todo 다형성으로
         Score score = pitchings.getScore();
+
         if (pitchings instanceof LastFramePitchings2) {
             return score;
         }
@@ -50,7 +50,6 @@ public class Frame2 {
         if (canApplyBonusScore(score)) {
             return nextFrame.applyBonusScoreTo(score);
         }
-
         return score;
     }
 
@@ -72,6 +71,9 @@ public class Frame2 {
 
     Integer getTotalScore(Integer previousFrameTotalScore) {
         if (previousFrameTotalScore == null || getScore() == null) {
+            return null;
+        }
+        if (!isEnd()) {
             return null;
         }
         return previousFrameTotalScore + getScore().getValue();

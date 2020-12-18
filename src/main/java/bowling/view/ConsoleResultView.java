@@ -3,6 +3,8 @@ package bowling.view;
 import bowling.domain.Pitching;
 import bowling.domain.frames.Frames2;
 import bowling.dto.BowlingGame2Dto;
+import bowling.dto.Frame2Dto;
+import bowling.dto.Frames2Dto;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -73,21 +75,42 @@ public class ConsoleResultView implements ResultView {
     }
 
     private void appendResults(BowlingGame2Dto bowlingGameDto, StringBuilder resultBuilder) {
-        bowlingGameDto.framesViewDtoStream().forEach(frameViewDto -> {
-            String result = frameViewDto.getPitchings().stream()
-                    .map(stringByPitching::get)
-                    .collect(Collectors.joining(DELIMITER));
-            String formattedResult = centerString(result);
-            resultBuilder.append(formattedResult).append(DELIMITER);
-        });
+        Frames2Dto frames = bowlingGameDto.getFrames();
+        IntStream.rangeClosed(1, Frames2.MAX_FRAME_SIZE)
+                .forEach(frameNo -> {
+                    String result = getResult(frames, frameNo);
+                    String formattedResult = centerString(result);
+                    resultBuilder.append(formattedResult).append(DELIMITER);
+                });
+    }
+
+    private String getResult(Frames2Dto frames, int frameNo) {
+        Frame2Dto frame2Dto = frames.get(frameNo);
+        if (frame2Dto == null) {
+            return EMPTY_VALUE;
+        }
+
+        return frame2Dto.getPitchings().stream()
+                .map(stringByPitching::get)
+                .collect(Collectors.joining(DELIMITER));
     }
 
     private void appendScore(BowlingGame2Dto bowlingGameDto, StringBuilder resultBuilder) {
         resultBuilder.append(DELIMITER).append(centerString(EMPTY_VALUE)).append(DELIMITER);
-        bowlingGameDto.framesViewDtoStream().forEach(frameViewDto -> {
-           Integer totalScore = frameViewDto.getTotalScore();
-            resultBuilder.append(formatScore(totalScore)).append(DELIMITER);
-        });
+        Frames2Dto frames = bowlingGameDto.getFrames();
+        IntStream.rangeClosed(1, Frames2.MAX_FRAME_SIZE)
+                .forEach(frameNo -> {
+                    Integer totalScore = getTotalScore(frames, frameNo);
+                    resultBuilder.append(formatScore(totalScore)).append(DELIMITER);
+                });
+    }
+
+    private Integer getTotalScore(Frames2Dto frames, int frameNo) {
+        Frame2Dto frame2Dto = frames.get(frameNo);
+        if (frame2Dto == null) {
+            return null;
+        }
+        return frame2Dto.getTotalScore();
     }
 
     private String formatScore(Integer totalScore) {
