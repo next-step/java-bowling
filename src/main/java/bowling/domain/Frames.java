@@ -8,34 +8,35 @@ import java.util.List;
  * Developer : Seo
  */
 public class Frames {
-    public static final int ALL_PINS = 10;
-    public static final int FRAME_INIT = 1;
     public static final int ALL_FRAMES = 10;
 
     private final List<Frame> frames;
 
     public Frames() {
         this.frames = new LinkedList<>();
+        init();
+    }
 
-        Frame frame = new Frame(FRAME_INIT);
-        while (frame.getFrameNo() <= ALL_FRAMES) {
-            Frame afterFirstStroke = firstStroke(frame);
-            Frame next = secondStroke(frame, afterFirstStroke);
-
-            frames.add(next);
-            frame = next;
+    private void init() {
+        Frame frame = new Frame(Frame.INIT);
+        frames.add(frame);
+        while (frame.getFrameNo() < ALL_FRAMES) {
+            Frame afterFirstBowl = firstBowl(frame);
+            Frame nextFrame = secondBowl(frame, afterFirstBowl);
+            frames.add(nextFrame);
+            frame = nextFrame;
         }
     }
 
-    private Frame firstStroke(Frame frame) {
-        return frame.bowl(Bowling.stroke(ALL_PINS));
+    private Frame firstBowl(Frame frame) {
+        return frame.bowl(Bowling.stroke(Frame.ALL_PINS));
     }
 
-    private Frame secondStroke(Frame frame, Frame afterFirstStroke) {
-        if (frame.equals(afterFirstStroke)) {
-            return frame.bowl(Bowling.stroke(ALL_PINS - afterFirstStroke.getScore().get()));
+    private Frame secondBowl(Frame frame, Frame afterFirstBowl) {
+        if (frame.equals(afterFirstBowl)) {
+            return frame.bowl(Bowling.stroke(afterFirstBowl.remainPins()));
         }
-        return afterFirstStroke;
+        return afterFirstBowl;
     }
 
     public int size() {
@@ -44,5 +45,9 @@ public class Frames {
 
     public List<Frame> getFrames() {
         return frames;
+    }
+
+    public Frame get(int i) {
+        return frames.get(i);
     }
 }

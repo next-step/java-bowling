@@ -7,26 +7,32 @@ import java.util.Objects;
  * Developer : Seo
  */
 public class FinalFrame extends Frame {
-    private final Score score;
 
-    public FinalFrame(int downPins) {
-        super(Frame.FINAL_FRAME_NO + 1);
-        this.score = new Score(downPins);
+    public FinalFrame(Pins downPins) {
+        super(Frames.ALL_FRAMES, new Score(downPins));
     }
 
     @Override
-    public Frame bowl(int downPins) {
-        this.score.setSecond(downPins);
+    public Frame bowl(Pins downPins) {
+        super.score.setSecond(downPins);
 
-        if (isStrike(downPins) || isSpare(downPins)) {
-            this.score.setTenFrameBonus(Bowling.stroke(Frames.ALL_PINS));
+        if (isFirstStrike() || isStrike(downPins) || isSpare()) {
+            bonusStroke();
         }
 
         return this;
     }
 
-    private boolean isSpare(int downPins) {
-        return downPins != Symbol.STRIKE.getScore() && score.get() == Symbol.SPARE.getScore();
+    private boolean isFirstStrike() {
+        return score.getFirst() == Symbol.STRIKE.getScore();
+    }
+
+    private boolean isSpare() {
+        return score.get() == Symbol.SPARE.getScore();
+    }
+
+    private void bonusStroke() {
+        super.score.setTenFrameBonus(Bowling.stroke(Frame.ALL_PINS));
     }
 
     @Override

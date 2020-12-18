@@ -8,9 +8,10 @@ import java.util.Random;
  */
 public class Bowling {
     private static final Random random = new Random();
+    public static final int FOR_RANDOM_RANGE = 1;
 
-    public static int stroke(int leftPins) {
-        return random.nextInt(leftPins + 1);
+    public static Pins stroke(Pins leftPins) {
+        return new Pins(random.nextInt(leftPins.get() + FOR_RANDOM_RANGE));
     }
 
     private Bowling() {

@@ -7,42 +7,43 @@ import java.util.Objects;
  * Developer : Seo
  */
 public class Frame {
-
-    public static final int INIT = 0;
+    public static final Pins ALL_PINS = new Pins(10);
+    public static final int INIT = 1;
     public static final int NEXT_NO = 1;
-    public static final int FINAL_FRAME_NO = 10;
+    public static final String FORMATTER_ZERO = "0";
 
     private final int frameNo;
-    private Score score;
+    protected Score score;
 
     public Frame(int frameNo) {
-        System.out.println(frameNo);
         this.frameNo = frameNo;
     }
 
-    public Frame bowl(int downPins) {
-        if (isFinalFrame()) {
-            return new FinalFrame(downPins);
-        }
+    public Frame(int frameNo, Score score) {
+        this.frameNo = frameNo;
+        this.score = score;
+    }
+
+    public Frame bowl(Pins downPins) {
         if (isStrike(downPins)) {
             this.score = new Score(downPins);
-            return new Frame(frameNo + NEXT_NO);
+            return isNextFinalFrame() ? new FinalFrame(downPins) : new Frame(frameNo + NEXT_NO);
         }
         if (isSecond()) {
             this.score.setSecond(downPins);
-            return new Frame(frameNo + NEXT_NO);
+            return isNextFinalFrame() ? new FinalFrame(downPins) : new Frame(frameNo + NEXT_NO);
         }
 
         this.score = new Score(downPins);
         return this;
     }
 
-    private boolean isFinalFrame() {
-        return this.frameNo == FINAL_FRAME_NO;
+    private boolean isNextFinalFrame() {
+        return this.frameNo + NEXT_NO == Frames.ALL_FRAMES;
     }
 
-    public boolean isStrike(int downPins) {
-        return downPins == Symbol.STRIKE.getScore();
+    public boolean isStrike(Pins downPins) {
+        return downPins.get() == Symbol.STRIKE.getScore();
     }
 
     private boolean isSecond() {
@@ -50,12 +51,19 @@ public class Frame {
     }
 
     public int getFrameNo() {
-//        return frameNo < 10 ? "0" + frameNo : String.valueOf(frameNo);
         return frameNo;
+    }
+
+    public String getFrameNoString() {
+        return frameNo < Frames.ALL_FRAMES ? FORMATTER_ZERO + frameNo : String.valueOf(frameNo);
     }
 
     public Score getScore() {
         return score;
+    }
+
+    public Pins remainPins() {
+        return new Pins(Frame.ALL_PINS.get() - this.score.get());
     }
 
     @Override
