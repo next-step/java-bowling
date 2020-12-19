@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import static bowling.domain.Scoring.STRIKE;
 
-class NormalFrame implements Frame {
+public class NormalFrame implements Frame {
     private final List<BallThrow> ballThrows = new ArrayList<>();
     private final int number;
 
