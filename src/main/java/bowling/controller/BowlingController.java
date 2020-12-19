@@ -19,7 +19,7 @@ public class BowlingController {
             Point pointPitch = InputView.inputPitchBowl(frameNumber);
 
             bowling.pitch(pointPitch);
-            OutputView.printResult(bowling.getPlayerName(), bowling.getResult());
+            OutputView.printResult(bowling);
         }
     }
 
