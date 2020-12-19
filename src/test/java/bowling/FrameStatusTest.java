@@ -3,23 +3,23 @@ package bowling;
 import bowling.domain.Scoring;
 import org.junit.jupiter.api.Test;
 
-import static bowling.domain.Scoring.MISS;
+import static bowling.domain.Scoring.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FrameStatusTest {
     @Test
     void strike() {
-        assertThat(new FrameStatus(10, Scoring.STRIKE).toString()).isEqualTo("X");
+        assertThat(FrameStatus.strike().toString()).isEqualTo("X");
     }
 
     @Test
     void spare() {
-        assertThat(new FrameStatus(2, Scoring.SPARE).toString()).isEqualTo("2|/");
+        assertThat(FrameStatus.spare(2).toString()).isEqualTo("2|/");
     }
 
     @Test
     void miss() {
-        assertThat(new FrameStatus(4, 2).toString()).isEqualTo("4|2");
+        assertThat(FrameStatus.miss(4, 2).toString()).isEqualTo("4|2");
     }
 
     @Test
@@ -43,6 +43,18 @@ public class FrameStatusTest {
             this.firstFallingPins = firstFallingPins;
             this.secondFallingPins = secondFallingPins;
             this.scoring = scoring;
+        }
+
+        public static FrameStatus strike() {
+            return new FrameStatus(10, STRIKE);
+        }
+
+        public static FrameStatus spare(int firstFallingPins) {
+            return new FrameStatus(firstFallingPins, SPARE);
+        }
+
+        public static FrameStatus miss(int first, int second) {
+            return new FrameStatus(first, second);
         }
 
         @Override
