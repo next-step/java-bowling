@@ -23,7 +23,7 @@ public class QuestionTest {
     public void 질문삭제_권한_없는_경우() {
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
         assertThatThrownBy(() -> {
-            question.isOwnerMatch(UserTest.SANJIGI);
+            question.validatePermission(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 

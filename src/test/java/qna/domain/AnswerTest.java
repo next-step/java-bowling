@@ -19,7 +19,7 @@ public class AnswerTest {
         question.addAnswer(answer);
 
         assertThatThrownBy(() -> {
-            answer.isMatchOwner(question.getWriter());
+            answer.validateNotMatchAnswerUser(question.getWriter());
         }).isInstanceOf(CannotDeleteException.class);
     }
 
