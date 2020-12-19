@@ -17,9 +17,6 @@ public abstract class Frame {
         this.score = score;
     }
 
-    public Frame getNextFrame() {
-        return nextFrame;
-    }
 
     abstract public Frame createNextFrame(boolean isLast);
 
@@ -33,9 +30,9 @@ public abstract class Frame {
 
     abstract protected boolean isFrameFinished();
 
-    abstract protected List<Point> getPitchPoints(int count);
+    abstract protected List<Point> getNextFramePitchPoints(int count);
 
-    abstract protected List<Point> getPitchPoints();
+    abstract protected List<Point> getFramePitchPoints();
 
     abstract FrameResultDto getFrameResultDto();
 }
