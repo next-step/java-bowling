@@ -59,7 +59,7 @@ class LastFrame implements Frame {
 
     @Override
     public List<BallThrow> getBallThrows() {
-        return null;
+        return ballThrows;
     }
 
     @Override

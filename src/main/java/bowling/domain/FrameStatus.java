@@ -5,10 +5,6 @@ public class FrameStatus {
     protected final Integer second;
     protected final Integer third;
 
-    public FrameStatus(Integer first, Integer second) {
-        this(first, second, null);
-    }
-
     public FrameStatus(Integer first, Integer second, Integer third) {
         this.first = first;
         this.second = second;
@@ -16,8 +12,6 @@ public class FrameStatus {
     }
 
     public FrameStatus(FrameStatus frameStatus) {
-        this.first = frameStatus.first;
-        this.second = frameStatus.second;
-        this.third = frameStatus.third;
+        this(frameStatus.first, frameStatus.second, frameStatus.third);
     }
 }
