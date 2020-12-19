@@ -5,10 +5,11 @@ import bowling.util.Lists;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
-class Score {
+public class Score {
     private final List<Integer> values;
 
     public Score(Integer... fallingPins) {
@@ -30,7 +31,13 @@ class Score {
             return sumAll();
         }
         return first() + second();
+    }
 
+    @Override
+    public String toString() {
+        return Optional.ofNullable(toInt())
+                .map(Object::toString)
+                .orElse("");
     }
 
     private Integer first() {

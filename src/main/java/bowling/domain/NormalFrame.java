@@ -72,6 +72,9 @@ public class NormalFrame implements Frame {
             second = getFallingPinOfIndex(getNextFrame(), 0);
             third = getFallingPinOfIndex(getNextFrame(), 1);
         }
+        if (getNextFrame().getScoring() == STRIKE) {
+            third = getFallingPinOfIndex(getNextFrame().getNextFrame(), 0);
+        }
         if (getScoring() == SPARE) {
             third = getFallingPinOfIndex(getNextFrame(), 0);
         }
