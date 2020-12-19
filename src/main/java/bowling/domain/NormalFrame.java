@@ -5,7 +5,7 @@ import java.util.List;
 
 public class NormalFrame {
 
-    private static final int MAXIMUM_TRIES_PER_FRAME = 2;
+    private static final int MAXIMUM_TRIES_PER_NORMAL_FRAME = 2;
 
     private final List<DownedPinPerTry> tries;
 
@@ -23,6 +23,6 @@ public class NormalFrame {
     }
 
     public boolean isEnd() {
-        return (tries.get(0).isStrike() || tries.size() == MAXIMUM_TRIES_PER_FRAME);
+        return (tries.get(0).isStrike() || tries.size() == MAXIMUM_TRIES_PER_NORMAL_FRAME);
     }
 }
