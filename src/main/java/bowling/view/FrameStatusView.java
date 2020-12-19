@@ -2,6 +2,9 @@ package bowling.view;
 
 import bowling.domain.FrameStatus;
 
+import static bowling.domain.BallThrow.MAX_PINS;
+import static bowling.domain.BallThrow.MIN_PINS;
+
 public class FrameStatusView extends FrameStatus {
 
 
@@ -21,7 +24,7 @@ public class FrameStatusView extends FrameStatus {
 
         StringBuilder sb = new StringBuilder();
         sb.append(toNumberOrGutter(first));
-        if (first != 10) {
+        if (!isStrike(first)) {
             appendNext(sb, getNumberOrSign(first, second));
             return appendNext(sb, third).toString();
         }
@@ -32,7 +35,7 @@ public class FrameStatusView extends FrameStatus {
 
         appendNext(sb, second);
 
-        if (second != 10) {
+        if (!isStrike(second)) {
             return appendNext(sb, getNumberOrSign(second, third)).toString();
         }
 
@@ -40,7 +43,7 @@ public class FrameStatusView extends FrameStatus {
     }
 
     private String getNumberOrSign(Integer aNumber, Integer nextNumber) {
-        if (nextNumber != null && aNumber + nextNumber == 10) {
+        if (nextNumber != null && aNumber + nextNumber == MAX_PINS) {
             return "/";
         }
         if (nextNumber == null) {
@@ -55,6 +58,7 @@ public class FrameStatusView extends FrameStatus {
         }
         return sb;
     }
+
     private StringBuilder appendNext(StringBuilder sb, String next) {
         if (next != null) {
             sb.append("|");
@@ -62,15 +66,22 @@ public class FrameStatusView extends FrameStatus {
         }
         return sb;
     }
-
     private String toNumberOrGutter(Integer fallingPins) {
         if (fallingPins == null) {
             return "";
         }
-        if (fallingPins == 0)
+        if (isGutter(fallingPins))
             return "-";
-        if (fallingPins == 10)
+        if (isStrike(fallingPins))
             return "X";
         return String.valueOf(fallingPins);
+    }
+
+    private boolean isStrike(Integer pins) {
+        return pins == MAX_PINS;
+    }
+
+    private boolean isGutter(Integer fallingPins) {
+        return fallingPins == MIN_PINS;
     }
 }

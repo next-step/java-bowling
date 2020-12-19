@@ -3,7 +3,7 @@ package bowling.domain;
 import java.util.Objects;
 import java.util.Optional;
 
-class BallThrow {
+public class BallThrow {
     public static final int MAX_PINS = 10;
     public static final int MIN_PINS = 0;
     private final int fallingPins;
