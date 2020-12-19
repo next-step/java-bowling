@@ -61,6 +61,12 @@ public class LastFrameTest {
         assertThat(lastFrame.throwBall(8).throwBall(1).getScoring()).isEqualTo(MISS.asOptional());
     }
 
+    @DisplayName("마지막 프레임의 스페어")
+    @Test
+    void lastFrameSpare() {
+        Frame lastFrame = new NormalFrame(9).throwBall(10);
+        assertThat(lastFrame.throwBall(8).throwBall(2).getScoring()).isEqualTo(SPARE.asOptional());
+    }
 
     static class LastFrame implements Frame {
 
