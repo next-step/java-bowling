@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static bowling.Scoring.MISS;
-import static bowling.Scoring.STRIKE;
+import static bowling.BallThrow.MAX_PINS;
+import static bowling.BallThrow.MIN_PINS;
+import static bowling.Scoring.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -78,7 +79,11 @@ public class LastFrameTest {
             }
 
             if (getLastThrow().isStrike()) {
-                return Optional.of(STRIKE);
+                return STRIKE.asOptional();
+            }
+
+            if (sumOfFallingPins() < MAX_PINS && sumOfFallingPins() > MIN_PINS) {
+                return MISS.asOptional();
             }
 
             return Optional.empty();
@@ -88,6 +93,10 @@ public class LastFrameTest {
             return ballThrows.get(ballThrows.size() - 1);
         }
 
+        private boolean isFirstThrowStrike() {
+            return ballThrows.get(0).isStrike();
+        }
+
         @Override
         public int getNumber() {
             return 0;
@@ -95,7 +104,7 @@ public class LastFrameTest {
 
         @Override
         public int sumOfFallingPins() {
-            return 0;
+            return BallThrow.sumOfFallingPins(ballThrows);
         }
     }
 }

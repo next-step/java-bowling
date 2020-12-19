@@ -1,5 +1,6 @@
 package bowling;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -51,6 +52,12 @@ class BallThrow {
         return fallingPins + Optional.ofNullable(ballThrows)
                 .map(ballThrow -> ballThrow.fallingPins)
                 .orElse(0);
+    }
+
+    public static int sumOfFallingPins(List<BallThrow> ballThrows) {
+        return ballThrows.stream()
+                .mapToInt(ballThrow -> ballThrow.fallingPins)
+                .sum();
     }
 
     public boolean isStrike() {
