@@ -1,12 +1,13 @@
 package bowling;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static bowling.Scoring.STRIKE;
 
 class NormalFrame implements Frame {
-    private BallThrow firstThrow;
-    private BallThrow secondThrow;
+    private final List<BallThrow> ballThrows = new ArrayList<>();
     private final int number;
 
     public NormalFrame() {
@@ -28,16 +29,14 @@ class NormalFrame implements Frame {
         if (isIncomplete()) {
             return Optional.empty();
         }
-        if (firstThrow.isStrike()) {
+        if (ballThrows.get(0).isStrike()) {
             return Optional.of(STRIKE);
         }
         return Scoring.nonStrikeValueOf(sumOfFallingPins()).asOptional();
     }
 
     public int sumOfFallingPins() {
-        return Optional.ofNullable(firstThrow)
-                .map(ballThrow -> ballThrow.add(secondThrow))
-                .orElse(0);
+        return ballThrows.stream().mapToInt(BallThrow::getFallingPins).sum();
     }
 
     public int getNumber() {
@@ -45,11 +44,11 @@ class NormalFrame implements Frame {
     }
 
     private void assignBallThrow(int fallingPins) {
-        if (firstThrow == null) {
-            firstThrow = new BallThrow(fallingPins);
+        if (ballThrows.isEmpty()) {
+            ballThrows.add(new BallThrow(fallingPins));
             return;
         }
-        secondThrow = firstThrow.throwSecond(fallingPins);
+        ballThrows.add(ballThrows.get(0).throwSecond(fallingPins));
     }
 
     private Frame getNextFrame() {
@@ -62,6 +61,6 @@ class NormalFrame implements Frame {
     }
 
     private boolean isIncomplete() {
-        return firstThrow == null || !firstThrow.isStrike() && secondThrow == null;
+        return ballThrows.isEmpty() || !ballThrows.get(0).isStrike() && ballThrows.size() < 2;
     }
 }
