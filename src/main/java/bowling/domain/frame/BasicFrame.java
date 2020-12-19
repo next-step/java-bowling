@@ -55,6 +55,10 @@ public class BasicFrame extends Frame {
             return ScoreDto.init(0, BowlType.NONE);
         }
 
+        if (isFrameFinished()) {
+            return ScoreDto.init(score.sumPoint(), BowlType.END);
+        }
+
         int nextBowlCount = getBonusCount();
         List<Point> pitchedPoints = getNextFramePitchPoints(nextBowlCount);
 
@@ -89,6 +93,9 @@ public class BasicFrame extends Frame {
 
     @Override
     protected List<Point> getNextFramePitchPoints(int count) {
+        if (nextFrame == null) {
+            return new ArrayList<>();
+        }
 
         List<Point> nextDownPins = nextFrame.getFramePitchPoints();
         if (nextDownPins.isEmpty()) {
@@ -113,8 +120,6 @@ public class BasicFrame extends Frame {
     FrameResultDto getFrameResultDto() {
         return new FrameResultDto(score.getPitchedPoint(), score.getBowlType(), getScoreDto());
     }
-
-
 
 
 }
