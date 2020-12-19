@@ -5,6 +5,7 @@ import java.util.Objects;
 public class BallThrow {
     public static final int MAX_PINS = 10;
     public static final int MIN_PINS = 0;
+
     private final int fallingPins;
     private final boolean lastFrame;
 
