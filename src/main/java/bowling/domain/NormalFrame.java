@@ -37,10 +37,6 @@ public class NormalFrame implements Frame {
         return Scoring.valueOf(first, second);
     }
 
-    public int sumOfFallingPins() {
-        return ballThrows.stream().mapToInt(BallThrow::getFallingPins).sum();
-    }
-
     public int getNumber() {
         return number;
     }

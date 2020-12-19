@@ -59,24 +59,22 @@ class LastFrame implements Frame {
     }
 
     @Override
-    public int sumOfFallingPins() {
-        int skipBallThrows = getSkipBallThrows();
-
-        return ballThrows.stream()
-                .skip(skipBallThrows)
-                .mapToInt(BallThrow::getFallingPins)
-                .sum();
-    }
-
-    @Override
     public boolean isFinish() {
         if (ballThrows.isEmpty()) {
             return false;
         }
-        if (isNotFirstThrowStrike() && sumOfFallingPins() < MAX_PINS) {
+        if (isNotFirstThrowStrike() && sumOfLastTwoThrows() < MAX_PINS) {
             return ballThrows.size() == 2;
         }
         return ballThrows.size() == 3;
+    }
+
+    private int sumOfLastTwoThrows() {
+
+        return ballThrows.stream()
+                .skip(getSkipBallThrows())
+                .mapToInt(BallThrow::getFallingPins)
+                .sum();
     }
 
     private int getSkipBallThrows() {

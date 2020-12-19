@@ -9,8 +9,6 @@ public interface Frame {
 
     int getNumber();
 
-    int sumOfFallingPins();
-
     default boolean isFinish() {
         return false;
     }

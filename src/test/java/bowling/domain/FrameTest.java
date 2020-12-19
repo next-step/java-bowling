@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Optional;
 
+import static bowling.domain.Scoring.SPARE;
 import static bowling.domain.Scoring.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -41,7 +42,7 @@ public class FrameTest {
     void secondThrow() {
         frame.throwBall(5);
         frame.throwBall(5);
-        assertThat(frame.sumOfFallingPins()).isEqualTo(10);
+        assertThat(frame.getScoring()).isEqualTo(SPARE.asOptional());
     }
 
     @DisplayName("10개를 쓰러뜨리면 스트라이크")
