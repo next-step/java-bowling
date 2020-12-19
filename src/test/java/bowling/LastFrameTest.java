@@ -123,19 +123,6 @@ public class LastFrameTest {
             return Scoring.nonStrikeValueOf(sumOfFallingPins()).asOptional();
         }
 
-        private boolean isMissAndThirdThrow() {
-            return getScoring().filter(scoring -> scoring == MISS).isPresent()
-                   && ballThrows.size() == 2;
-        }
-
-        private BallThrow getLastThrow() {
-            return ballThrows.get(ballThrows.size() - 1);
-        }
-
-        private boolean isFirstThrowStrike() {
-            return ballThrows.get(0).isStrike();
-        }
-
         @Override
         public int getNumber() {
             return 0;
@@ -150,6 +137,19 @@ public class LastFrameTest {
                     .limit(2)
                     .mapToInt(BallThrow::getFallingPins)
                     .sum();
+        }
+
+        private boolean isMissAndThirdThrow() {
+            return getScoring().filter(scoring -> scoring == MISS).isPresent()
+                   && ballThrows.size() == 2;
+        }
+
+        private BallThrow getLastThrow() {
+            return ballThrows.get(ballThrows.size() - 1);
+        }
+
+        private boolean isFirstThrowStrike() {
+            return ballThrows.get(0).isStrike();
         }
     }
 }
