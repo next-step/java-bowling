@@ -24,6 +24,17 @@ class GameStatusTest {
                 .isEqualTo("|  PJS |      |      |      |      |      |      |      |      |      |      |");
     }
 
+    @Test
+    void allGutter() {
+        for (int i = 1; i <= 18; i++) {
+            gameService.throwBall(0);
+        }
+        gameService.throwBall(0);
+        GameStatus gameStatus = gameService.throwBall(0);
+        assertThat(gameStatus.toString())
+                .isEqualTo("|  PJS |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |");
+    }
+
     @Nested
     class FirstFrame {
         @Test
