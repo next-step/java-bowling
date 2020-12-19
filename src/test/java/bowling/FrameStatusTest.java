@@ -16,6 +16,12 @@ public class FrameStatusTest {
         assertThat(new FrameStatus(2, Scoring.SPARE).toString()).isEqualTo("2|/");
     }
 
+    @Test
+    void miss() {
+        assertThat(new FrameStatus(4, 2).toString()).isEqualTo("4|2");
+    }
+
+
     private static class FrameStatus {
         private final int fallingPins;
         private final Scoring scoring;
