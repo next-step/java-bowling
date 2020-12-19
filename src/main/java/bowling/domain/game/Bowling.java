@@ -31,11 +31,11 @@ public class Bowling {
     }
 
     public void pitch(Point pointPitch) {
-        frames.roll(pointPitch);
+        frames.pitch(pointPitch);
     }
 
     public List<FrameResultDto> getResult() {
-        return frames.getFrameResults();
+        return frames.getFrameResultDtos();
     }
 
     public boolean isGameFinished() {
