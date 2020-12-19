@@ -41,11 +41,12 @@ public class LastFrameStatusTest {
 
     @Test
     void miss() {
-        assertThat(new LastFrameStatus(8, 1, 0).toString()).isEqualTo("8|1");
+        assertThat(new LastFrameStatus(8, 1, null).toString()).isEqualTo("8|1");
     }
 
     @Test
     void playing() {
+        assertThat(new LastFrameStatus(null, null, null).toString()).isEqualTo("");
         assertThat(new LastFrameStatus(10, null, null).toString()).isEqualTo("X");
         assertThat(new LastFrameStatus(8, 2, null).toString()).isEqualTo("8|/");
         assertThat(new LastFrameStatus(8, null, null).toString()).isEqualTo("8");
@@ -56,7 +57,7 @@ public class LastFrameStatusTest {
     }
 
     private static class LastFrameStatus {
-        private final int first;
+        private final Integer first;
         private final Integer second;
         private final Integer third;
 
@@ -68,46 +69,52 @@ public class LastFrameStatusTest {
 
         @Override
         public String toString() {
-            StringBuilder sb = new StringBuilder();
-            if (first == 10) {
-                sb.append(toNumberOrGutter(first));
-                if (second != null) {
-                    sb.append("|");
-                    if (second == 10) {
-                        sb.append(toNumberOrGutter(second));
-                        if (third != null) {
-                            sb.append("|");
-                            sb.append(toNumberOrGutter(third));
-                        }
-                    } else {
-                        if (third != null && second + third == 10) {
-                            sb.append(toNumberOrGutter(second));
-                            sb.append("|/");
-                        } else {
-                            sb.append(toNumberOrGutter(second));
-                            if (third != null) {
-                                sb.append("|");
-                                sb.append(toNumberOrGutter(third));
-                            }
-                        }
-                    }
-                }
-            } else if (second != null && first + second == 10) {
-                sb.append(toNumberOrGutter(first));
-                sb.append("|/");
-                if (third != null) {
-                    sb.append("|");
-                    sb.append(toNumberOrGutter(third));
-                }
-            } else if (second != null){
-                sb.append(toNumberOrGutter(first));
-                sb.append("|");
-                sb.append(toNumberOrGutter(second));
-            } else {
-                sb.append(toNumberOrGutter(first));
+            if (first == null) {
+                return "";
             }
 
-            return sb.toString();
+            StringBuilder sb = new StringBuilder();
+            sb.append(toNumberOrGutter(first));
+            if (first != 10) {
+                appendNext(sb, getNumberOrSign(first, second));
+                return appendNext(sb, third).toString();
+            }
+
+            if (second == null) {
+                return sb.toString();
+            }
+
+            appendNext(sb, second);
+
+            if (second != 10) {
+                return appendNext(sb, getNumberOrSign(second, third)).toString();
+            }
+
+            return appendNext(sb, third).toString();
+        }
+
+        private String getNumberOrSign(Integer aNumber, Integer nextNumber) {
+            if (nextNumber != null && aNumber + nextNumber == 10) {
+                return "/";
+            }
+            if (nextNumber == null) {
+                return null;
+            }
+            return toNumberOrGutter(nextNumber);
+        }
+
+        private StringBuilder appendNext(StringBuilder sb, Integer next) {
+            if (next != null) {
+                appendNext(sb, toNumberOrGutter(next));
+            }
+            return sb;
+        }
+        private StringBuilder appendNext(StringBuilder sb, String next) {
+            if (next != null) {
+                sb.append("|");
+                sb.append(next);
+            }
+            return sb;
         }
 
         private String toNumberOrGutter(Integer fallingPins) {
