@@ -62,6 +62,15 @@ public class LastFrameTest {
         assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring()).isEqualTo(Scoring.valueOf(scoringName).asOptional());
     }
 
+    @DisplayName("프레임이 끝나지 않으면 반환할 상태가 없다")
+    @Test
+    void incomplete() {
+        Frame lastFrame = new NormalFrame(9).throwBall(10);
+        assertThat(lastFrame.getScoring()).isEqualTo(Optional.empty());
+        lastFrame.throwBall(0);
+        assertThat(lastFrame.getScoring()).isEqualTo(Optional.empty());
+    }
+
     static class LastFrame implements Frame {
 
         private final List<BallThrow> ballThrows = new ArrayList<>();
