@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class BallThrow {
     public static final int MAX_PINS = 10;
@@ -42,12 +41,6 @@ public class BallThrow {
             throw new IllegalBallThrownException();
         }
         return new BallThrow(thirdFallingPins, true);
-    }
-
-    public int add(BallThrow ballThrows) {
-        return fallingPins + Optional.ofNullable(ballThrows)
-                .map(ballThrow -> ballThrow.fallingPins)
-                .orElse(0);
     }
 
     public int getFallingPins() {
