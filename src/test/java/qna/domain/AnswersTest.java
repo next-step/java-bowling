@@ -19,7 +19,7 @@ class AnswersTest {
     @DisplayName("Answers 객체 생성")
     void fromTest() {
         Answers answers = Answers.from(Arrays.asList(A1,A3));
-        assertThat(answers.getSize()).isEqualTo(1);
+        assertThat(answers.getSize()).isEqualTo(2);
     }
 
     @Test
