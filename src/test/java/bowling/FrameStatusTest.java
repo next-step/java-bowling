@@ -3,6 +3,7 @@ package bowling;
 import bowling.domain.Scoring;
 import org.junit.jupiter.api.Test;
 
+import static bowling.domain.Scoring.MISS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FrameStatusTest {
@@ -21,13 +22,26 @@ public class FrameStatusTest {
         assertThat(new FrameStatus(4, 2).toString()).isEqualTo("4|2");
     }
 
+    @Test
+    void gutter() {
+        assertThat(new FrameStatus(4, 0).toString()).isEqualTo("4|-");
+    }
 
     private static class FrameStatus {
-        private final int fallingPins;
+        private final int firstFallingPins;
+        private final int secondFallingPins;
         private final Scoring scoring;
 
         public FrameStatus(int fallingPins, Scoring scoring) {
-            this.fallingPins = fallingPins;
+            this(fallingPins, 0, scoring);
+        }
+
+        public FrameStatus(int firstFallingPins, int secondFallingPins) {
+            this(firstFallingPins, secondFallingPins, MISS);
+        }
+        public FrameStatus(int firstFallingPins, int secondFallingPins, Scoring scoring) {
+            this.firstFallingPins = firstFallingPins;
+            this.secondFallingPins = secondFallingPins;
             this.scoring = scoring;
         }
 
@@ -37,9 +51,16 @@ public class FrameStatusTest {
                 return "X";
             }
             if (scoring == Scoring.SPARE) {
-                return String.format("%d|/", fallingPins);
+                return String.format("%d|/", firstFallingPins);
             }
-            throw new IllegalStateException();
+
+            return String.format("%s|%s", toNumberOrGutter(firstFallingPins), toNumberOrGutter(secondFallingPins));
+        }
+
+        private String toNumberOrGutter(int fallingPins) {
+            if (fallingPins == 0)
+                return "-";
+            return String.valueOf(fallingPins);
         }
     }
 }
