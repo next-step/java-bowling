@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static bowling.Scoring.MISS;
 import static bowling.Scoring.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -40,7 +41,7 @@ public class LastFrameTest {
                         .isInstanceOf(LastFrame.class),
                 // 거터
                 () -> assertThat(new NormalFrame(9).throwBall(0).throwBall(0))
-                                .isInstanceOf(LastFrame.class)
+                        .isInstanceOf(LastFrame.class)
         );
     }
 
@@ -97,6 +98,10 @@ public class LastFrameTest {
 
         @Override
         public Frame throwBall(int fallingPins) {
+            if (isMissAndThirdThrow()) {
+                throw new IllegalBallThrownException();
+            }
+
             ballThrows.add(new BallThrow(fallingPins));
             return this;
         }
@@ -116,6 +121,11 @@ public class LastFrameTest {
             }
 
             return Scoring.nonStrikeValueOf(sumOfFallingPins()).asOptional();
+        }
+
+        private boolean isMissAndThirdThrow() {
+            return getScoring().filter(scoring -> scoring == MISS).isPresent()
+                   && ballThrows.size() == 2;
         }
 
         private BallThrow getLastThrow() {
