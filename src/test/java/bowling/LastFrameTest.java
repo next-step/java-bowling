@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
+import static bowling.Scoring.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -35,6 +36,18 @@ public class LastFrameTest {
                 () -> assertThat(new NormalFrame(9).throwBall(0).throwBall(0))
                                 .isInstanceOf(LastFrame.class)
         );
+    }
+
+    @DisplayName("마지막 프레임은 첫번째 투구가 스트라이크 인 경우 두번 더 투구할 수 있다")
+    @Test
+    void lastFrame3TimesThrow() {
+        Frame lastFrame = new NormalFrame(9).throwBall(10);
+        Frame first = lastFrame.throwBall(10);
+        assertThat(first.getScoring()).isEqualTo(STRIKE.asOptional());
+        Frame second = first.throwBall(10);
+        assertThat(second.getScoring()).isEqualTo(STRIKE.asOptional());
+        Frame third = first.throwBall(10);
+        assertThat(third.getScoring()).isEqualTo(STRIKE.asOptional());
     }
 
 
