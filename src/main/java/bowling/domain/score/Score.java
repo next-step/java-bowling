@@ -5,17 +5,26 @@ import bowling.domain.point.Point;
 
 import java.util.List;
 
-public interface Score {
+public abstract class Score {
 
-    void pitch(Point pitchedPoint);
+    protected final List<Point> points;
 
-    boolean hasScoreTurn();
+    protected Score(List<Point> points) {
+        this.points = points;
+    }
 
-    BowlType getBowlType();
+    abstract public void pitch(Point pitchedPoint);
 
-    List<Point> getPitchedPoint();
+    abstract public boolean hasScoreTurn();
 
-    int sumPoint();
+    abstract public BowlType getBowlType();
+
+    abstract public List<Point> getPitchedPoint();
+
+    abstract public int sumPoint();
 
 
+    public int getBonusCount() {
+        return getBowlType().getBonusCount();
+    }
 }
