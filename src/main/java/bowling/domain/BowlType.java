@@ -1,28 +1,23 @@
 package bowling.domain;
 
+import java.util.Arrays;
+import java.util.function.Function;
+
 public enum BowlType {
 
-    STRIKE("X"),
-    SPARE("/"),
-    GUTTER("-"),
-    ONE("1"),
-    TWO("2"),
-    THREE("3"),
-    FORE("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8"),
-    NINE("9"),
-    NONE("");
+    STRIKE(2),
+    SPARED(1),
+    MISS(0),
+    READY(0),
+    NORMAL(0);
 
-    private final String type;
+    private int bonusCount;
 
-    BowlType(String type) {
-        this.type = type;
+    BowlType(int bonusCount) {
+        this.bonusCount = bonusCount;
     }
 
-    public String getType() {
-        return type;
+    public int getBonusCount() {
+        return bonusCount;
     }
 }
