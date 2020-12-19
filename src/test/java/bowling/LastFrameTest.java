@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import static bowling.Scoring.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 /**
@@ -72,7 +73,6 @@ public class LastFrameTest {
         assertThat(lastFrame.getScoring()).isEqualTo(Optional.empty());
     }
 
-
     @DisplayName("첫번째 스트라이크인 상태에서 미스, 스페어, 거터")
     @ParameterizedTest
     @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,GUTTER"})
@@ -80,6 +80,15 @@ public class LastFrameTest {
         Frame lastFrame = new NormalFrame(9).throwBall(10);
         lastFrame.throwBall(10);
         assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring()).isEqualTo(Scoring.valueOf(scoringName).asOptional());
+    }
+
+    @DisplayName("미스는 세번째 던지기를 할 수 없다")
+    @Test
+    void missAndLastThrow() {
+        Frame lastFrame = new NormalFrame(9).throwBall(10);
+        lastFrame.throwBall(8).throwBall(1);
+        assertThatThrownBy(() -> lastFrame.throwBall(10))
+                .isInstanceOf(IllegalBallThrownException.class);
     }
 
     static class LastFrame implements Frame {
