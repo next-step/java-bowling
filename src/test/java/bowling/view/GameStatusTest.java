@@ -21,9 +21,9 @@ class GameStatusTest {
     void blank() {
         GameService gameService = new GameService("PJS");
         GameStatus gameStatus = gameService.start();
-        assertThat(gameStatus.getScoring())
+        assertThat(gameStatus.getAllFrameStatus())
                 .isEqualTo("|  PJS |      |      |      |      |      |      |      |      |      |      |");
-        assertThat(gameStatus.getScore())
+        assertThat(gameStatus.getAllScore())
                 .isEqualTo("|      |      |      |      |      |      |      |      |      |      |      |");
     }
 
@@ -34,9 +34,9 @@ class GameStatusTest {
         }
         gameService.throwBall(0);
         GameStatus gameStatus = gameService.throwBall(0);
-        assertThat(gameStatus.getScoring())
+        assertThat(gameStatus.getAllFrameStatus())
                 .isEqualTo("|  PJS |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |");
-        assertThat(gameStatus.getScore())
+        assertThat(gameStatus.getAllScore())
                 .isEqualTo("|      |  0   |  0   |  0   |  0   |  0   |  0   |  0   |  0   |  0   |  0   |");
     }
 
@@ -45,7 +45,7 @@ class GameStatusTest {
         gameService.throwBall(10);
         gameService.throwBall(10);
         GameStatus gameStatus = gameService.throwBall(10);
-        assertThat(gameStatus.getScore())
+        assertThat(gameStatus.getAllScore())
                 .isEqualTo("|      |  30  |      |      |      |      |      |      |      |      |      |");
     }
 
@@ -56,7 +56,7 @@ class GameStatusTest {
         gameService.throwBall(2);
         gameService.throwBall(8);
         GameStatus gameStatus = gameService.throwBall(0);
-        assertThat(gameStatus.getScore())
+        assertThat(gameStatus.getAllScore())
                 .isEqualTo("|      |  20  |  38  |  46  |      |      |      |      |      |      |      |");
     }
 
@@ -66,17 +66,17 @@ class GameStatusTest {
         @Test
         void firstStrike() {
             GameStatus gameStatus = gameService.throwBall(10);
-            assertThat(gameStatus.getScoring())
+            assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  X   |      |      |      |      |      |      |      |      |      |");
-            assertThat(gameStatus.getScore())
+            assertThat(gameStatus.getAllScore())
                     .isEqualTo("|      |      |      |      |      |      |      |      |      |      |      |");
         }
         @Test
         void firstThrow() {
             GameStatus gameStatus = gameService.throwBall(8);
-            assertThat(gameStatus.getScoring())
+            assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  8   |      |      |      |      |      |      |      |      |      |");
-            assertThat(gameStatus.getScore())
+            assertThat(gameStatus.getAllScore())
                     .isEqualTo("|      |      |      |      |      |      |      |      |      |      |      |");
         }
 
@@ -84,9 +84,9 @@ class GameStatusTest {
         void firstSpare() {
             gameService.throwBall(8);
             GameStatus gameStatus = gameService.throwBall(2);
-            assertThat(gameStatus.getScoring())
+            assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  8|/ |      |      |      |      |      |      |      |      |      |");
-            assertThat(gameStatus.getScore())
+            assertThat(gameStatus.getAllScore())
                     .isEqualTo("|      |      |      |      |      |      |      |      |      |      |      |");
         }
 
@@ -95,9 +95,9 @@ class GameStatusTest {
         void firstMiss() {
             gameService.throwBall(8);
             GameStatus gameStatus = gameService.throwBall(1);
-            assertThat(gameStatus.getScoring())
+            assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  8|1 |      |      |      |      |      |      |      |      |      |");
-            assertThat(gameStatus.getScore())
+            assertThat(gameStatus.getAllScore())
                     .isEqualTo("|      |  9   |      |      |      |      |      |      |      |      |      |");
         }
 
@@ -105,9 +105,9 @@ class GameStatusTest {
         void firstGutter() {
             gameService.throwBall(8);
             GameStatus gameStatus = gameService.throwBall(0);
-            assertThat(gameStatus.getScoring())
+            assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  8|- |      |      |      |      |      |      |      |      |      |");
-            assertThat(gameStatus.getScore())
+            assertThat(gameStatus.getAllScore())
                     .isEqualTo("|      |  8   |      |      |      |      |      |      |      |      |      |");
         }
 
@@ -126,9 +126,9 @@ class GameStatusTest {
             gameService.throwBall(10);
             gameService.throwBall(10);
             GameStatus gameStatus = gameService.throwBall(10);
-            assertThat(gameStatus.getScoring())
+            assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X|X|X |");
-            assertThat(gameStatus.getScore())
+            assertThat(gameStatus.getAllScore())
                     .isEqualTo("|      |  30  |  60  |  90  |  120 |  150 |  180 |  210 |  240 |  270 |  300 |");
         }
 
@@ -137,9 +137,9 @@ class GameStatusTest {
             gameService.throwBall(10);
             gameService.throwBall(10);
             GameStatus gameStatus = gameService.throwBall(3);
-            assertThat(gameStatus.getScoring())
+            assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X|X|3 |");
-            assertThat(gameStatus.getScore())
+            assertThat(gameStatus.getAllScore())
                     .isEqualTo("|      |  30  |  60  |  90  |  120 |  150 |  180 |  210 |  240 |  270 |  293 |");
         }
 
@@ -166,9 +166,9 @@ class GameStatusTest {
         gameService.throwBall(2);
         gameService.throwBall(8);
         GameStatus gameStatus = gameService.throwBall(6);
-        assertThat(gameStatus.getScoring())
+        assertThat(gameStatus.getAllFrameStatus())
                 .isEqualTo("|  PJS |  1|4 |  4|5 |  6|/ |  5|/ |  X   |  -|1 |  7|/ |  6|/ |  X   |  2|/|6 |");
-        assertThat(gameStatus.getScore())
+        assertThat(gameStatus.getAllScore())
                 .isEqualTo("|      |  5   |  14  |  29  |  49  |  60  |  61  |  77  |  97  |  117 |  133 |");
     }
 }

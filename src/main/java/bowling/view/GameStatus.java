@@ -19,13 +19,13 @@ public class GameStatus {
         this.game = game;
     }
 
-    public String getScoring() {
+    public String getAllFrameStatus() {
         return "|  " + game.getPlayerName() + " " +
                "|" + getFrameStatus() +
                "|";
     }
 
-    public String getScore() {
+    public String getAllScore() {
         return "|      " +
                "|" + getFrameScore() +
                "|";

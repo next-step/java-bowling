@@ -7,7 +7,8 @@ import static java.util.stream.Collectors.joining;
 public class ResultView {
     public static void printResult(GameStatus status) {
         System.out.println(getFrameTitle());
-        System.out.println(status.toString());
+        System.out.println(status.getAllFrameStatus());
+        System.out.println(status.getAllScore());
     }
 
     private static String getFrameTitle() {
