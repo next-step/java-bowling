@@ -40,16 +40,9 @@ public class NormalFrame implements Frame {
         return ballThrows;
     }
 
+    @Override
     public int getNumber() {
         return number;
-    }
-
-    private void assignBallThrow(int fallingPins) {
-        if (ballThrows.isEmpty()) {
-            ballThrows.add(new BallThrow(fallingPins));
-            return;
-        }
-        ballThrows.add(ballThrows.get(0).throwSecond(fallingPins));
     }
 
     @Override
@@ -79,6 +72,14 @@ public class NormalFrame implements Frame {
             third = getFallingPinOfIndex(getNextFrame(), 0);
         }
         return new Score(first, second, third);
+    }
+
+    private void assignBallThrow(int fallingPins) {
+        if (ballThrows.isEmpty()) {
+            ballThrows.add(new BallThrow(fallingPins));
+            return;
+        }
+        ballThrows.add(ballThrows.get(0).throwSecond(fallingPins));
     }
 
     private Frame getFrame() {
