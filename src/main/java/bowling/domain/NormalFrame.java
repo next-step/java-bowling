@@ -1,10 +1,10 @@
-package bowling;
+package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static bowling.Scoring.STRIKE;
+import static bowling.domain.Scoring.STRIKE;
 
 class NormalFrame implements Frame {
     private final List<BallThrow> ballThrows = new ArrayList<>();

@@ -1,9 +1,9 @@
-package bowling;
+package bowling.domain;
 
 import java.util.Optional;
 
-import static bowling.BallThrow.MAX_PINS;
-import static bowling.BallThrow.MIN_PINS;
+import static bowling.domain.BallThrow.MAX_PINS;
+import static bowling.domain.BallThrow.MIN_PINS;
 
 enum Scoring {
     STRIKE, MISS, GUTTER, SPARE;

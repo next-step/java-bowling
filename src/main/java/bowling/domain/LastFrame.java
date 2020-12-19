@@ -1,11 +1,11 @@
-package bowling;
+package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static bowling.BallThrow.MAX_PINS;
-import static bowling.Scoring.STRIKE;
+import static bowling.domain.BallThrow.MAX_PINS;
+import static bowling.domain.Scoring.STRIKE;
 
 class LastFrame implements Frame {
 
