@@ -34,15 +34,12 @@ class BallThrow {
         return new BallThrow(secondFallingPins, lastFrame);
     }
 
-    public BallThrow throwThird(int thirdFallingPins, BallThrow firstBallThrow) {
+    public BallThrow throwThird(int thirdFallingPins, BallThrow firstBallThrow, BallThrow secondBallThrow) {
         if (!lastFrame) {
             throw new IllegalBallThrownException();
         }
-        if (firstBallThrow.fallingPins != MAX_PINS) {
+        if (firstBallThrow.fallingPins + secondBallThrow.fallingPins < MAX_PINS) {
             throw new IllegalBallThrownException();
-        }
-        if (this.fallingPins + thirdFallingPins > MAX_PINS && this.fallingPins < MAX_PINS) {
-            throw new IllegalFallingPinsException();
         }
         return new BallThrow(thirdFallingPins, true);
     }

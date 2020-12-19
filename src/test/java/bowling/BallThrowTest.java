@@ -73,7 +73,7 @@ public class BallThrowTest {
     void lastFrameThirdThrow() {
         BallThrow first = new BallThrow(10, true);
         BallThrow second = first.throwSecond(2);
-        assertThat(second.throwThird(3, first)).isEqualTo(new BallThrow(3));
+        assertThat(second.throwThird(3, first, second)).isEqualTo(new BallThrow(3));
     }
 
     @DisplayName("마지막 프레임이 아니면 세번째 투구를 던질 수 없다")
@@ -81,7 +81,7 @@ public class BallThrowTest {
     void nonLastFrameCannotThirdThrow() {
         BallThrow first = new BallThrow(2, false);
         BallThrow second = first.throwSecond(2);
-        assertThatThrownBy(() -> second.throwThird(3, first))
+        assertThatThrownBy(() -> second.throwThird(3, first, second))
                 .isInstanceOf(IllegalBallThrownException.class);
     }
 
@@ -90,7 +90,7 @@ public class BallThrowTest {
     void thirdThrowExists() {
         BallThrow first = new BallThrow(1, true);
         BallThrow second = first.throwSecond(2);
-        assertThatThrownBy(() -> second.throwThird(3, first))
+        assertThatThrownBy(() -> second.throwThird(3, first, second))
                 .isInstanceOf(IllegalBallThrownException.class);
 
     }
@@ -100,16 +100,25 @@ public class BallThrowTest {
     void thirdThrow10Pins() {
         BallThrow first = new BallThrow(10, true);
         BallThrow second = first.throwSecond(10);
-        assertThat(second.throwThird(10, first)).isEqualTo(new BallThrow(10));
+        assertThat(second.throwThird(10, first, second)).isEqualTo(new BallThrow(10));
     }
 
-    @DisplayName("마지막 프레임의 세번째 투구는 두번째 투구가 10 미만의 핀수를 가진다면 또다시 10개의 투구를 가질 수 없다")
+    @DisplayName("마지막 프레임의 세번째 투구는 첫번째와 두번째 핀수의 합이 10 이 아니라면 예외가 발생한다")
     @Test
     void thirdThrowCannotHave10PinsWhenSecondPinUnder10() {
-        BallThrow first = new BallThrow(10, true);
-        BallThrow second = first.throwSecond(5);
-        assertThatThrownBy(() -> second.throwThird(10, first))
-                .isInstanceOf(IllegalFallingPinsException.class);
+        BallThrow first = new BallThrow(8, true);
+        BallThrow second = first.throwSecond(1);
+        assertThatThrownBy(() -> second.throwThird(10, first, second))
+                .isInstanceOf(IllegalBallThrownException.class);
+    }
+
+    @DisplayName("마지막 프레임의 세번째 투구는 첫번째와 두번째 핀수의 합이 10 이라면 세번째 투구가 존재한다")
+    @Test
+    void thirdThrowCannotHave10PinsWhenSecondPinUnder10_() {
+        BallThrow first = new BallThrow(8, true);
+        BallThrow second = first.throwSecond(2);
+        assertThat(second.throwThird(10, first, second))
+                .isEqualTo(new BallThrow(10));
     }
 
 }
