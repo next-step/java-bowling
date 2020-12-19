@@ -1,11 +1,9 @@
 package bowling.domain;
 
-import java.util.Optional;
-
 public interface Frame {
     Frame throwBall(int fallingPins);
 
-    Optional<Scoring> getScoring();
+    Scoring getScoring();
 
     int getNumber();
 

@@ -2,9 +2,9 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static bowling.domain.BallThrow.MAX_PINS;
+import static bowling.domain.Scoring.NONE;
 import static bowling.domain.Scoring.STRIKE;
 import static bowling.util.Lists.getAsOptional;
 import static java.util.stream.Collectors.toList;
@@ -30,17 +30,17 @@ class LastFrame implements Frame {
     }
 
     @Override
-    public Optional<Scoring> getScoring() {
+    public Scoring getScoring() {
         if (ballThrows.isEmpty()) {
-            return Optional.empty();
+            return NONE;
         }
 
         if (getLastThrow().isStrike()) {
-            return STRIKE.asOptional();
+            return STRIKE;
         }
 
         if (isNotFirstThrowStrike() && ballThrows.size() == 1) {
-            return Optional.empty();
+            return NONE;
         }
 
         List<BallThrow> lastTwoThrows = ballThrows.stream()
@@ -71,6 +71,12 @@ class LastFrame implements Frame {
 
     @Override
     public FrameStatus getFrameStatus() {
+        if (ballThrows.stream().mapToInt(BallThrow::getFallingPins).sum() == 30) {
+            // turkey
+        }
+        if (isFirstThrowStrike()) {
+//            strikeAndMore(, 10)
+        }
         throw new UnsupportedOperationException();
     }
 

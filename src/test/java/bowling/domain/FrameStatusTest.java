@@ -25,4 +25,8 @@ public class FrameStatusTest {
         assertThat(new FrameStatus(4, 0).toString()).isEqualTo("4|-");
     }
 
+    @Test
+    void playing() {
+        assertThat(FrameStatus.playing(4).toString()).isEqualTo("4");
+    }
 }

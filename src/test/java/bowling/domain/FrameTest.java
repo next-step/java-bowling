@@ -6,10 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.Optional;
-
-import static bowling.domain.Scoring.SPARE;
-import static bowling.domain.Scoring.STRIKE;
+import static bowling.domain.Scoring.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -42,14 +39,14 @@ public class FrameTest {
     void secondThrow() {
         frame.throwBall(5);
         frame.throwBall(5);
-        assertThat(frame.getScoring()).isEqualTo(SPARE.asOptional());
+        assertThat(frame.getScoring()).isEqualTo(SPARE);
     }
 
     @DisplayName("10개를 쓰러뜨리면 스트라이크")
     @Test
     void strike() {
         frame.throwBall(10);
-        assertThat(frame.getScoring()).isEqualTo(STRIKE.asOptional());
+        assertThat(frame.getScoring()).isEqualTo(STRIKE);
     }
 
     @DisplayName("미스, 스페어, 거터")
@@ -58,15 +55,15 @@ public class FrameTest {
     void scoring(int firstThrow, int secondThrow, String scoringName) {
         frame.throwBall(firstThrow);
         frame.throwBall(secondThrow);
-        assertThat(frame.getScoring()).isEqualTo(Scoring.valueOf(scoringName).asOptional());
+        assertThat(frame.getScoring()).isEqualTo(Scoring.valueOf(scoringName));
     }
 
     @DisplayName("프레임이 끝나지 않으면 반환할 상태가 없다")
     @Test
     void incomplete() {
-        assertThat(frame.getScoring()).isEqualTo(Optional.empty());
+        assertThat(frame.getScoring()).isEqualTo(NONE);
         frame.throwBall(0);
-        assertThat(frame.getScoring()).isEqualTo(Optional.empty());
+        assertThat(frame.getScoring()).isEqualTo(NONE);
     }
 
     @DisplayName("프레임이 끝나지 않으면 같은 프레임을 반환한다")

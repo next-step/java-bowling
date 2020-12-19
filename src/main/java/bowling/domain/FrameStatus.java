@@ -33,10 +33,17 @@ class FrameStatus {
         return new FrameStatus(first, second);
     }
 
+    public static FrameStatus playing(int first) {
+        return new FrameStatus(first, NONE);
+    }
+
     @Override
     public String toString() {
         if (scoring == Scoring.STRIKE) {
             return "X";
+        }
+        if (scoring == Scoring.NONE) {
+            return String.valueOf(firstFallingPins);
         }
         if (scoring == Scoring.SPARE) {
             return String.format("%d|/", firstFallingPins);

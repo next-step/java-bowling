@@ -1,29 +1,23 @@
 package bowling.domain;
 
-import java.util.Optional;
-
 import static bowling.domain.BallThrow.MAX_PINS;
 
 public enum Scoring {
-    STRIKE, MISS, SPARE;
+    STRIKE, MISS, SPARE, NONE;
 
-    Optional<Scoring> asOptional() {
-        return Optional.of(this);
-    }
-
-    static Optional<Scoring> valueOf(Integer first, Integer second) {
+    static Scoring valueOf(Integer first, Integer second) {
         if (first == 10) {
-            return STRIKE.asOptional();
+            return STRIKE;
         }
 
         if (second == null) {
-            return Optional.empty();
+            return NONE;
         }
 
         if (first + second == MAX_PINS) {
-            return SPARE.asOptional();
+            return SPARE;
         }
 
-        return MISS.asOptional();
+        return MISS;
     }
 }

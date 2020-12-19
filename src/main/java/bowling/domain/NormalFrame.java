@@ -2,10 +2,8 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static bowling.domain.Scoring.SPARE;
-import static bowling.domain.Scoring.STRIKE;
+import static bowling.domain.Scoring.*;
 import static bowling.util.Lists.getAsOptional;
 
 public class NormalFrame implements Frame {
@@ -27,9 +25,9 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Optional<Scoring> getScoring() {
+    public Scoring getScoring() {
         if (isIncomplete()) {
-            return Optional.empty();
+            return Scoring.NONE;
         }
 
         Integer first = getFallingPins(ballThrows, 0);
@@ -41,13 +39,13 @@ public class NormalFrame implements Frame {
     public FrameStatus getFrameStatus() {
         Integer first = getFallingPins(ballThrows, 0);
         Integer second = getFallingPins(ballThrows, 1);
-        Optional<Scoring> scoring = Scoring.valueOf(first, second);
+        Scoring scoring = Scoring.valueOf(first, second);
 
-        if (scoring.equals(STRIKE.asOptional())) {
+        if (scoring.equals(STRIKE)) {
             return FrameStatus.strike();
         }
 
-        if (scoring.equals(SPARE.asOptional())) {
+        if (scoring.equals(SPARE)) {
             return FrameStatus.spare(first);
         }
 
@@ -73,12 +71,13 @@ public class NormalFrame implements Frame {
     }
 
     private Frame getNextFrame() {
-        return getScoring().map(__ -> {
-            if (number < 9) {
-                return new NormalFrame(number + 1);
-            }
-            return new LastFrame();
-        }).orElse(this);
+        if (getScoring() == NONE) {
+            return this;
+        }
+        if (number < 9) {
+            return new NormalFrame(number + 1);
+        }
+        return new LastFrame();
     }
 
     private boolean isIncomplete() {

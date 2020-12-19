@@ -25,7 +25,7 @@ public class GameStatus {
         return IntStream.rangeClosed(1, 10)
                 .mapToObj(i -> game.getFrame(i))
                 .map(frame -> {
-                    return frame.flatMap(Frame::getScoring)
+                    return frame.map(Frame::getScoring)
                             .map(scoring -> {
                                 if (scoring == Scoring.STRIKE) {
                                     return "X";
