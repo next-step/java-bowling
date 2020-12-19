@@ -27,12 +27,11 @@ public class Answers {
         return answers;
     }
 
-    public DeleteHistory deleteAnswerMatchOwner(User loginUser) throws CannotDeleteException {
+    public DeleteHistory deleteHistory(User loginUser) throws CannotDeleteException {
         DeleteHistory deleteHistory = new DeleteHistory();
-        for (Answer answer : this.answers) {
-            if (answer.isMatchOwner(loginUser)) {
-                deleteHistory = answer.delete();
-            }
+        for (Answer answer : Collections.unmodifiableList(this.answers)) {
+            answer.validateNotMatchAnswerUser(loginUser);
+            deleteHistory = answer.delete();
         }
         return deleteHistory;
     }

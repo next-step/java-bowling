@@ -67,11 +67,10 @@ public class Question extends AbstractEntity {
         this.qnaAnswers = Answers.of(answer);
     }
 
-    public boolean isOwnerMatch(User loginUser) throws CannotDeleteException {
+    public void validatePermission(User loginUser) throws CannotDeleteException {
         if (!this.isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-        return true;
     }
 
     private boolean isOwner(User loginUser) {
