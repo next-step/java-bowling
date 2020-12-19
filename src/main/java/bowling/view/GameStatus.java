@@ -28,7 +28,7 @@ public class GameStatus {
                 .map(frame -> frame.map(Frame::getFrameStatus).orElse(null))
                 .map(this::toString)
                 .map(Object::toString)
-                .map(score -> String.format("  %-3s", score))
+                .map(score -> String.format("  %-3s ", score))
                 .collect(joining("|"));
     }
 

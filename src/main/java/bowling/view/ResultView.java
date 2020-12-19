@@ -12,7 +12,7 @@ public class ResultView {
 
     private static String getFrameTitle() {
         String frameTitle = IntStream.rangeClosed(1, 10)
-                .mapToObj(i -> String.format("  %-2d ", i))
+                .mapToObj(i -> String.format("  %02d  ", i))
                 .collect(joining("|"));
         return "| NAME |" + frameTitle + "|";
     }
