@@ -156,7 +156,7 @@ public class LastFrameTest {
                 return this;
             }
 
-            ballThrows.add(getLastThrow().throwThird(fallingPins, ballThrows.get(0), ballThrows.get(1)));
+            ballThrows.add(getLastThrow().throwThird(fallingPins, getFirstBallThrow()));
             return this;
         }
 
