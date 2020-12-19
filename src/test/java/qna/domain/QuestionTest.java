@@ -29,9 +29,9 @@ public class QuestionTest {
 
     @Test
     @DisplayName("질문 삭제")
-    public void 질문_삭제() {
+    public void 질문_삭제() throws CannotDeleteException {
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        question.delete();
+        question.delete(UserTest.JAVAJIGI);
         assertTrue(question.isDeleted());
     }
 }
