@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static bowling.domain.Scoring.STRIKE;
+import static bowling.util.Lists.getAsOptional;
 
 public class NormalFrame implements Frame {
     private final List<BallThrow> ballThrows = new ArrayList<>();
@@ -29,10 +29,12 @@ public class NormalFrame implements Frame {
         if (isIncomplete()) {
             return Optional.empty();
         }
-        if (ballThrows.get(0).isStrike()) {
-            return Optional.of(STRIKE);
-        }
-        return Scoring.nonStrikeValueOf(sumOfFallingPins()).asOptional();
+
+        Integer first = getAsOptional(ballThrows, 0).map(BallThrow::getFallingPins)
+                .orElse(null);
+        Integer second = getAsOptional(ballThrows, 1).map(BallThrow::getFallingPins)
+                .orElse(null);
+        return Scoring.valueOf(first, second);
     }
 
     public int sumOfFallingPins() {

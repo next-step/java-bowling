@@ -78,7 +78,7 @@ public class LastFrameTest {
 
     @DisplayName("첫번째 스트라이크인 상태에서 미스, 스페어, 거터")
     @ParameterizedTest
-    @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,GUTTER"})
+    @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,MISS"})
     void lastFrameFirstStrikeAndScoring(int firstThrow, int secondThrow, String scoringName) {
         lastFrame.throwBall(10);
         assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring())

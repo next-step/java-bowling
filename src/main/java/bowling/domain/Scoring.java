@@ -3,7 +3,6 @@ package bowling.domain;
 import java.util.Optional;
 
 import static bowling.domain.BallThrow.MAX_PINS;
-import static bowling.domain.BallThrow.MIN_PINS;
 
 public enum Scoring {
     STRIKE, MISS, SPARE;
@@ -12,15 +11,19 @@ public enum Scoring {
         return Optional.of(this);
     }
 
-    static Scoring nonStrikeValueOf(int sumOfFallingPins) {
-        if (sumOfFallingPins > MAX_PINS || sumOfFallingPins < MIN_PINS) {
-            throw new IllegalArgumentException();
+    static Optional<Scoring> valueOf(Integer first, Integer second) {
+        if (first == 10) {
+            return STRIKE.asOptional();
         }
 
-        if (sumOfFallingPins == MAX_PINS) {
-            return SPARE;
+        if (second == null) {
+            return Optional.empty();
         }
 
-        return MISS;
+        if (first + second == MAX_PINS) {
+            return SPARE.asOptional();
+        }
+
+        return MISS.asOptional();
     }
 }

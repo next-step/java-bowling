@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import static bowling.domain.BallThrow.MAX_PINS;
 import static bowling.domain.Scoring.STRIKE;
+import static bowling.util.Lists.getAsOptional;
+import static java.util.stream.Collectors.toList;
 
 class LastFrame implements Frame {
 
@@ -41,8 +43,14 @@ class LastFrame implements Frame {
             return Optional.empty();
         }
 
-        return Scoring.nonStrikeValueOf(sumOfFallingPins())
-                .asOptional();
+        List<BallThrow> lastTwoThrows = ballThrows.stream()
+                .skip(getSkipBallThrows())
+                .collect(toList());
+
+        Integer first = getAsOptional(lastTwoThrows, 0).map(BallThrow::getFallingPins).orElse(null);
+        Integer second = getAsOptional(lastTwoThrows, 1).map(BallThrow::getFallingPins).orElse(null);
+
+        return Scoring.valueOf(first, second);
     }
 
     @Override
@@ -52,10 +60,7 @@ class LastFrame implements Frame {
 
     @Override
     public int sumOfFallingPins() {
-        int skipBallThrows = 0;
-        if (!isNotFirstThrowStrike() && ballThrows.size() == 3) {
-            skipBallThrows = 1;
-        }
+        int skipBallThrows = getSkipBallThrows();
 
         return ballThrows.stream()
                 .skip(skipBallThrows)
@@ -72,6 +77,13 @@ class LastFrame implements Frame {
             return ballThrows.size() == 2;
         }
         return ballThrows.size() == 3;
+    }
+
+    private int getSkipBallThrows() {
+        if (!isNotFirstThrowStrike() && ballThrows.size() == 3) {
+            return 1;
+        }
+        return 0;
     }
 
     private BallThrow getLastThrow() {
