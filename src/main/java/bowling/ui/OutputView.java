@@ -2,6 +2,7 @@ package bowling.ui;
 
 import bowling.domain.frame.FrameResult;
 import bowling.domain.player.Player;
+import bowling.domain.score.Score;
 import bowling.domain.score.ScoreType;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,13 @@ public class OutputView {
     public static void showInitializedGame(Player player) {
         System.out.println(getHeaderAreaText());
         System.out.println(getInitValueAreaText(player.toString()));
+        System.out.println(getInitScoreAreaText());
     }
 
     public static void showDashBoard(Player player, List<FrameResult> frameResults) {
         System.out.println(getHeaderAreaText());
         System.out.println(getCurrentValueAreaText(player.toString(), frameResults));
+        System.out.println(getCurrentScoreAreaText(frameResults));
     }
 
     private static String getHeaderAreaText() {
@@ -40,8 +43,16 @@ public class OutputView {
         return buildStartFrame(playerName) + getEmptyValueTextPerFrame();
     }
 
+    private static String getInitScoreAreaText() {
+        return buildStartFrame(AREA_PER_FRAME) + getEmptyTenFrames();
+    }
+
     private static String getCurrentValueAreaText(String playerName, List<FrameResult> frameResults) {
         return buildStartFrame(playerName) + getCurrentValueTextPerFrame(frameResults);
+    }
+
+    private static String getCurrentScoreAreaText(List<FrameResult> frameResults) {
+        return buildStartFrame(AREA_PER_FRAME) + getCurrentScorePerFrame(frameResults);
     }
 
     private static String getHeaderTitlePerFrame() {
@@ -60,6 +71,27 @@ public class OutputView {
         return frameResults.stream()
             .map(frameResult -> buildNoneStartFrame(bowlingSymbol(frameResult)))
             .collect(Collectors.joining());
+    }
+
+    private static String getEmptyTenFrames() {
+        return IntStream.rangeClosed(1, 10)
+            .mapToObj(index -> buildNoneStartFrame(AREA_PER_FRAME))
+            .collect(Collectors.joining());
+    }
+
+    private static String getCurrentScorePerFrame(List<FrameResult> frameResults) {
+        List<Score> scores = frameResults.stream()
+            .map(FrameResult::getScore).collect(Collectors.toList());
+        StringBuilder scoreDisplays = new StringBuilder();
+
+        int sum = 0;
+        for (Score score : scores) {
+            sum += score.getValue();
+            scoreDisplays.append(score.getScoreType() != ScoreType.READY
+                ? buildNoneStartFrame(String.valueOf(sum)) : buildNoneStartFrame(EMPTY));
+        }
+
+        return scoreDisplays.toString();
     }
 
     private static String bowlingSymbol(FrameResult frameResult) {

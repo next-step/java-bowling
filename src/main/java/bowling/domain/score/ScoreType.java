@@ -4,6 +4,7 @@ public enum ScoreType {
     STRIKE(2),
     SPARE(1),
     STRIKE_AND_SPARE(0),
+    NORMAL(0),
     MISS(0),
     READY(0);
 
