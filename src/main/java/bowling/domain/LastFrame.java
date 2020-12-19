@@ -54,7 +54,7 @@ class LastFrame implements Frame {
 
     @Override
     public int getNumber() {
-        return 0;
+        return 10;
     }
 
     @Override

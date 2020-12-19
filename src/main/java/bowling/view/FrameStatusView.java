@@ -6,8 +6,6 @@ import static bowling.domain.BallThrow.MAX_PINS;
 import static bowling.domain.BallThrow.MIN_PINS;
 
 public class FrameStatusView extends FrameStatus {
-
-
     FrameStatusView(Integer first, Integer second, Integer third) {
         super(first, second, third);
     }

@@ -14,7 +14,7 @@ public interface Frame {
     List<BallThrow> getBallThrows();
 
     default FrameStatus getFrameStatus() {
-        return new FrameStatus(getFallingPins( 0),
+        return new FrameStatus(getFallingPins(0),
                                getFallingPins(1),
                                getFallingPins(2));
     }
@@ -22,7 +22,6 @@ public interface Frame {
     default boolean isFinish() {
         return false;
     }
-
 
     default Integer getFallingPins(int index) {
         return getAsOptional(getBallThrows(), index)
