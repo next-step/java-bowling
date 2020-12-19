@@ -53,7 +53,7 @@ public class FrameTest {
 
     @DisplayName("미스, 스페어, 거터")
     @ParameterizedTest
-    @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,GUTTER"})
+    @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,MISS"})
     void scoring(int firstThrow, int secondThrow, String scoringName) {
         frame.throwBall(firstThrow);
         frame.throwBall(secondThrow);

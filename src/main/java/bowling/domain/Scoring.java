@@ -6,7 +6,7 @@ import static bowling.domain.BallThrow.MAX_PINS;
 import static bowling.domain.BallThrow.MIN_PINS;
 
 public enum Scoring {
-    STRIKE, MISS, GUTTER, SPARE;
+    STRIKE, MISS, SPARE;
 
     Optional<Scoring> asOptional() {
         return Optional.of(this);
@@ -19,10 +19,6 @@ public enum Scoring {
 
         if (sumOfFallingPins == MAX_PINS) {
             return SPARE;
-        }
-
-        if (sumOfFallingPins == MIN_PINS) {
-            return GUTTER;
         }
 
         return MISS;

@@ -62,7 +62,7 @@ public class LastFrameTest {
 
     @DisplayName("마지막 프레임의 미스, 스페어, 거터")
     @ParameterizedTest
-    @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,GUTTER"})
+    @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,MISS"})
     void lastFrameScoring(int firstThrow, int secondThrow, String scoringName) {
         assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring())
                 .isEqualTo(Scoring.valueOf(scoringName).asOptional());
