@@ -1,11 +1,11 @@
 package bowling.domain;
 
-public class Frame {
+public class NormalFrameStatus {
 
     private DownedPinPerTry first;
     private DownedPinPerTry second;
 
-    public Frame() {
+    public NormalFrameStatus() {
     }
 
     public void record(DownedPinPerTry downedPinPerTry) {

@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FrameTest {
+public class NormalFrameStatusTest {
 
     @Test
     @DisplayName("일반적인 상황의 2회 입력 테스트")
     void testTwoTime() {
-        Frame frame = new Frame();
+        NormalFrameStatus frame = new NormalFrameStatus();
         DownedPinPerTry firstTry = DownedPinPerTry.fromNumber(3);
 
         frame.record(firstTry);
@@ -23,7 +23,7 @@ public class FrameTest {
     @Test
     @DisplayName("첫 투구에 10개가 입력되었을 때 프레임 종료조건 테스트")
     void testStrike() {
-        Frame frame = new Frame();
+        NormalFrameStatus frame = new NormalFrameStatus();
         DownedPinPerTry firstTry = DownedPinPerTry.fromNumber(10);
 
         frame.record(firstTry);
