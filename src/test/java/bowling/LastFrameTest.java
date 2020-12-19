@@ -7,11 +7,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static bowling.Scoring.MISS;
 import static bowling.Scoring.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -103,11 +101,8 @@ public class LastFrameTest {
 
         @Override
         public Frame throwBall(int fallingPins) {
-            if (isMissAndThirdThrow()) {
-                throw new IllegalBallThrownException();
-            }
             if (ballThrows.isEmpty()) {
-                ballThrows.add(new BallThrow(fallingPins));
+                ballThrows.add(new BallThrow(fallingPins, true));
                 return this;
             }
 
@@ -130,7 +125,7 @@ public class LastFrameTest {
                 return STRIKE.asOptional();
             }
 
-            if (!isFirstThrowStrike() && ballThrows.size() < 2) {
+            if (isNotFirstThrowStrike() && ballThrows.size() < 2) {
                 return Optional.empty();
             }
 
@@ -145,26 +140,23 @@ public class LastFrameTest {
 
         @Override
         public int sumOfFallingPins() {
-            List<BallThrow> tmp = new ArrayList<>(this.ballThrows);
-            Collections.reverse(tmp);
-
-            return tmp.stream()
-                    .limit(2)
+            if (!isNotFirstThrowStrike() && ballThrows.size() == 3) {
+                return ballThrows.stream()
+                        .skip(1)
+                        .mapToInt(BallThrow::getFallingPins)
+                        .sum();
+            }
+            return ballThrows.stream()
                     .mapToInt(BallThrow::getFallingPins)
                     .sum();
-        }
-
-        private boolean isMissAndThirdThrow() {
-            return getScoring().filter(scoring -> scoring == MISS).isPresent()
-                   && ballThrows.size() == 2;
         }
 
         private BallThrow getLastThrow() {
             return ballThrows.get(ballThrows.size() - 1);
         }
 
-        private boolean isFirstThrowStrike() {
-            return ballThrows.get(0).isStrike();
+        private boolean isNotFirstThrowStrike() {
+            return !ballThrows.get(0).isStrike();
         }
     }
 }

@@ -13,6 +13,10 @@ enum Scoring {
     }
 
     static Scoring nonStrikeValueOf(int sumOfFallingPins) {
+        if (sumOfFallingPins > MAX_PINS || sumOfFallingPins < MIN_PINS) {
+            throw new IllegalArgumentException();
+        }
+
         if (sumOfFallingPins == MAX_PINS) {
             return SPARE;
         }
