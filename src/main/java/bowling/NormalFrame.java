@@ -56,7 +56,7 @@ class NormalFrame implements Frame {
             if (number < 9) {
                 return new NormalFrame(number + 1);
             }
-            return new LastFrameTest.LastFrame();
+            return new LastFrame();
         }).orElse(this);
     }
 
