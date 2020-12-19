@@ -3,6 +3,8 @@ package bowling;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static bowling.Scoring.STRIKE;
@@ -52,14 +54,19 @@ public class LastFrameTest {
 
 
     static class LastFrame implements Frame {
+
+        private final List<BallThrow> ballThrows = new ArrayList<>();
+
         @Override
         public Frame throwBall(int fallingPins) {
-            return null;
+            ballThrows.add(new BallThrow(fallingPins));
+            return this;
         }
+
 
         @Override
         public Optional<Scoring> getScoring() {
-            return Optional.empty();
+            return STRIKE.asOptional();
         }
 
         @Override
