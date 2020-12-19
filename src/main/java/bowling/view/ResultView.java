@@ -1,6 +1,4 @@
-package bowling;
-
-import bowling.view.GameStatus;
+package bowling.view;
 
 import java.util.stream.IntStream;
 
@@ -13,9 +11,9 @@ public class ResultView {
     }
 
     private static String getFrameTitle() {
-        String frameTitle = IntStream.rangeClosed(0, 10)
-                .mapToObj(i -> String.format("  %d  ", i))
+        String frameTitle = IntStream.rangeClosed(1, 10)
+                .mapToObj(i -> String.format("  %-2d ", i))
                 .collect(joining("|"));
-        return "| NAME |" + frameTitle;
+        return "| NAME |" + frameTitle + "|";
     }
 }

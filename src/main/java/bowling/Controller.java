@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.view.InputView;
+import bowling.view.ResultView;
 
 public class Controller {
     public void execute() {
