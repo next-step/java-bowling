@@ -63,6 +63,11 @@ class LastFrame implements Frame {
     }
 
     @Override
+    public Score getScore() {
+        return null;
+    }
+
+    @Override
     public boolean isFinish() {
         if (ballThrows.isEmpty()) {
             return false;

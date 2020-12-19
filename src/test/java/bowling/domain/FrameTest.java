@@ -95,5 +95,31 @@ public class FrameTest {
         assertThat(nextFrame.getNumber()).isEqualTo(2);
     }
 
+    @Test
+    void scoreMiss() {
+        frame.throwBall(8);
+        assertThat(frame.getScore().toInt()).isNull();
+        frame.throwBall(1);
+        assertThat(frame.getScore().toInt()).isEqualTo(9);
+    }
 
+    @Test
+    void scoreSpare() {
+        frame.throwBall(8);
+        assertThat(frame.getScore().toInt()).isNull();
+        Frame nextFrame = this.frame.throwBall(2);
+        assertThat(frame.getScore().toInt()).isNull();
+        nextFrame.throwBall(8);
+        assertThat(frame.getScore().toInt()).isEqualTo(18);
+    }
+
+    @Test
+    void scoreStrike() {
+        Frame nextFrame = this.frame.throwBall(10);
+        assertThat(this.frame.getScore().toInt()).isNull();
+        nextFrame.throwBall(2);
+        assertThat(this.frame.getScore().toInt()).isNull();
+        nextFrame.throwBall(8);
+        assertThat(this.frame.getScore().toInt()).isEqualTo(20);
+    }
 }

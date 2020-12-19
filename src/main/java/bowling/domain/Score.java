@@ -18,16 +18,12 @@ class Score {
     }
 
     public Integer toInt() {
-        if (first() == null) {
+        if (first() == null || second() == null) {
             return null;
         }
 
         if (first() == 10) {
             return sumAll();
-        }
-
-        if (second() == null) {
-            return first();
         }
 
         if (first() + second() == 10) {

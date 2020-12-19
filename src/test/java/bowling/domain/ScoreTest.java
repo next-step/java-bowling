@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ScoreTest {
     @Test
     void miss() {
-        assertThat(new Score(0, null, null).toInt()).isEqualTo(0);
+        assertThat(new Score(0, null, null).toInt()).isNull();
         assertThat(new Score(8, 1, null).toInt()).isEqualTo(9);
     }
 

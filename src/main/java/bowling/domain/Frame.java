@@ -13,6 +13,8 @@ public interface Frame {
 
     List<BallThrow> getBallThrows();
 
+    Score getScore();
+
     default FrameStatus getFrameStatus() {
         return new FrameStatus(getFallingPins(0),
                                getFallingPins(1),
