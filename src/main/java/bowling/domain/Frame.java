@@ -13,6 +13,8 @@ public interface Frame {
 
     List<BallThrow> getBallThrows();
 
+    Frame getNextFrame();
+
     Score getScore();
 
     default FrameStatus getFrameStatus() {

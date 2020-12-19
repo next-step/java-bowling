@@ -144,4 +144,32 @@ public class LastFrameTest {
         assertThat(actualLastFrame.isFinish()).isTrue();
     }
 
+    @Test
+    void scoreMiss() {
+        lastFrame.throwBall(8);
+        assertThat(lastFrame.getScore().toInt()).isNull();
+        lastFrame.throwBall(1);
+        assertThat(lastFrame.getScore().toInt()).isEqualTo(9);
+    }
+
+    @Test
+    void scoreSpare() {
+        lastFrame.throwBall(8);
+        assertThat(lastFrame.getScore().toInt()).isNull();
+        lastFrame.throwBall(2);
+        assertThat(lastFrame.getScore().toInt()).isNull();
+        lastFrame.throwBall(8);
+        assertThat(lastFrame.getScore().toInt()).isEqualTo(18);
+    }
+
+    @Test
+    void scoreStrike() {
+        lastFrame.throwBall(10);
+        assertThat(lastFrame.getScore().toInt()).isNull();
+        lastFrame.throwBall(2);
+        assertThat(lastFrame.getScore().toInt()).isNull();
+        lastFrame.throwBall(8);
+        assertThat(lastFrame.getScore().toInt()).isEqualTo(20);
+    }
+
 }
