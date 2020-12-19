@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static bowling.domain.BallThrow.MAX_PINS;
-import static bowling.domain.Scoring.NONE;
-import static bowling.domain.Scoring.STRIKE;
+import static bowling.domain.Scoring.*;
 import static bowling.util.Lists.getAsOptional;
 import static java.util.stream.Collectors.toList;
 
@@ -59,6 +58,11 @@ class LastFrame implements Frame {
     }
 
     @Override
+    public List<BallThrow> getBallThrows() {
+        return null;
+    }
+
+    @Override
     public boolean isFinish() {
         if (ballThrows.isEmpty()) {
             return false;
@@ -69,19 +73,7 @@ class LastFrame implements Frame {
         return ballThrows.size() == 3;
     }
 
-    @Override
-    public FrameStatus getFrameStatus() {
-        if (ballThrows.stream().mapToInt(BallThrow::getFallingPins).sum() == 30) {
-            // turkey
-        }
-        if (isFirstThrowStrike()) {
-//            strikeAndMore(, 10)
-        }
-        throw new UnsupportedOperationException();
-    }
-
     private int sumOfLastTwoThrows() {
-
         return ballThrows.stream()
                 .skip(getSkipBallThrows())
                 .mapToInt(BallThrow::getFallingPins)

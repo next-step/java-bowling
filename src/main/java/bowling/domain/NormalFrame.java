@@ -3,8 +3,7 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bowling.domain.Scoring.*;
-import static bowling.util.Lists.getAsOptional;
+import static bowling.domain.Scoring.NONE;
 
 public class NormalFrame implements Frame {
     private final List<BallThrow> ballThrows = new ArrayList<>();
@@ -30,32 +29,14 @@ public class NormalFrame implements Frame {
             return Scoring.NONE;
         }
 
-        Integer first = getFallingPins(ballThrows, 0);
-        Integer second = getFallingPins(ballThrows, 1);
+        Integer first = getFallingPins(0);
+        Integer second = getFallingPins(1);
         return Scoring.valueOf(first, second);
     }
 
     @Override
-    public FrameStatus getFrameStatus() {
-        Integer first = getFallingPins(ballThrows, 0);
-        Integer second = getFallingPins(ballThrows, 1);
-        Scoring scoring = Scoring.valueOf(first, second);
-
-        if (scoring.equals(STRIKE)) {
-            return FrameStatus.strike();
-        }
-
-        if (scoring.equals(SPARE)) {
-            return FrameStatus.spare(first);
-        }
-
-        return FrameStatus.miss(first, second);
-    }
-
-    private Integer getFallingPins(List<BallThrow> ballThrows, int index) {
-        return getAsOptional(ballThrows, index)
-                .map(BallThrow::getFallingPins)
-                .orElse(null);
+    public List<BallThrow> getBallThrows() {
+        return ballThrows;
     }
 
     public int getNumber() {
