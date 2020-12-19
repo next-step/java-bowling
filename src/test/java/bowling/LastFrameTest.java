@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
  * <p>
  * * 마지막 프래임은 1..3 개의 투구를 가진다
  * [ ] ~마지막 프레임은 아홉번째 프레임이 스트라이크 인 경우 한번 더 투구 할 수 있다~
- * * 마지막 프레임은 첫번째 투구가 스트라이크 인 경우 두번 더 투구할 수 있다.
+ * [x] 마지막 프레임은 첫번째 투구가 스트라이크 인 경우 두번 더 투구할 수 있다.
  * * 마지막 프레임은 더이상 투구할 수 없으면 종료한다.
  */
 public class LastFrameTest {
@@ -63,10 +63,21 @@ public class LastFrameTest {
             return this;
         }
 
-
         @Override
         public Optional<Scoring> getScoring() {
-            return STRIKE.asOptional();
+            if (ballThrows.isEmpty()) {
+                return Optional.empty();
+            }
+
+            if (getLastThrow().isStrike()) {
+                return Optional.of(STRIKE);
+            }
+
+            return Optional.empty();
+        }
+
+        private BallThrow getLastThrow() {
+            return ballThrows.get(ballThrows.size() - 1);
         }
 
         @Override
