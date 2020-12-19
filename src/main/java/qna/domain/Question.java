@@ -4,6 +4,8 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -17,7 +19,7 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    private Answers qnaAnswers;
+    private Answers qnaAnswers = new Answers();
 
     private boolean deleted = false;
 
@@ -64,7 +66,7 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        this.qnaAnswers = Answers.of(answer);
+        this.qnaAnswers.add(answer);
     }
 
     public void validatePermission(User loginUser) throws CannotDeleteException {
@@ -91,10 +93,15 @@ public class Question extends AbstractEntity {
     }
 
     public boolean hasAnswer() {
-        return qnaAnswers == null;
+        return qnaAnswers.size() == 0;
     }
 
-    public DeleteHistory delete() {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        this.validatePermission(loginUser);
+        return Arrays.asList(this.delete(), this.qnaAnswers.deleteHistory(loginUser));
+    }
+
+    private DeleteHistory delete(){
         this.deleted = true;
         return new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now());
     }
