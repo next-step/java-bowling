@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static bowling.domain.BallThrow.MAX_PINS;
 import static java.util.stream.Collectors.toList;
 
 public class Score {
@@ -23,11 +24,11 @@ public class Score {
             return null;
         }
 
-        if (first() == 10) {
+        if (first() == MAX_PINS) {
             return sumAll();
         }
 
-        if (first() + second() == 10) {
+        if (first() + second() == MAX_PINS) {
             return sumAll();
         }
         return first() + second();
@@ -56,6 +57,6 @@ public class Score {
         if (third() == null) {
             return null;
         }
-        return values.stream().mapToInt(value -> value).sum();
+        return values.stream().reduce(0, Integer::sum);
     }
 }

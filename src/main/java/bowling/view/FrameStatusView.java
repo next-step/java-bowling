@@ -19,26 +19,38 @@ public class FrameStatusView {
 
     @Override
     public String toString() {
-        if (frameStatus.getFirst() == null) {
+        if (first() == null) {
             return builder.toString();
         }
-        builder.append(toNumberOrGutter(frameStatus.getFirst()));
-        if (!isStrike(frameStatus.getFirst())) {
-            appendNext(getNumberOrSign(frameStatus.getFirst(), frameStatus.getSecond()));
-            return appendNext(frameStatus.getThird()).toString();
+        builder.append(toNumberOrGutter(first()));
+        if (!isStrike(first())) {
+            appendNext(getNumberOrSign(first(), second()));
+            return appendNext(third()).toString();
         }
 
-        if (frameStatus.getSecond() == null) {
+        if (second() == null) {
             return builder.toString();
         }
 
-        appendNext(frameStatus.getSecond());
+        appendNext(second());
 
-        if (!isStrike(frameStatus.getSecond())) {
-            return appendNext(getNumberOrSign(frameStatus.getSecond(), frameStatus.getThird())).toString();
+        if (!isStrike(second())) {
+            return appendNext(getNumberOrSign(second(), third())).toString();
         }
 
-        return appendNext(frameStatus.getThird()).toString();
+        return appendNext(third()).toString();
+    }
+
+    private Integer third() {
+        return frameStatus.getThird();
+    }
+
+    private Integer second() {
+        return frameStatus.getSecond();
+    }
+
+    private Integer first() {
+        return frameStatus.getFirst();
     }
 
     private String getNumberOrSign(Integer aNumber, Integer nextNumber) {
