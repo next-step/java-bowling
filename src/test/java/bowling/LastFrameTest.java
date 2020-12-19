@@ -92,6 +92,10 @@ public class LastFrameTest {
                 return MISS.asOptional();
             }
 
+            if (sumOfFallingPins() == MAX_PINS) {
+                return SPARE.asOptional();
+            }
+
             return Optional.empty();
         }
 
