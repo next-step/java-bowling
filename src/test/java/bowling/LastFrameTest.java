@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -123,7 +124,13 @@ public class LastFrameTest {
 
         @Override
         public int sumOfFallingPins() {
-            return BallThrow.sumOfFallingPins(ballThrows);
+            List<BallThrow> tmp = new ArrayList<>(this.ballThrows);
+            Collections.reverse(tmp);
+
+            return tmp.stream()
+                    .limit(2)
+                    .mapToInt(BallThrow::getFallingPins)
+                    .sum();
         }
     }
 }
