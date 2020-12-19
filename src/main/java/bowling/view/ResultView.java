@@ -13,6 +13,7 @@ public class ResultView {
     public void printFrames(String name, int round) {
         printSignature();
         printScore(name, round);
+        System.out.println();
     }
 
     private void printSignature() {

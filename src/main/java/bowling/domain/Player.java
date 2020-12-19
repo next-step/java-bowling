@@ -2,7 +2,7 @@ package bowling.domain;
 
 public class Player {
 
-    public static final int NAME_LENGTH = 3;
+    public static final int NAME_LENGTH_CONDITION = 3;
     public static final String LENGTH_LIMIT = "이름은 3글자여야 합니다.";
     public static final String NAME_EMPTY = "이름을 입력해주세요.";
 
@@ -23,7 +23,7 @@ public class Player {
     }
 
     private void validateLength(String name) {
-        if(name.length() != NAME_LENGTH) {
+        if(name.length() != NAME_LENGTH_CONDITION) {
             throw new IllegalArgumentException(LENGTH_LIMIT);
         }
     }

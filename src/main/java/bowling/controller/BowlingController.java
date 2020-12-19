@@ -12,5 +12,7 @@ public class BowlingController {
 
         Player player = inputView.inputPlayer();
         resultView.printFrames(player.getName(), 0);
+
+        inputView.inputScore();
     }
 }
