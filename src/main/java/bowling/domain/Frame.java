@@ -9,6 +9,8 @@ public interface Frame {
 
     int getNumber();
 
+    FrameStatus getFrameStatus();
+
     default boolean isFinish() {
         return false;
     }

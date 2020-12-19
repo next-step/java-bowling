@@ -69,6 +69,11 @@ class LastFrame implements Frame {
         return ballThrows.size() == 3;
     }
 
+    @Override
+    public FrameStatus getFrameStatus() {
+        throw new UnsupportedOperationException();
+    }
+
     private int sumOfLastTwoThrows() {
 
         return ballThrows.stream()

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static bowling.domain.Scoring.SPARE;
+import static bowling.domain.Scoring.STRIKE;
 import static bowling.util.Lists.getAsOptional;
 
 public class NormalFrame implements Frame {
@@ -30,11 +32,32 @@ public class NormalFrame implements Frame {
             return Optional.empty();
         }
 
-        Integer first = getAsOptional(ballThrows, 0).map(BallThrow::getFallingPins)
-                .orElse(null);
-        Integer second = getAsOptional(ballThrows, 1).map(BallThrow::getFallingPins)
-                .orElse(null);
+        Integer first = getFallingPins(ballThrows, 0);
+        Integer second = getFallingPins(ballThrows, 1);
         return Scoring.valueOf(first, second);
+    }
+
+    @Override
+    public FrameStatus getFrameStatus() {
+        Integer first = getFallingPins(ballThrows, 0);
+        Integer second = getFallingPins(ballThrows, 1);
+        Optional<Scoring> scoring = Scoring.valueOf(first, second);
+
+        if (scoring.equals(STRIKE.asOptional())) {
+            return FrameStatus.strike();
+        }
+
+        if (scoring.equals(SPARE.asOptional())) {
+            return FrameStatus.spare(first);
+        }
+
+        return FrameStatus.miss(first, second);
+    }
+
+    private Integer getFallingPins(List<BallThrow> ballThrows, int index) {
+        return getAsOptional(ballThrows, index)
+                .map(BallThrow::getFallingPins)
+                .orElse(null);
     }
 
     public int getNumber() {
