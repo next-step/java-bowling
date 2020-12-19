@@ -2,6 +2,8 @@ package bowling;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,18 +56,12 @@ public class LastFrameTest {
         assertThat(third.getScoring()).isEqualTo(STRIKE.asOptional());
     }
 
-    @DisplayName("마지막 프레임의 미스")
-    @Test
-    void lastFrameMiss() {
+    @DisplayName("마지막 프레임의 미스, 스페어, 거터")
+    @ParameterizedTest
+    @CsvSource({"8,1,MISS", "8,2,SPARE", "0.0,GUTTER"})
+    void lastFrameMiss(int firstThrow, int secondThrow, String scoringName) {
         Frame lastFrame = new NormalFrame(9).throwBall(10);
-        assertThat(lastFrame.throwBall(8).throwBall(1).getScoring()).isEqualTo(MISS.asOptional());
-    }
-
-    @DisplayName("마지막 프레임의 스페어")
-    @Test
-    void lastFrameSpare() {
-        Frame lastFrame = new NormalFrame(9).throwBall(10);
-        assertThat(lastFrame.throwBall(8).throwBall(2).getScoring()).isEqualTo(SPARE.asOptional());
+        assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring()).isEqualTo(Scoring.valueOf(scoringName).asOptional());
     }
 
     static class LastFrame implements Frame {
