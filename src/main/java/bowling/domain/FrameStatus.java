@@ -18,14 +18,14 @@ public class FrameStatus {
     }
 
     public Integer getFirst() {
-        return Lists.getAsOptional(values, 0).orElse(null);
+        return Lists.getOrNull(values, 0);
     }
 
     public Integer getSecond() {
-        return Lists.getAsOptional(values, 1).orElse(null);
+        return Lists.getOrNull(values, 1);
     }
 
     public Integer getThird() {
-        return Lists.getAsOptional(values, 2).orElse(null);
+        return Lists.getOrNull(values, 2);
     }
 }
