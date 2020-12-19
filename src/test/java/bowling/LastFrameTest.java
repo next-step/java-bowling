@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 /**
  * 마지막 프레임
- *
+ * <p>
  * * 마지막 프래임은 1..3 개의 투구를 가진다
  * [ ] ~마지막 프레임은 아홉번째 프레임이 스트라이크 인 경우 한번 더 투구 할 수 있다~
  * * 마지막 프레임은 첫번째 투구가 스트라이크 인 경우 두번 더 투구할 수 있다.
@@ -20,8 +21,20 @@ public class LastFrameTest {
     @DisplayName("9번째 프레임이 끝나면 LastFrame 을 리턴한다")
     @Test
     void lastFrame() {
-        assertThat(new NormalFrame(9).throwBall(10))
-                .isInstanceOf(LastFrame.class);
+        assertAll(
+                // 스트라이크
+                () -> assertThat(new NormalFrame(9).throwBall(10))
+                        .isInstanceOf(LastFrame.class),
+                // 스페어
+                () -> assertThat(new NormalFrame(9).throwBall(2).throwBall(8))
+                        .isInstanceOf(LastFrame.class),
+                // 미스
+                () -> assertThat(new NormalFrame(9).throwBall(2).throwBall(7))
+                        .isInstanceOf(LastFrame.class),
+                // 거터
+                () -> assertThat(new NormalFrame(9).throwBall(0).throwBall(0))
+                                .isInstanceOf(LastFrame.class)
+        );
     }
 
 
