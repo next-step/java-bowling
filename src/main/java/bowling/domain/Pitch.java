@@ -35,4 +35,7 @@ public class Pitch {
         }
     }
 
+    public int getScore() {
+        return score;
+    }
 }
