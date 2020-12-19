@@ -63,6 +63,7 @@ class LastFrame implements Frame {
                 .sum();
     }
 
+    @Override
     public boolean isFinish() {
         if (ballThrows.isEmpty()) {
             return false;

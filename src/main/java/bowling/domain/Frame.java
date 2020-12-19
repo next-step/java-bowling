@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.Optional;
 
-interface Frame {
+public interface Frame {
     Frame throwBall(int fallingPins);
 
     Optional<Scoring> getScoring();
@@ -10,4 +10,8 @@ interface Frame {
     int getNumber();
 
     int sumOfFallingPins();
+
+    default boolean isFinish() {
+        return false;
+    }
 }
