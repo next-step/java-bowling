@@ -5,12 +5,13 @@ import bowling.bowlingexception.InvalidDownedPinNumberException;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static bowling.domain.BowlingConstant.*;
+import static bowling.domain.BowlingConstant.MAXIMUM_DOWNED_PIN_NUM_IN_FRAME;
+import static bowling.domain.BowlingConstant.MINIMUM_DOWNED_PIN_NUM_IN_FRAME;
 import static java.util.stream.Collectors.toList;
 
 public class DownedPinPerTry {
 
-    private static final List<DownedPinPerTry> cachedPin = IntStream.rangeClosed(MINIMUM_DOWNED_PIN_NUM, MAXIMUM_DOWNED_PIN_NUM)
+    private static final List<DownedPinPerTry> cachedPin = IntStream.rangeClosed(MINIMUM_DOWNED_PIN_NUM_IN_FRAME, MAXIMUM_DOWNED_PIN_NUM_IN_FRAME)
             .mapToObj(DownedPinPerTry::new)
             .collect(toList());
 
@@ -21,7 +22,7 @@ public class DownedPinPerTry {
     }
 
     private static void validateRange(int numDownedPin) {
-        if (numDownedPin < MINIMUM_DOWNED_PIN_NUM || numDownedPin > MAXIMUM_DOWNED_PIN_NUM) {
+        if (numDownedPin < MINIMUM_DOWNED_PIN_NUM_IN_FRAME || numDownedPin > MAXIMUM_DOWNED_PIN_NUM_IN_FRAME) {
             throw new InvalidDownedPinNumberException();
         }
     }
@@ -37,6 +38,6 @@ public class DownedPinPerTry {
     }
 
     public boolean isStrike() {
-        return numDownedPin == ALL_PIN_DOWN;
+        return numDownedPin == MAXIMUM_DOWNED_PIN_NUM_IN_FRAME;
     }
 }
