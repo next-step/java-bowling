@@ -120,11 +120,11 @@ public class LastFrameTest {
     @Test
     void finish_2() {
         LastFrame actualLastFrame = (LastFrame) lastFrame;
-//        assertThat(actualLastFrame.isFinish()).isFalse();
+        assertThat(actualLastFrame.isFinish()).isFalse();
         lastFrame.throwBall(9);
-//        assertThat(actualLastFrame.isFinish()).isFalse();
+        assertThat(actualLastFrame.isFinish()).isFalse();
         lastFrame.throwBall(1);
-//        assertThat(actualLastFrame.isFinish()).isFalse();
+        assertThat(actualLastFrame.isFinish()).isFalse();
         lastFrame.throwBall(10);
         assertThat(actualLastFrame.isFinish()).isTrue();
     }
