@@ -11,6 +11,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class UserTest {
 
     @Test
+    @DisplayName("일반적인 상황에 대한 테스트")
+    void happyPath() {
+        User user = new User("ABC");
+    }
+
+    @Test
     @DisplayName("Null 테스트")
     void testNull() {
         assertThatThrownBy(() -> new User(null))
