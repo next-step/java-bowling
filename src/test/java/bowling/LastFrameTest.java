@@ -88,6 +88,13 @@ public class LastFrameTest {
                 .isEqualTo(Scoring.valueOf(scoringName).asOptional());
     }
 
+    @DisplayName("스페어 상태에서 한번 더 던지기")
+    @Test
+    void spareAndLastThrow() {
+        lastFrame.throwBall(8).throwBall(2);
+        assertThat(lastFrame.throwBall(10).getScoring()).isEqualTo(STRIKE.asOptional());
+    }
+
     @DisplayName("미스는 세번째 던지기를 할 수 없다")
     @Test
     void missAndLastThrow() {
@@ -95,13 +102,6 @@ public class LastFrameTest {
         assertThatThrownBy(() -> lastFrame.throwBall(10))
                 .isInstanceOf(IllegalBallThrownException.class);
     }
-
-    /**
-     * 종료 케이스.
-     * 10 / 10 / 10 -> 세번
-     * 9 / 1 / 10 -> 세번
-     * 1 / 1 -> 두번
-     */
 
     @DisplayName("종료 케이스 10 / 10 / 10")
     @Test
