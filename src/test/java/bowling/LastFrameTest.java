@@ -1,5 +1,6 @@
 package bowling;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,6 +27,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
  */
 public class LastFrameTest {
 
+    private Frame lastFrame;
+
+    @BeforeEach
+    void setUp() {
+        lastFrame = new NormalFrame(9).throwBall(10);
+    }
+
     @DisplayName("9번째 프레임이 끝나면 LastFrame 을 리턴한다")
     @Test
     void ninthFrameNext() {
@@ -48,7 +56,6 @@ public class LastFrameTest {
     @DisplayName("마지막 프레임은 첫번째 투구가 스트라이크 인 경우 두번 더 투구할 수 있다")
     @Test
     void lastFrame3TimesThrow() {
-        Frame lastFrame = new NormalFrame(9).throwBall(10);
         Frame first = lastFrame.throwBall(10);
         assertThat(first.getScoring()).isEqualTo(STRIKE.asOptional());
         Frame second = first.throwBall(10);
@@ -61,14 +68,12 @@ public class LastFrameTest {
     @ParameterizedTest
     @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,GUTTER"})
     void lastFrameScoring(int firstThrow, int secondThrow, String scoringName) {
-        Frame lastFrame = new NormalFrame(9).throwBall(10);
         assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring()).isEqualTo(Scoring.valueOf(scoringName).asOptional());
     }
 
     @DisplayName("프레임이 끝나지 않으면 반환할 상태가 없다")
     @Test
     void incomplete() {
-        Frame lastFrame = new NormalFrame(9).throwBall(10);
         assertThat(lastFrame.getScoring()).isEqualTo(Optional.empty());
         lastFrame.throwBall(0);
         assertThat(lastFrame.getScoring()).isEqualTo(Optional.empty());
@@ -78,7 +83,6 @@ public class LastFrameTest {
     @ParameterizedTest
     @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,GUTTER"})
     void lastFrameFirstStrikeAndScoring(int firstThrow, int secondThrow, String scoringName) {
-        Frame lastFrame = new NormalFrame(9).throwBall(10);
         lastFrame.throwBall(10);
         assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring()).isEqualTo(Scoring.valueOf(scoringName).asOptional());
     }
@@ -86,7 +90,6 @@ public class LastFrameTest {
     @DisplayName("미스는 세번째 던지기를 할 수 없다")
     @Test
     void missAndLastThrow() {
-        Frame lastFrame = new NormalFrame(9).throwBall(10);
         lastFrame.throwBall(8).throwBall(1);
         assertThatThrownBy(() -> lastFrame.throwBall(10))
                 .isInstanceOf(IllegalBallThrownException.class);
