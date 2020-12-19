@@ -91,6 +91,10 @@ public class LastFrameTest {
                 return STRIKE.asOptional();
             }
 
+            if (!isFirstThrowStrike() && ballThrows.size() < 2) {
+                return Optional.empty();
+            }
+
             return Scoring.nonStrikeValueOf(sumOfFallingPins()).asOptional();
         }
 
