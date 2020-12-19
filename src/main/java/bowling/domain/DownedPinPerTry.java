@@ -37,6 +37,10 @@ public class DownedPinPerTry {
         return fromNumber(downedPinPerTry.numDownedPin);
     }
 
+    public boolean isSpare(DownedPinPerTry continuousTry) {
+        return numDownedPin + continuousTry.numDownedPin == MAXIMUM_DOWNED_PIN_NUM_IN_FRAME;
+    }
+
     public boolean isStrike() {
         return numDownedPin == MAXIMUM_DOWNED_PIN_NUM_IN_FRAME;
     }
