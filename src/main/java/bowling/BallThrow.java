@@ -44,7 +44,7 @@ class BallThrow {
         if (this.fallingPins + thirdFallingPins > MAX_PINS && this.fallingPins < MAX_PINS) {
             throw new IllegalFallingPinsException();
         }
-        return new BallThrow(thirdFallingPins);
+        return new BallThrow(thirdFallingPins, true);
     }
 
     public int add(BallThrow ballThrows) {
