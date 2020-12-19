@@ -8,7 +8,7 @@ public class LastFrame {
     private static final int FIRST_TRY_INDEX = 0;
     private static final int SECOND_TRY_INDEX = 1;
 
-    private final List<DownedPinPerTry> tries;
+    private final List<DownedPin> tries;
     private boolean isEnded;
 
     public LastFrame() {
@@ -16,7 +16,7 @@ public class LastFrame {
         isEnded = false;
     }
 
-    public void record(DownedPinPerTry currentTurn) {
+    public void record(DownedPin currentTurn) {
         if (isEnded()) {
             return;
         }
@@ -34,33 +34,33 @@ public class LastFrame {
         handleThirdTurn(currentTurn);
     }
 
-    private void handleSecondTry(DownedPinPerTry secondTry) {
-        DownedPinPerTry firstTry = tries.get(FIRST_TRY_INDEX);
+    private void handleSecondTry(DownedPin secondTry) {
+        DownedPin firstTry = tries.get(FIRST_TRY_INDEX);
 
         if (firstTry.isStrike()) {
             tries.add(secondTry);
             return;
         }
 
-        tries.add(firstTry.fromFirstTry(secondTry));
+        tries.add(firstTry.fromSubordinateTry(secondTry));
 
         if (!firstTry.isSpare(secondTry)) {
             isEnded = true;
         }
     }
 
-    private void handleThirdTurn(DownedPinPerTry thirdTry) {
+    private void handleThirdTurn(DownedPin thirdTry) {
         isEnded = true;
 
-        DownedPinPerTry firstTry = tries.get(FIRST_TRY_INDEX);
-        DownedPinPerTry secondTry = tries.get(SECOND_TRY_INDEX);
+        DownedPin firstTry = tries.get(FIRST_TRY_INDEX);
+        DownedPin secondTry = tries.get(SECOND_TRY_INDEX);
 
         if (firstTry.isSpare(secondTry) || secondTry.isStrike()) {
             tries.add(thirdTry);
             return;
         }
 
-        secondTry.fromFirstTry(thirdTry);
+        secondTry.fromSubordinateTry(thirdTry);
     }
 
     public boolean isEnded() {

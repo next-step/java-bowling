@@ -14,28 +14,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 class NormalFramesTest {
 
     private static Stream<Arguments> makeScenario() {
-        List<DownedPinPerTry> scenario1 = Arrays.asList(
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(10)
+        List<DownedPin> scenario1 = Arrays.asList(
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(10)
         );
 
-        List<DownedPinPerTry> scenario2 = Arrays.asList(
-                DownedPinPerTry.fromNumber(5), DownedPinPerTry.fromNumber(4),
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(6), DownedPinPerTry.fromNumber(3),
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(2), DownedPinPerTry.fromNumber(3),
-                DownedPinPerTry.fromNumber(10),
-                DownedPinPerTry.fromNumber(10)
+        List<DownedPin> scenario2 = Arrays.asList(
+                DownedPin.fromNumber(5), DownedPin.fromNumber(4),
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(6), DownedPin.fromNumber(3),
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(2), DownedPin.fromNumber(3),
+                DownedPin.fromNumber(10),
+                DownedPin.fromNumber(10)
         );
 
         return Stream.of(
@@ -47,7 +47,7 @@ class NormalFramesTest {
     @ParameterizedTest
     @MethodSource("makeScenario")
     @DisplayName("모든 일반 프레임이 종료되었는지 확인")
-    void testCheckingComplete(List<DownedPinPerTry> tries) {
+    void testCheckingComplete(List<DownedPin> tries) {
         NormalFrames normalFrames = new NormalFrames();
 
         for (int i = 0; i < tries.size() - 1; i++) {

@@ -14,8 +14,8 @@ class LastFrameTest {
     @DisplayName("스페어나 스트라이크가 아닐 때의 종료 조건")
     void testOnNormal() {
         LastFrame lastFrame = new LastFrame();
-        lastFrame.record(DownedPinPerTry.fromNumber(3));
-        lastFrame.record(DownedPinPerTry.fromNumber(6));
+        lastFrame.record(DownedPin.fromNumber(3));
+        lastFrame.record(DownedPin.fromNumber(6));
 
         assertThat(lastFrame.isEnded()).isTrue();
     }
@@ -24,10 +24,10 @@ class LastFrameTest {
     @DisplayName("Spare 의 종료 조건")
     void testRecordOnSpare() {
         LastFrame lastFrame = new LastFrame();
-        lastFrame.record(DownedPinPerTry.fromNumber(3));
-        lastFrame.record(DownedPinPerTry.fromNumber(7));
+        lastFrame.record(DownedPin.fromNumber(3));
+        lastFrame.record(DownedPin.fromNumber(7));
 
-        lastFrame.record(DownedPinPerTry.fromNumber(8));
+        lastFrame.record(DownedPin.fromNumber(8));
 
         assertThat(lastFrame.isEnded()).isTrue();
     }
@@ -36,9 +36,9 @@ class LastFrameTest {
     @DisplayName("Strike 의 종료 조건")
     void testRecordOnStrike() {
         LastFrame lastFrame = new LastFrame();
-        lastFrame.record(DownedPinPerTry.fromNumber(10));
-        lastFrame.record(DownedPinPerTry.fromNumber(7));
-        lastFrame.record(DownedPinPerTry.fromNumber(3));
+        lastFrame.record(DownedPin.fromNumber(10));
+        lastFrame.record(DownedPin.fromNumber(7));
+        lastFrame.record(DownedPin.fromNumber(3));
 
         assertThat(lastFrame.isEnded()).isTrue();
     }
@@ -47,11 +47,11 @@ class LastFrameTest {
     @DisplayName("Strike 이후 예외처리")
     void testInvalidInputOnStrike() {
         LastFrame lastFrame = new LastFrame();
-        lastFrame.record(DownedPinPerTry.fromNumber(10));
-        lastFrame.record(DownedPinPerTry.fromNumber(7));
+        lastFrame.record(DownedPin.fromNumber(10));
+        lastFrame.record(DownedPin.fromNumber(7));
 
         assertThatThrownBy(
-                () -> lastFrame.record(DownedPinPerTry.fromNumber(4))
+                () -> lastFrame.record(DownedPin.fromNumber(4))
         ).isInstanceOf(InvalidDownedPinNumberException.class);
 
     }

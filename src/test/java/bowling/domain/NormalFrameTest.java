@@ -11,12 +11,12 @@ public class NormalFrameTest {
     @DisplayName("일반적인 상황의 2회 입력 테스트")
     void testTwoTime() {
         NormalFrame frame = new NormalFrame();
-        DownedPinPerTry firstTry = DownedPinPerTry.fromNumber(3);
+        DownedPin firstTry = DownedPin.fromNumber(3);
 
         frame.record(firstTry);
         assertThat(frame.isEnd()).isFalse();
 
-        frame.record(firstTry.fromFirstTry(DownedPinPerTry.fromNumber(6)));
+        frame.record(firstTry.fromSubordinateTry(DownedPin.fromNumber(6)));
         assertThat(frame.isEnd()).isTrue();
     }
 
@@ -24,7 +24,7 @@ public class NormalFrameTest {
     @DisplayName("첫 투구에 10개가 입력되었을 때 프레임 종료조건 테스트")
     void testStrike() {
         NormalFrame frame = new NormalFrame();
-        DownedPinPerTry firstTry = DownedPinPerTry.fromNumber(10);
+        DownedPin firstTry = DownedPin.fromNumber(10);
 
         frame.record(firstTry);
 
