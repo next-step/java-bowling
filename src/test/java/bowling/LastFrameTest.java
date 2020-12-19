@@ -106,8 +106,17 @@ public class LastFrameTest {
             if (isMissAndThirdThrow()) {
                 throw new IllegalBallThrownException();
             }
+            if (ballThrows.isEmpty()) {
+                ballThrows.add(new BallThrow(fallingPins));
+                return this;
+            }
 
-            ballThrows.add(new BallThrow(fallingPins));
+            if (ballThrows.size() == 1) {
+                ballThrows.add(getLastThrow().throwSecond(fallingPins));
+                return this;
+            }
+
+            ballThrows.add(getLastThrow().throwThird(fallingPins, ballThrows.get(0)));
             return this;
         }
 
