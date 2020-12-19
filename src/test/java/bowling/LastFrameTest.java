@@ -172,6 +172,12 @@ public class LastFrameTest {
         }
 
         public boolean isFinish() {
+            if (ballThrows.isEmpty()) {
+                return false;
+            }
+            if (!isNotFirstThrowStrike()) {
+                return ballThrows.size() == 3;
+            }
             return false;
         }
 
