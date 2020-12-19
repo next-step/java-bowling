@@ -24,24 +24,24 @@ public class GameService {
         return getCurrentFrame().getNumber();
     }
 
-    private Frame getCurrentFrame() {
-        return frames.get(frames.size() - 1);
-    }
-
     public GameStatus throwBall(int fallingPins) {
         Frame frame = getCurrentFrame().throwBall(fallingPins);
         updateFrames(frame);
         return new GameStatus(this);
     }
 
+    public GameStatus start() {
+        frames.add(new NormalFrame());
+        return new GameStatus(this);
+    }
+
+    private Frame getCurrentFrame() {
+        return frames.get(frames.size() - 1);
+    }
+
     private void updateFrames(Frame frame) {
         if (getCurrentFrame() != frame) {
             frames.add(frame);
         }
-    }
-
-    public GameStatus start() {
-        frames.add(new NormalFrame());
-        return new GameStatus(this);
     }
 }
