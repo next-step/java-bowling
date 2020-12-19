@@ -7,19 +7,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class Answers {
-    private List<Answer> answers;
+    private List<Answer> answers = new ArrayList<>();
 
-    private Answers(List<Answer> answers) {
-        this.answers = answers;
+    public Answers() {
+
     }
 
-    public static Answers of(Answer answer) {
-        return new Answers(add(answer));
-    }
-
-    public static List<Answer> add(Answer answer) {
-        List<Answer> answers = new ArrayList<>();
-        answers.add(answer);
+    public List<Answer> add(Answer answer) {
+        this.answers.add(answer);
         return Collections.unmodifiableList(answers);
     }
 
@@ -36,4 +31,7 @@ public class Answers {
         return deleteHistory;
     }
 
+    public int size() {
+        return this.getAnswers().size();
+    }
 }
