@@ -7,6 +7,7 @@ import bowling.domain.NormalFrame;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GameService {
     private final List<Frame> frames = new ArrayList<>();
@@ -56,7 +57,10 @@ public class GameService {
         return playerName;
     }
 
-    public Frame getFirstFrame() {
-        return getCurrentFrame();
+    public Optional<Frame> getFrame(int i) {
+        if (frames.size() < i) {
+            return Optional.empty();
+        }
+        return Optional.of(frames.get(i - 1));
     }
 }
