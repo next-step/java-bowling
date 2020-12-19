@@ -95,6 +95,26 @@ public class LastFrameTest {
                 .isInstanceOf(IllegalBallThrownException.class);
     }
 
+    /**
+     * 종료 케이스.
+     * 10 / 10 / 10 -> 세번
+     * 9 / 1 / 10 -> 세번
+     * 1 / 1 -> 두번
+     */
+
+    @DisplayName("종료 케이스 10 / 10 / 10")
+    @Test
+    void finish_1() {
+        LastFrame actualLastFrame = (LastFrame) lastFrame;
+        assertThat(actualLastFrame.isFinish()).isFalse();
+        lastFrame.throwBall(10);
+        assertThat(actualLastFrame.isFinish()).isFalse();
+        lastFrame.throwBall(10);
+        assertThat(actualLastFrame.isFinish()).isFalse();
+        lastFrame.throwBall(10);
+        assertThat(actualLastFrame.isFinish()).isTrue();
+    }
+
     static class LastFrame implements Frame {
 
         private final List<BallThrow> ballThrows = new ArrayList<>();
@@ -149,6 +169,10 @@ public class LastFrameTest {
                     .skip(skipBallThrows)
                     .mapToInt(BallThrow::getFallingPins)
                     .sum();
+        }
+
+        public boolean isFinish() {
+            return false;
         }
 
         private BallThrow getLastThrow() {
