@@ -39,7 +39,7 @@ class LastFrame implements Frame {
             return STRIKE.asOptional();
         }
 
-        if (isNotFirstThrowStrike() && ballThrows.size() < 2) {
+        if (isNotFirstThrowStrike() && ballThrows.size() == 1) {
             return Optional.empty();
         }
 
@@ -78,7 +78,7 @@ class LastFrame implements Frame {
     }
 
     private int getSkipBallThrows() {
-        if (!isNotFirstThrowStrike() && ballThrows.size() == 3) {
+        if (isFirstThrowStrike()) {
             return 1;
         }
         return 0;
@@ -89,7 +89,11 @@ class LastFrame implements Frame {
     }
 
     private boolean isNotFirstThrowStrike() {
-        return !getFirstBallThrow().isStrike();
+        return !isFirstThrowStrike();
+    }
+
+    private boolean isFirstThrowStrike() {
+        return getFirstBallThrow().isStrike();
     }
 
     private BallThrow getFirstBallThrow() {

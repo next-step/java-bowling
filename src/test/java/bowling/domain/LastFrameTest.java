@@ -76,6 +76,14 @@ public class LastFrameTest {
         assertThat(lastFrame.getScoring()).isEqualTo(Optional.empty());
     }
 
+    @DisplayName("프레임이 끝나지 않으면 반환할 상태가 없다 - 첫 투구가 스트라이크인경우")
+    @Test
+    void incomplete2() {
+        lastFrame.throwBall(10);
+        lastFrame.throwBall(0);
+        assertThat(lastFrame.getScoring()).isEqualTo(Optional.empty());
+    }
+
     @DisplayName("첫번째 스트라이크인 상태에서 미스, 스페어, 거터")
     @ParameterizedTest
     @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,MISS"})
