@@ -39,4 +39,24 @@ class GameServiceTest {
         assertThatThrownBy(() -> gameService.throwBall(10))
                 .isInstanceOf(IllegalBallThrownException.class);
     }
+
+    @DisplayName("프레임이 끝나지 않으면 같은 프레임을 리턴한다")
+    @Test
+    void getCurrentFrameNumber() {
+        GameService gameService = new GameService("ABC");
+        gameService.start();
+        assertThat(gameService.getCurrentFrameNumber()).isEqualTo(1);
+        gameService.throwBall(1);
+        assertThat(gameService.getCurrentFrameNumber()).isEqualTo(1);
+    }
+
+    @DisplayName("프레임이 끝나면 다음 프레임을 리턴한다")
+    @Test
+    void throwBallAndNextFrame() {
+        GameService gameService = new GameService("ABC");
+        gameService.start();
+        assertThat(gameService.getCurrentFrameNumber()).isEqualTo(1);
+        gameService.throwBall(10);
+        assertThat(gameService.getCurrentFrameNumber()).isEqualTo(2);
+    }
 }

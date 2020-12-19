@@ -55,4 +55,8 @@ public class GameService {
     public String getPlayerName() {
         return playerName;
     }
+
+    public Frame getFirstFrame() {
+        return getCurrentFrame();
+    }
 }

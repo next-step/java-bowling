@@ -5,7 +5,7 @@ import java.util.Optional;
 import static bowling.domain.BallThrow.MAX_PINS;
 import static bowling.domain.BallThrow.MIN_PINS;
 
-enum Scoring {
+public enum Scoring {
     STRIKE, MISS, GUTTER, SPARE;
 
     Optional<Scoring> asOptional() {
