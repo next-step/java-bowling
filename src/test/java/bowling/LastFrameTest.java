@@ -57,7 +57,7 @@ public class LastFrameTest {
     @DisplayName("마지막 프레임의 미스, 스페어, 거터")
     @ParameterizedTest
     @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,GUTTER"})
-    void lastFrameMiss(int firstThrow, int secondThrow, String scoringName) {
+    void lastFrameScoring(int firstThrow, int secondThrow, String scoringName) {
         Frame lastFrame = new NormalFrame(9).throwBall(10);
         assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring()).isEqualTo(Scoring.valueOf(scoringName).asOptional());
     }
@@ -69,6 +69,16 @@ public class LastFrameTest {
         assertThat(lastFrame.getScoring()).isEqualTo(Optional.empty());
         lastFrame.throwBall(0);
         assertThat(lastFrame.getScoring()).isEqualTo(Optional.empty());
+    }
+
+
+    @DisplayName("첫번째 스트라이크인 상태에서 미스, 스페어, 거터")
+    @ParameterizedTest
+    @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,GUTTER"})
+    void lastFrameFirstStrikeAndScoring(int firstThrow, int secondThrow, String scoringName) {
+        Frame lastFrame = new NormalFrame(9).throwBall(10);
+        lastFrame.throwBall(10);
+        assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring()).isEqualTo(Scoring.valueOf(scoringName).asOptional());
     }
 
     static class LastFrame implements Frame {
