@@ -5,6 +5,8 @@ import bowling.domain.pitchings.NormalFramePitchings;
 import bowling.domain.pitchings.Pitchings;
 import bowling.dto.FrameDto;
 
+import java.util.function.BiFunction;
+
 public class Frame {
     private final Pitchings pitchings;
     private Frame nextFrame;
@@ -38,7 +40,7 @@ public class Frame {
         return nextFrame;
     }
 
-    public Score getScore() {
+    public Score getFrameScore() {
         Score score = pitchings.getScore();
 
         if (pitchings instanceof LastFramePitchings) {
@@ -67,22 +69,13 @@ public class Frame {
         return FrameDto.of(pitchings, getTotalScore(previousFrameTotalScore));
     }
 
-    Integer getTotalScore(Integer previousFrameTotalScore) {
-        Score score = getScore();
-        if (canNotCalculateTotalScore(previousFrameTotalScore, score)) {
-            return null;
-        }
+    private Integer getTotalScore(Integer previousFrameTotalScore) {
+        Score score = getFrameScore();
 
-        if (score.leftBonusApplyChance()) {
-            return null;
-        }
-
-        return previousFrameTotalScore + score.getValue();
+        BiFunction<Integer, Score, Integer> calculateTotalScore = pitchings.calculateTotalScore();
+        return calculateTotalScore.apply(previousFrameTotalScore, score);
     }
 
-    private boolean canNotCalculateTotalScore(Integer previousFrameTotalScore, Score score) {
-        return previousFrameTotalScore == null || score == null || !isEnd();
-    }
 
     @Override
     public String toString() {

@@ -6,6 +6,7 @@ import bowling.domain.Score;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 public abstract class Pitchings implements Iterable<Pitching> {
@@ -80,6 +81,12 @@ public abstract class Pitchings implements Iterable<Pitching> {
 
     public Score getScore() {
         return score;
+    }
+
+    public abstract BiFunction<Integer, Score, Integer> calculateTotalScore();
+
+    protected boolean canNotCalculateTotalScore(Integer previousFrameTotalScore, Score score) {
+        return previousFrameTotalScore == null || score == null || !isEnd();
     }
 
     public Stream<Pitching> stream() {
