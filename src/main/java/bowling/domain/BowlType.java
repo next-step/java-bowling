@@ -1,8 +1,5 @@
 package bowling.domain;
 
-import java.util.Arrays;
-import java.util.function.Function;
-
 public enum BowlType {
 
     STRIKE(2),
