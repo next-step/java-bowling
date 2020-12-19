@@ -68,7 +68,8 @@ public class LastFrameTest {
     @ParameterizedTest
     @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,GUTTER"})
     void lastFrameScoring(int firstThrow, int secondThrow, String scoringName) {
-        assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring()).isEqualTo(Scoring.valueOf(scoringName).asOptional());
+        assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring())
+                .isEqualTo(Scoring.valueOf(scoringName).asOptional());
     }
 
     @DisplayName("프레임이 끝나지 않으면 반환할 상태가 없다")
@@ -84,7 +85,8 @@ public class LastFrameTest {
     @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,GUTTER"})
     void lastFrameFirstStrikeAndScoring(int firstThrow, int secondThrow, String scoringName) {
         lastFrame.throwBall(10);
-        assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring()).isEqualTo(Scoring.valueOf(scoringName).asOptional());
+        assertThat(lastFrame.throwBall(firstThrow).throwBall(secondThrow).getScoring())
+                .isEqualTo(Scoring.valueOf(scoringName).asOptional());
     }
 
     @DisplayName("미스는 세번째 던지기를 할 수 없다")
@@ -123,7 +125,8 @@ public class LastFrameTest {
                 return Optional.empty();
             }
 
-            return Scoring.nonStrikeValueOf(sumOfFallingPins()).asOptional();
+            return Scoring.nonStrikeValueOf(sumOfFallingPins())
+                    .asOptional();
         }
 
         @Override
