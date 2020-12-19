@@ -13,16 +13,27 @@ public class FrameStatusTest {
 
     @Test
     void spare() {
-        assertThat(new FrameStatus(2, Scoring.SPARE).toString()).isEqualTo("X");
+        assertThat(new FrameStatus(2, Scoring.SPARE).toString()).isEqualTo("2|/");
     }
 
-    private class FrameStatus {
-        public FrameStatus(int fallingPins) {
+    private static class FrameStatus {
+        private final int fallingPins;
+        private final Scoring scoring;
+
+        public FrameStatus(int fallingPins, Scoring scoring) {
+            this.fallingPins = fallingPins;
+            this.scoring = scoring;
         }
 
         @Override
         public String toString() {
-            return "X";
+            if (scoring == Scoring.STRIKE) {
+                return "X";
+            }
+            if (scoring == Scoring.SPARE) {
+                return String.format("%d|/", fallingPins);
+            }
+            throw new IllegalStateException();
         }
     }
 }
