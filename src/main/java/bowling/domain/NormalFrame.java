@@ -58,7 +58,6 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score getScore() {
-        Integer first = getFallingPinOfIndex(this, 0);
         Integer second = getFallingPinOfIndex(this, 1);
         Integer third = null;
         if (getScoring() == STRIKE) {
@@ -71,7 +70,8 @@ public class NormalFrame implements Frame {
         if (getScoring() == SPARE) {
             third = getFallingPinOfIndex(getNextFrame(), 0);
         }
-        return new Score(first, second, third);
+        return new Score(getFallingPinOfIndex(this, 0),
+                         second, third);
     }
 
     private void assignBallThrow(int fallingPins) {
