@@ -5,39 +5,40 @@ import bowling.domain.FrameStatus;
 import static bowling.domain.BallThrow.MAX_PINS;
 import static bowling.domain.BallThrow.MIN_PINS;
 
-public class FrameStatusView extends FrameStatus {
-    FrameStatusView(Integer first, Integer second, Integer third) {
-        super(first, second, third);
+public class FrameStatusView {
+    private final StringBuilder builder = new StringBuilder();
+    private final FrameStatus frameStatus;
+
+    FrameStatusView(Integer... fallingPinValues) {
+        this(new FrameStatus(fallingPinValues));
     }
 
     public FrameStatusView(FrameStatus frameStatus) {
-        super(frameStatus);
+        this.frameStatus = frameStatus;
     }
 
     @Override
     public String toString() {
-        if (first == null) {
-            return "";
+        if (frameStatus.getFirst() == null) {
+            return builder.toString();
+        }
+        builder.append(toNumberOrGutter(frameStatus.getFirst()));
+        if (!isStrike(frameStatus.getFirst())) {
+            appendNext(getNumberOrSign(frameStatus.getFirst(), frameStatus.getSecond()));
+            return appendNext(frameStatus.getThird()).toString();
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(toNumberOrGutter(first));
-        if (!isStrike(first)) {
-            appendNext(sb, getNumberOrSign(first, second));
-            return appendNext(sb, third).toString();
+        if (frameStatus.getSecond() == null) {
+            return builder.toString();
         }
 
-        if (second == null) {
-            return sb.toString();
+        appendNext(frameStatus.getSecond());
+
+        if (!isStrike(frameStatus.getSecond())) {
+            return appendNext(getNumberOrSign(frameStatus.getSecond(), frameStatus.getThird())).toString();
         }
 
-        appendNext(sb, second);
-
-        if (!isStrike(second)) {
-            return appendNext(sb, getNumberOrSign(second, third)).toString();
-        }
-
-        return appendNext(sb, third).toString();
+        return appendNext(frameStatus.getThird()).toString();
     }
 
     private String getNumberOrSign(Integer aNumber, Integer nextNumber) {
@@ -50,19 +51,19 @@ public class FrameStatusView extends FrameStatus {
         return toNumberOrGutter(nextNumber);
     }
 
-    private StringBuilder appendNext(StringBuilder sb, Integer next) {
+    private StringBuilder appendNext(Integer next) {
         if (next != null) {
-            appendNext(sb, toNumberOrGutter(next));
+            appendNext(toNumberOrGutter(next));
         }
-        return sb;
+        return builder;
     }
 
-    private StringBuilder appendNext(StringBuilder sb, String next) {
+    private StringBuilder appendNext(String next) {
         if (next != null) {
-            sb.append("|");
-            sb.append(next);
+            builder.append("|");
+            builder.append(next);
         }
-        return sb;
+        return builder;
     }
     private String toNumberOrGutter(Integer fallingPins) {
         if (fallingPins == null) {
