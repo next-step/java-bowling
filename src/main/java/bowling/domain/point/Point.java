@@ -3,6 +3,8 @@ package bowling.domain.point;
 import bowling.domain.BowlType;
 import bowling.exception.ScorePointRangeOutBoundException;
 
+import java.util.Objects;
+
 public class Point {
 
 
@@ -37,4 +39,16 @@ public class Point {
         return point;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point point1 = (Point) o;
+        return point == point1.point;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(point);
+    }
 }
