@@ -1,7 +1,14 @@
 package bowling;
 
 public class GameStatus {
-    public GameStatus(GameService game) {
+    private GameService game;
 
+    public GameStatus(GameService game) {
+        this.game = game;
+    }
+
+    @Override
+    public String toString() {
+        return "|  PJS |      |      |      |      |      |      |      |      |      |      |";
     }
 }
