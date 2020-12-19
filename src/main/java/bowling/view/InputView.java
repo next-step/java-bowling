@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Frame;
+import bowling.domain.Pitch;
 import bowling.domain.Player;
 
 import java.util.Scanner;
@@ -18,10 +18,10 @@ public class InputView {
         return Player.from(name);
     }
 
-    public Frame inputScore() {
+    public Pitch inputScore() {
         System.out.println();
         System.out.print(INPUT_SCORE);
         String score = scanner.nextLine();
-        return Frame.from(Integer.parseInt(score));
+        return Pitch.from(Integer.parseInt(score));
     }
 }

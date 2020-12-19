@@ -1,6 +1,6 @@
 package bowling.domain;
 
-public class Frame {
+public class Pitch {
 
     private static final int SCORE_CONDITION = 10;
     public static final int ZERO_CONDITION = 0;
@@ -9,13 +9,13 @@ public class Frame {
 
     private final int score;
 
-    public Frame(int score) {
+    public Pitch(int score) {
         validateScore(score);
         this.score = score;
     }
 
-    public static Frame from(int score) {
-        return new Frame(score);
+    public static Pitch from(int score) {
+        return new Pitch(score);
     }
 
     private void validateScore(int score) {

@@ -6,26 +6,26 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FrameTest {
+class PitchTest {
 
     @Test
     @DisplayName("프레임 점수 입력")
     void createFrame() {
-        assertThat(Frame.from(10)).isInstanceOf(Frame.class);
+        assertThat(Pitch.from(10)).isInstanceOf(Pitch.class);
     }
 
     @Test
     @DisplayName("점수가 10점을 초과할 경우 예외 처리")
     void exceptScoreLimit() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> Frame.from(11));
+                () -> Pitch.from(11));
     }
 
     @Test
     @DisplayName("점수가 0점 아래인 경우 예외 처리")
     void exceptScoreBelowZero() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> Frame.from(-1));
+                () -> Pitch.from(-1));
     }
 
 }
