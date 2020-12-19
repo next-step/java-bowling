@@ -3,6 +3,7 @@ package bowling.model.frame;
 import bowling.model.Pins;
 import bowling.model.Score;
 
+
 import java.util.Optional;
 
 public class FinalFrame extends Frame {
@@ -31,7 +32,7 @@ public class FinalFrame extends Frame {
         return states.addScoreUntilPossible(score);
 
     }
-
+  
     @Override
     public Optional<Integer> getScore() {
         int totalScore = states.sumScore();
