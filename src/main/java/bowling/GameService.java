@@ -2,6 +2,7 @@ package bowling;
 
 
 import bowling.domain.Frame;
+import bowling.domain.IllegalBallThrownException;
 import bowling.domain.NormalFrame;
 
 import java.util.ArrayList;
@@ -25,7 +26,11 @@ public class GameService {
     }
 
     public GameStatus throwBall(int fallingPins) {
-        Frame frame = getCurrentFrame().throwBall(fallingPins);
+        Frame currentFrame = getCurrentFrame();
+        if (currentFrame.isFinish()) {
+            throw new IllegalBallThrownException();
+        }
+        Frame frame = currentFrame.throwBall(fallingPins);
         updateFrames(frame);
         return new GameStatus(this);
     }

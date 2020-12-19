@@ -1,4 +1,4 @@
 package bowling.domain;
 
-class IllegalBallThrownException extends RuntimeException {
+public class IllegalBallThrownException extends IllegalStateException {
 }
