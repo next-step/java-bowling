@@ -1,8 +1,14 @@
 package bowling.controller;
 
-import bowling.domain.*;
+import bowling.domain.Player;
+import bowling.domain.frame.FrameResultDto;
+import bowling.domain.frame.Frames;
+import bowling.domain.game.BowlingGameResult;
+import bowling.domain.point.Point;
 import bowling.view.InputView;
 import bowling.view.OutputView;
+
+import java.util.List;
 
 public class BowlingController {
 
@@ -11,24 +17,22 @@ public class BowlingController {
 
         BowlingGameResult bowlingGameResult = BowlingGameResult.of(player, Frames.init());
 
-        OutputView.printResult(player, bowlingGameResult);
+        while (!bowlingGameResult.isGameOver()) {
+            int frameNumber = bowlingGameResult.getFrameNumber();
+            Point pointPitch = InputView.inputPitchBowl(frameNumber);
 
-
-        Frame frame = BasicFrame.of(BasicScores.init(), null);
-        while (frame instanceof BasicFrame) {
-            frame = initBasicFrame(bowlingGameResult, frame);
+            bowlingGameResult.roll(pointPitch);
+            List<FrameResultDto> result = bowlingGameResult.getResult();
+            result.forEach(frameResultDto -> {
+                List<Point> points = frameResultDto.getPoints();
+                points.forEach(point ->
+                        System.out.println("포인트 : " + point.getPoint()));
+                System.out.println("스코어 : " + frameResultDto.getScoreDto().getClass().getName());
+                System.out.println("스코어타입 : " + frameResultDto.getScoreType());
+            });
+            OutputView.printResult(bowlingGameResult.getPlayerName(), bowlingGameResult.getResult());
         }
-        initLastFrame(bowlingGameResult, frame);
-
-
     }
 
-    private static void initLastFrame(BowlingGameResult bowlingGameResult, Frame frame) {
-
-    }
-
-    private static Frame initBasicFrame(BowlingGameResult bowlingGameResult, Frame frame) {
-        return null;
-    }
 
 }
