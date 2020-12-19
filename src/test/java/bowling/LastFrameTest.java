@@ -111,7 +111,7 @@ public class LastFrameTest {
                 return this;
             }
 
-            ballThrows.add(getLastThrow().throwThird(fallingPins, ballThrows.get(0)));
+            ballThrows.add(getLastThrow().throwThird(fallingPins, getFirstBallThrow()));
             return this;
         }
 
@@ -140,13 +140,13 @@ public class LastFrameTest {
 
         @Override
         public int sumOfFallingPins() {
+            int skipBallThrows = 0;
             if (!isNotFirstThrowStrike() && ballThrows.size() == 3) {
-                return ballThrows.stream()
-                        .skip(1)
-                        .mapToInt(BallThrow::getFallingPins)
-                        .sum();
+                skipBallThrows = 1;
             }
+
             return ballThrows.stream()
+                    .skip(skipBallThrows)
                     .mapToInt(BallThrow::getFallingPins)
                     .sum();
         }
@@ -156,7 +156,11 @@ public class LastFrameTest {
         }
 
         private boolean isNotFirstThrowStrike() {
-            return !ballThrows.get(0).isStrike();
+            return !getFirstBallThrow().isStrike();
+        }
+
+        private BallThrow getFirstBallThrow() {
+            return ballThrows.get(0);
         }
     }
 }
