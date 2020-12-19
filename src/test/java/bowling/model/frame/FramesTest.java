@@ -1,43 +1,28 @@
 package bowling.model.frame;
 
-import bowling.model.User;
+import bowling.model.Name;
+import bowling.model.Pins;
 import bowling.view.ResultView;
 import org.junit.jupiter.api.Test;
 
-import java.util.Random;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class FramesTest {
-    @Test
-    void bowling_RANDOME() {
-        for(int i = 0; i < 100; i++){
-            Frames frames = new Frames();
-            Random random = new Random();
-            int previous = random.nextInt(11);
-            while (!frames.isFinished()){
-                int now = random.nextInt(11-previous);
-                run(frames,now);
-                previous = now;
-            }
-        }
-    }
+    private final Pins[] pins = IntStream.rangeClosed(0, 10)
+            .boxed()
+            .map(Pins::from)
+            .toArray(Pins[]::new);
 
-    private void run(Frames frames, int fallenPins){
-        frames.bowling(fallenPins);
-        ResultView.printHeadFrame();
-        ResultView.printFrame(User.from("TST"), frames.result());
-        ResultView.printFrame(User.from("TST"), frames.getScores());
-    }
 
     @Test
     void bowling_STRIKE_STRIKE_OPEN() {
         Frames frames = new Frames();
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(1);
+        frames.bowling(pins[10]);
+        frames.bowling(pins[10]);
+        frames.bowling(pins[1]);
 
         String[] totalScore = frames.getScores()
                 .stream()
@@ -51,9 +36,9 @@ class FramesTest {
     @Test
     void bowling_STRIKE_STRIKE_STRIKE() {
         Frames frames = new Frames();
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
+        frames.bowling(pins[10]);
+        frames.bowling(pins[10]);
+        frames.bowling(pins[10]);
 
         String[] totalScore = frames.getScores()
                 .stream()
@@ -67,10 +52,10 @@ class FramesTest {
     @Test
     void bowling_STRIKE_STRIKE_STRIKE_STRIKE() {
         Frames frames = new Frames();
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
+        frames.bowling(pins[10]);
+        frames.bowling(pins[10]);
+        frames.bowling(pins[10]);
+        frames.bowling(pins[10]);
 
         String[] totalScore = frames.getScores()
                 .stream()
@@ -83,13 +68,13 @@ class FramesTest {
     @Test
     void bowling_STRIKE_STRIKE_STRIKE_OPEN() {
         Frames frames = new Frames();
-        frames.bowling(10);
+        frames.bowling(pins[10]);
         frames.getScores();
-        frames.bowling(10);
+        frames.bowling(pins[10]);
         frames.getScores();
-        frames.bowling(10);
+        frames.bowling(pins[10]);
         frames.getScores();
-        frames.bowling(5);
+        frames.bowling(pins[5]);
         frames.getScores();
 
         String[] totalScore = frames.getScores()
@@ -103,9 +88,9 @@ class FramesTest {
     @Test
     void bowling_STRIKE_OPEN_MISS() {
         Frames frames = new Frames();
-        frames.bowling(10);
-        frames.bowling(5);
-        frames.bowling(4);
+        frames.bowling(pins[10]);
+        frames.bowling(pins[5]);
+        frames.bowling(pins[4]);
 
         String[] totalScore = frames.getScores()
                 .stream()
@@ -118,8 +103,8 @@ class FramesTest {
     @Test
     void bowling_OPEN_MISS() {
         Frames frames = new Frames();
-        frames.bowling(5);
-        frames.bowling(4);
+        frames.bowling(pins[5]);
+        frames.bowling(pins[4]);
 
         String[] totalScore = frames.getScores()
                 .stream()
@@ -134,14 +119,14 @@ class FramesTest {
         Frames frames = new Frames();
 
         IntStream.range(0,8)
-                .forEach(idx -> frames.bowling(10));
+                .forEach(idx -> frames.bowling(pins[10]));
 
-        frames.bowling(9);
-        frames.bowling(1);
+        frames.bowling(pins[9]);
+        frames.bowling(pins[1]);
 
         //final frame
-        frames.bowling(1);
-        frames.bowling(1);
+        frames.bowling(pins[1]);
+        frames.bowling(pins[1]);
 
         String[] totalScore = frames.getScores()
                 .stream()
@@ -156,13 +141,13 @@ class FramesTest {
         Frames frames = new Frames();
 
         IntStream.range(0,8)
-                .forEach(idx -> frames.bowling(10));
+                .forEach(idx -> frames.bowling(pins[10]));
 
-        frames.bowling(9);
-        frames.bowling(1);
+        frames.bowling(pins[9]);
+        frames.bowling(pins[1]);
 
         //final frame
-        frames.bowling(10);
+        frames.bowling(pins[10]);
 
         String[] totalScore = frames.getScores()
                 .stream()
@@ -177,12 +162,12 @@ class FramesTest {
         Frames frames = new Frames();
 
         IntStream.range(0,8)
-                .forEach(idx -> frames.bowling(10));
+                .forEach(idx -> frames.bowling(pins[10]));
 
-        frames.bowling(10);
+        frames.bowling(pins[10]);
 
         //final frame
-        frames.bowling(1);
+        frames.bowling(pins[1]);
 
         String[] totalScore = frames.getScores()
                 .stream()
@@ -197,13 +182,13 @@ class FramesTest {
         Frames frames = new Frames();
 
         IntStream.range(0,8)
-                .forEach(idx -> frames.bowling(10));
+                .forEach(idx -> frames.bowling(pins[10]));
 
-        frames.bowling(10);
+        frames.bowling(pins[10]);
 
         //final frame
-        frames.bowling(1);
-        frames.bowling(1);
+        frames.bowling(pins[1]);
+        frames.bowling(pins[1]);
 
         String[] totalScore = frames.getScores()
                 .stream()
@@ -218,13 +203,13 @@ class FramesTest {
         Frames frames = new Frames();
 
         IntStream.range(0,8)
-                .forEach(idx -> frames.bowling(10));
+                .forEach(idx -> frames.bowling(pins[10]));
 
-        frames.bowling(10);
+        frames.bowling(pins[10]);
 
         //final frame
-        frames.bowling(1);
-        frames.bowling(9);
+        frames.bowling(pins[1]);
+        frames.bowling(pins[9]);
 
         String[] totalScore = frames.getScores()
                 .stream()
@@ -238,9 +223,9 @@ class FramesTest {
     @Test
     void bowling_OPEN_SPARE_OPEN() {
         Frames frames = new Frames();
-        frames.bowling(5);
-        frames.bowling(5);
-        frames.bowling(1);
+        frames.bowling(pins[5]);
+        frames.bowling(pins[5]);
+        frames.bowling(pins[1]);
         String[] totalScore = frames.getScores()
                 .stream()
                 .filter(score -> 0 < score.length())
@@ -252,9 +237,9 @@ class FramesTest {
     @Test
     void bowling_OPEN_SPARE_STRIKE() {
         Frames frames = new Frames();
-        frames.bowling(9);
-        frames.bowling(1);
-        frames.bowling(10);
+        frames.bowling(pins[9]);
+        frames.bowling(pins[1]);
+        frames.bowling(pins[10]);
 
         String[] totalScore = frames.getScores()
                 .stream()
@@ -267,9 +252,9 @@ class FramesTest {
     @Test
     void bowling_STRIKE_OPEN_SPARE() {
         Frames frames = new Frames();
-        frames.bowling(10);
-        frames.bowling(1);
-        frames.bowling(9);
+        frames.bowling(pins[10]);
+        frames.bowling(pins[1]);
+        frames.bowling(pins[9]);
 
         String[] totalScore = frames.getScores()
                 .stream()
@@ -280,16 +265,15 @@ class FramesTest {
     }
 
 
-
-
     @Test
     void bowling_프레임_마지막_직전_까지_소진() {
         Frames frames = new Frames();
         for (int i = FrameNumber.MIN_FRAME_NUMBER; i < FrameNumber.MAX_FRAME_NUMBER; i++) {
             assertThat(frames.nowFrameNumber()).isEqualTo(i);
-            frames.bowling(10);
+            frames.bowling(pins[10]);
             assertThat(frames.isFinished()).isFalse();
         }
+
         assertThat(frames.nowFrameNumber()).isEqualTo(FrameNumber.MAX_FRAME_NUMBER);
     }
 
@@ -299,8 +283,15 @@ class FramesTest {
         Frames frames = getBeforeLastFrames();
 
         assertThat(frames.nowFrameNumber()).isEqualTo(FrameNumber.MAX_FRAME_NUMBER);
-        frames.bowling(8);
-        frames.bowling(1);
+        frames.bowling(pins[8]);
+        frames.bowling(pins[1]);
+
+        long resultCount = frames.getScores()
+                .stream()
+                .filter(result -> 0 < result.length())
+                .count();
+
+        assertThat(resultCount).isEqualTo(10);
         assertThat(frames.isFinished()).isTrue();
     }
 
@@ -308,9 +299,16 @@ class FramesTest {
     void bowling_프레임_모두_소진_시_정상_마지막_스트라이크() {
         Frames frames = getBeforeLastFrames();
         assertThat(frames.nowFrameNumber()).isEqualTo(FrameNumber.MAX_FRAME_NUMBER);
-        frames.bowling(10);
-        frames.bowling(10);
-        frames.bowling(10);
+        frames.bowling(pins[10]);
+        frames.bowling(pins[10]);
+        frames.bowling(pins[10]);
+
+        long resultCount = frames.getScores()
+                .stream()
+                .filter(result -> 0 < result.length())
+                .count();
+
+        assertThat(resultCount).isEqualTo(10);
         assertThat(frames.isFinished()).isTrue();
     }
 
@@ -319,9 +317,16 @@ class FramesTest {
         Frames frames = getBeforeLastFrames();
 
         assertThat(frames.nowFrameNumber()).isEqualTo(FrameNumber.MAX_FRAME_NUMBER);
-        frames.bowling(10);
-        frames.bowling(1);
-        frames.bowling(1);
+        frames.bowling(pins[10]);
+        frames.bowling(pins[1]);
+        frames.bowling(pins[1]);
+
+        long resultCount = frames.getScores()
+                .stream()
+                .filter(result -> 0 < result.length())
+                .count();
+
+        assertThat(resultCount).isEqualTo(10);
         assertThat(frames.isFinished()).isTrue();
     }
 
@@ -330,9 +335,16 @@ class FramesTest {
         Frames frames = getBeforeLastFrames();
 
         assertThat(frames.nowFrameNumber()).isEqualTo(FrameNumber.MAX_FRAME_NUMBER);
-        frames.bowling(9);
-        frames.bowling(1);
-        frames.bowling(9);
+        frames.bowling(pins[9]);
+        frames.bowling(pins[1]);
+        frames.bowling(pins[9]);
+
+        long resultCount = frames.getScores()
+                .stream()
+                .filter(result -> 0 < result.length())
+                .count();
+
+        assertThat(resultCount).isEqualTo(10);
         assertThat(frames.isFinished()).isTrue();
     }
 
@@ -341,9 +353,16 @@ class FramesTest {
         Frames frames = getBeforeLastFrames();
 
         assertThat(frames.nowFrameNumber()).isEqualTo(FrameNumber.MAX_FRAME_NUMBER);
-        frames.bowling(9);
-        frames.bowling(1);
-        frames.bowling(10);
+        frames.bowling(pins[9]);
+        frames.bowling(pins[1]);
+        frames.bowling(pins[10]);
+
+        long resultCount = frames.getScores()
+                .stream()
+                .filter(result -> 0 < result.length())
+                .count();
+
+        assertThat(resultCount).isEqualTo(10);
         assertThat(frames.isFinished()).isTrue();
     }
 
@@ -352,16 +371,16 @@ class FramesTest {
         Frames frames = getBeforeLastFrames();
 
         assertThat(frames.nowFrameNumber()).isEqualTo(FrameNumber.MAX_FRAME_NUMBER);
-        frames.bowling(8);
-        frames.bowling(1);
+        frames.bowling(pins[8]);
+        frames.bowling(pins[1]);
 
-        assertThatIllegalArgumentException().isThrownBy(() -> frames.bowling(10));
+        assertThatIllegalArgumentException().isThrownBy(() -> frames.bowling(pins[10]));
     }
 
     private Frames getBeforeLastFrames() {
         Frames frames = new Frames();
         for (int i = FrameNumber.MIN_FRAME_NUMBER; i < FrameNumber.MAX_FRAME_NUMBER; i++) {
-            frames.bowling(10);
+            frames.bowling(pins[10]);
         }
         return frames;
     }

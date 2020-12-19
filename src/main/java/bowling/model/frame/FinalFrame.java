@@ -1,6 +1,7 @@
 package bowling.model.frame;
 
 import bowling.model.Pins;
+import bowling.model.Score;
 
 import java.util.Optional;
 
@@ -26,6 +27,11 @@ public class FinalFrame extends Frame {
         return states.isFinished() && !states.canLastCalculate();
     }
 
+    protected Score addScore(Score score) {
+        return states.addScoreUntilPossible(score);
+
+    }
+
     @Override
     public Optional<Integer> getScore() {
         int totalScore = states.sumScore();
@@ -34,6 +40,6 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isFinished() {
-        return states.isFinished() && states.canLastCalculate() || states.size() == MAX_BONUS_COUNT;
+        return (states.isFinished() && states.canLastCalculate()) || states.size() == MAX_BONUS_COUNT;
     }
 }

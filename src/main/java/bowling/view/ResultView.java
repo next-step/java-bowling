@@ -1,8 +1,9 @@
 package bowling.view;
 
-import bowling.model.User;
+import bowling.model.Name;
 import bowling.model.frame.FrameNumber;
 import bowling.model.frame.FrameResult;
+import bowling.model.player.PlayerResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,19 +26,24 @@ public class ResultView {
                 .mapToObj(number -> FrameNumber.from(number).toString())
                 .collect(Collectors.toList());
 
-        printFrame(Optional.empty(), FrameResult.from(frameNumbers));
+        printFrame(NAME_COLUMN, FrameResult.from(frameNumbers));
     }
 
-    public static void printFrame(User user, FrameResult frameResult) {
-        printFrame(Optional.of(user.toString()), frameResult);
+    public static void printInfo(List<PlayerResult> playerResults) {
+        ResultView.printHeadFrame();
+        for(PlayerResult playerResult : playerResults){
+            String user = playerResult.user();
+            printFrame(user, playerResult.frame());
+            printFrame("", playerResult.score());
+        }
     }
 
-    private static void printFrame(Optional<String> name, FrameResult frameResult) {
+    private static void printFrame(String name, FrameResult frameResult) {
         String frame = frameResult.stream()
                 .map(viewElement -> center(viewElement, FRAME_PADDING))
                 .collect(Collectors.joining(FRAME_DELIMITER));
 
-        System.out.print(FRAME_DELIMITER + center(name.orElse(NAME_COLUMN), FRAME_PADDING));
+        System.out.print(FRAME_DELIMITER + center(name, FRAME_PADDING));
         System.out.println(FRAME_DELIMITER + frame + FRAME_DELIMITER);
     }
 }

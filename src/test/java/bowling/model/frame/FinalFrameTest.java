@@ -19,6 +19,7 @@ class FinalFrameTest {
             .boxed()
             .map(Pins::from)
             .collect(Collectors.toList());
+
     @Test
     void bowling_OPEN_MISS(){
         FinalFrame finalFrame = new FinalFrame();

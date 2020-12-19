@@ -11,12 +11,16 @@ public class Frames {
     private final LinkedList<Frame> frames = Stream.of(NormalFrame.createFirstFrame())
             .collect(Collectors.toCollection(LinkedList::new));
 
-    public void bowling(int fallenPins) {
-        Frame afterBowling = lastFrame().bowling(Pins.from(fallenPins));
+    public void bowling(Pins fallenPins) {
+        Frame afterBowling = lastFrame().bowling(fallenPins);
 
         if (afterBowling.isNewFrame()) {
             frames.add(afterBowling);
         }
+    }
+
+    public boolean isNewFrame(){
+        return frames.getLast().isNewFrame();
     }
 
     public int nowFrameNumber() {
