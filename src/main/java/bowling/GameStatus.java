@@ -9,6 +9,6 @@ public class GameStatus {
 
     @Override
     public String toString() {
-        return "|  PJS |      |      |      |      |      |      |      |      |      |      |";
+        return "|  " + game.getPlayerName() + " |      |      |      |      |      |      |      |      |      |      |";
     }
 }

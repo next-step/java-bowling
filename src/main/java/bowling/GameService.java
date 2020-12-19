@@ -10,11 +10,13 @@ import java.util.List;
 
 public class GameService {
     private final List<Frame> frames = new ArrayList<>();
+    private final String playerName;
 
     public GameService(String playerName) {
         if (playerName.length() > 3) {
             throw new IllegalPlayerNameException();
         }
+        this.playerName = playerName;
     }
 
     public boolean isFinish() {
@@ -48,5 +50,9 @@ public class GameService {
         if (getCurrentFrame() != frame) {
             frames.add(frame);
         }
+    }
+
+    public String getPlayerName() {
+        return playerName;
     }
 }
