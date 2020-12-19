@@ -13,12 +13,12 @@ public class NormalFrames {
         frames = new ArrayList<>();
     }
 
-    public void record(DownedPin downedPin) {
+    public void record(DownedPin currentTry) {
         if (frames.size() == 0 || getLatestFrame().isEnd()) {
             frames.add(new NormalFrame());
         }
 
-        getLatestFrame().record(downedPin);
+        getLatestFrame().record(currentTry);
     }
 
     public boolean isEnd() {
