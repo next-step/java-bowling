@@ -1,8 +1,8 @@
-package bowling;
+package bowling.view;
 
+import bowling.GameService;
 import bowling.domain.Frame;
 import bowling.domain.FrameStatus;
-import bowling.view.FrameStatusView;
 
 import java.util.stream.IntStream;
 

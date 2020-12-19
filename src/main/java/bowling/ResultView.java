@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.view.GameStatus;
+
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.joining;

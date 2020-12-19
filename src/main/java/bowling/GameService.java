@@ -4,6 +4,7 @@ package bowling;
 import bowling.domain.Frame;
 import bowling.domain.IllegalBallThrownException;
 import bowling.domain.NormalFrame;
+import bowling.view.GameStatus;
 
 import java.util.ArrayList;
 import java.util.List;
