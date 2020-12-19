@@ -72,6 +72,11 @@ public class Frame {
         if (canNotCalculateTotalScore(previousFrameTotalScore, score)) {
             return null;
         }
+
+        if (score.leftBonusApplyChance()) {
+            return null;
+        }
+
         return previousFrameTotalScore + score.getValue();
     }
 
