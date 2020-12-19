@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static bowling.Scoring.MISS;
 import static bowling.Scoring.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -23,7 +24,7 @@ public class LastFrameTest {
 
     @DisplayName("9번째 프레임이 끝나면 LastFrame 을 리턴한다")
     @Test
-    void lastFrame() {
+    void ninthFrameNext() {
         assertAll(
                 // 스트라이크
                 () -> assertThat(new NormalFrame(9).throwBall(10))
@@ -50,6 +51,13 @@ public class LastFrameTest {
         assertThat(second.getScoring()).isEqualTo(STRIKE.asOptional());
         Frame third = first.throwBall(10);
         assertThat(third.getScoring()).isEqualTo(STRIKE.asOptional());
+    }
+
+    @DisplayName("마지막 프레임의 미스")
+    @Test
+    void lastFrameMiss() {
+        Frame lastFrame = new NormalFrame(9).throwBall(10);
+        assertThat(lastFrame.throwBall(8).throwBall(1).getScoring()).isEqualTo(MISS.asOptional());
     }
 
 
