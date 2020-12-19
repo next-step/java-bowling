@@ -34,7 +34,7 @@ public class QnaServiceTest {
     private Answer answer;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         question.addAnswer(answer);
@@ -52,11 +52,15 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_다른_사람이_쓴_글() throws Exception {
+    public void delete_다른_사람이_쓴_글() {
+        question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        answer = new Answer(11L, UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents1");
+        question.addAnswer(answer);
+
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
+            qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
         }).isInstanceOf(CannotDeleteException.class);
     }
 
@@ -72,7 +76,7 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
+    public void delete_답변_중_다른_사람이_쓴_글() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {
