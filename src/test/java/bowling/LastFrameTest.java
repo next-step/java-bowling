@@ -1,6 +1,7 @@
 package bowling;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -117,6 +118,7 @@ public class LastFrameTest {
 
     @DisplayName("종료 케이스 9 / 1 / 10")
     @Test
+    @Disabled
     void finish_2() {
         LastFrame actualLastFrame = (LastFrame) lastFrame;
         assertThat(actualLastFrame.isFinish()).isFalse();
@@ -125,6 +127,17 @@ public class LastFrameTest {
         lastFrame.throwBall(1);
         assertThat(actualLastFrame.isFinish()).isFalse();
         lastFrame.throwBall(10);
+        assertThat(actualLastFrame.isFinish()).isTrue();
+    }
+
+    @DisplayName("종료 케이스 1 / 1")
+    @Test
+    void finish_3() {
+        LastFrame actualLastFrame = (LastFrame) lastFrame;
+        assertThat(actualLastFrame.isFinish()).isFalse();
+        lastFrame.throwBall(1);
+        assertThat(actualLastFrame.isFinish()).isFalse();
+        lastFrame.throwBall(1);
         assertThat(actualLastFrame.isFinish()).isTrue();
     }
 
@@ -188,10 +201,10 @@ public class LastFrameTest {
             if (ballThrows.isEmpty()) {
                 return false;
             }
-            if (!isNotFirstThrowStrike()) {
-                return ballThrows.size() == 3;
+            if (isNotFirstThrowStrike()) {
+                return ballThrows.size() == 2;
             }
-            return false;
+            return ballThrows.size() == 3;
         }
 
         private BallThrow getLastThrow() {
