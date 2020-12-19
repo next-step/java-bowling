@@ -39,7 +39,7 @@ public class NormalFrameTest {
 
         frame.record(firstTry);
 
-        assertThat(firstTry.isStrike()).isTrue();
+        assertThat(frame.isStrike()).isTrue();
     }
 
     @Test
@@ -50,7 +50,7 @@ public class NormalFrameTest {
 
         frame.record(firstTry);
 
-        assertThat(firstTry.isStrike()).isFalse();
+        assertThat(frame.isStrike()).isFalse();
     }
 
     @Test

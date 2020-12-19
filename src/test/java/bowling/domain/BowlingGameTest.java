@@ -62,7 +62,7 @@ class BowlingGameTest {
 
     @ParameterizedTest
     @MethodSource("makeScenario")
-    @DisplayName("")
+    @DisplayName("투구 시나리오에 따른 종료 조건 검증")
     void testRun(List<DownedPin> pins) {
         BowlingGame game = new BowlingGame();
         for (int i = 0; i < pins.size() - 1; i++) {
