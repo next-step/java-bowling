@@ -5,9 +5,12 @@ import java.util.Optional;
 
 public class Lists {
     public static  <T> Optional<T> getAsOptional(List<T> list, int index) {
+        return Optional.ofNullable(getOrNull(list, index));
+    }
+    public static  <T> T getOrNull(List<T> list, int index) {
         if (list.size() - 1 < index) {
-            return Optional.empty();
+            return null;
         }
-        return Optional.of(list.get(index));
+        return list.get(index);
     }
 }
