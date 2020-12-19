@@ -5,6 +5,7 @@ import bowling.domain.score.Score;
 import bowling.domain.score.ScoreDto;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Frame {
 
@@ -35,4 +36,17 @@ public abstract class Frame {
     abstract protected List<Point> getFramePitchPoints();
 
     abstract FrameResultDto getFrameResultDto();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frame frame = (Frame) o;
+        return frameNumber == frame.frameNumber && Objects.equals(score, frame.score) && Objects.equals(nextFrame, frame.nextFrame);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber, score, nextFrame);
+    }
 }
