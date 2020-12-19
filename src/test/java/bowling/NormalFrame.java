@@ -2,9 +2,7 @@ package bowling;
 
 import java.util.Optional;
 
-import static bowling.BallThrow.MAX_PINS;
-import static bowling.BallThrow.MIN_PINS;
-import static bowling.Scoring.*;
+import static bowling.Scoring.STRIKE;
 
 class NormalFrame implements Frame {
     private BallThrow firstThrow;
@@ -33,13 +31,7 @@ class NormalFrame implements Frame {
         if (firstThrow.isStrike()) {
             return Optional.of(STRIKE);
         }
-        if (sumOfFallingPins() == MAX_PINS) {
-            return Optional.of(SPARE);
-        }
-        if (sumOfFallingPins() == MIN_PINS) {
-            return Optional.of(GUTTER);
-        }
-        return Optional.of(MISS);
+        return Scoring.nonStrikeValueOf(sumOfFallingPins()).asOptional();
     }
 
     public int sumOfFallingPins() {

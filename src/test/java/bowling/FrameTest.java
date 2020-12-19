@@ -3,6 +3,8 @@ package bowling;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Optional;
 
@@ -45,31 +47,16 @@ public class FrameTest {
     @Test
     void strike() {
         frame.throwBall(10);
-        assertThat(frame.getScoring()).isEqualTo(Optional.of(STRIKE));
+        assertThat(frame.getScoring()).isEqualTo(STRIKE.asOptional());
     }
 
-    @DisplayName("9/1 개를 쓰러뜨리면 스페어")
-    @Test
-    void spare() {
-        frame.throwBall(9);
-        frame.throwBall(1);
-        assertThat(frame.getScoring()).isEqualTo(Optional.of(SPARE));
-    }
-
-    @DisplayName("9/0 개를 쓰러뜨리면 미스")
-    @Test
-    void miss() {
-        frame.throwBall(9);
-        frame.throwBall(0);
-        assertThat(frame.getScoring()).isEqualTo(Optional.of(MISS));
-    }
-
-    @DisplayName("아무것도 쓰러뜨리지 못하면 거터")
-    @Test
-    void gutter() {
-        frame.throwBall(0);
-        frame.throwBall(0);
-        assertThat(frame.getScoring()).isEqualTo(Optional.of(GUTTER));
+    @DisplayName("미스, 스페어, 거터")
+    @ParameterizedTest
+    @CsvSource({"8,1,MISS", "8,2,SPARE", "0,0,GUTTER"})
+    void scoring(int firstThrow, int secondThrow, String scoringName) {
+        frame.throwBall(firstThrow);
+        frame.throwBall(secondThrow);
+        assertThat(frame.getScoring()).isEqualTo(Scoring.valueOf(scoringName).asOptional());
     }
 
     @DisplayName("프레임이 끝나지 않으면 반환할 상태가 없다")
