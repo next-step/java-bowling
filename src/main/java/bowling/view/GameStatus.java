@@ -5,9 +5,6 @@ import bowling.domain.Frame;
 import bowling.domain.FrameStatus;
 import bowling.domain.Score;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.joining;
@@ -32,27 +29,12 @@ public class GameStatus {
     }
 
     private String getFrameScore() {
-        List<Integer> collect = IntStream.rangeClosed(1, 10)
+        return IntStream.rangeClosed(1, 10)
                 .mapToObj(game::getFrame)
                 .map(frame -> frame.map(Frame::getScore))
-                .collect((Supplier<ArrayList<Integer>>) ArrayList::new,
-                         ((integers, score) -> {
-                             integers.add(score.map(Score::toInt).orElse(null));
-                         }),
-                         ((integers, integers2) -> {
-                             throw new IllegalStateException();
-                         }));
-
-        return collect.stream()
-                .map(score -> {
-                    if (score == null) {
-                        return "";
-                    }
-                    return score.toString();
-                })
-                .map(score -> {
-                    return String.format("  %-3s ", score);
-                })
+                .map(score -> score.map(Score::toInt).orElse(null))
+                .map(this::toStringScore)
+                .map(this::formatString)
                 .collect(joining("|"));
     }
 
@@ -61,9 +43,12 @@ public class GameStatus {
                 .mapToObj(game::getFrame)
                 .map(frame -> frame.map(Frame::getFrameStatus).orElse(null))
                 .map(this::toStringFrameStatus)
-                .map(Object::toString)
-                .map(score -> String.format("  %-3s ", score))
+                .map(this::formatString)
                 .collect(joining("|"));
+    }
+
+    private String formatString(String score) {
+        return String.format("  %-3s ", score);
     }
 
     private String toStringFrameStatus(FrameStatus frameStatus) {
@@ -71,5 +56,12 @@ public class GameStatus {
             return "";
         }
         return new FrameStatusView(frameStatus).toString();
+    }
+
+    private String toStringScore(Integer score) {
+        if (score == null) {
+            return "";
+        }
+        return score.toString();
     }
 }
