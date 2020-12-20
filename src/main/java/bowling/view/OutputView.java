@@ -1,8 +1,13 @@
 package bowling.view;
 
+import bowling.domain.Pins;
+import bowling.domain.Player;
+import bowling.domain.interfaces.Frame;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.PrintStream;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

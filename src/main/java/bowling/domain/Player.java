@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class Player {
 
     public static final int NAME_LENGTH = 3;
