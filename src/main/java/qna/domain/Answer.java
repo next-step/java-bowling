@@ -59,6 +59,10 @@ public class Answer extends AbstractEntity {
         }
     }
 
+    public DeleteHistory createDeleteHistory(long questionId, User deletedBy) {
+        return new DeleteHistory(ContentType.ANSWER, questionId, deletedBy);
+    }
+
     public boolean isOwner(User writer) {
         return this.writer.equals(writer);
     }

@@ -19,10 +19,13 @@ public class Answers {
         }
     }
 
-    public void deleteAnswers(DeleteHistories deleteHistories, User deletedBy) {
+    public List<DeleteHistory> deleteAnswers(long questionId, User deletedBy) {
+        List<DeleteHistory> deleteHistoriesList = new ArrayList<>();
         for (Answer answer : answers) {
             answer.setDeleted(true);
-            deleteHistories.addHistory(ContentType.ANSWER, deletedBy);
+            deleteHistoriesList.add(answer.createDeleteHistory(questionId, deletedBy));
         }
+
+        return deleteHistoriesList;
     }
 }

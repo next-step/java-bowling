@@ -88,9 +88,13 @@ public class Question extends AbstractEntity {
         answers.checkAnswersOwner(loginUser);
     }
 
-    public void deleteAnswers(DeleteHistories deleteHistories, User deletedBy) {
-        answers.deleteAnswers(deleteHistories, deletedBy);
+    public List<DeleteHistory> deleteAnswers(long questionId, User deletedBy) {
+        return answers.deleteAnswers(questionId, deletedBy);
+    }
 
+    public DeleteHistory deleteQuestion(long questionId, User deletedBy) {
+        this.setDeleted(true);
+        return new DeleteHistory(ContentType.QUESTION, questionId, deletedBy);
     }
 
     @Override

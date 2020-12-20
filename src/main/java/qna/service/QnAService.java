@@ -41,12 +41,10 @@ public class QnAService {
 
         question.validateAnswersOwner(loginUser);
 
-        DeleteHistories deleteHistories = new DeleteHistories(questionId);
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.addHistory(question.deleteQuestion(questionId, question.getWriter()));
 
-        question.setDeleted(true);
-        deleteHistories.addHistory(ContentType.QUESTION, question.getWriter());
-
-        question.deleteAnswers(deleteHistories, question.getWriter());
+        deleteHistories.addDeleteHistories(question.deleteAnswers(questionId, question.getWriter()));
         deleteHistoryService.saveAll(deleteHistories);
     }
 }
