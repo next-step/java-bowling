@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -67,8 +68,7 @@ public class Question extends AbstractEntity {
     }
 
     public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
+        answers.addAnswer(answer, this);
     }
 
     public boolean isOwner(User loginUser) {
@@ -84,8 +84,13 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public void validateAnswersOwner(User loginUser) throws CannotDeleteException {
+        answers.checkAnswersOwner(loginUser);
+    }
+
+    public void deleteAnswers(DeleteHistories deleteHistories, User deletedBy) {
+        answers.deleteAnswers(deleteHistories, deletedBy);
+
     }
 
     @Override
