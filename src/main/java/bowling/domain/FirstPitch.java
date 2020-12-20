@@ -5,6 +5,7 @@ import bowling.domain.interfaces.State;
 import java.util.Objects;
 
 public class FirstPitch implements State {
+    private Pins pins = new Pins();
 
     @Override
     public State bowl(int count) {

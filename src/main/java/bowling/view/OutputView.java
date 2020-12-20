@@ -15,10 +15,18 @@ public class OutputView {
     public static final String NAME = "NAME";
     public static final String INFIX = "|";
     public static final int FRAME_LENGTH = 6;
+    public static final String STRIKE_MARK = "X";
+    public static final String SPARE_MARK = "/";
+    public static final String GUTTER_MARK = "-";
+    public static final int TOTAL_FRAME_COUNT = 10;
     private static final PrintStream out = System.out;
 
     private static String getNameGuideString() {
         return StringUtils.wrap(StringUtils.center(NAME, FRAME_LENGTH), INFIX);
+    }
+
+    private static String getNameString(Player player) {
+        return StringUtils.wrap(StringUtils.center(player.getName(), FRAME_LENGTH), INFIX);
     }
 
     private static String getFrameGuideString() {
@@ -29,5 +37,63 @@ public class OutputView {
 
     public static void showFramesGuide() {
         out.println(getNameGuideString() + getFrameGuideString() + INFIX);
+    }
+
+    public static void showRecords(Player player, Frame frame) {
+        showFramesGuide();
+
+        StringBuilder builder = new StringBuilder(getNameString(player));
+        addFrameString(frame, builder);
+
+        out.println(builder.toString());
+    }
+
+    private static void addFrameString(Frame frame, StringBuilder builder) {
+        int frameCount = 0;
+        Frame currentFrame = frame;
+        while (Objects.nonNull(currentFrame)) {
+            String pinsString = getPinsString(currentFrame);
+            builder.append(StringUtils.center(pinsString, FRAME_LENGTH)).append(INFIX);
+            currentFrame = currentFrame.getNextFrame();
+            frameCount++;
+        }
+
+        addRestFrameString(builder, frameCount);
+    }
+
+    private static void addRestFrameString(StringBuilder builder, int frameCount) {
+        int rest = TOTAL_FRAME_COUNT - frameCount;
+        if (rest > 0)
+            builder.append(getRestFrameString(rest));
+    }
+
+    private static String getPinsString(Frame currentFrame) {
+        List<Pins> pinsList = currentFrame.getPinsList();
+        return pinsList.stream()
+            .map(OutputView::getPinsString)
+            .collect(Collectors.joining(INFIX));
+    }
+
+    private static String getRestFrameString(int count) {
+        return IntStream.range(0, count)
+            .mapToObj(i -> StringUtils.center("", FRAME_LENGTH))
+            .collect(Collectors.joining(INFIX)) + INFIX;
+    }
+
+    public static String getPinsString(Pins pins) {
+        if (pins.isStrike()) {
+            return STRIKE_MARK;
+        }
+        if (pins.isSpare()) {
+            return pins.getFirstFall() + INFIX + SPARE_MARK;
+        }
+        return pins.getFalls().stream().map(OutputView::getGutterMark).collect(Collectors.joining(INFIX));
+    }
+
+    private static String getGutterMark(Integer fall) {
+        if (fall == 0) {
+            return GUTTER_MARK;
+        }
+        return fall + "";
     }
 }

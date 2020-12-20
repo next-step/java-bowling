@@ -5,8 +5,14 @@ import bowling.domain.interfaces.State;
 import java.util.Objects;
 
 public class SecondPitch implements State {
+    private Pins pins;
+
+    public SecondPitch(Pins pins) {
+        this.pins = pins;
+    }
+
     @Override
-    public State bowl(Pins pins, int count) {
+    public State bowl(int count) {
         pins.fall(count);
         if (pins.isAllDown()) {
             return new Spare(pins);

@@ -1,11 +1,17 @@
 package bowling.domain;
 
+import bowling.domain.interfaces.Frame;
 import bowling.domain.interfaces.State;
 
-public class NormalFrame {
+import java.util.Collections;
+import java.util.List;
 
-    private Pins pins = new Pins();
-    private State state = new FirstPitch();
+public class NormalFrame implements Frame {
+
+    public final int NORMAL_FRAME_COUNT = 9;
+    private int frameCount;
+    private State state;
+    private Frame nextFrame;
 
 
     public NormalFrame(int frameCount) {

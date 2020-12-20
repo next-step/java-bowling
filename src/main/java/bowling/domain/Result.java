@@ -4,14 +4,16 @@ import bowling.domain.interfaces.State;
 
 import java.util.Objects;
 
-public enum Result implements State {
-    MISS,
-    STRIKE,
-    SPARE;
+public abstract class Result implements State {
+    private Pins pins;
+
+    public Result(Pins pins) {
+        this.pins = pins;
+    }
 
     @Override
-    public State bowl(Pins pins, int count) {
-        return this;
+    public State bowl(int count) {
+        return null;
     }
 
     @Override
