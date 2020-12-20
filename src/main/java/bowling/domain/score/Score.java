@@ -1,9 +1,11 @@
 package bowling.domain.score;
 
-import bowling.state.BowlingState;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Created By mand2 on 2020-12-21.
@@ -39,13 +41,16 @@ public class Score {
         return this.pitches.size() == FIRST_PITCH && sum() < MAX_SCORE;
     }
 
-
     public boolean isSpare() {
         return this.pitches.size() == SECOND_PITCH && sum() == MAX_SCORE;
     }
 
     public boolean isMiss() {
         return this.pitches.size() == SECOND_PITCH && sum() < MAX_SCORE;
+    }
+
+    public boolean isUnOpen() {
+        return this.pitches.isEmpty();
     }
 
     public boolean isStrikeBonusGame() {
@@ -59,8 +64,14 @@ public class Score {
     }
 
     public int sum() {
-        return this.pitches.stream().mapToInt(Pitch::getScore).sum();
+        return this.pitches.stream()
+                .mapToInt(Pitch::getScore)
+                .sum();
     }
 
-
+    public List<Integer> getList() {
+        return pitches.stream()
+                .map(Pitch::getScore)
+                .collect(Collectors.collectingAndThen(toList(), Collections::unmodifiableList));
+    }
 }

@@ -1,10 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Pitch;
-import bowling.domain.score.Score;
 import bowling.state.*;
-
-import java.util.Objects;
 
 /**
  * Created By mand2 on 2020-12-21.

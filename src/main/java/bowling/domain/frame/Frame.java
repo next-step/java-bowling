@@ -4,6 +4,7 @@ import bowling.domain.score.Pitch;
 import bowling.domain.score.Score;
 import bowling.state.BowlingState;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -38,8 +39,16 @@ public abstract class Frame {
         return index;
     }
 
+    public List<Integer> getScoreList() {
+        return score.getList();
+    }
+
     public Score getScore() {
         return score;
+    }
+
+    public int sum() {
+        return score.sum();
     }
 
     @Override
