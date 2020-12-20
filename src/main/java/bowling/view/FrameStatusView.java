@@ -17,8 +17,7 @@ public class FrameStatusView {
         this.frameStatus = frameStatus;
     }
 
-    @Override
-    public String toString() {
+    public String apply() {
         if (first() == null) {
             return builder.toString();
         }

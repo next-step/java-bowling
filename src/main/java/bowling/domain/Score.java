@@ -5,7 +5,6 @@ import bowling.util.Lists;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import static bowling.domain.BallThrow.MAX_PINS;
 import static java.util.stream.Collectors.toList;
@@ -32,13 +31,6 @@ public class Score {
             return sumAll();
         }
         return first() + second();
-    }
-
-    @Override
-    public String toString() {
-        return Optional.ofNullable(toInt())
-                .map(Object::toString)
-                .orElse("");
     }
 
     private Integer first() {

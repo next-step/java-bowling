@@ -89,7 +89,7 @@ public class GameStatus {
         if (frameStatus == null) {
             return "";
         }
-        return new FrameStatusView(frameStatus).toString();
+        return new FrameStatusView(frameStatus).apply();
     }
 
     private String toStringScore(Integer score) {
