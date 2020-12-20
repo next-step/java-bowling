@@ -11,9 +11,9 @@ import java.util.stream.Stream;
 
 public abstract class Pitchings implements Iterable<Pitching> {
     final LinkedList<Pitching> value;
-    private Score score;
+    Score score;
 
-    protected Pitchings() {
+    Pitchings() {
         this.value = new LinkedList<>();
         score = Score.ofMiss(0);
     }
@@ -21,26 +21,10 @@ public abstract class Pitchings implements Iterable<Pitching> {
     public void addPitching(KnockDownPins knockDownPins) {
         Pitching pitching = getPitching(knockDownPins);
         value.add(pitching);
-        score = renewScore();
+        score = renewScore(pitching);
     }
 
-    private Score renewScore() {
-        if (isStrike()) {
-            return Score.ofStrike();
-        }
-
-        if (isSpare()) {
-            return Score.ofSpare();
-        }
-
-        return Score.ofMiss(calculatePitchingScore());
-    }
-
-    private int calculatePitchingScore() {
-        return value.stream()
-                .mapToInt(Pitching::getScore)
-                .sum();
-    }
+    abstract Score renewScore(Pitching pitching);
 
     private Pitching getPitching(KnockDownPins knockDownPins) {
         if (value.isEmpty()) {

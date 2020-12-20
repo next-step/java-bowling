@@ -21,12 +21,20 @@ public class Score {
         return new Score(score, 0);
     }
 
+    public static Score of(int score, int bonusApplyChance) {
+        return new Score(score, bonusApplyChance);
+    }
+
     public boolean leftBonusApplyChance() {
         return bonusApplyChance > 0;
     }
 
     public Score addBonusScore(int bonusScore) {
         return new Score(value + bonusScore, bonusApplyChance - 1);
+    }
+
+    public Score addScore(int score) {
+        return new Score(value + score, bonusApplyChance);
     }
 
     public int getValue() {
