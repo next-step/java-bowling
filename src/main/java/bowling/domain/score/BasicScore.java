@@ -53,7 +53,7 @@ public class BasicScore extends Score {
             return false;
         }
 
-        if (sumPoint() == 10) {
+        if (sumPoint() == ALL_PITCH_COUNT) {
             return false;
         }
 
