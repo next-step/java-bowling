@@ -1,6 +1,6 @@
 package bowling.state;
 
-import bowling.domain.Frame;
+import bowling.domain.frame.Frame;
 
 /**
  * Created By mand2 on 2020-12-19.
@@ -28,17 +28,17 @@ public class Open implements BowlingState {
     }
 
     @Override
-    public int getLeft() {
-        return frame.getLeft();
+    public boolean isPlayable() {
+        return true;
     }
 
     @Override
-    public int getFirstPitch() {
-        return frame.getFirstPitch();
+    public boolean isFinalPlayable() {
+        return false;
     }
 
     @Override
-    public int getSecondPitch() {
-        return frame.getSecondPitch();
+    public void showResults() {
+
     }
 }

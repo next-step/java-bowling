@@ -9,11 +9,11 @@ public interface BowlingState {
 
     boolean isSpare();
 
-    int getLeft();
+    boolean isPlayable();
 
-    int getFirstPitch();
+    boolean isFinalPlayable();
 
-    int getSecondPitch();
+    void showResults(); //TODO score 값 변환필요.
 
 
 }

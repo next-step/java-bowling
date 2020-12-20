@@ -1,6 +1,6 @@
 package bowling.state;
 
-import bowling.domain.Frame;
+import bowling.domain.frame.Frame;
 
 /**
  * Created By mand2 on 2020-12-21.
@@ -29,17 +29,17 @@ public class Strike implements BowlingState {
     }
 
     @Override
-    public int getLeft() {
-        return 0;
+    public boolean isPlayable() {
+        return false;
     }
 
     @Override
-    public int getFirstPitch() {
-        return Frame.MAX_SCORE;
+    public boolean isFinalPlayable() {
+        return true;
     }
 
     @Override
-    public int getSecondPitch() {
-        return 0;
+    public void showResults() {
+
     }
 }
