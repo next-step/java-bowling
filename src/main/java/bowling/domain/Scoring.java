@@ -6,7 +6,7 @@ public enum Scoring {
     STRIKE, MISS, SPARE, NONE;
 
     static Scoring valueOf(Integer first, Integer second) {
-        if (first == 10) {
+        if (first == MAX_PINS) {
             return STRIKE;
         }
 

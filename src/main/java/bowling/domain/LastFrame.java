@@ -63,6 +63,11 @@ class LastFrame implements Frame {
     }
 
     @Override
+    public Frame getNextFrame() {
+        return this;
+    }
+
+    @Override
     public boolean isFinish() {
         if (ballThrows.isEmpty()) {
             return false;
@@ -71,6 +76,13 @@ class LastFrame implements Frame {
             return ballThrows.size() == 2;
         }
         return ballThrows.size() == 3;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(getFallingPins(0),
+                         getFallingPins(1),
+                         getFallingPins(2));
     }
 
     private int sumOfLastTwoThrows() {

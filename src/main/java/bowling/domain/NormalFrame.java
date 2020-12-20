@@ -3,11 +3,12 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bowling.domain.Scoring.NONE;
+import static bowling.domain.Scoring.*;
 
 public class NormalFrame implements Frame {
     private final List<BallThrow> ballThrows = new ArrayList<>();
     private final int number;
+    private Frame nextFrame;
 
     public NormalFrame() {
         this(1);
@@ -39,8 +40,38 @@ public class NormalFrame implements Frame {
         return ballThrows;
     }
 
+    @Override
     public int getNumber() {
         return number;
+    }
+
+    @Override
+    public Frame getNextFrame() {
+        if (getScoring() == NONE) {
+            return this;
+        }
+        if (nextFrame == null) {
+            nextFrame = getFrame();
+        }
+        return nextFrame;
+    }
+
+    @Override
+    public Score getScore() {
+        Integer second = getFallingPinOfIndex(this, 1);
+        Integer third = null;
+        if (getScoring() == STRIKE) {
+            second = getFallingPinOfIndex(getNextFrame(), 0);
+            third = getFallingPinOfIndex(getNextFrame(), 1);
+        }
+        if (getNextFrame().getScoring() == STRIKE) {
+            third = getFallingPinOfIndex(getNextFrame().getNextFrame(), 0);
+        }
+        if (getScoring() == SPARE) {
+            third = getFallingPinOfIndex(getNextFrame(), 0);
+        }
+        return new Score(getFallingPinOfIndex(this, 0),
+                         second, third);
     }
 
     private void assignBallThrow(int fallingPins) {
@@ -51,10 +82,7 @@ public class NormalFrame implements Frame {
         ballThrows.add(ballThrows.get(0).throwSecond(fallingPins));
     }
 
-    private Frame getNextFrame() {
-        if (getScoring() == NONE) {
-            return this;
-        }
+    private Frame getFrame() {
         if (number < 9) {
             return new NormalFrame(number + 1);
         }
@@ -63,5 +91,9 @@ public class NormalFrame implements Frame {
 
     private boolean isIncomplete() {
         return ballThrows.isEmpty() || !ballThrows.get(0).isStrike() && ballThrows.size() < 2;
+    }
+
+    static Integer getFallingPinOfIndex(Frame frame, int index) {
+        return frame.getFallingPins(index);
     }
 }
