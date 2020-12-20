@@ -7,9 +7,11 @@ import java.util.Objects;
  */
 public abstract class Frame {
 
-    private final int index;
-    private Pitch firstPitch;
-    private Pitch secondPitch;
+    public final static int MAX_SCORE = 10;
+
+    protected final int index;
+    protected Pitch firstPitch;
+    protected Pitch secondPitch;
 
     protected Frame(int index) {
         this(index, Pitch.from(0), Pitch.from(0));
@@ -34,8 +36,23 @@ public abstract class Frame {
 //        return FinalFrame.of(10);
 //    }
 
-    public abstract void pitch();
+    public abstract void firstPitch(int score);
 
+    public abstract int getLeft();
+
+    public abstract void isStrike();
+
+    public int getIndex() {
+        return index;
+    }
+
+    public int getFirstPitch() {
+        return firstPitch.getScore();
+    }
+
+    public int getSecondPitch() {
+        return secondPitch.getScore();
+    }
 
     @Override
     public boolean equals(Object o) {

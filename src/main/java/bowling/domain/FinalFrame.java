@@ -24,7 +24,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public void pitch() {
+    public void firstPitch(int score) {
 
     }
 }
