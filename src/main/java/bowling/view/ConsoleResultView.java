@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.BowlingGames;
 import bowling.domain.Frames;
 import bowling.domain.Pitching;
 import bowling.dto.BowlingGameDto;
@@ -124,5 +125,10 @@ public class ConsoleResultView implements ResultView {
         int width = value.length() + ((CELL_WIDTH - value.length()) / 2);
         String formattedValue = String.format("%" + width + "s", value);
         return String.format("%-" + CELL_WIDTH + "s", formattedValue);
+    }
+
+    @Override
+    public void print2(BowlingGames bowlingGames) {
+        System.out.println(bowlingGames.toString());
     }
 }

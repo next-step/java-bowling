@@ -1,11 +1,15 @@
 package bowling;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.KnockDownPins;
 import bowling.domain.PlayerName;
 import bowling.helper.ValidInputHelper;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameHandler {
     private final InputView inputView;
@@ -17,13 +21,22 @@ public class GameHandler {
     }
 
     public void run() {
-        PlayerName playerName = ValidInputHelper.get(this::getPlayerName, inputView::printError);
-        BowlingGame bowlingGame = BowlingGame.init(playerName);
-
-        while (!bowlingGame.isEnd()) {
-            setKnockDownPins(bowlingGame);
-            resultView.print(bowlingGame.convertToDto());
+        Integer numberOfPlayers = ValidInputHelper.get(this::getNumberOfPlayers, inputView::printError);
+        List<PlayerName> playerNames = new ArrayList<>();
+        for (int i = 0; i < numberOfPlayers; i++) {
+            PlayerName playerName = ValidInputHelper.get(this::getPlayerName, inputView::printError);
+            playerNames.add(playerName);
         }
+
+        BowlingGames bowlingGames = BowlingGames.init(playerNames);
+        while (!bowlingGames.isEnd()) {
+            setKnockDownPins2(bowlingGames);
+            resultView.print2(bowlingGames);
+        }
+    }
+
+    private Integer getNumberOfPlayers() {
+        return ValidInputHelper.get(inputView::getNumberOfPlayers, inputView::printError);
     }
 
     private PlayerName getPlayerName() {
@@ -41,8 +54,23 @@ public class GameHandler {
         }
     }
 
+    private void setKnockDownPins2(BowlingGames bowlingGames) {
+        try {
+            KnockDownPins knockDownPins = ValidInputHelper.get(() -> getKnockDownPins2(bowlingGames), inputView::printError);
+            bowlingGames.setKnockDownPins(knockDownPins);
+        } catch (RuntimeException e) {
+            inputView.printError(e);
+            setKnockDownPins2(bowlingGames);
+        }
+    }
+
     private KnockDownPins getKnockDownPins(BowlingGame bowlingGame) {
         Integer knockDownPins = ValidInputHelper.get(() -> inputView.getKnockDownPins(bowlingGame.getCurrentFrameNo()), inputView::printError);
+        return KnockDownPins.valueOf(knockDownPins);
+    }
+
+    private KnockDownPins getKnockDownPins2(BowlingGames bowlingGames) {
+        Integer knockDownPins = ValidInputHelper.get(() -> inputView.getKnockDownPins2(bowlingGames.getCurrentPlayer()), inputView::printError);
         return KnockDownPins.valueOf(knockDownPins);
     }
 }

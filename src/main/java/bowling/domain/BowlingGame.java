@@ -27,7 +27,19 @@ public class BowlingGame {
         return frames.getCurrentFrameNo();
     }
 
+    public PlayerName getPlayerName() {
+        return playerName;
+    }
+
     public BowlingGameDto convertToDto() {
         return BowlingGameDto.of(frames.convertToDto(), playerName.getValue());
+    }
+
+    @Override
+    public String toString() {
+        return "BowlingGame{" +
+                "frames=" + frames +
+                ", playerName=" + playerName +
+                '}';
     }
 }

@@ -79,7 +79,7 @@ public class Frame {
 
     @Override
     public String toString() {
-        return "Frame2{" +
+        return "Frame{" +
                 "pitchings=" + pitchings +
                 ", nextFrame=" + nextFrame +
                 '}';
