@@ -16,6 +16,10 @@ public class LastFrame {
         isEnded = false;
     }
 
+    public boolean isEnded() {
+        return isEnded;
+    }
+
     public void record(DownedPin currentTurn) {
         if (isEnded()) {
             return;
@@ -60,10 +64,22 @@ public class LastFrame {
             return;
         }
 
-        secondTry.fromSubordinateTry(thirdTry);
+        tries.add(secondTry.fromSubordinateTry(thirdTry));
     }
 
-    public boolean isEnded() {
-        return isEnded;
+    public boolean isStrike(int index) {
+        if (index >= tries.size()) {
+            return false;
+        }
+
+        return tries.get(index).isStrike();
+    }
+
+    public boolean isSpare(int index) {
+        if (index >= tries.size() || index < 1) {
+            return false;
+        }
+
+        return tries.get(index - 1).isSpare(tries.get(index));
     }
 }
