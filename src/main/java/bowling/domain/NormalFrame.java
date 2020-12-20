@@ -3,7 +3,7 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Frame {
+public class NormalFrame {
 
     public static final int MAXIMUM_PITCH = 2;
     public static final int MAXIMUM_SCORE_CONDITION = 10;
@@ -12,19 +12,19 @@ public class Frame {
     private List<Pitch> pitches;
     private int frameScore = 0;
 
-    private Frame(List<Pitch> pitches) {
+    private NormalFrame(List<Pitch> pitches) {
         this.pitches = pitches;
     }
 
-    public static Frame init() {
+    public static NormalFrame init() {
         List<Pitch> pitches = new ArrayList<>(MAXIMUM_PITCH);
-        return new Frame(pitches);
+        return new NormalFrame(pitches);
     }
 
-    public Frame add(Pitch pitch) {
+    public NormalFrame add(Pitch pitch) {
         addSecondPitch(pitch);
         addFirstPitch(pitch);
-        return new Frame(pitches);
+        return new NormalFrame(pitches);
     }
 
     private void addFirstPitch(Pitch pitch) {
