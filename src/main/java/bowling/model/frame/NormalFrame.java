@@ -31,8 +31,8 @@ public class NormalFrame extends Frame {
         return states.isFinished() ? next() : this;
     }
 
-    private void updateScore(){
-        if(states.isFinished()){
+    private void updateScore() {
+        if (states.isFinished()) {
             score = states.last().score();
         }
     }

@@ -1,8 +1,6 @@
 package bowling.controller;
 
-import bowling.model.User;
-import bowling.model.frame.FrameResult;
-import bowling.model.frame.Frames;
+import bowling.model.player.Players;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -10,23 +8,20 @@ import bowling.view.ResultView;
 public class BowlingController {
 
     public void run() {
-        String userName = InputView.printInputUserNameMessage();
-        User user = User.from(userName);
-        FrameResult frameResult = FrameResult.empty;
+        Players players = new Players();
+        int numberOfPlayers = InputView.printInputPlayerCountMessage();
 
-        ResultView.printHeadFrame();
-        ResultView.printFrame(user, frameResult);
-
-        Frames frames = new Frames();
-
-        while (!frames.isFinished()) {
-            int fallenPins = InputView.printInputFallenPinsMessage(frames.nowFrameNumber());
-            frames.bowling(fallenPins);
-            frameResult = frames.result();
-            ResultView.printHeadFrame();
-            ResultView.printFrame(user, frameResult);
-            ResultView.printFrame(user, frames.getScores());
+        for (int i = 0; i < numberOfPlayers; i++) {
+            String userName = InputView.printInputUserNameMessage(i + 1);
+            players.addNewPlayer(userName);
         }
 
+        ResultView.printInfo(players.info());
+
+        while (!players.isGameEnd()) {
+            int fallenPins = InputView.printInputFallenPinsMessage(players.nowPlayerName());
+            players.bowling(fallenPins);
+            ResultView.printInfo(players.info());
+        }
     }
 }
