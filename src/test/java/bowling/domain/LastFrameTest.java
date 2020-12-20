@@ -110,38 +110,35 @@ public class LastFrameTest {
     @DisplayName("종료 케이스 10 / 10 / 10")
     @Test
     void finish_1() {
-        LastFrame actualLastFrame = (LastFrame) lastFrame;
-        assertThat(actualLastFrame.isFinish()).isFalse();
+        assertThat(lastFrame.isFinish()).isFalse();
         lastFrame.throwBall(10);
-        assertThat(actualLastFrame.isFinish()).isFalse();
+        assertThat(lastFrame.isFinish()).isFalse();
         lastFrame.throwBall(10);
-        assertThat(actualLastFrame.isFinish()).isFalse();
+        assertThat(lastFrame.isFinish()).isFalse();
         lastFrame.throwBall(10);
-        assertThat(actualLastFrame.isFinish()).isTrue();
+        assertThat(lastFrame.isFinish()).isTrue();
     }
 
     @DisplayName("종료 케이스 9 / 1 / 10")
     @Test
     void finish_2() {
-        LastFrame actualLastFrame = (LastFrame) lastFrame;
-        assertThat(actualLastFrame.isFinish()).isFalse();
+        assertThat(lastFrame.isFinish()).isFalse();
         lastFrame.throwBall(9);
-        assertThat(actualLastFrame.isFinish()).isFalse();
+        assertThat(lastFrame.isFinish()).isFalse();
         lastFrame.throwBall(1);
-        assertThat(actualLastFrame.isFinish()).isFalse();
+        assertThat(lastFrame.isFinish()).isFalse();
         lastFrame.throwBall(10);
-        assertThat(actualLastFrame.isFinish()).isTrue();
+        assertThat(lastFrame.isFinish()).isTrue();
     }
 
     @DisplayName("종료 케이스 1 / 1")
     @Test
     void finish_3() {
-        LastFrame actualLastFrame = (LastFrame) lastFrame;
-        assertThat(actualLastFrame.isFinish()).isFalse();
+        assertThat(lastFrame.isFinish()).isFalse();
         lastFrame.throwBall(1);
-        assertThat(actualLastFrame.isFinish()).isFalse();
+        assertThat(lastFrame.isFinish()).isFalse();
         lastFrame.throwBall(1);
-        assertThat(actualLastFrame.isFinish()).isTrue();
+        assertThat(lastFrame.isFinish()).isTrue();
     }
 
     @Test
