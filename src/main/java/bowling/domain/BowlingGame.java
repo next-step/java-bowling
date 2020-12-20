@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.dto.BowlingGameDTO;
+
 public class BowlingGame {
 
     private final NormalFrames normalFrames;
@@ -21,5 +23,9 @@ public class BowlingGame {
 
     public boolean isEnd() {
         return normalFrames.isEnd() && lastFrame.isEnded();
+    }
+
+    public BowlingGameDTO exportData() {
+        return new BowlingGameDTO(normalFrames, lastFrame);
     }
 }

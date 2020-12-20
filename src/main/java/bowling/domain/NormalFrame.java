@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NormalFrame {
@@ -35,5 +36,9 @@ public class NormalFrame {
     public boolean isSpare() {
         return tries.size() == MAXIMUM_TRIES_PER_NORMAL_FRAME
                 && tries.get(FIRST_TURN_INDEX).isSpare(tries.get(SECOND_TURN_INDEX));
+    }
+
+    public List<DownedPin> getTries() {
+        return Collections.unmodifiableList(tries);
     }
 }

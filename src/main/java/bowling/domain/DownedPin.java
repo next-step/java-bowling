@@ -41,7 +41,15 @@ public class DownedPin {
         return !isStrike() && numDownedPin + continuousTry.numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
     }
 
+    public boolean isGutter() {
+        return numDownedPin == MINIMUM_NUMBER_OF_DOWNED_PIN;
+    }
+
     public boolean isStrike() {
         return numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
+    }
+
+    public int getNumDownedPin() {
+        return numDownedPin;
     }
 }

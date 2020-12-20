@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NormalFrames {
@@ -27,5 +28,13 @@ public class NormalFrames {
 
     private NormalFrame getLatestFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    public int size() {
+        return frames.size();
+    }
+
+    public List<NormalFrame> getFrames() {
+        return Collections.unmodifiableList(frames);
     }
 }

@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LastFrame {
@@ -81,5 +82,17 @@ public class LastFrame {
         }
 
         return tries.get(index - 1).isSpare(tries.get(index));
+    }
+
+    public boolean isGutter(int index) {
+        if (index >= tries.size()) {
+            return false;
+        }
+
+        return tries.get(index).isGutter();
+    }
+
+    public List<DownedPin> getTries() {
+        return Collections.unmodifiableList(tries);
     }
 }
