@@ -10,7 +10,7 @@ public class InputView {
     private static Scanner scanner = new Scanner(System.in);
 
     public static String inputPlayerName(){
-        System.out.println(INPUT_PLAYER_NAME);
+        System.out.print(INPUT_PLAYER_NAME);
         String playerName = scanner.next();
 
         validatePlayerName(playerName);
