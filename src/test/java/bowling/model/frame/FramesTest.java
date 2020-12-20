@@ -62,7 +62,7 @@ class FramesTest {
                 .filter(score -> 0 < score.length())
                 .toArray(String[]::new);
 
-        assertThat(totalScore).containsExactly("30","60");
+        assertThat(totalScore).containsExactly("30", "60");
     }
 
     @Test
@@ -82,7 +82,7 @@ class FramesTest {
                 .filter(score -> 0 < score.length())
                 .toArray(String[]::new);
 
-        assertThat(totalScore).containsExactly("30","55");
+        assertThat(totalScore).containsExactly("30", "55");
     }
 
     @Test
@@ -97,7 +97,7 @@ class FramesTest {
                 .filter(score -> 0 < score.length())
                 .toArray(String[]::new);
 
-        assertThat(totalScore).containsExactly("19","28");
+        assertThat(totalScore).containsExactly("19", "28");
     }
 
     @Test
@@ -118,7 +118,7 @@ class FramesTest {
     void bowling_SPARE_FINAL_FRAME_OPEN_MISS() {
         Frames frames = new Frames();
 
-        IntStream.range(0,8)
+        IntStream.range(0, 8)
                 .forEach(idx -> frames.bowling(pins[10]));
 
         frames.bowling(pins[9]);
@@ -133,14 +133,14 @@ class FramesTest {
                 .filter(score -> 0 < score.length())
                 .toArray(String[]::new);
 
-        assertThat(totalScore).containsExactly("30","60","90","120","150","180","209","229","240","242");
+        assertThat(totalScore).containsExactly("30", "60", "90", "120", "150", "180", "209", "229", "240", "242");
     }
 
     @Test
     void bowling_SPARE_FINAL_FRAME_STRIKE() {
         Frames frames = new Frames();
 
-        IntStream.range(0,8)
+        IntStream.range(0, 8)
                 .forEach(idx -> frames.bowling(pins[10]));
 
         frames.bowling(pins[9]);
@@ -154,14 +154,14 @@ class FramesTest {
                 .filter(score -> 0 < score.length())
                 .toArray(String[]::new);
 
-        assertThat(totalScore).containsExactly("30","60","90","120","150","180","209","229","249");
+        assertThat(totalScore).containsExactly("30", "60", "90", "120", "150", "180", "209", "229", "249");
     }
 
     @Test
     void bowling_STRIKE_FINAL_FRAME_OPEN() {
         Frames frames = new Frames();
 
-        IntStream.range(0,8)
+        IntStream.range(0, 8)
                 .forEach(idx -> frames.bowling(pins[10]));
 
         frames.bowling(pins[10]);
@@ -174,14 +174,14 @@ class FramesTest {
                 .filter(score -> 0 < score.length())
                 .toArray(String[]::new);
 
-        assertThat(totalScore).containsExactly("30","60","90","120","150","180","210","231");
+        assertThat(totalScore).containsExactly("30", "60", "90", "120", "150", "180", "210", "231");
     }
 
     @Test
     void bowling_STRIKE_FINAL_FRAME_OPEN_MISS() {
         Frames frames = new Frames();
 
-        IntStream.range(0,8)
+        IntStream.range(0, 8)
                 .forEach(idx -> frames.bowling(pins[10]));
 
         frames.bowling(pins[10]);
@@ -195,14 +195,14 @@ class FramesTest {
                 .filter(score -> 0 < score.length())
                 .toArray(String[]::new);
 
-        assertThat(totalScore).containsExactly("30","60","90","120","150","180","210","231","243", "245");
+        assertThat(totalScore).containsExactly("30", "60", "90", "120", "150", "180", "210", "231", "243", "245");
     }
 
     @Test
     void bowling_STRIKE_FINAL_FRAME_OPEN_SPARE() {
         Frames frames = new Frames();
 
-        IntStream.range(0,8)
+        IntStream.range(0, 8)
                 .forEach(idx -> frames.bowling(pins[10]));
 
         frames.bowling(pins[10]);
@@ -216,7 +216,7 @@ class FramesTest {
                 .filter(score -> 0 < score.length())
                 .toArray(String[]::new);
 
-        assertThat(totalScore).containsExactly("30","60","90","120","150","180","210","231","251");
+        assertThat(totalScore).containsExactly("30", "60", "90", "120", "150", "180", "210", "231", "251");
     }
 
 

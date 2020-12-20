@@ -12,7 +12,7 @@ public class BowlingController {
         int numberOfPlayers = InputView.printInputPlayerCountMessage();
 
         for (int i = 0; i < numberOfPlayers; i++) {
-            String userName = InputView.printInputUserNameMessage(i+1);
+            String userName = InputView.printInputUserNameMessage(i + 1);
             players.addNewPlayer(userName);
         }
 

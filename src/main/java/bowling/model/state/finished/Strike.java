@@ -19,7 +19,7 @@ public class Strike extends FinishedState {
 
     @Override
     public Score score() {
-        return Score.of(10,2);
+        return Score.of(10, 2);
     }
 
     public static Strike from(Pins pins) {

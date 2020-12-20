@@ -24,12 +24,12 @@ public class FinalFrame extends Frame {
         return this;
     }
 
-    private boolean canBonusBowling(){
+    private boolean canBonusBowling() {
         return states.isFinished() && !states.canLastCalculate();
     }
 
     protected Score addScore(Score score) {
-        return states.addScoreUntilPossible(score);
+        return states.size() == 1 ? states.calculate(score) : states.addScoreUntilPossible(score);
 
     }
   

@@ -31,7 +31,7 @@ public class InputView {
     }
 
     public static int printInputPlayerCountMessage() {
-        System.out.print(" "+INPUT_PLATER_COUNT_MESSAGE);
+        System.out.print(" " + INPUT_PLATER_COUNT_MESSAGE);
         return Integer.parseInt(SCANNER.nextLine());
     }
 }

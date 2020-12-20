@@ -12,20 +12,20 @@ public class Player {
     private Name name;
     private Frames frames;
 
-    private Player(Name name, Frames frames){
+    private Player(Name name, Frames frames) {
         this.name = name;
         this.frames = frames;
     }
 
-    public static Player of(Name name, Frames frames){
-        return new Player(name,frames);
+    public static Player of(Name name, Frames frames) {
+        return new Player(name, frames);
     }
 
-    public void bowling(int fallenPins){
+    public void bowling(int fallenPins) {
         frames.bowling(Pins.from(fallenPins));
     }
 
-    public boolean isTurnOver(){
+    public boolean isTurnOver() {
         return frames.isNewFrame() || frames.isFinished();
     }
 
@@ -34,11 +34,11 @@ public class Player {
         return name.toString();
     }
 
-    public boolean isEnd(){
+    public boolean isEnd() {
         return frames.isFinished();
     }
 
-    public List<FrameResult> info(){
-       return Arrays.asList(frames.result(), frames.getScores());
+    public List<FrameResult> info() {
+        return Arrays.asList(frames.result(), frames.getScores());
     }
 }

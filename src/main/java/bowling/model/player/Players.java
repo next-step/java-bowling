@@ -14,7 +14,7 @@ public class Players {
     private int nowPlayerIndex = 0;
     private final List<Player> players = new LinkedList<>();
 
-    public void addNewPlayer(String userName){
+    public void addNewPlayer(String userName) {
         userDuplicateCheck(userName);
 
         Name name = Name.from(userName);
@@ -22,13 +22,13 @@ public class Players {
         players.add(newPlayer);
     }
 
-    private void userDuplicateCheck(String name){
-        if(contains(name)){
+    private void userDuplicateCheck(String name) {
+        if (contains(name)) {
             throw new IllegalArgumentException(ADD_PLAYER_MESSAGE);
         }
     }
 
-    private boolean contains(String userName){
+    private boolean contains(String userName) {
         String lowerUserName = userName.toLowerCase();
 
         return players.stream()
@@ -36,34 +36,34 @@ public class Players {
                 .anyMatch(player -> player.equals(lowerUserName));
     }
 
-    public void bowling(int fallenPins){
+    public void bowling(int fallenPins) {
         nowPlayer().bowling(fallenPins);
 
-        if(nowPlayer().isTurnOver()){
+        if (nowPlayer().isTurnOver()) {
             nowPlayerIndex = rollingIndex();
         }
     }
 
-    public boolean isGameEnd(){
+    public boolean isGameEnd() {
         return players.stream()
                 .map(Player::isEnd)
-                .reduce((x,y) -> x && y)
+                .reduce((x, y) -> x && y)
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_FINISH_MESSAGE));
     }
 
-    public String nowPlayerName(){
+    public String nowPlayerName() {
         return nowPlayer().toString();
     }
 
-    private Player nowPlayer(){
+    private Player nowPlayer() {
         return players.get(nowPlayerIndex);
     }
 
-    private int rollingIndex(){
+    private int rollingIndex() {
         return (players.size() - 1 <= nowPlayerIndex) ? 0 : nowPlayerIndex + 1;
     }
 
-    public List<PlayerResult> info(){
+    public List<PlayerResult> info() {
         return players.stream()
                 .map(player -> PlayerResult.of(player.toString(), player.info()))
                 .collect(Collectors.toList());

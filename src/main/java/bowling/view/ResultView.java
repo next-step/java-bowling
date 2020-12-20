@@ -31,7 +31,7 @@ public class ResultView {
 
     public static void printInfo(List<PlayerResult> playerResults) {
         ResultView.printHeadFrame();
-        for(PlayerResult playerResult : playerResults){
+        for (PlayerResult playerResult : playerResults) {
             String user = playerResult.user();
             printFrame(user, playerResult.frame());
             printFrame("", playerResult.score());

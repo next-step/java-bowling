@@ -21,24 +21,25 @@ public class States {
         return bowlingResult;
     }
 
-    public Score addScoreUntilPossible(Score score){
-        if(states.size() == 1){
-            return calculate(score);
-        }
+    public Score addScoreUntilPossible(Score score) {
+        List<State> finishedStates = finishedState();
 
-        List<State> finishedStates = states.stream()
-                .filter(State::isFinished)
-                .collect(Collectors.toList());
-
-        for(int i = 0, limit = finishedStates.size(); i < limit && !score.canCalculate(); i++){
+        for (int i = 0, limit = finishedStates.size(); i < limit && !score.canCalculate(); i++) {
             State previousState = finishedStates.get(i);
             score = previousState.calculateScore(score);
         }
 
         return score;
     }
-    private State nextState(Pins fallenPins){
-        if(states.isEmpty()){
+
+    private List<State> finishedState(){
+        return states.stream()
+                .filter(State::isFinished)
+                .collect(Collectors.toList());
+    }
+
+    private State nextState(Pins fallenPins) {
+        if (states.isEmpty()) {
             return Start.bowling(fallenPins);
         }
         return last().bowling(fallenPins);
@@ -93,7 +94,7 @@ public class States {
     }
 
 
-    public boolean canLastCalculate(){
+    public boolean canLastCalculate() {
         return states.getLast()
                 .score()
                 .canCalculate();

@@ -19,7 +19,7 @@ public class Frames {
         }
     }
 
-    public boolean isNewFrame(){
+    public boolean isNewFrame() {
         return frames.getLast().isNewFrame();
     }
 
@@ -56,7 +56,7 @@ public class Frames {
         return FrameResult.from(result);
     }
 
-    private Integer[] getFrameScores(){
+    private Integer[] getFrameScores() {
         return frames.stream()
                 .map(Frame::getScore)
                 .filter(Optional::isPresent)

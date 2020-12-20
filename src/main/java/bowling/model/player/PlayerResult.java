@@ -12,31 +12,31 @@ public class PlayerResult {
     private String user;
     private List<FrameResult> info;
 
-    private PlayerResult(String user, List<FrameResult> info){
+    private PlayerResult(String user, List<FrameResult> info) {
         this.user = user;
         this.info = info;
     }
 
-    public static PlayerResult of(String user, List<FrameResult> info){
+    public static PlayerResult of(String user, List<FrameResult> info) {
         validPlayerResult(info);
         return new PlayerResult(user, info);
     }
 
     private static void validPlayerResult(List<FrameResult> info) {
-        if(info.size() != 2){
+        if (info.size() != 2) {
             throw new IllegalArgumentException(RESULT_COUNT_ERROR);
         }
     }
 
-    public String user(){
+    public String user() {
         return user;
     }
 
-    public FrameResult frame(){
+    public FrameResult frame() {
         return info.get(FRAME_INFO);
     }
 
-    public FrameResult score(){
+    public FrameResult score() {
         return info.get(SCORE_INFO);
     }
 }
