@@ -55,7 +55,7 @@ public class BasicFrame extends Frame {
             return ScoreDto.init(0, BowlType.NONE);
         }
 
-        if (isFrameFinished()) {
+        if (isLastFrame() && isFrameFinished()) {
             return ScoreDto.init(score.sumPoint(), BowlType.END);
         }
 

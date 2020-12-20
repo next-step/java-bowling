@@ -22,6 +22,7 @@ public class OutputView {
     public static final String DELIMITER = "|";
     public static final String GUTTER = "-";
     public static final String STRIKE = "X";
+    public static final String SPARE = "/";
     public static final int FIRST_INDEX = 0;
 
     public static void printResult(Bowling bowling) {
@@ -85,7 +86,7 @@ public class OutputView {
 
     private static int printSpare(List<String> builder, int downPinIndex, BowlType scoreType) {
         if (scoreType == BowlType.SPARED) {
-            builder.add(scoreType.getMark());
+            builder.add(SPARE);
             downPinIndex++;
         }
         return downPinIndex;

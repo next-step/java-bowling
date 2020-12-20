@@ -13,7 +13,7 @@ class PlayerTest {
 
     @ParameterizedTest
     @DisplayName("플레이어가 잘 생성되는지 확인한다.")
-    @ValueSource(strings = "POB,WAN")
+    @ValueSource(strings = "POB" )
     void create(String name) {
         Player player = Player.of(name);
         assertThat(player).isEqualTo(Player.of(name));
