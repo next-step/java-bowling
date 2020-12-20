@@ -8,7 +8,10 @@ import bowling.domain.score.Score;
 import bowling.domain.score.ScoreDto;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.emptyList;
 
 public class BasicFrame extends Frame {
 
@@ -28,13 +31,13 @@ public class BasicFrame extends Frame {
 
 
     @Override
-    public Frame createNextFrame(boolean isLast) {
-        if (isLast) {
-            this.nextFrame = LastFrame.init(this.frameNumber + 1, LastScore.initFirst());
+    public Frame createNextFrame() {
+        if (frameNumber == 9) {
+            this.nextFrame = LastFrame.init(frameNumber + 1, LastScore.initFirst());
             return this.nextFrame;
         }
 
-        this.nextFrame = init(this.frameNumber + 1, BasicScore.initFirst());
+        this.nextFrame = init(frameNumber + 1, BasicScore.initFirst());
         return this.nextFrame;
     }
 
@@ -94,7 +97,7 @@ public class BasicFrame extends Frame {
     @Override
     protected List<Point> getNextFramePitchPoints(int count) {
         if (nextFrame == null) {
-            return new ArrayList<>();
+            return emptyList();
         }
 
         List<Point> nextDownPins = nextFrame.getFramePitchPoints();
@@ -106,7 +109,7 @@ public class BasicFrame extends Frame {
             return nextDownPins.subList(0, count);
         }
 
-        nextDownPins.addAll(nextFrame.getNextFramePitchPoints(count - nextDownPins.size()));
+        nextDownPins.addAll(this.nextFrame.getNextFramePitchPoints(count - nextDownPins.size()));
         return nextDownPins;
     }
 

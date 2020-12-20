@@ -8,7 +8,7 @@ public enum BowlType {
     NONE(0),
     END(0);
 
-    private int bonusCount;
+    private final int bonusCount;
 
     BowlType(int bonusCount) {
         this.bonusCount = bonusCount;

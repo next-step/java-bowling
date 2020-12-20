@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.point.Point;
+import bowling.domain.score.LastScore;
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreDto;
 
@@ -18,8 +19,12 @@ public abstract class Frame {
         this.score = score;
     }
 
+    public Frame createLastFrame() {
+        this.nextFrame = LastFrame.init(this.frameNumber + 1, LastScore.initFirst());
+        return this.nextFrame;
+    }
 
-    abstract public Frame createNextFrame(boolean isLast);
+    abstract public Frame createNextFrame();
 
     abstract public void pitch(Point point);
 
@@ -49,4 +54,6 @@ public abstract class Frame {
     public int hashCode() {
         return Objects.hash(frameNumber, score, nextFrame);
     }
+
+
 }

@@ -21,7 +21,7 @@ class LastFrameTest {
     @BeforeEach
     void setUp() {
         basicFrame = BasicFrame.initFirst();
-        lastFrame = basicFrame.createNextFrame(true);
+        lastFrame = basicFrame.createLastFrame();
     }
 
     @Test

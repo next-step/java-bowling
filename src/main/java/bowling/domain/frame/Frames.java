@@ -12,8 +12,6 @@ import static java.util.stream.Collectors.toList;
 public class Frames {
     public static final int FRAME_SIZE = 10;
     public static final int LAST_FRAME_INDEX = 9;
-    public static final boolean IS_BASIC_FRAME = false;
-    public static final boolean IS_LAST_FRAME = true;
 
     private final List<Frame> frames;
     private int currentFramePosition;
@@ -29,12 +27,12 @@ public class Frames {
     public static Frames init() {
         List<Frame> frames = new ArrayList<>();
         Frame frame = BasicFrame.initFirst();
-        for (int i = 0; i < FRAME_SIZE - 1; i++) {
-            frame = frame.createNextFrame(IS_BASIC_FRAME);
+
+        while (frame instanceof BasicFrame) {
+            frame = frame.createNextFrame();
             frames.add(frame);
         }
-        frame = frame.createNextFrame(IS_LAST_FRAME);
-        frames.add(frame);
+
 
         validFrame(frames);
         return of(frames);
@@ -43,7 +41,7 @@ public class Frames {
 
     private static void validFrame(List<Frame> frames) {
         if (frames.size() != FRAME_SIZE) {
-            throw new FrameSizeException();
+            throw new FrameSizeException(frames.size());
         }
     }
 
