@@ -154,4 +154,37 @@ public class ScoreCalculateTest {
         Integer frame9Score = frames.convertToDto().get(9).getTotalScore();
         assertThat(frame9Score - frame8Score).isEqualTo(20);
     }
+
+    @ParameterizedTest
+    @MethodSource("lastFrameScore")
+    void scoreTest_lastFrame(Integer lastPitching1, Integer lastPitching2, Integer lastPitching3,  Integer  expected) {
+        Frames frames = Frames.init();
+
+        frames.setKnockDownPins(KnockDownPins.valueOf(10));
+        frames.setKnockDownPins(KnockDownPins.valueOf(10));
+        frames.setKnockDownPins(KnockDownPins.valueOf(10));
+        frames.setKnockDownPins(KnockDownPins.valueOf(10));
+        frames.setKnockDownPins(KnockDownPins.valueOf(10));
+        frames.setKnockDownPins(KnockDownPins.valueOf(10));
+        frames.setKnockDownPins(KnockDownPins.valueOf(10));
+        frames.setKnockDownPins(KnockDownPins.valueOf(10));
+        frames.setKnockDownPins(KnockDownPins.valueOf(10));
+        frames.setKnockDownPins(KnockDownPins.valueOf(lastPitching1));
+        frames.setKnockDownPins(KnockDownPins.valueOf(lastPitching2));
+        if (lastPitching3 != null) {
+            frames.setKnockDownPins(KnockDownPins.valueOf(lastPitching3));
+        }
+
+        Integer frame10Score = frames.convertToDto().get(10).getTotalScore();
+        assertThat(frame10Score).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> lastFrameScore() {
+        return Stream.of(
+                Arguments.of(10, 10, 10, 300),
+                Arguments.of(10, 0, 10, 280),
+                Arguments.of(3, 3, null, 255),
+                Arguments.of(5, 5, 5, 270)
+        );
+    }
 }
