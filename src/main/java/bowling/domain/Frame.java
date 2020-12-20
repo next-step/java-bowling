@@ -9,23 +9,24 @@ public abstract class Frame {
     protected final int MAX_FRAME_COUNT = 10;
 
     protected int index;
-    protected LinkedList<Integer> pitchResults;
+    protected PitchResults pitchResults;
 
     public Frame(int index){
         this.index = index;
-        this.pitchResults = new LinkedList<>();
+        this.pitchResults = PitchResults.from(new LinkedList<>());
     }
 
     public int getIndex() {
         return this.index;
     }
 
-    public LinkedList<Integer> getPitchResults() {
+    public PitchResults getPitchResults() {
         return pitchResults;
     }
 
     public int sumCurrentPitchResults() {
-        return pitchResults.stream().mapToInt(Integer::intValue).sum();
+        return pitchResults.sumUpCurrentResult();
+
     }
 
     public abstract void start(PitchStrategy pitchStrategy);

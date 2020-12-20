@@ -2,9 +2,9 @@ package bowling.view;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.Frame;
+import bowling.domain.PitchResults;
 import bowling.domain.Player;
 
-import java.util.LinkedList;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -79,7 +79,7 @@ public class ResultView {
 
     }
 
-    private static String parsePitchResult(LinkedList<Integer> pitchResults) {
+    private static String parsePitchResult(PitchResults pitchResults) {
 
         if (pitchResults.size() == FINAL_FRAME_MAX_PITCH) {
             return parseLastFramePitchResult(pitchResults);
@@ -90,31 +90,31 @@ public class ResultView {
 
         }
 
-        return pitchResults.stream().map(integer -> pitchNumberToChar(integer))
+        return pitchResults.getPitchResults().stream().map(pitchResult -> pitchNumberToChar(pitchResult.getPinCount()))
                 .collect(Collectors.joining(DELIMITER));
 
     }
 
-    private static String parseNormalFramePitchResult(LinkedList<Integer> pitchResults) {
-        int totalCount = pitchResults.stream().mapToInt(Integer::intValue).sum();
+    private static String parseNormalFramePitchResult(PitchResults pitchResults) {
+        int totalCount = pitchResults.sumUpCurrentResult();
 
         if(totalCount == BOWLING_PIN_COUNT){
-            return pitchNumberToChar(pitchResults.get(0))+ DELIMITER + SPARE;
+            return pitchNumberToChar(pitchResults.findResult(0))+ DELIMITER + SPARE;
         }
 
-        return pitchResults.stream().map(integer -> pitchNumberToChar(integer))
+        return pitchResults.getPitchResults().stream().map(pitchResult -> pitchNumberToChar(pitchResult.getPinCount()))
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private static String parseLastFramePitchResult(LinkedList<Integer> pitchResults) {
-        String first = pitchNumberToChar(pitchResults.get(0));
-        String second = pitchNumberToChar(pitchResults.get(1));
+    private static String parseLastFramePitchResult(PitchResults pitchResults) {
+        String first = pitchNumberToChar(pitchResults.findResult(0));
+        String second = pitchNumberToChar(pitchResults.findResult(1));
 
-        if (pitchResults.get(0) + pitchResults.get(1) == BOWLING_PIN_COUNT) {
+        if (pitchResults.findResult(0) + pitchResults.findResult(1) == BOWLING_PIN_COUNT) {
             second = SPARE;
         }
 
-        return first + DELIMITER + second + DELIMITER + pitchNumberToChar(pitchResults.get(2));
+        return first + DELIMITER + second + DELIMITER + pitchNumberToChar(pitchResults.findResult(2));
     }
 
     private static String pitchNumberToChar(int pitchNumber) {
@@ -132,7 +132,7 @@ public class ResultView {
     private static void printPitchResult(BowlingGame bowlingGame) {
         Frame currentFrame = bowlingGame.getFrames().getFrames().getLast();
 
-        int pitchResult = currentFrame.getPitchResults().getLast();
+        int pitchResult = currentFrame.getPitchResults().findLast();
 
         System.out.println(currentFrame.getIndex() +"프레임 투구 : " + pitchResult);
     }

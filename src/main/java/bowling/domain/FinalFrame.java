@@ -16,7 +16,7 @@ public class FinalFrame extends Frame{
     public void start(PitchStrategy pitchStrategy) {
         if(!isEnd()){
             int pitchResult = pitchStrategy.makePitchResult(countLeftOverPins());
-            pitchResults.add(pitchResult);
+            pitchResults.addNewResult(pitchResult);
         }
     }
 
