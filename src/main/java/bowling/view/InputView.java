@@ -1,6 +1,5 @@
 package bowling.view;
 
-import bowling.domain.Pitch;
 import bowling.domain.Player;
 
 import java.util.Scanner;
@@ -18,10 +17,10 @@ public class InputView {
         return Player.from(name);
     }
 
-    public Pitch inputScore() {
+    public int inputScore(int index) {
         System.out.println();
-        System.out.print(INPUT_SCORE);
+        System.out.print(index + INPUT_SCORE);
         String score = scanner.nextLine();
-        return Pitch.from(Integer.parseInt(score));
+        return Integer.parseInt(score);
     }
 }

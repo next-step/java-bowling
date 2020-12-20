@@ -6,9 +6,15 @@ public class ResultView {
 
     public static final String BAR_DELIMITER = "|";
     public static final String NAME = "NAME";
-    public static final int ZERO = 0;
+    public static final int ONE = 1;
     public static final int FRAME_LENGTH = 11;
     public static final String EMPTY_SPACE = "      ";
+
+    public void printFirstFrame(String name) {
+        printSignature();
+        printScore(name, 1);
+        System.out.println();
+    }
 
     public void printFrames(String name, int round) {
         printSignature();
@@ -20,7 +26,7 @@ public class ResultView {
         System.out.print(BAR_DELIMITER);
         System.out.print(String.format("%5s ",NAME));
         System.out.print(BAR_DELIMITER);
-        IntStream.range(ZERO, FRAME_LENGTH)
+        IntStream.range(ONE, FRAME_LENGTH)
                 .forEach(this::printFrameNumbers);
     }
 
@@ -34,7 +40,8 @@ public class ResultView {
         System.out.print(BAR_DELIMITER);
         System.out.print(String.format("%5s ",name));
         System.out.print(BAR_DELIMITER);
-        IntStream.range(round, FRAME_LENGTH)
+
+        IntStream.range(ONE, FRAME_LENGTH)
                 .forEach(this::printEmptyScore);
     }
 
@@ -42,5 +49,9 @@ public class ResultView {
         System.out.print(EMPTY_SPACE);
         System.out.print(BAR_DELIMITER);
     }
+
+//    private void printPitchScore(int number) {
+//        System.out.print(String.format("%3s ", number));
+//    }
 
 }

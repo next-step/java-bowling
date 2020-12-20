@@ -38,4 +38,8 @@ public class Pitch {
     public int getScore() {
         return score;
     }
+
+    public boolean isStrike() {
+        return score == SCORE_CONDITION;
+    }
 }
