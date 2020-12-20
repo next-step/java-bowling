@@ -1,7 +1,6 @@
 package bowling;
 
-import bowling.domain.Frames;
-import bowling.domain.User;
+import bowling.domain.*;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -10,9 +9,25 @@ import bowling.view.ResultView;
  * Developer : Seo
  */
 public class Application {
+    public static final int FIRST_FRAME = 1;
+    public static final int LAST_FRAME = 10;
+
     public static void main(String[] args) {
-        User user = InputView.getUsers();
-        Frames frames = new Frames();
-        ResultView.print(user, frames);
+        Users users = InputView.getUsers();
+        Frames frames = new Frames(users);
+        ResultView resultView = new ResultView(frames, users);
+        resultView.print();
+
+        for (int frameNo = FIRST_FRAME; frameNo < LAST_FRAME + 1; frameNo++) {
+            frames.bowl(resultView, frameNo);
+        }
+
+//        frame = frame.bowl(InputView.getPins(FIRST_FRAME));
+//        ResultView.print(frame, user);
+
+//        while (frame.get) {
+//            frame = frame.bowl(InputView.getPins(FIRST_FRAME));
+//            ResultView.print(frame, user);
+//        }
     }
 }

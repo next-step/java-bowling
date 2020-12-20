@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.view.ResultView;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,34 +11,19 @@ import java.util.List;
  */
 public class Frames {
     public static final int ALL_FRAMES = 10;
+    public static final int START_FRAME = 1;
+    public static final int END_FRAME = 11;
 
     private final List<Frame> frames;
 
-    public Frames() {
+    public Frames(Users users) {
         this.frames = new LinkedList<>();
-        init();
+        frames.add(Frame.init(users));
     }
 
-    private void init() {
-        Frame frame = new Frame(Frame.INIT);
-        frames.add(frame);
-        while (frame.getFrameNo() < ALL_FRAMES) {
-            Frame afterFirstBowl = firstBowl(frame);
-            Frame nextFrame = secondBowl(frame, afterFirstBowl);
-            frames.add(nextFrame);
-            frame = nextFrame;
-        }
-    }
-
-    private Frame firstBowl(Frame frame) {
-        return frame.bowl(Bowling.stroke(Frame.ALL_PINS));
-    }
-
-    private Frame secondBowl(Frame frame, Frame afterFirstBowl) {
-        if (frame.equals(afterFirstBowl)) {
-            return frame.bowl(Bowling.stroke(afterFirstBowl.remainPins()));
-        }
-        return afterFirstBowl;
+    public void bowl(ResultView resultView, int frameNo) {
+        Frame frame = frames.get(frameNo - 1);
+        frames.add(frame.bowl(resultView));
     }
 
     public int size() {
@@ -49,5 +36,9 @@ public class Frames {
 
     public Frame get(int i) {
         return frames.get(i);
+    }
+
+    public void remove(int i) {
+        frames.remove(i);
     }
 }

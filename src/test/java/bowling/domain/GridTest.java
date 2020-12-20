@@ -1,0 +1,21 @@
+package bowling.domain;
+
+import bowling.view.ResultView;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class GridTest {
+    private User user;
+
+    @BeforeEach
+    void setUp() {
+        user = new User("aaa");
+    }
+
+    @Test
+    void init() {
+        Frames frames = new Frames(users);
+        frames.init();
+        ResultView.init(frames, user);
+    }
+}

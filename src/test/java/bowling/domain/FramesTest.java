@@ -15,7 +15,7 @@ class FramesTest {
 
     @BeforeEach
     void setUp() {
-        frames = new Frames();
+        frames = new Frames(users);
     }
 
     @DisplayName("생성")
@@ -24,14 +24,16 @@ class FramesTest {
         assertThat(frames).isNotNull().isInstanceOf(Frames.class);
     }
 
-    @DisplayName("사이즈 구하기")
+    @DisplayName("초기화")
     @Test
-    void size() {
+    void init() {
+        frames.init();
         assertThat(frames.size()).isEqualTo(10);
     }
 
     @Test
     void name() {
-        frames.getFrames().forEach(System.out::println);
+        frames.bowl(1, new Pins(10));
+//        NormalFrame frame = frames.get(0);
     }
 }

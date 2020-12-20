@@ -1,129 +1,46 @@
 package bowling.domain;
 
-/**
- * Created : 2020-12-16 오전 8:22
- * Developer : Seo
- */
+import java.util.Optional;
+
 public class Score {
-    public static final int SCORE_INIT = 0;
-    public static final String DELIMITER = "|";
+    public static final int PINS_NOT_GUTTER = 1;
+    private final Pins first;
+    private Pins second;
 
-    private final int first;
-    private int second;
-    private int tenFrameBonus;
-
-    public Score(Pins downPins) {
-        validateFirst(downPins);
-        this.first = downPins.get();
-        this.second = SCORE_INIT;
-        this.tenFrameBonus = SCORE_INIT;
+    public Score(Pins first) {
+        this.first = first;
     }
 
-    private void validateFirst(Pins downPins) {
-        if (downPins.get() > Frame.ALL_PINS.get()) {
-            throw new IllegalArgumentException("잘못된 점수입니다.");
-        }
-    }
-
-    public int getFirst() {
+    public Pins getFirst() {
         return first;
     }
 
-    public void setSecond(Pins downPins) {
-        this.second = downPins.get();
+    public void setSecond(Pins second) {
+        if (isStrike()) {
+            throw new IllegalStateException("첫 구가 스트라이트");
+        }
+        this.second = second;
     }
 
-    public int getSecond() {
+    public Pins getSecond() {
         return second;
     }
 
-    public void setTenFrameBonus(Pins downPins) {
-        this.tenFrameBonus = downPins.get();
+    public boolean isStrike() {
+        return this.first.get() == Symbol.STRIKE.getPins().get();
     }
 
-    public int getTenFrameBonus() {
-        return tenFrameBonus;
+    public boolean isSpare(Pins pins) {
+        return this.first.get() + pins.get()
+                == Symbol.SPARE.getPins().get();
     }
 
-    public int get() {
-        return first + second + tenFrameBonus;
+    public boolean isGutter() {
+        return this.first.get() == Symbol.GUTTER.getPins().get()
+                || Optional.ofNullable(this.second).orElse(new Pins(PINS_NOT_GUTTER)).get() == Symbol.GUTTER.getPins().get();
     }
 
-    public String getSymbol(int frameNo) {
-        if (isLastFrameWithBonus(frameNo)) {
-            return lastSymbol();
-        }
-
-        // Strike
-        if (first == Symbol.STRIKE.getScore()) {
-            return Symbol.STRIKE.getSymbol();
-        }
-
-        // Spare
-        if (first + second == Symbol.SPARE.getScore()) {
-            return first + DELIMITER + Symbol.SPARE.getSymbol();
-        }
-
-        // Gutter
-        if (first == Symbol.GUTTER.getScore() && second != Symbol.GUTTER.getScore()) {
-            return Symbol.GUTTER.getSymbol() + DELIMITER + second;
-        }
-        if (first != Symbol.GUTTER.getScore() && second == Symbol.GUTTER.getScore()) {
-            return first + DELIMITER + Symbol.GUTTER.getSymbol();
-        }
-        if (first == Symbol.GUTTER.getScore() && second == Symbol.GUTTER.getScore()) {
-            return Symbol.GUTTER.getSymbol() + DELIMITER + Symbol.GUTTER.getSymbol();
-        }
-
-        // miss
-        return first + DELIMITER + second;
-    }
-
-    private boolean isLastFrameWithBonus(int frameNo) {
-        if (frameNo == Frames.ALL_FRAMES && tenFrameBonus != Symbol.GUTTER.getScore()) {
-            return true;
-        }
-        return false;
-    }
-
-    private String lastSymbol() {
-        // X|X|X
-        if (first == Symbol.STRIKE.getScore() && second == Symbol.STRIKE.getScore() && tenFrameBonus == Symbol.STRIKE.getScore()) {
-            return Symbol.STRIKE.getSymbol() + DELIMITER + Symbol.STRIKE.getSymbol() + DELIMITER + Symbol.STRIKE.getSymbol();
-        }
-        // X|X|*
-        if (first == Symbol.STRIKE.getScore() && second == Symbol.STRIKE.getScore() && tenFrameBonus != Symbol.STRIKE.getScore()) {
-            return Symbol.STRIKE.getSymbol() + DELIMITER + Symbol.STRIKE.getSymbol() + DELIMITER + tenFrameBonus;
-        }
-        // X|*|X
-        if (first == Symbol.STRIKE.getScore() && second != Symbol.STRIKE.getScore() && tenFrameBonus == Symbol.STRIKE.getScore()) {
-            return Symbol.STRIKE.getSymbol() + DELIMITER + second + DELIMITER + Symbol.STRIKE.getSymbol();
-        }
-        // *|X|X
-        if (first != Symbol.STRIKE.getScore() && second == Symbol.STRIKE.getScore() && tenFrameBonus == Symbol.STRIKE.getScore()) {
-            return first + DELIMITER + Symbol.STRIKE.getSymbol() + DELIMITER + Symbol.STRIKE.getSymbol();
-        }
-        // X|*|*
-        if (first == Symbol.STRIKE.getScore() && second != Symbol.STRIKE.getScore() && tenFrameBonus != Symbol.STRIKE.getScore()) {
-            return Symbol.STRIKE.getSymbol() + DELIMITER + second + DELIMITER + tenFrameBonus;
-        }
-        // *|X|*
-        if (first != Symbol.STRIKE.getScore() && second == Symbol.STRIKE.getScore() && tenFrameBonus != Symbol.STRIKE.getScore()) {
-            return first + DELIMITER + Symbol.STRIKE.getSymbol() + DELIMITER + tenFrameBonus;
-        }
-        // *|*|X
-        if (first != Symbol.STRIKE.getScore() && second != Symbol.STRIKE.getScore() && tenFrameBonus == Symbol.STRIKE.getScore()) {
-            return first + DELIMITER + second + DELIMITER + Symbol.STRIKE.getSymbol();
-        }
-        return "";
-    }
-
-    @Override
-    public String toString() {
-        return "Score{" +
-                "first=" + first +
-                ", second=" + second +
-                ", tenFrameBonus=" + tenFrameBonus +
-                '}';
+    public boolean isFirst() {
+        return this.second == null;
     }
 }

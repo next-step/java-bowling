@@ -5,9 +5,9 @@ package bowling.domain;
  * Developer : Seo
  */
 public class Pins {
-
     public static final int MAX_PINS = 10;
     public static final int MIN_PINS = 0;
+
     private final int pins;
 
     public Pins(int pins) {

@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * Developer : Seo
  */
 class ScoreTest {
-
     private Score score;
 
     @BeforeEach
@@ -20,107 +19,59 @@ class ScoreTest {
         score = new Score(new Pins(10));
     }
 
-    @DisplayName("생성")
     @Test
     void constructor() {
         assertThat(score).isNotNull().isInstanceOf(Score.class);
     }
 
-    @DisplayName("점수 유효성 체크 ")
     @Test
-    void invalid_first() {
-        assertThatThrownBy(() -> new Score(new Pins(11)))
-                .withFailMessage("잘못된 점수입니다.")
-                .isInstanceOf(IllegalArgumentException.class);
+    void strike() {
+        assertThat(score.isStrike()).isTrue();
     }
 
-    @DisplayName("첫 구 점수 체크")
+    @Test
+    void gutter() {
+        score = new Score(new Pins(0));
+        assertThat(score.isGutter()).isTrue();
+
+        score = new Score(new Pins(1));
+        score.setSecond(new Pins(0));
+        assertThat(score.isGutter()).isTrue();
+    }
+
     @Test
     void getFirst() {
-        assertThat(score.getFirst()).isEqualTo(10);
+        assertThat(score.getFirst().get()).isEqualTo(10);
     }
 
-    @DisplayName("프레임 점수 체크")
     @Test
-    void get_strike() {
-        assertThat(score.get()).isEqualTo(Symbol.STRIKE.getScore());
+    void getSecond() {
+        score = new Score(new Pins(1));
+        score.setSecond(new Pins(1));
+        assertThat(score.getSecond().get()).isEqualTo(1);
     }
 
-    @DisplayName("심볼 체크 - 스트라이크")
+    @DisplayName("첫 구가 스트라이크")
     @Test
-    void get_symbol_strike() {
-        score = new Score(new Pins(10));
-        assertThat(score.getSymbol(0)).isEqualTo("X");
+    void firstStrike() {
+        assertThatThrownBy(() -> score.setSecond(new Pins(1)))
+                .withFailMessage("첫 구가 스트라이트")
+                .isInstanceOf(IllegalStateException.class);
     }
 
-    @DisplayName("심볼 체크 - 스페어")
     @Test
-    void get_symbol_spare() {
+    void spare() {
         score = new Score(new Pins(9));
         score.setSecond(new Pins(1));
-        assertThat(score.getSymbol(0)).isEqualTo("9|/");
+        assertThat(score.isSpare()).isTrue();
     }
 
-    @DisplayName("심볼 체크 - 거터")
     @Test
-    void get_symbol_gutter() {
+    void first() {
         score = new Score(new Pins(9));
-        score.setSecond(new Pins(0));
-        assertThat(score.getSymbol(0)).isEqualTo("9|-");
+        assertThat(score.isFirst()).isTrue();
 
-        score = new Score(new Pins(0));
-        score.setSecond(new Pins(9));
-        assertThat(score.getSymbol(0)).isEqualTo("-|9");
-
-        score = new Score(new Pins(0));
-        score.setSecond(new Pins(0));
-        assertThat(score.getSymbol(0)).isEqualTo("-|-");
-    }
-
-    @DisplayName("심볼 체크 - 미스")
-    @Test
-    void get_symbol_miss() {
-        score = new Score(new Pins(8));
         score.setSecond(new Pins(1));
-        assertThat(score.getSymbol(0)).isEqualTo("8|1");
-    }
-
-    @DisplayName("심볼 체크 - 10프레임 보너스")
-    @Test
-    void lastSymbol() {
-        score = new Score(new Pins(10));
-        score.setSecond(new Pins(10));
-        score.setTenFrameBonus(new Pins(10));
-        assertThat(score.getSymbol(10)).isEqualTo("X|X|X");
-
-        score = new Score(new Pins(10));
-        score.setSecond(new Pins(10));
-        score.setTenFrameBonus(new Pins(9));
-        assertThat(score.getSymbol(10)).isEqualTo("X|X|9");
-
-        score = new Score(new Pins(10));
-        score.setSecond(new Pins(9));
-        score.setTenFrameBonus(new Pins(10));
-        assertThat(score.getSymbol(10)).isEqualTo("X|9|X");
-
-        score = new Score(new Pins(9));
-        score.setSecond(new Pins(10));
-        score.setTenFrameBonus(new Pins(10));
-        assertThat(score.getSymbol(10)).isEqualTo("9|X|X");
-
-        score = new Score(new Pins(10));
-        score.setSecond(new Pins(9));
-        score.setTenFrameBonus(new Pins(9));
-        assertThat(score.getSymbol(10)).isEqualTo("X|9|9");
-
-        score = new Score(new Pins(9));
-        score.setSecond(new Pins(10));
-        score.setTenFrameBonus(new Pins(9));
-        assertThat(score.getSymbol(10)).isEqualTo("9|X|9");
-
-        score = new Score(new Pins(9));
-        score.setSecond(new Pins(9));
-        score.setTenFrameBonus(new Pins(10));
-        assertThat(score.getSymbol(10)).isEqualTo("9|9|X");
+        assertThat(score.isFirst()).isFalse();
     }
 }

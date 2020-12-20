@@ -5,23 +5,23 @@ package bowling.domain;
  * Developer : Seo
  */
 public enum Symbol {
-    STRIKE("X", 10),
-    SPARE("/", 10),
-    GUTTER("-", 0);
+    STRIKE("X", new Pins(10)),
+    SPARE("/", new Pins(10)),
+    GUTTER("-", new Pins(0));
 
     private final String symbol;
-    private final int score;
+    private final Pins pins;
 
-    Symbol(String symbol, int score) {
+    Symbol(String symbol, Pins pins) {
         this.symbol = symbol;
-        this.score = score;
+        this.pins = pins;
     }
 
     public String getSymbol() {
         return symbol;
     }
 
-    public int getScore() {
-        return score;
+    public Pins getPins() {
+        return pins;
     }
 }

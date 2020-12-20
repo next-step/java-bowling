@@ -1,75 +1,93 @@
 package bowling.view;
 
-import bowling.domain.Frame;
 import bowling.domain.Frames;
+import bowling.domain.None;
 import bowling.domain.User;
+import bowling.domain.Users;
+
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 /**
  * Created : 2020-12-16 오전 11:23
  * Developer : Seo
  */
 public class ResultView {
-
+    public static final String HEADER_NAME = "| NAME |";
+    public static final String HEADER_FRAME_NO = "  %s  |";
     public static final String FORMAT_SPACE = "  %-3s |";
+    public static final String DELIMITER = "|";
+    public static final int START_FRAME = 1;
+    public static final int FINAL_FRAME = 10;
+    public static final int ONE = 1;
+    public static final String NONE = "";
+    public static final int USER_INDEX = 0;
 
-    public static void print(User user, Frames frames) {
-        init(frames, user);
-        eachFrame(frames, user);
+    private Frames frames;
+    private Users users;
+
+    public ResultView(Frames frames, Users users) {
+        this.frames = frames;
+        this.users = users;
     }
 
-    private static void init(Frames frames, User user) {
-        header(frames);
-        scores(frames, user);
+    public ResultView() {
     }
 
-    private static void header(Frames frames) {
-        printf("| NAME |", "");
-        frames.getFrames().forEach(frame -> printf("  %s  |", frame.getFrameNoString()));
-        space();
+    public void print() {
+        header();
+        scores();
     }
 
-    private static void scores(Frames frames, User user) {
-        printf("|" + FORMAT_SPACE, user.getName());
-        frames.getFrames().forEach(frame -> printf(FORMAT_SPACE, ""));
+    private void header() {
+        print(HEADER_NAME);
+        IntStream.range(START_FRAME, FINAL_FRAME + ONE)
+                .forEach(value -> {
+                    String no = value < 10 ? "0" + value : String.valueOf(value);
+                    printf(FORMAT_SPACE, no);
+                });
+        nextLine();
     }
 
-    private static void eachFrame(Frames frames, User user) {
-        for (int i = 0; i < frames.size(); i++) {
-            space();
-            space();
-            sumFrameScore(i, frames.get(i));
-            header(frames);
-            untilFrame(i, frames, user);
+    private void scores() {
+        for (int i = USER_INDEX; i < this.users.size(); i++) {
+            score(this.frames, this.users.get(i));
+            sum(this.frames, this.users.get(i));
         }
     }
 
-    private static void sumFrameScore(int i, Frame frame) {
-        printf((i + 1) + "프레임 투구 : " + frame.getScore().get(), "");
-        space();
+    private void score(Frames frames, User user) {
+        printf(DELIMITER + FORMAT_SPACE, user.getName());
+        printf(FORMAT_SPACE, NONE);
+        frames.getFrames().forEach(frame -> frame.getUsers().getUsers()
+                .forEach(userScore -> printf(FORMAT_SPACE, String.valueOf(Optional.ofNullable(userScore.getState()).orElse(new None())))));
+        remainFrames(frames.size());
+        nextLine();
     }
 
-    private static void untilFrame(int i, Frames frames, User user) {
-        printf("|" + FORMAT_SPACE, user.getName());
-        for (int j = 0; j < i + 1; j++) {
-            printf(FORMAT_SPACE, frames.get(j).getScore().getSymbol(j));
-        }
-        remainFrames(i);
+    private static void sum(Frames frames, User user) {
+        printf(DELIMITER + FORMAT_SPACE, NONE);
+        printf(FORMAT_SPACE, NONE);
+        frames.getFrames().forEach(frame -> printf(FORMAT_SPACE, NONE));
+        remainFrames(frames.size());
+        nextLine();
     }
 
-    private static void remainFrames(int i) {
-        for (int j = i + 1; j < 10; j++) {
-            printf(FORMAT_SPACE, "");
+    private static void remainFrames(int frameNo) {
+        for (int i = frameNo + ONE; i < FINAL_FRAME; i++) {
+            printf(FORMAT_SPACE, NONE);
         }
+    }
+
+    private static void print(String args) {
+        System.out.print(args);
     }
 
     private static void printf(String format, String args) {
         System.out.printf(format, args);
     }
 
-    private static void space() {
+    private static void nextLine() {
         System.out.println();
-    }
-
-    private ResultView() {
     }
 }
