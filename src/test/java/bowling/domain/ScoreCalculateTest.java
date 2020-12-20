@@ -184,7 +184,8 @@ public class ScoreCalculateTest {
                 Arguments.of(10, 10, 10, 300),
                 Arguments.of(10, 0, 10, 280),
                 Arguments.of(3, 3, null, 255),
-                Arguments.of(5, 5, 5, 270)
+                Arguments.of(5, 5, 5, 270),
+                Arguments.of(10, 5, 5, 285)
         );
     }
 }
