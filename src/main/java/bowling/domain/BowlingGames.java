@@ -30,7 +30,7 @@ public class BowlingGames {
 
     private BowlingGame getCurrentBowlingGame() {
         return value.stream()
-                .filter(bowlingGame -> bowlingGame.getCurrentFrameNo() == currentFrameNo)
+                .filter(bowlingGame -> !bowlingGame.isEnd() && bowlingGame.getCurrentFrameNo() == currentFrameNo)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("만족하는 볼링게임이 없음"));
     }
@@ -42,6 +42,10 @@ public class BowlingGames {
     public boolean isEnd() {
         return value.stream()
                 .allMatch(BowlingGame::isEnd);
+    }
+
+    public List<BowlingGame> getValue() {
+        return value;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGames;
 import bowling.domain.Frames;
 import bowling.domain.Pitching;
@@ -129,6 +130,12 @@ public class ConsoleResultView implements ResultView {
 
     @Override
     public void print2(BowlingGames bowlingGames) {
-        System.out.println(bowlingGames.toString());
+        StringBuilder resultBuilder = new StringBuilder();
+        appendHeader(resultBuilder);
+        for (BowlingGame bowlingGame : bowlingGames.getValue()) {
+            appendBody(bowlingGame.convertToDto(), resultBuilder);
+            resultBuilder.append(System.lineSeparator());
+        }
+        System.out.println(resultBuilder.toString());
     }
 }
