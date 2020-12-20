@@ -25,16 +25,16 @@ public class Frames {
         this.frames = frames;
     }
 
-    public static Frames of() {
-        return init();
+    private static Frames of(List<Frame> frames) {
+        return new Frames(frames);
     }
 
-    private static Frames init() {
+    public static Frames init() {
         List<Frame> frames = IntStream.of(START_INDEX, NORMAL_FRAME_SIZE)
                 .mapToObj(NormalFrame::of)
                 .collect(Collectors.toList());
         frames.add(FinalFrame.of(FINAL_FRAME_INDEX));
-        return new Frames(frames);
+        return of(frames);
     }
 
     public void bowling(Pitch score) {
@@ -45,12 +45,20 @@ public class Frames {
         }
     }
 
-    public Frame getFrameByIndex(int index) {
+    public boolean isFrameEnd() {
+        return getFrameByIndex(FINAL_FRAME_INDEX).isEnd();
+    }
+
+    private Frame getFrameByIndex(int index) {
         return this.frames.get(index);
     }
 
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
+    }
+
+    public int getCurrentIndex() {
+        return currentIndex;
     }
 
     @Override
