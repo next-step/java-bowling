@@ -48,13 +48,17 @@ public class Score {
         return this.pitches.size() == SECOND_PITCH && sum() < MAX_SCORE;
     }
 
+    public boolean isStrikeBonusGame() {
+        return this.pitches.size() == SECOND_PITCH;
+    }
+
     private void validatePitch(Pitch knockedDownPins) {
         if (knockedDownPins.getScore() + sum() > MAX_SCORE) {
             throw new RuntimeException(OVER_SCORE_IN_EACH_FRAME);
         }
     }
 
-    private int sum() {
+    public int sum() {
         return this.pitches.stream().mapToInt(Pitch::getScore).sum();
     }
 
