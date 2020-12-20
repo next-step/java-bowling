@@ -13,7 +13,5 @@ public interface BowlingState {
 
     boolean isFinalPlayable();
 
-    void showResults(); //TODO score 값 변환필요.
-
-
+    String printResult();
 }

@@ -1,6 +1,7 @@
 package bowling.state;
 
 import bowling.domain.frame.Frame;
+import bowling.domain.score.BowlingScore;
 
 /**
  * Created By mand2 on 2020-12-19.
@@ -38,7 +39,10 @@ public class Open implements BowlingState {
     }
 
     @Override
-    public void showResults() {
-
+    public String printResult() {
+        if (this.frame.getScore().isUnOpen()) {
+            return BowlingScore.getResultScore(-1, isSpare());
+        }
+        return BowlingScore.getResultScore(this.frame.getScore().getList().get(0), isSpare());
     }
 }

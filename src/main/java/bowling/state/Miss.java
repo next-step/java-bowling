@@ -1,6 +1,10 @@
 package bowling.state;
 
 import bowling.domain.frame.Frame;
+import bowling.domain.score.BowlingScore;
+import bowling.view.ResultView;
+
+import java.util.stream.Collectors;
 
 /**
  * Created By mand2 on 2020-12-21.
@@ -39,6 +43,10 @@ public class Miss implements BowlingState {
     }
 
     @Override
-    public void showResults() {
+    public String printResult() {
+        return this.frame.getScoreList().stream()
+                .map(score -> BowlingScore.getResultScore(score, isSpare()))
+                .collect(Collectors.joining(ResultView.DELIMITER))
+                ;
     }
 }
