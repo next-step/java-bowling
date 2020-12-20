@@ -20,28 +20,36 @@ public class GameStatus {
     }
 
     public String getAllFrameStatus() {
-        return "|  " + game.getPlayerName() + " " +
-               "|" + getFrameStatus() +
-               "|";
+        return formatLine(game.getPlayerName(), getFrameStatus());
     }
 
     public String getAllScore() {
-        return "|      " +
-               "|" + getFrameScore() +
-               "|";
+        return formatLine("   ", getFrameScore());
+    }
+
+    private String formatLine(String rowHeader, String rowBody) {
+        return "|  " + rowHeader + " |" + rowBody + "|";
     }
 
     private String getFrameScore() {
-        List<Integer> result = IntStream.rangeClosed(1, 10)
+        return formatScore(makeFrameScore());
+    }
+
+    private String getFrameStatus() {
+        return IntStream.rangeClosed(1, 10)
+                .mapToObj(game::getFrame)
+                .map(frame -> frame.map(Frame::getFrameStatus).orElse(null))
+                .map(this::toStringFrameStatus)
+                .map(this::formatString)
+                .collect(joining("|"));
+    }
+
+    private List<Integer> makeFrameScore() {
+        return IntStream.rangeClosed(1, 10)
                 .mapToObj(game::getFrame)
                 .map(frame -> frame.map(Frame::getScore))
                 .map(score -> score.map(Score::toInt).orElse(null))
                 .collect(accumulateScore());
-
-        return result.stream()
-                .map(this::toStringScore)
-                .map(this::formatString)
-                .collect(joining("|"));
     }
 
     private Collector<Integer, List<Integer>, List<Integer>> accumulateScore() {
@@ -66,11 +74,9 @@ public class GameStatus {
         result.add(score);
     }
 
-    private String getFrameStatus() {
-        return IntStream.rangeClosed(1, 10)
-                .mapToObj(game::getFrame)
-                .map(frame -> frame.map(Frame::getFrameStatus).orElse(null))
-                .map(this::toStringFrameStatus)
+    private String formatScore(List<Integer> scores) {
+        return scores.stream()
+                .map(this::toStringScore)
                 .map(this::formatString)
                 .collect(joining("|"));
     }
