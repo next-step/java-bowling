@@ -29,4 +29,8 @@ public class FrameNumber {
     public int getValue() {
         return value;
     }
+
+    public FrameNumber increment() {
+        return create(value + 1);
+    }
 }
