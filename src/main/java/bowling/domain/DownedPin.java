@@ -38,7 +38,7 @@ public class DownedPin {
     }
 
     public boolean isSpare(DownedPin continuousTry) {
-        return numDownedPin + continuousTry.numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
+        return !isStrike() && numDownedPin + continuousTry.numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
     }
 
     public boolean isStrike() {

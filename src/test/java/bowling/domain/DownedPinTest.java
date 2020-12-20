@@ -4,7 +4,11 @@ import bowling.bowlingexception.InvalidDownedPinNumberException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -35,5 +39,20 @@ public class DownedPinTest {
     void testIsStrike() {
         assertThat(DownedPin.fromNumber(10).isStrike())
                 .isTrue();
+    }
+
+    private static Stream<Arguments> makeSpareConditions() {
+
+        return Stream.of(
+                Arguments.of(DownedPin.fromNumber(3), DownedPin.fromNumber(7), true),
+                Arguments.of(DownedPin.fromNumber(10), DownedPin.fromNumber(0), false)
+        );
+    }
+
+    @MethodSource("makeSpareConditions")
+    @ParameterizedTest
+    @DisplayName("스페어 여부 확인")
+    void testIsSpare(DownedPin arg1, DownedPin arg2, boolean result) {
+        assertThat(arg1.isSpare(arg2)).isEqualTo(result);
     }
 }
