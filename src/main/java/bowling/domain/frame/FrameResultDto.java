@@ -9,12 +9,12 @@ import java.util.List;
 public class FrameResultDto {
     private final List<Point> points;
     private final BowlType scoreType;
-    private final ScoreDto score;
+    private final ScoreDto scoreDto;
 
-    public FrameResultDto(List<Point> points, BowlType scoreType, ScoreDto score) {
+    public FrameResultDto(List<Point> points, BowlType scoreType, ScoreDto scoreDto) {
         this.points = points;
         this.scoreType = scoreType;
-        this.score = score;
+        this.scoreDto = scoreDto;
     }
 
     public List<Point> getPoints() {
@@ -25,4 +25,7 @@ public class FrameResultDto {
         return scoreType;
     }
 
+    public ScoreDto getScoreDto() {
+        return scoreDto;
+    }
 }

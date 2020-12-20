@@ -6,7 +6,6 @@ import bowling.exception.NotHasTurnException;
 import bowling.exception.ValidOverPointException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BasicScore extends Score {
@@ -97,7 +96,7 @@ public class BasicScore extends Score {
 
     @Override
     public List<Point> getPitchedPoint() {
-        return Collections.unmodifiableList(new ArrayList<>(this.points));
+        return new ArrayList<>(this.points);
     }
 
     @Override
