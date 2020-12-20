@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class BallThrow {
@@ -14,7 +16,7 @@ public class BallThrow {
     }
 
     public BallThrow(int fallingPins, boolean lastFrame) {
-        this.fallingPins = new FallingPins(fallingPins);
+        this.fallingPins = FallingPins.valueOf(fallingPins);
         this.lastFrame = lastFrame;
     }
 
@@ -65,9 +67,14 @@ public class BallThrow {
     }
 
     static class FallingPins {
+        private static final Map<Integer, FallingPins> CACHE = new HashMap<>();
+        public static FallingPins valueOf(int fallingPins) {
+            return CACHE.computeIfAbsent(fallingPins, FallingPins::new);
+        }
+
         private final int value;
 
-        public FallingPins(int fallingPins) {
+        private FallingPins(int fallingPins) {
             if (fallingPins > MAX_PINS || fallingPins < MIN_PINS) {
                 throw new IllegalFallingPinsException();
             }
