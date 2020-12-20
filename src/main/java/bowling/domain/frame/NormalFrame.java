@@ -47,6 +47,11 @@ public class NormalFrame extends Frame {
     }
 
     @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
     public void checkState() {
 
         if (score.isStrike()) {

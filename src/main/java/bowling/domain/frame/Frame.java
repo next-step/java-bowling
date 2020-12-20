@@ -28,12 +28,18 @@ public abstract class Frame {
 
     public abstract boolean isPlayable();
 
+    public abstract boolean isEnd();
+
     public abstract void checkState();
 
     public abstract BowlingState getState();
 
     public int getIndex() {
         return index;
+    }
+
+    public Score getScore() {
+        return score;
     }
 
     @Override
