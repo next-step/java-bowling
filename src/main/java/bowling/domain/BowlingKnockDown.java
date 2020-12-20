@@ -5,21 +5,25 @@ import bowling.exception.BowlingMaxCountException;
 import java.util.Objects;
 
 public class BowlingKnockDown {
-    private static final int MAX_COUNT = 10;
+    public static final int MAX_COUNT = 10;
     private final int count;
 
-    public BowlingKnockDown(int count) {
-        validate(count);
+    private BowlingKnockDown(int count) {
         this.count = count;
+    }
+
+    public static BowlingKnockDown of(int count) {
+        validate(count);
+        return new BowlingKnockDown(count);
     }
 
     public int getCount() {
         return count;
     }
 
-    private void validate(int count){
+    private static void validate(int count){
         if (count > MAX_COUNT) {
-            throw new BowlingMaxCountException(MAX_COUNT);
+            throw new BowlingMaxCountException();
         }
     }
 
