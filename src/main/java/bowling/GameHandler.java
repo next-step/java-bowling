@@ -31,7 +31,7 @@ public class GameHandler {
         BowlingGames bowlingGames = BowlingGames.init(playerNames);
         while (!bowlingGames.isEnd()) {
             setKnockDownPins2(bowlingGames);
-            resultView.print2(bowlingGames);
+            resultView.print2(bowlingGames.convertToDto());
         }
     }
 

@@ -1,7 +1,11 @@
 package bowling.domain;
 
+import bowling.dto.BowlingGameDto;
+import bowling.dto.BowlingGamesDto;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BowlingGames {
     private final List<BowlingGame> value;
@@ -46,6 +50,13 @@ public class BowlingGames {
 
     public List<BowlingGame> getValue() {
         return value;
+    }
+
+    public BowlingGamesDto convertToDto() {
+        List<BowlingGameDto> bowlingGameDtos = value.stream()
+                .map(BowlingGame::convertToDto)
+                .collect(Collectors.toList());
+        return BowlingGamesDto.of(bowlingGameDtos);
     }
 
     @Override

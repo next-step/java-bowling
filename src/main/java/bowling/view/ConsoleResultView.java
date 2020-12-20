@@ -5,10 +5,12 @@ import bowling.domain.BowlingGames;
 import bowling.domain.Frames;
 import bowling.domain.Pitching;
 import bowling.dto.BowlingGameDto;
+import bowling.dto.BowlingGamesDto;
 import bowling.dto.FrameDto;
 import bowling.dto.FramesDto;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -129,11 +131,12 @@ public class ConsoleResultView implements ResultView {
     }
 
     @Override
-    public void print2(BowlingGames bowlingGames) {
+    public void print2(BowlingGamesDto bowlingGamesDto) {
         StringBuilder resultBuilder = new StringBuilder();
         appendHeader(resultBuilder);
-        for (BowlingGame bowlingGame : bowlingGames.getValue()) {
-            appendBody(bowlingGame.convertToDto(), resultBuilder);
+        List<BowlingGameDto> value = bowlingGamesDto.getValue();
+        for (BowlingGameDto bowlingGameDto : value) {
+            appendBody(bowlingGameDto, resultBuilder);
             resultBuilder.append(System.lineSeparator());
         }
         System.out.println(resultBuilder.toString());
