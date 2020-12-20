@@ -4,6 +4,7 @@ import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -90,13 +91,14 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public void deleteBy(User user) throws CannotDeleteException {
+    public List<DeleteHistory> deleteBy(User user) throws CannotDeleteException {
         validateQuestionOwnedBy(user);
         validateAllAnswersOwnedBy(user);
-        setDeleted(true);
 
-        answers.forEach(answer -> answer.setDeleted(true));
-        // TODO : deleteHistory
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteThis(user, deleteHistories); deleteCascadingAnswers(user, deleteHistories);
+
+        return deleteHistories;
     }
 
     @Override
@@ -117,6 +119,17 @@ public class Question extends AbstractEntity {
 
         if (notOwnedAnswer.isPresent()) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
+    private void deleteThis(User user, List<DeleteHistory> deleteHistories) {
+        setDeleted(true);
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), user, LocalDateTime.now()));
+    }
+
+    private void deleteCascadingAnswers(User user, List<DeleteHistory> deleteHistories) throws CannotDeleteException {
+        for (Answer answer : answers) {
+            deleteHistories.add(answer.deleteBy(user));
         }
     }
 }

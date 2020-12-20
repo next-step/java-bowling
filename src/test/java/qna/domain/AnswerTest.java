@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -13,16 +16,17 @@ public class AnswerTest {
 
     @BeforeEach
     public void setUp() {
-        Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        A1 = new Answer(UserTest.JAVAJIGI, Q1, "Answers Contents1");
+        Q1 = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        A1 = new Answer(11L, UserTest.JAVAJIGI, Q1, "Answers Contents1");
         Q1.addAnswer(A1);
     }
 
     @Test
     public void deleted_by_writer() throws CannotDeleteException {
-        A1.deleteBy(UserTest.JAVAJIGI);
+        DeleteHistory deleteHistory = A1.deleteBy(UserTest.JAVAJIGI);
 
         assertThat(A1.isDeleted()).isTrue();
+        assertDeleteHistoryIsA1(deleteHistory);
     }
 
     @Test
@@ -33,9 +37,28 @@ public class AnswerTest {
 
     @Test
     public void delete_cascaded_from_question() throws CannotDeleteException {
-        Q1.deleteBy(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistoryList = Q1.deleteBy(UserTest.JAVAJIGI);
 
         assertThat(A1.isDeleted()).isTrue();
+        assertThat(deleteHistoryList).allSatisfy(deleteHistory ->
+                assertThat(deleteHistory).satisfiesAnyOf(
+                        this::assertDeleteHistoryIsA1,
+                        this::assertDeleteHistoryIsQ1
+                )
+        );
     }
 
+    private void assertDeleteHistoryIsQ1(DeleteHistory deleteHistory) {
+        assertDeleteHistoryIs(deleteHistory, ContentType.QUESTION, Q1.getId(), Q1.getWriter());
+    }
+
+    private void assertDeleteHistoryIsA1(DeleteHistory deleteHistory) {
+        assertDeleteHistoryIs(deleteHistory, ContentType.ANSWER, A1.getId(), A1.getWriter());
+    }
+
+    private void assertDeleteHistoryIs(DeleteHistory deleteHistory, ContentType contentType, long id, User user) {
+        assertThat(deleteHistory).isEqualToIgnoringGivenFields(
+                new DeleteHistory(contentType, id, user, LocalDateTime.now()),
+                "createDate");
+    }
 }

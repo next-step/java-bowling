@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -14,17 +17,19 @@ public class QuestionTest {
 
     @BeforeEach
     public void setUp() {
-        Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        A1 = new Answer(UserTest.JAVAJIGI, Q1, "Answers Contents1");
-        A2 = new Answer(UserTest.SANJIGI, Q1, "Answers Contents2");
+        Q1 = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        A1 = new Answer(11L, UserTest.JAVAJIGI, Q1, "Answers Contents1");
+        A2 = new Answer(12L, UserTest.SANJIGI, Q1, "Answers Contents2");
     }
 
 
     @Test
     public void delete_by_writer() throws CannotDeleteException {
-        Q1.deleteBy(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistories = Q1.deleteBy(UserTest.JAVAJIGI);
 
         assertThat(Q1.isDeleted()).isTrue();
+        assertThat(deleteHistories.size()).isEqualTo(1);
+        assertDeleteHistoryIsQ1(deleteHistories.get(0));
     }
 
     @Test
@@ -37,10 +42,17 @@ public class QuestionTest {
     @Test
     public void delete_with_answers_by_writer() throws CannotDeleteException {
         Q1.addAnswer(A1);
-        Q1.deleteBy(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistories = Q1.deleteBy(UserTest.JAVAJIGI);
 
         assertThat(Q1.isDeleted()).isTrue();
         assertThat(A1.isDeleted()).isTrue();
+
+        assertThat(deleteHistories).allSatisfy(deleteHistory ->
+                assertThat(deleteHistory).satisfiesAnyOf(
+                        this::assertDeleteHistoryIsA1,
+                        this::assertDeleteHistoryIsQ1
+                )
+        );
     }
 
     @Test
@@ -49,5 +61,19 @@ public class QuestionTest {
         assertThatThrownBy(() -> Q1.deleteBy(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class);
         assertThat(Q1.isDeleted()).isFalse();
+    }
+
+    private void assertDeleteHistoryIsQ1(DeleteHistory deleteHistory) {
+        assertDeleteHistoryIs(deleteHistory, ContentType.QUESTION, Q1.getId(), Q1.getWriter());
+    }
+
+    private void assertDeleteHistoryIsA1(DeleteHistory deleteHistory) {
+        assertDeleteHistoryIs(deleteHistory, ContentType.ANSWER, A1.getId(), A1.getWriter());
+    }
+
+    private void assertDeleteHistoryIs(DeleteHistory deleteHistory, ContentType contentType, long id, User user) {
+        assertThat(deleteHistory).isEqualToIgnoringGivenFields(
+                new DeleteHistory(contentType, id, user, LocalDateTime.now()),
+                "createDate");
     }
 }
