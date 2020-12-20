@@ -64,6 +64,7 @@ public class FrameTest {
     void createStrikeInNormalFrame(int frameIndex) {
         // given
         Frame frame = NormalFrame.of(frameIndex);
+
         // when
         frame.pitch(Pitch.from(10));
 
@@ -91,12 +92,130 @@ public class FrameTest {
 
         // 1 차시도
         frame.pitch(first);
-        frame.checkState();
         assertThat(frame.isPlayable()).isTrue();
 
         // 2 차시도
         frame.pitch(second);
-        frame.checkState();
         assertThat(frame.isPlayable()).isFalse();
     }
+
+    @ParameterizedTest
+    @DisplayName("10프레임 스페어 후 보너스 게임")
+    @MethodSource("providedSpare")
+    void createSpareInFinalFrame(int bonusScore, Pitch first, Pitch second) {
+        // given
+        Frame frame = FinalFrame.of(10);
+
+        // 1 차시도
+        frame.pitch(first);
+        assertThat(frame.isPlayable()).isTrue();
+
+        // 2 차시도
+        frame.pitch(second);
+        assertThat(frame.isPlayable()).isTrue();
+        assertThat(frame.isEnd()).isFalse();
+
+        // 보너스
+        frame.pitch(Pitch.from(bonusScore));
+        assertThat(frame.isEnd()).isTrue();
+    }
+
+
+    private static Stream<Arguments> providedMiss() {
+        return Stream.of(
+                arguments(Pitch.from(4), Pitch.from(4)),
+                arguments(Pitch.from(1), Pitch.from(5)),
+                arguments(Pitch.from(8), Pitch.from(1)),
+                arguments(Pitch.from(9), Pitch.from(0))
+        );
+    }
+    @ParameterizedTest
+    @DisplayName("10프레임 miss 후 게임 끝나는지 확인")
+    @MethodSource("providedMiss")
+    void createMissInFinalFrame(Pitch first, Pitch second) {
+        // given
+        Frame frame = FinalFrame.of(10);
+
+        // 1 차시도
+        frame.pitch(first);
+        assertThat(frame.isPlayable()).isTrue();
+
+        // 2 차시도
+        frame.pitch(second);
+        assertThat(frame.isPlayable()).isFalse();
+        assertThat(frame.isEnd()).isTrue();
+
+    }
+
+
+
+    private static Stream<Arguments> providedStrike() {
+        return Stream.of(
+                arguments(Pitch.from(10), Pitch.from(10)),
+                arguments(Pitch.from(10), Pitch.from(10)),
+                arguments(Pitch.from(10), Pitch.from(10)),
+                arguments(Pitch.from(10), Pitch.from(10))
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("10프레임 3 스트라이크 후 게임 끝나는지 확인")
+    @MethodSource("providedStrike")
+    void createStrikeInFinalFrame(Pitch first, Pitch second) {
+        // given
+        Frame frame = FinalFrame.of(10);
+
+        // 1 차시도
+        frame.pitch(first);
+        assertThat(frame.isPlayable()).isTrue();
+        assertThat(frame.isEnd()).isFalse();
+
+        // 2 차시도
+        frame.pitch(second);
+        assertThat(frame.isPlayable()).isTrue();
+        assertThat(frame.isEnd()).isFalse();
+
+        // 3 차시도
+        frame.pitch(second);
+        assertThat(frame.isPlayable()).isTrue();
+        assertThat(frame.isEnd()).isTrue();
+
+    }
+
+
+    private static Stream<Arguments> providedStrikeAndMiss() {
+        return Stream.of(
+                arguments(Pitch.from(10), Pitch.from(2), Pitch.from(10)),
+                arguments(Pitch.from(10), Pitch.from(3), Pitch.from(8)),
+                arguments(Pitch.from(10), Pitch.from(4), Pitch.from(0)),
+                arguments(Pitch.from(10), Pitch.from(9), Pitch.from(1))
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("10프레임 스트라이크 후 miss, 보너스 게임 추가되는지 확인")
+    @MethodSource("providedStrikeAndMiss")
+    void createStrikeAndMissInFinalFrame(Pitch first, Pitch second, Pitch third) {
+        // given
+        Frame frame = FinalFrame.of(10);
+
+        // 1 차시도
+        frame.pitch(first);
+        assertThat(frame.isPlayable()).isTrue();
+        assertThat(frame.isEnd()).isFalse();
+
+        // 2 차시도
+        frame.pitch(second);
+        assertThat(frame.isPlayable()).isTrue();
+        assertThat(frame.isEnd()).isFalse();
+
+        // 3 차시도
+        frame.pitch(third);
+        assertThat(frame.isPlayable()).isTrue();
+        assertThat(frame.isEnd()).isTrue();
+
+    }
+
+
+
 }
