@@ -38,7 +38,7 @@ public enum Pitching {
     }
 
     public static Pitching getPitching(KnockDownPins knockDownPins, Pitching previousPitching) {
-        if (previousPitching == SPARE) {
+        if (previousPitching == SPARE || previousPitching == STRIKE) {
             return getPitching(knockDownPins);
         }
 
@@ -62,5 +62,9 @@ public enum Pitching {
         if (previousPitching != STRIKE && knockDownPinsValue + previousPitchingScore > strikeScore) {
             throw new IllegalArgumentException(INVALID_REMAIN_PINS_SIZE_INPUT_ERR_MSG);
         }
+    }
+
+    public Integer getScore() {
+        return score;
     }
 }

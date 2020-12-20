@@ -1,9 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
-
-import java.util.stream.Stream;
+import bowling.dto.BowlingGameDto;
 
 public class BowlingGame {
     private final Frames frames;
@@ -22,19 +19,15 @@ public class BowlingGame {
         frames.setKnockDownPins(knockDownPins);
     }
 
-    public int getCurrentFrameIndex() {
-        return frames.getCurrentFrameIndex();
-    }
-
     public boolean isEnd() {
         return frames.isEnd();
     }
 
-    public Stream<Frame> framesStream() {
-        return frames.stream();
+    public int getCurrentFrameNo() {
+        return frames.getCurrentFrameNo();
     }
 
-    public PlayerName getPlayerName() {
-        return playerName;
+    public BowlingGameDto convertToDto() {
+        return BowlingGameDto.of(frames.convertToDto(), playerName.getValue());
     }
 }

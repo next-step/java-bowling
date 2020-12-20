@@ -19,8 +19,8 @@ public class ConsoleInputView implements InputView {
     }
 
     @Override
-    public int getKnockDownPins(int frameIndex) {
-        System.out.print(frameIndex + KNOCK_DOWN_PINS_INPUT_MSG_SUFFIX);
+    public int getKnockDownPins(int frameNo) {
+        System.out.print(frameNo + KNOCK_DOWN_PINS_INPUT_MSG_SUFFIX);
         return Integer.parseInt(scanner.nextLine());
     }
 

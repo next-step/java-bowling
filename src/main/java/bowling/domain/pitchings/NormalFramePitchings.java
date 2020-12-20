@@ -1,45 +1,29 @@
 package bowling.domain.pitchings;
 
-import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
+import bowling.domain.Score;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Stream;
+import java.util.function.BiFunction;
 
-public class NormalFramePitchings implements Pitchings {
+public class NormalFramePitchings extends Pitchings {
     private static final int NORMAL_FRAME_MAX_PITCHING_SIZE = 2;
-    private final List<Pitching> value;
-
-    public NormalFramePitchings() {
-        this.value = new ArrayList<>();
-    }
 
     public static NormalFramePitchings getInstance() {
         return new NormalFramePitchings();
     }
 
     @Override
-    public void addPitching(KnockDownPins knockDownPins) {
-        if (value.isEmpty()) {
-            setFirstPitching(knockDownPins);
-            return;
+    Score renewScore(Pitching pitching) {
+        if (isStrike()) {
+            return Score.ofStrike();
         }
 
-        setSecondPitching(knockDownPins);
-    }
+        if (isSpare()) {
+            return Score.ofSpare();
+        }
 
-    private void setFirstPitching(KnockDownPins knockDownPins) {
-        Pitching pitching = Pitching.getPitching(knockDownPins);
-        value.add(pitching);
-    }
-
-    private void setSecondPitching(KnockDownPins knockDownPins) {
-        int lastIndex = value.size() - 1;
-        Pitching previousPitching = value.get(lastIndex);
-        Pitching pitching = Pitching.getPitching(knockDownPins, previousPitching);
-        value.add(pitching);
+        Integer currentScore = pitching.getScore();
+        return score.addScore(currentScore);
     }
 
     @Override
@@ -48,25 +32,25 @@ public class NormalFramePitchings implements Pitchings {
             return false;
         }
 
-        if (isFirstPitchingStrike()) {
+        if (isStrike()) {
             return true;
         }
 
         return value.size() == NORMAL_FRAME_MAX_PITCHING_SIZE;
     }
 
-    private boolean isFirstPitchingStrike() {
-        Pitching firstPitching = value.get(0);
-        return firstPitching == Pitching.STRIKE;
-    }
-
     @Override
-    public Iterator<Pitching> iterator() {
-        return value.iterator();
-    }
+    public BiFunction<Integer, Score, Integer> calculateTotalScore() {
+        return (previousFrameTotalScore, score) -> {
+            if (canNotCalculateTotalScore(previousFrameTotalScore, score)) {
+                return null;
+            }
 
-    @Override
-    public Stream<Pitching> stream() {
-        return value.stream();
+            if (score.leftBonusApplyChance()) {
+                return null;
+            }
+
+            return previousFrameTotalScore + score.getValue();
+        };
     }
 }

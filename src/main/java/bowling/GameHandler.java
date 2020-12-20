@@ -22,7 +22,7 @@ public class GameHandler {
 
         while (!bowlingGame.isEnd()) {
             setKnockDownPins(bowlingGame);
-            resultView.print(bowlingGame);
+            resultView.print(bowlingGame.convertToDto());
         }
     }
 
@@ -42,7 +42,7 @@ public class GameHandler {
     }
 
     private KnockDownPins getKnockDownPins(BowlingGame bowlingGame) {
-        Integer knockDownPins = ValidInputHelper.get(() -> inputView.getKnockDownPins(bowlingGame.getCurrentFrameIndex()), inputView::printError);
+        Integer knockDownPins = ValidInputHelper.get(() -> inputView.getKnockDownPins(bowlingGame.getCurrentFrameNo()), inputView::printError);
         return KnockDownPins.valueOf(knockDownPins);
     }
 }

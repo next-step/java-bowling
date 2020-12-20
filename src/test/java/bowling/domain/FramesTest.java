@@ -1,18 +1,11 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frames;
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class FramesTest {
-    @Test
-    public void createTest() {
-        Frames frames = Frames.init();
-        assertThat(frames.size()).isEqualTo(10);
-    }
-
     @Test
     @DisplayName("프레임이 모두 끝난 경우 isEnd() true")
     public void bowlingGameTest() {
