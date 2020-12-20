@@ -20,7 +20,7 @@ public class Player {
     }
 
     private static void validate(String name) {
-        if(StringUtils.empty(name)) {
+        if(StringUtils.isEmpty(name)) {
             throw new PlayerNullPointException();
         }
 
