@@ -1,7 +1,7 @@
 package bowling.controller;
 
-import bowling.domain.NormalFrame;
-import bowling.domain.NormalFrames;
+import bowling.domain.Frame;
+import bowling.domain.Frames;
 import bowling.domain.Pitch;
 import bowling.domain.Player;
 import bowling.view.InputView;
@@ -16,26 +16,26 @@ public class BowlingController {
         Player player = inputView.inputPlayer();
         resultView.printFirstFrame(player.getName());
 
-        NormalFrames normalFrames = NormalFrames.init();
+        Frames frames = Frames.init();
         boolean gameFinished = false;
         int frameIndex = 1;
         int pitchCount = 0;
 
         while(!gameFinished) {
             boolean isFinished = false;
-            NormalFrame normalFrame = NormalFrame.init();
+            Frame frame = Frame.init();
 
             while(!isFinished) {
                 int score = inputView.inputScore(frameIndex);
                 Pitch pitch = Pitch.from(score);
                 pitchCount++;
-                normalFrame.add(pitch);
+                frame.add(pitch);
                 resultView.printFrames(player.getName(), frameIndex);
 
                 if(pitch.isStrike() || pitchCount >= 2) {
                     frameIndex++;
                     pitchCount = 0;
-                    normalFrames.add(normalFrame);
+                    frames.add(frame);
                     isFinished = true;
                 }
             }

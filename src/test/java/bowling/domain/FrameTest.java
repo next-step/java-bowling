@@ -6,40 +6,40 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class NormalFrameTest {
+class FrameTest {
 
     @Test
     @DisplayName("스트라이크일 때, 프레임 생성")
     void strike() {
-        NormalFrame normalFrame = NormalFrame.init();
+        Frame frame = Frame.init();
 
         Pitch pitch = Pitch.from(10);
-        normalFrame.add(pitch);
-        Assertions.assertThat(normalFrame.getPitchSize()).isEqualTo(1);
+        frame.add(pitch);
+        Assertions.assertThat(frame.getPitchSize()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("스트라이크가 아닐 때, 스페어 처리하는 프레임 생성")
     void spare() {
-        NormalFrame normalFrame = NormalFrame.init();
+        Frame frame = Frame.init();
 
         Pitch pitch1 = Pitch.from(9);
         Pitch pitch2 = Pitch.from(1);
-        normalFrame.add(pitch1);
-        normalFrame.add(pitch2);
-        Assertions.assertThat(normalFrame.getPitchSize()).isEqualTo(2);
+        frame.add(pitch1);
+        frame.add(pitch2);
+        Assertions.assertThat(frame.getPitchSize()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("스페어 처리시, 총 점수가 10점을 넘을 때 예외 처리")
     void spareException() {
-        NormalFrame normalFrame = NormalFrame.init();
+        Frame frame = Frame.init();
 
         Pitch pitch1 = Pitch.from(9);
         Pitch pitch2 = Pitch.from(2);
-        normalFrame.add(pitch1);
+        frame.add(pitch1);
         assertThrows(IllegalArgumentException.class,
-                () -> normalFrame.add(pitch2));
+                () -> frame.add(pitch2));
     }
 
 }
