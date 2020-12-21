@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Pin;
-import bowling.domain.score.Score;
 import bowling.state.*;
 
 /**

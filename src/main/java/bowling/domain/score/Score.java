@@ -15,6 +15,7 @@ public class Score {
     public final static int MAX_SCORE = 10;
     public final static int FIRST_PITCH = 1;
     public final static int SECOND_PITCH = 2;
+    public final static int BONUS_PITCH = 3;
 
     public static final String OVER_SCORE_IN_EACH_FRAME = "한 프레임 내에서 점수의 합은 10점 초과할 수 없음.";
 
@@ -31,14 +32,6 @@ public class Score {
 
     public void bonus(Pin knockedDownPins) {
         pins.add(knockedDownPins);
-    }
-
-    public boolean isUnOpen() {
-        return this.pins.isEmpty();
-    }
-
-    public boolean isStrikeBonusGame() {
-        return this.pins.size() == SECOND_PITCH;
     }
 
     private void validatePitch(Pin knockedDownPins) {

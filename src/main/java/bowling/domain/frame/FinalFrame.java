@@ -44,18 +44,20 @@ public class FinalFrame extends Frame {
         if (this.state.isPlayable()) {
             this.score.pitch(knockDownPin);
         }
-        if (isSpare() && this.state.isFinalPlayable()) {
-            this.score.bonus(knockDownPin);
-            this.endGame = true;
-        }
-        if (isStrike() && this.state.isFinalPlayable()) {
+        if (this.state.isFinalPlayable()) {
             this.score.bonus(knockDownPin);
             checkStrikeBonus();
         }
     }
 
     private void checkStrikeBonus() {
-        this.endGame = !this.score.isStrikeBonusGame();
+        if (isBonusGame()) {
+            this.endGame = true;
+        }
+    }
+
+    private boolean isBonusGame() {
+        return this.score.size() == Score.BONUS_PITCH;
     }
 
     @Override
