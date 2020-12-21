@@ -47,7 +47,7 @@ public class FinalFrame extends Frame {
             this.score.bonus(knockDownPin);
             this.endGame = true;
         }
-        if (this.state.isStrike() && this.state.isFinalPlayable()) {
+        if (!this.state.isSpare() && this.state.isFinalPlayable()) {
             this.score.bonus(knockDownPin);
             checkStrikeBonus();
         }

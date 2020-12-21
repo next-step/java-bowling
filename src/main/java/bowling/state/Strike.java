@@ -23,11 +23,6 @@ public class Strike implements BowlingState {
 
 
     @Override
-    public boolean isStrike() {
-        return true;
-    }
-
-    @Override
     public boolean isSpare() {
         return false;
     }
