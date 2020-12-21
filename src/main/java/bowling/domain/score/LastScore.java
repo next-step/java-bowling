@@ -42,10 +42,9 @@ public class LastScore extends Score {
             secondPoint = pitchedPoint;
             return;
         }
-        if (lastPoint == null) {
-            lastPoint = pitchedPoint;
-            return;
-        }
+
+        lastPoint = pitchedPoint;
+
     }
 
     private void validHasScoreTurn() {
