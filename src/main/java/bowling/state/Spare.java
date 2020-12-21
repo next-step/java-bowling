@@ -3,6 +3,7 @@ package bowling.state;
 import bowling.domain.frame.Frame;
 import bowling.domain.score.BowlingScore;
 import bowling.domain.score.Score;
+import bowling.domain.score.ScoreResult;
 import bowling.view.ResultView;
 
 import java.util.ArrayList;
@@ -34,7 +35,11 @@ public class Spare implements BowlingState {
     }
 
     @Override
-    public List<BowlingScore> getScoreBoard() {
+    public ScoreResult getScoreBoard() {
+        return ScoreResult.of(bowlingScores());
+    }
+
+    private List<BowlingScore> bowlingScores() {
         List<Integer> list = this.frame.getScore().getList();
         int size = list.size();
         List<BowlingScore> scoreList = new ArrayList<>();

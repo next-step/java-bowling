@@ -2,6 +2,7 @@ package bowling.state;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.score.BowlingScore;
+import bowling.domain.score.ScoreResult;
 import bowling.view.ResultView;
 
 import java.util.List;
@@ -34,7 +35,11 @@ public class Strike implements BowlingState {
     }
 
     @Override
-    public List<BowlingScore> getScoreBoard() {
+    public ScoreResult getScoreBoard() {
+        return ScoreResult.of(bowlingScores());
+    }
+
+    private List<BowlingScore> bowlingScores() {
         return this.frame.getScoreList().stream()
                 .map(score -> BowlingScore.getBowlingScore(score, false))
                 .collect(Collectors.toList());

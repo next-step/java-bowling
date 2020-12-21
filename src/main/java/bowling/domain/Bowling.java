@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.score.Pin;
+import bowling.domain.score.ScoreResult;
 import bowling.state.BowlingState;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class Bowling {
         return this.frames.getCurrentIndex();
     }
 
-    public List<BowlingState> getState() {
-        return this.frames.getState();
+    public List<ScoreResult> getScoreBoard() {
+        return this.frames.getScoreBoard();
     }
 }

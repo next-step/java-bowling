@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Pin;
+import bowling.domain.score.ScoreResult;
 import bowling.state.BowlingState;
 
 import java.util.Collections;
@@ -60,10 +61,12 @@ public class Frames {
         return Collections.unmodifiableList(frames);
     }
 
-    public List<BowlingState> getState() {
+    public List<ScoreResult> getScoreBoard() {
         return this.frames.stream()
                 .map(Frame::getState)
+                .map(BowlingState::getScoreBoard)
                 .collect(Collectors.collectingAndThen(toList(), Collections::unmodifiableList));
+
     }
 
     public int getCurrentIndex() {

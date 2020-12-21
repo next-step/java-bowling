@@ -1,8 +1,7 @@
 package bowling.state;
 
-import bowling.domain.score.BowlingScore;
+import bowling.domain.score.ScoreResult;
 
-import java.util.List;
 
 /**
  * Created By mand2 on 2020-12-19.
@@ -13,6 +12,6 @@ public interface BowlingState {
 
     boolean isFinalPlayable();
 
-    List<BowlingScore> getScoreBoard();
+    ScoreResult getScoreBoard();
 
 }
