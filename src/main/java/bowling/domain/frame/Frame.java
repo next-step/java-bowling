@@ -35,19 +35,19 @@ public abstract class Frame {
 
     public abstract BowlingState getState();
 
-    protected boolean isUnOpen() {
+    public boolean isUnOpen() {
         return this.score.size() == 0;
     }
 
-    protected boolean isStrike() {
+    public boolean isStrike() {
         return this.score.size() == Score.FIRST_PITCH && this.score.sumAll() == Score.MAX_SCORE;
     }
 
-    protected boolean isSpare() {
+    public boolean isSpare() {
         return this.score.size() == Score.SECOND_PITCH && this.score.sumAll() == Score.MAX_SCORE;
     }
 
-    protected boolean isMiss(){
+    public boolean isMiss(){
         return this.score.size() == Score.SECOND_PITCH && this.score.sumAll() < Score.MAX_SCORE;
     }
 

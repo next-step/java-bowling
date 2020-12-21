@@ -33,5 +33,24 @@ public class Spare implements BowlingState {
         return true;
     }
 
+    @Override
+    public List<BowlingScore> getScoreBoard() {
+        List<Integer> list = this.frame.getScore().getList();
+        int size = list.size();
+        List<BowlingScore> scoreList = new ArrayList<>();
+
+        for (int pin = 0; pin < size; pin++) {
+            scoreList.add(BowlingScore.getBowlingScore(list.get(pin), isSecondPitch(pin)));
+        }
+
+        return scoreList;
+    }
+
+    private boolean isSecondPitch(int index) {
+        if (index + 1 == Score.SECOND_PITCH) {
+            return true;
+        }
+        return false;
+    }
 }
 

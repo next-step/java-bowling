@@ -8,6 +8,7 @@ import java.util.Arrays;
 public enum BowlingScore {
 
     GUTTER(0, "-"),
+    EMPTY(0, ""),
     ONE(1, "1"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -39,6 +40,16 @@ public enum BowlingScore {
                 .findFirst()
                 .map(BowlingScore::getName)
                 .orElse("");
+    }
+    public static BowlingScore getBowlingScore(int score, boolean spare) {
+        if (spare) {
+            return SPARE;
+        }
+
+        return Arrays.stream(values())
+                .filter(bowlingScore -> bowlingScore.value == score)
+                .findFirst()
+                .orElse(BowlingScore.EMPTY);
     }
 
 
