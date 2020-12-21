@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.view.ResultView;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,9 +15,9 @@ public class Frames {
         frames.add(Frame.init(users));
     }
 
-    public void bowl(int frameNo, ResultView resultView) {
+    public void bowl(int frameNo) {
         Frame frame = frames.get(frameNo - 1);
-        frames.add(frame.bowl(frameNo, resultView));
+        frames.add(frame.bowl(frameNo));
     }
 
     public int size() {

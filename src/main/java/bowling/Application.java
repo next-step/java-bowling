@@ -16,11 +16,10 @@ public class Application {
     public static void main(String[] args) {
         Users users = InputView.getUsers();
         Frames frames = new Frames(users);
-        ResultView resultView = new ResultView(frames, users);
-        resultView.print();
+        ResultView.print(frames, users);
 
         for (int frameNo = FIRST_FRAME; frameNo < LAST_FRAME + 1; frameNo++) {
-            frames.bowl(frameNo, resultView);
+            frames.bowl(frameNo);
         }
     }
 }

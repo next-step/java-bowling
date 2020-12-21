@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.view.ResultView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +14,10 @@ public class Users {
         users.add(user);
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
     public User get(int i) {
         return users.get(i);
     }
@@ -24,9 +26,9 @@ public class Users {
         return users.size();
     }
 
-    public void bowl(int frameNo, ResultView resultView) {
+    public void bowl(int frameNo) {
         for (User user : users) {
-            user.bowl(frameNo, resultView);
+            user.bowl(frameNo);
         }
     }
 }

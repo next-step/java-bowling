@@ -35,22 +35,22 @@ public class User {
         return name;
     }
 
-    public void bowl(int frameNo, ResultView resultView) {
+    public void bowl(int frameNo) {
         Bowl firstBowl = new FirstBowl();
         State state = firstBowl.stroke(InputView.getPins(this.name));
-        states.add(state);
-        resultView.print();
+        this.states.add(state);
+        ResultView.print(frames, users);
 
-        secondStroke(frameNo, resultView, state);
+        secondStroke(frameNo, state);
     }
 
-    private void secondStroke(int frameNo, ResultView resultView, State state) {
+    private void secondStroke(int frameNo, State state) {
         if (state instanceof Miss || state instanceof Gutter) {
             Score firstScore = state.getScore();
             Bowl secondBowl = new SecondBowl(firstScore);
             state = secondBowl.stroke(InputView.getPins(this.name));
             states.set(frameNo - PREVIOUS_INDEX, state);
-            resultView.print();
+            ResultView.print(frames, users);
         }
     }
 

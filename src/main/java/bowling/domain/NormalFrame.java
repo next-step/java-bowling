@@ -19,8 +19,8 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame bowl(int frameNo, ResultView resultView) {
-        users.bowl(frameNo, resultView);
+    public Frame bowl(int frameNo) {
+        users.bowl(frameNo);
 
         return this.frameNo + NEXT_FRAME == LAST_FRAME ?
                 new FinalFrame() : new NormalFrame(users, this.frameNo + NEXT_FRAME);
