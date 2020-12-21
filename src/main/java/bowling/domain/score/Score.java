@@ -7,10 +7,12 @@ import java.util.List;
 
 public abstract class Score {
 
-    protected final List<Point> points;
+    protected Point firstPoint;
+    protected Point secondPoint;
 
-    protected Score(List<Point> points) {
-        this.points = points;
+    protected Score(Point firstPoint, Point secondPoint) {
+        this.firstPoint = firstPoint;
+        this.secondPoint = secondPoint;
     }
 
     abstract public void pitch(Point pitchedPoint);

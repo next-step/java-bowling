@@ -4,9 +4,11 @@ import bowling.domain.BowlType;
 import bowling.domain.frame.FrameResultDto;
 import bowling.domain.game.Bowling;
 import bowling.domain.point.Point;
+import bowling.domain.score.ScoreDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class OutputView {
@@ -23,10 +25,14 @@ public class OutputView {
     public static final String GUTTER = "-";
     public static final String STRIKE = "X";
     public static final int FIRST_INDEX = 0;
+    public static final String SPARED = "/";
+    public static final String SCORE_BLANK = "|      |";
+    public static final String SCORE = "  %-4s|";
 
     public static void printResult(Bowling bowling) {
         printFramesRounds();
         printBowlsResult(bowling);
+        printScores(bowling);
         System.out.print(System.lineSeparator());
     }
 
@@ -85,10 +91,33 @@ public class OutputView {
 
     private static int printSpare(List<String> builder, int downPinIndex, BowlType scoreType) {
         if (scoreType == BowlType.SPARED) {
-            builder.add(scoreType.getMark());
+            builder.add(SPARED);
             downPinIndex++;
         }
         return downPinIndex;
+    }
+
+    private static void printScores(Bowling bowling) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(SCORE_BLANK);
+        int sumPoint = 0;
+        for (ScoreDto score : getScores(bowling)) {
+            sumPoint += score.getSumScore();
+            builder.append(String.format(SCORE, isContinueBowling(sumPoint, score)));
+        }
+
+        System.out.println(builder.toString());
+    }
+
+    private static Object isContinueBowling(int sumPoint, ScoreDto score) {
+        return score.getBowlType() == BowlType.NONE ? BLANK : sumPoint;
+    }
+
+    private static List<ScoreDto> getScores(Bowling bowling) {
+        return bowling.getResult()
+                .stream()
+                .map(FrameResultDto::getScoreDto)
+                .collect(Collectors.toList());
     }
 
 

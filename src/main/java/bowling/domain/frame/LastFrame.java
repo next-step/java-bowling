@@ -22,18 +22,18 @@ public class LastFrame extends Frame {
 
 
     @Override
-    public Frame createNextFrame(boolean isLast) {
-        return init(frameNumber, score);
+    public Frame createNextFrame() {
+        return init(frameBoard.getFrameNumber(), frameBoard.getScore());
     }
 
     @Override
     public void pitch(Point point) {
-        score.pitch(point);
+        frameBoard.pitch(point);
     }
 
     @Override
     public boolean hasScoreTurn() {
-        return score.hasScoreTurn();
+        return frameBoard.hasScoreTurn();
     }
 
     @Override
@@ -42,15 +42,15 @@ public class LastFrame extends Frame {
             return ScoreDto.init(0, BowlType.NONE);
         }
         if (isLastFrame() && isFrameFinished()) {
-            return ScoreDto.init(score.sumPoint(), BowlType.END);
+            return ScoreDto.init(frameBoard.sumPoint(), BowlType.END);
         }
-        int nextBowlCount = score.getBowlType().getBonusCount();
+        int nextBowlCount = frameBoard.getBowlType().getBonusCount();
         List<Point> nextFramePitchedPoint = getNextFramePitchPoints(nextBowlCount);
         if (nextFramePitchedPoint.size() < nextBowlCount) {
             return ScoreDto.init(0, BowlType.NONE);
         }
 
-        int sumScore = score.sumPoint() + getNextFramePitchedPoint(nextFramePitchedPoint);
+        int sumScore = frameBoard.sumPoint() + getNextFramePitchedPoint(nextFramePitchedPoint);
         return ScoreDto.init(sumScore, BowlType.END);
 
     }
@@ -68,7 +68,7 @@ public class LastFrame extends Frame {
 
     @Override
     protected boolean isFrameFinished() {
-        return !this.score.hasScoreTurn();
+        return !frameBoard.hasScoreTurn();
     }
 
     @Override
@@ -92,12 +92,12 @@ public class LastFrame extends Frame {
 
     @Override
     protected List<Point> getFramePitchPoints() {
-        return this.score.getPitchedPoint();
+        return frameBoard.getPitchedPoint();
     }
 
 
     @Override
     FrameResultDto getFrameResultDto() {
-        return new FrameResultDto(this.score.getPitchedPoint(), score.getBowlType(), getScoreDto());
+        return new FrameResultDto(frameBoard.getPitchedPoint(), frameBoard.getBowlType(), getScoreDto());
     }
 }

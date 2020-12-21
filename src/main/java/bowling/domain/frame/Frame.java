@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.point.Point;
+import bowling.domain.score.LastScore;
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreDto;
 
@@ -9,17 +10,19 @@ import java.util.Objects;
 
 public abstract class Frame {
 
-    protected int frameNumber;
-    protected final Score score;
+    protected FrameBoard frameBoard;
     protected Frame nextFrame;
 
     protected Frame(int frameNumber, Score score) {
-        this.frameNumber = frameNumber;
-        this.score = score;
+        this.frameBoard = FrameBoard.of(frameNumber , score);
     }
 
+    public Frame createLastFrame() {
+        this.nextFrame = LastFrame.init(frameBoard.increaseFrameNumber(), LastScore.initFirst());
+        return this.nextFrame;
+    }
 
-    abstract public Frame createNextFrame(boolean isLast);
+    abstract public Frame createNextFrame();
 
     abstract public void pitch(Point point);
 
@@ -37,16 +40,17 @@ public abstract class Frame {
 
     abstract FrameResultDto getFrameResultDto();
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return frameNumber == frame.frameNumber && Objects.equals(score, frame.score) && Objects.equals(nextFrame, frame.nextFrame);
+        return Objects.equals(frameBoard, frame.frameBoard) && Objects.equals(nextFrame, frame.nextFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameNumber, score, nextFrame);
+        return Objects.hash(frameBoard, nextFrame);
     }
 }

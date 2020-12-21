@@ -20,7 +20,7 @@ class BasicFrameTest {
     @BeforeEach
     void setUp() {
         basicFrame = BasicFrame.initFirst();
-        nextBasicFrame = basicFrame.createNextFrame(false);
+        nextBasicFrame = basicFrame.createNextFrame();
     }
 
     @Test
