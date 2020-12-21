@@ -1,12 +1,16 @@
 package bowling.domain;
 
 public class Miss implements State {
-    private Pins firstPins;
+    private final Pins firstPins;
     private Pins secondPins;
 
     public Miss(Pins firstPins, Pins secondPins) {
         this.firstPins = firstPins;
         this.secondPins = secondPins;
+    }
+
+    public Miss(Pins firstPins) {
+        this.firstPins = firstPins;
     }
 
     @Override
@@ -18,6 +22,15 @@ public class Miss implements State {
 
     @Override
     public String toString() {
-        return "1";
+        String ret = String.valueOf(this.firstPins.get());
+        if (this.secondPins != null) {
+            ret = ret + "|" + (this.secondPins.get() == 0 ? Symbol.GUTTER.getSymbol() : this.secondPins.get());
+        }
+        return ret;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return this.secondPins != null;
     }
 }

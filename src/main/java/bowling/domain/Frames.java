@@ -10,10 +10,6 @@ import java.util.List;
  * Developer : Seo
  */
 public class Frames {
-    public static final int ALL_FRAMES = 10;
-    public static final int START_FRAME = 1;
-    public static final int END_FRAME = 11;
-
     private final List<Frame> frames;
 
     public Frames(Users users) {
@@ -21,9 +17,9 @@ public class Frames {
         frames.add(Frame.init(users));
     }
 
-    public void bowl(ResultView resultView, int frameNo) {
+    public void bowl(int frameNo, ResultView resultView) {
         Frame frame = frames.get(frameNo - 1);
-        frames.add(frame.bowl(resultView));
+        frames.add(frame.bowl(frameNo, resultView));
     }
 
     public int size() {
@@ -36,9 +32,5 @@ public class Frames {
 
     public Frame get(int i) {
         return frames.get(i);
-    }
-
-    public void remove(int i) {
-        frames.remove(i);
     }
 }

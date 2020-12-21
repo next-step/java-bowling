@@ -30,7 +30,7 @@ class FrameTest {
     @DisplayName("스트라이크")
     @Test
     void bowl_strike() {
-        NormalFrame returnFrame = frame.bowl(new Pins(10));
+        NormalFrame returnFrame = frame.bowl(frameNo, new Pins(10));
         assertThat(returnFrame.getFrameNo()).isEqualTo(2);
         assertThat(returnFrame.getFrameNoString()).isEqualTo("02");
 //        assertThat(returnFrame.getScore().getScore()).isTrue();
@@ -49,7 +49,7 @@ class FrameTest {
     @DisplayName("스트라이크면 다음 프레임")
     @Test
     void bowl_isStrike() {
-        NormalFrame nextFrame = frame.bowl(new Pins(10));
+        NormalFrame nextFrame = frame.bowl(frameNo, new Pins(10));
         assertThat(nextFrame).isInstanceOf(NormalFrame.class);
         assertThat(frame.equals(nextFrame)).isNotEqualTo(true);
 
@@ -63,7 +63,7 @@ class FrameTest {
     @DisplayName("첫 구가 스트라이크 아니면 다음 구")
     @Test
     void bowl_isFirst() {
-        NormalFrame thisFrame = frame.bowl(new Pins(9));
+        NormalFrame thisFrame = frame.bowl(frameNo, new Pins(9));
         assertThat(thisFrame).isInstanceOf(NormalFrame.class);
         assertThat(frame.equals(thisFrame)).isTrue();
 
@@ -78,7 +78,7 @@ class FrameTest {
     @DisplayName("2구 이후 다음 프레임")
     @Test
     void bowl_isSecond() {
-        NormalFrame thisFrame = frame.bowl(new Pins(9));
+        NormalFrame thisFrame = frame.bowl(frameNo, new Pins(9));
         assertThat(thisFrame.getScore()).isNotNull();
 
 //        Frame nextFrame = thisFrame.bowl(Bowling.stroke(thisFrame.remainPins()));
@@ -91,7 +91,7 @@ class FrameTest {
     @DisplayName("남아있는 핀")
     @Test
     void remainPins() {
-        NormalFrame thisFrame = frame.bowl(new Pins(9));
+        NormalFrame thisFrame = frame.bowl(frameNo, new Pins(9));
 //        assertThat(thisFrame.remainPins().get()).isEqualTo(1);
     }
 }

@@ -1,6 +1,7 @@
 package bowling;
 
-import bowling.domain.*;
+import bowling.domain.Frames;
+import bowling.domain.Users;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -19,15 +20,7 @@ public class Application {
         resultView.print();
 
         for (int frameNo = FIRST_FRAME; frameNo < LAST_FRAME + 1; frameNo++) {
-            frames.bowl(resultView, frameNo);
+            frames.bowl(frameNo, resultView);
         }
-
-//        frame = frame.bowl(InputView.getPins(FIRST_FRAME));
-//        ResultView.print(frame, user);
-
-//        while (frame.get) {
-//            frame = frame.bowl(InputView.getPins(FIRST_FRAME));
-//            ResultView.print(frame, user);
-//        }
     }
 }

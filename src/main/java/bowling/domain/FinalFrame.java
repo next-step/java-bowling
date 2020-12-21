@@ -8,12 +8,12 @@ import bowling.view.ResultView;
  */
 public class FinalFrame extends Frame {
     @Override
-    public Frame bowl(ResultView resultView) {
+    public Frame bowl(int frameNo, ResultView resultView) {
         return null;
     }
 
     @Override
-    public Users getUsers() {
-        return null;
+    public int getFrameNo() {
+        return 10;
     }
 }

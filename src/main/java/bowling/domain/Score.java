@@ -9,6 +9,12 @@ public class Score {
 
     public Score(Pins first) {
         this.first = first;
+        this.second = new Pins(0);
+    }
+
+    public Score() {
+        this.first = new Pins(0);
+        this.second = new Pins(0);
     }
 
     public Pins getFirst() {
@@ -36,11 +42,26 @@ public class Score {
     }
 
     public boolean isGutter() {
+        return this.first.get() == Symbol.GUTTER.getPins().get();
+    }
+
+    public boolean isAllGutter() {
         return this.first.get() == Symbol.GUTTER.getPins().get()
-                || Optional.ofNullable(this.second).orElse(new Pins(PINS_NOT_GUTTER)).get() == Symbol.GUTTER.getPins().get();
+                && this.second.get() == Symbol.GUTTER.getPins().get();
     }
 
     public boolean isFirst() {
         return this.second == null;
+    }
+
+    public int getFrameScore() {
+        Pins second = Optional.ofNullable(this.second).orElse(new Pins(0));
+        return this.first.get() + second.get();
+    }
+
+    @Override
+    public String toString() {
+        int sum = first.get() + second.get();
+        return sum != 0 ? String.valueOf(sum) : "";
     }
 }

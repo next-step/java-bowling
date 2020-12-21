@@ -11,6 +11,11 @@ public class Strike implements State {
 
     @Override
     public String toString() {
-        return "10";
+        return Symbol.STRIKE.getSymbol();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 }

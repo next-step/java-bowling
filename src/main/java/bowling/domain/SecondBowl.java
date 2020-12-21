@@ -1,7 +1,7 @@
 package bowling.domain;
 
 public class SecondBowl implements Bowl {
-    private Score score;
+    private final Score score;
 
     public SecondBowl(Score score) {
         this.score = score;
@@ -10,10 +10,10 @@ public class SecondBowl implements Bowl {
     @Override
     public State stroke(Pins pins) {
         if (score.isSpare(pins)) {
-            return new Spare();
+            return new Spare(this.score.getFirst(), pins);
         }
-        if (score.isGutter()) {
-            return new Gutter();
+        if (score.isAllGutter()) {
+            return new Gutter(pins, pins);
         }
         return new Miss(this.score.getFirst(), pins);
     }

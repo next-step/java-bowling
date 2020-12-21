@@ -12,13 +12,15 @@ import java.util.regex.Pattern;
  */
 public class User {
     public static final String NAME_PATTERN = "^([A-z]{3})$";
+    public static final int PREVIOUS_INDEX = 1;
 
     private final String name;
-    private State state;
+    private final States states;
 
     public User(String name) {
         validate(name);
         this.name = name;
+        this.states = new States();
     }
 
     private void validate(String name) {
@@ -33,23 +35,36 @@ public class User {
         return name;
     }
 
-    public void bowl(ResultView resultView) {
+    public void bowl(int frameNo, ResultView resultView) {
         Bowl firstBowl = new FirstBowl();
-        this.state = firstBowl.stroke(InputView.getPins(this.name));
-        if (this.state instanceof Miss) {
-            Score firstScore = this.state.getScore();
-            Bowl secondBowl = new SecondBowl(firstScore);
-            this.state = secondBowl.stroke(InputView.getPins(this.name));
-        }
-        if (this.state instanceof Gutter) {
-            Score firstScore = this.state.getScore();
-            Bowl secondBowl = new SecondBowl(firstScore);
-            this.state = secondBowl.stroke(InputView.getPins(this.name));
-        }
+        State state = firstBowl.stroke(InputView.getPins(this.name));
+        states.add(state);
         resultView.print();
+
+        secondStroke(frameNo, resultView, state);
     }
 
-    public State getState() {
-        return state;
+    private void secondStroke(int frameNo, ResultView resultView, State state) {
+        if (state instanceof Miss || state instanceof Gutter) {
+            Score firstScore = state.getScore();
+            Bowl secondBowl = new SecondBowl(firstScore);
+            state = secondBowl.stroke(InputView.getPins(this.name));
+            states.set(frameNo - PREVIOUS_INDEX, state);
+            resultView.print();
+        }
+    }
+
+    public State getState(int frameNo) {
+        return this.states.getState(frameNo);
+    }
+
+    public int getScore(int frameNo) {
+        State state = this.states.getState(frameNo);
+        return state.getScore().getFrameScore();
+    }
+
+    public int getFirstScore(int frameNo) {
+        State state = this.states.getState(frameNo);
+        return state.getScore().getFirst().get();
     }
 }

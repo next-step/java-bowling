@@ -16,10 +16,6 @@ public class Users {
         users.add(user);
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
     public User get(int i) {
         return users.get(i);
     }
@@ -28,9 +24,9 @@ public class Users {
         return users.size();
     }
 
-    public void bowl(ResultView resultView) {
+    public void bowl(int frameNo, ResultView resultView) {
         for (User user : users) {
-            user.bowl(resultView);
+            user.bowl(frameNo, resultView);
         }
     }
 }

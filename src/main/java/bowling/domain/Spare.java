@@ -1,16 +1,30 @@
 package bowling.domain;
 
 public class Spare implements State {
+    public static final String DELIMITER = "|";
 
-    public static final int PINS_SPARE = 10;
+    private final Pins firstPins;
+    private final Pins secondPins;
+
+    public Spare(Pins firstPins, Pins secondPins) {
+        this.firstPins = firstPins;
+        this.secondPins = secondPins;
+    }
 
     @Override
     public Score getScore() {
-        return new Score(new Pins(PINS_SPARE));
+        Score score = new Score(firstPins);
+        score.setSecond(secondPins);
+        return score;
     }
 
     @Override
     public String toString() {
-        return "10";
+        return this.firstPins.get() + DELIMITER + Symbol.SPARE.getSymbol();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 }

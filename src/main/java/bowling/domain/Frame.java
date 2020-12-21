@@ -9,7 +9,7 @@ public abstract class Frame {
         return new NormalFrame(users, FRAME_INIT);
     }
 
-    public abstract Frame bowl(ResultView resultView);
+    public abstract Frame bowl(int frameNo, ResultView resultView);
 
-    public abstract Users getUsers();
+    public abstract int getFrameNo();
 }
