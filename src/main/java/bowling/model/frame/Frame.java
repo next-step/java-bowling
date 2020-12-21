@@ -16,9 +16,7 @@ public abstract class Frame implements Comparable<Frame> {
 
     public abstract Frame bowling(Pins pins);
 
-    protected Score addScore(Score score) {
-        return states.calculate(score);
-    }
+    protected abstract Score addScore(Score score);
 
     public abstract Optional<Integer> getScore();
 

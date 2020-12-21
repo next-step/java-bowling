@@ -5,6 +5,7 @@ import bowling.model.Score;
 import bowling.model.frame.FinalFrame;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class States {
@@ -20,8 +21,25 @@ public class States {
         return bowlingResult;
     }
 
-    private State nextState(Pins fallenPins){
-        if(states.isEmpty()){
+    public Score addScoreUntilPossible(Score score) {
+        List<State> finishedStates = finishedState();
+
+        for (int i = 0, limit = finishedStates.size(); i < limit && !score.canCalculate(); i++) {
+            State previousState = finishedStates.get(i);
+            score = previousState.calculateScore(score);
+        }
+
+        return score;
+    }
+
+    private List<State> finishedState(){
+        return states.stream()
+                .filter(State::isFinished)
+                .collect(Collectors.toList());
+    }
+
+    private State nextState(Pins fallenPins) {
+        if (states.isEmpty()) {
             return Start.bowling(fallenPins);
         }
         return last().bowling(fallenPins);
@@ -76,7 +94,7 @@ public class States {
     }
 
 
-    public boolean canLastCalculate(){
+    public boolean canLastCalculate() {
         return states.getLast()
                 .score()
                 .canCalculate();
