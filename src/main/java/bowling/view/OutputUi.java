@@ -48,7 +48,8 @@ public class OutputUi {
 
         IntStream.rangeClosed(1, nomalFrames.size())
                 .mapToObj(i -> nomalFrames.get(i).getBowlingKnockDowns().getKnockDownExpression())
-                .map(knockDown -> knockDown + LINE).forEach(sb::append);
+                .map(knockDown -> knockDown + LINE)
+                .forEach(sb::append);
 
         IntStream.range(0, 10 - nomalFrames.size())
                 .mapToObj(i -> EMPTY + LINE)
