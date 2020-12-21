@@ -62,17 +62,18 @@ public class OutputView {
     }
 
     private static void addScoreString(Frame frame, StringBuilder builder) {
-        int frameCount = 0;
-        Frame currentFrame = frame;
+        Frame currentFrame = null;
         int totalScore = 0;
-        while (Objects.nonNull(currentFrame)) {
+        int frameCount = 0;
+        while (frame != currentFrame && Objects.nonNull(frame)) {
+            currentFrame = frame;
             Score score = currentFrame.getScore();
             if (!score.isFinished()) {
                 break;
             }
             totalScore = totalScore + score.getScore();
             builder.append(StringUtils.center(totalScore + "", FRAME_LENGTH)).append(INFIX);
-            currentFrame = currentFrame.getNextFrame();
+            frame = currentFrame.getNextFrame();
             frameCount++;
         }
 
@@ -81,11 +82,12 @@ public class OutputView {
 
     private static void addFrameString(Frame frame, StringBuilder builder) {
         int frameCount = 0;
-        Frame currentFrame = frame;
-        while (Objects.nonNull(currentFrame)) {
+        Frame currentFrame = null;
+        while (frame != currentFrame && Objects.nonNull(frame)) {
+            currentFrame = frame;
             String pinsString = getPinsString(currentFrame);
             builder.append(StringUtils.center(pinsString, FRAME_LENGTH)).append(INFIX);
-            currentFrame = currentFrame.getNextFrame();
+            frame = currentFrame.getNextFrame();
             frameCount++;
         }
 
