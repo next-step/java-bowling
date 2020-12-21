@@ -46,10 +46,9 @@ public class OutputUi {
         printFrameFirstLine();
         sb.append(LINE + String.format("  %s ", player) + LINE);
 
-        for (int i = 1; i <= nomalFrames.size(); i++) {
-            String knockDown = nomalFrames.get(i).getBowlingKnockDowns().getKnockDownExpression();
-            sb.append(knockDown + LINE);
-        }
+        IntStream.rangeClosed(1, nomalFrames.size())
+                .mapToObj(i -> nomalFrames.get(i).getBowlingKnockDowns().getKnockDownExpression())
+                .map(knockDown -> knockDown + LINE).forEach(sb::append);
 
         IntStream.range(0, 10 - nomalFrames.size())
                 .mapToObj(i -> EMPTY + LINE)
