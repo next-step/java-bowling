@@ -15,6 +15,7 @@ public class Spare extends Result {
 
     @Override
     public Score addNextScore(Score score) {
+        score = addNextScore(score, pins.getFirstFall());
         return addNextScore(score, pins.getSecondFall());
     }
 }

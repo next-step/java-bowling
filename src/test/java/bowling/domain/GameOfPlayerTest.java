@@ -20,7 +20,7 @@ class GameOfPlayerTest {
     @Test
     @DisplayName("게임 종료")
     void isGameEnd_true() {
-        IntStream.range(0, 12).forEach(i -> gameOfPlayer.bowl(10));
+        IntStream.range(0, 12).forEach(i -> gameOfPlayer.playFrame(10));
 
         assertThat(gameOfPlayer.isGameEnd()).isTrue();
     }
@@ -29,7 +29,7 @@ class GameOfPlayerTest {
     @Test
     @DisplayName("게임 종료 실패")
     void isGameEnd_false() {
-        IntStream.range(0, 11).forEach(i -> gameOfPlayer.bowl(10));
+        IntStream.range(0, 11).forEach(i -> gameOfPlayer.playFrame(10));
 
         assertThat(gameOfPlayer.isGameEnd()).isFalse();
     }
