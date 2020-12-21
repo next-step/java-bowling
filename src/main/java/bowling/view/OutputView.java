@@ -81,12 +81,11 @@ public class OutputView {
 
     private static void addFrameString(Frame frame, StringBuilder builder) {
         int frameCount = 0;
-        Frame currentFrame = null;
-        while (frame != currentFrame && Objects.nonNull(frame)) {
-            currentFrame = frame;
+        Frame currentFrame = frame;
+        while (Objects.nonNull(currentFrame)) {
             String pinsString = getPinsString(currentFrame);
             builder.append(StringUtils.center(pinsString, FRAME_LENGTH)).append(INFIX);
-            frame = currentFrame.getNextFrame();
+            currentFrame = currentFrame.getNextFrame();
             frameCount++;
         }
 

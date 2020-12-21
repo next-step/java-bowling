@@ -5,6 +5,7 @@ import bowling.domain.state.FirstPitch;
 import bowling.domain.state.Pins;
 import bowling.domain.state.State;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +47,13 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score getScore() {
-        return addScore(states.getFirst().getScore());
+        Iterator<State> iterator = states.iterator();
+        Score score = iterator.next().getScore();
+        while (iterator.hasNext()) {
+            State state = iterator.next();
+            score = state.addNextScore(score);
+        }
+        return score;
     }
 
     public boolean isGameEnd() {
@@ -56,7 +63,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame getNextFrame() {
-        return this;
+        return null;
     }
 
     @Override
