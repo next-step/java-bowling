@@ -6,26 +6,13 @@ public class Score {
     private final int score;
     private final int left;
 
-    public Score() {
-        score = 0;
-        left = 2;
-    }
-
     public Score(int score, int left) {
         this.score = score;
         this.left = left;
     }
 
-    public static Score getStrikeScore() {
-        return new Score(10, 2);
-    }
-
-    public static Score getSpareScore() {
-        return new Score(10, 1);
-    }
-
-    public static Score getMissScore(int pins) {
-        return new Score(pins, 0);
+    public Score() {
+        this(0, 2);
     }
 
     public int getScore() {

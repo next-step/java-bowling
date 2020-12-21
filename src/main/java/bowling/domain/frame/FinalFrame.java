@@ -8,21 +8,22 @@ import bowling.domain.state.State;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static bowling.view.OutputView.TOTAL_FRAME_COUNT;
 
 public class FinalFrame implements Frame {
 
     private final LinkedList<State> states;
-    private int frameCount;
 
     public FinalFrame(LinkedList<State> states) {
         this.states = states;
     }
 
-    public FinalFrame(int frameCount) {
+    public FinalFrame() {
         this.states = new LinkedList<>();
         this.states.add(new FirstPitch());
-        this.frameCount = frameCount;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public int getFrameCount() {
-        return frameCount;
+        return TOTAL_FRAME_COUNT;
     }
 
     @Override
@@ -78,5 +79,18 @@ public class FinalFrame implements Frame {
         currentState = currentState.bowl(count);
         states.add(currentState);
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FinalFrame that = (FinalFrame) o;
+        return states.equals(that.states);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(states);
     }
 }
