@@ -42,7 +42,6 @@ public class LastScore extends Score {
             secondPoint = pitchedPoint;
             return;
         }
-
         lastPoint = pitchedPoint;
 
     }

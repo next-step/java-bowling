@@ -31,15 +31,22 @@ public class BasicFrame extends Frame {
 
     @Override
     public Frame createNextFrame() {
-        if (frameBoard.getFrameNumber() == LAST_FRAME_NUMBER) {
-            this.nextFrame = LastFrame.init(frameBoard.increaseFrameNumber(), LastScore.initFirst());
-            return this.nextFrame;
-        }
-
-        this.nextFrame = init(frameBoard.increaseFrameNumber(), BasicScore.initFirst());
-        return this.nextFrame;
+        return isLastFrameIndex() ? makeLastFrameInstance() : makeBasicFrameInstance();
     }
 
+    private boolean isLastFrameIndex() {
+        return frameBoard.getFrameNumber() == LAST_FRAME_NUMBER;
+    }
+
+    private Frame makeLastFrameInstance() {
+        nextFrame = LastFrame.init(frameBoard.increaseFrameNumber(), LastScore.initFirst());
+        return nextFrame;
+    }
+
+    private Frame makeBasicFrameInstance() {
+        nextFrame = BasicFrame.init(frameBoard.increaseFrameNumber(), BasicScore.initFirst());
+        return nextFrame;
+    }
 
     @Override
     public void pitch(Point point) {
