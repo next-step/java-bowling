@@ -26,9 +26,8 @@ public class BowlingGame {
         }
     }
 
-    public PlayerName getCurrentPlayer() {
-        Player currentPlayer = players.getCurrentPlayer(currentFrameNo);
-        return currentPlayer.getPlayerName();
+    public Player getCurrentPlayer() {
+        return players.getCurrentPlayer(currentFrameNo);
     }
 
     public boolean isEnd() {

@@ -7,9 +7,7 @@ public interface InputView {
 
     String getPlayerName(int playerNo);
 
-    int getKnockDownPins(int frameNo);
-
-    int getKnockDownPins2(PlayerName playerName);
+    int getKnockDownPins(PlayerName playerName);
 
     void printError(RuntimeException e);
 }

@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.KnockDownPins;
+import bowling.domain.Player;
 import bowling.domain.PlayerName;
 import bowling.domain.PlayerNames;
 import bowling.helper.ValidInputHelper;
@@ -60,7 +61,11 @@ public class GameHandler {
     }
 
     private KnockDownPins getKnockDownPins(BowlingGame bowlingGame) {
-        Integer knockDownPins = ValidInputHelper.get(() -> inputView.getKnockDownPins2(bowlingGame.getCurrentPlayer()), inputView::printError);
+        Integer knockDownPins = ValidInputHelper.get(() -> {
+            Player currentPlayer = bowlingGame.getCurrentPlayer();
+            PlayerName playerName = currentPlayer.getPlayerName();
+            return inputView.getKnockDownPins(playerName);
+        }, inputView::printError);
         return KnockDownPins.valueOf(knockDownPins);
     }
 }
