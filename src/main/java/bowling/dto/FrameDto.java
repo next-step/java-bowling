@@ -1,21 +1,19 @@
 package bowling.dto;
 
-import bowling.domain.pitchings.Pitchings;
-
 public class FrameDto {
-    private final Pitchings pitchings;
+    private final PitchingsDto pitchings;
     private final Integer totalScore;
 
-    private FrameDto(Pitchings pitchings, Integer totalScore) {
+    private FrameDto(PitchingsDto pitchings, Integer totalScore) {
         this.pitchings = pitchings;
         this.totalScore = totalScore;
     }
 
-    public static FrameDto of(Pitchings pitchings, Integer totalScore) {
+    public static FrameDto of(PitchingsDto pitchings, Integer totalScore) {
         return new FrameDto(pitchings, totalScore);
     }
 
-    public Pitchings getPitchings() {
+    public PitchingsDto getPitchings() {
         return pitchings;
     }
 

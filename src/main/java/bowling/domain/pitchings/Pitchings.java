@@ -3,9 +3,12 @@ package bowling.domain.pitchings;
 import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 import bowling.domain.Score;
+import bowling.dto.PitchingsDto;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
@@ -73,8 +76,9 @@ public abstract class Pitchings implements Iterable<Pitching> {
         return previousFrameTotalScore == null || score == null || !isEnd();
     }
 
-    public Stream<Pitching> stream() {
-        return value.stream();
+    public PitchingsDto convertToDto() {
+        List<Pitching> pitchings = Collections.unmodifiableList(value);
+        return PitchingsDto.of(pitchings);
     }
 
     @Override
