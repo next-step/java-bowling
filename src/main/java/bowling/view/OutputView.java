@@ -42,6 +42,7 @@ public class OutputView {
     }
 
     public static void showGameOfPlayers(List<GameOfPlayer> gameOfPlayers) {
+        out.println(makeFramesGuide());
         gameOfPlayers.forEach(OutputView::showGameOfPlayer);
     }
 
@@ -50,9 +51,7 @@ public class OutputView {
         Frame frame = gameOfPlayer.getFirstFrame();
 
         StringBuilder builder = new StringBuilder();
-        builder.append(makeFramesGuide())
-            .append("\n")
-            .append(getFrameWithWord(player.getName()))
+        builder.append(getFrameWithWord(player.getName()))
             .append(makeFrameString(frame))
             .append("\n")
             .append(getFrameWithWord(StringUtils.EMPTY))
