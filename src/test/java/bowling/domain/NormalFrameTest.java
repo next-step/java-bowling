@@ -11,7 +11,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("스트라이크일 때, 프레임 생성")
     void strike() {
-        NormalFrame normalFrame = NormalFrame.init();
+        Frame normalFrame = NormalFrame.init();
 
         Pitch pitch = Pitch.from(10);
         normalFrame.add(pitch);
@@ -21,7 +21,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("스트라이크가 아닐 때, 스페어 처리하는 프레임 생성")
     void spare() {
-        NormalFrame normalFrame = NormalFrame.init();
+        Frame normalFrame = NormalFrame.init();
 
         Pitch pitch1 = Pitch.from(9);
         Pitch pitch2 = Pitch.from(1);
@@ -33,7 +33,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("스페어 처리시, 총 점수가 10점을 넘을 때 예외 처리")
     void spareException() {
-        NormalFrame normalFrame = NormalFrame.init();
+        Frame normalFrame = NormalFrame.init();
 
         Pitch pitch1 = Pitch.from(9);
         Pitch pitch2 = Pitch.from(2);
