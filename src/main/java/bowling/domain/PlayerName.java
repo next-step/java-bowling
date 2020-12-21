@@ -25,6 +25,21 @@ public class PlayerName {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PlayerName)) return false;
+
+        PlayerName that = (PlayerName) o;
+
+        return getValue().equals(that.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return getValue().hashCode();
+    }
+
+    @Override
     public String toString() {
         return "PlayerName{" +
                 "value='" + value + '\'' +

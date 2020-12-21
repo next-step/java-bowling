@@ -40,6 +40,21 @@ public class Player {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player)) return false;
+
+        Player player = (Player) o;
+
+        return getPlayerName().equals(player.getPlayerName());
+    }
+
+    @Override
+    public int hashCode() {
+        return getPlayerName().hashCode();
+    }
+
+    @Override
     public String toString() {
         return "BowlingGame{" +
                 "frames=" + frames +
