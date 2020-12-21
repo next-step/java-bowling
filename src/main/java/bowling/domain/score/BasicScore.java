@@ -15,20 +15,27 @@ public class BasicScore extends Score {
     private static final int FIRST_PITCH = 1;
     private static final int SECOND_PITCH = 2;
 
-    protected BasicScore(List<Point> points) {
-        super(points);
+    protected BasicScore(Point firstPoint, Point secondPoint) {
+        super(firstPoint, secondPoint);
     }
 
 
     public static BasicScore initFirst() {
-        return new BasicScore(new ArrayList<>());
+        return new BasicScore(null, null);
     }
 
     @Override
     public void pitch(Point pitchedPoint) {
         validHasScoreTurn();
         validOverPitch(pitchedPoint);
-        points.add(pitchedPoint);
+        if (firstPoint == null) {
+            firstPoint = pitchedPoint;
+            return;
+        }
+        if (secondPoint == null) {
+            secondPoint = pitchedPoint;
+            return;
+        }
     }
 
 
@@ -48,7 +55,7 @@ public class BasicScore extends Score {
 
     @Override
     public boolean hasScoreTurn() {
-        if (this.points.size() == MAX_ROUND) {
+        if (secondPoint != null) {
             return false;
         }
 
@@ -78,7 +85,7 @@ public class BasicScore extends Score {
 
     private boolean isStrike() {
 
-        if (this.points.size() == FIRST_PITCH && this.points.get(0).getPoint() == ALL_PITCH_COUNT) {
+        if (firstPoint != null && secondPoint == null && firstPoint.getPoint() == ALL_PITCH_COUNT) {
             return true;
         }
 
@@ -87,7 +94,7 @@ public class BasicScore extends Score {
 
     private boolean isSpared() {
 
-        if (this.points.size() == SECOND_PITCH && sumPoint() == ALL_PITCH_COUNT) {
+        if (firstPoint != null && secondPoint != null && sumPoint() == ALL_PITCH_COUNT) {
             return true;
         }
 
@@ -96,13 +103,25 @@ public class BasicScore extends Score {
 
     @Override
     public List<Point> getPitchedPoint() {
-        return new ArrayList<>(this.points);
+        List<Point> as = new ArrayList<>();
+        if (firstPoint != null) {
+            as.add(firstPoint);
+        }
+        if (secondPoint != null) {
+            as.add(secondPoint);
+        }
+        return as;
     }
 
     @Override
     public int sumPoint() {
-        return this.points.stream()
-                .map(Point::getPoint)
-                .reduce(0, Integer::sum);
+        int sum = 0;
+        if (firstPoint != null) {
+            sum += firstPoint.getPoint();
+        }
+        if (secondPoint != null) {
+            sum += secondPoint.getPoint();
+        }
+        return sum;
     }
 }

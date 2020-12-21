@@ -10,10 +10,13 @@ import java.util.List;
 public class LastScore extends Score {
 
 
+    private Point lastPoint;
     private final Score score;
 
+
     protected LastScore(Score score) {
-        super(new ArrayList<>());
+        super(null, null);
+        this.lastPoint = null;
         this.score = score;
     }
 
@@ -31,7 +34,18 @@ public class LastScore extends Score {
             score.pitch(pitchedPoint);
             return;
         }
-        this.points.add(pitchedPoint);
+        if (firstPoint == null) {
+            firstPoint = pitchedPoint;
+            return;
+        }
+        if (secondPoint == null) {
+            secondPoint = pitchedPoint;
+            return;
+        }
+        if (lastPoint == null) {
+            lastPoint = pitchedPoint;
+            return;
+        }
     }
 
     private void validHasScoreTurn() {
@@ -42,13 +56,22 @@ public class LastScore extends Score {
     }
 
 
-
     @Override
     public boolean hasScoreTurn() {
         if (score.hasScoreTurn()) {
             return true;
         }
-        return this.points.size() < getBonusCount();
+        int size = 0;
+        if (firstPoint != null) {
+            size++;
+        }
+        if (secondPoint != null) {
+            size++;
+        }
+        if (lastPoint != null) {
+            size++;
+        }
+        return size < getBonusCount();
     }
 
 
@@ -60,15 +83,35 @@ public class LastScore extends Score {
     @Override
     public List<Point> getPitchedPoint() {
         List<Point> downPoints = new ArrayList<>(score.getPitchedPoint());
-        downPoints.addAll(points);
+        if (firstPoint != null) {
+            downPoints.add(firstPoint);
+        }
+        if (secondPoint != null) {
+            downPoints.add(secondPoint);
+        }
+        if (lastPoint != null) {
+            downPoints.add(lastPoint);
+        }
         return downPoints;
     }
 
     @Override
     public int sumPoint() {
-        return score.sumPoint() + points.stream()
-                .map(Point::getPoint)
-                .reduce(0, Integer::sum);
+
+        int sum = 0;
+        sum += score.sumPoint();
+        if (firstPoint != null) {
+            sum += firstPoint.getPoint();
+        }
+        if (secondPoint != null) {
+            sum += secondPoint.getPoint();
+        }
+        if (lastPoint != null) {
+            sum += lastPoint.getPoint();
+        }
+        return sum;
+
     }
+
 
 }
