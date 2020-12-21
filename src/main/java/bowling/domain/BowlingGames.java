@@ -11,7 +11,7 @@ public class BowlingGames {
     private final List<BowlingGame> value;
     private int currentFrameNo = 1;
 
-    private BowlingGames(List<PlayerName> playerNames) {
+    private BowlingGames(PlayerNames playerNames) {
         value = new ArrayList<>();
         for (PlayerName playerName : playerNames) {
             BowlingGame bowlingGame = BowlingGame.init(playerName);
@@ -19,7 +19,7 @@ public class BowlingGames {
         }
     }
 
-    public static BowlingGames init(List<PlayerName> playerNames) {
+    public static BowlingGames init(PlayerNames playerNames) {
         return new BowlingGames(playerNames);
     }
 

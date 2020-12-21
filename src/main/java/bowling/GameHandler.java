@@ -4,6 +4,7 @@ import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGames;
 import bowling.domain.KnockDownPins;
 import bowling.domain.PlayerName;
+import bowling.domain.PlayerNames;
 import bowling.helper.ValidInputHelper;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -22,18 +23,23 @@ public class GameHandler {
 
     public void run() {
         Integer numberOfPlayers = ValidInputHelper.get(this::getNumberOfPlayers, inputView::printError);
-        List<PlayerName> playerNames = new ArrayList<>();
-        for (int i = 0; i < numberOfPlayers; i++) {
-            int playerNo = i + 1;
-            PlayerName playerName = ValidInputHelper.get(() -> getPlayerName(playerNo), inputView::printError);
-            playerNames.add(playerName);
-        }
+        PlayerNames playerNames = getPlayerNames(numberOfPlayers);
 
         BowlingGames bowlingGames = BowlingGames.init(playerNames);
         while (!bowlingGames.isEnd()) {
             setKnockDownPins2(bowlingGames);
             resultView.print2(bowlingGames.convertToDto());
         }
+    }
+
+    private PlayerNames getPlayerNames(Integer numberOfPlayers) {
+        List<PlayerName> playerNames = new ArrayList<>();
+        for (int i = 0; i < numberOfPlayers; i++) {
+            int playerNo = i + 1;
+            PlayerName playerName = ValidInputHelper.get(() -> getPlayerName(playerNo), inputView::printError);
+            playerNames.add(playerName);
+        }
+        return PlayerNames.of(playerNames);
     }
 
     private Integer getNumberOfPlayers() {
