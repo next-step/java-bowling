@@ -1,6 +1,6 @@
-package bowling.domain;
+package bowling.domain.state;
 
-import bowling.domain.interfaces.State;
+import bowling.domain.Score;
 
 import java.util.Objects;
 
@@ -18,7 +18,7 @@ public class SecondPitch implements State {
             return new Spare(pins);
         }
 
-        return new Miss(pins);
+        return new Miss(pins, pins.getFirstFall() + pins.getSecondFall());
     }
 
     @Override
@@ -27,8 +27,21 @@ public class SecondPitch implements State {
     }
 
     @Override
-    public Condition getCondition() {
-        return Condition.PLAYING;
+    public Score getScore() {
+        return new Score();
+    }
+
+    @Override
+    public Score addNextScore(Score score) {
+        if (!score.isFinished()) {
+            score = score.pitch(pins.getFirstFall());
+        }
+        return score;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 
     @Override

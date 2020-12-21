@@ -1,8 +1,9 @@
 package bowling.view;
 
-import bowling.domain.Pins;
 import bowling.domain.Player;
-import bowling.domain.interfaces.Frame;
+import bowling.domain.Score;
+import bowling.domain.frame.Frame;
+import bowling.domain.state.Pins;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.PrintStream;
@@ -39,22 +40,53 @@ public class OutputView {
         out.println(getNameGuideString() + getFrameGuideString() + INFIX);
     }
 
+    public static void showEmptyRecords(Player player) {
+        showFramesGuide();
+
+        StringBuilder builder = new StringBuilder(getNameString(player));
+        addRestFrameString(builder, 0);
+
+        out.println(builder.toString());
+    }
+
     public static void showRecords(Player player, Frame frame) {
         showFramesGuide();
 
         StringBuilder builder = new StringBuilder(getNameString(player));
         addFrameString(frame, builder);
+        builder.append("\n");
+        builder.append(getNameString(player));
+        addScoreString(frame, builder);
 
         out.println(builder.toString());
     }
 
-    private static void addFrameString(Frame frame, StringBuilder builder) {
+    private static void addScoreString(Frame frame, StringBuilder builder) {
         int frameCount = 0;
         Frame currentFrame = frame;
+        int totalScore = 0;
         while (Objects.nonNull(currentFrame)) {
+            Score score = currentFrame.getScore();
+            if (!score.isFinished()) {
+                break;
+            }
+            totalScore = totalScore + score.getScore();
+            builder.append(StringUtils.center(totalScore + "", FRAME_LENGTH)).append(INFIX);
+            currentFrame = currentFrame.getNextFrame();
+            frameCount++;
+        }
+
+        addRestFrameString(builder, frameCount);
+    }
+
+    private static void addFrameString(Frame frame, StringBuilder builder) {
+        int frameCount = 0;
+        Frame currentFrame = null;
+        while (frame != currentFrame && Objects.nonNull(frame)) {
+            currentFrame = frame;
             String pinsString = getPinsString(currentFrame);
             builder.append(StringUtils.center(pinsString, FRAME_LENGTH)).append(INFIX);
-            currentFrame = currentFrame.getNextFrame();
+            frame = currentFrame.getNextFrame();
             frameCount++;
         }
 
@@ -63,8 +95,9 @@ public class OutputView {
 
     private static void addRestFrameString(StringBuilder builder, int frameCount) {
         int rest = TOTAL_FRAME_COUNT - frameCount;
-        if (rest > 0)
+        if (rest > 0) {
             builder.append(getRestFrameString(rest));
+        }
     }
 
     private static String getPinsString(Frame currentFrame) {
@@ -85,12 +118,14 @@ public class OutputView {
             return STRIKE_MARK;
         }
         if (pins.isSpare()) {
-            return pins.getFirstFall() + INFIX + SPARE_MARK;
+            return getGutterMark(pins.getFirstFall()) + INFIX + SPARE_MARK;
         }
-        return pins.getFalls().stream().map(OutputView::getGutterMark).collect(Collectors.joining(INFIX));
+        return pins.getFalls().stream()
+            .map(OutputView::getGutterMark)
+            .collect(Collectors.joining(INFIX));
     }
 
-    private static String getGutterMark(Integer fall) {
+    private static String getGutterMark(int fall) {
         if (fall == 0) {
             return GUTTER_MARK;
         }

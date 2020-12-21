@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.state;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +51,12 @@ public class Pins {
         return falls.size() == 1 && countAllFalls() == MAX_PINS;
     }
 
-    public Integer getFirstFall() {
+    public int getFirstFall() {
         return falls.get(0);
+    }
+
+    public int getSecondFall() {
+        return falls.get(1);
     }
 
     @Override

@@ -1,6 +1,6 @@
-package bowling.domain;
+package bowling.domain.state;
 
-import bowling.domain.interfaces.State;
+import bowling.domain.Score;
 
 import java.util.Objects;
 
@@ -23,8 +23,18 @@ public class FirstPitch implements State {
     }
 
     @Override
-    public Condition getCondition() {
-        return Condition.READY;
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score();
+    }
+
+    @Override
+    public Score addNextScore(Score score) {
+        return score;
     }
 
     @Override

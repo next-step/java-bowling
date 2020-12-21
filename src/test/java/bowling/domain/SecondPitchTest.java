@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.interfaces.State;
+import bowling.domain.state.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,5 +35,15 @@ class SecondPitchTest {
         State miss = secondPitch.bowl(5);
 
         assertThat(miss).isInstanceOf(Spare.class);
+    }
+
+    @Test
+    @DisplayName("다음 스코어 더하기")
+    void addNextScore() {
+        Score score = new Score();
+
+        Score nextScore = secondPitch.addNextScore(score);
+
+        assertThat(nextScore).isEqualTo(new Score(5, 1));
     }
 }

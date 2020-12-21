@@ -1,6 +1,8 @@
 package bowling.domain;
 
-import bowling.domain.interfaces.Frame;
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,11 +38,7 @@ class NormalFrameTest {
     @DisplayName("마지막 라운드로 넘어가기")
     void bowl_nextFinalFrame() {
         normalFrame = new NormalFrame(8);
-
         Frame frame = normalFrame.bowl(10);
-
-        assertThat(frame).isInstanceOf(NormalFrame.class);
-
         frame = frame.bowl(10);
 
         assertThat(frame).isInstanceOf(FinalFrame.class);

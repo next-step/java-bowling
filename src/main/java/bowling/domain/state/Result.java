@@ -1,11 +1,12 @@
-package bowling.domain;
+package bowling.domain.state;
 
-import bowling.domain.interfaces.State;
+import bowling.domain.Score;
 
 import java.util.Objects;
 
 public abstract class Result implements State {
-    private Pins pins;
+    protected Score score;
+    protected Pins pins;
 
     public Result(Pins pins) {
         this.pins = pins;
@@ -13,7 +14,7 @@ public abstract class Result implements State {
 
     @Override
     public State bowl(int count) {
-        return null;
+        return this;
     }
 
     @Override
@@ -27,6 +28,23 @@ public abstract class Result implements State {
         if (o == null || getClass() != o.getClass()) return false;
         Result result = (Result) o;
         return Objects.equals(pins, result.pins);
+    }
+
+    @Override
+    public Score getScore() {
+        return score;
+    }
+
+    public Score addNextScore(Score score, int pins) {
+        if (!score.isFinished()) {
+            score = score.pitch(pins);
+        }
+        return score;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 
     @Override

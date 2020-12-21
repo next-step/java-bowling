@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.interfaces.State;
+import bowling.domain.state.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,21 +1,20 @@
 package bowling.controller;
 
-import bowling.domain.NormalFrame;
 import bowling.domain.Player;
-import bowling.domain.interfaces.Frame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
 public class Controller {
 
-    private Integer frameIdx = 1;
     private Player player;
     private Frame currentFrame;
 
     public void play() {
+        OutputView.showEmptyRecords(player);
         Frame firstFrame = new NormalFrame(1);
         currentFrame = firstFrame;
-        OutputView.showRecords(player, firstFrame);
 
         while (!currentFrame.isGameEnd()) {
             playFrame(firstFrame);
@@ -23,13 +22,8 @@ public class Controller {
     }
 
     private void playFrame(Frame firstFrame) {
-        Frame frame = currentFrame.bowl(InputView.getScore(frameIdx));
+        currentFrame = currentFrame.bowl(InputView.getScore(currentFrame.getFrameCount()));
         OutputView.showRecords(player, firstFrame);
-
-        if (currentFrame != frame) {
-            frameIdx++;
-            currentFrame = frame;
-        }
     }
 
     public void createPlayer() {

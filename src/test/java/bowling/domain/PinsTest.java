@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.state.Pins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,9 +42,6 @@ class PinsTest {
     @DisplayName("스페어인지 확인")
     void isSpare() {
         pins.fall(9);
-
-        assertThat(pins.isSpare()).isFalse();
-
         pins.fall(1);
 
         assertThat(pins.isSpare()).isTrue();
@@ -61,6 +59,7 @@ class PinsTest {
     @DisplayName("핀 다 쓰러졌는지 확인")
     void isAllDown_success() {
         Pins pins = new Pins(0, new ArrayList<>());
+
         assertThat(pins.isAllDown()).isTrue();
     }
 
@@ -68,6 +67,7 @@ class PinsTest {
     @DisplayName("핀 다 쓰러졌는지 확인")
     void isAllDown_fail() {
         Pins pins = new Pins(1, new ArrayList<>());
+
         assertThat(pins.isAllDown()).isFalse();
     }
 }
