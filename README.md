@@ -36,12 +36,20 @@
     - 볼링공을 한번 던졌을 때. 0~10 입력 가능. 그 외 예외처리.
     - `score` : 내가 쓰러뜨린 핀의 개수 
     
-- [ ] frame
+- [x] frame
     - 프레임. 한 경기는 10회의 프레임으로 이루어져있다. (ball 을 최대 2번 던졌을 떄의 객체)
         - final frame (마지막 프레임) : 보너스 게임 판단 -> 실행
     - 1 ball 후, 상태 체크 -> 진행 여부 판단 -> 1 프레임 종결 후 상태(`strike`, `spare`, `miss`) 판단.
     - `index` : 현재 회차
-    - `pitches` : pitch 객체 집합. => 이 값으로 상태값 판단, 결과값 전달.
+    - `Score` : pitch 객체 집합. => 이 값으로 상태값 판단, 결과값 전달.
+- [x] bowlingScore
+    - enum. ResultView에 보여줄 값으로 치환. (예- 10 -> X)
+- [x] bowlingState
+    - state 패턴을 위함. 각 상태에 맞는 `printResult()`로 현재 상태값 프린트.
     
-- [ ] round
+- [x] frames
     - 프레임10개의 묶음.
+    
+- [x] bowling
+    - frames 와 playerName 묶음
+    
