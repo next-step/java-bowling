@@ -1,10 +1,9 @@
 package bowling.domain;
 
-import bowling.dto.PlayerDto;
 import bowling.dto.BowlingGameDto;
+import bowling.dto.PlayerDto;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BowlingGame {
     private final Players players;

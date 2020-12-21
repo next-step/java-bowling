@@ -40,10 +40,7 @@ public class ConsoleResultView implements ResultView {
     public void print(BowlingGameDto bowlingGameDto) {
         StringBuilder resultBuilder = new StringBuilder();
         appendHeader(resultBuilder);
-        for (PlayerDto playerDto : bowlingGameDto) {
-            appendBody(playerDto, resultBuilder);
-            resultBuilder.append(System.lineSeparator());
-        }
+        appendBody(bowlingGameDto, resultBuilder);
         System.out.println(resultBuilder.toString());
     }
 
@@ -66,7 +63,14 @@ public class ConsoleResultView implements ResultView {
                 });
     }
 
-    private void appendBody(PlayerDto playerDto, StringBuilder resultBuilder) {
+    private void appendBody(BowlingGameDto bowlingGameDto, StringBuilder resultBuilder) {
+        for (PlayerDto playerDto : bowlingGameDto) {
+            appendPlayersStats(playerDto, resultBuilder);
+            resultBuilder.append(System.lineSeparator());
+        }
+    }
+
+    private void appendPlayersStats(PlayerDto playerDto, StringBuilder resultBuilder) {
         appendPlayerName(playerDto, resultBuilder);
         appendResults(playerDto, resultBuilder);
         resultBuilder.append(System.lineSeparator());
