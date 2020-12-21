@@ -1,14 +1,17 @@
 package bowling.view;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.joining;
 
 public class ResultView {
-    public static void printResult(GameStatus status) {
+    public static void printResults(List<GameStatus> statusList) {
         System.out.println(getFrameTitle());
-        System.out.println(status.getAllFrameStatus());
-        System.out.println(status.getAllScore());
+        statusList.forEach(status -> {
+            System.out.println(status.getAllFrameStatus());
+            System.out.println(status.getAllScore());
+        });
     }
 
     private static String getFrameTitle() {

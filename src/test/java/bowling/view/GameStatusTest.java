@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.GameService;
+import bowling.Frames;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -9,18 +9,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class GameStatusTest {
 
-    private GameService gameService;
+    private Frames frames;
 
     @BeforeEach
     void setUp() {
-        gameService = new GameService("PJS");
-        gameService.start();
+        frames = new Frames("PJS");
+        frames.start();
     }
 
     @Test
     void blank() {
-        GameService gameService = new GameService("PJS");
-        GameStatus gameStatus = gameService.start();
+        Frames frames = new Frames("PJS");
+        GameStatus gameStatus = frames.start();
         assertThat(gameStatus.getAllFrameStatus())
                 .isEqualTo("|  PJS |      |      |      |      |      |      |      |      |      |      |");
         assertThat(gameStatus.getAllScore())
@@ -30,10 +30,10 @@ class GameStatusTest {
     @Test
     void allGutter() {
         for (int i = 1; i <= 18; i++) {
-            gameService.throwBall(0);
+            frames.throwBall(0);
         }
-        gameService.throwBall(0);
-        GameStatus gameStatus = gameService.throwBall(0);
+        frames.throwBall(0);
+        GameStatus gameStatus = frames.throwBall(0);
         assertThat(gameStatus.getAllFrameStatus())
                 .isEqualTo("|  PJS |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |  -|- |");
         assertThat(gameStatus.getAllScore())
@@ -42,20 +42,20 @@ class GameStatusTest {
 
     @Test
     void turkey() {
-        gameService.throwBall(10);
-        gameService.throwBall(10);
-        GameStatus gameStatus = gameService.throwBall(10);
+        frames.throwBall(10);
+        frames.throwBall(10);
+        GameStatus gameStatus = frames.throwBall(10);
         assertThat(gameStatus.getAllScore())
                 .isEqualTo("|      |  30  |      |      |      |      |      |      |      |      |      |");
     }
 
     @Test
     void strikeAndSpare() {
-        gameService.throwBall(10);
-        gameService.throwBall(8);
-        gameService.throwBall(2);
-        gameService.throwBall(8);
-        GameStatus gameStatus = gameService.throwBall(0);
+        frames.throwBall(10);
+        frames.throwBall(8);
+        frames.throwBall(2);
+        frames.throwBall(8);
+        GameStatus gameStatus = frames.throwBall(0);
         assertThat(gameStatus.getAllScore())
                 .isEqualTo("|      |  20  |  38  |  46  |      |      |      |      |      |      |      |");
     }
@@ -65,7 +65,7 @@ class GameStatusTest {
 
         @Test
         void firstStrike() {
-            GameStatus gameStatus = gameService.throwBall(10);
+            GameStatus gameStatus = frames.throwBall(10);
             assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  X   |      |      |      |      |      |      |      |      |      |");
             assertThat(gameStatus.getAllScore())
@@ -73,7 +73,7 @@ class GameStatusTest {
         }
         @Test
         void firstThrow() {
-            GameStatus gameStatus = gameService.throwBall(8);
+            GameStatus gameStatus = frames.throwBall(8);
             assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  8   |      |      |      |      |      |      |      |      |      |");
             assertThat(gameStatus.getAllScore())
@@ -82,8 +82,8 @@ class GameStatusTest {
 
         @Test
         void firstSpare() {
-            gameService.throwBall(8);
-            GameStatus gameStatus = gameService.throwBall(2);
+            frames.throwBall(8);
+            GameStatus gameStatus = frames.throwBall(2);
             assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  8|/ |      |      |      |      |      |      |      |      |      |");
             assertThat(gameStatus.getAllScore())
@@ -93,8 +93,8 @@ class GameStatusTest {
 
         @Test
         void firstMiss() {
-            gameService.throwBall(8);
-            GameStatus gameStatus = gameService.throwBall(1);
+            frames.throwBall(8);
+            GameStatus gameStatus = frames.throwBall(1);
             assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  8|1 |      |      |      |      |      |      |      |      |      |");
             assertThat(gameStatus.getAllScore())
@@ -103,8 +103,8 @@ class GameStatusTest {
 
         @Test
         void firstGutter() {
-            gameService.throwBall(8);
-            GameStatus gameStatus = gameService.throwBall(0);
+            frames.throwBall(8);
+            GameStatus gameStatus = frames.throwBall(0);
             assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  8|- |      |      |      |      |      |      |      |      |      |");
             assertThat(gameStatus.getAllScore())
@@ -118,14 +118,14 @@ class GameStatusTest {
         @BeforeEach
         void setUp() {
             for (int i = 1; i <= 9; i++) {
-                gameService.throwBall(10);
+                frames.throwBall(10);
             }
         }
         @Test
         void perfect() {
-            gameService.throwBall(10);
-            gameService.throwBall(10);
-            GameStatus gameStatus = gameService.throwBall(10);
+            frames.throwBall(10);
+            frames.throwBall(10);
+            GameStatus gameStatus = frames.throwBall(10);
             assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X|X|X |");
             assertThat(gameStatus.getAllScore())
@@ -134,9 +134,9 @@ class GameStatusTest {
 
         @Test
         void lastMiss() {
-            gameService.throwBall(10);
-            gameService.throwBall(10);
-            GameStatus gameStatus = gameService.throwBall(3);
+            frames.throwBall(10);
+            frames.throwBall(10);
+            GameStatus gameStatus = frames.throwBall(3);
             assertThat(gameStatus.getAllFrameStatus())
                     .isEqualTo("|  PJS |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X|X|3 |");
             assertThat(gameStatus.getAllScore())
@@ -147,25 +147,25 @@ class GameStatusTest {
 
     @Test
     void fullCase() {
-        gameService.throwBall(1);
-        gameService.throwBall(4);
-        gameService.throwBall(4);
-        gameService.throwBall(5);
-        gameService.throwBall(6);
-        gameService.throwBall(4);
-        gameService.throwBall(5);
-        gameService.throwBall(5);
-        gameService.throwBall(10);
-        gameService.throwBall(0);
-        gameService.throwBall(1);
-        gameService.throwBall(7);
-        gameService.throwBall(3);
-        gameService.throwBall(6);
-        gameService.throwBall(4);
-        gameService.throwBall(10);
-        gameService.throwBall(2);
-        gameService.throwBall(8);
-        GameStatus gameStatus = gameService.throwBall(6);
+        frames.throwBall(1);
+        frames.throwBall(4);
+        frames.throwBall(4);
+        frames.throwBall(5);
+        frames.throwBall(6);
+        frames.throwBall(4);
+        frames.throwBall(5);
+        frames.throwBall(5);
+        frames.throwBall(10);
+        frames.throwBall(0);
+        frames.throwBall(1);
+        frames.throwBall(7);
+        frames.throwBall(3);
+        frames.throwBall(6);
+        frames.throwBall(4);
+        frames.throwBall(10);
+        frames.throwBall(2);
+        frames.throwBall(8);
+        GameStatus gameStatus = frames.throwBall(6);
         assertThat(gameStatus.getAllFrameStatus())
                 .isEqualTo("|  PJS |  1|4 |  4|5 |  6|/ |  5|/ |  X   |  -|1 |  7|/ |  6|/ |  X   |  2|/|6 |");
         assertThat(gameStatus.getAllScore())
