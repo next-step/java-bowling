@@ -49,7 +49,13 @@ public class NormalFrame implements Frame {
         }
     }
 
+    @Override
     public int getPitchSize() {
         return pitches.size();
+    }
+
+    @Override
+    public boolean isFinish() {
+        return frameScore == MAXIMUM_SCORE_CONDITION || pitches.size() == 2;
     }
 }

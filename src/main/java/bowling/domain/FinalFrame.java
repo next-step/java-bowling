@@ -35,7 +35,13 @@ public class FinalFrame implements Frame {
         }
     }
 
+    @Override
     public int getPitchSize() {
         return pitches.size();
+    }
+
+    @Override
+    public boolean isFinish() {
+        return false;
     }
 }
