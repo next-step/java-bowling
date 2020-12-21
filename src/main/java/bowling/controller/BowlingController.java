@@ -3,6 +3,7 @@ package bowling.controller;
 import bowling.domain.Player;
 import bowling.domain.frame.Frames;
 import bowling.domain.game.Bowling;
+import bowling.domain.game.BowlingGamesDto;
 import bowling.domain.game.BowlingGames;
 import bowling.domain.point.Point;
 import bowling.view.InputView;
@@ -22,7 +23,8 @@ public class BowlingController {
         while (!bowlingGames.isBowlingGameEnd()) {
             Point pointPitch = InputView.inputPitchBowl(bowlingGames.getPlayerName());
             bowlingGames.pitch(pointPitch);
-            OutputView.printResult(bowlingGames);
+
+            OutputView.printResult(bowlingGames.getBowlingDto());
         }
     }
 

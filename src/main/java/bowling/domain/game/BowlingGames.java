@@ -2,6 +2,7 @@ package bowling.domain.game;
 
 import bowling.domain.point.Point;
 
+import java.util.Collections;
 import java.util.List;
 
 public class BowlingGames {
@@ -28,6 +29,10 @@ public class BowlingGames {
 
     }
 
+    private Bowling getBowling(int index) {
+        return bowlings.get(index);
+    }
+
     private void isLastFrame() {
         if (isLastPeopleCursor() && isLastPeopleFrameTurnOver()) {
             bowlingGamesCursor.resetPeopleCursor();
@@ -50,9 +55,6 @@ public class BowlingGames {
     }
 
 
-    public Bowling getBowling(int index) {
-        return bowlings.get(index);
-    }
 
     public String getPlayerName() {
         return bowlings.get(bowlingGamesCursor.getPeopleCursor())
@@ -66,5 +68,9 @@ public class BowlingGames {
 
     public int getParticipationPeopleCount() {
         return bowlings.size();
+    }
+
+    public BowlingGamesDto getBowlingDto() {
+        return new BowlingGamesDto(Collections.unmodifiableList(bowlings));
     }
 }

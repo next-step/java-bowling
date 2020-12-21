@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.game.BowlingGamesDto;
 import bowling.domain.score.ScoreType;
 import bowling.domain.frame.FrameResultDto;
 import bowling.domain.game.Bowling;
@@ -30,12 +31,12 @@ public class OutputView {
     public static final String SCORE_BLANK = "|      |";
     public static final String SCORE = "  %-4s|";
 
-    public static void printResult(BowlingGames bowlingGames) {
+    public static void printResult(BowlingGamesDto bowlingGamesDto) {
 
         printFramesRounds();
-        for (int i = 0; i < bowlingGames.getParticipationPeopleCount(); i++) {
-            printBowlsResult(bowlingGames.getBowling(i));
-            printScores(bowlingGames.getBowling(i));
+        for (int i = 0; i < bowlingGamesDto.getParticipationPeopleCount(); i++) {
+            printBowlsResult(bowlingGamesDto.getBowling(i));
+            printScores(bowlingGamesDto.getBowling(i));
         }
         System.out.print(System.lineSeparator());
     }
