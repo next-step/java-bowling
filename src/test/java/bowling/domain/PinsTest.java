@@ -71,3 +71,4 @@ class PinsTest {
         assertThat(pins.isAllDown()).isFalse();
     }
 }
+

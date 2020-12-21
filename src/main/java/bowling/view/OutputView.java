@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.GameOfPlayer;
 import bowling.domain.Player;
 import bowling.domain.Score;
 import bowling.domain.frame.Frame;
@@ -26,8 +27,8 @@ public class OutputView {
         return StringUtils.wrap(StringUtils.center(NAME, FRAME_LENGTH), INFIX);
     }
 
-    private static String getNameString(Player player) {
-        return StringUtils.wrap(StringUtils.center(player.getName(), FRAME_LENGTH), INFIX);
+    private static String getFrameWithWord(String word) {
+        return StringUtils.wrap(StringUtils.center(word, FRAME_LENGTH), INFIX);
     }
 
     private static String getFrameGuideString() {
@@ -36,32 +37,33 @@ public class OutputView {
             .collect(Collectors.joining(INFIX));
     }
 
-    public static void showFramesGuide() {
-        out.println(getNameGuideString() + getFrameGuideString() + INFIX);
+    public static String makeFramesGuide() {
+        return getNameGuideString() + getFrameGuideString() + INFIX;
     }
 
-    public static void showEmptyRecords(Player player) {
-        showFramesGuide();
+    public static void showGameOfPlayers(List<GameOfPlayer> gameOfPlayers) {
+        gameOfPlayers.forEach(OutputView::showGameOfPlayer);
+    }
 
-        StringBuilder builder = new StringBuilder(getNameString(player));
-        addRestFrameString(builder, 0);
+    public static void showGameOfPlayer(GameOfPlayer gameOfPlayer) {
+        Player player = gameOfPlayer.getPlayer();
+        Frame frame = gameOfPlayer.getFirstFrame();
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(makeFramesGuide())
+            .append("\n")
+            .append(getFrameWithWord(player.getName()))
+            .append(makeFrameString(frame))
+            .append("\n")
+            .append(getFrameWithWord(StringUtils.EMPTY))
+            .append(makeScoreString(frame));
 
         out.println(builder.toString());
     }
 
-    public static void showRecords(Player player, Frame frame) {
-        showFramesGuide();
+    private static String makeScoreString(Frame frame) {
+        StringBuilder builder = new StringBuilder();
 
-        StringBuilder builder = new StringBuilder(getNameString(player));
-        addFrameString(frame, builder);
-        builder.append("\n");
-        builder.append(getNameString(player));
-        addScoreString(frame, builder);
-
-        out.println(builder.toString());
-    }
-
-    private static void addScoreString(Frame frame, StringBuilder builder) {
         Frame currentFrame = null;
         int totalScore = 0;
         int frameCount = 0;
@@ -77,10 +79,13 @@ public class OutputView {
             frameCount++;
         }
 
-        addRestFrameString(builder, frameCount);
+        builder.append(makeRestFrameString(frameCount));
+        return builder.toString();
     }
 
-    private static void addFrameString(Frame frame, StringBuilder builder) {
+    private static String makeFrameString(Frame frame) {
+        StringBuilder builder = new StringBuilder();
+
         int frameCount = 0;
         Frame currentFrame = null;
         while (frame != currentFrame && Objects.nonNull(frame)) {
@@ -91,14 +96,19 @@ public class OutputView {
             frameCount++;
         }
 
-        addRestFrameString(builder, frameCount);
+        builder.append(makeRestFrameString(frameCount));
+        return builder.toString();
     }
 
-    private static void addRestFrameString(StringBuilder builder, int frameCount) {
+    private static String makeRestFrameString(int frameCount) {
+        StringBuilder builder = new StringBuilder();
+
         int rest = TOTAL_FRAME_COUNT - frameCount;
         if (rest > 0) {
             builder.append(getRestFrameString(rest));
         }
+
+        return builder.toString();
     }
 
     private static String getPinsString(Frame currentFrame) {

@@ -1,12 +1,11 @@
 package bowling;
 
-import bowling.controller.Controller;
+import bowling.controller.GameController;
 
 public class Bowling {
 
     public static void main(String[] args) {
-        Controller controller = new Controller();
-        controller.createPlayer();
-        controller.play();
+        GameController gameController = GameController.start();
+        gameController.play();
     }
 }
