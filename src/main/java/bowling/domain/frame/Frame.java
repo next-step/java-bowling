@@ -1,43 +1,49 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreType;
+import bowling.domain.score.Scores;
+import java.util.Objects;
+
 public class Frame {
 
-    private static final int FIRST_FRAME_NUMBER = 0;
-    private static final int FINAL_FRAME_NUMBER = 9;
-
     private final FrameNumber frameNumber;
-    private final Pins pins;
+    private final Pins frameDownPins;
 
-    private Frame nextFrame;
+    public static Frame of(FrameNumber frameNumber, Pins frameDownPins) {
+        return new Frame(frameNumber, frameDownPins);
+    }
 
-    private Frame(FrameNumber frameNumber, Pins pins) {
+    private Frame(FrameNumber frameNumber, Pins frameDownPins) {
         this.frameNumber = frameNumber;
-        this.pins = pins;
+        this.frameDownPins = frameDownPins;
     }
 
-    public static Frame first() {
-        return new Frame(FrameNumber.create(FIRST_FRAME_NUMBER), new NormalPins());
-    }
-
-    public Frame last() {
-        this.nextFrame = new Frame(FrameNumber.create(FINAL_FRAME_NUMBER), FinalFramePins.create());
-        return this.nextFrame;
-    }
-
-    public Frame next() {
-        this.nextFrame = new Frame(FrameNumber.create(this.frameNumber.getValue() + 1), new NormalPins());
-        return this.nextFrame;
-    }
-
-    public void roll(int numberOfDownPin) {
-        this.pins.down(numberOfDownPin);
+    public void roll(int numberOfDownPin, Scores scores) {
+        this.frameDownPins.down(numberOfDownPin);
+        scores.updateScore(frameNumber, Score.create(frameDownPins.getDownPins(), ScoreType.READY));
     }
 
     public boolean hasTurn() {
-        return this.pins.hasTurn();
+        return this.frameDownPins.hasTurn();
     }
 
-    public FrameResult getFrameResult() {
-        return new FrameResult(this.pins.getDownPins(), this.pins.getScoreType());
+    public ScoreType scoreType() {
+        return this.frameDownPins.getScoreType();
+    }
+
+    public FrameResult getFrameResult(Scores scores) {
+        return new FrameResult(this.frameDownPins.getDownPins(), this.frameDownPins.getScoreType(), frameScore(scores));
+    }
+
+    public Score frameScore(Scores scores) {
+        if (isNotCalEnd(scores)) {
+            scores.updateScore(frameNumber, frameDownPins.frameScore(frameNumber, scores));
+        }
+        return scores.getFromIndex(frameNumber);
+    }
+
+    private boolean isNotCalEnd(Scores scores) {
+        return !Objects.equals(scores.getFromIndex(frameNumber).getScoreType(), ScoreType.NORMAL);
     }
 }

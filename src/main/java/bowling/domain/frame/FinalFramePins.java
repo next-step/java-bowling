@@ -1,6 +1,8 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.score.ScoreType;
+import bowling.domain.score.Scores;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +58,14 @@ public class FinalFramePins implements Pins {
         List<Integer> bonusDownPins = new ArrayList<>(this.pins.getDownPins());
         bonusDownPins.addAll(this.bonusDownPins);
         return bonusDownPins;
+    }
+
+    @Override
+    public Score frameScore(FrameNumber frameNumber, Scores scores) {
+        if (!hasTurn()) {
+            return Score.create(sum(), ScoreType.NORMAL);
+        }
+        return pins.frameScore(frameNumber, scores);
     }
 
     @Override

@@ -1,8 +1,11 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.score.ScoreType;
+import bowling.domain.score.Scores;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class NormalPins implements Pins {
 
@@ -14,6 +17,8 @@ public class NormalPins implements Pins {
     private static final int FIRST_BOWL_INDEX = 0;
     private static final int FIRST_ROLL = 1;
     private static final int SECOND_ROLL = 2;
+    private static final int NINE_FRAME_NUMBER = 8;
+    private static final int FINAL_FRAME_NUMBER = 9;
 
     private final List<Integer> downPins = new ArrayList<>();
 
@@ -29,7 +34,7 @@ public class NormalPins implements Pins {
             return false;
         }
 
-        return sumOfDownPin() != PIN_COUNT;
+        return sum() != PIN_COUNT;
     }
 
     @Override
@@ -55,21 +60,68 @@ public class NormalPins implements Pins {
     }
 
     @Override
+    public Score frameScore(FrameNumber frameNumber, Scores scores) {
+
+        if (isLastFrame(frameNumber) || hasTurn()) {
+            return Score.create(getDownPins(), ScoreType.READY);
+        }
+
+        int bonusBowlCount = getScoreType().getBonusBowlCount();
+
+        List<Integer> nextFrameDownPins = scores.getDownPinsFromIndex(frameNumber.increment());
+
+        if (isStrike()) {
+            strikeResolve(frameNumber, scores);
+        }
+
+        int nextFrameDownPinsSize = nextFrameDownPins.size();
+        if (nextFrameDownPinsSize >= bonusBowlCount) {
+            nextFrameDownPins.subList(0, bonusBowlCount);
+        }
+
+        if (nextFrameDownPinsSize < bonusBowlCount) {
+            return Score.create(getDownPins(), ScoreType.READY);
+        }
+
+        int score = sum() + nextFrameDownPins.stream()
+            .reduce(0, Integer::sum);
+        return Score.create(score, ScoreType.NORMAL);
+    }
+
+    private List<Integer> strikeResolve(FrameNumber frameNumber, Scores scores) {
+        List<Integer> nextFrameDownPins = scores.getDownPinsFromIndex(frameNumber.increment());
+
+        if (isNextFrameStrike(nextFrameDownPins) && isNotNineFrame(frameNumber)) {
+            List<Integer> twoNextFrameDownPins = scores.getDownPinsFromIndex(frameNumber.increment().increment());
+            nextFrameDownPins.addAll(twoNextFrameDownPins);
+            return nextFrameDownPins;
+        }
+
+        return nextFrameDownPins;
+    }
+
+    private boolean isNextFrameStrike(List<Integer> nextFrameDownPins) {
+        return nextFrameDownPins.size() == FIRST_ROLL
+            && nextFrameDownPins.stream().reduce(0, Integer::sum) == 10;
+    }
+
+    private boolean isNotNineFrame(FrameNumber frameNumber) {
+        return frameNumber.getValue() != NINE_FRAME_NUMBER;
+    }
+
+    private boolean isLastFrame(FrameNumber frameNumber) {
+        return Objects.equals(frameNumber.getValue(), FINAL_FRAME_NUMBER);
+    }
+
+    @Override
     public int sum() {
         return this.downPins
             .stream()
             .reduce(0, Integer::sum);
     }
 
-
-    private int sumOfDownPin() {
-        return this.downPins
-            .stream()
-            .reduce(0, Integer::sum);
-    }
-
     private boolean isSpare() {
-        return this.downPins.size() == SECOND_ROLL && sumOfDownPin() == STRIKE_PIN_COUNT;
+        return this.downPins.size() == SECOND_ROLL && sum() == STRIKE_PIN_COUNT;
     }
 
     private boolean isStrike() {
@@ -86,7 +138,7 @@ public class NormalPins implements Pins {
             throw new IllegalArgumentException("핀은 0개 보다 더 쓰러질 수 없습니다.");
         }
 
-        if (sumOfDownPin() + downPin > PIN_COUNT) {
+        if (sum() + downPin > PIN_COUNT) {
             throw new IllegalArgumentException("유효하지 않은 핀 갯수");
         }
     }
