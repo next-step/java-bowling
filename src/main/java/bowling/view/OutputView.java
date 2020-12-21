@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.BowlType;
 import bowling.domain.frame.FrameResultDto;
 import bowling.domain.game.Bowling;
+import bowling.domain.game.BowlingGames;
 import bowling.domain.point.Point;
 import bowling.domain.score.ScoreDto;
 
@@ -29,10 +30,13 @@ public class OutputView {
     public static final String SCORE_BLANK = "|      |";
     public static final String SCORE = "  %-4s|";
 
-    public static void printResult(Bowling bowling) {
+    public static void printResult(BowlingGames bowlingGames) {
+
         printFramesRounds();
-        printBowlsResult(bowling);
-        printScores(bowling);
+        for (int i = 0; i < bowlingGames.getParticipationPeopleCount(); i++) {
+            printBowlsResult(bowlingGames.getBowling(i));
+            printScores(bowlingGames.getBowling(i));
+        }
         System.out.print(System.lineSeparator());
     }
 
@@ -119,6 +123,4 @@ public class OutputView {
                 .map(FrameResultDto::getScoreDto)
                 .collect(Collectors.toList());
     }
-
-
 }
