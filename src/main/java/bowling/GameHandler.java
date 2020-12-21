@@ -26,8 +26,8 @@ public class GameHandler {
         PlayerNames playerNames = getPlayerNames(numberOfPlayers);
         BowlingGames bowlingGames = BowlingGames.init(playerNames);
         while (!bowlingGames.isEnd()) {
-            setKnockDownPins2(bowlingGames);
-            resultView.print2(bowlingGames.convertToDto());
+            setKnockDownPins(bowlingGames);
+            resultView.print(bowlingGames.convertToDto());
         }
     }
 
@@ -50,32 +50,17 @@ public class GameHandler {
         return PlayerName.valueOf(inputPlayerName);
     }
 
-    private void setKnockDownPins(BowlingGame bowlingGame) {
+    private void setKnockDownPins(BowlingGames bowlingGames) {
         try {
-            KnockDownPins knockDownPins = ValidInputHelper.get(() -> getKnockDownPins(bowlingGame), inputView::printError);
-            bowlingGame.setKnockDownPins(knockDownPins);
-        } catch (RuntimeException e) {
-            inputView.printError(e);
-            setKnockDownPins(bowlingGame);
-        }
-    }
-
-    private void setKnockDownPins2(BowlingGames bowlingGames) {
-        try {
-            KnockDownPins knockDownPins = ValidInputHelper.get(() -> getKnockDownPins2(bowlingGames), inputView::printError);
+            KnockDownPins knockDownPins = ValidInputHelper.get(() -> getKnockDownPins(bowlingGames), inputView::printError);
             bowlingGames.setKnockDownPins(knockDownPins);
         } catch (RuntimeException e) {
             inputView.printError(e);
-            setKnockDownPins2(bowlingGames);
+            setKnockDownPins(bowlingGames);
         }
     }
 
-    private KnockDownPins getKnockDownPins(BowlingGame bowlingGame) {
-        Integer knockDownPins = ValidInputHelper.get(() -> inputView.getKnockDownPins(bowlingGame.getCurrentFrameNo()), inputView::printError);
-        return KnockDownPins.valueOf(knockDownPins);
-    }
-
-    private KnockDownPins getKnockDownPins2(BowlingGames bowlingGames) {
+    private KnockDownPins getKnockDownPins(BowlingGames bowlingGames) {
         Integer knockDownPins = ValidInputHelper.get(() -> inputView.getKnockDownPins2(bowlingGames.getCurrentPlayer()), inputView::printError);
         return KnockDownPins.valueOf(knockDownPins);
     }

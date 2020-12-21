@@ -1,7 +1,5 @@
 package bowling.view;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.BowlingGames;
 import bowling.domain.Frames;
 import bowling.domain.Pitching;
 import bowling.dto.BowlingGameDto;
@@ -10,7 +8,6 @@ import bowling.dto.FrameDto;
 import bowling.dto.FramesDto;
 
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -40,10 +37,13 @@ public class ConsoleResultView implements ResultView {
     }
 
     @Override
-    public void print(BowlingGameDto bowlingGameDto) {
+    public void print(BowlingGamesDto bowlingGamesDto) {
         StringBuilder resultBuilder = new StringBuilder();
         appendHeader(resultBuilder);
-        appendBody(bowlingGameDto, resultBuilder);
+        for (BowlingGameDto bowlingGameDto : bowlingGamesDto) {
+            appendBody(bowlingGameDto, resultBuilder);
+            resultBuilder.append(System.lineSeparator());
+        }
         System.out.println(resultBuilder.toString());
     }
 
@@ -128,17 +128,5 @@ public class ConsoleResultView implements ResultView {
         int width = value.length() + ((CELL_WIDTH - value.length()) / 2);
         String formattedValue = String.format("%" + width + "s", value);
         return String.format("%-" + CELL_WIDTH + "s", formattedValue);
-    }
-
-    @Override
-    public void print2(BowlingGamesDto bowlingGamesDto) {
-        StringBuilder resultBuilder = new StringBuilder();
-        appendHeader(resultBuilder);
-        List<BowlingGameDto> value = bowlingGamesDto.getValue();
-        for (BowlingGameDto bowlingGameDto : value) {
-            appendBody(bowlingGameDto, resultBuilder);
-            resultBuilder.append(System.lineSeparator());
-        }
-        System.out.println(resultBuilder.toString());
     }
 }
