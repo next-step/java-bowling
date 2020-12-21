@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.BowlType;
+import bowling.domain.score.ScoreType;
 import bowling.domain.frame.FrameResultDto;
 import bowling.domain.game.Bowling;
 import bowling.domain.game.BowlingGames;
@@ -93,8 +93,8 @@ public class OutputView {
         return String.valueOf(point);
     }
 
-    private static int printSpare(List<String> builder, int downPinIndex, BowlType scoreType) {
-        if (scoreType == BowlType.SPARED) {
+    private static int printSpare(List<String> builder, int downPinIndex, ScoreType scoreType) {
+        if (scoreType == ScoreType.SPARED) {
             builder.add(SPARED);
             downPinIndex++;
         }
@@ -114,7 +114,7 @@ public class OutputView {
     }
 
     private static Object isContinueBowling(int sumPoint, ScoreDto score) {
-        return score.getBowlType() == BowlType.NONE ? BLANK : sumPoint;
+        return score.getBowlType() == ScoreType.NONE ? BLANK : sumPoint;
     }
 
     private static List<ScoreDto> getScores(Bowling bowling) {

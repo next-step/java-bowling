@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.BowlType;
+import bowling.domain.score.ScoreType;
 import bowling.domain.point.Point;
 import bowling.domain.score.BasicScore;
 import bowling.domain.score.LastScore;
@@ -61,22 +61,22 @@ public class BasicFrame extends Frame {
     @Override
     public ScoreDto getScoreDto() {
         if (!isFrameFinished()) {
-            return ScoreDto.init(0, BowlType.NONE);
+            return ScoreDto.init(0, ScoreType.NONE);
         }
 
         if (isLastFrame() && isFrameFinished()) {
-            return ScoreDto.init(frameBoard.sumPoint(), BowlType.END);
+            return ScoreDto.init(frameBoard.sumPoint(), ScoreType.END);
         }
 
         int nextBowlCount = getBonusCount();
         List<Point> pitchedPoints = getNextFramePitchPoints(nextBowlCount);
 
         if (pitchedPoints.size() < nextBowlCount) {
-            return ScoreDto.init(0, BowlType.NONE);
+            return ScoreDto.init(0, ScoreType.NONE);
         }
 
         int sumScore = frameBoard.sumPoint() + getNextPointSum(pitchedPoints);
-        return ScoreDto.init(sumScore, BowlType.END);
+        return ScoreDto.init(sumScore, ScoreType.END);
 
     }
 

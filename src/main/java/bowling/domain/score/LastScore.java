@@ -1,6 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.BowlType;
 import bowling.domain.point.Point;
 import bowling.exception.NotHasTurnException;
 
@@ -74,7 +73,7 @@ public class LastScore extends Score {
 
 
     @Override
-    public BowlType getBowlType() {
+    public ScoreType getBowlType() {
         return score.getBowlType();
     }
 

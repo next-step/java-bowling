@@ -1,6 +1,5 @@
 package bowling.domain.point;
 
-import bowling.domain.BowlType;
 import bowling.exception.ScorePointRangeOutBoundException;
 
 import java.util.Objects;
