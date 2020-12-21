@@ -1,20 +1,18 @@
-package bowling;
+package bowling.domain;
 
 
-import bowling.domain.Frame;
-import bowling.domain.IllegalBallThrownException;
-import bowling.domain.NormalFrame;
+import bowling.IllegalPlayerNameException;
 import bowling.view.GameStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class GameService {
+public class Frames {
     private final List<Frame> frames = new ArrayList<>();
     private final String playerName;
 
-    public GameService(String playerName) {
+    public Frames(String playerName) {
         if (playerName.length() > 3) {
             throw new IllegalPlayerNameException();
         }

@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.GameService;
+import bowling.domain.Frames;
 import bowling.domain.Frame;
 import bowling.domain.FrameStatus;
 import bowling.domain.Score;
@@ -13,9 +13,9 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.joining;
 
 public class GameStatus {
-    private final GameService game;
+    private final Frames game;
 
-    public GameStatus(GameService game) {
+    public GameStatus(Frames game) {
         this.game = game;
     }
 

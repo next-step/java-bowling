@@ -1,18 +1,26 @@
 package bowling;
 
+import bowling.view.GameStatus;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
+import java.util.List;
+
 public class Controller {
     public void execute() {
-        String playerName = InputView.requestPlayerName();
-        GameService game = new GameService(playerName);
-        ResultView.printResult(game.start());
+        int count = InputView.requestPlayerCount();
+        List<String> playerNames = InputView.requestPlayerNames(count);
+
+        Game game = new Game(playerNames);
+        List<GameStatus> status = game.start();
+        ResultView.printResults(status);
 
         while (!game.isFinish()) {
-            int number = game.getCurrentFrameNumber();
-            int fallingPins = InputView.requestFallingPins(number);
-            ResultView.printResult(game.throwBall(fallingPins));
+            game.forEach(frame -> {
+                int fallingPins = InputView.requestFallingPins(frame.getPlayerName());
+                frame.throwBall(fallingPins);
+                ResultView.printResults(status);
+            });
         }
     }
 }
