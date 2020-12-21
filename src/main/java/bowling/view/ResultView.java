@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.dto.BowlingGamesDto;
+import bowling.dto.BowlingGameDto;
 
 public interface ResultView {
-    void print(BowlingGamesDto bowlingGamesDto);
+    void print(BowlingGameDto bowlingGameDto);
 }
