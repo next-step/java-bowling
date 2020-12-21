@@ -54,4 +54,60 @@ public class BowlingGameTest {
                 Arguments.of(Arrays.asList(3, 3), PLAYER_NAME_2)
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("pitchingsAndIsEnd")
+    public void isEndTest(List<Integer> pitchings, boolean expectedIsEnd) {
+        //given
+        BowlingGame bowlingGame = BowlingGame.init(playerNames);
+
+        //when
+        for (Integer knockDownPins : pitchings) {
+            bowlingGame.setKnockDownPins(KnockDownPins.valueOf(knockDownPins));
+        }
+
+        //then
+        assertThat(bowlingGame.isEnd()).isEqualTo(expectedIsEnd);
+    }
+
+    private static Stream<Arguments> pitchingsAndIsEnd() {
+        return Stream.of(
+                Arguments.of(Collections.emptyList(), false),
+                Arguments.of(Arrays.asList(
+                        10, 10, 10, // frame1
+                        10, 10, 10, // frame2
+                        10, 10, 10, // frame3
+                        10, 10, 10, // frame4
+                        10, 10, 10, // frame5
+                        10, 10, 10, // frame6
+                        10, 10, 10, // frame7
+                        10, 10, 10, // frame8
+                        10, 10, 10 // frame9
+                ), false),
+                Arguments.of(Arrays.asList(
+                        10, 10, 10, // frame1
+                        10, 10, 10, // frame2
+                        10, 10, 10, // frame3
+                        10, 10, 10, // frame4
+                        10, 10, 10, // frame5
+                        10, 10, 10, // frame6
+                        10, 10, 10, // frame7
+                        10, 10, 10, // frame8
+                        10, 10, 10, // frame9
+                        10, 10, 10, 10, 10, 10, 10, 10, 10 // frame10
+                ), true),
+                Arguments.of(Arrays.asList(
+                        10, 10, 10, // frame1
+                        10, 10, 10, // frame2
+                        10, 10, 10, // frame3
+                        10, 10, 10, // frame4
+                        10, 10, 10, // frame5
+                        10, 10, 10, // frame6
+                        10, 10, 10, // frame7
+                        10, 10, 10, // frame8
+                        10, 10, 10, // frame9
+                        1, 1, 2, 2, 3, 3 // frame10
+                ), true)
+        );
+    }
 }
