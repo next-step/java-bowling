@@ -23,8 +23,12 @@ public class Player {
         return frames.isEnd();
     }
 
-    public int getCurrentFrameNo() {
-        return frames.getCurrentFrameNo();
+    public boolean isFameNo(int frameNo) {
+        return frames.getCurrentFrameNo() == frameNo;
+    }
+
+    public boolean isFrameEnd(int frameNo) {
+        return frames.getCurrentFrameNo() > frameNo;
     }
 
     public PlayerName getPlayerName() {

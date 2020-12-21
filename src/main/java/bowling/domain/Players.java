@@ -26,14 +26,14 @@ public class Players {
 
     public Player getCurrentPlayer(int currentFrameNo) {
         return value.stream()
-                .filter(player -> !player.isEnd() && player.getCurrentFrameNo() == currentFrameNo)
+                .filter(player -> !player.isEnd() && player.isFameNo(currentFrameNo))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException(CAN_NOT_FIND_PLAYER_ERR_MSG));
     }
 
     public boolean isAllPlayerEndFrame(int currentFrameNo) {
         return value.stream()
-                .allMatch(player -> player.getCurrentFrameNo() > currentFrameNo);
+                .allMatch(player -> player.isFrameEnd(currentFrameNo));
     }
 
     public boolean isAllPlayerEndGame() {
