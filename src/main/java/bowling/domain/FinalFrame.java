@@ -7,6 +7,7 @@ public class FinalFrame implements Frame {
     public static final int MAXIMUM_PITCH = 3;
 
     private List<Pitch> pitches;
+    private int frameScore = 0;
 
     private FinalFrame(List<Pitch> pitches) {
         this.pitches = pitches;
@@ -18,19 +19,21 @@ public class FinalFrame implements Frame {
     }
 
     public Frame add(Pitch pitch) {
-        addSecondPitch(pitch);
+        addRemainPitch(pitch);
         addFirstPitch(pitch);
         return new FinalFrame(pitches);
     }
 
     private void addFirstPitch(Pitch pitch) {
         if(pitches.isEmpty()) {
+            frameScore += pitch.getScore();
             pitches.add(pitch);
         }
     }
 
-    private void addSecondPitch(Pitch pitch) {
+    private void addRemainPitch(Pitch pitch) {
         if(!pitches.isEmpty()) {
+            frameScore += pitch.getScore();
             pitches.add(pitch);
         }
     }
@@ -42,6 +45,6 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return false;
+        return (frameScore < 10 && pitches.size() == 2) || pitches.size() == 3;
     }
 }
