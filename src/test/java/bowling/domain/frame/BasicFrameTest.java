@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.BowlType;
+import bowling.domain.score.ScoreType;
 import bowling.domain.point.Point;
 import bowling.domain.score.ScoreDto;
 import bowling.exception.NotHasTurnException;
@@ -29,7 +29,7 @@ class BasicFrameTest {
         basicFrame.pitch(Point.valueOf(1));
         basicFrame.pitch(Point.valueOf(2));
 
-        assertThat(basicFrame.getScoreDto()).isEqualToComparingFieldByField(ScoreDto.init(3, BowlType.END));
+        assertThat(basicFrame.getScoreDto()).isEqualToComparingFieldByField(ScoreDto.init(3, ScoreType.END));
     }
 
     @Test
@@ -37,7 +37,7 @@ class BasicFrameTest {
     void pitchStrike() {
         basicFrame.pitch(Point.valueOf(10));
         assertThat(basicFrame.getScoreDto().getSumScore()).isEqualTo(0);
-        assertThat(basicFrame.getScoreDto().getBowlType()).isEqualTo(BowlType.NONE);
+        assertThat(basicFrame.getScoreDto().getBowlType()).isEqualTo(ScoreType.NONE);
     }
 
     @Test
@@ -47,7 +47,7 @@ class BasicFrameTest {
         basicFrame.pitch(Point.valueOf(8));
         nextBasicFrame.pitch(Point.valueOf(3));
         assertThat(basicFrame.getScoreDto().getSumScore()).isEqualTo(13);
-        assertThat(basicFrame.getScoreDto().getBowlType()).isEqualTo(BowlType.END);
+        assertThat(basicFrame.getScoreDto().getBowlType()).isEqualTo(ScoreType.END);
     }
 
     @Test

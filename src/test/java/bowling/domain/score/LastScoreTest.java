@@ -1,6 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.BowlType;
 import bowling.domain.point.Point;
 import bowling.exception.NotHasTurnException;
 import bowling.exception.ValidOverPointException;
@@ -94,7 +93,7 @@ class LastScoreTest {
         score.pitch(Point.valueOf(2));
         score.pitch(Point.valueOf(3));
 
-        assertThat(score.getBowlType()).isEqualTo(BowlType.MISS);
+        assertThat(score.getBowlType()).isEqualTo(ScoreType.MISS);
     }
 
     @Test
@@ -102,7 +101,7 @@ class LastScoreTest {
     void strike() {
         score.pitch(Point.valueOf(10));
 
-        assertThat(score.getBowlType()).isEqualTo(BowlType.STRIKE);
+        assertThat(score.getBowlType()).isEqualTo(ScoreType.STRIKE);
     }
 
     @Test
@@ -110,7 +109,7 @@ class LastScoreTest {
     void spare() {
         score.pitch(Point.valueOf(2));
         score.pitch(Point.valueOf(8));
-        assertThat(score.getBowlType()).isEqualTo(BowlType.SPARED);
+        assertThat(score.getBowlType()).isEqualTo(ScoreType.SPARED);
     }
 
     @Test
@@ -118,6 +117,6 @@ class LastScoreTest {
     void none() {
         score.pitch(Point.valueOf(2));
 
-        assertThat(score.getBowlType()).isEqualTo(BowlType.NONE);
+        assertThat(score.getBowlType()).isEqualTo(ScoreType.NONE);
     }
 }
