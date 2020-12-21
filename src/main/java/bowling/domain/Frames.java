@@ -8,16 +8,19 @@ import java.util.List;
  * Developer : Seo
  */
 public class Frames {
+    public static final int PREVIOUS_NO = 1;
+
     private final List<Frame> frames;
 
-    public Frames(Users users) {
+    public Frames() {
         this.frames = new LinkedList<>();
-        frames.add(Frame.init(users));
+        frames.add(Frame.init());
     }
 
-    public void bowl(int frameNo) {
-        Frame frame = frames.get(frameNo - 1);
-        frames.add(frame.bowl(frameNo));
+    public void next(int frameNo) {
+        Frame frame = frames.get(frameNo - PREVIOUS_NO);
+        Frame next = frame.next(frameNo);
+        frames.add(next);
     }
 
     public int size() {

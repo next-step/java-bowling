@@ -1,6 +1,8 @@
 package bowling.domain;
 
 public class Gutter implements State {
+    public static final String DELIMITER = "|";
+
     private final Pins firstPins;
     private Pins secondPins;
 
@@ -22,7 +24,7 @@ public class Gutter implements State {
     public String toString() {
         String ret = Symbol.GUTTER.getSymbol();
         if (this.secondPins != null) {
-            ret = ret + "|" + Symbol.GUTTER.getSymbol();
+            ret = ret + DELIMITER + Symbol.GUTTER.getSymbol();
         }
         return ret;
     }

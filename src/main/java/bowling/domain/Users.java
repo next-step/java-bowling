@@ -25,10 +25,4 @@ public class Users {
     public int size() {
         return users.size();
     }
-
-    public void bowl(int frameNo) {
-        for (User user : users) {
-            user.bowl(frameNo);
-        }
-    }
 }

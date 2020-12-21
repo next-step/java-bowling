@@ -1,6 +1,8 @@
 package bowling.domain;
 
 public class Miss implements State {
+    public static final String DELIMITER = "|";
+
     private final Pins firstPins;
     private Pins secondPins;
 
@@ -24,7 +26,7 @@ public class Miss implements State {
     public String toString() {
         String ret = String.valueOf(this.firstPins.get());
         if (this.secondPins != null) {
-            ret = ret + "|" + (this.secondPins.get() == 0 ? Symbol.GUTTER.getSymbol() : this.secondPins.get());
+            ret = ret + DELIMITER + (this.secondPins.get() == 0 ? Symbol.GUTTER.getSymbol() : this.secondPins.get());
         }
         return ret;
     }

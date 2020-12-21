@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.Pins;
+import bowling.domain.State;
 import bowling.domain.User;
 import bowling.domain.Users;
 
@@ -32,6 +33,16 @@ public class InputView {
     public static Pins getPins(String name) {
         print(name + ENTER_PINS);
         return new Pins(scanner.nextInt());
+    }
+
+    public static Pins getSecondPins(State state, String name) {
+        print(name + ENTER_PINS);
+        int pins = scanner.nextInt();
+        int remainPins = state.getScore().getFirst().get();
+        if (pins > remainPins) {
+            throw new IllegalArgumentException(String.format("남은 핀은 %d개입니다.", remainPins));
+        }
+        return new Pins(pins);
     }
 
     private static void print(String args) {

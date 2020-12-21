@@ -17,6 +17,12 @@ public class ResultView {
     public static final int INDEX_ZERO = 0;
     public static final int INDEX_ONE = 1;
     public static final String NONE = "";
+    public static final String STRING_ZERO = "0";
+
+    public static void init(Frames frames, Users users) {
+        header();
+        scores(frames, users);
+    }
 
     public static void print(Frames frames, Users users) {
         header();
@@ -27,7 +33,7 @@ public class ResultView {
         print(HEADER_NAME);
         IntStream.range(START_FRAME, FINAL_FRAME + INDEX_ONE)
                 .forEach(value -> {
-                    String no = value < 10 ? "0" + value : String.valueOf(value);
+                    String no = value < FINAL_FRAME ? STRING_ZERO + value : String.valueOf(value);
                     printf(FORMAT_SPACE, no);
                 });
         nextLine();
@@ -35,40 +41,58 @@ public class ResultView {
 
     private static void scores(Frames frames, Users users) {
         for (int i = INDEX_ZERO; i < users.size(); i++) {
-            score(frames, users.get(i));
-            sum(frames, users.get(i));
+            score(frames, users.get(i), i);
+            sum(frames, users.get(i), i);
         }
     }
 
-    private static void score(Frames frames, User user) {
+    private static void score(Frames frames, User user, int index) {
         printf(DELIMITER + FORMAT_SPACE, user.getName());
+        int remainSize = frames.size();
         for (Frame frame : frames.getFrames()) {
-            String state = String.valueOf(user.getState(frame.getFrameNo()));
-            printf(FORMAT_SPACE, state);
+            State state = frame.getState(index);
+            printf(FORMAT_SPACE, String.valueOf(state));
         }
-        remainFrames(frames.size());
+        remainFrames(remainSize);
         nextLine();
     }
 
-    private static void sum(Frames frames, User user) {
+    private static void sum(Frames frames, User user, int index) {
         printf(DELIMITER + FORMAT_SPACE, NONE);
 
         TotalScore totalScore = new TotalScore();
+        int remainSize = frames.size();
         for (int i = 0; i < frames.size(); i++) {
-            int frameNo = frames.get(i).getFrameNo();
-            State frameState = user.getState(frameNo);
-            int frameScore = user.getScore(frameNo);
-            printStrikeAndSpare(frames, user, totalScore, i, frameState);
+            Frame frame = frames.get(i);
 
-            totalScore.add(frameScore);
-            printNormal(totalScore, frameState);
+            printStrike(frames, user, totalScore, i);
+            printSpare(frames, user, totalScore, i);
+
+            totalScore.add(frame.getScore(index));
+            printNormal(totalScore, frame.getState(index));
         }
-        remainFrames(frames.size() - 1);
+        remainFrames(remainSize - INDEX_ONE);
         nextLine();
     }
 
-    private static void printStrikeAndSpare(Frames frames, User user, TotalScore totalScore, int i, State state) {
-        if (i != INDEX_ZERO) {
+    private static void printStrike(Frames frames, User user, TotalScore totalScore, int index) {
+        Frame frame = frames.get(index);
+        State state = frame.getLastState();
+
+        if (index != INDEX_ZERO) {
+            State prevFrame = user.getState(frames.get(i - INDEX_ONE).getFrameNo());
+            int prevFirstScore = user.getFirstScore(frames.get(i - INDEX_ONE).getFrameNo());
+
+            printStrike(totalScore, state, prevFrame);
+            printSpare(totalScore, prevFrame, prevFirstScore);
+        }
+    }
+
+    private static void printSpare(Frames frames, User user, TotalScore totalScore, int index) {
+        Frame frame = frames.get(index);
+        State state = frame.getLastState();
+
+        if (index != INDEX_ZERO) {
             State prevFrame = user.getState(frames.get(i - INDEX_ONE).getFrameNo());
             int prevFirstScore = user.getFirstScore(frames.get(i - INDEX_ONE).getFrameNo());
 
@@ -119,5 +143,8 @@ public class ResultView {
 
     private static void nextLine() {
         System.out.println();
+    }
+
+    private ResultView() {
     }
 }

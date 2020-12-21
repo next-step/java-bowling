@@ -3,7 +3,6 @@ package bowling.domain;
 import java.util.Optional;
 
 public class Score {
-    public static final int PINS_NOT_GUTTER = 1;
     private final Pins first;
     private Pins second;
 
@@ -55,8 +54,8 @@ public class Score {
     }
 
     public int getFrameScore() {
-        Pins second = Optional.ofNullable(this.second).orElse(new Pins(0));
-        return this.first.get() + second.get();
+        Pins secondPins = Optional.ofNullable(this.second).orElse(new Pins(0));
+        return this.first.get() + secondPins.get();
     }
 
     @Override
