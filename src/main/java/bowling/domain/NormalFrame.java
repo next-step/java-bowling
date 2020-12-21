@@ -1,7 +1,6 @@
 package bowling.domain;
 
-import static bowling.common.SymbolConstants.NOT_THROWN;
-import static bowling.common.SymbolConstants.SPARE;
+import static bowling.common.SymbolConstants.*;
 
 public class NormalFrame implements Frame{
     private static final int NORMAL_FRAME_MAX = 9;
@@ -39,17 +38,32 @@ public class NormalFrame implements Frame{
 
     @Override
     public String display() {
-        String first = normalTries.isFirstNotThrown() ? NOT_THROWN : normalTries.first().display();
-        String second = normalTries.isSecondNotThrown() ? NOT_THROWN : normalTries.second().display();
+        String first = NOT_THROWN, second = NOT_THROWN;
+
+        if(normalTries.first().isPresent()) {
+            first = normalTries.first().get().display();
+        }
+
+        if(normalTries.second().isPresent()) {
+            second = normalTries.second().get().display();
+        }
+
+        if(normalTries.isFirstNotThrown()) {
+            return NOT_THROWN.concat(NOT_THROWN);
+        }
 
         if(normalTries.isStrike()) {
-            return first;
+            return first.concat(NOT_THROWN);
+        }
+
+        if(normalTries.isSecondNotThrown()) {
+            return first.concat(SYMBOL_DELIMITER).concat(NOT_THROWN);
         }
 
         if(normalTries.isSpare()) {
-            return first.concat(SPARE);
+            return first.concat(SYMBOL_DELIMITER).concat(SPARE);
         }
 
-        return first.concat(second);
+        return first.concat(SYMBOL_DELIMITER).concat(second);
     }
 }

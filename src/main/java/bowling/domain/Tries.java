@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Tries {
     private static final int FIRST_INDEX = 0;
@@ -23,14 +24,14 @@ public class Tries {
             return false;
         }
 
-        return Try.MAX.equals(first());
+        return Try.MAX.equals(first().get());
     }
 
     public boolean isSpare() {
         if(isSecondNotThrown()) {
             return false;
         }
-        return Try.MAX.equals(first().plus(second()));
+        return Try.MAX.equals(first().get().plus(second().get()));
     }
 
     public int size() {
@@ -41,28 +42,31 @@ public class Tries {
         tries.add(Try.of(value));
     }
 
-    public Try first() {
+    public Optional<Try> first() {
+        Try t = null;
         if(isFirstNotThrown()) {
-            return null;
+            return Optional.ofNullable(t);
         }
 
-        return tries.get(FIRST_INDEX);
+        return Optional.of(tries.get(FIRST_INDEX));
     }
 
-    public Try second() {
+    public Optional<Try> second() {
+        Try t = null;
         if(isSecondNotThrown()) {
-            return null;
+            return Optional.ofNullable(t);
         }
 
-        return tries.get(SECOND_INDEX);
+        return Optional.of(tries.get(SECOND_INDEX));
     }
 
-    public Try third() {
+    public Optional<Try> third() {
+        Try t = null;
         if(isThirdNotThrown()) {
-            return null;
+            return Optional.ofNullable(t);
         }
 
-        return tries.get(THIRD_INDEX);
+        return Optional.of(tries.get(THIRD_INDEX));
     }
 
     public boolean isFirstNotThrown() {

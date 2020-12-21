@@ -1,7 +1,7 @@
 package bowling.common;
 
 public class StringUtils {
-    public static final int NUMBER_OF_PADDING = 6;
+    private static final int NUMBER_OF_PADDING = 6;
     private static final char BLANK = ' ';
 
     private StringUtils() {}
@@ -11,7 +11,7 @@ public class StringUtils {
             return inputString;
 
         StringBuilder sb = new StringBuilder(NUMBER_OF_PADDING);
-        for (int i = 0; i < (NUMBER_OF_PADDING - inputString.length()) / 2; i++) {
+        for (int i = 0; i < (NUMBER_OF_PADDING - inputString.length() + 1) / 2; i++) {
             sb.append(BLANK);
         }
         sb.append(inputString);

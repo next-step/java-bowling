@@ -33,9 +33,9 @@ public class FinalFrame implements Frame{
 
     @Override
     public String display() {
-        String first = finalTries.isFirstNotThrown() ? NOT_THROWN : finalTries.first().display();
-        String second = finalTries.isSecondNotThrown() ? NOT_THROWN : finalTries.second().display();
-        String third = finalTries.isThirdNotThrown() ? NOT_THROWN : finalTries.third().display();
+        String first = finalTries.first().isPresent() ? finalTries.first().get().display() : NOT_THROWN;
+        String second = finalTries.second().isPresent() ? finalTries.second().get().display() : NOT_THROWN;
+        String third = finalTries.third().isPresent() ? finalTries.third().get().display() : NOT_THROWN;
 
         if(!finalTries.isStrike() && finalTries.isSpare()) {
             return first.concat(SPARE).concat(third);

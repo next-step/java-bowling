@@ -7,8 +7,9 @@ import bowling.ui.ResultView;
 public class BowlingApplication {
     public static void main(String[] args) {
         String playerName = InputView.askPlayerName();
+        ResultView.printPlayerName(playerName);
+
         Player player = new Player(playerName);
-        ResultView.print(player);
 
         for(int i = 1; i <= 10; i++) {
             playBowling(player, i);

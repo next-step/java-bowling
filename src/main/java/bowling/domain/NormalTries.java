@@ -1,47 +1,32 @@
 package bowling.domain;
 
-public class NormalTries{
+import bowling.exception.NormalTriesCannotHaveThirdException;
 
+import java.util.Optional;
+
+public class NormalTries extends AbstractTries{
     private static final int NORMAL_TRIES_MAX_SIZE = 2;
-    private final Tries tries;
 
     private NormalTries(Tries tries) {
-        this.tries = tries;
+        super(tries);
     }
 
     public static NormalTries init() {
         return new NormalTries(Tries.init());
     }
 
+    @Override
     public boolean isOver() {
-        return tries.isStrike() || tries.size() == NORMAL_TRIES_MAX_SIZE;
+        return isStrike() || size() == NORMAL_TRIES_MAX_SIZE;
     }
 
-    public boolean isStrike() {
-        return tries.isStrike();
+    @Override
+    protected boolean isThirdNotThrown() {
+        throw new NormalTriesCannotHaveThirdException();
     }
 
-    public boolean isSpare() {
-        return tries.isSpare();
-    }
-
-    public void add(int value) {
-        tries.add(value);
-    }
-
-    public boolean isFirstNotThrown() {
-        return tries.isFirstNotThrown();
-    }
-
-    public boolean isSecondNotThrown() {
-        return tries.isSecondNotThrown();
-    }
-
-    public Try first() {
-        return tries.first();
-    }
-
-    public Try second() {
-        return tries.second();
+    @Override
+    protected Optional<Try> third() {
+        throw new NormalTriesCannotHaveThirdException();
     }
 }
