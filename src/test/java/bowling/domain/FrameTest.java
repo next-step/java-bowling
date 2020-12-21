@@ -2,10 +2,8 @@ package bowling.domain;
 
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.score.Pitch;
-import org.assertj.core.api.Assertions;
+import bowling.domain.score.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -66,7 +64,7 @@ public class FrameTest {
         Frame frame = NormalFrame.of(frameIndex);
 
         // when
-        frame.pitch(Pitch.from(10));
+        frame.pitch(Pin.from(10));
 
         // then
         assertThat(frame.isPlayable()).isFalse();
@@ -76,17 +74,17 @@ public class FrameTest {
 
     private static Stream<Arguments> providedSpare() {
         return Stream.of(
-                arguments(1, Pitch.from(4), Pitch.from(6)),
-                arguments(3, Pitch.from(1), Pitch.from(9)),
-                arguments(7, Pitch.from(8), Pitch.from(2)),
-                arguments(9, Pitch.from(9), Pitch.from(1))
+                arguments(1, Pin.from(4), Pin.from(6)),
+                arguments(3, Pin.from(1), Pin.from(9)),
+                arguments(7, Pin.from(8), Pin.from(2)),
+                arguments(9, Pin.from(9), Pin.from(1))
         );
     }
 
     @ParameterizedTest
     @DisplayName("1~9프레임 2차 시도=스페어")
     @MethodSource("providedSpare")
-    void createSpareInNormalFrame(int frameIndex, Pitch first, Pitch second) {
+    void createSpareInNormalFrame(int frameIndex, Pin first, Pin second) {
         // given
         Frame frame = NormalFrame.of(frameIndex);
 
@@ -102,7 +100,7 @@ public class FrameTest {
     @ParameterizedTest
     @DisplayName("10프레임 스페어 후 보너스 게임")
     @MethodSource("providedSpare")
-    void createSpareInFinalFrame(int bonusScore, Pitch first, Pitch second) {
+    void createSpareInFinalFrame(int bonusScore, Pin first, Pin second) {
         // given
         Frame frame = FinalFrame.of(10);
 
@@ -116,23 +114,23 @@ public class FrameTest {
         assertThat(frame.isEnd()).isFalse();
 
         // 보너스
-        frame.pitch(Pitch.from(bonusScore));
+        frame.pitch(Pin.from(bonusScore));
         assertThat(frame.isEnd()).isTrue();
     }
 
 
     private static Stream<Arguments> providedMiss() {
         return Stream.of(
-                arguments(Pitch.from(4), Pitch.from(4)),
-                arguments(Pitch.from(1), Pitch.from(5)),
-                arguments(Pitch.from(8), Pitch.from(1)),
-                arguments(Pitch.from(9), Pitch.from(0))
+                arguments(Pin.from(4), Pin.from(4)),
+                arguments(Pin.from(1), Pin.from(5)),
+                arguments(Pin.from(8), Pin.from(1)),
+                arguments(Pin.from(9), Pin.from(0))
         );
     }
     @ParameterizedTest
     @DisplayName("10프레임 miss 후 게임 끝나는지 확인")
     @MethodSource("providedMiss")
-    void createMissInFinalFrame(Pitch first, Pitch second) {
+    void createMissInFinalFrame(Pin first, Pin second) {
         // given
         Frame frame = FinalFrame.of(10);
 
@@ -151,17 +149,17 @@ public class FrameTest {
 
     private static Stream<Arguments> providedStrike() {
         return Stream.of(
-                arguments(Pitch.from(10), Pitch.from(10)),
-                arguments(Pitch.from(10), Pitch.from(10)),
-                arguments(Pitch.from(10), Pitch.from(10)),
-                arguments(Pitch.from(10), Pitch.from(10))
+                arguments(Pin.from(10), Pin.from(10)),
+                arguments(Pin.from(10), Pin.from(10)),
+                arguments(Pin.from(10), Pin.from(10)),
+                arguments(Pin.from(10), Pin.from(10))
         );
     }
 
     @ParameterizedTest
     @DisplayName("10프레임 3 스트라이크 후 게임 끝나는지 확인")
     @MethodSource("providedStrike")
-    void createStrikeInFinalFrame(Pitch first, Pitch second) {
+    void createStrikeInFinalFrame(Pin first, Pin second) {
         // given
         Frame frame = FinalFrame.of(10);
 
@@ -185,17 +183,17 @@ public class FrameTest {
 
     private static Stream<Arguments> providedStrikeAndMiss() {
         return Stream.of(
-                arguments(Pitch.from(10), Pitch.from(2), Pitch.from(10)),
-                arguments(Pitch.from(10), Pitch.from(3), Pitch.from(8)),
-                arguments(Pitch.from(10), Pitch.from(4), Pitch.from(0)),
-                arguments(Pitch.from(10), Pitch.from(9), Pitch.from(1))
+                arguments(Pin.from(10), Pin.from(2), Pin.from(10)),
+                arguments(Pin.from(10), Pin.from(3), Pin.from(8)),
+                arguments(Pin.from(10), Pin.from(4), Pin.from(0)),
+                arguments(Pin.from(10), Pin.from(9), Pin.from(1))
         );
     }
 
     @ParameterizedTest
     @DisplayName("10프레임 스트라이크 후 miss, 보너스 게임 추가되는지 확인")
     @MethodSource("providedStrikeAndMiss")
-    void createStrikeAndMissInFinalFrame(Pitch first, Pitch second, Pitch third) {
+    void createStrikeAndMissInFinalFrame(Pin first, Pin second, Pin third) {
         // given
         Frame frame = FinalFrame.of(10);
 

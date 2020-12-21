@@ -3,7 +3,7 @@ package bowling.view;
 import bowling.controller.Controller;
 import bowling.domain.Bowling;
 import bowling.domain.Name;
-import bowling.domain.score.Pitch;
+import bowling.domain.score.Pin;
 
 /**
  * Created By mand2 on 2020-12-21.
@@ -18,9 +18,9 @@ public class InputView {
         return Name.from(Controller.SCANNER.nextLine());
     }
 
-    public static Pitch askPitch(Bowling bowling) {
+    public static Pin askPitch(Bowling bowling) {
         System.out.print(String.format(ASK_PITCH_OF_INDEX, bowling.currentIndex()));
-        return Pitch.from(Controller.SCANNER.nextInt());
+        return Pin.from(Controller.SCANNER.nextInt());
     }
 
 }

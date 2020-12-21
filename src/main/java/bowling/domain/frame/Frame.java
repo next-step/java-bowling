@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Pitch;
+import bowling.domain.score.Pin;
 import bowling.domain.score.Score;
 import bowling.state.BowlingState;
 
@@ -25,7 +25,7 @@ public abstract class Frame {
     }
 
 
-    public abstract void pitch(Pitch score);
+    public abstract void pitch(Pin score);
 
     public abstract boolean isPlayable();
 

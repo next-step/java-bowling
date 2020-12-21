@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Pitch;
+import bowling.domain.score.Pin;
 import bowling.state.*;
 
 /**
@@ -34,7 +34,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public void pitch(Pitch score) {
+    public void pitch(Pin score) {
         if (this.state.isPlayable()) {
             this.score.pitch(score);
         }

@@ -1,7 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.frame.Frames;
-import bowling.domain.score.Pitch;
+import bowling.domain.score.Pin;
 import bowling.state.BowlingState;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public class Bowling {
         return playerName.getName();
     }
 
-    public void pitch(Pitch score) {
+    public void pitch(Pin score) {
         frames.bowling(score);
     }
 

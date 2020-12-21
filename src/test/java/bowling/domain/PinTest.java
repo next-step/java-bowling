@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.score.Pitch;
+import bowling.domain.score.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,15 +11,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 /**
  * Created By mand2 on 2020-12-18.
  */
-class PitchTest {
+class PinTest {
 
     @ParameterizedTest
     @DisplayName("투구 생성자")
     @ValueSource(ints = {0, 5, 7, 10})
     void createPitch(int inputScore) {
-        Pitch pitch = Pitch.from(inputScore);
+        Pin pin = Pin.from(inputScore);
 
-        assertThat(pitch).isEqualTo(Pitch.from(inputScore));
+        assertThat(pin).isEqualTo(Pin.from(inputScore));
     }
 
     @ParameterizedTest
@@ -27,9 +27,9 @@ class PitchTest {
     @ValueSource(ints = {-1, 11})
     void createPitchExceedRange(int inputScore) {
 
-        assertThatThrownBy(() -> Pitch.from(inputScore))
+        assertThatThrownBy(() -> Pin.from(inputScore))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Pitch.MESSAGE_SCORE_RANGE);
+                .hasMessage(Pin.MESSAGE_SCORE_RANGE);
     }
 
 }

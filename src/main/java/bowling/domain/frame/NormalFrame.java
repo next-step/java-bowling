@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Pitch;
+import bowling.domain.score.Pin;
 import bowling.state.*;
 
 /**
@@ -33,7 +33,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public void pitch(Pitch score) {
+    public void pitch(Pin score) {
         this.score.pitch(score);
     }
 

@@ -32,7 +32,7 @@
 - [x] Name 
     - 이름 입력 3글자, 영어로만.
     
-- [x] pitch
+- [x] pin
     - 볼링공을 한번 던졌을 때. 0~10 입력 가능. 그 외 예외처리.
     - `score` : 내가 쓰러뜨린 핀의 개수 
     
@@ -41,7 +41,7 @@
         - final frame (마지막 프레임) : 보너스 게임 판단 -> 실행
     - 1 ball 후, 상태 체크 -> 진행 여부 판단 -> 1 프레임 종결 후 상태(`strike`, `spare`, `miss`) 판단.
     - `index` : 현재 회차
-    - `Score` : pitch 객체 집합. => 이 값으로 상태값 판단, 결과값 전달.
+    - `Score` : pin 객체 집합. => 이 값으로 상태값 판단, 결과값 전달.
 - [x] bowlingScore
     - enum. ResultView에 보여줄 값으로 치환. (예- 10 -> X)
 - [x] bowlingState

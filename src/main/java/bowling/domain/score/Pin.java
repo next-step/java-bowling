@@ -5,25 +5,25 @@ import java.util.Objects;
 /**
  * Created By mand2 on 2020-12-18.
  */
-public class Pitch {
+public class Pin {
 
     public static final int MIN_PINS = 0;
     public static final int MAX_PINS = 10;
     public static final String MESSAGE_SCORE_RANGE = "투구 점수는 0~10 사이입니다";
     
-    private final int score;
+    private final int knockDownPins;
 
-    private Pitch(int score) {
-        this.score = score;
+    private Pin(int knockDownPins) {
+        this.knockDownPins = knockDownPins;
     }
 
-    public static Pitch from(int score) {
+    public static Pin from(int score) {
         validate(score);
-        return new Pitch(score);
+        return new Pin(score);
     }
 
-    public int getScore() {
-        return score;
+    public int getKnockDownPins() {
+        return knockDownPins;
     }
 
     private static void validate(int pins) {
@@ -36,12 +36,12 @@ public class Pitch {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pitch pitch = (Pitch) o;
-        return getScore() == pitch.getScore();
+        Pin pin = (Pin) o;
+        return getKnockDownPins() == pin.getKnockDownPins();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getScore());
+        return Objects.hash(getKnockDownPins());
     }
 }

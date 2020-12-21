@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Pitch;
+import bowling.domain.score.Pin;
 import bowling.state.BowlingState;
 
 import java.util.Collections;
@@ -40,7 +40,7 @@ public class Frames {
         return of(frames);
     }
 
-    public void bowling(Pitch score) {
+    public void bowling(Pin score) {
         Frame currentFrame = getFrameByIndex(currentIndex);
         currentFrame.pitch(score);
         if (!currentFrame.isPlayable()) {
