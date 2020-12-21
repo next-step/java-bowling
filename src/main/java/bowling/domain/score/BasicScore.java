@@ -32,10 +32,8 @@ public class BasicScore extends Score {
             firstPoint = pitchedPoint;
             return;
         }
-        if (secondPoint == null) {
-            secondPoint = pitchedPoint;
-            return;
-        }
+        secondPoint = pitchedPoint;
+
     }
 
 
