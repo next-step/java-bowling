@@ -5,11 +5,8 @@ package bowling.state;
  */
 public interface BowlingState {
 
-    boolean isSpare();
-
     boolean isPlayable();
 
     boolean isFinalPlayable();
 
-    String printResult();
 }

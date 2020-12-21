@@ -24,11 +24,6 @@ public class Spare implements BowlingState {
     }
 
     @Override
-    public boolean isSpare() {
-        return true;
-    }
-
-    @Override
     public boolean isPlayable() {
         return false;
     }
@@ -36,24 +31,6 @@ public class Spare implements BowlingState {
     @Override
     public boolean isFinalPlayable() {
         return true;
-    }
-
-    @Override
-    public String printResult() {
-        List<String> buffer = new ArrayList<>();
-        List<Integer> list = this.frame.getScore().getList();
-        for (int pitch = 0; pitch < list.size(); pitch++) {
-            buffer.add(BowlingScore.getResultScore(list.get(pitch), isSecondPitch(pitch)));
-        }
-
-        return String.join(ResultView.DELIMITER, buffer);
-    }
-
-    private boolean isSecondPitch(int index) {
-        if (index + 1 == Score.SECOND_PITCH) {
-            return true;
-        }
-        return false;
     }
 
 }

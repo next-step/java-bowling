@@ -23,11 +23,6 @@ public class Miss implements BowlingState {
 
 
     @Override
-    public boolean isSpare() {
-        return false;
-    }
-
-    @Override
     public boolean isPlayable() {
         return false;
     }
@@ -37,11 +32,4 @@ public class Miss implements BowlingState {
         return false;
     }
 
-    @Override
-    public String printResult() {
-        return this.frame.getScoreList().stream()
-                .map(score -> BowlingScore.getResultScore(score, isSpare()))
-                .collect(Collectors.joining(ResultView.DELIMITER))
-                ;
-    }
 }

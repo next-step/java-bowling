@@ -19,11 +19,6 @@ public class Open implements BowlingState {
     }
 
     @Override
-    public boolean isSpare() {
-        return false;
-    }
-
-    @Override
     public boolean isPlayable() {
         return true;
     }
@@ -31,13 +26,5 @@ public class Open implements BowlingState {
     @Override
     public boolean isFinalPlayable() {
         return false;
-    }
-
-    @Override
-    public String printResult() {
-        if (this.frame.getScore().isUnOpen()) {
-            return BowlingScore.getResultScore(-1, isSpare());
-        }
-        return BowlingScore.getResultScore(this.frame.getScore().getList().get(0), isSpare());
     }
 }
