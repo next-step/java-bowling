@@ -13,7 +13,7 @@ public class BowlingController {
         Player player = inputView.inputPlayer();
         resultView.printFirstFrame(player.getName());
 
-        NormalFrames normalFrames = NormalFrames.init();
+        Frames frames = Frames.init();
         boolean isGameFinished = false;
         int frameIndex = 1;
         int pitchCount = 0;
@@ -32,7 +32,7 @@ public class BowlingController {
                 if(pitch.isStrike() || pitchCount >= 2) {
                     frameIndex++;
                     pitchCount = 0;
-                    normalFrames.add(normalFrame);
+                    frames.add(normalFrame);
                     isFinished = true;
                 }
             }

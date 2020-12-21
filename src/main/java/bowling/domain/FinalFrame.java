@@ -3,7 +3,7 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FinalFrame {
+public class FinalFrame implements Frame {
     public static final int MAXIMUM_PITCH = 3;
 
     private List<Pitch> pitches;
@@ -17,7 +17,7 @@ public class FinalFrame {
         return new FinalFrame(pitches);
     }
 
-    public FinalFrame add(Pitch pitch) {
+    public Frame add(Pitch pitch) {
         addSecondPitch(pitch);
         addFirstPitch(pitch);
         return new FinalFrame(pitches);
