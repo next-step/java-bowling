@@ -41,7 +41,7 @@ public class FinalFrame implements Frame {
     }
 
     private void validateFrameScore(Pitch pitch) {
-        if(frameScore != 10 && frameScore + pitch.getScore() > 10) {
+        if(getPitchSize() == 1 && frameScore != 10 && frameScore + pitch.getScore() > 10) {
             throw new IllegalArgumentException(MAXIMUM_FRAMESCORE);
         }
     }
