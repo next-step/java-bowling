@@ -6,48 +6,47 @@ import bowling.view.ResultView;
 
 public class BowlingController {
 
+    public static final int ONE = 1;
+
+    private Player player;
+    private Frames frames;
+
     public void start() {
-        InputView inputView = new InputView();
-        ResultView resultView = new ResultView();
 
-        Player player = inputView.inputPlayer();
-        resultView.printFirstFrame(player.getName());
+        player = InputView.inputPlayer();
+        ResultView.printEmptyRecords(player.getName());
 
-        Frames frames = Frames.init();
-        boolean isGameFinished = false;
-        int frameIndex = 1;
+        frames = Frames.init();
 
-        while(!isGameFinished) {
-            Frame normalFrame = NormalFrame.init();
-
-            while(!normalFrame.isFinish()) {
-                int score = inputView.inputScore(frameIndex);
-                Pitch pitch = Pitch.from(score);
-                normalFrame.add(pitch);
-                resultView.printFrames(player.getName(), frameIndex);
-            }
-            frameIndex++;
-            frames.add(normalFrame);
-
-            if(frameIndex > 9) {
-                isGameFinished = true;
-            }
+        while(!frames.isFinished()) {
+            frames.add(playGame());
         }
+    }
 
-        boolean lastGameFinished = false;
-        while(!lastGameFinished) {
-            Frame finalFrame = FinalFrame.init();
-
-            while(!finalFrame.isFinish()) {
-                int score = inputView.inputScore(frameIndex);
-
-                Pitch pitch = Pitch.from(score);
-                finalFrame.add(pitch);
-                resultView.printFrames(player.getName(), frameIndex);
-            }
-            frameIndex++;
-            frames.add(finalFrame);
-            lastGameFinished = true;
+    private Frame playGame() {
+        if(frames.isFinalFrame()) {
+            return createFinalFrame();
         }
+        return createNormalFrame();
+    }
+
+    private Frame createNormalFrame() {
+        Frame normalFrame = NormalFrame.init();
+        return createFrame(normalFrame);
+    }
+
+    private Frame createFinalFrame() {
+        Frame finalFrame = FinalFrame.init();
+        return createFrame(finalFrame);
+    }
+
+    private Frame createFrame(Frame frame) {
+        while(!frame.isFinish()) {
+            int round = frames.getSize() + ONE;
+            Pitch pitch = Pitch.from(InputView.inputScore(round));
+            frame.add(pitch);
+            ResultView.printFrames(player.getName(), round);
+        }
+        return frame;
     }
 }

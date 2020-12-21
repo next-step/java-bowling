@@ -11,13 +11,13 @@ public class InputView {
     private static final String INPUT_PLAYER = "플레이어 이름은(3 english letters)?: ";
     private static final String INPUT_SCORE = "프레임 투구 : ";
 
-    public Player inputPlayer() {
+    public static Player inputPlayer() {
         System.out.print(INPUT_PLAYER);
         String name = scanner.nextLine();
         return Player.from(name);
     }
 
-    public int inputScore(int index) {
+    public static int inputScore(int index) {
         System.out.println();
         System.out.print(index + INPUT_SCORE);
         String score = scanner.nextLine();

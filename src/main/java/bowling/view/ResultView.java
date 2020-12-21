@@ -10,42 +10,42 @@ public class ResultView {
     public static final int FRAME_LENGTH = 11;
     public static final String EMPTY_SPACE = "      ";
 
-    public void printFirstFrame(String name) {
+    public static void printEmptyRecords(String name) {
         printSignature();
         printScore(name, 1);
         System.out.println();
     }
 
-    public void printFrames(String name, int round) {
+    public static void printFrames(String name, int round) {
         printSignature();
         printScore(name, round);
         System.out.println();
     }
 
-    private void printSignature() {
+    private static void printSignature() {
         System.out.print(BAR_DELIMITER);
         System.out.print(String.format("%5s ",NAME));
         System.out.print(BAR_DELIMITER);
         IntStream.range(ONE, FRAME_LENGTH)
-                .forEach(this::printFrameNumbers);
+                .forEach(ResultView::printFrameNumbers);
     }
 
-    private void printFrameNumbers(int number) {
+    private static void printFrameNumbers(int number) {
         System.out.print(String.format("  %02d  ", number));
         System.out.print(BAR_DELIMITER);
     }
 
-    private void printScore(String name, int round) {
+    private static void printScore(String name, int round) {
         System.out.println();
         System.out.print(BAR_DELIMITER);
         System.out.print(String.format("%5s ",name));
         System.out.print(BAR_DELIMITER);
 
         IntStream.range(ONE, FRAME_LENGTH)
-                .forEach(this::printEmptyScore);
+                .forEach(ResultView::printEmptyScore);
     }
 
-    private void printEmptyScore(int number) {
+    private static void printEmptyScore(int number) {
         System.out.print(EMPTY_SPACE);
         System.out.print(BAR_DELIMITER);
     }

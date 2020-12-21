@@ -5,17 +5,22 @@ import java.util.List;
 
 public class Frames {
 
-    public static final int NORMALFRAME_NUMBER = 9;
+    public static final int NUMBER_OF_FRAMES = 10;
+    public static final int FINAL_FRAME_CONDITION = 9;
 
     private List<Frame> frames;
 
-    private Frames(List<Frame> normalFrames) {
-        this.frames = normalFrames;
+    private Frames(List<Frame> frames) {
+        this.frames = frames;
     }
 
     public static Frames init() {
-        List<Frame> normalFrames = new ArrayList<>(NORMALFRAME_NUMBER);
-        return new Frames(normalFrames);
+        List<Frame> frames = new ArrayList<>(NUMBER_OF_FRAMES);
+        return new Frames(frames);
+    }
+
+    public static Frames from(List<Frame> frames) {
+        return new Frames(frames);
     }
 
     public Frames add(Frame frame) {
@@ -23,8 +28,15 @@ public class Frames {
         return new Frames(frames);
     }
 
-    public int getNormalFrameSize() {
+    public int getSize() {
         return frames.size();
     }
 
+    public boolean isFinished() {
+        return frames.size() == NUMBER_OF_FRAMES;
+    }
+
+    public boolean isFinalFrame() {
+        return frames.size() >= FINAL_FRAME_CONDITION;
+    }
 }
