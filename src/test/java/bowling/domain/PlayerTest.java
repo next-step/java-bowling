@@ -10,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PlayerTest {
 
-
     @ParameterizedTest
     @DisplayName("플레이어 이름 정상 등록 확인")
     @ValueSource(strings = {"WYR", "HHH", "KKK"})
