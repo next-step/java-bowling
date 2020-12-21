@@ -2,6 +2,9 @@ package bowling.domain;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.score.Pitch;
+import bowling.state.BowlingState;
+
+import java.util.List;
 
 /**
  * Created By mand2 on 2020-12-21.
@@ -40,4 +43,7 @@ public class Bowling {
         return this.frames.getCurrentIndex();
     }
 
+    public List<BowlingState> getState() {
+        return this.frames.getState();
+    }
 }

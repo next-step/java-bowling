@@ -2,6 +2,7 @@ package bowling.controller;
 
 import bowling.domain.Bowling;
 import bowling.domain.Name;
+import bowling.domain.score.Pitch;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -23,7 +24,11 @@ public class Controller {
 
         ResultView.printScoreBoard(bowling);
 
-
+        while (!bowling.isGameEnd()) {
+            Pitch pitch = InputView.askPitch(bowling);
+            bowling.pitch(pitch);
+            ResultView.printScoreBoard(bowling);
+        }
 
     }
 

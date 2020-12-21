@@ -1,12 +1,15 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Pitch;
+import bowling.state.BowlingState;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Created By mand2 on 2020-12-21.
@@ -30,7 +33,7 @@ public class Frames {
     }
 
     public static Frames init() {
-        List<Frame> frames = IntStream.of(START_INDEX, NORMAL_FRAME_SIZE)
+        List<Frame> frames = IntStream.rangeClosed(START_INDEX, NORMAL_FRAME_SIZE)
                 .mapToObj(NormalFrame::of)
                 .collect(Collectors.toList());
         frames.add(FinalFrame.of(FINAL_FRAME_INDEX));
@@ -50,11 +53,17 @@ public class Frames {
     }
 
     private Frame getFrameByIndex(int index) {
-        return this.frames.get(index);
+        return this.frames.get(index-1);
     }
 
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
+    }
+
+    public List<BowlingState> getState() {
+        return this.frames.stream()
+                .map(Frame::getState)
+                .collect(Collectors.collectingAndThen(toList(), Collections::unmodifiableList));
     }
 
     public int getCurrentIndex() {
