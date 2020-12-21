@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FinalFrameTest {
 
@@ -71,6 +72,19 @@ class FinalFrameTest {
         finalFrame.add(pitch2);
 
         assertThat(finalFrame.isFinish()).isFalse();
+    }
+
+    @Test
+    @DisplayName("첫번째 투구가 스트라이크가 아님에도 2번째 투구까지의 합이 10을 초과할 경우, 예외 처리")
+    void exceptScore() {
+        Frame finalFrame = FinalFrame.init();
+
+        Pitch pitch1 = Pitch.from(8);
+        Pitch pitch2 = Pitch.from(3);
+        finalFrame.add(pitch1);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> finalFrame.add(pitch2));
     }
 
 }
