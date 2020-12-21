@@ -26,9 +26,6 @@ public class Bowling {
         return player.getName();
     }
 
-    public int getCurrentFrameNumber() {
-        return frames.getCurrentFramePosition();
-    }
 
     public void pitch(Point pointPitch) {
         frames.pitch(pointPitch);
@@ -40,6 +37,9 @@ public class Bowling {
 
     public boolean isGameFinished() {
         return frames.isFinished();
+    }
+    public boolean isFrameFinished(int frameIndex){
+        return frames.hasScoreTurn(frameIndex);
     }
 
 }
