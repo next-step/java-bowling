@@ -5,7 +5,7 @@ import bowling.domain.PlayerName;
 public interface InputView {
     int getNumberOfPlayers();
 
-    String getPlayerName();
+    String getPlayerName(int playerNo);
 
     int getKnockDownPins(int frameNo);
 

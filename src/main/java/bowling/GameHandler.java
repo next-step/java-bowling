@@ -24,7 +24,8 @@ public class GameHandler {
         Integer numberOfPlayers = ValidInputHelper.get(this::getNumberOfPlayers, inputView::printError);
         List<PlayerName> playerNames = new ArrayList<>();
         for (int i = 0; i < numberOfPlayers; i++) {
-            PlayerName playerName = ValidInputHelper.get(this::getPlayerName, inputView::printError);
+            int playerNo = i + 1;
+            PlayerName playerName = ValidInputHelper.get(() -> getPlayerName(playerNo), inputView::printError);
             playerNames.add(playerName);
         }
 
@@ -39,8 +40,8 @@ public class GameHandler {
         return ValidInputHelper.get(inputView::getNumberOfPlayers, inputView::printError);
     }
 
-    private PlayerName getPlayerName() {
-        String inputPlayerName = ValidInputHelper.get(inputView::getPlayerName, inputView::printError);
+    private PlayerName getPlayerName(int playerNo) {
+        String inputPlayerName = ValidInputHelper.get(() -> inputView.getPlayerName(playerNo), inputView::printError);
         return PlayerName.valueOf(inputPlayerName);
     }
 
