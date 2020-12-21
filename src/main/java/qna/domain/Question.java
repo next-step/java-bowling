@@ -94,7 +94,7 @@ public class Question extends AbstractEntity {
 
     public DeleteHistory deleteQuestion(long questionId, User deletedBy) {
         this.setDeleted(true);
-        return new DeleteHistory(ContentType.QUESTION, questionId, deletedBy);
+        return DeleteHistory.ofQuestion(questionId, deletedBy);
     }
 
     @Override
