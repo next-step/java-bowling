@@ -13,7 +13,6 @@ import java.util.Scanner;
  */
 public class Controller {
 
-    public static Scanner SCANNER = new Scanner(System.in);
 
 
     public static void start() {
