@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.Frames;
 import bowling.view.GameStatus;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import static java.util.stream.Collectors.toList;
 
 public class Game {
 
-    private List<Frames> framesList;
+    private final List<Frames> framesList;
 
     public Game(List<String> playerNames) {
         framesList = playerNames
@@ -25,7 +26,7 @@ public class Game {
     }
 
     public boolean isFinish() {
-        return false;
+        return framesList.stream().allMatch(Frames::isFinish);
     }
 
     public void forEach(Consumer<Frames> frameConsumer) {

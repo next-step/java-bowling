@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.Frames;
+import bowling.domain.Frames;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

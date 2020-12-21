@@ -1,9 +1,7 @@
-package bowling;
+package bowling.domain;
 
 
-import bowling.domain.Frame;
-import bowling.domain.IllegalBallThrownException;
-import bowling.domain.NormalFrame;
+import bowling.IllegalPlayerNameException;
 import bowling.view.GameStatus;
 
 import java.util.ArrayList;
