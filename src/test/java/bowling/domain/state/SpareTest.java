@@ -19,6 +19,6 @@ class SpareTest {
 
         Score nextScore = spare.addNextScore(score);
 
-        assertThat(nextScore).isEqualTo(new Score(9, 1));
+        assertThat(nextScore).isEqualTo(new Score(10, 0));
     }
 }
