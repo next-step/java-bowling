@@ -1,13 +1,12 @@
 package bowling.controller;
 
 import bowling.domain.BowlingKnockDown;
+import bowling.domain.Frames;
 import bowling.domain.Player;
 import bowling.exception.BowlingMaxCountException;
 import bowling.view.InputUi;
 import bowling.view.OutputUi;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.stream.IntStream;
 
 public class BowlingGameController {
@@ -20,35 +19,21 @@ public class BowlingGameController {
 
     public static void run() {
         player = Player.of(InputUi.inputPlayer());
-        OutputUi.printInitFrame(player.getName());
+        OutputUi.printInitFrame(player);
 
-        Map<Integer, BowlingKnockDown> bowlingKnockDownMap = new LinkedHashMap<>();
+        Frames frames = new Frames();
         IntStream.range(1, BOWLING_MAX_NUMBER)
-                .forEach(i -> setBowlingKnockDown(i, bowlingKnockDownMap));
-        finalFrame(bowlingKnockDownMap);
+                .forEach(i -> setBowlingKnockDown(i, frames));
+
+        finalFrame(frames);
 
         InputUi.close();
     }
 
-    private static BowlingKnockDown initFirst(int number, Map<Integer, BowlingKnockDown> bowlingKnockDownMap) {
-        BowlingKnockDown bowlingKnockDown = new BowlingKnockDown(InputUi.inputFrame(number));
-        bowlingKnockDownMap.put(number, bowlingKnockDown);
-        OutputUi.printBowling(player, bowlingKnockDownMap);
-        return bowlingKnockDown;
-    }
+    private static void setBowlingKnockDown(int number, Frames frames) {
+        BowlingKnockDown bowlingKnockDown = frames.initFirst(number, InputUi.inputFrame(number));
+        OutputUi.printBowling(player, frames);
 
-    private static BowlingKnockDown initNext(int number, BowlingKnockDown bowlingKnockDown, Map<Integer, BowlingKnockDown> bowlingKnockDownMap, int nextCountOfBowlingKnockDown) {
-        String knockDownExpression = bowlingKnockDown.getKnockDownExpression().trim();
-        int countOfBowlingKnockDown = bowlingKnockDown.getCountOfBowlingKnockDown();
-
-        bowlingKnockDown = new BowlingKnockDown(knockDownExpression, countOfBowlingKnockDown, nextCountOfBowlingKnockDown);
-        bowlingKnockDownMap.put(number, bowlingKnockDown);
-        OutputUi.printBowling(player, bowlingKnockDownMap);
-        return bowlingKnockDown;
-    }
-
-    private static void setBowlingKnockDown(int number, Map<Integer, BowlingKnockDown> bowlingKnockDownMap) {
-        BowlingKnockDown bowlingKnockDown = initFirst(number, bowlingKnockDownMap);
         int countOfBowlingKnockDown = bowlingKnockDown.getCountOfBowlingKnockDown();
         if (countOfBowlingKnockDown == STRIKE_NUMBER) {
             return;
@@ -59,25 +44,32 @@ public class BowlingGameController {
         if (sum > BOWLING_MAX_NUMBER) {
             throw new BowlingMaxCountException();
         }
-        initNext(number, bowlingKnockDown, bowlingKnockDownMap, nextCountOfBowlingKnockDown);
+
+        frames.initNext(number, bowlingKnockDown, nextCountOfBowlingKnockDown);
+        OutputUi.printBowling(player, frames);
     }
 
-    private static void finalFrame(Map<Integer, BowlingKnockDown> bowlingKnockDownMap) {
-        BowlingKnockDown bowlingKnockDown = initFirst(BOWLING_MAX_NUMBER, bowlingKnockDownMap);
-        int countOfBowlingKnockDown = bowlingKnockDown.getCountOfBowlingKnockDown();
+    private static void finalFrame(Frames frames) {
+        BowlingKnockDown bowlingKnockDown = frames.initFirst(BOWLING_MAX_NUMBER, InputUi.inputFrame(BOWLING_MAX_NUMBER));
+        OutputUi.printBowling(player, frames);
 
+        int countOfBowlingKnockDown = bowlingKnockDown.getCountOfBowlingKnockDown();
         if (countOfBowlingKnockDown < BOWLING_MAX_NUMBER) {
             int nextCountOfBowlingKnockDown = InputUi.inputFrame(BOWLING_MAX_NUMBER);
             int sum = countOfBowlingKnockDown + nextCountOfBowlingKnockDown;
 
-            initNext(BOWLING_MAX_NUMBER, bowlingKnockDown, bowlingKnockDownMap, nextCountOfBowlingKnockDown);
+            frames.initNext(BOWLING_MAX_NUMBER, bowlingKnockDown, nextCountOfBowlingKnockDown);
+            OutputUi.printBowling(player, frames);
             if (sum < BOWLING_MAX_NUMBER) {
                 InputUi.close();
                 return;
             }
         }
 
-        bowlingKnockDown = initNext(BOWLING_MAX_NUMBER, bowlingKnockDown, bowlingKnockDownMap, InputUi.inputFrame(BOWLING_MAX_NUMBER));
-        initNext(BOWLING_MAX_NUMBER, bowlingKnockDown, bowlingKnockDownMap, InputUi.inputFrame(BOWLING_MAX_NUMBER));
+        bowlingKnockDown = frames.initNext(BOWLING_MAX_NUMBER, bowlingKnockDown, InputUi.inputFrame(BOWLING_MAX_NUMBER));
+        OutputUi.printBowling(player, frames);
+
+        frames.initNext(BOWLING_MAX_NUMBER, bowlingKnockDown, InputUi.inputFrame(BOWLING_MAX_NUMBER));
+        OutputUi.printBowling(player, frames);
     }
 }
