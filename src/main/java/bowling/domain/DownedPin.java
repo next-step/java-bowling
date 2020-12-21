@@ -5,11 +5,12 @@ import bowling.bowlingexception.InvalidDownedPinNumberException;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static bowling.domain.BowlingConstant.MAXIMUM_NUMBER_OF_DOWNED_PIN;
-import static bowling.domain.BowlingConstant.MINIMUM_NUMBER_OF_DOWNED_PIN;
 import static java.util.stream.Collectors.toList;
 
 public class DownedPin {
+
+    public static final int MAXIMUM_NUMBER_OF_DOWNED_PIN = 10;
+    public static final int MINIMUM_NUMBER_OF_DOWNED_PIN = 0;
 
     private static final List<DownedPin> cachedPin = IntStream.rangeClosed(MINIMUM_NUMBER_OF_DOWNED_PIN, MAXIMUM_NUMBER_OF_DOWNED_PIN)
             .mapToObj(DownedPin::new)
