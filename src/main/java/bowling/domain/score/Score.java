@@ -33,22 +33,6 @@ public class Score {
         pins.add(knockedDownPins);
     }
 
-    public boolean isStrike() {
-        return this.pins.size() == FIRST_PITCH && sum() == MAX_SCORE;
-    }
-
-    public boolean isOpen() {
-        return this.pins.size() == FIRST_PITCH && sum() < MAX_SCORE;
-    }
-
-    public boolean isSpare() {
-        return this.pins.size() == SECOND_PITCH && sum() == MAX_SCORE;
-    }
-
-    public boolean isMiss() {
-        return this.pins.size() == SECOND_PITCH && sum() < MAX_SCORE;
-    }
-
     public boolean isUnOpen() {
         return this.pins.isEmpty();
     }
@@ -58,15 +42,19 @@ public class Score {
     }
 
     private void validatePitch(Pin knockedDownPins) {
-        if (knockedDownPins.getKnockDownPins() + sum() > MAX_SCORE) {
+        if (knockedDownPins.getKnockDownPins() + sumAll() > MAX_SCORE) {
             throw new RuntimeException(OVER_SCORE_IN_EACH_FRAME);
         }
     }
 
-    public int sum() {
+    public int sumAll() {
         return this.pins.stream()
                 .mapToInt(Pin::getKnockDownPins)
                 .sum();
+    }
+
+    public int size() {
+        return this.pins.size();
     }
 
     public List<Integer> getList() {

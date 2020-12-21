@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 import bowling.state.*;
 
 /**
@@ -51,13 +52,13 @@ public class NormalFrame extends Frame {
     @Override
     public void checkState() {
 
-        if (score.isStrike()) {
+        if (isStrike()) {
             this.state = Strike.of(this);
         }
-        if (score.isSpare()) {
+        if (isSpare()) {
             this.state = Spare.of(this);
         }
-        if (score.isMiss()) {
+        if (isMiss()) {
             this.state = Miss.of(this);
         }
 

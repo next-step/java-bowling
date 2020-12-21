@@ -35,6 +35,22 @@ public abstract class Frame {
 
     public abstract BowlingState getState();
 
+    protected boolean isUnOpen() {
+        return this.score.size() == 0;
+    }
+
+    protected boolean isStrike() {
+        return this.score.size() == Score.FIRST_PITCH && this.score.sumAll() == Score.MAX_SCORE;
+    }
+
+    protected boolean isSpare() {
+        return this.score.size() == Score.SECOND_PITCH && this.score.sumAll() == Score.MAX_SCORE;
+    }
+
+    protected boolean isMiss(){
+        return this.score.size() == Score.SECOND_PITCH && this.score.sumAll() < Score.MAX_SCORE;
+    }
+
     public int getIndex() {
         return index;
     }
@@ -48,7 +64,7 @@ public abstract class Frame {
     }
 
     public int sumScore() {
-        return score.sum();
+        return score.sumAll();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Pin;
+import bowling.domain.score.Score;
 import bowling.state.*;
 
 /**
@@ -43,11 +44,11 @@ public class FinalFrame extends Frame {
         if (this.state.isPlayable()) {
             this.score.pitch(knockDownPin);
         }
-        if (this.state.isSpare() && this.state.isFinalPlayable()) {
+        if (isSpare() && this.state.isFinalPlayable()) {
             this.score.bonus(knockDownPin);
             this.endGame = true;
         }
-        if (!this.state.isSpare() && this.state.isFinalPlayable()) {
+        if (isStrike() && this.state.isFinalPlayable()) {
             this.score.bonus(knockDownPin);
             checkStrikeBonus();
         }
@@ -60,7 +61,6 @@ public class FinalFrame extends Frame {
     @Override
     public boolean isPlayable() {
         checkState();
-
         return this.state.isPlayable() || this.state.isFinalPlayable();
     }
 
@@ -71,13 +71,13 @@ public class FinalFrame extends Frame {
 
     @Override
     public void checkState() {
-        if (score.isStrike()) {
+        if (isStrike()) {
             this.state = Strike.of(this);
         }
-        if (score.isSpare()) {
+        if (isSpare()) {
             this.state = Spare.of(this);
         }
-        if (score.isMiss()) {
+        if (isMiss()) {
             this.state = Miss.of(this);
             this.endGame = true;
         }
