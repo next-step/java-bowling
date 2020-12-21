@@ -42,15 +42,15 @@ public class FrameTest {
     @DisplayName("10프레임 생성자")
     void createFinalFrame() {
         int frameIndex = 10;
-        Frame frame = FinalFrame.of(frameIndex);
-        assertThat(frame).isEqualTo(FinalFrame.of(frameIndex));
+        Frame frame = FinalFrame.init();
+        assertThat(frame).isEqualTo(FinalFrame.init());
     }
 
     @ParameterizedTest
     @DisplayName("10프레임 생성시 입력가능한 프레임 번호를 벗어나면 예외처리")
     @ValueSource(ints = {1, 2, 8, 9})
     void createFinalFrameRangeException(int frameIndex) {
-        assertThatThrownBy(() -> FinalFrame.of(frameIndex))
+        assertThatThrownBy(() -> FinalFrame.init())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(FinalFrame.ERROR_MESSAGE_FINAL_FRAME_INDEX);
     }
@@ -102,7 +102,7 @@ public class FrameTest {
     @MethodSource("providedSpare")
     void createSpareInFinalFrame(int bonusScore, Pin first, Pin second) {
         // given
-        Frame frame = FinalFrame.of(10);
+        Frame frame = FinalFrame.init();
 
         // 1 차시도
         frame.pitch(first);
@@ -132,7 +132,7 @@ public class FrameTest {
     @MethodSource("providedMiss")
     void createMissInFinalFrame(Pin first, Pin second) {
         // given
-        Frame frame = FinalFrame.of(10);
+        Frame frame = FinalFrame.init();
 
         // 1 차시도
         frame.pitch(first);
@@ -161,7 +161,7 @@ public class FrameTest {
     @MethodSource("providedStrike")
     void createStrikeInFinalFrame(Pin first, Pin second) {
         // given
-        Frame frame = FinalFrame.of(10);
+        Frame frame = FinalFrame.init();
 
         // 1 차시도
         frame.pitch(first);
@@ -195,7 +195,7 @@ public class FrameTest {
     @MethodSource("providedStrikeAndMiss")
     void createStrikeAndMissInFinalFrame(Pin first, Pin second, Pin third) {
         // given
-        Frame frame = FinalFrame.of(10);
+        Frame frame = FinalFrame.init();
 
         // 1 차시도
         frame.pitch(first);

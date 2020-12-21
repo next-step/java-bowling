@@ -18,7 +18,12 @@ public class FinalFrame extends Frame {
         this.state = Open.of(this);
     }
 
-    public static FinalFrame of(int index) {
+    public static FinalFrame init() {
+        int index = Frames.FINAL_FRAME_INDEX;
+        return of(index);
+    }
+
+    private static FinalFrame of(int index) {
         validateIndex(index);
         return new FinalFrame(index);
     }

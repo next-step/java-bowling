@@ -36,7 +36,7 @@ public class Frames {
         List<Frame> frames = IntStream.rangeClosed(START_INDEX, NORMAL_FRAME_SIZE)
                 .mapToObj(NormalFrame::of)
                 .collect(Collectors.toList());
-        frames.add(FinalFrame.of(FINAL_FRAME_INDEX));
+        frames.add(FinalFrame.init());
         return of(frames);
     }
 
