@@ -40,7 +40,6 @@ public class QnAService {
         }
 
         question.validateAnswersOwner(loginUser);
-
         DeleteHistories deleteHistories = new DeleteHistories();
         deleteHistories.addHistory(question.deleteQuestion(questionId, question.getWriter()));
 
