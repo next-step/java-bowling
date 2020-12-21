@@ -82,21 +82,11 @@ public class BasicScore extends Score {
     }
 
     private boolean isStrike() {
-
-        if (firstPoint != null && secondPoint == null && firstPoint.getPoint() == ALL_PITCH_COUNT) {
-            return true;
-        }
-
-        return false;
+        return firstPoint != null && secondPoint == null && firstPoint.getPoint() == ALL_PITCH_COUNT;
     }
 
     private boolean isSpared() {
-
-        if (firstPoint != null && secondPoint != null && sumPoint() == ALL_PITCH_COUNT) {
-            return true;
-        }
-
-        return false;
+        return firstPoint != null && secondPoint != null && sumPoint() == ALL_PITCH_COUNT;
     }
 
     @Override
