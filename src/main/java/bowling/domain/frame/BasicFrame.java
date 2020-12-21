@@ -31,24 +31,24 @@ public class BasicFrame extends Frame {
 
     @Override
     public Frame createNextFrame() {
-        if (frameNumber == LAST_FRAME_NUMBER) {
-            this.nextFrame = LastFrame.init(frameNumber + 1, LastScore.initFirst());
+        if (frameBoard.getFrameNumber() == LAST_FRAME_NUMBER) {
+            this.nextFrame = LastFrame.init(frameBoard.increaseFrameNumber(), LastScore.initFirst());
             return this.nextFrame;
         }
 
-        this.nextFrame = init(frameNumber + 1, BasicScore.initFirst());
+        this.nextFrame = init(frameBoard.increaseFrameNumber(), BasicScore.initFirst());
         return this.nextFrame;
     }
 
 
     @Override
     public void pitch(Point point) {
-        this.score.pitch(point);
+        frameBoard.pitch(point);
     }
 
     @Override
     public boolean hasScoreTurn() {
-        return this.score.hasScoreTurn();
+        return frameBoard.hasScoreTurn();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class BasicFrame extends Frame {
         }
 
         if (isLastFrame() && isFrameFinished()) {
-            return ScoreDto.init(score.sumPoint(), BowlType.END);
+            return ScoreDto.init(frameBoard.sumPoint(), BowlType.END);
         }
 
         int nextBowlCount = getBonusCount();
@@ -68,7 +68,7 @@ public class BasicFrame extends Frame {
             return ScoreDto.init(0, BowlType.NONE);
         }
 
-        int sumScore = score.sumPoint() + getNextPointSum(pitchedPoints);
+        int sumScore = frameBoard.sumPoint() + getNextPointSum(pitchedPoints);
         return ScoreDto.init(sumScore, BowlType.END);
 
     }
@@ -80,7 +80,7 @@ public class BasicFrame extends Frame {
     }
 
     private int getBonusCount() {
-        return score.getBonusCount();
+        return frameBoard.getBonusCount();
     }
 
     @Override
@@ -90,7 +90,7 @@ public class BasicFrame extends Frame {
 
     @Override
     protected boolean isFrameFinished() {
-        return !this.score.hasScoreTurn();
+        return !frameBoard.hasScoreTurn();
     }
 
     @Override
@@ -114,13 +114,13 @@ public class BasicFrame extends Frame {
 
     @Override
     protected List<Point> getFramePitchPoints() {
-        return score.getPitchedPoint();
+        return frameBoard.getPitchedPoint();
     }
 
 
     @Override
     FrameResultDto getFrameResultDto() {
-        return new FrameResultDto(score.getPitchedPoint(), score.getBowlType(), getScoreDto());
+        return new FrameResultDto(frameBoard.getPitchedPoint(), frameBoard.getBowlType(), getScoreDto());
     }
 
 

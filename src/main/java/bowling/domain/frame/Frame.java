@@ -10,17 +10,15 @@ import java.util.Objects;
 
 public abstract class Frame {
 
-    protected int frameNumber;
-    protected final Score score;
+    protected FrameBoard frameBoard;
     protected Frame nextFrame;
 
     protected Frame(int frameNumber, Score score) {
-        this.frameNumber = frameNumber;
-        this.score = score;
+        this.frameBoard = FrameBoard.of(frameNumber , score);
     }
 
     public Frame createLastFrame() {
-        this.nextFrame = LastFrame.init(this.frameNumber + 1, LastScore.initFirst());
+        this.nextFrame = LastFrame.init(frameBoard.increaseFrameNumber(), LastScore.initFirst());
         return this.nextFrame;
     }
 
@@ -42,18 +40,17 @@ public abstract class Frame {
 
     abstract FrameResultDto getFrameResultDto();
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return frameNumber == frame.frameNumber && Objects.equals(score, frame.score) && Objects.equals(nextFrame, frame.nextFrame);
+        return Objects.equals(frameBoard, frame.frameBoard) && Objects.equals(nextFrame, frame.nextFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameNumber, score, nextFrame);
+        return Objects.hash(frameBoard, nextFrame);
     }
-
-
 }
