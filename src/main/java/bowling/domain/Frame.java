@@ -42,11 +42,6 @@ public class Frame {
 
     public Score getFrameScore() {
         Score score = pitchings.getScore();
-
-        if (pitchings instanceof LastFramePitchings) {
-            return score;
-        }
-
         if (canApplyBonusScore(score)) {
             return nextFrame.applyBonusScoreTo(score);
         }
