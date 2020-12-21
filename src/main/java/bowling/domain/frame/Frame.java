@@ -47,7 +47,7 @@ public abstract class Frame {
         return score;
     }
 
-    public int sum() {
+    public int sumScore() {
         return score.sum();
     }
 

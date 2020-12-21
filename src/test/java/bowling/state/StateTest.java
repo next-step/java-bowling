@@ -27,7 +27,7 @@ public class StateTest {
     void test() {
         Frame frame = NormalFrame.of(1);
 //        assertThat(frame.getScore().isOpen()).isTrue();
-        System.out.println(frame.sum());
+        System.out.println(frame.sumScore());
         frame.getScoreList().stream()
                 .forEach(System.out::print);
 
