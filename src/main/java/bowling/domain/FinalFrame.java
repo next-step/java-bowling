@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FinalFrame implements Frame {
+
+    public static final int MAXIMUM_SCORE_CONDITION = 10;
+    public static final int NORMAL_PITCH = 2;
     public static final int MAXIMUM_PITCH = 3;
     public static final String MAXIMUM_FRAMESCORE = "한 프레임의 점수의 총 합은 10점입니다.";
 
@@ -53,12 +56,12 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return (frameScore < 10 && pitches.size() == 2) || pitches.size() == 3;
+        return (frameScore < MAXIMUM_SCORE_CONDITION && pitches.size() == NORMAL_PITCH) || pitches.size() == MAXIMUM_PITCH;
     }
 
     @Override
     public boolean isSpare() {
-        return false;
+        return frameScore == MAXIMUM_SCORE_CONDITION && pitches.size() == NORMAL_PITCH;
     }
 
     @Override

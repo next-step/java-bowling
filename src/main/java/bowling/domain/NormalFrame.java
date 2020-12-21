@@ -56,12 +56,12 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return frameScore == MAXIMUM_SCORE_CONDITION || pitches.size() == 2;
+        return frameScore == MAXIMUM_SCORE_CONDITION || pitches.size() == MAXIMUM_PITCH;
     }
 
     @Override
     public boolean isSpare() {
-        return false;
+        return frameScore == MAXIMUM_SCORE_CONDITION && pitches.size() == MAXIMUM_PITCH;
     }
 
     @Override

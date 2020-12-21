@@ -116,4 +116,17 @@ class NormalFrameTest {
         assertThat(normalFrame.getSecondScore()).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("스페어처리인지 확인")
+    void isSpare() {
+        Frame normalFrame = NormalFrame.init();
+
+        Pitch pitch1 = Pitch.from(8);
+        Pitch pitch2 = Pitch.from(2);
+        normalFrame.add(pitch1);
+        normalFrame.add(pitch2);
+
+        assertThat(normalFrame.isSpare()).isTrue();
+    }
+
 }

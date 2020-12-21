@@ -111,4 +111,17 @@ class FinalFrameTest {
         assertThat(finalFrame.getSecondScore()).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("스페어처리인지 확인")
+    void isSpare() {
+        Frame finalFrame = FinalFrame.init();
+
+        Pitch pitch1 = Pitch.from(8);
+        Pitch pitch2 = Pitch.from(2);
+        finalFrame.add(pitch1);
+        finalFrame.add(pitch2);
+
+        assertThat(finalFrame.isSpare()).isTrue();
+    }
+
 }
