@@ -25,7 +25,7 @@ public abstract class Frame {
     }
 
 
-    public abstract void pitch(Pin score);
+    public abstract void pitch(Pin knockDownPin);
 
     public abstract boolean isPlayable();
 

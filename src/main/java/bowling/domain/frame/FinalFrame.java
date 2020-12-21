@@ -39,16 +39,16 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public void pitch(Pin score) {
+    public void pitch(Pin knockDownPin) {
         if (this.state.isPlayable()) {
-            this.score.pitch(score);
+            this.score.pitch(knockDownPin);
         }
         if (this.state.isSpare() && this.state.isFinalPlayable()) {
-            this.score.bonus(score);
+            this.score.bonus(knockDownPin);
             this.endGame = true;
         }
         if (this.state.isStrike() && this.state.isFinalPlayable()) {
-            this.score.bonus(score);
+            this.score.bonus(knockDownPin);
             checkStrikeBonus();
         }
     }

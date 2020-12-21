@@ -33,8 +33,8 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public void pitch(Pin score) {
-        this.score.pitch(score);
+    public void pitch(Pin knockDownPin) {
+        this.score.pitch(knockDownPin);
     }
 
     @Override

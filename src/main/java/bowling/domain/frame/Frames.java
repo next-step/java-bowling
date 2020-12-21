@@ -40,9 +40,9 @@ public class Frames {
         return of(frames);
     }
 
-    public void bowling(Pin score) {
+    public void bowling(Pin knockDownPin) {
         Frame currentFrame = getFrameByIndex(currentIndex);
-        currentFrame.pitch(score);
+        currentFrame.pitch(knockDownPin);
         if (!currentFrame.isPlayable()) {
             this.currentIndex = currentIndex + 1;
         }

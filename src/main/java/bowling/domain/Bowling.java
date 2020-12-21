@@ -31,8 +31,8 @@ public class Bowling {
         return playerName.getName();
     }
 
-    public void pitch(Pin score) {
-        frames.bowling(score);
+    public void pitch(Pin knockDownPin) {
+        frames.bowling(knockDownPin);
     }
 
     public boolean isGameEnd() {
