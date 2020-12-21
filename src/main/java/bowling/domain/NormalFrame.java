@@ -58,4 +58,19 @@ public class NormalFrame implements Frame {
     public boolean isFinish() {
         return frameScore == MAXIMUM_SCORE_CONDITION || pitches.size() == 2;
     }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public int getFirstScore() {
+        return pitches.get(0).getScore();
+    }
+
+    @Override
+    public int getSecondScore() {
+        return pitches.get(1).getScore();
+    }
 }

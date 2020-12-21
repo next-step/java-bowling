@@ -3,6 +3,7 @@ package bowling.domain;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.TestExecutionListeners;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -89,6 +90,30 @@ class NormalFrameTest {
         normalFrame.add(pitch1);
 
         assertThat(normalFrame.isFinish()).isFalse();
+    }
+
+    @Test
+    @DisplayName("첫번째 투구 반환")
+    void getFirstPitch() {
+        Frame normalFrame = NormalFrame.init();
+
+        Pitch pitch1 = Pitch.from(8);
+        normalFrame.add(pitch1);
+
+        assertThat(normalFrame.getFirstScore()).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("두번째 투구 반환")
+    void getSecondPitch() {
+        Frame normalFrame = NormalFrame.init();
+
+        Pitch pitch1 = Pitch.from(8);
+        Pitch pitch2 = Pitch.from(2);
+        normalFrame.add(pitch1);
+        normalFrame.add(pitch2);
+
+        assertThat(normalFrame.getSecondScore()).isEqualTo(2);
     }
 
 }

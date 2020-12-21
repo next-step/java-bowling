@@ -87,4 +87,28 @@ class FinalFrameTest {
                 () -> finalFrame.add(pitch2));
     }
 
+    @Test
+    @DisplayName("첫번째 투구 반환")
+    void getFirstPitch() {
+        Frame finalFrame = FinalFrame.init();
+
+        Pitch pitch1 = Pitch.from(8);
+        finalFrame.add(pitch1);
+
+        assertThat(finalFrame.getFirstScore()).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("두번째 투구 반환")
+    void getSecondPitch() {
+        Frame finalFrame = FinalFrame.init();
+
+        Pitch pitch1 = Pitch.from(8);
+        Pitch pitch2 = Pitch.from(2);
+        finalFrame.add(pitch1);
+        finalFrame.add(pitch2);
+
+        assertThat(finalFrame.getSecondScore()).isEqualTo(2);
+    }
+
 }

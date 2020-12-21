@@ -55,4 +55,19 @@ public class FinalFrame implements Frame {
     public boolean isFinish() {
         return (frameScore < 10 && pitches.size() == 2) || pitches.size() == 3;
     }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public int getFirstScore() {
+        return pitches.get(0).getScore();
+    }
+
+    @Override
+    public int getSecondScore() {
+        return pitches.get(1).getScore();
+    }
 }

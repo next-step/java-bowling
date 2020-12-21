@@ -7,4 +7,10 @@ public interface Frame {
     int getPitchSize();
 
     boolean isFinish();
+
+    boolean isSpare();
+
+    int getFirstScore();
+
+    int getSecondScore();
 }

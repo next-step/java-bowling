@@ -45,7 +45,7 @@ public class BowlingController {
             int round = frames.getSize() + ONE;
             Pitch pitch = Pitch.from(InputView.inputScore(round));
             frame.add(pitch);
-            ResultView.printFrames(player.getName(), round);
+            ResultView.printFirstFramePitch(player.getName(), frame);
         }
         return frame;
     }
