@@ -24,7 +24,6 @@ public class GameHandler {
     public void run() {
         Integer numberOfPlayers = ValidInputHelper.get(this::getNumberOfPlayers, inputView::printError);
         PlayerNames playerNames = getPlayerNames(numberOfPlayers);
-
         BowlingGames bowlingGames = BowlingGames.init(playerNames);
         while (!bowlingGames.isEnd()) {
             setKnockDownPins2(bowlingGames);
