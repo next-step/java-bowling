@@ -73,4 +73,8 @@ public class FinalFrame implements Frame {
     public int getSecondScore() {
         return pitches.get(1).getScore();
     }
+
+    public int getThirdScore() {
+        return pitches.get(2).getScore();
+    }
 }
