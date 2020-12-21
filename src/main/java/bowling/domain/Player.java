@@ -56,7 +56,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "BowlingGame{" +
+        return "Player{" +
                 "frames=" + frames +
                 ", playerName=" + playerName +
                 '}';

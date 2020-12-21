@@ -1,5 +1,6 @@
 package bowling.domain.pitchings;
 
+import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 import bowling.domain.Score;
 
@@ -22,7 +23,7 @@ public class LastFramePitchings extends Pitchings {
         if (pitching == Pitching.SPARE) {
             int previousIndex = value.size() - 2;
             Pitching previousPitching = value.get(previousIndex);
-            return 10 - previousPitching.getScore();
+            return KnockDownPins.MAX_VALUE - previousPitching.getScore();
         }
         return pitching.getScore();
     }

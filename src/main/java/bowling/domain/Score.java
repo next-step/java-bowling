@@ -1,6 +1,8 @@
 package bowling.domain;
 
 public class Score {
+    private static final int STRIKE_BONUS_APPLY_CHANCE = 2;
+    private static final int SPARE_BONUS_APPLY_CHANCE = 1;
     private final int value;
     private final int bonusApplyChance;
 
@@ -10,11 +12,11 @@ public class Score {
     }
 
     public static Score ofStrike() {
-        return new Score(10, 2);
+        return new Score(KnockDownPins.MAX_VALUE, STRIKE_BONUS_APPLY_CHANCE);
     }
 
     public static Score ofSpare() {
-        return new Score(10, 1);
+        return new Score(KnockDownPins.MAX_VALUE, SPARE_BONUS_APPLY_CHANCE);
     }
 
     public static Score ofMiss(int score) {

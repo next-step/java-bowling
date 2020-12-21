@@ -58,7 +58,7 @@ public abstract class Pitchings implements Iterable<Pitching> {
     private int getBonusScore(Pitching pitching) {
         if (pitching == Pitching.SPARE) {
             Pitching firstPitching = value.get(0);
-            return 10 - firstPitching.getScore();
+            return KnockDownPins.MAX_VALUE - firstPitching.getScore();
         }
         return pitching.getScore();
     }
@@ -84,7 +84,7 @@ public abstract class Pitchings implements Iterable<Pitching> {
 
     @Override
     public String toString() {
-        return "Pitchings2{" +
+        return "Pitchings{" +
                 "value=" + value +
                 ", score=" + score +
                 ", isEnd()=" + isEnd() +
