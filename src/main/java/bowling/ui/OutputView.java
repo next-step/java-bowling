@@ -1,7 +1,7 @@
 package bowling.ui;
 
 import bowling.domain.frame.FrameResult;
-import bowling.domain.player.Player;
+import bowling.domain.game.BowlingGames;
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreType;
 import java.util.ArrayList;
@@ -23,16 +23,22 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void showInitializedGame(Player player) {
+    public static void showInitializedGame(BowlingGames bowlingGames) {
         System.out.println(getHeaderAreaText());
-        System.out.println(getInitValueAreaText(player.toString()));
-        System.out.println(getInitScoreAreaText());
+        bowlingGames.getGames()
+            .forEach(bowlingGame -> {
+                System.out.println(getInitValueAreaText(bowlingGame.getPlayer()));
+                System.out.println(getInitScoreAreaText());
+            });
     }
 
-    public static void showDashBoard(Player player, List<FrameResult> frameResults) {
+    public static void showDashBoard(BowlingGames bowlingGames) {
         System.out.println(getHeaderAreaText());
-        System.out.println(getCurrentValueAreaText(player.toString(), frameResults));
-        System.out.println(getCurrentScoreAreaText(frameResults));
+        bowlingGames.getGames()
+            .forEach(bowlingGame -> {
+                System.out.println(getCurrentValueAreaText(bowlingGame.getPlayer(), bowlingGame.getResult()));
+                System.out.println(getCurrentScoreAreaText(bowlingGame.getResult()));
+            });
     }
 
     private static String getHeaderAreaText() {

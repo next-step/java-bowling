@@ -37,13 +37,15 @@ public class Frames {
         }
     }
 
-    public void roll(int downPin) {
+    public boolean roll(int downPin) {
         Frame frame = this.frames.get(this.currentFrameNumber);
         frame.roll(downPin, scores);
 
         if (!frame.hasTurn()) {
             this.currentFrameNumber++;
+            return true;
         }
+        return false;
     }
 
     public List<FrameResult> getFrameResults() {
@@ -52,7 +54,6 @@ public class Frames {
             .collect(Collectors.toList());
         return frameResults;
     }
-
 
     public int getCurrentFrameNumber() {
         return this.currentFrameNumber;
