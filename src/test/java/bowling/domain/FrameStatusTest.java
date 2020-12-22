@@ -2,6 +2,7 @@ package bowling.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -10,13 +11,6 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FrameStatusTest {
-
-    @Test
-    @DisplayName("Strike 여부확인(Strike)")
-    void testIsStrike() {
-        assertThat(FrameStatus.getStatus(DownedPin.fromNumber(10), null))
-                .isEqualTo(FrameStatus.STRIKE);
-    }
 
     private static Stream<Arguments> provideMissStatus() {
         return Stream.of(
@@ -27,12 +21,20 @@ public class FrameStatusTest {
     }
 
     @Test
+    @DisplayName("Strike 여부확인(Strike)")
+    void testIsStrike() {
+        assertThat(FrameStatus.getStatus(DownedPin.fromNumber(10), null))
+                .isEqualTo(FrameStatus.STRIKE);
+    }
+
+    @Test
     @DisplayName("Spare 상태 확인")
     void testIsSpare() {
         assertThat(FrameStatus.getStatus(DownedPin.fromNumber(4), DownedPin.fromNumber(6)))
                 .isEqualTo(FrameStatus.SPARE);
     }
 
+    @ParameterizedTest
     @MethodSource("provideMissStatus")
     @DisplayName("Miss 상태")
     void testMiss(DownedPin previousTurn, DownedPin currentTurn) {
