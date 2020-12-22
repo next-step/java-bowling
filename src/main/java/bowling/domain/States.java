@@ -21,7 +21,7 @@ public class States {
         if (states.isEmpty()) {
             return new None();
         }
-        return this.states.get(i - 1);
+        return this.states.get(i);
     }
 
     public State getLast() {

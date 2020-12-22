@@ -8,8 +8,6 @@ import java.util.List;
  * Developer : Seo
  */
 public class Frames {
-    public static final int PREVIOUS_NO = 1;
-
     private final List<Frame> frames;
 
     public Frames() {
@@ -18,7 +16,7 @@ public class Frames {
     }
 
     public void next(int frameNo) {
-        Frame frame = frames.get(frameNo - PREVIOUS_NO);
+        Frame frame = frames.get(frameNo);
         Frame next = frame.next(frameNo);
         frames.add(next);
     }

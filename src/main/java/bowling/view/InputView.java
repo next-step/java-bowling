@@ -17,6 +17,7 @@ public class InputView {
     public static final String ENTER_PINS = "'s turn : ";
 
     private static final Scanner scanner = new Scanner(System.in);
+    public static final int MAX_PINS = 10;
 
     public static Users getUsers() {
         print(ENTER_USERS);
@@ -38,7 +39,7 @@ public class InputView {
     public static Pins getSecondPins(State state, String name) {
         print(name + ENTER_PINS);
         int pins = scanner.nextInt();
-        int remainPins = state.getScore().getFirst().get();
+        int remainPins = MAX_PINS - state.getScore().getFirst().get();
         if (pins > remainPins) {
             throw new IllegalArgumentException(String.format("남은 핀은 %d개입니다.", remainPins));
         }

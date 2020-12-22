@@ -7,7 +7,6 @@ package bowling.domain;
 public class NormalFrame extends Frame {
     public static final int NEXT_FRAME = 1;
     public static final int LAST_FRAME = 10;
-    public static final int PREVIOUS_INDEX = 1;
 
     private final States states;
     private final int frameNo;
@@ -36,17 +35,18 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public void secondBowl(int frameNo, State state, Pins pins) {
+    public void secondBowl(int userIndex, State state, Pins pins) {
         if (state instanceof Miss || state instanceof Gutter) {
             Score firstScore = state.getScore();
             Bowl secondBowl = new SecondBowl(firstScore);
             State secondState = secondBowl.stroke(pins);
-            states.set(frameNo - PREVIOUS_INDEX, secondState);
+            states.set(userIndex, secondState);
         }
     }
 
-    public States getStates() {
-        return states;
+    @Override
+    public State getState(int userIndex) {
+        return this.states.getState(userIndex);
     }
 
     @Override
@@ -55,19 +55,14 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public State getState(int index) {
-        return this.states.getState(index);
-    }
-
-    @Override
-    public int getScore(int index) {
-        State state = this.states.getState(index);
+    public int getScore(int userIndex) {
+        State state = this.states.getState(userIndex);
         return state.getScore().getFrameScore();
     }
 
-    // frameNo != this.states.getState(frameNo);
-    public int getFirstScore(int frameNo) {
-        State state = this.states.getState(frameNo);
+    @Override
+    public int getFirstScore(int userIndex) {
+        State state = this.states.getState(userIndex);
         return state.getScore().getFirst().get();
     }
 }

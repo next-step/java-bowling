@@ -44,18 +44,24 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public State getLastState() {
-        return this.states.getLast();
+    public State getState(int userIndex) {
+        return this.states.getState(userIndex);
     }
 
     @Override
-    public State getState(int index) {
-        return this.states.getState(index);
+    public State getLastState() {
+        return this.states.getLast();
     }
 
     @Override
     public int getScore(int index) {
         State state = this.states.getState(index);
         return state.getScore().getFrameScore();
+    }
+
+    @Override
+    public int getFirstScore(int frameNo) {
+        State state = this.states.getState(frameNo);
+        return state.getScore().getFirst().get();
     }
 }

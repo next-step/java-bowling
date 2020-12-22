@@ -26,21 +26,21 @@ public class Application {
     }
 
     private static void usersStroke(int frameNo, Frames frames, Users users) {
-        for (User user : users.getUsers()) {
-            Pins pins = InputView.getPins(user.getName());
+        for (int userIndex = 0; userIndex < users.getUsers().size(); userIndex++) {
+            Pins pins = InputView.getPins(users.getUsers().get(userIndex).getName());
             Frame frame = frames.get(frameNo);
             frame.bowl(pins);
             ResultView.print(frames, users);
-            secondStroke(frameNo, frames, users, user);
+            secondStroke(frameNo, frames, users, userIndex);
         }
     }
 
-    private static void secondStroke(int frameNo, Frames frames, Users users, User user) {
+    private static void secondStroke(int frameNo, Frames frames, Users users, int userIndex) {
         Frame frame = frames.get(frameNo);
         State state = frame.getLastState();
         if (!state.isFinished()) {
-            Pins secondPins = InputView.getSecondPins(state, user.getName());
-            frame.secondBowl(frameNo, state, secondPins);
+            Pins secondPins = InputView.getSecondPins(state, users.getUsers().get(userIndex).getName());
+            frame.secondBowl(userIndex, state, secondPins);
             ResultView.print(frames, users);
         }
     }
