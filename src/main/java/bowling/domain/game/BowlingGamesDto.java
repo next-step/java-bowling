@@ -10,9 +10,7 @@ public class BowlingGamesDto {
         this.bowlings = bowlings;
     }
 
-    public List<Bowling> getBowlings() {
-        return Collections.unmodifiableList(bowlings);
-    }
+
 
     public int getParticipationPeopleCount() {
         return bowlings.size();

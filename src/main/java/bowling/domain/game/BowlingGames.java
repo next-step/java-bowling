@@ -7,25 +7,18 @@ import java.util.List;
 
 public class BowlingGames {
     private final List<Bowling> bowlings;
-    private final BowlingGamesCursor bowlingGamesCursor;
 
     private BowlingGames(List<Bowling> bowlings) {
         this.bowlings = bowlings;
-        this.bowlingGamesCursor = BowlingGamesCursor.of();
     }
 
     public static BowlingGames of(List<Bowling> bowlings) {
         return new BowlingGames(bowlings);
     }
 
-    public void pitch(Point pitchedPoint) {
-        getBowling(bowlingGamesCursor.getPeopleCursor())
+    public void pitch(int peopleCursor, Point pitchedPoint) {
+        getBowling(peopleCursor)
                 .pitch(pitchedPoint);
-
-        if (isFrameTurnOver()) {
-            bowlingGamesCursor.increasePeopleCursor();
-            isLastFrame();
-        }
 
     }
 
@@ -33,31 +26,14 @@ public class BowlingGames {
         return bowlings.get(index);
     }
 
-    private void isLastFrame() {
-        if (isLastPeopleCursor() && isLastPeopleFrameTurnOver()) {
-            bowlingGamesCursor.resetPeopleCursor();
-            bowlingGamesCursor.increaseFrameNumberCursor();
-        }
-    }
-
-    private boolean isLastPeopleCursor() {
-        return bowlingGamesCursor.getPeopleCursor() == getParticipationPeopleCount();
-    }
-
-    private boolean isFrameTurnOver() {
-        return bowlings.get(bowlingGamesCursor.getPeopleCursor())
-                .isFrameFinished(bowlingGamesCursor.getFrameNumberCursor());
-    }
-
-    private boolean isLastPeopleFrameTurnOver() {
+    private boolean isLastPeopleFrameTurnOver(int frameCursor) {
         return bowlings.get(getParticipationPeopleCount() - 1)
-                .isFrameFinished(bowlingGamesCursor.getFrameNumberCursor());
+                .isFrameFinished(frameCursor);
     }
 
 
-
-    public String getPlayerName() {
-        return bowlings.get(bowlingGamesCursor.getPeopleCursor())
+    public String getPlayerName(int peopleCursor) {
+        return bowlings.get(peopleCursor)
                 .getPlayerName();
     }
 
@@ -72,5 +48,14 @@ public class BowlingGames {
 
     public BowlingGamesDto getBowlingDto() {
         return new BowlingGamesDto(Collections.unmodifiableList(bowlings));
+    }
+
+    public boolean isLastPeople(int peopleCursor, int frameCursor) {
+        return bowlings.get(peopleCursor)
+                .isFrameFinished(frameCursor);
+    }
+
+    public boolean isLastFramePeople(int frameCursor) {
+        return isLastPeopleFrameTurnOver(frameCursor);
     }
 }
