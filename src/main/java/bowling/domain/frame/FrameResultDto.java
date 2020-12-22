@@ -1,31 +1,31 @@
 package bowling.domain.frame;
 
-import bowling.domain.BowlType;
+import bowling.domain.score.ScoreType;
 import bowling.domain.point.Point;
-import bowling.domain.score.ScoreDto;
+import bowling.domain.score.ScoreResult;
 
 import java.util.List;
 
 public class FrameResultDto {
     private final List<Point> points;
-    private final BowlType scoreType;
-    private final ScoreDto scoreDto;
+    private final ScoreType scoreType;
+    private final ScoreResult scoreResult;
 
-    public FrameResultDto(List<Point> points, BowlType scoreType, ScoreDto scoreDto) {
+    public FrameResultDto(List<Point> points, ScoreType scoreType, ScoreResult scoreResult) {
         this.points = points;
         this.scoreType = scoreType;
-        this.scoreDto = scoreDto;
+        this.scoreResult = scoreResult;
     }
 
     public List<Point> getPoints() {
         return points;
     }
 
-    public BowlType getScoreType() {
+    public ScoreType getScoreType() {
         return scoreType;
     }
 
-    public ScoreDto getScoreDto() {
-        return scoreDto;
+    public ScoreResult getScoreDto() {
+        return scoreResult;
     }
 }

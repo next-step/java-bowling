@@ -1,6 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.BowlType;
 import bowling.domain.point.Point;
 import bowling.exception.NotHasTurnException;
 import bowling.exception.ValidOverPointException;
@@ -10,10 +9,7 @@ import java.util.List;
 
 public class BasicScore extends Score {
 
-    private static final int MAX_ROUND = 2;
     private static final int ALL_PITCH_COUNT = 10;
-    private static final int FIRST_PITCH = 1;
-    private static final int SECOND_PITCH = 2;
 
     protected BasicScore(Point firstPoint, Point secondPoint) {
         super(firstPoint, secondPoint);
@@ -32,10 +28,8 @@ public class BasicScore extends Score {
             firstPoint = pitchedPoint;
             return;
         }
-        if (secondPoint == null) {
-            secondPoint = pitchedPoint;
-            return;
-        }
+        secondPoint = pitchedPoint;
+
     }
 
 
@@ -68,49 +62,21 @@ public class BasicScore extends Score {
 
 
     @Override
-    public BowlType getBowlType() {
-        if (isStrike()) {
-            return BowlType.STRIKE;
-        }
-        if (isSpared()) {
-            return BowlType.SPARED;
-        }
-
-        if (!hasScoreTurn()) {
-            return BowlType.MISS;
-        }
-
-        return BowlType.NONE;
+    public ScoreType getBowlType() {
+        return ScoreType.valueOf(this);
     }
 
-    private boolean isStrike() {
-
-        if (firstPoint != null && secondPoint == null && firstPoint.getPoint() == ALL_PITCH_COUNT) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean isSpared() {
-
-        if (firstPoint != null && secondPoint != null && sumPoint() == ALL_PITCH_COUNT) {
-            return true;
-        }
-
-        return false;
-    }
 
     @Override
     public List<Point> getPitchedPoint() {
-        List<Point> as = new ArrayList<>();
+        List<Point> pitchedPoints = new ArrayList<>();
         if (firstPoint != null) {
-            as.add(firstPoint);
+            pitchedPoints.add(firstPoint);
         }
         if (secondPoint != null) {
-            as.add(secondPoint);
+            pitchedPoints.add(secondPoint);
         }
-        return as;
+        return pitchedPoints;
     }
 
     @Override
@@ -123,5 +89,15 @@ public class BasicScore extends Score {
             sum += secondPoint.getPoint();
         }
         return sum;
+    }
+
+    @Override
+    public Point getFirstPoint() {
+        return firstPoint;
+    }
+
+    @Override
+    public Point getSecondPoint() {
+        return secondPoint;
     }
 }

@@ -1,10 +1,11 @@
 package bowling.view;
 
-import bowling.domain.BowlType;
+import bowling.domain.game.BowlingGamesDto;
+import bowling.domain.score.ScoreType;
 import bowling.domain.frame.FrameResultDto;
 import bowling.domain.game.Bowling;
 import bowling.domain.point.Point;
-import bowling.domain.score.ScoreDto;
+import bowling.domain.score.ScoreResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +30,13 @@ public class OutputView {
     public static final String SCORE_BLANK = "|      |";
     public static final String SCORE = "  %-4s|";
 
-    public static void printResult(Bowling bowling) {
+    public static void printResult(BowlingGamesDto bowlingGamesDto) {
+
         printFramesRounds();
-        printBowlsResult(bowling);
-        printScores(bowling);
+        for (int i = 0; i < bowlingGamesDto.getParticipationPeopleCount(); i++) {
+            printBowlsResult(bowlingGamesDto.getBowling(i));
+            printScores(bowlingGamesDto.getBowling(i));
+        }
         System.out.print(System.lineSeparator());
     }
 
@@ -89,8 +93,8 @@ public class OutputView {
         return String.valueOf(point);
     }
 
-    private static int printSpare(List<String> builder, int downPinIndex, BowlType scoreType) {
-        if (scoreType == BowlType.SPARED) {
+    private static int printSpare(List<String> builder, int downPinIndex, ScoreType scoreType) {
+        if (scoreType == ScoreType.SPARED) {
             builder.add(SPARED);
             downPinIndex++;
         }
@@ -101,7 +105,7 @@ public class OutputView {
         StringBuilder builder = new StringBuilder();
         builder.append(SCORE_BLANK);
         int sumPoint = 0;
-        for (ScoreDto score : getScores(bowling)) {
+        for (ScoreResult score : getScores(bowling)) {
             sumPoint += score.getSumScore();
             builder.append(String.format(SCORE, isContinueBowling(sumPoint, score)));
         }
@@ -109,16 +113,14 @@ public class OutputView {
         System.out.println(builder.toString());
     }
 
-    private static Object isContinueBowling(int sumPoint, ScoreDto score) {
-        return score.getBowlType() == BowlType.NONE ? BLANK : sumPoint;
+    private static Object isContinueBowling(int sumPoint, ScoreResult score) {
+        return score.getBowlType() == ScoreType.NONE ? BLANK : sumPoint;
     }
 
-    private static List<ScoreDto> getScores(Bowling bowling) {
+    private static List<ScoreResult> getScores(Bowling bowling) {
         return bowling.getResult()
                 .stream()
                 .map(FrameResultDto::getScoreDto)
                 .collect(Collectors.toList());
     }
-
-
 }

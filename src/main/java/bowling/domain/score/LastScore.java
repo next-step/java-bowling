@@ -1,6 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.BowlType;
 import bowling.domain.point.Point;
 import bowling.exception.NotHasTurnException;
 
@@ -42,10 +41,8 @@ public class LastScore extends Score {
             secondPoint = pitchedPoint;
             return;
         }
-        if (lastPoint == null) {
-            lastPoint = pitchedPoint;
-            return;
-        }
+        lastPoint = pitchedPoint;
+
     }
 
     private void validHasScoreTurn() {
@@ -76,7 +73,7 @@ public class LastScore extends Score {
 
 
     @Override
-    public BowlType getBowlType() {
+    public ScoreType getBowlType() {
         return score.getBowlType();
     }
 
@@ -111,6 +108,16 @@ public class LastScore extends Score {
         }
         return sum;
 
+    }
+
+    @Override
+    public Point getFirstPoint() {
+        return firstPoint;
+    }
+
+    @Override
+    public Point getSecondPoint() {
+        return secondPoint;
     }
 
 

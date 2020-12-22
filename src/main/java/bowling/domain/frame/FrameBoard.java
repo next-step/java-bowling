@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.BowlType;
+import bowling.domain.score.ScoreType;
 import bowling.domain.point.Point;
 import bowling.domain.score.Score;
 
@@ -52,7 +52,7 @@ public class FrameBoard {
         return score.getPitchedPoint();
     }
 
-    public BowlType getBowlType() {
+    public ScoreType getBowlType() {
         return score.getBowlType();
     }
 }

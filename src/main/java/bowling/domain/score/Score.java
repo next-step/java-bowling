@@ -1,6 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.BowlType;
 import bowling.domain.point.Point;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public abstract class Score {
 
     abstract public boolean hasScoreTurn();
 
-    abstract public BowlType getBowlType();
+    abstract public ScoreType getBowlType();
 
     abstract public List<Point> getPitchedPoint();
 
@@ -29,4 +28,9 @@ public abstract class Score {
     public int getBonusCount() {
         return getBowlType().getBonusCount();
     }
+
+    public abstract Point getFirstPoint();
+
+    public abstract Point getSecondPoint();
+
 }
