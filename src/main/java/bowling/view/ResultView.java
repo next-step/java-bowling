@@ -132,7 +132,7 @@ public class ResultView {
     }
 
     private static void printPitchResult(BowlingGame bowlingGame) {
-        Frame currentFrame = bowlingGame.getFrames().getFrames().getLast();
+        Frame currentFrame = bowlingGame.getFrames().getLast();
 
         int pitchResult = currentFrame.getPitchResults().findLast();
 

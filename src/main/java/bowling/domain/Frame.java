@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class Frame {
@@ -13,7 +13,7 @@ public abstract class Frame {
 
     public Frame(int index){
         this.index = index;
-        this.pitchResults = PitchResults.from(new LinkedList<>());
+        this.pitchResults = PitchResults.from(new ArrayList<>());
     }
 
     public int getIndex() {

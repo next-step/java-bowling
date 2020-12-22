@@ -1,21 +1,22 @@
 package bowling.domain;
 
-import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class PitchResults {
 
-    private LinkedList<PitchResult> pitchResults;
+    private List<PitchResult> pitchResults;
 
-    private PitchResults(LinkedList<PitchResult> pitchResults){
+    private PitchResults(List<PitchResult> pitchResults){
         this.pitchResults = pitchResults;
     }
 
-    public static PitchResults from(LinkedList<PitchResult> pitchResults){
+    public static PitchResults from(List<PitchResult> pitchResults){
         return new PitchResults(pitchResults);
     }
 
-    public LinkedList<PitchResult> getPitchResults() {
+    public List<PitchResult> getPitchResults() {
         return pitchResults;
     }
 
@@ -38,7 +39,10 @@ public class PitchResults {
     }
 
     public int findLast() {
-        return pitchResults.getLast().getPinCount();
+        return pitchResults.stream()
+                .reduce((first, second) -> second)
+                .map(pitchResult -> pitchResult.getPinCount())
+                .orElseThrow(NoSuchElementException::new);
     }
 
     @Override

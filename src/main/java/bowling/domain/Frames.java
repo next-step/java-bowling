@@ -1,17 +1,17 @@
 package bowling.domain;
 
-import java.util.LinkedList;
+import java.util.*;
 
 public class Frames {
 
     private static final int FRAME_START_INDEX = 1;
     public static final int MAX_FRAME_COUNT = 10;
 
-    private LinkedList<Frame> frames;
+    private List<Frame> frames;
     private PitchStrategy pitchStrategy;
 
     private Frames(PitchStrategy pitchStrategy){
-        this.frames = new LinkedList<>();
+        this.frames = new ArrayList<>();
         this.pitchStrategy = pitchStrategy;
     }
 
@@ -19,12 +19,12 @@ public class Frames {
         return new Frames(pitchStrategy);
     }
 
-    public LinkedList<Frame> getFrames() {
-        return frames;
+    public List<Frame> getFrames() {
+        return Collections.unmodifiableList(frames);
     }
 
     public boolean isEnd() {
-        return frames.size() == MAX_FRAME_COUNT && frames.getLast().isEnd();
+        return frames.size() == MAX_FRAME_COUNT && this.getLast().isEnd();
     }
 
     public void execute() {
@@ -33,7 +33,7 @@ public class Frames {
             makeFirstFrame();
         }
 
-        Frame currentFrame = frames.getLast();
+        Frame currentFrame = this.getLast();
         currentFrame.start(pitchStrategy);
 
     }
@@ -47,10 +47,16 @@ public class Frames {
     }
 
     public void makeNextFrames() {
-        if (frames.getLast().isEnd() && frames.size() < MAX_FRAME_COUNT) {
-            Frame nextFrame = frames.getLast().makeNextFrame(getCurrentFrameIndex());
+        if (this.getLast().isEnd() && frames.size() < MAX_FRAME_COUNT) {
+            Frame nextFrame = this.getLast().makeNextFrame(getCurrentFrameIndex());
             frames.add(nextFrame);
         }
+    }
+
+    public Frame getLast(){
+        return frames.stream()
+                .reduce((first, second) -> second)
+                .orElseThrow(NoSuchElementException::new);
     }
 }
 
