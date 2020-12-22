@@ -21,10 +21,9 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame add(Pitch pitch) {
+    public void add(Pitch pitch) {
         addSecondPitch(pitch);
         addFirstPitch(pitch);
-        return new NormalFrame(pitches);
     }
 
     private void addFirstPitch(Pitch pitch) {

@@ -22,10 +22,9 @@ public class FinalFrame implements Frame {
         return new FinalFrame(pitches);
     }
 
-    public Frame add(Pitch pitch) {
+    public void add(Pitch pitch) {
         addRemainPitch(pitch);
         addFirstPitch(pitch);
-        return new FinalFrame(pitches);
     }
 
     private void addFirstPitch(Pitch pitch) {
@@ -93,19 +92,43 @@ public class FinalFrame implements Frame {
 
     @Override
     public String getSecondSymbol() {
-        if(isSecondPitch()) {
-            return getFinalOtherSymbol(pitches.get(0), pitches.get(1));
-        }
-        return getFinalOtherSymbol(pitches.get(1), pitches.get(2));
-    }
-
-    private String getFinalOtherSymbol(Pitch pitch1, Pitch pitch2) {
+        Pitch pitch1 = pitches.get(0);
+        Pitch pitch2 = pitches.get(1);
         Strike strike1 = Strike.from(pitch1);
         Strike strike2 = Strike.from(pitch2);
         Gutter gutter = Gutter.from(pitch2);
-        pitches = Arrays.asList(pitch1, pitch2);
-        Spare spare = Spare.from(pitches);
-        Miss miss = Miss.from(pitches);
+        List<Pitch> newPitches = Arrays.asList(pitch1, pitch2);
+        Spare spare = Spare.from(newPitches);
+        Miss miss = Miss.from(newPitches);
+
+        if(strike1.isStrike() && strike2.isStrike()) {
+            return strike2.toString();
+        }
+
+        if(gutter.isGutter()) {
+            return gutter.toString();
+        }
+
+        if(spare.isSpare()) {
+            return spare.toString();
+        }
+
+        if(miss.isMiss()) {
+            return miss.toString();
+        }
+
+        return "" + pitch2.getScore();
+    }
+
+    public String getThirdSymbol() {
+        Pitch pitch1 = pitches.get(1);
+        Pitch pitch2 = pitches.get(2);
+        Strike strike1 = Strike.from(pitch1);
+        Strike strike2 = Strike.from(pitch2);
+        Gutter gutter = Gutter.from(pitch2);
+        List<Pitch> newPitches = Arrays.asList(pitch1, pitch2);
+        Spare spare = Spare.from(newPitches);
+        Miss miss = Miss.from(newPitches);
 
         if(strike1.isStrike() && strike2.isStrike()) {
             return strike2.toString();

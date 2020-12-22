@@ -255,12 +255,12 @@ class FinalFrameTest {
         Pitch pitch2 = Pitch.from(10);
         Pitch pitch3 = Pitch.from(0);
 
-        Frame finalFrame = FinalFrame.init();
+        FinalFrame finalFrame = FinalFrame.init();
         finalFrame.add(pitch1);
         finalFrame.add(pitch2);
         finalFrame.add(pitch3);
 
-        assertThat(finalFrame.getSecondSymbol()).isEqualTo("-");
+        assertThat(finalFrame.getThirdSymbol()).isEqualTo("-");
     }
 
     @Test
@@ -270,12 +270,12 @@ class FinalFrameTest {
         Pitch pitch2 = Pitch.from(8);
         Pitch pitch3 = Pitch.from(2);
 
-        Frame finalFrame = FinalFrame.init();
+        FinalFrame finalFrame = FinalFrame.init();
         finalFrame.add(pitch1);
         finalFrame.add(pitch2);
         finalFrame.add(pitch3);
 
-        assertThat(finalFrame.getSecondSymbol()).isEqualTo("/");
+        assertThat(finalFrame.getThirdSymbol()).isEqualTo("/");
     }
 
     @Test
@@ -285,12 +285,12 @@ class FinalFrameTest {
         Pitch pitch2 = Pitch.from(7);
         Pitch pitch3 = Pitch.from(2);
 
-        Frame finalFrame = FinalFrame.init();
+        FinalFrame finalFrame = FinalFrame.init();
         finalFrame.add(pitch1);
         finalFrame.add(pitch2);
         finalFrame.add(pitch3);
 
-        assertThat(finalFrame.getSecondSymbol()).isEqualTo("2");
+        assertThat(finalFrame.getThirdSymbol()).isEqualTo("2");
     }
 
 }

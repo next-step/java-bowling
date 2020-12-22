@@ -14,9 +14,6 @@ public class ResultView {
     private static final int FRAME_LENGTH = 11;
     private static final String EMPTY_SPACE = "      ";
     private static final String HALF_EMPTY_SPACE = "   ";
-    private static final String STRIKE = "X";
-    private static final String SPARE = "/";
-    private static final String GUTTER = "-";
 
     private static StringBuilder SCORES = new StringBuilder();
 
@@ -63,7 +60,7 @@ public class ResultView {
         printUsername(name);
         System.out.print(SCORES);
 
-        String firstSymbol = checkFirstSymbol(frame.getFirstScore());
+        String firstSymbol = frame.getFirstSymbol();
 
         if(frame.getPitchSize() == 1) {
             printFirstPitch(frame, firstSymbol);
@@ -96,7 +93,7 @@ public class ResultView {
     }
 
     private static void printSecondPitch(Frame frame, String firstSymbol, Frames frames) {
-        String secondSymbol = checkSecondSymbol(frame.getSecondScore(), frame);
+        String secondSymbol = frame.getSecondSymbol();
         System.out.print(String.format("%3s", firstSymbol));
         System.out.print(BAR_DELIMITER);
         System.out.print(String.format("%s ", secondSymbol));
@@ -113,34 +110,14 @@ public class ResultView {
     private static void printThirdPitch(Frame frame, String firstSymbol) {
         FinalFrame finalFrame = (FinalFrame) frame;
 
-        String secondSymbol = checkFirstSymbol(frame.getSecondScore());
-        String thirdSymbol = checkSecondSymbol(finalFrame.getThirdScore(), frame);
+        String secondSymbol = frame.getSecondSymbol();
+        String thirdSymbol = finalFrame.getThirdSymbol();
         System.out.print(String.format("%3s", firstSymbol));
         System.out.print(BAR_DELIMITER);
         System.out.print(String.format("%s", secondSymbol));
         System.out.print(BAR_DELIMITER);
         System.out.print(String.format("%s", thirdSymbol));
         System.out.print(BAR_DELIMITER);
-    }
-
-    private static String checkFirstSymbol(int score) {
-        if(score == 0) {
-            return GUTTER;
-        }
-
-        if(score == 10) {
-            return STRIKE;
-        }
-
-        return "" + score;
-    }
-
-    private static String checkSecondSymbol(int score, Frame frame) {
-        if(frame.isSpare()) {
-            return SPARE;
-        }
-
-        return checkFirstSymbol(score);
     }
 
 }

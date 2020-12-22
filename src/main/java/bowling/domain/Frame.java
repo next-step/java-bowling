@@ -2,7 +2,7 @@ package bowling.domain;
 
 public interface Frame {
 
-    Frame add(Pitch pitch);
+    void add(Pitch pitch);
 
     int getPitchSize();
 
