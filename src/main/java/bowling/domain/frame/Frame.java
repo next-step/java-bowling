@@ -1,4 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.score.Pins;
+import bowling.domain.state.State;
 
 public abstract class Frame {
     public static final int FRAME_INIT = 0;
@@ -14,6 +17,8 @@ public abstract class Frame {
     public abstract void bowl(Pins pins);
 
     public abstract void secondBowl(int frameNo, State state, Pins pins);
+
+    public abstract void thirdBowl(int userIndex, State state, Pins thirdPins);
 
     public abstract State getState(int userIndex);
 

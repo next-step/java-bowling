@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.score;
+
+import bowling.domain.Symbol;
 
 import java.util.Optional;
 
@@ -21,9 +23,6 @@ public class Score {
     }
 
     public void setSecond(Pins second) {
-        if (isStrike()) {
-            throw new IllegalStateException("첫 구가 스트라이트");
-        }
         this.second = second;
     }
 

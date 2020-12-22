@@ -1,4 +1,14 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.bowl.Bowl;
+import bowling.domain.bowl.FirstBowl;
+import bowling.domain.bowl.SecondBowl;
+import bowling.domain.score.Pins;
+import bowling.domain.score.Score;
+import bowling.domain.state.Gutter;
+import bowling.domain.state.Miss;
+import bowling.domain.state.State;
+import bowling.domain.state.States;
 
 /**
  * Created : 2020-12-16 오전 9:30
@@ -6,7 +16,7 @@ package bowling.domain;
  */
 public class NormalFrame extends Frame {
     public static final int NEXT_FRAME = 1;
-    public static final int LAST_FRAME = 10;
+    public static final int LAST_FRAME = 9;
 
     private final States states;
     private final int frameNo;
@@ -64,5 +74,9 @@ public class NormalFrame extends Frame {
     public int getFirstScore(int userIndex) {
         State state = this.states.getState(userIndex);
         return state.getScore().getFirst().get();
+    }
+
+    @Override
+    public void thirdBowl(int userIndex, State state, Pins thirdPins) {
     }
 }

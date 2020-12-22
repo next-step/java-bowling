@@ -1,4 +1,7 @@
-package bowling.domain;
+package bowling.domain.state;
+
+import bowling.domain.state.None;
+import bowling.domain.state.State;
 
 import java.util.LinkedList;
 

@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.LinkedList;
 import java.util.List;

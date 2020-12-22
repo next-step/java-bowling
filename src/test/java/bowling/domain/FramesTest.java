@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frames;
+import bowling.domain.score.Pins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

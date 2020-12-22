@@ -1,4 +1,11 @@
-package bowling.domain;
+package bowling.domain.bowl;
+
+import bowling.domain.score.Pins;
+import bowling.domain.score.Score;
+import bowling.domain.state.Gutter;
+import bowling.domain.state.Miss;
+import bowling.domain.state.State;
+import bowling.domain.state.Strike;
 
 public class FirstBowl implements Bowl {
     @Override

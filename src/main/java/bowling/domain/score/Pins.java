@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.score;
 
 /**
  * Created : 2020-12-18 오전 8:47

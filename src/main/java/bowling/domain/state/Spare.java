@@ -1,4 +1,8 @@
-package bowling.domain;
+package bowling.domain.state;
+
+import bowling.domain.score.Pins;
+import bowling.domain.score.Score;
+import bowling.domain.Symbol;
 
 public class Spare implements State {
     public static final String DELIMITER = "|";
@@ -19,12 +23,17 @@ public class Spare implements State {
     }
 
     @Override
-    public String toString() {
+    public boolean isFinished() {
+        return true;
+    }
+
+    @Override
+    public String getSymbol() {
         return this.firstPins.get() + DELIMITER + Symbol.SPARE.getSymbol();
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    public String toString() {
+        return getSymbol();
     }
 }

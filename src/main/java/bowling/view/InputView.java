@@ -1,9 +1,9 @@
 package bowling.view;
 
-import bowling.domain.Pins;
-import bowling.domain.State;
-import bowling.domain.User;
-import bowling.domain.Users;
+import bowling.domain.score.Pins;
+import bowling.domain.state.State;
+import bowling.domain.user.User;
+import bowling.domain.user.Users;
 
 import java.util.Scanner;
 

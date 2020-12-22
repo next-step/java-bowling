@@ -1,6 +1,11 @@
 package bowling.view;
 
-import bowling.domain.*;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
+import bowling.domain.score.TotalScore;
+import bowling.domain.state.*;
+import bowling.domain.user.User;
+import bowling.domain.user.Users;
 
 import java.util.stream.IntStream;
 
@@ -19,7 +24,6 @@ public class ResultView {
     public static final int INDEX_TWO = 2;
     public static final String NONE = "";
     public static final String STRING_ZERO = "0";
-    public static final int NINE_FRAME_INDEX = 9;
 
     public static void init(Frames frames, Users users) {
         header();
@@ -42,31 +46,31 @@ public class ResultView {
     }
 
     private static void scores(Frames frames, Users users) {
-        for (int i = INDEX_ZERO; i < users.size(); i++) {
-            score(frames, users.get(i), i);
-            sum(frames, users.get(i), i);
+        for (int userIndex = INDEX_ZERO; userIndex < users.size(); userIndex++) {
+            score(frames, users.get(userIndex), userIndex);
+            sum(frames, userIndex);
         }
     }
 
     private static void score(Frames frames, User user, int userIndex) {
         printf(DELIMITER + FORMAT_SPACE, user.getName());
         for (Frame frame : frames.getFrames()) {
-            State state = frame.getState(userIndex);
+            State state = frame.getState(0);
             printf(FORMAT_SPACE, String.valueOf(state));
         }
         remainFrames(frames.size());
         nextLine();
     }
 
-    private static void sum(Frames frames, User user, int userIndex) {
+    private static void sum(Frames frames, int userIndex) {
         printf(DELIMITER + FORMAT_SPACE, NONE);
 
         TotalScore totalScore = new TotalScore();
-        for (int i = INDEX_ZERO; i < frames.size(); i++) {
-            strike(frames, totalScore, i, userIndex);
-            spare(frames, totalScore, i, userIndex);
-            miss(frames, totalScore, i, userIndex);
-            gutter(frames, totalScore, i, userIndex);
+        for (int frameIndex = INDEX_ZERO; frameIndex < frames.size(); frameIndex++) {
+            strike(frames, totalScore, frameIndex, userIndex);
+            spare(frames, totalScore, frameIndex, userIndex);
+            miss(frames, totalScore, frameIndex, userIndex);
+            gutter(frames, totalScore, frameIndex, userIndex);
         }
         if (frames.size() == 1) {
             remainFrames(frames.size() - 1);
@@ -83,14 +87,23 @@ public class ResultView {
             strikeBonus(frames, totalScore, frameIndex, userIndex);
             strikePrint(frames, totalScore, frameIndex, userIndex);
         }
+        if (thisState instanceof LastState && thisState.isFinished()) {
+            totalScore.add(thisState.getScore().getFrameScore());
+            strikePrint(frames, totalScore, frameIndex, userIndex);
+        }
     }
 
     private static void strikeBonus(Frames frames, TotalScore totalScore, int frameIndex, int userIndex) {
         if (frameIndex + INDEX_ONE < frames.size()) {
             totalScore.add(frames.get(frameIndex + INDEX_ONE).getScore(userIndex));
         }
+        // 스트라이크 && 스트라이크 && 스트라이크
         if (frameIndex + INDEX_TWO < frames.size()) {
-            totalScore.add(frames.get(frameIndex + INDEX_TWO).getScore(userIndex));
+            Frame nextFrame = frames.get(frameIndex + INDEX_ONE);
+            State nextState = nextFrame.getState(userIndex);
+            if (nextState instanceof Strike) {
+                totalScore.add(frames.get(frameIndex + INDEX_TWO).getScore(userIndex));
+            }
         }
     }
 
@@ -101,17 +114,17 @@ public class ResultView {
             State nextNextState = nextNextFrame.getState(userIndex);
             printThisFrameStrike(totalScore, nextNextState);
         }
-        // 9프레임
-        if (frameIndex == NINE_FRAME_INDEX) {
-            Frame nineFrame = frames.get(NINE_FRAME_INDEX);
-            State nineFrameState = nineFrame.getState(userIndex);
-            printThisFrameStrike(totalScore, nineFrameState);
+        // 10프레임
+        if (frameIndex == FINAL_FRAME - INDEX_ONE) {
+            Frame lastFrame = frames.get(FINAL_FRAME - INDEX_ONE);
+            State lastState = lastFrame.getState(userIndex);
+            printThisFrameStrike(totalScore, lastState);
         }
         // 스트라이크 && Other
         if (frameIndex + INDEX_ONE < frames.size()) {
             Frame nextFrame = frames.get(frameIndex + INDEX_ONE);
             State nextState = nextFrame.getState(userIndex);
-            printQualifiedState(totalScore, nextState);
+            printStrikeQualifiedState(totalScore, nextState);
         }
     }
 
@@ -119,9 +132,12 @@ public class ResultView {
         if (state instanceof Strike) {
             printf(FORMAT_SPACE, totalScore.get());
         }
+        if (state instanceof LastState && state.isFinished()) {
+            printf(FORMAT_SPACE, totalScore.get());
+        }
     }
 
-    private static void printQualifiedState(TotalScore totalScore, State nextState) {
+    private static void printStrikeQualifiedState(TotalScore totalScore, State nextState) {
         if (!nextState.isFinished()) {
             return;
         }
@@ -172,10 +188,17 @@ public class ResultView {
     }
 
     private static void missPrint(Frames frames, TotalScore totalScore, int frameIndex, int userIndex) {
-        if (frameIndex + INDEX_ONE < frames.size()) {
-            Frame nextFrame = frames.get(frameIndex + INDEX_ONE);
-            State nextState = nextFrame.getState(userIndex);
-            printQualifiedState(totalScore, nextState);
+        Frame thisFrame = frames.get(frameIndex);
+        State thisState = thisFrame.getState(userIndex);
+        printFinishedState(totalScore, thisState);
+    }
+
+    private static void printFinishedState(TotalScore totalScore, State thisState) {
+        if (!thisState.isFinished()) {
+            return;
+        }
+        if (thisState instanceof Spare || thisState instanceof Miss || thisState instanceof Gutter) {
+            printf(FORMAT_SPACE, totalScore.get());
         }
     }
 
@@ -189,11 +212,56 @@ public class ResultView {
     }
 
     private static void gutterPrint(Frames frames, TotalScore totalScore, int frameIndex, int userIndex) {
-        if (frameIndex + INDEX_ONE < frames.size()) {
-            Frame nextFrame = frames.get(frameIndex + INDEX_ONE);
-            State nextState = nextFrame.getState(userIndex);
-            printQualifiedState(totalScore, nextState);
+        Frame thisFrame = frames.get(frameIndex);
+        State thisState = thisFrame.getState(userIndex);
+        printFinishedState(totalScore, thisState);
+    }
+
+    public static void last(Frames frames, Users users) {
+        header();
+        lastScores(frames, users);
+    }
+
+    private static void lastScores(Frames frames, Users users) {
+        for (int userIndex = INDEX_ZERO; userIndex < users.size(); userIndex++) {
+            lastScore(frames, users.get(userIndex), userIndex);
+            lastSum(frames, userIndex);
         }
+    }
+
+    private static void lastScore(Frames frames, User user, int userIndex) {
+        printf(DELIMITER + FORMAT_SPACE, user.getName());
+        for (int frameIndex = INDEX_ZERO; frameIndex < frames.getFrames().size() - INDEX_ONE; frameIndex++) {
+            State state = frames.getFrames().get(frameIndex).getState(userIndex);
+            printf(FORMAT_SPACE, String.valueOf(state));
+        }
+
+        // 10 프레임
+        State state = frames.getFrames().get(FINAL_FRAME - INDEX_ONE).getState(userIndex);
+        printf(FORMAT_SPACE, String.valueOf(state));
+
+        nextLine();
+    }
+
+    private static void lastSum(Frames frames, int userIndex) {
+        printf(DELIMITER + FORMAT_SPACE, NONE);
+
+        TotalScore totalScore = new TotalScore();
+        for (int frameIndex = INDEX_ZERO; frameIndex < frames.size(); frameIndex++) {
+            strike(frames, totalScore, frameIndex, userIndex);
+            spare(frames, totalScore, frameIndex, userIndex);
+            miss(frames, totalScore, frameIndex, userIndex);
+            gutter(frames, totalScore, frameIndex, userIndex);
+        }
+
+        // 10 프레임
+        Frame lastFrame = frames.get(FINAL_FRAME - INDEX_ONE);
+        State lastState = lastFrame.getState(userIndex);
+
+        totalScore.add(lastState.getScore().getFrameScore());
+        printf(FORMAT_SPACE, totalScore.get());
+
+        nextLine();
     }
 
     private static void remainFrames(int frameSize) {

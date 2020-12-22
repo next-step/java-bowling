@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.score.Pins;
+
 /**
  * Created : 2020-12-16 오전 8:08
  * Developer : Seo

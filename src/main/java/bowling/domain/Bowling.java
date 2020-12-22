@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.score.Pins;
+
 import java.util.Random;
 
 /**

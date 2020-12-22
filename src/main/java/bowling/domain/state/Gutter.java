@@ -1,4 +1,8 @@
-package bowling.domain;
+package bowling.domain.state;
+
+import bowling.domain.score.Pins;
+import bowling.domain.score.Score;
+import bowling.domain.Symbol;
 
 public class Gutter implements State {
     public static final String DELIMITER = "|";
@@ -21,7 +25,12 @@ public class Gutter implements State {
     }
 
     @Override
-    public String toString() {
+    public boolean isFinished() {
+        return secondPins != null;
+    }
+
+    @Override
+    public String getSymbol() {
         String ret = Symbol.GUTTER.getSymbol();
         if (this.secondPins != null) {
             ret = ret + DELIMITER + Symbol.GUTTER.getSymbol();
@@ -30,7 +39,7 @@ public class Gutter implements State {
     }
 
     @Override
-    public boolean isFinished() {
-        return secondPins != null;
+    public String toString() {
+        return getSymbol();
     }
 }

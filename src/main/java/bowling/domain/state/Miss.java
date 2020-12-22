@@ -1,4 +1,8 @@
-package bowling.domain;
+package bowling.domain.state;
+
+import bowling.domain.score.Pins;
+import bowling.domain.score.Score;
+import bowling.domain.Symbol;
 
 public class Miss implements State {
     public static final String DELIMITER = "|";
@@ -23,7 +27,12 @@ public class Miss implements State {
     }
 
     @Override
-    public String toString() {
+    public boolean isFinished() {
+        return this.secondPins != null;
+    }
+
+    @Override
+    public String getSymbol() {
         String ret = String.valueOf(this.firstPins.get());
         if (this.secondPins != null) {
             ret = ret + DELIMITER + (this.secondPins.get() == 0 ? Symbol.GUTTER.getSymbol() : this.secondPins.get());
@@ -32,7 +41,7 @@ public class Miss implements State {
     }
 
     @Override
-    public boolean isFinished() {
-        return this.secondPins != null;
+    public String toString() {
+        return getSymbol();
     }
 }

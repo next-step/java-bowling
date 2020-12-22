@@ -1,6 +1,11 @@
 package bowling;
 
-import bowling.domain.*;
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
+import bowling.domain.score.Pins;
+import bowling.domain.state.State;
+import bowling.domain.user.Users;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -9,7 +14,10 @@ import bowling.view.ResultView;
  * Developer : Seo
  */
 public class Application {
-    public static final int LAST_FRAME = 10;
+    public static final int FINAL_FRAME = 10;
+    public static final int INDEX_ONE = 1;
+    public static final String STRIKE_SYMBOL = "X";
+    public static final String SPARE_SYMBOL = "/";
 
     public static void main(String[] args) {
         Users users = InputView.getUsers();
@@ -19,7 +27,7 @@ public class Application {
     }
 
     private static void bowling(Frames frames, Users users) {
-        for (int frameNo = 0; frameNo < LAST_FRAME; frameNo++) {
+        for (int frameNo = 0; frameNo < FINAL_FRAME; frameNo++) {
             usersStroke(frameNo, frames, users);
             frames.next(frameNo);
         }
@@ -32,6 +40,7 @@ public class Application {
             frame.bowl(pins);
             ResultView.print(frames, users);
             secondStroke(frameNo, frames, users, userIndex);
+            thirdStroke(frameNo, frames, users, userIndex);
         }
     }
 
@@ -42,6 +51,30 @@ public class Application {
             Pins secondPins = InputView.getSecondPins(state, users.getUsers().get(userIndex).getName());
             frame.secondBowl(userIndex, state, secondPins);
             ResultView.print(frames, users);
+        }
+
+        // 10프레임
+        if (frameNo == FINAL_FRAME - INDEX_ONE) {
+            Pins secondPins = InputView.getPins(users.getUsers().get(userIndex).getName());
+            frame.secondBowl(userIndex, state, secondPins);
+            ResultView.last(frames, users);
+        }
+    }
+
+    private static void thirdStroke(int frameNo, Frames frames, Users users, int userIndex) {
+        Frame frame = frames.get(frameNo);
+        State state = frame.getLastState();
+
+        if (frame instanceof FinalFrame) {
+            lastStroke(frames, users, userIndex, frame, state);
+        }
+    }
+
+    private static void lastStroke(Frames frames, Users users, int userIndex, Frame frame, State state) {
+        if (state.getSymbol().contains(STRIKE_SYMBOL) || state.getSymbol().contains(SPARE_SYMBOL)) {
+            Pins thirdPins = InputView.getPins(users.getUsers().get(userIndex).getName());
+            frame.thirdBowl(userIndex, state, thirdPins);
+            ResultView.last(frames, users);
         }
     }
 }

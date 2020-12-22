@@ -1,4 +1,11 @@
-package bowling.domain;
+package bowling.domain.bowl;
+
+import bowling.domain.score.Pins;
+import bowling.domain.score.Score;
+import bowling.domain.state.Gutter;
+import bowling.domain.state.Miss;
+import bowling.domain.state.Spare;
+import bowling.domain.state.State;
 
 public class SecondBowl implements Bowl {
     private final Score score;
