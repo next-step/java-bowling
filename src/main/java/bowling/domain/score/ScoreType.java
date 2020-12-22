@@ -23,15 +23,15 @@ public enum ScoreType {
 
     public static final int ALL_PITCH_COUNT = 10;
 
-    static ScoreType valueOf(Point firstPoint, Point secondPoint) {
-        if (isStrike(firstPoint, secondPoint)) {
+    static ScoreType valueOf(Score score) {
+        if (isStrike(score.getFirstPoint(), score.getSecondPoint())) {
             return ScoreType.STRIKE;
         }
-        if (isSpared(firstPoint, secondPoint)) {
+        if (isSpared(score.getFirstPoint(), score.getSecondPoint())) {
             return ScoreType.SPARED;
         }
 
-        if (!hasScoreTurn(firstPoint, secondPoint)) {
+        if (!hasScoreTurn(score.getFirstPoint(), score.getSecondPoint())) {
             return ScoreType.MISS;
         }
 

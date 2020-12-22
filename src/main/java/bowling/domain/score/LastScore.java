@@ -110,5 +110,15 @@ public class LastScore extends Score {
 
     }
 
+    @Override
+    public Point getFirstPoint() {
+        return firstPoint;
+    }
+
+    @Override
+    public Point getSecondPoint() {
+        return secondPoint;
+    }
+
 
 }

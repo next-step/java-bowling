@@ -63,7 +63,7 @@ public class BasicScore extends Score {
 
     @Override
     public ScoreType getBowlType() {
-        return ScoreType.valueOf(firstPoint, secondPoint);
+        return ScoreType.valueOf(this);
     }
 
 
@@ -89,5 +89,15 @@ public class BasicScore extends Score {
             sum += secondPoint.getPoint();
         }
         return sum;
+    }
+
+    @Override
+    public Point getFirstPoint() {
+        return firstPoint;
+    }
+
+    @Override
+    public Point getSecondPoint() {
+        return secondPoint;
     }
 }

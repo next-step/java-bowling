@@ -28,4 +28,9 @@ public abstract class Score {
     public int getBonusCount() {
         return getBowlType().getBonusCount();
     }
+
+    public abstract Point getFirstPoint();
+
+    public abstract Point getSecondPoint();
+
 }
