@@ -3,64 +3,42 @@ package bowling.domain;
 import bowling.exception.BowlingMaxCountException;
 
 public class BowlingKnockDown {
-    private static final int MIN_NUMBER = 0;
     public static final int MAX_NUMBER = 10;
-    private static final String STRIKE = "X";
-    private static final String SPARE = "/";
-    private static final String GUTTER = "-";
-    private static final String LINE = " | ";
 
-    private String knockDownExpression;
+    private Integer currentOfKnockDown;
 
-    private int countOfBowlingKnockDown;
+    private Integer nextOfKnockDown;
 
-    public BowlingKnockDown(int count) {
-        validate(count);
-        this.countOfBowlingKnockDown = count;
-        this.knockDownExpression = initDownExpress(count);
+    private Integer bonusKnockDown;
+
+    public BowlingKnockDown(Integer currentOfKnockDown) {
+        validate(currentOfKnockDown);
+        this.currentOfKnockDown = currentOfKnockDown;
     }
 
-    public BowlingKnockDown(String currentKnockDownExpression, int currentOfKnockDown, int nextOfKnockDown) {
+    public BowlingKnockDown(Integer currentOfKnockDown, Integer nextOfKnockDown) {
         validate(nextOfKnockDown);
-        this.countOfBowlingKnockDown = currentOfKnockDown;
-        this.knockDownExpression = finalKnockDownExpress(currentKnockDownExpression, nextOfKnockDown);
+        this.currentOfKnockDown = currentOfKnockDown;
+        this.nextOfKnockDown = nextOfKnockDown;
     }
 
-    private String initDownExpress(int count) {
-        if (count == MIN_NUMBER) {
-            return String.format(" %s ", GUTTER);
-        }
-
-        if (count == MAX_NUMBER) {
-            return String.format("   %s  ", STRIKE);
-        }
-
-        return String.format("  %d   ", count);
+    public BowlingKnockDown(Integer currentOfKnockDown, Integer nextOfKnockDown, Integer bonusKnockDown) {
+        validate(bonusKnockDown);
+        this.currentOfKnockDown = currentOfKnockDown;
+        this.nextOfKnockDown = nextOfKnockDown;
+        this.bonusKnockDown = bonusKnockDown;
     }
 
-    private String finalKnockDownExpress(String currentKnockDownExpression, int count) {
-
-        if (this.countOfBowlingKnockDown + count == MAX_NUMBER) {
-            return String.format("%s%s%s ", currentKnockDownExpression, LINE, SPARE);
-        }
-
-        if (count == MIN_NUMBER) {
-            return String.format(" %s%s%s ", currentKnockDownExpression, LINE, GUTTER);
-        }
-
-        if (count == MAX_NUMBER) {
-            return String.format(" %s%s%s ", currentKnockDownExpression, LINE, STRIKE);
-        }
-
-        return String.format(" %s%s%d ", currentKnockDownExpression, LINE, count);
+    public Integer getCurrentOfKnockDown() {
+        return currentOfKnockDown;
     }
 
-    public String getKnockDownExpression() {
-        return knockDownExpression;
+    public Integer getNextOfKnockDown() {
+        return nextOfKnockDown;
     }
 
-    public int getCountOfBowlingKnockDown() {
-        return countOfBowlingKnockDown;
+    public Integer getBonusKnockDown() {
+        return bonusKnockDown;
     }
 
     private static void validate(int count) {
