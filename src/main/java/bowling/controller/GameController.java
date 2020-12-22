@@ -7,7 +7,6 @@ import bowling.view.InputView;
 import bowling.view.OutputView;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -48,21 +47,18 @@ public class GameController {
             return;
         }
 
-        Frame nextFrame = gameOfPlayer.getCurrentFrame();
-        Frame frame = null;
-        while (!isFrameEnd(nextFrame, frame)) {
+        Frame frame = gameOfPlayer.getCurrentFrame();
+        while (!isFrameEnd(gameOfPlayer, frame)) {
             OutputView.showGame(firstFrames, game.getPlayers());
-            frame = nextFrame;
             int score = InputView.getScore(gameOfPlayer.getPlayer());
-            nextFrame = gameOfPlayer.playFrame(score);
+            frame = gameOfPlayer.playFrame(score);
         }
     }
 
-    private boolean isFrameEnd(Frame nextFrame, Frame frame) {
-        if (nextFrame.getScore().isFinished()) {
+    private boolean isFrameEnd(GameOfPlayer gameOfPlayer, Frame frame) {
+        if (frame != gameOfPlayer.getCurrentFrame()) {
             return true;
         }
-
-        return nextFrame != frame && Objects.nonNull(frame);
+        return gameOfPlayer.isGameEnd();
     }
 }
