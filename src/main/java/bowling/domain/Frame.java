@@ -16,7 +16,7 @@ public interface Frame {
 
     int getSecondScore();
 
-    String getFirstSymbol(Pitch pitch);
+    String getFirstSymbol();
 
     String getSecondSymbol();
 }

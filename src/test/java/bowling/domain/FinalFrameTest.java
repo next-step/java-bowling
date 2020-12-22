@@ -157,7 +157,7 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.init();
         finalFrame.add(pitch);
 
-        assertThat(finalFrame.getFirstSymbol(pitch)).isEqualTo("X");
+        assertThat(finalFrame.getFirstSymbol()).isEqualTo("X");
     }
 
     @Test
@@ -168,7 +168,7 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.init();
         finalFrame.add(pitch);
 
-        assertThat(finalFrame.getFirstSymbol(pitch)).isEqualTo("-");
+        assertThat(finalFrame.getFirstSymbol()).isEqualTo("-");
     }
 
     @Test
@@ -179,7 +179,20 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.init();
         finalFrame.add(pitch);
 
-        assertThat(finalFrame.getFirstSymbol(pitch)).isEqualTo("1");
+        assertThat(finalFrame.getFirstSymbol()).isEqualTo("1");
+    }
+
+    @Test
+    @DisplayName("두번째 투구 스트라이크")
+    void secondStrike() {
+        Pitch pitch1 = Pitch.from(10);
+        Pitch pitch2 = Pitch.from(10);
+
+        Frame finalFrame = FinalFrame.init();
+        finalFrame.add(pitch1);
+        finalFrame.add(pitch2);
+
+        assertThat(finalFrame.getSecondSymbol())
     }
 
 }

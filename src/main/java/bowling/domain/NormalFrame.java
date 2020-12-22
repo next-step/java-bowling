@@ -47,7 +47,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String getFirstSymbol(Pitch pitch) {
+    public String getFirstSymbol() {
         return null;
     }
 
