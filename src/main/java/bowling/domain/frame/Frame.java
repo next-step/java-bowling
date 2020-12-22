@@ -3,7 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.point.Point;
 import bowling.domain.score.LastScore;
 import bowling.domain.score.Score;
-import bowling.domain.score.ScoreDto;
+import bowling.domain.score.ScoreResult;
 
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +28,7 @@ public abstract class Frame {
 
     abstract public boolean hasScoreTurn();
 
-    abstract public ScoreDto getScoreDto();
+    abstract public ScoreResult getScoreResult();
 
     abstract protected boolean isLastFrame();
 

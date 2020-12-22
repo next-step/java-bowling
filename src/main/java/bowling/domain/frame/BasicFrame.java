@@ -5,7 +5,7 @@ import bowling.domain.point.Point;
 import bowling.domain.score.BasicScore;
 import bowling.domain.score.LastScore;
 import bowling.domain.score.Score;
-import bowling.domain.score.ScoreDto;
+import bowling.domain.score.ScoreResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,26 +60,25 @@ public class BasicFrame extends Frame {
     }
 
     @Override
-    public ScoreDto getScoreDto() {
+    public ScoreResult getScoreResult() {
         if (!isFrameFinished()) {
-            return ScoreDto.init(0, ScoreType.NONE);
+            return ScoreResult.initFinished();
         }
 
         if (isLastFrame() && isFrameFinished()) {
-            return ScoreDto.init(frameBoard.sumPoint(), ScoreType.END);
+            return ScoreResult.initLastFrameFinished(frameBoard.sumPoint());
         }
 
         int nextBowlCount = getBonusCount();
         List<Point> pitchedPoints = getNextFramePitchPoints(nextBowlCount);
 
         if (pitchedPoints.size() < nextBowlCount) {
-            return ScoreDto.init(0, ScoreType.NONE);
+            return ScoreResult.initFinished();
         }
 
-        int sumScore = frameBoard.sumPoint() + getNextPointSum(pitchedPoints);
-        return ScoreDto.init(sumScore, ScoreType.END);
-
+        return ScoreResult.initLastFrameFinished(frameBoard.sumPoint() + getNextPointSum(pitchedPoints));
     }
+
 
     private Integer getNextPointSum(List<Point> pitchedPoints) {
         return pitchedPoints.stream()
@@ -128,7 +127,7 @@ public class BasicFrame extends Frame {
 
     @Override
     FrameResultDto getFrameResultDto() {
-        return new FrameResultDto(frameBoard.getPitchedPoint(), frameBoard.getBowlType(), getScoreDto());
+        return new FrameResultDto(frameBoard.getPitchedPoint(), frameBoard.getBowlType(), getScoreResult());
     }
 
 

@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.ScoreType;
 import bowling.domain.point.Point;
-import bowling.domain.score.ScoreDto;
+import bowling.domain.score.ScoreResult;
 import bowling.exception.NotHasTurnException;
 import bowling.exception.ValidOverPointException;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +29,7 @@ class LastFrameTest {
         lastFrame.pitch(Point.valueOf(1));
         lastFrame.pitch(Point.valueOf(2));
 
-        assertThat(lastFrame.getScoreDto()).isEqualToComparingFieldByField(ScoreDto.init(3, ScoreType.END));
+        assertThat(lastFrame.getScoreResult()).isEqualToComparingFieldByField(ScoreResult.init(3, ScoreType.END));
     }
 
     @Test
@@ -50,8 +50,8 @@ class LastFrameTest {
         lastFrame.pitch(Point.valueOf(10));
         lastFrame.pitch(Point.valueOf(10));
         lastFrame.pitch(Point.valueOf(10));
-        assertThat(lastFrame.getScoreDto().getSumScore()).isEqualTo(30);
-        assertThat(lastFrame.getScoreDto().getBowlType()).isEqualTo(ScoreType.END);
+        assertThat(lastFrame.getScoreResult().getSumScore()).isEqualTo(30);
+        assertThat(lastFrame.getScoreResult().getBowlType()).isEqualTo(ScoreType.END);
     }
 
     @Test
@@ -60,8 +60,8 @@ class LastFrameTest {
         basicFrame.pitch(Point.valueOf(2));
         basicFrame.pitch(Point.valueOf(8));
         lastFrame.pitch(Point.valueOf(3));
-        assertThat(basicFrame.getScoreDto().getSumScore()).isEqualTo(13);
-        assertThat(basicFrame.getScoreDto().getBowlType()).isEqualTo(ScoreType.END);
+        assertThat(basicFrame.getScoreResult().getSumScore()).isEqualTo(13);
+        assertThat(basicFrame.getScoreResult().getBowlType()).isEqualTo(ScoreType.END);
     }
 
     @Test

@@ -2,18 +2,27 @@ package bowling.domain.score;
 
 import java.util.Objects;
 
-public class ScoreDto {
+public class ScoreResult {
 
     private final int sumScore;
     private final ScoreType scoreType;
 
 
-    public ScoreDto(int sumScore, ScoreType scoreType) {
+    public ScoreResult(int sumScore, ScoreType scoreType) {
         this.sumScore = sumScore;
         this.scoreType = scoreType;
     }
-    public static ScoreDto init(int value, ScoreType scoreType) {
-        return new ScoreDto(value, scoreType);
+
+    public static ScoreResult init(int value, ScoreType scoreType) {
+        return new ScoreResult(value, scoreType);
+    }
+
+    public static ScoreResult initFinished() {
+        return init(0, ScoreType.NONE);
+    }
+
+    public static ScoreResult initLastFrameFinished(int sumPoint) {
+        return init(sumPoint, ScoreType.END);
     }
 
     public int getSumScore() {
@@ -28,8 +37,8 @@ public class ScoreDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ScoreDto scoreDto = (ScoreDto) o;
-        return sumScore == scoreDto.sumScore && scoreType == scoreDto.scoreType;
+        ScoreResult scoreResult = (ScoreResult) o;
+        return sumScore == scoreResult.sumScore && scoreType == scoreResult.scoreType;
     }
 
     @Override

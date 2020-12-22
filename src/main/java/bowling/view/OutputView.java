@@ -4,9 +4,8 @@ import bowling.domain.game.BowlingGamesDto;
 import bowling.domain.score.ScoreType;
 import bowling.domain.frame.FrameResultDto;
 import bowling.domain.game.Bowling;
-import bowling.domain.game.BowlingGames;
 import bowling.domain.point.Point;
-import bowling.domain.score.ScoreDto;
+import bowling.domain.score.ScoreResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +105,7 @@ public class OutputView {
         StringBuilder builder = new StringBuilder();
         builder.append(SCORE_BLANK);
         int sumPoint = 0;
-        for (ScoreDto score : getScores(bowling)) {
+        for (ScoreResult score : getScores(bowling)) {
             sumPoint += score.getSumScore();
             builder.append(String.format(SCORE, isContinueBowling(sumPoint, score)));
         }
@@ -114,11 +113,11 @@ public class OutputView {
         System.out.println(builder.toString());
     }
 
-    private static Object isContinueBowling(int sumPoint, ScoreDto score) {
+    private static Object isContinueBowling(int sumPoint, ScoreResult score) {
         return score.getBowlType() == ScoreType.NONE ? BLANK : sumPoint;
     }
 
-    private static List<ScoreDto> getScores(Bowling bowling) {
+    private static List<ScoreResult> getScores(Bowling bowling) {
         return bowling.getResult()
                 .stream()
                 .map(FrameResultDto::getScoreDto)
