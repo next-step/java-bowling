@@ -187,4 +187,53 @@ class FramesTest {
         Assertions.assertThat(frames.isFinalFrame()).isFalse();
     }
 
+    @Test
+    @DisplayName("NormalFrame 생성")
+    void createNormalFrame() {
+        Frames frames = Frames.init();
+
+        Frame normalFrame = frames.createFrame();
+        assertThat(normalFrame).isInstanceOf(NormalFrame.class);
+    }
+
+    @Test
+    @DisplayName("FinalFrame 생성")
+    void createFinalFrame() {
+        Pitch pitch = Pitch.from(10);
+        Frame frame1 = NormalFrame.init();
+        frame1.add(pitch);
+        Frame frame2 = NormalFrame.init();
+        frame2.add(pitch);
+        Frame frame3 = NormalFrame.init();
+        frame3.add(pitch);
+        Frame frame4 = NormalFrame.init();
+        frame4.add(pitch);
+        Frame frame5 = NormalFrame.init();
+        frame5.add(pitch);
+        Frame frame6 = NormalFrame.init();
+        frame6.add(pitch);
+        Frame frame7 = NormalFrame.init();
+        frame7.add(pitch);
+        Frame frame8 = NormalFrame.init();
+        frame8.add(pitch);
+        Frame frame9 = NormalFrame.init();
+        frame9.add(pitch);
+
+        List<Frame> frameList = new ArrayList<>();
+        frameList.add(frame1);
+        frameList.add(frame2);
+        frameList.add(frame3);
+        frameList.add(frame4);
+        frameList.add(frame5);
+        frameList.add(frame6);
+        frameList.add(frame7);
+        frameList.add(frame8);
+        frameList.add(frame9);
+
+        Frames frames = Frames.from(frameList);
+
+        Frame normalFrame = frames.createFrame();
+        assertThat(normalFrame).isInstanceOf(FinalFrame.class);
+    }
+
 }

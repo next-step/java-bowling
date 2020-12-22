@@ -39,4 +39,11 @@ public class Frames {
     public boolean isFinalFrame() {
         return frames.size() >= FINAL_FRAME_CONDITION;
     }
+
+    public Frame createFrame() {
+        if(isFinalFrame()) {
+            return FinalFrame.init();
+        }
+        return NormalFrame.init();
+    }
 }

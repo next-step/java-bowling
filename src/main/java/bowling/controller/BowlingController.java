@@ -19,25 +19,9 @@ public class BowlingController {
         frames = Frames.init();
 
         while(!frames.isFinished()) {
-            frames.add(playGame());
+            Frame frame = frames.createFrame();
+            frames.add(createFrame(frame));
         }
-    }
-
-    private Frame playGame() {
-        if(frames.isFinalFrame()) {
-            return createFinalFrame();
-        }
-        return createNormalFrame();
-    }
-
-    private Frame createNormalFrame() {
-        Frame normalFrame = NormalFrame.init();
-        return createFrame(normalFrame);
-    }
-
-    private Frame createFinalFrame() {
-        Frame finalFrame = FinalFrame.init();
-        return createFrame(finalFrame);
     }
 
     private Frame createFrame(Frame frame) {
