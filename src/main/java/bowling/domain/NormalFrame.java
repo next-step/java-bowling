@@ -10,7 +10,6 @@ public class NormalFrame implements Frame {
     public static final String MAXIMUM_FRAMESCORE = "한 프레임의 점수의 총 합은 10점입니다.";
 
     private List<Pitch> pitches;
-    private int frameScore = 0;
 
     private NormalFrame(List<Pitch> pitches) {
         this.pitches = pitches;
@@ -30,7 +29,6 @@ public class NormalFrame implements Frame {
 
     private void addFirstPitch(Pitch pitch) {
         if(pitches.isEmpty()) {
-            frameScore += pitch.getScore();
             pitches.add(pitch);
         }
     }
@@ -38,13 +36,12 @@ public class NormalFrame implements Frame {
     private void addSecondPitch(Pitch pitch) {
         validateFrameScore(pitch);
         if(!pitches.isEmpty()) {
-            frameScore += pitch.getScore();
             pitches.add(pitch);
         }
     }
 
     private void validateFrameScore(Pitch pitch) {
-        if(frameScore + pitch.getScore() > MAXIMUM_SCORE_CONDITION) {
+        if(getFrameScore() + pitch.getScore() > MAXIMUM_SCORE_CONDITION) {
             throw new IllegalArgumentException(MAXIMUM_FRAMESCORE);
         }
     }
@@ -56,12 +53,19 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return frameScore == MAXIMUM_SCORE_CONDITION || pitches.size() == MAXIMUM_PITCH;
+        return getFrameScore() == MAXIMUM_SCORE_CONDITION || pitches.size() == MAXIMUM_PITCH;
     }
 
     @Override
     public boolean isSpare() {
-        return frameScore == MAXIMUM_SCORE_CONDITION && pitches.size() == MAXIMUM_PITCH;
+        return getFrameScore() == MAXIMUM_SCORE_CONDITION && pitches.size() == MAXIMUM_PITCH;
+    }
+
+    @Override
+    public int getFrameScore() {
+        return pitches.stream()
+                .mapToInt(Pitch::getScore)
+                .sum();
     }
 
     @Override

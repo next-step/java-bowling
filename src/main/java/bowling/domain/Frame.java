@@ -10,6 +10,8 @@ public interface Frame {
 
     boolean isSpare();
 
+    int getFrameScore();
+
     int getFirstScore();
 
     int getSecondScore();

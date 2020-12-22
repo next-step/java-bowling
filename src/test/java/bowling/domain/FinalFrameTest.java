@@ -124,4 +124,28 @@ class FinalFrameTest {
         assertThat(finalFrame.isSpare()).isTrue();
     }
 
+    @Test
+    @DisplayName("프레임 점수 확인1")
+    void getFrameScorePitch1() {
+        Frame finalFrame = FinalFrame.init();
+
+        Pitch pitch1 = Pitch.from(8);
+        finalFrame.add(pitch1);
+
+        assertThat(finalFrame.getFrameScore()).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("프레임 점수 확인2")
+    void getFrameScorePitch2() {
+        Frame finalFrame = FinalFrame.init();
+
+        Pitch pitch1 = Pitch.from(8);
+        Pitch pitch2 = Pitch.from(1);
+        finalFrame.add(pitch1);
+        finalFrame.add(pitch2);
+
+        assertThat(finalFrame.getFrameScore()).isEqualTo(9);
+    }
+
 }
