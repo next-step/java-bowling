@@ -14,7 +14,7 @@ public class BowlingKnockDownTest {
     @ValueSource(ints = {10, 9, 7, 0})
     public void 볼링핀_쓰러뜨린수(int countOfKnockDown) {
         BowlingKnockDown bowlingKnockDown = new BowlingKnockDown(countOfKnockDown);
-        System.out.println(bowlingKnockDown.getKnockDownExpression());
+        System.out.println(bowlingKnockDown.getCurrentOfKnockDown());
     }
 
     @ParameterizedTest
