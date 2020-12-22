@@ -1,7 +1,7 @@
 package bowling.util;
 
 public class StringUtils {
-    public StringUtils() {
+    private StringUtils() {
     }
 
     public static boolean isEmpty(String value) {
