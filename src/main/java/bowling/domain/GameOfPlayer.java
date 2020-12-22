@@ -16,9 +16,9 @@ public class GameOfPlayer {
         return currentFrame;
     }
 
-    public boolean playFrame(int count, Frame frame) {
+    public Frame playFrame(int count) {
         currentFrame = currentFrame.bowl(count);
-        return frame != currentFrame;
+        return currentFrame;
     }
 
     public boolean isGameEnd() {
