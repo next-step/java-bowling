@@ -41,4 +41,11 @@ public class FrameStatusTest {
         assertThat(FrameStatus.getStatus(previousTurn, currentTurn))
                 .isEqualTo(FrameStatus.MISS);
     }
+
+    @Test
+    @DisplayName("null 값 체크")
+    void testNullValue() {
+        assertThat(FrameStatus.getStatus(null, null))
+                .isEqualTo(FrameStatus.MISS);
+    }
 }

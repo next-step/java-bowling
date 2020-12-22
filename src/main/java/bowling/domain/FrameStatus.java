@@ -6,6 +6,10 @@ public enum FrameStatus {
     MISS;
 
     public static FrameStatus getStatus(DownedPin previousPitch, DownedPin currentPitch) {
+        if (previousPitch == null) {
+            return MISS;
+        }
+
         if (previousPitch.isStrike()) {
             return STRIKE;
         }
