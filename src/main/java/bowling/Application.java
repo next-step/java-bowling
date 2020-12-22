@@ -18,6 +18,7 @@ public class Application {
     public static final int INDEX_ONE = 1;
     public static final String STRIKE_SYMBOL = "X";
     public static final String SPARE_SYMBOL = "/";
+    public static final int INDEX_ZERO = 0;
 
     public static void main(String[] args) {
         Users users = InputView.getUsers();
@@ -27,14 +28,14 @@ public class Application {
     }
 
     private static void bowling(Frames frames, Users users) {
-        for (int frameNo = 0; frameNo < FINAL_FRAME; frameNo++) {
+        for (int frameNo = INDEX_ZERO; frameNo < FINAL_FRAME; frameNo++) {
             usersStroke(frameNo, frames, users);
             frames.next(frameNo);
         }
     }
 
     private static void usersStroke(int frameNo, Frames frames, Users users) {
-        for (int userIndex = 0; userIndex < users.getUsers().size(); userIndex++) {
+        for (int userIndex = INDEX_ZERO; userIndex < users.getUsers().size(); userIndex++) {
             Pins pins = InputView.getPins(users.getUsers().get(userIndex).getName());
             Frame frame = frames.get(frameNo);
             frame.bowl(pins);
@@ -66,11 +67,11 @@ public class Application {
         State state = frame.getLastState();
 
         if (frame instanceof FinalFrame) {
-            lastStroke(frames, users, userIndex, frame, state);
+            thirdAtlastStroke(frames, users, userIndex, frame, state);
         }
     }
 
-    private static void lastStroke(Frames frames, Users users, int userIndex, Frame frame, State state) {
+    private static void thirdAtlastStroke(Frames frames, Users users, int userIndex, Frame frame, State state) {
         if (state.getSymbol().contains(STRIKE_SYMBOL) || state.getSymbol().contains(SPARE_SYMBOL)) {
             Pins thirdPins = InputView.getPins(users.getUsers().get(userIndex).getName());
             frame.thirdBowl(userIndex, state, thirdPins);

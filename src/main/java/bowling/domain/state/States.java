@@ -1,9 +1,7 @@
 package bowling.domain.state;
 
-import bowling.domain.state.None;
-import bowling.domain.state.State;
-
 import java.util.LinkedList;
+import java.util.Optional;
 
 /**
  * Created : 2020-12-21 오전 11:22
@@ -20,11 +18,14 @@ public class States {
         this.states.add(state);
     }
 
-    public State getState(int i) {
+    public State getState(int userIndex) {
         if (states.isEmpty()) {
             return new None();
         }
-        return this.states.get(i);
+        if (states.size() <= userIndex) {
+            return new None();
+        }
+        return this.states.get(userIndex);
     }
 
     public State getLast() {
@@ -33,9 +34,5 @@ public class States {
 
     public void set(int frameNo, State state) {
         this.states.set(frameNo, state);
-    }
-
-    public int size() {
-        return states.size();
     }
 }
