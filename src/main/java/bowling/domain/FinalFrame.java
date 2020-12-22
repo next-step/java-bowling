@@ -41,9 +41,37 @@ public class FinalFrame implements Frame {
     }
 
     private void validateFrameScore(Pitch pitch) {
-        if(getPitchSize() == 1 && getFrameScore() != 10 && getFrameScore() + pitch.getScore() > 10) {
+        if(isFirstPitch() && !isFrameScoreEqualTen() && isExceedMaxScore(pitch)) {
             throw new IllegalArgumentException(MAXIMUM_FRAMESCORE);
         }
+    }
+
+    private boolean isFirstPitch() {
+        return getPitchSize() == 1;
+    }
+
+    private boolean isSecondPitch() {
+        return getPitchSize() == NORMAL_PITCH;
+    }
+
+    private boolean isThirdPitch() {
+        return getPitchSize() == MAXIMUM_PITCH;
+    }
+
+    private boolean isFrameScoreEqualTen() {
+        return getFrameScore() == MAXIMUM_SCORE_CONDITION;
+    }
+
+    private boolean isExceedMaxScore(Pitch pitch) {
+        return getFrameScore() + pitch.getScore() > MAXIMUM_SCORE_CONDITION;
+    }
+
+    private boolean isUnderMaxScore() {
+        return getFrameScore() < MAXIMUM_SCORE_CONDITION;
+    }
+
+    private boolean isEqualMaxScore() {
+        return getFrameScore() == MAXIMUM_SCORE_CONDITION;
     }
 
     @Override
@@ -53,12 +81,12 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return (getFrameScore() < MAXIMUM_SCORE_CONDITION && pitches.size() == NORMAL_PITCH) || pitches.size() == MAXIMUM_PITCH;
+        return (isUnderMaxScore() && isSecondPitch()) || isThirdPitch();
     }
 
     @Override
     public boolean isSpare() {
-        return getFrameScore() == MAXIMUM_SCORE_CONDITION && pitches.size() == NORMAL_PITCH;
+        return isEqualMaxScore() && isSecondPitch();
     }
 
     @Override
