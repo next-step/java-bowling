@@ -151,4 +151,76 @@ class NormalFrameTest {
         assertThat(normalFrame.getFrameScore()).isEqualTo(9);
     }
 
+    @Test
+    @DisplayName("첫번째 투구 스트라이크")
+    void firstStrike() {
+        Pitch pitch = Pitch.from(10);
+
+        Frame normalFrame = NormalFrame.init();
+        normalFrame.add(pitch);
+
+        assertThat(normalFrame.getFirstSymbol()).isEqualTo("X");
+    }
+
+    @Test
+    @DisplayName("첫번째 투구 거터")
+    void firstGutter() {
+        Pitch pitch = Pitch.from(0);
+
+        Frame normalFrame = NormalFrame.init();
+        normalFrame.add(pitch);
+
+        assertThat(normalFrame.getFirstSymbol()).isEqualTo("-");
+    }
+
+    @Test
+    @DisplayName("첫번째 투구 일반 숫자")
+    void firstNumber() {
+        Pitch pitch = Pitch.from(2);
+
+        Frame normalFrame = NormalFrame.init();
+        normalFrame.add(pitch);
+
+        assertThat(normalFrame.getFirstSymbol()).isEqualTo("2");
+    }
+
+    @Test
+    @DisplayName("두번째 투구 거터")
+    void secondGutter() {
+        Pitch pitch1 = Pitch.from(5);
+        Pitch pitch2 = Pitch.from(0);
+
+        Frame normalFrame = NormalFrame.init();
+        normalFrame.add(pitch1);
+        normalFrame.add(pitch2);
+
+        assertThat(normalFrame.getSecondSymbol()).isEqualTo("-");
+    }
+
+    @Test
+    @DisplayName("두번째 투구 스페어")
+    void secondSpare() {
+        Pitch pitch1 = Pitch.from(5);
+        Pitch pitch2 = Pitch.from(5);
+
+        Frame normalFrame = NormalFrame.init();
+        normalFrame.add(pitch1);
+        normalFrame.add(pitch2);
+
+        assertThat(normalFrame.getSecondSymbol()).isEqualTo("/");
+    }
+
+    @Test
+    @DisplayName("두번째 투구 미스")
+    void secondMiss() {
+        Pitch pitch1 = Pitch.from(5);
+        Pitch pitch2 = Pitch.from(4);
+
+        Frame normalFrame = NormalFrame.init();
+        normalFrame.add(pitch1);
+        normalFrame.add(pitch2);
+
+        assertThat(normalFrame.getSecondSymbol()).isEqualTo("4");
+    }
+
 }
