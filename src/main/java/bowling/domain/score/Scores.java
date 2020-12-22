@@ -1,7 +1,6 @@
 package bowling.domain.score;
 
 import bowling.domain.frame.FrameNumber;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +31,6 @@ public class Scores {
 
     public List<Integer> getDownPinsFromIndex(FrameNumber frameNumber) {
         Optional<List<Integer>> downPins = Optional.of(scores.get(frameNumber.getValue()).getDownPins());
-        return downPins.orElse(new ArrayList<>());
+        return downPins.orElse(scores.get(frameNumber.getValue()).getDownPins());
     }
 }
