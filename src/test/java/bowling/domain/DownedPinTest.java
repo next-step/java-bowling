@@ -24,6 +24,14 @@ public class DownedPinTest {
         ).isInstanceOf(InvalidDownedPinNumberException.class);
     }
 
+    private static Stream<Arguments> makeSpareConditions() {
+        return Stream.of(
+                Arguments.of(DownedPin.fromNumber(3), DownedPin.fromNumber(7), true),
+                Arguments.of(DownedPin.fromNumber(10), DownedPin.fromNumber(0), false),
+                Arguments.of(DownedPin.fromNumber(5), null, false)
+        );
+    }
+
     @Test
     @DisplayName("한 프레임 안에서 2번 째 시도가 정상적이지 않을 때의 검증")
     void testFrameCondition() {
@@ -39,14 +47,6 @@ public class DownedPinTest {
     void testIsStrike() {
         assertThat(DownedPin.fromNumber(10).isStrike())
                 .isTrue();
-    }
-
-    private static Stream<Arguments> makeSpareConditions() {
-
-        return Stream.of(
-                Arguments.of(DownedPin.fromNumber(3), DownedPin.fromNumber(7), true),
-                Arguments.of(DownedPin.fromNumber(10), DownedPin.fromNumber(0), false)
-        );
     }
 
     @MethodSource("makeSpareConditions")
