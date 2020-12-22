@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 
 public class OutputUi {
     private static final String NAME = " NAME ";
-    private static final String LINE = " | ";
     private static final String FIRST = "  01  ";
     private static final String SECOND = "  02  ";
     private static final String THIRD = "  03  ";
@@ -21,6 +20,16 @@ public class OutputUi {
     private static final String TENTH = "  10  ";
     private static final String EMPTY = "      ";
 
+    private static final int MIN_NUMBER = 0;
+    public static final int MAX_NUMBER = 10;
+    private static final String STRIKE = "X";
+    private static final String SPARE = "/";
+    private static final String GUTTER = "-";
+    private static final String LINE = " | ";
+
+    private OutputUi() {
+
+    }
 
     private static void printFrameFirstLine() {
         System.out.print(LINE + NAME + LINE);
@@ -59,5 +68,34 @@ public class OutputUi {
 
     public static void printBowling(Player player, Frames frames) {
         printPlayFrames(player, frames);
+    }
+
+    private String initDownExpress(int count) {
+        if (count == MIN_NUMBER) {
+            return String.format(" %s ", GUTTER);
+        }
+
+        if (count == MAX_NUMBER) {
+            return String.format("   %s  ", STRIKE);
+        }
+
+        return String.format("  %d   ", count);
+    }
+
+    private String finalKnockDownExpress(String currentKnockDownExpression, int count) {
+
+        if (count == MAX_NUMBER) {
+            return String.format("%s%s%s ", currentKnockDownExpression, LINE, SPARE);
+        }
+
+        if (count == MIN_NUMBER) {
+            return String.format(" %s%s%s ", currentKnockDownExpression, LINE, GUTTER);
+        }
+
+        if (count == MAX_NUMBER) {
+            return String.format(" %s%s%s ", currentKnockDownExpression, LINE, STRIKE);
+        }
+
+        return String.format(" %s%s%d ", currentKnockDownExpression, LINE, count);
     }
 }
