@@ -31,7 +31,8 @@ public class BasicFrame extends Frame {
 
     @Override
     public Frame createNextFrame() {
-        return isLastFrameIndex() ? makeLastFrameInstance() : makeBasicFrameInstance();
+        nextFrame = isLastFrameIndex() ? makeLastFrameInstance() : makeBasicFrameInstance();
+        return nextFrame;
     }
 
     private boolean isLastFrameIndex() {
