@@ -2,13 +2,11 @@ package bowling.controller;
 
 import bowling.domain.Game;
 import bowling.domain.GameOfPlayer;
-import bowling.domain.Player;
 import bowling.domain.frame.Frame;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -22,9 +20,10 @@ public class GameController {
 
     public static GameController start() {
         int playerNum = InputView.getPlayerNum();
-        Game game = new Game(IntStream.range(0, playerNum)
-            .mapToObj(idx -> new GameOfPlayer(new Player(InputView.getName(idx + 1))))
-            .collect(Collectors.toList()));
+        List<String> names = IntStream.range(0, playerNum)
+            .mapToObj(idx -> InputView.getName(idx + 1))
+            .collect(Collectors.toList());
+        Game game = new Game(names);
 
         return new GameController(game);
     }
@@ -35,28 +34,29 @@ public class GameController {
             playPlayers(gameOfPlayers);
         }
 
-        OutputView.showGameOfPlayers(gameOfPlayers);
+        OutputView.showGame(game);
     }
 
     private void playPlayers(List<GameOfPlayer> gameOfPlayers) {
-        for (GameOfPlayer gameOfPlayer : gameOfPlayers) {
-            if (gameOfPlayer.isGameEnd())
-                return;
+        if (gameOfPlayers.isEmpty()) {
+            return;
+        }
 
-            playFrame(gameOfPlayers, gameOfPlayer);
+        GameOfPlayer gameOfPlayer = gameOfPlayers.get(0);
+        for (int idx = 0; idx < gameOfPlayers.size() && !gameOfPlayer.isGameEnd(); idx++) {
+            gameOfPlayer = gameOfPlayers.get(idx);
+            playFrame(gameOfPlayer);
         }
     }
 
-    private void playFrame(List<GameOfPlayer> gameOfPlayers, GameOfPlayer gameOfPlayer) {
-        Frame nextFrame = gameOfPlayer.getCurrentFrame();
-        Frame frame = null;
-        while (nextFrame == frame || Objects.isNull(frame)) {
-            OutputView.showGameOfPlayers(gameOfPlayers);
-            frame = nextFrame;
+    private void playFrame(GameOfPlayer gameOfPlayer) {
+        boolean isFrameChanged = false;
+        Frame frame;
+        while (!isFrameChanged) {
+            OutputView.showGame(game);
             int score = InputView.getScore(gameOfPlayer.getPlayer());
-            nextFrame = gameOfPlayer.playFrame(score);
-            if (nextFrame.getScore().isFinished())
-                break;
+            frame = gameOfPlayer.getCurrentFrame();
+            isFrameChanged = gameOfPlayer.playFrame(score, frame);
         }
     }
 }

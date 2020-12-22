@@ -5,22 +5,20 @@ import bowling.domain.frame.NormalFrame;
 
 public class GameOfPlayer {
     private final Player player;
-    private final Frame firstFrame;
     private Frame currentFrame;
 
     public GameOfPlayer(Player player) {
         this.player = player;
-        firstFrame = new NormalFrame(1);
-        currentFrame = firstFrame;
+        currentFrame = new NormalFrame(1);
     }
 
     public Frame getCurrentFrame() {
         return currentFrame;
     }
 
-    public Frame playFrame(int count) {
+    public boolean playFrame(int count, Frame frame) {
         currentFrame = currentFrame.bowl(count);
-        return currentFrame;
+        return frame != currentFrame;
     }
 
     public boolean isGameEnd() {
@@ -31,7 +29,4 @@ public class GameOfPlayer {
         return player;
     }
 
-    public Frame getFirstFrame() {
-        return firstFrame;
-    }
 }

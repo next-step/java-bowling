@@ -12,7 +12,6 @@ import java.util.Objects;
 public class NormalFrame implements Frame {
 
     public final int TOTAL_FRAME_COUNT = 10;
-
     private final int frameCount;
     private State state;
     private Frame nextFrame;
@@ -26,11 +25,6 @@ public class NormalFrame implements Frame {
     @Override
     public List<Pins> getPinsList() {
         return Collections.singletonList(state.getPins());
-    }
-
-    @Override
-    public int getFrameCount() {
-        return frameCount;
     }
 
     @Override

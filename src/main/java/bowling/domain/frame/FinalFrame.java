@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static bowling.view.OutputView.TOTAL_FRAME_COUNT;
-
 public class FinalFrame implements Frame {
 
     private final LinkedList<State> states;
@@ -31,11 +29,6 @@ public class FinalFrame implements Frame {
         return states.stream()
             .map(State::getPins)
             .collect(Collectors.toList());
-    }
-
-    @Override
-    public int getFrameCount() {
-        return TOTAL_FRAME_COUNT;
     }
 
     @Override

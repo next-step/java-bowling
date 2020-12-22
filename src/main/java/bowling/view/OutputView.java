@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.GameOfPlayer;
+import bowling.domain.Game;
 import bowling.domain.Player;
 import bowling.domain.Score;
 import bowling.domain.frame.Frame;
@@ -41,15 +41,16 @@ public class OutputView {
         return getNameGuideString() + getFrameGuideString() + INFIX;
     }
 
-    public static void showGameOfPlayers(List<GameOfPlayer> gameOfPlayers) {
+    public static void showGame(Game game) {
+        List<Frame> firstFrames = game.getCurrentFrames();
+        List<Player> players = game.getPlayers();
+
+        IntStream.range(0, players.size())
+            .forEach(idx -> showGameOfPlayer(players.get(idx), firstFrames.get(idx)));
         out.println(makeFramesGuide());
-        gameOfPlayers.forEach(OutputView::showGameOfPlayer);
     }
 
-    public static void showGameOfPlayer(GameOfPlayer gameOfPlayer) {
-        Player player = gameOfPlayer.getPlayer();
-        Frame frame = gameOfPlayer.getFirstFrame();
-
+    public static void showGameOfPlayer(Player player, Frame frame) {
         StringBuilder builder = new StringBuilder();
         builder.append(getFrameWithWord(player.getName()))
             .append(makeFrameString(frame))
