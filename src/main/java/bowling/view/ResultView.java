@@ -90,7 +90,8 @@ public class ResultView {
 
         }
 
-        return pitchResults.getPitchResults().stream().map(pitchResult -> pitchNumberToChar(pitchResult.getPinCount()))
+        return pitchResults.getPitchResults().stream()
+                .map(pitchResult -> pitchNumberToChar(pitchResult.getPinCount()))
                 .collect(Collectors.joining(DELIMITER));
 
     }
@@ -98,11 +99,12 @@ public class ResultView {
     private static String parseNormalFramePitchResult(PitchResults pitchResults) {
         int totalCount = pitchResults.sumUpCurrentResult();
 
-        if(totalCount == BOWLING_PIN_COUNT){
-            return pitchNumberToChar(pitchResults.findResult(0))+ DELIMITER + SPARE;
+        if (totalCount == BOWLING_PIN_COUNT) {
+            return pitchNumberToChar(pitchResults.findResult(0)) + DELIMITER + SPARE;
         }
 
-        return pitchResults.getPitchResults().stream().map(pitchResult -> pitchNumberToChar(pitchResult.getPinCount()))
+        return pitchResults.getPitchResults().stream()
+                .map(pitchResult -> pitchNumberToChar(pitchResult.getPinCount()))
                 .collect(Collectors.joining(DELIMITER));
     }
 
@@ -110,7 +112,7 @@ public class ResultView {
         String first = pitchNumberToChar(pitchResults.findResult(0));
         String second = pitchNumberToChar(pitchResults.findResult(1));
 
-        if (pitchResults.findResult(0) + pitchResults.findResult(1) == BOWLING_PIN_COUNT) {
+        if ((pitchResults.findResult(0) + pitchResults.findResult(1)) == BOWLING_PIN_COUNT) {
             second = SPARE;
         }
 
@@ -118,11 +120,11 @@ public class ResultView {
     }
 
     private static String pitchNumberToChar(int pitchNumber) {
-        if(pitchNumber == BOWLING_PIN_COUNT){
+        if (pitchNumber == BOWLING_PIN_COUNT) {
             return STRIKE;
         }
 
-        if(pitchNumber == 0){
+        if (pitchNumber == 0) {
             return GUTTER;
         }
 

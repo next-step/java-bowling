@@ -17,6 +17,6 @@ public class PitchResultsTest {
         pitchResults.addNewResult(10);
 
         // then
-        assertThat(pitchResults.sumUpCurrentResult()).isEqualTo(10+10);
+        assertThat(pitchResults.sumUpCurrentResult()).isEqualTo(10 + 10);
     }
 }

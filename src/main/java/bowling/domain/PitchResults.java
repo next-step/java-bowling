@@ -20,7 +20,9 @@ public class PitchResults {
     }
 
     public int sumUpCurrentResult() {
-        return pitchResults.stream().mapToInt(pitchResult -> pitchResult.getPinCount()).sum();
+        return pitchResults.stream()
+                .mapToInt(pitchResult -> pitchResult.getPinCount())
+                .sum();
     }
 
     public void addNewResult(int pitchResult) {

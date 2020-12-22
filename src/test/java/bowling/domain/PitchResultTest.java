@@ -26,7 +26,7 @@ public class PitchResultTest {
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
 
-            PitchResult.from(BOWLING_PIN_COUNT+1);
+            PitchResult.from(BOWLING_PIN_COUNT + 1);
 
         }).withMessageContaining("투구 결과는 총 볼링핀의 갯수를 넘을 수 없습니다.");
     }

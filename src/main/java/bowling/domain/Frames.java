@@ -29,7 +29,7 @@ public class Frames {
 
     public void execute() {
 
-        if(frames.isEmpty()){
+        if (frames.isEmpty()) {
             makeFirstFrame();
         }
 
@@ -47,7 +47,7 @@ public class Frames {
     }
 
     public void makeNextFrames() {
-        if(frames.getLast().isEnd() && frames.size() < MAX_FRAME_COUNT){
+        if (frames.getLast().isEnd() && frames.size() < MAX_FRAME_COUNT) {
             Frame nextFrame = frames.getLast().makeNextFrame(getCurrentFrameIndex());
             frames.add(nextFrame);
         }

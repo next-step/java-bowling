@@ -27,9 +27,6 @@ public class FrameTest {
     @Test
     void sumCurrentPitchResultsTest(){
 
-        // given
-        int index = 0;
-
         NormalFrame normalFrame =  NormalFrame.from(0);
 
         // when
@@ -38,7 +35,7 @@ public class FrameTest {
         normalFrame.start(leftBowlingPins -> 3);
 
         // then
-        assertThat(normalFrame.sumCurrentPitchResults()).isEqualTo(2+3);
+        assertThat(normalFrame.sumCurrentPitchResults()).isEqualTo(2 + 3);
     }
 
     @DisplayName("FinalFrame 에서 다음 프레임 생성 요청 시 Exception 테스트")

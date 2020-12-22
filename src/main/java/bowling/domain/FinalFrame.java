@@ -14,7 +14,7 @@ public class FinalFrame extends Frame{
 
     @Override
     public void start(PitchStrategy pitchStrategy) {
-        if(!isEnd()){
+        if (!isEnd()) {
             int pitchResult = pitchStrategy.makePitchResult(countLeftOverPins());
             pitchResults.addNewResult(pitchResult);
         }
@@ -23,11 +23,11 @@ public class FinalFrame extends Frame{
     private int countLeftOverPins() {
         int currentPoint = sumCurrentPitchResults();
 
-        if(currentPoint % BOWLING_PIN_COUNT == 0){
+        if (currentPoint % BOWLING_PIN_COUNT == 0) {
             return BOWLING_PIN_COUNT;
         }
 
-        if(currentPoint > BOWLING_PIN_COUNT){
+        if (currentPoint > BOWLING_PIN_COUNT) {
             currentPoint = currentPoint - BOWLING_PIN_COUNT;
         }
 
@@ -39,7 +39,7 @@ public class FinalFrame extends Frame{
     public boolean isEnd() {
         return (pitchResults.size() == 2 && sumCurrentPitchResults() == 0) ||
                 (pitchResults.size() == 2 && countLeftOverPins() > 0 && countLeftOverPins() != 10) ||
-                pitchResults.size() == MAX_PITCH_COUNT;
+                (pitchResults.size() == MAX_PITCH_COUNT);
     }
 
     @Override

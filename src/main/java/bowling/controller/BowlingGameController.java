@@ -22,7 +22,7 @@ public class BowlingGameController {
 
         printEmptyFrames(bowlingGame.getPlayer(), bowlingGame.getFrames().MAX_FRAME_COUNT);
 
-        while(!bowlingGame.isEnd()){
+        while (!bowlingGame.isEnd()) {
             frames.execute();
             printCurrentFrame(bowlingGame, bowlingGame.getFrames().MAX_FRAME_COUNT);
 

@@ -13,7 +13,7 @@ public class PitchResult {
     }
 
     private void validatePitchResult(int pinCount) {
-        if(pinCount > BOWLING_PIN_COUNT || pinCount < 0){
+        if ((pinCount > BOWLING_PIN_COUNT) || (pinCount < 0)) {
             throw new IllegalArgumentException("투구 결과는 총 볼링핀의 갯수를 넘을 수 없습니다.");
         }
     }

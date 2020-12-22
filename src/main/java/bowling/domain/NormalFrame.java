@@ -14,7 +14,7 @@ public class NormalFrame extends Frame{
 
     @Override
     public void start(PitchStrategy pitchStrategy) {
-        if(!isEnd()){
+        if (!isEnd()) {
             int pitchResult = pitchStrategy.makePitchResult(countLeftOverPins());
             pitchResults.addNewResult(pitchResult);
         }
