@@ -7,28 +7,33 @@ import bowling.view.ResultView;
 
 public class BowlingGameController {
 
-
     public static void run() {
-
 
         String playerName = getPlayerName();
 
         Player player = Player.from(playerName);
 
-        Frames frames = Frames.of(new RandomPitchStrategy());
-
+        Frames frames = Frames.of();
 
         BowlingGame bowlingGame = BowlingGame.of(player, frames);
 
         printEmptyFrames(bowlingGame.getPlayer(), bowlingGame.getFrames().MAX_FRAME_COUNT);
 
         while (!bowlingGame.isEnd()) {
-            frames.execute();
+
+            int knockedDownPins = inputKnockedDownPins(frames.getLast().getIndex());
+
+            frames.execute(knockedDownPins);
+
             printCurrentFrame(bowlingGame, bowlingGame.getFrames().MAX_FRAME_COUNT);
 
             frames.makeNextFrames();
 
         }
+    }
+
+    private static int inputKnockedDownPins(int frameIndex) {
+        return InputView.inputKnockedDownPins(frameIndex);
     }
 
     private static void printCurrentFrame(BowlingGame bowlingGame, int maxFrameCount) {

@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
-import bowling.domain.Frame;
 import bowling.domain.PitchResults;
 import bowling.domain.Player;
 
@@ -37,7 +36,6 @@ public class ResultView {
     }
 
     public static void printEmptyFrames(Player player, int maxFrameCount) {
-        System.out.println();
         printFramesHeader(maxFrameCount);
         printFramesEmptyBody(player, maxFrameCount);
     }
@@ -55,8 +53,6 @@ public class ResultView {
 
 
     public static void printCurrentFrame(BowlingGame bowlingGame, int maxFrameCount) {
-        System.out.println();
-        printPitchResult(bowlingGame);
         printFramesHeader(maxFrameCount);
         printFramesBody(bowlingGame, maxFrameCount);
     }
@@ -129,14 +125,6 @@ public class ResultView {
         }
 
         return String.valueOf(pitchNumber);
-    }
-
-    private static void printPitchResult(BowlingGame bowlingGame) {
-        Frame currentFrame = bowlingGame.getFrames().getLast();
-
-        int pitchResult = currentFrame.getPitchResults().findLast();
-
-        System.out.println(currentFrame.getIndex() +"프레임 투구 : " + pitchResult);
     }
 
     public static String center(String s){

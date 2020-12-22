@@ -8,15 +8,13 @@ public class Frames {
     public static final int MAX_FRAME_COUNT = 10;
 
     private List<Frame> frames;
-    private PitchStrategy pitchStrategy;
 
-    private Frames(PitchStrategy pitchStrategy){
+    private Frames(){
         this.frames = new ArrayList<>();
-        this.pitchStrategy = pitchStrategy;
     }
 
-    public static Frames of(PitchStrategy pitchStrategy) {
-        return new Frames(pitchStrategy);
+    public static Frames of() {
+        return new Frames();
     }
 
     public List<Frame> getFrames() {
@@ -27,15 +25,9 @@ public class Frames {
         return frames.size() == MAX_FRAME_COUNT && this.getLast().isEnd();
     }
 
-    public void execute() {
-
-        if (frames.isEmpty()) {
-            makeFirstFrame();
-        }
-
+    public void execute(int knockedDownPins) {
         Frame currentFrame = this.getLast();
-        currentFrame.start(pitchStrategy);
-
+        currentFrame.start(knockedDownPins);
     }
 
     private int getCurrentFrameIndex() {
@@ -47,16 +39,21 @@ public class Frames {
     }
 
     public void makeNextFrames() {
-        if (this.getLast().isEnd() && frames.size() < MAX_FRAME_COUNT) {
+        if ((this.getLast().isEnd()) && (frames.size() < MAX_FRAME_COUNT)) {
             Frame nextFrame = this.getLast().makeNextFrame(getCurrentFrameIndex());
             frames.add(nextFrame);
         }
     }
 
     public Frame getLast(){
+        if (frames.isEmpty()) {
+            makeFirstFrame();
+        }
+
         return frames.stream()
                 .reduce((first, second) -> second)
                 .orElseThrow(NoSuchElementException::new);
     }
+
 }
 

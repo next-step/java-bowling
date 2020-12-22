@@ -7,6 +7,7 @@ public abstract class Frame {
 
     protected final int BOWLING_PIN_COUNT = 10;
     protected final int MAX_FRAME_COUNT = 10;
+    protected final String ILLEGAL_KNOCK_DOWN_PINS = "입력한 투구 결과가 남은 핀의 갯수보다 많습니다.";
 
     protected int index;
     protected PitchResults pitchResults;
@@ -29,7 +30,7 @@ public abstract class Frame {
 
     }
 
-    public abstract void start(PitchStrategy pitchStrategy);
+    public abstract void start(int knockedDownPins);
 
     public abstract boolean isEnd();
 

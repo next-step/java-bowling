@@ -13,10 +13,16 @@ public class NormalFrame extends Frame{
     }
 
     @Override
-    public void start(PitchStrategy pitchStrategy) {
+    public void start(int knockedDownPins) {
         if (!isEnd()) {
-            int pitchResult = pitchStrategy.makePitchResult(countLeftOverPins());
-            pitchResults.addNewResult(pitchResult);
+            validateKnockedDownPins(knockedDownPins);
+            pitchResults.addNewResult(knockedDownPins);
+        }
+    }
+
+    private void validateKnockedDownPins(int knockedDownPins) {
+        if (countLeftOverPins() < knockedDownPins) {
+            throw new IllegalArgumentException(ILLEGAL_KNOCK_DOWN_PINS);
         }
     }
 
@@ -27,7 +33,7 @@ public class NormalFrame extends Frame{
 
     @Override
     public boolean isEnd() {
-        return countLeftOverPins() == 0 || pitchResults.size() == MAX_PITCH_COUNT;
+        return (countLeftOverPins() == 0) || (pitchResults.size() == MAX_PITCH_COUNT);
     }
 
     @Override

@@ -38,4 +38,9 @@ public class PitchResult {
     public int hashCode() {
         return Objects.hash(pinCount);
     }
+
+    public boolean isStrike() {
+        return this.pinCount == BOWLING_PIN_COUNT;
+    }
+
 }

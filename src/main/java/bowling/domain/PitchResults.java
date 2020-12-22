@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class PitchResults {
 
+    private final int BOWLING_PIN_COUNT = 10;
+
     private List<PitchResult> pitchResults;
 
     private PitchResults(List<PitchResult> pitchResults){
@@ -38,13 +40,6 @@ public class PitchResults {
         return pitchResults.get(index).getPinCount();
     }
 
-    public int findLast() {
-        return pitchResults.stream()
-                .reduce((first, second) -> second)
-                .map(pitchResult -> pitchResult.getPinCount())
-                .orElseThrow(NoSuchElementException::new);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,5 +51,18 @@ public class PitchResults {
     @Override
     public int hashCode() {
         return Objects.hash(pitchResults);
+    }
+
+    public boolean isSpare() {
+        return (pitchResults.size() >= 2) &&
+                (pitchResults.stream()
+                        .limit(2)
+                        .mapToInt(PitchResult::getPinCount)
+                        .sum() == BOWLING_PIN_COUNT);
+
+    }
+
+    public boolean isStrike() {
+        return (!pitchResults.isEmpty()) && (pitchResults.get(0).isStrike());
     }
 }

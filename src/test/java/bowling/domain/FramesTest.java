@@ -15,11 +15,11 @@ public class FramesTest {
     void isEndTest(){
 
         // given
-        Frames frames = Frames.of(leftBowlingPins -> 2);
+        Frames frames = Frames.of();
 
         // when
         for (int i=0; i<MAX_FRAME_COUNT * 2; i++) {
-            frames.execute();
+            frames.execute(2);
             frames.makeNextFrames();
         }
 
@@ -32,8 +32,8 @@ public class FramesTest {
     @Test
     void makeNextFrameWhenCurrentIsNotEnd(){
         // given
-        Frames frames = Frames.of(leftBowlingPins -> 2);
-        frames.execute();
+        Frames frames = Frames.of();
+        frames.execute(2);
         int currentFrameSize = frames.getFrames().size();
 
         // when

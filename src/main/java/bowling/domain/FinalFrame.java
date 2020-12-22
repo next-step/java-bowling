@@ -13,10 +13,16 @@ public class FinalFrame extends Frame{
     }
 
     @Override
-    public void start(PitchStrategy pitchStrategy) {
+    public void start(int knockedDownPins) {
         if (!isEnd()) {
-            int pitchResult = pitchStrategy.makePitchResult(countLeftOverPins());
-            pitchResults.addNewResult(pitchResult);
+            validateKnockedDownPins(knockedDownPins);
+            pitchResults.addNewResult(knockedDownPins);
+        }
+    }
+
+    private void validateKnockedDownPins(int knockedDownPins) {
+        if (countLeftOverPins() < knockedDownPins) {
+            throw new IllegalArgumentException(ILLEGAL_KNOCK_DOWN_PINS);
         }
     }
 
@@ -38,8 +44,12 @@ public class FinalFrame extends Frame{
     @Override
     public boolean isEnd() {
         return (pitchResults.size() == 2 && sumCurrentPitchResults() == 0) ||
-                (pitchResults.size() == 2 && countLeftOverPins() > 0 && countLeftOverPins() != 10) ||
+                (pitchResults.size() == 2 && countLeftOverPins() > 0 && !hasBonusPitch()) ||
                 (pitchResults.size() == MAX_PITCH_COUNT);
+    }
+
+    public boolean hasBonusPitch(){
+        return pitchResults.isStrike() || pitchResults.isSpare();
     }
 
     @Override
