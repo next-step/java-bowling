@@ -75,6 +75,26 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public String getFirstSymbol(Pitch pitch) {
+        Strike strike = Strike.from(pitch);
+        Gutter gutter = Gutter.from(pitch);
+        if(strike.isStrike()) {
+            return strike.toString();
+        }
+
+        if(gutter.isGutter()) {
+            return gutter.toString();
+        }
+
+        return "" + pitch.getScore();
+    }
+
+    @Override
+    public String getSecondSymbol() {
+        return null;
+    }
+
+    @Override
     public int getPitchSize() {
         return pitches.size();
     }
