@@ -1,9 +1,13 @@
 package bowling.view;
 
-public interface InputView {
-    String getPlayerName();
+import bowling.domain.PlayerName;
 
-    int getKnockDownPins(int frameNo);
+public interface InputView {
+    int getNumberOfPlayers();
+
+    String getPlayerName(int playerNo);
+
+    int getKnockDownPins(PlayerName playerName);
 
     void printError(RuntimeException e);
 }

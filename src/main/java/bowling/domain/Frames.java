@@ -53,7 +53,7 @@ public class Frames {
 
     @Override
     public String toString() {
-        return "Frames2{" +
+        return "Frames{" +
                 "value=" + value +
                 '}';
     }

@@ -3,9 +3,12 @@ package bowling.domain.pitchings;
 import bowling.domain.KnockDownPins;
 import bowling.domain.Pitching;
 import bowling.domain.Score;
+import bowling.dto.PitchingsDto;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
@@ -58,7 +61,7 @@ public abstract class Pitchings implements Iterable<Pitching> {
     private int getBonusScore(Pitching pitching) {
         if (pitching == Pitching.SPARE) {
             Pitching firstPitching = value.get(0);
-            return 10 - firstPitching.getScore();
+            return KnockDownPins.MAX_VALUE - firstPitching.getScore();
         }
         return pitching.getScore();
     }
@@ -73,8 +76,9 @@ public abstract class Pitchings implements Iterable<Pitching> {
         return previousFrameTotalScore == null || score == null || !isEnd();
     }
 
-    public Stream<Pitching> stream() {
-        return value.stream();
+    public PitchingsDto convertToDto() {
+        List<Pitching> pitchings = Collections.unmodifiableList(value);
+        return PitchingsDto.of(pitchings);
     }
 
     @Override
@@ -84,7 +88,7 @@ public abstract class Pitchings implements Iterable<Pitching> {
 
     @Override
     public String toString() {
-        return "Pitchings2{" +
+        return "Pitchings{" +
                 "value=" + value +
                 ", score=" + score +
                 ", isEnd()=" + isEnd() +

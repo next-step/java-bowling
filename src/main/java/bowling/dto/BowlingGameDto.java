@@ -1,23 +1,21 @@
 package bowling.dto;
 
-public class BowlingGameDto {
-    private final FramesDto frames;
-    private final String playerName;
+import java.util.Iterator;
+import java.util.List;
 
-    private BowlingGameDto(FramesDto frames, String playerName) {
-        this.frames = frames;
-        this.playerName = playerName;
+public class BowlingGameDto implements Iterable<PlayerDto> {
+    private final List<PlayerDto> value;
+
+    private BowlingGameDto(List<PlayerDto> value) {
+        this.value = value;
     }
 
-    public static BowlingGameDto of(FramesDto frames, String playerName) {
-        return new BowlingGameDto(frames, playerName);
+    public static BowlingGameDto of(List<PlayerDto> value) {
+        return new BowlingGameDto(value);
     }
 
-    public FramesDto getFrames() {
-        return frames;
-    }
-
-    public String getPlayerName() {
-        return playerName;
+    @Override
+    public Iterator<PlayerDto> iterator() {
+        return value.iterator();
     }
 }

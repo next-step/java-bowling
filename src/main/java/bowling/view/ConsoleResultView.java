@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.Frames;
 import bowling.domain.Pitching;
+import bowling.dto.PlayerDto;
 import bowling.dto.BowlingGameDto;
 import bowling.dto.FrameDto;
 import bowling.dto.FramesDto;
@@ -63,19 +64,26 @@ public class ConsoleResultView implements ResultView {
     }
 
     private void appendBody(BowlingGameDto bowlingGameDto, StringBuilder resultBuilder) {
-        appendPlayerName(bowlingGameDto, resultBuilder);
-        appendResults(bowlingGameDto, resultBuilder);
-        resultBuilder.append(System.lineSeparator());
-        appendScore(bowlingGameDto, resultBuilder);
+        for (PlayerDto playerDto : bowlingGameDto) {
+            appendPlayersStats(playerDto, resultBuilder);
+            resultBuilder.append(System.lineSeparator());
+        }
     }
 
-    private void appendPlayerName(BowlingGameDto bowlingGameDto, StringBuilder resultBuilder) {
-        String formattedPlayerName = centerString(bowlingGameDto.getPlayerName());
+    private void appendPlayersStats(PlayerDto playerDto, StringBuilder resultBuilder) {
+        appendPlayerName(playerDto, resultBuilder);
+        appendResults(playerDto, resultBuilder);
+        resultBuilder.append(System.lineSeparator());
+        appendScore(playerDto, resultBuilder);
+    }
+
+    private void appendPlayerName(PlayerDto playerDto, StringBuilder resultBuilder) {
+        String formattedPlayerName = centerString(playerDto.getPlayerName());
         resultBuilder.append(DELIMITER).append(formattedPlayerName).append(DELIMITER);
     }
 
-    private void appendResults(BowlingGameDto bowlingGameDto, StringBuilder resultBuilder) {
-        FramesDto frames = bowlingGameDto.getFrames();
+    private void appendResults(PlayerDto playerDto, StringBuilder resultBuilder) {
+        FramesDto frames = playerDto.getFrames();
         IntStream.rangeClosed(1, Frames.MAX_FRAME_SIZE)
                 .forEach(frameNo -> {
                     String result = getResult(frames, frameNo);
@@ -95,9 +103,9 @@ public class ConsoleResultView implements ResultView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private void appendScore(BowlingGameDto bowlingGameDto, StringBuilder resultBuilder) {
+    private void appendScore(PlayerDto playerDto, StringBuilder resultBuilder) {
         resultBuilder.append(DELIMITER).append(centerString(EMPTY_VALUE)).append(DELIMITER);
-        FramesDto frames = bowlingGameDto.getFrames();
+        FramesDto frames = playerDto.getFrames();
         IntStream.rangeClosed(1, Frames.MAX_FRAME_SIZE)
                 .forEach(frameNo -> {
                     Integer totalScore = getTotalScore(frames, frameNo);

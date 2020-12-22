@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class KnockDownPins {
     public static final String INVALID_KNOCK_DOWN_PINS_VALUE = "유효하지 않은 knockDownPins 입력값입니다.";
-    private static final int MIN_VALUE = 0;
-    private static final int MAX_VALUE = 10;
+    public static final int MIN_VALUE = 0;
+    public static final int MAX_VALUE = 10;
     private static final Map<Integer, KnockDownPins> knockDownPinsByInteger = new HashMap<>();
     static {
         for (int value = MIN_VALUE; value <= MAX_VALUE; value++) {
