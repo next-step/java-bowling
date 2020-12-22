@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.*;
+
 class StrikeTest {
 
     @Test
@@ -12,7 +14,7 @@ class StrikeTest {
         Pitch pitch = Pitch.from(10);
         Strike strike = Strike.from(pitch);
 
-        Assertions.assertThat(strike.isStrike()).isTrue();
+        assertThat(strike.isStrike()).isTrue();
     }
 
     @Test
@@ -21,7 +23,7 @@ class StrikeTest {
         Pitch pitch = Pitch.from(9);
         Strike strike = Strike.from(pitch);
 
-        Assertions.assertThat(strike.isStrike()).isFalse();
+        assertThat(strike.isStrike()).isFalse();
     }
 
 }
