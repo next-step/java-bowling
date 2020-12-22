@@ -53,12 +53,20 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return getFrameScore() == MAXIMUM_SCORE_CONDITION || pitches.size() == MAXIMUM_PITCH;
+        return isScoreEqualTen() || isTwicePitch();
+    }
+
+    private boolean isScoreEqualTen() {
+        return getFrameScore() == MAXIMUM_SCORE_CONDITION;
+    }
+
+    private boolean isTwicePitch() {
+        return pitches.size() == MAXIMUM_PITCH;
     }
 
     @Override
     public boolean isSpare() {
-        return getFrameScore() == MAXIMUM_SCORE_CONDITION && pitches.size() == MAXIMUM_PITCH;
+        return isScoreEqualTen() && isTwicePitch();
     }
 
     @Override
