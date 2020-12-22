@@ -1,15 +1,12 @@
 package bowling.controller;
 
-import bowling.domain.Player;
 import bowling.domain.frame.Frames;
 import bowling.domain.game.Bowling;
-import bowling.domain.game.BowlingGamesDto;
 import bowling.domain.game.BowlingGames;
 import bowling.domain.point.Point;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
