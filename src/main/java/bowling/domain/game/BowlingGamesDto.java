@@ -19,6 +19,6 @@ public class BowlingGamesDto {
     }
 
     public Bowling getBowling(int index) {
-        return getBowling(index);
+        return bowlings.get(index);
     }
 }

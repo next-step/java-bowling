@@ -11,6 +11,8 @@ import bowling.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BowlingController {
 
@@ -29,13 +31,9 @@ public class BowlingController {
     }
 
     private static List<Bowling> initBowlingGames(int peopleCount) {
-        List<Bowling> bowlings = new ArrayList<>();
-        for (int i = 0; i < peopleCount; i++) {
-            Player player = InputView.inputPlayerName();
-            Bowling bowling = Bowling.of(player, Frames.init());
-            bowlings.add(bowling);
-        }
-        return bowlings;
+        return Stream.generate(() ->
+                Bowling.of(InputView.inputPlayerName(), Frames.init())).limit(peopleCount)
+                .collect(Collectors.toList());
     }
 
 
