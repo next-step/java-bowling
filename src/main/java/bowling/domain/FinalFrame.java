@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FinalFrame implements Frame {
@@ -92,7 +93,37 @@ public class FinalFrame implements Frame {
 
     @Override
     public String getSecondSymbol() {
-        return null;
+        if(isSecondPitch()) {
+            return getFinalOtherSymbol(pitches.get(0), pitches.get(1));
+        }
+        return getFinalOtherSymbol(pitches.get(1), pitches.get(2));
+    }
+
+    private String getFinalOtherSymbol(Pitch pitch1, Pitch pitch2) {
+        Strike strike1 = Strike.from(pitch1);
+        Strike strike2 = Strike.from(pitch2);
+        Gutter gutter = Gutter.from(pitch2);
+        pitches = Arrays.asList(pitch1, pitch2);
+        Spare spare = Spare.from(pitches);
+        Miss miss = Miss.from(pitches);
+
+        if(strike1.isStrike() && strike2.isStrike()) {
+            return strike2.toString();
+        }
+
+        if(gutter.isGutter()) {
+            return gutter.toString();
+        }
+
+        if(spare.isSpare()) {
+            return spare.toString();
+        }
+
+        if(miss.isMiss()) {
+            return miss.toString();
+        }
+
+        return "" + pitch2.getScore();
     }
 
     @Override

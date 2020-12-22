@@ -192,7 +192,106 @@ class FinalFrameTest {
         finalFrame.add(pitch1);
         finalFrame.add(pitch2);
 
-        assertThat(finalFrame.getSecondSymbol())
+        assertThat(finalFrame.getSecondSymbol()).isEqualTo("X");
+    }
+
+    @Test
+    @DisplayName("두번째 투구 거터")
+    void secondGutter() {
+        Pitch pitch1 = Pitch.from(5);
+        Pitch pitch2 = Pitch.from(0);
+
+        Frame finalFrame = FinalFrame.init();
+        finalFrame.add(pitch1);
+        finalFrame.add(pitch2);
+
+        assertThat(finalFrame.getSecondSymbol()).isEqualTo("-");
+    }
+
+    @Test
+    @DisplayName("두번째 투구 스페어")
+    void secondSpare() {
+        Pitch pitch1 = Pitch.from(8);
+        Pitch pitch2 = Pitch.from(2);
+
+        Frame finalFrame = FinalFrame.init();
+        finalFrame.add(pitch1);
+        finalFrame.add(pitch2);
+
+        assertThat(finalFrame.getSecondSymbol()).isEqualTo("/");
+    }
+
+    @Test
+    @DisplayName("두번째 투구 일반 숫자")
+    void secondNumber() {
+        Pitch pitch1 = Pitch.from(7);
+        Pitch pitch2 = Pitch.from(2);
+
+        Frame finalFrame = FinalFrame.init();
+        finalFrame.add(pitch1);
+        finalFrame.add(pitch2);
+
+        assertThat(finalFrame.getSecondSymbol()).isEqualTo("2");
+    }
+
+    @Test
+    @DisplayName("세번째 투구 스트라이크")
+    void thirdStrike() {
+        Pitch pitch1 = Pitch.from(10);
+        Pitch pitch2 = Pitch.from(10);
+        Pitch pitch3 = Pitch.from(10);
+
+        Frame finalFrame = FinalFrame.init();
+        finalFrame.add(pitch1);
+        finalFrame.add(pitch2);
+        finalFrame.add(pitch3);
+
+        assertThat(finalFrame.getSecondSymbol()).isEqualTo("X");
+    }
+
+    @Test
+    @DisplayName("세번째 투구 거터")
+    void thirdGutter() {
+        Pitch pitch1 = Pitch.from(10);
+        Pitch pitch2 = Pitch.from(10);
+        Pitch pitch3 = Pitch.from(0);
+
+        Frame finalFrame = FinalFrame.init();
+        finalFrame.add(pitch1);
+        finalFrame.add(pitch2);
+        finalFrame.add(pitch3);
+
+        assertThat(finalFrame.getSecondSymbol()).isEqualTo("-");
+    }
+
+    @Test
+    @DisplayName("세번째 투구 스페어")
+    void thirdSpare() {
+        Pitch pitch1 = Pitch.from(10);
+        Pitch pitch2 = Pitch.from(8);
+        Pitch pitch3 = Pitch.from(2);
+
+        Frame finalFrame = FinalFrame.init();
+        finalFrame.add(pitch1);
+        finalFrame.add(pitch2);
+        finalFrame.add(pitch3);
+
+        assertThat(finalFrame.getSecondSymbol()).isEqualTo("/");
+    }
+
+    @Test
+    @DisplayName("세번째 투구 일반 숫자")
+    void thirdNumber() {
+        Pitch pitch1 = Pitch.from(10);
+        Pitch pitch2 = Pitch.from(7);
+        Pitch pitch3 = Pitch.from(2);
+
+        Frame finalFrame = FinalFrame.init();
+        finalFrame.add(pitch1);
+        finalFrame.add(pitch2);
+        finalFrame.add(pitch3);
+
+        assertThat(finalFrame.getSecondSymbol()).isEqualTo("2");
     }
 
 }
