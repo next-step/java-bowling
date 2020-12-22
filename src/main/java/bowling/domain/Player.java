@@ -4,9 +4,12 @@ import java.util.Objects;
 
 public class Player {
 
+    private static final String PLAYER_NAME_PATTERN = "^[a-zA-Z]{3}$";
+
     private String name;
 
     private Player(String name){
+        validatePlayerName(name);
         this.name = name;
     }
 
@@ -16,6 +19,12 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    private void validatePlayerName(String name) {
+        if (!name.matches(PLAYER_NAME_PATTERN)) {
+            throw new IllegalArgumentException("플레이어의 이름을 영문자 세글자로 입력하세요.");
+        }
     }
 
     @Override
