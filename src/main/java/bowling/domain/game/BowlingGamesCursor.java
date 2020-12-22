@@ -8,8 +8,8 @@ public class BowlingGamesCursor {
     private int frameNumberCursor;
 
     private BowlingGamesCursor() {
-        this.peopleCursor = 0;
-        this.frameNumberCursor = 0;
+        peopleCursor = 0;
+        frameNumberCursor = 0;
     }
 
     public static BowlingGamesCursor of() {
@@ -17,15 +17,15 @@ public class BowlingGamesCursor {
     }
 
     public int increasePeopleCursor() {
-        return this.peopleCursor++;
+        return peopleCursor++;
     }
 
     public int increaseFrameNumberCursor() {
-        return this.frameNumberCursor++;
+        return frameNumberCursor++;
     }
 
     public void resetPeopleCursor() {
-        this.peopleCursor = 0;
+        peopleCursor = 0;
     }
 
     public int getPeopleCursor() {
