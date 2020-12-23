@@ -1,7 +1,8 @@
 package bowling.view;
 
-import bowling.domain.BowlingKnockDown;
-import bowling.domain.Frames;
+import bowling.domain.FinalFrame;
+import bowling.domain.Frame;
+import bowling.domain.GameFrames;
 import bowling.domain.Player;
 
 import java.util.stream.IntStream;
@@ -49,53 +50,7 @@ public class OutputUi {
         System.out.println();
     }
 
-    private static void drawFirstKnockDown(BowlingKnockDown bowlingKnockDown, StringBuilder sb) {
-        if (bowlingKnockDown.getNextOfKnockDown() == null) {
-            sb.append(initDownExpress(bowlingKnockDown.getCurrentOfKnockDown()));
-        }
-    }
-
-    private static String drawBonusKnockDown(BowlingKnockDown bowlingKnockDown, String sumKnockDown) {
-        if (bowlingKnockDown.getBonusKnockDown() != null) {
-            return String.format("%s%s%s ", sumKnockDown, LINE, initDownExpress(bowlingKnockDown.getBonusKnockDown()));
-        }
-        return sumKnockDown;
-    }
-
-    private static void drawFinishKnockDown(BowlingKnockDown bowlingKnockDown, StringBuilder sb) {
-        if (bowlingKnockDown.getCurrentOfKnockDown() != null && bowlingKnockDown.getNextOfKnockDown() != null) {
-            String sumKnockDown = finalKnockDownExpress(bowlingKnockDown.getCurrentOfKnockDown(), bowlingKnockDown.getNextOfKnockDown());
-            sumKnockDown = drawBonusKnockDown(bowlingKnockDown, sumKnockDown);
-            sb.append(sumKnockDown);
-        }
-    }
-
-    private static void printPlayFrames(Player player, Frames frames) {
-        StringBuilder sb = new StringBuilder();
-        printFrameFirstLine();
-        sb.append(LINE + String.format("  %s ", player.getName()) + LINE);
-
-        IntStream.rangeClosed(1, frames.size())
-                .mapToObj(i -> frames.getBowlingKnockDownMap().get(i))
-                .forEach(bowlingKnockDown -> {
-                    drawFirstKnockDown(bowlingKnockDown, sb);
-                    drawFinishKnockDown(bowlingKnockDown, sb);
-                    sb.append(LINE);
-                });
-
-        IntStream.range(0, 10 - frames.size())
-                .mapToObj(i -> EMPTY + LINE)
-                .forEach(sb::append);
-
-        System.out.print(sb);
-        System.out.println();
-    }
-
-    public static void printBowling(Player player, Frames frames) {
-        printPlayFrames(player, frames);
-    }
-
-    private static String initDownExpress(int count) {
+    private static String setKnockDownExpress(int count) {
         if (count == MIN_NUMBER) {
             return String.format(" %s ", GUTTER);
         }
@@ -106,7 +61,7 @@ public class OutputUi {
         return String.format(" %s ", count);
     }
 
-    private static String finalKnockDownExpress(int first, int second) {
+    private static String setFinalKnockDownExpress(int first, int second) {
         if (first + second == MAX_NUMBER) {
             return String.format("%s%s%s ", first, LINE, SPARE);
         }
@@ -128,5 +83,50 @@ public class OutputUi {
         }
 
         return String.format(" %s%s%d ", first, LINE, second);
+    }
+
+    private static void printOneFrame(StringBuilder sb, Frame frame) {
+        if (frame.size() == 1) {
+            sb.append(setKnockDownExpress(frame.getFirstOfKnockDown()));
+        }
+    }
+
+    private static void printSecondFrame(StringBuilder sb, Frame frame) {
+        if (frame.size() == 2) {
+            sb.append(setFinalKnockDownExpress(frame.getFirstOfKnockDown()
+                    , frame.getSecondOfKnockDown()));
+        }
+    }
+
+    private static void printFinalFrame(StringBuilder sb, Frame frame) {
+        if (frame.size() == 3) {
+            FinalFrame finalFrame = (FinalFrame) frame;
+
+            String drawFrame =
+                    setFinalKnockDownExpress(frame.getFirstOfKnockDown(), frame.getSecondOfKnockDown());
+            drawFrame += setKnockDownExpress(finalFrame.getBonusOfKnockDown());
+            sb.append(drawFrame);
+        }
+    }
+
+    public static void printInitBowling(Player player, GameFrames gameFrames) {
+        StringBuilder sb = new StringBuilder();
+        printFrameFirstLine();
+        sb.append(LINE + String.format("  %s ", player.getName()) + LINE);
+        IntStream.rangeClosed(1, gameFrames.size())
+                .mapToObj(i -> gameFrames.getFrames().get(i))
+                .forEach(frame -> {
+                    printOneFrame(sb, frame);
+                    printSecondFrame(sb, frame);
+                    printFinalFrame(sb, frame);
+                    sb.append(LINE);
+                });
+
+        IntStream.range(0, 10 - gameFrames.size())
+                .mapToObj(i -> EMPTY + LINE)
+                .forEach(sb::append);
+
+        System.out.print(sb);
+        System.out.println();
     }
 }
