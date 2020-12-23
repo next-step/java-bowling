@@ -2,16 +2,24 @@ package bowling.domain.state;
 
 import bowling.domain.Pitch;
 
-public interface State {
+public abstract class State {
 
-    State bowl(Pitch pitch);
+    private Pitch pitch;
 
-    boolean isFinish();
+    State bowl(Pitch pitch) {
+        return null;
+    }
 
-    int getScore();
+    boolean isFinish() {
+        return false;
+    }
 
-    int calculateAdditionalState(int score);
+    int getScore() {
+        return 0;
+    }
 
-    String toString();
+    int calculateAdditionalState(int score) {
+        return 0;
+    }
 
 }

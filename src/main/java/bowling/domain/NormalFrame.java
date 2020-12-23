@@ -52,38 +52,40 @@ public class NormalFrame implements Frame {
 
     @Override
     public String getFirstSymbol() {
-        Pitch pitch = pitches.get(0);
-
-        Strike strike = Strike.from(pitch);
-        Gutter gutter = Gutter.from(pitch);
-
-        if(strike.isStrike()) {
-            return strike.toString();
-        }
-
-        if(gutter.isGutter()) {
-            return gutter.toString();
-        }
-
-        return "" + pitch.getScore();
+//        Pitch pitch = pitches.get(0);
+//
+//        Strike strike = Strike.from(pitch);
+//        Gutter gutter = Gutter.from(pitch);
+//
+//        if(strike.isStrike()) {
+//            return strike.toString();
+//        }
+//
+//        if(gutter.isGutter()) {
+//            return gutter.toString();
+//        }
+//
+//        return "" + pitch.getScore();
+        return null;
     }
 
     @Override
     public String getSecondSymbol() {
-        Pitch pitch = pitches.get(1);
-        Gutter gutter = Gutter.from(pitch);
-        Spare spare = Spare.from(pitches);
-        Miss miss = Miss.from(pitches);
-
-        if(gutter.isGutter()) {
-            return gutter.toString();
-        }
-
-        if(spare.isSpare()) {
-            return spare.toString();
-        }
-
-        return miss.toString();
+//        Pitch pitch = pitches.get(1);
+//        Gutter gutter = Gutter.from(pitch);
+//        Spare spare = Spare.from(pitches);
+//        Miss miss = Miss.from(pitches);
+//
+//        if(gutter.isGutter()) {
+//            return gutter.toString();
+//        }
+//
+//        if(spare.isSpare()) {
+//            return spare.toString();
+//        }
+//
+//        return miss.toString();
+        return null;
     }
 
     @Override
