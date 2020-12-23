@@ -1,9 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.state.Gutter;
-import bowling.domain.state.Miss;
-import bowling.domain.state.Spare;
-import bowling.domain.state.Strike;
+import bowling.domain.state.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ public class NormalFrame implements Frame {
     public static final String MAXIMUM_FRAMESCORE = "한 프레임의 점수의 총 합은 10점입니다.";
 
     private List<Pitch> pitches;
+    private State state = new Ready();
 
     private NormalFrame(List<Pitch> pitches) {
         this.pitches = pitches;
@@ -51,41 +49,9 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String getFirstSymbol() {
-//        Pitch pitch = pitches.get(0);
-//
-//        Strike strike = Strike.from(pitch);
-//        Gutter gutter = Gutter.from(pitch);
-//
-//        if(strike.isStrike()) {
-//            return strike.toString();
-//        }
-//
-//        if(gutter.isGutter()) {
-//            return gutter.toString();
-//        }
-//
-//        return "" + pitch.getScore();
-        return null;
-    }
-
-    @Override
-    public String getSecondSymbol() {
-//        Pitch pitch = pitches.get(1);
-//        Gutter gutter = Gutter.from(pitch);
-//        Spare spare = Spare.from(pitches);
-//        Miss miss = Miss.from(pitches);
-//
-//        if(gutter.isGutter()) {
-//            return gutter.toString();
-//        }
-//
-//        if(spare.isSpare()) {
-//            return spare.toString();
-//        }
-//
-//        return miss.toString();
-        return null;
+    public State bowl(Pitch pitch) {
+        state = state.bowl(pitch);
+        return state;
     }
 
     @Override
@@ -126,5 +92,10 @@ public class NormalFrame implements Frame {
     @Override
     public int getSecondScore() {
         return pitches.get(1).getScore();
+    }
+
+    @Override
+    public State getState() {
+        return state;
     }
 }

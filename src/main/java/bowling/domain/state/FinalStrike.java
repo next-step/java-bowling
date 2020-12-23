@@ -2,16 +2,16 @@ package bowling.domain.state;
 
 import bowling.domain.Pitch;
 
-public class Ready extends State {
+public class FinalStrike extends State {
 
-    private Pitch pitch;
+    private static final String SYMBOL = "X";
 
     @Override
     public State bowl(Pitch pitch) {
         if(pitch.isStrike()) {
-            return new Strike();
+            return new FinalStrike();
         }
-        return new FirstBowl(pitch);
+        return new FinalBowl(pitch);
     }
 
     @Override
@@ -19,4 +19,8 @@ public class Ready extends State {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return SYMBOL;
+    }
 }

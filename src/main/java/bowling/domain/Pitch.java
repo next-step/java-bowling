@@ -8,6 +8,7 @@ public class Pitch {
     public static final int ZERO_CONDITION = 0;
     public static final String SCORE_LIMIT = "점수는 10점 이하입니다.";
     public static final String SCORE_OVER_ZERO = "점수는 0점 이상이어야 합니다.";
+    public static final String GUTTER_SYMBOL = "-";
 
     private int score;
     private int left;
@@ -76,6 +77,9 @@ public class Pitch {
 
     @Override
     public String toString() {
+        if(score == ZERO_CONDITION) {
+            return GUTTER_SYMBOL;
+        }
         return "" + score;
     }
 }

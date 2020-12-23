@@ -2,25 +2,22 @@ package bowling.domain.state;
 
 import bowling.domain.Pitch;
 
-public class FirstBowl extends State {
-
+public class FinalBowl extends State {
     private static final int MAX_SCORE = 10;
 
     private Pitch pitch;
 
-    public FirstBowl(Pitch pitch) {
+    public FinalBowl(Pitch pitch) {
         this.pitch = pitch;
     }
 
     @Override
     public State bowl(Pitch pitch) {
         if(this.pitch.getScore() + pitch.getScore() == MAX_SCORE) {
-            System.out.println("Spare");
-            return new Spare(this.pitch);
+            return new FinalSpare(this.pitch);
         }
 
-        System.out.println("Miss");
-        return new Miss(this.pitch, pitch);
+        return new FinalMiss(this.pitch, pitch);
     }
 
     @Override

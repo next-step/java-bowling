@@ -1,9 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.state.Gutter;
-import bowling.domain.state.Miss;
-import bowling.domain.state.Spare;
-import bowling.domain.state.Strike;
+import bowling.domain.state.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +14,7 @@ public class FinalFrame implements Frame {
     public static final String MAXIMUM_FRAMESCORE = "한 프레임의 점수의 총 합은 10점입니다.";
 
     private List<Pitch> pitches;
+    private State state = new FinalReady();
 
     private FinalFrame(List<Pitch> pitches) {
         this.pitches = pitches;
@@ -80,81 +78,9 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String getFirstSymbol() {
-//        Pitch pitch = pitches.get(0);
-//        Strike strike = Strike.from(pitch);
-//        Gutter gutter = Gutter.from(pitch);
-//        if(strike.isStrike()) {
-//            return strike.toString();
-//        }
-//
-//        if(gutter.isGutter()) {
-//            return gutter.toString();
-//        }
-//
-//        return "" + pitch.getScore();
-        return null;
-    }
-
-    @Override
-    public String getSecondSymbol() {
-//        Pitch pitch1 = pitches.get(0);
-//        Pitch pitch2 = pitches.get(1);
-//        Strike strike1 = Strike.from(pitch1);
-//        Strike strike2 = Strike.from(pitch2);
-//        Gutter gutter = Gutter.from(pitch2);
-//        List<Pitch> newPitches = Arrays.asList(pitch1, pitch2);
-//        Spare spare = Spare.from(newPitches);
-//        Miss miss = Miss.from(newPitches);
-//
-//        if(strike1.isStrike() && strike2.isStrike()) {
-//            return strike2.toString();
-//        }
-//
-//        if(gutter.isGutter()) {
-//            return gutter.toString();
-//        }
-//
-//        if(spare.isSpare()) {
-//            return spare.toString();
-//        }
-//
-//        if(miss.isMiss()) {
-//            return miss.toString();
-//        }
-//
-//        return "" + pitch2.getScore();
-        return null;
-    }
-
-    public String getThirdSymbol() {
-//        Pitch pitch1 = pitches.get(1);
-//        Pitch pitch2 = pitches.get(2);
-//        Strike strike1 = Strike.from(pitch1);
-//        Strike strike2 = Strike.from(pitch2);
-//        Gutter gutter = Gutter.from(pitch2);
-//        List<Pitch> newPitches = Arrays.asList(pitch1, pitch2);
-//        Spare spare = Spare.from(newPitches);
-//        Miss miss = Miss.from(newPitches);
-//
-//        if(strike1.isStrike() && strike2.isStrike()) {
-//            return strike2.toString();
-//        }
-//
-//        if(gutter.isGutter()) {
-//            return gutter.toString();
-//        }
-//
-//        if(spare.isSpare()) {
-//            return spare.toString();
-//        }
-//
-//        if(miss.isMiss()) {
-//            return miss.toString();
-//        }
-//
-//        return "" + pitch2.getScore();
-        return null;
+    public State bowl(Pitch pitch) {
+        state = state.bowl(pitch);
+        return state;
     }
 
     @Override
@@ -191,5 +117,10 @@ public class FinalFrame implements Frame {
 
     public int getThirdScore() {
         return pitches.get(2).getScore();
+    }
+
+    @Override
+    public State getState() {
+        return state;
     }
 }

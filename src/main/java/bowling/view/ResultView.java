@@ -1,8 +1,8 @@
 package bowling.view;
 
-import bowling.domain.FinalFrame;
 import bowling.domain.Frame;
 import bowling.domain.Frames;
+import bowling.domain.state.*;
 
 import java.util.stream.IntStream;
 
@@ -56,23 +56,18 @@ public class ResultView {
     }
 
     public static void printFrame(String name, Frame frame, Frames frames) {
+        State state = frame.getState();
         printSignature();
         printUsername(name);
         System.out.print(SCORES);
 
-        String firstSymbol = frame.getFirstSymbol();
-
-        if(frame.getPitchSize() == 1) {
-            printFirstPitch(frame, firstSymbol);
+        if(frames.isFinalFrame()) {
+            printFinal(state, frame);
         }
 
-        if(frame.getPitchSize() == 2) {
-            printSecondPitch(frame, firstSymbol, frames);
-        }
-
-        if(frame.getPitchSize() == 3) {
-            printThirdPitch(frame,firstSymbol);
-            return;
+        if(!frames.isFinalFrame()) {
+            printFirstScore(state);
+            printSecondScore(state);
         }
 
         IntStream.range(frames.getSize() + 2, FRAME_LENGTH)
@@ -80,44 +75,105 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void printFirstPitch(Frame frame, String firstSymbol) {
-        System.out.print(String.format("%3s", firstSymbol));
-        System.out.print(HALF_EMPTY_SPACE);
-        System.out.print(BAR_DELIMITER);
+    private static void printFirstScore(State state) {
+        if(!state.isFinish()) {
+            System.out.print(String.format("%3s", state));
+            System.out.print(HALF_EMPTY_SPACE);
+            System.out.print(BAR_DELIMITER);
+        }
+    }
 
-        if(frame.isFinish()) {
-            SCORES.append(String.format("%3s", firstSymbol));
+    private static void printSecondScore(State state) {
+        if(state.isFinish() && !(state instanceof Strike)) {
+            System.out.print(String.format("%5s ", state));
+            System.out.print(BAR_DELIMITER);
+            SCORES.append(String.format("%5s ", state));
+            SCORES.append(BAR_DELIMITER);
+        }
+
+        if(state.isFinish() && (state instanceof Strike)) {
+            System.out.print(String.format("%3s", state));
+            System.out.print(HALF_EMPTY_SPACE);
+            System.out.print(BAR_DELIMITER);
+            SCORES.append(String.format("%3s", state));
             SCORES.append(HALF_EMPTY_SPACE);
             SCORES.append(BAR_DELIMITER);
         }
     }
 
-    private static void printSecondPitch(Frame frame, String firstSymbol, Frames frames) {
-        String secondSymbol = frame.getSecondSymbol();
-        System.out.print(String.format("%3s", firstSymbol));
-        System.out.print(BAR_DELIMITER);
-        System.out.print(String.format("%s ", secondSymbol));
-        System.out.print(BAR_DELIMITER);
+    private static void printFinal(State state, Frame frame) {
+        if(frame.getPitchSize() == 1) {
+            printFinalFirst(state);
+        }
 
-        if(!frames.isFinalFrame()) {
-            SCORES.append(String.format("%3s", firstSymbol));
-            SCORES.append(BAR_DELIMITER);
-            SCORES.append(String.format("%s ", secondSymbol));
-            SCORES.append(BAR_DELIMITER);
+        if(frame.getPitchSize() == 2) {
+            printFinalSecond(state);
+        }
+
+        if(frame.getPitchSize() == 3) {
+            printFinalThird(state);
         }
     }
 
-    private static void printThirdPitch(Frame frame, String firstSymbol) {
-        FinalFrame finalFrame = (FinalFrame) frame;
-
-        String secondSymbol = frame.getSecondSymbol();
-        String thirdSymbol = finalFrame.getThirdSymbol();
-        System.out.print(String.format("%3s", firstSymbol));
-        System.out.print(BAR_DELIMITER);
-        System.out.print(String.format("%s", secondSymbol));
-        System.out.print(BAR_DELIMITER);
-        System.out.print(String.format("%s", thirdSymbol));
+    private static void printFinalFirst(State state) {
+        if(state instanceof FinalStrike) {
+            System.out.print(String.format("%3s", state));
+            System.out.print(HALF_EMPTY_SPACE);
+            System.out.print(BAR_DELIMITER);
+            SCORES.append(String.format("%3s", state));
+            SCORES.append(BAR_DELIMITER);
+            return;
+        }
+        System.out.print(String.format("%3s", state));
+        System.out.print(HALF_EMPTY_SPACE);
         System.out.print(BAR_DELIMITER);
     }
 
+    private static void printFinalSecond(State state) {
+        if(state instanceof FinalStrike) {
+            System.out.print(String.format("%s ", state));
+            System.out.print(BAR_DELIMITER);
+            SCORES.append(String.format("%s", state));
+            SCORES.append(BAR_DELIMITER);
+            return;
+        }
+
+        if(state instanceof FinalSpare) {
+            System.out.print(String.format("%5s ", state));
+            System.out.print(BAR_DELIMITER);
+            SCORES.append(String.format("%5s", state));
+            SCORES.append(BAR_DELIMITER);
+            return;
+        }
+
+        if(state instanceof FinalMiss) {
+            System.out.print(String.format("%5s ", state));
+            System.out.print(BAR_DELIMITER);
+            return;
+        }
+
+        System.out.print(String.format("%s ", state));
+        System.out.print(BAR_DELIMITER);
+
+    }
+
+    private static void printFinalThird(State state) {
+        if(state.isFinish() && (state instanceof FinalStrike)) {
+            System.out.print(String.format("%s", state));
+            System.out.print(BAR_DELIMITER);
+            return;
+        }
+
+        if(state.isFinish() && !(state instanceof FinalStrike)) {
+            System.out.print(String.format("%s", state));
+            System.out.print(BAR_DELIMITER);
+            return;
+        }
+
+        System.out.print(String.format("%s", state));
+        System.out.print(BAR_DELIMITER);
+        SCORES.append(String.format("%s", state));
+        SCORES.append(BAR_DELIMITER);
+
+    }
 }

@@ -2,22 +2,27 @@ package bowling.domain.state;
 
 import bowling.domain.Pitch;
 
-import java.util.List;
-
-public class Spare extends State {
-
+public class FinalSpare extends State {
     private static final String SYMBOL = "/";
     private static final String DELIMITER = "|";
 
     private final Pitch firstPitch;
 
-    public Spare(Pitch firstPitch) {
+    public FinalSpare(Pitch firstPitch) {
         this.firstPitch = firstPitch;
     }
 
     @Override
+    public State bowl(Pitch pitch) {
+        if(pitch.isStrike()) {
+            return new FinalStrike();
+        }
+        return new FinalBowl(pitch);
+    }
+
+    @Override
     public boolean isFinish() {
-        return true;
+        return false;
     }
 
     @Override

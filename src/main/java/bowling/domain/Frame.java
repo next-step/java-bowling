@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
 public interface Frame {
 
     void playPitch(Pitch pitch);
@@ -16,7 +18,7 @@ public interface Frame {
 
     int getSecondScore();
 
-    String getFirstSymbol();
+    State bowl(Pitch pitch);
 
-    String getSecondSymbol();
+    State getState();
 }

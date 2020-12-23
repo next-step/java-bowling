@@ -17,6 +17,11 @@ public class Miss extends State {
     }
 
     @Override
+    public boolean isFinish() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return firstPitch + DELIMITER + secondPitch;
     }
