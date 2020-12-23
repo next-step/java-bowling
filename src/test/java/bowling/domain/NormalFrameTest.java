@@ -37,28 +37,6 @@ public class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("스트라이크 컨디션 테스트(true)")
-    void isStrike() {
-        NormalFrame frame = new NormalFrame();
-        DownedPin firstTry = DownedPin.fromNumber(10);
-
-        frame.record(firstTry);
-
-        assertThat(frame.isStrike()).isTrue();
-    }
-
-    @Test
-    @DisplayName("스트라이크 컨디션 테스트(false)")
-    void isNotStrike() {
-        NormalFrame frame = new NormalFrame();
-        DownedPin firstTry = DownedPin.fromNumber(7);
-
-        frame.record(firstTry);
-
-        assertThat(frame.isStrike()).isFalse();
-    }
-
-    @Test
     @DisplayName("스페어 컨디션 테스트(true)")
     void isSpare() {
         NormalFrame frame = new NormalFrame();

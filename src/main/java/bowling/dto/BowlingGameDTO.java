@@ -1,9 +1,6 @@
 package bowling.dto;
 
-import bowling.domain.DownedPin;
-import bowling.domain.LastFrame;
-import bowling.domain.NormalFrame;
-import bowling.domain.NormalFrames;
+import bowling.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +45,7 @@ public class BowlingGameDTO {
     private String extractOutputForm(NormalFrame normalFrame) {
         List<DownedPin> tries = normalFrame.getTries();
 
-        if (normalFrame.isStrike()) {
+        if (normalFrame.getFrameStatus() == FrameStatus.STRIKE) {
             return "   X   ";
         }
 
