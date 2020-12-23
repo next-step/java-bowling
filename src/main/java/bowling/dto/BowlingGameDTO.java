@@ -49,7 +49,7 @@ public class BowlingGameDTO {
             return "   X   ";
         }
 
-        if (normalFrame.isSpare()) {
+        if (normalFrame.getFrameStatus() == FrameStatus.SPARE) {
             return " " + exchangeGutterMark(tries.get(0)) + " | / ";
         }
 

@@ -36,19 +36,6 @@ public class NormalFrameTest {
         assertThat(frame.isEnd()).isTrue();
     }
 
-    @Test
-    @DisplayName("스페어 컨디션 테스트(true)")
-    void isSpare() {
-        NormalFrame frame = new NormalFrame();
-        DownedPin firstTry = DownedPin.fromNumber(3);
-        DownedPin secondTry = firstTry.fromSubordinateTry(DownedPin.fromNumber(7));
-
-        frame.record(firstTry);
-        frame.record(secondTry);
-
-        assertThat(frame.isSpare()).isTrue();
-    }
-
     private static Stream<Arguments> makeMissConditions() {
         return Stream.of(
                 Arguments.of(DownedPin.fromNumber(3), DownedPin.fromNumber(4)),
