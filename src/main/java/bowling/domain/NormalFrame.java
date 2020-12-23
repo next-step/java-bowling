@@ -1,5 +1,10 @@
 package bowling.domain;
 
+import bowling.domain.state.Gutter;
+import bowling.domain.state.Miss;
+import bowling.domain.state.Spare;
+import bowling.domain.state.Strike;
+
 import java.util.ArrayList;
 import java.util.List;
 

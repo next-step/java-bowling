@@ -1,6 +1,6 @@
-package bowling.domain;
+package bowling.domain.state;
 
-import java.util.List;
+import bowling.domain.Pitch;
 
 public class Gutter {
 

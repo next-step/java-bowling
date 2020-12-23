@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import org.assertj.core.api.Assertions;
+import bowling.domain.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
