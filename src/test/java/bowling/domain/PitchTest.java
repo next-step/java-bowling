@@ -28,4 +28,14 @@ class PitchTest {
                 () -> Pitch.from(-1));
     }
 
+    @Test
+    @DisplayName("프레임 투구 준비")
+    void readyFrame() {
+        Pitch pitch = Pitch.of(0, 2);
+
+        Pitch newPitch = pitch.bowl(8);
+
+        assertThat(newPitch).isEqualTo(Pitch.of(8, 1));
+    }
+
 }
