@@ -6,8 +6,6 @@ import java.util.List;
 
 public class NormalFrame {
 
-    private static final int FIRST_TURN_INDEX = 0;
-    private static final int SECOND_TURN_INDEX = 1;
     private static final int MAXIMUM_TRIES_PER_NORMAL_FRAME = 2;
 
     private final List<DownedPin> tries;
@@ -17,16 +15,16 @@ public class NormalFrame {
     }
 
     public void record(DownedPin currentTry) {
-        if (tries.size() == FIRST_TURN_INDEX) {
+        if (tries.size() == 0) {
             tries.add(currentTry);
             return;
         }
 
-        tries.add(tries.get(FIRST_TURN_INDEX).fromSubordinateTry(currentTry));
+        tries.add(tries.get(0).fromSubordinateTry(currentTry));
     }
 
     public boolean isEnd() {
-        return (tries.get(FIRST_TURN_INDEX).isStrike() || tries.size() == MAXIMUM_TRIES_PER_NORMAL_FRAME);
+        return (getFrameStatus() == FrameStatus.STRIKE || tries.size() == MAXIMUM_TRIES_PER_NORMAL_FRAME);
     }
 
     public FrameStatus getFrameStatus() {
