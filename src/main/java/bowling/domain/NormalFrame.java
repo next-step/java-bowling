@@ -34,6 +34,11 @@ public class NormalFrame implements Frame {
         return tries.size();
     }
 
+    @Override
+    public List<DownedPin> exportCurrentStatus() {
+        return Collections.unmodifiableList(tries);
+    }
+
     public FrameStatus getFrameStatus() {
         if (tries.size() == 0) {
             return FrameStatus.getStatus(null, null);
