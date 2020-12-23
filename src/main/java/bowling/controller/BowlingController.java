@@ -20,11 +20,11 @@ public class BowlingController {
 
         while(!frames.isFinished()) {
             Frame frame = frames.createFrame();
-            frames.add(createFrame(frame));
+            frames.add(runningFrame(frame));
         }
     }
 
-    private Frame createFrame(Frame frame) {
+    private Frame runningFrame(Frame frame) {
         while(!frame.isFinish()) {
             int round = frames.getSize() + ONE;
             Pitch pitch = Pitch.from(InputView.inputScore(round));
