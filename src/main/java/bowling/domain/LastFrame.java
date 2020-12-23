@@ -1,98 +1,53 @@
 package bowling.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
 
-public class LastFrame {
+import static java.util.stream.Collectors.toList;
 
-    private static final int FIRST_TRY_INDEX = 0;
-    private static final int SECOND_TRY_INDEX = 1;
+public class LastFrame implements Frame {
 
-    private final List<DownedPin> tries;
-    private boolean isEnded;
+    private final List<NormalFrame> frames;
 
     public LastFrame() {
-        tries = new ArrayList<>();
-        isEnded = false;
+        frames = new ArrayList<>();
     }
 
-    public boolean isEnded() {
-        return isEnded;
+    @Override
+    public void record(DownedPin currentTry) {
+        if (frames.isEmpty() || getLatestFrame().isEnd()) {
+            frames.add(new NormalFrame());
+        }
+
+        getLatestFrame().record(currentTry);
     }
 
-    public void record(DownedPin currentTurn) {
-        if (isEnded()) {
-            return;
-        }
-
-        if (tries.size() == FIRST_TRY_INDEX) {
-            tries.add(currentTurn);
-            return;
-        }
-
-        if (tries.size() == SECOND_TRY_INDEX) {
-            handleSecondTry(currentTurn);
-            return;
-        }
-
-        handleThirdTurn(currentTurn);
-    }
-
-    private void handleSecondTry(DownedPin secondTry) {
-        DownedPin firstTry = tries.get(FIRST_TRY_INDEX);
-
-        if (firstTry.isStrike()) {
-            tries.add(secondTry);
-            return;
-        }
-
-        tries.add(firstTry.fromSubordinateTry(secondTry));
-
-        if (!firstTry.isSpare(secondTry)) {
-            isEnded = true;
-        }
-    }
-
-    private void handleThirdTurn(DownedPin thirdTry) {
-        isEnded = true;
-
-        DownedPin firstTry = tries.get(FIRST_TRY_INDEX);
-        DownedPin secondTry = tries.get(SECOND_TRY_INDEX);
-
-        if (firstTry.isSpare(secondTry) || secondTry.isStrike()) {
-            tries.add(thirdTry);
-            return;
-        }
-
-        tries.add(secondTry.fromSubordinateTry(thirdTry));
-    }
-
-    public boolean isStrike(int index) {
-        if (index >= tries.size()) {
+    @Override
+    public boolean isEnd() {
+        if (frames.isEmpty()) {
             return false;
         }
 
-        return tries.get(index).isStrike();
+        return (numThrown() == 2 && frames.get(0).getFrameStatus() == FrameStatus.MISS)
+                || (numThrown() == 3);
     }
 
-    public boolean isSpare(int index) {
-        if (index >= tries.size() || index < 1) {
-            return false;
-        }
-
-        return tries.get(index - 1).isSpare(tries.get(index));
+    public int numThrown() {
+        return frames.stream()
+                .map(NormalFrame::numThrown)
+                .reduce(0, Integer::sum);
     }
 
-    public boolean isGutter(int index) {
-        if (index >= tries.size()) {
-            return false;
-        }
-
-        return tries.get(index).isGutter();
+    @Override
+    public List<DownedPin> exportCurrentStatus() {
+        return frames.stream()
+                .map(NormalFrame::exportCurrentStatus)
+                .flatMap(Collection::stream)
+                .collect(toList());
     }
 
-    public List<DownedPin> getTries() {
-        return Collections.unmodifiableList(tries);
+    private NormalFrame getLatestFrame() {
+        return frames.get(frames.size() - 1);
     }
 }
