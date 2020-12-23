@@ -1,31 +1,45 @@
 package bowling.domain;
 
-import bowling.dto.BowlingGameDTO;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BowlingGame {
 
-    private final NormalFrames normalFrames;
-    private final LastFrame lastFrame;
+    private final static int TOTAL_FRAME_SIZE = 10;
+    private final static int NUM_NORMAL_FRAMES = TOTAL_FRAME_SIZE - 1;
+
+    List<Frame> frames;
 
     public BowlingGame() {
-        normalFrames = new NormalFrames();
-        lastFrame = new LastFrame();
+        this.frames = new ArrayList<>();
     }
 
     public void record(DownedPin downedPin) {
-        if (normalFrames.isEnd()) {
-            lastFrame.record(downedPin);
-            return;
+        if (frames.size() == 0) {
+            frames.add(new NormalFrame());
         }
-
-        normalFrames.record(downedPin);
+        renewFrame();
+        getLatestFrame().record(downedPin);
     }
 
     public boolean isEnd() {
-        return normalFrames.isEnd() && lastFrame.isEnded();
+        return frames.size() == TOTAL_FRAME_SIZE && getLatestFrame().isEnd();
     }
 
-    public BowlingGameDTO exportData() {
-        return new BowlingGameDTO(normalFrames, lastFrame);
+    private void renewFrame() {
+        if (!getLatestFrame().isEnd()) {
+            return;
+        }
+
+        if (frames.size() == NUM_NORMAL_FRAMES && getLatestFrame().isEnd()) {
+            frames.add(new LastFrame());
+            return;
+        }
+
+        frames.add(new NormalFrame());
+    }
+
+    private Frame getLatestFrame() {
+        return frames.get(frames.size() - 1);
     }
 }
