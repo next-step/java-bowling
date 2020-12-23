@@ -1,9 +1,6 @@
 package bowling.controller;
 
-import bowling.domain.BowlingKnockDown;
-import bowling.domain.Frames;
-import bowling.domain.Player;
-import bowling.exception.BowlingMaxCountException;
+import bowling.domain.*;
 import bowling.view.InputUi;
 import bowling.view.OutputUi;
 
@@ -15,84 +12,49 @@ public class BowlingGameController {
 
     private static Player player;
 
+    private static GameFrames gameFrames;
+
     public static void run() {
         player = Player.of(InputUi.inputPlayer());
         OutputUi.printInitFrame(player);
 
-        Frames frames = new Frames();
+        gameFrames = GameFrames.init();
         IntStream.range(1, BOWLING_MAX_NUMBER)
-                .forEach(i -> nomalFrame(i, frames));
+                .forEach(i -> createNomalFrame(i, NomalFrame.init()));
 
-        finalFrame(frames);
-        InputUi.close();
+        createFinalFrame(FinalFrame.init());
     }
 
-    private static boolean isStrikeOrSpare(int number) {
-        return number == BOWLING_MAX_NUMBER;
+    private static int printResult(int count, Frame frame) {
+        int countOfKnockDown = InputUi.inputFrame(count);
+
+        Pitch pitch = Pitch.of(countOfKnockDown);
+        frame.add(pitch);
+        gameFrames.put(count, frame);
+        OutputUi.printInitBowling(player, gameFrames);
+
+        return countOfKnockDown;
     }
 
-    private static BowlingKnockDown initBowling(int number, Frames frames) {
-        BowlingKnockDown bowlingKnockDown = new BowlingKnockDown(InputUi.inputFrame(number));
-        frames.put(number, bowlingKnockDown);
-        OutputUi.printBowling(player, frames);
-        return bowlingKnockDown;
+    private static boolean isStrikeOrSpare(int countOfKnockDown) {
+        return countOfKnockDown == BOWLING_MAX_NUMBER;
     }
 
-    private static BowlingKnockDown nextBowling(BowlingKnockDown bowlingKnockDown, int number, Frames frames) {
-        bowlingKnockDown = new BowlingKnockDown(bowlingKnockDown.getCurrentOfKnockDown(), InputUi.inputFrame(number));
-        frames.put(number, bowlingKnockDown);
-        OutputUi.printBowling(player, frames);
-        return bowlingKnockDown;
-    }
-
-    private static void nomalFrame(int number, Frames frames) {
-        BowlingKnockDown bowlingKnockDown = initBowling(number, frames);
-
-        int countOfBowlingKnockDown = bowlingKnockDown.getCurrentOfKnockDown();
-        if (isStrikeOrSpare(countOfBowlingKnockDown)) {
+    private static void createNomalFrame(int count, Frame frame) {
+        if (IntStream.rangeClosed(1, 2)
+                .map(i -> printResult(count, frame))
+                .anyMatch(BowlingGameController::isStrikeOrSpare)) {
             return;
         }
-
-        bowlingKnockDown = nextBowling(bowlingKnockDown, number, frames);
-        int nextCountOfBowlingKnockDown = bowlingKnockDown.getNextOfKnockDown();
-        int sum = countOfBowlingKnockDown + nextCountOfBowlingKnockDown;
-        if (sum > BOWLING_MAX_NUMBER) {
-            throw new BowlingMaxCountException();
-        }
     }
 
-    private static void bonusBall(BowlingKnockDown bowlingKnockDown, Frames frames) {
-        int bonusOfKnockDown = InputUi.inputFrame(BOWLING_MAX_NUMBER);
-        bowlingKnockDown =
-                new BowlingKnockDown(bowlingKnockDown.getCurrentOfKnockDown(),
-                        bowlingKnockDown.getNextOfKnockDown(),
-                        bonusOfKnockDown);
-        frames.put(BOWLING_MAX_NUMBER, bowlingKnockDown);
-        OutputUi.printBowling(player, frames);
-    }
-
-    private static void bowlingKnockDown(Frames frames, BowlingKnockDown bowlingKnockDown) {
-        bowlingKnockDown = nextBowling(bowlingKnockDown, BOWLING_MAX_NUMBER, frames);
-        int sum = bowlingKnockDown.getCurrentOfKnockDown() + bowlingKnockDown.getNextOfKnockDown();
-        if (!isStrikeOrSpare(sum)) {
-            InputUi.close();
+    private static void createFinalFrame(Frame frame) {
+        for (int i = 0; i < 3; i++) {
+            if (!isStrikeOrSpare(printResult(BOWLING_MAX_NUMBER, frame))) {
+                printResult(BOWLING_MAX_NUMBER, frame);
+                InputUi.close();
+                return;
+            }
         }
-
-        if (isStrikeOrSpare(sum)) {
-            bonusBall(bowlingKnockDown, frames);
-        }
-    }
-
-
-    private static void finalFrame(Frames frames) {
-        BowlingKnockDown bowlingKnockDown = initBowling(BOWLING_MAX_NUMBER, frames);
-        int countOfBowlingKnockDown = bowlingKnockDown.getCurrentOfKnockDown();
-        if (!isStrikeOrSpare(countOfBowlingKnockDown)) {
-            bowlingKnockDown(frames, bowlingKnockDown);
-            return;
-        }
-
-        bowlingKnockDown = nextBowling(bowlingKnockDown, BOWLING_MAX_NUMBER, frames);
-        bonusBall(bowlingKnockDown, frames);
     }
 }
