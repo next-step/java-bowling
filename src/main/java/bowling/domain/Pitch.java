@@ -73,4 +73,9 @@ public class Pitch {
     public int hashCode() {
         return Objects.hash(getScore(), left);
     }
+
+    @Override
+    public String toString() {
+        return "" + score;
+    }
 }

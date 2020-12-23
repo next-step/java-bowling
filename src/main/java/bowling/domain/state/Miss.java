@@ -4,31 +4,20 @@ import bowling.domain.Pitch;
 
 import java.util.List;
 
-public class Miss {
+public class Miss extends State {
 
-    private static final int MAXINUM_SCORE = 10;
+    private static final String DELIMITER = "|";
 
-    private final List<Pitch> pitches;
+    private final Pitch firstPitch;
+    private final Pitch secondPitch;
 
-
-    private Miss(List<Pitch> pitches) {
-        this.pitches = pitches;
-    }
-
-    public static Miss from(List<Pitch> pitches) {
-        return new Miss(pitches);
-    }
-
-    public boolean isMiss() {
-        int frameScore = pitches.stream()
-                .mapToInt(Pitch::getScore)
-                .sum();
-
-        return frameScore < MAXINUM_SCORE;
+    public Miss(Pitch firstPitch, Pitch secondPitch) {
+        this.firstPitch = firstPitch;
+        this.secondPitch = secondPitch;
     }
 
     @Override
     public String toString() {
-        return "" + pitches.get(1).getScore();
+        return firstPitch + DELIMITER + secondPitch;
     }
 }

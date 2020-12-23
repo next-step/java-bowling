@@ -4,30 +4,19 @@ import bowling.domain.Pitch;
 
 import java.util.List;
 
-public class Spare {
+public class Spare extends State {
 
     private static final String SYMBOL = "/";
-    private static final int MAXIMUN_SCORE = 10;
+    private static final String DELIMITER = "|";
 
-    private final List<Pitch> pitches;
+    private final Pitch firstPitch;
 
-    private Spare(List<Pitch> pitches) {
-        this.pitches = pitches;
-    }
-
-    public static Spare from(List<Pitch> pitches) {
-        return new Spare(pitches);
-    }
-
-    public boolean isSpare() {
-        int frameScore = pitches.stream()
-                .mapToInt(Pitch::getScore)
-                .sum();
-        return frameScore == MAXIMUN_SCORE;
+    public Spare(Pitch firstPitch) {
+        this.firstPitch = firstPitch;
     }
 
     @Override
     public String toString() {
-        return SYMBOL;
+        return firstPitch + DELIMITER + SYMBOL;
     }
 }
