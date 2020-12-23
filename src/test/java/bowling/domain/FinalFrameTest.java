@@ -14,7 +14,7 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.init();
 
         Pitch pitch = Pitch.from(10);
-        finalFrame.add(pitch);
+        finalFrame.playPitch(pitch);
         assertThat(finalFrame.getPitchSize()).isEqualTo(1);
     }
 
@@ -26,9 +26,9 @@ class FinalFrameTest {
         Pitch pitch1 = Pitch.from(10);
         Pitch pitch2 = Pitch.from(10);
         Pitch pitch3 = Pitch.from(10);
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
-        finalFrame.add(pitch3);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
+        finalFrame.playPitch(pitch3);
 
         assertThat(finalFrame.isFinish()).isTrue();
     }
@@ -41,9 +41,9 @@ class FinalFrameTest {
         Pitch pitch1 = Pitch.from(8);
         Pitch pitch2 = Pitch.from(2);
         Pitch pitch3 = Pitch.from(5);
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
-        finalFrame.add(pitch3);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
+        finalFrame.playPitch(pitch3);
 
         assertThat(finalFrame.isFinish()).isTrue();
     }
@@ -55,8 +55,8 @@ class FinalFrameTest {
 
         Pitch pitch1 = Pitch.from(8);
         Pitch pitch2 = Pitch.from(1);
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
 
         assertThat(finalFrame.isFinish()).isTrue();
     }
@@ -68,8 +68,8 @@ class FinalFrameTest {
 
         Pitch pitch1 = Pitch.from(10);
         Pitch pitch2 = Pitch.from(8);
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
 
         assertThat(finalFrame.isFinish()).isFalse();
     }
@@ -81,10 +81,10 @@ class FinalFrameTest {
 
         Pitch pitch1 = Pitch.from(8);
         Pitch pitch2 = Pitch.from(3);
-        finalFrame.add(pitch1);
+        finalFrame.playPitch(pitch1);
 
         assertThrows(IllegalArgumentException.class,
-                () -> finalFrame.add(pitch2));
+                () -> finalFrame.playPitch(pitch2));
     }
 
     @Test
@@ -93,7 +93,7 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.init();
 
         Pitch pitch1 = Pitch.from(8);
-        finalFrame.add(pitch1);
+        finalFrame.playPitch(pitch1);
 
         assertThat(finalFrame.getFirstScore()).isEqualTo(8);
     }
@@ -105,8 +105,8 @@ class FinalFrameTest {
 
         Pitch pitch1 = Pitch.from(8);
         Pitch pitch2 = Pitch.from(2);
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
 
         assertThat(finalFrame.getSecondScore()).isEqualTo(2);
     }
@@ -118,8 +118,8 @@ class FinalFrameTest {
 
         Pitch pitch1 = Pitch.from(8);
         Pitch pitch2 = Pitch.from(2);
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
 
         assertThat(finalFrame.isSpare()).isTrue();
     }
@@ -130,7 +130,7 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.init();
 
         Pitch pitch1 = Pitch.from(8);
-        finalFrame.add(pitch1);
+        finalFrame.playPitch(pitch1);
 
         assertThat(finalFrame.getFrameScore()).isEqualTo(8);
     }
@@ -142,8 +142,8 @@ class FinalFrameTest {
 
         Pitch pitch1 = Pitch.from(8);
         Pitch pitch2 = Pitch.from(1);
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
 
         assertThat(finalFrame.getFrameScore()).isEqualTo(9);
     }
@@ -154,7 +154,7 @@ class FinalFrameTest {
         Pitch pitch = Pitch.from(10);
 
         Frame finalFrame = FinalFrame.init();
-        finalFrame.add(pitch);
+        finalFrame.playPitch(pitch);
 
         assertThat(finalFrame.getFirstSymbol()).isEqualTo("X");
     }
@@ -165,7 +165,7 @@ class FinalFrameTest {
         Pitch pitch = Pitch.from(0);
 
         Frame finalFrame = FinalFrame.init();
-        finalFrame.add(pitch);
+        finalFrame.playPitch(pitch);
 
         assertThat(finalFrame.getFirstSymbol()).isEqualTo("-");
     }
@@ -176,7 +176,7 @@ class FinalFrameTest {
         Pitch pitch = Pitch.from(1);
 
         Frame finalFrame = FinalFrame.init();
-        finalFrame.add(pitch);
+        finalFrame.playPitch(pitch);
 
         assertThat(finalFrame.getFirstSymbol()).isEqualTo("1");
     }
@@ -188,8 +188,8 @@ class FinalFrameTest {
         Pitch pitch2 = Pitch.from(10);
 
         Frame finalFrame = FinalFrame.init();
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
 
         assertThat(finalFrame.getSecondSymbol()).isEqualTo("X");
     }
@@ -201,8 +201,8 @@ class FinalFrameTest {
         Pitch pitch2 = Pitch.from(0);
 
         Frame finalFrame = FinalFrame.init();
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
 
         assertThat(finalFrame.getSecondSymbol()).isEqualTo("-");
     }
@@ -214,8 +214,8 @@ class FinalFrameTest {
         Pitch pitch2 = Pitch.from(2);
 
         Frame finalFrame = FinalFrame.init();
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
 
         assertThat(finalFrame.getSecondSymbol()).isEqualTo("/");
     }
@@ -227,8 +227,8 @@ class FinalFrameTest {
         Pitch pitch2 = Pitch.from(2);
 
         Frame finalFrame = FinalFrame.init();
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
 
         assertThat(finalFrame.getSecondSymbol()).isEqualTo("2");
     }
@@ -241,9 +241,9 @@ class FinalFrameTest {
         Pitch pitch3 = Pitch.from(10);
 
         Frame finalFrame = FinalFrame.init();
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
-        finalFrame.add(pitch3);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
+        finalFrame.playPitch(pitch3);
 
         assertThat(finalFrame.getSecondSymbol()).isEqualTo("X");
     }
@@ -256,9 +256,9 @@ class FinalFrameTest {
         Pitch pitch3 = Pitch.from(0);
 
         FinalFrame finalFrame = FinalFrame.init();
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
-        finalFrame.add(pitch3);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
+        finalFrame.playPitch(pitch3);
 
         assertThat(finalFrame.getThirdSymbol()).isEqualTo("-");
     }
@@ -271,9 +271,9 @@ class FinalFrameTest {
         Pitch pitch3 = Pitch.from(2);
 
         FinalFrame finalFrame = FinalFrame.init();
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
-        finalFrame.add(pitch3);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
+        finalFrame.playPitch(pitch3);
 
         assertThat(finalFrame.getThirdSymbol()).isEqualTo("/");
     }
@@ -286,9 +286,9 @@ class FinalFrameTest {
         Pitch pitch3 = Pitch.from(2);
 
         FinalFrame finalFrame = FinalFrame.init();
-        finalFrame.add(pitch1);
-        finalFrame.add(pitch2);
-        finalFrame.add(pitch3);
+        finalFrame.playPitch(pitch1);
+        finalFrame.playPitch(pitch2);
+        finalFrame.playPitch(pitch3);
 
         assertThat(finalFrame.getThirdSymbol()).isEqualTo("2");
     }

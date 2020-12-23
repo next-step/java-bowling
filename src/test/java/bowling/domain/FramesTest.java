@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,13 +22,13 @@ class FramesTest {
     void addNormalFrame() {
         Pitch pitch1 = Pitch.from(10);
         NormalFrame normalFrame1 = NormalFrame.init();
-        normalFrame1.add(pitch1);
+        normalFrame1.playPitch(pitch1);
 
         Pitch pitch2 = Pitch.from(8);
         Pitch pitch3 = Pitch.from(2);
         NormalFrame normalFrame2 = NormalFrame.init();
-        normalFrame2.add(pitch2);
-        normalFrame2.add(pitch3);
+        normalFrame2.playPitch(pitch2);
+        normalFrame2.playPitch(pitch3);
 
         Frames frames = Frames.init();
         frames.add(normalFrame1);
@@ -43,21 +42,21 @@ class FramesTest {
     void addAllFrame() {
         Pitch pitch1 = Pitch.from(10);
         Frame normalFrame1 = NormalFrame.init();
-        normalFrame1.add(pitch1);
+        normalFrame1.playPitch(pitch1);
 
         Pitch pitch2 = Pitch.from(8);
         Pitch pitch3 = Pitch.from(2);
         Frame normalFrame2 = NormalFrame.init();
-        normalFrame2.add(pitch2);
-        normalFrame2.add(pitch3);
+        normalFrame2.playPitch(pitch2);
+        normalFrame2.playPitch(pitch3);
 
         Pitch pitch4 = Pitch.from(10);
         Pitch pitch5 = Pitch.from(10);
         Pitch pitch6 = Pitch.from(10);
         Frame finalFrame = FinalFrame.init();
-        finalFrame.add(pitch4);
-        finalFrame.add(pitch5);
-        finalFrame.add(pitch6);
+        finalFrame.playPitch(pitch4);
+        finalFrame.playPitch(pitch5);
+        finalFrame.playPitch(pitch6);
 
         Frames frames = Frames.init();
         frames.add(normalFrame1);
@@ -72,27 +71,27 @@ class FramesTest {
     void finishBowling() {
         Pitch pitch = Pitch.from(10);
         Frame frame1 = NormalFrame.init();
-        frame1.add(pitch);
+        frame1.playPitch(pitch);
         Frame frame2 = NormalFrame.init();
-        frame2.add(pitch);
+        frame2.playPitch(pitch);
         Frame frame3 = NormalFrame.init();
-        frame3.add(pitch);
+        frame3.playPitch(pitch);
         Frame frame4 = NormalFrame.init();
-        frame4.add(pitch);
+        frame4.playPitch(pitch);
         Frame frame5 = NormalFrame.init();
-        frame5.add(pitch);
+        frame5.playPitch(pitch);
         Frame frame6 = NormalFrame.init();
-        frame6.add(pitch);
+        frame6.playPitch(pitch);
         Frame frame7 = NormalFrame.init();
-        frame7.add(pitch);
+        frame7.playPitch(pitch);
         Frame frame8 = NormalFrame.init();
-        frame8.add(pitch);
+        frame8.playPitch(pitch);
         Frame frame9 = NormalFrame.init();
-        frame9.add(pitch);
+        frame9.playPitch(pitch);
         Frame frame10 = FinalFrame.init();
-        frame10.add(pitch);
-        frame10.add(pitch);
-        frame10.add(pitch);
+        frame10.playPitch(pitch);
+        frame10.playPitch(pitch);
+        frame10.playPitch(pitch);
 
 
         List<Frame> frameList = new ArrayList<>();
@@ -117,23 +116,23 @@ class FramesTest {
     void finalFrame() {
         Pitch pitch = Pitch.from(10);
         Frame frame1 = NormalFrame.init();
-        frame1.add(pitch);
+        frame1.playPitch(pitch);
         Frame frame2 = NormalFrame.init();
-        frame2.add(pitch);
+        frame2.playPitch(pitch);
         Frame frame3 = NormalFrame.init();
-        frame3.add(pitch);
+        frame3.playPitch(pitch);
         Frame frame4 = NormalFrame.init();
-        frame4.add(pitch);
+        frame4.playPitch(pitch);
         Frame frame5 = NormalFrame.init();
-        frame5.add(pitch);
+        frame5.playPitch(pitch);
         Frame frame6 = NormalFrame.init();
-        frame6.add(pitch);
+        frame6.playPitch(pitch);
         Frame frame7 = NormalFrame.init();
-        frame7.add(pitch);
+        frame7.playPitch(pitch);
         Frame frame8 = NormalFrame.init();
-        frame8.add(pitch);
+        frame8.playPitch(pitch);
         Frame frame9 = NormalFrame.init();
-        frame9.add(pitch);
+        frame9.playPitch(pitch);
 
         List<Frame> frameList = new ArrayList<>();
         frameList.add(frame1);
@@ -156,21 +155,21 @@ class FramesTest {
     void notFinalFrame() {
         Pitch pitch = Pitch.from(10);
         Frame frame1 = NormalFrame.init();
-        frame1.add(pitch);
+        frame1.playPitch(pitch);
         Frame frame2 = NormalFrame.init();
-        frame2.add(pitch);
+        frame2.playPitch(pitch);
         Frame frame3 = NormalFrame.init();
-        frame3.add(pitch);
+        frame3.playPitch(pitch);
         Frame frame4 = NormalFrame.init();
-        frame4.add(pitch);
+        frame4.playPitch(pitch);
         Frame frame5 = NormalFrame.init();
-        frame5.add(pitch);
+        frame5.playPitch(pitch);
         Frame frame6 = NormalFrame.init();
-        frame6.add(pitch);
+        frame6.playPitch(pitch);
         Frame frame7 = NormalFrame.init();
-        frame7.add(pitch);
+        frame7.playPitch(pitch);
         Frame frame8 = NormalFrame.init();
-        frame8.add(pitch);
+        frame8.playPitch(pitch);
 
         List<Frame> frameList = new ArrayList<>();
         frameList.add(frame1);
@@ -201,23 +200,23 @@ class FramesTest {
     void createFinalFrame() {
         Pitch pitch = Pitch.from(10);
         Frame frame1 = NormalFrame.init();
-        frame1.add(pitch);
+        frame1.playPitch(pitch);
         Frame frame2 = NormalFrame.init();
-        frame2.add(pitch);
+        frame2.playPitch(pitch);
         Frame frame3 = NormalFrame.init();
-        frame3.add(pitch);
+        frame3.playPitch(pitch);
         Frame frame4 = NormalFrame.init();
-        frame4.add(pitch);
+        frame4.playPitch(pitch);
         Frame frame5 = NormalFrame.init();
-        frame5.add(pitch);
+        frame5.playPitch(pitch);
         Frame frame6 = NormalFrame.init();
-        frame6.add(pitch);
+        frame6.playPitch(pitch);
         Frame frame7 = NormalFrame.init();
-        frame7.add(pitch);
+        frame7.playPitch(pitch);
         Frame frame8 = NormalFrame.init();
-        frame8.add(pitch);
+        frame8.playPitch(pitch);
         Frame frame9 = NormalFrame.init();
-        frame9.add(pitch);
+        frame9.playPitch(pitch);
 
         List<Frame> frameList = new ArrayList<>();
         frameList.add(frame1);

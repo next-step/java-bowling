@@ -27,7 +27,7 @@ public class FinalFrame implements Frame {
         return new FinalFrame(pitches);
     }
 
-    public void add(Pitch pitch) {
+    public void playPitch(Pitch pitch) {
         addRemainPitch(pitch);
         addFirstPitch(pitch);
     }
