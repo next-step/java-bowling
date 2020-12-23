@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.BowlingKnockDown;
 import bowling.domain.Frames;
 import bowling.domain.Player;
 
@@ -48,15 +49,39 @@ public class OutputUi {
         System.out.println();
     }
 
+    private static void drawFirstKnockDown(BowlingKnockDown bowlingKnockDown, StringBuilder sb) {
+        if (bowlingKnockDown.getNextOfKnockDown() == null) {
+            sb.append(initDownExpress(bowlingKnockDown.getCurrentOfKnockDown()));
+        }
+    }
+
+    private static String drawBonusKnockDown(BowlingKnockDown bowlingKnockDown, String sumKnockDown) {
+        if (bowlingKnockDown.getBonusKnockDown() != null) {
+            return String.format("%s%s%s ", sumKnockDown, LINE, initDownExpress(bowlingKnockDown.getBonusKnockDown()));
+        }
+        return sumKnockDown;
+    }
+
+    private static void drawFinishKnockDown(BowlingKnockDown bowlingKnockDown, StringBuilder sb) {
+        if (bowlingKnockDown.getCurrentOfKnockDown() != null && bowlingKnockDown.getNextOfKnockDown() != null) {
+            String sumKnockDown = finalKnockDownExpress(bowlingKnockDown.getCurrentOfKnockDown(), bowlingKnockDown.getNextOfKnockDown());
+            sumKnockDown = drawBonusKnockDown(bowlingKnockDown, sumKnockDown);
+            sb.append(sumKnockDown);
+        }
+    }
+
     private static void printPlayFrames(Player player, Frames frames) {
         StringBuilder sb = new StringBuilder();
         printFrameFirstLine();
         sb.append(LINE + String.format("  %s ", player.getName()) + LINE);
 
         IntStream.rangeClosed(1, frames.size())
-                .mapToObj(i -> frames.bowlingKnockDownExpression(i))
-                .map(knockDown -> knockDown + LINE)
-                .forEach(sb::append);
+                .mapToObj(i -> frames.getBowlingKnockDownMap().get(i))
+                .forEach(bowlingKnockDown -> {
+                    drawFirstKnockDown(bowlingKnockDown, sb);
+                    drawFinishKnockDown(bowlingKnockDown, sb);
+                    sb.append(LINE);
+                });
 
         IntStream.range(0, 10 - frames.size())
                 .mapToObj(i -> EMPTY + LINE)
@@ -70,32 +95,38 @@ public class OutputUi {
         printPlayFrames(player, frames);
     }
 
-    private String initDownExpress(int count) {
+    private static String initDownExpress(int count) {
         if (count == MIN_NUMBER) {
             return String.format(" %s ", GUTTER);
         }
 
         if (count == MAX_NUMBER) {
-            return String.format("   %s  ", STRIKE);
+            return String.format("  %s   ", STRIKE);
         }
-
-        return String.format("  %d   ", count);
+        return String.format(" %s ", count);
     }
 
-    private String finalKnockDownExpress(String currentKnockDownExpression, int count) {
-
-        if (count == MAX_NUMBER) {
-            return String.format("%s%s%s ", currentKnockDownExpression, LINE, SPARE);
+    private static String finalKnockDownExpress(int first, int second) {
+        if (first + second == MAX_NUMBER) {
+            return String.format("%s%s%s ", first, LINE, SPARE);
         }
 
-        if (count == MIN_NUMBER) {
-            return String.format(" %s%s%s ", currentKnockDownExpression, LINE, GUTTER);
+        if (first + second == MIN_NUMBER) {
+            return String.format("%s%s%s ", GUTTER, LINE, GUTTER);
         }
 
-        if (count == MAX_NUMBER) {
-            return String.format(" %s%s%s ", currentKnockDownExpression, LINE, STRIKE);
+        if (second == MIN_NUMBER) {
+            return String.format(" %s%s%s ", first, LINE, GUTTER);
         }
 
-        return String.format(" %s%s%d ", currentKnockDownExpression, LINE, count);
+        if (first == MIN_NUMBER) {
+            return String.format(" %s%s%s ", GUTTER, LINE, second);
+        }
+
+        if (first == MAX_NUMBER && second == MAX_NUMBER) {
+            return String.format(" %s%s%s ", STRIKE, LINE, STRIKE);
+        }
+
+        return String.format(" %s%s%d ", first, LINE, second);
     }
 }
