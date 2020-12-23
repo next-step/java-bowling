@@ -75,7 +75,7 @@ public class Answer extends AbstractEntity {
     }
 
     public DeleteHistory delete() {
-        setDeleted(true);
+        this.deleted = true;
         return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 }
