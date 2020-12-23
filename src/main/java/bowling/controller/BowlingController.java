@@ -4,7 +4,6 @@ import bowling.domain.*;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +28,7 @@ public class BowlingController {
         while (!frames.isEnd()) {
             int pinCount = InputView.enterPinCount(frames.getCurrentNumber());
             frames.pitch(pinCount);
-            ResultView.printScoreboard(new ArrayList<>());
+            ResultView.printPlayerScoreboard(player.getName(), frames.getFrames());
         }
     }
 }

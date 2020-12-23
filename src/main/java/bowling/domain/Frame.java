@@ -1,10 +1,12 @@
 package bowling.domain;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class Frame {
 
+    public static final int FIRST_PITCH_COUNT = 1;
+    public static final int SECOND_PITCH_COUNT = 2;
+    public static final int BONUS_PITCH_COUNT = 3;
     public static final String FRAME_DELIMITER = "|";
 
     protected FrameNumber frameNumber;
@@ -35,6 +37,10 @@ public abstract class Frame {
         return pins;
     }
 
+    public Pin getPin(int index) {
+        return pins.get(index);
+    }
+
     public int getSumPinCount() {
         return pins.stream()
                 .map(Pin::getPinCount)
@@ -45,10 +51,8 @@ public abstract class Frame {
         return pins.size();
     }
 
-    public String getPinsToString() {
-        return pins.stream()
-                .map(Pin::getCountToString)
-                .collect(Collectors.joining(FRAME_DELIMITER));
+    public boolean isFinalFrame() {
+        return frameNumber.equals(FrameNumber.last());
     }
 
     @Override

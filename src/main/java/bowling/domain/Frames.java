@@ -11,8 +11,6 @@ import static bowling.domain.FrameNumber.FRAME_LAST_NUMBER;
 
 public class Frames {
 
-    public static final String FRAMES_DELIMITER = ":";
-
     private final List<Frame> frames;
     private FrameNumber currentNumber;
 
@@ -65,10 +63,8 @@ public class Frames {
         return currentNumber.getNumber();
     }
 
-    public String getPinCountBoard() {
-        return frames.stream()
-                .map(Frame::getPinsToString)
-                .collect(Collectors.joining(FRAMES_DELIMITER));
+    public Boolean isCurrentFinalFrame() {
+        return getCurrentNumber() == FRAME_LAST_NUMBER;
     }
 
     @Override

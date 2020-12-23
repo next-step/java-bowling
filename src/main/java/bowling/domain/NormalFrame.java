@@ -42,6 +42,10 @@ public class NormalFrame extends Frame {
             return true;
         }
 
+        return checkMaxPinCount();
+    }
+
+    private Boolean checkMaxPinCount() {
         return getSumPinCount() == Pin.MAX_PIN_COUNT;
     }
 
