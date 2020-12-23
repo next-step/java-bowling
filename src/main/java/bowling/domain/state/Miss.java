@@ -4,9 +4,11 @@ import bowling.domain.Score;
 
 public class Miss extends Result {
 
+    public static final int LEFT = 0;
+
     public Miss(Pins pins, int totalCount) {
         super(pins);
-        score = Score.getMissScore(totalCount);
+        score = new Score(totalCount, LEFT);
     }
 
     @Override

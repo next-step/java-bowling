@@ -15,8 +15,6 @@ public interface Frame {
 
     List<Pins> getPinsList();
 
-    int getFrameCount();
-
     Score getScore();
 
     Score addScore(Score score);

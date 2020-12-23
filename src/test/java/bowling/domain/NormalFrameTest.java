@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class NormalFrameTest {
 
-    private NormalFrame normalFrame;
+    private Frame normalFrame;
 
     @BeforeEach
     void setUp() {
@@ -42,5 +42,60 @@ class NormalFrameTest {
         frame = frame.bowl(10);
 
         assertThat(frame).isInstanceOf(FinalFrame.class);
+    }
+
+    @Test
+    @DisplayName("미스 점수 확인")
+    void getScore_miss() {
+        normalFrame.bowl(4);
+        normalFrame.bowl(5);
+
+        Score score = normalFrame.getScore();
+
+        assertThat(score).isEqualTo(new Score(9, 0));
+    }
+
+    @Test
+    @DisplayName("스트라이크 점수 확인")
+    void getScore() {
+        normalFrame.bowl(10);
+
+        Score score = normalFrame.getScore();
+
+        assertThat(score).isEqualTo(new Score(10, 2));
+    }
+
+    @Test
+    @DisplayName("스페어 점수 확인")
+    void getScore_spare() {
+        normalFrame.bowl(4);
+        normalFrame.bowl(6);
+
+        Score score = normalFrame.getScore();
+
+        assertThat(score).isEqualTo(new Score(10, 1));
+    }
+
+    @Test
+    @DisplayName("다음 차례까지 점수 더하기")
+    void addScore_1next() {
+        normalFrame.bowl(4);
+        Score lastScore = new Score(1, 1);
+
+        Score score = normalFrame.addScore(lastScore);
+
+        assertThat(score).isEqualTo(new Score(5, 0));
+    }
+
+    @Test
+    @DisplayName("다다음 차례까지 점수 더하기")
+    void addScore_2next() {
+        normalFrame.bowl(4);
+        normalFrame.bowl(5);
+        Score lastScore = new Score(1, 2);
+
+        Score score = normalFrame.addScore(lastScore);
+
+        assertThat(score).isEqualTo(new Score(10, 0));
     }
 }
