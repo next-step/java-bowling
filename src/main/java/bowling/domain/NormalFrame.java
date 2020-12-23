@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
 
     private static final int MAXIMUM_TRIES_PER_NORMAL_FRAME = 2;
 
@@ -14,6 +14,7 @@ public class NormalFrame {
         this.tries = new ArrayList<>();
     }
 
+    @Override
     public void record(DownedPin currentTry) {
         if (tries.size() == 0) {
             tries.add(currentTry);
@@ -23,8 +24,14 @@ public class NormalFrame {
         tries.add(tries.get(0).fromSubordinateTry(currentTry));
     }
 
+    @Override
     public boolean isEnd() {
         return (getFrameStatus() == FrameStatus.STRIKE || tries.size() == MAXIMUM_TRIES_PER_NORMAL_FRAME);
+    }
+
+    @Override
+    public int numThrown() {
+        return tries.size();
     }
 
     public FrameStatus getFrameStatus() {
