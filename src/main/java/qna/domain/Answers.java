@@ -26,10 +26,11 @@ public class Answers {
         }
     }
 
-    public List<DeleteHistory> delete() {
-        return answers.stream()
-                .map(Answer::delete)
-                .collect(Collectors.toList());
+    public DeleteHistories delete() {
+        return DeleteHistories.of(
+                answers.stream()
+                        .map(Answer::delete)
+                        .collect(Collectors.toList()));
     }
 
     @Override

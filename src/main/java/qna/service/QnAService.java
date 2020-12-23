@@ -35,8 +35,6 @@ public class QnAService {
         Question question = findQuestionById(questionId);
 
         question.canDeleteBy(loginUser);
-        List<DeleteHistory> deleteHistories = question.delete();
-
-        deleteHistoryService.saveAll(deleteHistories);
+        deleteHistoryService.saveAll(question.delete());
     }
 }
