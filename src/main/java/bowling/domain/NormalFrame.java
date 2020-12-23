@@ -29,6 +29,18 @@ public class NormalFrame {
         return (tries.get(FIRST_TURN_INDEX).isStrike() || tries.size() == MAXIMUM_TRIES_PER_NORMAL_FRAME);
     }
 
+    public FrameStatus getFrameStatus() {
+        if (tries.size() == 0) {
+            return FrameStatus.getStatus(null, null);
+        }
+
+        if (tries.size() == 1) {
+            return FrameStatus.getStatus(tries.get(0), null);
+        }
+
+        return FrameStatus.getStatus(tries.get(0), tries.get(1));
+    }
+
     public boolean isStrike() {
         return tries.size() == 1 && tries.get(0).isStrike();
     }
