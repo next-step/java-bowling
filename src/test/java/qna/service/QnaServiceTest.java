@@ -86,4 +86,27 @@ public class QnaServiceTest {
                 new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         verify(deleteHistoryService).saveAll(deleteHistories);
     }
+
+    @Test
+    public void deleteOneQuestion_성공() throws Exception {
+        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
+
+        assertThat(question.isDeleted()).isFalse();
+        DeleteHistory history = qnAService.deleteOneQuestion(question, UserTest.JAVAJIGI);
+
+        assertThat(question.isDeleted()).isTrue();
+        assertThat(history).isNotNull();
+        verifyDeleteHistories();
+    }
+
+    @Test
+    public void deleteAnswer_성공() throws Exception {
+        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
+
+        assertThat(question.isDeleted()).isFalse();
+        List<DeleteHistory> result = qnAService.deleteAnswer(question, UserTest.JAVAJIGI);
+
+        assertThat(answer.isDeleted()).isTrue();
+        assertThat(result.size()).isEqualTo(1);
+    }
 }
