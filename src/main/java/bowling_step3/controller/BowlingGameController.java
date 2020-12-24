@@ -41,6 +41,12 @@ public class BowlingGameController {
         return countOfKnockDown == BOWLING_MAX_NUMBER;
     }
 
+    private static void checkOfSpare(int sum) {
+        if (!isStrikeOrSpare(sum)) {
+            return;
+        }
+    }
+
     private static void createNomalFrame(int count, Frame frame) {
         IntStream.rangeClosed(1, 2)
                 .map(i -> printResult(count, frame))
@@ -57,11 +63,5 @@ public class BowlingGameController {
         }
         printResult(BOWLING_MAX_NUMBER, frame);
         printResult(BOWLING_MAX_NUMBER, frame);
-    }
-
-    private static void checkOfSpare(int sum) {
-        if (!isStrikeOrSpare(sum)) {
-            return;
-        }
     }
 }
