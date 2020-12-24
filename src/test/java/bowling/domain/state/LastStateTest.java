@@ -32,7 +32,7 @@ class LastStateTest {
     }
 
     @Test
-    void xnum() {
+    void xNum() {
         lastState = new LastState(new Strike(), new Miss(new Pins(1)));
         lastState.setSecondSymbol();
         assertThat(lastState.getSymbol()).isEqualTo("X|1");
@@ -64,6 +64,13 @@ class LastStateTest {
         lastState = new LastState(new Miss(new Pins(1)), new Miss(new Pins(1)));
         lastState.setSecondSymbol();
         assertThat(lastState.getSymbol()).isEqualTo("1|1");
+    }
+
+    @Test
+    void spare() {
+        lastState = new LastState(new Miss(new Pins(1)), new Miss(new Pins(9)));
+        lastState.setSecondSymbol();
+        assertThat(lastState.getSymbol()).isEqualTo("1|/");
     }
 
     @Test
@@ -118,7 +125,70 @@ class LastStateTest {
     }
 
     @Test
+    void gutterXX() {
+        lastState = new LastState(new Gutter(new Pins(0)), new Strike());
+        lastState.setSecondSymbol();
+        LastState thirdState = new LastState(lastState, new Strike());
+        thirdState.setThirdSymbol();
+        assertThat(thirdState.getSymbol()).isEqualTo("-|XX");
+    }
+    @Test
+    void gutterXNum() {
+        lastState = new LastState(new Gutter(new Pins(0)), new Strike());
+        lastState.setSecondSymbol();
+        LastState thirdState = new LastState(lastState, new Miss(new Pins(1)));
+        thirdState.setThirdSymbol();
+        assertThat(thirdState.getSymbol()).isEqualTo("-|X|1");
+    }
+
+    @Test
+    void xGutterNum() {
+        lastState = new LastState(new Strike(), new Gutter(new Pins(0)));
+        lastState.setSecondSymbol();
+        LastState thirdState = new LastState(lastState, new Miss(new Pins(1)));
+        thirdState.setThirdSymbol();
+        assertThat(thirdState.getSymbol()).isEqualTo("X|-|1");
+    }
+
+    @Test
+    void xGutterGutter() {
+        lastState = new LastState(new Strike(), new Gutter(new Pins(0)));
+        lastState.setSecondSymbol();
+        LastState thirdState = new LastState(lastState, new Gutter(new Pins(0)));
+        thirdState.setThirdSymbol();
+        assertThat(thirdState.getSymbol()).isEqualTo("X|-|-");
+    }
+
+    @Test
+    void spareX() {
+        lastState = new LastState(new Miss(new Pins(1)), new Miss(new Pins(9)));
+        lastState.setSecondSymbol();
+        LastState thirdState = new LastState(lastState, new Strike());
+        thirdState.setThirdSymbol();
+        assertThat(thirdState.getSymbol()).isEqualTo("1|/|X");
+    }
+
+    @Test
+    void spareGutter() {
+        lastState = new LastState(new Miss(new Pins(1)), new Miss(new Pins(9)));
+        lastState.setSecondSymbol();
+        LastState thirdState = new LastState(lastState, new Gutter(new Pins(0)));
+        thirdState.setThirdSymbol();
+        assertThat(thirdState.getSymbol()).isEqualTo("1|/|-");
+    }
+
+    @Test
+    void spareNum() {
+        lastState = new LastState(new Miss(new Pins(1)), new Miss(new Pins(9)));
+        lastState.setSecondSymbol();
+        LastState thirdState = new LastState(lastState, new Miss(new Pins(1)));
+        thirdState.setThirdSymbol();
+        assertThat(thirdState.getSymbol()).isEqualTo("1|/|1");
+    }
+
+    @Test
     void getScore() {
+        assertThat(lastState.getScore().getFrameScore()).isEqualTo(20);
     }
 
     @Test
@@ -127,9 +197,5 @@ class LastStateTest {
         assertThat(lastState.isFinished()).isFalse();
         lastState.setThirdSymbol();
         assertThat(lastState.isFinished()).isTrue();
-    }
-
-    @Test
-    void getSymbol() {
     }
 }

@@ -34,13 +34,23 @@ public class LastState implements State {
             return;
         }
         // X|*
-        if (firstScore == STRIKE && secondScore < STRIKE) {
+        if (firstScore == STRIKE && secondScore < STRIKE && secondScore != GUTTER) {
             this.symbol = Symbol.STRIKE.getSymbol() +  DELIMITER + secondScore;
             return;
         }
         // *|X
-        if (firstScore < STRIKE && secondScore == STRIKE) {
+        if (firstScore < STRIKE && secondScore == STRIKE && firstScore != GUTTER) {
             this.symbol = firstScore +  DELIMITER + Symbol.STRIKE.getSymbol();
+            return;
+        }
+        // X|-
+        if (firstScore == STRIKE && secondScore == GUTTER) {
+            this.symbol = Symbol.STRIKE.getSymbol() +  DELIMITER + Symbol.GUTTER.getSymbol();
+            return;
+        }
+        // -|X
+        if (firstScore == GUTTER && secondScore == STRIKE) {
+            this.symbol = Symbol.GUTTER.getSymbol() +  DELIMITER + Symbol.STRIKE.getSymbol();
             return;
         }
         // *|-
@@ -51,6 +61,11 @@ public class LastState implements State {
         // -|*
         if (firstScore == GUTTER && secondScore > GUTTER) {
             this.symbol = Symbol.GUTTER.getSymbol() +  DELIMITER + secondScore;
+            return;
+        }
+        // *|/
+        if (firstScore + secondScore == STRIKE) {
+            this.symbol = firstScore + DELIMITER + Symbol.SPARE.getSymbol();
             return;
         }
         // *|*
