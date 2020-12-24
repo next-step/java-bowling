@@ -7,6 +7,7 @@ import bowling.domain.bowl.ThirdBowl;
 import bowling.domain.score.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.state.LastState;
+import bowling.domain.state.Miss;
 import bowling.domain.state.State;
 import bowling.domain.state.States;
 

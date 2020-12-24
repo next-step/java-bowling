@@ -30,7 +30,7 @@ class FinalFrameTest {
     }
 
     @Test
-    void X() {
+    void bowl_x() {
         assertThat(frame.getLastState()).isInstanceOf(Strike.class);
         assertThat(frame.getLastStateFrameScore()).isEqualTo(10);
         assertThat(frame.getLastStateFirstScore()).isEqualTo(10);
@@ -39,12 +39,17 @@ class FinalFrameTest {
     }
 
     @Test
-    void XX() {
+    void secondBowl_xx() {
         frame.secondBowl(userIndex, new Strike(), new Pins(10));
         assertThat(frame.getLastState()).isInstanceOf(LastState.class);
         assertThat(frame.getLastStateFrameScore()).isEqualTo(20);
-//        assertThat(frame.getLastStateFirstScore()).isEqualTo(10);
-//        assertThat(frame.getLastStateSecondScore()).isZero();
-//        assertThat(frame.getLastStateSymbol()).isEqualTo("X");
+        assertThat(frame.getLastStateSymbol()).isEqualTo("XX");
+    }
+
+    @Test
+    void thirdBowl_xxx() {
+        frame.thirdBowl(userIndex, new LastState(new Strike(), new Strike()), new Pins(10));
+        assertThat(frame.getLastStateFrameScore()).isEqualTo(30);
+        assertThat(frame.getLastStateSymbol()).isEqualTo("XXX");
     }
 }

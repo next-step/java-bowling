@@ -2,10 +2,7 @@ package bowling.domain.bowl;
 
 import bowling.domain.score.Pins;
 import bowling.domain.score.Score;
-import bowling.domain.state.Gutter;
-import bowling.domain.state.Miss;
-import bowling.domain.state.Spare;
-import bowling.domain.state.State;
+import bowling.domain.state.*;
 
 public class SecondBowl implements Bowl {
     private final Score score;
@@ -16,6 +13,10 @@ public class SecondBowl implements Bowl {
 
     @Override
     public State stroke(Pins pins) {
+        // 10 프레임
+        if (score.isStrike()) {
+            return new Strike();
+        }
         if (score.isSpare(pins)) {
             return new Spare(this.score.getFirst(), pins);
         }

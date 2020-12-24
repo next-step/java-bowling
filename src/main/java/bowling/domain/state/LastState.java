@@ -90,6 +90,7 @@ public class LastState implements State {
     }
 
     private String getFormattedSymbol() {
+        System.out.println(this.firstState);
         if (this.firstState.getSymbol().endsWith("X")) {
             return this.firstState.getSymbol();
         }

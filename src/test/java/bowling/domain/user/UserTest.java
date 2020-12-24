@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.user;
 
 
 import bowling.domain.user.User;
