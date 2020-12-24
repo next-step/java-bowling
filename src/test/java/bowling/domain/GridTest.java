@@ -16,8 +16,5 @@ class GridTest {
 
     @Test
     void init() {
-        Frames frames = new Frames(users);
-        frames.init();
-        ResultView.init(frames, user);
     }
 }

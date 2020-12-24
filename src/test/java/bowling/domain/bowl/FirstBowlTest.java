@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.bowl;
 
 import bowling.domain.bowl.FirstBowl;
 import bowling.domain.score.Pins;

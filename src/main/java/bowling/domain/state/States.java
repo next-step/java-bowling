@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import java.util.LinkedList;
-import java.util.Optional;
 
 /**
  * Created : 2020-12-21 오전 11:22
@@ -34,5 +33,9 @@ public class States {
 
     public void set(int frameNo, State state) {
         this.states.set(frameNo, state);
+    }
+
+    public int size() {
+        return this.states.size();
     }
 }

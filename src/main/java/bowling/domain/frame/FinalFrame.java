@@ -15,24 +15,15 @@ import bowling.domain.state.States;
  * Developer : Seo
  */
 public class FinalFrame extends Frame {
-    public static final int FINAL_FRAME = 10;
-
     private final States states;
-    private final int frameNo;
 
-    public FinalFrame(int frameNo) {
-        this.frameNo = frameNo;
+    public FinalFrame() {
         this.states = new States();
     }
 
     @Override
-    public Frame next(int frameNo) {
+    public Frame next() {
         return null;
-    }
-
-    @Override
-    public int getFrameNo() {
-        return FINAL_FRAME;
     }
 
     @Override
@@ -44,6 +35,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public void secondBowl(int userIndex, State firstState, Pins pins) {
+        validateUserIndex(userIndex);
         Score firstScore = firstState.getScore();
         Bowl secondBowl = new SecondBowl(firstScore);
         State secondState = secondBowl.stroke(pins);
@@ -54,7 +46,8 @@ public class FinalFrame extends Frame {
 
     @Override
     public void thirdBowl(int userIndex, State state, Pins thirdPins) {
-        Bowl thirdBowl = new ThirdBowl();
+        validateUserIndex(userIndex);
+        Bowl thirdBowl = new ThirdBowl(state);
         State thirdState = thirdBowl.stroke(thirdPins);
         LastState lastState = new LastState(state, thirdState);
         lastState.setThirdSymbol();
@@ -63,7 +56,32 @@ public class FinalFrame extends Frame {
 
     @Override
     public State getState(int userIndex) {
+        validateUserIndex(userIndex);
         return this.states.getState(userIndex);
+    }
+
+    @Override
+    public String getSymbol(int userIndex) {
+        validateUserIndex(userIndex);
+        return this.states.getState(userIndex).getSymbol();
+    }
+
+    @Override
+    public int getFrameScore(int userIndex) {
+        validateUserIndex(userIndex);
+        return this.states.getState(userIndex).getScore().getFrameScore();
+    }
+
+    @Override
+    public int getFirstScore(int userIndex) {
+        validateUserIndex(userIndex);
+        return this.states.getState(userIndex).getScore().getFirst().get();
+    }
+
+    @Override
+    public int getSecondScore(int userIndex) {
+        validateUserIndex(userIndex);
+        return this.states.getState(userIndex).getScore().getSecond().get();
     }
 
     @Override
@@ -72,14 +90,28 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public int getScore(int userIndex) {
-        State state = this.states.getState(userIndex);
-        return state.getScore().getFrameScore();
+    public int getLastStateFrameScore() {
+        return getLastState().getScore().getFrameScore();
     }
 
     @Override
-    public int getFirstScore(int userIndex) {
-        State state = this.states.getState(userIndex);
-        return state.getScore().getFirst().get();
+    public int getLastStateFirstScore() {
+        return getLastState().getScore().getFirst().get();
+    }
+
+    @Override
+    public int getLastStateSecondScore() {
+        return getLastState().getScore().getSecond().get();
+    }
+
+    @Override
+    public String getLastStateSymbol() {
+        return getLastState().getSymbol();
+    }
+
+    private void validateUserIndex(int userIndex) {
+        if (userIndex >= this.states.size()) {
+            throw new IllegalArgumentException(String.format("사용자를 확인해주십시요. 현재 사용자 번호 : %d", userIndex));
+        }
     }
 }

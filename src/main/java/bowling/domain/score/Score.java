@@ -5,17 +5,19 @@ import bowling.domain.Symbol;
 import java.util.Optional;
 
 public class Score {
+    public static final int PINS_ZERO = 0;
+    public static final String BLANK = "";
     private final Pins first;
     private Pins second;
 
     public Score(Pins first) {
         this.first = first;
-        this.second = new Pins(0);
+        this.second = new Pins(PINS_ZERO);
     }
 
     public Score() {
-        this.first = new Pins(0);
-        this.second = new Pins(0);
+        this.first = new Pins(PINS_ZERO);
+        this.second = new Pins(PINS_ZERO);
     }
 
     public Pins getFirst() {
@@ -35,31 +37,26 @@ public class Score {
     }
 
     public boolean isSpare(Pins pins) {
-        return this.first.get() + pins.get()
-                == Symbol.SPARE.getPins().get();
+        return this.first.get() + pins.get() == Symbol.SPARE.getPins().get();
     }
 
     public boolean isGutter() {
         return this.first.get() == Symbol.GUTTER.getPins().get();
     }
 
-    public boolean isAllGutter() {
+    public boolean isAllGutter(Pins secondPins) {
         return this.first.get() == Symbol.GUTTER.getPins().get()
-                && this.second.get() == Symbol.GUTTER.getPins().get();
-    }
-
-    public boolean isFirst() {
-        return this.second == null;
+                && secondPins.get() == Symbol.GUTTER.getPins().get();
     }
 
     public int getFrameScore() {
-        Pins secondPins = Optional.ofNullable(this.second).orElse(new Pins(0));
+        Pins secondPins = Optional.ofNullable(this.second).orElse(new Pins(PINS_ZERO));
         return this.first.get() + secondPins.get();
     }
 
     @Override
     public String toString() {
         int sum = first.get() + second.get();
-        return sum != 0 ? String.valueOf(sum) : "";
+        return sum != PINS_ZERO ? String.valueOf(sum) : BLANK;
     }
 }

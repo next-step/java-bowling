@@ -17,7 +17,7 @@ public class Frames {
 
     public void next(int frameNo) {
         Frame frame = frames.get(frameNo);
-        Frame next = frame.next(frameNo);
+        Frame next = frame.next();
         frames.add(next);
     }
 

@@ -17,7 +17,6 @@ class FramesTest {
 
     @BeforeEach
     void setUp() {
-        frames = new Frames(users);
     }
 
     @DisplayName("생성")
@@ -29,13 +28,5 @@ class FramesTest {
     @DisplayName("초기화")
     @Test
     void init() {
-        frames.init();
-        assertThat(frames.size()).isEqualTo(10);
-    }
-
-    @Test
-    void name() {
-        frames.bowl(1, new Pins(10));
-//        NormalFrame frame = frames.get(0);
     }
 }

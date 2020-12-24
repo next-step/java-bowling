@@ -93,7 +93,7 @@ public class ResultView {
 
     private static void addStrikeBonus(Frames frames, TotalScore totalScore, int frameIndex, int userIndex) {
         if (frameIndex + INDEX_ONE < frames.size()) {
-            totalScore.add(frames.get(frameIndex + INDEX_ONE).getScore(userIndex));
+            totalScore.add(frames.get(frameIndex + INDEX_ONE).getFrameScore(userIndex));
         }
         // 스트라이크 && 스트라이크 && 스트라이크
         if (frameIndex + INDEX_TWO < frames.size() && frameIndex < 8) {
@@ -105,7 +105,7 @@ public class ResultView {
 
     private static void addQualifiedScore(Frames frames, TotalScore totalScore, int frameIndex, int userIndex, State nextState) {
         if (nextState instanceof Strike) {
-            totalScore.add(frames.get(frameIndex + INDEX_TWO).getScore(userIndex));
+            totalScore.add(frames.get(frameIndex + INDEX_TWO).getFrameScore(userIndex));
         }
     }
 

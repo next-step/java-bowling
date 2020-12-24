@@ -27,14 +27,9 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame next(int frameNo) {
+    public Frame next() {
         return this.frameNo + NEXT_FRAME == LAST_FRAME ?
-                new FinalFrame(this.frameNo) : new NormalFrame(this.frameNo + NEXT_FRAME);
-    }
-
-    @Override
-    public int getFrameNo() {
-        return frameNo;
+                new FinalFrame() : new NormalFrame(this.frameNo + NEXT_FRAME);
     }
 
     @Override
@@ -45,9 +40,12 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public void secondBowl(int userIndex, State state, Pins pins) {
-        if (state instanceof Miss || state instanceof Gutter) {
-            Score firstScore = state.getScore();
+    public void secondBowl(int userIndex, State firstBowlState, Pins pins) {
+        validateUserIndex(userIndex);
+        validate(firstBowlState, pins);
+
+        if (firstBowlState instanceof Miss || firstBowlState instanceof Gutter) {
+            Score firstScore = firstBowlState.getScore();
             Bowl secondBowl = new SecondBowl(firstScore);
             State secondState = secondBowl.stroke(pins);
             states.set(userIndex, secondState);
@@ -55,8 +53,37 @@ public class NormalFrame extends Frame {
     }
 
     @Override
+    public void thirdBowl(int userIndex, State state, Pins thirdPins) {
+    }
+
+    @Override
     public State getState(int userIndex) {
+        validateUserIndex(userIndex);
         return this.states.getState(userIndex);
+    }
+
+    @Override
+    public String getSymbol(int userIndex) {
+        validateUserIndex(userIndex);
+        return this.states.getState(userIndex).getSymbol();
+    }
+
+    @Override
+    public int getFrameScore(int userIndex) {
+        validateUserIndex(userIndex);
+        return this.states.getState(userIndex).getScore().getFrameScore();
+    }
+
+    @Override
+    public int getFirstScore(int userIndex) {
+        validateUserIndex(userIndex);
+        return this.states.getState(userIndex).getScore().getFirst().get();
+    }
+
+    @Override
+    public int getSecondScore(int userIndex) {
+        validateUserIndex(userIndex);
+        return this.states.getState(userIndex).getScore().getSecond().get();
     }
 
     @Override
@@ -65,18 +92,35 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public int getScore(int userIndex) {
-        State state = this.states.getState(userIndex);
-        return state.getScore().getFrameScore();
+    public int getLastStateFrameScore() {
+        return getLastState().getScore().getFrameScore();
     }
 
     @Override
-    public int getFirstScore(int userIndex) {
-        State state = this.states.getState(userIndex);
-        return state.getScore().getFirst().get();
+    public int getLastStateFirstScore() {
+        return getLastState().getScore().getFirst().get();
     }
 
     @Override
-    public void thirdBowl(int userIndex, State state, Pins thirdPins) {
+    public int getLastStateSecondScore() {
+        return getLastState().getScore().getSecond().get();
+    }
+
+    @Override
+    public String getLastStateSymbol() {
+        return getLastState().getSymbol();
+    }
+
+    private void validate(State firstBowlState, Pins secondPins) {
+        int firstPins = firstBowlState.getScore().getFirst().get();
+        if (firstPins + secondPins.get() > Pins.MAX_PINS) {
+            throw new IllegalArgumentException("잘못된 2구 핀입니다.");
+        }
+    }
+
+    private void validateUserIndex(int userIndex) {
+        if (userIndex >= this.states.size()) {
+            throw new IllegalArgumentException(String.format("사용자를 확인해주십시요. 현재 사용자 번호 : %d", userIndex));
+        }
     }
 }

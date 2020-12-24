@@ -1,22 +1,31 @@
 package bowling.domain.state;
 
+import bowling.domain.Symbol;
 import bowling.domain.score.Pins;
 import bowling.domain.score.Score;
-import bowling.domain.Symbol;
 
 public class Gutter implements State {
     public static final String DELIMITER = "|";
 
-    private final Pins firstPins;
+    private final Pins firstPins; // finish 체크용
     private Pins secondPins;
 
+    public Gutter(Pins firstPins) {
+        validate(firstPins);
+        this.firstPins = firstPins;
+    }
+
     public Gutter(Pins firstPins, Pins secondPins) {
+        validate(firstPins);
+        validate(secondPins);
         this.firstPins = firstPins;
         this.secondPins = secondPins;
     }
 
-    public Gutter(Pins firstPins) {
-        this.firstPins = firstPins;
+    private void validate(Pins secondPins) {
+        if (secondPins.get() != Symbol.GUTTER.getPins().get()) {
+            throw new IllegalArgumentException("잘못된 핀입니다.");
+        }
     }
 
     @Override
@@ -31,11 +40,11 @@ public class Gutter implements State {
 
     @Override
     public String getSymbol() {
-        String ret = Symbol.GUTTER.getSymbol();
+        String symbol = Symbol.GUTTER.getSymbol();
         if (this.secondPins != null) {
-            ret = ret + DELIMITER + Symbol.GUTTER.getSymbol();
+            symbol += DELIMITER + Symbol.GUTTER.getSymbol();
         }
-        return ret;
+        return symbol;
     }
 
     @Override

@@ -3,7 +3,6 @@ package bowling.domain;
 import bowling.domain.score.Pins;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,6 +23,20 @@ class ScoreTest {
     @Test
     void constructor() {
         assertThat(score).isNotNull().isInstanceOf(Score.class);
+        assertThat(new Score()).isNotNull().isInstanceOf(Score.class);
+    }
+
+    @Test
+    void first() {
+        assertThat(score.getFirst().get()).isEqualTo(10);
+        assertThat(score.getSecond().get()).isZero();
+    }
+
+    @Test
+    void second() {
+        score.setSecond(new Pins(10));
+        assertThat(score.getFirst().get()).isEqualTo(10);
+        assertThat(score.getSecond().get()).isEqualTo(10);
     }
 
     @Test
@@ -32,48 +45,35 @@ class ScoreTest {
     }
 
     @Test
+    void spare() {
+        score = new Score(new Pins(9));
+        assertThat(score.isSpare(new Pins(1))).isTrue();
+        assertThat(score.isSpare(new Pins(0))).isFalse();
+    }
+
+    @Test
     void gutter() {
         score = new Score(new Pins(0));
         assertThat(score.isGutter()).isTrue();
+    }
 
-        score = new Score(new Pins(1));
+    @Test
+    void allGutter() {
+        score = new Score(new Pins(0));
+        assertThat(score.isAllGutter(new Pins(0))).isTrue();
+    }
+
+    @Test
+    void getFrameScore() {
         score.setSecond(new Pins(0));
-        assertThat(score.isGutter()).isTrue();
+        assertThat(score.getFrameScore()).isEqualTo(10);
     }
 
     @Test
-    void getFirst() {
-        assertThat(score.getFirst().get()).isEqualTo(10);
-    }
+    void tostring() {
+        assertThat(score.toString()).hasToString("10");
 
-    @Test
-    void getSecond() {
-        score = new Score(new Pins(1));
-        score.setSecond(new Pins(1));
-        assertThat(score.getSecond().get()).isEqualTo(1);
-    }
-
-    @DisplayName("첫 구가 스트라이크")
-    @Test
-    void firstStrike() {
-        assertThatThrownBy(() -> score.setSecond(new Pins(1)))
-                .withFailMessage("첫 구가 스트라이트")
-                .isInstanceOf(IllegalStateException.class);
-    }
-
-    @Test
-    void spare() {
-        score = new Score(new Pins(9));
-        score.setSecond(new Pins(1));
-        assertThat(score.isSpare()).isTrue();
-    }
-
-    @Test
-    void first() {
-        score = new Score(new Pins(9));
-        assertThat(score.isFirst()).isTrue();
-
-        score.setSecond(new Pins(1));
-        assertThat(score.isFirst()).isFalse();
+        score = new Score(new Pins(0));
+        assertThat(score.toString()).hasToString("");
     }
 }

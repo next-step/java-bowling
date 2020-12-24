@@ -11,11 +11,11 @@ import bowling.domain.score.Score;
 public class LastState implements State {
     public static final int STRIKE = 10;
     public static final int DOUBLE_STRIKE = 20;
-    public static final int SECOND_GUTTER = 0;
-    public static final int SECOND_SPARE = 20;
+    public static final int GUTTER = 0;
+    public static final String DELIMITER = "|";
 
-    private State firstState;
-    private State secondState;
+    private final State firstState;
+    private final State secondState;
     private String symbol;
     private boolean isThird = false;
 
@@ -28,35 +28,57 @@ public class LastState implements State {
         int firstScore = firstState.getScore().getFrameScore();
         int secondScore = secondState.getScore().getFrameScore();
 
-        String firstSymbol = firstState.getSymbol();
-        String secondSymbol = String.valueOf(secondScore);
-        if (secondScore == DOUBLE_STRIKE) {
-            secondSymbol = Symbol.STRIKE.getSymbol();
+        // XX
+        if (firstScore + secondScore == DOUBLE_STRIKE) {
+            this.symbol = Symbol.STRIKE.getSymbol() + Symbol.STRIKE.getSymbol();
+            return;
         }
-        if (secondScore == SECOND_GUTTER) {
-            secondSymbol = Symbol.GUTTER.getSymbol();
+        // X|*
+        if (firstScore == STRIKE && secondScore < STRIKE) {
+            this.symbol = Symbol.STRIKE.getSymbol() +  DELIMITER + secondScore;
+            return;
         }
-        if (firstScore + secondScore == SECOND_SPARE) {
-            secondSymbol = Symbol.SPARE.getSymbol();
+        // *|X
+        if (firstScore < STRIKE && secondScore == STRIKE) {
+            this.symbol = firstScore +  DELIMITER + Symbol.STRIKE.getSymbol();
+            return;
         }
-
-        this.symbol = firstSymbol + secondSymbol;
+        // *|-
+        if (firstScore > GUTTER && secondScore == GUTTER) {
+            this.symbol = firstScore +  DELIMITER + Symbol.GUTTER.getSymbol();
+            return;
+        }
+        // -|*
+        if (firstScore == GUTTER && secondScore > GUTTER) {
+            this.symbol = Symbol.GUTTER.getSymbol() +  DELIMITER + secondScore;
+            return;
+        }
+        // *|*
+        this.symbol = secondScore + DELIMITER + secondScore;
     }
 
     public void setThirdSymbol() {
         this.isThird = true;
-        int secondScore = secondState.getScore().getFrameScore();
+        int secondScore = this.secondState.getScore().getFrameScore();
 
-        String firstSymbol = firstState.getSymbol();
         String secondSymbol = String.valueOf(secondScore);
         if (secondScore == STRIKE) {
-            secondSymbol = Symbol.STRIKE.getSymbol();
+            this.symbol = getFormattedSymbol() + Symbol.STRIKE.getSymbol();
+            return;
         }
-        if (secondScore == SECOND_GUTTER) {
-            secondSymbol = Symbol.GUTTER.getSymbol();
+        if (secondScore == GUTTER) {
+            this.symbol = getFormattedSymbol() + Symbol.GUTTER.getSymbol();
+            return;
         }
 
-        this.symbol = firstSymbol + secondSymbol;
+        this.symbol = this.firstState.getSymbol() + DELIMITER + secondSymbol;
+    }
+
+    private String getFormattedSymbol() {
+        if (this.firstState.getSymbol().endsWith("X")) {
+            return this.firstState.getSymbol();
+        }
+        return this.firstState.getSymbol() + DELIMITER;
     }
 
     @Override

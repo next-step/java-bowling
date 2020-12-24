@@ -3,6 +3,9 @@ package bowling.domain.state;
 import bowling.domain.score.Score;
 
 public class None implements State {
+
+    public static final String BLANK = "";
+
     @Override
     public Score getScore() {
         return new Score();
@@ -15,7 +18,7 @@ public class None implements State {
 
     @Override
     public String getSymbol() {
-        return "";
+        return BLANK;
     }
 
     @Override

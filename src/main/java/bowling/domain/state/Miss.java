@@ -6,6 +6,7 @@ import bowling.domain.Symbol;
 
 public class Miss implements State {
     public static final String DELIMITER = "|";
+    public static final int PINS_ZERO = 0;
 
     private final Pins firstPins;
     private Pins secondPins;
@@ -33,11 +34,24 @@ public class Miss implements State {
 
     @Override
     public String getSymbol() {
-        String ret = String.valueOf(this.firstPins.get());
-        if (this.secondPins != null) {
-            ret = ret + DELIMITER + (this.secondPins.get() == 0 ? Symbol.GUTTER.getSymbol() : this.secondPins.get());
+        String symbol = String.valueOf(this.firstPins.get());
+
+        if (isFirstGutter()) {
+            symbol = Symbol.GUTTER.getSymbol();
         }
-        return ret;
+        if (this.secondPins != null) {
+            symbol = symbol + DELIMITER
+                    + (isSecondGutter() ? Symbol.GUTTER.getSymbol() : this.secondPins.get());
+        }
+        return symbol;
+    }
+
+    private boolean isSecondGutter() {
+        return this.secondPins.get() == PINS_ZERO;
+    }
+
+    private boolean isFirstGutter() {
+        return this.firstPins.get() == PINS_ZERO;
     }
 
     @Override

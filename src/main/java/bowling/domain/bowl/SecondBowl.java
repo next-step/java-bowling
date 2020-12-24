@@ -19,7 +19,7 @@ public class SecondBowl implements Bowl {
         if (score.isSpare(pins)) {
             return new Spare(this.score.getFirst(), pins);
         }
-        if (score.isAllGutter()) {
+        if (score.isAllGutter(pins)) {
             return new Gutter(pins, pins);
         }
         return new Miss(this.score.getFirst(), pins);

@@ -67,11 +67,11 @@ public class Application {
         State state = frame.getLastState();
 
         if (frame instanceof FinalFrame) {
-            thirdAtlastStroke(frames, users, userIndex, frame, state);
+            thirdAtLastStroke(frames, users, userIndex, frame, state);
         }
     }
 
-    private static void thirdAtlastStroke(Frames frames, Users users, int userIndex, Frame frame, State state) {
+    private static void thirdAtLastStroke(Frames frames, Users users, int userIndex, Frame frame, State state) {
         if (state.getSymbol().contains(STRIKE_SYMBOL) || state.getSymbol().contains(SPARE_SYMBOL)) {
             Pins thirdPins = InputView.getPins(users.getUsers().get(userIndex).getName());
             frame.thirdBowl(userIndex, state, thirdPins);
