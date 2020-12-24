@@ -24,7 +24,7 @@ public class AnswerTest {
     void deleteHistory(){
         Answer answer = new Answer(1L, UserTest.SEHAN, QuestionTest.Q1, "content");
         assertThat(answer.delete(UserTest.SEHAN)).isEqualTo(
-                new DeleteHistory(ContentType.ANSWER, 1L, UserTest.SEHAN, LocalDateTime.now())
+                DeleteHistory.ofAnswer(1L, UserTest.SEHAN)
         );
     }
 

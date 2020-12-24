@@ -98,7 +98,7 @@ public class Question extends AbstractEntity {
         deleted = true;
 
         DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+        deleteHistories.add(DeleteHistory.ofQuestion(getId(), getWriter()));
         answers.stream()
                 .forEach( answer -> deleteHistories.add(answer.delete(writer)));
         return deleteHistories;
