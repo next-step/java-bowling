@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.dto.BowlingGameDTO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,5 +43,9 @@ public class BowlingGame {
 
     private Frame getLatestFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    public BowlingGameDTO createBowlingGameDTO() {
+        return new BowlingGameDTO(frames);
     }
 }

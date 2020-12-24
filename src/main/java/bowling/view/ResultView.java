@@ -3,38 +3,34 @@ package bowling.view;
 import bowling.dto.BowlingGameDTO;
 import bowling.dto.UserDTO;
 
+import java.util.List;
+
 public class ResultView {
 
     private static final int NUM_SCORE_CELL = 10;
 
-    private static final String PARTITION = "|";
-    private static final String MEDIUM_MARGIN = "   ";
-    private static final String NAME_LABEL = "  NAME  ";
-
     private ResultView() {
     }
 
-    public static void printCurrentRound(BowlingGameDTO bowlingGameDTO) {
-        System.out.print((bowlingGameDTO.getCurrentWorkingFrame()) + "프레임 입니다. : ");
-    }
-
     public static void printRoundDescription() {
-        System.out.print(PARTITION + NAME_LABEL + PARTITION);
+        System.out.print("|  NAME  |");
 
         for (int i = 0; i < NUM_SCORE_CELL - 1; i++) {
-            System.out.print(MEDIUM_MARGIN + (i + 1) + MEDIUM_MARGIN + PARTITION);
+            System.out.print("   " + (i + 1) + "   |");
         }
 
-        System.out.println("     " + "10" + "    " + PARTITION);
+        System.out.println("     10    |");
+
     }
 
-    public static void printGameStatus(UserDTO userDTO, BowlingGameDTO bowlingGameDTO) {
-        System.out.print(PARTITION + "   " + userDTO.getName() + "  |");
-        for (String normalFrameOutputForm : bowlingGameDTO.getNormalFrames()) {
-            System.out.print(normalFrameOutputForm + "|");
-        }
+    public static void printContent(UserDTO userDTO, BowlingGameDTO bowlingGameDTO) {
+        System.out.print("|   " + userDTO.getName() + "  |");
 
-        System.out.print(bowlingGameDTO.getLastFrame());
+        List<String> contents = bowlingGameDTO.getContents();
+
+        for (String content : contents) {
+            System.out.print(content + "|");
+        }
 
         System.out.println();
     }

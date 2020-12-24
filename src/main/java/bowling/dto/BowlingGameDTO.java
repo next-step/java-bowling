@@ -7,94 +7,110 @@ import java.util.List;
 
 public class BowlingGameDTO {
 
-    private final NormalFrames normalFrames;
-    private final LastFrame lastFrame;
+    private static final int NUM_FRAMES_PER_GAME = 10;
+    private static final int NUM_NORMAL_FRAMES_PER_GAME = NUM_FRAMES_PER_GAME - 1;
+    private static final String NO_CONTENT_IN_NORMAL_FRAME = "       ";
+    private static final String NO_CONTENT_IN_LAST_FRAME = "           ";
 
-    public BowlingGameDTO(NormalFrames normalFrames, LastFrame lastFrame) {
-        this.normalFrames = normalFrames;
-        this.lastFrame = lastFrame;
+    private final List<Frame> frames;
+
+    public BowlingGameDTO(List<Frame> frames) {
+        this.frames = frames;
     }
 
-    public int getCurrentWorkingFrame() {
-        if (normalFrames.size() == 0) {
-            return 1;
+    public List<String> getContents() {
+        List<String> contents = new ArrayList<>();
+
+        for (int i = 0; i < frames.size(); i++) {
+            extractFromFrame(i, frames.get(i), contents);
         }
 
-        int latestIndex = normalFrames.getFrames().size() - 1;
-        if (normalFrames.getFrames().get(latestIndex).isEnd()) {
-            return normalFrames.getFrames().size() + 1;
+        for (int i = 0; i < NUM_NORMAL_FRAMES_PER_GAME - frames.size(); i++) {
+            contents.add(NO_CONTENT_IN_NORMAL_FRAME);
         }
 
-        return normalFrames.getFrames().size();
+        if (frames.size() != NUM_FRAMES_PER_GAME) {
+            contents.add(NO_CONTENT_IN_LAST_FRAME);
+        }
+
+        return contents;
     }
 
-    public List<String> getNormalFrames() {
-        List<String> outPutFrames = new ArrayList<>();
-
-        for (NormalFrame normalFrame : normalFrames.getFrames()) {
-            outPutFrames.add(extractOutputForm(normalFrame));
+    private void extractFromFrame(int index, Frame frame, List<String> contents) {
+        if (index == NUM_FRAMES_PER_GAME - 1) {
+            contents.addAll(extractLastFrame((LastFrame) frame));
+            return;
         }
 
-        for (int i = 0; i < 9 - normalFrames.getFrames().size(); i++) {
-            outPutFrames.add("       ");
-        }
-
-        return outPutFrames;
+        contents.add(extractNormalFrame((NormalFrame) frame));
     }
 
-    private String extractOutputForm(NormalFrame normalFrame) {
-        List<DownedPin> tries = normalFrame.getTries();
+    private String extractNormalFrame(NormalFrame frame) {
+        List<DownedPin> pins = frame.getTries();
 
-        if (normalFrame.getFrameStatus() == FrameStatus.STRIKE) {
+        if (frame.getFrameStatus() == FrameStatus.STRIKE) {
             return "   X   ";
         }
 
-        if (normalFrame.getFrameStatus() == FrameStatus.SPARE) {
-            return " " + exchangeGutterMark(tries.get(0)) + " | / ";
+        if (frame.getFrameStatus() == FrameStatus.SPARE) {
+            return " " + pins.get(0).getNumDownedPin() + " | / ";
         }
 
-        if (normalFrame.getTries().size() == 1) {
-            return " " + exchangeGutterMark(tries.get(0)) + " |   ";
-        }
-
-        return " " + exchangeGutterMark(tries.get(0)) + " | "
-                + exchangeGutterMark(tries.get(1)) + " ";
+        return " " + convertNoContent(0, pins) + " | " + convertNoContent(1, pins) + " ";
     }
 
-    private String exchangeGutterMark(DownedPin downedPin) {
-        if (downedPin.isGutter()) {
-            return "-";
-        }
-        return Integer.toString(downedPin.getNumDownedPin());
-    }
-
-    public String getLastFrame() {
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 0; i < 3; i++) {
-            builder.append(" ").append(exchangeTryToPrint(i, lastFrame)).append(" |");
-        }
-
-        return builder.toString();
-    }
-
-    private String exchangeTryToPrint(int index, LastFrame lastFrame) {
-        if (index >= lastFrame.getTries().size()) {
+    private String convertNoContent(int index, List<DownedPin> pins) {
+        if (index >= pins.size()) {
             return " ";
         }
+        return Integer.toString(pins.get(index).getNumDownedPin());
+    }
 
-        if (lastFrame.isStrike(index)) {
-            return "X";
+    private List<String> extractLastFrame(LastFrame lastFrame) {
+        List<NormalFrame> frames = lastFrame.getFrames();
+        List<String> contents = new ArrayList<>();
+
+        for (NormalFrame frame : frames) {
+            contents.add(changeFrameInLastFrame(frame));
         }
 
-        if (lastFrame.isSpare(index)) {
-            return "/";
+        for (int i = 0; i < 3 - getCountsOfPitchesInLastFrame(lastFrame); i++) {
+            contents.add("   ");
         }
 
-        if (lastFrame.isGutter(index)) {
+        return contents;
+    }
+
+    private int getCountsOfPitchesInLastFrame(LastFrame lastFrame) {
+        return lastFrame.getFrames().stream()
+                .map(NormalFrame::getNumThrown)
+                .reduce(0, Integer::sum);
+    }
+
+    private String changeFrameInLastFrame(NormalFrame frame) {
+        List<DownedPin> downedPins = frame.getTries();
+
+        if (frame.getFrameStatus() == FrameStatus.STRIKE) {
+            return " X ";
+        }
+
+        if (frame.getFrameStatus() == FrameStatus.SPARE) {
+            return " " + chargeGutterMark(downedPins.get(0).getNumDownedPin()) + " | / ";
+        }
+
+        String result = "";
+        result = result.concat(" " + chargeGutterMark(downedPins.get(0).getNumDownedPin()) + " ");
+        for (int i = 1; i < downedPins.size(); i++) {
+            result = result.concat("| " + chargeGutterMark(downedPins.get(i).getNumDownedPin()) + " ");
+        }
+
+        return result;
+    }
+
+    private String chargeGutterMark(int number) {
+        if (number == 0) {
             return "-";
         }
-
-        return Integer.toString(lastFrame.getTries().get(index).getNumDownedPin());
+        return Integer.toString(number);
     }
 }
