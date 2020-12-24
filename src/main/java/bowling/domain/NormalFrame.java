@@ -30,12 +30,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int numThrown() {
+    public int getNumThrown() {
         return tries.size();
     }
 
-    @Override
-    public List<DownedPin> exportCurrentStatus() {
+    public List<DownedPin> getTries() {
         return Collections.unmodifiableList(tries);
     }
 
@@ -49,9 +48,5 @@ public class NormalFrame implements Frame {
         }
 
         return FrameStatus.getStatus(tries.get(0), tries.get(1));
-    }
-
-    public List<DownedPin> getTries() {
-        return Collections.unmodifiableList(tries);
     }
 }

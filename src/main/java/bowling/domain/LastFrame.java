@@ -1,10 +1,8 @@
 package bowling.domain;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 public class LastFrame implements Frame {
 
@@ -29,22 +27,19 @@ public class LastFrame implements Frame {
             return false;
         }
 
-        return (numThrown() == 2 && frames.get(0).getFrameStatus() == FrameStatus.MISS)
-                || (numThrown() == 3);
-    }
-
-    public int numThrown() {
-        return frames.stream()
-                .map(NormalFrame::numThrown)
-                .reduce(0, Integer::sum);
+        return (getNumThrown() == 2 && frames.get(0).getFrameStatus() == FrameStatus.MISS)
+                || (getNumThrown() == 3);
     }
 
     @Override
-    public List<DownedPin> exportCurrentStatus() {
+    public int getNumThrown() {
         return frames.stream()
-                .map(NormalFrame::exportCurrentStatus)
-                .flatMap(Collection::stream)
-                .collect(toList());
+                .map(NormalFrame::getNumThrown)
+                .reduce(0, Integer::sum);
+    }
+
+    public List<NormalFrame> getFrames() {
+        return Collections.unmodifiableList(this.frames);
     }
 
     private NormalFrame getLatestFrame() {
