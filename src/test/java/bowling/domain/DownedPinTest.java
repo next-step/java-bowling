@@ -27,7 +27,6 @@ public class DownedPinTest {
     private static Stream<Arguments> makeSpareConditions() {
         return Stream.of(
                 Arguments.of(DownedPin.fromNumber(3), DownedPin.fromNumber(7), true),
-                Arguments.of(DownedPin.fromNumber(10), DownedPin.fromNumber(0), false),
                 Arguments.of(DownedPin.fromNumber(5), null, false)
         );
     }

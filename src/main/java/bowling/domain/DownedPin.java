@@ -43,7 +43,7 @@ public class DownedPin {
             return false;
         }
 
-        return !isStrike() && numDownedPin + continuousTry.numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
+        return numDownedPin + continuousTry.numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
     }
 
     public boolean isGutter() {
