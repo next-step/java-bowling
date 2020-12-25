@@ -5,19 +5,19 @@ import bowling.bowlingexception.InvalidProgressException;
 import java.util.Arrays;
 import java.util.List;
 
-public enum FrameProgress {
+public enum NormalFrameProgress {
     ON_FIRST_PITCH(0),
     ON_SECOND_PITCH(1),
     END(2);
 
     private final int stage;
 
-    FrameProgress(int stage) {
+    NormalFrameProgress(int stage) {
         this.stage = stage;
     }
 
-    public static FrameProgress getStage(List<DownedPin> downedPins) {
-        return Arrays.stream(FrameProgress.values())
+    public static NormalFrameProgress getProgress(List<DownedPin> downedPins) {
+        return Arrays.stream(NormalFrameProgress.values())
                 .filter(progress -> progress.stage == downedPins.size())
                 .findAny()
                 .orElseThrow(InvalidProgressException::new);

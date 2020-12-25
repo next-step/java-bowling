@@ -10,15 +10,15 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class FrameProgressTest {
+public class NormalFrameProgressTest {
 
     @Test
     @DisplayName("프레임에서 첫 피치를 진행하지 않았을 때의 조건")
     void testNotYetStarted() {
         List<DownedPin> empty = new ArrayList<>();
 
-        assertThat(FrameProgress.getStage(empty))
-                .isEqualTo(FrameProgress.ON_FIRST_PITCH);
+        assertThat(NormalFrameProgress.getProgress(empty))
+                .isEqualTo(NormalFrameProgress.ON_FIRST_PITCH);
     }
 
     @Test
@@ -27,8 +27,8 @@ public class FrameProgressTest {
         List<DownedPin> one = new ArrayList<>();
         one.add(DownedPin.fromNumber(4));
 
-        assertThat(FrameProgress.getStage(one))
-                .isEqualTo(FrameProgress.ON_SECOND_PITCH);
+        assertThat(NormalFrameProgress.getProgress(one))
+                .isEqualTo(NormalFrameProgress.ON_SECOND_PITCH);
     }
 
     @Test
@@ -41,8 +41,8 @@ public class FrameProgressTest {
         two.add(first);
         two.add(second);
 
-        assertThat(FrameProgress.getStage(two))
-                .isEqualTo(FrameProgress.END);
+        assertThat(NormalFrameProgress.getProgress(two))
+                .isEqualTo(NormalFrameProgress.END);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class FrameProgressTest {
 
         downedPins.add(third);
 
-        assertThatThrownBy(() -> FrameProgress.getStage(downedPins))
+        assertThatThrownBy(() -> NormalFrameProgress.getProgress(downedPins))
                 .isInstanceOf(InvalidProgressException.class);
     }
 }

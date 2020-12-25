@@ -14,7 +14,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public void record(DownedPin currentTry) {
-        if (getCurrentProgress() == FrameProgress.ON_FIRST_PITCH) {
+        if (getCurrentProgress() == NormalFrameProgress.ON_FIRST_PITCH) {
             tries.add(currentTry);
             return;
         }
@@ -24,11 +24,11 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return getFrameStatus() == FrameStatus.STRIKE || getCurrentProgress() == FrameProgress.END;
+        return getFrameStatus() == FrameStatus.STRIKE || getCurrentProgress() == NormalFrameProgress.END;
     }
 
-    private FrameProgress getCurrentProgress() {
-        return FrameProgress.getStage(Collections.unmodifiableList(tries));
+    private NormalFrameProgress getCurrentProgress() {
+        return NormalFrameProgress.getProgress(Collections.unmodifiableList(tries));
     }
 
     @Override
