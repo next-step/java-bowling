@@ -10,7 +10,7 @@ public class BowlingGame {
     private final static int TOTAL_FRAME_SIZE = 10;
     private final static int NUM_NORMAL_FRAMES = TOTAL_FRAME_SIZE - 1;
 
-    List<Frame> frames;
+    private final List<Frame> frames;
 
     public BowlingGame() {
         this.frames = new ArrayList<>();
