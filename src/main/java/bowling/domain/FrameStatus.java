@@ -8,11 +8,11 @@ public enum FrameStatus {
     MISS;
 
     public static FrameStatus getStatus(List<DownedPin> downedPins) {
-        if (FrameProgress.getStage(downedPins) == FrameProgress.START) {
+        if (FrameProgress.getStage(downedPins) == FrameProgress.ON_FIRST_PITCH) {
             return MISS;
         }
 
-        if (FrameProgress.getStage(downedPins) == FrameProgress.IN_PROGRESS
+        if (FrameProgress.getStage(downedPins) == FrameProgress.ON_SECOND_PITCH
                 && downedPins.get(0).isStrike()) {
             return STRIKE;
         }

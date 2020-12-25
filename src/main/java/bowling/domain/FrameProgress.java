@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum FrameProgress {
-    START(0),
-    IN_PROGRESS(1),
+    ON_FIRST_PITCH(0),
+    ON_SECOND_PITCH(1),
     END(2);
 
     private final int stage;

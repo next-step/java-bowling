@@ -18,7 +18,7 @@ public class FrameProgressTest {
         List<DownedPin> empty = new ArrayList<>();
 
         assertThat(FrameProgress.getStage(empty))
-                .isEqualTo(FrameProgress.START);
+                .isEqualTo(FrameProgress.ON_FIRST_PITCH);
     }
 
     @Test
@@ -28,7 +28,7 @@ public class FrameProgressTest {
         one.add(DownedPin.fromNumber(4));
 
         assertThat(FrameProgress.getStage(one))
-                .isEqualTo(FrameProgress.IN_PROGRESS);
+                .isEqualTo(FrameProgress.ON_SECOND_PITCH);
     }
 
     @Test
