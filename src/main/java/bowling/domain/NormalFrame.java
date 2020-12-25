@@ -6,8 +6,6 @@ import java.util.List;
 
 public class NormalFrame implements Frame {
 
-    private static final int MAXIMUM_TRIES_PER_NORMAL_FRAME = 2;
-
     private final List<DownedPin> tries;
 
     public NormalFrame() {
@@ -16,7 +14,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public void record(DownedPin currentTry) {
-        if (tries.size() == 0) {
+        if (getCurrentProgress() == FrameProgress.ON_FIRST_PITCH) {
             tries.add(currentTry);
             return;
         }
@@ -26,7 +24,11 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return (getFrameStatus() == FrameStatus.STRIKE || tries.size() == MAXIMUM_TRIES_PER_NORMAL_FRAME);
+        return getFrameStatus() == FrameStatus.STRIKE || getCurrentProgress() == FrameProgress.END;
+    }
+
+    private FrameProgress getCurrentProgress() {
+        return FrameProgress.getStage(Collections.unmodifiableList(tries));
     }
 
     @Override
@@ -34,19 +36,11 @@ public class NormalFrame implements Frame {
         return tries.size();
     }
 
-    public List<DownedPin> getTries() {
-        return Collections.unmodifiableList(tries);
+    public FrameStatus getFrameStatus() {
+        return FrameStatus.getStatus(Collections.unmodifiableList(tries));
     }
 
-    public FrameStatus getFrameStatus() {
-        if (tries.size() == 0) {
-            return FrameStatus.getStatus(null, null);
-        }
-
-        if (tries.size() == 1) {
-            return FrameStatus.getStatus(tries.get(0), null);
-        }
-
-        return FrameStatus.getStatus(tries.get(0), tries.get(1));
+    public List<DownedPin> getTries() {
+        return Collections.unmodifiableList(tries);
     }
 }

@@ -1,20 +1,24 @@
 package bowling.domain;
 
+import java.util.List;
+
 public enum FrameStatus {
     STRIKE,
     SPARE,
     MISS;
 
-    public static FrameStatus getStatus(DownedPin previousPitch, DownedPin currentPitch) {
-        if (previousPitch == null) {
+    public static FrameStatus getStatus(List<DownedPin> downedPins) {
+        if (FrameProgress.getStage(downedPins) == FrameProgress.START) {
             return MISS;
         }
 
-        if (previousPitch.isStrike()) {
+        if (FrameProgress.getStage(downedPins) == FrameProgress.IN_PROGRESS
+                && downedPins.get(0).isStrike()) {
             return STRIKE;
         }
 
-        if (previousPitch.isSpare(currentPitch)) {
+        if (FrameProgress.getStage(downedPins) == FrameProgress.END
+                && downedPins.get(0).isSpare(downedPins.get(1))) {
             return SPARE;
         }
 
