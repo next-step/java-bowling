@@ -8,8 +8,6 @@ import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingController {
-    public BowlingController() {
-    }
 
     public void run() {
         User user = new User(InputView.askName());
