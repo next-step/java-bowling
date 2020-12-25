@@ -29,7 +29,7 @@ public class BowlingGameController {
     private static int printResult(int count, Frame frame) {
         int countOfKnockDown = InputUi.inputFrame(count);
 
-        Pitch pitch = Pitch.of(countOfKnockDown);
+        Pitch pitch = Pitch.valueOf(countOfKnockDown);
         frame.add(pitch);
         gameFrames.put(count, frame);
         OutputUi.printInitBowling(player, gameFrames);

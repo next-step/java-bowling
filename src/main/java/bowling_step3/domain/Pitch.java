@@ -4,7 +4,7 @@ import bowling_step3.exception.BowlingMaxCountException;
 
 public class Pitch {
 
-    private static final int BOWLING_MAX_NUMBER = 10;
+    public static final int BOWLING_MAX_NUMBER = 10;
 
     private final int knockDown;
 
@@ -12,7 +12,7 @@ public class Pitch {
         this.knockDown = knockDown;
     }
 
-    public static Pitch of(int nextKnockDown) {
+    public static Pitch valueOf(int nextKnockDown) {
         if (nextKnockDown > BOWLING_MAX_NUMBER) {
             throw new BowlingMaxCountException();
         }
