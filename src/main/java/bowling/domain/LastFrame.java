@@ -21,28 +21,28 @@ public class LastFrame implements Frame {
         getLatestFrame().record(currentTry);
     }
 
+    private NormalFrame getLatestFrame() {
+        return frames.get(frames.size() - 1);
+    }
+
     @Override
     public boolean isEnd() {
-        if (frames.isEmpty()) {
+        if (LastFrameProgress.getProgress(Collections.unmodifiableList(frames))
+                == LastFrameProgress.ON_FIRST_PITCH) {
             return false;
         }
 
-        return (getNumThrown() == 2 && frames.get(0).getFrameStatus() == FrameStatus.MISS)
-                || (getNumThrown() == 3);
+        return (LastFrameProgress.getProgress(frames) == LastFrameProgress.ON_ADDITIONAL_PITCH
+                && frames.get(0).getFrameStatus() == FrameStatus.MISS)
+                || (LastFrameProgress.getProgress(frames) == LastFrameProgress.END);
     }
 
     @Override
     public int getNumThrown() {
-        return frames.stream()
-                .map(NormalFrame::getNumThrown)
-                .reduce(0, Integer::sum);
+        return LastFrameProgress.countsOfTotalPitch(Collections.unmodifiableList(frames));
     }
 
     public List<NormalFrame> getFrames() {
         return Collections.unmodifiableList(this.frames);
-    }
-
-    private NormalFrame getLatestFrame() {
-        return frames.get(frames.size() - 1);
     }
 }
