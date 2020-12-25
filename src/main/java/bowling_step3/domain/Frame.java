@@ -1,23 +1,20 @@
 package bowling_step3.domain;
 
-public interface Frame {
-    default void add(Pitch pitch) {
+import java.util.List;
 
-    }
+public abstract class Frame {
 
-    default int size() {
-        return 0;
-    }
+    public abstract void add(Pitch pitch);
 
-    default int getFirstOfKnockDown() {
-        return 0;
-    }
+    public abstract int size();
 
-    default int getSecondOfKnockDown() {
-        return 0;
-    }
+    public abstract int getFirstOfKnockDown();
 
-    default boolean isFirst() {
-        return false;
-    }
+    public abstract int getSecondOfKnockDown();
+
+    public abstract boolean isFirst();
+
+    public abstract ScoreResult getScoreResult();
+
+    public abstract List<Pitch> getNextFramePitchPoints(int count);
 }
