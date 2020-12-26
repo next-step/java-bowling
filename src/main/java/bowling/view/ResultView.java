@@ -1,8 +1,6 @@
 package bowling.view;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.PitchResults;
-import bowling.domain.Player;
+import bowling.domain.*;
 
 
 import java.util.stream.Collectors;
@@ -55,6 +53,32 @@ public class ResultView {
     public static void printCurrentFrame(BowlingGame bowlingGame, int maxFrameCount) {
         printFramesHeader(maxFrameCount);
         printFramesBody(bowlingGame, maxFrameCount);
+        printFramesScore(bowlingGame, maxFrameCount);
+    }
+
+    private static void printFramesScore(BowlingGame bowlingGame, int maxFrameCount) {
+        int currentFramesCount = bowlingGame.getFrames().getFrames().size();
+
+        System.out.print(DELIMITER + center(SPACE) + DELIMITER);
+
+        for (int i = 0; i <currentFramesCount; i++) {
+            System.out.print(center(parsePitchScore(bowlingGame.getFrames().getFrames().get(i))) + DELIMITER);
+        }
+
+        for (int j = currentFramesCount; j<maxFrameCount; j++) {
+            System.out.print(center(SPACE) + DELIMITER);
+        }
+
+        System.out.println();
+    }
+
+    private static String parsePitchScore(Frame frame) {
+        Score currentScore = frame.getScore();
+        if(frame.isEnd() && currentScore.getLeftBonusCount() == 0){
+            return String.valueOf(frame.getScore().getScore());
+        }
+
+        return SPACE;
     }
 
     private static void printFramesBody(BowlingGame bowlingGame, int maxFrameCount) {

@@ -77,5 +77,40 @@ public class FrameTest {
 
         assertThat(formalFrame.hasBonusPitch()).isEqualTo(expect);
     }
+
+    @DisplayName("투구 결과에 따라 Score 생성 테스트")
+    @ParameterizedTest
+    @CsvSource(value = {"10:2", "2,8:1", "2,7:0"}, delimiter = ':')
+    void createScoreTest(String pitchResultsWithComma, int expectValue){
+
+        NormalFrame normalFrame =  NormalFrame.from(0);
+
+        String[] pitchResults = pitchResultsWithComma.split(",");
+
+        for(String pitchResult: pitchResults){
+            normalFrame.start(Integer.parseInt(pitchResult));
+        }
+
+        Score score = normalFrame.createScore();
+
+        assertThat(score.getLeftBonusCount()).isEqualTo(expectValue);
+    }
+
+    @DisplayName("마지막 프레임에서 Score 생성 시 보너스 점수 획득 기회는 항상 0")
+    @ParameterizedTest
+    @CsvSource(value = {"10:0", "2,8:0", "2,7:0"}, delimiter = ':')
+    void createScoreInLastFrameTest(String pitchResultsWithComma, int expectValue){
+        FinalFrame finalFrame =  FinalFrame.from(0);
+
+        String[] pitchResults = pitchResultsWithComma.split(",");
+
+        for (String pitchResult: pitchResults) {
+            finalFrame.start(Integer.parseInt(pitchResult));
+        }
+
+        finalFrame.setScore(finalFrame.getPitchResults().sumUpCurrentResult());
+
+        assertThat(finalFrame.getScore().getLeftBonusCount()).isEqualTo(expectValue);
+    }
     
 }

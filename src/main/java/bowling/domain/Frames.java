@@ -2,8 +2,10 @@ package bowling.domain;
 
 import java.util.*;
 
+
 public class Frames {
 
+    private static final int MIN_FRAME_COUNT_TO_SCORE = 2;
     private static final int FRAME_START_INDEX = 1;
     public static final int MAX_FRAME_COUNT = 10;
 
@@ -28,6 +30,25 @@ public class Frames {
     public void execute(int knockedDownPins) {
         Frame currentFrame = this.getLast();
         currentFrame.start(knockedDownPins);
+        currentFrame.setScore(knockedDownPins);
+
+        if (frames.size() >= MIN_FRAME_COUNT_TO_SCORE) {
+            renewScore(currentFrame, knockedDownPins);
+        }
+
+    }
+
+    private void renewScore(Frame currentFrame, int knockedDownPins){
+        if (hasUnfinishedScore()) {
+            frames.stream()
+                    .filter(frame -> frame.getScore().getLeftBonusCount() > 0 && !(frame.getIndex() == currentFrame.getIndex()))
+                    .forEach(frame -> frame.renewScore(knockedDownPins));
+        }
+    }
+
+    public boolean hasUnfinishedScore() {
+        return frames.stream()
+                .anyMatch(frame -> frame.getScore().getLeftBonusCount() > 0);
     }
 
     private int getCurrentFrameIndex() {

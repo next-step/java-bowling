@@ -8,6 +8,11 @@ public class FinalFrame extends Frame{
         super(index);
     }
 
+    @Override
+    public void setScore(int score) {
+        this.score = Score.of(pitchResults.sumUpCurrentResult());
+    }
+
     public static FinalFrame from(int index){
         return new FinalFrame(index);
     }
@@ -55,6 +60,14 @@ public class FinalFrame extends Frame{
     @Override
     public Frame makeNextFrame(int currentFrameIndex) {
         throw new RuntimeException("마지막 프레임입니다.");
+    }
+
+    @Override
+    public void renewScore(int knockedDownPins) {
+        int currentScore = this.score.getScore();
+        if (this.score.getLeftBonusCount() > 0) {
+            this.score.renewScore(knockedDownPins + currentScore);
+        }
     }
 
 }

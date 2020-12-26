@@ -8,6 +8,25 @@ public class NormalFrame extends Frame{
         super(index);
     }
 
+    @Override
+    public void setScore(int score) {
+        this.score = createScore();
+    }
+
+    public Score createScore() {
+        int sumUp = pitchResults.sumUpCurrentResult();
+
+        if(pitchResults.isStrike()){
+            return Score.ofStrike(sumUp);
+        }
+
+        if(pitchResults.isSpare()){
+            return Score.ofSpare(sumUp);
+        }
+
+        return Score.of(sumUp);
+    }
+
     public static NormalFrame from(int index){
         return new NormalFrame(index);
     }
@@ -45,6 +64,13 @@ public class NormalFrame extends Frame{
         return NormalFrame.from(currentFrameIndex + 1);
     }
 
+    @Override
+    public void renewScore(int knockedDownPins) {
+        int currentScore = this.score.getScore();
+        if (this.score.getLeftBonusCount() > 0) {
+            this.score.renewScore(knockedDownPins + currentScore);
+        }
+    }
 
 
 }

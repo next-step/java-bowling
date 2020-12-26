@@ -11,11 +11,17 @@ public abstract class Frame {
 
     protected int index;
     protected PitchResults pitchResults;
+    protected Score score;
 
     public Frame(int index){
         this.index = index;
         this.pitchResults = PitchResults.from(new ArrayList<>());
     }
+
+    public Score getScore() {return this.score;}
+
+    public abstract void setScore(int score);
+
 
     public int getIndex() {
         return this.index;
@@ -51,4 +57,6 @@ public abstract class Frame {
     public int hashCode() {
         return Objects.hash(BOWLING_PIN_COUNT, MAX_FRAME_COUNT, index, pitchResults);
     }
+
+    public abstract void renewScore(int knockedDownPins);
 }
