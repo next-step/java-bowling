@@ -3,6 +3,7 @@ package bowling_step3.view;
 import bowling_step3.domain.BowlingGame;
 import bowling_step3.domain.Frame.Frame;
 import bowling_step3.domain.Player;
+import bowling_step3.domain.Scores;
 import org.apache.logging.log4j.util.Strings;
 
 import java.util.List;
@@ -41,10 +42,10 @@ public class OutputUi {
         printEmptySpace(frames.size());
     }
 
-    private static void printScores(List<Integer> scores) {
+    private static void printScores(Scores scores) {
         printName(Strings.EMPTY);
 
-        scores.stream()
+        scores.getScores().stream()
                 .map(score -> String.format("%-4s%s", score, VERTICAL))
                 .forEach(System.out::print);
 
@@ -56,7 +57,7 @@ public class OutputUi {
 
         printName(playerName);
         printKnockDown(gameFrames.getGameFrames().getFrames());
-        printScores(gameFrames.getScore());
+        printScores(gameFrames.addScores());
     }
 
     public static void printInitFrame(Player player, BowlingGame gameFrames) {
