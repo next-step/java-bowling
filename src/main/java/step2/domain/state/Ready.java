@@ -18,4 +18,9 @@ public class Ready extends Running {
     public Score calculateAdditionalScore(Score score) {
         throw new IllegalArgumentException("추가 점수를 구할 수 없습니다.");
     }
+
+    @Override
+    public String toString() {
+        return "";
+    }
 }
