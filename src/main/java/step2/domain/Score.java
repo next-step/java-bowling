@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Score {
 
     private static final int ONE_CHANCE = 1;
-    public static final int NO_CHANCE = 0;
+    private static final int NO_CHANCE = 0;
 
     private int score;
     private int left;
