@@ -4,9 +4,10 @@ import bowling_step3.domain.Frame.GameFrames;
 import bowling_step3.exception.PitchOverBoundException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import static java.util.Collections.unmodifiableList;
 
 public class BowlingGame {
 
@@ -35,14 +36,24 @@ public class BowlingGame {
         return this.gameFrames;
     }
 
-    public List<Integer> getScore() {
-        List<Integer> list = new ArrayList<>();
+    private Scores gameScores() {
+        return gameFrames.getScores();
+    }
+
+    private int sumScore(int sum, int score) {
+        return sum + score;
+    }
+
+    public Scores addScores() {
+        Scores scores = Scores.of();
+
         int sum = 0;
-        for (Integer score : Collections.unmodifiableList(gameFrames.getScores())) {
-            sum += score;
-            list.add(sum);
+        for (Integer score : unmodifiableList(gameScores().getScores())) {
+            sum = sumScore(sum, score);
+            scores.add(sum);
         }
-        return list;
+
+        return scores;
     }
 
     public Player getPlayer() {
