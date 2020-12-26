@@ -1,10 +1,10 @@
 package step2.domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PinsTest {
 
@@ -17,15 +17,47 @@ class PinsTest {
     @Test
     @DisplayName("떨어진 핀이 0개 밑일 경우 예외 처리")
     void exceptZero() {
-        Assertions.assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> Pins.from(-1));
     }
 
     @Test
     @DisplayName("핀이 10개 초과일 경우 예외 처리")
     void exceptTen() {
-        Assertions.assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> Pins.from(11));
+    }
+
+    @Test
+    @DisplayName("스트라이크인지 확인")
+    void isStrike() {
+        Pins pins = Pins.from(10);
+        assertThat(pins.isStrike()).isTrue();
+    }
+
+    @Test
+    @DisplayName("스트라이크가 아님을 확인")
+    void isNotStrike() {
+        Pins pins = Pins.from(9);
+        assertThat(pins.isStrike()).isFalse();
+    }
+
+    @Test
+    @DisplayName("스페어인지 확인")
+    void isSpare() {
+        Pins pins1 = Pins.from(8);
+        Pins pins2 = Pins.from(2);
+
+        assertThat(pins1.isSpare(pins2)).isTrue();
+    }
+
+    @Test
+    @DisplayName("스페어가 아님을 확인")
+    void isNotSpare() {
+        Pins pins1 = Pins.from(8);
+        Pins pins2 = Pins.from(1);
+
+        assertThat(pins1.isSpare(pins2)).isFalse();
     }
 
 }

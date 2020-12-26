@@ -4,6 +4,7 @@ public class Pins {
 
     private static final int MIN_PINS = 0;
     private static final int MAX_PINS = 10;
+    private static final String GUTTER_SYMBOL = "-";
 
     private final int fallingPins;
 
@@ -48,5 +49,13 @@ public class Pins {
 
     public int getFallingPins() {
         return fallingPins;
+    }
+
+    @Override
+    public String toString() {
+        if(fallingPins == MIN_PINS) {
+            return GUTTER_SYMBOL;
+        }
+        return "" + fallingPins;
     }
 }
