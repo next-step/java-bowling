@@ -7,16 +7,11 @@ import bowling_step3.exception.BowlingMaxCountException;
 import static bowling_step3.domain.Pitch.BOWLING_MAX_NUMBER;
 
 public class Miss extends Finished {
-    private final Pitch firstPitch;
-    private final Pitch secondPitch;
 
-    public Miss(int firstPitch, int secondPitch) {
-        this(Pitch.valueOf(firstPitch), Pitch.valueOf(secondPitch));
-    }
+    public static final int MAX_PITCH_COUNT = 2;
 
     public Miss(Pitch firstPitch, Pitch secondPitch) {
-        this.validate(firstPitch, secondPitch);
-
+        validate(firstPitch, secondPitch);
         this.firstPitch = firstPitch;
         this.secondPitch = secondPitch;
     }
@@ -33,12 +28,12 @@ public class Miss extends Finished {
 
     @Override
     public int getPitchCount() {
-        return 2;
+        return MAX_PITCH_COUNT;
     }
 
     @Override
     public Score getScore() {
-        return Score.ofMiss(firstPitch.sum(secondPitch));
+        return Score.ofMiss(getTotalCount());
     }
 
     @Override
@@ -48,8 +43,8 @@ public class Miss extends Finished {
 
     @Override
     public String toString() {
-        return firstPitch.toString()
-                + "|"
-                + (firstPitch.sum(secondPitch) == 0 ? "-" : secondPitch.toString());
+        return firstPitch.toString() +
+                "|" +
+                (firstPitch.sum(secondPitch) == 0 ? "-" : secondPitch.toString());
     }
 }

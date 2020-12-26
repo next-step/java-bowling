@@ -1,22 +1,24 @@
 package bowling_step3.domain.state;
 
-
 import bowling_step3.domain.Pitch;
 
 public class FirstBowl extends Running {
-    private final Pitch firstPins;
+    private final Pitch firstPitch;
 
-    public FirstBowl(int firstPins) {
-        this.firstPins = Pitch.valueOf(firstPins);
+    public FirstBowl(int firstCountOfKnockDown) {
+        this.firstPitch = Pitch.valueOf(firstCountOfKnockDown);
     }
 
+    private boolean isSpare(int countOfKnockDown) {
+        return firstPitch.isSpare(Pitch.valueOf(countOfKnockDown));
+    }
     @Override
-    public State pitch(int fallenPins) {
-        if (firstPins.isSpare(Pitch.valueOf(fallenPins))) {
-            return new Spare(firstPins, Pitch.valueOf(fallenPins));
+    public State pitch(int countOfKnockDown) {
+        if (isSpare(countOfKnockDown)) {
+            return new Spare(firstPitch, Pitch.valueOf(countOfKnockDown));
         }
 
-        return new Miss(firstPins, Pitch.valueOf(fallenPins));
+        return new Miss(firstPitch, Pitch.valueOf(countOfKnockDown));
     }
 
     @Override
@@ -26,11 +28,11 @@ public class FirstBowl extends Running {
 
     @Override
     public int getTotalCount() {
-        return firstPins.getKnockDown();
+        return firstPitch.getKnockDown();
     }
 
     @Override
     public String toString() {
-        return firstPins.toString();
+        return firstPitch.toString();
     }
 }

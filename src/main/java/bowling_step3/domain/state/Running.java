@@ -1,6 +1,5 @@
 package bowling_step3.domain.state;
 
-
 import bowling_step3.domain.Score;
 
 public abstract class Running implements State {

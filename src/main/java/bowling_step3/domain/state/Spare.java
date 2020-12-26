@@ -1,27 +1,21 @@
 package bowling_step3.domain.state;
 
-
 import bowling_step3.domain.Pitch;
 import bowling_step3.domain.Score;
 
 import static bowling_step3.domain.Pitch.BOWLING_MAX_NUMBER;
+import static bowling_step3.domain.state.Miss.MAX_PITCH_COUNT;
 
 public class Spare extends Finished {
-    private final Pitch firstPins;
-    private final Pitch secondPins;
 
-    public Spare(int firstPins, int secondPins) {
-        this(Pitch.valueOf(firstPins), Pitch.valueOf(secondPins));
-    }
-
-    public Spare(Pitch firstPins, Pitch secondPins) {
-        this.firstPins = firstPins;
-        this.secondPins = secondPins;
+    public Spare(Pitch firstPitch, Pitch secondPitch) {
+        this.firstPitch = firstPitch;
+        this.secondPitch = secondPitch;
     }
 
     @Override
     public int getPitchCount() {
-        return 2;
+        return MAX_PITCH_COUNT;
     }
 
     @Override
@@ -36,6 +30,6 @@ public class Spare extends Finished {
 
     @Override
     public String toString() {
-        return firstPins.toString() + "|/";
+        return firstPitch.toString() + "|/";
     }
 }

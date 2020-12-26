@@ -1,18 +1,20 @@
 package bowling_step3.domain.state;
 
-
 import bowling_step3.domain.Score;
 
 public class Strike extends Finished {
+    private static final String STRIKE = "X";
+    private static final int MIN_PITCH_COUNT = 1;
+    private static final int BOWLING_MAX_TOTAL = 10;
 
     @Override
     public String toString() {
-        return "X";
+        return STRIKE;
     }
 
     @Override
     public int getPitchCount() {
-        return 1;
+        return MIN_PITCH_COUNT;
     }
 
     @Override
@@ -22,6 +24,6 @@ public class Strike extends Finished {
 
     @Override
     public int getTotalCount() {
-        return 10;
+        return BOWLING_MAX_TOTAL;
     }
 }
