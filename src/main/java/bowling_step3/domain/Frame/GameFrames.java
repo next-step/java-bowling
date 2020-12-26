@@ -1,30 +1,26 @@
 package bowling_step3.domain.Frame;
 
+import bowling_step3.domain.Scores;
 import bowling_step3.exception.PitchOverBoundException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class GameFrames {
     public static final int NORMAL_MAX_FRAME = 9;
 
     public static final int MAX_FRAME_COUNT = 10;
 
-    private final List<Frame> frames;
+    private final List<Frame> frames = new ArrayList<>();
 
     public GameFrames() {
-        this.frames = new ArrayList<>();
+
     }
 
     private Frame getLastFrame() {
-        if (frames.isEmpty()) {
-            throw new PitchOverBoundException();
-        }
-
-        return frames.get(frames.size() - 1);
+        return frames.get(size() - 1);
     }
 
     public void pitch(int count) {
@@ -39,9 +35,17 @@ public class GameFrames {
 
     private void calculateScore(int count) {
         frames.forEach(frame -> {
-            int index = frames.size() - 1;
+            int index = size() - 1;
             frame.calculateScore(index, count);
         });
+    }
+
+    private boolean isNormalMaxFrame() {
+        return size() == NORMAL_MAX_FRAME;
+    }
+
+    private void addFrames() {
+        frames.add(isNormalMaxFrame() ? new FinalFrame() : getLastFrame().next());
     }
 
     private void makeFrame() {
@@ -54,12 +58,12 @@ public class GameFrames {
             return;
         }
 
-        frames.add(frames.size() == NORMAL_MAX_FRAME ? new FinalFrame() : getLastFrame().next());
+        addFrames();
     }
 
 
     private boolean isFinalFrame() {
-        return frames.size() == MAX_FRAME_COUNT;
+        return size() == MAX_FRAME_COUNT;
     }
 
     public boolean isFinish() {
@@ -72,17 +76,25 @@ public class GameFrames {
 
     public int getIndex() {
         if (frames.isEmpty() || getLastFrame().isFinish()) {
-            return frames.size() + 1;
+            return size() + 1;
         }
 
-        return frames.size();
+        return size();
     }
 
-    public List<Integer> getScores() {
-        return frames.stream()
-                .filter(Frame::hasScore)
-                .map(Frame::getScore)
-                .collect(Collectors.toList());
+    private Scores addScore(Scores scores, Frame frame) {
+        if (frame.hasScore()) {
+            scores.add(frame.getScore());
+        }
+        return scores;
+    }
+
+    public Scores getScores() {
+        Scores scores = Scores.of();
+        for (Frame frame : frames) {
+            scores = addScore(scores, frame);
+        }
+        return scores;
     }
 
     public int size() {
