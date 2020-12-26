@@ -23,7 +23,7 @@ public class ScoreTest {
         Score score = new Score(10, 1);
         score.add(4);
 
-        assertThat(score).isEqualTo(new Score(14, 0));
+        assertThat(score).isEqualTo(new Score(14, 1));
     }
 
     @Test
@@ -33,6 +33,6 @@ public class ScoreTest {
         score.add(10);
         score.add(5);
 
-        assertThat(score).isEqualTo(new Score(25, 0));
+        assertThat(score).isEqualTo(new Score(25, 2));
     }
 }
