@@ -15,11 +15,14 @@ public class Score {
 
     private int left;
 
-    public Score(int score, int left) {
+    private Score(int score, int left) {
         this.score = score;
         this.left = left;
     }
 
+    public static Score of(int score, int left) {
+        return new Score(score, left);
+    }
     public static Score ofMiss(int score) {
         return new Score(score, DEFAULT);
     }
