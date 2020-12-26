@@ -1,132 +1,65 @@
 package bowling_step3.view;
 
-import bowling_step3.domain.FinalFrame;
-import bowling_step3.domain.Frame;
-import bowling_step3.domain.GameFrames;
+import bowling_step3.domain.BowlingGame;
+import bowling_step3.domain.Frame.Frame;
 import bowling_step3.domain.Player;
+import org.apache.logging.log4j.util.Strings;
 
+import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
+
 
 public class OutputUi {
-    private static final String NAME = " NAME ";
-    private static final String FIRST = "  01  ";
-    private static final String SECOND = "  02  ";
-    private static final String THIRD = "  03  ";
-    private static final String FOURTH = "  04  ";
-    private static final String FIFTH = "  05  ";
-    private static final String SIXTH = "  06  ";
-    private static final String SEVENTH = "  07  ";
-    private static final String EIGHTH = "  08  ";
-    private static final String NINTH = "  09  ";
-    private static final String TENTH = "  10  ";
-    private static final String EMPTY = "      ";
 
-    private static final int MIN_NUMBER = 0;
-    public static final int MAX_NUMBER = 10;
-    private static final String STRIKE = "X";
-    private static final String SPARE = "/";
-    private static final String GUTTER = "-";
-    private static final String LINE = " | ";
+    public static final int MAX_FRAME_COUNT = 10;
+    public static final String VERTICAL = " | ";
+    public static final String SCORE_HEADER = " | NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+    private static final Object EMPTY = "    ";
 
     private OutputUi() {
-
     }
 
-    private static void printFrameFirstLine() {
-        System.out.print(LINE + NAME + LINE);
-        Stream.of(FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH, EIGHTH, NINTH, TENTH)
-                .map(s -> s + LINE)
+    public static void printInitHeader() {
+        System.out.println(SCORE_HEADER);
+    }
+
+    private static void printName(String playerName) {
+        System.out.print(String.format("%s%4s%s", VERTICAL, playerName, VERTICAL));
+    }
+
+    private static void printEmptySpace(int size) {
+        IntStream.range(size, MAX_FRAME_COUNT)
+                .mapToObj(i -> String.format("%s%s", EMPTY, VERTICAL))
                 .forEach(System.out::print);
         System.out.println();
     }
 
-    public static void printInitFrame(Player player) {
-        printFrameFirstLine();
-        System.out.print(LINE + String.format("  %s ", player.getName()) + LINE);
-        IntStream.range(0, 10)
-                .mapToObj(i -> EMPTY + LINE)
+    private static void printKnockDown(List<Frame> frames) {
+        frames.stream()
+                .map(frame -> String.format("%-4s%s", frame.getKnockDownExpression(), VERTICAL))
                 .forEach(System.out::print);
-        System.out.println();
+        printEmptySpace(frames.size());
     }
 
-    private static String setKnockDownExpress(int count) {
-        if (count == MIN_NUMBER) {
-            return String.format(" %s ", GUTTER);
-        }
+    private static void printScores(List<Integer> scores) {
+        printName(Strings.EMPTY);
 
-        if (count == MAX_NUMBER) {
-            return String.format("  %s   ", STRIKE);
-        }
-        return String.format(" %s ", count);
+        scores.stream()
+                .map(score -> String.format("%-4s%s", score, VERTICAL))
+                .forEach(System.out::print);
+
+        printEmptySpace(scores.size());
     }
 
-    private static String setFinalKnockDownExpress(int first, int second) {
-        if (first + second == MAX_NUMBER) {
-            return String.format("%s%s%s ", first, LINE, SPARE);
-        }
+    public static void printInitBowling(String playerName, BowlingGame gameFrames) {
+        printInitHeader();
 
-        if (first + second == MIN_NUMBER) {
-            return String.format("%s%s%s ", GUTTER, LINE, GUTTER);
-        }
-
-        if (second == MIN_NUMBER) {
-            return String.format(" %s%s%s ", first, LINE, GUTTER);
-        }
-
-        if (first == MIN_NUMBER) {
-            return String.format(" %s%s%s ", GUTTER, LINE, second);
-        }
-
-        if (first == MAX_NUMBER && second == MAX_NUMBER) {
-            return String.format(" %s%s%s ", STRIKE, LINE, STRIKE);
-        }
-
-        return String.format(" %s%s%d ", first, LINE, second);
+        printName(playerName);
+        printKnockDown(gameFrames.getGameFrames().getFrames());
+        printScores(gameFrames.getScore());
     }
 
-    private static void printOneFrame(StringBuilder sb, Frame frame) {
-        if (frame.size() == 1) {
-            sb.append(setKnockDownExpress(frame.getFirstOfKnockDown()));
-        }
-    }
-
-    private static void printSecondFrame(StringBuilder sb, Frame frame) {
-        if (frame.size() == 2) {
-            sb.append(setFinalKnockDownExpress(frame.getFirstOfKnockDown()
-                    , frame.getSecondOfKnockDown()));
-        }
-    }
-
-    private static void printFinalFrame(StringBuilder sb, Frame frame) {
-        if (frame.size() == 3) {
-            FinalFrame finalFrame = (FinalFrame) frame;
-
-            String drawFrame =
-                    setFinalKnockDownExpress(frame.getFirstOfKnockDown(), frame.getSecondOfKnockDown());
-            drawFrame += setKnockDownExpress(finalFrame.getBonusOfKnockDown());
-            sb.append(drawFrame);
-        }
-    }
-
-    public static void printInitBowling(Player player, GameFrames gameFrames) {
-        StringBuilder sb = new StringBuilder();
-        printFrameFirstLine();
-        sb.append(LINE + String.format("  %s ", player.getName()) + LINE);
-        IntStream.rangeClosed(1, gameFrames.size())
-                .mapToObj(i -> gameFrames.getFrames().get(i))
-                .forEach(frame -> {
-                    printOneFrame(sb, frame);
-                    printSecondFrame(sb, frame);
-                    printFinalFrame(sb, frame);
-                    sb.append(LINE);
-                });
-
-        IntStream.range(0, 10 - gameFrames.size())
-                .mapToObj(i -> EMPTY + LINE)
-                .forEach(sb::append);
-
-        System.out.print(sb);
-        System.out.println();
+    public static void printInitFrame(Player player, BowlingGame gameFrames) {
+        printInitBowling(player.getName(), gameFrames);
     }
 }
