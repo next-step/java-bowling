@@ -24,13 +24,13 @@ public class FinalFrame extends Frame {
         states.add(new Ready());
     }
 
-    private boolean isStateInstanceOfStrikeOrSpare(State state) {
+    private boolean isStrikeOfSpare(State state) {
         return state instanceof Strike || state instanceof Spare;
     }
 
     private boolean hasBonusPitch() {
         return states.stream()
-                .anyMatch(this::isStateInstanceOfStrikeOrSpare);
+                .anyMatch(this::isStrikeOfSpare);
     }
 
     private int sumCountOfKnockDown() {
