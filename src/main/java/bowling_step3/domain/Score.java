@@ -33,7 +33,6 @@ public class Score {
     }
 
     public void add(int score) {
-        this.left--;
         this.score += score;
     }
 
@@ -43,6 +42,10 @@ public class Score {
 
     public boolean isFinishedCalculate() {
         return left == DEFAULT;
+    }
+
+    public void decrease() {
+        this.left--;
     }
 
     @Override

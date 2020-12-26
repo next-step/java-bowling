@@ -2,7 +2,6 @@ package bowling_step3.domain;
 
 import bowling_step3.exception.BowlingMaxCountException;
 
-import java.util.Map;
 import java.util.Objects;
 
 public class Pitch {
