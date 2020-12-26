@@ -7,7 +7,9 @@ import bowling_step3.util.StringUtils;
 import java.util.Objects;
 
 public class Player {
+
     public static final int NAME_MAX_LENGTH = 3;
+
     private final String name;
 
     private Player(String name) {
@@ -20,11 +22,11 @@ public class Player {
     }
 
     private static void validate(String name) {
-        if(StringUtils.isEmpty(name)) {
+        if (StringUtils.isEmpty(name)) {
             throw new PlayerNullPointException();
         }
 
-        if(name.length() > NAME_MAX_LENGTH) {
+        if (name.length() > NAME_MAX_LENGTH) {
             throw new PlayerExceedsMaxLengthException();
         }
     }
