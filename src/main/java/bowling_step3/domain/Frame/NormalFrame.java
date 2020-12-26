@@ -17,25 +17,17 @@ public class NormalFrame extends Frame {
         this.state = new Ready();
     }
 
-    public static NormalFrame init() {
-        return new NormalFrame(0);
-    }
-
     @Override
     public NormalFrame next() {
         return new NormalFrame(index + 1);
     }
 
-    private void createScore() {
-        if (!isFinish()) {
-            return;
-        }
-
-        this.score = state.getScore();
+    public static NormalFrame init() {
+        return new NormalFrame(DEFAULT);
     }
 
     private void validate() {
-        if (this.isFinish()) {
+        if (isFinish()) {
             throw new PitchOverBoundException();
         }
     }
@@ -44,7 +36,11 @@ public class NormalFrame extends Frame {
     public void pitch(int countOfKnockDown) {
         validate();
         this.state = state.pitch(countOfKnockDown);
-        createScore();
+
+        if (!isFinish()) {
+            return;
+        }
+        this.score = state.getScore();
     }
 
     @Override

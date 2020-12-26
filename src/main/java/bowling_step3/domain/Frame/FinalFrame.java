@@ -12,11 +12,7 @@ import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
 
-    private static final int DEFAULT = 0;
-
-    private static final int MIN_PITCH_COUNT = 2;
-
-    private static final int MAX_PITCH_COUNT = 3;
+    private static final String VERTICAL = "|";
 
     private LinkedList<State> states = new LinkedList<>();
 
@@ -101,7 +97,7 @@ public class FinalFrame extends Frame {
     public String getKnockDownExpression() {
         return states.stream()
                 .map(State::toString)
-                .collect(Collectors.joining("|"));
+                .collect(Collectors.joining(VERTICAL));
     }
 
     @Override
