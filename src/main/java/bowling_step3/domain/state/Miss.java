@@ -22,7 +22,7 @@ public class Miss extends Finished {
     }
 
     private boolean isOverPitch(int firstOfKnockDown, int secondOfKnockDown) {
-        return firstPitch.getKnockDown() + secondPitch.getKnockDown() >= BOWLING_MAX_NUMBER;
+        return firstOfKnockDown + secondOfKnockDown >= BOWLING_MAX_NUMBER;
     }
 
     private void validate(Pitch firstPitch, Pitch secondPitch) {
