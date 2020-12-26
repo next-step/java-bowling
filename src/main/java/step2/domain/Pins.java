@@ -42,6 +42,10 @@ public class Pins {
         return totalPins == MAX_PINS;
     }
 
+    public Score sumScore(Score score) {
+        return score.bowl(fallingPins);
+    }
+
     public int getFallingPins() {
         return fallingPins;
     }
