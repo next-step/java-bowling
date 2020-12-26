@@ -7,7 +7,7 @@ public class Pins {
 
     private final int fallingPins;
 
-    public Pins(int fallingPins) {
+    private Pins(int fallingPins) {
         validatePins(fallingPins);
         this.fallingPins = fallingPins;
     }
