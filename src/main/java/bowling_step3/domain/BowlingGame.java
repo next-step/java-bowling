@@ -3,8 +3,6 @@ package bowling_step3.domain;
 import bowling_step3.domain.Frame.GameFrames;
 import bowling_step3.exception.PitchOverBoundException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import static java.util.Collections.unmodifiableList;

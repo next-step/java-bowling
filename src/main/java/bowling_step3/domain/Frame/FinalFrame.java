@@ -64,7 +64,8 @@ public class FinalFrame extends Frame {
     }
 
     private void createScore() {
-        this.score = Score.of(sumAll(), DEFAULT);
+        Score score = new Score();
+        this.score = score.of(sumAll());
     }
 
     private boolean isSumPitchCount(int pitchCount) {
