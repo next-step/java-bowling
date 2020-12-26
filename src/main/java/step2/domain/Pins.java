@@ -37,6 +37,11 @@ public class Pins {
         return fallingPins == MAX_PINS;
     }
 
+    public boolean isSpare(Pins pins) {
+        int totalPins = fallingPins + pins.getFallingPins();
+        return totalPins == MAX_PINS;
+    }
+
     public int getFallingPins() {
         return fallingPins;
     }
