@@ -4,6 +4,7 @@ import org.apache.logging.log4j.util.Strings;
 import static bowling_step3.domain.Pitch.BOWLING_MAX_NUMBER;
 
 public class Ready extends Running {
+
     private static final int MIN_COUNT_ZERO = 0;
 
     @Override
