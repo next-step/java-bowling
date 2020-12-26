@@ -27,7 +27,7 @@ public class NormalFrame extends Frame {
     }
 
     private void createScore() {
-        if (!state.isFinish()) {
+        if (!isFinish()) {
             return;
         }
 
@@ -67,12 +67,12 @@ public class NormalFrame extends Frame {
         return Objects.nonNull(score) && score.isFinishedCalculate();
     }
 
-
     @Override
     public void calculateScore(int index, int count) {
         if (this.index == index || score.isFinishedCalculate()) {
             return;
         }
+        score.decrease();
         score.add(count);
     }
 
