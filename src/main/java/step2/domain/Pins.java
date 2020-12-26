@@ -33,6 +33,10 @@ public class Pins {
         }
     }
 
+    public boolean isStrike() {
+        return fallingPins == MAX_PINS;
+    }
+
     public int getFallingPins() {
         return fallingPins;
     }
