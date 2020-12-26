@@ -4,11 +4,7 @@ import bowling_step3.domain.Pitch;
 import bowling_step3.domain.Score;
 import bowling_step3.exception.BowlingMaxCountException;
 
-import static bowling_step3.domain.Pitch.BOWLING_MAX_NUMBER;
-
 public class Miss extends Finished {
-
-    public static final int MAX_PITCH_COUNT = 2;
 
     public Miss(Pitch firstPitch, Pitch secondPitch) {
         validate(firstPitch, secondPitch);
@@ -17,7 +13,7 @@ public class Miss extends Finished {
     }
 
     private boolean isOverPitch(int firstOfKnockDown, int secondOfKnockDown) {
-        return firstOfKnockDown + secondOfKnockDown >= BOWLING_MAX_NUMBER;
+        return firstOfKnockDown + secondOfKnockDown >= BOWLING_MAX_TOTAL;
     }
 
     private void validate(Pitch firstPitch, Pitch secondPitch) {

@@ -3,10 +3,9 @@ package bowling_step3.domain.state;
 import bowling_step3.domain.Pitch;
 import bowling_step3.domain.Score;
 
-import static bowling_step3.domain.Pitch.BOWLING_MAX_NUMBER;
-import static bowling_step3.domain.state.Miss.MAX_PITCH_COUNT;
-
 public class Spare extends Finished {
+
+    private static final String VERTICAL_SPARE = "|/";
 
     public Spare(Pitch firstPitch, Pitch secondPitch) {
         this.firstPitch = firstPitch;
@@ -25,11 +24,11 @@ public class Spare extends Finished {
 
     @Override
     public int getTotalCount() {
-        return BOWLING_MAX_NUMBER;
+        return BOWLING_MAX_TOTAL;
     }
 
     @Override
     public String toString() {
-        return firstPitch.toString() + "|/";
+        return firstPitch.toString() + VERTICAL_SPARE;
     }
 }

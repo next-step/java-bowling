@@ -1,7 +1,8 @@
 package bowling_step3.domain.state;
 
 import org.apache.logging.log4j.util.Strings;
-import static bowling_step3.domain.Pitch.BOWLING_MAX_NUMBER;
+
+import static bowling_step3.domain.state.Finished.BOWLING_MAX_TOTAL;
 
 public class Ready extends Running {
 
@@ -9,7 +10,7 @@ public class Ready extends Running {
 
     @Override
     public State pitch(int countOfKnockDown) {
-        if (countOfKnockDown == BOWLING_MAX_NUMBER) {
+        if (countOfKnockDown == BOWLING_MAX_TOTAL) {
             return new Strike();
         }
         return new FirstBowl(countOfKnockDown);
