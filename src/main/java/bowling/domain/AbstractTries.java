@@ -11,6 +11,8 @@ public abstract class AbstractTries {
 
     abstract protected boolean isOver();
 
+    abstract protected Score fetchScore();
+
     protected boolean isStrike() {
         return tries.isStrike();
     }
@@ -42,6 +44,38 @@ public abstract class AbstractTries {
     }
 
     protected Optional<Try> third() { return tries.third(); }
+
+    protected Score calculatePreviousScore(Score prevScore) {
+        if (isFirstNotThrown()) {
+            return Score.NOT_SCORED;
+        }
+
+        if(hasOneLeftTry(prevScore)) {
+            return new Score(prevScore.value() + first().get().value(), 0);
+        }
+
+        if(hasTwoLeftTries(prevScore) && isStrike()) {
+            return new Score(2 * Try.MAX.value(), 1);
+        }
+
+        if(hasTwoLeftTries(prevScore) && isSecondNotThrown()) {
+            return Score.NOT_SCORED;
+        }
+
+        if(hasTwoLeftTries(prevScore)) {
+            return new Score(10 + first().get().value() + second().get().value(), 0);
+        }
+
+        return Score.NOT_SCORED;
+    }
+
+    private boolean hasOneLeftTry(Score prevScore) {
+        return prevScore.getLeftTries() == 1;
+    }
+
+    private boolean hasTwoLeftTries(Score prevScore) {
+        return prevScore.getLeftTries() == 2;
+    }
 
     protected int size() {
         return tries.size();

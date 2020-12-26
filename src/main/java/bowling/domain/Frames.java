@@ -36,7 +36,7 @@ public class Frames {
 
     private void addNewFrameIfOver(Frame frame) {
         if(frame.isOver()) {
-            frames.add(frame.next());
+            frames.add(frame.getNext());
         }
     }
 

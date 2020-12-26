@@ -7,10 +7,12 @@ public class NormalFrame implements Frame{
 
     private final int frameNo;
     private final NormalTries normalTries;
+    private final Frame next;
 
     public NormalFrame(int frameNo, NormalTries normalTries) {
         this.frameNo = frameNo;
         this.normalTries = normalTries;
+        this.next = next();
     }
 
     public static Frame first() {
@@ -66,4 +68,34 @@ public class NormalFrame implements Frame{
 
         return first.concat(SYMBOL_DELIMITER).concat(second);
     }
+
+    @Override
+    public int getScore() {
+        Score score = normalTries.fetchScore();
+
+        if( isOver() && !score.canBeCalculated() ) {
+            return next.addPreviousScore(score).value();
+        }
+
+        if(!score.canBeCalculated()) {
+            return Score.NOT_CALCULATED;
+        }
+
+        return score.value();
+    }
+
+    @Override
+    public Score addPreviousScore(Score prevScore) {
+        Score score = normalTries.calculatePreviousScore(prevScore);
+        if(score.canBeCalculated()) {
+            return score;
+        }
+        return next.addPreviousScore(score);
+    }
+
+    @Override
+    public Frame getNext() {
+        return next;
+    }
+
 }

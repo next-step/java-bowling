@@ -5,4 +5,7 @@ public interface Frame {
     void add(int value);
     Frame next();
     String display();
+    int getScore();
+    Score addPreviousScore(Score score);
+    Frame getNext();
 }

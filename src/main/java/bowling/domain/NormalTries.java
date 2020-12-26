@@ -29,4 +29,26 @@ public class NormalTries extends AbstractTries{
     protected Optional<Try> third() {
         throw new NormalTriesCannotHaveThirdException();
     }
+
+    @Override
+    protected Score fetchScore() {
+        if (isFirstNotThrown()) {
+            return Score.NOT_SCORED;
+        }
+
+        if (isStrike()) {
+            return new Score(Try.MAX.value(), 2);
+        }
+
+        if (isSecondNotThrown()) {
+            return new Score(first().get().value(), 1);
+        }
+
+        if (isSpare()) {
+            return new Score(Try.MAX.value(), 1);
+        }
+
+        return new Score(first().get().plus(second().get()).value(), 0);
+    }
 }
+

@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import static bowling.common.SymbolConstants.NOT_THROWN;
+import static bowling.domain.Score.NOT_CALCULATED;
 
 public class NullFrame implements Frame{
 
@@ -28,5 +29,20 @@ public class NullFrame implements Frame{
     @Override
     public String display() {
         return NOT_THROWN.concat(NOT_THROWN);
+    }
+
+    @Override
+    public int getScore() {
+        return NOT_CALCULATED;
+    }
+
+    @Override
+    public Score addPreviousScore(Score score) {
+        throw new RuntimeException("N.F - addPreviousScore()");
+    }
+
+    @Override
+    public Frame getNext() {
+        throw new RuntimeException("N.F - getNext()");
     }
 }

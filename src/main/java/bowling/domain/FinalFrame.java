@@ -43,4 +43,23 @@ public class FinalFrame implements Frame{
 
         return first.concat(second).concat(third);
     }
+
+    @Override
+    public int getScore() {
+        return finalTries.fetchScore().value();
+    }
+
+    @Override
+    public Score addPreviousScore(Score prevScore) {
+        Score score = finalTries.calculatePreviousScore(prevScore);
+        if(score.canBeCalculated()) {
+            return score;
+        }
+        return addPreviousScore(score);
+    }
+
+    @Override
+    public Frame getNext() {
+        return NullFrame.getInstance();
+    }
 }

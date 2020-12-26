@@ -25,6 +25,10 @@ public class Try {
         return new Try(value);
     }
 
+    public int value() {
+        return value;
+    }
+
     public Try plus(final Try t) {
         return of(value + t.value);
     }
