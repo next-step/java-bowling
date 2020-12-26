@@ -65,6 +65,11 @@ public class ResultView {
             System.out.print(center(parsePitchScore(bowlingGame.getFrames().getFrames().get(i))) + DELIMITER);
         }
 
+        printNotCreatedFrames(currentFramesCount, maxFrameCount);
+
+    }
+
+    private static void printNotCreatedFrames(int currentFramesCount, int maxFrameCount) {
         for (int j = currentFramesCount; j<maxFrameCount; j++) {
             System.out.print(center(SPACE) + DELIMITER);
         }
@@ -91,11 +96,7 @@ public class ResultView {
             System.out.print(center(parsePitchResult(bowlingGame.getFrames().getFrames().get(i).getPitchResults())) + DELIMITER);
         }
 
-        for (int j = currentFramesCount; j<maxFrameCount; j++) {
-            System.out.print(center(SPACE) + DELIMITER);
-        }
-
-        System.out.println();
+        printNotCreatedFrames(currentFramesCount, maxFrameCount);
 
     }
 

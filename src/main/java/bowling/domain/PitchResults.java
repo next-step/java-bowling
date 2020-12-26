@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class PitchResults {

@@ -87,7 +87,7 @@ public class FrameTest {
 
         String[] pitchResults = pitchResultsWithComma.split(",");
 
-        for(String pitchResult: pitchResults){
+        for (String pitchResult : pitchResults) {
             normalFrame.start(Integer.parseInt(pitchResult));
         }
 
@@ -104,7 +104,7 @@ public class FrameTest {
 
         String[] pitchResults = pitchResultsWithComma.split(",");
 
-        for (String pitchResult: pitchResults) {
+        for (String pitchResult : pitchResults) {
             finalFrame.start(Integer.parseInt(pitchResult));
         }
 

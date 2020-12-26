@@ -52,7 +52,7 @@ public class FramesTest {
 
         String[] pitchResults = pitchResultsWithComma.split(",");
 
-        for(String pitchResult: pitchResults){
+        for (String pitchResult: pitchResults) {
             frames.execute(Integer.parseInt(pitchResult));
         }
 
