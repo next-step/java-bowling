@@ -5,17 +5,34 @@ import step2.domain.Score;
 
 public class Miss extends Finished {
 
-    public Miss(Pins firstPins, Pins pins) {
+    private static final int ZERO_CHANCE = 0;
 
+    private Pins firstPins;
+    private Pins secondPins;
+
+    public Miss(Pins firstPins, Pins secondPins) {
+        this.firstPins = firstPins;
+        this.secondPins = secondPins;
     }
 
     @Override
     public Score getScore() {
-        return null;
+        int totalScore = firstPins.getFallingPins() + secondPins.getFallingPins();
+        return Score.of(totalScore, ZERO_CHANCE);
     }
 
     @Override
     public Score calculateAdditionalScore(Score score) {
-        return null;
+        score = firstPins.sumScore(score);
+        if (score.validateChance()) {
+            return score;
+        }
+        score = secondPins.sumScore(score);
+        return score;
+    }
+
+    @Override
+    public String toString() {
+        return firstPins + "|" + secondPins;
     }
 }

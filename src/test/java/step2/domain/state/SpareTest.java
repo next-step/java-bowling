@@ -28,9 +28,9 @@ class SpareTest {
         Pins pins2 = Pins.from(2);
         Spare spare = new Spare(pins1, pins2);
 
-        Score score = Score.of(8, 1);
+        Score score = Score.of(0, 2);
 
-        assertThat(spare.calculateAdditionalScore(score)).isEqualTo(score);
+        assertThat(spare.calculateAdditionalScore(score).getScore()).isEqualTo(10);
     }
 
 }
