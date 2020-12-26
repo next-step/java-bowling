@@ -26,14 +26,14 @@ public class Score {
     }
 
     public int getScore() {
-        if(validateChance()) {
+        if(!validateChance()) {
             throw new IllegalArgumentException("기회가 남았으므로 아직 점수를 계산할 수 없습니다.");
         }
         return score;
     }
 
-    private boolean validateChance() {
-        return left != NO_CHANCE;
+    public boolean validateChance() {
+        return left == NO_CHANCE;
     }
 
     @Override

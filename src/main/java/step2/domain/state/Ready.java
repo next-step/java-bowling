@@ -16,6 +16,6 @@ public class Ready extends Running {
 
     @Override
     public Score calculateAdditionalScore(Score score) {
-        return null;
+        throw new IllegalArgumentException("추가 점수를 구할 수 없습니다.");
     }
 }
