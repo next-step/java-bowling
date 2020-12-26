@@ -60,4 +60,14 @@ class PinsTest {
         assertThat(pins1.isSpare(pins2)).isFalse();
     }
 
+    @Test
+    @DisplayName("점수 더하기 기능")
+    void sumScore() {
+        Score score = Score.of(5, 1);
+
+        Pins pins = Pins.from(8);
+
+        assertThat(pins.sumScore(score).getScore()).isEqualTo(13);
+    }
+
 }
