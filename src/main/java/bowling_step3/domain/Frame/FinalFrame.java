@@ -1,6 +1,5 @@
 package bowling_step3.domain.Frame;
 
-import bowling_step3.domain.Frame.Frame;
 import bowling_step3.domain.Score;
 import bowling_step3.domain.state.Ready;
 import bowling_step3.domain.state.Spare;
@@ -19,16 +18,19 @@ public class FinalFrame extends Frame {
 
     private static final int MAX_PITCH_COUNT = 3;
 
-    private LinkedList<State> states;
+    private LinkedList<State> states = new LinkedList<>();
 
     public FinalFrame() {
-        this.states = new LinkedList<>();
         states.add(new Ready());
+    }
+
+    private boolean isStateInstanceOfStrikeOrSpare(State state) {
+        return state instanceof Strike || state instanceof Spare;
     }
 
     private boolean hasBonusPitch() {
         return states.stream()
-                .anyMatch(state -> state instanceof Strike || state instanceof Spare);
+                .anyMatch(this::isStateInstanceOfStrikeOrSpare);
     }
 
     private int sumCountOfKnockDown() {
@@ -43,8 +45,12 @@ public class FinalFrame extends Frame {
         }
     }
 
+    private boolean isLastFinish() {
+        return states.getLast().isFinish();
+    }
+
     private void statesAdd() {
-        if (states.getLast().isFinish()) {
+        if (isLastFinish()) {
             states.add(new Ready());
         }
     }
@@ -65,6 +71,10 @@ public class FinalFrame extends Frame {
         this.score = new Score(sumAll(), DEFAULT);
     }
 
+    private boolean isSumPitchCount(int pitchCount) {
+        return this.sumCountOfKnockDown() == pitchCount;
+    }
+
     @Override
     public void pitch(int countOfKnockDown) {
         validate();
@@ -75,15 +85,11 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isFinish() {
-        if (states.isEmpty()) {
-            return false;
-        }
-
-        if (!hasBonusPitch() && this.sumCountOfKnockDown() == MIN_PITCH_COUNT) {
+        if (!hasBonusPitch() && isSumPitchCount(MIN_PITCH_COUNT)) {
             return true;
         }
 
-        return this.sumCountOfKnockDown() == MAX_PITCH_COUNT;
+        return isSumPitchCount(MAX_PITCH_COUNT);
     }
 
     @Override
