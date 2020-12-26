@@ -1,8 +1,8 @@
 package bowling.controller;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.DownedPin;
-import bowling.domain.User;
+import bowling.domain.frame.DownedPin;
+import bowling.domain.game.BowlingGame;
+import bowling.domain.user.User;
 import bowling.dto.UserDTO;
 import bowling.view.InputView;
 import bowling.view.ResultView;

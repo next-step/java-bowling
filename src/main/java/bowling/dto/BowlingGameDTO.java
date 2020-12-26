@@ -1,6 +1,6 @@
 package bowling.dto;
 
-import bowling.domain.*;
+import bowling.domain.frame.*;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,9 @@
-package bowling.domain;
+package bowling.domain.game;
 
+import bowling.domain.frame.DownedPin;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.LastFrame;
+import bowling.domain.frame.NormalFrame;
 import bowling.dto.BowlingGameDTO;
 
 import java.util.ArrayList;

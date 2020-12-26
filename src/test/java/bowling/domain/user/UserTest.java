@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.user;
 
 import bowling.bowlingexception.InvalidNameFormatException;
 import org.junit.jupiter.api.DisplayName;

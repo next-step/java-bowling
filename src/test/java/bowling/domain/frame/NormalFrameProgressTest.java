@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.bowlingexception.InvalidProgressException;
 import org.junit.jupiter.api.DisplayName;
