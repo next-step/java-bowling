@@ -2,8 +2,9 @@ package step2.domain;
 
 public class Pitch {
 
-    public static final int MIN_SCORE = 0;
-    public static final int MAX_SCORE = 10;
+    private static final int MIN_SCORE = 0;
+    private static final int MAX_SCORE = 10;
+    private static final String GUTTER_SYMBOL = "-";
 
     private final int score;
 
@@ -18,13 +19,13 @@ public class Pitch {
     }
 
     private void validateBelowZero(int score) {
-        if(score < MIN_SCORE) {
+        if (score < MIN_SCORE) {
             throw new IllegalArgumentException("한번에 쓰러뜨릴 수 있는 핀은 0개 이상입니다.");
         }
     }
 
     private void validateOverTen(int score) {
-        if(score > MAX_SCORE) {
+        if (score > MAX_SCORE) {
             throw new IllegalArgumentException("한번에 쓰러뜨릴 수 있는 핀은 10개 이하입니다.");
         }
     }
@@ -35,6 +36,9 @@ public class Pitch {
 
     @Override
     public String toString() {
+        if (score == MIN_SCORE) {
+            return GUTTER_SYMBOL;
+        }
         return "" + score;
     }
 }
