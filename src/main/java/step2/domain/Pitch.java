@@ -2,8 +2,8 @@ package step2.domain;
 
 public class Pitch {
 
-    private static final int MIN_SCORE = 0;
-    private static final int MAX_SCORE = 10;
+    public static final int MIN_SCORE = 0;
+    public static final int MAX_SCORE = 10;
     private static final String GUTTER_SYMBOL = "-";
 
     private final int score;
@@ -32,6 +32,10 @@ public class Pitch {
 
     public static Pitch from(int score) {
         return new Pitch(score);
+    }
+
+    public int getScore() {
+        return score;
     }
 
     @Override

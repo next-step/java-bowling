@@ -2,7 +2,7 @@ package step2.domain.state;
 
 import step2.domain.Pitch;
 
-public class Spare {
+public class Spare implements State {
 
     private static final String SYMBOL = "/";
     private static final String DELIMITER = "|";

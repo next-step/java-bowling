@@ -1,6 +1,6 @@
 package step2.domain.state;
 
-public class Strike {
+public class Strike implements State {
 
     private final static String SYMBOL = "X";
 

@@ -2,7 +2,7 @@ package step2.domain.state;
 
 import step2.domain.Pitch;
 
-public class Miss {
+public class Miss implements State {
 
     private static final String DELIMITER = "|";
 
