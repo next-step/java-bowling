@@ -7,6 +7,7 @@ import java.util.Optional;
 public class Score {
     public static final int PINS_ZERO = 0;
     public static final String BLANK = "";
+
     private final Pins first;
     private Pins second;
 

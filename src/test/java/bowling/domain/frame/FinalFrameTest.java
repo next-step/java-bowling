@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Pins;
-import bowling.domain.state.Gutter;
-import bowling.domain.state.LastState;
+import bowling.domain.state.FinalState;
+import bowling.domain.state.State;
 import bowling.domain.state.Strike;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,13 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class FinalFrameTest {
     private Frame frame;
-    private int userIndex;
+    private int playerIndex;
 
     @BeforeEach
     void setUp() {
-        userIndex = 0;
+        playerIndex = 0;
         frame = new FinalFrame();
-        frame.bowl(new Pins(10));
     }
 
     @Test
@@ -30,26 +29,36 @@ class FinalFrameTest {
     }
 
     @Test
-    void bowl_x() {
-        assertThat(frame.getLastState()).isInstanceOf(Strike.class);
-        assertThat(frame.getLastStateFrameScore()).isEqualTo(10);
-        assertThat(frame.getLastStateFirstScore()).isEqualTo(10);
-        assertThat(frame.getLastStateSecondScore()).isZero();
-        assertThat(frame.getLastStateSymbol()).isEqualTo("X");
+    void next_final() {
+        assertThat(frame.next()).isNull();
     }
 
     @Test
-    void secondBowl_xx() {
-        frame.secondBowl(userIndex, new Strike(), new Pins(10));
-        assertThat(frame.getLastState()).isInstanceOf(LastState.class);
-        assertThat(frame.getLastStateFrameScore()).isEqualTo(20);
-        assertThat(frame.getLastStateSymbol()).isEqualTo("XX");
+    void stroke() {
+        frame.stroke(playerIndex, new Pins(10));
+        assertThat(frame.getLastState()).isInstanceOf(FinalState.class);
+        assertThat(frame.getState(playerIndex)).isInstanceOf(FinalState.class);
     }
 
     @Test
-    void thirdBowl_xxx() {
-        frame.thirdBowl(userIndex, new LastState(new Strike(), new Strike()), new Pins(10));
-        assertThat(frame.getLastStateFrameScore()).isEqualTo(30);
-        assertThat(frame.getLastStateSymbol()).isEqualTo("XXX");
+    void stroke_isFinished() {
+        State state = frame.stroke(playerIndex, new Pins(10));
+        assertThat(state.isFinished()).isFalse();
+    }
+
+    @Test
+    void spare_isFinished() {
+        frame.stroke(playerIndex, new Pins(10));
+        State state = frame.spare(playerIndex, new Pins(10));
+        assertThat(state.isFinished()).isFalse();
+    }
+
+    @Test
+    void spare_finished() {
+        frame.stroke(playerIndex, new Pins(10));
+        State second = frame.spare(playerIndex, new Pins(10));
+        assertThat(second.isFinished()).isFalse();
+        State state = frame.spare(playerIndex, new Pins(10));
+        assertThat(state.isFinished()).isTrue();
     }
 }

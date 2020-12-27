@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.score.Pins;
 import bowling.domain.state.Gutter;
 import bowling.domain.state.Miss;
+import bowling.domain.state.Spare;
 import bowling.domain.state.Strike;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,11 +17,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  */
 class NormalFrameTest {
     private Frame frame;
-    private int userIndex;
+    private int playerIndex;
 
     @BeforeEach
     void setUp() {
-        userIndex = 0;
+        playerIndex = 0;
         frame = new NormalFrame(1);
     }
 
@@ -41,143 +42,128 @@ class NormalFrameTest {
     }
 
     @Test
-    void bowl_getLastStateFrameScore() {
-        frame.bowl(new Pins(10));
-        assertThat(frame.getLastStateFrameScore()).isEqualTo(10);
+    void stroke() {
+        frame.stroke(playerIndex,new Pins(10));
+        assertThat(frame.getLastState()).isInstanceOf(Strike.class);
+        assertThat(frame.getState(playerIndex)).isInstanceOf(Strike.class);
     }
 
     @Test
-    void bowl_getLastStateFirstScore() {
-        frame.bowl(new Pins(10));
-        assertThat(frame.getLastStateFirstScore()).isEqualTo(10);
+    void spare() {
+        frame.stroke(playerIndex, new Pins(7));
+        frame.spare(playerIndex, new Pins(3));
+        assertThat(frame.getLastState()).isInstanceOf(Spare.class);
+        assertThat(frame.getState(playerIndex)).isInstanceOf(Spare.class);
     }
 
     @Test
-    void bowl_getLastStateSecondScore() {
-        frame.bowl(new Pins(10));
-        assertThat(frame.getLastStateSecondScore()).isZero();
+    void getState_throwException() {
+        assertThatThrownBy(() -> frame.getState(1))
+                .withFailMessage("사용자를 확인해주십시요. 현재 사용자 번호 : %d", playerIndex)
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void bowl_getLastStateSymbol() {
-        frame.bowl(new Pins(10));
+    void getState() {
+        frame.stroke(playerIndex, new Pins(10));
+        assertThat(frame.getState(playerIndex)).isInstanceOf(Strike.class);
+    }
+
+    @Test
+    void getSymbol() {
+        frame.stroke(playerIndex, new Pins(10));
+        assertThat(frame.getSymbol(playerIndex)).isEqualTo("X");
         assertThat(frame.getLastStateSymbol()).isEqualTo("X");
     }
 
     @Test
-    void bowl_getFrameScore() {
-        frame.bowl(new Pins(10));
-        assertThat(frame.getFrameScore(userIndex)).isEqualTo(10);
+    void getFrameScore() {
+        frame.stroke(playerIndex, new Pins(10));
+        assertThat(frame.getFrameScore(playerIndex)).isEqualTo(10);
     }
 
     @Test
-    void bowl_getFirstScore() {
-        frame.bowl(new Pins(10));
-        assertThat(frame.getFirstScore(userIndex)).isEqualTo(10);
+    void getFirstScore() {
+        frame.stroke(playerIndex, new Pins(10));
+        assertThat(frame.getFirstScore(playerIndex)).isEqualTo(10);
     }
 
     @Test
-    void bowl_getSecondScore() {
-        frame.bowl(new Pins(10));
-        assertThat(frame.getSecondScore(userIndex)).isZero();
+    void getSecondScore() {
+        frame.stroke(playerIndex, new Pins(7));
+        frame.spare(playerIndex, new Pins(3));
+        assertThat(frame.getSecondScore(playerIndex)).isEqualTo(3);
     }
 
     @Test
-    void bowl_getSymbol() {
-        frame.bowl(new Pins(10));
-        assertThat(frame.getSymbol(userIndex)).isEqualTo("X");
+    void getLastState() {
+        frame.stroke(playerIndex, new Pins(10));
+        assertThat(frame.getLastState()).isInstanceOf(Strike.class);
     }
 
     @Test
-    void secondBowl_getLastStateFrameScore() {
-        frame.bowl(new Pins(0));
-        frame.secondBowl(userIndex, new Gutter(new Pins(0)), new Pins(1));
-        assertThat(frame.getLastStateFrameScore()).isEqualTo(1);
+    void getLastStateFrameScore() {
+        frame.stroke(playerIndex, new Pins(10));
+        assertThat(frame.getLastStateFrameScore()).isEqualTo(10);
     }
 
     @Test
-    void secondBowl_getLastStateFirstScore() {
-        frame.bowl(new Pins(0));
-        frame.secondBowl(userIndex, new Gutter(new Pins(0)), new Pins(1));
-        assertThat(frame.getLastStateFirstScore()).isZero();
+    void getLastStateFirstScore() {
+        frame.stroke(playerIndex, new Pins(10));
+        assertThat(frame.getLastStateFirstScore()).isEqualTo(10);
     }
 
     @Test
-    void secondBowl_getLastStateSecondScore() {
-        frame.bowl(new Pins(0));
-        frame.secondBowl(userIndex, new Gutter(new Pins(0)), new Pins(1));
-        assertThat(frame.getLastStateSecondScore()).isEqualTo(1);
+    void getLastStateSecondScore() {
+        frame.stroke(playerIndex, new Pins(10));
+        frame.spare(playerIndex, new Pins(0));
+        assertThat(frame.getLastStateSecondScore()).isZero();
     }
 
     @Test
-    void secondBowl_getFrameScore() {
-        frame.bowl(new Pins(0));
-        frame.secondBowl(userIndex, new Gutter(new Pins(0)), new Pins(1));
-        assertThat(frame.getLastStateFrameScore()).isEqualTo(1);
-    }
-
-    @Test
-    void secondBowl_getFirst() {
-        frame.bowl(new Pins(0));
-        frame.secondBowl(userIndex, new Gutter(new Pins(0)), new Pins(1));
-        assertThat(frame.getLastStateFirstScore()).isZero();
+    void getLastStateSymbol() {
+        frame.stroke(playerIndex, new Pins(10));
+        assertThat(frame.getLastStateSymbol()).isEqualTo("X");
     }
 
     @Test
     void symbol_strike() {
-        frame.bowl(new Pins(10));
-        frame.secondBowl(userIndex, new Strike(), new Pins(0));
-        assertThat(frame.getSymbol(userIndex)).isEqualTo("X");
+        frame.stroke(playerIndex, new Pins(10));
+        assertThat(frame.getSymbol(playerIndex)).isEqualTo("X");
     }
 
     @Test
     void symbol_spare() {
-        frame.bowl(new Pins(9));
-        frame.secondBowl(userIndex, new Miss(new Pins(9)), new Pins(1));
-        assertThat(frame.getSymbol(userIndex)).isEqualTo("9|/");
+        frame.stroke(playerIndex, new Pins(9));
+        frame.spare(playerIndex, new Pins(1));
+        assertThat(frame.getSymbol(playerIndex)).isEqualTo("9|/");
     }
 
     @Test
     void symbol_miss() {
-        frame.bowl(new Pins(8));
-        frame.secondBowl(userIndex, new Miss(new Pins(8)), new Pins(1));
-        assertThat(frame.getSymbol(userIndex)).isEqualTo("8|1");
+        frame.stroke(playerIndex, new Pins(8));
+        frame.spare(playerIndex, new Pins(1));
+        assertThat(frame.getSymbol(playerIndex)).isEqualTo("8|1");
     }
 
     @Test
     void symbol_gutter() {
-        frame.bowl(new Pins(0));
-        frame.secondBowl(userIndex, new Gutter(new Pins(0)), new Pins(1));
-        assertThat(frame.getSymbol(userIndex)).isEqualTo("-|1");
+        frame.stroke(playerIndex, new Pins(0));
+        frame.spare(playerIndex, new Pins(1));
+        assertThat(frame.getSymbol(playerIndex)).isEqualTo("-|1");
     }
 
     @Test
     void symbol_gutter2() {
-        frame.bowl(new Pins(1));
-        frame.secondBowl(userIndex, new Miss(new Pins(1)), new Pins(0));
-        assertThat(frame.getSymbol(userIndex)).isEqualTo("1|-");
+        frame.stroke(playerIndex, new Pins(1));
+        frame.spare(playerIndex, new Pins(0));
+        assertThat(frame.getSymbol(playerIndex)).isEqualTo("1|-");
     }
 
     @Test
     void symbol_gutter3() {
-        frame.bowl(new Pins(0));
-        frame.secondBowl(userIndex, new Gutter(new Pins(0)), new Pins(0));
-        assertThat(frame.getSymbol(userIndex)).isEqualTo("-|-");
-    }
-
-    @Test
-    void validate() {
-        frame.bowl(new Pins(10));
-        assertThatThrownBy(() -> frame.secondBowl(0, new Strike(), new Pins(10)))
-                .withFailMessage("잘못된 2구 핀입니다.")
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    void validateUserIndex() {
-        frame.bowl(new Pins(0));
-        assertThatThrownBy(() -> frame.secondBowl(1, new Gutter(new Pins(0)), new Pins(0)))
-                .withFailMessage("사용자를 확인해주십시요. 현재 사용자 번호 : %d", userIndex)
-                .isInstanceOf(IllegalArgumentException.class);
+        frame.stroke(playerIndex, new Pins(0));
+        frame.spare(playerIndex, new Pins(0));
+        assertThat(frame.getSymbol(playerIndex)).isEqualTo("-|-");
     }
 }

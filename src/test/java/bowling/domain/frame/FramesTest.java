@@ -1,9 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.Frames;
-import bowling.domain.score.Pins;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,20 +9,25 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Developer : Seo
  */
 class FramesTest {
-    private Frames frames;
-
-    @BeforeEach
-    void setUp() {
-    }
-
-    @DisplayName("생성")
-    @Test
-    void construct() {
-        assertThat(frames).isNotNull().isInstanceOf(Frames.class);
-    }
-
-    @DisplayName("초기화")
     @Test
     void init() {
+        Frames frames = new Frames();
+        assertThat(frames).isNotNull().isInstanceOf(Frames.class);
+        assertThat(frames.size()).isEqualTo(1);
+
+        assertThat(frames.get(0)).isInstanceOf(NormalFrame.class);
+    }
+
+    @Test
+    void next() {
+        Frames frames = new Frames();
+        frames.next(0);
+        assertThat(frames.size()).isEqualTo(2);
+        assertThat(frames.get(1)).isInstanceOf(NormalFrame.class);
+
+        for (int i = 1; i < 10; i++) {
+            frames.next(i);
+        }
+        assertThat(frames.get(9)).isInstanceOf(FinalFrame.class);
     }
 }

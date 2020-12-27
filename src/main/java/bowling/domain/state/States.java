@@ -13,18 +13,18 @@ public class States {
         this.states = new LinkedList<>();
     }
 
-    public void add(State state) {
-        this.states.add(state);
+    public void add(int playerIndex, State state) {
+        this.states.add(playerIndex, state);
     }
 
-    public State getState(int userIndex) {
+    public State getState(int playerIndex) {
         if (states.isEmpty()) {
             return new None();
         }
-        if (states.size() <= userIndex) {
+        if (states.size() <= playerIndex) {
             return new None();
         }
-        return this.states.get(userIndex);
+        return this.states.get(playerIndex);
     }
 
     public State getLast() {

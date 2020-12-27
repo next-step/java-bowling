@@ -1,6 +1,5 @@
 package bowling.domain.bowl;
 
-import bowling.domain.bowl.FirstBowl;
 import bowling.domain.score.Pins;
 import bowling.domain.state.Gutter;
 import bowling.domain.state.Miss;
@@ -20,7 +19,7 @@ class FirstBowlTest {
     }
 
     @Test
-    void constructor() {
+    void init() {
         assertThat(firstBowl).isNotNull().isInstanceOf(FirstBowl.class);
     }
 

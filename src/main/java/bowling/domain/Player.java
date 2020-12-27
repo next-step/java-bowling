@@ -1,4 +1,4 @@
-package bowling.domain.user;
+package bowling.domain;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,12 +7,12 @@ import java.util.regex.Pattern;
  * Created : 2020-12-16 오전 7:55
  * Developer : Seo
  */
-public class User {
+public class Player {
     public static final String NAME_PATTERN = "^([A-z]{3})$";
 
     private final String name;
 
-    public User(String name) {
+    public Player(String name) {
         validate(name);
         this.name = name;
     }

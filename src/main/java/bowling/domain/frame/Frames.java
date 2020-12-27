@@ -29,7 +29,7 @@ public class Frames {
         return frames;
     }
 
-    public Frame get(int i) {
-        return frames.get(i);
+    public Frame get(int frameIndex) {
+        return frames.get(frameIndex);
     }
 }

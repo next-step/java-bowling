@@ -8,10 +8,10 @@ import bowling.domain.state.*;
  * Created : 2020-12-22 오후 2:29
  * Developer : Seo
  */
-public class ThirdBowl implements Bowl {
+public class FinalBowl implements Bowl {
     private final State state;
 
-    public ThirdBowl(State state) {
+    public FinalBowl(State state) {
         this.state = state;
     }
 

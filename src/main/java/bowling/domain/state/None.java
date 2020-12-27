@@ -3,7 +3,6 @@ package bowling.domain.state;
 import bowling.domain.score.Score;
 
 public class None implements State {
-
     public static final String BLANK = "";
 
     @Override
