@@ -17,6 +17,7 @@ public class FinalFrame extends Frame {
     private LinkedList<State> states = new LinkedList<>();
 
     public FinalFrame() {
+        score = new Score();
         states.add(new Ready());
     }
 
@@ -36,7 +37,7 @@ public class FinalFrame extends Frame {
     }
 
     private void validate() {
-        if (this.isFinish()) {
+        if (isFinish()) {
             throw new PitchOverBoundException();
         }
     }
@@ -64,8 +65,7 @@ public class FinalFrame extends Frame {
     }
 
     private void createScore() {
-        Score score = new Score();
-        this.score = score.of(sumAll());
+        score = score.of(sumAll());
     }
 
     private boolean isSumPitchCount(int pitchCount) {
@@ -103,7 +103,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public int getScore() {
-        return this.score.getScore();
+        return score.getScore();
     }
 
     @Override
