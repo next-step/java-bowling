@@ -1,6 +1,7 @@
 package bowling_step3.exception;
 
-import static bowling.domain.NomalFrame.BOWLING_MAX_NUMBER;
+
+import static bowling_step3.domain.Pitch.BOWLING_MAX_NUMBER;
 
 public class BowlingMaxCountException extends IllegalArgumentException {
     public BowlingMaxCountException() {

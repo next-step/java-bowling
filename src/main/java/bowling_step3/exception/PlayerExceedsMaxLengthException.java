@@ -1,6 +1,6 @@
 package bowling_step3.exception;
 
-import static bowling.domain.Player.NAME_MAX_LENGTH;
+import static bowling_step3.domain.Player.NAME_MAX_LENGTH;
 
 public class PlayerExceedsMaxLengthException extends IllegalArgumentException {
     public PlayerExceedsMaxLengthException() {
