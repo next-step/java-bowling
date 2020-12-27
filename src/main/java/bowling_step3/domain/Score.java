@@ -6,13 +6,10 @@ import static bowling_step3.domain.Pitch.BOWLING_MAX_NUMBER;
 
 public class Score {
     private static final int COUNT_OF_STRIKE = 2;
-
     private static final int COUNT_OF_SPARE = 1;
-
     private static final int DEFAULT = 0;
 
     private int score;
-
     private int left;
 
     public Score() {
