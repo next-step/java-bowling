@@ -82,19 +82,12 @@ public class GameFrames {
         return size();
     }
 
-    private Scores addScore(Scores scores, Frame frame) {
-        if (frame.hasScore()) {
-            scores.add(frame.getScore());
-        }
-        return scores;
-    }
-
     public Scores getScores() {
         Scores scores = Scores.of();
         frames.stream()
-                .filter(frame -> frame.hasScore())
-                .forEach(frame -> addScore(scores, frame));
-
+                .filter(Frame::hasScore)
+                .mapToInt(Frame::getScore)
+                .forEach(scores::add);
         return scores;
     }
 
