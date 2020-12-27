@@ -42,7 +42,14 @@ public class LastFrame implements Frame {
         return LastFrameProgress.countsOfTotalPitch(Collections.unmodifiableList(frames));
     }
 
-    public List<NormalFrame> getFrames() {
-        return Collections.unmodifiableList(this.frames);
+    @Override
+    public String printStatus() {
+        String result = frames.get(0).printStatus();
+
+        for (int i = 1; i < frames.size(); i++) {
+            result = result.concat("|").concat(frames.get(i).printStatus());
+        }
+
+        return result;
     }
 }

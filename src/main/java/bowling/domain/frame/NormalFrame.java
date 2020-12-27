@@ -40,7 +40,15 @@ public class NormalFrame implements Frame {
         return FrameStatus.getStatus(Collections.unmodifiableList(tries));
     }
 
-    public List<DownedPin> getTries() {
-        return Collections.unmodifiableList(tries);
+    @Override
+    public String printStatus() {
+        FrameStatus status = getFrameStatus();
+        String interpretedFrame = status.interpretFrame(tries);
+
+        if (status == FrameStatus.STRIKE) {
+            return interpretedFrame;
+        }
+
+        return interpretedFrame;
     }
 }

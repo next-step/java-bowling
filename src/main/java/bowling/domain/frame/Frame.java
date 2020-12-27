@@ -7,4 +7,6 @@ public interface Frame {
     boolean isEnd();
 
     int getNumThrown();
+
+    String printStatus();
 }
