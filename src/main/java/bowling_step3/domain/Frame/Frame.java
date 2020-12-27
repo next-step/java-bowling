@@ -5,24 +5,20 @@ import bowling_step3.domain.Score;
 public abstract class Frame {
 
     protected static final int DEFAULT = 0;
-
     protected static final int MIN_PITCH_COUNT = 2;
-
     protected static final int MAX_PITCH_COUNT = 3;
 
     protected Score score;
 
-    abstract void pitch(int countOfKnockDown);
+    public abstract void pitch(int countOfKnockDown);
 
-    abstract boolean isFinish();
+    public abstract boolean isFinish();
 
-    abstract Frame next();
+    public abstract Frame next();
 
-    public abstract String getKnockDownExpression();
+    public abstract int getScore();
 
-    abstract int getScore();
-
-    abstract boolean hasScore();
+    public abstract boolean hasScore();
 
     public abstract void calculateScore(int index, int count);
 }

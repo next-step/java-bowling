@@ -9,7 +9,6 @@ import java.util.Objects;
 public class NormalFrame extends Frame {
 
     private final int index;
-
     private State state;
 
     public NormalFrame(int index) {
@@ -43,19 +42,19 @@ public class NormalFrame extends Frame {
         this.score = state.getScore();
     }
 
+    public String getKnockDownExpression() {
+        return state.toString();
+    }
+
+
     @Override
     public boolean isFinish() {
         return state.isFinish();
     }
 
     @Override
-    public String getKnockDownExpression() {
-        return state.toString();
-    }
-
-    @Override
     public int getScore() {
-        return this.score.getScore();
+        return score.getScore();
     }
 
     @Override
