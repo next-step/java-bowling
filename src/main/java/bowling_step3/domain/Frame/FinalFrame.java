@@ -1,23 +1,16 @@
 package bowling_step3.domain.Frame;
 
 import bowling_step3.domain.Score;
-import bowling_step3.domain.state.Ready;
-import bowling_step3.domain.state.Spare;
-import bowling_step3.domain.state.State;
-import bowling_step3.domain.state.Strike;
+import bowling_step3.domain.state.*;
 import bowling_step3.exception.PitchOverBoundException;
 
 import java.util.LinkedList;
-import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
 
-    private static final String VERTICAL = "|";
-
-    private LinkedList<State> states = new LinkedList<>();
+    private final LinkedList<State> states = new LinkedList<>();
 
     public FinalFrame() {
-        score = new Score();
         states.add(new Ready());
     }
 
@@ -64,8 +57,8 @@ public class FinalFrame extends Frame {
                 .sum();
     }
 
-    private void createScore() {
-        score = score.of(sumAll());
+    private void createScore(Score score) {
+        this.score = score.of(sumAll());
     }
 
     private boolean isSumPitchCount(int pitchCount) {
@@ -77,7 +70,7 @@ public class FinalFrame extends Frame {
         validate();
         statesAdd();
         pitchLast(countOfKnockDown);
-        createScore();
+        createScore(new Score());
     }
 
     @Override
@@ -94,11 +87,8 @@ public class FinalFrame extends Frame {
         throw new PitchOverBoundException();
     }
 
-    @Override
-    public String getKnockDownExpression() {
-        return states.stream()
-                .map(State::toString)
-                .collect(Collectors.joining(VERTICAL));
+    public LinkedList<State> getStates() {
+        return states;
     }
 
     @Override
@@ -111,7 +101,7 @@ public class FinalFrame extends Frame {
         return isFinish();
     }
 
-    @Deprecated
+    @Override
     public void calculateScore(int index, int count) {
 
     }
