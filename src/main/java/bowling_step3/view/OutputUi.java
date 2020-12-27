@@ -54,19 +54,21 @@ public class OutputUi {
                 .collect(Collectors.joining(VERTICAL));
     }
 
-    private static void printAllFrame(int index, List<Frame> frames) {
-        String format = "";
+    private static String printAllFrame(int index, List<Frame> frames) {
         if (!isFinalFrame(index)) {
-            format += String.format("%-4s%s", printNormalKnockDown(frames.get(index)), VERTICAL);
-        } else {
-            format += String.format("%-4s%s", printFinalKnockDown(frames.get(index)), VERTICAL);
+            return String.format("%-4s%s", printNormalKnockDown(frames.get(index)), VERTICAL);
         }
-        System.out.print(format);
+        return String.format("%-4s%s", printFinalKnockDown(frames.get(index)), VERTICAL);
     }
 
     private static void printKnockDown(List<Frame> frames) {
-        IntStream.range(0, frames.size())
-                .forEach(i -> printAllFrame(i, frames));
+        int bound = frames.size();
+        StringBuilder builder = new StringBuilder();
+        IntStream.range(0, bound)
+                .mapToObj(i -> printAllFrame(i, frames))
+                .forEach(builder::append);
+        System.out.print(builder);
+
         printEmptySpace(frames.size());
     }
 
