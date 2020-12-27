@@ -28,7 +28,7 @@ public class GameFrames {
             throw new PitchOverBoundException();
         }
 
-        this.makeFrame();
+        makeFrame();
         getLastFrame().pitch(count);
         calculateScore(count);
     }
@@ -91,9 +91,10 @@ public class GameFrames {
 
     public Scores getScores() {
         Scores scores = Scores.of();
-        for (Frame frame : frames) {
-            scores = addScore(scores, frame);
-        }
+        frames.stream()
+                .filter(frame -> frame.hasScore())
+                .forEach(frame -> addScore(scores, frame));
+
         return scores;
     }
 
