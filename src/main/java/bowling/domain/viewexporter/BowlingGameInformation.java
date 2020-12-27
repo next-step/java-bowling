@@ -1,11 +1,12 @@
-package bowling.dto;
+package bowling.domain.viewexporter;
 
 import bowling.domain.frame.Frame;
+import bowling.dto.BowlingGameInformationDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BowlingGameDTO {
+public class BowlingGameInformation {
 
     private static final int CONTENT_SIZE_IN_NORMAL_FRAME = 7;
 
@@ -16,9 +17,15 @@ public class BowlingGameDTO {
     private static final String NO_CONTENT_IN_LAST_FRAME = "           ";
 
     private final List<Frame> frames;
+    private final int currentFrame;
 
-    public BowlingGameDTO(List<Frame> frames) {
+    public BowlingGameInformation(List<Frame> frames, int currentFrame) {
         this.frames = frames;
+        this.currentFrame = currentFrame;
+    }
+
+    public int getStage() {
+        return currentFrame;
     }
 
     public List<String> getContents() {
@@ -59,5 +66,9 @@ public class BowlingGameDTO {
         }
 
         return builder.toString();
+    }
+
+    public BowlingGameInformationDTO createBowlingGameInformationDTO() {
+        return new BowlingGameInformationDTO(getContents(), getStage());
     }
 }

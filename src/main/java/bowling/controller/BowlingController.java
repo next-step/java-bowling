@@ -14,10 +14,15 @@ public class BowlingController {
         UserDTO userDTO = user.exportData();
         BowlingGame bowlingGame = new BowlingGame();
 
+        ResultView.printRoundDescription();
+        ResultView.printContent(userDTO, bowlingGame.createInformation().createBowlingGameInformationDTO());
+
         while (!bowlingGame.isEnd()) {
+            ResultView.printCurrentStage(bowlingGame.createInformation().createBowlingGameInformationDTO());
             bowlingGame.record(DownedPin.fromNumber(InputView.askScore()));
+
             ResultView.printRoundDescription();
-            ResultView.printContent(userDTO, bowlingGame.createBowlingGameDTO());
+            ResultView.printContent(userDTO, bowlingGame.createInformation().createBowlingGameInformationDTO());
         }
     }
 }
