@@ -31,6 +31,10 @@ public class NormalFrame extends Frame {
         }
     }
 
+    public String getKnockDownExpression() {
+        return state.toString();
+    }
+
     @Override
     public void pitch(int countOfKnockDown) {
         validate();
@@ -41,11 +45,6 @@ public class NormalFrame extends Frame {
         }
         this.score = state.getScore();
     }
-
-    public String getKnockDownExpression() {
-        return state.toString();
-    }
-
 
     @Override
     public boolean isFinish() {
@@ -67,7 +66,7 @@ public class NormalFrame extends Frame {
         if (this.index == index || score.isFinishedCalculate()) {
             return;
         }
-        score.decrease();
+
         score.add(count);
     }
 

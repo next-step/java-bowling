@@ -5,6 +5,7 @@ import bowling_step3.domain.Score;
 import bowling_step3.exception.BowlingMaxCountException;
 
 public class Miss extends Finished {
+    private static final int DEFAULT = 0;
 
     public Miss(Pitch firstPitch, Pitch secondPitch) {
         validate(firstPitch, secondPitch);
@@ -29,7 +30,7 @@ public class Miss extends Finished {
 
     @Override
     public Score getScore() {
-        return Score.ofMiss(getTotalCount());
+        return Score.ofKnockDownState(getTotalCount(), DEFAULT);
     }
 
     @Override

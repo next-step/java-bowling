@@ -3,8 +3,11 @@ package bowling_step3.domain.state;
 import bowling_step3.domain.Pitch;
 import bowling_step3.domain.Score;
 
+import static bowling_step3.domain.Pitch.BOWLING_MAX_NUMBER;
+
 public class Spare extends Finished {
 
+    private static final int COUNT_OF_SPARE = 1;
     private static final String VERTICAL_SPARE = "|/";
 
     public Spare(Pitch firstPitch, Pitch secondPitch) {
@@ -19,7 +22,7 @@ public class Spare extends Finished {
 
     @Override
     public Score getScore() {
-        return Score.ofSpare();
+        return Score.ofKnockDownState(BOWLING_MAX_NUMBER, COUNT_OF_SPARE);
     }
 
     @Override

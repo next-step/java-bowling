@@ -2,8 +2,10 @@ package bowling_step3.domain.state;
 
 import bowling_step3.domain.Score;
 
-public class Strike extends Finished {
+import static bowling_step3.domain.Pitch.BOWLING_MAX_NUMBER;
 
+public class Strike extends Finished {
+    private static final int COUNT_OF_STRIKE = 2;
     private static final String STRIKE = "X";
 
     @Override
@@ -18,7 +20,7 @@ public class Strike extends Finished {
 
     @Override
     public Score getScore() {
-        return Score.ofStrike();
+        return Score.ofKnockDownState(BOWLING_MAX_NUMBER, COUNT_OF_STRIKE);
     }
 
     @Override

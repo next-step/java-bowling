@@ -5,15 +5,12 @@ import java.util.Objects;
 import static bowling_step3.domain.Pitch.BOWLING_MAX_NUMBER;
 
 public class Score {
-    private static final int COUNT_OF_STRIKE = 2;
-    private static final int COUNT_OF_SPARE = 1;
     private static final int DEFAULT = 0;
 
     private int score;
     private int left;
 
     public Score() {
-
     }
 
     public Score(int score, int left) {
@@ -22,35 +19,24 @@ public class Score {
     }
 
     public Score of(int countOfKnockDown) {
-        return new Score(score += countOfKnockDown, left - 1);
+        return new Score(score + countOfKnockDown, left - 1);
     }
 
-    public static Score ofMiss(int score) {
-        return new Score(score, DEFAULT);
-    }
-
-    public static Score ofSpare() {
-        return new Score(BOWLING_MAX_NUMBER, COUNT_OF_SPARE);
-    }
-
-    public static Score ofStrike() {
-        return new Score(BOWLING_MAX_NUMBER, COUNT_OF_STRIKE);
-    }
-
-    public void add(int score) {
-        this.score += score;
-    }
-
-    public int getScore() {
-        return score;
+    public static Score ofKnockDownState(int countOfKnockDown, int left) {
+        return new Score(countOfKnockDown, left);
     }
 
     public boolean isFinishedCalculate() {
         return left == DEFAULT;
     }
 
-    public void decrease() {
+    public void add(int score) {
         this.left--;
+        this.score += score;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     @Override
