@@ -32,9 +32,8 @@ public class Frames {
 
     public Frame nextFrame() {
         if (frames.size() > 9) {
-            return null;
+            return FinalFrame.init();
         }
-//        return FinalFrame.init();
         return NormalFrame.init();
     }
 }
