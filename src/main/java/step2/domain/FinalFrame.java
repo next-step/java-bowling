@@ -7,6 +7,7 @@ public class FinalFrame implements Frame {
 
     private static final int MAX_SIZE = 3;
     private static final int NORMAL_FRAME_SIZE = 2;
+    private static final int MIN_SIZE = 1;
 
     private final List<Pitch> pitches;
 
@@ -21,6 +22,9 @@ public class FinalFrame implements Frame {
 
     @Override
     public void bowl(Pitch pitch) {
+        if (getSize() == MIN_SIZE && !isStrike()) {
+            validateScore(pitch);
+        }
         pitches.add(pitch);
     }
 
@@ -60,6 +64,14 @@ public class FinalFrame implements Frame {
 
     private boolean isMaxSize() {
         return getSize() == MAX_SIZE;
+    }
+
+    @Override
+    public void validateScore(Pitch pitch) {
+        int totalScore = pitches.get(0).getScore() + pitch.getScore();
+        if (totalScore > Pitch.MAX_SCORE) {
+            throw new IllegalArgumentException("프레임의 점수의 합이 10을 넘겼습니다.");
+        }
     }
 
     @Override

@@ -8,9 +8,15 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final String PLAYER_NAME = "플레이어 이름은(3 english letters)?: ";
+    private static final String PITCH = "프레임 투구 : ";
 
-    public Player getPlayer() {
+    public static Player getPlayer() {
         System.out.print(PLAYER_NAME);
         return Player.from(scanner.nextLine());
+    }
+
+    public static int getScore(int index) {
+        System.out.print(index + PITCH);
+        return Integer.parseInt(scanner.nextLine());
     }
 }

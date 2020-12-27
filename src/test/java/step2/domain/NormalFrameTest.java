@@ -1,5 +1,6 @@
 package step2.domain;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,6 +54,17 @@ class NormalFrameTest {
         frame.bowl(pitch);
 
         assertThat(frame.isFinish()).isFalse();
+    }
+
+    @Test
+    @DisplayName("프레임의 점수가 10점을 넘을 경우 예외 처리")
+    void exceptScore() {
+        Pitch pitch = Pitch.from(6);
+        Frame frame = NormalFrame.init();
+        frame.bowl(pitch);
+
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> frame.bowl(pitch));
     }
 
 }

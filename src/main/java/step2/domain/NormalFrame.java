@@ -10,6 +10,7 @@ import java.util.List;
 
 public class NormalFrame implements Frame {
 
+    private static final int MIN_SIZE = 1;
     private static final int MAX_SIZE = 2;
 
     private final List<Pitch> pitches;
@@ -25,11 +26,17 @@ public class NormalFrame implements Frame {
 
     @Override
     public void bowl(Pitch pitch) {
+        if (getSize() == MIN_SIZE) {
+            validateScore(pitch);
+        }
         pitches.add(pitch);
     }
 
     @Override
     public boolean isFinish() {
+        if (getSize() < MIN_SIZE) {
+            return false;
+        }
         return isStrike() || isMaxSize();
     }
 
@@ -58,6 +65,14 @@ public class NormalFrame implements Frame {
         }
 
         return new Miss(pitches.get(0), pitches.get(1));
+    }
+
+    @Override
+    public void validateScore(Pitch pitch) {
+        int totalScore = pitches.get(0).getScore() + pitch.getScore();
+        if (totalScore > Pitch.MAX_SCORE) {
+            throw new IllegalArgumentException("한 프레임의 점수는 10점을 넘을 수 없습니다.");
+        }
     }
 
     @Override

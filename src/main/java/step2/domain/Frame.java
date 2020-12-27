@@ -8,4 +8,6 @@ public interface Frame {
 
     int getSize();
 
+    void validateScore(Pitch pitch);
+
 }
