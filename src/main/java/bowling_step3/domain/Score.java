@@ -2,8 +2,6 @@ package bowling_step3.domain;
 
 import java.util.Objects;
 
-import static bowling_step3.domain.Pitch.BOWLING_MAX_NUMBER;
-
 public class Score {
     private static final int DEFAULT = 0;
 
@@ -18,7 +16,7 @@ public class Score {
         this.left = left;
     }
 
-    public Score of(int countOfKnockDown) {
+    public Score sumOfScore(int countOfKnockDown) {
         return new Score(score + countOfKnockDown, left - 1);
     }
 
