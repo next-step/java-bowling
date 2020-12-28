@@ -1,28 +1,30 @@
 package step2.domain.state;
 
+import step2.domain.Frame;
 import step2.domain.Pitch;
+
+import java.util.List;
 
 public class Miss implements State {
 
     private static final String DELIMITER = "|";
 
-    private Pitch firstPitch;
-    private Pitch secondPitch;
+    private List<Pitch> pitches;
 
-    public Miss(Pitch firstPitch, Pitch secondPitch) {
-        this.firstPitch = firstPitch;
-        this.secondPitch = secondPitch;
-    }
-
-    public Miss(Pitch firstPitch) {
-        this.firstPitch = firstPitch;
+    public Miss(List<Pitch> pitches) {
+        this.pitches = pitches;
     }
 
     @Override
     public String toString() {
-        if (secondPitch == null) {
-            return "" + firstPitch;
+        if (pitches.size() == Frame.MAX_SIZE) {
+            return "" + pitches.get(0) + DELIMITER + pitches.get(1) + DELIMITER + pitches.get(2);
         }
-        return firstPitch + DELIMITER + secondPitch;
+
+        if (pitches.size() == Frame.NORMAL_FRAME_SIZE) {
+            return "" + pitches.get(0) + DELIMITER + pitches.get(1);
+        }
+
+        return "" + pitches.get(0);
     }
 }

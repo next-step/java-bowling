@@ -1,15 +1,14 @@
 package step2.domain;
 
+import step2.domain.state.Miss;
+import step2.domain.state.Spare;
 import step2.domain.state.State;
+import step2.domain.state.Strike;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FinalFrame implements Frame {
-
-    private static final int MAX_SIZE = 3;
-    private static final int NORMAL_FRAME_SIZE = 2;
-    private static final int MIN_SIZE = 1;
 
     private final List<Pitch> pitches;
 
@@ -24,7 +23,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public void bowl(Pitch pitch) {
-        if (getSize() == MIN_SIZE && !isStrike()) {
+        if (getSize() == MIN_SIZE && !sameStrikeNumber()) {
             validateScore(pitch);
         }
         pitches.add(pitch);
@@ -51,12 +50,35 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isStrike() {
-        return pitches.get(0).getScore() == Pitch.MAX_SCORE;
+        return sameStrikeNumber() || isLastStrike();
+    }
+
+    private boolean sameStrikeNumber() {
+        int strikeNumber = (int) pitches.stream()
+                .filter(pitch -> pitch.getScore() == Pitch.MAX_SCORE)
+                .count();
+        return getSize() == strikeNumber;
+    }
+
+    private boolean isLastStrike() {
+        if (!isThirdNull()) {
+            return pitches.get(2).getScore() == Pitch.MAX_SCORE;
+        }
+        return false;
+    }
+
+    private boolean isThirdNull() {
+        return getSize() < MAX_SIZE;
     }
 
     private boolean isSpare() {
-        int totalScore = pitches.get(0).getScore() + pitches.get(1).getScore();
-        return totalScore == Pitch.MAX_SCORE;
+        if (isThirdNull()) {
+            int firstTotalScore = pitches.get(0).getScore() + pitches.get(1).getScore();
+            return firstTotalScore == Pitch.MAX_SCORE;
+        }
+
+        int secondTotalScore = pitches.get(1).getScore() + pitches.get(2).getScore();
+        return secondTotalScore == Pitch.MAX_SCORE;
     }
 
     private boolean isMiss() {
@@ -78,7 +100,15 @@ public class FinalFrame implements Frame {
 
     @Override
     public State getState() {
-        return null;
+        if (isStrike()) {
+            return new Strike(pitches);
+        }
+
+        if (isSpare()) {
+            return new Spare(pitches);
+        }
+
+        return new Miss(pitches);
     }
 
     @Override

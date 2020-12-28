@@ -1,10 +1,13 @@
 package step2.domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import step2.domain.state.Miss;
+import step2.domain.state.Spare;
+import step2.domain.state.Strike;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FinalFrameTest {
 
@@ -79,7 +82,109 @@ class FinalFrameTest {
         Frame frame = FinalFrame.init();
         frame.bowl(pitch);
 
-        Assertions.assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> frame.bowl(pitch));
+    }
+
+    @Test
+    @DisplayName("싱글 스트라이크 상태 테스트")
+    void singleStrikeState() {
+        Pitch pitch = Pitch.from(10);
+        Frame frame = FinalFrame.init();
+        frame.bowl(pitch);
+
+        assertThat(frame.getState()).isInstanceOf(Strike.class);
+    }
+
+    @Test
+    @DisplayName("더블 스트라이크 상태 테스트")
+    void doubleStrikeState() {
+        Pitch pitch1 = Pitch.from(10);
+        Pitch pitch2 = Pitch.from(10);
+        Frame frame = FinalFrame.init();
+        frame.bowl(pitch1);
+        frame.bowl(pitch2);
+
+        assertThat(frame.getState()).isInstanceOf(Strike.class);
+    }
+
+    @Test
+    @DisplayName("트리플 스트라이크 상태 테스트")
+    void tripleStrikeState() {
+        Pitch pitch1 = Pitch.from(10);
+        Pitch pitch2 = Pitch.from(10);
+        Pitch pitch3 = Pitch.from(10);
+        Frame frame = FinalFrame.init();
+        frame.bowl(pitch1);
+        frame.bowl(pitch2);
+        frame.bowl(pitch3);
+
+        assertThat(frame.getState()).isInstanceOf(Strike.class);
+    }
+
+    @Test
+    @DisplayName("스트라이크-스트라이크아님-스트라이크 상태 테스트")
+    void strikeNotStrikeStrikeState() {
+        Pitch pitch1 = Pitch.from(10);
+        Pitch pitch2 = Pitch.from(2);
+        Pitch pitch3 = Pitch.from(10);
+        Frame frame = FinalFrame.init();
+        frame.bowl(pitch1);
+        frame.bowl(pitch2);
+        frame.bowl(pitch3);
+
+        assertThat(frame.getState()).isInstanceOf(Strike.class);
+    }
+
+    @Test
+    @DisplayName("첫번째 스페어 상태 테스트")
+    void spareFirstState() {
+        Pitch pitch1 = Pitch.from(8);
+        Pitch pitch2 = Pitch.from(2);
+        Frame frame = FinalFrame.init();
+        frame.bowl(pitch1);
+        frame.bowl(pitch2);
+
+        assertThat(frame.getState()).isInstanceOf(Spare.class);
+    }
+
+    @Test
+    @DisplayName("두번째 스페어 상태 테스트")
+    void spareSecondState() {
+        Pitch pitch1 = Pitch.from(10);
+        Pitch pitch2 = Pitch.from(8);
+        Pitch pitch3 = Pitch.from(2);
+        Frame frame = FinalFrame.init();
+        frame.bowl(pitch1);
+        frame.bowl(pitch2);
+        frame.bowl(pitch3);
+
+        assertThat(frame.getState()).isInstanceOf(Spare.class);
+    }
+
+    @Test
+    @DisplayName("미스 상태 테스트")
+    void missState() {
+        Pitch pitch1 = Pitch.from(8);
+        Pitch pitch2 = Pitch.from(1);
+        Frame frame = FinalFrame.init();
+        frame.bowl(pitch1);
+        frame.bowl(pitch2);
+
+        assertThat(frame.getState()).isInstanceOf(Miss.class);
+    }
+
+    @Test
+    @DisplayName("스트라이크 후 미스 상태 테스트")
+    void strikeMissState() {
+        Pitch pitch1 = Pitch.from(10);
+        Pitch pitch2 = Pitch.from(1);
+        Pitch pitch3 = Pitch.from(2);
+        Frame frame = FinalFrame.init();
+        frame.bowl(pitch1);
+        frame.bowl(pitch2);
+        frame.bowl(pitch3);
+
+        assertThat(frame.getState()).isInstanceOf(Miss.class);
     }
 }

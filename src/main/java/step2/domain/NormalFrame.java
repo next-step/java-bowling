@@ -10,9 +10,6 @@ import java.util.List;
 
 public class NormalFrame implements Frame {
 
-    private static final int MIN_SIZE = 1;
-    private static final int MAX_SIZE = 2;
-
     private final List<Pitch> pitches;
 
     public NormalFrame(List<Pitch> pitches) {
@@ -20,7 +17,7 @@ public class NormalFrame implements Frame {
     }
 
     public static Frame init() {
-        List<Pitch> pitches = new ArrayList<>(MAX_SIZE);
+        List<Pitch> pitches = new ArrayList<>(NORMAL_FRAME_SIZE);
         return new NormalFrame(pitches);
     }
 
@@ -52,23 +49,19 @@ public class NormalFrame implements Frame {
     }
 
     private boolean isMaxSize() {
-        return getSize() == MAX_SIZE;
+        return getSize() == NORMAL_FRAME_SIZE;
     }
 
     public State getState() {
         if (isStrike()) {
-            return new Strike();
-        }
-
-        if (getSize() == MIN_SIZE) {
-            return new Miss(pitches.get(0));
+            return new Strike(pitches);
         }
 
         if (isSpare()) {
-            return new Spare(pitches.get(0));
+            return new Spare(pitches);
         }
 
-        return new Miss(pitches.get(0), pitches.get(1));
+        return new Miss(pitches);
     }
 
     @Override
