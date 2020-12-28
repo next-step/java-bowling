@@ -72,13 +72,19 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isSpare() {
-        if (isThirdNull()) {
-            int firstTotalScore = pitches.get(0).getScore() + pitches.get(1).getScore();
-            return firstTotalScore == Pitch.MAX_SCORE;
+        int totalScore = pitches.stream()
+                .mapToInt(Pitch::getScore)
+                .sum();
+
+        if (getSize() == NORMAL_FRAME_SIZE) {
+            return totalScore == Pitch.MAX_SCORE;
         }
 
-        int secondTotalScore = pitches.get(1).getScore() + pitches.get(2).getScore();
-        return secondTotalScore == Pitch.MAX_SCORE;
+        if (getSize() == MAX_SIZE) {
+            return totalScore - pitches.get(0).getScore() == Pitch.MAX_SCORE;
+        }
+
+        return false;
     }
 
     private boolean isMiss() {
@@ -101,7 +107,7 @@ public class FinalFrame implements Frame {
     @Override
     public State getState() {
         if (isStrike()) {
-            return new Strike(pitches);
+            return new Strike();
         }
 
         if (isSpare()) {

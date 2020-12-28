@@ -54,7 +54,7 @@ public class NormalFrame implements Frame {
 
     public State getState() {
         if (isStrike()) {
-            return new Strike(pitches);
+            return new Strike();
         }
 
         if (isSpare()) {

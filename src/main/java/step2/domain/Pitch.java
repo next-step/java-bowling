@@ -1,5 +1,7 @@
 package step2.domain;
 
+import step2.domain.state.Strike;
+
 public class Pitch {
 
     public static final int MIN_SCORE = 0;
@@ -42,6 +44,10 @@ public class Pitch {
     public String toString() {
         if (score == MIN_SCORE) {
             return GUTTER_SYMBOL;
+        }
+
+        if (score == MAX_SCORE) {
+            return new Strike().toString();
         }
         return "" + score;
     }

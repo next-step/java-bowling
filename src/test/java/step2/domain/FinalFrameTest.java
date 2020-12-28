@@ -175,6 +175,16 @@ class FinalFrameTest {
     }
 
     @Test
+    @DisplayName("미스 상태 테스트")
+    void firstMissState() {
+        Pitch pitch1 = Pitch.from(8);
+        Frame frame = FinalFrame.init();
+        frame.bowl(pitch1);
+
+        assertThat(frame.getState()).isInstanceOf(Miss.class);
+    }
+
+    @Test
     @DisplayName("스트라이크 후 미스 상태 테스트")
     void strikeMissState() {
         Pitch pitch1 = Pitch.from(10);
