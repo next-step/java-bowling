@@ -96,7 +96,8 @@ public class Question extends AbstractEntity {
         validateAllAnswersOwnedBy(user);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteThis(user, deleteHistories); deleteCascadingAnswers(user, deleteHistories);
+        deleteHistories.add(deleteThis(user));
+        deleteHistories.addAll(deleteCascadingAnswers(user));
 
         return deleteHistories;
     }
@@ -122,14 +123,17 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private void deleteThis(User user, List<DeleteHistory> deleteHistories) {
+    private DeleteHistory deleteThis(User user) {
         setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), user, LocalDateTime.now()));
+        return new DeleteHistory(ContentType.QUESTION, getId(), user, LocalDateTime.now());
     }
 
-    private void deleteCascadingAnswers(User user, List<DeleteHistory> deleteHistories) throws CannotDeleteException {
+    private List<DeleteHistory> deleteCascadingAnswers(User user) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
             deleteHistories.add(answer.deleteBy(user));
         }
+
+        return deleteHistories;
     }
 }
