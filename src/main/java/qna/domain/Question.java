@@ -125,7 +125,7 @@ public class Question extends AbstractEntity {
 
     private DeleteHistory deleteThis(User user) {
         setDeleted(true);
-        return new DeleteHistory(ContentType.QUESTION, getId(), user, LocalDateTime.now());
+        return DeleteHistory.ofQuestion(getId(), user);
     }
 
     private List<DeleteHistory> deleteCascadingAnswers(User user) throws CannotDeleteException {

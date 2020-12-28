@@ -49,16 +49,14 @@ public class AnswerTest {
     }
 
     private void assertDeleteHistoryIsQ1(DeleteHistory deleteHistory) {
-        assertDeleteHistoryIs(deleteHistory, ContentType.QUESTION, Q1.getId(), Q1.getWriter());
+        assertThat(deleteHistory).isEqualToIgnoringGivenFields(
+                DeleteHistory.ofQuestion(Q1.getId(), Q1.getWriter()),
+                "createDate");
     }
 
     private void assertDeleteHistoryIsA1(DeleteHistory deleteHistory) {
-        assertDeleteHistoryIs(deleteHistory, ContentType.ANSWER, A1.getId(), A1.getWriter());
-    }
-
-    private void assertDeleteHistoryIs(DeleteHistory deleteHistory, ContentType contentType, long id, User user) {
         assertThat(deleteHistory).isEqualToIgnoringGivenFields(
-                new DeleteHistory(contentType, id, user, LocalDateTime.now()),
+                DeleteHistory.ofAnswer(A1.getId(), A1.getWriter()),
                 "createDate");
     }
 }

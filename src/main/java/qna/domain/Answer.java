@@ -74,7 +74,7 @@ public class Answer extends AbstractEntity {
         validateAnswerOwnedBy(user);
 
         setDeleted(true);
-        return new DeleteHistory(ContentType.ANSWER, getId(), user, LocalDateTime.now());
+        return DeleteHistory.ofAnswer(getId(), user);
     }
 
     @Override
