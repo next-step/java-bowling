@@ -28,33 +28,13 @@ public class DownedPin {
         }
     }
 
-    public static DownedPin fromNumber(int number) {
-        validateRange(number);
-        return cachedPin.get(number);
+    public static DownedPin fromNumber(int numDownedPin) {
+        validateRange(numDownedPin);
+        return cachedPin.get(numDownedPin);
     }
 
-    public DownedPin fromSubordinateTry(DownedPin downedPin) {
-        validateRange(this.numDownedPin + downedPin.numDownedPin);
-        return fromNumber(downedPin.numDownedPin);
-    }
-
-    public boolean isSpare(DownedPin continuousTry) {
-        if (continuousTry == null) {
-            return false;
-        }
-
-        return numDownedPin + continuousTry.numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
-    }
-
-    public boolean isGutter() {
-        return numDownedPin == MINIMUM_NUMBER_OF_DOWNED_PIN;
-    }
-
-    public boolean isStrike() {
-        return numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
-    }
-
-    public int getNumDownedPin() {
-        return numDownedPin;
+    public DownedPin fromPreviousPitch(int numDownedPin) {
+        validateRange(this.numDownedPin + numDownedPin);
+        return cachedPin.get(numDownedPin);
     }
 }
