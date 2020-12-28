@@ -32,7 +32,7 @@ public class Scores {
     private static List<Integer> sumScore(List<Integer> currentScore) {
         List<Integer> scores = new ArrayList<>();
         int sum = 0;
-        for (Integer score : currentScore) {
+        for (int score : currentScore) {
             sum += score;
             scores.add(sum);
         }

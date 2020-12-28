@@ -1,7 +1,9 @@
 package bowling_step3.domain;
 
+import bowling_step3.domain.Frame.Frame;
 import bowling_step3.exception.PitchOverBoundException;
 
+import java.util.List;
 import java.util.Objects;
 
 public class BowlingGame {
@@ -31,7 +33,7 @@ public class BowlingGame {
         return this.gameFrames;
     }
 
-    public Scores addScores() {
+    public Scores sumScore() {
         return Scores.sumOf(gameFrames.getScores().getScores());
     }
 
@@ -54,5 +56,9 @@ public class BowlingGame {
     @Override
     public int hashCode() {
         return Objects.hash(player);
+    }
+
+    public List<Frame> getFrames() {
+        return gameFrames.getFrames();
     }
 }

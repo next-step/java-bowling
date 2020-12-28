@@ -86,8 +86,8 @@ public class OutputUi {
         printInitHeader();
 
         printName(playerName);
-        printKnockDown(gameFrames.getGameFrames().getFrames());
-        printScores(gameFrames.addScores());
+        printKnockDown(gameFrames.getFrames());
+        printScores(gameFrames.sumScore());
     }
 
     public static void printInitFrame(Player player, BowlingGame gameFrames) {
