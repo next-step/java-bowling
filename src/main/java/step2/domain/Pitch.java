@@ -47,7 +47,7 @@ public class Pitch {
         }
 
         if (score == MAX_SCORE) {
-            return new Strike().toString();
+            return Strike.SYMBOL;
         }
         return "" + score;
     }

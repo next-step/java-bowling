@@ -107,7 +107,7 @@ public class FinalFrame implements Frame {
     @Override
     public State getState() {
         if (isStrike()) {
-            return new Strike();
+            return new Strike(pitches);
         }
 
         if (isSpare()) {
