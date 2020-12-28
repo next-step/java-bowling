@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Arrays;
 import java.util.List;
 
 public interface FrameData {
@@ -28,4 +29,24 @@ public interface FrameData {
             }
         };
     }
+
+    static FrameData empty(int frameNo) {
+        return new FrameData() {
+            @Override
+            public int getFrameNo() {
+                return frameNo;
+            }
+
+            @Override
+            public List<PinMark> getPinMarks() {
+                return Arrays.asList();
+            }
+
+            @Override
+            public int getFrameScore() {
+                return 0;
+            }
+        };
+    }
+
 }

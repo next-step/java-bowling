@@ -20,8 +20,7 @@ public class BowlingGame {
     }
 
     public FrameSet start() {
-        return start(game -> {
-        });
+        return start(game -> {});
     }
 
     public FrameSet start(Consumer<BowlingGame> actionBeforeStart) {

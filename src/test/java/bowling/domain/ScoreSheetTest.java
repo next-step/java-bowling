@@ -61,7 +61,7 @@ abstract class ScoreSheetTest {
     @DisplayName("볼링스코어시트를 출력할 수 있다")
     @Test
     void printScoreSheet(){
-        IntStream.range(0, 10)
+        IntStream.range(0, 8)
                 .forEach(idx -> {
                     Frame frame = scoreSheet.nextFrame();
                     while( !frame.isEnd() ) {
@@ -92,7 +92,11 @@ abstract class ScoreSheetTest {
                     .stream()
                     .map( pinMark -> String.valueOf(pinMark.getCountOfFallDownPins()))
                     .collect(Collectors.joining("|"));
-            System.out.print(marked);
+            int spanSize = 3;
+            if( frameData.getFrameNo() == 10 ){
+                spanSize = spanSize+2;
+            }
+            System.out.print(String.format("%1$" + spanSize + "s", marked));
             System.out.print(" | ");
         }
 
