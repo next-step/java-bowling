@@ -4,8 +4,6 @@ import bowling_step3.exception.PitchOverBoundException;
 
 import java.util.Objects;
 
-import static java.util.Collections.unmodifiableList;
-
 public class BowlingGame {
 
     private final Player player;
@@ -33,24 +31,8 @@ public class BowlingGame {
         return this.gameFrames;
     }
 
-    private Scores gameScores() {
-        return gameFrames.getScores();
-    }
-
-    private int sumScore(int sum, int score) {
-        return sum + score;
-    }
-
     public Scores addScores() {
-        Scores scores = Scores.of();
-
-        int sum = 0;
-        for (Integer score : unmodifiableList(gameScores().getScores())) {
-            sum = sumScore(sum, score);
-            scores.add(sum);
-        }
-
-        return scores;
+        return Scores.sumOf(gameFrames.getScores().getScores());
     }
 
     public Player getPlayer() {

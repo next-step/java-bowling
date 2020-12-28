@@ -81,12 +81,7 @@ public class GameFrames {
     }
 
     public Scores getScores() {
-        Scores scores = Scores.of();
-        frames.stream()
-                .filter(Frame::hasScore)
-                .mapToInt(Frame::getScore)
-                .forEach(scores::add);
-        return scores;
+        return Scores.ofFrames(frames);
     }
 
     public int size() {
