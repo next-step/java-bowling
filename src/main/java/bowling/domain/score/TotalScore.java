@@ -8,10 +8,14 @@ public class TotalScore {
     private int totalScore = 0;
 
     public void add(int frameScore) {
-        totalScore += frameScore;
+         totalScore += frameScore;
     }
 
     public String get() {
         return String.valueOf(totalScore);
+    }
+
+    public String addAndGet(int num) {
+        return String.valueOf(totalScore + num);
     }
 }

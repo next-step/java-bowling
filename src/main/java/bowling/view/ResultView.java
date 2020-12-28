@@ -21,7 +21,8 @@ public class ResultView {
 
     public static void init(Frames frames, Players players) {
         header();
-        scores(frames, players);
+        blank();
+        blank();
     }
 
     public static void print(Frames frames, Players players) {
@@ -31,6 +32,10 @@ public class ResultView {
 
     private static void header() {
         println(Grid.header());
+    }
+
+    private static void blank() {
+        println(Grid.blank());
     }
 
     private static void scores(Frames frames, Players players) {

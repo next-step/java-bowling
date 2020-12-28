@@ -43,6 +43,7 @@ public class Bowling {
     private void stroke(int frameNo, int playerIndex) {
         Frame frame = frames.get(frameNo);
         State state = frame.stroke(playerIndex, InputView.getPins(players.get(playerIndex)));
+        ResultView.print(frames, players);
         while (!state.isFinished()) {
             state = frame.spare(playerIndex, InputView.getPins(players.get(playerIndex)));
             ResultView.print(frames, players);

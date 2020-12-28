@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.view;
 
+import bowling.domain.Player;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GridTest {
-
     private Frames frames;
     private Player player;
     private int playerIndex;
@@ -467,9 +467,162 @@ class GridTest {
         frames.next(frameIndex++);
         frame = frames.get(frameIndex);
         frame.stroke(playerIndex, new Pins(10));
-        frame.spare(playerIndex, new Pins(10));
 
         assertThat(Grid.sum(frames, playerIndex))
                 .isEqualTo("|      |  30  |  60  |  90  |  120 |  150 |  180 |  210 |  240 |      |      |");
+    }
+
+    @Test
+    void sum11() {
+        Frame frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(10));
+
+        for (int i = 0; i < 8; i++) {
+            frames.next(frameIndex++);
+            frame = frames.get(frameIndex);
+            frame.stroke(playerIndex, new Pins(10));
+        }
+
+        frames.next(frameIndex++);
+        frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(10));
+        frame.spare(playerIndex, new Pins(10));
+
+        assertThat(Grid.sum(frames, playerIndex))
+                .isEqualTo("|      |  30  |  60  |  90  |  120 |  150 |  180 |  210 |  240 |  270 |      |");
+    }
+
+    @Test
+    void sum12() {
+        Frame frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(10));
+
+        for (int i = 0; i < 8; i++) {
+            frames.next(frameIndex++);
+            frame = frames.get(frameIndex);
+            frame.stroke(playerIndex, new Pins(10));
+        }
+
+        frames.next(frameIndex++);
+        frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(10));
+        frame.spare(playerIndex, new Pins(10));
+        frame.spare(playerIndex, new Pins(10));
+
+        assertThat(Grid.sum(frames, playerIndex))
+                .isEqualTo("|      |  30  |  60  |  90  |  120 |  150 |  180 |  210 |  240 |  270 |  300 |");
+    }
+
+    @Test
+    void sum13() {
+        Frame frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(10));
+
+        for (int i = 0; i < 8; i++) {
+            frames.next(frameIndex++);
+            frame = frames.get(frameIndex);
+            frame.stroke(playerIndex, new Pins(10));
+        }
+
+        frames.next(frameIndex++);
+        frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(10));
+        frame.spare(playerIndex, new Pins(10));
+        frame.spare(playerIndex, new Pins(9));
+
+        assertThat(Grid.sum(frames, playerIndex))
+                .isEqualTo("|      |  30  |  60  |  90  |  120 |  150 |  180 |  210 |  240 |  270 |  299 |");
+    }
+
+    @Test
+    void sum14() {
+        Frame frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(10));
+
+        for (int i = 0; i < 8; i++) {
+            frames.next(frameIndex++);
+            frame = frames.get(frameIndex);
+            frame.stroke(playerIndex, new Pins(10));
+        }
+
+        frames.next(frameIndex++);
+        frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(10));
+        frame.spare(playerIndex, new Pins(10));
+        frame.spare(playerIndex, new Pins(8));
+
+        assertThat(Grid.sum(frames, playerIndex))
+                .isEqualTo("|      |  30  |  60  |  90  |  120 |  150 |  180 |  210 |  240 |  270 |  298 |");
+    }
+
+    @Test
+    void sum15() {
+        Frame frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(10));
+
+        for (int i = 0; i < 8; i++) {
+            frames.next(frameIndex++);
+            frame = frames.get(frameIndex);
+            frame.stroke(playerIndex, new Pins(10));
+        }
+
+        frames.next(frameIndex++);
+        frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(1));
+        frame.spare(playerIndex, new Pins(9));
+        frame.spare(playerIndex, new Pins(8));
+
+        assertThat(Grid.sum(frames, playerIndex))
+                .isEqualTo("|      |  30  |  60  |  90  |  120 |  150 |  180 |  210 |  240 |  270 |  298 |");
+    }
+
+    @Test
+    void miss() {
+        Frame frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(1));
+
+
+        assertThat(Grid.sum(frames, playerIndex))
+                .isEqualTo("|      |  1   |      |      |      |      |      |      |      |      |      |");
+    }
+
+    @Test
+    void spare() {
+        Frame frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(1));
+        frame.spare(playerIndex, new Pins(9));
+
+
+        assertThat(Grid.sum(frames, playerIndex))
+                .isEqualTo("|      |      |      |      |      |      |      |      |      |      |      |");
+    }
+
+    @Test
+    void spare_miss() {
+        Frame frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(1));
+        frame.spare(playerIndex, new Pins(9));
+
+        frames.next(frameIndex++);
+        frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(1));
+
+
+        assertThat(Grid.sum(frames, playerIndex))
+                .isEqualTo("|      |  11  |  12  |      |      |      |      |      |      |      |      |");
+    }
+
+    @Test
+    void strike_spare() {
+        Frame frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(10));
+
+        frames.next(frameIndex++);
+        frame = frames.get(frameIndex);
+        frame.stroke(playerIndex, new Pins(8));
+
+
+        assertThat(Grid.sum(frames, playerIndex))
+                .isEqualTo("|      |      |      |      |      |      |      |      |      |      |      |");
     }
 }
