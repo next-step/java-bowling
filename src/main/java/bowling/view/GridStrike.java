@@ -1,12 +1,10 @@
 package bowling.view;
 
+import bowling.domain.Symbol;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.score.TotalScore;
-import bowling.domain.state.FinalState;
-import bowling.domain.state.Spare;
-import bowling.domain.state.State;
-import bowling.domain.state.Strike;
+import bowling.domain.state.*;
 
 /**
  * Created : 2020-12-28 오후 3:45
@@ -15,50 +13,60 @@ import bowling.domain.state.Strike;
 public class GridStrike {
 
     public static int add(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
-        if (frameIndex > Grid.MAX_BONUS) {
-            return Grid.INDEX_ZERO;
-        }
         Frame frame = frames.get(frameIndex);
         State state = frame.getState(playerIndex);
-        int remain = 0;
+        int remain = Grid.INDEX_ZERO;
 
         if (state instanceof Strike) {
             totalScore.add(state.getScore().getFrameScore());
-            addStrikeBonus(frames, totalScore, frameIndex, playerIndex);
             remain++;
+            remain += addStrikeBonus(frames, totalScore, frameIndex, playerIndex);
         }
-        // 10프레임 (XX)
-        if (state instanceof FinalState && state.getSymbol().length() == Grid.INDEX_TWO) {
-            remain++;
-        }
-        // 10프레임 (XXX)
-        if (state instanceof FinalState && state.getSymbol().length() == Grid.INDEX_THREE) {
-            remain++;
-        }
-        // 10프레임 (XX|*)
-        if (state instanceof FinalState && state.getSymbol().length() == Grid.INDEX_FOUR) {
-            remain++;
+        if (state instanceof FinalState) {
+            totalScore.add(addFinalScore(state));
         }
         return remain;
     }
 
-    private static void addStrikeBonus(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
-        if (frameIndex + Grid.INDEX_ONE < frames.size()) {
-            totalScore.add(frames.get(frameIndex + Grid.INDEX_ONE).getFrameScore(playerIndex));
+    private static int addFinalScore(State state) {
+        int ret = 0;
+        if ("XXX".equals(state.getSymbol())) {
+            ret = 20;
         }
-
-        if (frameIndex + Grid.INDEX_TWO < frames.size()) {
-            addNextStrikeBonus(frames, totalScore, frameIndex, playerIndex);
-        }
+        return ret;
     }
 
-    private static void addNextStrikeBonus(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
+    private static int addStrikeBonus(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
+        int remain = Grid.INDEX_ZERO;
+        // 8프레임일 때 10프레임 값
+        if (frameIndex == Grid.NORMAL_FRAME_MAX) {
+        }
+        if (frameIndex + Grid.INDEX_ONE < frames.size()) {
+            totalScore.add(frames.get(frameIndex + Grid.INDEX_ONE).getFrameScore(playerIndex));
+            remain++;
+        }
+        if (frameIndex + Grid.INDEX_TWO < frames.size()) {
+            remain += addNextStrikeBonus(frames, totalScore, frameIndex, playerIndex);
+        }
+        if (frameIndex == Grid.NORMAL_FRAME_MAX) remain--;
+        return remain;
+    }
+
+    private static int addNextStrikeBonus(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
         Frame nextFrame = frames.get(frameIndex + Grid.INDEX_ONE);
         State nextState = nextFrame.getState(playerIndex);
+        int remain = Grid.INDEX_ZERO;
 
+        if (nextState instanceof Strike && frameIndex == 7) {
+            totalScore.add(Symbol.STRIKE.getPins().get());
+            remain += Grid.INDEX_TWO;
+            return remain;
+        }
         if (nextState instanceof Strike) {
             totalScore.add(frames.get(frameIndex + Grid.INDEX_TWO).getFrameScore(playerIndex));
+            remain++;
         }
+        return remain;
     }
 
     public static String print(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
@@ -66,12 +74,25 @@ public class GridStrike {
         State state = frame.getState(playerIndex);
 
         if (state instanceof Strike) {
-            return printStrikeInstance(frames, totalScore, frameIndex, playerIndex);
+            return printStrike(frames, totalScore, frameIndex, playerIndex);
         }
-        // 10프레임
-        if (state instanceof FinalState) {
+        if (state instanceof FinalState && frameIndex > 8) {
             return printFinal(frames, totalScore, frameIndex, playerIndex);
         }
+        return Grid.NONE;
+    }
+
+    private static String printStrike(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
+        if (frameIndex + Grid.INDEX_TWO < frames.size()) {
+            return String.format(Grid.FORMAT_SPACE, totalScore.get());
+        }
+        if (frameIndex + Grid.INDEX_ONE < frames.size() && frameIndex < Grid.NORMAL_FRAME_MAX) {
+            return String.format(Grid.FORMAT_SPACE, Grid.NONE);
+        }
+        if (frameIndex == Grid.NORMAL_FRAME_MAX && frames.size() == 9) {
+            return String.format(Grid.FORMAT_SPACE, Grid.NONE);
+        }
+
         return Grid.NONE;
     }
 
@@ -79,69 +100,17 @@ public class GridStrike {
         Frame frame = frames.get(frameIndex);
         State state = frame.getState(playerIndex);
 
-        // 10프레임 (X)
-        if (state instanceof FinalState && state.getSymbol().length() == Grid.INDEX_ONE) {
-            return String.format(Grid.FORMAT_SPACE, totalScore.get());
+        StringBuilder sb = new StringBuilder();
+        if (!state.isFinished()) {
+            sb.append(String.format(Grid.FORMAT_SPACE, Grid.NONE));
+            sb.append(String.format(Grid.FORMAT_SPACE, Grid.NONE));
         }
-        // 10프레임 (XX)
-        if (state instanceof FinalState && state.getSymbol().length() == Grid.INDEX_TWO) {
-            int score = frames.get(frameIndex).getFrameScore(playerIndex);
-            if (score == 20) score += 10;
-            return String.format(Grid.FORMAT_SPACE, totalScore.get())
-                    + String.format(Grid.FORMAT_SPACE, totalScore.addAndGet(score));
+        if (state.isFinished()) {
+            sb.append(String.format(Grid.FORMAT_SPACE, Integer.parseInt(totalScore.get()) - state.getScore().getFrameScore()));
+            sb.append(String.format(Grid.FORMAT_SPACE, totalScore.get()));
         }
-        // 10프레임 (XXX)
-        if (state instanceof FinalState && state.getSymbol().length() == Grid.INDEX_THREE) {
-            int score = frames.get(frameIndex).getFrameScore(playerIndex);
-            int score2 = 0;
-            if (score == 30) score2 = score + 30;
-            return String.format(Grid.FORMAT_SPACE, totalScore.get())
-                    + String.format(Grid.FORMAT_SPACE, totalScore.addAndGet(score))
-                    + String.format(Grid.FORMAT_SPACE, totalScore.addAndGet(score2));
-        }
-        // 10프레임 (XX|*)
-        if (state instanceof FinalState && state.getSymbol().length() == Grid.INDEX_FOUR) {
-            int score = frames.get(frameIndex).getFrameScore(playerIndex);
-            int score2 = 0;
-            if (score > 20) {
-                score2 = score + 30;
-                score = 30;
-            }
-            return String.format(Grid.FORMAT_SPACE, totalScore.get())
-                    + String.format(Grid.FORMAT_SPACE, totalScore.addAndGet(score))
-                    + String.format(Grid.FORMAT_SPACE, totalScore.addAndGet(score2));
-        }
-        return Grid.NONE;
-    }
 
-    private static String printStrikeInstance(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
-        // Strike && Strike
-        if (frameIndex + Grid.INDEX_TWO < frames.size()) {
-            return printStrikeAndStrike(frames, totalScore, frameIndex, playerIndex);
-        }
-        // Strike && Spare
-        if (frameIndex + Grid.INDEX_ONE < frames.size()) {
-            return printStrikeAndSpare(frames, totalScore, frameIndex, playerIndex);
-        }
-        return String.format(Grid.FORMAT_SPACE, Grid.NONE);
-    }
-
-    private static String printStrikeAndStrike(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
-        Frame nextNextFrame = frames.get(frameIndex + Grid.INDEX_TWO);
-        State nextNextState = nextNextFrame.getState(playerIndex);
-        if (nextNextState instanceof Strike) {
-            return String.format(Grid.FORMAT_SPACE, totalScore.get());
-        }
-        return Grid.NONE;
-    }
-
-    private static String printStrikeAndSpare(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
-        Frame nextFrame = frames.get(frameIndex + Grid.INDEX_ONE);
-        State nextState = nextFrame.getState(playerIndex);
-        if (nextState instanceof Spare) {
-            return String.format(Grid.FORMAT_SPACE, totalScore.get());
-        }
-        return Grid.NONE;
+        return sb.toString();
     }
 
     private GridStrike() {

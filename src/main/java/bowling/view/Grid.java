@@ -15,13 +15,11 @@ public class Grid {
     public static final int INDEX_ZERO = 0;
     public static final int INDEX_ONE = 1;
     public static final int INDEX_TWO = 2;
-    public static final int INDEX_THREE = 3;
-    public static final int INDEX_FOUR = 4;
     public static final String FORMAT_SPACE = "  %-3s |";
     public static final String STRING_ZERO = "0";
     public static final String DELIMITER = "|";
     public static final String NONE = "";
-    public static final int MAX_BONUS = 7;
+    public static final int NORMAL_FRAME_MAX = 8;
 
     public static String header() {
         StringBuilder sb = new StringBuilder();
@@ -59,10 +57,6 @@ public class Grid {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(DELIMITER + FORMAT_SPACE, NONE));
 
-        boolean strikeVisible = true;
-        boolean spareVisible = true;
-        boolean missVisible = true;
-        boolean gutterVisible = true;
         int remain = 0;
         TotalScore totalScore = new TotalScore();
         for (int frameIndex = INDEX_ZERO; frameIndex < frames.size(); frameIndex++) {

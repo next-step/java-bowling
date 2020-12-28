@@ -19,9 +19,6 @@ public class GridSpare {
         if (state instanceof Spare) {
             totalScore.add(state.getScore().getFrameScore());
             addSpareBonus(frames, totalScore, frameIndex, playerIndex);
-        }
-
-        if (state instanceof Spare) {
             remain++;
         }
 

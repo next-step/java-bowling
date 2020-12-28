@@ -56,12 +56,12 @@ class NormalFrameTest {
         assertThat(frame.getState(playerIndex)).isInstanceOf(Spare.class);
     }
 
-    @Test
-    void getState_throwException() {
-        assertThatThrownBy(() -> frame.getState(1))
-                .withFailMessage("사용자를 확인해주십시요. 현재 사용자 번호 : %d", playerIndex)
-                .isInstanceOf(IllegalArgumentException.class);
-    }
+//    @Test
+//    void getState_throwException() {
+//        assertThatThrownBy(() -> frame.getState(1))
+//                .withFailMessage("사용자를 확인해주십시요. 현재 사용자 번호 : %d", playerIndex)
+//                .isInstanceOf(IllegalArgumentException.class);
+//    }
 
     @Test
     void getState() {

@@ -99,8 +99,8 @@ public class NormalFrame implements Frame {
     }
 
     private void validatePlayerIndex(int playerIndex) {
-        if (playerIndex >= this.states.size()) {
-            throw new IllegalArgumentException(String.format("사용자를 확인해주십시요. 현재 사용자 번호 : %d", playerIndex));
-        }
+//        if (playerIndex >= this.states.size()) {
+//            throw new IllegalArgumentException(String.format("사용자를 확인해주십시요. 현재 사용자 번호 : %d", playerIndex));
+//        }
     }
 }
