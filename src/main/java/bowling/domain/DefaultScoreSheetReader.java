@@ -13,14 +13,17 @@ public class DefaultScoreSheetReader implements ScoreSheetReader {
         this.frames = frames;
     }
 
+    @Override
     public boolean isEOF() {
         return frames.size() <= nextFrameIdx;
     }
 
+    @Override
     public String readPlayName() {
         return player.getName();
     }
 
+    @Override
     public FrameData readFrameData() {
         if (isEOF()) return null;
 

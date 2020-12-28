@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,8 +55,49 @@ abstract class ScoreSheetTest {
 
     private int getCountOfFailDownPins(){
         Random random = new Random();
-        return random.nextInt(5);
+        return random.nextInt(6);
     }
+
+    @DisplayName("볼링스코어시트를 출력할 수 있다")
+    @Test
+    void printScoreSheet(){
+        IntStream.range(0, 10)
+                .forEach(idx -> {
+                    Frame frame = scoreSheet.nextFrame();
+                    while( !frame.isEnd() ) {
+                        frame.inputPins(getCountOfFailDownPins());
+                    }
+                });
+
+        ScoreSheetReader reader = scoreSheet.getReader();
+        String playerName = reader.readPlayName();
+        int nameSpan = Math.max(playerName.length() + 2, 8);
+
+        System.out.print(String.format("| %1$" + nameSpan + "s | ", "NAME"));
+        String frameNos = IntStream.range(0, 10)
+                .mapToObj(idx -> {
+                    if( idx == 9 ){
+                        return String.format("%1$4s ", String.valueOf(idx+1));
+                    }
+                    return String.format("%1$2s ", String.valueOf(idx+1));
+                })
+                .collect(Collectors.joining(" | "));
+        System.out.print(frameNos);
+        System.out.println(" |");
+
+        System.out.print(String.format("|%1$" + nameSpan + "s  | ", playerName));
+        while(!reader.isEOF()){
+            FrameData frameData = reader.readFrameData();
+            String marked = frameData.getPinMarks()
+                    .stream()
+                    .map( pinMark -> String.valueOf(pinMark.getCountOfFallDownPins()))
+                    .collect(Collectors.joining("|"));
+            System.out.print(marked);
+            System.out.print(" | ");
+        }
+
+    }
+
 }
 
 class DefaultScoreSheetTest extends ScoreSheetTest {
