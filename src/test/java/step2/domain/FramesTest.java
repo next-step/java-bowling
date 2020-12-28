@@ -87,5 +87,4 @@ class FramesTest {
         Frames frames = Frames.init();
         assertThat(frames.nextFrame()).isInstanceOf(Frame.class);
     }
-
 }
