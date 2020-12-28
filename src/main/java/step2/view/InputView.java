@@ -16,6 +16,7 @@ public class InputView {
     }
 
     public static int getScore(int index) {
+        System.out.println();
         System.out.print(index + PITCH);
         return Integer.parseInt(scanner.nextLine());
     }

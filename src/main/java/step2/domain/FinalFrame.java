@@ -1,5 +1,7 @@
 package step2.domain;
 
+import step2.domain.state.State;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +74,11 @@ public class FinalFrame implements Frame {
         if (totalScore > Pitch.MAX_SCORE) {
             throw new IllegalArgumentException("프레임의 점수의 합이 10을 넘겼습니다.");
         }
+    }
+
+    @Override
+    public State getState() {
+        return null;
     }
 
     @Override

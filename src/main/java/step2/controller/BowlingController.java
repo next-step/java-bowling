@@ -22,15 +22,16 @@ public class BowlingController {
         while (!frames.isFinish()) {
             Frame frame = frames.nextFrame();
             int round = frames.getSize() + ONE;
-            bowlFrame(frame, round);
+            bowlFrame(resultView, frame, round);
             frames.bowl(frame);
         }
     }
 
-    private void bowlFrame(Frame frame, int round) {
+    private void bowlFrame(ResultView resultView, Frame frame, int round) {
         while (!frame.isFinish()) {
             Pitch pitch = Pitch.from(InputView.getScore(round));
             frame.bowl(pitch);
+            resultView.printScoreBoard(frame, round);
         }
     }
 }

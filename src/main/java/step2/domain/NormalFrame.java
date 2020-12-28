@@ -60,6 +60,10 @@ public class NormalFrame implements Frame {
             return new Strike();
         }
 
+        if (getSize() == MIN_SIZE) {
+            return new Miss(pitches.get(0));
+        }
+
         if (isSpare()) {
             return new Spare(pitches.get(0));
         }
