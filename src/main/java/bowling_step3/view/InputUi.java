@@ -1,5 +1,7 @@
 package bowling_step3.view;
 
+import bowling_step3.domain.Player;
+
 import java.util.Scanner;
 
 public class InputUi {
@@ -9,13 +11,18 @@ public class InputUi {
 
     }
 
-    public static String inputPlayer() {
-        System.out.print("플레이어 이름은(3 english letters)? : ");
+    public static int inputCountOfPlayer() {
+        System.out.print("How many people? ");
+        return SCANNER.nextInt();
+    }
+
+    public static String inputPlayer(int number) {
+        System.out.print("플레이어" + number + "의 이름은(3 english letters)? : ");
         return SCANNER.next();
     }
 
-    public static int inputFrame(int number) {
-        System.out.print(String.format("%d프레임 투구 : ", number));
+    public static int inputFrame(Player player) {
+        System.out.print(String.format("%s's turn : ", player.getName()));
         return SCANNER.nextInt();
     }
 
