@@ -1,5 +1,6 @@
 package step2.domain.state;
 
+import step2.domain.Frame;
 import step2.domain.Pitch;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public class Spare implements State {
 
     @Override
     public String toString() {
+        if (pitches.size() == Frame.MAX_SIZE) {
+            return pitches.get(0) + DELIMITER + pitches.get(1) + DELIMITER + SYMBOL;
+        }
         return pitches.get(0) + DELIMITER + SYMBOL;
     }
 }
