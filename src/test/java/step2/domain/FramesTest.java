@@ -87,4 +87,30 @@ class FramesTest {
         Frames frames = Frames.init();
         assertThat(frames.nextFrame()).isInstanceOf(Frame.class);
     }
+
+    @Test
+    @DisplayName("마지막 프레임 생성")
+    void createFinalFrame() {
+        Frames frames = Frames.init();
+        Frame frame1 = NormalFrame.init();
+        Frame frame2 = NormalFrame.init();
+        Frame frame3 = NormalFrame.init();
+        Frame frame4 = NormalFrame.init();
+        Frame frame5 = NormalFrame.init();
+        Frame frame6 = NormalFrame.init();
+        Frame frame7 = NormalFrame.init();
+        Frame frame8 = NormalFrame.init();
+        Frame frame9 = NormalFrame.init();
+        frames.bowl(frame1);
+        frames.bowl(frame2);
+        frames.bowl(frame3);
+        frames.bowl(frame4);
+        frames.bowl(frame5);
+        frames.bowl(frame6);
+        frames.bowl(frame7);
+        frames.bowl(frame8);
+        frames.bowl(frame9);
+
+        assertThat(frames.nextFrame()).isInstanceOf(FinalFrame.class);
+    }
 }

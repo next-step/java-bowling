@@ -31,7 +31,7 @@ public class Frames {
     }
 
     public Frame nextFrame() {
-        if (frames.size() > 9) {
+        if (frames.size() == MAX_FRAME - 1) {
             return FinalFrame.init();
         }
         return NormalFrame.init();
