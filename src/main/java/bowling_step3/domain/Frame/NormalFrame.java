@@ -52,11 +52,6 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public int getScore() {
-        return score.getScore();
-    }
-
-    @Override
     public boolean hasScore() {
         return Objects.nonNull(score) && score.isFinishedCalculate();
     }

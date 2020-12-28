@@ -16,10 +16,13 @@ public abstract class Frame {
 
     public abstract Frame next();
 
-    public abstract int getScore();
+    public Integer getScore() {
+        return score.getScore();
+    }
 
     public abstract boolean hasScore();
 
     public abstract void calculateScore(int index, int count);
+
 }
 

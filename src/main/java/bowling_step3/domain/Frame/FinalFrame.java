@@ -58,7 +58,7 @@ public class FinalFrame extends Frame {
     }
 
     private void createScore(Score score) {
-        this.score = score.of(sumAll());
+        this.score = score.sumOfScore(sumAll());
     }
 
     private boolean isSumPitchCount(int pitchCount) {
@@ -89,11 +89,6 @@ public class FinalFrame extends Frame {
 
     public LinkedList<State> getStates() {
         return states;
-    }
-
-    @Override
-    public int getScore() {
-        return score.getScore();
     }
 
     @Override
