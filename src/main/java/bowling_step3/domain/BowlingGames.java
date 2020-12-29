@@ -1,7 +1,7 @@
 package bowling_step3.domain;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BowlingGames {
 
@@ -11,7 +11,7 @@ public class BowlingGames {
         this.bowlingGames = bowlingGames;
     }
 
-    public static BowlingGames of(Players players) {
+    public static BowlingGames of(List<Player> players) {
         return new BowlingGames(setBowlingGamesOfPlayer(players));
     }
 
@@ -19,26 +19,10 @@ public class BowlingGames {
         return bowlingGames;
     }
 
-    public int size() {
-        return bowlingGames.size();
-    }
-
-    public Player player(int index) {
-        return bowlingGames.get(index).getPlayer();
-    }
-
-    public BowlingGame frame(int index) {
-        return bowlingGames.get(index);
-    }
-
-    public Scores sumScore(int index) {
-        return bowlingGames.get(index).sumScore();
-    }
-
-    private static List<BowlingGame> setBowlingGamesOfPlayer(Players players) {
-        List<BowlingGame> bowlingGames = new ArrayList<>();
-        players.getPlayers()
-                .forEach(player -> bowlingGames.add(new BowlingGame(player)));
-        return bowlingGames;
+    private static List<BowlingGame> setBowlingGamesOfPlayer(List<Player> players) {
+        return players
+                .stream()
+                .map(BowlingGame::new)
+                .collect(Collectors.toList());
     }
 }
