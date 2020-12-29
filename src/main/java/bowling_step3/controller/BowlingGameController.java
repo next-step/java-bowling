@@ -4,10 +4,11 @@ package bowling_step3.controller;
 import bowling_step3.domain.BowlingGame;
 import bowling_step3.domain.BowlingGames;
 import bowling_step3.domain.Player;
-import bowling_step3.domain.Players;
 import bowling_step3.view.InputUi;
 import bowling_step3.view.OutputUi;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BowlingGameController {
@@ -18,11 +19,11 @@ public class BowlingGameController {
     public static void run() {
         int countOfPlayer = InputUi.inputCountOfPlayer();
 
-        Players players = new Players();
-        IntStream.rangeClosed(1, countOfPlayer)
-                .mapToObj(InputUi::inputPlayer)
-                .map(Player::of)
-                .forEach(players::add);
+        List<Player> players =
+                IntStream.rangeClosed(1, countOfPlayer)
+                        .mapToObj(InputUi::inputPlayer)
+                        .map(Player::of)
+                        .collect(Collectors.toList());
 
         OutputUi.printInitHeader();
 
