@@ -1,8 +1,7 @@
 package bowling.domain;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class FrameSet {
 
@@ -17,16 +16,16 @@ public class FrameSet {
     }
 
     public boolean isEnd() {
-        return false;
+        return frames.stream().allMatch(Frame::isEnd);
     }
 
-    public Iterator<Frame> frames() {
-        return frames.iterator();
-    }
-
-    public void playForEachFrame(Consumer<Frame> frameAction) {
-        frames.iterator()
-                .forEachRemaining(frameAction);
+    public void mark(Function<Frame, Integer> fallDownPinsGetter) {
+        frames.stream()
+                .forEach(frame -> {
+                    while (!frame.isEnd()) {
+                        frame.mark(fallDownPinsGetter.apply(frame));
+                    }
+                });
     }
 
 }

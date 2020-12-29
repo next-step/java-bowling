@@ -20,7 +20,7 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public void inputPins(int countOfFallDown) {
+    public void mark(int countOfFallDown) {
         marks.mark(PinMark.pin(countOfFallDown));
     }
 

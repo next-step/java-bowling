@@ -2,32 +2,29 @@ package bowling;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.FrameSet;
+import bowling.view.ConsoleView;
+import bowling.view.UserInput;
 
 import java.util.Random;
 
 public class BowlingApplication {
 
     public static void main(String[] args) {
-        BowlingGame game = new BowlingGame("NIO");
+        UserInput input = new UserInput();
+        ConsoleView view = new ConsoleView();
 
-        game.start();
+        String playName = input.readPlayerName();
+        BowlingGame game = new BowlingGame(playName);
 
-        FrameSet current;
-        while (game.hasNextFrameSet()) {
-            current = game.nextFrameSet();
-            current.playForEachFrame(frame -> {
-                while (!frame.isEnd()) {
-                    int countOfFallDown = getUserInput();
-                    // display scoreboard
-                    frame.inputPins(countOfFallDown);
-                }
-            });
-        }
+        game.start( (bowlingGame) -> {
+            view.printScoreSheets(bowlingGame.getReaders());
+        });
 
-    }
+//        FrameSet current;
+//        while (!game.isEnd()) {
+//            current = game.nextFrameSet();
+//            current.mark(frame -> input.readCountOfFallDownPins(frame.getFrameNo()));
+//        }
 
-    private static int getUserInput() {
-        Random random = new Random();
-        return random.nextInt(11);
     }
 }

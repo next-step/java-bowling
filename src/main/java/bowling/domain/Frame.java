@@ -12,7 +12,7 @@ public interface Frame {
      *
      * @param countOfFallDown
      */
-    void inputPins(int countOfFallDown);
+    void mark(int countOfFallDown);
 
     /**
      * 현재 프레임 종료여부
@@ -33,7 +33,7 @@ public interface Frame {
     boolean isLast();
 
     /**
-     * 다음 프레임을 가져온다
+     * 다음 프레임을 생성한다
      * <p>
      * 볼링은 총 10개 프레임을 가진다
      *

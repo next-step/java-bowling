@@ -24,29 +24,29 @@ abstract class ScoreSheetTest {
 
     @DisplayName("10개의 프레임까지 진행할 수 있다")
     @Test
-    void isRemainingFrame1(){
+    void isAllMarked1(){
         IntStream.range(0, 10)
                 .forEach(idx -> {
                     Frame frame = scoreSheet.nextFrame();
                     while( !frame.isEnd() ) {
-                        frame.inputPins(getCountOfFailDownPins());
+                        frame.mark(getCountOfFailDownPins());
                     }
                 });
-        assertThat(scoreSheet.isRemainingFrame()).isFalse();
+        assertThat(scoreSheet.isAllMarked()).isTrue();
         assertThat(scoreSheet.nextFrame()).isNull();
     }
 
     @DisplayName("남아 있는 프래임이 있는지 확인 할 수 있다")
     @Test
-    void isRemainingFrame2(){
+    void isAllMarked2(){
         IntStream.range(0, 5)
                 .forEach(idx -> {
                     Frame frame = scoreSheet.nextFrame();
                     while( !frame.isEnd() ) {
-                        frame.inputPins(getCountOfFailDownPins());
+                        frame.mark(getCountOfFailDownPins());
                     }
                 });
-        assertThat(scoreSheet.isRemainingFrame()).isTrue();
+        assertThat(scoreSheet.isAllMarked()).isFalse();
         assertThat(scoreSheet.nextFrame())
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("frameNo", 6);
@@ -65,7 +65,7 @@ abstract class ScoreSheetTest {
                 .forEach(idx -> {
                     Frame frame = scoreSheet.nextFrame();
                     while( !frame.isEnd() ) {
-                        frame.inputPins(getCountOfFailDownPins());
+                        frame.mark(getCountOfFailDownPins());
                     }
                 });
 

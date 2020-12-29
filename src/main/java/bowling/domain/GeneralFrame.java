@@ -6,12 +6,12 @@ public class GeneralFrame implements Frame {
 
     private final int frameNo;
     private Frame prevFrame;
-    private PinMarks marks;
+    private PinMarks pinMarks;
 
     GeneralFrame(int frameNo, Frame prevFrame) {
         this.frameNo = frameNo;
         this.prevFrame = prevFrame;
-        this.marks = new GeneralFramePinMarks();
+        this.pinMarks = new GeneralFramePinMarks();
     }
 
     @Override
@@ -20,13 +20,13 @@ public class GeneralFrame implements Frame {
     }
 
     @Override
-    public void inputPins(int countOfFallDown) {
-        marks.mark(PinMark.pin(countOfFallDown));
+    public void mark(int countOfFallDown) {
+        pinMarks.mark(PinMark.pin(countOfFallDown));
     }
 
     @Override
     public boolean isEnd() {
-        return marks.isAllMarked();
+        return pinMarks.isAllMarked();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class GeneralFrame implements Frame {
 
     @Override
     public List<PinMark> getPinMarks() {
-        return marks.toImmutableList();
+        return pinMarks.toImmutableList();
     }
 
     @Override

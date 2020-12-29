@@ -16,15 +16,15 @@ class GeneralFrameTest extends FrameTest {
     @DisplayName("1번 투구에 10개 핀을 쓰러뜨리면 프레임을 종료된다")
     @Test
     void isEnd1(){
-        frame.inputPins(10);
+        frame.mark(10);
         assertThat(frame.isEnd()).isTrue();
     }
 
     @DisplayName("2번 투구하면 프래임은 종료된다")
     @Test
     void isEnd2(){
-        frame.inputPins(5);
-        frame.inputPins(4);
+        frame.mark(5);
+        frame.mark(4);
 
         assertThat(frame.isEnd()).isTrue();
     }

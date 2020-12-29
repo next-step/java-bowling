@@ -3,11 +3,11 @@ package bowling.domain;
 public interface ScoreSheet {
 
     /**
-     * 남아 있는 프레임이 있는지 여부
+     * 모든 프래임에 핀이 기입되었느지 여부
      *
      * @return
      */
-    boolean isRemainingFrame();
+    boolean isAllMarked();
 
 
     /**

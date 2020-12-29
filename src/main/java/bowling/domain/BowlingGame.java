@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class BowlingGame {
 
     private List<Player> players;
-    private ScoreBoards scoreBoards;
+    private ScoreSheets scoreSheets;
 
     public BowlingGame(String... playerNames) {
         this(Arrays.stream(playerNames).map(name -> new Player(name)).collect(Collectors.toList()));
@@ -16,7 +16,7 @@ public class BowlingGame {
 
     public BowlingGame(List<Player> players) {
         this.players = players;
-        this.scoreBoards = new ScoreBoards(players);
+        this.scoreSheets = new ScoreSheets(players);
     }
 
     public FrameSet start() {
@@ -25,14 +25,18 @@ public class BowlingGame {
 
     public FrameSet start(Consumer<BowlingGame> actionBeforeStart) {
         actionBeforeStart.accept(this);
-        return scoreBoards.nextFrameSet();
+        return scoreSheets.nextFrameSet();
     }
 
-    public boolean hasNextFrameSet() {
-        return scoreBoards.hasNextFrame();
+    public List<ScoreSheetReader> getReaders(){
+        return scoreSheets.getReaders();
+    }
+
+    public boolean isEnd() {
+        return scoreSheets.isAllMarked();
     }
 
     public FrameSet nextFrameSet() {
-        return null;
+        return scoreSheets.nextFrameSet();
     }
 }

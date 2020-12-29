@@ -16,8 +16,8 @@ public class DefaultScoreSheet implements ScoreSheet {
     }
 
     @Override
-    public boolean isRemainingFrame() {
-        return frames.size() < NUM_OF_FRAMES;
+    public boolean isAllMarked() {
+        return frames.size() == NUM_OF_FRAMES;
     }
 
     @Override
