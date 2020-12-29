@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DownedPinTest {
@@ -27,5 +28,13 @@ public class DownedPinTest {
         assertThatThrownBy(
                 () -> firstTry.fromPreviousPitch(6)
         ).isInstanceOf(InvalidDownedPinNumberException.class);
+    }
+
+    @Test
+    @DisplayName("해당 시도가 10(스트라이크)일 때")
+    void testIsStrike() {
+        DownedPin firstTry = DownedPin.fromNumber(10);
+
+        assertThat(firstTry.isTen()).isTrue();
     }
 }

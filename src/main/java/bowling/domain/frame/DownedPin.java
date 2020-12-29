@@ -37,4 +37,8 @@ public class DownedPin {
         validateRange(this.numDownedPin + numDownedPin);
         return cachedPin.get(numDownedPin);
     }
+
+    public boolean isTen() {
+        return numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
+    }
 }
