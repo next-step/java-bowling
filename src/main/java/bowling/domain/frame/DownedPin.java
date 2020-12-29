@@ -38,7 +38,11 @@ public class DownedPin {
         return cachedPin.get(numDownedPin);
     }
 
-    public boolean isTen() {
+    public boolean isStrike() {
         return numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
+    }
+
+    public boolean isSpare(DownedPin downedPin) {
+        return numDownedPin + downedPin.numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
     }
 }

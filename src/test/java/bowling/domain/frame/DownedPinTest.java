@@ -35,6 +35,15 @@ public class DownedPinTest {
     void testIsStrike() {
         DownedPin firstTry = DownedPin.fromNumber(10);
 
-        assertThat(firstTry.isTen()).isTrue();
+        assertThat(firstTry.isStrike()).isTrue();
+    }
+
+    @Test
+    @DisplayName("2개의 시도가 스페어를 만들 때")
+    void testIsSpare() {
+        DownedPin firstPitch = DownedPin.fromNumber(6);
+        DownedPin secondPitch = firstPitch.fromPreviousPitch(4);
+
+        assertThat(firstPitch.isSpare(secondPitch)).isTrue();
     }
 }
