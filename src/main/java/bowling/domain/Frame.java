@@ -4,6 +4,10 @@ import java.util.List;
 
 public interface Frame {
 
+    enum Status{
+        Strike, Spare, Miss, Gutter;
+    }
+
     int getFrameNo();
 
     /**
@@ -13,6 +17,8 @@ public interface Frame {
      * @param countOfFallDown
      */
     void mark(int countOfFallDown);
+
+    Status getStatus();
 
     /**
      * 현재 프레임 종료여부
@@ -24,13 +30,6 @@ public interface Frame {
      * @return
      */
     boolean isEnd();
-
-    /**
-     * 마지막 프레임 여부
-     *
-     * @return
-     */
-    boolean isLast();
 
     /**
      * 다음 프레임을 생성한다
@@ -56,14 +55,14 @@ public interface Frame {
     int getScore();
 
     static Frame first() {
-        return new GeneralFrame(1, null);
+        return new GeneralFrame(1);
     }
 
-    static Frame general(int frameNo, Frame prevFrame) {
-        return new GeneralFrame(frameNo, prevFrame);
+    static Frame general(int frameNo) {
+        return new GeneralFrame(frameNo);
     }
 
-    static Frame last(int frameNo, Frame prevFrame) {
-        return new LastFrame(frameNo, prevFrame);
+    static Frame last(int frameNo) {
+        return new LastFrame(frameNo);
     }
 }

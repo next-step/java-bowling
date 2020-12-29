@@ -9,40 +9,34 @@ public class LastFramePinMarks implements PinMarks {
     private final int MAX_MARKS = 3;
     private List<PinMark> marks = new ArrayList<>();
 
-    @Override
-    public int getMaxMarks() {
-        return MAX_MARKS;
-    }
-
     /**
      * @param pin
      */
     @Override
     public void mark(PinMark pin) {
-        shouldLessThanMaxMarks(marks);
-        shouldLessThanOrEqualPinMax(pin);
-        shouldGreaterThanOrEqualPinMaxIfExtraMark();
+        shouldMarksLessThanMaxMarks();
+        if( !isStrike() ) shouldMarkedPinSumLessThanOrEqualMaxPins(pin);
+        shouldMarkedPinsEqualPinMaxIfThirdPinMark();
 
         marks.add(pin);
-        markRemainingToEmptyIfTwoShotSumIsLessThanPinMax();
+        markBonusToEmptyIfTwoShotSumIsLessThanPinMax();
     }
 
-    private void shouldLessThanOrEqualPinMax(PinMark secondPinMark) {
-        if (marks.size() == 1
-                && marks.get(0) != PinMark.strike()
-                && getCountOfFallDownPins() + secondPinMark.getCountOfFallDownPins() > PinMark.MAX_PINS) {
-            throw new IllegalArgumentException("2번째 PinMark 와 1번째 PinMark 가 쓰러뜨린 pin 수는 " + PinMark.MAX_PINS + " 개를 넘을 수 없습니다");
-        }
+    @Override
+    public boolean isStrike() {
+        if(marks.size() > 0)
+            return marks.get(0).getCountOfFallDownPins() == PinMark.MAX_PINS;
+        return false;
     }
 
-    private void shouldGreaterThanOrEqualPinMaxIfExtraMark() {
+    private void shouldMarkedPinsEqualPinMaxIfThirdPinMark() {
         if (marks.size() == 2
                 && getCountOfFallDownPins() < PinMark.MAX_PINS) {
             throw new IllegalStateException("3번째 PinMark 는 1,2번째 PinMark 의 합이 10이상 일때 mark 할 수 있습니다");
         }
     }
 
-    private void markRemainingToEmptyIfTwoShotSumIsLessThanPinMax() {
+    private void markBonusToEmptyIfTwoShotSumIsLessThanPinMax() {
         if (marks.size() == 2
                 && getCountOfFallDownPins() < PinMark.MAX_PINS) {
             marks.add(PinMark.empty());

@@ -9,25 +9,24 @@ public class GeneralFramePinMarks implements PinMarks {
     private List<PinMark> marks = new ArrayList<>();
 
     @Override
-    public int getMaxMarks() {
-        return MAX_MARKS;
+    public void mark(PinMark pin) {
+        shouldMarksLessThanMaxMarks();
+        shouldMarkedPinSumLessThanOrEqualMaxPins(pin);
+
+        marks.add(pin);
+        markRemainingToEmptyIfFirstMarkIsStrike();
     }
 
     @Override
-    public void mark(PinMark pin) {
-        shouldLessThanMaxMarks(marks);
-        if (marks.size() == 1
-                && getCountOfFallDownPins() + pin.getCountOfFallDownPins() > PinMark.MAX_PINS) {
-            throw new IllegalArgumentException("두번째 PinMark 와 첫번째 PinMark 가 쓰러뜨린 pin 수는 " + PinMark.MAX_PINS + " 개를 넘을 수 없습니다");
-        }
-
-        marks.add(pin);
-        markRemainingToEmptyIfFirstShotIsStrike();
+    public boolean isStrike() {
+        if(isAllMarked())
+            return marks.get(0).equals(PinMark.strike);
+        return false;
     }
 
-    private void markRemainingToEmptyIfFirstShotIsStrike() {
+    private void markRemainingToEmptyIfFirstMarkIsStrike() {
         if (marks.size() == 1
-                && getCountOfFallDownPins() == PinMark.MAX_PINS) {
+                && marks.get(0).equals(PinMark.strike)) {
             marks.add(PinMark.empty());
         }
     }

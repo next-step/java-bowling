@@ -59,7 +59,7 @@ class LastFramePinMarksTest {
         assertThat(pinMarks.isAllMarked()).isTrue();
     }
 
-    @DisplayName("보너스 마크까지 마크하면 allmarked 된다")
+    @DisplayName("1번째,2번째 투구의 합이 10개를 mark 하고 보너스까지 마그하면 allmarked 된다")
     @Test
     void allMarked2(){
         PinMarks pinMarks = new LastFramePinMarks();
@@ -69,6 +69,7 @@ class LastFramePinMarksTest {
 
         assertThat(pinMarks.isAllMarked()).isTrue();
     }
+
 
     @DisplayName("1번째,2번째 투구의 합이 10개를 mark 하면 보너스 마크가 남기때문에 allmarked 되지 않는다")
     @Test

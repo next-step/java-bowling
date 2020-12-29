@@ -5,13 +5,11 @@ import java.util.List;
 public class LastFrame implements Frame {
 
     private final int frameNo;
-    private final Frame prevFrame;
-    private PinMarks marks;
+    private PinMarks pinMarks;
 
-    LastFrame(int frameNo, Frame prevFrame) {
+    LastFrame(int frameNo) {
         this.frameNo = frameNo;
-        this.prevFrame = prevFrame;
-        this.marks = new LastFramePinMarks();
+        this.pinMarks = new LastFramePinMarks();
     }
 
     @Override
@@ -21,17 +19,20 @@ public class LastFrame implements Frame {
 
     @Override
     public void mark(int countOfFallDown) {
-        marks.mark(PinMark.pin(countOfFallDown));
+        pinMarks.mark(PinMark.pin(countOfFallDown));
+    }
+
+    @Override
+    public Status getStatus() {
+        if( pinMarks.isStrike() ) return Status.Strike;
+        if( pinMarks.getCountOfFallDownPins() == PinMark.MAX_PINS ) return Status.Spare;
+        if( pinMarks.getCountOfFallDownPins() == 0 ) return Status.Gutter;
+        return Status.Miss;
     }
 
     @Override
     public boolean isEnd() {
-        return marks.isAllMarked();
-    }
-
-    @Override
-    public boolean isLast() {
-        return true;
+        return pinMarks.isAllMarked();
     }
 
     @Override
@@ -41,7 +42,7 @@ public class LastFrame implements Frame {
 
     @Override
     public List<PinMark> getPinMarks() {
-        return marks.toImmutableList();
+        return pinMarks.toImmutableList();
     }
 
     @Override

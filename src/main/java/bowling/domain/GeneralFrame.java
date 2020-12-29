@@ -5,12 +5,11 @@ import java.util.List;
 public class GeneralFrame implements Frame {
 
     private final int frameNo;
-    private Frame prevFrame;
+    private Frame next;
     private PinMarks pinMarks;
 
-    GeneralFrame(int frameNo, Frame prevFrame) {
+    GeneralFrame(int frameNo) {
         this.frameNo = frameNo;
-        this.prevFrame = prevFrame;
         this.pinMarks = new GeneralFramePinMarks();
     }
 
@@ -25,20 +24,31 @@ public class GeneralFrame implements Frame {
     }
 
     @Override
+    public Status getStatus() {
+        if( pinMarks.isStrike() ) return Status.Strike;
+        if( pinMarks.getCountOfFallDownPins() == 0 ) return Status.Gutter;
+        if( pinMarks.getCountOfFallDownPins() == PinMark.MAX_PINS ) return Status.Spare;
+        return Status.Miss;
+    }
+
+    @Override
     public boolean isEnd() {
         return pinMarks.isAllMarked();
     }
 
     @Override
-    public boolean isLast() {
-        return false;
+    public Frame nextFrame() {
+        if (isNextFrameLast()) {
+            next = Frame.last(frameNo + 1);
+            return next;
+        }
+
+        next = Frame.general(frameNo + 1);
+        return next;
     }
 
-    @Override
-    public Frame nextFrame() {
-        if (frameNo == 9)
-            return Frame.last(frameNo + 1, this);
-        return Frame.general(frameNo + 1, this);
+    private boolean isNextFrameLast() {
+        return frameNo == 9;
     }
 
     @Override
