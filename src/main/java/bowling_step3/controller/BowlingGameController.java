@@ -31,7 +31,7 @@ public class BowlingGameController {
         OutputUi.printInitFrame(bowlingGames);
 
         IntStream.rangeClosed(1, LAST_FRAME)
-                .forEach(i -> playBowling(bowlingGames, i));
+                .forEach(BowlingGameController::playBowling);
 
         InputUi.close();
     }
@@ -48,7 +48,7 @@ public class BowlingGameController {
         }
     }
 
-    private static void playBowling(BowlingGames bowlingGames, int index) {
+    private static void playBowling(int index) {
         bowlingGames.getBowlingGames()
                 .forEach(bowlingGame -> playFrame(bowlingGame, index));
     }
