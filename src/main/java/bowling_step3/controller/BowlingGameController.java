@@ -2,22 +2,57 @@ package bowling_step3.controller;
 
 
 import bowling_step3.domain.BowlingGame;
+import bowling_step3.domain.BowlingGames;
 import bowling_step3.domain.Player;
 import bowling_step3.view.InputUi;
 import bowling_step3.view.OutputUi;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class BowlingGameController {
+    private static final int LAST_FRAME = 10;
+
+    private static BowlingGames bowlingGames;
+
     public static void run() {
-        String playerName = InputUi.inputPlayer();
-        Player player = Player.of(playerName);
-        BowlingGame game = new BowlingGame(player);
+        int countOfPlayer = InputUi.inputCountOfPlayer();
 
-        OutputUi.printInitFrame(player, game);
+        List<Player> players =
+                IntStream.rangeClosed(1, countOfPlayer)
+                        .mapToObj(InputUi::inputPlayer)
+                        .map(Player::of)
+                        .collect(Collectors.toList());
 
-        while (!game.isFinish()) {
-            int countOfKnockDown = InputUi.inputFrame(game.getFrameCount());
-            game.pitch(countOfKnockDown);
-            OutputUi.printInitBowling(playerName, game);
+        OutputUi.printInitHeader();
+
+        bowlingGames = BowlingGames.of(players);
+        OutputUi.printInitFrame(bowlingGames);
+
+        IntStream.rangeClosed(1, LAST_FRAME)
+                .forEach(BowlingGameController::playBowling);
+
+        InputUi.close();
+    }
+
+    private static boolean isMatchFrameCount(int frameCount, int index) {
+        return frameCount == index;
+    }
+
+    private static void playFrame(BowlingGame bowlingGame, int index) {
+        while (isMatchFrameCount(bowlingGame.getFrameCount(), index)) {
+            int countOfKnockDown = InputUi.inputFrame(bowlingGame.getPlayer());
+            bowlingGame.pitch(countOfKnockDown);
+            OutputUi.printInitBowling(bowlingGames.getBowlingGames());
         }
     }
+
+    private static void playBowling(int index) {
+        bowlingGames.getBowlingGames()
+                .forEach(bowlingGame -> playFrame(bowlingGame, index));
+    }
 }
+
+
+

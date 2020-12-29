@@ -1,10 +1,10 @@
 package bowling_step3.view;
 
 import bowling_step3.domain.BowlingGame;
+import bowling_step3.domain.BowlingGames;
 import bowling_step3.domain.Frame.FinalFrame;
 import bowling_step3.domain.Frame.Frame;
 import bowling_step3.domain.Frame.NormalFrame;
-import bowling_step3.domain.Player;
 import bowling_step3.domain.Scores;
 import bowling_step3.domain.state.State;
 import org.apache.logging.log4j.util.Strings;
@@ -82,15 +82,17 @@ public class OutputUi {
         printEmptySpace(scores.size());
     }
 
-    public static void printInitBowling(String playerName, BowlingGame gameFrames) {
-        printInitHeader();
-
-        printName(playerName);
-        printKnockDown(gameFrames.getGameFrames().getFrames());
-        printScores(gameFrames.addScores());
+    private static void printBowlingGame(BowlingGame bowlingGame) {
+        printName(bowlingGame.getPlayer().getName());
+        printKnockDown(bowlingGame.getFrames());
+        printScores(bowlingGame.sumScore());
     }
 
-    public static void printInitFrame(Player player, BowlingGame gameFrames) {
-        printInitBowling(player.getName(), gameFrames);
+    public static void printInitBowling(List<BowlingGame> bowlingGames) {
+        bowlingGames.forEach(OutputUi::printBowlingGame);
+    }
+
+    public static void printInitFrame(BowlingGames bowlingGames) {
+        printInitBowling(bowlingGames.getBowlingGames());
     }
 }
