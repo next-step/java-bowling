@@ -10,7 +10,7 @@ public class UserInput {
     }
 
     public String readPlayerName() {
-        return getStringFromStdin("플레이어 이름은(3 english letters)?:");
+        return getStringFromStdin("플레이어 이름은(3 english letters)?: ");
     }
 
     public int readCountOfFallDownPins(int frameNo) {
@@ -18,12 +18,12 @@ public class UserInput {
     }
 
     private String getStringFromStdin(String displayText) {
-        System.out.println(displayText);
+        System.out.print(displayText);
         return scanner.nextLine();
     }
 
     private int getNumberFromStdin(String displayText) {
-        System.out.println(displayText);
+        System.out.print(displayText);
         return Integer.valueOf(scanner.nextLine());
     }
 

@@ -19,13 +19,12 @@ public class BowlingGame {
         this.scoreSheets = new ScoreSheets(players);
     }
 
-    public FrameSet start() {
-        return start(game -> {});
+    public void start() {
+        start(game -> {});
     }
 
-    public FrameSet start(Consumer<BowlingGame> actionBeforeStart) {
+    public void start(Consumer<BowlingGame> actionBeforeStart) {
         actionBeforeStart.accept(this);
-        return scoreSheets.nextFrameSet();
     }
 
     public List<ScoreSheetReader> getReaders(){

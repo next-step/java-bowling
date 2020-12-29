@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class FrameSet {
@@ -19,11 +20,12 @@ public class FrameSet {
         return frames.stream().allMatch(Frame::isEnd);
     }
 
-    public void mark(Function<Frame, Integer> fallDownPinsGetter) {
+    public void mark(Function<Frame, Integer> fallDownPinsGetter, Consumer<Frame> actionAfterMark) {
         frames.stream()
                 .forEach(frame -> {
                     while (!frame.isEnd()) {
                         frame.mark(fallDownPinsGetter.apply(frame));
+                        actionAfterMark.accept(frame);
                     }
                 });
     }

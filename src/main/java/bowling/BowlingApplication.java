@@ -18,13 +18,16 @@ public class BowlingApplication {
 
         game.start( (bowlingGame) -> {
             view.printScoreSheets(bowlingGame.getReaders());
-        });
 
-//        FrameSet current;
-//        while (!game.isEnd()) {
-//            current = game.nextFrameSet();
-//            current.mark(frame -> input.readCountOfFallDownPins(frame.getFrameNo()));
-//        }
+            FrameSet current;
+            while (!bowlingGame.isEnd()) {
+                current = bowlingGame.nextFrameSet();
+                current.mark(
+                        frame -> input.readCountOfFallDownPins(frame.getFrameNo()),
+                        frame -> view.printScoreSheets(bowlingGame.getReaders())
+                );
+            }
+        });
 
     }
 }
