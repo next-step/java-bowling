@@ -44,7 +44,7 @@ public class BowlingGameController {
         while (isMatchFrameCount(bowlingGame.getFrameCount(), index)) {
             int countOfKnockDown = InputUi.inputFrame(bowlingGame.getPlayer());
             bowlingGame.pitch(countOfKnockDown);
-            OutputUi.printInitBowling(bowlingGames);
+            OutputUi.printInitBowling(bowlingGames.getBowlingGames());
         }
     }
 

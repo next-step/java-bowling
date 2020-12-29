@@ -88,12 +88,11 @@ public class OutputUi {
         printScores(bowlingGame.sumScore());
     }
 
-    public static void printInitBowling(BowlingGames bowlingGames) {
-        bowlingGames.getBowlingGames()
-                .forEach(OutputUi::printBowlingGame);
+    public static void printInitBowling(List<BowlingGame> bowlingGames) {
+        bowlingGames.forEach(OutputUi::printBowlingGame);
     }
 
     public static void printInitFrame(BowlingGames bowlingGames) {
-        printInitBowling(bowlingGames);
+        printInitBowling(bowlingGames.getBowlingGames());
     }
 }
