@@ -26,7 +26,7 @@ public class DefaultScoreSheetReader implements ScoreSheetReader {
     }
 
     @Override
-    public FrameInfo readFrameData() {
+    public FrameInfo readFrameInfo() {
         if (isEOF()) return null;
         if (nextIdx >= frameInfos.size()) return FrameInfo.blank(nextIdx++ + 1);
         return frameInfos.get(nextIdx++);

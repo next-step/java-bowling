@@ -38,7 +38,7 @@ public class ConsoleView {
         readers.forEach(reader -> {
             writer.print(String.format("|%1$" + nameSpan + "s  | ", reader.readPlayName()));
             while (!reader.isEOF()) {
-                FrameInfo frameInfo = reader.readFrameData();
+                FrameInfo frameInfo = reader.readFrameInfo();
                 String marked = frameInfo.getPinMarkSigns()
                         .stream()
                         .collect(Collectors.joining("|"));

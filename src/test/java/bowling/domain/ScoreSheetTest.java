@@ -146,7 +146,7 @@ abstract class ScoreSheetTest {
 
         System.out.print(String.format("|%1$" + nameSpan + "s  | ", playerName));
         while (!reader.isEOF()) {
-            FrameInfo frameInfo = reader.readFrameData();
+            FrameInfo frameInfo = reader.readFrameInfo();
             String marked = frameInfo.getPinMarkSigns()
                     .stream()
                     .collect(Collectors.joining("|"));

@@ -6,5 +6,5 @@ public interface ScoreSheetReader {
 
     String readPlayName();
 
-    FrameInfo readFrameData();
+    FrameInfo readFrameInfo();
 }
