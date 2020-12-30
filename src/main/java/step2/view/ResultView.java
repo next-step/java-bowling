@@ -18,51 +18,51 @@ public class ResultView {
     private static final String TWO_EMPTY_SPACE = "  ";
     private static StringBuilder SCORES = new StringBuilder();
 
-    private final Player player;
+    private static Player player;
 
-    public ResultView(Player player) {
-        this.player = player;
+    public static void setPlayer(Player player) {
+        ResultView.player = player;
     }
 
-    public void printEmptyRecords() {
+    public static void printEmptyRecords() {
         printSignature();
         printEmptyScore(player);
         System.out.println();
     }
 
-    private void printEmptyScore(Player player) {
+    private static void printEmptyScore(Player player) {
         printUsername(player);
 
         IntStream.range(ONE, FRAME_LENGTH)
-                .forEach(this::printEmptyScore);
+                .forEach(ResultView::printEmptyScore);
     }
 
-    private void printUsername(Player player) {
+    private static void printUsername(Player player) {
         System.out.println();
         System.out.print(BAR_DELIMITER);
         System.out.print(String.format("%5s ", player));
         System.out.print(BAR_DELIMITER);
     }
 
-    private void printSignature() {
+    private static void printSignature() {
         System.out.print(BAR_DELIMITER);
         System.out.print(String.format("%5s ",NAME));
         System.out.print(BAR_DELIMITER);
         IntStream.range(ONE, FRAME_LENGTH)
-                .forEach(this::printFrameNumbers);
+                .forEach(ResultView::printFrameNumbers);
     }
 
-    private void printFrameNumbers(int number) {
+    private static void printFrameNumbers(int number) {
         System.out.print(String.format("  %02d  ", number));
         System.out.print(BAR_DELIMITER);
     }
 
-    private void printEmptyScore(int number) {
+    private static void printEmptyScore(int number) {
         System.out.print(EMPTY_SPACE);
         System.out.print(BAR_DELIMITER);
     }
 
-    public void printScoreBoard(Frame frame, int round) {
+    public static void printScoreBoard(Frame frame, int round) {
         printSignature();
         printUsername(player);
 
@@ -75,11 +75,11 @@ public class ResultView {
         }
 
         IntStream.range(round+ONE, FRAME_LENGTH)
-                .forEach(this::printEmptyScore);
+                .forEach(ResultView::printEmptyScore);
         System.out.println();
     }
 
-    private StringBuilder printScore(Frame frame) {
+    private static StringBuilder printScore(Frame frame) {
         StringBuilder result = new StringBuilder();
         System.out.print(TWO_EMPTY_SPACE + frame.getState());
         result.append(TWO_EMPTY_SPACE + frame.getState());
