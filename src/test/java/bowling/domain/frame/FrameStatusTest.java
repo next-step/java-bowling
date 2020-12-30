@@ -70,7 +70,7 @@ class FrameStatusTest {
     @Test
     @DisplayName("2회를 일반적으로 종료했을 경우")
     void testOnMiss() {
-        Frame frame = new Frame();
+        NormalFrame frame = new NormalFrame();
         frame.record(7);
         frame.record(2);
 

@@ -45,6 +45,7 @@ public enum FrameStatus {
 
         if (status == ON_FRAME) {
             downedPins.add(downedPins.get(0).fromPreviousPitch(record));
+            return;
         }
 
         downedPins.add(DownedPin.fromNumber(record));
