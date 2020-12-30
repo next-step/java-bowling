@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 public class GeneralFrame implements Frame {
 
     private final int frameNo;
@@ -20,7 +18,7 @@ public class GeneralFrame implements Frame {
 
     @Override
     public void mark(int countOfFallDown) {
-        pinMarks.mark(PinMark.pin(countOfFallDown));
+        pinMarks.mark(countOfFallDown);
     }
 
     @Override
@@ -52,12 +50,12 @@ public class GeneralFrame implements Frame {
     }
 
     @Override
-    public List<PinMark> getPinMarks() {
-        return pinMarks.toImmutableList();
+    public int getScore() {
+        return 0;
     }
 
     @Override
-    public int getScore() {
-        return 0;
+    public FrameData toFrameData() {
+        return FrameData.of(frameNo, pinMarks.toSigns(), getScore());
     }
 }

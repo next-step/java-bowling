@@ -58,10 +58,10 @@ abstract class ScoreSheetTest {
         return random.nextInt(6);
     }
 
-    @DisplayName("볼링스코어시트를 출력할 수 있다")
+    @DisplayName("볼링스코어시트를 출력할 수 있다 ( 랜덤 )")
     @Test
-    void printScoreSheet(){
-        IntStream.range(0, 8)
+    void random(){
+        IntStream.range(0, 10)
                 .forEach(idx -> {
                     Frame frame = scoreSheet.nextFrame();
                     while( !frame.isEnd() ) {
@@ -69,39 +69,95 @@ abstract class ScoreSheetTest {
                     }
                 });
 
-        ScoreSheetReader reader = scoreSheet.getReader();
+        printScoreSheet(scoreSheet.getReader());
+    }
+
+    @DisplayName("볼링스코어시트를 출력할 수 있다 ( 각 유형별로 눈 검증용 :-) )")
+    @Test
+    void varietyCase(){
+        // 1 기본 (Miss)
+        Frame frame = scoreSheet.nextFrame();
+        frame.mark(8);
+        frame.mark(1);
+
+        // 2 스페어
+        frame = scoreSheet.nextFrame();
+        frame.mark(9);
+        frame.mark(1);
+
+        // 3 스트라이크
+        frame = scoreSheet.nextFrame();
+        frame.mark(10);
+
+        // 4 Gutter
+        frame = scoreSheet.nextFrame();
+        frame.mark(8);
+        frame.mark(0);
+
+        // 5 Double Gutter
+        frame = scoreSheet.nextFrame();
+        frame.mark(0);
+        frame.mark(0);
+
+        // 6 Reverse Gutter
+        frame = scoreSheet.nextFrame();
+        frame.mark(0);
+        frame.mark(8);
+
+        // 7
+        frame = scoreSheet.nextFrame();
+        frame.mark(7);
+        frame.mark(2);
+
+        // 8
+        frame = scoreSheet.nextFrame();
+        frame.mark(9);
+        frame.mark(0);
+
+        // 9
+        frame = scoreSheet.nextFrame();
+        frame.mark(9);
+        frame.mark(0);
+
+        // 10
+        frame = scoreSheet.nextFrame();
+        frame.mark(9);
+        frame.mark(1);
+        frame.mark(10);
+
+        printScoreSheet(scoreSheet.getReader());
+    }
+
+    private void printScoreSheet(ScoreSheetReader reader) {
         String playerName = reader.readPlayName();
         int nameSpan = Math.max(playerName.length() + 2, 8);
 
         System.out.print(String.format("| %1$" + nameSpan + "s | ", "NAME"));
         String frameNos = IntStream.range(0, 10)
                 .mapToObj(idx -> {
-                    if( idx == 9 ){
-                        return String.format("%1$4s ", String.valueOf(idx+1));
+                    if (idx == 9) {
+                        return String.format("%1$4s ", String.valueOf(idx + 1));
                     }
-                    return String.format("%1$2s ", String.valueOf(idx+1));
+                    return String.format("%1$2s ", String.valueOf(idx + 1));
                 })
                 .collect(Collectors.joining(" | "));
         System.out.print(frameNos);
         System.out.println(" |");
 
         System.out.print(String.format("|%1$" + nameSpan + "s  | ", playerName));
-        while(!reader.isEOF()){
+        while (!reader.isEOF()) {
             FrameData frameData = reader.readFrameData();
-            String marked = frameData.getPinMarks()
+            String marked = frameData.getPinMarkSigns()
                     .stream()
-                    .map( pinMark -> String.valueOf(pinMark.getCountOfFallDownPins()))
                     .collect(Collectors.joining("|"));
             int spanSize = 3;
-            if( frameData.getFrameNo() == 10 ){
-                spanSize = spanSize+2;
+            if (frameData.getFrameNo() == 10) {
+                spanSize = spanSize + 2;
             }
             System.out.print(String.format("%1$" + spanSize + "s", marked));
             System.out.print(" | ");
         }
-
     }
-
 }
 
 class DefaultScoreSheetTest extends ScoreSheetTest {

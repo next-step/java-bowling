@@ -2,51 +2,42 @@ package bowling.domain;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public interface FrameData {
+public class FrameData {
 
-    int getFrameNo();
-
-    List<PinMark> getPinMarks();
-
-    int getFrameScore();
-
-    static FrameData of(Frame frame) {
-        return new FrameData() {
-            @Override
-            public int getFrameNo() {
-                return frame.getFrameNo();
-            }
-
-            @Override
-            public List<PinMark> getPinMarks() {
-                return frame.getPinMarks();
-            }
-
-            @Override
-            public int getFrameScore() {
-                return 0;
-            }
-        };
+    static FrameData of(int frameNo, List<PinMarkSign> pinMarkSigns, int score) {
+        return new FrameData(
+                frameNo,
+                pinMarkSigns.stream()
+                        .map(PinMarkSign::toString)
+                        .collect(Collectors.toList()),
+                score);
     }
 
-    static FrameData empty(int frameNo) {
-        return new FrameData() {
-            @Override
-            public int getFrameNo() {
-                return frameNo;
-            }
-
-            @Override
-            public List<PinMark> getPinMarks() {
-                return Arrays.asList();
-            }
-
-            @Override
-            public int getFrameScore() {
-                return 0;
-            }
-        };
+    static FrameData blank(int frameNo) {
+        return new FrameData(frameNo, Arrays.asList(), 0);
     }
 
+    private int frameNo;
+    private List<String> pinMarkSigns;
+    private int score;
+
+    private FrameData(int frameNo, List<String> pinMarkSigns, int score) {
+        this.frameNo = frameNo;
+        this.pinMarkSigns = pinMarkSigns;
+        this.score = score;
+    }
+
+    public int getFrameNo() {
+        return frameNo;
+    }
+
+    public List<String> getPinMarkSigns() {
+        return pinMarkSigns;
+    }
+
+    public int getScore() {
+        return score;
+    }
 }

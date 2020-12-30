@@ -1,13 +1,17 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LastFramePinMarks implements PinMarks {
 
     private final int MAX_MARKS = 3;
     private List<PinMark> marks = new ArrayList<>();
+
+    LastFramePinMarks() { }
 
     /**
      * @param pin
@@ -29,6 +33,14 @@ public class LastFramePinMarks implements PinMarks {
         return false;
     }
 
+    @Override
+    public boolean isSpare() {
+        if(marks.size() > 1){
+            return marks.get(marks.size()-1).getCountOfFallDownPins() + marks.get(marks.size()-2).getCountOfFallDownPins() == PinMark.MAX_PINS;
+        }
+        return false;
+    }
+
     private void shouldMarkedPinsEqualPinMaxIfThirdPinMark() {
         if (marks.size() == 2
                 && getCountOfFallDownPins() < PinMark.MAX_PINS) {
@@ -39,7 +51,7 @@ public class LastFramePinMarks implements PinMarks {
     private void markBonusToEmptyIfTwoShotSumIsLessThanPinMax() {
         if (marks.size() == 2
                 && getCountOfFallDownPins() < PinMark.MAX_PINS) {
-            marks.add(PinMark.empty());
+            marks.add(PinMark.blank());
         }
     }
 
@@ -60,5 +72,19 @@ public class LastFramePinMarks implements PinMarks {
     @Override
     public List<PinMark> toImmutableList() {
         return Collections.unmodifiableList(marks);
+    }
+
+    @Override
+    public List<PinMarkSign> toSigns() {
+        if ( isSpare() && marks.size() == 2) {
+            return Arrays.asList(PinMarkSign.number(marks.get(0).getCountOfFallDownPins()), PinMarkSign.Spare);
+        }
+        if ( isSpare() && marks.size() == 3) {
+            return Arrays.asList(PinMarkSign.Strike, PinMarkSign.number(marks.get(1).getCountOfFallDownPins()), PinMarkSign.Spare);
+        }
+        return marks.stream()
+                .filter(mark -> !(mark instanceof BlankPinMark) )
+                .map(mark -> PinMarkSign.number(mark.getCountOfFallDownPins()))
+                .collect(Collectors.toList());
     }
 }

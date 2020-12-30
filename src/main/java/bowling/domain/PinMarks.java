@@ -15,14 +15,21 @@ public interface PinMarks {
         }
     }
 
+    default void mark(int countOfFallDown){
+        mark(PinMark.pin(countOfFallDown));
+    }
 
     void mark(PinMark pin);
 
     boolean isStrike();
+
+    boolean isSpare();
 
     int getCountOfFallDownPins();
 
     boolean isAllMarked();
 
     List<PinMark> toImmutableList();
+
+    List<PinMarkSign> toSigns();
 }

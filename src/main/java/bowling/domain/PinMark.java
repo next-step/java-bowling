@@ -8,8 +8,8 @@ public interface PinMark {
 
     int getCountOfFallDownPins();
 
-    static PinMark empty() {
-        return () -> 0;
+    static PinMark blank() {
+        return new BlankPinMark();
     }
 
     static PinMark pin(int countOfFallDownPins) {
@@ -17,8 +17,13 @@ public interface PinMark {
         return new DefaultPinMark(countOfFallDownPins);
     }
 
-    PinMark strike = pin(MAX_PINS);
+}
 
+class BlankPinMark implements PinMark {
+    @Override
+    public int getCountOfFallDownPins() {
+        return 0;
+    }
 }
 
 class DefaultPinMark implements PinMark {

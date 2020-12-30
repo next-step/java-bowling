@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 public interface Frame {
 
     enum Status{
@@ -40,12 +38,7 @@ public interface Frame {
      */
     Frame nextFrame();
 
-    /**
-     * 쓰러뜨린 핀 마크를 가져온다
-     *
-     * @return 불변컬랙션이다
-     */
-    List<PinMark> getPinMarks();
+    FrameData toFrameData();
 
     /**
      * 현재 프레임까지 스코어를 가져온다
@@ -53,6 +46,7 @@ public interface Frame {
      * @return
      */
     int getScore();
+
 
     static Frame first() {
         return new GeneralFrame(1);
