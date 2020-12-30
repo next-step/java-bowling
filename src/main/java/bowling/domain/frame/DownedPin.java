@@ -42,6 +42,10 @@ public class DownedPin {
         return numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
     }
 
+    public boolean isGutter() {
+        return numDownedPin == MINIMUM_NUMBER_OF_DOWNED_PIN;
+    }
+
     public boolean isSpare(DownedPin downedPin) {
         return numDownedPin + downedPin.numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
     }

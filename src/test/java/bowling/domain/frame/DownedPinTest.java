@@ -46,4 +46,12 @@ public class DownedPinTest {
 
         assertThat(firstPitch.isSpare(secondPitch)).isTrue();
     }
+
+    @Test
+    @DisplayName("프레임이 0점을 기록했을 때의 Gutter")
+    void testIsGutter() {
+        DownedPin pitch = DownedPin.fromNumber(0);
+
+        assertThat(pitch.isGutter()).isTrue();
+    }
 }
