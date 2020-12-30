@@ -12,7 +12,7 @@ class ScoreSheetsTest {
     @DisplayName("현재 프래임셋에 끝나지 않은 프래임이 존재하는 상태에서 다음 프래임셋을 진행하려고 하면 exception 을 던진다")
     @Test
     void failToNextFrameSet(){
-        ScoreSheets scoreSheets = new ScoreSheets(Arrays.asList(new Player("NIO"), new Player("HOON")));
+        ScoreSheets scoreSheets = new ScoreSheets(Arrays.asList(new Player("NIO"), new Player("HOO")));
 
         FrameSet frameSet = scoreSheets.nextFrameSet();
         // do not play and.. nextFrameSet
