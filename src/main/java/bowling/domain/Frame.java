@@ -49,14 +49,14 @@ public interface Frame {
 
 
     static Frame first() {
-        return new GeneralFrame(1);
+        return new NormalFrame(1);
     }
 
-    static Frame general(int frameNo) {
-        return new GeneralFrame(frameNo);
+    static Frame createNormal(int frameNo) {
+        return new NormalFrame(frameNo);
     }
 
-    static Frame last(int frameNo) {
-        return new LastFrame(frameNo);
+    static Frame createFinal(int frameNo) {
+        return new FinalFrame(frameNo);
     }
 }

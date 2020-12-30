@@ -1,13 +1,13 @@
 package bowling.domain;
 
-public class LastFrame implements Frame {
+public class FinalFrame implements Frame {
 
     private final int frameNo;
     private PinMarks pinMarks;
 
-    LastFrame(int frameNo) {
+    FinalFrame(int frameNo) {
         this.frameNo = frameNo;
-        this.pinMarks = new LastFramePinMarks();
+        this.pinMarks = new FinalFramePinMarks();
     }
 
     @Override

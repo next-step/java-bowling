@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GeneralFrameTest extends FrameTest {
+class NormalFrameTest extends FrameTest {
 
     @BeforeEach
     void setUp(){
-        frame = new GeneralFrame(1);
+        frame = new NormalFrame(1);
     }
 
     @DisplayName("1번 투구에 10개 핀을 쓰러뜨리면 프레임을 종료된다")
@@ -33,31 +33,31 @@ class GeneralFrameTest extends FrameTest {
     @Test
     void should_be_GeneralFrame(){
         Frame first = Frame.first();
-        assertThat(first instanceof GeneralFrame).isTrue();
+        assertThat(first instanceof NormalFrame).isTrue();
 
         Frame second = first.nextFrame();
-        assertThat(second instanceof GeneralFrame).isTrue();
+        assertThat(second instanceof NormalFrame).isTrue();
 
         Frame third = second.nextFrame();
-        assertThat(third instanceof GeneralFrame).isTrue();
+        assertThat(third instanceof NormalFrame).isTrue();
 
         Frame forth = third.nextFrame();
-        assertThat(forth instanceof GeneralFrame).isTrue();
+        assertThat(forth instanceof NormalFrame).isTrue();
 
         Frame fifth = forth.nextFrame();
-        assertThat(fifth instanceof GeneralFrame).isTrue();
+        assertThat(fifth instanceof NormalFrame).isTrue();
 
         Frame sixth = fifth.nextFrame();
-        assertThat(sixth instanceof GeneralFrame).isTrue();
+        assertThat(sixth instanceof NormalFrame).isTrue();
 
         Frame seventh = sixth.nextFrame();
-        assertThat(seventh instanceof GeneralFrame).isTrue();
+        assertThat(seventh instanceof NormalFrame).isTrue();
 
         Frame eighth = seventh.nextFrame();
-        assertThat(eighth instanceof GeneralFrame).isTrue();
+        assertThat(eighth instanceof NormalFrame).isTrue();
 
         Frame nineth = eighth.nextFrame();
-        assertThat(nineth instanceof GeneralFrame).isTrue();
+        assertThat(nineth instanceof NormalFrame).isTrue();
     }
 
 }

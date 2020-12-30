@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GeneralFramePinMarks implements PinMarks {
+public class NormalFramePinMarks implements PinMarks {
     private final int MAX_MARKS = 2;
     private List<PinMark> marks = new ArrayList<>();
 
-    GeneralFramePinMarks() {
+    NormalFramePinMarks() {
     }
 
     @Override

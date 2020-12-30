@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LastFrameTest extends FrameTest {
+class FinalFrameTest extends FrameTest {
 
     @BeforeEach
     void setUp(){
@@ -36,7 +36,7 @@ class LastFrameTest extends FrameTest {
                 .nextFrame()
                 .nextFrame();
 
-        assertThat(last instanceof LastFrame).isTrue();
+        assertThat(last instanceof FinalFrame).isTrue();
     }
 
     @DisplayName("마지막 프레임의 다음 프레임은 null 을 return 한다")

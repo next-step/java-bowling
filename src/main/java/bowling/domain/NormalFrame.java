@@ -1,14 +1,14 @@
 package bowling.domain;
 
-public class GeneralFrame implements Frame {
+public class NormalFrame implements Frame {
 
     private final int frameNo;
     private Frame next;
     private PinMarks pinMarks;
 
-    GeneralFrame(int frameNo) {
+    NormalFrame(int frameNo) {
         this.frameNo = frameNo;
-        this.pinMarks = new GeneralFramePinMarks();
+        this.pinMarks = new NormalFramePinMarks();
     }
 
     @Override
@@ -36,16 +36,16 @@ public class GeneralFrame implements Frame {
 
     @Override
     public Frame nextFrame() {
-        if (isNextFrameLast()) {
-            next = Frame.last(frameNo + 1);
+        if (isNextFrameFinal()) {
+            next = Frame.createFinal(frameNo + 1);
             return next;
         }
 
-        next = Frame.general(frameNo + 1);
+        next = Frame.createNormal(frameNo + 1);
         return next;
     }
 
-    private boolean isNextFrameLast() {
+    private boolean isNextFrameFinal() {
         return frameNo == 9;
     }
 

@@ -6,12 +6,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LastFramePinMarks implements PinMarks {
+public class FinalFramePinMarks implements PinMarks {
 
     private final int MAX_MARKS = 3;
     private List<PinMark> marks = new ArrayList<>();
 
-    LastFramePinMarks() {
+    FinalFramePinMarks() {
     }
 
     /**

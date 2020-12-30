@@ -9,13 +9,13 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class GeneralFramePinMarksTest {
+class NormalFramePinMarksTest {
 
-    GeneralFramePinMarks pinMarks;
+    NormalFramePinMarks pinMarks;
 
     @BeforeEach
     void setUp(){
-        pinMarks = new GeneralFramePinMarks();
+        pinMarks = new NormalFramePinMarks();
     }
 
     @DisplayName("1번째 투구가 10개 핀을 쓰러뜨리면 Strike 다")
