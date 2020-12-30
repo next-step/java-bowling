@@ -2,6 +2,10 @@ package step2.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import step2.domain.frame.FinalFrame;
+import step2.domain.frame.Frame;
+import step2.domain.frame.Frames;
+import step2.domain.frame.NormalFrame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

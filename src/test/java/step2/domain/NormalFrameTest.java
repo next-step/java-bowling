@@ -2,6 +2,8 @@ package step2.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import step2.domain.frame.Frame;
+import step2.domain.frame.NormalFrame;
 import step2.domain.state.Miss;
 import step2.domain.state.Spare;
 import step2.domain.state.Strike;

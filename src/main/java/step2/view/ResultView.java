@@ -1,6 +1,6 @@
 package step2.view;
 
-import step2.domain.Frame;
+import step2.domain.frame.Frame;
 import step2.domain.Player;
 
 import java.util.stream.IntStream;

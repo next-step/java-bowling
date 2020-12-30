@@ -1,9 +1,8 @@
 package step2.controller;
 
-import step2.domain.Frame;
-import step2.domain.Frames;
+import step2.domain.frame.Frame;
+import step2.domain.frame.Frames;
 import step2.domain.Pitch;
-import step2.domain.Player;
 import step2.view.InputView;
 import step2.view.ResultView;
 

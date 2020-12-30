@@ -1,5 +1,6 @@
-package step2.domain;
+package step2.domain.frame;
 
+import step2.domain.Pitch;
 import step2.domain.state.Miss;
 import step2.domain.state.Spare;
 import step2.domain.state.State;

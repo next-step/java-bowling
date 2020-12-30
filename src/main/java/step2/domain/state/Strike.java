@@ -1,6 +1,6 @@
 package step2.domain.state;
 
-import step2.domain.Frame;
+import step2.domain.frame.Frame;
 import step2.domain.Pitch;
 
 import java.util.List;
