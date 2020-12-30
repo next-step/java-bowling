@@ -31,7 +31,8 @@ public class FrameSet {
     }
 
     public void mark(Function<Frame, Integer> fallDownPinsGetter) {
-        mark(fallDownPinsGetter, (frame) -> {});
+        mark(fallDownPinsGetter, (frame) -> {
+        });
     }
 }
 

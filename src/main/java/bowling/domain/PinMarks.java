@@ -15,7 +15,7 @@ public interface PinMarks {
         }
     }
 
-    default void mark(int countOfFallDown){
+    default void mark(int countOfFallDown) {
         mark(PinMark.pin(countOfFallDown));
     }
 

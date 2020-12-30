@@ -11,7 +11,8 @@ public class LastFramePinMarks implements PinMarks {
     private final int MAX_MARKS = 3;
     private List<PinMark> marks = new ArrayList<>();
 
-    LastFramePinMarks() { }
+    LastFramePinMarks() {
+    }
 
     /**
      * @param pin
@@ -19,7 +20,7 @@ public class LastFramePinMarks implements PinMarks {
     @Override
     public void mark(PinMark pin) {
         shouldMarksLessThanMaxMarks();
-        if( !isStrike() ) shouldMarkedPinSumLessThanOrEqualMaxPins(pin);
+        if (!isStrike()) shouldMarkedPinSumLessThanOrEqualMaxPins(pin);
         shouldMarkedPinsEqualPinMaxIfThirdPinMark();
 
         marks.add(pin);
@@ -28,15 +29,15 @@ public class LastFramePinMarks implements PinMarks {
 
     @Override
     public boolean isStrike() {
-        if(marks.size() > 0)
+        if (marks.size() > 0)
             return marks.get(0).getCountOfFallDownPins() == PinMark.MAX_PINS;
         return false;
     }
 
     @Override
     public boolean isSpare() {
-        if(marks.size() > 1){
-            return marks.get(marks.size()-1).getCountOfFallDownPins() + marks.get(marks.size()-2).getCountOfFallDownPins() == PinMark.MAX_PINS;
+        if (marks.size() > 1) {
+            return marks.get(marks.size() - 1).getCountOfFallDownPins() + marks.get(marks.size() - 2).getCountOfFallDownPins() == PinMark.MAX_PINS;
         }
         return false;
     }
@@ -76,14 +77,14 @@ public class LastFramePinMarks implements PinMarks {
 
     @Override
     public List<PinMarkSign> toSigns() {
-        if ( isSpare() && marks.size() == 2) {
+        if (isSpare() && marks.size() == 2) {
             return Arrays.asList(PinMarkSign.number(marks.get(0).getCountOfFallDownPins()), PinMarkSign.Spare);
         }
-        if ( isSpare() && marks.size() == 3) {
+        if (isSpare() && marks.size() == 3) {
             return Arrays.asList(PinMarkSign.Strike, PinMarkSign.number(marks.get(1).getCountOfFallDownPins()), PinMarkSign.Spare);
         }
         return marks.stream()
-                .filter(mark -> !(mark instanceof BlankPinMark) )
+                .filter(mark -> !(mark instanceof BlankPinMark))
                 .map(mark -> PinMarkSign.number(mark.getCountOfFallDownPins()))
                 .collect(Collectors.toList());
     }

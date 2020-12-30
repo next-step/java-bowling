@@ -20,14 +20,15 @@ public class BowlingGame {
     }
 
     public void start() {
-        start(game -> {});
+        start(game -> {
+        });
     }
 
     public void start(Consumer<BowlingGame> actionBeforeStart) {
         actionBeforeStart.accept(this);
     }
 
-    public List<ScoreSheetReader> getReaders(){
+    public List<ScoreSheetReader> getReaders() {
         return scoreSheets.getReaders();
     }
 

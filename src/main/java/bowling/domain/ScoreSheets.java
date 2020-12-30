@@ -11,7 +11,7 @@ public class ScoreSheets {
         this.sheets = players.stream().map(DefaultScoreSheet::new).collect(Collectors.toList());
     }
 
-    public boolean isAllMarked(){
+    public boolean isAllMarked() {
         return !sheets.stream()
                 .anyMatch(sheet -> !sheet.isAllMarked());
 

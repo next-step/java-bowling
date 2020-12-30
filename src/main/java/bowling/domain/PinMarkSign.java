@@ -10,11 +10,11 @@ public interface PinMarkSign {
     PinMarkSign Spare = SpecialPinMarkSign.Spare;
     PinMarkSign Gutter = SpecialPinMarkSign.Gutter;
 
-    static PinMarkSign number(int pins){
-        if( pins < 0 ) throw new IllegalArgumentException("표시할 수 있는 기호가 없습니다");
+    static PinMarkSign number(int pins) {
+        if (pins < 0) throw new IllegalArgumentException("표시할 수 있는 기호가 없습니다");
 
-        if( pins == 0 ) return Gutter;
-        if( pins == PinMark.MAX_PINS ) return Strike;
+        if (pins == 0) return Gutter;
+        if (pins == PinMark.MAX_PINS) return Strike;
         return new NumberPinMarkSign(pins);
     }
 }

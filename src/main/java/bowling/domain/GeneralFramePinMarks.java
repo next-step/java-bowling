@@ -10,7 +10,8 @@ public class GeneralFramePinMarks implements PinMarks {
     private final int MAX_MARKS = 2;
     private List<PinMark> marks = new ArrayList<>();
 
-    GeneralFramePinMarks() { }
+    GeneralFramePinMarks() {
+    }
 
     @Override
     public void mark(PinMark pin) {
@@ -23,14 +24,14 @@ public class GeneralFramePinMarks implements PinMarks {
 
     @Override
     public boolean isStrike() {
-        if(isAllMarked())
+        if (isAllMarked())
             return marks.get(0).equals(PinMark.pin(10));
         return false;
     }
 
     @Override
     public boolean isSpare() {
-        if(marks.size() == 2){
+        if (marks.size() == 2) {
             return getCountOfFallDownPins() == PinMark.MAX_PINS;
         }
         return false;

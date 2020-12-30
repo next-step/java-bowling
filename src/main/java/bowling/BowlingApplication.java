@@ -5,8 +5,6 @@ import bowling.domain.FrameSet;
 import bowling.view.ConsoleView;
 import bowling.view.UserInput;
 
-import java.util.Random;
-
 public class BowlingApplication {
 
     public static void main(String[] args) {
@@ -16,7 +14,7 @@ public class BowlingApplication {
         String playName = input.readPlayerName();
         BowlingGame game = new BowlingGame(playName);
 
-        game.start( (bowlingGame) -> {
+        game.start((bowlingGame) -> {
             view.printScoreSheets(bowlingGame.getReaders());
 
             FrameSet current;

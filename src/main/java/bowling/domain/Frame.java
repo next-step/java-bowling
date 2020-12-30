@@ -2,7 +2,7 @@ package bowling.domain;
 
 public interface Frame {
 
-    enum Status{
+    enum Status {
         Strike, Spare, Miss, Gutter;
     }
 

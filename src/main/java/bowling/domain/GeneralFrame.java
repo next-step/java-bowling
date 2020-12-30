@@ -23,9 +23,9 @@ public class GeneralFrame implements Frame {
 
     @Override
     public Status getStatus() {
-        if( pinMarks.isStrike() ) return Status.Strike;
-        if( pinMarks.getCountOfFallDownPins() == 0 ) return Status.Gutter;
-        if( pinMarks.getCountOfFallDownPins() == PinMark.MAX_PINS ) return Status.Spare;
+        if (pinMarks.isStrike()) return Status.Strike;
+        if (pinMarks.getCountOfFallDownPins() == 0) return Status.Gutter;
+        if (pinMarks.getCountOfFallDownPins() == PinMark.MAX_PINS) return Status.Spare;
         return Status.Miss;
     }
 
