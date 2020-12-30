@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.List;
+
 public interface ScoreSheet {
 
     /**
@@ -18,7 +20,13 @@ public interface ScoreSheet {
      */
     Frame nextFrame();
 
+    String getPlayerName();
+
+    List<FrameInfo> getFrameInfos();
+
     ScoreSheetReader getReader();
+
+
 }
 
 

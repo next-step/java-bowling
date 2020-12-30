@@ -38,7 +38,7 @@ public interface Frame {
      */
     Frame nextFrame();
 
-    FrameData toFrameData();
+    FrameInfo toFrameInfo();
 
     /**
      * 현재 프레임까지 스코어를 가져온다

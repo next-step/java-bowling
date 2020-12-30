@@ -1,20 +1,18 @@
 package bowling.domain;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DefaultScoreSheetReader implements ScoreSheetReader {
 
     private static final int LAST_FRAME_NO = 10;
-    private final Player player;
-    private final List<FrameData> frameData;
+
+    private final String playerName;
+    private final List<FrameInfo> frameInfos;
     private int nextIdx = 0;
 
-    public DefaultScoreSheetReader(Player player, List<Frame> frames) {
-        this.player = player;
-        this.frameData = frames.stream()
-                .map(Frame::toFrameData)
-                .collect(Collectors.toList());
+    public DefaultScoreSheetReader(ScoreSheet scoreSheet) {
+        this.playerName = scoreSheet.getPlayerName();
+        this.frameInfos = scoreSheet.getFrameInfos();
     }
 
     @Override
@@ -24,14 +22,14 @@ public class DefaultScoreSheetReader implements ScoreSheetReader {
 
     @Override
     public String readPlayName() {
-        return player.getName();
+        return playerName;
     }
 
     @Override
-    public FrameData readFrameData() {
+    public FrameInfo readFrameData() {
         if (isEOF()) return null;
-        if (nextIdx >= frameData.size()) return FrameData.blank(nextIdx++ + 1);
-        return frameData.get(nextIdx++);
+        if (nextIdx >= frameInfos.size()) return FrameInfo.blank(nextIdx++ + 1);
+        return frameInfos.get(nextIdx++);
     }
 
 }

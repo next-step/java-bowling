@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class BowlingGame {
 
-    private List<Player> players;
     private ScoreSheets scoreSheets;
 
     public BowlingGame(String... playerNames) {
@@ -15,7 +14,6 @@ public class BowlingGame {
     }
 
     public BowlingGame(List<Player> players) {
-        this.players = players;
         this.scoreSheets = new ScoreSheets(players);
     }
 

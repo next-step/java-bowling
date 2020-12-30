@@ -146,12 +146,12 @@ abstract class ScoreSheetTest {
 
         System.out.print(String.format("|%1$" + nameSpan + "s  | ", playerName));
         while (!reader.isEOF()) {
-            FrameData frameData = reader.readFrameData();
-            String marked = frameData.getPinMarkSigns()
+            FrameInfo frameInfo = reader.readFrameData();
+            String marked = frameInfo.getPinMarkSigns()
                     .stream()
                     .collect(Collectors.joining("|"));
             int spanSize = 3;
-            if (frameData.getFrameNo() == 10) {
+            if (frameInfo.getFrameNo() == 10) {
                 spanSize = spanSize + 2;
             }
             System.out.print(String.format("%1$" + spanSize + "s", marked));

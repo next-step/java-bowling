@@ -55,7 +55,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public FrameData toFrameData() {
-        return FrameData.of(frameNo, pinMarks.toSigns(), getScore());
+    public FrameInfo toFrameInfo() {
+        return FrameInfo.of(frameNo, pinMarks.toSigns(), getScore());
     }
 }

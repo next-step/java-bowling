@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FrameData {
+public class FrameInfo {
 
-    static FrameData of(int frameNo, List<PinMarkSign> pinMarkSigns, int score) {
-        return new FrameData(
+    static FrameInfo of(int frameNo, List<PinMarkSign> pinMarkSigns, int score) {
+        return new FrameInfo(
                 frameNo,
                 pinMarkSigns.stream()
                         .map(PinMarkSign::toString)
@@ -15,15 +15,15 @@ public class FrameData {
                 score);
     }
 
-    static FrameData blank(int frameNo) {
-        return new FrameData(frameNo, Arrays.asList(), 0);
+    static FrameInfo blank(int frameNo) {
+        return new FrameInfo(frameNo, Arrays.asList(), 0);
     }
 
     private int frameNo;
     private List<String> pinMarkSigns;
     private int score;
 
-    private FrameData(int frameNo, List<String> pinMarkSigns, int score) {
+    private FrameInfo(int frameNo, List<String> pinMarkSigns, int score) {
         this.frameNo = frameNo;
         this.pinMarkSigns = pinMarkSigns;
         this.score = score;

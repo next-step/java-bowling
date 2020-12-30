@@ -44,7 +44,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public FrameData toFrameData() {
-        return FrameData.of(getFrameNo(), pinMarks.toSigns(), getScore());
+    public FrameInfo toFrameInfo() {
+        return FrameInfo.of(getFrameNo(), pinMarks.toSigns(), getScore());
     }
 }

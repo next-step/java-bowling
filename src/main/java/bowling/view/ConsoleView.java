@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.FrameData;
+import bowling.domain.FrameInfo;
 import bowling.domain.ScoreSheetReader;
 
 import java.io.PrintWriter;
@@ -38,12 +38,12 @@ public class ConsoleView {
         readers.forEach(reader -> {
             writer.print(String.format("|%1$" + nameSpan + "s  | ", reader.readPlayName()));
             while (!reader.isEOF()) {
-                FrameData frameData = reader.readFrameData();
-                String marked = frameData.getPinMarkSigns()
+                FrameInfo frameInfo = reader.readFrameData();
+                String marked = frameInfo.getPinMarkSigns()
                         .stream()
                         .collect(Collectors.joining("|"));
                 int spanSize = 3;
-                if (frameData.getFrameNo() == 10) {
+                if (frameInfo.getFrameNo() == 10) {
                     spanSize = spanSize + 2;
                 }
                 writer.print(String.format("%1$" + spanSize + "s", marked));
