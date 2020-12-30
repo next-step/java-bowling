@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NormalFrame implements Frame {
@@ -23,5 +24,9 @@ public class NormalFrame implements Frame {
 
     public FrameStatus decideStatus() {
         return FrameStatus.decideStatus(downedPins);
+    }
+
+    public List<DownedPin> getDownedPins() {
+        return Collections.unmodifiableList(downedPins);
     }
 }

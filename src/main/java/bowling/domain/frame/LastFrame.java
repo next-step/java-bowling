@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LastFrame implements Frame {
@@ -33,6 +34,10 @@ public class LastFrame implements Frame {
         return initialFrameStatus == FrameStatus.MISS ||
                 ((initialFrameStatus == FrameStatus.STRIKE || initialFrameStatus == FrameStatus.SPARE) &&
                         this.numPitches == MAXIMUM_NUMBER_OF_PITCHES_IN_LAST_FRAME);
+    }
+
+    public List<NormalFrame> getFrames() {
+        return Collections.unmodifiableList(frames);
     }
 
     private NormalFrame getInitialFrame() {

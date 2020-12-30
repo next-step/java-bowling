@@ -45,4 +45,8 @@ public class DownedPin {
     public boolean isSpare(DownedPin downedPin) {
         return numDownedPin + downedPin.numDownedPin == MAXIMUM_NUMBER_OF_DOWNED_PIN;
     }
+
+    public int getNumDownedPin() {
+        return numDownedPin;
+    }
 }
