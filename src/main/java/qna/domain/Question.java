@@ -1,10 +1,13 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -88,8 +91,49 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
+    public List<DeleteHistory> deleteBy(User user) throws CannotDeleteException {
+        validateQuestionOwnedBy(user);
+        validateAllAnswersOwnedBy(user);
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(deleteThis(user));
+        deleteHistories.addAll(deleteCascadingAnswers(user));
+
+        return deleteHistories;
+    }
+
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    private void validateQuestionOwnedBy(User user) throws CannotDeleteException {
+        if (!isOwner(user)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다");
+        }
+    }
+
+    private void validateAllAnswersOwnedBy(User user) throws CannotDeleteException {
+        Optional<Answer> notOwnedAnswer = answers.stream()
+                .filter(answer -> !answer.isOwner(user))
+                .findAny();
+
+        if (notOwnedAnswer.isPresent()) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
+    private DeleteHistory deleteThis(User user) {
+        setDeleted(true);
+        return DeleteHistory.ofQuestion(getId(), user);
+    }
+
+    private List<DeleteHistory> deleteCascadingAnswers(User user) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        for (Answer answer : answers) {
+            deleteHistories.add(answer.deleteBy(user));
+        }
+
+        return deleteHistories;
     }
 }
