@@ -5,7 +5,7 @@ import step2.domain.Pitch;
 
 import java.util.List;
 
-public class Miss implements State {
+public class Miss extends Finished {
 
     private static final String DELIMITER = "|";
 

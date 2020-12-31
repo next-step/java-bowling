@@ -45,4 +45,18 @@ class PitchTest {
                 () -> Pitch.from(-1));
     }
 
+    @Test
+    @DisplayName("스트라이크인지 확인")
+    void isStrike() {
+        Pitch pitch = Pitch.from(10);
+        assertThat(pitch.isStrike()).isTrue();
+    }
+
+    @Test
+    @DisplayName("거터인지 확인")
+    void isGutter() {
+        Pitch pitch = Pitch.from(0);
+        assertThat(pitch.isGutter()).isTrue();
+    }
+
 }

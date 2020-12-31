@@ -10,7 +10,7 @@ public class Pitch {
 
     private final int score;
 
-    public Pitch(int score) {
+    private Pitch(int score) {
         validate(score);
         this.score = score;
     }
@@ -40,13 +40,21 @@ public class Pitch {
         return score;
     }
 
+    public boolean isStrike() {
+        return score == MAX_SCORE;
+    }
+
+    public boolean isGutter() {
+        return score == MIN_SCORE;
+    }
+
     @Override
     public String toString() {
-        if (score == MIN_SCORE) {
+        if (isGutter()) {
             return GUTTER_SYMBOL;
         }
 
-        if (score == MAX_SCORE) {
+        if (isStrike()) {
             return Strike.SYMBOL;
         }
         return "" + score;

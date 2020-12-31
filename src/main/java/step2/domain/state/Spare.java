@@ -5,7 +5,7 @@ import step2.domain.Pitch;
 
 import java.util.List;
 
-public class Spare implements State {
+public class Spare extends Finished {
 
     private static final String SYMBOL = "/";
     private static final String DELIMITER = "|";
