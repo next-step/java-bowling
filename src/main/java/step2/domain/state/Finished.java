@@ -24,8 +24,4 @@ public abstract class Finished implements State {
         return null;
     }
 
-    @Override
-    public String getDesc() {
-        return null;
-    }
 }

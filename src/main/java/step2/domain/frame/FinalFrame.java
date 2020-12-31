@@ -111,11 +111,12 @@ public class FinalFrame implements Frame {
             return new Strike(pitches);
         }
 
-        if (isSpare()) {
-            return new Spare(pitches);
-        }
+//        if (isSpare()) {
+//            return new Spare(pitches);
+//        }
 
-        return new Miss(pitches);
+//        return new Miss(pitches);
+        return null;
     }
 
     @Override

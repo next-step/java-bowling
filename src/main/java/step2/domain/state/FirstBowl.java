@@ -7,13 +7,20 @@ public class FirstBowl extends Running {
 
     private Pitch firstPitch;
 
-    public FirstBowl(Pitch pitch) {
-        this.firstPitch = pitch;
+    public FirstBowl(Pitch firstPitch) {
+        this.firstPitch = firstPitch;
     }
 
     @Override
     public State bowl(int fallingPins) {
-        return null;
+        int totalScore = firstPitch.getScore() + fallingPins;
+        Pitch secondPitch = Pitch.from(fallingPins);
+
+        if (totalScore == Pitch.MAX_SCORE) {
+            return new Spare(firstPitch, secondPitch);
+        }
+
+        return new Miss(firstPitch, secondPitch);
     }
 
     @Override
@@ -21,8 +28,4 @@ public class FirstBowl extends Running {
         return null;
     }
 
-    @Override
-    public String getDesc() {
-        return null;
-    }
 }

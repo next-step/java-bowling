@@ -10,17 +10,17 @@ public class Spare extends Finished {
     private static final String SYMBOL = "/";
     private static final String DELIMITER = "|";
 
-    private final List<Pitch> pitches;
+    private Pitch firstPitch;
+    private Pitch secondPitch;
 
-    public Spare(List<Pitch> pitches) {
-        this.pitches = pitches;
+
+    public Spare(Pitch firstPitch, Pitch secondPitch) {
+        this.firstPitch = firstPitch;
+        this.secondPitch = secondPitch;
     }
 
     @Override
     public String toString() {
-        if (pitches.size() == Frame.MAX_SIZE) {
-            return pitches.get(0) + DELIMITER + pitches.get(1) + DELIMITER + SYMBOL;
-        }
-        return pitches.get(0) + DELIMITER + SYMBOL;
+        return firstPitch + DELIMITER + SYMBOL;
     }
 }
