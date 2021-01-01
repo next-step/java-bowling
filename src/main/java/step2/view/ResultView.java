@@ -20,47 +20,47 @@ public class ResultView {
 
     private static Player player;
 
-//    public static void setPlayer(Player player) {
-//        ResultView.player = player;
-//    }
-//
-//    public static void printEmptyRecords() {
-//        printSignature();
-//        printEmptyScore(player);
-//        System.out.println();
-//    }
-//
-//    private static void printEmptyScore(Player player) {
-//        printUsername(player);
-//
-//        IntStream.range(ONE, FRAME_LENGTH)
-//                .forEach(ResultView::printEmptyScore);
-//    }
-//
-//    private static void printUsername(Player player) {
-//        System.out.println();
-//        System.out.print(BAR_DELIMITER);
-//        System.out.print(String.format("%5s ", player));
-//        System.out.print(BAR_DELIMITER);
-//    }
-//
-//    private static void printSignature() {
-//        System.out.print(BAR_DELIMITER);
-//        System.out.print(String.format("%5s ",NAME));
-//        System.out.print(BAR_DELIMITER);
-//        IntStream.range(ONE, FRAME_LENGTH)
-//                .forEach(ResultView::printFrameNumbers);
-//    }
-//
-//    private static void printFrameNumbers(int number) {
-//        System.out.print(String.format("  %02d  ", number));
-//        System.out.print(BAR_DELIMITER);
-//    }
-//
-//    private static void printEmptyScore(int number) {
-//        System.out.print(EMPTY_SPACE);
-//        System.out.print(BAR_DELIMITER);
-//    }
+    public static void setPlayer(Player player) {
+        ResultView.player = player;
+    }
+
+    public static void printEmptyRecords() {
+        printSignature();
+        printEmptyScore(player);
+        System.out.println();
+    }
+
+    private static void printEmptyScore(Player player) {
+        printUsername(player);
+
+        IntStream.range(ONE, FRAME_LENGTH)
+                .forEach(ResultView::printEmptyScore);
+    }
+
+    private static void printUsername(Player player) {
+        System.out.println();
+        System.out.print(BAR_DELIMITER);
+        System.out.print(String.format("%5s ", player));
+        System.out.print(BAR_DELIMITER);
+    }
+
+    private static void printSignature() {
+        System.out.print(BAR_DELIMITER);
+        System.out.print(String.format("%5s ",NAME));
+        System.out.print(BAR_DELIMITER);
+        IntStream.range(ONE, FRAME_LENGTH)
+                .forEach(ResultView::printFrameNumbers);
+    }
+
+    private static void printFrameNumbers(int number) {
+        System.out.print(String.format("  %02d  ", number));
+        System.out.print(BAR_DELIMITER);
+    }
+
+    private static void printEmptyScore(int number) {
+        System.out.print(EMPTY_SPACE);
+        System.out.print(BAR_DELIMITER);
+    }
 //
 //    public static void printScoreBoard(Frame frame, int round) {
 //        printSignature();

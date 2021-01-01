@@ -8,6 +8,7 @@ public class NormalFrame implements Frame {
 
     private final int index;
     private State state;
+    private Frame nextFrame;
 
     public NormalFrame(int index) {
         this.index = index;
@@ -22,7 +23,8 @@ public class NormalFrame implements Frame {
     public Frame bowl(int fallingPins) {
         state = state.bowl(fallingPins);
         if (state.isFinish()) {
-            return createFrame(index);
+            nextFrame = createFrame(index);
+            return nextFrame;
         }
         return this;
     }
@@ -38,6 +40,12 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score calculateAdditionalScore(Score beforeScore) {
-        return null;
+        Score score = state.calculateAdditionalScore(beforeScore);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        return nextFrame.calculateAdditionalScore(score);
     }
+
 }

@@ -5,12 +5,8 @@ import org.junit.jupiter.api.Test;
 import step2.domain.frame.FinalFrame;
 import step2.domain.frame.Frame;
 import step2.domain.frame.NormalFrame;
-import step2.domain.state.Miss;
-import step2.domain.state.Spare;
-import step2.domain.state.Strike;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class NormalFrameTest {
 
@@ -42,6 +38,39 @@ class NormalFrameTest {
         Frame frame = new NormalFrame(9);
 
         assertThat(frame.bowl(10)).isInstanceOf(FinalFrame.class);
+    }
+
+    @Test
+    @DisplayName("NormalFrame 투구 시 점수 계산")
+    void getFrameScore() {
+        Frame frame1 = NormalFrame.init();
+        frame1.bowl(3).bowl(5);
+        Score score = frame1.calculateAdditionalScore(Score.of(0, 2));
+
+        assertThat(score.getScore()).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("NormalFrame 투구 시 이전 프레이 합산 점수 계산")
+    void getNextFrameScore() {
+        Frame frame1 = NormalFrame.init();
+        Frame frame2 = frame1.bowl(3).bowl(5);
+        Score score1 = frame1.calculateAdditionalScore(Score.of(0, 2));
+        frame2.bowl(6).bowl(3);
+        Score score2 = frame2.calculateAdditionalScore(Score.of(score1.getScore(), 2));
+
+        assertThat(score2.getScore()).isEqualTo(17);
+    }
+
+    @Test
+    @DisplayName("NormalFrame 스트라이크 점수 계산")
+    void getStrikeScore() {
+        Frame frame1 = NormalFrame.init();
+        frame1.bowl(10).bowl(10).bowl(10);
+
+        Score score = frame1.calculateAdditionalScore(Score.ofStrike());
+
+        assertThat(score.getScore()).isEqualTo(30);
     }
 
 }
