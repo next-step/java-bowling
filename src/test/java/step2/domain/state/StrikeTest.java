@@ -24,10 +24,10 @@ class StrikeTest {
         Ready ready = new Ready();
         State state = ready.bowl(10);
 
-        Score score = Score.ofMiss(0);
+        Score score = Score.ofMiss(5);
         Score newScore1 = state.calculateAdditionalScore(score);
 
-        assertThat(newScore1.getScore()).isEqualTo(0);
+        assertThat(newScore1.getScore()).isEqualTo(5);
     }
 
     @Test
