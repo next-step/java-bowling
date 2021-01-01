@@ -16,7 +16,11 @@ public class Ready extends Running {
 
     @Override
     public Score calculateAdditionalScore(Score score) {
-        return null;
+        throw new IllegalArgumentException("점수를 계산할 수 없습니다.");
     }
 
+    @Override
+    public String toString() {
+        return "";
+    }
 }

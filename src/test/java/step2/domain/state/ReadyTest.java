@@ -2,6 +2,7 @@ package step2.domain.state;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import step2.domain.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -35,6 +36,16 @@ class ReadyTest {
         Ready ready = new Ready();
         assertThrows(IllegalArgumentException.class,
                 ready::getScore);
+    }
+
+    @Test
+    @DisplayName("준비상태일 때 점수 계산 예외 처리")
+    void calculateAdditionalExceptionScore() {
+        Ready ready = new Ready();
+        Score score = Score.ofStrike();
+
+        assertThrows(IllegalArgumentException.class,
+                () -> ready.calculateAdditionalScore(score));
     }
 
 }
