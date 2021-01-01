@@ -6,6 +6,7 @@ import step2.domain.Pitch;
 import step2.domain.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MissTest {
 
@@ -43,6 +44,27 @@ class MissTest {
         Score newScore = miss.calculateAdditionalScore(score);
 
         assertThat(newScore.getScore()).isEqualTo(12);
+    }
+
+    @Test
+    @DisplayName("스페어 투구 예외 처리")
+    void bowlException() {
+        Pitch pitch1 = Pitch.from(2);
+        Pitch pitch2 = Pitch.from(3);
+        Miss miss = new Miss(pitch1, pitch2);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> miss.bowl(1));
+    }
+
+    @Test
+    @DisplayName("스페어 종료 상태")
+    void isFinished() {
+        Pitch pitch1 = Pitch.from(2);
+        Pitch pitch2 = Pitch.from(3);
+        Miss miss = new Miss(pitch1, pitch2);
+
+        assertThat(miss.isFinish()).isTrue();
     }
 
 }
