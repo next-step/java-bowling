@@ -1,27 +1,15 @@
 package step2.domain.state;
 
-import step2.domain.Score;
-
 public abstract class Finished implements State {
 
     @Override
     public State bowl(int fallingPins) {
-        return null;
+        throw new IllegalArgumentException("더 이상 투구를 할 수 없습니다.");
     }
 
     @Override
     public boolean isFinish() {
-        return false;
-    }
-
-    @Override
-    public Score getScore() {
-        return null;
-    }
-
-    @Override
-    public Score calculateAdditionalScore(Score score) {
-        return null;
+        return true;
     }
 
 }

@@ -45,7 +45,7 @@ public class Score {
         return score;
     }
 
-    private boolean canCalculateScore() {
+    public boolean canCalculateScore() {
         return left == NO_CHANCE;
     }
 

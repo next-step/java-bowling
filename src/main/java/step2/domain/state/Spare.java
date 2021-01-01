@@ -1,9 +1,7 @@
 package step2.domain.state;
 
-import step2.domain.frame.Frame;
 import step2.domain.Pitch;
-
-import java.util.List;
+import step2.domain.Score;
 
 public class Spare extends Finished {
 
@@ -17,6 +15,21 @@ public class Spare extends Finished {
     public Spare(Pitch firstPitch, Pitch secondPitch) {
         this.firstPitch = firstPitch;
         this.secondPitch = secondPitch;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.of(Pitch.MAX_SCORE, 1);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = score.bowl(firstPitch.getScore());
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        return score.bowl(secondPitch.getScore());
     }
 
     @Override
