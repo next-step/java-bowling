@@ -6,6 +6,7 @@ import step2.domain.Pitch;
 import step2.domain.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SpareTest {
 
@@ -43,6 +44,27 @@ class SpareTest {
         Score newScore = state.calculateAdditionalScore(score);
 
         assertThat(newScore.getScore()).isEqualTo(17);
+    }
+
+    @Test
+    @DisplayName("스페어 투구 예외 처리")
+    void bowlException() {
+        Pitch pitch = Pitch.from(7);
+        FirstBowl firstBowl = new FirstBowl(pitch);
+        State state = firstBowl.bowl(3);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> state.bowl(1));
+    }
+
+    @Test
+    @DisplayName("스페어 종료 상태")
+    void isFinished() {
+        Pitch pitch = Pitch.from(7);
+        FirstBowl firstBowl = new FirstBowl(pitch);
+        State state = firstBowl.bowl(3);
+
+        assertThat(state.isFinish()).isTrue();
     }
 
 }
