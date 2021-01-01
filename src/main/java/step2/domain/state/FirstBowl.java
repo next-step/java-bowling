@@ -25,7 +25,15 @@ public class FirstBowl extends Running {
 
     @Override
     public Score calculateAdditionalScore(Score score) {
-        return null;
+        score = score.bowl(firstPitch.getScore());
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        throw new IllegalArgumentException("점수를 계산할 수 없습니다.");
     }
 
+    @Override
+    public String toString() {
+        return "" + firstPitch;
+    }
 }

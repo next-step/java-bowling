@@ -3,6 +3,7 @@ package step2.domain.state;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import step2.domain.Pitch;
+import step2.domain.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -44,6 +45,42 @@ class FirstBowlTest {
 
         assertThrows(IllegalArgumentException.class,
                 firstBowl::getScore);
+    }
+
+    @Test
+    @DisplayName("첫번째 투구 상태일 때 점수 계산하기")
+    void calculateAdditionalStrikeScore() {
+        Pitch pitch = Pitch.from(9);
+        FirstBowl firstBowl = new FirstBowl(pitch);
+
+        Score score = Score.ofSpare();
+        Score newScore = firstBowl.calculateAdditionalScore(score);
+
+        assertThat(newScore.getScore()).isEqualTo(15);
+    }
+
+    @Test
+    @DisplayName("첫번째 투구 상태일 때 점수 계산하기 예외 처리 - Strike")
+    void calculateAdditionalExceptionStrikeScore() {
+        Pitch pitch = Pitch.from(9);
+        FirstBowl firstBowl = new FirstBowl(pitch);
+
+        Score score = Score.ofStrike();
+
+        assertThrows(IllegalArgumentException.class,
+                () -> firstBowl.calculateAdditionalScore(score));
+    }
+
+    @Test
+    @DisplayName("첫번째 투구 상태일 때 점수 계산하기 예외 처리 - Miss")
+    void calculateAdditionalExceptionMissScore() {
+        Pitch pitch = Pitch.from(9);
+        FirstBowl firstBowl = new FirstBowl(pitch);
+
+        Score score = Score.ofMiss(4);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> firstBowl.calculateAdditionalScore(score));
     }
 
 }
