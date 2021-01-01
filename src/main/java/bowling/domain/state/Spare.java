@@ -5,6 +5,7 @@ import bowling.domain.Score;
 import java.util.Objects;
 
 import static bowling.common.SymbolConstants.SPARE;
+import static bowling.common.SymbolConstants.SYMBOL_DELIMITER;
 import static bowling.domain.Score.*;
 
 public class Spare implements Calculating {
@@ -53,7 +54,7 @@ public class Spare implements Calculating {
 
     @Override
     public String display() {
-        return String.valueOf(firstPin).concat(SPARE);
+        return String.valueOf(firstPin).concat(SYMBOL_DELIMITER).concat(SPARE);
     }
 
 

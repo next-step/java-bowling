@@ -4,7 +4,7 @@ import bowling.domain.Score;
 
 import java.util.Objects;
 
-import static bowling.common.SymbolConstants.GUTTER;
+import static bowling.common.SymbolConstants.*;
 import static bowling.domain.Score.*;
 
 public class BowledOnce implements Calculated {
@@ -52,7 +52,12 @@ public class BowledOnce implements Calculated {
 
     @Override
     public String display() {
-        return pins == MINIMUM_VALUE ? GUTTER : String.valueOf(pins);
+        String first = String.valueOf(pins);
+        if(pins == MINIMUM_VALUE) {
+            first = GUTTER;
+        }
+
+        return  first.concat(NOT_THROWN);
     }
 
     @Override
