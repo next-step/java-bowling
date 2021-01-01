@@ -55,4 +55,23 @@ class StrikeTest {
                 newScore1::getScore);
     }
 
+    @Test
+    @DisplayName("스트라이크 투구 예외 처리")
+    void bowlException() {
+        Ready ready = new Ready();
+        State state = ready.bowl(10);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> state.bowl(1));
+    }
+
+    @Test
+    @DisplayName("스트라이크 종료 상태")
+    void isFinished() {
+        Ready ready = new Ready();
+        State state = ready.bowl(10);
+
+        assertThat(state.isFinish()).isTrue();
+    }
+
 }
