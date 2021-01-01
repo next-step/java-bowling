@@ -17,12 +17,11 @@ public class ResultView {
     private static final String NONE = "";
 
     private ResultView() {}
-    
+
     public static void print(Player player) {
         System.out.println(TEMPLATE_HEADER);
         printFrames(player);
         printScore(player);
-
     }
 
     private static void printFrames(Player player) {
@@ -39,13 +38,13 @@ public class ResultView {
         System.out.print(SYMBOL_DELIMITER.concat(centerPadding(NONE).concat(SYMBOL_DELIMITER)));
         for(int i = FIRST_FRAME_NO; i <= LAST_FRAME_NO; i++) {
             Frame frame = player.nthFrame(i);
-            int score = frame.getScore();
+            Score score = frame.getScore();
 
-            if(score == Score.NOT_CALCULATED) {
+            if(score == Score.UNSCORED) {
                 System.out.print(centerPadding(NONE).concat(SYMBOL_DELIMITER));
                 continue;
             }
-            totalScore += score;
+            totalScore += score.getFallenPins();
 
             System.out.print(centerPadding(String.valueOf(totalScore)).concat(SYMBOL_DELIMITER));
         }
