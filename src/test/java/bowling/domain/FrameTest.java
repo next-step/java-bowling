@@ -91,7 +91,7 @@ public class FrameTest {
             normalFrame.start(Integer.parseInt(pitchResult));
         }
 
-        Score score = normalFrame.createScore();
+        Score score = normalFrame.createScore(0);
 
         assertThat(score.getLeftBonusCount()).isEqualTo(expectValue);
     }

@@ -20,7 +20,7 @@ public abstract class Frame {
 
     public Score getScore() {return this.score;}
 
-    public abstract void setScore(int score);
+    public abstract void setScore(int previousScore);
 
 
     public int getIndex() {
@@ -33,7 +33,10 @@ public abstract class Frame {
 
     public int sumCurrentPitchResults() {
         return pitchResults.sumUpCurrentResult();
+    }
 
+    public int sumUpCurrentScore(){
+        return score.getScore();
     }
 
     public abstract void start(int knockedDownPins);
@@ -41,6 +44,8 @@ public abstract class Frame {
     public abstract boolean isEnd();
 
     public abstract Frame makeNextFrame(int currentFrameIndex);
+
+
 
     @Override
     public boolean equals(Object o) {

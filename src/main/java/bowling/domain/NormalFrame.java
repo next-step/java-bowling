@@ -9,12 +9,12 @@ public class NormalFrame extends Frame{
     }
 
     @Override
-    public void setScore(int score) {
-        this.score = createScore();
+    public void setScore(int previousScore) {
+        this.score = createScore(previousScore);
     }
 
-    public Score createScore() {
-        int sumUp = pitchResults.sumUpCurrentResult();
+    public Score createScore(int previousScore) {
+        int sumUp = previousScore + sumUpCurrentResult();
 
         if(pitchResults.isStrike()){
             return Score.ofStrike(sumUp);
@@ -26,6 +26,11 @@ public class NormalFrame extends Frame{
 
         return Score.of(sumUp);
     }
+
+    public int sumUpCurrentResult(){
+        return pitchResults.sumUpCurrentResult();
+    }
+
 
     public static NormalFrame from(int index){
         return new NormalFrame(index);
@@ -67,10 +72,10 @@ public class NormalFrame extends Frame{
     @Override
     public void renewScore(int knockedDownPins) {
         int currentScore = this.score.getScore();
+
         if (this.score.getLeftBonusCount() > 0) {
             this.score.renewScore(knockedDownPins + currentScore);
         }
     }
-
 
 }

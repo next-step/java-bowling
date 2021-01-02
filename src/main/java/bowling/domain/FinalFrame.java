@@ -9,8 +9,12 @@ public class FinalFrame extends Frame{
     }
 
     @Override
-    public void setScore(int score) {
-        this.score = Score.of(pitchResults.sumUpCurrentResult());
+    public void setScore(int previousScore) {
+        this.score = Score.of(previousScore + sumUpCurrentResult());
+    }
+
+    public int sumUpCurrentResult(){
+        return pitchResults.sumUpCurrentResult();
     }
 
     public static FinalFrame from(int index){

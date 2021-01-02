@@ -30,7 +30,10 @@ public class Frames {
     public void execute(int knockedDownPins) {
         Frame currentFrame = this.getLast();
         currentFrame.start(knockedDownPins);
-        currentFrame.setScore(knockedDownPins);
+
+        int previousScore = previousFrameScoreSumUp(currentFrame);
+
+        currentFrame.setScore(previousScore);
 
         if (frames.size() >= MIN_FRAME_COUNT_TO_SCORE) {
             renewScore(currentFrame, knockedDownPins);
@@ -38,12 +41,29 @@ public class Frames {
 
     }
 
+    private int previousFrameScoreSumUp(Frame currentFrame) {
+        return frames.stream()
+                .filter(frame -> frame.getIndex() == (currentFrame.getIndex() - 1))
+                .mapToInt(Frame::sumUpCurrentScore)
+                .sum();
+    }
+
     private void renewScore(Frame currentFrame, int knockedDownPins){
         if (hasUnfinishedScore()) {
             frames.stream()
                     .filter(frame -> frame.getScore().getLeftBonusCount() > 0 && !(frame.getIndex() == currentFrame.getIndex()))
-                    .forEach(frame -> frame.renewScore(knockedDownPins));
+                    .forEach(frame -> renewFrameScore(frame, knockedDownPins));
         }
+    }
+
+    private void renewFrameScore(Frame frame, int knockedDownPins){
+        frame.renewScore(knockedDownPins);
+        renewNextFrame(frame.getIndex());
+    }
+
+    private void renewNextFrame(int i) {
+        Frame nextFrame = frames.get(i);
+        nextFrame.setScore(previousFrameScoreSumUp(nextFrame));
     }
 
     public boolean hasUnfinishedScore() {
