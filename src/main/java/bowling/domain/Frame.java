@@ -1,8 +1,10 @@
 package bowling.domain;
 
 public interface Frame {
+    Frame bowl(int pins);
     boolean isOver();
-    void add(int value);
-    Frame next();
+    Score getScore();
+    Score addBonusScore(Score prevScore);
+    Frame getNext();
     String display();
 }

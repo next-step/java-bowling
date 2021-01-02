@@ -16,7 +16,11 @@ public class FramesTest {
     @Test
     void bowlTest() {
         frames.bowl(10);
-
+        frames.bowl(10);
         assertThat(frames.get(0).isOver()).isTrue();
+        assertThat(frames.get(1).isOver()).isTrue();
+        assertThat(frames.get(2).isOver()).isFalse();
     }
 }
+
+
