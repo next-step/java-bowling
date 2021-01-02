@@ -24,9 +24,9 @@ public class QuestionTest {
 
         assertThat(deleteHistories.getHistories()).hasSize(3);
         assertThat(deleteHistories.getHistories()).containsExactlyInAnyOrder(
-                new DeleteHistory(ContentType.QUESTION, 1L, UserTest.SEHAN, LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, 1L, UserTest.SEHAN, LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, 2L, UserTest.SEHAN, LocalDateTime.now())
+                DeleteHistory.ofQuestion(1L, UserTest.SEHAN),
+                DeleteHistory.ofAnswer(1L, UserTest.SEHAN),
+                DeleteHistory.ofAnswer( 2L, UserTest.SEHAN)
         );
     }
 

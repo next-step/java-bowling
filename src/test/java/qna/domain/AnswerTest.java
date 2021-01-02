@@ -15,7 +15,7 @@ public class AnswerTest {
     @Test
     void delete(){
         Answer answer = new Answer(1L, UserTest.SEHAN, QuestionTest.Q1, "content");
-        answer.delete();
+        answer.delete(UserTest.SEHAN);
         assertThat(answer.isDeleted()).isTrue();
     }
 
@@ -23,8 +23,8 @@ public class AnswerTest {
     @Test
     void deleteHistory(){
         Answer answer = new Answer(1L, UserTest.SEHAN, QuestionTest.Q1, "content");
-        assertThat(answer.delete()).isEqualTo(
-                new DeleteHistory(ContentType.ANSWER, 1L, UserTest.SEHAN, LocalDateTime.now())
+        assertThat(answer.delete(UserTest.SEHAN)).isEqualTo(
+                DeleteHistory.ofAnswer(1L, UserTest.SEHAN)
         );
     }
 

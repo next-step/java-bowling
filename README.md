@@ -1,3 +1,4 @@
+
 # 볼링 게임 점수판
 ## 진행 방법
 * 볼링 게임 점수판 요구사항을 파악한다.
@@ -7,3 +8,7 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+
+## Todo
+* frameNo 포장하기
