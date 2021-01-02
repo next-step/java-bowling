@@ -21,7 +21,7 @@ public class Strike extends Finished {
     }
 
     @Override
-    public String toString() {
+    public String getDesc() {
         return SYMBOL;
     }
 

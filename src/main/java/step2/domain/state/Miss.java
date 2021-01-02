@@ -35,7 +35,7 @@ public class Miss extends Finished {
     }
 
     @Override
-    public String toString() {
-        return firstPitch + DELIMITER + secondPitch;
+    public String getDesc() {
+        return firstPitch.getDesc(secondPitch);
     }
 }

@@ -60,6 +60,6 @@ public class NormalFrame implements Frame {
 
     @Override
     public String toString() {
-        return "" + state;
+        return "" + state.getDesc();
     }
 }

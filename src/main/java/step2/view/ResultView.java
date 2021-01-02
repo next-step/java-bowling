@@ -81,8 +81,8 @@ public class ResultView {
 
     private static StringBuilder printScore(Frame frame) {
         StringBuilder result = new StringBuilder();
-        System.out.print(TWO_EMPTY_SPACE + frame.toString());
-        result.append(TWO_EMPTY_SPACE + frame.toString());
+        System.out.print(TWO_EMPTY_SPACE + frame);
+        result.append(TWO_EMPTY_SPACE + frame);
 
 //        if (frame.getSize() == ONE) {
 //            System.out.print(HALF_EMPTY_SPACE);

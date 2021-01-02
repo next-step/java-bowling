@@ -19,9 +19,6 @@ public class BowlingController {
         Frame frame = NormalFrame.init();
         while (!frames.isFinish()) {
             bowlFrame(frame);
-            frame.getRound();
-//            frame.bowl(pitch);
-//            ResultView.printScoreBoard(frame, round);
             frames.bowl(frame);
         }
     }

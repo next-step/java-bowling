@@ -1,12 +1,12 @@
 package step2.domain;
 
-import step2.domain.state.Strike;
-
 public class Pitch {
 
     public static final int MIN_SCORE = 0;
     public static final int MAX_SCORE = 10;
     private static final String GUTTER_SYMBOL = "-";
+    private static final String SPARE_SYMBOL = "/";
+    private static final String DELIMITER = "|";
 
     private final int score;
 
@@ -48,15 +48,30 @@ public class Pitch {
         return score == MIN_SCORE;
     }
 
-    @Override
-    public String toString() {
+    private int totalScore(Pitch secondPitch) {
+        return score + secondPitch.getScore();
+    }
+
+    private boolean isSpare(Pitch secondPitch) {
+        if (totalScore(secondPitch) == MAX_SCORE) {
+            return true;
+        }
+        return false;
+    }
+
+    public String getDesc(Pitch secondPitch) {
+        if (isSpare(secondPitch)) {
+            return score + DELIMITER + SPARE_SYMBOL;
+        }
+
+        return score + DELIMITER + secondPitch.getScore();
+    }
+
+    public String getDesc() {
         if (isGutter()) {
             return GUTTER_SYMBOL;
         }
 
-        if (isStrike()) {
-            return Strike.SYMBOL;
-        }
         return "" + score;
     }
 }

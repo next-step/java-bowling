@@ -33,7 +33,7 @@ public class FirstBowl extends Running {
     }
 
     @Override
-    public String toString() {
-        return "" + firstPitch;
+    public String getDesc() {
+        return firstPitch.getDesc();
     }
 }

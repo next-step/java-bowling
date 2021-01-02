@@ -20,7 +20,8 @@ public class Ready extends Running {
     }
 
     @Override
-    public String toString() {
+    public String getDesc() {
         return "";
     }
 }
+

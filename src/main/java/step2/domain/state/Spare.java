@@ -33,7 +33,7 @@ public class Spare extends Finished {
     }
 
     @Override
-    public String toString() {
-        return firstPitch + DELIMITER + SYMBOL;
+    public String getDesc() {
+        return firstPitch.getDesc(secondPitch);
     }
 }
