@@ -57,12 +57,12 @@ public class ResultView {
     }
 
     private static void printFramesScore(BowlingGame bowlingGame, int maxFrameCount) {
-        int currentFramesCount = bowlingGame.getFrames().getFrames().size();
+        int currentFramesCount = bowlingGame.countFrames();
 
         System.out.print(DELIMITER + center(SPACE) + DELIMITER);
 
         for (int i = 0; i <currentFramesCount; i++) {
-            System.out.print(center(parsePitchScore(bowlingGame.getFrames().getFrames().get(i))) + DELIMITER);
+            System.out.print(center(parsePitchScore(bowlingGame.searchFrame(i))) + DELIMITER);
         }
 
         printNotCreatedFrames(currentFramesCount, maxFrameCount);
@@ -88,12 +88,12 @@ public class ResultView {
 
     private static void printFramesBody(BowlingGame bowlingGame, int maxFrameCount) {
 
-        int currentFramesCount = bowlingGame.getFrames().getFrames().size();
+        int currentFramesCount = bowlingGame.countFrames();
 
         System.out.print(DELIMITER + center(bowlingGame.getPlayer().getName()) + DELIMITER);
 
         for (int i = 0; i <currentFramesCount; i++) {
-            System.out.print(center(parsePitchResult(bowlingGame.getFrames().getFrames().get(i).getPitchResults())) + DELIMITER);
+            System.out.print(center(parsePitchResult(bowlingGame.searchFramePitchResult(i))) + DELIMITER);
         }
 
         printNotCreatedFrames(currentFramesCount, maxFrameCount);

@@ -51,7 +51,7 @@ public class Frames {
     private void renewScore(Frame currentFrame, int knockedDownPins){
         if (hasUnfinishedScore()) {
             frames.stream()
-                    .filter(frame -> frame.getScore().getLeftBonusCount() > 0 && !(frame.getIndex() == currentFrame.getIndex()))
+                    .filter(frame -> frame.isRenewScore(currentFrame))
                     .forEach(frame -> renewFrameScore(frame, knockedDownPins));
         }
     }
@@ -61,14 +61,14 @@ public class Frames {
         renewNextFrame(frame.getIndex());
     }
 
-    private void renewNextFrame(int i) {
-        Frame nextFrame = frames.get(i);
+    private void renewNextFrame(int nextFrameIndex) {
+        Frame nextFrame = frames.get(nextFrameIndex);
         nextFrame.setScore(previousFrameScoreSumUp(nextFrame));
     }
 
     public boolean hasUnfinishedScore() {
         return frames.stream()
-                .anyMatch(frame -> frame.getScore().getLeftBonusCount() > 0);
+                .anyMatch(frame -> frame.countLeftBonus() > 0);
     }
 
     private int getCurrentFrameIndex() {
@@ -96,5 +96,16 @@ public class Frames {
                 .orElseThrow(NoSuchElementException::new);
     }
 
+    public int count() {
+        return frames.size();
+    }
+
+    public Frame searchFrame(int index) {
+        return frames.get(index);
+    }
+
+    public PitchResults searchFramePitchResult(int index) {
+        return frames.get(index).getPitchResults();
+    }
 }
 

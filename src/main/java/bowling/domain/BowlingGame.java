@@ -1,6 +1,8 @@
 package bowling.domain;
 
 
+import java.util.List;
+
 public class BowlingGame {
 
     private Player player;
@@ -25,5 +27,17 @@ public class BowlingGame {
 
     public boolean isEnd() {
         return frames.isEnd();
+    }
+
+    public int countFrames() {
+        return frames.count();
+    }
+
+    public Frame searchFrame(int index){
+        return frames.searchFrame(index);
+    }
+
+    public PitchResults searchFramePitchResult(int index) {
+        return frames.searchFramePitchResult(index);
     }
 }

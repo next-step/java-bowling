@@ -64,4 +64,13 @@ public abstract class Frame {
     }
 
     public abstract void renewScore(int knockedDownPins);
+
+
+    public boolean isRenewScore(Frame currentFrame) {
+        return countLeftBonus() > 0 && !(this.index == currentFrame.getIndex());
+    }
+
+    public int countLeftBonus(){
+        return this.score.getLeftBonusCount();
+    }
 }

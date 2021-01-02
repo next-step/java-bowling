@@ -108,9 +108,9 @@ public class FrameTest {
             finalFrame.start(Integer.parseInt(pitchResult));
         }
 
-        finalFrame.setScore(finalFrame.getPitchResults().sumUpCurrentResult());
+        finalFrame.setScore(finalFrame.sumUpCurrentResult());
 
-        assertThat(finalFrame.getScore().getLeftBonusCount()).isEqualTo(expectValue);
+        assertThat(finalFrame.countLeftBonus()).isEqualTo(expectValue);
     }
     
 }
