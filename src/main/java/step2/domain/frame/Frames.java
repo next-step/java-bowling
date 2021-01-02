@@ -1,4 +1,4 @@
-package step2.domain;
+package step2.domain.frame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +30,10 @@ public class Frames {
         return getSize() == MAX_FRAME;
     }
 
-    public Frame nextFrame() {
-        if (frames.size() == MAX_FRAME - 1) {
-            return FinalFrame.init();
-        }
-        return NormalFrame.init();
-    }
+//    public Frame nextFrame() {
+//        if (frames.size() == MAX_FRAME - 1) {
+//            return FinalFrame.init();
+//        }
+//        return NormalFrame.init();
+//    }
 }

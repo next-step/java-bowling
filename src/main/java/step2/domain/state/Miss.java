@@ -1,30 +1,41 @@
 package step2.domain.state;
 
-import step2.domain.Frame;
+import step2.domain.Score;
+import step2.domain.frame.Frame;
 import step2.domain.Pitch;
 
 import java.util.List;
 
-public class Miss implements State {
+public class Miss extends Finished {
 
     private static final String DELIMITER = "|";
 
-    private List<Pitch> pitches;
+    private Pitch firstPitch;
+    private Pitch secondPitch;
 
-    public Miss(List<Pitch> pitches) {
-        this.pitches = pitches;
+    public Miss(Pitch firstPitch, Pitch secondPitch) {
+        this.firstPitch = firstPitch;
+        this.secondPitch = secondPitch;
     }
 
     @Override
-    public String toString() {
-        if (pitches.size() == Frame.MAX_SIZE) {
-            return "" + pitches.get(0) + DELIMITER + pitches.get(1) + DELIMITER + pitches.get(2);
+    public Score getScore() {
+        int frameScore = firstPitch.getScore() + secondPitch.getScore();
+        return Score.of(frameScore, 0);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = score.bowl(firstPitch.getScore());
+        if (score.canCalculateScore()) {
+            return score;
         }
 
-        if (pitches.size() == Frame.NORMAL_FRAME_SIZE) {
-            return "" + pitches.get(0) + DELIMITER + pitches.get(1);
-        }
+        return score.bowl(secondPitch.getScore());
+    }
 
-        return "" + pitches.get(0);
+    @Override
+    public String getDesc() {
+        return firstPitch.getDesc(secondPitch);
     }
 }

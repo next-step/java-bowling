@@ -1,26 +1,39 @@
 package step2.domain.state;
 
-import step2.domain.Frame;
 import step2.domain.Pitch;
+import step2.domain.Score;
 
-import java.util.List;
-
-public class Spare implements State {
+public class Spare extends Finished {
 
     private static final String SYMBOL = "/";
     private static final String DELIMITER = "|";
 
-    private final List<Pitch> pitches;
+    private Pitch firstPitch;
+    private Pitch secondPitch;
 
-    public Spare(List<Pitch> pitches) {
-        this.pitches = pitches;
+
+    public Spare(Pitch firstPitch, Pitch secondPitch) {
+        this.firstPitch = firstPitch;
+        this.secondPitch = secondPitch;
     }
 
     @Override
-    public String toString() {
-        if (pitches.size() == Frame.MAX_SIZE) {
-            return pitches.get(0) + DELIMITER + pitches.get(1) + DELIMITER + SYMBOL;
+    public Score getScore() {
+        return Score.of(Pitch.MAX_SCORE, 1);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = score.bowl(firstPitch.getScore());
+        if (score.canCalculateScore()) {
+            return score;
         }
-        return pitches.get(0) + DELIMITER + SYMBOL;
+
+        return score.bowl(secondPitch.getScore());
+    }
+
+    @Override
+    public String getDesc() {
+        return firstPitch.getDesc(secondPitch);
     }
 }
