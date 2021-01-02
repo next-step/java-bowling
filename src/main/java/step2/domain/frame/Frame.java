@@ -12,4 +12,8 @@ public interface Frame {
 
     Score calculateAdditionalScore(Score beforeScore);
 
+    boolean isFinish();
+
+    int getRound();
+
 }

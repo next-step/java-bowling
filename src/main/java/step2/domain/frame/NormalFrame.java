@@ -6,12 +6,12 @@ import step2.domain.state.StateFactory;
 
 public class NormalFrame implements Frame {
 
-    private final int index;
+    private int round;
     private State state;
     private Frame nextFrame;
 
-    public NormalFrame(int index) {
-        this.index = index;
+    public NormalFrame(int round) {
+        this.round = round;
         this.state = StateFactory.ready();
     }
 
@@ -23,18 +23,18 @@ public class NormalFrame implements Frame {
     public Frame bowl(int fallingPins) {
         state = state.bowl(fallingPins);
         if (state.isFinish()) {
-            nextFrame = createFrame(index);
+            nextFrame = createFrame(round);
             return nextFrame;
         }
         return this;
     }
 
-    private Frame createFrame(int index) {
-        if (index == FINAL_FRAME_NO - 1) {
+    private Frame createFrame(int round) {
+        if (round == FINAL_FRAME_NO - 1) {
             return new FinalFrame();
         }
 
-        int nextIndex = index++;
+        int nextIndex = ++round;
         return new NormalFrame(nextIndex);
     }
 
@@ -48,4 +48,18 @@ public class NormalFrame implements Frame {
         return nextFrame.calculateAdditionalScore(score);
     }
 
+    @Override
+    public boolean isFinish() {
+        return state.isFinish();
+    }
+
+    @Override
+    public int getRound() {
+        return round;
+    }
+
+    @Override
+    public String toString() {
+        return "" + state;
+    }
 }

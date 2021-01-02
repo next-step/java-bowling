@@ -61,29 +61,29 @@ public class ResultView {
         System.out.print(EMPTY_SPACE);
         System.out.print(BAR_DELIMITER);
     }
-//
-//    public static void printScoreBoard(Frame frame, int round) {
-//        printSignature();
-//        printUsername(player);
-//
-//        System.out.print(SCORES);
-//
-//        StringBuilder result = printScore(frame);
-//
-//        if (frame.isFinish()) {
-//            SCORES.append(result);
-//        }
-//
-//        IntStream.range(round+ONE, FRAME_LENGTH)
-//                .forEach(ResultView::printEmptyScore);
-//        System.out.println();
-//    }
-//
-//    private static StringBuilder printScore(Frame frame) {
-//        StringBuilder result = new StringBuilder();
-//        System.out.print(TWO_EMPTY_SPACE + frame.getState());
-//        result.append(TWO_EMPTY_SPACE + frame.getState());
-//
+
+    public static void printScoreBoard(Frame frame, int round) {
+        printSignature();
+        printUsername(player);
+
+        System.out.print(SCORES);
+
+        StringBuilder result = printScore(frame);
+
+        if (frame.isFinish()) {
+            SCORES.append(result);
+        }
+
+        IntStream.range(round+ONE, FRAME_LENGTH)
+                .forEach(ResultView::printEmptyScore);
+        System.out.println();
+    }
+
+    private static StringBuilder printScore(Frame frame) {
+        StringBuilder result = new StringBuilder();
+        System.out.print(TWO_EMPTY_SPACE + frame.toString());
+        result.append(TWO_EMPTY_SPACE + frame.toString());
+
 //        if (frame.getSize() == ONE) {
 //            System.out.print(HALF_EMPTY_SPACE);
 //            result.append(HALF_EMPTY_SPACE);
@@ -93,10 +93,10 @@ public class ResultView {
 //            System.out.print(ONE_EMPTY_SPACE);
 //            result.append(ONE_EMPTY_SPACE);
 //        }
-//
-//        System.out.print(BAR_DELIMITER);
-//        result.append(BAR_DELIMITER);
-//
-//        return result;
-//    }
+
+        System.out.print(BAR_DELIMITER);
+        result.append(BAR_DELIMITER);
+
+        return result;
+    }
 }

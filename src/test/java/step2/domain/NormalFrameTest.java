@@ -73,4 +73,22 @@ class NormalFrameTest {
         assertThat(score.getScore()).isEqualTo(30);
     }
 
+    @Test
+    @DisplayName("NormalFrame 프레임 종료")
+    void isFinish() {
+        Frame frame1 = NormalFrame.init();
+        frame1.bowl(3).bowl(5);
+
+        assertThat(frame1.isFinish()).isTrue();
+    }
+
+    @Test
+    @DisplayName("NormalFrame 프레임 종료 아님")
+    void isNotFinish() {
+        Frame frame1 = NormalFrame.init();
+        frame1.bowl(3);
+
+        assertThat(frame1.isFinish()).isFalse();
+    }
+
 }

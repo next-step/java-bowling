@@ -23,6 +23,16 @@ public class FinalFrame implements Frame {
         return null;
     }
 
+    @Override
+    public boolean isFinish() {
+        return false;
+    }
+
+    @Override
+    public int getRound() {
+        return 0;
+    }
+
     //    private final List<Pitch> pitches;
 //
 //    public FinalFrame(List<Pitch> pitches) {

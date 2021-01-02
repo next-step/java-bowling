@@ -2,7 +2,7 @@ package step2.controller;
 
 import step2.domain.frame.Frame;
 import step2.domain.frame.Frames;
-import step2.domain.Pitch;
+import step2.domain.frame.NormalFrame;
 import step2.view.InputView;
 import step2.view.ResultView;
 
@@ -14,21 +14,24 @@ public class BowlingController {
         ResultView.setPlayer(InputView.getPlayer());
 
         ResultView.printEmptyRecords();
-//
-//        Frames frames = Frames.init();
-//        while (!frames.isFinish()) {
-//            Frame frame = frames.nextFrame();
-//            int round = frames.getSize() + ONE;
-//            bowlFrame(frame, round);
-//            frames.bowl(frame);
-//        }
-    }
 
-    private void bowlFrame(Frame frame, int round) {
-//        while (!frame.isFinish()) {
-//            Pitch pitch = Pitch.from(InputView.getScore(round));
+        Frames frames = Frames.init();
+        Frame frame = NormalFrame.init();
+        while (!frames.isFinish()) {
+            bowlFrame(frame);
+            frame.getRound();
 //            frame.bowl(pitch);
 //            ResultView.printScoreBoard(frame, round);
-//        }
+            frames.bowl(frame);
+        }
+    }
+
+    private Frame bowlFrame(Frame frame) {
+        while (!frame.isFinish()) {
+            int round = frame.getRound() + ONE;
+            frame = frame.bowl(InputView.getScore(round));
+            ResultView.printScoreBoard(frame, round);
+        }
+        return frame;
     }
 }
