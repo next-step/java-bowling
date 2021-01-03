@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
 import bowling.domain.state.State;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -18,35 +17,28 @@ public class Bowling {
     public static final int INDEX_ONE = 1;
 
     private final Players players;
-    private final Frames frames;
 
-    public Bowling(Players players, Frames frames) {
+    public Bowling(Players players) {
         this.players = players;
-        this.frames = frames;
     }
 
-    public void game() {
-        ResultView.init(frames, players);
-        IntStream.rangeClosed(INDEX_ZERO, FINAL_FRAME)
-                .forEach(frameNo -> {
-                    bowl(frameNo);
-                    frames.next(frameNo);
-                });
+    public void games() {
+        ResultView.init();
+        IntStream.rangeClosed(INDEX_ZERO, FINAL_FRAME).forEach(this::game);
     }
 
-    private void bowl(int frameNo) {
-        for (int playerIndex = INDEX_ZERO; playerIndex < players.size(); playerIndex++) {
-            stroke(frameNo, playerIndex);
-        }
-    }
+    private void game(int frameNo) {
+        players.getPlayers().forEach(player -> {
+            Frame frame = player.stroke(frameNo, InputView.getPins(player, frameNo));
+            ResultView.print(players);
 
-    private void stroke(int frameNo, int playerIndex) {
-        Frame frame = frames.get(frameNo);
-        State state = frame.stroke(playerIndex, InputView.getPins(players.get(playerIndex)));
-        ResultView.print(frames, players);
-        while (!state.isFinished()) {
-            state = frame.spare(playerIndex, InputView.getPins(players.get(playerIndex)));
-            ResultView.print(frames, players);
-        }
+            State state = frame.getState();
+            while (!state.isFinished()) {
+//                frame.spare(InputView.getPins(player, frameNo));
+                player.spare(frameNo, InputView.getPins(player, frameNo));
+                state = frame.getState();
+                ResultView.print(players);
+            }
+        });
     }
 }

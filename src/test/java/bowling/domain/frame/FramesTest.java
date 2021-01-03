@@ -15,19 +15,6 @@ class FramesTest {
         assertThat(frames).isNotNull().isInstanceOf(Frames.class);
         assertThat(frames.size()).isEqualTo(1);
 
-        assertThat(frames.get(0)).isInstanceOf(NormalFrame.class);
-    }
-
-    @Test
-    void next() {
-        Frames frames = new Frames();
-        frames.next(0);
-        assertThat(frames.size()).isEqualTo(2);
-        assertThat(frames.get(1)).isInstanceOf(NormalFrame.class);
-
-        for (int i = 1; i < 10; i++) {
-            frames.next(i);
-        }
-        assertThat(frames.get(9)).isInstanceOf(FinalFrame.class);
+        assertThat(frames.get()).isInstanceOf(NormalFrame.class);
     }
 }

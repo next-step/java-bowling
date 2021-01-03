@@ -8,28 +8,26 @@ import java.util.List;
  * Developer : Seo
  */
 public class Frames {
-    private final List<Frame> frames;
+    private final LinkedList<Frame> frames;
 
     public Frames() {
         this.frames = new LinkedList<>();
-        frames.add(Frame.init());
+        this.frames.add(new NormalFrame());
     }
 
-    public void next(int frameNo) {
-        Frame frame = frames.get(frameNo);
-        Frame next = frame.next();
-        frames.add(next);
+    public void add(Frame frame) {
+        this.frames.add(frame);
     }
 
-    public int size() {
-        return frames.size();
+    public Frame get() {
+        return frames.getLast();
     }
 
     public List<Frame> getFrames() {
-        return frames;
+        return this.frames;
     }
 
-    public Frame get(int frameIndex) {
-        return frames.get(frameIndex);
+    public int size() {
+        return this.frames.size();
     }
 }

@@ -11,29 +11,28 @@ import bowling.domain.state.*;
  */
 public class GridSpare {
 
-    public static int add(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
-        Frame frame = frames.get(frameIndex);
-        State state = frame.getState(playerIndex);
+    public static int add(Frame frame, TotalScore totalScore) {
+        State state = frame.getState();
         int remain = 0;
 
         if (state instanceof Spare) {
             totalScore.add(state.getScore().getFrameScore());
-            addSpareBonus(frames, totalScore, frameIndex, playerIndex);
+            addSpareBonus(frame, totalScore);
             remain++;
         }
 
         return remain;
     }
 
-    private static void addSpareBonus(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
-        if (frameIndex + Grid.INDEX_ONE < frames.size()) {
-            totalScore.add(frames.get(frameIndex + Grid.INDEX_ONE).getFirstScore(playerIndex));
-        }
+    private static void addSpareBonus(Frame frame, TotalScore totalScore) {
+//        if (frameIndex + Grid.INDEX_ONE < frames.size()) {
+//            totalScore.add(frames.get().getFirstScore());
+//        }
     }
 
     public static String print(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
-        Frame frame = frames.get(frameIndex);
-        State state = frame.getState(playerIndex);
+        Frame frame = frames.get();
+        State state = frame.getState();
         if (state instanceof Spare && frameIndex + Grid.INDEX_ONE < frames.size()) {
             return printSpareQualifiedState(frames, totalScore, frameIndex, playerIndex);
         }
@@ -41,8 +40,8 @@ public class GridSpare {
     }
 
     private static String printSpareQualifiedState(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
-        Frame nextFrame = frames.get(frameIndex + Grid.INDEX_ONE);
-        State nextState = nextFrame.getState(playerIndex);
+        Frame nextFrame = frames.get();
+        State nextState = nextFrame.getState();
         if (nextState instanceof Spare || nextState instanceof Miss || nextState instanceof Gutter) {
             return String.format(Grid.FORMAT_SPACE, totalScore.get());
         }

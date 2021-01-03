@@ -1,38 +1,29 @@
 package bowling.domain.frame;
 
-import bowling.domain.Bowling;
 import bowling.domain.score.Pins;
 import bowling.domain.state.State;
 
 public interface Frame {
 
-    static Frame init() {
-        return new NormalFrame(Bowling.INDEX_ZERO);
-    }
+    Frame stroke(int frameNo, Pins pins);
 
-    Frame next();
+    Frame spare(int frameNo, Pins pins);
 
-    State stroke(int playerIndex, Pins pins);
+    State getState();
 
-    State spare(int playerIndex, Pins pins);
+    String getSymbol();
 
-    State getState(int playerIndex);
+    int getFrameScore();
 
-    State getLastState();
+    int getFirstScore();
 
-    String getSymbol(int playerIndex);
+    int getSecondScore();
 
-    String getLastStateSymbol();
+    Frame getNext();
 
-    int getFrameScore(int playerIndex);
+    int getBonusScore();
 
-    int getLastStateFrameScore();
+    int getBonus2Score();
 
-    int getFirstScore(int playerIndex);
-
-    int getLastStateFirstScore();
-
-    int getSecondScore(int playerIndex);
-
-    int getLastStateSecondScore();
+    boolean isVisible();
 }

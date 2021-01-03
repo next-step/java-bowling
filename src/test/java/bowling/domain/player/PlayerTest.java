@@ -2,6 +2,12 @@ package bowling.domain.player;
 
 
 import bowling.domain.Player;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
+import bowling.domain.score.Pins;
+import bowling.domain.state.Miss;
+import bowling.domain.state.None;
+import bowling.domain.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,5 +35,19 @@ class PlayerTest {
                 .isInstanceOf(IllegalArgumentException.class);
 
         assertThat(new Player("ABC")).isNotNull().isInstanceOf(Player.class);
+    }
+
+    @Test
+    void stroke() {
+        Player player = new Player("aaa");
+        Frame frame = player.stroke(0, new Pins(10));
+        assertThat(frame.getState()).isInstanceOf(None.class);
+    }
+
+    @Test
+    void stroke_miss() {
+        Player player = new Player("aaa");
+        Frame frame = player.stroke(0, new Pins(9));
+        assertThat(frame.getState()).isInstanceOf(Miss.class);
     }
 }

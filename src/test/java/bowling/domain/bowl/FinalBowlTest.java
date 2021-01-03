@@ -12,46 +12,45 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Developer : Seo
  */
 class FinalBowlTest {
-    private FinalBowl finalBowl;
-    private State secondState;
+    private FinalFirstBowl finalFirstBowl;
 
     @BeforeEach
     void setUp() {
-        secondState = new Strike();
     }
 
     @Test
     void init() {
-        finalBowl = new FinalBowl(secondState);
-        assertThat(finalBowl).isNotNull().isInstanceOf(FinalBowl.class);
+        finalFirstBowl = new FinalFirstBowl();
+        assertThat(finalFirstBowl).isNotNull().isInstanceOf(FinalFirstBowl.class);
     }
 
     @Test
-    void strike() {
-        finalBowl = new FinalBowl(secondState);
-        State state = finalBowl.stroke(new Pins(10));
-        assertThat(state).isInstanceOf(State.class).isInstanceOf(Strike.class);
+    void first() {
+        finalFirstBowl = new FinalFirstBowl();
+        State state = finalFirstBowl.stroke(new Pins(10));
+        assertThat(state).isInstanceOf(State.class).isInstanceOf(FinalFirstState.class);
     }
 
     @Test
-    void spare() {
-        secondState = new Miss(new Pins(10), new Pins(1));
-        finalBowl = new FinalBowl(secondState);
-        State state = finalBowl.stroke(new Pins(9));
-        assertThat(state).isInstanceOf(State.class).isInstanceOf(Spare.class);
+    void second() {
+        finalFirstBowl = new FinalFirstBowl();
+        State state = finalFirstBowl.stroke(new Pins(10));
+
+        FinalSecondBowl finalSecondBowl = new FinalSecondBowl(state);
+        State state2 = finalSecondBowl.stroke(new Pins(9));
+        assertThat(state2).isInstanceOf(State.class).isInstanceOf(FinalSecondState.class);
     }
 
     @Test
-    void gutter() {
-        finalBowl = new FinalBowl(secondState);
-        State state = finalBowl.stroke(new Pins(0));
-        assertThat(state).isInstanceOf(State.class).isInstanceOf(Gutter.class);
-    }
+    void third() {
+        finalFirstBowl = new FinalFirstBowl();
+        State state = finalFirstBowl.stroke(new Pins(10));
 
-    @Test
-    void miss() {
-        finalBowl = new FinalBowl(secondState);
-        State state = finalBowl.stroke(new Pins(1));
-        assertThat(state).isInstanceOf(State.class).isInstanceOf(Miss.class);
+        FinalSecondBowl finalSecondBowl = new FinalSecondBowl(state);
+        State state2 = finalSecondBowl.stroke(new Pins(9));
+
+        FinalThirdBowl finalThirdBowl = new FinalThirdBowl(state, state2);
+        State state3 = finalThirdBowl.stroke(new Pins(9));
+        assertThat(state3).isInstanceOf(State.class).isInstanceOf(FinalThirdState.class);
     }
 }

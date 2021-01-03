@@ -12,9 +12,9 @@ import bowling.domain.state.State;
  */
 public class GridGutter {
 
-    public static int add(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
-        Frame frame = frames.get(frameIndex);
-        State state = frame.getState(playerIndex);
+    public static int add(Frames frames, int frameIndex, int playerIndex) {
+        Frame frame = frames.get();
+        State state = frame.getState();
         int remain = 0;
 
         if (state instanceof Gutter && !state.isFinished()) {
@@ -25,8 +25,8 @@ public class GridGutter {
     }
 
     public static String print(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
-        Frame frame = frames.get(frameIndex);
-        State state = frame.getState(playerIndex);
+        Frame frame = frames.get();
+        State state = frame.getState();
         if (state instanceof Gutter && state.isFinished()) {
             return String.format(Grid.FORMAT_SPACE, totalScore.get());
         }

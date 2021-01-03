@@ -1,124 +1,167 @@
 package bowling.domain.frame;
 
+import bowling.domain.Symbol;
 import bowling.domain.bowl.Bowl;
-import bowling.domain.bowl.FinalBowl;
-import bowling.domain.bowl.FirstBowl;
-import bowling.domain.bowl.SecondBowl;
+import bowling.domain.bowl.FinalFirstBowl;
+import bowling.domain.bowl.FinalSecondBowl;
+import bowling.domain.bowl.FinalThirdBowl;
 import bowling.domain.score.Pins;
-import bowling.domain.state.FinalState;
-import bowling.domain.state.State;
-import bowling.domain.state.States;
+import bowling.domain.state.*;
+
+import java.util.Objects;
 
 /**
  * Created : 2020-12-16 오전 9:09
  * Developer : Seo
  */
 public class FinalFrame implements Frame {
-    private final States states;
+    private State firstState;
+    private State secondState;
+    private State thirdState;
 
-    public FinalFrame() {
-        this.states = new States();
+    @Override
+    public Frame stroke(int frameNo, Pins pins) {
+        Bowl finalFirstBowl = new FinalFirstBowl();
+        this.firstState = finalFirstBowl.stroke(pins);
+        return this;
     }
 
     @Override
-    public Frame next() {
-        return null;
+    public Frame spare(int frameNo, Pins pins) {
+        if (isBonus(firstState, secondState)) {
+            FinalThirdBowl finalThirdBowl = new FinalThirdBowl(firstState, secondState);
+            this.thirdState = finalThirdBowl.stroke(pins);
+            return this;
+        }
+        Bowl finalSecondBowl = new FinalSecondBowl(this.firstState);
+        this.secondState = finalSecondBowl.stroke(pins);
+        return this;
+    }
+
+    private boolean isBonus(State firstState, State secondState) {
+        return secondState != null
+                && (firstState.getSymbol().contains(Symbol.STRIKE.getSymbol())
+                || secondState.getSymbol().contains(Symbol.STRIKE.getSymbol())
+                || secondState.getSymbol().contains(Symbol.SPARE.getSymbol()));
     }
 
     @Override
-    public State stroke(int playerIndex, Pins pins) {
-        Bowl firstBowl = new FirstBowl();
-        State state = firstBowl.stroke(pins);
-        FinalState finalState = new FinalState(state);
-        states.add(playerIndex, finalState);
-        return finalState;
-    }
-
-    @Override
-    public State spare(int playerIndex, Pins pins) {
-        State state = getLastState();
-
-        if (isBonus(state)) {
-            FinalBowl finalBowl = new FinalBowl(state);
-            State thirdState = finalBowl.stroke(pins);
-            FinalState finalState = new FinalState(state, thirdState);
-            finalState.setThirdSymbol();
-            states.set(playerIndex, finalState);
-            return finalState;
+    public State getState() {
+        if (this.firstState == null) {
+            return new None();
         }
 
-        Bowl secondBowl = new SecondBowl(state);
-        State secondState = secondBowl.stroke(pins);
-        FinalState finalState = new FinalState(state, secondState);
-        finalState.setSecondSymbol();
-        states.set(playerIndex, finalState);
-        return finalState;
-    }
-
-    private boolean isBonus(State state) {
-        FinalState finalState = (FinalState) state;
-        return finalState.isFirstStateStrike()
-                && (finalState.isSecondStateStrike() || finalState.isSecondStateSpare());
-    }
-
-    @Override
-    public State getState(int userIndex) {
-        validatePlayerIndex(userIndex);
-        return this.states.getState(userIndex);
-    }
-
-    @Override
-    public State getLastState() {
-        return this.states.getLast();
-    }
-
-    @Override
-    public String getSymbol(int userIndex) {
-        validatePlayerIndex(userIndex);
-        return this.states.getState(userIndex).getSymbol();
-    }
-
-    @Override
-    public String getLastStateSymbol() {
-        return getLastState().getSymbol();
-    }
-
-    @Override
-    public int getFrameScore(int userIndex) {
-        validatePlayerIndex(userIndex);
-        return this.states.getState(userIndex).getScore().getFrameScore();
-    }
-
-    @Override
-    public int getLastStateFrameScore() {
-        return getLastState().getScore().getFrameScore();
-    }
-
-    @Override
-    public int getFirstScore(int userIndex) {
-        validatePlayerIndex(userIndex);
-        return this.states.getState(userIndex).getScore().getFirst().get();
-    }
-
-    @Override
-    public int getLastStateFirstScore() {
-        return getLastState().getScore().getFirst().get();
-    }
-
-    @Override
-    public int getSecondScore(int userIndex) {
-        validatePlayerIndex(userIndex);
-        return this.states.getState(userIndex).getScore().getSecond().get();
-    }
-
-    @Override
-    public int getLastStateSecondScore() {
-        return getLastState().getScore().getSecond().get();
-    }
-
-    private void validatePlayerIndex(int userIndex) {
-        if (userIndex >= this.states.size()) {
-            throw new IllegalArgumentException(String.format("사용자를 확인해주십시요. 현재 사용자 번호 : %d", userIndex));
+        if (this.secondState == null) {
+            return this.firstState;
         }
+        if (this.thirdState == null) {
+            return this.secondState;
+        }
+        return this.thirdState;
+    }
+
+    @Override
+    public String getSymbol() {
+        if (this.secondState == null) {
+            return this.firstState.getSymbol();
+        }
+        if (this.thirdState == null) {
+            return this.secondState.getSymbol();
+        }
+        return this.thirdState.getSymbol();
+    }
+
+    @Override
+    public Frame getNext() {
+        return new FinalFrame();
+    }
+
+    @Override
+    public int getFrameScore() {
+        if (this.firstState == null) return 0;
+        if (this.secondState == null) {
+            return this.firstState.getScore().getFrameScore();
+        }
+        if (this.thirdState == null) {
+            return this.secondState.getScore().getFrameScore();
+        }
+        return this.thirdState.getScore().getFrameScore();
+    }
+
+    @Override
+    public int getFirstScore() {
+        if (this.firstState == null) return 0;
+        if (this.secondState == null) {
+            return this.firstState.getScore().getFirst().get();
+        }
+        if (this.thirdState == null) {
+            return this.secondState.getScore().getFirst().get();
+        }
+        return this.thirdState.getScore().getFirst().get();
+    }
+
+    @Override
+    public int getSecondScore() {
+        if (this.firstState == null) return 0;
+        if (this.secondState == null) {
+            return this.firstState.getScore().getSecond().get();
+        }
+        if (this.thirdState == null) {
+            return this.secondState.getScore().getSecond().get();
+        }
+        return this.thirdState.getScore().getSecond().get();
+    }
+
+    @Override
+    public boolean isVisible() {
+        return thirdState != null;
+    }
+
+    @Override
+    public int getBonusScore() {
+        if (this.firstState == null) {
+            return 0;
+        }
+        return this.firstState.getScore().getFrameScore() + this.secondState.getScore().getFrameScore();
+    }
+
+    @Override
+    public int getBonus2Score() {
+        if (this.firstState == null) {
+            return 0;
+        }
+        if (this.secondState == null) {
+            return this.firstState.getScore().getFrameScore();
+        }
+        if (this.thirdState == null) {
+            return this.firstState.getScore().getFrameScore() + this.secondState.getScore().getFrameScore();
+        }
+        return this.firstState.getScore().getFrameScore() + this.secondState.getScore().getFrameScore() + this.thirdState.getScore().getFrameScore();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+        final FinalFrame other = (FinalFrame) obj;
+        if (!Objects.equals(this.firstState, other.firstState)) {
+            return false;
+        }
+        if (!Objects.equals(this.secondState, other.secondState)) {
+            return false;
+        }
+        if (!Objects.equals(this.thirdState, other.thirdState)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

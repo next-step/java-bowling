@@ -13,8 +13,8 @@ import bowling.domain.state.State;
 public class GridMiss {
 
     public static int add(Frames frames, TotalScore totalScore, int frameIndex, int userIndex) {
-        Frame frame = frames.get(frameIndex);
-        State state = frame.getState(userIndex);
+        Frame frame = frames.get();
+        State state = frame.getState();
         int remain = 0;
 
         if (state instanceof Miss) {
@@ -28,8 +28,8 @@ public class GridMiss {
     }
 
     public static String print(Frames frames, TotalScore totalScore, int frameIndex, int playerIndex) {
-        Frame frame = frames.get(frameIndex);
-        State state = frame.getState(playerIndex);
+        Frame frame = frames.get();
+        State state = frame.getState();
         if (state instanceof Miss && state.isFinished()) {
             return String.format(Grid.FORMAT_SPACE, totalScore.get());
         }
