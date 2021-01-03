@@ -1,5 +1,6 @@
 package bowling.ui;
 
+import bowling.domain.BowlingGame;
 import bowling.domain.Frame;
 import bowling.domain.Player;
 import bowling.domain.Score;
@@ -18,10 +19,13 @@ public class ResultView {
 
     private ResultView() {}
 
-    public static void print(Player player) {
+    public static void print(BowlingGame bowlingGame) {
         System.out.println(TEMPLATE_HEADER);
-        printFrames(player);
-        printScore(player);
+        bowlingGame.forEachPlayer(player -> {
+            printFrames(player);
+            printScore(player);
+        });
+
     }
 
     private static void printFrames(Player player) {
@@ -51,11 +55,12 @@ public class ResultView {
         System.out.print(NEW_LINE);
     }
 
-    public static void printPlayerName(String playerName) {
+    public static void printInitialization(BowlingGame bowlingGame) {
         System.out.println(TEMPLATE_HEADER);
-        System.out.printf(TEMPLATE_PLAYER_NAME, playerName);
-        System.out.print(NEW_LINE);
-        System.out.println(TEMPLATE_SCORES);
-
+        bowlingGame.forEachPlayer( player -> {
+            System.out.printf(TEMPLATE_PLAYER_NAME, player.getName());
+            System.out.print(NEW_LINE);
+            System.out.println(TEMPLATE_SCORES);
+        });
     }
 }
