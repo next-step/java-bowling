@@ -56,12 +56,18 @@ public class Grid {
 
         int remain = 0;
         int score = 0;
+        int bonus1;
+        int bonus2;
         for (Frame frame : player.getFrames().getFrames()) {
-            score += frame.getFrameScore() + frame.getBonusScore() + frame.getBonus2Score();
+            score += frame.getFrameScore();
+            bonus1 = frame.getBonusScore();
+            bonus2 = frame.getBonus2Score();
+            score += bonus1 + bonus2;
 
             if (frame instanceof FinalFrame && frame.isVisible()) {
                 sb.append(String.format(FORMAT_SPACE, score));
                 remain++;
+                continue;
             }
             if (frame.isVisible()) {
                 sb.append(String.format(FORMAT_SPACE, score));

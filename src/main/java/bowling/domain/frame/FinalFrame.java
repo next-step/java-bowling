@@ -9,6 +9,7 @@ import bowling.domain.score.Pins;
 import bowling.domain.state.*;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created : 2020-12-16 오전 9:09
@@ -119,24 +120,16 @@ public class FinalFrame implements Frame {
 
     @Override
     public int getBonusScore() {
-        if (this.firstState == null) {
-            return 0;
-        }
-        return this.firstState.getScore().getFrameScore() + this.secondState.getScore().getFrameScore();
+        return Optional.ofNullable(this.firstState)
+                .orElse(new None())
+                .getScore().getFrameScore();
     }
 
     @Override
     public int getBonus2Score() {
-        if (this.firstState == null) {
-            return 0;
-        }
-        if (this.secondState == null) {
-            return this.firstState.getScore().getFrameScore();
-        }
-        if (this.thirdState == null) {
-            return this.firstState.getScore().getFrameScore() + this.secondState.getScore().getFrameScore();
-        }
-        return this.firstState.getScore().getFrameScore() + this.secondState.getScore().getFrameScore() + this.thirdState.getScore().getFrameScore();
+        return Optional.ofNullable(this.secondState)
+                .orElse(new None())
+                .getScore().getFrameScore();
     }
 
     @Override

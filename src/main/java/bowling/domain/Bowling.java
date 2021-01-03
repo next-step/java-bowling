@@ -34,7 +34,6 @@ public class Bowling {
 
             State state = frame.getState();
             while (!state.isFinished()) {
-//                frame.spare(InputView.getPins(player, frameNo));
                 player.spare(frameNo, InputView.getPins(player, frameNo));
                 state = frame.getState();
                 ResultView.print(players);

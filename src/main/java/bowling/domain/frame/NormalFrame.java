@@ -161,6 +161,12 @@ public class NormalFrame implements Frame {
             return nextNext.getFirstScore();
         }
 
+        if (this.next instanceof FinalFrame) {
+            return this.next.getBonusScore();
+        }
+        if (nextNext instanceof FinalFrame) {
+            return nextNext.getBonusScore();
+        }
         return 0;
     }
 
