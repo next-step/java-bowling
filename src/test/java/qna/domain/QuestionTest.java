@@ -15,10 +15,11 @@ public class QuestionTest {
     @Test
     @DisplayName(value = "Question을 지우면 Deleted가 true로 변경된다.")
     void delete() throws CannotDeleteException {
-        assertThat(Q1.isDeleted()).isFalse();
+        Question Q3 = new Question("title3", "contens3").writeBy(UserTest.SANJIGI);
+        assertThat(Q3.isDeleted()).isFalse();
 
-        Q1.delete(UserTest.JAVAJIGI);
-        assertThat(Q1.isDeleted()).isTrue();
+        Q3.delete(UserTest.SANJIGI);
+        assertThat(Q3.isDeleted()).isTrue();
     }
 
     @Test
