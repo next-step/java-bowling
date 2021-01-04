@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -72,6 +74,7 @@ abstract class ScoreSheetTest {
         printScoreSheet(scoreSheet.getReader());
     }
 
+
     @DisplayName("볼링스코어시트를 출력할 수 있다 ( 각 유형별로 눈 검증용 :-) )")
     @Test
     void varietyCase(){
@@ -128,6 +131,22 @@ abstract class ScoreSheetTest {
         printScoreSheet(scoreSheet.getReader());
     }
 
+    @DisplayName("볼링스코어시트를 출력할 수 있다 ( 현재 프래임의 점수를 알 수 없는경우 )")
+    @Test
+    void unknownCase(){
+        // 1 기본 (Miss)
+        Frame frame = scoreSheet.nextFrame();
+        frame.mark(10);
+
+        frame = scoreSheet.nextFrame();
+        frame.mark(9);
+        frame.mark(0);
+
+
+        printScoreSheet(scoreSheet.getReader());
+    }
+
+
     private void printScoreSheet(ScoreSheetReader reader) {
         String playerName = reader.readPlayName();
         int nameSpan = Math.max(playerName.length() + 2, 8);
@@ -145,6 +164,9 @@ abstract class ScoreSheetTest {
         System.out.println(" |");
 
         System.out.print(String.format("|%1$" + nameSpan + "s  | ", playerName));
+        StringBuilder scoreString = new StringBuilder();
+        int prevTotalScore = 0;
+        int currentTotalScore = 0;
         while (!reader.isEOF()) {
             FrameInfo frameInfo = reader.readFrameInfo();
             String marked = frameInfo.getPinMarkSigns()
@@ -156,7 +178,21 @@ abstract class ScoreSheetTest {
             }
             System.out.print(String.format("%1$" + spanSize + "s", marked));
             System.out.print(" | ");
+
+            if( frameInfo.getScore() == FrameScore.unknown ) {
+                IntStream.range(0, spanSize).forEach(idx -> scoreString.append(" "));
+                scoreString.append(" | ");
+            } else {
+                currentTotalScore = prevTotalScore + frameInfo.getScore().getValue();
+                scoreString.append(String.format("%1$" + spanSize + "d", currentTotalScore))
+                        .append(" | ");
+                prevTotalScore = currentTotalScore;
+            }
         }
+
+        System.out.println();
+        System.out.print(String.format("|%1$" + nameSpan + "s  | %2$s", " ", scoreString.toString()));
+        System.out.println();
     }
 }
 

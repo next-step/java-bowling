@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 
 public class FrameInfo {
 
-    static FrameInfo of(int frameNo, List<PinMarkSign> pinMarkSigns, FrameScore score) {
-        return of(frameNo, pinMarkSigns, score.getValue());
+    static FrameInfo of(int frameNo, List<PinMarkSign> pinMarkSigns, int score) {
+        return of(frameNo, pinMarkSigns, FrameScore.of(score));
     }
 
-    static FrameInfo of(int frameNo, List<PinMarkSign> pinMarkSigns, int score) {
+    static FrameInfo of(int frameNo, List<PinMarkSign> pinMarkSigns, FrameScore score) {
         return new FrameInfo(
                 frameNo,
                 pinMarkSigns.stream()
@@ -20,14 +20,14 @@ public class FrameInfo {
     }
 
     static FrameInfo blank(int frameNo) {
-        return new FrameInfo(frameNo, Arrays.asList(), 0);
+        return new FrameInfo(frameNo, Arrays.asList(), FrameScore.unknown);
     }
 
     private int frameNo;
     private List<String> pinMarkSigns;
-    private int score;
+    private FrameScore score;
 
-    private FrameInfo(int frameNo, List<String> pinMarkSigns, int score) {
+    private FrameInfo(int frameNo, List<String> pinMarkSigns, FrameScore score) {
         this.frameNo = frameNo;
         this.pinMarkSigns = pinMarkSigns;
         this.score = score;
@@ -41,7 +41,7 @@ public class FrameInfo {
         return pinMarkSigns;
     }
 
-    public int getScore() {
+    public FrameScore getScore() {
         return score;
     }
 }

@@ -171,6 +171,32 @@ class NormalFrameTest extends FrameTest {
         assertThat(frame.getScore()).isEqualTo(FrameScore.of(18));
     }
 
+    @DisplayName("9프레임이 Strike 고 마지막 프레임이 2구를 던지면 점수를 알수 있다")
+    @Test
+    void nineFrameScore1(){
+        Frame frame = Frame.createNormal(9);
+        frame.mark(10);
 
+        Frame finalFrame = frame.createNext();
+        finalFrame.mark(8);
+        finalFrame.mark(1);
+
+        assertThat(frame.getScore()).isEqualTo(FrameScore.of(19));
+    }
+
+    @DisplayName("9프레임이 Strike 고 마지막 프레임에 보너스 투구까지 던져도 9,10 프레임 점수를 알 수 있다")
+    @Test
+    void nineFrameScore2(){
+        Frame frame = Frame.createNormal(9);
+        frame.mark(10);
+
+        Frame finalFrame = frame.createNext();
+        finalFrame.mark(8);
+        finalFrame.mark(2);
+        finalFrame.mark(10);
+
+        assertThat(frame.getScore()).isEqualTo(FrameScore.of(20));
+        assertThat(finalFrame.getScore()).isEqualTo(FrameScore.of(20));
+    }
 
 }

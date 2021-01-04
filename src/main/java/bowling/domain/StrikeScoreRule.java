@@ -6,7 +6,7 @@ public class StrikeScoreRule implements FrameScoreRule {
     @Override
     public FrameScore apply(Frame frame) {
         if (frame.hasNext()
-                && frame.next().getCountOfMarks() == 2) {
+                && frame.next().getCountOfMarks() >= 2) {
             List<Integer> pins = frame.next().getCountListOfFallDownPins();
             return FrameScore.of(10, pins.get(0), pins.get(1));
         }
