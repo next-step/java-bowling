@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public interface PinMark {
 
-    PinMark blank = new BlankPinMark();
+    PinMark strike = PinMark.pin(10);
 
     int MAX_PINS = 10;
 
@@ -15,13 +15,6 @@ public interface PinMark {
         return new DefaultPinMark(countOfFallDownPins);
     }
 
-}
-
-class BlankPinMark implements PinMark {
-    @Override
-    public int getCountOfFallDownPins() {
-        return 0;
-    }
 }
 
 class DefaultPinMark implements PinMark {

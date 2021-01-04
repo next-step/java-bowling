@@ -8,7 +8,7 @@ public class FinalFrame extends BaseFrame {
 
     @Override
     public Status getStatus() {
-        if (pinMarks.isStrike()) return Status.Strike;
+        if (pinMarks.isFirstStrike()) return Status.Strike;
         if (pinMarks.getCountOfMarks() == 2 && pinMarks.getCountOfAllFallDownPins() == PinMark.MAX_PINS) return Status.Spare;
         if (pinMarks.getCountOfAllFallDownPins() == 0) return Status.Gutter;
         return Status.Miss;

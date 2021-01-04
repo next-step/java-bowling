@@ -4,51 +4,54 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class NormalFramePinMarks implements PinMarks {
+
     private final int MAX_MARKS = 2;
     private List<PinMark> marks = new ArrayList<>();
+    private boolean completed = false;
 
     NormalFramePinMarks() {
     }
 
     @Override
     public void mark(PinMark pin) {
-        shouldMarksLessThanMaxMarks();
-        shouldMarkedPinSumLessThanOrEqualMaxPins(pin);
+        shouldCountOfMarksLessThanMaxMarks();
+        if( getCountOfMarks() == 1 ) shouldSumOfLastTwoPinMarksLessThanOrEqualMaxPins(marks.get(0), pin);
 
         marks.add(pin);
-        markRemainingToBlankIfFirstMarkIsStrike();
+        completeIf(pinMarks -> isFirstStrike() || isMaxMarked() );
+    }
+
+    private boolean isMaxMarked() {
+        return getCountOfMarks() == MAX_MARKS;
+    }
+
+    private void completeIf(Predicate<PinMarks> condition){
+        if( condition.test(this) ){
+            completed = true;
+        }
     }
 
     @Override
     public long getCountOfMarks() {
-        return marks.stream()
-                .filter(mask -> !(mask instanceof BlankPinMark))
-                .count();
+        return marks.size();
     }
 
     @Override
-    public boolean isStrike() {
-        if (isAllMarked())
-            return marks.get(0).equals(PinMark.pin(10));
-        return false;
+    public boolean isFirstStrike() {
+        return getCountOfMarks() > 0 && marks.get(0).equals(PinMark.strike);
     }
 
     @Override
     public boolean isSpare() {
-        if (marks.size() == 2) {
-            return getCountOfAllFallDownPins() == PinMark.MAX_PINS;
+        if (getCountOfMarks() == MAX_MARKS
+                && getCountOfAllFallDownPins() == PinMark.MAX_PINS) {
+            return true;
         }
         return false;
-    }
-
-    private void markRemainingToBlankIfFirstMarkIsStrike() {
-        if (marks.size() == 1
-                && marks.get(0).equals(PinMark.pin(10))) {
-            marks.add(PinMark.blank);
-        }
     }
 
     @Override
@@ -60,8 +63,8 @@ public class NormalFramePinMarks implements PinMarks {
     }
 
     @Override
-    public boolean isAllMarked() {
-        return marks.size() == MAX_MARKS;
+    public boolean isCompleted() {
+        return completed;
     }
 
     @Override
@@ -71,7 +74,7 @@ public class NormalFramePinMarks implements PinMarks {
 
     @Override
     public List<PinMarkSign> toSigns() {
-        if (isStrike()) {
+        if (isFirstStrike()) {
             return Arrays.asList(PinMarkSign.Strike);
         }
         if (isSpare()) {

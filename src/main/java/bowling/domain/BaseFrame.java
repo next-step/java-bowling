@@ -38,7 +38,7 @@ abstract public class BaseFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return pinMarks.isAllMarked();
+        return pinMarks.isCompleted();
     }
 
     @Override

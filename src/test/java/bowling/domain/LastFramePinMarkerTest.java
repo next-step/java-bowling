@@ -53,42 +53,42 @@ class FinalFramePinMarksTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    @DisplayName("1번째,2번째 투구의 합이 10개를 mark 하지 못하면 보너스마크는 empty 로 마크되어 allmarked 된다")
+    @DisplayName("1번째,2번째 투구의 합이 10개를 mark 하지 못하면 complete 된다")
     @Test
     void allMarked1(){
         pinMarks.mark(PinMark.pin(8));
         pinMarks.mark(PinMark.pin(1));
 
-        assertThat(pinMarks.isAllMarked()).isTrue();
+        assertThat(pinMarks.isCompleted()).isTrue();
     }
 
-    @DisplayName("1번째,2번째 투구의 합이 10개를 mark 하고 보너스까지 마그하면 allmarked 된다")
+    @DisplayName("1번째,2번째 투구의 합이 10개를 mark 하고 보너스까지 마크하면 complete 된다")
     @Test
     void allMarked2(){
         pinMarks.mark(PinMark.pin(8));
         pinMarks.mark(PinMark.pin(2));
         pinMarks.mark(PinMark.pin(5));
 
-        assertThat(pinMarks.isAllMarked()).isTrue();
+        assertThat(pinMarks.isCompleted()).isTrue();
     }
 
 
-    @DisplayName("1번째,2번째 투구의 합이 10개를 mark 하면 보너스 마크가 남기때문에 allmarked 되지 않는다")
+    @DisplayName("1번째,2번째 투구의 합이 10개를 mark 하면 보너스 마크가 남기때문에 complete 되지 않는다")
     @Test
     void notAllMarked(){
         pinMarks.mark(PinMark.pin(8));
         pinMarks.mark(PinMark.pin(2));
 
-        assertThat(pinMarks.isAllMarked()).isFalse();
+        assertThat(pinMarks.isCompleted()).isFalse();
     }
 
-    @DisplayName("1번째,2번째 모두 10개씩 mark 하면 보너스 마크가 남기때문에 allmarked 되지 않는다")
+    @DisplayName("1번째,2번째 모두 10개씩 mark 하면 보너스 마크가 남기때문에 complete 되지 않는다")
     @Test
     void notAllMarked2(){
         pinMarks.mark(PinMark.pin(10));
         pinMarks.mark(PinMark.pin(10));
 
-        assertThat(pinMarks.isAllMarked()).isFalse();
+        assertThat(pinMarks.isCompleted()).isFalse();
     }
 
     @DisplayName("1번 핀마크가 8이면 8 로 표기된다")
@@ -178,4 +178,21 @@ class FinalFramePinMarksTest {
                 .containsExactly(PinMarkSign.Gutter, PinMarkSign.Gutter);
     }
 
+    @DisplayName("1번 핀마크가 10이 아니면 1,2번 핀마크 합이 10을 넘으면 안된다")
+    @Test
+    void invalidMark1(){
+        pinMarks.mark(8);
+        assertThatThrownBy( () -> pinMarks.mark(3) )
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("1번 핀마크가 10이면 2,3번 핀마크 합이 10을 넘으면 안된다")
+    @Test
+    void invalidMark2(){
+        pinMarks.mark(10);
+        pinMarks.mark(8);
+
+        assertThatThrownBy( () -> pinMarks.mark(3) )
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
