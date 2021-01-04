@@ -31,7 +31,7 @@ public class DefaultScoreSheet implements ScoreSheet {
             throw new IllegalStateException(MessageFormat.format("현재 {0} 번째 프래임 진행중입니다. 현재 프래임이 완료된 후 다음 프레임을 진행 할 수 있습니다", getCurrentFrame().getFrameNo()));
         }
 
-        return addFrame(getCurrentFrame().nextFrame());
+        return addFrame(getCurrentFrame().createNext());
     }
 
     private boolean isCurrentFrameNotEnd() {

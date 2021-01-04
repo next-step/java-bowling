@@ -28,6 +28,13 @@ public class FinalFramePinMarks implements PinMarks {
     }
 
     @Override
+    public long getCountOfMarks() {
+        return marks.stream()
+                .filter(mask -> !(mask instanceof BlankPinMark))
+                .count();
+    }
+
+    @Override
     public boolean isStrike() {
         if (marks.size() > 0)
             return marks.get(0).getCountOfFallDownPins() == PinMark.MAX_PINS;
@@ -44,21 +51,21 @@ public class FinalFramePinMarks implements PinMarks {
 
     private void shouldMarkedPinsEqualPinMaxIfThirdPinMark() {
         if (marks.size() == 2
-                && getCountOfFallDownPins() < PinMark.MAX_PINS) {
+                && getCountOfAllFallDownPins() < PinMark.MAX_PINS) {
             throw new IllegalStateException("3번째 PinMark 는 1,2번째 PinMark 의 합이 10이상 일때 mark 할 수 있습니다");
         }
     }
 
     private void markBonusToEmptyIfTwoShotSumIsLessThanPinMax() {
         if (marks.size() == 2
-                && getCountOfFallDownPins() < PinMark.MAX_PINS) {
-            marks.add(PinMark.blank());
+                && getCountOfAllFallDownPins() < PinMark.MAX_PINS) {
+            marks.add(PinMark.blank);
         }
     }
 
 
     @Override
-    public int getCountOfFallDownPins() {
+    public int getCountOfAllFallDownPins() {
         return marks.stream()
                 .map(PinMark::getCountOfFallDownPins)
                 .reduce(Integer::sum)
@@ -71,7 +78,7 @@ public class FinalFramePinMarks implements PinMarks {
     }
 
     @Override
-    public List<PinMark> toImmutableList() {
+    public List<PinMark> toList() {
         return Collections.unmodifiableList(marks);
     }
 

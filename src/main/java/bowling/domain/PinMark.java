@@ -4,13 +4,11 @@ import java.util.Objects;
 
 public interface PinMark {
 
+    PinMark blank = new BlankPinMark();
+
     int MAX_PINS = 10;
 
     int getCountOfFallDownPins();
-
-    static PinMark blank() {
-        return new BlankPinMark();
-    }
 
     static PinMark pin(int countOfFallDownPins) {
         if (countOfFallDownPins > MAX_PINS) throw new IllegalArgumentException("한번에 쓰러뜨릴 수 있는 최대 볼링핀은 10개 입니다");

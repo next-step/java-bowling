@@ -9,8 +9,8 @@ public interface PinMarks {
     }
 
     default void shouldMarkedPinSumLessThanOrEqualMaxPins(PinMark secondPinMark) {
-        if (toImmutableList().size() == 1
-                && getCountOfFallDownPins() + secondPinMark.getCountOfFallDownPins() > PinMark.MAX_PINS) {
+        if (toList().size() == 1
+                && getCountOfAllFallDownPins() + secondPinMark.getCountOfFallDownPins() > PinMark.MAX_PINS) {
             throw new IllegalArgumentException("2번째 PinMark 와 첫번째 PinMark 가 쓰러뜨린 pin 수는 " + PinMark.MAX_PINS + " 개를 넘을 수 없습니다");
         }
     }
@@ -21,15 +21,17 @@ public interface PinMarks {
 
     void mark(PinMark pin);
 
+    long getCountOfMarks();
+
     boolean isStrike();
 
     boolean isSpare();
 
-    int getCountOfFallDownPins();
+    int getCountOfAllFallDownPins();
 
     boolean isAllMarked();
 
-    List<PinMark> toImmutableList();
+    List<PinMark> toList();
 
     List<PinMarkSign> toSigns();
 }

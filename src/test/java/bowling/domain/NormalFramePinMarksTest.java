@@ -31,7 +31,7 @@ class NormalFramePinMarksTest {
         pinMarks.mark(PinMark.pin(7));
         pinMarks.mark(PinMark.pin(3));
         assertThat(pinMarks.isStrike()).isFalse();
-        assertThat(pinMarks.getCountOfFallDownPins()).isEqualTo(PinMark.MAX_PINS);
+        assertThat(pinMarks.getCountOfAllFallDownPins()).isEqualTo(PinMark.MAX_PINS);
     }
 
     @DisplayName("mark 된 pin 수의 합을 구할 수 있다")
@@ -39,7 +39,7 @@ class NormalFramePinMarksTest {
     void countOfFallDownPins(){
         pinMarks.mark(PinMark.pin(9));
         pinMarks.mark(PinMark.pin(1));
-        assertThat(pinMarks.getCountOfFallDownPins()).isEqualTo(10);
+        assertThat(pinMarks.getCountOfAllFallDownPins()).isEqualTo(10);
     }
 
     @DisplayName("수정불가능한 List<PinMark> 로 변환 할 수 있다")
@@ -47,7 +47,7 @@ class NormalFramePinMarksTest {
     void immutableList(){
         pinMarks.mark(PinMark.pin(3));
 
-        List<PinMark> immutableList = pinMarks.toImmutableList();
+        List<PinMark> immutableList = pinMarks.toList();
         assertThatThrownBy( () -> immutableList.add(PinMark.pin(10)) )
                 .isInstanceOf(UnsupportedOperationException.class);
     }

@@ -23,6 +23,13 @@ public class NormalFramePinMarks implements PinMarks {
     }
 
     @Override
+    public long getCountOfMarks() {
+        return marks.stream()
+                .filter(mask -> !(mask instanceof BlankPinMark))
+                .count();
+    }
+
+    @Override
     public boolean isStrike() {
         if (isAllMarked())
             return marks.get(0).equals(PinMark.pin(10));
@@ -32,7 +39,7 @@ public class NormalFramePinMarks implements PinMarks {
     @Override
     public boolean isSpare() {
         if (marks.size() == 2) {
-            return getCountOfFallDownPins() == PinMark.MAX_PINS;
+            return getCountOfAllFallDownPins() == PinMark.MAX_PINS;
         }
         return false;
     }
@@ -40,12 +47,12 @@ public class NormalFramePinMarks implements PinMarks {
     private void markRemainingToBlankIfFirstMarkIsStrike() {
         if (marks.size() == 1
                 && marks.get(0).equals(PinMark.pin(10))) {
-            marks.add(PinMark.blank());
+            marks.add(PinMark.blank);
         }
     }
 
     @Override
-    public int getCountOfFallDownPins() {
+    public int getCountOfAllFallDownPins() {
         return marks.stream()
                 .map(PinMark::getCountOfFallDownPins)
                 .reduce(Integer::sum)
@@ -58,7 +65,7 @@ public class NormalFramePinMarks implements PinMarks {
     }
 
     @Override
-    public List<PinMark> toImmutableList() {
+    public List<PinMark> toList() {
         return Collections.unmodifiableList(marks);
     }
 
