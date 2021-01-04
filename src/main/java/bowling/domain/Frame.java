@@ -82,14 +82,14 @@ public interface Frame {
 
 
     static Frame first() {
-        return new NormalFrame(1, null);
+        return new NormalFrame(1);
     }
 
-    static Frame createNormal(int frameNo, Frame prev) {
-        return new NormalFrame(frameNo, prev);
+    static Frame createNormal(int frameNo) {
+        return new NormalFrame(frameNo);
     }
 
-    static Frame createFinal(int frameNo, Frame prev) {
-        return new FinalFrame(frameNo, prev);
+    static Frame createFinal(int frameNo) {
+        return new FinalFrame(frameNo);
     }
 }

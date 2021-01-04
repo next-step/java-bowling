@@ -10,7 +10,7 @@ class NormalFrameTest extends FrameTest {
 
     @BeforeEach
     void setUp(){
-        frame = new NormalFrame(1, null);
+        frame = new NormalFrame(1);
     }
 
     @DisplayName("1번 투구에 10개 핀을 쓰러뜨리면 프레임을 종료된다")
