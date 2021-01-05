@@ -1,4 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.PitchResults;
+import bowling.domain.Score;
 
 import java.util.ArrayList;
 import java.util.Objects;

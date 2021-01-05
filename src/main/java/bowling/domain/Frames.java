@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
+
 import java.util.*;
 
 

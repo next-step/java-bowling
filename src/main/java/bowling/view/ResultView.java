@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.*;
+import bowling.domain.frame.Frame;
 
 
 import java.util.stream.Collectors;

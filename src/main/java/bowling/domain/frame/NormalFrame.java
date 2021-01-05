@@ -1,6 +1,8 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-public class NormalFrame extends Frame{
+import bowling.domain.Score;
+
+public class NormalFrame extends Frame {
 
     private static final int MAX_PITCH_COUNT = 2;
 
