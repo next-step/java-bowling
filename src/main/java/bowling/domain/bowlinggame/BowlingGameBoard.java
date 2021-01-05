@@ -43,7 +43,6 @@ public class BowlingGameBoard {
         return new BowlingStatus(getCurrentFrameNumber(), frames);
     }
 
-
     private int getCurrentFrameNumber() {
         if (getLatestFrame().isEnd()) {
             return frames.size() + 1;
