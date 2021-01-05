@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class DefaultScoreSheet implements ScoreSheet {
 
-    private final int NUM_OF_FRAMES = 10;
+    private static final int NUM_OF_FRAMES = 10;
 
     private final Player player;
     private List<Frame> frames = new ArrayList<>();

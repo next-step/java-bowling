@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class FinalFramePinMarks implements PinMarks {
 
-    private final int MIN_MARKS = 2;
-    private final int MAX_MARKS = 3;
+    private static final int MIN_MARKS = 2;
+    private static final int MAX_MARKS = 3;
     private List<PinMark> marks = new ArrayList<>();
     private boolean complete = false;
 

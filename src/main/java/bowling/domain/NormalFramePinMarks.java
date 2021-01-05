@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class NormalFramePinMarks implements PinMarks {
 
-    private final int MAX_MARKS = 2;
+    private static final int MAX_MARKS = 2;
     private List<PinMark> marks = new ArrayList<>();
     private boolean completed = false;
 
