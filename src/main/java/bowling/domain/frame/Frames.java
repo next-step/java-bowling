@@ -1,20 +1,18 @@
-package bowling.domain.bowlinggame;
+package bowling.domain.frame;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.LastFrame;
-import bowling.domain.frame.NormalFrame;
+import bowling.domain.bowlinggame.BowlingGameResults;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BowlingGameBoard {
+public class Frames {
 
     private static final int NUM_TOTAL_FRAME = 10;
     private static final int NUM_NORMAL_FRAME = NUM_TOTAL_FRAME - 1;
 
     private final List<Frame> frames;
 
-    public BowlingGameBoard() {
+    public Frames() {
         this.frames = new ArrayList<>();
         frames.add(new NormalFrame());
     }
@@ -39,8 +37,8 @@ public class BowlingGameBoard {
         return frames.size() == NUM_TOTAL_FRAME && getLatestFrame().isEnd();
     }
 
-    public BowlingStatus exportStatus() {
-        return new BowlingStatus(getCurrentFrameNumber(), frames);
+    public BowlingGameResults exportResult() {
+        return new BowlingGameResults(getCurrentFrameNumber(), frames);
     }
 
     private int getCurrentFrameNumber() {

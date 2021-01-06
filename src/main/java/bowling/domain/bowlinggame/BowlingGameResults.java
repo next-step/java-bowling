@@ -3,12 +3,12 @@ package bowling.domain.bowlinggame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.LastFrame;
 import bowling.domain.frame.NormalFrame;
-import bowling.dto.BowlingStatusDTO;
+import bowling.dto.BowlingGameResultsDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BowlingStatus {
+public class BowlingGameResults {
 
     private final static int NORMAL_FRAME_MARGIN = 7;
     private final static int LAST_FRAME_MARGIN = 11;
@@ -17,13 +17,13 @@ public class BowlingStatus {
     private final int currentFrame;
     private final List<Frame> frames;
 
-    public BowlingStatus(int currentFrame, List<Frame> frames) {
+    public BowlingGameResults(int currentFrame, List<Frame> frames) {
         this.currentFrame = currentFrame;
         this.frames = frames;
     }
 
-    public BowlingStatusDTO makeDTO() {
-        return new BowlingStatusDTO(currentFrame, makeForm());
+    public BowlingGameResultsDTO makeDTO() {
+        return new BowlingGameResultsDTO(currentFrame, makeForm());
     }
 
     private List<String> makeForm() {

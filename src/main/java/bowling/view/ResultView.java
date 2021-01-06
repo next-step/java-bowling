@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.dto.BowlingStatusDTO;
+import bowling.dto.BowlingGameResultsDTO;
 import bowling.dto.UserDTO;
 
 public class ResultView {
@@ -15,11 +15,11 @@ public class ResultView {
         System.out.print(PLAYER_NAME_MESSAGE);
     }
 
-    public static void printCurrentFrameNumber(BowlingStatusDTO bowlingStatusDTO) {
+    public static void printCurrentFrameNumber(BowlingGameResultsDTO bowlingStatusDTO) {
         System.out.print(bowlingStatusDTO.getCurrentFrame() + CURRENT_FRAME_MESSAGE);
     }
 
-    public static void printScoreBoard(UserDTO userDTO, BowlingStatusDTO bowlingStatusDTO) {
+    public static void printScoreBoard(UserDTO userDTO, BowlingGameResultsDTO bowlingStatusDTO) {
         System.out.print("|  NAME  |");
         for (int i = 1; i <= 9; i++) {
             System.out.print("   " + i + "   |");
