@@ -76,21 +76,11 @@ public class Question extends AbstractEntity {
     }
 
     public void isOtherAnswer(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers.getAnswers()) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
+        answers.isOtherAnswer(loginUser);
     }
 
-    public List<DeleteHistory> deleteAnswer(){
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-
-        for (Answer answer : answers.getAnswers()) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter()));
-        }
-        return deleteHistories;
+    public List<DeleteHistory> deleteAnswer() {
+        return answers.deleteAnswer();
     }
 
     public Question setDeleted(boolean deleted) {
