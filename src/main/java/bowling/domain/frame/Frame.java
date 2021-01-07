@@ -6,4 +6,7 @@ public interface Frame {
 
     boolean isEnd();
 
+    int calculateScore();
+
+    boolean needAdditionalScore();
 }

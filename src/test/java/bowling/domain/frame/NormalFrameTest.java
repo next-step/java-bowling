@@ -46,4 +46,34 @@ public class NormalFrameTest {
         frame.record(10);
         assertThat(frame.isEnd()).isTrue();
     }
+
+    @Test
+    @DisplayName("스트라이크 이후 추가적인 핀 갯수 등록")
+    void testStrikesAdditionalScore() {
+        NormalFrame frame = new NormalFrame();
+        frame.record(10);
+
+        if (frame.needAdditionalScore()) {
+            frame.recordAdditionalScore(8);
+        }
+        if (frame.needAdditionalScore()) {
+            frame.recordAdditionalScore(2);
+        }
+
+        assertThat(frame.calculateScore()).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("스페어 이후 추가적인 핀 등록")
+    void testSparesAdditionalScore() {
+        NormalFrame frame = new NormalFrame();
+        frame.record(4);
+        frame.record(6);
+
+        if (frame.needAdditionalScore()) {
+            frame.recordAdditionalScore(7);
+        }
+
+        assertThat(frame.calculateScore()).isEqualTo(17);
+    }
 }
