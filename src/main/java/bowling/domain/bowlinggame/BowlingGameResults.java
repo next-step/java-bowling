@@ -23,10 +23,37 @@ public class BowlingGameResults {
     }
 
     public BowlingGameResultsDTO makeDTO() {
-        return new BowlingGameResultsDTO(currentFrame, makeForm());
+        return new BowlingGameResultsDTO(currentFrame, makePitchForm(), makeAccumulatedForm());
     }
 
-    private List<String> makeForm() {
+    private List<String> makeAccumulatedForm() {
+        List<String> printContent = new ArrayList<>();
+
+        int countsOfFixedScore = 0;
+        int previousFrameScore = 0;
+        for (Frame frame : frames) {
+            if (frame.isEnd() && !frame.needAdditionalScore()) {
+                String content = Integer.toString(frame.calculateScore() + previousFrameScore);
+                countsOfFixedScore += 1;
+                previousFrameScore += frame.calculateScore();
+
+                if (frame instanceof LastFrame) {
+                    fillMargin(content, LAST_FRAME_MARGIN, printContent);
+                    break;
+                }
+
+                fillMargin(content, NORMAL_FRAME_MARGIN, printContent);
+            }
+        }
+
+        for (int i = countsOfFixedScore; i < TOTAL_FRAMES; i++) {
+            fillEmptyFrameContent(printContent, i);
+        }
+
+        return printContent;
+    }
+
+    private List<String> makePitchForm() {
         List<String> printContent = new ArrayList<>();
 
         for (int i = 0; i < frames.size(); i++) {
@@ -80,6 +107,12 @@ public class BowlingGameResults {
         }
 
         return fillMargin(NORMAL_FRAME_MARGIN, content);
+    }
+
+    private void fillMargin(String content, int FrameMargin, List<String> printContent) {
+        int marginOnScore = (FrameMargin - content.length()) / 2;
+        String filledMarginContent = fillMargin(FrameMargin, fillMargin(marginOnScore, "").concat(content));
+        printContent.add(filledMarginContent);
     }
 
     private String fillMargin(int contentSize, String content) {

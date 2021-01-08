@@ -19,7 +19,7 @@ public class ResultView {
         System.out.print(bowlingStatusDTO.getCurrentFrame() + CURRENT_FRAME_MESSAGE);
     }
 
-    public static void printScoreBoard(UserDTO userDTO, BowlingGameResultsDTO bowlingStatusDTO) {
+    public static void printScoreBoard(UserDTO userDTO, BowlingGameResultsDTO bowlingGameResultDTO) {
         System.out.print("|  NAME  |");
         for (int i = 1; i <= 9; i++) {
             System.out.print("   " + i + "   |");
@@ -27,8 +27,14 @@ public class ResultView {
         System.out.println("    " + 10 + "     |");
 
         System.out.print("|   " + userDTO.getName() + "  |");
-        for (String status : bowlingStatusDTO.getFrames()) {
+        for (String status : bowlingGameResultDTO.getFrames()) {
             System.out.print(status + "|");
+        }
+        System.out.println();
+
+        System.out.print("|        |");
+        for (String score : bowlingGameResultDTO.getAccumulatedScore()) {
+            System.out.print(score + "|");
         }
         System.out.println();
     }
