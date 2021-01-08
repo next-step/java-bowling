@@ -23,6 +23,10 @@ public class LastFrame implements Frame {
             frames.add(new NormalFrame());
         }
 
+        if (getInitialFrame().isEnd() && getInitialFrame().needAdditionalScore()) {
+            getInitialFrame().recordAdditionalScore(numDownedPins);
+        }
+
         getLatestFrame().record(numDownedPins);
         numPitches += 1;
     }
@@ -34,6 +38,16 @@ public class LastFrame implements Frame {
         return initialFrameStatus == FrameStatus.MISS ||
                 ((initialFrameStatus == FrameStatus.STRIKE || initialFrameStatus == FrameStatus.SPARE) &&
                         this.numPitches == MAXIMUM_NUMBER_OF_PITCHES_IN_LAST_FRAME);
+    }
+
+    @Override
+    public int calculateScore() {
+        return getInitialFrame().calculateScore();
+    }
+
+    @Override
+    public boolean needAdditionalScore() {
+        return getInitialFrame().needAdditionalScore();
     }
 
     public List<NormalFrame> getFrames() {

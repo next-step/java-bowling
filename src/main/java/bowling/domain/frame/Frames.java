@@ -19,7 +19,14 @@ public class Frames {
 
     public void record(int numDownedPin) {
         renewFrame();
+        recordAdditionalScore(numDownedPin);
         getLatestFrame().record(numDownedPin);
+    }
+
+    private void recordAdditionalScore(int numDownedPin) {
+        for (int i = 0; i < NUM_NORMAL_FRAME && i < frames.size(); i++) {
+            ((NormalFrame) frames.get(i)).recordAdditionalScore(numDownedPin);
+        }
     }
 
     private void renewFrame() {

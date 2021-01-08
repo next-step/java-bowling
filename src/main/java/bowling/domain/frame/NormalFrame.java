@@ -31,6 +31,10 @@ public class NormalFrame implements Frame {
 
     @Override
     public int calculateScore() {
+        if (score == null) {
+            return -1;
+        }
+
         return score.calculateScore();
     }
 
@@ -44,7 +48,9 @@ public class NormalFrame implements Frame {
     }
 
     public void recordAdditionalScore(int numDownedPin) {
-        score.record(numDownedPin);
+        if (needAdditionalScore()) {
+            score.record(numDownedPin);
+        }
     }
 
     public FrameStatus decideStatus() {
