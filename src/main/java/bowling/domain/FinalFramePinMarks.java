@@ -24,14 +24,20 @@ public class FinalFramePinMarks implements PinMarks {
     public void mark(PinMark pin) {
         shouldCountOfMarksLessThanMaxMarks();
         if (getCountOfMarks() == 1  && !isFirstStrike() ){
-            shouldSumOfLastTwoPinMarksLessThanOrEqualMaxPins(marks.get(0), pin);
+            shouldNotSumOfLastTwoPinMarksGreaterThanMaxPins(marks.get(0), pin);
         }
         if (getCountOfMarks() == 2 && isFirstStrike() && !isSecondStrike() ) {
-            shouldSumOfLastTwoPinMarksLessThanOrEqualMaxPins(marks.get(1), pin);
+            shouldNotSumOfLastTwoPinMarksGreaterThanMaxPins(marks.get(1), pin);
         }
 
         marks.add(pin);
         completePinMarksIf( pinMarks -> isMiss() || isMaxMarked() );
+    }
+
+    private void shouldNotSumOfLastTwoPinMarksGreaterThanMaxPins(PinMark lastOne, PinMark lastTwo) {
+        if ( lastOne.getCountOfFallDownPins() + lastTwo.getCountOfFallDownPins() > PinMark.MAX_PINS) {
+            throw new IllegalArgumentException("두 PinMark 가 쓰러뜨린 pin 의 합은 " + PinMark.MAX_PINS + " 개를 넘을 수 없습니다");
+        }
     }
 
     private boolean isMiss() {

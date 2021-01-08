@@ -19,10 +19,16 @@ public class NormalFramePinMarks implements PinMarks {
     @Override
     public void mark(PinMark pin) {
         shouldCountOfMarksLessThanMaxMarks();
-        if( getCountOfMarks() == 1 ) shouldSumOfLastTwoPinMarksLessThanOrEqualMaxPins(marks.get(0), pin);
+        shouldNotCountOfAllFallDownPinsGreaterThanMaxPins(pin);
 
         marks.add(pin);
         completeIf(pinMarks -> isFirstStrike() || isMaxMarked() );
+    }
+
+    private void shouldNotCountOfAllFallDownPinsGreaterThanMaxPins(PinMark pin) {
+        if ( getCountOfAllFallDownPins() + pin.getCountOfFallDownPins() > PinMark.MAX_PINS) {
+            throw new IllegalArgumentException("두 PinMark 가 쓰러뜨린 pin 의 합은 " + PinMark.MAX_PINS + " 개를 넘을 수 없습니다");
+        }
     }
 
     private boolean isMaxMarked() {
