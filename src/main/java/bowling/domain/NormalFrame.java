@@ -8,7 +8,7 @@ public class NormalFrame extends BaseFrame {
 
     @Override
     public Status getStatus() {
-        if (pinMarks.isFirstStrike()) return Status.Strike;
+        if (pinMarks.isStrike()) return Status.Strike;
         if (pinMarks.getCountOfAllFallDownPins() == PinMark.MAX_PINS) return Status.Spare;
         if (pinMarks.getCountOfAllFallDownPins() == 0) return Status.Gutter;
         return Status.Miss;

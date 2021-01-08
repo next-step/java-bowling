@@ -23,10 +23,10 @@ public class FinalFramePinMarks implements PinMarks {
     @Override
     public void mark(PinMark pin) {
         shouldCountOfMarksLessThanMaxMarks();
-        if (getCountOfMarks() == 1  && !isFirstStrike() ){
+        if (getCountOfMarks() == 1  && !isStrike() ){
             shouldNotSumOfLastTwoPinMarksGreaterThanMaxPins(marks.get(0), pin);
         }
-        if (getCountOfMarks() == 2 && isFirstStrike() && !isSecondStrike() ) {
+        if (getCountOfMarks() == 2 && isStrike() && !isSecondStrike() ) {
             shouldNotSumOfLastTwoPinMarksGreaterThanMaxPins(marks.get(1), pin);
         }
 
@@ -69,7 +69,7 @@ public class FinalFramePinMarks implements PinMarks {
     }
 
     @Override
-    public boolean isFirstStrike() {
+    public boolean isStrike() {
         return checkPin(0, PinMark.strike);
     }
 

@@ -22,7 +22,7 @@ class NormalFramePinMarksTest {
     @Test
     void isStrike(){
         pinMarks.mark(PinMark.pin(10));
-        assertThat(pinMarks.isFirstStrike()).isTrue();
+        assertThat(pinMarks.isStrike()).isTrue();
     }
 
     @DisplayName("1,2번째 투구로 10개 핀을 쓰러뜨리면 Strike 가 아니다")
@@ -30,7 +30,7 @@ class NormalFramePinMarksTest {
     void isNotStrike(){
         pinMarks.mark(PinMark.pin(7));
         pinMarks.mark(PinMark.pin(3));
-        assertThat(pinMarks.isFirstStrike()).isFalse();
+        assertThat(pinMarks.isStrike()).isFalse();
         assertThat(pinMarks.getCountOfAllFallDownPins()).isEqualTo(PinMark.MAX_PINS);
     }
 

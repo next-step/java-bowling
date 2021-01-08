@@ -22,7 +22,7 @@ public class NormalFramePinMarks implements PinMarks {
         shouldNotCountOfAllFallDownPinsGreaterThanMaxPins(pin);
 
         marks.add(pin);
-        completeIf(pinMarks -> isFirstStrike() || isMaxMarked() );
+        completeIf(pinMarks -> isStrike() || isMaxMarked() );
     }
 
     private void shouldNotCountOfAllFallDownPinsGreaterThanMaxPins(PinMark pin) {
@@ -47,17 +47,15 @@ public class NormalFramePinMarks implements PinMarks {
     }
 
     @Override
-    public boolean isFirstStrike() {
-        return getCountOfMarks() > 0 && marks.get(0).equals(PinMark.strike);
+    public boolean isStrike() {
+        return getCountOfMarks() > 0
+                && marks.get(0).equals(PinMark.strike);
     }
 
     @Override
     public boolean isSpare() {
-        if (getCountOfMarks() == MAX_MARKS
-                && getCountOfAllFallDownPins() == PinMark.MAX_PINS) {
-            return true;
-        }
-        return false;
+        return getCountOfMarks() == MAX_MARKS
+                && getCountOfAllFallDownPins() == PinMark.MAX_PINS;
     }
 
     @Override
@@ -80,7 +78,7 @@ public class NormalFramePinMarks implements PinMarks {
 
     @Override
     public List<PinMarkSign> toSigns() {
-        if (isFirstStrike()) {
+        if (isStrike()) {
             return Arrays.asList(PinMarkSign.Strike);
         }
         if (isSpare()) {

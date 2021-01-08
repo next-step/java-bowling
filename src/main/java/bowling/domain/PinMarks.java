@@ -16,7 +16,7 @@ public interface PinMarks {
 
     long getCountOfMarks();
 
-    boolean isFirstStrike();
+    boolean isStrike();
 
     boolean isSpare();
 
