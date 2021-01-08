@@ -34,13 +34,6 @@ public interface Frame {
     boolean isFinal();
 
     /**
-     * 오픈 프래임 여부
-     * 마지막 투구 후 핀이 하나 이상 남아 있으면 open 이다
-     * @return
-     */
-    boolean isOpen();
-
-    /**
      * 현재 프레임 종료여부
      * <p>
      * 일반 프레임은 2번의 shot 기회가 있고 마지막 프레임은 3번의 shot 기회가 있다.

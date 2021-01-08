@@ -30,13 +30,6 @@ abstract public class BaseFrame implements Frame {
     }
 
     @Override
-    public boolean isOpen() {
-        Status status = getStatus();
-        return  status == Status.Gutter
-                || status == Status.Miss;
-    }
-
-    @Override
     public boolean isEnd() {
         return pinMarks.isCompleted();
     }
