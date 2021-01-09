@@ -8,16 +8,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import qna.NotFoundException;
-import qna.UnAuthorizedException;
+import qna.CannotDeleteException;
 import qna.service.DeleteHistoryService;
 import qna.service.QnAService;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-
 @RunWith(MockitoJUnitRunner.class)
-public class AnswerTest {
+public class AnswersTest {
     @Mock
     private QuestionRepository questionRepository;
 
@@ -37,17 +35,27 @@ public class AnswerTest {
         question.addAnswer(answer);
     }
 
-    @Test
-    public void check_null_작성자(){
+    @ParameterizedTest
+    @NullSource
+    public void add_Answer_Null_체크(Answers answers) {
         assertThatThrownBy(() -> {
-            Answer answerTest = new Answer(1L, null, question, "test");
-        }).isInstanceOf(UnAuthorizedException.class);
+            answers.addAnswer(null);
+        }).isInstanceOf(NullPointerException.class);
+    }
+
+    @ParameterizedTest
+    @NullSource
+    public void answer_다른_사람_답변_Null_체크(User loginUser) {
+        Answers answers = new Answers();
+        assertThatThrownBy(() -> {
+            answers.isOtherAnswer(loginUser);
+        }).isInstanceOf(NullPointerException.class);
     }
 
     @Test
-    public void check_null_question(){
+    public void 다른_사람의_쓴글_확인(){
         assertThatThrownBy(() -> {
-            Answer answerTest = new Answer(1L,  UserTest.JAVAJIGI, null, "test");
-        }).isInstanceOf(NotFoundException.class);
+            question.isOwner(UserTest.SANJIGI);
+        }).isInstanceOf(CannotDeleteException.class);
     }
 }
