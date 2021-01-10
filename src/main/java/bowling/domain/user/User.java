@@ -1,7 +1,6 @@
 package bowling.domain.user;
 
 import bowling.bowlingexception.InvalidNameFormatException;
-import bowling.dto.UserDTO;
 
 import java.util.regex.Pattern;
 
@@ -19,9 +18,5 @@ public class User {
         if (name == null || !Pattern.matches(allowedPattern, name)) {
             throw new InvalidNameFormatException();
         }
-    }
-
-    public UserDTO makeDTO() {
-        return new UserDTO(this.name);
     }
 }
