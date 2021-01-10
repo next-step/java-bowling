@@ -107,8 +107,5 @@ public class Frames {
         return frames.get(index);
     }
 
-    public PitchResults searchFramePitchResult(int index) {
-        return frames.get(index).getPitchResults();
-    }
 }
 

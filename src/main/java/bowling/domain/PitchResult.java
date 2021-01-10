@@ -43,4 +43,8 @@ public class PitchResult {
         return this.pinCount == BOWLING_PIN_COUNT;
     }
 
+    @Override
+    public String toString() {
+        return pinCount == 0 ? "-" : String.valueOf(this.pinCount);
+    }
 }

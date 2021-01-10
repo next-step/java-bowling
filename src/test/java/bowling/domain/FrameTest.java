@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.*;
 
 public class FrameTest {
 
@@ -39,7 +40,7 @@ public class FrameTest {
         normalFrame.start(3);
 
         // then
-        assertThat(normalFrame.sumCurrentPitchResults()).isEqualTo(2 + 3);
+        assertThat(normalFrame.sumUpCurrentResult()).isEqualTo(2 + 3);
     }
 
     @DisplayName("FinalFrame 에서 다음 프레임 생성 요청 시 Exception 테스트")
@@ -111,9 +112,21 @@ public class FrameTest {
             finalFrame.start(Integer.parseInt(pitchResult));
         }
 
-        finalFrame.setScore(finalFrame.sumUpCurrentResult());
+        finalFrame.setScore(0);
 
         assertThat(finalFrame.countLeftBonus()).isEqualTo(expectValue);
+    }
+
+    @Test
+    void renewScoreTest(){
+        NormalFrame first = NormalFrame.from(0);
+        first.start(10);
+        first.setScore(0);
+
+        first.renewScore(1);
+        first.renewScore(2);
+
+        assertTrue(first.getScore().getScore() == (10 + 1 + 2));
     }
     
 }

@@ -1,13 +1,17 @@
 package bowling.domain.frame;
 
+import bowling.domain.PitchResults;
 import bowling.domain.Score;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
 
 public class NormalFrame extends Frame {
 
-    private static final int MAX_PITCH_COUNT = 2;
+    private State state;
 
     private NormalFrame(int index){
         super(index);
+        this.state = new Ready();
     }
 
     @Override
@@ -16,23 +20,12 @@ public class NormalFrame extends Frame {
     }
 
     public Score createScore(int previousScore) {
-        int sumUp = previousScore + sumUpCurrentResult();
-
-        if(pitchResults.isStrike()){
-            return Score.ofStrike(sumUp);
-        }
-
-        if(pitchResults.isSpare()){
-            return Score.ofSpare(sumUp);
-        }
-
-        return Score.of(sumUp);
+        return state.createScore(previousScore);
     }
 
     public int sumUpCurrentResult(){
-        return pitchResults.sumUpCurrentResult();
+        return state.sumUpCurrentResult();
     }
-
 
     public static NormalFrame from(int index){
         return new NormalFrame(index);
@@ -42,7 +35,7 @@ public class NormalFrame extends Frame {
     public void start(int knockedDownPins) {
         if (!isEnd()) {
             validateKnockedDownPins(knockedDownPins);
-            pitchResults.addNewResult(knockedDownPins);
+            this.state = state.pitch(knockedDownPins);
         }
     }
 
@@ -52,14 +45,14 @@ public class NormalFrame extends Frame {
         }
     }
 
-    private int countLeftOverPins() {
-        int currentPoint = sumCurrentPitchResults();
+   private int countLeftOverPins() {
+        int currentPoint = sumUpCurrentResult();
         return BOWLING_PIN_COUNT - currentPoint;
     }
 
     @Override
     public boolean isEnd() {
-        return (countLeftOverPins() == 0) || (pitchResults.size() == MAX_PITCH_COUNT);
+        return this.state.isFinish();
     }
 
     @Override
@@ -78,6 +71,16 @@ public class NormalFrame extends Frame {
         if (this.score.getLeftBonusCount() > 0) {
             this.score.renewScore(knockedDownPins + currentScore);
         }
+    }
+
+    @Override
+    public PitchResults getPitchResults() {
+        return state.getPitchResults();
+    }
+
+    @Override
+    public String expressState() {
+        return state.toString();
     }
 
 }

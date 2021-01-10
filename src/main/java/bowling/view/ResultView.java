@@ -10,18 +10,13 @@ import java.util.stream.IntStream;
 
 public class ResultView {
 
-    private static final int BOWLING_PIN_COUNT = 10;
+
     private static final int FRAME_START_INDEX = 1;
-    private static final int NORMAL_FRAME_MAX_PITCH = 2;
-    private static final int FINAL_FRAME_MAX_PITCH = 3;
     private static final int WIDTH = 6;
     private static final String NAME_HEAD = "NAME";
     private static final String DELIMITER = "|";
     private static final String SPACE = " ";
     private static final String NUMBER_FORMAT = "%02d";
-    private static final String SPARE = "/";
-    private static final String STRIKE = "X";
-    private static final String GUTTER = "-";
 
 
     private static void printFramesHeader(int framesCount) {
@@ -37,6 +32,8 @@ public class ResultView {
     public static void printEmptyFrames(Player player, int maxFrameCount) {
         printFramesHeader(maxFrameCount);
         printFramesEmptyBody(player, maxFrameCount);
+        System.out.print(DELIMITER + center(SPACE) + DELIMITER);
+        printNotCreatedFrames(0, maxFrameCount);
     }
 
     private static void printFramesEmptyBody(Player player, int framesCount) {
@@ -80,7 +77,7 @@ public class ResultView {
 
     private static String parsePitchScore(Frame frame) {
         Score currentScore = frame.getScore();
-        if(frame.isEnd() && currentScore.getLeftBonusCount() == 0){
+        if (frame.isEnd() && currentScore.getLeftBonusCount() == 0) {
             return String.valueOf(frame.getScore().getScore());
         }
 
@@ -94,64 +91,17 @@ public class ResultView {
         System.out.print(DELIMITER + center(bowlingGame.getPlayer().getName()) + DELIMITER);
 
         for (int i = 0; i <currentFramesCount; i++) {
-            System.out.print(center(parsePitchResult(bowlingGame.searchFramePitchResult(i))) + DELIMITER);
+            System.out.print(center(parsePitchResult(bowlingGame.searchFrame(i))) + DELIMITER);
         }
 
         printNotCreatedFrames(currentFramesCount, maxFrameCount);
 
     }
 
-    private static String parsePitchResult(PitchResults pitchResults) {
-
-        if (pitchResults.size() == FINAL_FRAME_MAX_PITCH) {
-            return parseLastFramePitchResult(pitchResults);
-        }
-
-        if (pitchResults.size() == NORMAL_FRAME_MAX_PITCH) {
-            return parseNormalFramePitchResult(pitchResults);
-
-        }
-
-        return pitchResults.getPitchResults().stream()
-                .map(pitchResult -> pitchNumberToChar(pitchResult.getPinCount()))
-                .collect(Collectors.joining(DELIMITER));
-
+    private static String parsePitchResult(Frame searchFrame) {
+        return searchFrame.expressState();
     }
 
-    private static String parseNormalFramePitchResult(PitchResults pitchResults) {
-        int totalCount = pitchResults.sumUpCurrentResult();
-
-        if (totalCount == BOWLING_PIN_COUNT) {
-            return pitchNumberToChar(pitchResults.findResult(0)) + DELIMITER + SPARE;
-        }
-
-        return pitchResults.getPitchResults().stream()
-                .map(pitchResult -> pitchNumberToChar(pitchResult.getPinCount()))
-                .collect(Collectors.joining(DELIMITER));
-    }
-
-    private static String parseLastFramePitchResult(PitchResults pitchResults) {
-        String first = pitchNumberToChar(pitchResults.findResult(0));
-        String second = pitchNumberToChar(pitchResults.findResult(1));
-
-        if ((pitchResults.findResult(0) + pitchResults.findResult(1)) == BOWLING_PIN_COUNT) {
-            second = SPARE;
-        }
-
-        return first + DELIMITER + second + DELIMITER + pitchNumberToChar(pitchResults.findResult(2));
-    }
-
-    private static String pitchNumberToChar(int pitchNumber) {
-        if (pitchNumber == BOWLING_PIN_COUNT) {
-            return STRIKE;
-        }
-
-        if (pitchNumber == 0) {
-            return GUTTER;
-        }
-
-        return String.valueOf(pitchNumber);
-    }
 
     public static String center(String s){
         return center(s, WIDTH);

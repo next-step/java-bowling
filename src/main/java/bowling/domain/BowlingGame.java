@@ -37,7 +37,4 @@ public class BowlingGame {
         return frames.searchFrame(index);
     }
 
-    public PitchResults searchFramePitchResult(int index) {
-        return frames.searchFramePitchResult(index);
-    }
 }

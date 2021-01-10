@@ -1,23 +1,37 @@
 package bowling.domain.frame;
 
+import bowling.domain.PitchResults;
 import bowling.domain.Score;
+import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
+import bowling.domain.state.State;
+import bowling.domain.state.Strike;
+
+import java.util.LinkedList;
+
+import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
 
-    private static final int MAX_PITCH_COUNT = 3;
+    private static final String DELIMITER = "|";
+    private LinkedList<State> states = new LinkedList<>();
 
     private FinalFrame(int index){
         super(index);
+        this.states.add(new Ready());
     }
 
     @Override
     public void setScore(int previousScore) {
-        this.score = Score.of(previousScore + sumUpCurrentResult());
+        this.score = createScore(previousScore);
     }
 
-    public int sumUpCurrentResult(){
-        return pitchResults.sumUpCurrentResult();
+    private Score createScore(int previousScore) {
+        return Score.of(previousScore + states.stream()
+                .mapToInt(State::sumUpCurrentResult)
+                .sum());
     }
+
 
     public static FinalFrame from(int index){
         return new FinalFrame(index);
@@ -25,9 +39,20 @@ public class FinalFrame extends Frame {
 
     @Override
     public void start(int knockedDownPins) {
-        if (!isEnd()) {
-            validateKnockedDownPins(knockedDownPins);
-            pitchResults.addNewResult(knockedDownPins);
+        validateKnockedDownPins(knockedDownPins);
+        addState();
+        pitchState(knockedDownPins);
+    }
+
+    private void pitchState(int knockedDownPins) {
+        State lastState = states.getLast();
+        states.removeLast();
+        states.add(lastState.pitch(knockedDownPins));
+    }
+
+    private void addState() {
+        if (states.getLast().isFinish()) {
+            states.add(new Ready());
         }
     }
 
@@ -51,16 +76,36 @@ public class FinalFrame extends Frame {
         return BOWLING_PIN_COUNT - currentPoint;
     }
 
+    private int sumCurrentPitchResults() {
+        return states.stream().mapToInt(State::sumUpCurrentResult).sum();
+    }
+
 
     @Override
     public boolean isEnd() {
-        return (pitchResults.size() == 2 && sumCurrentPitchResults() == 0) ||
-                (pitchResults.size() == 2 && countLeftOverPins() > 0 && !hasBonusPitch()) ||
-                (pitchResults.size() == MAX_PITCH_COUNT);
+        if (!hasBonusPitch() && isEndPitch(MIN_PITCH_COUNT)) {
+            return true;
+        }
+
+        return isEndPitch(MAX_PITCH_COUNT);
+    }
+
+    private boolean isEndPitch(int pitchTryCount) {
+        return countPitchTries() == pitchTryCount;
+    }
+
+    private int countPitchTries() {
+        return states.stream()
+                .mapToInt(State::getPitchTryCount)
+                .sum();
     }
 
     public boolean hasBonusPitch(){
-        return pitchResults.isStrike() || pitchResults.isSpare();
+        return states.stream().anyMatch(this::isStrikeOrSpare);
+    }
+
+    private boolean isStrikeOrSpare(State state) {
+        return state instanceof Strike || state instanceof Spare;
     }
 
     @Override
@@ -75,5 +120,18 @@ public class FinalFrame extends Frame {
             this.score.renewScore(knockedDownPins + currentScore);
         }
     }
+
+    @Override
+    public PitchResults getPitchResults() {
+        return states.getLast().getPitchResults();
+    }
+
+    @Override
+    public String expressState() {
+        return states.stream()
+                .map(State::toString)
+                .collect(Collectors.joining(DELIMITER));
+    }
+
 
 }
