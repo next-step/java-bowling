@@ -19,7 +19,7 @@
 * GameController - 게임 접속 컨트롤러 객체
 * BowlingGame - 볼링 게임 객체
   * run() - 시작 메소드
-* Chance - 공 한분 굴리는 찬스 객체
+* Chance - 공 한번 굴리는 찬스 객체
   * countOfPin - 넘어진 핀 
   * nextRollTheBall() - 다음 공울 굴리는 메소드
 * Frame - 프레임 관리 객체
