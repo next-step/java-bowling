@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class PitchResults {
@@ -23,21 +22,14 @@ public class PitchResults {
     }
 
     public int sumUpCurrentResult() {
-        return pitchResults.stream()
+        int sumUpCurrentResult = pitchResults.stream()
                 .mapToInt(pitchResult -> pitchResult.getPinCount())
                 .sum();
+        return sumUpCurrentResult;
     }
 
     public void addNewResult(int pitchResult) {
         pitchResults.add(PitchResult.from(pitchResult));
-    }
-
-    public int size() {
-        return pitchResults.size();
-    }
-
-    public int findResult(int index) {
-        return pitchResults.get(index).getPinCount();
     }
 
     @Override
@@ -64,5 +56,9 @@ public class PitchResults {
 
     public boolean isStrike() {
         return (!pitchResults.isEmpty()) && (pitchResults.get(0).isStrike());
+    }
+
+    public String toStringFirstResult() {
+        return pitchResults.get(0).toString();
     }
 }

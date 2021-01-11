@@ -1,6 +1,8 @@
 package bowling.domain;
 
 
+import bowling.domain.frame.Frame;
+
 public class BowlingGame {
 
     private Player player;
@@ -26,4 +28,13 @@ public class BowlingGame {
     public boolean isEnd() {
         return frames.isEnd();
     }
+
+    public int countFrames() {
+        return frames.count();
+    }
+
+    public Frame searchFrame(int index){
+        return frames.searchFrame(index);
+    }
+
 }

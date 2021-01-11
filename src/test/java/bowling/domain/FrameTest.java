@@ -1,11 +1,15 @@
 package bowling.domain;
 
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.*;
 
 public class FrameTest {
 
@@ -36,7 +40,7 @@ public class FrameTest {
         normalFrame.start(3);
 
         // then
-        assertThat(normalFrame.sumCurrentPitchResults()).isEqualTo(2 + 3);
+        assertThat(normalFrame.sumUpCurrentResult()).isEqualTo(2 + 3);
     }
 
     @DisplayName("FinalFrame 에서 다음 프레임 생성 요청 시 Exception 테스트")
@@ -76,6 +80,53 @@ public class FrameTest {
         formalFrame.start(secondPitch);
 
         assertThat(formalFrame.hasBonusPitch()).isEqualTo(expect);
+    }
+
+    @DisplayName("투구 결과에 따라 Score 생성 테스트")
+    @ParameterizedTest
+    @CsvSource(value = {"10:2", "2,8:1", "2,7:0"}, delimiter = ':')
+    void createScoreTest(String pitchResultsWithComma, int expectValue){
+
+        NormalFrame normalFrame =  NormalFrame.from(0);
+
+        String[] pitchResults = pitchResultsWithComma.split(",");
+
+        for (String pitchResult : pitchResults) {
+            normalFrame.start(Integer.parseInt(pitchResult));
+        }
+
+        Score score = normalFrame.createScore(0);
+
+        assertThat(score.getLeftBonusCount()).isEqualTo(expectValue);
+    }
+
+    @DisplayName("마지막 프레임에서 Score 생성 시 보너스 점수 획득 기회는 항상 0")
+    @ParameterizedTest
+    @CsvSource(value = {"10:0", "2,8:0", "2,7:0"}, delimiter = ':')
+    void createScoreInLastFrameTest(String pitchResultsWithComma, int expectValue){
+        FinalFrame finalFrame =  FinalFrame.from(0);
+
+        String[] pitchResults = pitchResultsWithComma.split(",");
+
+        for (String pitchResult : pitchResults) {
+            finalFrame.start(Integer.parseInt(pitchResult));
+        }
+
+        finalFrame.setScore(0);
+
+        assertThat(finalFrame.countLeftBonus()).isEqualTo(expectValue);
+    }
+
+    @Test
+    void renewScoreTest(){
+        NormalFrame first = NormalFrame.from(0);
+        first.start(10);
+        first.setScore(0);
+
+        first.renewScore(1);
+        first.renewScore(2);
+
+        assertTrue(first.getScore().getScore() == (10 + 1 + 2));
     }
     
 }
