@@ -31,11 +31,33 @@ class NormalFrameTest {
 
     @Test
     @DisplayName("프레임이 종료 이후에도 record를 시도할 시에 예외 처리")
-    void exceptionWhenAfterTwoRecord() {
+    void exceptionAfterTwoRecord() {
         NormalFrame frame = new NormalFrame();
 
         frame.record(4);
         frame.record(5);
+
+        assertThatThrownBy(
+                () -> frame.record(3)
+        ).isInstanceOf(IllegalFrameRecordException.class);
+    }
+
+    @Test
+    @DisplayName("스트라이크 상태의 종료 조건 테스트")
+    void isEndWhenStrike() {
+        NormalFrame frame = new NormalFrame();
+
+        assertThat(frame.isEnd()).isFalse();
+        frame.record(10);
+        assertThat(frame.isEnd()).isTrue();
+    }
+
+    @Test
+    @DisplayName("스트라이크 이후 입력의 예외처리 테스트")
+    void exceptionAfterStrike() {
+        NormalFrame frame = new NormalFrame();
+
+        frame.record(10);
 
         assertThatThrownBy(
                 () -> frame.record(3)
