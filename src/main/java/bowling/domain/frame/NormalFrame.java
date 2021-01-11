@@ -21,6 +21,6 @@ public class NormalFrame {
     }
 
     public boolean isEnd() {
-        return downedPins.size() == 2;
+        return (downedPins.size() == 1 && downedPins.get(0) == 10) || downedPins.size() == 2;
     }
 }
