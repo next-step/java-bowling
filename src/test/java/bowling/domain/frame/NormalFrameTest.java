@@ -1,8 +1,11 @@
 package bowling.domain.frame;
 
 import bowling.bowlingexception.IllegalFrameRecordException;
+import bowling.bowlingexception.IllegalPinRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -62,5 +65,28 @@ class NormalFrameTest {
         assertThatThrownBy(
                 () -> frame.record(3)
         ).isInstanceOf(IllegalFrameRecordException.class);
+    }
+
+    @ValueSource(ints = {-1, 11})
+    @DisplayName("1회차 범위는 0 ~ 10 넘을 수 없음")
+    @ParameterizedTest
+    void validateInput(int input) {
+        NormalFrame normalFrame = new NormalFrame();
+
+        assertThatThrownBy(
+                () -> normalFrame.record(input)
+        ).isInstanceOf(IllegalPinRangeException.class);
+    }
+
+    @Test
+    @DisplayName("2회차 합이 0 ~ 10을 만족해야 됨")
+    void sumIsUnder10() {
+        NormalFrame normalFrame = new NormalFrame();
+
+        normalFrame.record(6);
+
+        assertThatThrownBy(
+                () -> normalFrame.record(5)
+        ).isInstanceOf(IllegalPinRangeException.class);
     }
 }
