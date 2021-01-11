@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.bowlingexception.IllegalFrameRecordException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,9 @@ public class NormalFrame {
     }
 
     public void record(int downedPin) {
+        if (isEnd()) {
+            throw new IllegalFrameRecordException();
+        }
         downedPins.add(downedPin);
     }
 
