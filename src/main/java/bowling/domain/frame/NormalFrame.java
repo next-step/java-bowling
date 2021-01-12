@@ -6,7 +6,7 @@ import bowling.bowlingexception.IllegalPinRangeException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalFrame {
+public class NormalFrame extends Frame {
 
     private final List<Integer> downedPins;
 
@@ -14,6 +14,7 @@ public class NormalFrame {
         downedPins = new ArrayList<>();
     }
 
+    @Override
     public void record(int downedPin) {
         if (isEnd()) {
             throw new IllegalFrameRecordException();
@@ -26,6 +27,7 @@ public class NormalFrame {
         }
     }
 
+    @Override
     public boolean isEnd() {
         return (downedPins.size() == 1 && downedPins.get(0) == 10) || downedPins.size() == 2;
     }
