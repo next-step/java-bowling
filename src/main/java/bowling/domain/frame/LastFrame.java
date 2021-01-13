@@ -18,6 +18,8 @@ public class LastFrame extends Frame {
 
     @Override
     public boolean isEnd() {
-        return (downedPins.size() == 3 && downedPins.get(0) == 10) || (downedPins.size() == 2 && downedPins.get(0) != 10);
+        return (downedPins.size() == 3 && downedPins.get(0) == 10)
+                || (downedPins.size() == 2 && downedPins.get(0) != 10 && downedPins.get(0) + downedPins.get(1) != 10)
+                || (downedPins.size() == 3 && (downedPins.get(0) + downedPins.get(1)) == 10);
     }
 }
