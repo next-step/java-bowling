@@ -1,11 +1,7 @@
 package bowling.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class BowlingGame {
 
-    private Map matchMap = new HashMap();
     private Frames frames;
     private Name name;
 

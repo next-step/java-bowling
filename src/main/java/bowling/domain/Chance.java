@@ -33,6 +33,7 @@ public class Chance {
         }
     }
 
+
     public int getCountOfPin() {
         return countOfPin;
     }
