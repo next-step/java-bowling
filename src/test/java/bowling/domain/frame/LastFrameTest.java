@@ -41,4 +41,18 @@ public class LastFrameTest {
         frame.record(4);
         assertThat(frame.isEnd()).isTrue();
     }
+
+    @Test
+    @DisplayName("Spare 이후 추가 2회 종료 시나리오")
+    void endConditionWithSpare() {
+        LastFrame frame = new LastFrame();
+
+        assertThat(frame.isEnd()).isFalse();
+        frame.record(4);
+        assertThat(frame.isEnd()).isFalse();
+        frame.record(6);
+        assertThat(frame.isEnd()).isFalse();
+        frame.record(9);
+        assertThat(frame.isEnd()).isTrue();
+    }
 }
