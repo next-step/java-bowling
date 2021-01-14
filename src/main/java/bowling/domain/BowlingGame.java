@@ -52,4 +52,5 @@ public class BowlingGame {
     public int askRunningFrameIndex() {
         return frames.askRunningFrameIndex();
     }
+
 }
