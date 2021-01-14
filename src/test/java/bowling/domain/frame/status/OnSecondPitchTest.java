@@ -17,11 +17,20 @@ class OnSecondPitchTest {
     }
 
     @Test
-    @DisplayName("추가 피치에 따른 반환 확인")
-    void record() {
+    @DisplayName("추가 피치에 따른 반환 확인(스페어)")
+    void recordWhenSpare() {
         OnSecondPitch onSecondPitch = new OnSecondPitch(5);
 
         assertThat(onSecondPitch.record(5))
-                .isInstanceOf(TwoTimesPitched.class);
+                .isInstanceOf(Spare.class);
+    }
+
+    @Test
+    @DisplayName("추가 피치에 따른 반환 확인(미스)")
+    void recordWhenMiss() {
+        OnSecondPitch onSecondPitch = new OnSecondPitch(5);
+
+        assertThat(onSecondPitch.record(4))
+                .isInstanceOf(Miss.class);
     }
 }

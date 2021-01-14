@@ -26,6 +26,10 @@ public class OnSecondPitch extends OnPitching {
     public Status record(int downedPin) {
         DownedPin additionalPitch = firstPitch.fromPreviousPitch(downedPin);
 
-        return new TwoTimesPitched(firstPitch, additionalPitch);
+        if (firstPitch.isSpare(additionalPitch)) {
+            return new Spare(firstPitch, additionalPitch);
+        }
+
+        return new Miss(firstPitch, additionalPitch);
     }
 }
