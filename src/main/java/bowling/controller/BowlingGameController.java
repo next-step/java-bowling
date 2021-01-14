@@ -9,8 +9,11 @@ public class BowlingGameController {
 
     public static void run() {
 
-        String playerName = getPlayerName();
+        int playerNumber = askPlayerNumber();
+        String[] playerNames = askPlayerNames(playerNumber);
 
+        //String playerName = getPlayerName();
+/*
         Player player = Player.from(playerName);
 
         Frames frames = Frames.of();
@@ -29,7 +32,15 @@ public class BowlingGameController {
 
             frames.makeNextFrames();
 
-        }
+        }*/
+    }
+
+    private static String[] askPlayerNames(int playerNumber) {
+        return InputView.inputPlayerNames(playerNumber);
+    }
+
+    private static int askPlayerNumber() {
+        return InputView.inputPlayerNumber();
     }
 
     private static int inputKnockedDownPins(int frameIndex) {
@@ -44,7 +55,4 @@ public class BowlingGameController {
         ResultView.printEmptyFrames(player, maxFrameCount);
     }
 
-    private static String getPlayerName() {
-        return InputView.inputPlayerName();
-    }
 }
