@@ -1,43 +1,23 @@
 package bowling.domain.frame;
 
-import bowling.bowlingexception.IllegalFrameRecordException;
-import bowling.bowlingexception.IllegalPinRangeException;
-
-import java.util.ArrayList;
-import java.util.List;
+import bowling.domain.frame.status.Start;
+import bowling.domain.frame.status.Status;
 
 public class NormalFrame extends Frame {
 
-    private final List<Integer> downedPins;
+    private Status status;
 
     public NormalFrame() {
-        downedPins = new ArrayList<>();
+        status = new Start();
     }
 
     @Override
     public void record(int downedPin) {
-        if (isEnd()) {
-            throw new IllegalFrameRecordException();
-        }
-
-        downedPins.add(downedPin);
-
-        if (!hasValidRange()) {
-            throw new IllegalPinRangeException();
-        }
+        status = status.record(downedPin);
     }
 
     @Override
     public boolean isEnd() {
-        return (downedPins.size() == 1 && downedPins.get(0) == 10) || downedPins.size() == 2;
-    }
-
-    private boolean hasValidRange() {
-        int sum = 0;
-        for (Integer value : downedPins) {
-            sum += value;
-        }
-
-        return 0 <= sum && 10 >= sum;
+        return status.isEnd();
     }
 }
