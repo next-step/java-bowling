@@ -121,7 +121,7 @@ public class Frames {
         return Objects.hash(frames);
     }
 
-    public int countCompletedFrames() {
+    public int askRunningFrameIndex() {
         if (frames.isEmpty() || getLast().isEnd()) {
             return frames.size() + 1;
         }

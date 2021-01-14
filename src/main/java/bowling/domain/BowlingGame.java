@@ -27,10 +27,6 @@ public class BowlingGame {
         return frames;
     }
 
-    public boolean isEnd() {
-        return frames.isEnd();
-    }
-
     public int countFrames() {
         return frames.count();
     }
@@ -53,7 +49,7 @@ public class BowlingGame {
         return Objects.hash(player, frames);
     }
 
-    public int countCompletedFrames() {
-        return frames.countCompletedFrames();
+    public int askRunningFrameIndex() {
+        return frames.askRunningFrameIndex();
     }
 }

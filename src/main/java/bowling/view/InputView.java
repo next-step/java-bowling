@@ -3,7 +3,6 @@ package bowling.view;
 import bowling.domain.Player;
 
 import java.util.Scanner;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class InputView {
@@ -42,4 +41,5 @@ public class InputView {
         return playerNames;
 
     }
+
 }

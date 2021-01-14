@@ -57,6 +57,7 @@ public class ResultView {
         printFramesBody(bowlingGame, maxFrameCount);
         printFramesScore(bowlingGame, maxFrameCount);
     }
+
     public static void printCurrentFrames(List<BowlingGame> bowlingGames, int maxFrameCount) {
         IntStream.range(START_INDEX, bowlingGames.size())
                 .forEach(index -> printCurrentFrame(isFirstTurn(index), bowlingGames.get(index), maxFrameCount));
