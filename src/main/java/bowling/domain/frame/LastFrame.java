@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.status.Start;
-import bowling.domain.frame.status.Status;
+import bowling.domain.frame.status.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,22 +9,21 @@ import java.util.stream.Collectors;
 public class LastFrame extends Frame {
 
     private final List<Status> status;
-    private final List<Integer> downedPins;
+    private int numPitch;
 
     public LastFrame() {
-        this.downedPins = new ArrayList<>();
+        numPitch = 0;
         status = new ArrayList<>();
         status.add(new Start());
     }
 
     @Override
     public void record(int downedPin) {
-        downedPins.add(downedPin);
-
         if (getLatestStatus().isEnd()) {
             status.add(new Start());
         }
 
+        numPitch += 1;
         Status newLatestStatus = getLatestStatus().record(downedPin);
         setLatestStatus(newLatestStatus);
     }
@@ -40,9 +38,13 @@ public class LastFrame extends Frame {
 
     @Override
     public boolean isEnd() {
-        return (downedPins.size() == 3 && downedPins.get(0) == 10)
-                || (downedPins.size() == 2 && downedPins.get(0) != 10 && downedPins.get(0) + downedPins.get(1) != 10)
-                || (downedPins.size() == 3 && (downedPins.get(0) + downedPins.get(1)) == 10);
+        Status initialStat = getInitialStatus();
+        return initialStat instanceof Miss ||
+                (initialStat instanceof Strike || initialStat instanceof Spare) && numPitch == 3;
+    }
+
+    private Status getInitialStatus() {
+        return status.get(0);
     }
 
     @Override
