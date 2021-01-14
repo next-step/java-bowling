@@ -39,4 +39,16 @@ public class DownedPin {
         }
         return cachedPins.get(downedPin);
     }
+
+    public boolean isStrike() {
+        return pin == 10;
+    }
+
+    public boolean isSpare(int additionalPitch) {
+        return isSpare(this.fromPreviousPitch(additionalPitch));
+    }
+
+    public boolean isSpare(DownedPin additionalPitch) {
+        return pin + additionalPitch.pin == 10;
+    }
 }

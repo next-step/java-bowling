@@ -4,8 +4,10 @@ import bowling.bowlingexception.IllegalPinRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DownedPinTest {
@@ -31,5 +33,23 @@ public class DownedPinTest {
         assertThatThrownBy(
                 () -> pin.fromPreviousPitch(5)
         ).isInstanceOf(IllegalPinRangeException.class);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"10:true", "4:false"}, delimiter = ':')
+    @DisplayName("해당 핀이 단독으로 10을 가리킬 경우 Stirke 조건을 만족함")
+    void isStrike(int number, boolean expected) {
+        DownedPin pin = DownedPin.fromNumber(number);
+
+        assertThat(pin.isStrike()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("두 핀이 스페어 조건(1차 + 2차 = 10)을 만족함")
+    void isSpare() {
+        DownedPin firstPitch = DownedPin.fromNumber(6);
+        DownedPin secondPitch = firstPitch.fromPreviousPitch(4);
+
+        assertThat(firstPitch.isSpare(secondPitch)).isTrue();
     }
 }
