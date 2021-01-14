@@ -1,13 +1,18 @@
 package bowling.domain.frame.status;
 
+import bowling.bowlingexception.InvalidPinStatusException;
 import bowling.domain.frame.DownedPin;
 
-public class TwoTimesPitched extends Ended {
+public class Spare extends Ended {
 
     private final DownedPin firstPitch;
     private final DownedPin secondPitch;
 
-    public TwoTimesPitched(DownedPin firstPitch, DownedPin secondPitch) {
+    public Spare(DownedPin firstPitch, DownedPin secondPitch) {
+        if (!firstPitch.isSpare(secondPitch)) {
+            throw new InvalidPinStatusException();
+        }
+
         this.firstPitch = firstPitch;
         this.secondPitch = secondPitch;
     }

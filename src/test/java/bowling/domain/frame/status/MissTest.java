@@ -1,6 +1,7 @@
 package bowling.domain.frame.status;
 
 import bowling.bowlingexception.IllegalFrameRecordException;
+import bowling.bowlingexception.InvalidPinStatusException;
 import bowling.domain.frame.DownedPin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class MissTest {
+
+    @Test
+    @DisplayName("2회차 합이 10인 경우의 예외처리")
+    void invalidCondition() {
+        DownedPin firstPitch = DownedPin.fromNumber(4);
+        DownedPin secondPitch = firstPitch.fromPreviousPitch(5);
+
+        assertThatThrownBy(
+                () -> new Miss(firstPitch, secondPitch)
+        ).isInstanceOf(InvalidPinStatusException.class);
+    }
 
     private static Stream<Arguments> makeGutterScenario() {
         return Stream.of(
