@@ -2,6 +2,11 @@ package bowling.domain.frame;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,5 +59,70 @@ public class LastFrameTest {
         assertThat(frame.isEnd()).isFalse();
         frame.record(9);
         assertThat(frame.isEnd()).isTrue();
+    }
+
+    private static Stream<Arguments> oneRecordScenario() {
+        return Stream.of(
+                Arguments.of(0, "-"),
+                Arguments.of(1, "1"),
+                Arguments.of(9, "9"),
+                Arguments.of(10, "X")
+        );
+    }
+
+    private static Stream<Arguments> twoRecordScenario() {
+        return Stream.of(
+                Arguments.of(0, 10, "- | /"),
+                Arguments.of(1, 8, "1 | 8"),
+                Arguments.of(0, 0, "- | -"),
+                Arguments.of(10, 10, "X | X"),
+                Arguments.of(10, 7, "X | 7"),
+                Arguments.of(10, 0, "X | -")
+        );
+    }
+
+    private static Stream<Arguments> thirdRecordScenario() {
+        return Stream.of(
+                Arguments.of(0, 10, 0, "- | / | -"),
+                Arguments.of(0, 10, 4, "- | / | 4"),
+                Arguments.of(0, 10, 10, "- | / | X"),
+                Arguments.of(1, 9, 0, "1 | / | -"),
+                Arguments.of(10, 10, 0, "X | X | -"),
+                Arguments.of(10, 6, 4, "X | 6 | /"),
+                Arguments.of(10, 10, 10, "X | X | X")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("oneRecordScenario")
+    @DisplayName("1회차 시도 이후 출력")
+    void descriptionAfterFirstPitch(int firstPitch, String expected) {
+        LastFrame frame = new LastFrame();
+        frame.record(firstPitch);
+
+        assertThat(frame.getDescriptionForm()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("twoRecordScenario")
+    @DisplayName("2회차 시도 이후 출력")
+    void descriptionAfterSecondPitch(int firstPitch, int secondPitch, String expected) {
+        LastFrame frame = new LastFrame();
+        frame.record(firstPitch);
+        frame.record(secondPitch);
+
+        assertThat(frame.getDescriptionForm()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("thirdRecordScenario")
+    @DisplayName("2회차 시도 이후 출력")
+    void descriptionAfterThirdPitch(int firstPitch, int secondPitch, int thirdPitch, String expected) {
+        LastFrame frame = new LastFrame();
+        frame.record(firstPitch);
+        frame.record(secondPitch);
+        frame.record(thirdPitch);
+
+        assertThat(frame.getDescriptionForm()).isEqualTo(expected);
     }
 }
