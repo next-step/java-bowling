@@ -17,13 +17,8 @@ public class BowlingGame {
         this.scoreSheets = new ScoreSheets(players);
     }
 
-    public void start() {
-        start(game -> {
-        });
-    }
-
-    public void start(Consumer<BowlingGame> actionBeforeStart) {
-        actionBeforeStart.accept(this);
+    public void start(Consumer<BowlingGame> action) {
+        action.accept(this);
     }
 
     public List<ScoreSheetReader> getReaders() {

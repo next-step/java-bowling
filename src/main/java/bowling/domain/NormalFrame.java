@@ -3,14 +3,15 @@ package bowling.domain;
 public class NormalFrame extends BaseFrame {
 
     NormalFrame(int frameNo) {
-        super(frameNo, new NormalFramePinMarks());
+        super(frameNo, new NormalPinMarker());
     }
 
     @Override
     public Status getStatus() {
-        if (pinMarks.isStrike()) return Status.Strike;
-        if (pinMarks.getCountOfAllFallDownPins() == PinMark.MAX_PINS) return Status.Spare;
-        if (pinMarks.getCountOfAllFallDownPins() == 0) return Status.Gutter;
+        if (pinMarker.isStrike()) return Status.Strike;
+        if (pinMarker.getCountOfMarks() == 1 ) return Status.SecondBowl;
+        if (pinMarker.isSpare()) return Status.Spare;
+        if (pinMarker.getCountOfAllFallDownPins() == 0) return Status.Gutter;
         return Status.Miss;
     }
 
@@ -35,3 +36,5 @@ public class NormalFrame extends BaseFrame {
     }
 
 }
+
+

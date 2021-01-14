@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class FinalFramePinMarks implements PinMarks {
+public class FinalPinMarker implements PinMarker {
 
     private static final int MIN_MARKS = 2;
     private static final int MAX_MARKS = 3;
-    private List<PinMark> marks = new ArrayList<>();
+    private List<PinMark> marks = new ArrayList<>(MAX_MARKS);
     private boolean complete = false;
 
-    FinalFramePinMarks() {
+    FinalPinMarker() {
     }
 
     /**
@@ -31,7 +31,7 @@ public class FinalFramePinMarks implements PinMarks {
         }
 
         marks.add(pin);
-        completePinMarksIf( pinMarks -> isMiss() || isMaxMarked() );
+        completePinMarksIf(pinMarker -> isMiss() || isMaxMarked() );
     }
 
     private void shouldNotSumOfLastTwoPinMarksGreaterThanMaxPins(PinMark lastOne, PinMark lastTwo) {
@@ -49,7 +49,7 @@ public class FinalFramePinMarks implements PinMarks {
         return getCountOfMarks() == MAX_MARKS;
     }
 
-    private void completePinMarksIf(Predicate<PinMarks> condition) {
+    private void completePinMarksIf(Predicate<PinMarker> condition) {
         if( condition.test(this) ){
             complete = true;
         }

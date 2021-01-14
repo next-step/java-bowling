@@ -5,13 +5,13 @@ import java.util.stream.Collectors;
 
 abstract public class BaseFrame implements Frame {
 
-    protected int frameNo;
-    protected PinMarks pinMarks;
+    protected final int frameNo;
+    protected final PinMarker pinMarker;
     protected Frame next;
 
-    BaseFrame(int frameNo, PinMarks pinMarks){
+    BaseFrame(int frameNo, PinMarker pinMarker){
         this.frameNo = frameNo;
-        this.pinMarks = pinMarks;
+        this.pinMarker = pinMarker;
     }
 
     @Override
@@ -21,17 +21,17 @@ abstract public class BaseFrame implements Frame {
 
     @Override
     public void mark(int countOfFallDownPins) {
-        pinMarks.mark(PinMark.pin(countOfFallDownPins));
+        pinMarker.mark(PinMark.pin(countOfFallDownPins));
     }
 
     @Override
     public long getCountOfMarks() {
-        return pinMarks.getCountOfMarks();
+        return pinMarker.getCountOfMarks();
     }
 
     @Override
     public boolean isEnd() {
-        return pinMarks.isCompleted();
+        return pinMarker.isCompleted();
     }
 
     @Override
@@ -41,12 +41,12 @@ abstract public class BaseFrame implements Frame {
 
     @Override
     public FrameInfo toFrameInfo() {
-        return FrameInfo.of(getFrameNo(), pinMarks.toSigns(), getScore());
+        return FrameInfo.of(getFrameNo(), pinMarker.toSigns(), getScore());
     }
 
     @Override
     public List<Integer> getCountListOfFallDownPins() {
-        return pinMarks.toList()
+        return pinMarker.toList()
                 .stream()
                 .map(pinMark -> pinMark.getCountOfFallDownPins())
                 .collect(Collectors.toList());
@@ -54,6 +54,7 @@ abstract public class BaseFrame implements Frame {
 
     @Override
     public FrameScore getScore() {
-        return FrameScoreCalculatorFactory.create(isFinal(), getStatus()).calculate(this);
+        FrameScoreCalculator calculator = FrameScoreCalculatorFactory.create(isFinal(), getStatus());
+        return calculator.calculate(this);
     }
 }

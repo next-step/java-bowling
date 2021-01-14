@@ -1,35 +1,54 @@
 package bowling.domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public interface PinMarks {
+public class PinMarks {
 
-    default void shouldCountOfMarksLessThanMaxMarks() {
-        if (isCompleted()) throw new IllegalStateException("더 이상 PinMark 를 추가할 수 없습니다");
+    private final List<PinMark> marks;
+
+    public PinMarks(int maxMarks) {
+        this.marks = new ArrayList<>(maxMarks);
     }
 
-    default void mark(int countOfFallDown) {
-        mark(PinMark.pin(countOfFallDown));
+    public PinMarks(List<PinMark> marks) {
+        this.marks = marks;
     }
 
-    void mark(PinMark pin);
+    public int mark(PinMark pinMark) {
+        marks.add(pinMark);
+        return getCountOfMarked();
+    }
 
-    long getCountOfMarks();
+    public int getCountOfMarked(){
+        return marks.stream()
+                .map(PinMark::getCountOfFallDownPins)
+                .reduce(Integer::sum)
+                .orElse(0);
+    }
 
-    boolean isStrike();
+    public boolean isSumGreaterThanMaxPins(PinMark pinMark) {
+        int current = marks.stream()
+                .map(PinMark::getCountOfFallDownPins)
+                .reduce(Integer::sum)
+                .orElse(0);
+        return current + pinMark.getCountOfFallDownPins() > PinMark.MAX_PINS;
+    }
 
-    boolean isSpare();
+    public List<PinMarkSign> toSigns() {
+        return marks.stream()
+                .map(mark -> PinMarkSign.number(mark.getCountOfFallDownPins()))
+                .collect(Collectors.toList());
+    }
 
-    int getCountOfAllFallDownPins();
+    @Deprecated
+    public PinMark get(int i) {
+        return marks.get(i);
+    }
 
-    /**
-     * pin marking 완료여부
-     *
-     * @return
-     */
-    boolean isCompleted();
-
-    List<PinMark> toList();
-
-    List<PinMarkSign> toSigns();
+    public List<PinMark> getAll() {
+        return Collections.unmodifiableList(marks);
+    }
 }

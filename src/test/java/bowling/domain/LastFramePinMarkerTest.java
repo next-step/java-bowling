@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class FinalFramePinMarksTest {
+class FinalPinMarkerTest {
 
-    FinalFramePinMarks pinMarks;
+    FinalPinMarker pinMarks;
 
     @BeforeEach
     void setUp(){
-        pinMarks = new FinalFramePinMarks();
+        pinMarks = new FinalPinMarker();
     }
 
     @DisplayName("2번의 투구로 마크된 핀수가 10개 미만이면 보너스 마크를 할 수 없다")

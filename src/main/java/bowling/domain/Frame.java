@@ -5,7 +5,7 @@ import java.util.List;
 public interface Frame {
 
     enum Status {
-        Strike, Spare, Miss, Gutter;
+        Strike, Spare, Miss, Gutter, SecondBowl;
     }
 
     int getFrameNo();
