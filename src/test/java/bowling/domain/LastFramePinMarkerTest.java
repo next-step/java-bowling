@@ -96,7 +96,7 @@ class FinalPinMarkerTest {
     void numberSign(){
         pinMarks.mark(8);
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.number(8));
+                .containsExactly(PinMarkSymbol.from(8));
     }
 
     @DisplayName("1번,2번 핀마크가 8, 1이면 8, 1 로 표기된다")
@@ -105,7 +105,7 @@ class FinalPinMarkerTest {
         pinMarks.mark(8);
         pinMarks.mark(1);
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.number(8), PinMarkSign.number(1));
+                .containsExactly(PinMarkSymbol.from(8), PinMarkSymbol.from(1));
     }
 
     @DisplayName("1번 핀마크가 10이면 Strike(X) 로 표기된다")
@@ -113,7 +113,7 @@ class FinalPinMarkerTest {
     void strikeSign1(){
         pinMarks.mark(10);
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.Strike);
+                .containsExactly(PinMarkSymbol.Strike);
     }
 
     @DisplayName("1번,2번 핀마크가 10이면 Strike,Strike 로 표기된다")
@@ -123,7 +123,7 @@ class FinalPinMarkerTest {
         pinMarks.mark(10);
 
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.Strike, PinMarkSign.Strike);
+                .containsExactly(PinMarkSymbol.Strike, PinMarkSymbol.Strike);
     }
 
     @DisplayName("1번,2번,3번 핀마크가 10이면 Strike,Strike,Strike 로 표기된다")
@@ -134,7 +134,7 @@ class FinalPinMarkerTest {
         pinMarks.mark(10);
 
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.Strike, PinMarkSign.Strike, PinMarkSign.Strike);
+                .containsExactly(PinMarkSymbol.Strike, PinMarkSymbol.Strike, PinMarkSymbol.Strike);
     }
 
 
@@ -145,7 +145,7 @@ class FinalPinMarkerTest {
         pinMarks.mark(1);
 
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.number(9), PinMarkSign.Spare);
+                .containsExactly(PinMarkSymbol.from(9), PinMarkSymbol.Spare);
     }
 
     @DisplayName("1번 핀마크가 10이고 2,3번 핀마크 합이 10이면 Strike, Number, Spare 로 표기된다")
@@ -156,7 +156,7 @@ class FinalPinMarkerTest {
         pinMarks.mark(1);
 
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.Strike, PinMarkSign.number(9), PinMarkSign.Spare);
+                .containsExactly(PinMarkSymbol.Strike, PinMarkSymbol.from(9), PinMarkSymbol.Spare);
     }
 
     @DisplayName("1번 핀마크가 0 이면 Gutter 로 표기된다")
@@ -165,7 +165,7 @@ class FinalPinMarkerTest {
         pinMarks.mark(0);
 
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.Gutter);
+                .containsExactly(PinMarkSymbol.Gutter);
     }
 
     @DisplayName("1,2번 핀마크가 모두 0 이면 모두 Gutter 로 표기된다")
@@ -175,7 +175,7 @@ class FinalPinMarkerTest {
         pinMarks.mark(0);
 
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.Gutter, PinMarkSign.Gutter);
+                .containsExactly(PinMarkSymbol.Gutter, PinMarkSymbol.Gutter);
     }
 
     @DisplayName("1번 핀마크가 10이 아니면 1,2번 핀마크 합이 10을 넘으면 안된다")

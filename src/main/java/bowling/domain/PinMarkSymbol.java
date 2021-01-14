@@ -2,27 +2,27 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public interface PinMarkSign {
+public interface PinMarkSymbol {
 
     String toString();
 
-    PinMarkSign Strike = SpecialPinMarkSign.Strike;
-    PinMarkSign Spare = SpecialPinMarkSign.Spare;
-    PinMarkSign Gutter = SpecialPinMarkSign.Gutter;
+    PinMarkSymbol Strike = SpecialPinMarkSymbol.Strike;
+    PinMarkSymbol Spare = SpecialPinMarkSymbol.Spare;
+    PinMarkSymbol Gutter = SpecialPinMarkSymbol.Gutter;
 
-    static PinMarkSign number(int pins) {
+    static PinMarkSymbol from(int pins) {
         if (pins < 0) throw new IllegalArgumentException("표시할 수 있는 기호가 없습니다");
 
         if (pins == 0) return Gutter;
         if (pins == PinMark.MAX_PINS) return Strike;
-        return new NumberPinMarkSign(pins);
+        return new NumberPinMarkSymbol(pins);
     }
 }
 
-class NumberPinMarkSign implements PinMarkSign {
+class NumberPinMarkSymbol implements PinMarkSymbol {
     private String sign;
 
-    NumberPinMarkSign(int sign) {
+    NumberPinMarkSymbol(int sign) {
         this.sign = String.valueOf(sign);
     }
 
@@ -35,7 +35,7 @@ class NumberPinMarkSign implements PinMarkSign {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NumberPinMarkSign that = (NumberPinMarkSign) o;
+        NumberPinMarkSymbol that = (NumberPinMarkSymbol) o;
         return Objects.equals(sign, that.sign);
     }
 
@@ -45,12 +45,12 @@ class NumberPinMarkSign implements PinMarkSign {
     }
 }
 
-enum SpecialPinMarkSign implements PinMarkSign {
+enum SpecialPinMarkSymbol implements PinMarkSymbol {
     Strike("X"), Spare("/"), Gutter("-");
 
     private String sign;
 
-    SpecialPinMarkSign(String sign) {
+    SpecialPinMarkSymbol(String sign) {
         this.sign = sign;
     }
 

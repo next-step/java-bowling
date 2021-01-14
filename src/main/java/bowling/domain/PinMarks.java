@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PinMarks {
 
@@ -37,9 +38,13 @@ public class PinMarks {
         return current + pinMark.getCountOfFallDownPins() > PinMark.MAX_PINS;
     }
 
-    public List<PinMarkSign> toSigns() {
+    public Stream<PinMark> stream(){
+        return marks.stream();
+    }
+
+    public List<PinMarkSymbol> toSymbols() {
         return marks.stream()
-                .map(mark -> PinMarkSign.number(mark.getCountOfFallDownPins()))
+                .map(mark -> PinMarkSymbol.from(mark.getCountOfFallDownPins()))
                 .collect(Collectors.toList());
     }
 

@@ -8,6 +8,7 @@ public class NormalPinMarker implements PinMarker {
     private static final int MAX_MARKS = 2;
 
     private final PinMarks marks;
+    private List<PinMarkSymbol> symbols;
     private PinMarkerState state;
 
     NormalPinMarker() {
@@ -23,6 +24,7 @@ public class NormalPinMarker implements PinMarker {
     @Override
     public void mark(PinMark pinMark) {
         state = state.mark(pinMark);
+
     }
 
     @Deprecated
@@ -73,15 +75,8 @@ public class NormalPinMarker implements PinMarker {
     }
 
     @Override
-    public List<PinMarkSign> toSigns() {
-        if (isStrike()) {
-            return Arrays.asList(PinMarkSign.Strike);
-        }
-        if (isSpare()) {
-            return Arrays.asList(PinMarkSign.number(marks.get(0).getCountOfFallDownPins()), PinMarkSign.Spare);
-        }
-
-        return marks.toSigns();
+    public List<PinMarkSymbol> toSigns() {
+        return state.toSymbols();
     }
 
     /**
@@ -118,18 +113,53 @@ public class NormalPinMarker implements PinMarker {
                 throw new IllegalArgumentException("SecondMark 에서 쓰러뜨린 총 pin 의 수는 " + PinMark.MAX_PINS + " 개를 넘을 수 없습니다");
             }
 
-            if(marks.mark(pinMark) == PinMark.MAX_PINS){
-                return new Spare();
+            int firstPins = marks.getCountOfMarked();
+            marks.mark(pinMark);
+            if(marks.getCountOfMarked() == PinMark.MAX_PINS){
+                return new Spare(firstPins);
             }
-            return new Miss();
+            return new Miss(marks);
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return marks.toSymbols();
         }
     }
 
-    static class Spare extends Completed { }
+    static class Spare extends Completed {
+        private final int firstPins;
 
-    static class Strike extends Completed { }
+        public Spare(int firstPins) {
+            this.firstPins = firstPins;
+        }
 
-    static class Miss extends Completed { }
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return Arrays.asList(PinMarkSymbol.from(firstPins), PinMarkSymbol.Spare);
+        }
+    }
+
+    static class Strike extends Completed {
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return Arrays.asList(PinMarkSymbol.Strike);
+        }
+    }
+
+    static class Miss extends Completed {
+
+        private final PinMarks marks;
+
+        public Miss(PinMarks marks) {
+            this.marks = marks;
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return marks.toSymbols();
+        }
+    }
 }
 
 

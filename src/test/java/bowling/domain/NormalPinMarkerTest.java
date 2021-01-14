@@ -57,7 +57,7 @@ class NormalPinMarkerTest {
     void strikeSign(){
         pinMarks.mark(10);
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.Strike);
+                .containsExactly(PinMarkSymbol.Strike);
     }
 
     @DisplayName("1,2번 핀마크 합이 10이면 Spare(/) 로 표기된다")
@@ -67,7 +67,7 @@ class NormalPinMarkerTest {
         pinMarks.mark(1);
 
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.number(9), PinMarkSign.Spare);
+                .containsExactly(PinMarkSymbol.from(9), PinMarkSymbol.Spare);
     }
 
     @DisplayName("1번 핀마크가 0 이면 Gutter 로 표기된다")
@@ -76,7 +76,7 @@ class NormalPinMarkerTest {
         pinMarks.mark(0);
 
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.Gutter);
+                .containsExactly(PinMarkSymbol.Gutter);
     }
 
     @DisplayName("1,2번 핀마크가 모두 0 이면 모두 Gutter 로 표기된다")
@@ -86,7 +86,7 @@ class NormalPinMarkerTest {
         pinMarks.mark(0);
 
         assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSign.Gutter, PinMarkSign.Gutter);
+                .containsExactly(PinMarkSymbol.Gutter, PinMarkSymbol.Gutter);
     }
 
 }

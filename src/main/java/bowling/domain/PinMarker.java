@@ -35,5 +35,5 @@ public interface PinMarker {
 
     List<PinMark> toList();
 
-    List<PinMarkSign> toSigns();
+    List<PinMarkSymbol> toSigns();
 }

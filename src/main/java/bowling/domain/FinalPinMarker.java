@@ -1,13 +1,12 @@
 package bowling.domain;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class FinalPinMarker implements PinMarker {
 
     private static final int MAX_MARKS = 3;
+
     private PinMarks marks;
     private PinMarkerState state;
 
@@ -88,47 +87,61 @@ public class FinalPinMarker implements PinMarker {
     }
 
     @Override
-    public List<PinMarkSign> toSigns() {
+    public List<PinMarkSymbol> toSigns() {
         if (isSpare() && getCountOfMarks() == 2) {
-            return Arrays.asList(PinMarkSign.number(marks.get(0).getCountOfFallDownPins()), PinMarkSign.Spare);
+            return Arrays.asList(PinMarkSymbol.from(marks.get(0).getCountOfFallDownPins()), PinMarkSymbol.Spare);
         }
         if (isSpare() && getCountOfMarks() == 3) {
-            return Arrays.asList(PinMarkSign.Strike, PinMarkSign.number(marks.get(1).getCountOfFallDownPins()), PinMarkSign.Spare);
+            return Arrays.asList(PinMarkSymbol.Strike, PinMarkSymbol.from(marks.get(1).getCountOfFallDownPins()), PinMarkSymbol.Spare);
         }
-        return marks.toSigns();
+        return marks.toSymbols();
     }
 
     /**
      * State 에 따라 mark() , isComplete() 를 구현
      */
-    private class Ready extends InProgress {
+    private class Ready extends BeforeStart {
+
         @Override
         public PinMarkerState mark(PinMark pinMark) {
             marks.mark(pinMark);
             if(pinMark.isStrike()){
-                return new Bonus();
+                return new Bonus(marks);
             }
-            return new SecondMark(this, pinMark);
+            return new SecondMark(marks, this, pinMark);
         }
     }
 
     private class Bonus extends InProgress {
+
+        private final PinMarks marks;
+
+        public Bonus(PinMarks marks) {
+            this.marks = marks;
+        }
+
         @Override
         public PinMarkerState mark(PinMark pinMark) {
             marks.mark(pinMark);
             if( pinMark.isStrike() ) {
-                return new LastBonus();
+                return new LastBonus(marks);
             }
-            return new SecondMark(this, pinMark);
+            return new SecondMark(marks, this, pinMark);
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return Arrays.asList(PinMarkSymbol.Strike);
         }
     }
 
     private class SecondMark extends InProgress {
-
+        private final PinMarks marks;
         private final PinMark firstPinMark;
         private final PinMarkerState prev;
 
-        public SecondMark(PinMarkerState prev, PinMark firstPinMark) {
+        public SecondMark(PinMarks marks, PinMarkerState prev, PinMark firstPinMark) {
+            this.marks = marks;
             this.prev = prev;
             this.firstPinMark = firstPinMark;
         }
@@ -143,18 +156,59 @@ public class FinalPinMarker implements PinMarker {
             marks.mark(pinMark);
 
             if( prev instanceof Ready && sum == PinMark.MAX_PINS ){
-                return new LastBonus();
+                return new LastBonus(marks);
             }
 
-            return new Completed();
+            return new Miss(marks);
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return marks.toSymbols();
+        }
+    }
+
+    private class Miss extends Completed {
+        public Miss(PinMarks marks) {
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return Arrays.asList();
         }
     }
 
     private class LastBonus extends InProgress {
+        private final PinMarks marks;
+
+        public LastBonus(PinMarks marks) {
+            this.marks = marks;
+        }
+
         @Override
         public PinMarkerState mark(PinMark pinMark) {
             marks.mark(pinMark);
-            return new Completed();
+            return new CompletedHasBonus(marks);
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return null;
         }
     }
+
+    private class CompletedHasBonus extends Completed {
+
+        private final PinMarks marks;
+
+        public CompletedHasBonus(PinMarks marks) {
+            this.marks = marks;
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return null;
+        }
+    }
+
 }

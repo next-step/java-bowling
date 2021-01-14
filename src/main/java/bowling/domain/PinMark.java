@@ -46,5 +46,9 @@ public class PinMark {
     public boolean isStrike() {
         return getCountOfFallDownPins() == PinMark.MAX_PINS;
     }
+
+    public PinMarkSymbol toSymbol() {
+        return PinMarkSymbol.from(countOfFallDownPins);
+    }
 }
 
