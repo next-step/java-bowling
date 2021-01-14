@@ -20,4 +20,9 @@ public class NormalFrame extends Frame {
     public boolean isEnd() {
         return status.isEnd();
     }
+
+    @Override
+    public String getDescriptionForm() {
+        return status.getDescription();
+    }
 }

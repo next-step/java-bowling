@@ -5,7 +5,11 @@ import bowling.bowlingexception.IllegalPinRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -88,5 +92,43 @@ class NormalFrameTest {
         assertThatThrownBy(
                 () -> normalFrame.record(5)
         ).isInstanceOf(IllegalPinRangeException.class);
+    }
+
+    private static Stream<Arguments> oneRecordScenario() {
+        return Stream.of(
+                Arguments.of(0, "-"),
+                Arguments.of(1, "1"),
+                Arguments.of(9, "9"),
+                Arguments.of(10, "X")
+        );
+    }
+
+    private static Stream<Arguments> twoRecordScenario() {
+        return Stream.of(
+                Arguments.of(0, 10, "- | /"),
+                Arguments.of(3, 7, "3 | /"),
+                Arguments.of(3, 6, "3 | 6"),
+                Arguments.of(0, 0, "- | -"),
+                Arguments.of(0, 4, "- | 4")
+        );
+    }
+
+    @MethodSource("oneRecordScenario")
+    @ParameterizedTest
+    void DescriptionOfFrame(int downedPin, String expected) {
+        NormalFrame frame = new NormalFrame();
+        frame.record(downedPin);
+
+        assertThat(frame.getDescriptionForm()).isEqualTo(expected);
+    }
+
+    @MethodSource("twoRecordScenario")
+    @ParameterizedTest
+    void DescriptionOfFrameTwoRecord(int firstPitch, int secondPitch, String expected) {
+        NormalFrame frame = new NormalFrame();
+        frame.record(firstPitch);
+        frame.record(secondPitch);
+
+        assertThat(frame.getDescriptionForm()).isEqualTo(expected);
     }
 }
