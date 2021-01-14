@@ -4,8 +4,12 @@ import bowling.bowlingexception.IllegalPinRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -53,39 +57,42 @@ public class DownedPinTest {
         assertThat(firstPitch.isSpare(secondPitch)).isTrue();
     }
 
-    @Test
-    @DisplayName("핀이 10일 때 X를 출력하도록 함")
-    void pinDescription() {
-        DownedPin pin = DownedPin.fromNumber(10);
-
-        assertThat(pin.getDescriptionForm()).isEqualTo("X");
+    private static Stream<Arguments> makeOnePinDescriptionForm() {
+        return Stream.of(
+                Arguments.of(0, "-"),
+                Arguments.of(1, "1"),
+                Arguments.of(9, "9"),
+                Arguments.of(10, "X")
+        );
     }
 
-    @Test
-    @DisplayName("거터 상태일 때의 - 출력")
-    void printGutterDescription() {
-        DownedPin pin = DownedPin.fromNumber(0);
-
-        assertThat(pin.getDescriptionForm()).isEqualTo("-");
+    private static Stream<Arguments> makeTwoPinDescriptionForm() {
+        return Stream.of(
+                Arguments.of(0, 10, "- | /"),
+                Arguments.of(3, 7, "3 | /"),
+                Arguments.of(3, 6, "3 | 6"),
+                Arguments.of(0, 0, "- | -"),
+                Arguments.of(0, 4, "- | 4")
+        );
     }
 
-    @Test
-    @DisplayName("스페어 조건을 만족시킬 때의 출력")
-    void spareDescription() {
-        DownedPin firstPitch = DownedPin.fromNumber(4);
-        DownedPin secondPitch = firstPitch.fromPreviousPitch(6);
+    @MethodSource("makeOnePinDescriptionForm")
+    @ParameterizedTest
+    @DisplayName("핀이 1개인 경우의 출력 테스트")
+    void onePinDescription(int pitch, String expected) {
+        DownedPin pin = DownedPin.fromNumber(pitch);
 
-        assertThat(firstPitch.getDescriptionForm(secondPitch))
-                .isEqualTo("4 | /");
+        assertThat(pin.getDescriptionForm()).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("첫 피치가 gutter일 상태의 출력")
-    void gutterDescription() {
-        DownedPin firstPitch = DownedPin.fromNumber(0);
-        DownedPin secondPitch = firstPitch.fromPreviousPitch(10);
+    @MethodSource("makeTwoPinDescriptionForm")
+    @ParameterizedTest
+    @DisplayName("핀이 2개인 경우의 출력 테스트")
+    void twoPinDescription(int firstPitch, int secondPitch, String expected) {
+        DownedPin first = DownedPin.fromNumber(firstPitch);
+        DownedPin second = first.fromPreviousPitch(secondPitch);
 
-        assertThat(firstPitch.getDescriptionForm(secondPitch))
-                .isEqualTo("- | /");
+        assertThat(first.getDescriptionForm(second))
+                .isEqualTo(expected);
     }
 }
