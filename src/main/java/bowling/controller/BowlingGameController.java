@@ -4,11 +4,14 @@ import bowling.domain.*;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
+import java.util.stream.IntStream;
+
 
 public class BowlingGameController {
 
     public static final int MAX_FRAME_COUNT = 10;
 
+    private static BowlingGames bowlingGames;
     public static void run() {
 
         int playerNumber = askPlayerNumber();
@@ -16,28 +19,36 @@ public class BowlingGameController {
 
         Players players = Players.from(playerNames);
 
-        BowlingGames bowlingGames = BowlingGames.from(players);
+        bowlingGames = BowlingGames.from(players);
 
         printEmptyFrames(bowlingGames);
 
+        IntStream.rangeClosed(1, MAX_FRAME_COUNT)
+                .forEach(BowlingGameController::playGame);
+    }
 
-        /*Frames frames = Frames.of();
+    private static void playGame(int frameIndex) {
+        bowlingGames.getBowlingGames().stream()
+                .forEach(bowlingGame -> playEachFrame(bowlingGame, frameIndex));
 
-        BowlingGame bowlingGame = BowlingGame.of(player, frames);
+    }
 
-        printEmptyFrames(bowlingGame.getPlayer(), bowlingGame.getFrames().MAX_FRAME_COUNT);
+    private static void playEachFrame(BowlingGame bowlingGame, int frameIndex) {
 
-        while (!bowlingGame.isEnd()) {
+        while (bowlingGame.countCompletedFrames() == frameIndex) {
 
-            int knockedDownPins = inputKnockedDownPins(frames.getLast().getIndex());
+            int knockedDownPins = inputKnockedDownPins(bowlingGame.getPlayer());
 
-            frames.execute(knockedDownPins);
+            bowlingGame.getFrames().execute(knockedDownPins);
 
-            printCurrentFrame(bowlingGame, bowlingGame.getFrames().MAX_FRAME_COUNT);
+            printCurrentFrames(bowlingGames, MAX_FRAME_COUNT);
 
-            frames.makeNextFrames();
+            bowlingGame.getFrames().makeNextFrames();
+        }
+    }
 
-        }*/
+    private static void printCurrentFrames(BowlingGames bowlingGames, int maxFrameCount) {
+        ResultView.printCurrentFrames(bowlingGames.getBowlingGames(), maxFrameCount);
     }
 
     private static void printEmptyFrames(BowlingGames bowlingGames) {
@@ -55,13 +66,11 @@ public class BowlingGameController {
         return InputView.inputPlayerNumber();
     }
 
-    private static int inputKnockedDownPins(int frameIndex) {
-        return InputView.inputKnockedDownPins(frameIndex);
+    private static int inputKnockedDownPins(Player player) {
+        return InputView.inputKnockedDownPins(player);
     }
 
-    private static void printCurrentFrame(BowlingGame bowlingGame, int maxFrameCount) {
-        ResultView.printCurrentFrame(bowlingGame, maxFrameCount);
-    }
+
 
 
 

@@ -52,4 +52,8 @@ public class BowlingGame {
     public int hashCode() {
         return Objects.hash(player, frames);
     }
+
+    public int countCompletedFrames() {
+        return frames.countCompletedFrames();
+    }
 }

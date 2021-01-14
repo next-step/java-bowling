@@ -31,6 +31,11 @@ public class Frames {
     }
 
     public void execute(int knockedDownPins) {
+
+        if (frames.isEmpty()) {
+            makeFirstFrame();
+        }
+
         Frame currentFrame = this.getLast();
         currentFrame.start(knockedDownPins);
 
@@ -90,10 +95,6 @@ public class Frames {
     }
 
     public Frame getLast(){
-        if (frames.isEmpty()) {
-            makeFirstFrame();
-        }
-
         return frames.stream()
                 .reduce((first, second) -> second)
                 .orElseThrow(NoSuchElementException::new);
@@ -118,6 +119,14 @@ public class Frames {
     @Override
     public int hashCode() {
         return Objects.hash(frames);
+    }
+
+    public int countCompletedFrames() {
+        if (frames.isEmpty() || getLast().isEnd()) {
+            return frames.size() + 1;
+        }
+
+        return frames.size();
     }
 }
 
