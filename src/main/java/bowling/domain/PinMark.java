@@ -18,8 +18,12 @@ public class PinMark {
         return countOfFallDownPins;
     }
 
-    public boolean isStrike(){
-        return countOfFallDownPins == MAX_PINS;
+    public int plus(PinMark pinMark){
+        return pinMark.plus(countOfFallDownPins);
+    }
+
+    public int plus(int pins){
+        return countOfFallDownPins + pins;
     }
 
     @Override
@@ -39,6 +43,8 @@ public class PinMark {
         return new PinMark(countOfFallDownPins);
     }
 
-
+    public boolean isStrike() {
+        return getCountOfFallDownPins() == PinMark.MAX_PINS;
+    }
 }
 

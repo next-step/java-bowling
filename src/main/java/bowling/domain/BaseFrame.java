@@ -24,6 +24,7 @@ abstract public class BaseFrame implements Frame {
         pinMarker.mark(PinMark.pin(countOfFallDownPins));
     }
 
+    @Deprecated
     @Override
     public long getCountOfMarks() {
         return pinMarker.getCountOfMarks();

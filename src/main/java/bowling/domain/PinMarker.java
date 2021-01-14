@@ -12,6 +12,10 @@ public interface PinMarker {
         mark(PinMark.pin(countOfFallDown));
     }
 
+    PinMarkerState getState();
+
+    boolean isStarted();
+
     void mark(PinMark pin);
 
     long getCountOfMarks();

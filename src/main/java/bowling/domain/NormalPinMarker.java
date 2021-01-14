@@ -11,8 +11,13 @@ public class NormalPinMarker implements PinMarker {
     private PinMarkerState state;
 
     NormalPinMarker() {
-        this.marks = new PinMarks(MAX_MARKS);
-        this.state = new Ready();
+        marks = new PinMarks(MAX_MARKS);
+        state = new Ready(marks);
+    }
+
+    @Override
+    public PinMarkerState getState() {
+        return state;
     }
 
     @Override
@@ -34,11 +39,13 @@ public class NormalPinMarker implements PinMarker {
         return 1;
     }
 
+    @Deprecated
     @Override
     public boolean isStrike() {
         return state instanceof Strike;
     }
 
+    @Deprecated
     @Override
     public boolean isSpare() {
         return state instanceof Spare;
@@ -52,6 +59,11 @@ public class NormalPinMarker implements PinMarker {
     @Override
     public boolean isCompleted() {
         return state.isCompleted();
+    }
+
+    @Override
+    public boolean isStarted() {
+        return state.isStarted();
     }
 
     @Deprecated
@@ -75,18 +87,31 @@ public class NormalPinMarker implements PinMarker {
     /**
      * State 에 따라 mark() , isComplete() 를 구현
      */
-    private class Ready extends InProgress {
+    static class Ready extends BeforeStart {
+        private final PinMarks marks;
+
+        public Ready(PinMarks marks) {
+            this.marks = marks;
+        }
+
         @Override
         public PinMarkerState mark(PinMark pinMark) {
             marks.mark(pinMark);
-            if(pinMark.isStrike()){
+            if(pinMark.getCountOfFallDownPins() == PinMark.MAX_PINS){
                 return new Strike();
             }
-            return new SecondMark();
+            return new SecondMark(marks);
         }
     }
 
-    private class SecondMark extends InProgress {
+    static class SecondMark extends InProgress {
+
+        private final PinMarks marks;
+
+        public SecondMark(PinMarks marks) {
+            this.marks = marks;
+        }
+
         @Override
         public PinMarkerState mark(PinMark pinMark) {
             if( marks.isSumGreaterThanMaxPins(pinMark) ){
@@ -100,11 +125,11 @@ public class NormalPinMarker implements PinMarker {
         }
     }
 
-    private class Spare extends Completed { }
+    static class Spare extends Completed { }
 
-    private class Strike extends Completed { }
+    static class Strike extends Completed { }
 
-    private class Miss extends Completed { }
+    static class Miss extends Completed { }
 }
 
 

@@ -8,6 +8,7 @@ public class NormalFrame extends BaseFrame {
 
     @Override
     public Status getStatus() {
+        if (!pinMarker.isStarted()) return Status.Ready;
         if (pinMarker.isStrike()) return Status.Strike;
         if (pinMarker.getCountOfMarks() == 1 ) return Status.SecondBowl;
         if (pinMarker.isSpare()) return Status.Spare;
