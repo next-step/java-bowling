@@ -52,4 +52,40 @@ public class DownedPinTest {
 
         assertThat(firstPitch.isSpare(secondPitch)).isTrue();
     }
+
+    @Test
+    @DisplayName("핀이 10일 때 X를 출력하도록 함")
+    void pinDescription() {
+        DownedPin pin = DownedPin.fromNumber(10);
+
+        assertThat(pin.getDescriptionForm()).isEqualTo("X");
+    }
+
+    @Test
+    @DisplayName("거터 상태일 때의 - 출력")
+    void printGutterDescription() {
+        DownedPin pin = DownedPin.fromNumber(0);
+
+        assertThat(pin.getDescriptionForm()).isEqualTo("-");
+    }
+
+    @Test
+    @DisplayName("스페어 조건을 만족시킬 때의 출력")
+    void spareDescription() {
+        DownedPin firstPitch = DownedPin.fromNumber(4);
+        DownedPin secondPitch = firstPitch.fromPreviousPitch(6);
+
+        assertThat(firstPitch.getDescriptionForm(secondPitch))
+                .isEqualTo("4 | /");
+    }
+
+    @Test
+    @DisplayName("첫 피치가 gutter일 상태의 출력")
+    void gutterDescription() {
+        DownedPin firstPitch = DownedPin.fromNumber(0);
+        DownedPin secondPitch = firstPitch.fromPreviousPitch(10);
+
+        assertThat(firstPitch.getDescriptionForm(secondPitch))
+                .isEqualTo("- | /");
+    }
 }

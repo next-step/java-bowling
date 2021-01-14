@@ -51,4 +51,28 @@ public class DownedPin {
     public boolean isSpare(DownedPin additionalPitch) {
         return pin + additionalPitch.pin == 10;
     }
+
+    public String getDescriptionForm() {
+        return convertPin(pin);
+    }
+
+    public String getDescriptionForm(DownedPin additionalPitch) {
+        if (isSpare(additionalPitch)) {
+            return convertPin(pin) + " | /";
+        }
+
+        return convertPin(pin) + " | " + convertPin(additionalPitch.pin);
+    }
+
+    private String convertPin(int number) {
+        if (number == 10) {
+            return "X";
+        }
+
+        if (number == 0) {
+            return "-";
+        }
+
+        return Integer.toString(number);
+    }
 }
