@@ -13,8 +13,10 @@ public class BowlingGameController {
         String[] playerNames = askPlayerNames(playerNumber);
 
         //String playerName = getPlayerName();
-/*
-        Player player = Player.from(playerName);
+
+        Player player = Player.from("Test");
+
+        Players players = Players.from(playerNames);
 
         Frames frames = Frames.of();
 
@@ -32,7 +34,7 @@ public class BowlingGameController {
 
             frames.makeNextFrames();
 
-        }*/
+        }
     }
 
     private static String[] askPlayerNames(int playerNumber) {
