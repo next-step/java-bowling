@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class Players {
 
-    List<Player> players;
+    private List<Player> players;
 
     private Players(String[] playerNames){
         this.players = Arrays.stream(playerNames)
