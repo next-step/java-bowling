@@ -7,18 +7,21 @@ import bowling.view.ResultView;
 
 public class BowlingGameController {
 
+    public static final int MAX_FRAME_COUNT = 10;
+
     public static void run() {
 
         int playerNumber = askPlayerNumber();
         String[] playerNames = askPlayerNames(playerNumber);
 
-        //String playerName = getPlayerName();
-
-        Player player = Player.from("Test");
-
         Players players = Players.from(playerNames);
 
-        Frames frames = Frames.of();
+        BowlingGames bowlingGames = BowlingGames.from(players);
+
+        printEmptyFrames(bowlingGames);
+
+
+        /*Frames frames = Frames.of();
 
         BowlingGame bowlingGame = BowlingGame.of(player, frames);
 
@@ -34,7 +37,14 @@ public class BowlingGameController {
 
             frames.makeNextFrames();
 
-        }
+        }*/
+    }
+
+    private static void printEmptyFrames(BowlingGames bowlingGames) {
+        ResultView.printInitFrames(bowlingGames.getBowlingGames(), MAX_FRAME_COUNT);
+    }
+    private static void printEmptyFrames(Player player, int maxFrameCount) {
+        ResultView.printEmptyFrames(player, maxFrameCount);
     }
 
     private static String[] askPlayerNames(int playerNumber) {
@@ -53,8 +63,6 @@ public class BowlingGameController {
         ResultView.printCurrentFrame(bowlingGame, maxFrameCount);
     }
 
-    private static void printEmptyFrames(Player player, int maxFrameCount) {
-        ResultView.printEmptyFrames(player, maxFrameCount);
-    }
+
 
 }

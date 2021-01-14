@@ -4,6 +4,7 @@ import bowling.domain.*;
 import bowling.domain.frame.Frame;
 
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -30,7 +31,8 @@ public class ResultView {
     }
 
     public static void printEmptyFrames(Player player, int maxFrameCount) {
-        printFramesHeader(maxFrameCount);
+
+
         printFramesEmptyBody(player, maxFrameCount);
         System.out.print(DELIMITER + center(SPACE) + DELIMITER);
         printNotCreatedFrames(0, maxFrameCount);
@@ -112,4 +114,9 @@ public class ResultView {
     }
 
 
+    public static void printInitFrames(List<BowlingGame> bowlingGames, int maxFrameCount) {
+        printFramesHeader(maxFrameCount);
+        bowlingGames.stream()
+                .forEach(bowlingGame -> printEmptyFrames(bowlingGame.getPlayer(), maxFrameCount));
+    }
 }
