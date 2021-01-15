@@ -1,7 +1,9 @@
 package bowling.domain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FinalPinMarker implements PinMarker {
 
@@ -30,20 +32,20 @@ public class FinalPinMarker implements PinMarker {
 
     @Override
     public long getCountOfMarks() {
-        if( state instanceof LastBonus)
+        if (state instanceof LastBonus)
             return 2;
-        if( state instanceof Bonus)
+        if (state instanceof Bonus)
             return 1;
-        if( state instanceof Ready)
+        if (state instanceof Ready)
             return 0;
-        if( state instanceof SecondMark)
+        if (state instanceof Second)
             return 1;
         return 3;
     }
 
-    public boolean checkPin(int pos, PinMark test){
-        if( getCountOfMarks() > 0
-        && getCountOfMarks() > pos ){
+    public boolean checkPin(int pos, PinMark test) {
+        if (getCountOfMarks() > 0
+                && getCountOfMarks() > pos) {
             return marks.get(pos).equals(test);
         }
         return false;
@@ -87,14 +89,8 @@ public class FinalPinMarker implements PinMarker {
     }
 
     @Override
-    public List<PinMarkSymbol> toSigns() {
-        if (isSpare() && getCountOfMarks() == 2) {
-            return Arrays.asList(PinMarkSymbol.from(marks.get(0).getCountOfFallDownPins()), PinMarkSymbol.Spare);
-        }
-        if (isSpare() && getCountOfMarks() == 3) {
-            return Arrays.asList(PinMarkSymbol.Strike, PinMarkSymbol.from(marks.get(1).getCountOfFallDownPins()), PinMarkSymbol.Spare);
-        }
-        return marks.toSymbols();
+    public List<PinMarkSymbol> toSymbols() {
+        return state.toSymbols();
     }
 
     /**
@@ -105,61 +101,22 @@ public class FinalPinMarker implements PinMarker {
         @Override
         public PinMarkerState mark(PinMark pinMark) {
             marks.mark(pinMark);
-            if(pinMark.isStrike()){
-                return new Bonus(marks);
+            if (pinMark.isStrike()) {
+                return new BonusOne();
             }
-            return new SecondMark(marks, this, pinMark);
+            return new Second(pinMark);
         }
     }
 
-    private class Bonus extends InProgress {
-
-        private final PinMarks marks;
-
-        public Bonus(PinMarks marks) {
-            this.marks = marks;
-        }
+    private class BonusOne extends InProgress {
 
         @Override
         public PinMarkerState mark(PinMark pinMark) {
             marks.mark(pinMark);
-            if( pinMark.isStrike() ) {
-                return new LastBonus(marks);
+            if (pinMark.isStrike()) {
+                return new BonusTwo();
             }
-            return new SecondMark(marks, this, pinMark);
-        }
-
-        @Override
-        public List<PinMarkSymbol> toSymbols() {
-            return Arrays.asList(PinMarkSymbol.Strike);
-        }
-    }
-
-    private class SecondMark extends InProgress {
-        private final PinMarks marks;
-        private final PinMark firstPinMark;
-        private final PinMarkerState prev;
-
-        public SecondMark(PinMarks marks, PinMarkerState prev, PinMark firstPinMark) {
-            this.marks = marks;
-            this.prev = prev;
-            this.firstPinMark = firstPinMark;
-        }
-
-        @Override
-        public PinMarkerState mark(PinMark pinMark) {
-            int sum = firstPinMark.plus(pinMark);
-            if ( sum > PinMark.MAX_PINS ){
-                throw new IllegalArgumentException("SecondMark 에서 쓰러뜨린 총 pin 의 수는 " + PinMark.MAX_PINS + " 개를 넘을 수 없습니다");
-            }
-
-            marks.mark(pinMark);
-
-            if( prev instanceof Ready && sum == PinMark.MAX_PINS ){
-                return new LastBonus(marks);
-            }
-
-            return new Miss(marks);
+            return new LastSecond(pinMark);
         }
 
         @Override
@@ -168,13 +125,101 @@ public class FinalPinMarker implements PinMarker {
         }
     }
 
-    private class Miss extends Completed {
-        public Miss(PinMarks marks) {
+    private class BonusTwo extends InProgress {
+
+        @Override
+        public PinMarkerState mark(PinMark pinMark) {
+            marks.mark(pinMark);
+            if (pinMark.isStrike()) {
+                return new Turkey();
+            }
+            return new Double();
         }
 
         @Override
         public List<PinMarkSymbol> toSymbols() {
-            return Arrays.asList();
+            return Arrays.asList(PinMarkSymbol.Strike, PinMarkSymbol.Strike);
+        }
+    }
+
+    private class Second extends InProgress {
+        private final PinMark firstPinMark;
+
+        public Second(PinMark firstPinMark) {
+            this.firstPinMark = firstPinMark;
+        }
+
+        @Override
+        public PinMarkerState mark(PinMark secondPinMark) {
+            int sum = firstPinMark.plus(secondPinMark);
+            if (sum > PinMark.MAX_PINS) {
+                throw new IllegalArgumentException("SecondMark 에서 쓰러뜨린 총 pin 의 수는 " + PinMark.MAX_PINS + " 개를 넘을 수 없습니다");
+            }
+
+            marks.mark(secondPinMark);
+            if (sum == PinMark.MAX_PINS) {
+                return new Bonus(marks, firstPinMark);
+            }
+            //
+            return new Miss();
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return marks.toSymbols();
+        }
+    }
+
+    private class Bonus extends InProgress {
+
+        private final PinMarks marks;
+        private final PinMark firstPinMark;
+
+        public Bonus(PinMarks marks, PinMark firstPinMark) {
+            this.marks = marks;
+            this.firstPinMark = firstPinMark;
+        }
+
+        @Override
+        public PinMarkerState mark(PinMark pinMark) {
+            marks.mark(pinMark);
+            if (pinMark.isStrike()) {
+                return new SpareStrike(marks, firstPinMark);
+            }
+            return new SpareMiss(marks,firstPinMark, pinMark);
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return Arrays.asList(firstPinMark.toSymbol(), PinMarkSymbol.Spare);
+        }
+    }
+
+    private class LastSecond extends InProgress {
+        private final PinMark firstPinMark;
+
+        public LastSecond(PinMark firstPinMark) {
+            this.firstPinMark = firstPinMark;
+        }
+
+        @Override
+        public PinMarkerState mark(PinMark secondPinMark) {
+            int sum = firstPinMark.plus(secondPinMark);
+            if (sum > PinMark.MAX_PINS) {
+                throw new IllegalArgumentException("SecondMark 에서 쓰러뜨린 총 pin 의 수는 " + PinMark.MAX_PINS + " 개를 넘을 수 없습니다");
+            }
+
+            marks.mark(secondPinMark);
+
+            if (sum == PinMark.MAX_PINS) {
+                return new StrikeSpare();
+            }
+            return new StrikeMiss();
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return null;
         }
     }
 
@@ -193,7 +238,10 @@ public class FinalPinMarker implements PinMarker {
 
         @Override
         public List<PinMarkSymbol> toSymbols() {
-            return null;
+            return marks.stream()
+                    .limit(1)
+                    .map(PinMark::toSymbol)
+                    .collect(Collectors.toList());
         }
     }
 
@@ -211,4 +259,80 @@ public class FinalPinMarker implements PinMarker {
         }
     }
 
+    private class Miss extends Completed {
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return marks.toSymbols();
+        }
+    }
+
+    private class SpareStrike extends Completed {
+
+        private final PinMarks marks;
+        private final PinMark firstPinMark;
+
+        public SpareStrike(PinMarks marks, PinMark firstPinMark) {
+            this.marks = marks;
+            this.firstPinMark = firstPinMark;
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return Arrays.asList(firstPinMark.toSymbol(), PinMarkSymbol.Spare, PinMarkSymbol.Strike);
+        }
+    }
+
+    private class SpareMiss extends Completed {
+
+        private final PinMarks marks;
+        private final PinMark firstPinMark;
+        private final PinMark lastPinMark;
+
+        public SpareMiss(PinMarks marks, PinMark firstPinMark, PinMark lastPinMark) {
+            this.marks = marks;
+            this.firstPinMark = firstPinMark;
+            this.lastPinMark = lastPinMark;
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return Arrays.asList(firstPinMark.toSymbol(), PinMarkSymbol.Spare, lastPinMark.toSymbol() );
+        }
+    }
+
+    private class Double extends Completed {
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return marks.toSymbols();
+        }
+    }
+
+    private class Turkey extends Completed {
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return marks.toSymbols();
+        }
+    }
+
+    private class StrikeSpare extends Completed {
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            List<PinMarkSymbol> symbols = new ArrayList<>();
+            symbols.addAll(marks.stream()
+                    .limit(2)
+                    .map(PinMark::toSymbol)
+                    .collect(Collectors.toList()));
+            symbols.add(PinMarkSymbol.Spare);
+            return symbols;
+        }
+    }
+
+    private class StrikeMiss extends Completed {
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return marks.toSymbols();
+        }
+    }
 }

@@ -61,5 +61,4 @@ abstract class Completed implements PinMarkerState {
     public boolean isCompleted() {
         return true;
     }
-
 }

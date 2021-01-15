@@ -95,7 +95,7 @@ class FinalPinMarkerTest {
     @Test
     void numberSign(){
         pinMarks.mark(8);
-        assertThat(pinMarks.toSigns())
+        assertThat(pinMarks.toSymbols())
                 .containsExactly(PinMarkSymbol.from(8));
     }
 
@@ -104,7 +104,7 @@ class FinalPinMarkerTest {
     void numberSign2(){
         pinMarks.mark(8);
         pinMarks.mark(1);
-        assertThat(pinMarks.toSigns())
+        assertThat(pinMarks.toSymbols())
                 .containsExactly(PinMarkSymbol.from(8), PinMarkSymbol.from(1));
     }
 
@@ -112,7 +112,7 @@ class FinalPinMarkerTest {
     @Test
     void strikeSign1(){
         pinMarks.mark(10);
-        assertThat(pinMarks.toSigns())
+        assertThat(pinMarks.toSymbols())
                 .containsExactly(PinMarkSymbol.Strike);
     }
 
@@ -122,19 +122,30 @@ class FinalPinMarkerTest {
         pinMarks.mark(10);
         pinMarks.mark(10);
 
-        assertThat(pinMarks.toSigns())
+        assertThat(pinMarks.toSymbols())
                 .containsExactly(PinMarkSymbol.Strike, PinMarkSymbol.Strike);
     }
 
-    @DisplayName("1번,2번,3번 핀마크가 10이면 Strike,Strike,Strike 로 표기된다")
+    @DisplayName("1,2,3번 핀마크가 10이면 Strike,Strike,Strike 로 표기된다")
     @Test
     void strikeSign3(){
         pinMarks.mark(10);
         pinMarks.mark(10);
         pinMarks.mark(10);
 
-        assertThat(pinMarks.toSigns())
+        assertThat(pinMarks.toSymbols())
                 .containsExactly(PinMarkSymbol.Strike, PinMarkSymbol.Strike, PinMarkSymbol.Strike);
+    }
+
+    @DisplayName("1번 핀마크가 10이고 2,3번 핀마크 합이 10이면 Strike, Spare 로 표기된다")
+    @Test
+    void strikeSign4(){
+        pinMarks.mark(10);
+        pinMarks.mark(9);
+        pinMarks.mark(1);
+
+        assertThat(pinMarks.toSymbols())
+                .containsExactly(PinMarkSymbol.Strike, PinMarkSymbol.from(9), PinMarkSymbol.Spare);
     }
 
 
@@ -144,19 +155,19 @@ class FinalPinMarkerTest {
         pinMarks.mark(9);
         pinMarks.mark(1);
 
-        assertThat(pinMarks.toSigns())
+        assertThat(pinMarks.toSymbols())
                 .containsExactly(PinMarkSymbol.from(9), PinMarkSymbol.Spare);
     }
 
-    @DisplayName("1번 핀마크가 10이고 2,3번 핀마크 합이 10이면 Strike, Number, Spare 로 표기된다")
+    @DisplayName("1번 핀마크가 10이고 2,3번 핀마크 합이 10이면 Strike, Spare 로 표기된다")
     @Test
     void spareSign2(){
-        pinMarks.mark(10);
         pinMarks.mark(9);
         pinMarks.mark(1);
+        pinMarks.mark(10);
 
-        assertThat(pinMarks.toSigns())
-                .containsExactly(PinMarkSymbol.Strike, PinMarkSymbol.from(9), PinMarkSymbol.Spare);
+        assertThat(pinMarks.toSymbols())
+                .containsExactly(PinMarkSymbol.from(9), PinMarkSymbol.Spare, PinMarkSymbol.Strike);
     }
 
     @DisplayName("1번 핀마크가 0 이면 Gutter 로 표기된다")
@@ -164,7 +175,7 @@ class FinalPinMarkerTest {
     void gutterSign(){
         pinMarks.mark(0);
 
-        assertThat(pinMarks.toSigns())
+        assertThat(pinMarks.toSymbols())
                 .containsExactly(PinMarkSymbol.Gutter);
     }
 
@@ -174,7 +185,7 @@ class FinalPinMarkerTest {
         pinMarks.mark(0);
         pinMarks.mark(0);
 
-        assertThat(pinMarks.toSigns())
+        assertThat(pinMarks.toSymbols())
                 .containsExactly(PinMarkSymbol.Gutter, PinMarkSymbol.Gutter);
     }
 

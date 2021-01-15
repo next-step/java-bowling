@@ -42,7 +42,7 @@ abstract public class BaseFrame implements Frame {
 
     @Override
     public FrameInfo toFrameInfo() {
-        return FrameInfo.of(getFrameNo(), pinMarker.toSigns(), getScore());
+        return FrameInfo.of(getFrameNo(), pinMarker.toSymbols(), getScore());
     }
 
     @Override

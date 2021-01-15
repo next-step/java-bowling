@@ -10,6 +10,9 @@ public interface PinMarkSymbol {
     PinMarkSymbol Spare = SpecialPinMarkSymbol.Spare;
     PinMarkSymbol Gutter = SpecialPinMarkSymbol.Gutter;
 
+    static PinMarkSymbol from(PinMark pinMark) {
+        return from(pinMark.getCountOfFallDownPins());
+    }
     static PinMarkSymbol from(int pins) {
         if (pins < 0) throw new IllegalArgumentException("표시할 수 있는 기호가 없습니다");
 

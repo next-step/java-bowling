@@ -8,7 +8,6 @@ public class NormalPinMarker implements PinMarker {
     private static final int MAX_MARKS = 2;
 
     private final PinMarks marks;
-    private List<PinMarkSymbol> symbols;
     private PinMarkerState state;
 
     NormalPinMarker() {
@@ -75,7 +74,7 @@ public class NormalPinMarker implements PinMarker {
     }
 
     @Override
-    public List<PinMarkSymbol> toSigns() {
+    public List<PinMarkSymbol> toSymbols() {
         return state.toSymbols();
     }
 

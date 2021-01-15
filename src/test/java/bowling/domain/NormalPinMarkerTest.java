@@ -56,7 +56,7 @@ class NormalPinMarkerTest {
     @Test
     void strikeSign(){
         pinMarks.mark(10);
-        assertThat(pinMarks.toSigns())
+        assertThat(pinMarks.toSymbols())
                 .containsExactly(PinMarkSymbol.Strike);
     }
 
@@ -66,7 +66,7 @@ class NormalPinMarkerTest {
         pinMarks.mark(9);
         pinMarks.mark(1);
 
-        assertThat(pinMarks.toSigns())
+        assertThat(pinMarks.toSymbols())
                 .containsExactly(PinMarkSymbol.from(9), PinMarkSymbol.Spare);
     }
 
@@ -75,7 +75,7 @@ class NormalPinMarkerTest {
     void gutterSign(){
         pinMarks.mark(0);
 
-        assertThat(pinMarks.toSigns())
+        assertThat(pinMarks.toSymbols())
                 .containsExactly(PinMarkSymbol.Gutter);
     }
 
@@ -85,7 +85,7 @@ class NormalPinMarkerTest {
         pinMarks.mark(0);
         pinMarks.mark(0);
 
-        assertThat(pinMarks.toSigns())
+        assertThat(pinMarks.toSymbols())
                 .containsExactly(PinMarkSymbol.Gutter, PinMarkSymbol.Gutter);
     }
 
