@@ -23,17 +23,8 @@ public class NormalFrame extends BaseFrame {
 
     @Override
     public Frame createNext() {
-        if (isNextFrameFinal()) {
-            next = Frame.createFinal(frameNo + 1);
-            return next;
-        }
-
-        next = Frame.createNormal(frameNo + 1);
+        next = FrameFactory.createNextFrame(frameNo);
         return next;
-    }
-
-    private boolean isNextFrameFinal() {
-        return frameNo == 9;
     }
 
 }

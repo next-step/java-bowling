@@ -24,7 +24,7 @@ public class DefaultScoreSheet implements ScoreSheet {
     @Override
     public Frame nextFrame() {
         if (frames.size() == 0) {
-            return addFrame(Frame.first());
+            return addFrame(FrameFactory.createFirstFrame());
         }
 
         if (isCurrentFrameNotEnd()) {
