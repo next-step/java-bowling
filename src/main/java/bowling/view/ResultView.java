@@ -4,13 +4,14 @@ import bowling.domain.*;
 import bowling.domain.frame.Frame;
 
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
 public class ResultView {
 
-
+    private static final int START_INDEX = 0;
     private static final int FRAME_START_INDEX = 1;
     private static final int WIDTH = 6;
     private static final String NAME_HEAD = "NAME";
@@ -30,10 +31,11 @@ public class ResultView {
     }
 
     public static void printEmptyFrames(Player player, int maxFrameCount) {
-        printFramesHeader(maxFrameCount);
+
+
         printFramesEmptyBody(player, maxFrameCount);
         System.out.print(DELIMITER + center(SPACE) + DELIMITER);
-        printNotCreatedFrames(0, maxFrameCount);
+        printNotCreatedFrames(START_INDEX, maxFrameCount);
     }
 
     private static void printFramesEmptyBody(Player player, int framesCount) {
@@ -48,11 +50,23 @@ public class ResultView {
     }
 
 
-    public static void printCurrentFrame(BowlingGame bowlingGame, int maxFrameCount) {
-        printFramesHeader(maxFrameCount);
+    public static void printCurrentFrame(boolean firstTurn, BowlingGame bowlingGame, int maxFrameCount) {
+        if(firstTurn){
+            printFramesHeader(maxFrameCount);
+        }
         printFramesBody(bowlingGame, maxFrameCount);
         printFramesScore(bowlingGame, maxFrameCount);
     }
+
+    public static void printCurrentFrames(List<BowlingGame> bowlingGames, int maxFrameCount) {
+        IntStream.range(START_INDEX, bowlingGames.size())
+                .forEach(index -> printCurrentFrame(isFirstTurn(index), bowlingGames.get(index), maxFrameCount));
+    }
+
+    private static boolean isFirstTurn(int index) {
+        return index == START_INDEX;
+    }
+
 
     private static void printFramesScore(BowlingGame bowlingGame, int maxFrameCount) {
         int currentFramesCount = bowlingGame.countFrames();
@@ -109,6 +123,13 @@ public class ResultView {
 
     public static String center(String s, int size) {
         return String.format("%-" + size  + "s", String.format("%" + (s.length() + (size - s.length()) / 2) + "s", s));
+    }
+
+
+    public static void printInitFrames(List<BowlingGame> bowlingGames, int maxFrameCount) {
+        printFramesHeader(maxFrameCount);
+        bowlingGames.stream()
+                .forEach(bowlingGame -> printEmptyFrames(bowlingGame.getPlayer(), maxFrameCount));
     }
 
 

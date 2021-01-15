@@ -31,6 +31,11 @@ public class Frames {
     }
 
     public void execute(int knockedDownPins) {
+
+        if (frames.isEmpty()) {
+            makeFirstFrame();
+        }
+
         Frame currentFrame = this.getLast();
         currentFrame.start(knockedDownPins);
 
@@ -90,10 +95,6 @@ public class Frames {
     }
 
     public Frame getLast(){
-        if (frames.isEmpty()) {
-            makeFirstFrame();
-        }
-
         return frames.stream()
                 .reduce((first, second) -> second)
                 .orElseThrow(NoSuchElementException::new);
@@ -107,5 +108,25 @@ public class Frames {
         return frames.get(index);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frames frames1 = (Frames) o;
+        return Objects.equals(frames, frames1.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames);
+    }
+
+    public int askRunningFrameIndex() {
+        if (frames.isEmpty() || getLast().isEnd()) {
+            return frames.size() + 1;
+        }
+
+        return frames.size();
+    }
 }
 
