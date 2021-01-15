@@ -27,6 +27,33 @@ public class NormalFrame extends BaseFrame {
         return next;
     }
 
+    @Override
+    public FrameScore getScore() {
+        try {
+            FrameScore score = FrameScoreCalculatorFactory.create(isFinal(), getStatus()).calculate(this);
+            if (score.hasRemainingAddition() && hasNext()) {
+                next.addScoreTo(score);
+            }
+            return FrameScores.immutable(score);
+        } catch ( IllegalStateException e ){
+            return FrameScore.unknown;
+        }
+    }
+
+    @Override
+    public FrameScore addScoreTo(FrameScore score) {
+        for( Integer pins : getCountListOfFallDownPins() ){
+            score.addScore(pins);
+        }
+
+        if( score.hasRemainingAddition() && hasNext() ){
+            next.addScoreTo(score);
+        }
+
+        return score;
+    }
+
+
 }
 
 

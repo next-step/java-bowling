@@ -73,6 +73,7 @@ public interface Frame {
      */
     FrameScore getScore();
 
+    FrameScore addScoreTo(FrameScore score);
 
     static Frame first() {
         return new NormalFrame(1);

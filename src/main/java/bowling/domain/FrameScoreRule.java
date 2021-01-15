@@ -2,6 +2,9 @@ package bowling.domain;
 
 public interface FrameScoreRule {
 
-    FrameScore apply(Frame frame);
+    int getAdditionCount();
 
+    default FrameScore createBaseScore(Frame frame){
+        return FrameScore.of( getAdditionCount(), frame.getCountListOfFallDownPins());
+    }
 }

@@ -63,10 +63,9 @@ class NormalFrameTest extends FrameTest {
     @DisplayName("1구만 던진 상태에서는 점수를 알 수 없다")
     @Test
     void unknownScore() {
-        Frame first = frame;
-        first.mark(9);
+        frame.mark(9);
 
-        assertThat(first.getScore()).isEqualTo(FrameScore.unknown);
+        assertThat(frame.getScore()).isEqualTo(FrameScore.unknown);
     }
 
     @DisplayName("프레임을 miss 하면 다음 프레임에 관계 없이 점수를 계산한다")
@@ -184,7 +183,7 @@ class NormalFrameTest extends FrameTest {
         assertThat(frame.getScore()).isEqualTo(FrameScore.of(19));
     }
 
-    @DisplayName("9프레임이 Strike 고 마지막 프레임에 보너스 투구까지 던져도 9,10 프레임 점수를 알 수 있다")
+    @DisplayName("9프레임이 Strike 고 마지막 프레임에 보너스 투구까지 던지면 9,10 프레임 점수를 알 수 있다")
     @Test
     void nineFrameScore2(){
         Frame frame = Frame.createNormal(9);

@@ -12,11 +12,12 @@ public enum FrameScoreCalculator {
         this.rule = rule;
     }
 
-    FrameScore calculate(Frame frame) {
+    FrameScore calculate(Frame frame){
         if( frame.isEnd() )
-            return rule.apply(frame);
-        return FrameScore.unknown;
+            return rule.createBaseScore(frame);
+        throw new IllegalStateException("frame 이 진행중이면 점수를 계산할 수 없다");
     }
+
 }
 
 

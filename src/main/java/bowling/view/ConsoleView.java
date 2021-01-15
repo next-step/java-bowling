@@ -60,7 +60,7 @@ public class ConsoleView {
                     IntStream.range(0, spanSize).forEach(idx -> scoreString.append(" "));
                     scoreString.append(" | ");
                 } else {
-                    currentTotalScore = prevTotalScore + frameInfo.getScore().getValue();
+                    currentTotalScore = prevTotalScore + frameInfo.getScore().getIntValue();
                     scoreString.append(String.format("%1$" + spanSize + "d", currentTotalScore))
                             .append(" | ");
                     prevTotalScore = currentTotalScore;

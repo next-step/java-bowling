@@ -1,52 +1,91 @@
 package bowling.domain;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public interface FrameScore {
-    int getValue();
 
-    FrameScore plus(FrameScore other);
+    FrameScore unknown = new UnknownScore();
 
-    static FrameScore unknown = new UnknownScore();
+    void addScore(int additionScore);
+
+    boolean hasRemainingAddition();
+
+    int getIntValue();
+
+    static FrameScore of(int additionCount, List<Integer> countListOfFallDownPins) {
+        return new MutableFrameScore(
+                AdditionCounter.of(additionCount),
+                countListOfFallDownPins.stream()
+                        .reduce(Integer::sum)
+                        .orElse(0));
+    }
 
     static FrameScore of(int score){
-        return new DefaultScore(score);
+        return new ImmutableScore(score);
     }
 
-    static FrameScore of(List<Integer> scores){
-        return new DefaultScore(scores.stream().reduce(Integer::sum).orElse(0));
-    }
+    class MutableFrameScore implements FrameScore {
 
-    static FrameScore of(Integer... scores){
-        return new DefaultScore(Arrays.stream(scores).reduce(Integer::sum).orElse(0));
-    }
-
-    class DefaultScore implements FrameScore {
-
+        private final AdditionCounter additionCounter;
         private int score;
 
-        private DefaultScore(int score) {
+        public MutableFrameScore(AdditionCounter additionCounter, int baseScore) {
+            this.additionCounter = additionCounter;
+            this.score = baseScore;
+        }
+
+        @Override
+        public void addScore(int additionScore) {
+            if (hasRemainingAddition()) {
+                score += additionScore;
+                additionCounter.count();
+            }
+        }
+
+        @Override
+        public boolean hasRemainingAddition() {
+            return !additionCounter.isDone();
+        }
+
+        @Override
+        public int getIntValue() {
+            if (hasRemainingAddition()) {
+                throw new IllegalStateException("프레임 점수를 계산할 수 없는 상태 입니다");
+            }
+            return score;
+        }
+
+    }
+
+    class ImmutableScore implements FrameScore {
+
+        private final int score;
+
+        public ImmutableScore(int score) {
             this.score = score;
         }
 
         @Override
-        public int getValue() {
-            return score;
+        public void addScore(int additionScore) {
+            throw new IllegalStateException("점수를 수정할 수 없습니다");
         }
 
         @Override
-        public FrameScore plus(FrameScore other) {
-            score = score + other.getValue();
-            return this;
+        public boolean hasRemainingAddition() {
+            return false;
+        }
+
+        @Override
+        public int getIntValue() {
+            return score;
         }
 
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            DefaultScore that = (DefaultScore) o;
+            ImmutableScore that = (ImmutableScore) o;
             return score == that.score;
         }
 
@@ -56,18 +95,12 @@ public interface FrameScore {
         }
     }
 
-    class UnknownScore implements FrameScore {
-
-        @Override
-        public int getValue() {
-            return -1;
+    class UnknownScore extends ImmutableScore {
+        public UnknownScore(){
+            this(0);
         }
-
-        @Override
-        public FrameScore plus(FrameScore other) {
-            return this;
+        public UnknownScore(int score) {
+            super(score);
         }
-
     }
 }
-

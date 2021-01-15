@@ -42,7 +42,7 @@ abstract public class BaseFrame implements Frame {
 
     @Override
     public FrameInfo toFrameInfo() {
-        return FrameInfo.of(getFrameNo(), pinMarker.toSymbols(), getScore());
+        return FrameInfo.of(getFrameNo(), pinMarker.toSymbols(), FrameScores.immutable(getScore()));
     }
 
     @Override
@@ -53,9 +53,4 @@ abstract public class BaseFrame implements Frame {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public FrameScore getScore() {
-        FrameScoreCalculator calculator = FrameScoreCalculatorFactory.create(isFinal(), getStatus());
-        return calculator.calculate(this);
-    }
 }

@@ -6,10 +6,6 @@ import java.util.stream.Collectors;
 
 public class FrameInfo {
 
-    static FrameInfo of(int frameNo, List<PinMarkSymbol> pinMarkSymbols, int score) {
-        return of(frameNo, pinMarkSymbols, FrameScore.of(score));
-    }
-
     static FrameInfo of(int frameNo, List<PinMarkSymbol> pinMarkSymbols, FrameScore score) {
         return new FrameInfo(
                 frameNo,

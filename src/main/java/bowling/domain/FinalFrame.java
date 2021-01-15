@@ -24,4 +24,24 @@ public class FinalFrame extends BaseFrame {
         return null;
     }
 
+    @Override
+    public FrameScore getScore() {
+        try {
+            return FrameScores.immutable(
+                    FrameScoreCalculatorFactory.create(isFinal(), getStatus())
+                            .calculate(this));
+        } catch ( IllegalStateException e ){
+            return FrameScore.unknown;
+        }
+    }
+
+    @Override
+    public FrameScore addScoreTo(FrameScore score) {
+        for( Integer pins : getCountListOfFallDownPins() ){
+            score.addScore(pins);
+        }
+        return score;
+    }
+
+
 }

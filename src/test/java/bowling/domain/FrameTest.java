@@ -17,13 +17,13 @@ abstract public class FrameTest {
         assertThat(frame.getStatus()).isEqualTo(Frame.Status.Strike);
     }
 
-    @DisplayName("2번의 투구로 10개 핀을 쓰러뜨리면 Spare 다")
-    @Test
-    void spare(){
-        frame.mark(9);
-        frame.mark(1);
-        assertThat(frame.getStatus()).isEqualTo(Frame.Status.Spare);
-    }
+//    @DisplayName("2번의 투구로 10개 핀을 쓰러뜨리면 Spare 다")
+//    @Test
+//    void spare(){
+//        frame.mark(9);
+//        frame.mark(1);
+//        assertThat(frame.getStatus()).isEqualTo(Frame.Status.Spare);
+//    }
 
     @DisplayName("2번의 투구로 10개 미만으로 핀을 쓰러뜨리면 Miss 다")
     @Test
