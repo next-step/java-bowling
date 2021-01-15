@@ -20,8 +20,10 @@ public interface PinMarker {
 
     long getCountOfMarks();
 
+    @Deprecated
     boolean isStrike();
 
+    @Deprecated
     boolean isSpare();
 
     int getCountOfAllFallDownPins();

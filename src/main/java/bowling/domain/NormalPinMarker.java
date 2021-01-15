@@ -10,7 +10,7 @@ public class NormalPinMarker implements PinMarker {
     private final PinMarks marks;
     private PinMarkerState state;
 
-    NormalPinMarker() {
+    public NormalPinMarker() {
         marks = new PinMarks(MAX_MARKS);
         state = new Ready(marks);
     }
@@ -40,13 +40,11 @@ public class NormalPinMarker implements PinMarker {
         return 1;
     }
 
-    @Deprecated
     @Override
     public boolean isStrike() {
         return state instanceof Strike;
     }
 
-    @Deprecated
     @Override
     public boolean isSpare() {
         return state instanceof Spare;

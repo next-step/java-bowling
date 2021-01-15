@@ -12,7 +12,7 @@ public class FinalPinMarker implements PinMarker {
     private PinMarks marks;
     private PinMarkerState state;
 
-    FinalPinMarker() {
+    public FinalPinMarker() {
         this.marks = new PinMarks(MAX_MARKS);
         this.state = new Ready();
     }

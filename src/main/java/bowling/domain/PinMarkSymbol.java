@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public interface PinMarkSymbol {
 
-    String toString();
+    String getSymbol();
 
     PinMarkSymbol Strike = SpecialPinMarkSymbol.Strike;
     PinMarkSymbol Spare = SpecialPinMarkSymbol.Spare;
@@ -13,6 +13,7 @@ public interface PinMarkSymbol {
     static PinMarkSymbol from(PinMark pinMark) {
         return from(pinMark.getCountOfFallDownPins());
     }
+
     static PinMarkSymbol from(int pins) {
         if (pins < 0) throw new IllegalArgumentException("표시할 수 있는 기호가 없습니다");
 
@@ -23,15 +24,10 @@ public interface PinMarkSymbol {
 }
 
 class NumberPinMarkSymbol implements PinMarkSymbol {
-    private String sign;
+    private String symbol;
 
-    NumberPinMarkSymbol(int sign) {
-        this.sign = String.valueOf(sign);
-    }
-
-    @Override
-    public String toString() {
-        return sign;
+    NumberPinMarkSymbol(int symbol) {
+        this.symbol = String.valueOf(symbol);
     }
 
     @Override
@@ -39,27 +35,42 @@ class NumberPinMarkSymbol implements PinMarkSymbol {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NumberPinMarkSymbol that = (NumberPinMarkSymbol) o;
-        return Objects.equals(sign, that.sign);
+        return Objects.equals(symbol, that.symbol);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sign);
+        return Objects.hash(symbol);
+    }
+
+    @Override
+    public String getSymbol() {
+        return symbol;
+    }
+
+    @Override
+    public String toString() {
+        return getSymbol();
     }
 }
 
 enum SpecialPinMarkSymbol implements PinMarkSymbol {
     Strike("X"), Spare("/"), Gutter("-");
 
-    private String sign;
+    private String symbol;
 
-    SpecialPinMarkSymbol(String sign) {
-        this.sign = sign;
+    SpecialPinMarkSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     @Override
     public String toString() {
-        return sign;
+        return getSymbol();
+    }
+
+    @Override
+    public String getSymbol() {
+        return symbol;
     }
 }
 
