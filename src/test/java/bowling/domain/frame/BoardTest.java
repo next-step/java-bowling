@@ -12,6 +12,28 @@ public class BoardTest {
     void printCurrentFrame() {
         Board board = new Board();
 
-        assertThat(board.getCurrentFrame()).isEqualTo(1);
+        assertThat(board.getCurrentFrameNumber()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("스트라이크 이후 2프레임으로 이동")
+    void secondFrameAfterStrike() {
+        Board board = new Board();
+
+        assertThat(board.getCurrentFrameNumber()).isEqualTo(1);
+        board.record(10);
+        assertThat(board.getCurrentFrameNumber()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("MISS 이후 2프레임으로 이동 ")
+    void secondFrameAfterMiss() {
+        Board board = new Board();
+
+        assertThat(board.getCurrentFrameNumber()).isEqualTo(1);
+        board.record(5);
+        assertThat(board.getCurrentFrameNumber()).isEqualTo(1);
+        board.record(5);
+        assertThat(board.getCurrentFrameNumber()).isEqualTo(2);
     }
 }
