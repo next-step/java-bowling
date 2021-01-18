@@ -42,4 +42,8 @@ public class Board {
 
         return frames.size();
     }
+
+    public boolean isEnd() {
+        return frames.size() == lastFrameNumber && getLatestFrame().isEnd();
+    }
 }
