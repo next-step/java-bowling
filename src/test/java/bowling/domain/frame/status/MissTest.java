@@ -19,7 +19,7 @@ public class MissTest {
     @Test
     @DisplayName("2회차 합이 10인 경우의 예외처리")
     void invalidCondition() {
-        DownedPin firstPitch = DownedPin.fromNumber(4);
+        DownedPin firstPitch = DownedPin.fromNumber(5);
         DownedPin secondPitch = firstPitch.fromPreviousPitch(5);
 
         assertThatThrownBy(
