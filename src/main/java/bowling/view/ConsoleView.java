@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.FrameInfo;
+import bowling.domain.FrameScore;
 import bowling.domain.ScoreSheetReader;
 
 import java.io.PrintWriter;
@@ -37,9 +38,14 @@ public class ConsoleView {
 
         readers.forEach(reader -> {
             writer.print(String.format("|%1$" + nameSpan + "s  | ", reader.readPlayName()));
+
+            StringBuilder scoreString = new StringBuilder();
+            int prevTotalScore = 0;
+            int currentTotalScore = 0;
+
             while (!reader.isEOF()) {
                 FrameInfo frameInfo = reader.readFrameInfo();
-                String marked = frameInfo.getPinMarkSigns()
+                String marked = frameInfo.getSymbols()
                         .stream()
                         .collect(Collectors.joining("|"));
                 int spanSize = 3;
@@ -48,9 +54,25 @@ public class ConsoleView {
                 }
                 writer.print(String.format("%1$" + spanSize + "s", marked));
                 writer.print(" | ");
+
+                // score
+                if( frameInfo.getScore() == FrameScore.unknown ) {
+                    IntStream.range(0, spanSize).forEach(idx -> scoreString.append(" "));
+                    scoreString.append(" | ");
+                } else {
+                    currentTotalScore = prevTotalScore + frameInfo.getScore().getIntValue();
+                    scoreString.append(String.format("%1$" + spanSize + "d", currentTotalScore))
+                            .append(" | ");
+                    prevTotalScore = currentTotalScore;
+                }
             }
             writer.println();
+            writer.print(String.format("|%1$" + nameSpan + "s  | %2$s", " ", scoreString.toString()));
+            writer.println();
+
         });
         writer.flush();
+
+
     }
 }

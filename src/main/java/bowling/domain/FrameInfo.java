@@ -6,26 +6,26 @@ import java.util.stream.Collectors;
 
 public class FrameInfo {
 
-    static FrameInfo of(int frameNo, List<PinMarkSign> pinMarkSigns, int score) {
+    static FrameInfo of(int frameNo, List<PinMarkSymbol> pinMarkSymbols, FrameScore score) {
         return new FrameInfo(
                 frameNo,
-                pinMarkSigns.stream()
-                        .map(PinMarkSign::toString)
+                pinMarkSymbols.stream()
+                        .map(PinMarkSymbol::toString)
                         .collect(Collectors.toList()),
                 score);
     }
 
     static FrameInfo blank(int frameNo) {
-        return new FrameInfo(frameNo, Arrays.asList(), 0);
+        return new FrameInfo(frameNo, Arrays.asList(), FrameScore.unknown);
     }
 
     private int frameNo;
-    private List<String> pinMarkSigns;
-    private int score;
+    private List<String> symbols;
+    private FrameScore score;
 
-    private FrameInfo(int frameNo, List<String> pinMarkSigns, int score) {
+    private FrameInfo(int frameNo, List<String> symbols, FrameScore score) {
         this.frameNo = frameNo;
-        this.pinMarkSigns = pinMarkSigns;
+        this.symbols = symbols;
         this.score = score;
     }
 
@@ -33,11 +33,11 @@ public class FrameInfo {
         return frameNo;
     }
 
-    public List<String> getPinMarkSigns() {
-        return pinMarkSigns;
+    public List<String> getSymbols() {
+        return symbols;
     }
 
-    public int getScore() {
+    public FrameScore getScore() {
         return score;
     }
 }

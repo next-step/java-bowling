@@ -1,35 +1,59 @@
 package bowling.domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public interface PinMarks {
+public class PinMarks {
 
-    default void shouldMarksLessThanMaxMarks() {
-        if (isAllMarked()) throw new IllegalStateException("더 이상 PinMark 를 추가할 수 없습니다");
+    private final List<PinMark> marks;
+
+    public PinMarks(int maxMarks) {
+        this.marks = new ArrayList<>(maxMarks);
     }
 
-    default void shouldMarkedPinSumLessThanOrEqualMaxPins(PinMark secondPinMark) {
-        if (toImmutableList().size() == 1
-                && getCountOfFallDownPins() + secondPinMark.getCountOfFallDownPins() > PinMark.MAX_PINS) {
-            throw new IllegalArgumentException("2번째 PinMark 와 첫번째 PinMark 가 쓰러뜨린 pin 수는 " + PinMark.MAX_PINS + " 개를 넘을 수 없습니다");
-        }
+    public PinMarks(List<PinMark> marks) {
+        this.marks = marks;
     }
 
-    default void mark(int countOfFallDown) {
-        mark(PinMark.pin(countOfFallDown));
+    public int mark(PinMark pinMark) {
+        marks.add(pinMark);
+        return getCountOfMarked();
     }
 
-    void mark(PinMark pin);
+    public int getCountOfMarked(){
+        return marks.stream()
+                .map(PinMark::getCountOfFallDownPins)
+                .reduce(Integer::sum)
+                .orElse(0);
+    }
 
-    boolean isStrike();
+    public boolean isSumGreaterThanMaxPins(PinMark pinMark) {
+        int current = marks.stream()
+                .map(PinMark::getCountOfFallDownPins)
+                .reduce(Integer::sum)
+                .orElse(0);
+        return current + pinMark.getCountOfFallDownPins() > PinMark.MAX_PINS;
+    }
 
-    boolean isSpare();
+    public Stream<PinMark> stream(){
+        return marks.stream();
+    }
 
-    int getCountOfFallDownPins();
+    public List<PinMarkSymbol> toSymbols() {
+        return marks.stream()
+                .map(mark -> PinMarkSymbol.from(mark.getCountOfFallDownPins()))
+                .collect(Collectors.toList());
+    }
 
-    boolean isAllMarked();
+    @Deprecated
+    public PinMark get(int i) {
+        return marks.get(i);
+    }
 
-    List<PinMark> toImmutableList();
-
-    List<PinMarkSign> toSigns();
+    public List<PinMark> getAll() {
+        return Collections.unmodifiableList(marks);
+    }
 }

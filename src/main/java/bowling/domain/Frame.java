@@ -2,21 +2,15 @@ package bowling.domain;
 
 public interface Frame {
 
-    enum Status {
-        Strike, Spare, Miss, Gutter;
-    }
-
     int getFrameNo();
 
     /**
      * 볼링공을 던져서 넘어뜨린 볼링핀 수를 기입한다.
      * 최대 10개의 핀을 쓰러뜨릴 수 있다
      *
-     * @param countOfFallDown
+     * @param countOfFallDownPins
      */
-    void mark(int countOfFallDown);
-
-    Status getStatus();
+    void mark(int countOfFallDownPins);
 
     /**
      * 현재 프레임 종료여부
@@ -30,23 +24,33 @@ public interface Frame {
     boolean isEnd();
 
     /**
-     * 다음 프레임을 생성한다
+     * 다음 프레임을 가져온다
      * <p>
      * 볼링은 총 10개 프레임을 가진다
      *
      * @return
      */
-    Frame nextFrame();
+    Frame createNext();
+
+    Frame next();
+
+    default boolean hasNext(){
+        return next() != null;
+    }
 
     FrameInfo toFrameInfo();
 
     /**
-     * 현재 프레임까지 스코어를 가져온다
+     * 현재 프레임의 스코어
+     *
+     * 스트라이크 - 다음공, 다다음공 으로 쓰러뜨린 핀수를 더한다
+     * 스페어 - 다음공 으로 쓰러뜨린 핀수를 더한다
      *
      * @return
      */
-    int getScore();
+    FrameScore getScore();
 
+    FrameScore addScoreTo(FrameScore score);
 
     static Frame first() {
         return new NormalFrame(1);

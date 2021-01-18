@@ -1,61 +1,43 @@
 package bowling.domain;
 
-public class NormalFrame implements Frame {
-
-    private final int frameNo;
-    private Frame next;
-    private PinMarks pinMarks;
+public class NormalFrame extends BaseFrame {
 
     NormalFrame(int frameNo) {
-        this.frameNo = frameNo;
-        this.pinMarks = new NormalFramePinMarks();
+        super(frameNo, new NormalPinMarker());
     }
 
     @Override
-    public int getFrameNo() {
-        return frameNo;
-    }
-
-    @Override
-    public void mark(int countOfFallDown) {
-        pinMarks.mark(countOfFallDown);
-    }
-
-    @Override
-    public Status getStatus() {
-        if (pinMarks.isStrike()) return Status.Strike;
-        if (pinMarks.getCountOfFallDownPins() == 0) return Status.Gutter;
-        if (pinMarks.getCountOfFallDownPins() == PinMark.MAX_PINS) return Status.Spare;
-        return Status.Miss;
-    }
-
-    @Override
-    public boolean isEnd() {
-        return pinMarks.isAllMarked();
-    }
-
-    @Override
-    public Frame nextFrame() {
-        if (isNextFrameFinal()) {
-            next = Frame.createFinal(frameNo + 1);
-            return next;
-        }
-
-        next = Frame.createNormal(frameNo + 1);
+    public Frame createNext() {
+        next = FrameFactory.createNextFrame(frameNo);
         return next;
     }
 
-    private boolean isNextFrameFinal() {
-        return frameNo == 9;
+    @Override
+    public FrameScore getScore() {
+        FrameScore score = NormalFrameScoreFactory.create(pinMarker.getCountOfAllFallDownPins(), pinMarker.getState());
+        if (score.hasRemainingAddition() && hasNext()) {
+            next.addScoreTo(score);
+        }
+
+        try {
+            return FrameScores.immutable(score);
+        } catch (IllegalStateException e) {
+            return FrameScore.unknown;
+        }
     }
 
     @Override
-    public int getScore() {
-        return 0;
+    public FrameScore addScoreTo(FrameScore score) {
+        pinMarker.markStream()
+                .forEach( mark -> score.addScore(mark.getCountOfFallDownPins()));
+
+        if (score.hasRemainingAddition() && hasNext()) {
+            next.addScoreTo(score);
+        }
+
+        return score;
     }
 
-    @Override
-    public FrameInfo toFrameInfo() {
-        return FrameInfo.of(frameNo, pinMarks.toSigns(), getScore());
-    }
 }
+
+

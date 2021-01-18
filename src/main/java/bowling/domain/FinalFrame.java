@@ -1,50 +1,32 @@
 package bowling.domain;
 
-public class FinalFrame implements Frame {
-
-    private final int frameNo;
-    private PinMarks pinMarks;
+public class FinalFrame extends BaseFrame {
 
     FinalFrame(int frameNo) {
-        this.frameNo = frameNo;
-        this.pinMarks = new FinalFramePinMarks();
+        super(frameNo, new FinalPinMarker());
     }
 
     @Override
-    public int getFrameNo() {
-        return frameNo;
-    }
-
-    @Override
-    public void mark(int countOfFallDown) {
-        pinMarks.mark(PinMark.pin(countOfFallDown));
-    }
-
-    @Override
-    public Status getStatus() {
-        if (pinMarks.isStrike()) return Status.Strike;
-        if (pinMarks.getCountOfFallDownPins() == PinMark.MAX_PINS) return Status.Spare;
-        if (pinMarks.getCountOfFallDownPins() == 0) return Status.Gutter;
-        return Status.Miss;
-    }
-
-    @Override
-    public boolean isEnd() {
-        return pinMarks.isAllMarked();
-    }
-
-    @Override
-    public Frame nextFrame() {
+    public Frame createNext() {
         return null;
     }
 
     @Override
-    public int getScore() {
-        return 0;
+    public FrameScore getScore() {
+        FrameScore score = FinalFrameScoreFactory.create(pinMarker.getCountOfAllFallDownPins(), pinMarker.getState());
+        try {
+            return FrameScores.immutable(score);
+        } catch ( IllegalStateException e ){
+            return FrameScore.unknown;
+        }
     }
 
     @Override
-    public FrameInfo toFrameInfo() {
-        return FrameInfo.of(getFrameNo(), pinMarks.toSigns(), getScore());
+    public FrameScore addScoreTo(FrameScore score) {
+        pinMarker.markStream()
+                .forEach( mark -> score.addScore(mark.getCountOfFallDownPins()));
+        return score;
     }
+
+
 }
