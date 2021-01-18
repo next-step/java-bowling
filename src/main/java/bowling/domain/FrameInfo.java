@@ -20,12 +20,12 @@ public class FrameInfo {
     }
 
     private int frameNo;
-    private List<String> pinMarkSigns;
+    private List<String> symbols;
     private FrameScore score;
 
-    private FrameInfo(int frameNo, List<String> pinMarkSigns, FrameScore score) {
+    private FrameInfo(int frameNo, List<String> symbols, FrameScore score) {
         this.frameNo = frameNo;
-        this.pinMarkSigns = pinMarkSigns;
+        this.symbols = symbols;
         this.score = score;
     }
 
@@ -33,8 +33,8 @@ public class FrameInfo {
         return frameNo;
     }
 
-    public List<String> getPinMarkSigns() {
-        return pinMarkSigns;
+    public List<String> getSymbols() {
+        return symbols;
     }
 
     public FrameScore getScore() {

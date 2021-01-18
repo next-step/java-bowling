@@ -45,7 +45,7 @@ public class ConsoleView {
 
             while (!reader.isEOF()) {
                 FrameInfo frameInfo = reader.readFrameInfo();
-                String marked = frameInfo.getPinMarkSigns()
+                String marked = frameInfo.getSymbols()
                         .stream()
                         .collect(Collectors.joining("|"));
                 int spanSize = 3;

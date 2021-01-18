@@ -71,7 +71,7 @@ public class FinalPinMarker implements PinMarker {
         }
     }
 
-    private class BonusOne extends InProgress {
+    class BonusOne extends InProgress {
 
         @Override
         public PinMarkerState mark(PinMark pinMark) {
@@ -88,7 +88,7 @@ public class FinalPinMarker implements PinMarker {
         }
     }
 
-    private class BonusTwo extends InProgress {
+    class BonusTwo extends InProgress {
 
         @Override
         public PinMarkerState mark(PinMark pinMark) {
@@ -105,7 +105,7 @@ public class FinalPinMarker implements PinMarker {
         }
     }
 
-    private class Second extends InProgress {
+    class Second extends InProgress {
         private final PinMark firstPinMark;
 
         public Second(PinMark firstPinMark) {
@@ -133,7 +133,7 @@ public class FinalPinMarker implements PinMarker {
         }
     }
 
-    private class Bonus extends InProgress {
+    class Bonus extends InProgress {
         private final PinMark firstPinMark;
 
         public Bonus( PinMark firstPinMark) {
@@ -144,7 +144,7 @@ public class FinalPinMarker implements PinMarker {
         public PinMarkerState mark(PinMark pinMark) {
             marks.mark(pinMark);
             if (pinMark.isStrike()) {
-                return new SpareStrike(marks, firstPinMark);
+                return new SpareStrike(firstPinMark);
             }
             return new SpareMiss(marks,firstPinMark, pinMark);
         }
@@ -155,7 +155,7 @@ public class FinalPinMarker implements PinMarker {
         }
     }
 
-    private class LastSecond extends InProgress {
+    class LastSecond extends InProgress {
         private final PinMark firstPinMark;
 
         public LastSecond(PinMark firstPinMark) {
@@ -166,7 +166,7 @@ public class FinalPinMarker implements PinMarker {
         public PinMarkerState mark(PinMark secondPinMark) {
             int sum = firstPinMark.plus(secondPinMark);
             if (sum > PinMark.MAX_PINS) {
-                throw new IllegalArgumentException("SecondMark 에서 쓰러뜨린 총 pin 의 수는 " + PinMark.MAX_PINS + " 개를 넘을 수 없습니다");
+                throw new IllegalArgumentException("Second 에서 쓰러뜨린 총 pin 의 수는 " + PinMark.MAX_PINS + " 개를 넘을 수 없습니다");
             }
 
             marks.mark(secondPinMark);
@@ -183,20 +183,18 @@ public class FinalPinMarker implements PinMarker {
         }
     }
 
-    private class Miss extends Completed {
+    class Miss extends Completed {
         @Override
         public List<PinMarkSymbol> toSymbols() {
             return marks.toSymbols();
         }
     }
 
-    private class SpareStrike extends Completed {
+    class SpareStrike extends Completed {
 
-        private final PinMarks marks;
         private final PinMark firstPinMark;
 
-        public SpareStrike(PinMarks marks, PinMark firstPinMark) {
-            this.marks = marks;
+        public SpareStrike( PinMark firstPinMark) {
             this.firstPinMark = firstPinMark;
         }
 
@@ -206,7 +204,7 @@ public class FinalPinMarker implements PinMarker {
         }
     }
 
-    private class SpareMiss extends Completed {
+    class SpareMiss extends Completed {
 
         private final PinMarks marks;
         private final PinMark firstPinMark;
@@ -224,14 +222,14 @@ public class FinalPinMarker implements PinMarker {
         }
     }
 
-    private class Double extends Completed {
+    class Double extends Completed {
         @Override
         public List<PinMarkSymbol> toSymbols() {
             return marks.toSymbols();
         }
     }
 
-    private class Turkey extends Completed {
+    class Turkey extends Completed {
 
         @Override
         public List<PinMarkSymbol> toSymbols() {
@@ -239,7 +237,7 @@ public class FinalPinMarker implements PinMarker {
         }
     }
 
-    private class StrikeSpare extends Completed {
+    class StrikeSpare extends Completed {
 
         @Override
         public List<PinMarkSymbol> toSymbols() {
@@ -253,8 +251,7 @@ public class FinalPinMarker implements PinMarker {
         }
     }
 
-    private class StrikeMiss extends Completed {
-
+    class StrikeMiss extends Completed {
         @Override
         public List<PinMarkSymbol> toSymbols() {
             return marks.toSymbols();

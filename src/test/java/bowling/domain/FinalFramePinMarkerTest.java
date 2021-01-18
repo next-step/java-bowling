@@ -9,201 +9,215 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FinalPinMarkerTest {
 
-    FinalPinMarker pinMarks;
+    FinalPinMarker pinMarker;
 
     @BeforeEach
     void setUp(){
-        pinMarks = new FinalPinMarker();
+        pinMarker = new FinalPinMarker();
     }
 
     @DisplayName("2번의 투구로 마크된 핀수가 10개 미만이면 보너스 마크를 할 수 없다")
     @Test
     void extraMark1(){
-        pinMarks.mark(PinMark.pin(8));
-        pinMarks.mark(PinMark.pin(1));
+        pinMarker.mark(8);
+        pinMarker.mark(1);
 
-        assertThatThrownBy( () -> pinMarks.mark(PinMark.pin(9)))
+        assertThatThrownBy( () -> pinMarker.mark(9))
                 .isInstanceOf(IllegalStateException.class);
-    }
-
-    @DisplayName("1번째,2번째 투구모두 10개를 mark 하면 보너스 마크를 할 수 있다")
-    @Test
-    void extraMark2(){
-        pinMarks.mark(PinMark.pin(10));
-        pinMarks.mark(PinMark.pin(10));
-        pinMarks.mark(PinMark.pin(10));
-    }
-
-    @DisplayName("1번째,2번째 투구의 합이 10개를 mark 하면 보너스 마크를 할 수 있다")
-    @Test
-    void extraMark3(){
-        pinMarks.mark(PinMark.pin(5));
-        pinMarks.mark(PinMark.pin(5));
-        pinMarks.mark(PinMark.pin(10));
     }
 
     @DisplayName("보너스 마크를 포함해서 최대 3번까지 마크 할 수 있다. 그 이상 마크하면 exception 을 던진다")
     @Test
     void tooManyMarks(){
-        pinMarks.mark(PinMark.pin(8));
-        pinMarks.mark(PinMark.pin(2));
-        pinMarks.mark(PinMark.pin(1));
+        pinMarker.mark(8);
+        pinMarker.mark(2);
+        pinMarker.mark(1);
 
-        assertThatThrownBy( () -> pinMarks.mark(PinMark.pin(9)))
+        assertThatThrownBy( () -> pinMarker.mark(PinMark.pin(9)))
                 .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("1번째,2번째 투구의 합이 10개를 mark 하지 못하면 complete 된다")
     @Test
     void allMarked1(){
-        pinMarks.mark(PinMark.pin(8));
-        pinMarks.mark(PinMark.pin(1));
+        pinMarker.mark(PinMark.pin(8));
+        pinMarker.mark(PinMark.pin(1));
 
-        assertThat(pinMarks.isCompleted()).isTrue();
+        assertThat(pinMarker.isCompleted()).isTrue();
     }
 
     @DisplayName("1번째,2번째 투구의 합이 10개를 mark 하고 보너스까지 마크하면 complete 된다")
     @Test
     void allMarked2(){
-        pinMarks.mark(PinMark.pin(8));
-        pinMarks.mark(PinMark.pin(2));
-        pinMarks.mark(PinMark.pin(5));
+        pinMarker.mark(PinMark.pin(8));
+        pinMarker.mark(PinMark.pin(2));
+        pinMarker.mark(PinMark.pin(5));
 
-        assertThat(pinMarks.isCompleted()).isTrue();
+        assertThat(pinMarker.isCompleted()).isTrue();
     }
 
 
     @DisplayName("1번째,2번째 투구의 합이 10개를 mark 하면 보너스 마크가 남기때문에 complete 되지 않는다")
     @Test
     void notAllMarked(){
-        pinMarks.mark(PinMark.pin(8));
-        pinMarks.mark(PinMark.pin(2));
+        pinMarker.mark(PinMark.pin(8));
+        pinMarker.mark(PinMark.pin(2));
 
-        assertThat(pinMarks.isCompleted()).isFalse();
+        assertThat(pinMarker.isCompleted()).isFalse();
     }
 
     @DisplayName("1번째,2번째 모두 10개씩 mark 하면 보너스 마크가 남기때문에 complete 되지 않는다")
     @Test
     void notAllMarked2(){
-        pinMarks.mark(PinMark.pin(10));
-        pinMarks.mark(PinMark.pin(10));
+        pinMarker.mark(PinMark.pin(10));
+        pinMarker.mark(PinMark.pin(10));
 
-        assertThat(pinMarks.isCompleted()).isFalse();
+        assertThat(pinMarker.isCompleted()).isFalse();
     }
 
     @DisplayName("1번 핀마크가 8이면 8 로 표기된다")
     @Test
-    void numberSign(){
-        pinMarks.mark(8);
-        assertThat(pinMarks.toSymbols())
+    void second(){
+        pinMarker.mark(8);
+
+        assertThat(pinMarker.getState()).isInstanceOf(FinalPinMarker.Second.class);
+        assertThat(pinMarker.toSymbols())
                 .containsExactly(PinMarkSymbol.from(8));
     }
 
     @DisplayName("1번,2번 핀마크가 8, 1이면 8, 1 로 표기된다")
     @Test
-    void numberSign2(){
-        pinMarks.mark(8);
-        pinMarks.mark(1);
-        assertThat(pinMarks.toSymbols())
+    void miss(){
+        pinMarker.mark(8);
+        pinMarker.mark(1);
+        assertThat(pinMarker.toSymbols())
                 .containsExactly(PinMarkSymbol.from(8), PinMarkSymbol.from(1));
     }
 
     @DisplayName("1번 핀마크가 10이면 Strike(X) 로 표기된다")
     @Test
-    void strikeSign1(){
-        pinMarks.mark(10);
-        assertThat(pinMarks.toSymbols())
+    void bonusOne(){
+        pinMarker.mark(10);
+        assertThat(pinMarker.getState()).isInstanceOf(FinalPinMarker.BonusOne.class);
+        assertThat(pinMarker.toSymbols())
                 .containsExactly(PinMarkSymbol.Strike);
     }
 
     @DisplayName("1번,2번 핀마크가 10이면 Strike,Strike 로 표기된다")
     @Test
-    void strikeSign2(){
-        pinMarks.mark(10);
-        pinMarks.mark(10);
+    void doubleStrike(){
+        pinMarker.mark(10);
+        pinMarker.mark(10);
 
-        assertThat(pinMarks.toSymbols())
+        assertThat(pinMarker.getState()).isInstanceOf(FinalPinMarker.BonusTwo.class);
+        assertThat(pinMarker.toSymbols())
                 .containsExactly(PinMarkSymbol.Strike, PinMarkSymbol.Strike);
     }
 
     @DisplayName("1,2,3번 핀마크가 10이면 Strike,Strike,Strike 로 표기된다")
     @Test
-    void strikeSign3(){
-        pinMarks.mark(10);
-        pinMarks.mark(10);
-        pinMarks.mark(10);
+    void turkey(){
+        pinMarker.mark(10);
+        pinMarker.mark(10);
+        pinMarker.mark(10);
 
-        assertThat(pinMarks.toSymbols())
+        assertThat(pinMarker.getState()).isInstanceOf(FinalPinMarker.Turkey.class);
+        assertThat(pinMarker.toSymbols())
                 .containsExactly(PinMarkSymbol.Strike, PinMarkSymbol.Strike, PinMarkSymbol.Strike);
     }
 
     @DisplayName("1번 핀마크가 10이고 2,3번 핀마크 합이 10이면 Strike, Spare 로 표기된다")
     @Test
-    void strikeSign4(){
-        pinMarks.mark(10);
-        pinMarks.mark(9);
-        pinMarks.mark(1);
+    void strikeSpare(){
+        pinMarker.mark(10);
+        pinMarker.mark(9);
+        pinMarker.mark(1);
 
-        assertThat(pinMarks.toSymbols())
+        assertThat(pinMarker.toSymbols())
                 .containsExactly(PinMarkSymbol.Strike, PinMarkSymbol.from(9), PinMarkSymbol.Spare);
     }
 
+    @DisplayName("1번 핀마크가 10이고 2,3번 핀마크 합이 10 미만이면 Strike, Miss 로 표기된다")
+    @Test
+    void strikeMiss(){
+        pinMarker.mark(10);
+        pinMarker.mark(8);
+        pinMarker.mark(1);
+
+        assertThat(pinMarker.getState()).isInstanceOf(FinalPinMarker.StrikeMiss.class);
+        assertThat(pinMarker.toSymbols())
+                .containsExactly(PinMarkSymbol.Strike, PinMarkSymbol.from(8), PinMarkSymbol.from(1));
+    }
 
     @DisplayName("1,2번 핀마크 합이 10이면 Spare(/) 로 표기된다")
     @Test
-    void spareSign1(){
-        pinMarks.mark(9);
-        pinMarks.mark(1);
+    void spare(){
+        pinMarker.mark(9);
+        pinMarker.mark(1);
 
-        assertThat(pinMarks.toSymbols())
+        assertThat(pinMarker.getState()).isInstanceOf(FinalPinMarker.Bonus.class);
+        assertThat(pinMarker.toSymbols())
                 .containsExactly(PinMarkSymbol.from(9), PinMarkSymbol.Spare);
     }
 
-    @DisplayName("1번 핀마크가 10이고 2,3번 핀마크 합이 10이면 Strike, Spare 로 표기된다")
+    @DisplayName("1,2번 핀마크 합이 10이고 3번 Strike 면 Strike, Spare 로 표기된다")
     @Test
-    void spareSign2(){
-        pinMarks.mark(9);
-        pinMarks.mark(1);
-        pinMarks.mark(10);
+    void spareStrike(){
+        pinMarker.mark(9);
+        pinMarker.mark(1);
+        pinMarker.mark(10);
 
-        assertThat(pinMarks.toSymbols())
+        assertThat(pinMarker.getState()).isInstanceOf(FinalPinMarker.SpareStrike.class);
+        assertThat(pinMarker.toSymbols())
                 .containsExactly(PinMarkSymbol.from(9), PinMarkSymbol.Spare, PinMarkSymbol.Strike);
+    }
+
+    @DisplayName("1,2번 핀마크 합이 10이고 3번이 Miss 면 Strike, Miss 로 표기된다")
+    @Test
+    void spareMiss(){
+        pinMarker.mark(9);
+        pinMarker.mark(1);
+        pinMarker.mark(8);
+
+        assertThat(pinMarker.getState()).isInstanceOf(FinalPinMarker.SpareMiss.class);
+        assertThat(pinMarker.toSymbols())
+                .containsExactly(PinMarkSymbol.from(9), PinMarkSymbol.Spare, PinMarkSymbol.from(8));
     }
 
     @DisplayName("1번 핀마크가 0 이면 Gutter 로 표기된다")
     @Test
-    void gutterSign(){
-        pinMarks.mark(0);
+    void gutterSymbol(){
+        pinMarker.mark(0);
 
-        assertThat(pinMarks.toSymbols())
+        assertThat(pinMarker.toSymbols())
                 .containsExactly(PinMarkSymbol.Gutter);
     }
 
     @DisplayName("1,2번 핀마크가 모두 0 이면 모두 Gutter 로 표기된다")
     @Test
-    void gutterSign2(){
-        pinMarks.mark(0);
-        pinMarks.mark(0);
+    void gutterSymbol2(){
+        pinMarker.mark(0);
+        pinMarker.mark(0);
 
-        assertThat(pinMarks.toSymbols())
+        assertThat(pinMarker.toSymbols())
                 .containsExactly(PinMarkSymbol.Gutter, PinMarkSymbol.Gutter);
     }
 
     @DisplayName("1번 핀마크가 10이 아니면 1,2번 핀마크 합이 10을 넘으면 안된다")
     @Test
     void invalidMark1(){
-        pinMarks.mark(8);
-        assertThatThrownBy( () -> pinMarks.mark(3) )
+        pinMarker.mark(8);
+        assertThatThrownBy( () -> pinMarker.mark(3) )
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("1번 핀마크가 10이면 2,3번 핀마크 합이 10을 넘으면 안된다")
     @Test
     void invalidMark2(){
-        pinMarks.mark(10);
-        pinMarks.mark(8);
+        pinMarker.mark(10);
+        pinMarker.mark(8);
 
-        assertThatThrownBy( () -> pinMarks.mark(3) )
+        assertThatThrownBy( () -> pinMarker.mark(3) )
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -33,7 +33,10 @@ abstract public class BaseFrame implements Frame {
 
     @Override
     public FrameInfo toFrameInfo() {
-        return FrameInfo.of(getFrameNo(), pinMarker.toSymbols(), FrameScores.immutable(getScore()));
+        return FrameInfo.of(
+                getFrameNo(),
+                pinMarker.toSymbols(),
+                getScore());
     }
 
 }
