@@ -26,7 +26,7 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("MISS 이후 2프레임으로 이동 ")
+    @DisplayName("MISS 이후 2프레임으로 이동")
     void secondFrameAfterMiss() {
         Board board = new Board();
 
@@ -35,5 +35,30 @@ public class BoardTest {
         assertThat(board.getCurrentFrameNumber()).isEqualTo(1);
         board.record(5);
         assertThat(board.getCurrentFrameNumber()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("게임 종료조건 테스트")
+    void isEnd() {
+        Board board = new Board();
+        int[] scenario = {
+                10,
+                9, 1,
+                8, 2,
+                10,
+                10,
+                4, 5,
+                10,
+                10,
+                10,
+                10, 10, 10
+        };
+
+        for (int downedPin : scenario) {
+            assertThat(board.isEnd()).isFalse();
+            board.record(downedPin);
+        }
+
+        assertThat(board.isEnd()).isTrue();
     }
 }
