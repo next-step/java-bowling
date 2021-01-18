@@ -7,29 +7,15 @@ public class FinalFrame extends BaseFrame {
     }
 
     @Override
-    public Status getStatus() {
-        if (pinMarker.isStrike()) return Status.Strike;
-        if (pinMarker.getCountOfMarks() == 2 && pinMarker.getCountOfAllFallDownPins() == PinMark.MAX_PINS) return Status.Spare;
-        if (pinMarker.getCountOfAllFallDownPins() == 0) return Status.Gutter;
-        return Status.Miss;
-    }
-
-    @Override
-    public boolean isFinal() {
-        return true;
-    }
-
-    @Override
     public Frame createNext() {
         return null;
     }
 
     @Override
     public FrameScore getScore() {
+        FrameScore score = FinalFrameScoreFactory.create(pinMarker.getCountOfAllFallDownPins(), pinMarker.getState());
         try {
-            return FrameScores.immutable(
-                    FrameScoreCalculatorFactory.create(isFinal(), getStatus())
-                            .calculate(this));
+            return FrameScores.immutable(score);
         } catch ( IllegalStateException e ){
             return FrameScore.unknown;
         }
@@ -37,9 +23,8 @@ public class FinalFrame extends BaseFrame {
 
     @Override
     public FrameScore addScoreTo(FrameScore score) {
-        for( Integer pins : getCountListOfFallDownPins() ){
-            score.addScore(pins);
-        }
+        pinMarker.markStream()
+                .forEach( mark -> score.addScore(mark.getCountOfFallDownPins()));
         return score;
     }
 

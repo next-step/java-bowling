@@ -1,12 +1,6 @@
 package bowling.domain;
 
-import java.util.List;
-
 public interface Frame {
-
-    enum Status {
-        Strike, Spare, Miss, Gutter, SecondBowl, Ready;
-    }
 
     int getFrameNo();
 
@@ -17,21 +11,6 @@ public interface Frame {
      * @param countOfFallDownPins
      */
     void mark(int countOfFallDownPins);
-
-    /**
-     * 볼링공을 던진 횟수
-     *
-     * @return
-     */
-    long getCountOfMarks();
-
-    Status getStatus();
-
-    /**
-     * 마지막 프레임 여부
-     * @return
-     */
-    boolean isFinal();
 
     /**
      * 현재 프레임 종료여부
@@ -60,8 +39,6 @@ public interface Frame {
     }
 
     FrameInfo toFrameInfo();
-
-    List<Integer> getCountListOfFallDownPins();
 
     /**
      * 현재 프레임의 스코어

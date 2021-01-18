@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class NormalPinMarker implements PinMarker {
 
@@ -26,30 +27,6 @@ public class NormalPinMarker implements PinMarker {
 
     }
 
-    @Deprecated
-    @Override
-    public long getCountOfMarks() {
-        if( state instanceof Strike )
-            return 1;
-        if( state instanceof Spare )
-            return 2;
-        if( state instanceof Ready )
-            return 0;
-        if( state instanceof Miss )
-            return 2;
-        return 1;
-    }
-
-    @Override
-    public boolean isStrike() {
-        return state instanceof Strike;
-    }
-
-    @Override
-    public boolean isSpare() {
-        return state instanceof Spare;
-    }
-
     @Override
     public int getCountOfAllFallDownPins() {
         return marks.getCountOfMarked();
@@ -61,25 +38,19 @@ public class NormalPinMarker implements PinMarker {
     }
 
     @Override
-    public boolean isStarted() {
-        return state.isStarted();
-    }
-
-    @Deprecated
-    @Override
-    public List<PinMark> toList() {
-        return marks.getAll();
-    }
-
-    @Override
     public List<PinMarkSymbol> toSymbols() {
         return state.toSymbols();
+    }
+
+    @Override
+    public Stream<PinMark> markStream() {
+        return marks.stream();
     }
 
     /**
      * State 에 따라 mark() , isComplete() 를 구현
      */
-    static class Ready extends BeforeStart {
+    class Ready extends InProgress {
         private final PinMarks marks;
 
         public Ready(PinMarks marks) {
@@ -94,9 +65,14 @@ public class NormalPinMarker implements PinMarker {
             }
             return new SecondMark(marks);
         }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return marks.toSymbols();
+        }
     }
 
-    static class SecondMark extends InProgress {
+    class SecondMark extends InProgress {
 
         private final PinMarks marks;
 
@@ -124,7 +100,7 @@ public class NormalPinMarker implements PinMarker {
         }
     }
 
-    static class Spare extends Completed {
+    class Spare extends Completed {
         private final int firstPins;
 
         public Spare(int firstPins) {
@@ -137,14 +113,14 @@ public class NormalPinMarker implements PinMarker {
         }
     }
 
-    static class Strike extends Completed {
+    class Strike extends Completed {
         @Override
         public List<PinMarkSymbol> toSymbols() {
             return Arrays.asList(PinMarkSymbol.Strike);
         }
     }
 
-    static class Miss extends Completed {
+    class Miss extends Completed {
 
         private final PinMarks marks;
 

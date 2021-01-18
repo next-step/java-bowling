@@ -1,8 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 abstract public class BaseFrame implements Frame {
 
     protected final int frameNo;
@@ -24,12 +21,6 @@ abstract public class BaseFrame implements Frame {
         pinMarker.mark(PinMark.pin(countOfFallDownPins));
     }
 
-    @Deprecated
-    @Override
-    public long getCountOfMarks() {
-        return pinMarker.getCountOfMarks();
-    }
-
     @Override
     public boolean isEnd() {
         return pinMarker.isCompleted();
@@ -43,14 +34,6 @@ abstract public class BaseFrame implements Frame {
     @Override
     public FrameInfo toFrameInfo() {
         return FrameInfo.of(getFrameNo(), pinMarker.toSymbols(), FrameScores.immutable(getScore()));
-    }
-
-    @Override
-    public List<Integer> getCountListOfFallDownPins() {
-        return pinMarker.toList()
-                .stream()
-                .map(pinMark -> pinMark.getCountOfFallDownPins())
-                .collect(Collectors.toList());
     }
 
 }

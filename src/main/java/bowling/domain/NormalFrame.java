@@ -7,21 +7,6 @@ public class NormalFrame extends BaseFrame {
     }
 
     @Override
-    public Status getStatus() {
-        if (!pinMarker.isStarted()) return Status.Ready;
-        if (pinMarker.isStrike()) return Status.Strike;
-        if (pinMarker.getCountOfMarks() == 1 ) return Status.SecondBowl;
-        if (pinMarker.isSpare()) return Status.Spare;
-        if (pinMarker.getCountOfAllFallDownPins() == 0) return Status.Gutter;
-        return Status.Miss;
-    }
-
-    @Override
-    public boolean isFinal() {
-        return false;
-    }
-
-    @Override
     public Frame createNext() {
         next = FrameFactory.createNextFrame(frameNo);
         return next;
@@ -29,30 +14,29 @@ public class NormalFrame extends BaseFrame {
 
     @Override
     public FrameScore getScore() {
+        FrameScore score = NormalFrameScoreFactory.create(pinMarker.getCountOfAllFallDownPins(), pinMarker.getState());
+        if (score.hasRemainingAddition() && hasNext()) {
+            next.addScoreTo(score);
+        }
+
         try {
-            FrameScore score = FrameScoreCalculatorFactory.create(isFinal(), getStatus()).calculate(this);
-            if (score.hasRemainingAddition() && hasNext()) {
-                next.addScoreTo(score);
-            }
             return FrameScores.immutable(score);
-        } catch ( IllegalStateException e ){
+        } catch (IllegalStateException e) {
             return FrameScore.unknown;
         }
     }
 
     @Override
     public FrameScore addScoreTo(FrameScore score) {
-        for( Integer pins : getCountListOfFallDownPins() ){
-            score.addScore(pins);
-        }
+        pinMarker.markStream()
+                .forEach( mark -> score.addScore(mark.getCountOfFallDownPins()));
 
-        if( score.hasRemainingAddition() && hasNext() ){
+        if (score.hasRemainingAddition() && hasNext()) {
             next.addScoreTo(score);
         }
 
         return score;
     }
-
 
 }
 

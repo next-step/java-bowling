@@ -1,12 +1,9 @@
 package bowling.domain;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public interface PinMarker {
-
-    default void shouldCountOfMarksLessThanMaxMarks() {
-        if (isCompleted()) throw new IllegalStateException("더 이상 PinMark 를 추가할 수 없습니다");
-    }
 
     default void mark(int countOfFallDown) {
         mark(PinMark.pin(countOfFallDown));
@@ -14,17 +11,7 @@ public interface PinMarker {
 
     PinMarkerState getState();
 
-    boolean isStarted();
-
     void mark(PinMark pin);
-
-    long getCountOfMarks();
-
-    @Deprecated
-    boolean isStrike();
-
-    @Deprecated
-    boolean isSpare();
 
     int getCountOfAllFallDownPins();
 
@@ -35,7 +22,8 @@ public interface PinMarker {
      */
     boolean isCompleted();
 
-    List<PinMark> toList();
+    Stream<PinMark> markStream();
 
     List<PinMarkSymbol> toSymbols();
+
 }

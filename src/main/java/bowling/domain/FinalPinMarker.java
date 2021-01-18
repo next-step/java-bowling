@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FinalPinMarker implements PinMarker {
 
@@ -31,44 +32,6 @@ public class FinalPinMarker implements PinMarker {
     }
 
     @Override
-    public long getCountOfMarks() {
-        if (state instanceof LastBonus)
-            return 2;
-        if (state instanceof Bonus)
-            return 1;
-        if (state instanceof Ready)
-            return 0;
-        if (state instanceof Second)
-            return 1;
-        return 3;
-    }
-
-    public boolean checkPin(int pos, PinMark test) {
-        if (getCountOfMarks() > 0
-                && getCountOfMarks() > pos) {
-            return marks.get(pos).equals(test);
-        }
-        return false;
-    }
-
-    @Deprecated
-    @Override
-    public boolean isStrike() {
-        return checkPin(0, PinMark.strike);
-    }
-
-    @Deprecated
-    @Override
-    public boolean isSpare() {
-        if (marks.getAll().size() > 1) {
-            return marks.get(marks.getAll().size() - 1).getCountOfFallDownPins()
-                    + marks.get(marks.getAll().size() - 2).getCountOfFallDownPins()
-                    == PinMark.MAX_PINS;
-        }
-        return false;
-    }
-
-    @Override
     public int getCountOfAllFallDownPins() {
         return marks.getCountOfMarked();
     }
@@ -79,24 +42,19 @@ public class FinalPinMarker implements PinMarker {
     }
 
     @Override
-    public boolean isStarted() {
-        return state.isStarted();
-    }
-
-    @Override
-    public List<PinMark> toList() {
-        return marks.getAll();
-    }
-
-    @Override
     public List<PinMarkSymbol> toSymbols() {
         return state.toSymbols();
+    }
+
+    @Override
+    public Stream<PinMark> markStream() {
+        return marks.stream();
     }
 
     /**
      * State 에 따라 mark() , isComplete() 를 구현
      */
-    private class Ready extends BeforeStart {
+    private class Ready extends InProgress {
 
         @Override
         public PinMarkerState mark(PinMark pinMark) {
@@ -105,6 +63,11 @@ public class FinalPinMarker implements PinMarker {
                 return new BonusOne();
             }
             return new Second(pinMark);
+        }
+
+        @Override
+        public List<PinMarkSymbol> toSymbols() {
+            return marks.toSymbols();
         }
     }
 
@@ -158,7 +121,7 @@ public class FinalPinMarker implements PinMarker {
 
             marks.mark(secondPinMark);
             if (sum == PinMark.MAX_PINS) {
-                return new Bonus(marks, firstPinMark);
+                return new Bonus(firstPinMark);
             }
             //
             return new Miss();
@@ -171,12 +134,9 @@ public class FinalPinMarker implements PinMarker {
     }
 
     private class Bonus extends InProgress {
-
-        private final PinMarks marks;
         private final PinMark firstPinMark;
 
-        public Bonus(PinMarks marks, PinMark firstPinMark) {
-            this.marks = marks;
+        public Bonus( PinMark firstPinMark) {
             this.firstPinMark = firstPinMark;
         }
 
@@ -215,42 +175,6 @@ public class FinalPinMarker implements PinMarker {
                 return new StrikeSpare();
             }
             return new StrikeMiss();
-        }
-
-        @Override
-        public List<PinMarkSymbol> toSymbols() {
-            return null;
-        }
-    }
-
-    private class LastBonus extends InProgress {
-        private final PinMarks marks;
-
-        public LastBonus(PinMarks marks) {
-            this.marks = marks;
-        }
-
-        @Override
-        public PinMarkerState mark(PinMark pinMark) {
-            marks.mark(pinMark);
-            return new CompletedHasBonus(marks);
-        }
-
-        @Override
-        public List<PinMarkSymbol> toSymbols() {
-            return marks.stream()
-                    .limit(1)
-                    .map(PinMark::toSymbol)
-                    .collect(Collectors.toList());
-        }
-    }
-
-    private class CompletedHasBonus extends Completed {
-
-        private final PinMarks marks;
-
-        public CompletedHasBonus(PinMarks marks) {
-            this.marks = marks;
         }
 
         @Override
@@ -308,6 +232,7 @@ public class FinalPinMarker implements PinMarker {
     }
 
     private class Turkey extends Completed {
+
         @Override
         public List<PinMarkSymbol> toSymbols() {
             return marks.toSymbols();

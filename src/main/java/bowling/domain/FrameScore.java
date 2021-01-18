@@ -21,6 +21,10 @@ public interface FrameScore {
                         .orElse(0));
     }
 
+    static FrameScore of(AdditionCounter additionCounter, int currentScore){
+        return new MutableFrameScore(additionCounter, currentScore);
+    }
+
     static FrameScore of(int score){
         return new ImmutableScore(score);
     }
@@ -56,6 +60,18 @@ public interface FrameScore {
             return score;
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            MutableFrameScore that = (MutableFrameScore) o;
+            return score == that.score && Objects.equals(additionCounter, that.additionCounter);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(additionCounter, score);
+        }
     }
 
     class ImmutableScore implements FrameScore {
@@ -96,10 +112,10 @@ public interface FrameScore {
     }
 
     class UnknownScore extends ImmutableScore {
-        public UnknownScore(){
+        private UnknownScore(){
             this(0);
         }
-        public UnknownScore(int score) {
+        private UnknownScore(int score) {
             super(score);
         }
     }

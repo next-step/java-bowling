@@ -22,4 +22,12 @@ public class AdditionCounter {
         count.decrementAndGet();
     }
 
+    public static AdditionCounter ofStrike() {
+        return new AdditionCounter(2);
+    }
+
+    public static AdditionCounter ofSpare() {
+        return new AdditionCounter(1);
+    }
+
 }
