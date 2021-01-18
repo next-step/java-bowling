@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -45,5 +46,11 @@ public class Board {
 
     public boolean isEnd() {
         return frames.size() == lastFrameNumber && getLatestFrame().isEnd();
+    }
+
+    public List<String> getResults() {
+        return frames.stream()
+                .map(Frame::getDescriptionForm)
+                .collect(Collectors.toList());
     }
 }
