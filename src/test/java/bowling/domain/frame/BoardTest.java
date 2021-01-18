@@ -6,9 +6,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hibernate.internal.util.collections.ArrayHelper.toList;
 
 public class BoardTest {
 
@@ -42,7 +45,7 @@ public class BoardTest {
         assertThat(board.getCurrentFrameNumber()).isEqualTo(2);
     }
 
-    private static Stream<Arguments> gameScenario() {
+    private static Stream<Arguments> gameScenarios() {
         return Stream.of(
                 Arguments.of(new int[]{
                         10,
@@ -52,13 +55,23 @@ public class BoardTest {
                         10,
                         4, 5,
                         10,
-                        10,
+                        0, 0,
                         10,
                         10, 10, 10
-                }),
+                }, new String[]{
+                        "X",
+                        "9 | /",
+                        "8 | /",
+                        "X",
+                        "X",
+                        "4 | 5",
+                        "X",
+                        "- | -",
+                        "X",
+                        "X | X | X"}),
                 Arguments.of(new int[]{
                         5, 5,
-                        6, 4,
+                        0, 10,
                         10,
                         3, 4,
                         4, 5,
@@ -67,11 +80,21 @@ public class BoardTest {
                         10,
                         8, 1,
                         6, 3
-                })
+                }, new String[]{
+                        "5 | /",
+                        "- | /",
+                        "X",
+                        "3 | 4",
+                        "4 | 5",
+                        "X",
+                        "X",
+                        "X",
+                        "8 | 1",
+                        "6 | 3"})
         );
     }
 
-    @MethodSource("gameScenario")
+    @MethodSource("gameScenarios")
     @ParameterizedTest
     @DisplayName("게임 종료조건 테스트")
     void isEnd(int[] scenario) {
@@ -83,5 +106,66 @@ public class BoardTest {
         }
 
         assertThat(board.isEnd()).isTrue();
+    }
+
+    @Test
+    @DisplayName("출력 확인. 최초 조건")
+    void initialBoardDescription() {
+        Board board = new Board();
+        List<String> expected = new ArrayList<>();
+        expected.add("");
+
+        assertThat(board.getResults()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("첫 프레임의 Strike 출력")
+    void boardDescriptionWithFirstStrike() {
+        Board board = new Board();
+        board.record(10);
+
+        List<String> expected = new ArrayList<>();
+        expected.add("X");
+
+        assertThat(board.getResults()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("첫 프레임의 Miss 출력")
+    void boardDescriptionWithFirstMiss() {
+        Board board = new Board();
+        board.record(4);
+        board.record(4);
+
+        List<String> expected = new ArrayList<>();
+        expected.add("4 | 4");
+
+        assertThat(board.getResults()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("첫 프레임의 Spare 출력")
+    void boardDescriptionWithFirstSpare() {
+        Board board = new Board();
+        board.record(4);
+        board.record(6);
+
+        List<String> expected = new ArrayList<>();
+        expected.add("4 | /");
+
+        assertThat(board.getResults()).isEqualTo(expected);
+    }
+
+    @MethodSource("gameScenarios")
+    @ParameterizedTest
+    @DisplayName("게임 전체 출력 확인")
+    void wholeDescription(int[] scenario, String[] expected) {
+        Board board = new Board();
+
+        for (int downedPin : scenario) {
+            board.record(downedPin);
+        }
+
+        assertThat(board.getResults()).isEqualTo(toList(expected));
     }
 }
