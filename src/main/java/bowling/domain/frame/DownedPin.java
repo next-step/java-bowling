@@ -23,18 +23,18 @@ public class DownedPin {
     }
 
     public static DownedPin fromNumber(int downedPin) {
-        if (!inValidRange(downedPin)) {
+        if (!isValid(downedPin)) {
             throw new IllegalPinRangeException();
         }
         return cachedPins.get(downedPin);
     }
 
-    private static boolean inValidRange(int number) {
-        return MINIMUM_VALUE <= number && MAXIMUM_VALUE >= number;
+    private static boolean isValid(int number) {
+        return MINIMUM_VALUE <= number && number <= MAXIMUM_VALUE;
     }
 
     public DownedPin fromPreviousPitch(int downedPin) {
-        if (!inValidRange(this.pin + downedPin)) {
+        if (!isValid(this.pin + downedPin)) {
             throw new IllegalPinRangeException();
         }
         return cachedPins.get(downedPin);
@@ -42,10 +42,6 @@ public class DownedPin {
 
     public boolean isStrike() {
         return pin == 10;
-    }
-
-    public boolean isSpare(int additionalPitch) {
-        return isSpare(this.fromPreviousPitch(additionalPitch));
     }
 
     public boolean isSpare(DownedPin additionalPitch) {
