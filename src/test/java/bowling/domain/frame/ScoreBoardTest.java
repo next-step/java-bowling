@@ -13,12 +13,12 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.internal.util.collections.ArrayHelper.toList;
 
-public class BoardTest {
+public class ScoreBoardTest {
 
     @Test
     @DisplayName("최초의 프레임은 1")
     void printCurrentFrame() {
-        Board board = new Board();
+        ScoreBoard board = new ScoreBoard();
 
         assertThat(board.getCurrentFrameNumber()).isEqualTo(1);
     }
@@ -26,7 +26,7 @@ public class BoardTest {
     @Test
     @DisplayName("스트라이크 이후 2프레임으로 이동")
     void secondFrameAfterStrike() {
-        Board board = new Board();
+        ScoreBoard board = new ScoreBoard();
 
         assertThat(board.getCurrentFrameNumber()).isEqualTo(1);
         board.record(10);
@@ -36,7 +36,7 @@ public class BoardTest {
     @Test
     @DisplayName("MISS 이후 2프레임으로 이동")
     void secondFrameAfterMiss() {
-        Board board = new Board();
+        ScoreBoard board = new ScoreBoard();
 
         assertThat(board.getCurrentFrameNumber()).isEqualTo(1);
         board.record(5);
@@ -98,7 +98,7 @@ public class BoardTest {
     @ParameterizedTest
     @DisplayName("게임 종료조건 테스트")
     void isEnd(int[] scenario) {
-        Board board = new Board();
+        ScoreBoard board = new ScoreBoard();
 
         for (int downedPin : scenario) {
             assertThat(board.isEnd()).isFalse();
@@ -111,7 +111,7 @@ public class BoardTest {
     @Test
     @DisplayName("출력 확인. 최초 조건")
     void initialBoardDescription() {
-        Board board = new Board();
+        ScoreBoard board = new ScoreBoard();
         List<String> expected = new ArrayList<>();
         expected.add("");
 
@@ -121,7 +121,7 @@ public class BoardTest {
     @Test
     @DisplayName("첫 프레임의 Strike 출력")
     void boardDescriptionWithFirstStrike() {
-        Board board = new Board();
+        ScoreBoard board = new ScoreBoard();
         board.record(10);
 
         List<String> expected = new ArrayList<>();
@@ -133,7 +133,7 @@ public class BoardTest {
     @Test
     @DisplayName("첫 프레임의 Miss 출력")
     void boardDescriptionWithFirstMiss() {
-        Board board = new Board();
+        ScoreBoard board = new ScoreBoard();
         board.record(4);
         board.record(4);
 
@@ -146,7 +146,7 @@ public class BoardTest {
     @Test
     @DisplayName("첫 프레임의 Spare 출력")
     void boardDescriptionWithFirstSpare() {
-        Board board = new Board();
+        ScoreBoard board = new ScoreBoard();
         board.record(4);
         board.record(6);
 
@@ -160,7 +160,7 @@ public class BoardTest {
     @ParameterizedTest
     @DisplayName("게임 전체 출력 확인")
     void wholeDescription(int[] scenario, String[] expected) {
-        Board board = new Board();
+        ScoreBoard board = new ScoreBoard();
 
         for (int downedPin : scenario) {
             board.record(downedPin);

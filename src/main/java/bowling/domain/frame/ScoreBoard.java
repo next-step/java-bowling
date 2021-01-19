@@ -4,13 +4,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Board {
+public class ScoreBoard {
 
     private static final int lastFrameNumber = 10;
 
     private final List<Frame> frames;
 
-    public Board() {
+    public ScoreBoard() {
         this.frames = new LinkedList<>();
         frames.add(new NormalFrame());
     }
