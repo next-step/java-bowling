@@ -19,4 +19,8 @@ public class User {
             throw new InvalidNameFormatException();
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
