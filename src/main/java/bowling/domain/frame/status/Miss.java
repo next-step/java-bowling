@@ -1,6 +1,7 @@
 package bowling.domain.frame.status;
 
 import bowling.bowlingexception.InvalidPinStatusException;
+import bowling.bowlingexception.InvalidScoreCalculationException;
 import bowling.domain.frame.DownedPin;
 
 public class Miss extends Ended {
@@ -19,5 +20,10 @@ public class Miss extends Ended {
     @Override
     public String getDescription() {
         return firstPitch.getDescriptionForm(secondPitch);
+    }
+
+    @Override
+    public int calculateAccumulatedScore() {
+        throw new InvalidScoreCalculationException();
     }
 }

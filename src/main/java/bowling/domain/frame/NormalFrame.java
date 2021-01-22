@@ -28,6 +28,6 @@ public class NormalFrame extends Frame {
 
     @Override
     public int calculateAccumulatedScore() {
-        return 0;
+        return status.calculateAccumulatedScore();
     }
 }

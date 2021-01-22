@@ -1,5 +1,6 @@
 package bowling.domain.frame.status;
 
+import bowling.bowlingexception.InvalidScoreCalculationException;
 import bowling.domain.frame.DownedPin;
 
 public class Strike extends Ended {
@@ -13,5 +14,10 @@ public class Strike extends Ended {
     @Override
     public String getDescription() {
         return firstPitch.getDescriptionForm();
+    }
+
+    @Override
+    public int calculateAccumulatedScore() {
+        throw new InvalidScoreCalculationException();
     }
 }

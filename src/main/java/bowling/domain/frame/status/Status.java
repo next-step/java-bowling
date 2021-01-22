@@ -8,4 +8,6 @@ public interface Status {
 
     boolean isEnd();
 
+    int calculateAccumulatedScore();
+
 }
