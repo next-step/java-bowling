@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.bowlingexception.IllegalFrameRecordException;
 import bowling.bowlingexception.IllegalPinRangeException;
+import bowling.bowlingexception.InvalidScoreCalculationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -137,6 +138,15 @@ class NormalFrameTest {
     void firstFrameScore() {
         Frame firstFrame = new NormalFrame();
 
-        firstFrame.getAccumulatedScore();
+        firstFrame.calculateAccumulatedScore();
+    }
+
+    @Test
+    @DisplayName("프레임이 종료되지 않은 상태일 때의 스코어 반환 요청 예외처리")
+    void scoringWhenItCannotBeCalculated() {
+        NormalFrame firstFrame = new NormalFrame();
+        assertThatThrownBy(
+                () -> firstFrame.calculateAccumulatedScore()
+        ).isInstanceOf(InvalidScoreCalculationException.class);
     }
 }
