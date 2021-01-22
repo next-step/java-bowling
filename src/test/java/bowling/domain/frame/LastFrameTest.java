@@ -131,6 +131,6 @@ public class LastFrameTest {
     void frameScoring() {
         Frame lastFrame = new LastFrame();
 
-        lastFrame.getAccumulatedScore();
+        lastFrame.calculateAccumulatedScore();
     }
 }

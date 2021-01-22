@@ -25,4 +25,9 @@ public class NormalFrame extends Frame {
     public String getDescriptionForm() {
         return status.getDescription();
     }
+
+    @Override
+    public int calculateAccumulatedScore() {
+        return 0;
+    }
 }

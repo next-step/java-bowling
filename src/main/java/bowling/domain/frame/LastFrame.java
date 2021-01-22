@@ -53,4 +53,9 @@ public class LastFrame extends Frame {
                 .map(Status::getDescription)
                 .collect(Collectors.joining(" | "));
     }
+
+    @Override
+    public int calculateAccumulatedScore() {
+        return 0;
+    }
 }
