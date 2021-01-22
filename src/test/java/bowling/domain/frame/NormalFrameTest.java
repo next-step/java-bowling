@@ -131,4 +131,12 @@ class NormalFrameTest {
 
         assertThat(frame.getDescriptionForm()).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("프레임의 기초적인 스코어 반환 방식")
+    void firstFrameScore() {
+        Frame firstFrame = new NormalFrame();
+
+        firstFrame.getAccumulatedScore();
+    }
 }
