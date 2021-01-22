@@ -16,7 +16,7 @@ public class ContentPrintUtils {
             return content;
         }
 
-        int margin = (minimumContentLength - content.length());
+        int margin = minimumContentLength - content.length();
 
         return repeatedCharacterString(' ', margin - margin / 2)
                 + content
