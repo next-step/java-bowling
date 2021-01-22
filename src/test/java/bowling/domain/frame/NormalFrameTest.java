@@ -146,7 +146,7 @@ class NormalFrameTest {
     void scoringWhenItCannotBeCalculated() {
         NormalFrame firstFrame = new NormalFrame();
         assertThatThrownBy(
-                () -> firstFrame.calculateAccumulatedScore()
+                firstFrame::calculateAccumulatedScore
         ).isInstanceOf(InvalidScoreCalculationException.class);
     }
 }

@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.bowlingexception.InvalidScoreCalculationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 public class LastFrameTest {
@@ -132,5 +134,14 @@ public class LastFrameTest {
         Frame lastFrame = new LastFrame();
 
         lastFrame.calculateAccumulatedScore();
+    }
+
+    @Test
+    @DisplayName("프레임이 종료되지 않은 상태일 때의 스코어 반환 요청 예외처리")
+    void scoringWhenItIsCannotBeCalculated() {
+        LastFrame lastFrame = new LastFrame();
+        assertThatThrownBy(
+                lastFrame::calculateAccumulatedScore
+        ).isInstanceOf(InvalidScoreCalculationException.class);
     }
 }

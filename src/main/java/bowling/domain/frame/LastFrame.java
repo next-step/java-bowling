@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.bowlingexception.InvalidScoreCalculationException;
 import bowling.domain.frame.status.*;
 
 import java.util.ArrayList;
@@ -56,6 +57,10 @@ public class LastFrame extends Frame {
 
     @Override
     public int calculateAccumulatedScore() {
+        if (!isEnd()) {
+            throw new InvalidScoreCalculationException();
+        }
+
         return 0;
     }
 }
