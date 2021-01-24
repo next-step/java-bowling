@@ -152,4 +152,18 @@ class NormalFrameTest {
         assertThat(frame.calculateScore())
                 .isEqualTo(8);
     }
+
+    @Test
+    @DisplayName("Spare 상태의 계산")
+    void calculateScoreMiss() {
+        NormalFrame firstFrame = new NormalFrame();
+        firstFrame.record(3);
+        firstFrame.record(7);
+
+        NormalFrame secondFrame = new NormalFrame();
+        secondFrame.record(8);
+
+        assertThat(firstFrame.calculateScore())
+                .isEqualTo(18);
+    }
 }
