@@ -48,6 +48,10 @@ public class DownedPin {
         return pin + additionalPitch.pin == 10;
     }
 
+    public int calculateSum(DownedPin additionalPitch) {
+        return pin + additionalPitch.pin;
+    }
+
     public String getDescriptionForm() {
         return convertPin(pin);
     }

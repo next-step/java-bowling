@@ -26,8 +26,7 @@ public class NormalFrame extends Frame {
         return status.getDescription();
     }
 
-    @Override
-    public int calculateAccumulatedScore() {
-        return status.calculateAccumulatedScore();
+    public int calculateScore() {
+        return status.calculateScore();
     }
 }

@@ -95,4 +95,14 @@ public class DownedPinTest {
         assertThat(first.getDescriptionForm(second))
                 .isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("두 핀의 합계를 반환함")
+    void calculateSum() {
+        DownedPin first = DownedPin.fromNumber(3);
+        DownedPin second = first.fromPreviousPitch(5);
+
+        assertThat(first.calculateSum(second))
+                .isEqualTo(8);
+    }
 }

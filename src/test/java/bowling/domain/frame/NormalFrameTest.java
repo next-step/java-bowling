@@ -134,19 +134,22 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("프레임의 기초적인 스코어 반환 방식")
-    void firstFrameScore() {
-        Frame firstFrame = new NormalFrame();
-
-        firstFrame.calculateAccumulatedScore();
-    }
-
-    @Test
     @DisplayName("프레임이 종료되지 않은 상태일 때의 스코어 반환 요청 예외처리")
     void scoringWhenItCannotBeCalculated() {
         NormalFrame firstFrame = new NormalFrame();
         assertThatThrownBy(
-                firstFrame::calculateAccumulatedScore
+                firstFrame::calculateScore
         ).isInstanceOf(InvalidScoreCalculationException.class);
+    }
+
+    @Test
+    @DisplayName("MISS 상태의 계산")
+    void calculateScoreOnMiss() {
+        NormalFrame frame = new NormalFrame();
+        frame.record(3);
+        frame.record(5);
+
+        assertThat(frame.calculateScore())
+                .isEqualTo(8);
     }
 }
