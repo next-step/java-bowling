@@ -17,7 +17,7 @@ public class Strike extends Ended {
     }
 
     @Override
-    public int calculateAccumulatedScore() {
+    public int calculateScore() {
         throw new InvalidScoreCalculationException();
     }
 }

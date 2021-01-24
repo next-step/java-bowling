@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-
 public class LastFrameTest {
 
     @Test
@@ -129,19 +128,11 @@ public class LastFrameTest {
     }
 
     @Test
-    @DisplayName("프레임의 기초적인 스코어 반환 방식")
-    void frameScoring() {
-        Frame lastFrame = new LastFrame();
-
-        lastFrame.calculateAccumulatedScore();
-    }
-
-    @Test
     @DisplayName("프레임이 종료되지 않은 상태일 때의 스코어 반환 요청 예외처리")
     void scoringWhenItIsCannotBeCalculated() {
         LastFrame lastFrame = new LastFrame();
         assertThatThrownBy(
-                lastFrame::calculateAccumulatedScore
+                lastFrame::calculateScore
         ).isInstanceOf(InvalidScoreCalculationException.class);
     }
 }

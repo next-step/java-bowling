@@ -55,8 +55,7 @@ public class LastFrame extends Frame {
                 .collect(Collectors.joining(" | "));
     }
 
-    @Override
-    public int calculateAccumulatedScore() {
+    public int calculateScore() {
         if (!isEnd()) {
             throw new InvalidScoreCalculationException();
         }

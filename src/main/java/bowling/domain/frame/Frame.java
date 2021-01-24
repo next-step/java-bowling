@@ -8,5 +8,4 @@ public abstract class Frame {
 
     public abstract String getDescriptionForm();
 
-    public abstract int calculateAccumulatedScore();
 }
