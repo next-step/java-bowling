@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,9 +49,20 @@ public class ScoreBoard {
         return frames.size() == lastFrameNumber && getLatestFrame().isEnd();
     }
 
-    public List<String> getResults() {
+    public List<String> getDescriptions() {
         return frames.stream()
                 .map(Frame::getDescriptionForm)
                 .collect(Collectors.toList());
+    }
+
+    public List<Integer> getAccumulatedScoresOfFrames() {
+        // 프레임에서 스코어를 가져오고, 누적 값을 반환한다.
+        List<Integer> accumulatedScores = new ArrayList<>();
+
+        if (frames.size() == 0) {
+            return accumulatedScores;
+        }
+
+        return accumulatedScores;
     }
 }

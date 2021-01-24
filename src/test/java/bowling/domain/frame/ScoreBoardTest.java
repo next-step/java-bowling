@@ -115,7 +115,7 @@ public class ScoreBoardTest {
         List<String> expected = new ArrayList<>();
         expected.add("");
 
-        assertThat(board.getResults()).isEqualTo(expected);
+        assertThat(board.getDescriptions()).isEqualTo(expected);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class ScoreBoardTest {
         List<String> expected = new ArrayList<>();
         expected.add("X");
 
-        assertThat(board.getResults()).isEqualTo(expected);
+        assertThat(board.getDescriptions()).isEqualTo(expected);
     }
 
     @Test
@@ -140,7 +140,7 @@ public class ScoreBoardTest {
         List<String> expected = new ArrayList<>();
         expected.add("4 | 4");
 
-        assertThat(board.getResults()).isEqualTo(expected);
+        assertThat(board.getDescriptions()).isEqualTo(expected);
     }
 
     @Test
@@ -153,7 +153,7 @@ public class ScoreBoardTest {
         List<String> expected = new ArrayList<>();
         expected.add("4 | /");
 
-        assertThat(board.getResults()).isEqualTo(expected);
+        assertThat(board.getDescriptions()).isEqualTo(expected);
     }
 
     @MethodSource("gameScenarios")
@@ -166,6 +166,14 @@ public class ScoreBoardTest {
             board.record(downedPin);
         }
 
-        assertThat(board.getResults()).isEqualTo(toList(expected));
+        assertThat(board.getDescriptions()).isEqualTo(toList(expected));
+    }
+
+    @Test
+    @DisplayName("기초적인 Score List 생성 방법")
+    void scores() {
+        ScoreBoard board = new ScoreBoard();
+
+        List<Integer> scores = board.getAccumulatedScoresOfFrames();
     }
 }
