@@ -176,6 +176,8 @@ class NormalFrameTest {
         currentFrame = currentFrame.record(4);
         assertThat(currentFrame).isEqualTo(firstFrame);
         currentFrame = currentFrame.record(3);
+        assertThat(currentFrame).isEqualTo(firstFrame);
+        currentFrame = currentFrame.record(3);
         assertThat(currentFrame).isNotEqualTo(firstFrame);
     }
 }
