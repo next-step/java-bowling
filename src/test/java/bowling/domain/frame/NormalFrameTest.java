@@ -166,4 +166,16 @@ class NormalFrameTest {
         assertThat(firstFrame.calculateScore())
                 .isEqualTo(18);
     }
+
+    @Test
+    @DisplayName("Frame 완료(Miss, Spare, Strike) 시 새로운 Frame 반환")
+    void createNextFrame() {
+        Frame firstFrame = new NormalFrame();
+        Frame currentFrame = firstFrame;
+
+        currentFrame = currentFrame.record(4);
+        assertThat(currentFrame).isEqualTo(firstFrame);
+        currentFrame = currentFrame.record(3);
+        assertThat(currentFrame).isNotEqualTo(firstFrame);
+    }
 }
