@@ -13,6 +13,7 @@ public class LastFrame extends Frame {
     private int numPitch;
 
     public LastFrame() {
+        super(10);
         numPitch = 0;
         status = new ArrayList<>();
         status.add(new Start());

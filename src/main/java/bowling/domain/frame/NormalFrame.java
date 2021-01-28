@@ -7,14 +7,15 @@ public class NormalFrame extends Frame {
 
     private Status status;
 
-    public NormalFrame() {
+    public NormalFrame(int frameNumber) {
+        super(frameNumber);
         status = new Start();
     }
 
     @Override
     public Frame record(int downedPin) {
         if (isEnd()) {
-            NormalFrame next = new NormalFrame();
+            NormalFrame next = new NormalFrame(this.frameNumber + 1);
             next.record(downedPin);
             return next;
         }

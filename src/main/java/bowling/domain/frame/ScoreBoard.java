@@ -13,7 +13,7 @@ public class ScoreBoard {
 
     public ScoreBoard() {
         this.frames = new LinkedList<>();
-        frames.add(new NormalFrame());
+        frames.add(Frame.createInitialFrame());
     }
 
     public void record(int downedPin) {
@@ -34,7 +34,7 @@ public class ScoreBoard {
             return;
         }
 
-        frames.add(new NormalFrame());
+        frames.add(Frame.createInitialFrame());
     }
 
     public int getCurrentFrameNumber() {

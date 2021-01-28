@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.bowlingexception.IllegalFrameRecordException;
 import bowling.bowlingexception.IllegalPinRangeException;
 import bowling.bowlingexception.InvalidScoreCalculationException;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +19,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("프레임에 쓰러진 핀 갯수 기록")
     void recordDownedPins() {
-        NormalFrame frame = new NormalFrame();
+        NormalFrame frame = (NormalFrame) Frame.createInitialFrame();
 
         frame.record(6);
     }
@@ -28,55 +27,30 @@ class NormalFrameTest {
     @Test
     @DisplayName("프레임은 최대 2회의 기록을 가질 수 있다")
     void recordTwice() {
-        NormalFrame frame = new NormalFrame();
+        NormalFrame frame = (NormalFrame) Frame.createInitialFrame();
 
         assertThat(frame.isEnd()).isFalse();
         frame.record(4);
         assertThat(frame.isEnd()).isFalse();
         frame.record(5);
         assertThat(frame.isEnd()).isTrue();
-    }
-
-    @Test
-    @DisplayName("프레임이 종료 이후에도 record를 시도할 시에 예외 처리")
-    void exceptionAfterTwoRecord() {
-        NormalFrame frame = new NormalFrame();
-
-        frame.record(4);
-        frame.record(5);
-
-        assertThatThrownBy(
-                () -> frame.record(3)
-        ).isInstanceOf(IllegalFrameRecordException.class);
     }
 
     @Test
     @DisplayName("스트라이크 상태의 종료 조건 테스트")
     void isEndWhenStrike() {
-        NormalFrame frame = new NormalFrame();
+        NormalFrame frame = (NormalFrame) Frame.createInitialFrame();
 
         assertThat(frame.isEnd()).isFalse();
         frame.record(10);
         assertThat(frame.isEnd()).isTrue();
-    }
-
-    @Test
-    @DisplayName("스트라이크 이후 입력의 예외처리 테스트")
-    void exceptionAfterStrike() {
-        NormalFrame frame = new NormalFrame();
-
-        frame.record(10);
-
-        assertThatThrownBy(
-                () -> frame.record(3)
-        ).isInstanceOf(IllegalFrameRecordException.class);
     }
 
     @ValueSource(ints = {-1, 11})
     @DisplayName("1회차 범위는 0 ~ 10 넘을 수 없음")
     @ParameterizedTest
     void validateInput(int input) {
-        NormalFrame normalFrame = new NormalFrame();
+        NormalFrame normalFrame = (NormalFrame) Frame.createInitialFrame();
 
         assertThatThrownBy(
                 () -> normalFrame.record(input)
@@ -86,7 +60,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("2회차 합이 0 ~ 10을 만족해야 됨")
     void sumIsUnder10() {
-        NormalFrame normalFrame = new NormalFrame();
+        NormalFrame normalFrame = (NormalFrame) Frame.createInitialFrame();
 
         normalFrame.record(6);
 
@@ -117,7 +91,7 @@ class NormalFrameTest {
     @MethodSource("oneRecordScenario")
     @ParameterizedTest
     void DescriptionOfFrame(int downedPin, String expected) {
-        NormalFrame frame = new NormalFrame();
+        NormalFrame frame = (NormalFrame) Frame.createInitialFrame();
         frame.record(downedPin);
 
         assertThat(frame.getDescriptionForm()).isEqualTo(expected);
@@ -126,7 +100,7 @@ class NormalFrameTest {
     @MethodSource("twoRecordScenario")
     @ParameterizedTest
     void DescriptionOfFrameTwoRecord(int firstPitch, int secondPitch, String expected) {
-        NormalFrame frame = new NormalFrame();
+        NormalFrame frame = (NormalFrame) Frame.createInitialFrame();
         frame.record(firstPitch);
         frame.record(secondPitch);
 
@@ -136,7 +110,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("프레임이 종료되지 않은 상태일 때의 스코어 반환 요청 예외처리")
     void scoringWhenItCannotBeCalculated() {
-        NormalFrame firstFrame = new NormalFrame();
+        NormalFrame firstFrame = (NormalFrame) Frame.createInitialFrame();
         assertThatThrownBy(
                 firstFrame::calculateScore
         ).isInstanceOf(InvalidScoreCalculationException.class);
@@ -145,7 +119,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("MISS 상태의 계산")
     void calculateScoreOnMiss() {
-        NormalFrame frame = new NormalFrame();
+        NormalFrame frame = (NormalFrame) Frame.createInitialFrame();
         frame.record(3);
         frame.record(5);
 
@@ -156,11 +130,11 @@ class NormalFrameTest {
     @Test
     @DisplayName("Spare 상태의 계산")
     void calculateScoreMiss() {
-        NormalFrame firstFrame = new NormalFrame();
+        NormalFrame firstFrame = (NormalFrame) Frame.createInitialFrame();
         firstFrame.record(3);
         firstFrame.record(7);
 
-        NormalFrame secondFrame = new NormalFrame();
+        NormalFrame secondFrame = (NormalFrame) Frame.createInitialFrame();
         secondFrame.record(8);
 
         assertThat(firstFrame.calculateScore())
@@ -170,7 +144,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("Frame 완료(Miss, Spare, Strike) 시 새로운 Frame 반환")
     void createNextFrame() {
-        Frame firstFrame = new NormalFrame();
+        Frame firstFrame = Frame.createInitialFrame();
         Frame currentFrame = firstFrame;
 
         currentFrame = currentFrame.record(4);
@@ -179,5 +153,13 @@ class NormalFrameTest {
         assertThat(currentFrame).isEqualTo(firstFrame);
         currentFrame = currentFrame.record(3);
         assertThat(currentFrame).isNotEqualTo(firstFrame);
+    }
+
+    @Test
+    @DisplayName("Frame에서 정적 메소드를 통해 1번 프레임을 생성하는 기능 테스트")
+    void createFirstFrameWithFrameClass() {
+        Frame firstFrame = Frame.createInitialFrame();
+
+        assertThat(firstFrame).isInstanceOf(NormalFrame.class);
     }
 }
