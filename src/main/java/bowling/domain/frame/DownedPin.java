@@ -9,8 +9,8 @@ import static java.util.stream.Collectors.toList;
 
 public class DownedPin {
 
-    private static final int MINIMUM_VALUE = 0;
-    private static final int MAXIMUM_VALUE = 10;
+    private static final int MINIMUM_COUNTS_PER_CHANCE = 0;
+    private static final int MAXIMUM_COUNTS_PER_CHANCE = 10;
 
     private static final List<DownedPin> cachedPins = IntStream.rangeClosed(0, 10)
             .mapToObj(DownedPin::new)
@@ -30,7 +30,7 @@ public class DownedPin {
     }
 
     private static boolean isValid(int number) {
-        return MINIMUM_VALUE <= number && number <= MAXIMUM_VALUE;
+        return MINIMUM_COUNTS_PER_CHANCE <= number && number <= MAXIMUM_COUNTS_PER_CHANCE;
     }
 
     public DownedPin fromPreviousPitch(int downedPin) {
@@ -40,12 +40,12 @@ public class DownedPin {
         return cachedPins.get(downedPin);
     }
 
-    public boolean isStrike() {
-        return pin == 10;
+    private static int getWholeClearValue() {
+        return MAXIMUM_COUNTS_PER_CHANCE;
     }
 
-    public boolean isSpare(DownedPin additionalPitch) {
-        return pin + additionalPitch.pin == 10;
+    public boolean isStrike() {
+        return pin == MAXIMUM_COUNTS_PER_CHANCE;
     }
 
     public static int getDownedPinsOnSpare() {
@@ -56,8 +56,8 @@ public class DownedPin {
         return getWholeClearValue();
     }
 
-    private static int getWholeClearValue() {
-        return 10;
+    public boolean isSpare(DownedPin additionalPitch) {
+        return pin + additionalPitch.pin == MAXIMUM_COUNTS_PER_CHANCE;
     }
 
     public int calculateSum(DownedPin additionalPitch) {
@@ -77,11 +77,11 @@ public class DownedPin {
     }
 
     private String convertPin(int number) {
-        if (number == 10) {
+        if (number == MAXIMUM_COUNTS_PER_CHANCE) {
             return "X";
         }
 
-        if (number == 0) {
+        if (number == MINIMUM_COUNTS_PER_CHANCE) {
             return "-";
         }
 
