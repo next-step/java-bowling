@@ -162,4 +162,16 @@ class NormalFrameTest {
 
         assertThat(firstFrame).isInstanceOf(NormalFrame.class);
     }
+
+    @Test
+    @DisplayName("마지막 프레임에서 LastFrame을 생성하는 지 테스트")
+    void testCreateLastFrameWithLastClass() {
+        Frame ninthFrame = new NormalFrame(9);
+
+        ninthFrame.record(4);
+        ninthFrame.record(4);
+
+        assertThat(ninthFrame.record(4))
+                .isInstanceOf(LastFrame.class);
+    }
 }

@@ -15,7 +15,7 @@ public class NormalFrame extends Frame {
     @Override
     public Frame record(int downedPin) {
         if (isEnd()) {
-            NormalFrame next = new NormalFrame(this.frameNumber + 1);
+            Frame next = createNextFrame();
             next.record(downedPin);
             return next;
         }
@@ -23,6 +23,16 @@ public class NormalFrame extends Frame {
         status = status.record(downedPin);
 
         return this;
+    }
+
+    private Frame createNextFrame() {
+        int nextFrameNumber = frameNumber + 1;
+
+        if (nextFrameNumber == 10) {
+            return new LastFrame();
+        }
+
+        return new NormalFrame(nextFrameNumber);
     }
 
     @Override
