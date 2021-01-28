@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.bowlingexception.IllegalFrameRecordException;
 import bowling.bowlingexception.InvalidScoreCalculationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -115,9 +118,18 @@ public class LastFrameTest {
         assertThat(frame.getDescriptionForm()).isEqualTo(expected);
     }
 
+    private static Stream<Arguments> severalEndingScenarioOfLastFrame() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(1, 3)),
+                Arguments.of(Arrays.asList(10, 4, 5)),
+                Arguments.of(Arrays.asList(5, 5, 9)),
+                Arguments.of(Arrays.asList(10, 10, 10))
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("thirdRecordScenario")
-    @DisplayName("2회차 시도 이후 출력")
+    @DisplayName("3회차 시도 이후 출력")
     void descriptionAfterThirdPitch(int firstPitch, int secondPitch, int thirdPitch, String expected) {
         LastFrame frame = new LastFrame();
         frame.record(firstPitch);
@@ -125,6 +137,20 @@ public class LastFrameTest {
         frame.record(thirdPitch);
 
         assertThat(frame.getDescriptionForm()).isEqualTo(expected);
+    }
+
+    @MethodSource("severalEndingScenarioOfLastFrame")
+    @DisplayName("프레임 종료 이후 record에 대한 예외처리")
+    @ParameterizedTest
+    void exceptionAfterFrameIsEnd(List<Integer> scenario) {
+        LastFrame frame = new LastFrame();
+
+        for (Integer downedPin : scenario) {
+            frame.record(downedPin);
+        }
+
+        assertThatThrownBy(() -> frame.record(3))
+                .isInstanceOf(IllegalFrameRecordException.class);
     }
 
     @Test

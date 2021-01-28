@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.bowlingexception.IllegalFrameRecordException;
 import bowling.bowlingexception.InvalidScoreCalculationException;
 import bowling.domain.frame.status.*;
 
@@ -21,6 +22,10 @@ public class LastFrame extends Frame {
 
     @Override
     public Frame record(int downedPin) {
+        if (isEnd()) {
+            throw new IllegalFrameRecordException();
+        }
+
         if (getLatestStatus().isEnd()) {
             status.add(new Start());
         }
@@ -29,7 +34,7 @@ public class LastFrame extends Frame {
         Status newLatestStatus = getLatestStatus().record(downedPin);
         setLatestStatus(newLatestStatus);
 
-        return null;
+        return this;
     }
 
     private Status getLatestStatus() {

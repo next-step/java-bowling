@@ -122,4 +122,4 @@
     * [X] LastFrame을 생성하는 기능
 
 * 기타
-  - LastFrame 스코어링 종료 이후 예외처리
+  - [X] LastFrame 스코어링 종료 이후 예외처리
