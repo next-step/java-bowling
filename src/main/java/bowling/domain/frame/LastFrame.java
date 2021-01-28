@@ -19,7 +19,7 @@ public class LastFrame extends Frame {
     }
 
     @Override
-    public void record(int downedPin) {
+    public Frame record(int downedPin) {
         if (getLatestStatus().isEnd()) {
             status.add(new Start());
         }
@@ -27,6 +27,8 @@ public class LastFrame extends Frame {
         numPitch += 1;
         Status newLatestStatus = getLatestStatus().record(downedPin);
         setLatestStatus(newLatestStatus);
+
+        return null;
     }
 
     private Status getLatestStatus() {

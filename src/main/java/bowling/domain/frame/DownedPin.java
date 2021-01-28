@@ -48,6 +48,18 @@ public class DownedPin {
         return pin + additionalPitch.pin == 10;
     }
 
+    public static int getDownedPinsOnSpare() {
+        return getWholeClearValue();
+    }
+
+    public static int getDownedPinsOnStrike() {
+        return getWholeClearValue();
+    }
+
+    private static int getWholeClearValue() {
+        return 10;
+    }
+
     public int calculateSum(DownedPin additionalPitch) {
         return pin + additionalPitch.pin;
     }
