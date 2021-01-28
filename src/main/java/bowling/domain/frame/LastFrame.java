@@ -14,7 +14,7 @@ public class LastFrame extends Frame {
     private int numPitch;
 
     public LastFrame() {
-        super(10);
+        super(lastFrame);
         numPitch = 0;
         status = new ArrayList<>();
         status.add(new Start());

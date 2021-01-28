@@ -28,7 +28,7 @@ public class NormalFrame extends Frame {
     private Frame createNextFrame() {
         int nextFrameNumber = frameNumber + 1;
 
-        if (nextFrameNumber == 10) {
+        if (nextFrameNumber == lastFrame) {
             return new LastFrame();
         }
 

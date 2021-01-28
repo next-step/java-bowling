@@ -2,8 +2,8 @@ package bowling.domain.frame;
 
 public abstract class Frame {
 
-    private static final int firstFrame = 1;
-    private static final int lastFrame = 10;
+    protected static final int firstFrame = 1;
+    protected static final int lastFrame = 10;
 
     protected int frameNumber;
 
@@ -21,7 +21,7 @@ public abstract class Frame {
     public abstract String getDescriptionForm();
 
     public static Frame createInitialFrame() {
-        return new NormalFrame(1);
+        return new NormalFrame(firstFrame);
     }
 
 }
