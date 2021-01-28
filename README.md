@@ -110,3 +110,16 @@
 * 프레임 결과 반환 기능 추가. description 과 점수, 누적점수 출력기능 포함?
 * 프레임에 투구 결과 리스트를 반환하는 기능.(미래의 프레임에서 누적 결과를 가져올 때 사용)
 
+* Frame에서 스코어를 반환해주는 기능
+  * 필요시에 다음 프레임에 접근해서 피치 결과를 가져오는 기능
+    - Strike -> Strike -> Strike : 3개의 프레임에 걸쳐서 이루어짐
+    - Strike -> Miss, Spare
+    - Strike -> 추가 점수 없음 : 예외 처리
+    - Spare -> Strike, Spare, Miss
+    - Spare -> 추가 시도 없음 등 : 예외 처리
+  * [X] NormalFrame 에서 다음 NormalFrame 혹은 LastFrame 을 생성하는 기능
+    * [X] NormalFrame 에서 다음 NormalFrame을 생성하는 기능
+    * [X] LastFrame을 생성하는 기능
+
+* 기타
+  - LastFrame 스코어링 종료 이후 예외처리
