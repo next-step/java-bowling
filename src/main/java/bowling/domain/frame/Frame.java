@@ -5,7 +5,7 @@ public abstract class Frame {
     protected static final int firstFrame = 1;
     protected static final int lastFrame = 10;
 
-    protected int frameNumber;
+    private final int frameNumber;
 
     public Frame(int frameNumber) {
         if (frameNumber < firstFrame || frameNumber > lastFrame) {
@@ -24,4 +24,13 @@ public abstract class Frame {
         return new NormalFrame(firstFrame);
     }
 
+    public Frame createNextFrame() {
+        int nextFrameNumber = frameNumber + 1;
+
+        if (nextFrameNumber == lastFrame) {
+            return new LastFrame();
+        }
+
+        return new NormalFrame(nextFrameNumber);
+    }
 }

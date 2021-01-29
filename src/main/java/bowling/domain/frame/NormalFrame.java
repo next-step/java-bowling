@@ -25,16 +25,6 @@ public class NormalFrame extends Frame {
         return this;
     }
 
-    private Frame createNextFrame() {
-        int nextFrameNumber = frameNumber + 1;
-
-        if (nextFrameNumber == lastFrame) {
-            return new LastFrame();
-        }
-
-        return new NormalFrame(nextFrameNumber);
-    }
-
     @Override
     public boolean isEnd() {
         return status.isEnd();
