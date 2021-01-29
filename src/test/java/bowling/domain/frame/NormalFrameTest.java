@@ -117,31 +117,6 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("MISS 상태의 계산")
-    void calculateScoreOnMiss() {
-        NormalFrame frame = (NormalFrame) Frame.createInitialFrame();
-        frame.record(3);
-        frame.record(5);
-
-        assertThat(frame.calculateScore())
-                .isEqualTo(8);
-    }
-
-    @Test
-    @DisplayName("Spare 상태의 계산")
-    void calculateScoreMiss() {
-        NormalFrame firstFrame = (NormalFrame) Frame.createInitialFrame();
-        firstFrame.record(3);
-        firstFrame.record(7);
-
-        NormalFrame secondFrame = (NormalFrame) Frame.createInitialFrame();
-        secondFrame.record(8);
-
-        assertThat(firstFrame.calculateScore())
-                .isEqualTo(18);
-    }
-
-    @Test
     @DisplayName("Frame 완료(Miss, Spare, Strike) 시 새로운 Frame 반환")
     void createNextFrame() {
         Frame firstFrame = Frame.createInitialFrame();
@@ -173,5 +148,55 @@ class NormalFrameTest {
 
         assertThat(ninthFrame.record(4))
                 .isInstanceOf(LastFrame.class);
+    }
+
+    @Test
+    @DisplayName("MISS 상태의 계산")
+    void calculateScoreOnMiss() {
+        NormalFrame frame = (NormalFrame) Frame.createInitialFrame();
+        frame.record(3);
+        frame.record(5);
+
+        assertThat(frame.calculateScore())
+                .isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("Spare 상태의 계산")
+    void calculateScoreMiss() {
+        NormalFrame firstFrame = (NormalFrame) Frame.createInitialFrame();
+        firstFrame.record(3);
+        firstFrame.record(7);
+
+        Frame secondFrame = firstFrame.record(8);
+
+        assertThat(firstFrame.calculateScore())
+                .isEqualTo(18);
+    }
+
+    @Test
+    @DisplayName("Strike -> Miss나 Spare의 계산")
+    void calculateScoreWhenStrikeWithMissSpare() {
+        NormalFrame firstFrame = (NormalFrame) Frame.createInitialFrame();
+        Frame secondFrame = firstFrame.record(10);
+
+        secondFrame.record(4);
+        secondFrame.record(4);
+
+        assertThat(firstFrame.calculateScore())
+                .isEqualTo(18);
+    }
+
+    @Test
+    @DisplayName("Strike -> Strike -> Strike 의 스코어 계산")
+    void calculateScoreWhenContinuousStrike() {
+        NormalFrame firstFrame = (NormalFrame) Frame.createInitialFrame();
+
+        Frame secondFrame = firstFrame.record(10);
+        Frame thirdFrame = secondFrame.record(10);
+        thirdFrame.record(10);
+
+        assertThat(firstFrame.calculateScore())
+                .isEqualTo(30);
     }
 }
