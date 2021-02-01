@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.bowlingexception.IllegalPinRangeException;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -104,5 +105,16 @@ public class DownedPinTest {
 
         assertThat(first.calculateSum(second))
                 .isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("Score가 Pin에 메시지로 전달되면 넘어진 Pin 갯수를 Score에 제공하여 새로운 Score를 반환함")
+    void addPinToScore() {
+        DownedPin pin = DownedPin.fromNumber(4);
+        Score score = new Score(13, 2);
+
+        Score newScore = pin.addToScore(score);
+
+        assertThat(newScore).isEqualTo(new Score(17, 1));
     }
 }

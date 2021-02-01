@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.bowlingexception.IllegalPinRangeException;
+import bowling.domain.score.Score;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -86,5 +87,9 @@ public class DownedPin {
         }
 
         return Integer.toString(number);
+    }
+
+    public Score addToScore(Score score) {
+        return score.addScore(pin);
     }
 }
