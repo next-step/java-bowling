@@ -29,6 +29,10 @@ public class Score {
         return new Score(currentScore + pitch, leftChance - 1);
     }
 
+    public boolean isFixed() {
+        return leftChance == 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

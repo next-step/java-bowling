@@ -44,4 +44,16 @@ class ScoreTest {
                 () -> new Score(10, leftChance)
         ).isInstanceOf(InvalidLeftChanceException.class);
     }
+
+    @Test
+    @DisplayName("추가적으로 점수 등록이 필요한 지에 대해 인터페이스 제공")
+    void abc() {
+        Score score = new Score(10, 2);
+
+        assertThat(score.isFixed()).isFalse();
+        score = score.addScore(4);
+        assertThat(score.isFixed()).isFalse();
+        score = score.addScore(10);
+        assertThat(score.isFixed()).isTrue();
+    }
 }
