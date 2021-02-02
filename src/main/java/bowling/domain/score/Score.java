@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Score {
 
+    public static final int UNDEFINED = -1;
     private static final int MINIMUM_COUNTS_OF_BONUS = 0;
     private static final int MAXIMUM_COUNTS_OF_BONUS = 2;
 
@@ -31,6 +32,14 @@ public class Score {
 
     public boolean isFixed() {
         return leftChance == 0;
+    }
+
+    public int calculateScore() {
+        if (!isFixed()) {
+            return UNDEFINED;
+        }
+
+        return currentScore;
     }
 
     @Override

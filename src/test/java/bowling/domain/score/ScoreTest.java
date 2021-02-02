@@ -56,4 +56,16 @@ class ScoreTest {
         score = score.addScore(10);
         assertThat(score.isFixed()).isTrue();
     }
+
+    @Test
+    @DisplayName("스코어 계산")
+    void calculateScore() {
+        Score score = new Score(10, 2);
+
+        assertThat(score.calculateScore()).isEqualTo(Score.UNDEFINED);
+        score = score.addScore(4);
+        assertThat(score.calculateScore()).isEqualTo(Score.UNDEFINED);
+        score = score.addScore(10);
+        assertThat(score.calculateScore()).isEqualTo(24);
+    }
 }
