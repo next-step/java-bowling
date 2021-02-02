@@ -1,6 +1,7 @@
 package bowling.domain.frame.status;
 
 import bowling.bowlingexception.InvalidScoreCalculationException;
+import bowling.domain.score.Score;
 
 public abstract class OnPitching implements Status {
 
@@ -10,7 +11,7 @@ public abstract class OnPitching implements Status {
     }
 
     @Override
-    public int calculateScore() {
+    public Score calculateOriginalScoreOfFrame() {
         throw new InvalidScoreCalculationException();
     }
 }

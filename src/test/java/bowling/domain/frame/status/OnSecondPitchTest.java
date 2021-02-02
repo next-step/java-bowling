@@ -1,9 +1,11 @@
 package bowling.domain.frame.status;
 
+import bowling.bowlingexception.InvalidScoreCalculationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class OnSecondPitchTest {
 
@@ -32,5 +34,16 @@ class OnSecondPitchTest {
 
         assertThat(onSecondPitch.record(4))
                 .isInstanceOf(Miss.class);
+    }
+
+    @Test
+    @DisplayName("OnSecondPitch 에서 스코어 반환 요청에 대한 예외처리 테스트")
+    void calculateScore() {
+
+        OnSecondPitch secondPitch = new OnSecondPitch(4);
+
+        assertThatThrownBy(
+                secondPitch::calculateOriginalScoreOfFrame
+        ).isInstanceOf(InvalidScoreCalculationException.class);
     }
 }

@@ -2,6 +2,7 @@ package bowling.domain.frame.status;
 
 import bowling.bowlingexception.InvalidPinStatusException;
 import bowling.domain.frame.DownedPin;
+import bowling.domain.score.Score;
 
 public class Miss extends Ended {
     private final DownedPin firstPitch;
@@ -22,7 +23,7 @@ public class Miss extends Ended {
     }
 
     @Override
-    public int calculateScore() {
-        return firstPitch.calculateSum(secondPitch);
+    public Score calculateOriginalScoreOfFrame() {
+        return new Score(firstPitch.calculateSum(secondPitch), 0);
     }
 }

@@ -1,6 +1,7 @@
 package bowling.domain.frame.status;
 
 import bowling.bowlingexception.IllegalFrameRecordException;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,5 +30,14 @@ class StrikeTest {
     void isEnd() {
         assertThat(new Strike().isEnd())
                 .isTrue();
+    }
+
+    @Test
+    @DisplayName("Strike에서 기본 스코어를 반환하는 지에 대한 테스트")
+    void calculateScore() {
+        Strike strike = new Strike();
+
+        assertThat(strike.calculateOriginalScoreOfFrame())
+                .isEqualTo(new Score(10, 2));
     }
 }

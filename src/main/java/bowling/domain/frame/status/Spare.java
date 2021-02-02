@@ -1,8 +1,8 @@
 package bowling.domain.frame.status;
 
 import bowling.bowlingexception.InvalidPinStatusException;
-import bowling.bowlingexception.InvalidScoreCalculationException;
 import bowling.domain.frame.DownedPin;
+import bowling.domain.score.Score;
 
 public class Spare extends Ended {
 
@@ -24,7 +24,7 @@ public class Spare extends Ended {
     }
 
     @Override
-    public int calculateScore() {
-        throw new InvalidScoreCalculationException();
+    public Score calculateOriginalScoreOfFrame() {
+        return new Score(10, 1);
     }
 }

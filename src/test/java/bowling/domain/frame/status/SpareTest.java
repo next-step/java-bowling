@@ -2,6 +2,7 @@ package bowling.domain.frame.status;
 
 import bowling.bowlingexception.InvalidPinStatusException;
 import bowling.domain.frame.DownedPin;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,5 +42,17 @@ class SpareTest {
 
         assertThat(status.getDescription())
                 .isEqualTo("- | /");
+    }
+
+    @Test
+    @DisplayName("Miss에서 기본 스코어를 반환하는 지에 대한 테스트")
+    void calculateScore() {
+        DownedPin firstPitch = DownedPin.fromNumber(5);
+        DownedPin secondPitch = firstPitch.fromPreviousPitch(5);
+
+        Spare spare = new Spare(firstPitch, secondPitch);
+
+        assertThat(spare.calculateOriginalScoreOfFrame())
+                .isEqualTo(new Score(10, 1));
     }
 }

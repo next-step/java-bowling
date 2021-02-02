@@ -1,5 +1,7 @@
 package bowling.domain.frame.status;
 
+import bowling.domain.score.Score;
+
 public interface Status {
 
     String getDescription();
@@ -8,6 +10,6 @@ public interface Status {
 
     boolean isEnd();
 
-    int calculateScore();
+    Score calculateOriginalScoreOfFrame();
 
 }

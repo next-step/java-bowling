@@ -3,6 +3,7 @@ package bowling.domain.frame.status;
 import bowling.bowlingexception.IllegalFrameRecordException;
 import bowling.bowlingexception.InvalidPinStatusException;
 import bowling.domain.frame.DownedPin;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -68,5 +69,17 @@ public class MissTest {
 
         assertThat(status.getDescription())
                 .isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("Miss에서 기본 스코어를 반환하는 지에 대한 테스트")
+    void calculateScore() {
+        DownedPin firstPitch = DownedPin.fromNumber(4);
+        DownedPin secondPitch = firstPitch.fromPreviousPitch(5);
+
+        Miss miss = new Miss(firstPitch, secondPitch);
+
+        assertThat(miss.calculateOriginalScoreOfFrame())
+                .isEqualTo(new Score(9, 0));
     }
 }
