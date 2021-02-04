@@ -1,50 +1,75 @@
 package bowling.domain.frame;
 
+import bowling.bowlingexception.IllegalFrameRecordException;
+import bowling.domain.frame.status.*;
+import bowling.domain.score.Score;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class LastFrame implements Frame {
+public class LastFrame extends Frame {
 
-    private static final int MAXIMUM_NUMBER_OF_PITCHES_IN_LAST_FRAME = 3;
-
-    private final List<NormalFrame> frames;
-    private int numPitches;
+    private final List<Status> status;
+    private int numPitch;
 
     public LastFrame() {
-        this.frames = new ArrayList<>();
-        frames.add(new NormalFrame());
-        this.numPitches = 0;
+        super(lastFrame);
+        numPitch = 0;
+        status = new ArrayList<>();
+        status.add(new Start());
     }
 
     @Override
-    public void record(int numDownedPins) {
-        if (getLatestFrame().isEnd()) {
-            frames.add(new NormalFrame());
+    public Frame record(int downedPin) {
+        if (isEnd()) {
+            throw new IllegalFrameRecordException();
         }
 
-        getLatestFrame().record(numDownedPins);
-        numPitches += 1;
+        if (getLatestStatus().isEnd()) {
+            status.add(new Start());
+        }
+
+        numPitch += 1;
+        Status newLatestStatus = getLatestStatus().record(downedPin);
+        setLatestStatus(newLatestStatus);
+
+        return this;
+    }
+
+    private Status getLatestStatus() {
+        return status.get(status.size() - 1);
+    }
+
+    private void setLatestStatus(Status stat) {
+        status.set(status.size() - 1, stat);
     }
 
     @Override
     public boolean isEnd() {
-        FrameStatus initialFrameStatus = getInitialFrame().decideStatus();
-
-        return initialFrameStatus == FrameStatus.MISS ||
-                ((initialFrameStatus == FrameStatus.STRIKE || initialFrameStatus == FrameStatus.SPARE) &&
-                        this.numPitches == MAXIMUM_NUMBER_OF_PITCHES_IN_LAST_FRAME);
+        Status initialStat = getInitialStatus();
+        return initialStat instanceof Miss ||
+                (initialStat instanceof Strike || initialStat instanceof Spare) && numPitch == 3;
     }
 
-    public List<NormalFrame> getFrames() {
-        return Collections.unmodifiableList(frames);
+    private Status getInitialStatus() {
+        return status.get(0);
     }
 
-    private NormalFrame getInitialFrame() {
-        return frames.get(0);
+    @Override
+    public String getDescriptionForm() {
+        return status.stream()
+                .map(Status::getDescription)
+                .collect(Collectors.joining(" | "));
     }
 
-    private NormalFrame getLatestFrame() {
-        return frames.get(frames.size() - 1);
+    @Override
+    protected Score addBonus(Score originalScore) {
+        return null;
+    }
+
+    @Override
+    public int calculateScore() {
+        return 0;
     }
 }

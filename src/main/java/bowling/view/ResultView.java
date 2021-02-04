@@ -1,35 +1,49 @@
 package bowling.view;
 
-import bowling.dto.BowlingStatusDTO;
-import bowling.dto.UserDTO;
+import java.util.List;
+
+import static bowling.view.ContentPrintUtils.*;
 
 public class ResultView {
 
-    private static final String PLAYER_NAME_MESSAGE = "플레이어 이름은(3 english letters)?:";
-    private static final String CURRENT_FRAME_MESSAGE = "프레임 투구 : ";
+    private static final int maximumCountsOfFrames = 10;
+    private static final int defaultMargin = 7;
 
     private ResultView() {
     }
 
-    public static void printAskUserNameMessage() {
-        System.out.print(PLAYER_NAME_MESSAGE);
+    public static void printResults(String name, List<String> descriptions) {
+        printStatusBar(descriptions);
+        printName(name);
+        printDescription(descriptions);
     }
 
-    public static void printCurrentFrameNumber(BowlingStatusDTO bowlingStatusDTO) {
-        System.out.print(bowlingStatusDTO.getCurrentFrame() + CURRENT_FRAME_MESSAGE);
+    private static void printStatusBar(List<String> contents) {
+        System.out.print("| NAME |");
+
+        List<String> contentsWithEmptyContents = fillEmptyFrameContent(contents, maximumCountsOfFrames);
+
+        for (int i = 1; i <= maximumCountsOfFrames; i++) {
+            String content = fillBothSideMargin(Integer.toString(i),
+                    Math.max(contentsWithEmptyContents.get(i - 1).length() + 2, defaultMargin));
+
+            System.out.print(content + "|");
+        }
+        System.out.println();
     }
 
-    public static void printScoreBoard(UserDTO userDTO, BowlingStatusDTO bowlingStatusDTO) {
-        System.out.print("|  NAME  |");
-        for (int i = 1; i <= 9; i++) {
-            System.out.print("   " + i + "   |");
-        }
-        System.out.println("    " + 10 + "     |");
+    public static void printName(String name) {
+        System.out.print("|  " + name + " |");
+    }
 
-        System.out.print("|   " + userDTO.getName() + "  |");
-        for (String status : bowlingStatusDTO.getFrames()) {
-            System.out.print(status + "|");
+    public static void printDescription(List<String> contents) {
+        List<String> contentsWithEmpty = fillEmptyFrameContent(contents, maximumCountsOfFrames);
+
+        for (String content : contentsWithEmpty) {
+            String marginAndBoardingFilledContent = fillBothSideMargin(fillContentBoarding(content), defaultMargin);
+            System.out.print(marginAndBoardingFilledContent + "|");
         }
+
         System.out.println();
     }
 }

@@ -25,7 +25,7 @@ public class UserTest {
 
     @Test
     @DisplayName("empty string")
-    void testEmptyString() {
+    void emptyString() {
         assertThatThrownBy(() -> new User(""))
                 .isInstanceOf(InvalidNameFormatException.class);
     }
@@ -33,7 +33,7 @@ public class UserTest {
     @ParameterizedTest
     @ValueSource(strings = {"AB", "FEFE"})
     @DisplayName("3글자가 아닌 문자열 테스트")
-    void testNotThree(String input) {
+    void notThree(String input) {
         assertThatThrownBy(() -> new User(input))
                 .isInstanceOf(InvalidNameFormatException.class);
     }
@@ -41,7 +41,7 @@ public class UserTest {
     @ParameterizedTest
     @ValueSource(strings = {"AB1", "고De", "가나다"})
     @DisplayName("영어 문자 이외 다른 글자를 포함하고 있을 때")
-    void testWithInvalidChar(String input) {
+    void testWithInvalidCharacter(String input) {
         assertThatThrownBy(() -> new User(input))
                 .isInstanceOf(InvalidNameFormatException.class);
     }

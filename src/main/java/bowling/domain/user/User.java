@@ -1,7 +1,6 @@
 package bowling.domain.user;
 
 import bowling.bowlingexception.InvalidNameFormatException;
-import bowling.dto.UserDTO;
 
 import java.util.regex.Pattern;
 
@@ -21,7 +20,7 @@ public class User {
         }
     }
 
-    public UserDTO makeDTO() {
-        return new UserDTO(this.name);
+    public String getName() {
+        return name;
     }
 }

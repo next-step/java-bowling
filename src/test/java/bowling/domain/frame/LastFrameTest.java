@@ -1,41 +1,59 @@
 package bowling.domain.frame;
 
+import bowling.bowlingexception.IllegalFrameRecordException;
+import bowling.bowlingexception.InvalidScoreCalculationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class LastFrameTest {
 
     @Test
-    @DisplayName("MISS 상태일 때 2회 투구")
-    void testTwoPitch() {
+    @DisplayName("일반적인 점수 입력")
+    void recordScore() {
+        LastFrame frame = new LastFrame();
+
+        frame.record(9);
+    }
+
+    @Test
+    @DisplayName("첫 2회 시도가 MISS일 때의 종료 시나리오")
+    void endConditionWhenMiss() {
         LastFrame frame = new LastFrame();
 
         assertThat(frame.isEnd()).isFalse();
         frame.record(4);
         assertThat(frame.isEnd()).isFalse();
-        frame.record(3);
+        frame.record(5);
         assertThat(frame.isEnd()).isTrue();
     }
 
     @Test
-    @DisplayName("첫 Strike 상태일 때 3회 투구")
-    void testStrike() {
+    @DisplayName("Strike 이후 추가 2회 종료 시나리오")
+    void endConditionWithStrike() {
         LastFrame frame = new LastFrame();
 
         assertThat(frame.isEnd()).isFalse();
         frame.record(10);
         assertThat(frame.isEnd()).isFalse();
-        frame.record(3);
+        frame.record(5);
         assertThat(frame.isEnd()).isFalse();
         frame.record(4);
         assertThat(frame.isEnd()).isTrue();
     }
 
     @Test
-    @DisplayName("첫 Spare 상태일 때 3회 투구")
-    void testSpare() {
+    @DisplayName("Spare 이후 추가 2회 종료 시나리오")
+    void endConditionWithSpare() {
         LastFrame frame = new LastFrame();
 
         assertThat(frame.isEnd()).isFalse();
@@ -43,7 +61,104 @@ public class LastFrameTest {
         assertThat(frame.isEnd()).isFalse();
         frame.record(6);
         assertThat(frame.isEnd()).isFalse();
-        frame.record(4);
+        frame.record(9);
         assertThat(frame.isEnd()).isTrue();
+    }
+
+    private static Stream<Arguments> oneRecordScenario() {
+        return Stream.of(
+                Arguments.of(0, "-"),
+                Arguments.of(1, "1"),
+                Arguments.of(9, "9"),
+                Arguments.of(10, "X")
+        );
+    }
+
+    private static Stream<Arguments> twoRecordScenario() {
+        return Stream.of(
+                Arguments.of(0, 10, "- | /"),
+                Arguments.of(1, 8, "1 | 8"),
+                Arguments.of(0, 0, "- | -"),
+                Arguments.of(10, 10, "X | X"),
+                Arguments.of(10, 7, "X | 7"),
+                Arguments.of(10, 0, "X | -")
+        );
+    }
+
+    private static Stream<Arguments> thirdRecordScenario() {
+        return Stream.of(
+                Arguments.of(0, 10, 0, "- | / | -"),
+                Arguments.of(0, 10, 4, "- | / | 4"),
+                Arguments.of(0, 10, 10, "- | / | X"),
+                Arguments.of(1, 9, 0, "1 | / | -"),
+                Arguments.of(10, 10, 0, "X | X | -"),
+                Arguments.of(10, 6, 4, "X | 6 | /"),
+                Arguments.of(10, 10, 10, "X | X | X")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("oneRecordScenario")
+    @DisplayName("1회차 시도 이후 출력")
+    void descriptionAfterFirstPitch(int firstPitch, String expected) {
+        LastFrame frame = new LastFrame();
+        frame.record(firstPitch);
+
+        assertThat(frame.getDescriptionForm()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("twoRecordScenario")
+    @DisplayName("2회차 시도 이후 출력")
+    void descriptionAfterSecondPitch(int firstPitch, int secondPitch, String expected) {
+        LastFrame frame = new LastFrame();
+        frame.record(firstPitch);
+        frame.record(secondPitch);
+
+        assertThat(frame.getDescriptionForm()).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> severalEndingScenarioOfLastFrame() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(1, 3)),
+                Arguments.of(Arrays.asList(10, 4, 5)),
+                Arguments.of(Arrays.asList(5, 5, 9)),
+                Arguments.of(Arrays.asList(10, 10, 10))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("thirdRecordScenario")
+    @DisplayName("3회차 시도 이후 출력")
+    void descriptionAfterThirdPitch(int firstPitch, int secondPitch, int thirdPitch, String expected) {
+        LastFrame frame = new LastFrame();
+        frame.record(firstPitch);
+        frame.record(secondPitch);
+        frame.record(thirdPitch);
+
+        assertThat(frame.getDescriptionForm()).isEqualTo(expected);
+    }
+
+    @MethodSource("severalEndingScenarioOfLastFrame")
+    @DisplayName("프레임 종료 이후 record에 대한 예외처리")
+    @ParameterizedTest
+    void exceptionAfterFrameIsEnd(List<Integer> scenario) {
+        LastFrame frame = new LastFrame();
+
+        for (Integer downedPin : scenario) {
+            frame.record(downedPin);
+        }
+
+        assertThatThrownBy(() -> frame.record(3))
+                .isInstanceOf(IllegalFrameRecordException.class);
+    }
+
+    @Test
+    @DisplayName("프레임이 종료되지 않은 상태일 때의 스코어 반환 요청 예외처리")
+    void scoringWhenItIsCannotBeCalculated() {
+        LastFrame lastFrame = new LastFrame();
+        assertThatThrownBy(
+                lastFrame::calculateScore
+        ).isInstanceOf(InvalidScoreCalculationException.class);
     }
 }
