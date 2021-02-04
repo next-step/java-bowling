@@ -37,7 +37,7 @@ class StrikeTest {
     void calculateScore() {
         Strike strike = new Strike();
 
-        assertThat(strike.calculateOriginalScoreOfFrame())
+        assertThat(strike.calculateBaseScoreOfFrame())
                 .isEqualTo(new Score(10, 2));
     }
 }

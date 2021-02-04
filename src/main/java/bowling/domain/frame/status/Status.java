@@ -10,6 +10,7 @@ public interface Status {
 
     boolean isEnd();
 
-    Score calculateOriginalScoreOfFrame();
+    Score calculateBaseScoreOfFrame();
 
+    Score addBonus(Score originalScore);
 }

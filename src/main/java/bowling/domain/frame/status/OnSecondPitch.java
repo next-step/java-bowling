@@ -2,6 +2,7 @@ package bowling.domain.frame.status;
 
 import bowling.bowlingexception.InvalidPinStatusException;
 import bowling.domain.frame.DownedPin;
+import bowling.domain.score.Score;
 
 public class OnSecondPitch extends OnPitching {
 
@@ -31,5 +32,10 @@ public class OnSecondPitch extends OnPitching {
         }
 
         return new Miss(firstPitch, additionalPitch);
+    }
+
+    @Override
+    public Score addBonus(Score originalScore) {
+        return firstPitch.addToScore(originalScore);
     }
 }

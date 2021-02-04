@@ -11,7 +11,7 @@ public abstract class OnPitching implements Status {
     }
 
     @Override
-    public Score calculateOriginalScoreOfFrame() {
+    public Score calculateBaseScoreOfFrame() {
         throw new InvalidScoreCalculationException();
     }
 }

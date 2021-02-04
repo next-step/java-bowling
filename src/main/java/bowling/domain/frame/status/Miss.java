@@ -23,7 +23,18 @@ public class Miss extends Ended {
     }
 
     @Override
-    public Score calculateOriginalScoreOfFrame() {
+    public Score calculateBaseScoreOfFrame() {
         return new Score(firstPitch.calculateSum(secondPitch), 0);
+    }
+
+    @Override
+    public Score addBonus(Score originalScore) {
+        Score bonusAddedScore = firstPitch.addToScore(originalScore);
+
+        if (!bonusAddedScore.isFixed()) {
+            bonusAddedScore = secondPitch.addToScore(bonusAddedScore);
+        }
+
+        return bonusAddedScore;
     }
 }

@@ -52,7 +52,7 @@ class SpareTest {
 
         Spare spare = new Spare(firstPitch, secondPitch);
 
-        assertThat(spare.calculateOriginalScoreOfFrame())
+        assertThat(spare.calculateBaseScoreOfFrame())
                 .isEqualTo(new Score(10, 1));
     }
 }

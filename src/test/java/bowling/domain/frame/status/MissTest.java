@@ -79,7 +79,7 @@ public class MissTest {
 
         Miss miss = new Miss(firstPitch, secondPitch);
 
-        assertThat(miss.calculateOriginalScoreOfFrame())
+        assertThat(miss.calculateBaseScoreOfFrame())
                 .isEqualTo(new Score(9, 0));
     }
 }

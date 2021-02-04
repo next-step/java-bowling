@@ -43,7 +43,7 @@ class StartTest {
         Start start = new Start();
 
         assertThatThrownBy(
-                start::calculateOriginalScoreOfFrame
+                start::calculateBaseScoreOfFrame
         ).isInstanceOf(InvalidScoreCalculationException.class);
     }
 }

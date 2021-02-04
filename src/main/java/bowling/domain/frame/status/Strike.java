@@ -17,7 +17,12 @@ public class Strike extends Ended {
     }
 
     @Override
-    public Score calculateOriginalScoreOfFrame() {
+    public Score calculateBaseScoreOfFrame() {
         return new Score(10, 2);
+    }
+
+    @Override
+    public Score addBonus(Score originalScore) {
+        return firstPitch.addToScore(originalScore);
     }
 }

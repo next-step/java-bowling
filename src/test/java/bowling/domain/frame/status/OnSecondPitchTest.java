@@ -43,7 +43,7 @@ class OnSecondPitchTest {
         OnSecondPitch secondPitch = new OnSecondPitch(4);
 
         assertThatThrownBy(
-                secondPitch::calculateOriginalScoreOfFrame
+                secondPitch::calculateBaseScoreOfFrame
         ).isInstanceOf(InvalidScoreCalculationException.class);
     }
 }
