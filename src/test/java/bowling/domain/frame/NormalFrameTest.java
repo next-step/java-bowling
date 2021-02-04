@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.bowlingexception.IllegalPinRangeException;
 import bowling.bowlingexception.InvalidScoreCalculationException;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -178,13 +179,41 @@ class NormalFrameTest {
     @DisplayName("Strike -> Miss나 Spare의 계산")
     void calculateScoreWhenStrikeWithMissSpare() {
         NormalFrame firstFrame = (NormalFrame) Frame.createInitialFrame();
-        Frame secondFrame = firstFrame.record(10);
+        firstFrame.record(10);
 
-        secondFrame.record(4);
+        Frame secondFrame = firstFrame.record(4);
         secondFrame.record(4);
 
         assertThat(firstFrame.calculateScore())
                 .isEqualTo(18);
+    }
+
+    @Test
+    @DisplayName("Strike -> Spare -> Miss와 같은 보너스 점수가 연속적으로 필요한 경우의 테스트 케이스")
+    void calculateScoreWithBonus() {
+        NormalFrame firstFrame = (NormalFrame) Frame.createInitialFrame();
+
+        firstFrame.record(10);
+        assertThat(firstFrame.calculateScore())
+                .isEqualTo(Score.UNDEFINED);
+
+        NormalFrame secondFrame = (NormalFrame) firstFrame.record(4);
+        assertThat(firstFrame.calculateScore())
+                .isEqualTo(Score.UNDEFINED);
+        assertThatThrownBy(secondFrame::calculateScore)
+                .isInstanceOf(InvalidScoreCalculationException.class);
+
+        secondFrame.record(6);
+        assertThat(firstFrame.calculateScore())
+                .isEqualTo(20);
+        assertThat(secondFrame.calculateScore())
+                .isEqualTo(Score.UNDEFINED);
+
+        NormalFrame thirdFrame = (NormalFrame) secondFrame.record(6);
+        assertThat(firstFrame.calculateScore())
+                .isEqualTo(20);
+        assertThat(secondFrame.calculateScore())
+                .isEqualTo(16);
     }
 
     @Test

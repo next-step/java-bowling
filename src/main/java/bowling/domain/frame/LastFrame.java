@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.bowlingexception.IllegalFrameRecordException;
-import bowling.bowlingexception.InvalidScoreCalculationException;
 import bowling.domain.frame.status.*;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,11 +63,13 @@ public class LastFrame extends Frame {
                 .collect(Collectors.joining(" | "));
     }
 
-    public int calculateScore() {
-        if (!isEnd()) {
-            throw new InvalidScoreCalculationException();
-        }
+    @Override
+    protected Score addBonus(Score originalScore) {
+        return null;
+    }
 
+    @Override
+    public int calculateScore() {
         return 0;
     }
 }

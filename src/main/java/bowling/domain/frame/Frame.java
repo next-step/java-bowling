@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
+
 public abstract class Frame {
 
     protected static final int firstFrame = 1;
@@ -33,4 +35,8 @@ public abstract class Frame {
 
         return new NormalFrame(nextFrameNumber);
     }
+
+    protected abstract Score addBonus(Score originalScore);
+
+    public abstract int calculateScore();
 }
