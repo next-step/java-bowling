@@ -8,15 +8,12 @@ import java.util.Optional;
 
 public class Answers {
 
-    private List<Answer> answers;
+    private final List<Answer> answers;
 
     public Answers(List<Answer> answers) {
         this.answers = answers;
     }
 
-    public void of(List<Answer> answers) {
-        this.answers = answers;
-    }
 
     //answer들 삭제 가능여부 체크
     public void checkAllDelible(User loginUser) throws CannotDeleteException {
@@ -25,10 +22,9 @@ public class Answers {
         }
     }
 
-    //answer 전체 삭제
     public void delete() {
         for (Answer answer : answers) {
-            answer.setDeleted(true);
+            answer.delete();
         }
     }
 
