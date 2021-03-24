@@ -1,3 +1,21 @@
+# QnaService
+## 설계
+### ExceptionFactory
+- 해당타입에 맞는 ExceptionFactory 명시적으로 제공
+
+### Validations
+- check하는 함수들 전부 object내부에 설계
+- isOwner
+- countUnauthorized
+- 위 두개의 함수에서 check하여 아닌경우에 exception 생성
+- check 한 것이 존재한다면 exception Factory에서 생성
+
+### MakeDeleteHistory
+- 전부 삭제 history를 만들기에 interface로 확장성 
+
+### CannotDeleteException
+- default tx는 runtime exception을 잡기에 runtime exceptiond으로 변경
+
 # 볼링 게임 점수판
 ## 진행 방법
 * 볼링 게임 점수판 요구사항을 파악한다.
