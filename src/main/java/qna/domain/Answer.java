@@ -1,12 +1,14 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
 
 @Entity
-public class Answer extends AbstractEntity {
+public class Answer extends AbstractEntity implements MakeDeleteHistory{
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -72,4 +74,10 @@ public class Answer extends AbstractEntity {
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
+
+	@Override
+	public DeleteHistory makeDeleteHistory() {
+		this.setDeleted(true);
+		return new DeleteHistory(ContentType.ANSWER, super.getId(), this.getWriter(), LocalDateTime.now());
+	}
 }
