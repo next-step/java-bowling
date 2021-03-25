@@ -70,6 +70,12 @@ public class Question extends AbstractEntity {
         answerList.add(answer);
     }
 
+    public void addAnswerList(List<Answer> answerList) {
+        for (Answer answer : answerList) {
+            addAnswer(answer);
+        }
+    }
+
     private Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
@@ -83,7 +89,7 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public List<Answer> getAnswers() {
+    public List<Answer> getAnswerList() {
         return answerList.getAnswerList();
     }
 
