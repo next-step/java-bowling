@@ -4,7 +4,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -19,10 +22,16 @@ public class QuestionTest {
     void deleteBy_owner_of_question_and_answers() {
         Question questionWithOneAnswer = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         Answer answer = new Answer(1L, UserTest.JAVAJIGI, questionWithOneAnswer, "Answers Contents1");
+        LocalDateTime deleteDate = LocalDateTime.now();
+        DeleteHistory expectedQuestionDeleteHistory = new DeleteHistory(ContentType.QUESTION, questionWithOneAnswer.getId(), questionWithOneAnswer.getWriter(), deleteDate);
+        DeleteHistory expectedAnswerDeleteHistory = new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), deleteDate);
         questionWithOneAnswer.addAnswer(answer);
 
-        questionWithOneAnswer.deleteBy(UserTest.JAVAJIGI);
+        DeleteHistories deleteHistories = questionWithOneAnswer.deleteBy(UserTest.JAVAJIGI, deleteDate);
+        List<DeleteHistory> actualDeleteHistoryList = deleteHistories.getDeleteHistories();
+
         assertThat(questionWithOneAnswer.isDeleted()).isTrue();
+        assertThat(actualDeleteHistoryList).containsExactlyInAnyOrder(expectedQuestionDeleteHistory,expectedAnswerDeleteHistory);
     }
 
     @Test
@@ -30,7 +39,7 @@ public class QuestionTest {
     void deleteBy_not_owner_of_question() {
         Question question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
 
-        assertThatThrownBy(() -> question.deleteBy(UserTest.SANJIGI))
+        assertThatThrownBy(() -> question.deleteBy(UserTest.SANJIGI, LocalDateTime.now()))
                 .isInstanceOf(CannotDeleteException.class);
     }
 
@@ -43,7 +52,7 @@ public class QuestionTest {
         Answer answerByOther = new Answer(2L, UserTest.SANJIGI, question, "Answers Contents2");
         question.addAnswers(Arrays.asList(answerByOwner, answerByOther));
 
-        assertThatThrownBy(() -> question.deleteBy(UserTest.JAVAJIGI))
+        assertThatThrownBy(() -> question.deleteBy(UserTest.JAVAJIGI, LocalDateTime.now()))
                 .isInstanceOf(CannotDeleteException.class);
     }
 }

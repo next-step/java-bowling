@@ -7,9 +7,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -34,23 +36,21 @@ public class Answers {
         return Collections.unmodifiableList(new ArrayList<>(answers));
     }
 
-    public void deleteAllBy(User loginUser) {
+    public DeleteHistories deleteAllBy(User loginUser, LocalDateTime deleteDate) {
         validateAllAuthority(loginUser);
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-        }
+        return answers.stream()
+                .map(answer -> answer.delete(deleteDate))
+                .collect(Collectors.collectingAndThen(Collectors.toList(), DeleteHistories::new));
     }
 
     private void validateAllAuthority(User loginUser) {
-        for (Answer answer : answers) {
-            validateSingleAuthority(answer, loginUser);
+        if (notOwnedAnswerExist(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
 
-    private void validateSingleAuthority(Answer answer, User loginUser) {
-        if (!answer.isOwner(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
+    private boolean notOwnedAnswerExist(User loginUser) {
+        return answers.stream().anyMatch(answer -> !answer.isOwner(loginUser));
     }
 
 }
