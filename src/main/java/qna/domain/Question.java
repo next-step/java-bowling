@@ -18,7 +18,7 @@ public class Question extends AbstractEntity {
     private User writer;
 
     @Embedded
-    private AnswerList answerList;
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -28,14 +28,14 @@ public class Question extends AbstractEntity {
     public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        answerList = new AnswerList();
+        answers = new Answers();
     }
 
     public Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
-        answerList = new AnswerList();
+        answers = new Answers();
     }
 
     public String getTitle() {
@@ -67,10 +67,10 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answerList.add(answer);
+        answers.add(answer);
     }
 
-    public void addAnswerList(List<Answer> answerList) {
+    public void addAnswers(List<Answer> answerList) {
         for (Answer answer : answerList) {
             addAnswer(answer);
         }
@@ -89,14 +89,14 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public List<Answer> getAnswerList() {
-        return answerList.getAnswerList();
+    public List<Answer> getAnswers() {
+        return answers.getAnswers();
     }
 
 
     public void deleteBy(User loginUser) throws CannotDeleteException {
         validateAuthority(loginUser);
-        answerList.deleteAllBy(loginUser);
+        answers.deleteAllBy(loginUser);
         setDeleted(true);
     }
 

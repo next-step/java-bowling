@@ -41,7 +41,7 @@ public class QuestionTest {
         Question question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         Answer answerByOwner = new Answer(1L, UserTest.JAVAJIGI, question, "Answers Contents1");
         Answer answerByOther = new Answer(2L, UserTest.SANJIGI, question, "Answers Contents2");
-        question.addAnswerList(Arrays.asList(answerByOwner, answerByOther));
+        question.addAnswers(Arrays.asList(answerByOwner, answerByOther));
 
         assertThatThrownBy(() -> question.deleteBy(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class);

@@ -8,40 +8,41 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Embeddable
-public class AnswerList {
+public class Answers {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answerList = new ArrayList<>();
+    private List<Answer> answers = new ArrayList<>();
 
-    public AnswerList() {
+    public Answers() {
     }
 
-    public AnswerList(List<Answer> answerList) {
-        this.answerList = answerList;
+    public Answers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     public void add(Answer answer) {
-        answerList.add(answer);
+        answers.add(answer);
     }
 
-    public List<Answer> getAnswerList() {
-        return answerList;
+    public List<Answer> getAnswers() {
+        return Collections.unmodifiableList(new ArrayList<>(answers));
     }
 
     public void deleteAllBy(User loginUser) throws CannotDeleteException {
         validateAllAuthority(loginUser);
-        for (Answer answer : answerList) {
+        for (Answer answer : answers) {
             answer.setDeleted(true);
         }
     }
 
     private void validateAllAuthority(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answerList) {
+        for (Answer answer : answers) {
             validateSingleAuthority(answer, loginUser);
         }
     }
