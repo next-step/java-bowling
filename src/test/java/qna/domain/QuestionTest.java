@@ -16,7 +16,7 @@ public class QuestionTest {
 
     @Test
     @DisplayName("답변과 질문의 작성자가 삭제한 경우 테스트")
-    void deleteBy_owner_of_question_and_answers() throws CannotDeleteException {
+    void deleteBy_owner_of_question_and_answers() {
         Question questionWithOneAnswer = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         Answer answer = new Answer(1L, UserTest.JAVAJIGI, questionWithOneAnswer, "Answers Contents1");
         questionWithOneAnswer.addAnswer(answer);
