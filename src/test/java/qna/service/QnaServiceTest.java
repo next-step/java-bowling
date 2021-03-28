@@ -82,9 +82,15 @@ public class QnaServiceTest {
         }).isInstanceOf(CannotDeleteException.class);
     }
 
+
     private void verifyDeleteHistories() {
         ArgumentCaptor<List<DeleteHistory>> argument = ArgumentCaptor.forClass(List.class);
+        DeleteHistory expectedQuestionDeleteHistory = new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
+        DeleteHistory expectedAnswerDeleteHistory = new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
 
         verify(deleteHistoryService).saveAll(argument.capture());
+
+        List<DeleteHistory> actualDeleteHistoryList = argument.getValue();
+        assertThat(actualDeleteHistoryList).containsExactlyInAnyOrder(expectedQuestionDeleteHistory,expectedAnswerDeleteHistory);
     }
 }
