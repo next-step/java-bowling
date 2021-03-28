@@ -3,6 +3,7 @@ package qna.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -82,10 +83,8 @@ public class QnaServiceTest {
     }
 
     private void verifyDeleteHistories() {
-        List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now())
-                );
-        verify(deleteHistoryService).saveAll(deleteHistories);
+        ArgumentCaptor<List<DeleteHistory>> argument = ArgumentCaptor.forClass(List.class);
+
+        verify(deleteHistoryService).saveAll(argument.capture());
     }
 }
