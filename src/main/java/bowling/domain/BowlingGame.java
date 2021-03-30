@@ -4,30 +4,26 @@ import bowling.dto.ScoreBoard;
 
 public class BowlingGame {
 
-    private int currentFrameNumber;
-
-    private static final int LAST_FRAME = 10;
-
-    private String playerName;
+    private final Player player;
 
     public BowlingGame(String playerName) {
-        this.playerName = playerName;
+        player = new Player(playerName);
     }
 
 
     public ScoreBoard scoreBoard() {
-        return null;
+        return new ScoreBoard(player);
     }
 
     public boolean isDone() {
-        return currentFrameNumber == 10;
+        return player.isDone();
     }
 
     public int currentFrameNumber() {
-        return currentFrameNumber;
+        return player.currentFrameNumber();
     }
 
-    public void play(String pintCounts) {
-
+    public void play(int pintCount) {
+        player.addPinCounts(pintCount);
     }
 }

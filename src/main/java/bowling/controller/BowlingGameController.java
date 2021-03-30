@@ -10,13 +10,10 @@ public class BowlingGameController {
         ResultView.printScoreBoard(bowlingGame.scoreBoard());
         while(!bowlingGame.isDone()){
             int currentFrame = bowlingGame.currentFrameNumber();
-            String pintCounts = InputView.pintCounts(currentFrame);
+            int pintCounts = InputView.pintCounts(currentFrame);
             bowlingGame.play(pintCounts);
             ResultView.printScoreBoard(bowlingGame.scoreBoard());
         }
-
-
-
 
     }
 }

@@ -1,10 +1,16 @@
 package bowling.view;
 
+import bowling.dto.BowlingGameRequest;
+
 import java.util.Scanner;
 
 public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
+
+    public static BowlingGameRequest bowlingGameRequest() {
+return new BowlingGameRequest();
+    }
 
     public static String playerName() {
         System.out.print(MessageConstant.PLAYER_NAME_INPUT);
@@ -12,9 +18,10 @@ public class InputView {
                 .trim();
     }
 
-    public static String pintCounts(int frameNumber) {
+    public static int pintCounts(int frameNumber) {
         System.out.print(frameNumber+MessageConstant.PINS_COUNT);
-        return SCANNER.nextLine()
+        String count = SCANNER.nextLine()
                 .trim();
+        return Integer.parseInt(count);
     }
 }
