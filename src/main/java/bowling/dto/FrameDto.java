@@ -1,6 +1,6 @@
 package bowling.dto;
 
-import bowling.domain.Frame;
+import bowling.domain.FrameOld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,9 @@ public class FrameDto {
 
     private List<Integer> pintCounts = new ArrayList<>();
 
-    public FrameDto(Frame frame) {
-        this.number=frame.number();
-        this.pintCounts=frame.pinCounts();
+    public FrameDto(FrameOld frameOld) {
+        this.number= frameOld.number();
+        this.pintCounts= frameOld.pinCounts();
     }
 
     public int number() {

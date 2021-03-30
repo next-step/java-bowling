@@ -10,36 +10,36 @@ public class Player {
 
     private boolean isDone;
 
-    private List<Frame> frames = new ArrayList<>();
+    private List<FrameOld> frameOlds = new ArrayList<>();
 
     public Player(String name) {
         this.name = name;
-        frames.add(Frame.first());
+        frameOlds.add(FrameOld.first());
     }
 
     public void addPinCounts(int pintCount) {
-        Frame frame = frames.get(frames.size() - 1);
-        frame.addPinCounts(pintCount);
-        if (frame.isDone()) {
-            if (frame.number() == LAST_FRAME) {
+        FrameOld frameOld = frameOlds.get(frameOlds.size() - 1);
+        frameOld.addPinCounts(pintCount);
+        if (frameOld.isDone()) {
+            if (frameOld.number() == LAST_FRAME) {
                 isDone = true;
             } else {
-                frames.add(frame.next());
+                frameOlds.add(frameOld.next());
             }
 
         }
     }
 
     public int currentFrameNumber() {
-        return frames.get(frames.size() - 1).number();
+        return frameOlds.get(frameOlds.size() - 1).number();
     }
 
     public String name() {
         return name;
     }
 
-    public List<Frame> frames() {
-        return frames;
+    public List<FrameOld> frames() {
+        return frameOlds;
     }
 
     public boolean isDone() {
