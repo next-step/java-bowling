@@ -11,4 +11,10 @@ public class InputView {
         return SCANNER.nextLine()
                 .trim();
     }
+
+    public static String pintCounts(int frameNumber) {
+        System.out.print(frameNumber+MessageConstant.PINS_COUNT);
+        return SCANNER.nextLine()
+                .trim();
+    }
 }
