@@ -13,6 +13,15 @@ public class FinalFrame implements Frame{
         this.number = number;
     }
 
+    @Override
+    public void addPintCount(int pinCount) {
+        pintCounts.add(pinCount);
+    }
+
+    @Override
+    public List<Integer> pinCounts() {
+        return pintCounts;
+    }
 
     @Override
     public int number() {

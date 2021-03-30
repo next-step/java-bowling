@@ -1,14 +1,13 @@
 package bowling.domain;
 
-public interface Frame {
-    static NormalFrame first() {
-        return new NormalFrame(1);
-    }
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
 
-    static FinalFrame last(int finalFrameNumber) {
-        return new FinalFrame(finalFrameNumber);
-    }
+public interface Frame {
 
     int number();
 
+    void addPintCount(int pinCount);
+
+    List<Integer> pinCounts();
 }
