@@ -3,6 +3,8 @@ package qna.domain;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -101,5 +103,13 @@ public class Question extends AbstractEntity {
         if (!answers.isAllOwner(loginUser)) {
             throw new CannotDeleteException(ANSWER_NOT_OWNER);
         }
+    }
+
+    public DeleteHistory questionToDeleteHistory() {
+        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
+    }
+
+    public List<DeleteHistory> answersToDeleteHistories() {
+        return answers.answersToDeleteHistories();
     }
 }

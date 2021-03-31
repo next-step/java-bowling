@@ -1,6 +1,5 @@
 package qna.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +11,8 @@ public class DeleteHistories {
         deleteHistories.add(deleteHistory);
     }
 
-    public void addQuestion(Question question) {
-        add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
-    }
-
-    public void addAnswers(Answers answers) {
-        answers.getAnswers()
-                .forEach(answer -> add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now())));
+    public void add(List<DeleteHistory> deleteHistories) {
+        this.deleteHistories.addAll(deleteHistories);
     }
 
     public List<DeleteHistory> getDeleteHistories() {

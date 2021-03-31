@@ -6,8 +6,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -32,5 +34,11 @@ public class Answers {
 
     public void allDelete(boolean isDelete) {
         answers.forEach(answer -> answer.setDeleted(isDelete));
+    }
+
+    public List<DeleteHistory> answersToDeleteHistories() {
+        return answers.stream()
+                .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
+                .collect(Collectors.toList());
     }
 }
