@@ -28,7 +28,7 @@ public class QuestionTest {
     public void setDeleted() throws Exception {
         //given
         boolean deleteTrue = true;
-        boolean deleteFalse = true;
+        boolean deleteFalse = false;
 
         //when
         Q1.setDeleted(deleteTrue);
