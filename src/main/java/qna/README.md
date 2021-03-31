@@ -68,3 +68,5 @@
   - Question.List<Answer>
   - QnAService.List<DeleteHistory>
   
+- QnAService.deleteQuestion 수정
+  
