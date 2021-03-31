@@ -11,6 +11,6 @@ public class PinCountsTest {
         PinCounts pinCounts = new PinCounts();
         pinCounts.add(pinCountInInt);
 
-        assertThat(pinCounts).containsExactly(pinCountInInt);
+        assertThat(pinCounts.counts()).containsExactly(new PinCount(pinCountInInt));
     }
 }
