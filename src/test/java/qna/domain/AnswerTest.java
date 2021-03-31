@@ -49,4 +49,20 @@ public class AnswerTest {
         }).isInstanceOf(NotFoundException.class);
         //then
     }
+
+    @Test
+    @DisplayName("삭제여부 변경 테스트")
+    public void setDelete() throws Exception {
+        //given
+        boolean isDelete01 = true;
+        boolean isDelete02 = false;
+
+        //when
+        A1.setDeleted(isDelete01);
+        A2.setDeleted(isDelete02);
+
+        //then
+        assertThat(A1.isDeleted()).isTrue();
+        assertThat(A2.isDeleted()).isFalse();
+    }
 }
