@@ -22,6 +22,7 @@ public class Answers {
     }
 
     public boolean isOwner(User loginUser) {
-        return false;
+        return answers.stream()
+                .anyMatch(answer -> answer.isOwner(loginUser));
     }
 }
