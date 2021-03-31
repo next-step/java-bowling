@@ -1,9 +1,14 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
+
 import javax.persistence.*;
 
 @Entity
 public class Question extends AbstractEntity {
+    private static final String QUESTION_NOT_OWNER = "질문을 삭제할 권한이 없습니다.";
+    private static final String ANSWER_NOT_OWNER = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -71,6 +76,7 @@ public class Question extends AbstractEntity {
 
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
+        answers.allDelete(deleted);
         return this;
     }
 
@@ -87,8 +93,13 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void delete(boolean isDelete) {
-        this.deleted = isDelete;
-        answers.allDelete(isDelete);
+    public void canDelete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(QUESTION_NOT_OWNER);
+        }
+
+        if (!answers.isAllOwner(loginUser)) {
+            throw new CannotDeleteException(ANSWER_NOT_OWNER);
+        }
     }
 }

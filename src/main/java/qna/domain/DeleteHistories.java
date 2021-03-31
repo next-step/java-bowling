@@ -18,7 +18,7 @@ public class DeleteHistories {
 
     public void addAnswers(Answers answers) {
         answers.getAnswers()
-                .forEach(answer -> deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now())));
+                .forEach(answer -> add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now())));
     }
 
     public List<DeleteHistory> getDeleteHistories() {
