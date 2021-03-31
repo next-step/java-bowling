@@ -35,12 +35,11 @@ public class QnAService {
 
         question.canDelete(loginUser);
 
-        DeleteHistories deleteHistories = new  DeleteHistories();
         question.setDeleted(true);
-        deleteHistories.addQuestion(question);
 
-        Answers answers = question.getAnswers();
-        deleteHistories.addAnswers(answers);
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.addQuestion(question);
+        deleteHistories.addAnswers(question.getAnswers());
 
         deleteHistoryService.saveAll(deleteHistories.getDeleteHistories());
     }
