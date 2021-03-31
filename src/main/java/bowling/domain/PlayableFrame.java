@@ -1,15 +1,14 @@
 package bowling.domain;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface PlayableFrame {
 
-    int number();
+    FrameNumber number();
 
     void addPintCount(int pinCount);
 
-    List<Integer> pinCounts();
+    List<PinCount> pinCounts();
 
     boolean isDone();
 }

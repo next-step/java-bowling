@@ -5,12 +5,10 @@ import java.util.List;
 
 public class FinalFrame implements PlayableFrame {
 
-    private final int number;
-
-    private final List<Integer> pintCounts = new ArrayList<>();
+    private final Frame frame;
 
     public FinalFrame(int number) {
-        this.number = number;
+        this.frame = new Frame(number);
     }
 
     @Override
@@ -18,23 +16,21 @@ public class FinalFrame implements PlayableFrame {
         if (isDone()) {
             throw new IllegalStateException("이미 끝난 프레임 입니다.");
         }
-        pintCounts.add(pinCount);
+        frame.addPintCount(pinCount);
     }
 
     @Override
-    public List<Integer> pinCounts() {
-        return pintCounts;
+    public List<PinCount> pinCounts() {
+        return frame.pinCounts();
     }
 
     @Override
-    public int number() {
-        return number;
+    public FrameNumber number() {
+        return frame.number();
     }
 
     @Override
     public boolean isDone() {
-        int totalPinCounts = pintCounts.stream()
-                .reduce(0, Integer::sum);
 
         if (pintCounts.size() == 3) {
             return true;

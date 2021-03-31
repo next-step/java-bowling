@@ -4,6 +4,8 @@ import java.util.List;
 
 public class NormalFrame implements PlayableFrame {
 
+    private static final int MAX_TRY_COUNT = 2;
+
     private final Frame frame;
 
     public NormalFrame(int number) {
@@ -22,8 +24,8 @@ public class NormalFrame implements PlayableFrame {
         return new NormalFrame(number + 1);
     }
 
-    public int number() {
-        return number;
+    public FrameNumber number() {
+        return frame.number();
     }
 
     @Override
@@ -35,15 +37,14 @@ public class NormalFrame implements PlayableFrame {
     }
 
     @Override
-    public List<Integer> pinCounts() {
+    public List<PinCount> pinCounts() {
         return frame.pinCounts();
     }
 
     @Override
     public boolean isDone() {
-        int totalPinCounts = pintCounts.stream()
-                .reduce(0, Integer::sum);
-        if (totalPinCounts == 10 || pintCounts.size() == 2) {
+        int totalPinCounts = frame.totalPinCounts();
+        if (frame.hasCle() || frame.isReachedMaxTryCount(MAX_TRY_COUNT)) {
             return true;
         }
         return false;
