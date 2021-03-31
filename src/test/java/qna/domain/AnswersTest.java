@@ -17,18 +17,17 @@ public class AnswersTest {
     }
 
     @Test
-    @DisplayName("답변 작성자 일치 확인")
-    public void isOwnerTrue() throws Exception {
+    @DisplayName("모든 답변 작성자 일치")
+    public void isAllOwnerTrue() throws Exception {
         //given
         User user = UserTest.JAVAJIGI;
 
         //when
-        answers.add(AnswerTest.A2);
-        answers.add(AnswerTest.A2);
-        answers.add(AnswerTest.A2);
-        answers.add(AnswerTest.A2);
         answers.add(AnswerTest.A1);
-        boolean isOwner = answers.isOwner(user);
+        answers.add(AnswerTest.A1);
+        answers.add(AnswerTest.A1);
+        answers.add(AnswerTest.A1);
+        boolean isOwner = answers.isAllOwner(user);
 
         //then
         assertThat(isOwner).isTrue();
@@ -36,8 +35,8 @@ public class AnswersTest {
 
 
     @Test
-    @DisplayName("답변 작성자 미일치 확인")
-    public void isOwnerFalse() throws Exception {
+    @DisplayName("모든 답변 작성자 미일치")
+    public void isAllOwnerFalse() throws Exception {
         //given
         User user = UserTest.SANJIGI;
 
@@ -46,10 +45,21 @@ public class AnswersTest {
         answers.add(AnswerTest.A1);
         answers.add(AnswerTest.A1);
         answers.add(AnswerTest.A1);
-        boolean isOwner = answers.isOwner(user);
+        answers.add(AnswerTest.A2);
+        boolean isOwner = answers.isAllOwner(user);
 
         //then
         assertThat(isOwner).isFalse();
     }
 
+    @Test
+    @DisplayName("삭제 불가 에러 확인")
+    public void cannotDeleteException() throws Exception {
+        //given
+
+        //when
+
+        //then
+
+    }
 }

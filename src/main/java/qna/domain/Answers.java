@@ -21,8 +21,8 @@ public class Answers {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
+    public boolean isAllOwner(User loginUser) {
         return answers.stream()
-                .anyMatch(answer -> answer.isOwner(loginUser));
+                .allMatch(answer -> answer.isOwner(loginUser));
     }
 }
