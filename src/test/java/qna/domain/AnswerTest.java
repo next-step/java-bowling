@@ -54,12 +54,12 @@ public class AnswerTest {
     @DisplayName("삭제여부 변경 테스트")
     public void setDelete() throws Exception {
         //given
-        boolean isDelete01 = true;
-        boolean isDelete02 = false;
+        boolean deleteTrue = true;
+        boolean deleteFalse = false;
 
         //when
-        A1.setDeleted(isDelete01);
-        A2.setDeleted(isDelete02);
+        A1.setDeleted(deleteTrue);
+        A2.setDeleted(deleteFalse);
 
         //then
         assertThat(A1.isDeleted()).isTrue();
