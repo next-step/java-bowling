@@ -1,13 +1,27 @@
 package bowling.domain;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import java.util.ArrayList;
 import java.util.List;
 
-public interface Frame {
+public class Frame {
 
-    int number();
+    private final FrameNumber frameNumber;
 
-    void addPintCount(int pinCount);
+    private final List<Integer> pintCounts = new ArrayList<>();
 
-    List<Integer> pinCounts();
+    public Frame(int number) {
+        this.frameNumber = new FrameNumber(number);
+    }
+
+    public void addPintCount(int pinCount) {
+        pintCounts.add(pinCount);
+    }
+
+    public List<Integer> pinCounts() {
+        return pintCounts;
+    }
+
+    public int number() {
+        return frameNumber.number();
+    }
 }

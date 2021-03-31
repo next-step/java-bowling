@@ -1,16 +1,13 @@
 package bowling.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class NormalFrame implements Frame {
+public class NormalFrame implements PlayableFrame {
 
-    private final int number;
-
-    private final List<Integer> pintCounts = new ArrayList<>();
+    private final Frame frame;
 
     public NormalFrame(int number) {
-        this.number = number;
+        this.frame = new Frame(number);
     }
 
     public static NormalFrame first() {
@@ -31,11 +28,24 @@ public class NormalFrame implements Frame {
 
     @Override
     public void addPintCount(int pinCount) {
-        pintCounts.add(pinCount);
+        if (isDone()) {
+            throw new IllegalStateException("이미 끝난 프레임 입니다.");
+        }
+        frame.addPintCount(pinCount);
     }
 
     @Override
     public List<Integer> pinCounts() {
-        return pintCounts;
+        return frame.pinCounts();
+    }
+
+    @Override
+    public boolean isDone() {
+        int totalPinCounts = pintCounts.stream()
+                .reduce(0, Integer::sum);
+        if (totalPinCounts == 10 || pintCounts.size() == 2) {
+            return true;
+        }
+        return false;
     }
 }
