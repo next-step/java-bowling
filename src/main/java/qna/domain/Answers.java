@@ -28,10 +28,6 @@ public class Answers {
                 .allMatch(answer -> answer.isOwner(loginUser));
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
     public void allDelete(boolean isDelete) {
         answers.forEach(answer -> answer.setDeleted(isDelete));
     }
