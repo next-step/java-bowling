@@ -3,6 +3,7 @@ package qna.domain;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import qna.UnAuthorizedException;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -15,7 +16,7 @@ public class UserTest {
 
     @Before
     public void setUp() {
-        loopStudy = new User(3L, "loop", "password", "name", "sanjigi@slipp.net");
+        loopStudy = new User(3L, "loop", "study", "name", "sanjigi@slipp.net");
     }
 
     @Test
@@ -76,10 +77,83 @@ public class UserTest {
         //given
         
         //when
-        loopStudy.update(loopStudy, JAVAJIGI);
-        boolean isChange = loopStudy.equalsNameAndEmail(JAVAJIGI);
+        SANJIGI.update(SANJIGI, JAVAJIGI);
+        boolean isChange = SANJIGI.equalsNameAndEmail(JAVAJIGI);
 
         //then
         assertThat(isChange).isTrue();
+    }
+
+    @Test
+    @DisplayName("아이디 일치 확인")
+    public void matchUserIdTrue() throws Exception {
+        //given
+        String userId = loopStudy.getUserId();
+
+        //when
+
+        //then
+        assertThat(loopStudy.matchUserId(userId)).isTrue();
+    }
+
+    @Test
+    @DisplayName("아이디 불일치 확인")
+    public void matchUserIdFalse() throws Exception {
+        //given
+        String userId = "loop";
+
+        //when
+
+        //then
+        assertThat(JAVAJIGI.matchUserId(userId)).isFalse();
+    }
+
+
+    @Test
+    @DisplayName("아이디 일치 확인")
+    public void matchPasswordTrue() throws Exception {
+        //given
+        String password = loopStudy.getPassword();
+
+        //when
+
+        //then
+        assertThat(loopStudy.matchPassword(password)).isTrue();
+    }
+
+    @Test
+    @DisplayName("아이디 불일치 확인")
+    public void matchPasswordFalse() throws Exception {
+        //given
+        String password = "무작위비번";
+
+        //when
+
+        //then
+        assertThat(JAVAJIGI.matchPassword(password)).isFalse();
+    }
+
+    @Test
+    @DisplayName("업데이트 유저, 아이디 미일치 에러 확인")
+    public void updateMatchUserIdException() throws Exception {
+        //given
+
+        //when
+        assertThatThrownBy(() -> {
+            JAVAJIGI.update(JAVAJIGI, loopStudy);
+        }).isInstanceOf(UnAuthorizedException.class);
+        //then
+    }
+
+    @Test
+    @DisplayName("업데이트 유저, 비밀번호 미일치 에러 확인")
+    public void updateMatchPasswordException() throws Exception {
+        //given
+
+        //when
+        assertThatThrownBy(() -> {
+            JAVAJIGI.update(JAVAJIGI, loopStudy);
+        }).isInstanceOf(UnAuthorizedException.class);
+        //then
     }
 }
