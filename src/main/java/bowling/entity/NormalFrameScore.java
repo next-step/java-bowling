@@ -3,6 +3,7 @@ package bowling.entity;
 import static bowling.exception.UserExceptionMesssage.*;
 
 import bowling.exception.UserException;
+import bowling.views.BowlingScoreString;
 
 public class NormalFrameScore {
 	private final FirstWard firstWard;

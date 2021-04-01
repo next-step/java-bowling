@@ -17,7 +17,7 @@ public abstract class Ward {
 	}
 
 	private void validate(int score) {
-		if (score > 10) {
+		if (score < 0 || score > 10) {
 			throw new UserException(BOWLING_BOUND);
 		}
 	}

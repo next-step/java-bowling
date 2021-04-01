@@ -3,7 +3,6 @@ package bowling.views;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import bowling.entity.FinalFrameString;
 import bowling.entity.NormalFrame;
 import bowling.entity.Player;
 
