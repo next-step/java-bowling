@@ -1,14 +1,17 @@
-package bowling.entity;
+package bowling.views;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import bowling.entity.BowlingScoreType;
+import bowling.entity.Ward;
+
 public enum FinalFrameString {
 
 	ZERO(0) {
 		@Override
-		String stringMethod(List<Ward> wards) {
+		public String stringMethod(List<Ward> wards) {
 			return "";
 		}
 	},
@@ -51,7 +54,7 @@ public enum FinalFrameString {
 		this.size = size;
 	}
 
-	abstract String stringMethod(List<Ward> wards);
+	public abstract String stringMethod(List<Ward> wards);
 
 	public static String getString(List<Ward> wards) {
 		return Arrays.stream(values())

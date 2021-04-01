@@ -1,37 +1,40 @@
-package bowling.entity;
+package bowling.views;
 
 import java.util.Arrays;
 
+import bowling.entity.BowlingScoreType;
+import bowling.entity.Ward;
+
 public enum BowlingScoreString {
-	STRIKE(BowlingScoreType.STRIKE) {
+	STRIKE(BowlingScoreType.STRIKE, "X") {
 		@Override
 		public String scoreToString(Ward first, Ward second) {
-			return this.getType().getScore();
+			return STRIKE.scoreString;
 		}
 	},
 
-	SPARE(BowlingScoreType.SPARE) {
+	SPARE(BowlingScoreType.SPARE, "/") {
 		@Override
 		public String scoreToString(Ward first, Ward second) {
-			return first.getScore() + "|" + this.getType().getScore();
+			return first.getScore() + "|" + SPARE.scoreString;
 		}
 	},
 
-	MISS(BowlingScoreType.MISS) {
+	MISS(BowlingScoreType.MISS, "-") {
 		@Override
 		public String scoreToString(Ward first, Ward second) {
-			return first.getScore() + "|" + this.getType().getScore();
+			return first.getScore() + "|" + MISS.scoreString;
 		}
 	},
 
-	GUTTER(BowlingScoreType.GUTTER) {
+	GUTTER(BowlingScoreType.GUTTER, "-") {
 		@Override
 		public String scoreToString(Ward first, Ward second) {
-			return this.getType().getScore();
+			return GUTTER.scoreString;
 		}
 	},
 
-	OTHER(BowlingScoreType.OTHER) {
+	OTHER(BowlingScoreType.OTHER, "") {
 		@Override
 		public String scoreToString(Ward first, Ward second) {
 			if (second == null) {
@@ -42,15 +45,21 @@ public enum BowlingScoreString {
 	};
 
 	private final BowlingScoreType type;
+	private final String scoreString;
 
-	BowlingScoreString(BowlingScoreType type) {
+	BowlingScoreString(BowlingScoreType type, String scoreString) {
 		this.type = type;
+		this.scoreString = scoreString;
 	}
 
 	public abstract String scoreToString(Ward first, Ward second);
 
 	BowlingScoreType getType() {
 		return this.type;
+	}
+
+	public String getScoreString() {
+		return this.scoreString;
 	}
 
 	public static String getScoreString(BowlingScoreType type, Ward firstWard, Ward secondWard) {
