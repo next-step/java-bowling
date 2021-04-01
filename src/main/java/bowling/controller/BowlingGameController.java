@@ -1,7 +1,5 @@
 package bowling.controller;
 
-import bowling.entity.FinalFrame;
-import bowling.entity.NormalFrame;
 import bowling.entity.Player;
 import bowling.views.InputView;
 import bowling.views.OutputView;
@@ -19,18 +17,21 @@ public class BowlingGameController {
 		Player player = makePlayer();
 
 		for (int i = 0; i < 9; i++) {
-			NormalFrame first = NormalFrame.ofNext(i + 1, inputView.getFrameScore(i + 1), null);
-			showGame(player, first);
-
-			if (!first.isKeepGoing()) {
-				continue;
+			player.addPlayerFrameScore(i + 1, inputView.getFrameScore(i + 1));
+			showGame(player);
+			if (player.isKeepGoing(i + 1)) {
+				player.addPlayerFrameScore(i + 1, inputView.getFrameScore(i + 1));
+				showGame(player);
 			}
-
-			NormalFrame second = NormalFrame.ofNext(i + 1, inputView.getFrameScore(i + 1), first);
-			showGame(player, second);
 		}
 
-		doFinalFrame(player);
+		while (true) {
+			if (!player.isFinalFrameKeepGoing()) {
+				break;
+			}
+			player.addFinalFrame(inputView.getFrameScore(10));
+			showGame(player);
+		}
 	}
 
 	private Player makePlayer() {
@@ -38,27 +39,9 @@ public class BowlingGameController {
 		return new Player(name);
 	}
 
-	private void showGame(Player player, NormalFrame normalFrame) {
+	private void showGame(Player player) {
 		outputView.showFrames();
-		player.addPlayerFrameScore(normalFrame);
 		outputView.showPlayerFrames(player);
 	}
 
-	private void showGame(Player player, FinalFrame finalFrame) {
-		outputView.showFrames();
-		player.addPlayerFrameScore(finalFrame);
-		outputView.showPlayerFrames(player);
-	}
-
-	private void doFinalFrame(Player player) {
-		FinalFrame finalFrame = new FinalFrame();
-		int index = 0;
-		while (true) {
-			finalFrame.add(index, inputView.getFrameScore(10));
-			showGame(player, finalFrame);
-			if (!finalFrame.isKeepGoing(index++)) {
-				return;
-			}
-		}
-	}
 }

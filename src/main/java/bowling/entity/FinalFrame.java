@@ -2,21 +2,37 @@ package bowling.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class FinalFrame {
 	private final List<Ward> wards;
 
+	public FinalFrame(List<Ward> wards) {
+		this.wards = wards;
+	}
+
 	public FinalFrame() {
-		this.wards = new ArrayList<>();
+		this(new ArrayList<>());
 	}
 
-	public boolean isKeepGoing(int index) {
-		return wards.get(index).hasNext();
+	public boolean isKeepGoing() {
+		if (wards.isEmpty()) {
+			return true;
+		}
+
+		return Optional.ofNullable(wards.get(wards.size() - 1))
+			.orElseGet(() -> new Ward(0) {
+				@Override
+				boolean hasNext() {
+					return false;
+				}
+			})
+			.hasNext();
 	}
 
-	public void add(int index, int score) {
+	public void add(int score) {
 		if (wards.size() == 0) {
-			wards.add(index, new Ward(score) {
+			wards.add(new Ward(score) {
 				@Override
 				boolean hasNext() {
 					return true;
@@ -26,7 +42,7 @@ public class FinalFrame {
 		}
 
 		if (wards.size() == 1) {
-			wards.add(index, new Ward(score) {
+			wards.add(new Ward(score) {
 				@Override
 				boolean hasNext() {
 					return wards.get(0).getScore() == 10 || score == 10 || wards.get(0).getScore() + score == 10;
@@ -36,7 +52,7 @@ public class FinalFrame {
 		}
 
 		if (wards.size() == 2) {
-			wards.add(index, new Ward(score) {
+			wards.add(new Ward(score) {
 				@Override
 				boolean hasNext() {
 					return false;
