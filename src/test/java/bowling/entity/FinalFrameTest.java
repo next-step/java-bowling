@@ -11,6 +11,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import bowling.views.BowlingScoreString;
+import bowling.views.FinalFrameString;
+
 public class FinalFrameTest {
 
 	@ParameterizedTest
@@ -18,8 +21,8 @@ public class FinalFrameTest {
 	void first(int input) {
 		FinalFrame finalFrame = new FinalFrame();
 
-		finalFrame.add(0, input);
-		assertThat(finalFrame.isKeepGoing(0))
+		finalFrame.add(input);
+		assertThat(finalFrame.isKeepGoing())
 			.isEqualTo(true);
 	}
 
@@ -28,9 +31,9 @@ public class FinalFrameTest {
 	void second_success(int input) {
 		FinalFrame finalFrame = new FinalFrame();
 
-		finalFrame.add(0, input);
-		finalFrame.add(1, 10 - input);
-		assertThat(finalFrame.isKeepGoing(1))
+		finalFrame.add(input);
+		finalFrame.add(10 - input);
+		assertThat(finalFrame.isKeepGoing())
 			.isEqualTo(true);
 	}
 
@@ -74,7 +77,7 @@ public class FinalFrameTest {
 
 		// then
 		assertThat(FinalFrameString.ONE.stringMethod(wardList))
-			.isEqualTo("  " + BowlingScoreType.STRIKE.getScore());
+			.isEqualTo("  " + BowlingScoreString.STRIKE.getScoreString());
 	}
 
 	@ParameterizedTest
@@ -84,8 +87,8 @@ public class FinalFrameTest {
 		FinalFrame finalFrame = new FinalFrame();
 
 		// when
-		finalFrame.add(0, prev);
-		finalFrame.add(1, current);
+		finalFrame.add(prev);
+		finalFrame.add(current);
 
 		// then
 		assertThat(FinalFrameString.TWO.stringMethod(finalFrame.getWards()))
@@ -99,12 +102,12 @@ public class FinalFrameTest {
 		FinalFrame finalFrame = new FinalFrame();
 
 		// when
-		finalFrame.add(0, prev);
-		finalFrame.add(1, current);
+		finalFrame.add(prev);
+		finalFrame.add(current);
 
 		// then
 		assertThat(FinalFrameString.TWO.stringMethod(finalFrame.getWards()))
-			.isEqualTo(prev + "|" + BowlingScoreType.SPARE.getScore());
+			.isEqualTo(prev + "|" + BowlingScoreString.SPARE.getScoreString());
 	}
 	@ParameterizedTest
 	@CsvSource(value = {"10,9", "10,8", "10,7", "10,6"})
@@ -114,11 +117,11 @@ public class FinalFrameTest {
 		FinalFrame finalFrame = new FinalFrame();
 
 		// when
-		finalFrame.add(0, prev);
-		finalFrame.add(1, current);
+		finalFrame.add(prev);
+		finalFrame.add(current);
 
 		// then
 		assertThat(FinalFrameString.TWO.stringMethod(finalFrame.getWards()))
-			.isEqualTo("  "  + BowlingScoreType.STRIKE.getScore() + "|  " + current);
+			.isEqualTo("  "  + BowlingScoreString.STRIKE.getScoreString() + "|  " + current);
 	}
 }
