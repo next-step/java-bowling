@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 public class Question extends AbstractEntity {
     private static final String QUESTION_NOT_OWNER = "질문을 삭제할 권한이 없습니다.";
-    private static final String ANSWER_NOT_OWNER = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+    private static final boolean DELETE_TRUE = true;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -94,22 +94,19 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    // 삭제관련 체크, DeleteHistory 한테 가야맞겠네?
-    private void canDelete(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException(QUESTION_NOT_OWNER);
-        }
-
-        if (!answers.isAllOwner(loginUser)) {
-            throw new CannotDeleteException(ANSWER_NOT_OWNER);
-        }
-    }
-
-    public DeleteHistory questionToDeleteHistory() {
+    public DeleteHistory questionToDeleteHistory(User loginUser) {
+        validDelete(loginUser);
+        this.deleted = DELETE_TRUE;
         return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
     }
 
-    public List<DeleteHistory> answersToDeleteHistories() {
-        return answers.answersToDeleteHistories();
+    private void validDelete(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(QUESTION_NOT_OWNER);
+        }
+    }
+
+    public List<DeleteHistory> answersToDeleteHistories(User loginUser) {
+        return answers.answersToDeleteHistories(loginUser);
     }
 }

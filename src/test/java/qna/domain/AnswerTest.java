@@ -2,6 +2,7 @@ package qna.domain;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -64,5 +65,18 @@ public class AnswerTest {
         //then
         assertThat(A1.isDeleted()).isTrue();
         assertThat(A2.isDeleted()).isFalse();
+    }
+
+    @Test
+    @DisplayName("삭제 불가 예외 테스트")
+    public void deleteHistoryException() throws Exception {
+        //given
+
+        //when
+        assertThatThrownBy(() -> {
+            A1.toDeleteHistory(UserTest.SANJIGI);
+        }).isInstanceOf(CannotDeleteException.class);
+
+        //then
     }
 }

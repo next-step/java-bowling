@@ -6,7 +6,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,17 +22,9 @@ public class Answers {
         answers.add(answer);
     }
 
-    public boolean isAllOwner(User loginUser) {
+    public List<DeleteHistory> answersToDeleteHistories(User loginUser) {
         return answers.stream()
-                .allMatch(answer -> answer.isOwner(loginUser));
-    }
-
-    public List<DeleteHistory> answersToDeleteHistories() {
-        return answers.stream()
-                .map(answer -> {
-                    answer.setDeleted(true);
-                    return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
-                })
+                .map(answer -> answer.toDeleteHistory(loginUser))
                 .collect(Collectors.toList());
     }
 }
