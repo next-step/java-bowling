@@ -78,7 +78,6 @@ public class Question extends AbstractEntity {
 
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
-        answers.allDelete(deleted);
         return this;
     }
 
@@ -95,7 +94,8 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void canDelete(User loginUser) throws CannotDeleteException {
+    // 삭제관련 체크, DeleteHistory 한테 가야맞겠네?
+    private void canDelete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException(QUESTION_NOT_OWNER);
         }

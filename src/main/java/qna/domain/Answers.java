@@ -28,13 +28,12 @@ public class Answers {
                 .allMatch(answer -> answer.isOwner(loginUser));
     }
 
-    public void allDelete(boolean isDelete) {
-        answers.forEach(answer -> answer.setDeleted(isDelete));
-    }
-
     public List<DeleteHistory> answersToDeleteHistories() {
         return answers.stream()
-                .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
+                .map(answer -> {
+                    answer.setDeleted(true);
+                    return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
+                })
                 .collect(Collectors.toList());
     }
 }
