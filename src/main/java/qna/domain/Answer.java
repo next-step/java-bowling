@@ -78,13 +78,13 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
-    public DeleteHistory toDeleteHistory(User loginUser) throws CannotDeleteException {
+    public DeleteHistory toDeleteHistory(User loginUser) {
         validDelete(loginUser);
         this.deleted = DELETE_TRUE;
         return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 
-    private void validDelete(User loginUser) throws CannotDeleteException {
+    private void validDelete(User loginUser) {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException(ANSWER_NOT_OWNER);
         }
