@@ -17,7 +17,7 @@ public class Pin {
         this.secondBall = secondBall;
     }
 
-    public boolean checkOfPin(BiPredicate<Integer, Integer> knockOverCount) {
+    public boolean checkOfDownPin(BiPredicate<Integer, Integer> knockOverCount) {
         return knockOverCount.test(firstBall, secondBall);
     }
 }
