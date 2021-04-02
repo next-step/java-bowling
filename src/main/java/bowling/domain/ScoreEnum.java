@@ -8,7 +8,7 @@ public enum ScoreEnum {
     SPARE((a, b) -> (a+b) == 10, false),
     FIRST_GUTTER((a, b) -> a == 0, true),
     SECOND_GUTTER((a, b) -> b == 0, false),
-    MISS((a, b) -> (a+b) > 0, false);
+    MISS((a, b) -> true, false);
 
     private BiPredicate<Integer, Integer> knockOverCount;
     private boolean isFirstBall;
@@ -24,6 +24,4 @@ public enum ScoreEnum {
                 .findFirst()
                 .orElse(MISS);
     }
-
-
 }
