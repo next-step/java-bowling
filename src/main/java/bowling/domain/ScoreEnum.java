@@ -17,15 +17,11 @@ public enum ScoreEnum {
         this.isFirst = isFirst;
     }
 
-    public static ScoreEnum of(int firstBall, int secondBall) {
+    public static ScoreEnum of(Pin pin) {
         return Arrays.stream(values())
-                .filter(score -> score.knockOverCount(firstBall, secondBall))
+                .filter(score -> pin.checkOfPin(score.knockOverCount))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException());
-    }
-
-    private boolean knockOverCount(int firstBall, int secondBall) {
-        return knockOverCount.test(firstBall, secondBall);
     }
 
 
