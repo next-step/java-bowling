@@ -9,7 +9,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import qna.CannotDeleteException;
 import qna.domain.*;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +51,7 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_다른_사람이_쓴_글() throws Exception {
+    public void delete_다른_사람이_쓴_글() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {
@@ -72,7 +71,7 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
+    public void delete_답변_중_다른_사람이_쓴_글() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {

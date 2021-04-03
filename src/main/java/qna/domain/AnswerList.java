@@ -13,7 +13,7 @@ public class AnswerList {
         this.answers = question.getAnswers();
     }
 
-    public boolean canDelete(User loginUser) {
+    private boolean canDelete(User loginUser) {
         boolean canDelete = true;
         for (Answer answer : answers) {
             canDelete &= answer.isOwner(loginUser);
