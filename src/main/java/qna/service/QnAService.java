@@ -38,8 +38,8 @@ public class QnAService {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
 
-        DeleteHistoryList deleteHistoryList = new DeleteHistoryList(deleteHistoryService);
-        deleteHistoryList.delete(question, answerList);
+        DeleteHistoryList deleteHistoryList = new DeleteHistoryList();
+        deleteHistoryService.saveAll(deleteHistoryList.delete(question, answerList));
 
     }
 }

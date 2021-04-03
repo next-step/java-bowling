@@ -38,6 +38,10 @@ public class DeleteHistory {
         this.createDate = LocalDateTime.now();
     }
 
+    public ContentType getContentType() {
+        return contentType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
