@@ -13,7 +13,7 @@ public class BowlingFrameTest {
     @DisplayName("프레임은 고정으로 10개 만든다")
     public void frameMaxSize10() throws Exception {
         //given
-        List<BowlingFrame> frame = BowlingFrameFactory.of();
+        List<Frame> frame = FrameFactory.of();
 
         //when
         

@@ -15,4 +15,8 @@ public class User {
             throw new IllegalArgumentException(MAX_LENGHT_OVER);
         }
     }
+
+    public String name() {
+        return name;
+    }
 }
