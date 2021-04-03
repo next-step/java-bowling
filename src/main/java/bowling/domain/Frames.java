@@ -1,9 +1,13 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Frames {
+    private static final int MAX_SIZE = 10;
+    private static final int MINUS_INDEX_ONE = 1;
+
     private final User user;
     private final List<Frame> frames;
 
@@ -18,6 +22,35 @@ public class Frames {
 
     public static Frames of(User user) {
         return new Frames(user);
+    }
+
+    public Frames play(int countOfDownPin) {
+        if (!isSecond()) {
+            Frame frame = frames.get(lastIndex()).second(countOfDownPin);
+            frames.set(lastIndex(), frame);
+            return new Frames(user, frames);
+        }
+        frames.add(Frame.first(countOfDownPin));
+        return new Frames(user, frames);
+    }
+
+    private boolean isSecond() {
+        if (frames.isEmpty()) {
+            return true;
+        }
+        return frames.get(lastIndex()).isEnd();
+    }
+
+    private int lastIndex() {
+        return frames.size() - MINUS_INDEX_ONE;
+    }
+
+    public boolean isPlay() {
+        return frames.size() < MAX_SIZE;
+    }
+
+    public List<Frame> frames() {
+        return Collections.unmodifiableList(frames);
     }
 }
 

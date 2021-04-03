@@ -3,6 +3,7 @@ package bowling.domain;
 public class Frame {
     private static final int END_TURN = 2;
     private static final int FIRST_TURN = 1;
+    private static final boolean IS_FIRST = true;
 
     private final Pin pin;
     private final int turn;
@@ -13,7 +14,16 @@ public class Frame {
     }
 
     public static Frame first(int countOfDownPin) {
-        return new Frame(Pin.first(countOfDownPin), FIRST_TURN);
+        Pin pin = Pin.first(countOfDownPin);
+        int turn = checkStrike(pin);
+        return new Frame(pin, turn);
+    }
+
+    private static int checkStrike(Pin pin) {
+        if (Rule.of(pin, IS_FIRST) == Rule.STRIKE) {
+            return END_TURN;
+        }
+        return FIRST_TURN;
     }
 
     public Frame second(int countOfDownPin) {
