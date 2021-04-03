@@ -19,7 +19,6 @@ class DeleteHistoryListTest {
     public void setUp() {
         this.question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         this.answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-        question.addAnswer(answer);
 
         this.deleteHistoryList = new DeleteHistoryList();
     }
@@ -34,12 +33,34 @@ class DeleteHistoryListTest {
         List<DeleteHistory> deleteHistories = deleteHistoryList.delete(question, answerList);
 
         softAssertions.assertThat(question.isDeleted()).isTrue();
+        softAssertions.assertThat(answer.isDeleted()).isFalse();
+
+        softAssertions.assertThat(deleteHistories.size()).isEqualTo(1);
+        softAssertions.assertThat(deleteHistories.get(0).getContentType()).isEqualTo(ContentType.QUESTION);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    void delete_성공_질문자_답변자_같음() {
+        question.addAnswer(answer);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(question.isDeleted()).isFalse();
+        softAssertions.assertThat(answer.isDeleted()).isFalse();
+
+        AnswerList answerList = new AnswerList(question);
+        List<DeleteHistory> deleteHistories = deleteHistoryList.delete(question, answerList);
+
+        softAssertions.assertThat(question.isDeleted()).isTrue();
         softAssertions.assertThat(question.isDeleted()).isTrue();
 
+        softAssertions.assertThat(deleteHistories.size()).isEqualTo(2);
         softAssertions.assertThat(deleteHistories.get(0).getContentType()).isEqualTo(ContentType.QUESTION);
         softAssertions.assertThat(deleteHistories.get(1).getContentType()).isEqualTo(ContentType.ANSWER);
 
         softAssertions.assertAll();
     }
+
 
 }
