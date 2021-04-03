@@ -7,7 +7,7 @@ public class Pin {
     private static final String MIN_UNDER_PINS = "넘어뜨리는 볼링핀은 0개 미만이 안됩니다.";
     private static final int MAX_PINS = 10;
     private static final int MIN_PINS = 0;
-    
+
     private int firstBall = 0;
     private int secondBall = 0;
 
@@ -45,6 +45,14 @@ public class Pin {
 
     public boolean checkOfDownPin(BiPredicate<Integer, Integer> knockOverCount) {
         return knockOverCount.test(firstBall, secondBall);
+    }
+
+    public int firstBall() {
+        return firstBall;
+    }
+
+    public int secondBall() {
+        return secondBall;
     }
 }
 
