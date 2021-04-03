@@ -2,6 +2,8 @@ package bowling.domain;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,5 +31,31 @@ public class FrameTest {
 
         //then
         assertThat(frame.isEnd()).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0,1,10})
+    @DisplayName("첫구 넘어진 핀 확인")
+    public void firstDownPin(int first) throws Exception {
+        //given
+        Frame frame = Frame.first(first);
+
+        //when
+
+        //then
+        assertThat(frame.firstDownPin()).isEqualTo(first);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0,1,10})
+    @DisplayName("2 넘어진 핀 확인")
+    public void secondDownPin(int second) throws Exception {
+        //given
+        Frame frame = Frame.first(0).second(second);
+
+        //when
+
+        //then
+        assertThat(frame.secondDownPin()).isEqualTo(second);
     }
 }
