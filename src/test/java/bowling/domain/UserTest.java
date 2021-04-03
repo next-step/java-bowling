@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.*;
 
 public class UserTest {
+    public static final User U1 = new User("TDD");
 
     @Test
     @DisplayName("참여자 이름 3글자 초과 에러 확인")
