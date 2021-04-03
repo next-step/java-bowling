@@ -1,13 +1,14 @@
 package qna.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AnswerList {
 
     private List<Answer> answers;
 
-    public AnswerList(List<Answer> answers) {
-        this.answers = answers;
+    public AnswerList(Question question) {
+        this.answers = question.getAnswers();
     }
 
     public boolean canDelete(User loginUser) {
@@ -16,5 +17,11 @@ public class AnswerList {
             canDelete &= answer.isOwner(loginUser);
         }
         return canDelete;
+    }
+
+    public List<DeleteHistory> delete() {
+        return this.answers.stream()
+                .map(Answer::delete)
+                .collect(Collectors.toList());
     }
 }

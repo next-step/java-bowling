@@ -88,7 +88,8 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void delete() {
+    public DeleteHistory delete() {
         this.deleted = true;
+        return new DeleteHistory(this);
     }
 }

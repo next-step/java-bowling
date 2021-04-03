@@ -16,27 +16,11 @@ public class DeleteHistoryList {
         this.deleteHistoryService = deleteHistoryService;
     }
 
-    public List<DeleteHistory> delete(Question question) {
-        deleteQuestion(question);
-        for (Answer answer : question.getAnswers()) {
-            deleteAnswer(answer);
-        }
+    public List<DeleteHistory> delete(Question question, AnswerList answerList) {
+        this.deleteHistories.add(question.delete());
+        this.deleteHistories.addAll(answerList.delete());
         deleteHistoryService.saveAll(this.deleteHistories);
         return this.deleteHistories;
-    }
-
-    public DeleteHistory deleteQuestion(Question question) {
-        question.delete();
-        DeleteHistory deleteHistory = new DeleteHistory(question);
-        this.deleteHistories.add(deleteHistory);
-        return deleteHistory;
-    }
-
-    public DeleteHistory deleteAnswer(Answer answer) {
-        answer.delete();
-        DeleteHistory deleteHistory = new DeleteHistory(answer);
-        this.deleteHistories.add(deleteHistory);
-        return deleteHistory;
     }
 
 }
