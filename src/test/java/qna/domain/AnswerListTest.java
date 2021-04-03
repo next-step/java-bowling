@@ -15,8 +15,6 @@ class AnswerListTest {
     private Answer answer1;
     private Answer answer2;
 
-    private AnswerList answerList;
-
     @BeforeEach
     void setup() {
         question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -29,7 +27,6 @@ class AnswerListTest {
     void delete_성공() throws CannotDeleteException {
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(answer1.isDeleted()).isFalse();
-
 
         AnswerList answerList = new AnswerList(question);
         answerList.preCheckDeletion(UserTest.JAVAJIGI);
