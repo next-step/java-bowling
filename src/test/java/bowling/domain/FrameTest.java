@@ -43,7 +43,7 @@ public class FrameTest {
         //when
 
         //then
-        assertThat(frame.firstDownPin()).isEqualTo(first);
+        assertThat(frame.pin().firstBall()).isEqualTo(first);
     }
 
     @ParameterizedTest
@@ -56,6 +56,6 @@ public class FrameTest {
         //when
 
         //then
-        assertThat(frame.secondDownPin()).isEqualTo(second);
+        assertThat(frame.pin().secondBall()).isEqualTo(second);
     }
 }

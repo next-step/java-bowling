@@ -34,11 +34,7 @@ public class Frame {
         return turn >= END_TURN;
     }
 
-    public int firstDownPin() {
-        return pin.firstBall();
-    }
-
-    public int secondDownPin() {
-        return pin.secondBall();
-    }
+    public Pin pin() {
+        return pin;
+    };
 }
