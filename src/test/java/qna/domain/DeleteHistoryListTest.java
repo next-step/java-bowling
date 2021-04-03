@@ -1,16 +1,11 @@
 package qna.domain;
 
-import org.junit.Before;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.transaction.annotation.Transactional;
-import qna.service.DeleteHistoryService;
 
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import java.util.List;
 
 @Transactional
 class DeleteHistoryListTest {
@@ -18,28 +13,33 @@ class DeleteHistoryListTest {
     private Question question;
     private Answer answer;
 
-    private DeleteHistoryService deleteHistoryService;
+    private DeleteHistoryList deleteHistoryList;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         this.question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         this.answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         question.addAnswer(answer);
-        this.deleteHistoryService = new DeleteHistoryService();
+
+        this.deleteHistoryList = new DeleteHistoryList();
     }
 
     @Test
-    void delete_성공(){
+    void delete_성공() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(question.isDeleted()).isFalse();
+        softAssertions.assertThat(answer.isDeleted()).isFalse();
 
-        System.out.println(deleteHistoryService);
+        AnswerList answerList = new AnswerList(question);
+        List<DeleteHistory> deleteHistories = deleteHistoryList.delete(question, answerList);
 
-        assertThat(question.isDeleted()).isFalse();
-        question.delete();
-        assertThat(question.isDeleted()).isTrue();
-//        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
+        softAssertions.assertThat(question.isDeleted()).isTrue();
+        softAssertions.assertThat(question.isDeleted()).isTrue();
 
-//        assertThat(question.isDeleted()).isTrue();
-//        verifyDeleteHistories();
+        softAssertions.assertThat(deleteHistories.get(0).getContentType()).isEqualTo(ContentType.QUESTION);
+        softAssertions.assertThat(deleteHistories.get(1).getContentType()).isEqualTo(ContentType.ANSWER);
+
+        softAssertions.assertAll();
     }
 
 }
