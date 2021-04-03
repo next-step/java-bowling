@@ -2,7 +2,6 @@ package qna.domain;
 
 import qna.service.DeleteHistoryService;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,14 +27,14 @@ public class DeleteHistoryList {
 
     public DeleteHistory deleteQuestion(Question question) {
         question.delete();
-        DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
+        DeleteHistory deleteHistory = new DeleteHistory(question);
         this.deleteHistories.add(deleteHistory);
         return deleteHistory;
     }
 
     public DeleteHistory deleteAnswer(Answer answer) {
         answer.delete();
-        DeleteHistory deleteHistory = new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
+        DeleteHistory deleteHistory = new DeleteHistory(answer);
         this.deleteHistories.add(deleteHistory);
         return deleteHistory;
     }
