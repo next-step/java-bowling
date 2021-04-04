@@ -45,7 +45,7 @@ public class FinalPins implements Pins{
         int[] total = {0};
         IntStream.range(0, pins.size())
                 .skip(skipSize())
-                .limit(PINS_MAX_SIZE)
+                .limit(NORMAL_PINS_MAX_SIZE)
                 .forEach(index -> total[FIRST_INDEX] = pins.get(index).accumulated(total[FIRST_INDEX]));
         return total[FIRST_INDEX];
     }
@@ -64,11 +64,11 @@ public class FinalPins implements Pins{
                 || ScoreRule.STRIKE.equals(finalRule)) {
             return FINAL_PINS_MAX_SIZE;
         }
-        return PINS_MAX_SIZE;
+        return NORMAL_PINS_MAX_SIZE;
     }
 
     public ScoreRule scoreRule() {
-        return ScoreRule.of(accumulatedPins(), (pins.size() < PINS_MAX_SIZE));
+        return ScoreRule.of(accumulatedPins(), (pins.size() < NORMAL_PINS_MAX_SIZE));
     }
 
     @Override

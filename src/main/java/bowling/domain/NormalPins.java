@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class NormalPins implements Pins{
-
     private List<Pin> pins;
 
     private NormalPins() {
@@ -44,7 +43,7 @@ public class NormalPins implements Pins{
     }
 
     public boolean isEnd() {
-        return isStrike() || pins.size() == PINS_MAX_SIZE;
+        return isStrike() || pins.size() == NORMAL_PINS_MAX_SIZE;
     }
 
     private boolean isStrike() {
@@ -52,7 +51,7 @@ public class NormalPins implements Pins{
     }
 
     public ScoreRule scoreRule() {
-        return ScoreRule.of(accumulatedPins(), (pins.size() < PINS_MAX_SIZE));
+        return ScoreRule.of(accumulatedPins(), (pins.size() < NORMAL_PINS_MAX_SIZE));
     }
 
     @Override
