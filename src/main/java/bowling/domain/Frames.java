@@ -26,12 +26,19 @@ public class Frames {
 
     public Frames play(int countOfDownPin) {
         if (!isSecond()) {
-            Frame frame = frames.get(lastIndex()).second(countOfDownPin);
+            Frame frame = frames.get(lastIndex()).next(countOfDownPin);
             frames.set(lastIndex(), frame);
             return new Frames(user, frames);
         }
-        frames.add(Frame.first(countOfDownPin));
+        frames.add(Frame.of(countOfDownPin, ofPins()));
         return new Frames(user, frames);
+    }
+
+    private Pins ofPins() {
+        if ((MAX_SIZE - MINUS_INDEX_ONE) == frames.size()) {
+            return FinalPins.init();
+        }
+        return NormalPins.init();
     }
 
     private boolean isSecond() {
