@@ -1,5 +1,6 @@
 package bowling.controller;
 
+import bowling.domain.Frames;
 import bowling.domain.User;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -17,5 +18,9 @@ public class BowlingController {
         String name = inputView.user();
         User user = new User(name);
 
+        Frames frames = Frames.of(user);
+        while(frames.isPlay()) {
+            frames.play(inputView.score(frames));
+        }
     }
 }

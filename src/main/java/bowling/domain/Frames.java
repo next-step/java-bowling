@@ -41,7 +41,7 @@ public class Frames {
         return NormalPins.init();
     }
 
-    private boolean isSecond() {
+    public boolean isSecond() {
         if (frames.isEmpty()) {
             return true;
         }
