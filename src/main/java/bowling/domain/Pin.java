@@ -30,8 +30,8 @@ public class Pin {
         }
     }
 
-    public boolean isStrike(boolean isFirst) {
-        return ScoreRule.STRIKE == ScoreRule.of(pin, isFirst);
+    public ScoreRule ofScoreRule(boolean isFirst) {
+        return ScoreRule.of(pin, isFirst);
     }
 
     public int accumulated(int downPins) {
