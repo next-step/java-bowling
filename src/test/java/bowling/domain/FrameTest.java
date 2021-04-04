@@ -4,10 +4,23 @@ import bowling.dto.FrameResult;
 import bowling.dto.FrameScoreResult;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import java.util.Arrays;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class FrameTest {
+
+    @Test
+    void create_from_total_pin_counts_more_than_10_throw_exception() {
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                new Frame(Arrays.asList(new PinCount(5),new PinCount(11))));
+    }
+
+    @Test
+    void create_from_pin_count_list_size_more_than_2_throw_exception() {
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                new Frame(Arrays.asList(new PinCount(5),new PinCount(5),new PinCount(5))));
+    }
 
     @Test
     void add_pin_count() {
@@ -36,7 +49,7 @@ public class FrameTest {
         Frame frame = new Frame();
         frame.addPinCount(5);
 
-        assertThatIllegalStateException().isThrownBy(() ->
+        assertThatIllegalArgumentException().isThrownBy(() ->
                 frame.addPinCount(9));
     }
 

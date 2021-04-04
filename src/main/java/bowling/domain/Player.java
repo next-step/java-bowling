@@ -8,17 +8,17 @@ public class Player {
 
     private final Frames frames;
 
-    private Player(PlayerName name,Frames frames){
+    private Player(PlayerName name, Frames frames) {
         this.name = name;
         this.frames = frames;
     }
 
-    public Player(String name,int totalNumberOfFrame) {
-        this(new PlayerName(name),Frames.init(totalNumberOfFrame));
+    public Player(String name, int totalNumberOfFrame) {
+        this(new PlayerName(name), Frames.init(totalNumberOfFrame));
     }
 
     public void addPinCounts(int pintCount) {
-        if(isDone()){
+        if (isDone()) {
             throw new IllegalStateException("이미 전체 프레임을 다 play하셨습니다.");
         }
         frames.addPinCount(pintCount);
@@ -33,6 +33,6 @@ public class Player {
     }
 
     public PlayResult playResult() {
-       return new PlayResult(name,frames);
+        return new PlayResult(name, frames);
     }
 }

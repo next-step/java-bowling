@@ -17,8 +17,19 @@ public class FinalFrame {
     private int currentFrameIdx;
 
     public FinalFrame(List<Frame> frames, FrameNumber frameNumber) {
+        validateFramesTryCount(frames);
         this.frames = frames;
         this.frameNumber = frameNumber;
+    }
+
+    private void validateFramesTryCount(List<Frame> frames) {
+        int totalTryCount = frames.stream()
+                .map(Frame::tryCount)
+                .reduce(0, Integer::sum);
+
+        if(totalTryCount > MAX_TRY_COUNT) {
+            throw new IllegalArgumentException("bonusframe 숫자가 너무 많습니다.");
+        }
     }
 
     public static FinalFrame of(int frameNumber) {

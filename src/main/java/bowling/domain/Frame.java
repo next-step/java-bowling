@@ -30,15 +30,16 @@ public class Frame {
 
     private void validateTotalPinCounts(int totalCount) {
         if(totalCount > MAX_TOTAL_PIN_COUNTS) {
-            throw new IllegalStateException("투구 결과수가 너무 많습니다.");
+            throw new IllegalArgumentException("투구 결과 핀수가 너무 많습니다.");
         }
     }
 
     private void validatePinCountsSize(int size){
         if(size > MAX_TRY_COUNT){
-            throw new IllegalStateException("추가 할 수 없는 투구 수 입니다.");
+            throw new IllegalArgumentException("투구 수가 너무 많습니다.");
         }
     }
+
     public void addPinCount(int pinCount) {
         if (isDone()) {
             throw new IllegalStateException("이미 끝난 프레임 입니다.");

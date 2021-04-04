@@ -18,19 +18,22 @@ public class Frames {
     private FrameNumber currentFrameNumber;
 
     public Frames(List<NormalFrame> normalFrames, FinalFrame finalFrame) {
-        if (normalFrames.isEmpty()) {
-            throw new IllegalArgumentException("normalFrame의 갯수는 0보다 커야 합니다.");
-        }
+        validateEmptyNormalFrames(normalFrames);
+
         this.normalFrames = normalFrames.stream()
                 .sorted(Comparator.comparing(NormalFrame::number))
                 .collect(Collectors.toList());
-
         this.finalFrame = finalFrame;
-        this.currentFrameNumber = currentFrameNumberFrom(this.normalFrames, finalFrame);
+        this.currentFrameNumber = frameNumberToStartFrom(this.normalFrames, finalFrame);
     }
 
-    private FrameNumber currentFrameNumberFrom(List<NormalFrame> normalFrames, FinalFrame finalFrame) {
+    private void validateEmptyNormalFrames(List<NormalFrame> normalFrames) {
+        if (normalFrames.isEmpty()) {
+            throw new IllegalArgumentException("normalFrame의 갯수는 0보다 커야 합니다.");
+        }
+    }
 
+    private FrameNumber frameNumberToStartFrom(List<NormalFrame> normalFrames, FinalFrame finalFrame) {
         boolean isAllNormalFramesDone = normalFrames.stream()
                 .allMatch(NormalFrame::isDone);
 
@@ -43,7 +46,6 @@ public class Frames {
                 .findFirst()
                 .map(NormalFrame::number)
                 .orElse(FrameNumber.first());
-
     }
 
     public static Frames init(int totalNumberOfFrame) {

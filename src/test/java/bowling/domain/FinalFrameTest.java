@@ -5,13 +5,19 @@ import bowling.dto.FrameResult;
 import bowling.dto.FrameScoreResult;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import static org.assertj.core.api.Assertions.*;
 
 public class FinalFrameTest {
+
+    @Test
+    void create_from_frames_counts_more_than_3_throw_exception() {
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                new FinalFrame(Arrays.asList(new Frame(),new Frame(),new Frame(),new Frame()),new FrameNumber(4)));
+    }
 
     @Test
     void create() {
