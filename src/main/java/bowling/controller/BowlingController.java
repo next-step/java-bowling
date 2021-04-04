@@ -19,8 +19,11 @@ public class BowlingController {
         User user = new User(name);
 
         Frames frames = Frames.of(user);
+        resultView.bowlingBoard(frames);
+
         while(frames.isPlay()) {
             frames.play(inputView.score(frames));
+            resultView.bowlingBoard(frames);
         }
     }
 }

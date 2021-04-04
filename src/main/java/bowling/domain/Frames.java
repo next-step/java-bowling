@@ -59,6 +59,10 @@ public class Frames {
     public List<Frame> frames() {
         return Collections.unmodifiableList(frames);
     }
+
+    public String name() {
+        return user.name();
+    }
 }
 
 
