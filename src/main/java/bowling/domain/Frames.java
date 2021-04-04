@@ -26,8 +26,8 @@ public class Frames {
 
     public Frames play(int countOfDownPin) {
         if (!isPitch()) {
-            Frame frame = frames.get(lastIndex()).next(countOfDownPin);
-            frames.set(lastIndex(), frame);
+            Frame frame = frames.get(frames.size() - MINUS_INDEX_ONE).next(countOfDownPin);
+            frames.set(frames.size() - MINUS_INDEX_ONE, frame);
             return new Frames(user, frames);
         }
         frames.add(Frame.of(countOfDownPin, ofPins()));
@@ -64,11 +64,7 @@ public class Frames {
     }
 
     private boolean isLastIndexFrameEnd() {
-        return frames.get(lastIndex()).isEnd();
-    }
-
-    private int lastIndex() {
-        return frames.size() - MINUS_INDEX_ONE;
+        return frames.get(frames.size() - MINUS_INDEX_ONE).isEnd();
     }
 }
 
