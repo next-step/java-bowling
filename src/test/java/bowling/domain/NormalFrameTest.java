@@ -1,44 +1,47 @@
 package bowling.domain;
 
-import org.junit.jupiter.api.DisplayName;
+import bowling.dto.FrameResult;
+import bowling.dto.FrameScoreResult;
+import bowling.dto.NormalFrameResult;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class NormalFrameTest {
 
     @Test
     void first() {
         NormalFrame first = NormalFrame.first();
-        assertThat(first.number()).isEqualTo(1);
+        NormalFrameResult result = first.result();
+
+        assertThat(result.frameNumber()).isEqualTo(1);
     }
 
     @Test
     void next() {
-        NormalFrame next = NormalFrame.first().next();
-        assertThat(next.number()).isEqualTo(2);
+        NormalFrame nextThree = NormalFrame.first().next().next();
+        NormalFrameResult result = nextThree.result();
+
+        assertThat(result.frameNumber()).isEqualTo(3);
     }
 
     @Test
-    void last() {
-        FinalFrame last = NormalFrame.first().last();
-        assertThat(last.number()).isEqualTo(2);
+    void add_pin_count() {
+        int frameNumber = 3;
+        int pinCount = 6;
+        NormalFrame normalFrame = new NormalFrame(frameNumber);
+        normalFrame.addPintCount(pinCount);
+
+        NormalFrameResult result = normalFrame.result();
+
+        assertThat(result.frameNumber()).isEqualTo(frameNumber);
+        FrameResult frameResult = result.framesResult();
+        assertThat(frameResult.frameScoreResult()).isEqualTo(FrameScoreResult.NONE);
+        assertThat(frameResult.pinCounts()).containsExactly(pinCount);
     }
 
     @Test
-    void add_pin_counts() {
-        int pinCount = 3;
-        NormalFrame first = NormalFrame.first();
-        first.addPintCount(pinCount);
-        List<Integer> pinCounts = first.pinCounts();
-
-        assertThat(pinCounts).containsExactly(pinCount);
-    }
-
-    @Test
-    @DisplayName("이미 종료된 프레임에 투구 추가시 예외 발생 테스트")
     void add_pin_counts_when_done_throw_exception() {
         NormalFrame normalFrame = NormalFrame.first();
         normalFrame.addPintCount(4);
@@ -50,44 +53,57 @@ public class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("한번 투구에 스트라이크가 아닐시 종료 여부 테스트")
-    void is_done_once_when_miss() {
-        NormalFrame normalFrame = new NormalFrame(2);
-        normalFrame.addPintCount(4);
+    void result_when_strike() {
+        NormalFrame normalFrame = NormalFrame.first().next();
+        int strikePinCounts = 10;
+        normalFrame.addPintCount(strikePinCounts);
 
+        FrameResult result = normalFrame.result().framesResult();
+        assertThat(normalFrame.isDone()).isTrue();
+        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.STRIKE);
+        assertThat(result.pinCounts()).containsExactly(strikePinCounts);
+    }
+
+
+    @Test
+    void result_when_spare() {
+        NormalFrame normalFrame = NormalFrame.first().next();
+        int firstPinCount = 2;
+        int secondPinCount = 8;
+        normalFrame.addPintCount(firstPinCount);
+        normalFrame.addPintCount(secondPinCount);
+
+        FrameResult result = normalFrame.result().framesResult();
+        assertThat(normalFrame.isDone()).isTrue();
+        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.SPARE);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
+    }
+
+    @Test
+    void result_when_miss() {
+        NormalFrame normalFrame = NormalFrame.first();
+        int firstPinCount = 2;
+        int secondPinCount = 6;
+        normalFrame.addPintCount(firstPinCount);
+        normalFrame.addPintCount(secondPinCount);
+
+        FrameResult result = normalFrame.result().framesResult();
+        assertThat(normalFrame.isDone()).isTrue();
+        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.MISS);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
+    }
+
+    @Test
+    void result_when_none() {
+        NormalFrame normalFrame = NormalFrame.first();
+        int firstPinCount = 2;
+        normalFrame.addPintCount(firstPinCount);
+
+        FrameResult result = normalFrame.result().framesResult();
         assertThat(normalFrame.isDone()).isFalse();
+        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.NONE);
+        assertThat(result.pinCounts()).containsExactly(firstPinCount);
     }
 
-
-
-    @Test
-    @DisplayName("모든 핀을 쓸어뜨리지 못했을때 종료 여부 테스트")
-    void is_done_when_miss() {
-        NormalFrame normalFrame = new NormalFrame(2);
-        normalFrame.addPintCount(4);
-        normalFrame.addPintCount(5);
-
-        assertThat(normalFrame.isDone()).isTrue();
-    }
-
-    @Test
-    @DisplayName("스트라이크 종료 여부 테스트")
-    void is_done_when_strike() {
-        int pinCount = 10;
-        NormalFrame normalFrame = new NormalFrame(1);
-        normalFrame.addPintCount(pinCount);
-
-        assertThat(normalFrame.isDone()).isTrue();
-    }
-
-    @Test
-    @DisplayName("스페어 종료 여부 테스트")
-    void is_done_when_spare() {
-        NormalFrame normalFrame = new NormalFrame(1);
-        normalFrame.addPintCount(3);
-        normalFrame.addPintCount(7);
-
-        assertThat(normalFrame.isDone()).isTrue();
-    }
 
 }
