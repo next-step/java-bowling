@@ -16,7 +16,7 @@ public class FinalFrame {
 
     private int currentFrameIdx;
 
-    private FinalFrame(List<Frame> frames, FrameNumber frameNumber) {
+    public FinalFrame(List<Frame> frames, FrameNumber frameNumber) {
         this.frames = frames;
         this.frameNumber = frameNumber;
     }
@@ -27,13 +27,13 @@ public class FinalFrame {
         return new FinalFrame(frames, new FrameNumber(frameNumber));
     }
 
-    public void addPintCount(int pinCount) {
+    public void addPinCount(int pinCount) {
         if (isDone()) {
             throw new IllegalStateException("이미 끝난 프레임 입니다.");
         }
         addBonusFrameIfNecessary();
         Frame currentFrame = frames.get(currentFrameIdx);
-        currentFrame.addPintCount(pinCount);
+        currentFrame.addPinCount(pinCount);
     }
 
     private void addBonusFrameIfNecessary() {

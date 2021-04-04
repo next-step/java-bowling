@@ -1,6 +1,6 @@
 package bowling.domain;
 
-public class FrameNumber {
+public class FrameNumber implements Comparable<FrameNumber> {
 
     private static final int MIN = 1;
 
@@ -41,4 +41,8 @@ public class FrameNumber {
         return number;
     }
 
+    @Override
+    public int compareTo(FrameNumber o) {
+        return Integer.compare(number,o.number);
+    }
 }

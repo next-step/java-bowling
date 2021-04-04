@@ -3,8 +3,6 @@ package bowling.domain;
 import bowling.dto.FinalFrameResult;
 import bowling.dto.FrameResult;
 import bowling.dto.FrameScoreResult;
-import bowling.dto.NormalFrameResult;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -28,21 +26,21 @@ public class FinalFrameTest {
     @Test
     void add_pin_counts_when_done_throw_exception() {
         FinalFrame finalFrame = FinalFrame.of(10);
-        finalFrame.addPintCount(3);
-        finalFrame.addPintCount(5);
+        finalFrame.addPinCount(3);
+        finalFrame.addPinCount(5);
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThatIllegalStateException().isThrownBy(() ->
-                finalFrame.addPintCount(5));
+                finalFrame.addPinCount(5));
     }
 
     @Test
     void result_when_3_strike() {
         int strikePinCount = 10;
         FinalFrame finalFrame = FinalFrame.of(10);
-        finalFrame.addPintCount(strikePinCount);
-        finalFrame.addPintCount(strikePinCount);
-        finalFrame.addPintCount(strikePinCount);
+        finalFrame.addPinCount(strikePinCount);
+        finalFrame.addPinCount(strikePinCount);
+        finalFrame.addPinCount(strikePinCount);
 
         List<FrameResult> frameResults = finalFrame.result().frameResults();
         assertThat(finalFrame.isDone()).isTrue();
@@ -58,9 +56,9 @@ public class FinalFrameTest {
         int secondStrikePinCount = 10;
         int lastPinCount = 3;
         FinalFrame finalFrame = FinalFrame.of(10);
-        finalFrame.addPintCount(firstStrikePinCount);
-        finalFrame.addPintCount(secondStrikePinCount);
-        finalFrame.addPintCount(lastPinCount);
+        finalFrame.addPinCount(firstStrikePinCount);
+        finalFrame.addPinCount(secondStrikePinCount);
+        finalFrame.addPinCount(lastPinCount);
 
         List<FrameResult> frameResults = finalFrame.result().frameResults();
         List<FrameScoreResult> actualFrameScoreResults = frameResults.stream()
@@ -81,9 +79,9 @@ public class FinalFrameTest {
         int firstSparePinCount = 7;
         int secondSparePinCount = 3;
         FinalFrame finalFrame = FinalFrame.of(10);
-        finalFrame.addPintCount(strikePinCount);
-        finalFrame.addPintCount(firstSparePinCount);
-        finalFrame.addPintCount(secondSparePinCount);
+        finalFrame.addPinCount(strikePinCount);
+        finalFrame.addPinCount(firstSparePinCount);
+        finalFrame.addPinCount(secondSparePinCount);
 
         List<FrameResult> frameResults = finalFrame.result().frameResults();
         List<FrameScoreResult> actualFrameScoreResults = frameResults.stream()
@@ -104,9 +102,9 @@ public class FinalFrameTest {
         int firstMissPinCount = 4;
         int secondMissPinCount = 3;
         FinalFrame finalFrame = FinalFrame.of(10);
-        finalFrame.addPintCount(strikePinCount);
-        finalFrame.addPintCount(firstMissPinCount);
-        finalFrame.addPintCount(secondMissPinCount);
+        finalFrame.addPinCount(strikePinCount);
+        finalFrame.addPinCount(firstMissPinCount);
+        finalFrame.addPinCount(secondMissPinCount);
 
         List<FrameResult> frameResults = finalFrame.result().frameResults();
         List<FrameScoreResult> actualFrameScoreResults = frameResults.stream()
@@ -127,9 +125,9 @@ public class FinalFrameTest {
         int secondMissPinCount = 3;
         int lastPinCount = 5;
         FinalFrame finalFrame = FinalFrame.of(10);
-        finalFrame.addPintCount(firstMissPinCount);
-        finalFrame.addPintCount(secondMissPinCount);
-        finalFrame.addPintCount(lastPinCount);
+        finalFrame.addPinCount(firstMissPinCount);
+        finalFrame.addPinCount(secondMissPinCount);
+        finalFrame.addPinCount(lastPinCount);
 
         List<FrameResult> frameResults = finalFrame.result().frameResults();
         List<FrameScoreResult> actualFrameScoreResults = frameResults.stream()
@@ -150,9 +148,9 @@ public class FinalFrameTest {
         int secondSparePinCount = 3;
         int strikePinCount = 10;
         FinalFrame finalFrame = FinalFrame.of(10);
-        finalFrame.addPintCount(firstSparePinCount);
-        finalFrame.addPintCount(secondSparePinCount);
-        finalFrame.addPintCount(strikePinCount);
+        finalFrame.addPinCount(firstSparePinCount);
+        finalFrame.addPinCount(secondSparePinCount);
+        finalFrame.addPinCount(strikePinCount);
 
         List<FrameResult> frameResults = finalFrame.result().frameResults();
         List<FrameScoreResult> actualFrameScoreResults = frameResults.stream()
@@ -172,8 +170,8 @@ public class FinalFrameTest {
         int firstMissPinCount = 4;
         int secondMissPinCount = 3;
         FinalFrame finalFrame = FinalFrame.of(10);
-        finalFrame.addPintCount(firstMissPinCount);
-        finalFrame.addPintCount(secondMissPinCount);
+        finalFrame.addPinCount(firstMissPinCount);
+        finalFrame.addPinCount(secondMissPinCount);
 
         List<FrameResult> frameResults = finalFrame.result().frameResults();
         List<FrameScoreResult> actualFrameScoreResults = frameResults.stream()

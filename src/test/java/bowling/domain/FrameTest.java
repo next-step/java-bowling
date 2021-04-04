@@ -13,7 +13,7 @@ public class FrameTest {
     void add_pin_count() {
         int pinCount = 6;
         Frame frame = new Frame();
-        frame.addPintCount(pinCount);
+        frame.addPinCount(pinCount);
         FrameResult result = frame.result();
 
         assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.NONE);
@@ -23,28 +23,28 @@ public class FrameTest {
     @Test
     void add_pin_count_after_done_throw_exception() {
         Frame frame = new Frame();
-        frame.addPintCount(6);
-        frame.addPintCount(4);
+        frame.addPinCount(6);
+        frame.addPinCount(4);
 
         assertThat(frame.isDone()).isTrue();
         assertThatIllegalStateException().isThrownBy(() ->
-                frame.addPintCount(2));
+                frame.addPinCount(2));
     }
 
     @Test
     void add_pin_count_over_max_total_pin_counts_throw_exception() {
         Frame frame = new Frame();
-        frame.addPintCount(5);
+        frame.addPinCount(5);
 
         assertThatIllegalStateException().isThrownBy(() ->
-                frame.addPintCount(9));
+                frame.addPinCount(9));
     }
 
     @Test
     void result_when_strike() {
         Frame frame = new Frame();
         int strikePinCounts = 10;
-        frame.addPintCount(strikePinCounts);
+        frame.addPinCount(strikePinCounts);
 
         FrameResult result = frame.result();
         assertThat(frame.isDone()).isTrue();
@@ -58,8 +58,8 @@ public class FrameTest {
         Frame frame = new Frame();
         int firstPinCount = 2;
         int secondPinCount = 8;
-        frame.addPintCount(firstPinCount);
-        frame.addPintCount(secondPinCount);
+        frame.addPinCount(firstPinCount);
+        frame.addPinCount(secondPinCount);
 
         FrameResult result = frame.result();
         assertThat(frame.isDone()).isTrue();
@@ -72,8 +72,8 @@ public class FrameTest {
         Frame frame = new Frame();
         int firstPinCount = 2;
         int secondPinCount = 6;
-        frame.addPintCount(firstPinCount);
-        frame.addPintCount(secondPinCount);
+        frame.addPinCount(firstPinCount);
+        frame.addPinCount(secondPinCount);
 
         FrameResult result = frame.result();
         assertThat(frame.isDone()).isTrue();
@@ -85,7 +85,7 @@ public class FrameTest {
     void result_when_none() {
         Frame frame = new Frame();
         int firstPinCount = 2;
-        frame.addPintCount(firstPinCount);
+        frame.addPinCount(firstPinCount);
 
         FrameResult result = frame.result();
         assertThat(frame.isDone()).isFalse();
@@ -98,8 +98,8 @@ public class FrameTest {
         Frame frame = new Frame();
         int firstPinCount = 2;
         int secondPinCount = 6;
-        frame.addPintCount(firstPinCount);
-        frame.addPintCount(secondPinCount);
+        frame.addPinCount(firstPinCount);
+        frame.addPinCount(secondPinCount);
         FrameScoreResult expected = FrameScoreResult.MISS;
 
         assertThat(frame.isMatch(expected)).isTrue();

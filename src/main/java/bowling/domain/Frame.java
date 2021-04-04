@@ -12,15 +12,38 @@ public class Frame {
 
     private static final int MAX_TOTAL_PIN_COUNTS = 10;
 
-    private final List<PinCount> pinCounts = new ArrayList<>();
+    private final List<PinCount> pinCounts;
 
-    public void addPintCount(int pinCount) {
+    public Frame(List<PinCount> pinCounts) {
+        Integer totalCount = pinCounts.stream()
+                .map(PinCount::count)
+                .reduce(0, Integer::sum);
+
+        validatePinCountsSize(pinCounts.size());
+        validateTotalPinCounts(totalCount);
+        this.pinCounts = pinCounts;
+    }
+
+    public Frame() {
+        this(new ArrayList<>());
+    }
+
+    private void validateTotalPinCounts(int totalCount) {
+        if(totalCount > MAX_TOTAL_PIN_COUNTS) {
+            throw new IllegalStateException("투구 결과수가 너무 많습니다.");
+        }
+    }
+
+    private void validatePinCountsSize(int size){
+        if(size > MAX_TRY_COUNT){
+            throw new IllegalStateException("추가 할 수 없는 투구 수 입니다.");
+        }
+    }
+    public void addPinCount(int pinCount) {
         if (isDone()) {
             throw new IllegalStateException("이미 끝난 프레임 입니다.");
         }
-        if (totalPinCounts() + pinCount > MAX_TOTAL_PIN_COUNTS) {
-            throw new IllegalStateException("추가 할 수 없는 투구 수 입니다.");
-        }
+        validateTotalPinCounts(totalPinCounts() + pinCount);
         pinCounts.add(new PinCount(pinCount));
     }
 

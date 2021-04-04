@@ -31,7 +31,7 @@ public class NormalFrameTest {
         int frameNumber = 3;
         int pinCount = 6;
         NormalFrame normalFrame = new NormalFrame(frameNumber);
-        normalFrame.addPintCount(pinCount);
+        normalFrame.addPinCount(pinCount);
 
         NormalFrameResult result = normalFrame.result();
 
@@ -44,19 +44,19 @@ public class NormalFrameTest {
     @Test
     void add_pin_counts_when_done_throw_exception() {
         NormalFrame normalFrame = NormalFrame.first();
-        normalFrame.addPintCount(4);
-        normalFrame.addPintCount(5);
+        normalFrame.addPinCount(4);
+        normalFrame.addPinCount(5);
 
         assertThat(normalFrame.isDone()).isTrue();
         assertThatIllegalStateException().isThrownBy(() ->
-                normalFrame.addPintCount(5));
+                normalFrame.addPinCount(5));
     }
 
     @Test
     void result_when_strike() {
         NormalFrame normalFrame = NormalFrame.first().next();
         int strikePinCounts = 10;
-        normalFrame.addPintCount(strikePinCounts);
+        normalFrame.addPinCount(strikePinCounts);
 
         FrameResult result = normalFrame.result().framesResult();
         assertThat(normalFrame.isDone()).isTrue();
@@ -70,8 +70,8 @@ public class NormalFrameTest {
         NormalFrame normalFrame = NormalFrame.first().next();
         int firstPinCount = 2;
         int secondPinCount = 8;
-        normalFrame.addPintCount(firstPinCount);
-        normalFrame.addPintCount(secondPinCount);
+        normalFrame.addPinCount(firstPinCount);
+        normalFrame.addPinCount(secondPinCount);
 
         FrameResult result = normalFrame.result().framesResult();
         assertThat(normalFrame.isDone()).isTrue();
@@ -84,8 +84,8 @@ public class NormalFrameTest {
         NormalFrame normalFrame = NormalFrame.first();
         int firstPinCount = 2;
         int secondPinCount = 6;
-        normalFrame.addPintCount(firstPinCount);
-        normalFrame.addPintCount(secondPinCount);
+        normalFrame.addPinCount(firstPinCount);
+        normalFrame.addPinCount(secondPinCount);
 
         FrameResult result = normalFrame.result().framesResult();
         assertThat(normalFrame.isDone()).isTrue();
@@ -97,7 +97,7 @@ public class NormalFrameTest {
     void result_when_none() {
         NormalFrame normalFrame = NormalFrame.first();
         int firstPinCount = 2;
-        normalFrame.addPintCount(firstPinCount);
+        normalFrame.addPinCount(firstPinCount);
 
         FrameResult result = normalFrame.result().framesResult();
         assertThat(normalFrame.isDone()).isFalse();

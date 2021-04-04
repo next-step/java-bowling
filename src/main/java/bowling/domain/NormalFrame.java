@@ -8,7 +8,7 @@ public class NormalFrame {
 
     private final FrameNumber frameNumber;
 
-    private NormalFrame(Frame frame, FrameNumber frameNumber) {
+    public NormalFrame(Frame frame, FrameNumber frameNumber) {
         this.frame = frame;
         this.frameNumber = frameNumber;
     }
@@ -29,11 +29,11 @@ public class NormalFrame {
         return new NormalFrame(frameNumber.next());
     }
 
-    public void addPintCount(int pinCount) {
+    public void addPinCount(int pinCount) {
         if (isDone()) {
             throw new IllegalStateException("이미 끝난 프레임 입니다.");
         }
-        frame.addPintCount(pinCount);
+        frame.addPinCount(pinCount);
     }
 
     public boolean isDone() {
@@ -42,5 +42,9 @@ public class NormalFrame {
 
     public NormalFrameResult result() {
         return new NormalFrameResult(frameNumber, frame);
+    }
+
+    public FrameNumber number() {
+        return frameNumber;
     }
 }
