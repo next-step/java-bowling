@@ -34,7 +34,31 @@ public class PinsTest {
         //then
         assertThat(pins.scoreRule()).isEqualTo(ScoreRule.SPARE);
     }
-    
+
+    @Test
+    @DisplayName("마지막 프레임 스트라이크 확인")
+    public void finalStrike() throws Exception {
+        //given
+        Pins pins = FinalPins.init().first(10);
+
+        //when
+
+        //then
+        assertThat(pins.scoreRule()).isEqualTo(ScoreRule.STRIKE);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"9,1", "5,5", "1,9", "0,10"})
+    @DisplayName("마지막 프레임 스페어 확인")
+    public void fianlSpare(int first, int second) throws Exception {
+        //given
+        Pins pins = FinalPins.init().first(first).next(second);
+
+        //when
+        //then
+        assertThat(pins.scoreRule()).isEqualTo(ScoreRule.SPARE);
+    }
+
     @Test
     @DisplayName("첫구 거터 확인")
     public void firstBallGutter() throws Exception {
