@@ -30,6 +30,19 @@ public class NormalPins implements Pins{
         return new NormalPins(pins);
     }
 
+    public boolean isEnd() {
+        return isStrike() || pins.size() == NORMAL_PINS_MAX_SIZE;
+    }
+
+    public ScoreRule scoreRule() {
+        return ScoreRule.of(accumulatedPins(), (pins.size() < NORMAL_PINS_MAX_SIZE));
+    }
+
+    @Override
+    public List<Pin> pins() {
+        return Collections.unmodifiableList(pins);
+    }
+
     private void validMaxPins() {
         if (accumulatedPins() > MAX_PINS) {
             throw new IllegalArgumentException(MAX_OVER_PINS);
@@ -42,20 +55,7 @@ public class NormalPins implements Pins{
         return total[0];
     }
 
-    public boolean isEnd() {
-        return isStrike() || pins.size() == NORMAL_PINS_MAX_SIZE;
-    }
-
     private boolean isStrike() {
         return ScoreRule.STRIKE == pins.get(FIRST_INDEX).scoreRule(IS_FIRST);
-    }
-
-    public ScoreRule scoreRule() {
-        return ScoreRule.of(accumulatedPins(), (pins.size() < NORMAL_PINS_MAX_SIZE));
-    }
-
-    @Override
-    public List<Pin> pins() {
-        return Collections.unmodifiableList(pins);
     }
 }

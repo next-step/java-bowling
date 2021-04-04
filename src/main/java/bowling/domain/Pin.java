@@ -19,18 +19,6 @@ public class Pin {
         return new Pin(pin);
     }
 
-    private void validMinPins(int pin) {
-        if (pin < MIN_PINS) {
-            throw new IllegalArgumentException(MIN_UNDER_PINS);
-        }
-    }
-
-    private void validMaxPins(int pin) {
-        if (pin > MAX_PINS) {
-            throw new IllegalArgumentException(MAX_OVER_PINS);
-        }
-    }
-
     public boolean isStrike() {
         return ScoreRule.STRIKE == ScoreRule.of(pin, IS_FIRST);
     }
@@ -45,6 +33,18 @@ public class Pin {
 
     public int pin() {
         return pin;
+    }
+
+    private void validMinPins(int pin) {
+        if (pin < MIN_PINS) {
+            throw new IllegalArgumentException(MIN_UNDER_PINS);
+        }
+    }
+
+    private void validMaxPins(int pin) {
+        if (pin > MAX_PINS) {
+            throw new IllegalArgumentException(MAX_OVER_PINS);
+        }
     }
 }
 

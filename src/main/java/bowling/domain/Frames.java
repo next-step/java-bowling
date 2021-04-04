@@ -34,26 +34,11 @@ public class Frames {
         return new Frames(user, frames);
     }
 
-    private Pins ofPins() {
-        if ((MAX_SIZE - MINUS_INDEX_ONE) == frames.size()) {
-            return FinalPins.init();
-        }
-        return NormalPins.init();
-    }
-
     public boolean isPitch() {
         if (frames.isEmpty()) {
             return true;
         }
         return isLastIndexFrameEnd();
-    }
-
-    private boolean isLastIndexFrameEnd() {
-        return frames.get(lastIndex()).isEnd();
-    }
-
-    private int lastIndex() {
-        return frames.size() - MINUS_INDEX_ONE;
     }
 
     public boolean isPlay() {
@@ -69,6 +54,21 @@ public class Frames {
 
     public String name() {
         return user.name();
+    }
+
+    private Pins ofPins() {
+        if ((MAX_SIZE - MINUS_INDEX_ONE) == frames.size()) {
+            return FinalPins.init();
+        }
+        return NormalPins.init();
+    }
+
+    private boolean isLastIndexFrameEnd() {
+        return frames.get(lastIndex()).isEnd();
+    }
+
+    private int lastIndex() {
+        return frames.size() - MINUS_INDEX_ONE;
     }
 }
 

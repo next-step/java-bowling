@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 public class ResultView {
     private static final String DEFAULT_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String SCORE_EMPTY = "      |";
+    private static final String PIPE = "|";
     private static final int FRAME_MAX_SIZE = 10;
     private static final int DEFAULT_SIZE = 1;
     private static final int MINUS_ONE = 1;
@@ -56,7 +57,7 @@ public class ResultView {
 
         ScoreRule scoreRule = pins.scoreRule();
         if (ScoreRule.STRIKE == scoreRule) {
-            return String.format("  %-2s  |", scoreRule.symbol);
+            return String.format("  %-2s  " + PIPE, scoreRule.symbol);
         }
 
         boolean isSpare = ScoreRule.SPARE == scoreRule;
@@ -65,9 +66,9 @@ public class ResultView {
         stringToPins(pinList, builder, ZERO, maxLength);
 
         if (isSpare) {
-            builder.append("|"+scoreRule.symbol);
+            builder.append(PIPE + scoreRule.symbol);
         }
-        return String.format(" %-3s  |", builder.toString());
+        return String.format(" %-3s  " + PIPE, builder.toString());
     }
 
     private void stringToPins(List<Pin> pinList, StringBuilder builder, int startIndex, int maxLength) {
@@ -89,7 +90,7 @@ public class ResultView {
 
     private void addDeddd(StringBuilder builder) {
         if (builder.length() > ZERO) {
-            builder.append("|");
+            builder.append(PIPE);
         }
     }
 
@@ -101,7 +102,7 @@ public class ResultView {
 
         stringToPins(pinList, builder, result, pinList.size());
 
-        return String.format(" %-5s|", builder.toString());
+        return String.format(" %-5s" + PIPE, builder.toString());
     }
 
     private int stringToFinalStrike(List<Pin> pinList, StringBuilder builder) {
@@ -117,7 +118,7 @@ public class ResultView {
     }
 
     private String stringToName(Frames frames) {
-        return String.format("| %4s |", frames.name());
+        return String.format(PIPE + " %4s " + PIPE, frames.name());
     }
 
     private int index(int size) {

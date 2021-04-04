@@ -10,13 +10,13 @@ public class User {
         this.name = name;
     }
 
+    public String name() {
+        return name;
+    }
+
     private void validMaxLength(String name) {
         if (name.length() > MAX_LENGTH) {
             throw new IllegalArgumentException(MAX_LENGTH_OVER);
         }
-    }
-
-    public String name() {
-        return name;
     }
 }
