@@ -38,8 +38,8 @@ public class NormalPins implements Pins{
 
     private int accumulatedPins() {
         int[] total = { 0 };
-        pins.forEach(pin -> total[FIRST_INDEX] = pin.accumulated(total[FIRST_INDEX]));
-        return total[FIRST_INDEX];
+        pins.forEach(pin -> total[0] = pin.accumulated(total[0]));
+        return total[0];
     }
 
     public boolean isEnd() {

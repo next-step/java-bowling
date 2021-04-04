@@ -42,16 +42,16 @@ public class FinalPins implements Pins{
 
     private int accumulatedPins() {
         int[] total = {0};
-        IntStream.range(FIRST_INDEX, pins.size())
+        IntStream.range(0, pins.size())
                 .skip(skipSize())
                 .limit(NORMAL_PINS_MAX_SIZE)
-                .forEach(index -> total[FIRST_INDEX] = pins.get(index).accumulated(total[FIRST_INDEX]));
-        return total[FIRST_INDEX];
+                .forEach(index -> total[0] = pins.get(index).accumulated(total[0]));
+        return total[0];
     }
 
     private long skipSize() {
         int result;
-        for(result = FIRST_INDEX; result < pins.size() - MINUS_SIZE_ONE; result++) {
+        for(result = 0; result < pins.size() - MINUS_SIZE_ONE; result++) {
             if (!pins.get(result).isStrike()) {
                 break;
             };
