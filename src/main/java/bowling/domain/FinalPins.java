@@ -34,6 +34,19 @@ public class FinalPins implements Pins{
         return new FinalPins(pins);
     }
 
+    public boolean isEnd() {
+        return pins.size() == finalSize();
+    }
+
+    public ScoreRule scoreRule() {
+        return ScoreRule.of(accumulatedPins(), (pins.size() < NORMAL_PINS_MAX_SIZE));
+    }
+
+    @Override
+    public List<Pin> pins() {
+        return Collections.unmodifiableList(pins);
+    }
+
     private void validMaxPins() {
         if (accumulatedPins() > MAX_PINS) {
             throw new IllegalArgumentException(MAX_OVER_PINS);
@@ -59,25 +72,12 @@ public class FinalPins implements Pins{
         return result;
     }
 
-    public boolean isEnd() {
-        return pins.size() == finalSize();
-    }
-
     private int finalSize() {
         ScoreRule finalRule = scoreRule();
         if (pins.get(FIRST_INDEX).isStrike()
-            || ScoreRule.SPARE.equals(finalRule)) {
+            || ScoreRule.SPARE == finalRule) {
             return FINAL_PINS_MAX_SIZE;
         }
         return NORMAL_PINS_MAX_SIZE;
-    }
-
-    public ScoreRule scoreRule() {
-        return ScoreRule.of(accumulatedPins(), (pins.size() < NORMAL_PINS_MAX_SIZE));
-    }
-
-    @Override
-    public List<Pin> pins() {
-        return Collections.unmodifiableList(pins);
     }
 }

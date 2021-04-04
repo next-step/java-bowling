@@ -32,7 +32,7 @@ public class Pin {
     }
 
     public boolean isStrike() {
-        return ScoreRule.STRIKE.equals(ScoreRule.of(pin, IS_FIRST));
+        return ScoreRule.STRIKE == ScoreRule.of(pin, IS_FIRST);
     }
 
     public ScoreRule scoreRule(boolean isFirst) {

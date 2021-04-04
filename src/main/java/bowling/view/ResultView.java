@@ -55,11 +55,11 @@ public class ResultView {
         StringBuilder builder = new StringBuilder();
 
         ScoreRule scoreRule = pins.scoreRule();
-        if (ScoreRule.STRIKE.equals(scoreRule)) {
+        if (ScoreRule.STRIKE == scoreRule) {
             return String.format("  %-2s  |", scoreRule.symbol);
         }
 
-        boolean isSpare = ScoreRule.SPARE.equals(scoreRule);
+        boolean isSpare = ScoreRule.SPARE == scoreRule;
         int maxLength = isSpare ? DEFAULT_SIZE : pinList.size();
 
         stringToPins(pinList, builder, ZERO, maxLength);

@@ -23,7 +23,7 @@ public enum ScoreRule {
                 .findFirst()
                 .orElse(MISS);
 
-        if (result.equals(ScoreRule.STRIKE) && !isFirst) {
+        if (result == ScoreRule.STRIKE && !isFirst) {
             return ScoreRule.SPARE;
         }
         return result;

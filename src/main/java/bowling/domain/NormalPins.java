@@ -47,7 +47,7 @@ public class NormalPins implements Pins{
     }
 
     private boolean isStrike() {
-        return ScoreRule.STRIKE.equals(pins.get(FIRST_INDEX).scoreRule(IS_FIRST));
+        return ScoreRule.STRIKE == pins.get(FIRST_INDEX).scoreRule(IS_FIRST);
     }
 
     public ScoreRule scoreRule() {
