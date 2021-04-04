@@ -34,8 +34,8 @@ public class PinTest {
     }
     
     @Test
-    @DisplayName("첫구 거터 확인")
-    public void firstBallGutter() throws Exception {
+    @DisplayName("거터 확인")
+    public void gutter() throws Exception {
         //given
         //when
         ScoreRule scoreEnum = ScoreRule.of(0, true);
@@ -46,8 +46,8 @@ public class PinTest {
 
     @ParameterizedTest
     @CsvSource(value = {"1", "5", "9"})
-    @DisplayName("첫구 MISS 확인")
-    public void firstBallMiss(int first) throws Exception {
+    @DisplayName("MISS 확인")
+    public void miss(int first) throws Exception {
         //given
         //when
         ScoreRule scoreEnum = ScoreRule.of(first, true);
@@ -57,14 +57,14 @@ public class PinTest {
     }
 
     @Test
-    @DisplayName("첫구 잘못된 핀개수 초과 에러")
+    @DisplayName("잘못된 핀개수 초과 에러")
     public void downPin10OverException() {
         assertThatThrownBy(() -> Pin.of(11))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    @DisplayName("첫구 핀 0개 미만 에러")
+    @DisplayName("핀 0개 미만 에러")
     public void firstPin0UnderException() {
         assertThatThrownBy(() -> Pin.of(-1))
                 .isInstanceOf(IllegalArgumentException.class);
