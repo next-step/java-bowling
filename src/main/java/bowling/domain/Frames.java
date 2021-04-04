@@ -45,6 +45,10 @@ public class Frames {
         if (frames.isEmpty()) {
             return true;
         }
+        return isLastIndexFrameEnd();
+    }
+
+    private boolean isLastIndexFrameEnd() {
         return frames.get(lastIndex()).isEnd();
     }
 
@@ -53,7 +57,10 @@ public class Frames {
     }
 
     public boolean isPlay() {
-        return frames.size() < MAX_SIZE;
+        if (frames.size() < MAX_SIZE) {
+            return true;
+        }
+        return !isLastIndexFrameEnd();
     }
 
     public List<Frame> frames() {

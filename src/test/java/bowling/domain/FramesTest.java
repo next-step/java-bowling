@@ -1,7 +1,7 @@
 package bowling.domain;
 
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -33,7 +33,7 @@ public class FramesTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10,1", "2:8:3,2", "2:8:10:10,3", "10:10:10:10:10,5", "10:10:10:10:10:10:10:10:10:10,10", "10:10:10:10:10:10:10:10:10:10:10,10"})
+    @CsvSource(value = {"10,1", "2:8:3,2", "2:8:10:10,3", "10:10:10:10:10,5", "10:10:10:10:10:10:10:10:10:10,10", "10:10:10:10:10:10:10:10:10:10:10:10:10,10"})
     @DisplayName("게임은 최대 10턴까지 진행")
     public void play(String pins, int turn) throws Exception {
         //given

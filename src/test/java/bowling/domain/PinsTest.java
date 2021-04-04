@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("볼링핀")
+@DisplayName("볼링핀들")
 public class PinsTest {
 
     @Test
@@ -36,7 +36,7 @@ public class PinsTest {
     }
 
     @Test
-    @DisplayName("마지막 프레임 스트라이크 확인")
+    @DisplayName("마지막 프레임 첫구 스트라이크 확인")
     public void finalStrike() throws Exception {
         //given
         Pins pins = FinalPins.init().first(10);
@@ -57,6 +57,19 @@ public class PinsTest {
         //when
         //then
         assertThat(pins.scoreRule()).isEqualTo(ScoreRule.SPARE);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"9,1,10", "5,5,1", "1,9,2", "10,0,1"})
+    @DisplayName("마지막 프레임 투구 3번 확인")
+    public void final3Chance(int first, int second, int third) throws Exception {
+        //given
+        Pins pins = FinalPins.init().first(first).next(second).next(third);
+
+        //when
+
+        //then
+        assertThat(pins.pins().size()).isEqualTo(3);
     }
 
     @Test

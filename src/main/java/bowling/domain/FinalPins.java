@@ -7,8 +7,7 @@ import java.util.stream.IntStream;
 
 public class FinalPins implements Pins{
     private static final int FINAL_PINS_MAX_SIZE = 3;
-    private static final int SKIP_INDEX_ONE = 1;
-    private static final int SKIP_INDEX_ZERO = 0;
+    private static final int MINUS_SIZE_ONE = 1;
 
     private final List<Pin> pins;
 
@@ -43,7 +42,7 @@ public class FinalPins implements Pins{
 
     private int accumulatedPins() {
         int[] total = {0};
-        IntStream.range(0, pins.size())
+        IntStream.range(FIRST_INDEX, pins.size())
                 .skip(skipSize())
                 .limit(NORMAL_PINS_MAX_SIZE)
                 .forEach(index -> total[FIRST_INDEX] = pins.get(index).accumulated(total[FIRST_INDEX]));
@@ -51,7 +50,13 @@ public class FinalPins implements Pins{
     }
 
     private long skipSize() {
-        return pins.get(FIRST_INDEX).isStrike() ? SKIP_INDEX_ONE : SKIP_INDEX_ZERO;
+        int result;
+        for(result = FIRST_INDEX; result < pins.size() - MINUS_SIZE_ONE; result++) {
+            if (!pins.get(result).isStrike()) {
+                break;
+            };
+        }
+        return result;
     }
 
     public boolean isEnd() {
@@ -61,7 +66,7 @@ public class FinalPins implements Pins{
     private int finalSize() {
         ScoreRule finalRule = scoreRule();
         if (ScoreRule.STRIKE.equals(finalRule)
-                || ScoreRule.STRIKE.equals(finalRule)) {
+                || ScoreRule.SPARE.equals(finalRule)) {
             return FINAL_PINS_MAX_SIZE;
         }
         return NORMAL_PINS_MAX_SIZE;
