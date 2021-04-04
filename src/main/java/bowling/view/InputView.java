@@ -19,7 +19,7 @@ public class InputView {
     }
 
     private int framesSize(Frames frames) {
-        if (frames.isSecond()) {
+        if (frames.isPitch()) {
             return frames.frames().size() + PLUS_SIZE_ONE;
         };
         return frames.frames().size();

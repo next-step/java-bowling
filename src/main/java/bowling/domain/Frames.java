@@ -25,7 +25,7 @@ public class Frames {
     }
 
     public Frames play(int countOfDownPin) {
-        if (!isSecond()) {
+        if (!isPitch()) {
             Frame frame = frames.get(lastIndex()).next(countOfDownPin);
             frames.set(lastIndex(), frame);
             return new Frames(user, frames);
@@ -41,7 +41,7 @@ public class Frames {
         return NormalPins.init();
     }
 
-    public boolean isSecond() {
+    public boolean isPitch() {
         if (frames.isEmpty()) {
             return true;
         }
