@@ -1,40 +1,26 @@
 package bowling.domain;
 
 public class Frame {
-    private static final int END_TURN = 2;
-    private static final int FIRST_TURN = 1;
-    private static final boolean IS_FIRST = true;
+    private final Pins pins;
 
-    private final Pin pin;
-    private final int turn;
-
-    private Frame(Pin pin, int turn) {
-        this.turn = turn;
-        this.pin = pin;
+    private Frame(Pins pins) {
+        this.pins = pins;
     }
 
-    public static Frame first(int countOfDownPin) {
-        Pin pin = Pin.first(countOfDownPin);
-        int turn = checkStrike(pin);
-        return new Frame(pin, turn);
+    public static Frame of(int countOfDownPin, Pins pins) {
+        pins.first(countOfDownPin);
+        return new Frame(pins);
     }
 
-    private static int checkStrike(Pin pin) {
-        if (Rule.of(pin, IS_FIRST) == Rule.STRIKE) {
-            return END_TURN;
-        }
-        return FIRST_TURN;
-    }
-
-    public Frame second(int countOfDownPin) {
-        return new Frame(pin.next(countOfDownPin), END_TURN);
+    public Frame next(int countOfDownPin) {
+        return new Frame(pins.next(countOfDownPin));
     }
 
     public boolean isEnd() {
-        return turn >= END_TURN;
+        return pins.isEnd();
     }
 
-    public Pin pin() {
-        return pin;
+    public Pins pins() {
+        return pins;
     };
 }

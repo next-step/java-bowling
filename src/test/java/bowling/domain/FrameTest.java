@@ -3,17 +3,21 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FrameTest {
 
     @Test
-    @DisplayName("프레임, 턴 진행 확인")
-    public void first() throws Exception {
+    @DisplayName("턴 진행 확인")
+    public void isEndFalse() throws Exception {
         //given
-        Frame frame = Frame.first(5, NormalPins.init());
+        Frame frame = Frame.of(5, NormalPins.init());
 
         //when
 
@@ -22,10 +26,10 @@ public class FrameTest {
     }
 
     @Test
-    @DisplayName("프레임, 턴 종료 확인")
-    public void second() throws Exception {
+    @DisplayName("턴 종료 확인")
+    public void isEndTrue() throws Exception {
         //given
-        Frame frame = Frame.first(5, NormalPins.init()).next(3);
+        Frame frame = Frame.of(5, NormalPins.init()).next(3);
 
         //when
 
@@ -34,27 +38,23 @@ public class FrameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0,1,10})
-    @DisplayName("첫구 넘어진 핀 확인")
-    public void firstDownPin(int first) throws Exception {
-        //given
-        Frame frame = Frame.first(first, NormalPins.init());
-        //when
+    @CsvSource(value = {"10,1:2", "1,9:2", "0,10:2"})
+    @DisplayName("마지막 프레임은 스트라이크 or 스페어 때 최대 3번 투구")
+    public void strikeOrSpareIs3Chances(int firstPin, String inputPins) throws Exception {
 
-        //then
-//        assertThat(frame.pin().firstBall()).isEqualTo(first);
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {0,1,10})
-    @DisplayName("2 넘어진 핀 확인")
-    public void secondDownPin(int second) throws Exception {
         //given
-        Frame frame = Frame.first(0, NormalPins.init()).next(second);
+        Frame frame = Frame.of(firstPin, FinalPins.init());
 
         //when
+        List<Integer> countOfDownPins = Arrays.stream(inputPins.split(":"))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        countOfDownPins.forEach(pin -> frame.next(pin));
+
+        List<Pin> pins = frame.pins().pins();
 
         //then
-//        assertThat(frame.pin().secondBall()).isEqualTo(second);
+        assertThat(pins.size()).isEqualTo(3);
     }
 }

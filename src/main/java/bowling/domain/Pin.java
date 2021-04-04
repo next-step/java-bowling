@@ -5,6 +5,7 @@ public class Pin {
     private static final String MIN_UNDER_PINS = "넘어뜨리는 볼링핀은 0개 미만이 안됩니다.";
     private static final int MAX_PINS = 10;
     private static final int MIN_PINS = 0;
+    private static final boolean IS_FIRST = true;
 
     private final int pin;
 
@@ -30,7 +31,11 @@ public class Pin {
         }
     }
 
-    public ScoreRule ofScoreRule(boolean isFirst) {
+    public boolean isStrike() {
+        return ScoreRule.STRIKE.equals(ScoreRule.of(pin, IS_FIRST));
+    }
+
+    public ScoreRule scoreRule(boolean isFirst) {
         return ScoreRule.of(pin, isFirst);
     }
 

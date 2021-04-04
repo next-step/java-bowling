@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NormalPins implements Pins{
@@ -24,7 +25,7 @@ public class NormalPins implements Pins{
         return new NormalPins(pins);
     }
 
-    public NormalPins next(int countOfDownPin) {
+    public Pins next(int countOfDownPin) {
         pins.add(Pin.of(countOfDownPin));
         validMaxPins();
         return new NormalPins(pins);
@@ -37,20 +38,25 @@ public class NormalPins implements Pins{
     }
 
     private int accumulatedPins() {
-        int[] total = {0};
+        int[] total = { 0 };
         pins.forEach(pin -> total[FIRST_INDEX] = pin.accumulated(total[FIRST_INDEX]));
         return total[FIRST_INDEX];
     }
 
     public boolean isEnd() {
-        return isStrike() || pins.size() == MAX_SIZE;
+        return isStrike() || pins.size() == PINS_MAX_SIZE;
     }
 
     private boolean isStrike() {
-        return ScoreRule.STRIKE.equals(pins.get(FIRST_INDEX).ofScoreRule(IS_FIRST));
+        return ScoreRule.STRIKE.equals(pins.get(FIRST_INDEX).scoreRule(IS_FIRST));
     }
 
     public ScoreRule scoreRule() {
-        return ScoreRule.of(accumulatedPins(), (pins.size() < MAX_SIZE));
+        return ScoreRule.of(accumulatedPins(), (pins.size() < PINS_MAX_SIZE));
+    }
+
+    @Override
+    public List<Pin> pins() {
+        return Collections.unmodifiableList(pins);
     }
 }
