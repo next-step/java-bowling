@@ -19,4 +19,18 @@ public class PinCount {
         return pinCount;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PinCount pinCount1 = (PinCount) o;
+
+        return pinCount == pinCount1.pinCount;
+    }
+
+    @Override
+    public int hashCode() {
+        return pinCount;
+    }
 }
