@@ -73,7 +73,7 @@ public class ResultView {
 
     private void stringToPins(List<Pin> pinList, StringBuilder builder, int startIndex, int maxLength) {
         for (int i = startIndex; i < maxLength; i++) {
-            addDeddd(builder);
+            addBuilderPipe(builder);
             Pin pin = pinList.get(i);
             String symbol = pin.scoreRule(IS_NOT_FIRST).symbol;
             symbol = stringToSymbol(pin, symbol);
@@ -88,7 +88,7 @@ public class ResultView {
         return symbol;
     }
 
-    private void addDeddd(StringBuilder builder) {
+    private void addBuilderPipe(StringBuilder builder) {
         if (builder.length() > ZERO) {
             builder.append(PIPE);
         }
@@ -111,7 +111,7 @@ public class ResultView {
             if (!pinList.get(result).isStrike()) {
                 break;
             }
-            addDeddd(builder);
+            addBuilderPipe(builder);
             builder.append(ScoreRule.STRIKE.symbol);
         }
         return result;
