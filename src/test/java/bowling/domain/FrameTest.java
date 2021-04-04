@@ -1,30 +1,108 @@
 package bowling.domain;
 
+import bowling.dto.FrameResult;
+import bowling.dto.FrameScoreResult;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class FrameTest {
 
-
     @Test
-    void create() {
-        int frameNumber = 1;
-        Frame frame = new Frame(frameNumber);
-
-        assertThat(frame.number()).isEqualTo(frameNumber);
-    }
-
-
-    @Test
-    void add_pin_counts() {
-        int pinCount = 5;
-        Frame frame = new Frame(1);
+    void add_pin_count() {
+        int pinCount = 6;
+        Frame frame = new Frame();
         frame.addPintCount(pinCount);
-        List<Integer> pinCounts = frame.pinCounts();
+        FrameResult result = frame.result();
 
-        assertThat(pinCounts).containsExactly(pinCount);
+        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.NONE);
+        assertThat(result.pinCounts()).containsExactly(pinCount);
     }
+
+    @Test
+    void add_pin_count_after_done_throw_exception() {
+        Frame frame = new Frame();
+        frame.addPintCount(6);
+        frame.addPintCount(4);
+
+        assertThat(frame.isDone()).isTrue();
+        assertThatIllegalStateException().isThrownBy(() ->
+                frame.addPintCount(2));
+    }
+
+    @Test
+    void add_pin_count_over_max_total_pin_counts_throw_exception() {
+        Frame frame = new Frame();
+        frame.addPintCount(5);
+
+        assertThatIllegalStateException().isThrownBy(() ->
+                frame.addPintCount(9));
+    }
+
+    @Test
+    void result_when_strike() {
+        Frame frame = new Frame();
+        int strikePinCounts = 10;
+        frame.addPintCount(strikePinCounts);
+
+        FrameResult result = frame.result();
+        assertThat(frame.isDone()).isTrue();
+        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.STRIKE);
+        assertThat(result.pinCounts()).containsExactly(strikePinCounts);
+    }
+
+
+    @Test
+    void result_when_spare() {
+        Frame frame = new Frame();
+        int firstPinCount = 2;
+        int secondPinCount = 8;
+        frame.addPintCount(firstPinCount);
+        frame.addPintCount(secondPinCount);
+
+        FrameResult result = frame.result();
+        assertThat(frame.isDone()).isTrue();
+        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.SPARE);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
+    }
+
+    @Test
+    void result_when_miss() {
+        Frame frame = new Frame();
+        int firstPinCount = 2;
+        int secondPinCount = 6;
+        frame.addPintCount(firstPinCount);
+        frame.addPintCount(secondPinCount);
+
+        FrameResult result = frame.result();
+        assertThat(frame.isDone()).isTrue();
+        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.MISS);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
+    }
+
+    @Test
+    void result_when_none() {
+        Frame frame = new Frame();
+        int firstPinCount = 2;
+        frame.addPintCount(firstPinCount);
+
+        FrameResult result = frame.result();
+        assertThat(frame.isDone()).isFalse();
+        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.NONE);
+        assertThat(result.pinCounts()).containsExactly(firstPinCount);
+    }
+
+    @Test
+    void is_match() {
+        Frame frame = new Frame();
+        int firstPinCount = 2;
+        int secondPinCount = 6;
+        frame.addPintCount(firstPinCount);
+        frame.addPintCount(secondPinCount);
+        FrameScoreResult expected = FrameScoreResult.MISS;
+
+        assertThat(frame.isMatch(expected)).isTrue();
+    }
+
 }
