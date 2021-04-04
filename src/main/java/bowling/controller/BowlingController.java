@@ -10,8 +10,8 @@ public class BowlingController {
     private ResultView resultView;
 
     public BowlingController() {
-        inputView = new InputView();
-        resultView = new ResultView();
+        this.inputView = new InputView();
+        this.resultView = new ResultView();
     }
 
     public void run() {
