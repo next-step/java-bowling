@@ -13,11 +13,15 @@ public class Answers {
     }
 
     public void delete(User loginUser, DeleteHistories deleteHistories) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            answer.validate(loginUser);
-        }
+        checkValidation(loginUser);
         answers.stream()
                 .map(Answer::delete)
                 .forEach(deleteHistories::record);
+    }
+
+    public void checkValidation(User loginUser) throws CannotDeleteException {
+        for (Answer answer : answers) {
+            answer.validate(loginUser);
+        }
     }
 }
