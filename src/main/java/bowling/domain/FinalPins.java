@@ -65,8 +65,8 @@ public class FinalPins implements Pins{
 
     private int finalSize() {
         ScoreRule finalRule = scoreRule();
-        if (ScoreRule.STRIKE.equals(finalRule)
-                || ScoreRule.SPARE.equals(finalRule)) {
+        if (pins.get(FIRST_INDEX).isStrike()
+            || ScoreRule.SPARE.equals(finalRule)) {
             return FINAL_PINS_MAX_SIZE;
         }
         return NORMAL_PINS_MAX_SIZE;

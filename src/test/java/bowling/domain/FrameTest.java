@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("프레임")
 public class FrameTest {
 
     public void playGame(Frame frame, List<Integer> countOfDownPins) {
@@ -52,35 +53,31 @@ public class FrameTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10,1:2", "1,9:2", "0,10:2"})
-    @DisplayName("마지막 프레임은 스트라이크 or 스페어 때 최대 3번 투구")
-    public void strikeOrSpare3Chances(int firstPin, String inputPins) throws Exception {
-
+    @CsvSource(value = {"10,1:2,3", "1,9:2,3", "0,10:2,3"})
+    @DisplayName("마지막 프레임은 스트라이크 or 스페어 때 한번 더 투구")
+    public void strikeOrSpare3Chances(int firstPin, String inputPins, int count) throws Exception {
         //given
         Frame frame = Frame.of(firstPin, FinalPins.init());
 
         //when
         List<Integer> countOfDownPins = stringToListInteger(inputPins);
-
         playGame(frame, countOfDownPins);
 
         List<Pin> pins = frame.pins().pins();
 
         //then
-        assertThat(pins.size()).isEqualTo(3);
+        assertThat(pins.size()).isEqualTo(count);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"1,1:2", "1,8:2", "0,9:2"})
     @DisplayName("마지막 프레임은 스트라이크 or 스페어 없을때 최대 2번 투구")
     public void notStrikeOrSpare2Chances(int firstPin, String inputPins) throws Exception {
-
         //given
         Frame frame = Frame.of(firstPin, FinalPins.init());
 
         //when
         List<Integer> countOfDownPins = stringToListInteger(inputPins);
-
         playGame(frame, countOfDownPins);
 
         List<Pin> pins = frame.pins().pins();

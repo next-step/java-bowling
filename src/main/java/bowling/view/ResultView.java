@@ -8,9 +8,11 @@ import java.util.stream.IntStream;
 public class ResultView {
     private static final String DEFAULT_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String SCORE_EMPTY = "      |";
-    private static final int MAX_SIZE = 10;
+    private static final int FRAME_MAX_SIZE = 10;
     private static final int DEFAULT_SIZE = 1;
     private static final int MINUS_ONE = 1;
+    private static final int ZERO = 0;
+    private static final boolean IS_NOT_FIRST = false;
 
     public void bowlingBoard(Frames frames) {
         System.out.println(DEFAULT_BOARD);
@@ -20,11 +22,12 @@ public class ResultView {
         builder.append(printFrameBoard(frames));
 
         System.out.println(builder.toString());
+        System.out.println();
     }
 
     private String printFrameBoard(Frames frames) {
         StringBuilder builder = new StringBuilder();
-        IntStream.rangeClosed(DEFAULT_SIZE, MAX_SIZE)
+        IntStream.rangeClosed(DEFAULT_SIZE, FRAME_MAX_SIZE)
                 .forEach(size -> builder.append(frameScore(size, frames)));
 
         return builder.toString();
@@ -41,42 +44,76 @@ public class ResultView {
 
     private String stringToFrame(Frame frame) {
         Pins pins = frame.pins();
-        if (ScoreRule.STRIKE.equals(pins.scoreRule())) {
-            return stringToStrike();
+        if (pins.getClass() == FinalPins.class) {
+            return stringToFinal(pins);
         }
-
-        if (ScoreRule.SPARE.equals(pins.scoreRule())) {
-            return String.format(" %5s", stringToSpare(pins));
-        }
-
-        return String.format(" %5s", stringToEtc(pins));
+        return stringToNormal(pins);
     }
 
-    private String stringToEtc(Pins pins) {
-        StringBuilder builder = new StringBuilder();
-        return builder.toString();
-    }
-
-    private String stringToSpare(Pins pins) {
+    private String stringToNormal(Pins pins) {
         List<Pin> pinList = pins.pins();
         StringBuilder builder = new StringBuilder();
-        IntStream.rangeClosed(DEFAULT_SIZE, pinList.size())
-                .forEach(index -> {
-                    if (builder.length() != 0) {
-                        builder.append("|");
-                    }
-                    String result = (index == pinList.size()) ?
-                            ScoreRule.SPARE.symbol : String.valueOf(pinList.get(index).pin());
 
-                    builder.append(result);
-                });
+        ScoreRule scoreRule = pins.scoreRule();
+        if (ScoreRule.STRIKE.equals(scoreRule)) {
+            return String.format("  %-2s  |", scoreRule.symbol);
+        }
 
-        builder.append(" |");
-        return builder.toString();
+        boolean isSpare = ScoreRule.SPARE.equals(scoreRule);
+        int maxLength = isSpare ? DEFAULT_SIZE : pinList.size();
+
+        stringToPins(pinList, builder, ZERO, maxLength);
+
+        if (isSpare) {
+            builder.append("|"+scoreRule.symbol);
+        }
+        return String.format(" %-3s  |", builder.toString());
     }
 
-    private String stringToStrike() {
-        return String.format("  %s   |", ScoreRule.STRIKE.symbol);
+    private void stringToPins(List<Pin> pinList, StringBuilder builder, int startIndex, int maxLength) {
+        for (int i = startIndex; i < maxLength; i++) {
+            addDeddd(builder);
+            Pin pin = pinList.get(i);
+            String symbol = pin.scoreRule(IS_NOT_FIRST).symbol;
+            symbol = stringToSymbol(pin, symbol);
+            builder.append(symbol);
+        }
+    }
+
+    private String stringToSymbol(Pin pin, String symbol) {
+        if (symbol.isEmpty()) {
+            symbol = String.valueOf(pin.pin());
+        }
+        return symbol;
+    }
+
+    private void addDeddd(StringBuilder builder) {
+        if (builder.length() > ZERO) {
+            builder.append("|");
+        }
+    }
+
+    public String stringToFinal(Pins pins) {
+        List<Pin> pinList = pins.pins();
+        StringBuilder builder = new StringBuilder();
+
+        int result = stringToFinalStrike(pinList, builder);
+
+        stringToPins(pinList, builder, result, pinList.size());
+
+        return String.format(" %-5s|", builder.toString());
+    }
+
+    private int stringToFinalStrike(List<Pin> pinList, StringBuilder builder) {
+        int result;
+        for (result = ZERO; result < pinList.size(); result++) {
+            if (!pinList.get(result).isStrike()) {
+                break;
+            }
+            addDeddd(builder);
+            builder.append(ScoreRule.STRIKE.symbol);
+        }
+        return result;
     }
 
     private String stringToName(Frames frames) {
