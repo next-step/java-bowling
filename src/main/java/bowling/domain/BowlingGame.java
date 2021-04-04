@@ -1,15 +1,16 @@
 package bowling.domain;
 
+import bowling.dto.BowlingGameRequest;
 import bowling.dto.ScoreBoard;
 
 public class BowlingGame {
 
     private final Player player;
 
-    private static final int TOTAL_NUMBER_OF_FRAME = 10;
+    private static final int TOTAL_NUMBER_OF_FRAME = 3;
 
-    public BowlingGame(String playerName) {
-        player = new Player(playerName, TOTAL_NUMBER_OF_FRAME);
+    public BowlingGame(BowlingGameRequest bowlingGameRequest) {
+        player = new Player(bowlingGameRequest.playerName(), TOTAL_NUMBER_OF_FRAME);
     }
 
     public ScoreBoard scoreBoard() {

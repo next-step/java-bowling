@@ -9,16 +9,16 @@ public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
     public static BowlingGameRequest bowlingGameRequest() {
-return new BowlingGameRequest();
+        return new BowlingGameRequest(playerName());
     }
 
-    public static String playerName() {
+    private static String playerName() {
         System.out.print(MessageConstant.PLAYER_NAME_INPUT);
         return SCANNER.nextLine()
                 .trim();
     }
 
-    public static int pintCounts(int frameNumber) {
+    public static int pinCount(int frameNumber) {
         System.out.print(frameNumber+MessageConstant.PINS_COUNT);
         String count = SCANNER.nextLine()
                 .trim();

@@ -6,14 +6,13 @@ import bowling.view.ResultView;
 
 public class BowlingGameController {
     public static void run() {
-        BowlingGame bowlingGame = new BowlingGame(InputView.playerName());
+        BowlingGame bowlingGame = new BowlingGame(InputView.bowlingGameRequest());
         ResultView.printScoreBoard(bowlingGame.scoreBoard());
         while(!bowlingGame.isDone()){
-            int currentFrame = bowlingGame.currentFrameNumber();
-            int pintCounts = InputView.pintCounts(currentFrame);
-            bowlingGame.play(pintCounts);
+            int currentFrameNumber = bowlingGame.currentFrameNumber();
+            int pintCount = InputView.pinCount(currentFrameNumber);
+            bowlingGame.play(pintCount);
             ResultView.printScoreBoard(bowlingGame.scoreBoard());
         }
-
     }
 }
