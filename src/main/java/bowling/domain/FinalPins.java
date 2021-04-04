@@ -3,10 +3,13 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class FinalPins implements Pins{
+    private static final String MAX_OVER_PINS = "넘어뜨리는 볼링핀은 10개가 최대입니다.";
+    private static final int MAX_PINS = 10;
+    private static final int NORMAL_PINS_MAX_SIZE = 2;
     private static final int FINAL_PINS_MAX_SIZE = 3;
+    private static final int FIRST_INDEX = 0;
     private static final int MINUS_SIZE_ONE = 1;
 
     private final List<Pin> pins;
@@ -54,12 +57,11 @@ public class FinalPins implements Pins{
     }
 
     private int accumulatedPins() {
-        int[] total = {0};
-        IntStream.range(0, pins.size())
-                .skip(skipSize())
-                .limit(NORMAL_PINS_MAX_SIZE)
-                .forEach(index -> total[0] = pins.get(index).accumulated(total[0]));
-        return total[0];
+        return pins.stream()
+                        .skip(skipSize())
+                        .limit(NORMAL_PINS_MAX_SIZE)
+                        .mapToInt(Pin::pin)
+                        .sum();
     }
 
     private long skipSize() {

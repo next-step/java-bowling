@@ -5,6 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class NormalPins implements Pins{
+    private static final String MAX_OVER_PINS = "넘어뜨리는 볼링핀은 10개가 최대입니다.";
+    private static final int MAX_PINS = 10;
+    private static final int NORMAL_PINS_MAX_SIZE = 2;
+    private static final int FIRST_INDEX = 0;
+    private static final boolean IS_FIRST = true;
+
     private List<Pin> pins;
 
     private NormalPins() {
@@ -50,9 +56,9 @@ public class NormalPins implements Pins{
     }
 
     private int accumulatedPins() {
-        int[] total = { 0 };
-        pins.forEach(pin -> total[0] = pin.accumulated(total[0]));
-        return total[0];
+        return pins.stream()
+                .mapToInt(Pin::pin)
+                .sum();
     }
 
     private boolean isStrike() {

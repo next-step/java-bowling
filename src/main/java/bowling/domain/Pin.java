@@ -27,10 +27,6 @@ public class Pin {
         return ScoreRule.of(pin, isFirst);
     }
 
-    public int accumulated(int downPins) {
-        return pin + downPins;
-    }
-
     public int pin() {
         return pin;
     }
