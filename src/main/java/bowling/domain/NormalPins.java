@@ -42,9 +42,8 @@ public class NormalPins implements Pins{
         return total[FIRST_INDEX];
     }
 
-    // 스트라이크 혹은 사이즈 2 일 떄 종료
     public boolean isEnd() {
-        return isStrike() || pins.size() == 2;
+        return isStrike() || pins.size() == MAX_SIZE;
     }
 
     private boolean isStrike() {
@@ -52,6 +51,6 @@ public class NormalPins implements Pins{
     }
 
     public ScoreRule scoreRule() {
-        return ScoreRule.of(accumulatedPins(), (pins.size() == 1));
+        return ScoreRule.of(accumulatedPins(), (pins.size() < MAX_SIZE));
     }
 }
