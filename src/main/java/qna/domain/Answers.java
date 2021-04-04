@@ -16,6 +16,8 @@ public class Answers {
         for (Answer answer : answers) {
             answer.validate(loginUser);
         }
-        answers.stream().map(Answer::delete).forEach(deleteHistories::record);
+        answers.stream()
+                .map(Answer::delete)
+                .forEach(deleteHistories::record);
     }
 }
