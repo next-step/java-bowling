@@ -2,16 +2,22 @@ package bowling.dto;
 
 import bowling.domain.Player;
 
-import java.util.List;
-
 public class ScoreBoard {
-    private PlayerDto playerDto;
 
-    public ScoreBoard(Player player) {
-        this.playerDto = new PlayerDto(player);
+    private int totalFrameNumber;
+
+    private PlayResult playResult;
+
+    public ScoreBoard(Player player, int totalFrameNumber) {
+        this.playResult = player.playResult();
+        this.totalFrameNumber = totalFrameNumber;
     }
 
-    public PlayerDto playerResult() {
-        return playerDto;
+    public PlayResult playResult() {
+        return playResult;
+    }
+
+    public int totalFrameNumber() {
+        return totalFrameNumber;
     }
 }

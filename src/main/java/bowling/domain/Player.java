@@ -1,48 +1,38 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import bowling.dto.PlayResult;
 
 public class Player {
-    private static final int LAST_FRAME = 10;
 
-    private final String name;
+    private final PlayerName name;
 
-    private boolean isDone;
+    private final Frames frames;
 
-    private List<FrameOld> frameOlds = new ArrayList<>();
-
-    public Player(String name) {
+    private Player(PlayerName name,Frames frames){
         this.name = name;
-        frameOlds.add(FrameOld.first());
+        this.frames = frames;
+    }
+
+    public Player(String name,int totalNumberOfFrame) {
+        this(new PlayerName(name),Frames.init(totalNumberOfFrame));
     }
 
     public void addPinCounts(int pintCount) {
-        FrameOld frameOld = frameOlds.get(frameOlds.size() - 1);
-        frameOld.addPinCounts(pintCount);
-        if (frameOld.isDone()) {
-            if (frameOld.number() == LAST_FRAME) {
-                isDone = true;
-            } else {
-                frameOlds.add(frameOld.next());
-            }
-
+        if(isDone()){
+            throw new IllegalStateException("이미 전체 프레임을 다 play하셨습니다.");
         }
+        frames.addPinCount(pintCount);
     }
 
     public int currentFrameNumber() {
-        return frameOlds.get(frameOlds.size() - 1).number();
-    }
-
-    public String name() {
-        return name;
-    }
-
-    public List<FrameOld> frames() {
-        return frameOlds;
+        return frames.currentFrameNumberInt();
     }
 
     public boolean isDone() {
-        return isDone;
+        return frames.isDone();
+    }
+
+    public PlayResult playResult() {
+       return new PlayResult(name,frames);
     }
 }

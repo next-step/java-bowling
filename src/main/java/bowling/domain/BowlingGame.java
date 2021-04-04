@@ -6,13 +6,14 @@ public class BowlingGame {
 
     private final Player player;
 
+    private static final int TOTAL_NUMBER_OF_FRAME = 10;
+
     public BowlingGame(String playerName) {
-        player = new Player(playerName);
+        player = new Player(playerName, TOTAL_NUMBER_OF_FRAME);
     }
 
-
     public ScoreBoard scoreBoard() {
-        return new ScoreBoard(player);
+        return new ScoreBoard(player, TOTAL_NUMBER_OF_FRAME);
     }
 
     public boolean isDone() {
