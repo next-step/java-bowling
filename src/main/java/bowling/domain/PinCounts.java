@@ -18,7 +18,7 @@ public class PinCounts {
 
     public int totalCount() {
         return pinCounts.stream()
-                .map(pinCount -> pinCount.count())
+                .map(PinCount::count)
                 .reduce(0, Integer::sum);
     }
 
