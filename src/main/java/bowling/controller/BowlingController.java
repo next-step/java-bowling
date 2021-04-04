@@ -15,8 +15,7 @@ public class BowlingController {
     }
 
     public void run() {
-        String name = inputView.user();
-        User user = new User(name);
+        User user = inputView.user();
 
         Frames frames = Frames.of(user);
         resultView.bowlingBoard(frames);
