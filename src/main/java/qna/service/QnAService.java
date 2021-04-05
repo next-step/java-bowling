@@ -18,6 +18,9 @@ public class QnAService {
     @Resource(name = "questionRepository")
     private QuestionRepository questionRepository;
 
+    @Resource(name = "answerRepository")
+    private AnswerRepository answerRepository;
+
     @Resource(name = "deleteHistoryService")
     private DeleteHistoryService deleteHistoryService;
 
@@ -27,18 +30,23 @@ public class QnAService {
                 .orElseThrow(NotFoundException::new);
     }
 
+    @Transactional(readOnly = true)
+    public Answer findAnswerById(Long id) {
+        return answerRepository.findByIdAndDeletedFalse(id)
+                .orElseThrow(NotFoundException::new);
+    }
+
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
         List<DeleteHistory> deleteHistories = question.delete(loginUser);
-//
-//        question.preCheckDeletion(loginUser);
-//
-//        Answers answers = new Answers(question);
-//        answers.preCheckDeletion(loginUser);
-//
-//        DeleteHistoryList deleteHistoryList = new DeleteHistoryList();
         deleteHistoryService.saveAll(deleteHistories);
+    }
 
+    @Transactional
+    public void deleteAnswer(User loginUser, long answerId) throws CannotDeleteException {
+        Answer answer = findAnswerById(answerId);
+        DeleteHistory deleteHistory = answer.delete(loginUser);
+        deleteHistoryService.save(deleteHistory);
     }
 }

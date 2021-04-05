@@ -2,7 +2,6 @@ package qna.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,18 +24,18 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
-    private DeleteHistory(ContentType contentType, Long contentId, User deletedBy){
+    private DeleteHistory(ContentType contentType, Long contentId, User deletedBy) {
         this.contentType = contentType;
         this.contentId = contentId;
         this.deletedBy = deletedBy;
         this.createDate = LocalDateTime.now();
     }
 
-    public static DeleteHistory ofQuestion(Long contentId, User deletedBy){
+    public static DeleteHistory ofQuestion(Long contentId, User deletedBy) {
         return new DeleteHistory(ContentType.QUESTION, contentId, deletedBy);
     }
 
-    public static DeleteHistory ofAnswer(Long contentId, User deletedBy){
+    public static DeleteHistory ofAnswer(Long contentId, User deletedBy) {
         return new DeleteHistory(ContentType.ANSWER, contentId, deletedBy);
     }
 

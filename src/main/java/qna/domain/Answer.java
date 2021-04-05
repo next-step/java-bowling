@@ -5,9 +5,8 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -47,31 +46,25 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public static List<DeleteHistory> ofDelete(List<Answer> answers, User loginUser){
-        return answers.stream()
-                .map(answer-> answer.delete(loginUser))
-                .collect(Collectors.toList());
+    public static List<DeleteHistory> ofDelete(List<Answer> answers, User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        for (Answer answer : answers) {
+            deleteHistories.add(answer.delete(loginUser));
+        }
+        return deleteHistories;
     }
 
-    public DeleteHistory delete(User loginUser) {
-        try {
-            preCheckDeletion(loginUser);
-            this.deleted = true;
-            return DeleteHistory.ofAnswer(this.getId(), this.writer);
-        } catch (CannotDeleteException cannotDeleteException){
-            return null;
-        }
+    public DeleteHistory delete(User loginUser) throws CannotDeleteException {
+        preCheckDeletion(loginUser);
+        this.deleted = true;
+        return DeleteHistory.ofAnswer(this.getId(), this.writer);
     }
 
     private void preCheckDeletion(User loginUser) throws CannotDeleteException {
-        if(!isOwner(loginUser)){
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("답변의 작성자가 본인이 아니기 때문에 삭제할 수 없습니다");
         }
     }
-
-//    private boolean canDelete(User loginUser){
-//
-//    }
 
     public boolean isDeleted() {
         return deleted;
