@@ -7,7 +7,8 @@ import java.util.stream.IntStream;
 
 public class ResultView {
     private static final String DEFAULT_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final String SCORE_EMPTY = "      |";
+    private static final String FRAME_EMPTY = "      |";
+    private static final String SCORE_FIRST = "|      |";
     private static final String PIPE = "|";
     private static final int FRAME_MAX_SIZE = 10;
     private static final int DEFAULT_SIZE = 1;
@@ -23,11 +24,13 @@ public class ResultView {
         builder.append(printFrameBoard(frames));
 
         System.out.println(builder.toString());
-        System.out.println();
+        System.out.println(printScoreBoard(frames));
     }
 
-    private String printFrameBoard(Frames frames) {
+    private String printScoreBoard(Frames frames) {
         StringBuilder builder = new StringBuilder();
+        builder.append(SCORE_FIRST);
+
         IntStream.rangeClosed(DEFAULT_SIZE, FRAME_MAX_SIZE)
                 .forEach(size -> builder.append(frameScore(size, frames)));
 
@@ -35,12 +38,44 @@ public class ResultView {
     }
 
     private String frameScore(int size, Frames frames) {
+        List<Score> scores = frames.scores();
+        if (size <= scores.size()
+                && !isScoresEnd(size, scores)) {
+            return stringToScore(size, scores);
+        }
+        return FRAME_EMPTY;
+    }
+
+    private String stringToScore(int size, List<Score> scores) {
+        int sum = scores.stream()
+                    .limit(size)
+                    .mapToInt(Score::score)
+                    .sum();
+
+        return String.format(" %3d  " + PIPE, sum);
+    }
+
+    private boolean isScoresEnd(int size, List<Score> scores) {
+        return scores.stream()
+                .limit(size)
+                .anyMatch(score -> !score.isEndScore());
+    }
+
+    private String printFrameBoard(Frames frames) {
+        StringBuilder builder = new StringBuilder();
+        IntStream.rangeClosed(DEFAULT_SIZE, FRAME_MAX_SIZE)
+                .forEach(size -> builder.append(framePins(size, frames)));
+
+        return builder.toString();
+    }
+
+    private String framePins(int size, Frames frames) {
         List<Frame> frameList = frames.frames();
         if (!frameList.isEmpty()
                 && size <= frameList.size()) {
             return stringToFrame(frameList.get(index(size)));
         }
-        return SCORE_EMPTY;
+        return FRAME_EMPTY;
     }
 
     private String stringToFrame(Frame frame) {

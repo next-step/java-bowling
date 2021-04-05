@@ -22,6 +22,10 @@ public class Score {
         return new Score(score + countOfDownPin, bonusChance-1);
     }
 
+    public boolean isEndScore() {
+        return bonusChance == 0;
+    }
+
     public int score() {
         return score;
     }

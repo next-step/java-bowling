@@ -20,8 +20,9 @@ public class BowlingController {
         Frames frames = Frames.of(user);
         resultView.bowlingBoard(frames);
 
-        while(frames.isPlay()) {
-            frames.play(inputView.score(frames));
+        while (frames.isPlay()) {
+            frames = frames.play(inputView.score(frames));
+            frames.scoreInit();
             resultView.bowlingBoard(frames);
         }
     }
