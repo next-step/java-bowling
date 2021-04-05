@@ -20,23 +20,23 @@ public class QuestionTest {
         this.question2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
     }
 
-    @Test
-    void delete_성공() throws CannotDeleteException {
-        SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(question1.isDeleted()).isFalse();
-
-        question1.preCheckDeletion(UserTest.JAVAJIGI);
-        question1.delete();
-
-        softAssertions.assertThat(question1.isDeleted()).isTrue();
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    void delete_다른_사람이_쓴_글() {
-        assertThatThrownBy(() -> {
-            question2.preCheckDeletion(UserTest.JAVAJIGI);
-        }).isInstanceOf(CannotDeleteException.class);
-    }
+//    @Test
+//    void delete_성공() throws CannotDeleteException {
+//        SoftAssertions softAssertions = new SoftAssertions();
+//        softAssertions.assertThat(question1.isDeleted()).isFalse();
+//
+//        question1.preCheckDeletion(UserTest.JAVAJIGI);
+//        question1.delete();
+//
+//        softAssertions.assertThat(question1.isDeleted()).isTrue();
+//
+//        softAssertions.assertAll();
+//    }
+//
+//    @Test
+//    void delete_다른_사람이_쓴_글() {
+//        assertThatThrownBy(() -> {
+//            question2.preCheckDeletion(UserTest.JAVAJIGI);
+//        }).isInstanceOf(CannotDeleteException.class);
+//    }
 }
