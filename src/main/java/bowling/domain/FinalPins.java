@@ -50,6 +50,18 @@ public class FinalPins implements Pins{
         return Collections.unmodifiableList(pins);
     }
 
+    @Override
+    public int score() {
+        return pins.stream()
+                .mapToInt(Pin::pin)
+                .sum();
+    }
+
+    @Override
+    public int bonusChance() {
+        return 0;
+    }
+
     private void validMaxPins() {
         if (accumulatedPins() > MAX_PINS) {
             throw new IllegalArgumentException(MAX_OVER_PINS);
