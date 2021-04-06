@@ -39,22 +39,11 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
+    public Question(long id, String title, String contents, List<Answer> answers) {
+        super(id);
         this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
         this.contents = contents;
-        return this;
+        this.answers = answers;
     }
 
     public User getWriter() {
@@ -80,6 +69,11 @@ public class Question extends AbstractEntity {
         return this;
     }
 
+    public Question delete() {
+        this.deleted = true;
+        return this;
+    }
+
     public boolean isDeleted() {
         return deleted;
     }
@@ -91,5 +85,12 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public Question delete(User user) {
+        if(isOwner(user) && answers.size() == 0){
+            return delete();
+        }
+        return this;
     }
 }
