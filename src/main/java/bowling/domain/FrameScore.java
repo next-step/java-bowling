@@ -15,15 +15,15 @@ public class FrameScore {
         return new FrameScore(frame.score(), frame.bonusChance());
     }
 
-    public FrameScore add(int countOfDownPin) {
-        if (!bonusChance.isScoreAdd()) {
+    public FrameScore addScore(int countOfDownPin) {
+        if (!bonusChance.isAddScore()) {
             return this;
         }
         return new FrameScore(score.add(countOfDownPin), bonusChance.minus());
     }
 
     public boolean isAggregateEnd() {
-        return bonusChance.isScoreAdd();
+        return bonusChance.isAddScore();
     }
 
     public int aggregateScore() {

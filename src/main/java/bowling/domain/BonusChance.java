@@ -23,7 +23,7 @@ public class BonusChance {
         return new BonusChance(bonusChance - 1);
     }
 
-    public boolean isScoreAdd() {
+    public boolean isAddScore() {
         return bonusChance > MIN_CHANCE;
     }
 

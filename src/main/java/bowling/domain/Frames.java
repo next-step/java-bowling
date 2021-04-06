@@ -72,7 +72,7 @@ public class Frames {
 
     private List<FrameScore> addScore(int countOfDownPin) {
         return scores.stream()
-                .map(score -> score.add(countOfDownPin))
+                .map(score -> score.addScore(countOfDownPin))
                 .collect(Collectors.toList());
     }
 

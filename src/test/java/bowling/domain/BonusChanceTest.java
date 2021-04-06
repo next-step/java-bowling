@@ -22,7 +22,7 @@ public class BonusChanceTest {
         //when
         
         //then
-        assertThat(bonusChance.isScoreAdd()).isTrue();
+        assertThat(bonusChance.isAddScore()).isTrue();
     }
 
     @ParameterizedTest
@@ -49,7 +49,7 @@ public class BonusChanceTest {
         //when
 
         //then
-        assertThat(bonusChance.isScoreAdd()).isFalse();
+        assertThat(bonusChance.isAddScore()).isFalse();
     }
 
     @Test
