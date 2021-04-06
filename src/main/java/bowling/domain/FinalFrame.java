@@ -16,7 +16,7 @@ public class FinalFrame {
 
     private int currentFrameIdx;
 
-    public FinalFrame(List<Frame> frames, FrameNumber frameNumber) {
+    private FinalFrame(List<Frame> frames, FrameNumber frameNumber) {
         validateFramesTryCount(frames);
         this.frames = frames;
         this.frameNumber = frameNumber;
@@ -30,6 +30,10 @@ public class FinalFrame {
         if(totalTryCount > MAX_TRY_COUNT) {
             throw new IllegalArgumentException("bonusframe 숫자가 너무 많습니다.");
         }
+    }
+
+    public static FinalFrame from(List<Frame> frames, FrameNumber frameNumber) {
+        return new FinalFrame(frames,frameNumber);
     }
 
     public static FinalFrame of(int frameNumber) {
@@ -64,7 +68,7 @@ public class FinalFrame {
             return true;
         }
 
-        if (isFirstFrameIsMiss()) {
+        if (isFirstFrameMiss()) {
             return true;
         }
 
@@ -79,7 +83,7 @@ public class FinalFrame {
         return totalTryCount >= MAX_TRY_COUNT;
     }
 
-    private boolean isFirstFrameIsMiss() {
+    private boolean isFirstFrameMiss() {
         Frame firstBonusFrame = frames.get(0);
         return firstBonusFrame.isMatch(FrameScoreResult.MISS);
     }

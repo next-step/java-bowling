@@ -36,12 +36,12 @@ public class FramesTest {
         Frame missFrame = new Frame(Arrays.asList(new PinCount(3), new PinCount(4)));
         Frame missFrameForFinal = new Frame(Arrays.asList(new PinCount(3), new PinCount(4)));
 
-        NormalFrame normalFrame1 = new NormalFrame(strikeFrame, new FrameNumber(1));
-        NormalFrame normalFrame2 = new NormalFrame(spareFrame, new FrameNumber(2));
-        NormalFrame normalFrame3 = new NormalFrame(missFrame, new FrameNumber(3));
-        FinalFrame finalFrame = new FinalFrame(Arrays.asList(missFrameForFinal), new FrameNumber(lastFrameNumber));
+        NormalFrame normalFrame1 = NormalFrame.from(strikeFrame, new FrameNumber(1));
+        NormalFrame normalFrame2 = NormalFrame.from(spareFrame, new FrameNumber(2));
+        NormalFrame normalFrame3 = NormalFrame.from(missFrame, new FrameNumber(3));
+        FinalFrame finalFrame = FinalFrame.from(Arrays.asList(missFrameForFinal), new FrameNumber(lastFrameNumber));
 
-        Frames frames = new Frames(Arrays.asList(normalFrame1, normalFrame2, normalFrame3), finalFrame);
+        Frames frames = Frames.from(Arrays.asList(normalFrame1, normalFrame2, normalFrame3), finalFrame);
 
         assertThat(frames.isDone()).isTrue();
         assertThat(frames.currentFrameNumberInt()).isEqualTo(lastFrameNumber);
@@ -56,13 +56,13 @@ public class FramesTest {
         Frame unDoneFrame2 = new Frame();
         Frame unDoneFrameForFinal = new Frame();
 
-        NormalFrame normalFrame1 = new NormalFrame(strikeFrame, new FrameNumber(1));
-        NormalFrame normalFrame2 = new NormalFrame(spareFrame, new FrameNumber(2));
-        NormalFrame normalFrame4 = new NormalFrame(unDoneFrame2, new FrameNumber(4));
-        NormalFrame normalFrame3 = new NormalFrame(unDoneFrame1, new FrameNumber(3));
-        FinalFrame finalFrame = new FinalFrame(Arrays.asList(unDoneFrameForFinal), new FrameNumber(5));
+        NormalFrame normalFrame1 = NormalFrame.from(strikeFrame, new FrameNumber(1));
+        NormalFrame normalFrame2 = NormalFrame.from(spareFrame, new FrameNumber(2));
+        NormalFrame normalFrame4 = NormalFrame.from(unDoneFrame2, new FrameNumber(4));
+        NormalFrame normalFrame3 = NormalFrame.from(unDoneFrame1, new FrameNumber(3));
+        FinalFrame finalFrame = FinalFrame.from(Arrays.asList(unDoneFrameForFinal), new FrameNumber(5));
 
-        Frames frames = new Frames(Arrays.asList(normalFrame4, normalFrame1, normalFrame2, normalFrame3), finalFrame);
+        Frames frames = Frames.from(Arrays.asList(normalFrame4, normalFrame1, normalFrame2, normalFrame3), finalFrame);
 
         assertThat(frames.isDone()).isFalse();
         assertThat(frames.currentFrameNumberInt()).isEqualTo(firstUndoneFrameNumber);
@@ -75,11 +75,11 @@ public class FramesTest {
         int firstPinCountOfSecondFrame = 5;
         int secondPinCountOfSecondFrame = 3;
 
-        NormalFrame firstStrikeNormalFrame = new NormalFrame(new Frame(Arrays.asList(new PinCount(strikePinCount))), new FrameNumber(1));
-        NormalFrame secondUnDoneNormalFrame = new NormalFrame(new Frame(), new FrameNumber(2));
+        NormalFrame firstStrikeNormalFrame = NormalFrame.from(new Frame(Arrays.asList(new PinCount(strikePinCount))), new FrameNumber(1));
+        NormalFrame secondUnDoneNormalFrame = NormalFrame.from(new Frame(), new FrameNumber(2));
         FinalFrame thirdFinalFrame = FinalFrame.of(3);
 
-        Frames frames = new Frames(Arrays.asList(firstStrikeNormalFrame, secondUnDoneNormalFrame), thirdFinalFrame);
+        Frames frames = Frames.from(Arrays.asList(firstStrikeNormalFrame, secondUnDoneNormalFrame), thirdFinalFrame);
         frames.addPinCount(firstPinCountOfSecondFrame);
         frames.addPinCount(secondPinCountOfSecondFrame);
 

@@ -17,7 +17,7 @@ public class Frames {
 
     private FrameNumber currentFrameNumber;
 
-    public Frames(List<NormalFrame> normalFrames, FinalFrame finalFrame) {
+    private Frames(List<NormalFrame> normalFrames, FinalFrame finalFrame) {
         validateEmptyNormalFrames(normalFrames);
 
         this.normalFrames = normalFrames.stream()
@@ -40,22 +40,26 @@ public class Frames {
         if (isAllNormalFramesDone) {
             return finalFrame.number();
         }
-
         return normalFrames.stream()
                 .filter(normalFrame -> !normalFrame.isDone())
                 .findFirst()
                 .map(NormalFrame::number)
                 .orElse(FrameNumber.first());
+
     }
 
     public static Frames init(int totalNumberOfFrame) {
         if (totalNumberOfFrame < MIN_TOTAL_NUMBER_OF_FRAME) {
-            throw new IllegalArgumentException("요청된 프레임수가 너무 적습니다.");
+            throw new IllegalArgumentException("생성할 프레임 수 가 넘무 적습니다.");
         }
         List<NormalFrame> normalFrames = new ArrayList<>();
         initFirstNormalFrame(normalFrames);
         initRestNormalFrames(normalFrames, totalNumberOfFrame - 2);
         return new Frames(normalFrames, FinalFrame.of(totalNumberOfFrame));
+    }
+
+    public static Frames from(List<NormalFrame> normalFrames, FinalFrame finalFrame) {
+        return new Frames(normalFrames,finalFrame);
     }
 
     private static void initFirstNormalFrame(List<NormalFrame> normalFrames) {

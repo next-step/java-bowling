@@ -8,7 +8,7 @@ public class NormalFrame {
 
     private final FrameNumber frameNumber;
 
-    public NormalFrame(Frame frame, FrameNumber frameNumber) {
+    private NormalFrame(Frame frame, FrameNumber frameNumber) {
         this.frame = frame;
         this.frameNumber = frameNumber;
     }
@@ -23,6 +23,10 @@ public class NormalFrame {
 
     public static NormalFrame first() {
         return new NormalFrame(FrameNumber.first());
+    }
+
+    public static NormalFrame from(Frame frame, FrameNumber frameNumber) {
+        return new NormalFrame(frame,frameNumber);
     }
 
     public NormalFrame next() {

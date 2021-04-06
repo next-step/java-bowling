@@ -16,7 +16,7 @@ public class FinalFrameTest {
     @Test
     void create_from_frames_counts_more_than_3_throw_exception() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-                new FinalFrame(Arrays.asList(new Frame(),new Frame(),new Frame(),new Frame()),new FrameNumber(4)));
+                FinalFrame.from(Arrays.asList(new Frame(),new Frame(),new Frame(),new Frame()),new FrameNumber(4)));
     }
 
     @Test
