@@ -5,9 +5,9 @@ import bowling.dto.ScoreBoard;
 
 public class BowlingGame {
 
-    private final Player player;
+    private static final int TOTAL_NUMBER_OF_FRAME = 10;
 
-    private static final int TOTAL_NUMBER_OF_FRAME = 3;
+    private final Player player;
 
     public BowlingGame(BowlingGameRequest bowlingGameRequest) {
         player = new Player(bowlingGameRequest.playerName(), TOTAL_NUMBER_OF_FRAME);
