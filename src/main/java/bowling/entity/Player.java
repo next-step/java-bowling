@@ -1,6 +1,6 @@
 package bowling.entity;
 
-import java.util.Optional;
+import java.util.List;
 
 public class Player {
 	private final Name name;
@@ -19,49 +19,49 @@ public class Player {
 		return name.getName();
 	}
 
-	public void addPlayerFrameScore(int key, int score) {
-		NormalFrame normalFrame = this.playerFrameScore.getNormalFrames()
-			.get(key);
+	public int currentPlayerFrameIndex() {
 
-		if (normalFrame == null) {
-			NormalFrame first = NormalFrame.ofNext(key, score, null);
-			addPlayerNormalFrameScore(first);
+		if (playerFrameScore.isAdd()) {
+			return this.playerFrameScore.getFrames().size() + 1;
+		}
+		return this.playerFrameScore.getFrames().size();
+	}
+
+	public void addPlayerFrameScore(int score) {
+		List<FrameScore> scores = playerFrameScore.addScore(score);
+
+		if (!playerFrameScore.isAdd()) {
+			Frame frame = getFrame(score);
+			this.playerFrameScore = playerFrameScore.setFrameScore(frame, scores);
 			return;
 		}
 
-		NormalFrame second = NormalFrame.ofNext(key, score, normalFrame);
-		addPlayerNormalFrameScore(second);
+		Frame frame = getFrame(score);
+		this.playerFrameScore = playerFrameScore.addFrameScore(frame, scores);
 	}
 
-	public void addFinalFrame(int key) {
-		FinalFrame finalFrame = this.playerFrameScore.getFinalFrame();
+	private Frame getFrame(int score) {
+		if (playerFrameScore.isFinalFrame(currentPlayerFrameIndex()) && playerFrameScore.isAdd()) {
+			FinalFrame finalFrame = new FinalFrame();
+			finalFrame.add(score);
+			return finalFrame;
+		}
 
-		finalFrame.add(key);
-		addPlayerFinalFrameScore(finalFrame);
+		if (playerFrameScore.isFinalFrame(currentPlayerFrameIndex()) && playerFrameScore.getFrames().size() == 10) {
+			FinalFrame finalFrame = (FinalFrame) playerFrameScore.getFrames().get(playerFrameScore.getFrames().size() - 1);
+			finalFrame.add(score);
+			return finalFrame;
+		}
+
+		if (playerFrameScore.isAdd()) {
+			return NormalFrame.ofNext(score, null);
+		}
+		return NormalFrame.ofNext(score, playerFrameScore.getFrames().get(playerFrameScore.lastIndex()));
 	}
 
-	private void addPlayerNormalFrameScore(NormalFrame normalFrame) {
-		this.playerFrameScore = Optional.ofNullable(playerFrameScore)
-			.orElseGet(PlayerFrameScore::new)
-			.addFrameScore(normalFrame);
-	}
 
-	private void addPlayerFinalFrameScore(FinalFrame finalFrame) {
-		this.playerFrameScore = Optional.ofNullable(playerFrameScore)
-			.orElseGet(PlayerFrameScore::new)
-			.addFrameScore(finalFrame);
-	}
-
-	public boolean isKeepGoing(int key) {
-		return this.playerFrameScore.getNormalFrames()
-			.get(key)
-			.isKeepGoing();
-	}
-
-	public boolean isFinalFrameKeepGoing() {
-		return this.getPlayerFrameScore()
-			.getFinalFrame()
-			.isKeepGoing();
+	public boolean isKeepGoing() {
+		return currentPlayerFrameIndex() < 11;
 	}
 
 	public PlayerFrameScore getPlayerFrameScore() {
