@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("보너스 점수")
+@DisplayName("보너스 점수 기회")
 public class BonusChanceTest {
 
     @ParameterizedTest

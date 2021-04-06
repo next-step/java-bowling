@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("여러 프레임")
 public class FramesTest {
 
     public void playGame(Frames frames, List<Integer> countOfDownPins) {
