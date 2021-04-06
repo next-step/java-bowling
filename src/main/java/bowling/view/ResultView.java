@@ -18,13 +18,9 @@ public class ResultView {
 
     public void bowlingBoard(Frames frames) {
         System.out.println(DEFAULT_BOARD);
-
-        StringBuilder builder = new StringBuilder();
-        builder.append(stringToName(frames));
-        builder.append(printFrameBoard(frames));
-
-        System.out.println(builder.toString());
+        System.out.println(printFrameBoard(frames));
         System.out.println(printScoreBoard(frames));
+        System.out.println();
     }
 
     private String printScoreBoard(Frames frames) {
@@ -63,6 +59,8 @@ public class ResultView {
 
     private String printFrameBoard(Frames frames) {
         StringBuilder builder = new StringBuilder();
+        builder.append(stringToName(frames));
+
         IntStream.rangeClosed(DEFAULT_SIZE, FRAME_MAX_SIZE)
                 .forEach(size -> builder.append(framePins(size, frames)));
 
