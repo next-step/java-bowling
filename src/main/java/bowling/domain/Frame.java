@@ -24,11 +24,11 @@ public class Frame {
         return pins;
     };
 
-    public int score() {
+    public Score score() {
         return pins.score();
     }
 
-    public int bonusChance() {
+    public BonusChance bonusChance() {
         return pins.bonusChance();
     }
 }

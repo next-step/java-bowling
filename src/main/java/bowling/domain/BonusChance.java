@@ -20,7 +20,7 @@ public class BonusChance {
     }
 
     public BonusChance minus() {
-        return new BonusChance(bonusChance-1);
+        return new BonusChance(bonusChance - 1);
     }
 
     public boolean isScoreAdd() {

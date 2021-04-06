@@ -51,15 +51,17 @@ public class FinalPins implements Pins{
     }
 
     @Override
-    public int score() {
-        return pins.stream()
-                .mapToInt(Pin::pin)
-                .sum();
+    public Score score() {
+        int sum = pins.stream()
+                    .mapToInt(Pin::pin)
+                    .sum();
+
+        return Score.of(sum);
     }
 
     @Override
-    public int bonusChance() {
-        return 0;
+    public BonusChance bonusChance() {
+        return BonusChance.of(0);
     }
 
     private void validMaxPins() {

@@ -41,7 +41,7 @@ public class NormalPins implements Pins{
     }
 
     public ScoreRule scoreRule() {
-        return ScoreRule.of(score(), (pins.size() < NORMAL_PINS_MAX_SIZE));
+        return ScoreRule.of(accumulatedPins(), (pins.size() < NORMAL_PINS_MAX_SIZE));
     }
 
     @Override
@@ -50,19 +50,23 @@ public class NormalPins implements Pins{
     }
 
     @Override
-    public int score() {
+    public Score score() {
+        return Score.of(accumulatedPins());
+    }
+
+    private int accumulatedPins() {
         return pins.stream()
                 .mapToInt(Pin::pin)
                 .sum();
     }
 
     @Override
-    public int bonusChance() {
-        return scoreRule().bonusChance;
+    public BonusChance bonusChance() {
+        return BonusChance.of(scoreRule().bonusChance);
     }
 
     private void validMaxPins() {
-        if (score() > MAX_PINS) {
+        if (accumulatedPins() > MAX_PINS) {
             throw new IllegalArgumentException(MAX_OVER_PINS);
         }
     }

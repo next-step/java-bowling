@@ -12,7 +12,7 @@ public class FrameScore {
 
     public static FrameScore of(Frame frame) {
         validFrameIsEnd(frame);
-        return new FrameScore(Score.of(frame.score()), BonusChance.of(frame.bonusChance()));
+        return new FrameScore(frame.score(), frame.bonusChance());
     }
 
     public FrameScore add(int countOfDownPin) {
@@ -26,7 +26,7 @@ public class FrameScore {
         return bonusChance.isScoreAdd();
     }
 
-    public int score() {
+    public int aggregateScore() {
         return score.score();
     }
 

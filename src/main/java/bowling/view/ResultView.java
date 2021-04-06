@@ -45,7 +45,7 @@ public class ResultView {
     private String scoreToString(int size, List<FrameScore> scores) {
         int sum = scores.stream()
                     .limit(size)
-                    .mapToInt(FrameScore::score)
+                    .mapToInt(FrameScore::aggregateScore)
                     .sum();
 
         return String.format(" %3d  " + PIPE, sum);

@@ -13,7 +13,7 @@ public interface Pins {
 
     List<Pin> pins();
 
-    int score();
+    Score score();
 
-    int bonusChance();
+    BonusChance bonusChance();
 }
