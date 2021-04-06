@@ -9,8 +9,8 @@ public class FinalPins implements Pins{
     private static final int MAX_PINS = 10;
     private static final int NORMAL_PINS_MAX_SIZE = 2;
     private static final int FINAL_PINS_MAX_SIZE = 3;
-    private static final int FIRST_INDEX = 0;
     private static final int MINUS_SIZE_ONE = 1;
+    private static final int ZERO = 0;
 
     private final List<Pin> pins;
 
@@ -61,7 +61,7 @@ public class FinalPins implements Pins{
 
     @Override
     public BonusChance bonusChance() {
-        return BonusChance.of(0);
+        return BonusChance.of(ZERO);
     }
 
     private void validMaxPins() {
@@ -72,15 +72,15 @@ public class FinalPins implements Pins{
 
     private int accumulatedPins() {
         return pins.stream()
-                        .skip(skipSize())
-                        .limit(NORMAL_PINS_MAX_SIZE)
-                        .mapToInt(Pin::pin)
-                        .sum();
+                    .skip(skipSize())
+                    .limit(NORMAL_PINS_MAX_SIZE)
+                    .mapToInt(Pin::pin)
+                    .sum();
     }
 
     private long skipSize() {
         int result;
-        for(result = 0; result < pins.size() - MINUS_SIZE_ONE; result++) {
+        for (result = ZERO; result < pins.size() - MINUS_SIZE_ONE; result++) {
             if (!pins.get(result).isStrike()) {
                 break;
             };
@@ -90,7 +90,7 @@ public class FinalPins implements Pins{
 
     private int finalSize() {
         ScoreRule finalRule = scoreRule();
-        if (pins.get(FIRST_INDEX).isStrike()
+        if (pins.get(ZERO).isStrike()
             || ScoreRule.SPARE == finalRule) {
             return FINAL_PINS_MAX_SIZE;
         }
