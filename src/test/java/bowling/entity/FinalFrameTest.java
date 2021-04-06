@@ -124,4 +124,9 @@ public class FinalFrameTest {
 		assertThat(FinalFrameString.TWO.stringMethod(finalFrame.getWards()))
 			.isEqualTo("  "  + BowlingScoreString.STRIKE.getScoreString() + "|  " + current);
 	}
+
+	@Test
+	void final_Frame_isAdd_Test() {
+		FinalFrame finalFrame = new FinalFrame();
+	}
 }
