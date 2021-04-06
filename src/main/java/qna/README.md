@@ -15,7 +15,7 @@
 - DeleteHistory : Answer -> 1 : 1
 
 - [X] 일급 컬렉션 추가 Answers , DeleteHistories
-- [ ] Question을 삭제하면 데이터 상태가 deleted로 변한다.
+- [ ] Question을 삭제하면 데이터 상태가 삭제상태인 true로 변한다.
 - [ ] 로그인 사용자와 질문한 사람이 같은 경우 삭제 가능하다. -> Question로 이동
 - [ ] 답변이 없는 경우 삭제가 가능하다. -> Question로 이동 
 - [ ] 질문자와 답변글의 모든 답변자 같은 경우 삭제가 가능하다 -> Answers로 이동 
