@@ -10,12 +10,12 @@ public class Pin {
     private final int pin;
 
     private Pin(int pin) {
-        validMaxPins(pin);
-        validMinPins(pin);
         this.pin = pin;
     }
 
     public static Pin of(int pin) {
+        validMaxPins(pin);
+        validMinPins(pin);
         return new Pin(pin);
     }
 
@@ -31,13 +31,13 @@ public class Pin {
         return pin;
     }
 
-    private void validMinPins(int pin) {
+    private static void validMinPins(int pin) {
         if (pin < MIN_PINS) {
             throw new IllegalArgumentException(MIN_UNDER_PINS);
         }
     }
 
-    private void validMaxPins(int pin) {
+    private static void validMaxPins(int pin) {
         if (pin > MAX_PINS) {
             throw new IllegalArgumentException(MAX_OVER_PINS);
         }

@@ -10,24 +10,12 @@ public class BonusChance {
     private final int bonusChance;
 
     private BonusChance(int bonusChance) {
-        validMaxBonusChance(bonusChance);
-        validMinBonusChance(bonusChance);
         this.bonusChance = bonusChance;
     }
 
-    private void validMinBonusChance(int bonusChance) {
-        if (MIN_CHANCE > bonusChance) {
-            throw new IllegalArgumentException(MIN_UNDER_CHANCE);
-        }
-    }
-
-    private void validMaxBonusChance(int bonusChance) {
-        if (MAX_CHANCE < bonusChance) {
-            throw new IllegalArgumentException(MAX_OVER_CHANCE);
-        }
-    }
-
     public static BonusChance of(int bonusChance) {
+        validMaxBonusChance(bonusChance);
+        validMinBonusChance(bonusChance);
         return new BonusChance(bonusChance);
     }
 
@@ -50,5 +38,17 @@ public class BonusChance {
     @Override
     public int hashCode() {
         return Objects.hash(bonusChance);
+    }
+
+    private static void validMinBonusChance(int bonusChance) {
+        if (MIN_CHANCE > bonusChance) {
+            throw new IllegalArgumentException(MIN_UNDER_CHANCE);
+        }
+    }
+
+    private static void validMaxBonusChance(int bonusChance) {
+        if (MAX_CHANCE < bonusChance) {
+            throw new IllegalArgumentException(MAX_OVER_CHANCE);
+        }
     }
 }
