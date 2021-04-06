@@ -1,5 +1,6 @@
 package bowling.dto;
 
+import bowling.domain.FrameScoreResult;
 import bowling.domain.PinCount;
 
 import java.util.List;

@@ -2,8 +2,10 @@ package bowling.domain;
 
 import bowling.dto.FinalFrameResult;
 import bowling.dto.FrameResult;
-import bowling.dto.FrameScoreResult;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,15 +16,30 @@ import static org.assertj.core.api.Assertions.*;
 public class FinalFrameTest {
 
     @Test
-    void create_from_frames_counts_more_than_3_throw_exception() {
+    void create_from_try_more_than_3_throw_exception() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-                FinalFrame.from(Arrays.asList(new Frame(),new Frame(),new Frame(),new Frame()),new FrameNumber(4)));
+                FinalFrame.of(new FrameNumber(10),Arrays.asList(new PinCount(10),new PinCount(10),new PinCount(3),new PinCount(3)))
+        );
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"10,7,7", "10,8,8","8,8","5,6"}, delimiter = ':')
+    @DisplayName("유효하지 투구값으로 생성")
+    void create_from_invalid_pin_count_list_throw_exception(String pinCountsInString) {
+        String nameSeparator = ",";
+        String[] pinCountsInArray = pinCountsInString.split(nameSeparator);
+        List<PinCount> list = Arrays.stream(pinCountsInArray)
+                .map(pinCountInString -> new PinCount(Integer.parseInt(pinCountInString)))
+                .collect(Collectors.toList());
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                FinalFrame.of(new FrameNumber(10),list)
+        );
     }
 
     @Test
     void create() {
         int frameNumber = 10;
-        FinalFrame finalFrame = FinalFrame.of(frameNumber);
+        FinalFrame finalFrame = FinalFrame.from(frameNumber);
 
         FinalFrameResult result = finalFrame.result();
         assertThat(result.frameNumber()).isEqualTo(frameNumber);
@@ -31,7 +48,7 @@ public class FinalFrameTest {
 
     @Test
     void add_pin_counts_when_done_throw_exception() {
-        FinalFrame finalFrame = FinalFrame.of(10);
+        FinalFrame finalFrame = FinalFrame.from(10);
         finalFrame.addPinCount(3);
         finalFrame.addPinCount(5);
 
@@ -43,7 +60,7 @@ public class FinalFrameTest {
     @Test
     void result_when_3_strike() {
         int strikePinCount = 10;
-        FinalFrame finalFrame = FinalFrame.of(10);
+        FinalFrame finalFrame = FinalFrame.from(10);
         finalFrame.addPinCount(strikePinCount);
         finalFrame.addPinCount(strikePinCount);
         finalFrame.addPinCount(strikePinCount);
@@ -61,7 +78,7 @@ public class FinalFrameTest {
         int firstStrikePinCount = 10;
         int secondStrikePinCount = 10;
         int lastPinCount = 3;
-        FinalFrame finalFrame = FinalFrame.of(10);
+        FinalFrame finalFrame = FinalFrame.from(10);
         finalFrame.addPinCount(firstStrikePinCount);
         finalFrame.addPinCount(secondStrikePinCount);
         finalFrame.addPinCount(lastPinCount);
@@ -84,7 +101,7 @@ public class FinalFrameTest {
         int strikePinCount = 10;
         int firstSparePinCount = 7;
         int secondSparePinCount = 3;
-        FinalFrame finalFrame = FinalFrame.of(10);
+        FinalFrame finalFrame = FinalFrame.from(10);
         finalFrame.addPinCount(strikePinCount);
         finalFrame.addPinCount(firstSparePinCount);
         finalFrame.addPinCount(secondSparePinCount);
@@ -107,7 +124,7 @@ public class FinalFrameTest {
         int strikePinCount = 10;
         int firstMissPinCount = 4;
         int secondMissPinCount = 3;
-        FinalFrame finalFrame = FinalFrame.of(10);
+        FinalFrame finalFrame = FinalFrame.from(10);
         finalFrame.addPinCount(strikePinCount);
         finalFrame.addPinCount(firstMissPinCount);
         finalFrame.addPinCount(secondMissPinCount);
@@ -130,7 +147,7 @@ public class FinalFrameTest {
         int firstMissPinCount = 7;
         int secondMissPinCount = 3;
         int lastPinCount = 5;
-        FinalFrame finalFrame = FinalFrame.of(10);
+        FinalFrame finalFrame = FinalFrame.from(10);
         finalFrame.addPinCount(firstMissPinCount);
         finalFrame.addPinCount(secondMissPinCount);
         finalFrame.addPinCount(lastPinCount);
@@ -153,7 +170,7 @@ public class FinalFrameTest {
         int firstSparePinCount = 7;
         int secondSparePinCount = 3;
         int strikePinCount = 10;
-        FinalFrame finalFrame = FinalFrame.of(10);
+        FinalFrame finalFrame = FinalFrame.from(10);
         finalFrame.addPinCount(firstSparePinCount);
         finalFrame.addPinCount(secondSparePinCount);
         finalFrame.addPinCount(strikePinCount);
@@ -175,7 +192,7 @@ public class FinalFrameTest {
     void result_when_1_miss() {
         int firstMissPinCount = 4;
         int secondMissPinCount = 3;
-        FinalFrame finalFrame = FinalFrame.of(10);
+        FinalFrame finalFrame = FinalFrame.from(10);
         finalFrame.addPinCount(firstMissPinCount);
         finalFrame.addPinCount(secondMissPinCount);
 

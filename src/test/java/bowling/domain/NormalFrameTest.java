@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.dto.FrameResult;
-import bowling.dto.FrameScoreResult;
 import bowling.dto.NormalFrameResult;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +35,7 @@ public class NormalFrameTest {
         NormalFrameResult result = normalFrame.result();
 
         assertThat(result.frameNumber()).isEqualTo(frameNumber);
-        FrameResult frameResult = result.framesResult();
+        FrameResult frameResult = result.frameResult();
         assertThat(frameResult.frameScoreResult()).isEqualTo(FrameScoreResult.NONE);
         assertThat(frameResult.pinCounts()).containsExactly(pinCount);
     }
@@ -58,7 +57,7 @@ public class NormalFrameTest {
         int strikePinCounts = 10;
         normalFrame.addPinCount(strikePinCounts);
 
-        FrameResult result = normalFrame.result().framesResult();
+        FrameResult result = normalFrame.result().frameResult();
         assertThat(normalFrame.isDone()).isTrue();
         assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.STRIKE);
         assertThat(result.pinCounts()).containsExactly(strikePinCounts);
@@ -73,7 +72,7 @@ public class NormalFrameTest {
         normalFrame.addPinCount(firstPinCount);
         normalFrame.addPinCount(secondPinCount);
 
-        FrameResult result = normalFrame.result().framesResult();
+        FrameResult result = normalFrame.result().frameResult();
         assertThat(normalFrame.isDone()).isTrue();
         assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.SPARE);
         assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
@@ -87,7 +86,7 @@ public class NormalFrameTest {
         normalFrame.addPinCount(firstPinCount);
         normalFrame.addPinCount(secondPinCount);
 
-        FrameResult result = normalFrame.result().framesResult();
+        FrameResult result = normalFrame.result().frameResult();
         assertThat(normalFrame.isDone()).isTrue();
         assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.MISS);
         assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
@@ -99,7 +98,7 @@ public class NormalFrameTest {
         int firstPinCount = 2;
         normalFrame.addPinCount(firstPinCount);
 
-        FrameResult result = normalFrame.result().framesResult();
+        FrameResult result = normalFrame.result().frameResult();
         assertThat(normalFrame.isDone()).isFalse();
         assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.NONE);
         assertThat(result.pinCounts()).containsExactly(firstPinCount);

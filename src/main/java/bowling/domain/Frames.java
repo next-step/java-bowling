@@ -55,7 +55,7 @@ public class Frames {
         List<NormalFrame> normalFrames = new ArrayList<>();
         initFirstNormalFrame(normalFrames);
         initRestNormalFrames(normalFrames, totalNumberOfFrame - 2);
-        return new Frames(normalFrames, FinalFrame.of(totalNumberOfFrame));
+        return new Frames(normalFrames, FinalFrame.from(totalNumberOfFrame));
     }
 
     public static Frames from(List<NormalFrame> normalFrames, FinalFrame finalFrame) {

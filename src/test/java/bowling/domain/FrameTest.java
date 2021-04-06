@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.dto.FrameResult;
-import bowling.dto.FrameScoreResult;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

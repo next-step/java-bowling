@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.dto.FrameResult;
-import bowling.dto.FrameScoreResult;
 
 import java.util.ArrayList;
 import java.util.List;

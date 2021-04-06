@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.FrameScoreResult;
 import bowling.dto.*;
 import bowling.util.StringUtils;
 
@@ -68,7 +69,7 @@ public class ResultView {
         StringBuilder stringBuilder = new StringBuilder();
         for (NormalFrameResult normalFrameResult : normalFrameResults) {
             stringBuilder.append(FRAME_SEPARATOR);
-            stringBuilder.append(StringUtils.center(frameResultInString(normalFrameResult.framesResult()), FIXED_FRAME_SPACE));
+            stringBuilder.append(StringUtils.center(frameResultInString(normalFrameResult.frameResult()), FIXED_FRAME_SPACE));
         }
         return stringBuilder.toString();
     }

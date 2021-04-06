@@ -6,17 +6,21 @@ public class PinCount {
 
     private static final int MAX_PIN_COUNT = 10;
 
-    private final int pinCount;
+    private final int count;
 
-    public PinCount(int pinCount) {
-        if (pinCount < MIN_PIN_COUNT || pinCount > MAX_PIN_COUNT) {
+    public PinCount(int count) {
+        if (count < MIN_PIN_COUNT || count > MAX_PIN_COUNT) {
             throw new IllegalArgumentException("투구수는 0-10사이어야 합니다.");
         }
-        this.pinCount = pinCount;
+        this.count = count;
     }
 
     public int count() {
-        return pinCount;
+        return count;
+    }
+
+    public int sumCount(PinCount pinCount) {
+       return pinCount.count + count;
     }
 
     @Override
@@ -26,11 +30,11 @@ public class PinCount {
 
         PinCount pinCount1 = (PinCount) o;
 
-        return pinCount == pinCount1.pinCount;
+        return count == pinCount1.count;
     }
 
     @Override
     public int hashCode() {
-        return pinCount;
+        return count;
     }
 }

@@ -1,74 +1,62 @@
 package bowling.domain;
 
 import bowling.dto.FinalFrameResult;
-import bowling.dto.FrameScoreResult;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FinalFrame {
 
     private static final int MAX_TRY_COUNT = 3;
 
-    private static final int MAX_TOTAL_PIN_COUNTS = 30;
+    private static final int MAX_TOTAL_PIN_COUNTS_PER_FRAME = 10;
 
-    private final List<PinCount> pinCounts;
+    private final List<PinCount> pinCounts = new ArrayList<>();
 
     private final FrameNumber frameNumber;
 
-    private int currentFrameIdx;
-
     private FinalFrame(FrameNumber frameNumber, List<PinCount> pinCounts) {
-        validatePinCountsSize(pinCounts.size());
-        validateTotalPinCounts(totalPinCounts(pinCounts));
         this.frameNumber = frameNumber;
-        this.pinCounts = pinCounts.stream()
-                .map(pinCount -> new PinCount(pinCount.count()))
-                .collect(Collectors.toList());
+        initializePinCounts(pinCounts);
     }
 
-    private void validatePinCountsSize(int size) {
-        if (size > MAX_TRY_COUNT) {
-            throw new IllegalArgumentException("투구 수가 너무 많습니다.");
+    private void initializePinCounts(List<PinCount> pinCounts) {
+        try{
+            pinCounts.forEach(this::addPinCount);
+        }catch (IllegalArgumentException | IllegalStateException exception){
+            throw new IllegalArgumentException("유효하지 않는 투구 값들 입니다.");
         }
     }
 
-    private void validateTotalPinCounts(int totalCount) {
-        if (totalCount > MAX_TOTAL_PIN_COUNTS) {
-            throw new IllegalArgumentException("투구 결과 핀수가 너무 많습니다.");
+    private void validateToAddPinCount(PinCount pinCount) {
+        PinCount lastPinCount = new PinCount(0);
+        if(!pinCounts.isEmpty()) {
+            lastPinCount = pinCounts.get(pinCounts.size() - 1);
         }
-
+        if(FrameScoreResult.of(lastPinCount.count(), 1) == FrameScoreResult.NONE
+                && lastPinCount.sumCount(pinCount) > MAX_TOTAL_PIN_COUNTS_PER_FRAME){
+            throw new IllegalArgumentException("추가 할 수 없는 투구입니다.");
+        }
     }
 
-    private int totalPinCounts(List<PinCount> pinCounts) {
-        return pinCounts.stream()
-                .map(PinCount::count)
-                .reduce(0, Integer::sum);
-    }
-
-    public static FinalFrame from(FrameNumber frameNumber, List<PinCount> pinCounts) {
+    public static FinalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts) {
         return new FinalFrame(frameNumber, pinCounts);
     }
 
-    public static FinalFrame of(int frameNumber) {
+    public static FinalFrame from(int frameNumber) {
         return new FinalFrame(new FrameNumber(frameNumber), new ArrayList<>());
     }
 
     public void addPinCount(int pinCount) {
+        addPinCount(new PinCount(pinCount));
+    }
+
+    public void addPinCount(PinCount pinCount) {
         if (isDone()) {
             throw new IllegalStateException("이미 끝난 프레임 입니다.");
         }
-        addBonusFrameIfNecessary();
-        pinCounts.add(new PinCount(pinCount));
-    }
-
-    private void addBonusFrameIfNecessary() {
-        Frame currentFrame = frames.get(currentFrameIdx);
-        if (currentFrame.isDone() && currentFrameIdx < MAX_TRY_COUNT - 1) {
-            frames.add(new Frame());
-            currentFrameIdx++;
-        }
+        validateToAddPinCount(pinCount);
+        pinCounts.add(pinCount);
     }
 
     public FrameNumber number() {
@@ -76,28 +64,28 @@ public class FinalFrame {
     }
 
     public boolean isDone() {
-        if (isTryAll()) {
+        if (isTryAll() || isMissAtSecondTry()) {
             return true;
         }
-
-        if (isFirstFrameMiss()) {
-            return true;
-        }
-
         return false;
     }
 
     private boolean isTryAll() {
-        return totalPinCounts(this.pinCounts) >= MAX_TRY_COUNT;
+        return pinCounts.size() >= MAX_TRY_COUNT;
     }
 
-    private boolean isFirstFrameMiss() {
-        Frame firstBonusFrame = frames.get(0);
-        return firstBonusFrame.isMatch(FrameScoreResult.MISS);
+    private boolean isMissAtSecondTry() {
+        if(pinCounts.size() == 2){
+            PinCount firstPinCount = pinCounts.get(0);
+            PinCount secondPinCount = pinCounts.get(1);
+            FrameScoreResult result = FrameScoreResult.of(firstPinCount.sumCount(secondPinCount), 2);
+            return result == FrameScoreResult.MISS;
+        }
+        return false;
     }
 
     public FinalFrameResult result() {
-        return new FinalFrameResult(frameNumber, frames);
+        return new FinalFrameResult(frameNumber, null);
     }
 
 

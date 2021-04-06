@@ -1,11 +1,9 @@
 package bowling.domain;
 
-import bowling.dto.FrameScoreResult;
 import bowling.dto.NormalFrameResult;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class NormalFrame {
 
@@ -13,46 +11,31 @@ public class NormalFrame {
 
     private static final int MAX_TOTAL_PIN_COUNTS = 10;
 
-    private final List<PinCount> pinCounts;
+    private final List<PinCount> pinCounts = new ArrayList<>();
 
     private final FrameNumber frameNumber;
 
     private NormalFrame(FrameNumber frameNumber, List<PinCount> pinCounts) {
-        validatePinCountsSize(pinCounts.size());
-        validateTotalPinCounts(totalPinCounts(pinCounts));
         this.frameNumber = frameNumber;
-        this.pinCounts = pinCounts.stream()
-                .map(pinCount -> new PinCount(pinCount.count()))
-                .collect(Collectors.toList());
+        initializePinCounts(pinCounts);
     }
 
-    private void validatePinCountsSize(int size) {
-        if (size > MAX_TRY_COUNT) {
-            throw new IllegalArgumentException("투구 수가 너무 많습니다.");
+    private void initializePinCounts(List<PinCount> pinCounts) {
+        try {
+            pinCounts.forEach(this::addPinCount);
+        } catch (IllegalArgumentException | IllegalStateException exception) {
+            throw new IllegalArgumentException("유효하지 않는 투구 값들 입니다.");
         }
     }
 
-    private void validateTotalPinCounts(int totalCount) {
-        if (totalCount > MAX_TOTAL_PIN_COUNTS) {
+    private void validateToAddPinCount(PinCount pinCount) {
+        if (totalPinCounts(this.pinCounts) + pinCount.count() > MAX_TOTAL_PIN_COUNTS) {
             throw new IllegalArgumentException("투구 결과 핀수가 너무 많습니다.");
         }
-
     }
 
     private FrameScoreResult scoreResult() {
-        if (totalPinCounts(this.pinCounts) == MAX_TOTAL_PIN_COUNTS && pinCounts.size() == MAX_TRY_COUNT - 1) {
-            return FrameScoreResult.STRIKE;
-        }
-
-        if (totalPinCounts(this.pinCounts) == MAX_TOTAL_PIN_COUNTS && pinCounts.size() == MAX_TRY_COUNT) {
-            return FrameScoreResult.SPARE;
-        }
-
-        if (totalPinCounts(this.pinCounts) < MAX_TOTAL_PIN_COUNTS && pinCounts.size() == MAX_TRY_COUNT) {
-            return FrameScoreResult.MISS;
-        }
-
-        return FrameScoreResult.NONE;
+        return FrameScoreResult.of(totalPinCounts(this.pinCounts), pinCounts.size());
     }
 
     public NormalFrame(int frameNumber) {
@@ -67,7 +50,7 @@ public class NormalFrame {
         return new NormalFrame(FrameNumber.first());
     }
 
-    public static NormalFrame from(FrameNumber frameNumber, List<PinCount> pinCounts) {
+    public static NormalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts) {
         return new NormalFrame(frameNumber, pinCounts);
     }
 
@@ -76,11 +59,15 @@ public class NormalFrame {
     }
 
     public void addPinCount(int pinCount) {
+        addPinCount(new PinCount(pinCount));
+    }
+
+    public void addPinCount(PinCount pinCount) {
         if (isDone()) {
             throw new IllegalStateException("이미 끝난 프레임 입니다.");
         }
-        validateTotalPinCounts(totalPinCounts(this.pinCounts) + pinCount);
-        pinCounts.add(new PinCount(pinCount));
+        validateToAddPinCount(pinCount);
+        pinCounts.add(pinCount);
     }
 
     private int totalPinCounts(List<PinCount> pinCounts) {
@@ -90,11 +77,11 @@ public class NormalFrame {
     }
 
     public boolean isDone() {
-        return pinCounts.size() >= MAX_TRY_COUNT || totalPinCounts() >= MAX_TOTAL_PIN_COUNTS;
+        return pinCounts.size() >= MAX_TRY_COUNT || totalPinCounts(this.pinCounts) >= MAX_TOTAL_PIN_COUNTS;
     }
 
     public NormalFrameResult result() {
-        return new NormalFrameResult(frameNumber, pinCounts);
+        return new NormalFrameResult(frameNumber,null);
     }
 
     public FrameNumber number() {
