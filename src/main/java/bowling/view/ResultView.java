@@ -34,7 +34,7 @@ public class ResultView {
     }
 
     private String frameScore(int size, Frames frames) {
-        List<Score> scores = frames.scores();
+        List<FrameScore> scores = frames.scores();
         if (size <= scores.size()
                 && !isScoresEnd(size, scores)) {
             return stringToScore(size, scores);
@@ -42,16 +42,16 @@ public class ResultView {
         return FRAME_EMPTY;
     }
 
-    private String stringToScore(int size, List<Score> scores) {
+    private String stringToScore(int size, List<FrameScore> scores) {
         int sum = scores.stream()
                     .limit(size)
-                    .mapToInt(Score::score)
+                    .mapToInt(FrameScore::score)
                     .sum();
 
         return String.format(" %3d  " + PIPE, sum);
     }
 
-    private boolean isScoresEnd(int size, List<Score> scores) {
+    private boolean isScoresEnd(int size, List<FrameScore> scores) {
         return scores.stream()
                 .limit(size)
                 .anyMatch(score -> score.isFrameScoreEnd());

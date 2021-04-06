@@ -11,13 +11,13 @@ public class Frames {
 
     private final User user;
     private final List<Frame> frames;
-    private final List<Score> scores;
+    private final List<FrameScore> scores;
 
     private Frames(User user) {
         this(user, new ArrayList<>(), new ArrayList<>());
     }
 
-    private Frames(User user, List<Frame> frames, List<Score> scores) {
+    private Frames(User user, List<Frame> frames, List<FrameScore> scores) {
         this.user = user;
         this.frames = frames;
         this.scores = scores;
@@ -28,7 +28,7 @@ public class Frames {
     }
 
     public Frames play(int countOfDownPin) {
-        List<Score> scores = addScore(countOfDownPin);
+        List<FrameScore> scores = addScore(countOfDownPin);
         if (!isPitch()) {
             Frame frame = frames.get(frames.size() - MINUS_INDEX_ONE).next(countOfDownPin);
             frames.set(frames.size() - MINUS_INDEX_ONE, frame);
@@ -56,7 +56,7 @@ public class Frames {
         return Collections.unmodifiableList(frames);
     }
 
-    public List<Score> scores() {
+    public List<FrameScore> scores() {
         return Collections.unmodifiableList(scores);
     }
 
@@ -66,11 +66,11 @@ public class Frames {
 
     public void scoreInit() {
         if (isLastIndexFrameEnd()) {
-            scores.add(Score.of(frames.get(frames.size() - MINUS_INDEX_ONE)));
+            scores.add(FrameScore.of(frames.get(frames.size() - MINUS_INDEX_ONE)));
         }
     }
 
-    private List<Score> addScore(int countOfDownPin) {
+    private List<FrameScore> addScore(int countOfDownPin) {
         return scores.stream()
                 .map(score -> score.add(countOfDownPin))
                 .collect(Collectors.toList());

@@ -31,7 +31,7 @@ public class ScoreTest {
     public void strikeScore() throws Exception {
         //given
         Frame frame = createFrame(10, NormalPins.init());
-        Score score = Score.of(frame);
+        FrameScore score = FrameScore.of(frame);
         //when
 
         //then
@@ -44,7 +44,7 @@ public class ScoreTest {
         //given
         Frame frame = createFrame(1, NormalPins.init());
         frame.next(9);
-        Score score = Score.of(frame);
+        FrameScore score = FrameScore.of(frame);
         //when
 
         //then
@@ -61,7 +61,7 @@ public class ScoreTest {
         frame.next(pin.get(1));
 
         //when
-        Score score = Score.of(frame);
+        FrameScore score = FrameScore.of(frame);
 
         //then
         assertThat(score.score()).isEqualTo(result);
@@ -76,7 +76,7 @@ public class ScoreTest {
         Frame frame = createFrame(pin.get(0), NormalPins.init());
 
         //when
-        Score score = Score.of(frame)
+        FrameScore score = FrameScore.of(frame)
                         .add(pin.get(1))
                         .add(pin.get(2));
 
@@ -93,7 +93,7 @@ public class ScoreTest {
         Frame frame = createFrame(pin.get(0), NormalPins.init()).next(pin.get(1));
 
         //when
-        Score score = Score.of(frame)
+        FrameScore score = FrameScore.of(frame)
                 .add(pin.get(2))
                 .add(pin.get(3));
 
@@ -108,7 +108,7 @@ public class ScoreTest {
         Frame frame = createFrame(5, NormalPins.init());
 
         //when
-        assertThatThrownBy(() -> Score.of(frame))
+        assertThatThrownBy(() -> FrameScore.of(frame))
                        .isInstanceOf(IllegalArgumentException.class);
 
         //then
