@@ -5,41 +5,54 @@ import bowling.dto.FrameScoreResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FinalFrame {
 
     private static final int MAX_TRY_COUNT = 3;
 
-    private final List<Frame> frames;
+    private static final int MAX_TOTAL_PIN_COUNTS = 30;
+
+    private final List<PinCount> pinCounts;
 
     private final FrameNumber frameNumber;
 
     private int currentFrameIdx;
 
-    private FinalFrame(List<Frame> frames, FrameNumber frameNumber) {
-        validateFramesTryCount(frames);
-        this.frames = frames;
+    private FinalFrame(FrameNumber frameNumber, List<PinCount> pinCounts) {
+        validatePinCountsSize(pinCounts.size());
+        validateTotalPinCounts(totalPinCounts(pinCounts));
         this.frameNumber = frameNumber;
+        this.pinCounts = pinCounts.stream()
+                .map(pinCount -> new PinCount(pinCount.count()))
+                .collect(Collectors.toList());
     }
 
-    private void validateFramesTryCount(List<Frame> frames) {
-        int totalTryCount = frames.stream()
-                .map(Frame::tryCount)
-                .reduce(0, Integer::sum);
-
-        if(totalTryCount > MAX_TRY_COUNT) {
-            throw new IllegalArgumentException("bonusframe 숫자가 너무 많습니다.");
+    private void validatePinCountsSize(int size) {
+        if (size > MAX_TRY_COUNT) {
+            throw new IllegalArgumentException("투구 수가 너무 많습니다.");
         }
     }
 
-    public static FinalFrame from(List<Frame> frames, FrameNumber frameNumber) {
-        return new FinalFrame(frames,frameNumber);
+    private void validateTotalPinCounts(int totalCount) {
+        if (totalCount > MAX_TOTAL_PIN_COUNTS) {
+            throw new IllegalArgumentException("투구 결과 핀수가 너무 많습니다.");
+        }
+
+    }
+
+    private int totalPinCounts(List<PinCount> pinCounts) {
+        return pinCounts.stream()
+                .map(PinCount::count)
+                .reduce(0, Integer::sum);
+    }
+
+    public static FinalFrame from(FrameNumber frameNumber, List<PinCount> pinCounts) {
+        return new FinalFrame(frameNumber, pinCounts);
     }
 
     public static FinalFrame of(int frameNumber) {
-        List<Frame> frames = new ArrayList<>();
-        frames.add(new Frame());
-        return new FinalFrame(frames, new FrameNumber(frameNumber));
+        return new FinalFrame(new FrameNumber(frameNumber), new ArrayList<>());
     }
 
     public void addPinCount(int pinCount) {
@@ -47,8 +60,7 @@ public class FinalFrame {
             throw new IllegalStateException("이미 끝난 프레임 입니다.");
         }
         addBonusFrameIfNecessary();
-        Frame currentFrame = frames.get(currentFrameIdx);
-        currentFrame.addPinCount(pinCount);
+        pinCounts.add(new PinCount(pinCount));
     }
 
     private void addBonusFrameIfNecessary() {
@@ -76,11 +88,7 @@ public class FinalFrame {
     }
 
     private boolean isTryAll() {
-        int totalTryCount = frames.stream()
-                .map(Frame::tryCount)
-                .reduce(0, Integer::sum);
-
-        return totalTryCount >= MAX_TRY_COUNT;
+        return totalPinCounts(this.pinCounts) >= MAX_TRY_COUNT;
     }
 
     private boolean isFirstFrameMiss() {

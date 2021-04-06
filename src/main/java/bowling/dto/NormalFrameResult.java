@@ -3,22 +3,24 @@ package bowling.dto;
 import bowling.domain.Frame;
 import bowling.domain.FrameNumber;
 
+import java.util.List;
+
 public class NormalFrameResult {
 
     private int frameNumber;
 
-    private FrameResult frameResult;
+    private FrameScoreResult frameScoreResult;
 
-    public NormalFrameResult(FrameNumber frameNumber, Frame frame) {
-        this.frameNumber = frameNumber.number();
-        this.frameResult = frame.result();
+    private List<Integer> pinCounts;
+
+    public NormalFrameResult(int frameNumber, FrameScoreResult frameScoreResult, List<Integer> pinCounts) {
+        this.frameNumber = frameNumber;
+        this.frameScoreResult = frameScoreResult;
+        this.pinCounts = pinCounts;
     }
 
     public int frameNumber() {
         return frameNumber;
     }
 
-    public FrameResult framesResult() {
-        return frameResult;
-    }
 }
