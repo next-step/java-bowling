@@ -61,6 +61,7 @@ public enum FinalFrameString {
 			.filter(frameString -> frameString.size == wards.size())
 			.findFirst()
 			.get()
-			.stringMethod(wards);
+			.stringMethod(wards)
+			.replaceAll(" ", "");
 	}
 }

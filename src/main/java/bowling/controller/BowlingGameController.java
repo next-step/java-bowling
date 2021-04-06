@@ -16,20 +16,8 @@ public class BowlingGameController {
 	public void run() {
 		Player player = makePlayer();
 
-		for (int i = 0; i < 9; i++) {
-			player.addPlayerFrameScore(i + 1, inputView.getFrameScore(i + 1));
-			showGame(player);
-			if (player.isKeepGoing(i + 1)) {
-				player.addPlayerFrameScore(i + 1, inputView.getFrameScore(i + 1));
-				showGame(player);
-			}
-		}
-
-		while (true) {
-			if (!player.isFinalFrameKeepGoing()) {
-				break;
-			}
-			player.addFinalFrame(inputView.getFrameScore(10));
+		while(player.isKeepGoing()) {
+			player.addPlayerFrameScore(inputView.getFrameScore(player.currentPlayerFrameIndex()));
 			showGame(player);
 		}
 	}
@@ -42,6 +30,7 @@ public class BowlingGameController {
 	private void showGame(Player player) {
 		outputView.showFrames();
 		outputView.showPlayerFrames(player);
+		outputView.showPlayerFrameScore(player);
 	}
 
 }
