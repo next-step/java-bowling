@@ -22,7 +22,7 @@ public class FrameScore {
         return new FrameScore(score.add(countOfDownPin), bonusChance.minus());
     }
 
-    public boolean isEndFrameScore() {
+    public boolean isAggregateEnd() {
         return bonusChance.isScoreAdd();
     }
 

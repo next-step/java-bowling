@@ -54,7 +54,7 @@ public class ResultView {
     private boolean isEndFrameScore(int size, List<FrameScore> scores) {
         return scores.stream()
                 .limit(size)
-                .anyMatch(score -> score.isEndFrameScore());
+                .anyMatch(score -> score.isAggregateEnd());
     }
 
     private String frameBoardString(Frames frames) {
