@@ -4,6 +4,7 @@ import bowling.dto.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -31,14 +32,14 @@ public class FramesTest {
     @Test
     void is_done_true() {
         int lastFrameNumber = 4;
-        Frame strikeFrame = new Frame(Arrays.asList(new PinCount(10)));
-        Frame spareFrame = new Frame(Arrays.asList(new PinCount(5), new PinCount(5)));
-        Frame missFrame = new Frame(Arrays.asList(new PinCount(3), new PinCount(4)));
+        List<PinCount> strikePinCount = Arrays.asList(new PinCount(10));
+        List<PinCount> sparePinCount = Arrays.asList(new PinCount(5), new PinCount(5));
+        List<PinCount> missPinCount = Arrays.asList(new PinCount(3), new PinCount(4));
         Frame missFrameForFinal = new Frame(Arrays.asList(new PinCount(3), new PinCount(4)));
 
-        NormalFrame normalFrame1 = NormalFrame.from(strikeFrame, new FrameNumber(1));
-        NormalFrame normalFrame2 = NormalFrame.from(spareFrame, new FrameNumber(2));
-        NormalFrame normalFrame3 = NormalFrame.from(missFrame, new FrameNumber(3));
+        NormalFrame normalFrame1 = NormalFrame.from(new FrameNumber(1), strikePinCount);
+        NormalFrame normalFrame2 = NormalFrame.from(new FrameNumber(2), sparePinCount);
+        NormalFrame normalFrame3 = NormalFrame.from(new FrameNumber(3), missPinCount);
         FinalFrame finalFrame = FinalFrame.from(Arrays.asList(missFrameForFinal), new FrameNumber(lastFrameNumber));
 
         Frames frames = Frames.from(Arrays.asList(normalFrame1, normalFrame2, normalFrame3), finalFrame);
@@ -50,16 +51,15 @@ public class FramesTest {
     @Test
     void is_done_false() {
         int firstUndoneFrameNumber = 3;
-        Frame strikeFrame = new Frame(Arrays.asList(new PinCount(10)));
-        Frame spareFrame = new Frame(Arrays.asList(new PinCount(5), new PinCount(5)));
-        Frame unDoneFrame1 = new Frame();
-        Frame unDoneFrame2 = new Frame();
+        List<PinCount> strikePinCount = Arrays.asList(new PinCount(10));
+        List<PinCount> sparePinCount = Arrays.asList(new PinCount(5), new PinCount(5));
+        List<PinCount> emptyPinCount = new ArrayList<>();
         Frame unDoneFrameForFinal = new Frame();
 
-        NormalFrame normalFrame1 = NormalFrame.from(strikeFrame, new FrameNumber(1));
-        NormalFrame normalFrame2 = NormalFrame.from(spareFrame, new FrameNumber(2));
-        NormalFrame normalFrame4 = NormalFrame.from(unDoneFrame2, new FrameNumber(4));
-        NormalFrame normalFrame3 = NormalFrame.from(unDoneFrame1, new FrameNumber(3));
+        NormalFrame normalFrame1 = NormalFrame.from(new FrameNumber(1), strikePinCount);
+        NormalFrame normalFrame2 = NormalFrame.from(new FrameNumber(2), sparePinCount);
+        NormalFrame normalFrame4 = NormalFrame.from(new FrameNumber(4), emptyPinCount);
+        NormalFrame normalFrame3 = NormalFrame.from(new FrameNumber(3), emptyPinCount);
         FinalFrame finalFrame = FinalFrame.from(Arrays.asList(unDoneFrameForFinal), new FrameNumber(5));
 
         Frames frames = Frames.from(Arrays.asList(normalFrame4, normalFrame1, normalFrame2, normalFrame3), finalFrame);
@@ -75,8 +75,8 @@ public class FramesTest {
         int firstPinCountOfSecondFrame = 5;
         int secondPinCountOfSecondFrame = 3;
 
-        NormalFrame firstStrikeNormalFrame = NormalFrame.from(new Frame(Arrays.asList(new PinCount(strikePinCount))), new FrameNumber(1));
-        NormalFrame secondUnDoneNormalFrame = NormalFrame.from(new Frame(), new FrameNumber(2));
+        NormalFrame firstStrikeNormalFrame = NormalFrame.from(new FrameNumber(1), Arrays.asList(new PinCount(strikePinCount)));
+        NormalFrame secondUnDoneNormalFrame = NormalFrame.from(new FrameNumber(2), new ArrayList<>());
         FinalFrame thirdFinalFrame = FinalFrame.of(3);
 
         Frames frames = Frames.from(Arrays.asList(firstStrikeNormalFrame, secondUnDoneNormalFrame), thirdFinalFrame);
