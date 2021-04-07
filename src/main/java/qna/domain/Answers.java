@@ -9,16 +9,16 @@ public class Answers {
 
     private List<Answer> answers;
 
-    private Answers(List<Answer> answers) {
+    public Answers(List<Answer> answers) {
         this.answers = answers;
     }
 
-    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        for(Answer answer: this.answers){
+        for (Answer answer : this.answers) {
             deleteHistories.add(answer.delete(loginUser));
         }
-        return new DeleteHistories(deleteHistories);
+        return deleteHistories;
     }
 
 }
