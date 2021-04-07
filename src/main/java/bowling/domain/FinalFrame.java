@@ -17,12 +17,9 @@ public class FinalFrame implements Frame {
 
     private Frame nextFrame;
 
-    private final Frame previousFrame;
-
-    private FinalFrame(FrameNumber frameNumber, List<PinCount> pinCounts, Frame previousFrame, Frame nextFrame) {
+    private FinalFrame(FrameNumber frameNumber, List<PinCount> pinCounts, Frame nextFrame) {
         this.frameNumber = frameNumber;
         initializePinCounts(pinCounts);
-        this.previousFrame = previousFrame;
         this.nextFrame = nextFrame;
     }
 
@@ -45,8 +42,8 @@ public class FinalFrame implements Frame {
         }
     }
 
-    public static FinalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts, Frame previousFrame, Frame nextFrame) {
-        return new FinalFrame(frameNumber, pinCounts, previousFrame, nextFrame);
+    public static FinalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts, Frame nextFrame) {
+        return new FinalFrame(frameNumber, pinCounts, nextFrame);
     }
 
 
@@ -66,6 +63,11 @@ public class FinalFrame implements Frame {
         return frameNumber;
     }
 
+    @Override
+    public boolean isLast() {
+        return nextFrame == null;
+    }
+
     public boolean isDone() {
         if (isTryAll() || isMissAtSecondTry()) {
             return true;
@@ -75,7 +77,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame nextFrame() {
-        throw new IllegalStateException("마지막 프레임 이빈다.");
+        throw new IllegalStateException("마지막 프레임 입니다.");
     }
 
     private boolean isTryAll() {

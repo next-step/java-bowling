@@ -17,12 +17,9 @@ public class NormalFrame implements Frame {
 
     private Frame nextFrame;
 
-    private final Frame previousFrame;
-
-    private NormalFrame(FrameNumber frameNumber, List<PinCount> pinCounts, Frame previousFrame, Frame nextFrame) {
+    private NormalFrame(FrameNumber frameNumber, List<PinCount> pinCounts, Frame nextFrame) {
         this.frameNumber = frameNumber;
         initializePinCounts(pinCounts);
-        this.previousFrame = previousFrame;
         this.nextFrame = nextFrame;
     }
 
@@ -41,27 +38,22 @@ public class NormalFrame implements Frame {
         }
     }
 
-    private FrameScoreResult scoreResult() {
-        return FrameScoreResult.of(totalPinCounts(this.pinCounts), pinCounts.size());
-    }
-
-
     public static NormalFrame first() {
-        return new NormalFrame(FrameNumber.first(), new ArrayList<>(), null, null);
+        return new NormalFrame(FrameNumber.first(), new ArrayList<>(), null);
     }
 
-    public static NormalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts,Frame previousFrame, Frame nextFrame) {
-        return new NormalFrame(frameNumber, pinCounts,previousFrame,nextFrame);
+    public static NormalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts, Frame nextFrame) {
+        return new NormalFrame(frameNumber, pinCounts,nextFrame);
     }
 
     public NormalFrame next() {
-        NormalFrame next = new NormalFrame(frameNumber.next(), new ArrayList<>(), this, null);
+        NormalFrame next = new NormalFrame(frameNumber.next(), new ArrayList<>(), null);
         this.nextFrame = next;
         return next;
     }
 
     public FinalFrame last() {
-        FinalFrame next = FinalFrame.of(frameNumber.next(), new ArrayList<>(), this, null);
+        FinalFrame next = FinalFrame.of(frameNumber.next(), new ArrayList<>(),null);
         this.nextFrame = next;
         return next;
     }
@@ -98,5 +90,15 @@ public class NormalFrame implements Frame {
 
     public FrameNumber number() {
         return frameNumber;
+    }
+
+    @Override
+    public boolean isLast() {
+        return nextFrame == null;
+    }
+
+    @Override
+    public List<Integer> pinCounts() {
+        return null;
     }
 }

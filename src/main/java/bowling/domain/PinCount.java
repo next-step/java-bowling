@@ -20,7 +20,7 @@ public class PinCount {
     }
 
     public int sumCount(PinCount pinCount) {
-       return pinCount.count + count;
+        return pinCount.count + count;
     }
 
     @Override
