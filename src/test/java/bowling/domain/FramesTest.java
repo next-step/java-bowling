@@ -26,7 +26,7 @@ public class FramesTest {
     @DisplayName("frames 생성 확인")
     public void frames() throws Exception {
         //given
-        Frames frames = Frames.of(UserTest.U1);
+        Frames frames = Frames.init();
         //when
 
         //then
@@ -38,7 +38,7 @@ public class FramesTest {
     @DisplayName("게임은 최대 10턴까지 진행")
     public void play(String pins, int turn) throws Exception {
         //given
-        Frames frames = Frames.of(UserTest.U1);
+        Frames frames = Frames.init();
 
         //when
         List<Integer> countOfDownPins = Arrays.stream(pins.split(":"))

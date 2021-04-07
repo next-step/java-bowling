@@ -11,7 +11,7 @@ public class InputView {
 
     public User user() {
         System.out.print("플레이어 이름은(3 english letters)?:");
-        return new User(scanner.nextLine());
+        return User.of(scanner.nextLine());
     }
 
     public int score(Frames frames) {

@@ -9,22 +9,20 @@ public class Frames {
     private static final int MAX_SIZE = 10;
     private static final int MINUS_INDEX_ONE = 1;
 
-    private final User user;
     private final List<Frame> frames;
     private final List<FrameScore> scores;
 
-    private Frames(User user) {
-        this(user, new ArrayList<>(), new ArrayList<>());
+    private Frames() {
+        this(new ArrayList<>(), new ArrayList<>());
     }
 
-    private Frames(User user, List<Frame> frames, List<FrameScore> scores) {
-        this.user = user;
+    private Frames(List<Frame> frames, List<FrameScore> scores) {
         this.frames = frames;
         this.scores = scores;
     }
 
-    public static Frames of(User user) {
-        return new Frames(user);
+    public static Frames init() {
+        return new Frames();
     }
 
     public Frames play(int countOfDownPin) {
@@ -32,10 +30,10 @@ public class Frames {
         if (!isPitch()) {
             Frame frame = frames.get(frames.size() - MINUS_INDEX_ONE).next(countOfDownPin);
             frames.set(frames.size() - MINUS_INDEX_ONE, frame);
-            return new Frames(user, frames, scores);
+            return new Frames(frames, scores);
         }
         frames.add(Frame.of(countOfDownPin, ofPins()));
-        return new Frames(user, frames, scores);
+        return new Frames(frames, scores);
     }
 
     public boolean isPitch() {
@@ -58,10 +56,6 @@ public class Frames {
 
     public List<FrameScore> scores() {
         return Collections.unmodifiableList(scores);
-    }
-
-    public String name() {
-        return user.name();
     }
 
     public void scoreInit() {

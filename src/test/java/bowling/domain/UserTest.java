@@ -10,12 +10,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("유저")
 public class UserTest {
-    public static final User U1 = new User("TDD");
+    public static final User U1 = User.of("TDD");
 
     @Test
     @DisplayName("참여자 이름 3글자 초과 에러 확인")
     public void userNameMaxLength3OverException() throws Exception {
-        assertThatThrownBy(() -> new User("povi"))
+        assertThatThrownBy(() -> User.of("povi"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -24,7 +24,7 @@ public class UserTest {
     @DisplayName("이름 확인")
     public void name(String input) throws Exception {
         //given
-        User user = new User(input);
+        User user = User.of(input);
         //when
 
         //then

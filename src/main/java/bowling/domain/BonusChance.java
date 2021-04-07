@@ -10,12 +10,12 @@ public class BonusChance {
     private final int bonusChance;
 
     private BonusChance(int bonusChance) {
+        validMaxBonusChance(bonusChance);
+        validMinBonusChance(bonusChance);
         this.bonusChance = bonusChance;
     }
 
     public static BonusChance of(int bonusChance) {
-        validMaxBonusChance(bonusChance);
-        validMinBonusChance(bonusChance);
         return new BonusChance(bonusChance);
     }
 

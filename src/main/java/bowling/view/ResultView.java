@@ -16,10 +16,11 @@ public class ResultView {
     private static final int ZERO = 0;
     private static final boolean IS_NOT_FIRST = false;
 
-    public void bowlingBoard(Frames frames) {
+    public void bowlingBoard(User user) {
         System.out.println(DEFAULT_BOARD);
-        System.out.println(frameBoardString(frames));
-        System.out.println(scoreBoardString(frames));
+        System.out.print(nameToString(user.name()));
+        System.out.println(frameBoardString(user.frames()));
+        System.out.println(scoreBoardString(user.frames()));
         System.out.println();
     }
 
@@ -59,7 +60,6 @@ public class ResultView {
 
     private String frameBoardString(Frames frames) {
         StringBuilder builder = new StringBuilder();
-        builder.append(nameToString(frames));
 
         IntStream.rangeClosed(DEFAULT_SIZE, FRAME_MAX_SIZE)
                 .forEach(size -> builder.append(framePins(size, frames)));
@@ -150,8 +150,8 @@ public class ResultView {
         return result;
     }
 
-    private String nameToString(Frames frames) {
-        return String.format(PIPE + " %4s " + PIPE, frames.name());
+    private String nameToString(String name) {
+        return String.format(PIPE + " %4s " + PIPE, name);
     }
 
     private int index(int size) {
