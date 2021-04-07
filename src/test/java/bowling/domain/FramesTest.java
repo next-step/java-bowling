@@ -26,7 +26,7 @@ public class FramesTest {
 
         assertThat(normalFrameResults.size()).isEqualTo(totalNumberOfFrame - 1);
         assertThat(finalFrameResult.frameNumber()).isEqualTo(totalNumberOfFrame);
-        assertThat(frames.currentFrameNumberInt()).isEqualTo(1);
+        assertThat(frames.currentFrameNumber()).isEqualTo(1);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class FramesTest {
         Frames frames = Frames.from(Arrays.asList(normalFrame1, normalFrame2, normalFrame3), finalFrame);
 
         assertThat(frames.isDone()).isTrue();
-        assertThat(frames.currentFrameNumberInt()).isEqualTo(lastFrameNumber);
+        assertThat(frames.currentFrameNumber()).isEqualTo(lastFrameNumber);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class FramesTest {
         Frames frames = Frames.from(Arrays.asList(normalFrame4, normalFrame1, normalFrame2, normalFrame3), finalFrame);
 
         assertThat(frames.isDone()).isFalse();
-        assertThat(frames.currentFrameNumberInt()).isEqualTo(firstUndoneFrameNumber);
+        assertThat(frames.currentFrameNumber()).isEqualTo(firstUndoneFrameNumber);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class FramesTest {
 
         assertThat(actualTotalFrameScoreResults).containsExactlyInAnyOrder(FrameScoreResult.STRIKE, FrameScoreResult.MISS, FrameScoreResult.NONE);
         assertThat(actualTotalFramePinCounts).containsExactlyInAnyOrder(strikePinCount, firstPinCountOfSecondFrame, secondPinCountOfSecondFrame);
-        assertThat(frames.currentFrameNumberInt()).isEqualTo(3);
+        assertThat(frames.currentFrameNumber()).isEqualTo(3);
     }
 
 

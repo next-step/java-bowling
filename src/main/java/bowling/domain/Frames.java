@@ -11,66 +11,59 @@ public class Frames {
 
     private static final int MIN_TOTAL_NUMBER_OF_FRAME = 2;
 
-    private final List<NormalFrame> normalFrames;
+    private final List<Frame> frames;
 
-    private final FinalFrame finalFrame;
+    private Frame currentFrame;
 
-    private FrameNumber currentFrameNumber;
-
-    private Frames(List<NormalFrame> normalFrames, FinalFrame finalFrame) {
-        validateEmptyNormalFrames(normalFrames);
-
-        this.normalFrames = normalFrames.stream()
-                .sorted(Comparator.comparing(NormalFrame::number))
+    private Frames(List<Frame> frames) {
+        validateEmptyNormalFrames(frames);
+        this.frames = frames.stream()
+                .sorted(Comparator.comparing(Frame::number))
                 .collect(Collectors.toList());
-        this.finalFrame = finalFrame;
-        this.currentFrameNumber = frameNumberToStartFrom(this.normalFrames, finalFrame);
+        this.currentFrame = frameToStartFrom(this.frames);
     }
 
-    private void validateEmptyNormalFrames(List<NormalFrame> normalFrames) {
-        if (normalFrames.isEmpty()) {
-            throw new IllegalArgumentException("normalFrame의 갯수는 0보다 커야 합니다.");
+    private void validateEmptyNormalFrames(List<Frame> frames) {
+        if (frames.isEmpty()) {
+            throw new IllegalArgumentException("frame의 갯수는 0보다 커야 합니다.");
         }
     }
 
-    private FrameNumber frameNumberToStartFrom(List<NormalFrame> normalFrames, FinalFrame finalFrame) {
-        boolean isAllNormalFramesDone = normalFrames.stream()
-                .allMatch(NormalFrame::isDone);
-
-        if (isAllNormalFramesDone) {
-            return finalFrame.number();
-        }
-        return normalFrames.stream()
+    private Frame frameToStartFrom(List<Frame> frames) {
+        return frames.stream()
                 .filter(normalFrame -> !normalFrame.isDone())
                 .findFirst()
-                .map(NormalFrame::number)
-                .orElse(FrameNumber.first());
-
+                .orElse(frames.get(frames.size() - 1));
     }
 
     public static Frames init(int totalNumberOfFrame) {
         if (totalNumberOfFrame < MIN_TOTAL_NUMBER_OF_FRAME) {
-            throw new IllegalArgumentException("생성할 프레임 수 가 넘무 적습니다.");
+            throw new IllegalArgumentException("생성할 프레임 수 가 너무 적습니다.");
         }
-        List<NormalFrame> normalFrames = new ArrayList<>();
-        initFirstNormalFrame(normalFrames);
-        initRestNormalFrames(normalFrames, totalNumberOfFrame - 2);
-        return new Frames(normalFrames, FinalFrame.from(totalNumberOfFrame));
+        List<Frame> frames = new ArrayList<>();
+        initNormalFrames(frames, totalNumberOfFrame - 1);
+        initFinalFrame(frames);
+        return new Frames(frames);
     }
 
-    public static Frames from(List<NormalFrame> normalFrames, FinalFrame finalFrame) {
-        return new Frames(normalFrames,finalFrame);
+    public static Frames from(List<Frame> frames) {
+        return new Frames(frames);
     }
 
-    private static void initFirstNormalFrame(List<NormalFrame> normalFrames) {
-        normalFrames.add(NormalFrame.first());
-    }
-
-    private static void initRestNormalFrames(List<NormalFrame> normalFrames, int restNormalFrameCount) {
-        for (int i = 1; i <= restNormalFrameCount; i++) {
-            NormalFrame previousNormalFrame = normalFrames.get(normalFrames.size() - 1);
-            normalFrames.add(previousNormalFrame.next());
+    private static void initNormalFrames(List<Frame> frames, int normalFrameCount) {
+        NormalFrame previousFrame = NormalFrame.first();
+        frames.add(previousFrame);
+        for (int i = 1; i <= normalFrameCount - 1; i++) {
+            NormalFrame currentFrame = previousFrame.next();
+            frames.add(currentFrame);
+            previousFrame = currentFrame;
         }
+    }
+
+    private static void initFinalFrame(List<Frame> frames) {
+        Frame previousFrame = frames.get(frames.size() - 1);
+
+        frames.add(FinalFrame.ofPrevious(previousFrame.number().next(),previousFrame))
     }
 
     public FramesResult result() {
@@ -78,43 +71,21 @@ public class Frames {
     }
 
     public boolean isDone() {
-        return isAllNormalFramesDone() && isFinalFrameDone();
-    }
-
-    private boolean isAllNormalFramesDone() {
-        return normalFrames.stream()
-                .allMatch(NormalFrame::isDone);
-    }
-
-    private boolean isFinalFrameDone() {
-        return finalFrame.isDone();
+        return frames.stream()
+                .allMatch(frame -> frame.isDone());
     }
 
     public void addPinCount(int pintCount) {
         if (isDone()) {
             throw new IllegalStateException("이미 전체 프레임을 다 play하셨습니다.");
         }
-        if (currentFrameNumber.equals(finalFrame.number())) {
-            addToFinalFrame(pintCount);
-        } else {
-            addToNormalFrames(pintCount);
-        }
-
-    }
-
-    private void addToNormalFrames(int pintCount) {
-        NormalFrame normalFrame = normalFrames.get(currentFrameNumber.number() - 1);
-        normalFrame.addPinCount(pintCount);
-        if (normalFrame.isDone()) {
-            currentFrameNumber = currentFrameNumber.next();
+        currentFrame.addPinCount(pintCount);
+        if (currentFrame.isDone()) {
+            currentFrame = currentFrame.nextFrame();
         }
     }
 
-    private void addToFinalFrame(int pintCount) {
-        finalFrame.addPinCount(pintCount);
-    }
-
-    public int currentFrameNumberInt() {
-        return currentFrameNumber.number();
+    public FrameNumber currentFrameNumber() {
+        return currentFrame.number();
     }
 }

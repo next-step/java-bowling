@@ -22,7 +22,7 @@ public class BowlingGame {
     }
 
     public int currentFrameNumber() {
-        return player.currentFrameNumber();
+        return player.currentFrameNumber().number();
     }
 
     public void play(int pintCount) {

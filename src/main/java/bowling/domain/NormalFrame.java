@@ -5,7 +5,7 @@ import bowling.dto.NormalFrameResult;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
 
     private static final int MAX_TRY_COUNT = 2;
 
@@ -15,17 +15,25 @@ public class NormalFrame {
 
     private final FrameNumber frameNumber;
 
-    private NormalFrame(FrameNumber frameNumber, List<PinCount> pinCounts) {
+    private Frame nextFrame;
+
+    private final Frame previousFrame;
+
+    private NormalFrame(FrameNumber frameNumber, List<PinCount> pinCounts, Frame previousFrame, Frame nextFrame) {
         this.frameNumber = frameNumber;
         initializePinCounts(pinCounts);
+        this.previousFrame = previousFrame;
+        this.nextFrame = nextFrame;
     }
 
     private void initializePinCounts(List<PinCount> pinCounts) {
         try {
             pinCounts.forEach(this::addPinCount);
-        } catch (IllegalArgumentException | IllegalStateException exception) {
+        } catch (IllegalArgumentException |
+                IllegalStateException exception) {
             throw new IllegalArgumentException("유효하지 않는 투구 값들 입니다.");
         }
+
     }
 
     private void validateToAddPinCount(PinCount pinCount) {
@@ -38,24 +46,19 @@ public class NormalFrame {
         return FrameScoreResult.of(totalPinCounts(this.pinCounts), pinCounts.size());
     }
 
-    public NormalFrame(int frameNumber) {
-        this(new FrameNumber(frameNumber), new ArrayList<>());
-    }
-
-    public NormalFrame(FrameNumber frameNumber) {
-        this(frameNumber, new ArrayList<>());
-    }
 
     public static NormalFrame first() {
-        return new NormalFrame(FrameNumber.first());
+        return new NormalFrame(FrameNumber.first(), new ArrayList<>(), null, null);
     }
 
-    public static NormalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts) {
-        return new NormalFrame(frameNumber, pinCounts);
+    public static NormalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts,Frame previousFrame, Frame nextFrame) {
+        return new NormalFrame(frameNumber, pinCounts,previousFrame,nextFrame);
     }
 
     public NormalFrame next() {
-        return new NormalFrame(frameNumber.next());
+        NormalFrame next = new NormalFrame(frameNumber.next(), new ArrayList<>(), this, null);
+        this.nextFrame = next;
+        return next;
     }
 
     public void addPinCount(int pinCount) {
@@ -80,8 +83,13 @@ public class NormalFrame {
         return pinCounts.size() >= MAX_TRY_COUNT || totalPinCounts(this.pinCounts) >= MAX_TOTAL_PIN_COUNTS;
     }
 
+    @Override
+    public Frame nextFrame() {
+        return nextFrame;
+    }
+
     public NormalFrameResult result() {
-        return new NormalFrameResult(frameNumber,null);
+        return new NormalFrameResult(frameNumber, null);
     }
 
     public FrameNumber number() {

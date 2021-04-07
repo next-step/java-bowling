@@ -2,12 +2,33 @@ package bowling.domain;
 
 import bowling.dto.FrameResult;
 import bowling.dto.NormalFrameResult;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class NormalFrameTest {
+
+
+    @ParameterizedTest
+    @CsvSource(value = {"1,3,4", "10,8","8,8","5,6","7,10"}, delimiter = ':')
+    @DisplayName("유효하지 투구값으로 생성")
+    void create_from_invalid_pin_count_list_throw_exception(String pinCountsInString) {
+        String nameSeparator = ",";
+        String[] pinCountsInArray = pinCountsInString.split(nameSeparator);
+        List<PinCount> list = Arrays.stream(pinCountsInArray)
+                .map(pinCountInString -> new PinCount(Integer.parseInt(pinCountInString)))
+                .collect(Collectors.toList());
+        assertThatIllegalArgumentException().isThrownBy(() ->
+                NormalFrame.of(new FrameNumber(10),list)
+        );
+    }
 
     @Test
     void first() {

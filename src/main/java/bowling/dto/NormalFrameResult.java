@@ -1,6 +1,6 @@
 package bowling.dto;
 
-import bowling.domain.Frame;
+import bowling.domain.FrameOld;
 import bowling.domain.FrameNumber;
 
 public class NormalFrameResult {
@@ -9,7 +9,7 @@ public class NormalFrameResult {
 
     private FrameResult frameResult;
 
-    public NormalFrameResult(FrameNumber frameNumber, Frame frame) {
+    public NormalFrameResult(FrameNumber frameNumber, FrameOld frame) {
         this.frameNumber = frameNumber.number();
         this.frameResult = frame.result();
     }

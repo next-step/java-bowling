@@ -5,7 +5,7 @@ import bowling.dto.FinalFrameResult;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FinalFrame {
+public class FinalFrame implements Frame {
 
     private static final int MAX_TRY_COUNT = 3;
 
@@ -15,36 +15,42 @@ public class FinalFrame {
 
     private final FrameNumber frameNumber;
 
-    private FinalFrame(FrameNumber frameNumber, List<PinCount> pinCounts) {
+    private Frame nextFrame;
+
+    private final Frame previousFrame;
+
+    private FinalFrame(FrameNumber frameNumber, List<PinCount> pinCounts, Frame previousFrame, Frame nextFrame) {
         this.frameNumber = frameNumber;
         initializePinCounts(pinCounts);
+        this.previousFrame = previousFrame;
+        this.nextFrame = nextFrame;
     }
 
     private void initializePinCounts(List<PinCount> pinCounts) {
-        try{
+        try {
             pinCounts.forEach(this::addPinCount);
-        }catch (IllegalArgumentException | IllegalStateException exception){
+        } catch (IllegalArgumentException | IllegalStateException exception) {
             throw new IllegalArgumentException("유효하지 않는 투구 값들 입니다.");
         }
     }
 
     private void validateToAddPinCount(PinCount pinCount) {
         PinCount lastPinCount = new PinCount(0);
-        if(!pinCounts.isEmpty()) {
+        if (!pinCounts.isEmpty()) {
             lastPinCount = pinCounts.get(pinCounts.size() - 1);
         }
-        if(FrameScoreResult.of(lastPinCount.count(), 1) == FrameScoreResult.NONE
-                && lastPinCount.sumCount(pinCount) > MAX_TOTAL_PIN_COUNTS_PER_FRAME){
+        if (FrameScoreResult.of(lastPinCount.count(), 1) == FrameScoreResult.NONE
+                && lastPinCount.sumCount(pinCount) > MAX_TOTAL_PIN_COUNTS_PER_FRAME) {
             throw new IllegalArgumentException("추가 할 수 없는 투구입니다.");
         }
     }
 
-    public static FinalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts) {
-        return new FinalFrame(frameNumber, pinCounts);
+    public static FinalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts, Frame previousFrame, Frame nextFrame) {
+        return new FinalFrame(frameNumber, pinCounts, previousFrame, nextFrame);
     }
 
-    public static FinalFrame from(int frameNumber) {
-        return new FinalFrame(new FrameNumber(frameNumber), new ArrayList<>());
+    public static FinalFrame ofPrevious(FrameNumber frameNumber,Frame previousFrame) {
+        return new FinalFrame(frameNumber, new ArrayList<>(), previousFrame, null);
     }
 
     public void addPinCount(int pinCount) {
@@ -70,12 +76,17 @@ public class FinalFrame {
         return false;
     }
 
+    @Override
+    public Frame nextFrame() {
+        return null;
+    }
+
     private boolean isTryAll() {
         return pinCounts.size() >= MAX_TRY_COUNT;
     }
 
     private boolean isMissAtSecondTry() {
-        if(pinCounts.size() == 2){
+        if (pinCounts.size() == 2) {
             PinCount firstPinCount = pinCounts.get(0);
             PinCount secondPinCount = pinCounts.get(1);
             FrameScoreResult result = FrameScoreResult.of(firstPinCount.sumCount(secondPinCount), 2);

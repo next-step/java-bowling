@@ -24,8 +24,8 @@ public class Player {
         frames.addPinCount(pintCount);
     }
 
-    public int currentFrameNumber() {
-        return frames.currentFrameNumberInt();
+    public FrameNumber currentFrameNumber() {
+        return frames.currentFrameNumber();
     }
 
     public boolean isDone() {
