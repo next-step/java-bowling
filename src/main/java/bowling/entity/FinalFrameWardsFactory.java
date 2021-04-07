@@ -20,11 +20,13 @@ public enum FinalFrameWardsFactory {
 		this.func = func;
 	}
 
-	public static FinalFrameWardsFactory getInstance(int size) {
+	public static Ward getFinalFrameWard(int size, int score, List<Ward> wards) {
 		return Arrays.stream(values())
 			.filter(ward -> ward.size == size)
 			.findFirst()
-			.orElseThrow(() -> new UserException(FINAL_FRAME_MAX_THREE));
+			.orElseThrow(() -> new UserException(FINAL_FRAME_MAX_THREE))
+			.getFunc()
+			.apply(score, wards);
 	}
 
 	public BiFunction<Integer, List<Ward>, Ward> getFunc() {
