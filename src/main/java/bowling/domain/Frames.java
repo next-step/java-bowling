@@ -64,6 +64,13 @@ public class Frames {
         }
     }
 
+    public boolean isLastIndexFrameEnd() {
+        if (frames.isEmpty()) {
+            return false;
+        }
+        return frames.get(frames.size() - MINUS_INDEX_ONE).isEnd();
+    }
+
     private List<FrameScore> addScore(int countOfDownPin) {
         return scores.stream()
                 .map(score -> score.addScore(countOfDownPin))
@@ -75,10 +82,6 @@ public class Frames {
             return FinalPins.init();
         }
         return NormalPins.init();
-    }
-
-    private boolean isLastIndexFrameEnd() {
-        return frames.get(frames.size() - MINUS_INDEX_ONE).isEnd();
     }
 }
 

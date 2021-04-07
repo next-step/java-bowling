@@ -5,7 +5,7 @@ public class User {
     private static final int MAX_LENGTH = 3;
 
     private final String name;
-    private final Frames frames;
+    private Frames frames;
 
     private User(String name) {
         this(name, Frames.init());
@@ -25,12 +25,6 @@ public class User {
         return name;
     }
 
-    private static void validMaxLength(String name) {
-        if (name.length() > MAX_LENGTH) {
-            throw new IllegalArgumentException(MAX_LENGTH_OVER);
-        }
-    }
-
     public Frames frames() {
         return frames;
     }
@@ -39,10 +33,18 @@ public class User {
         return frames.isPlay();
     }
 
-    public User play(int score) {
-        Frames newFrames = frames.play(score);
-        newFrames.scoreInit();
+    public boolean isEndFrame() {
+        return frames.isLastIndexFrameEnd();
+    }
 
-        return new User(name, newFrames);
+    public void play(int score) {
+        frames = frames.play(score);
+        frames.scoreInit();
+    }
+
+    private static void validMaxLength(String name) {
+        if (name.length() > MAX_LENGTH) {
+            throw new IllegalArgumentException(MAX_LENGTH_OVER);
+        }
     }
 }

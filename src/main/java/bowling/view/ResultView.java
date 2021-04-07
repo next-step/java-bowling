@@ -16,11 +16,15 @@ public class ResultView {
     private static final int ZERO = 0;
     private static final boolean IS_NOT_FIRST = false;
 
-    public void bowlingBoard(User user) {
+    public void bowlingBoard(Users users) {
         System.out.println(DEFAULT_BOARD);
-        System.out.print(nameToString(user.name()));
-        System.out.println(frameBoardString(user.frames()));
-        System.out.println(scoreBoardString(user.frames()));
+
+        users.users().forEach(user -> {
+                    System.out.print(nameToString(user.name()));
+                    System.out.println(frameBoardString(user.frames()));
+                    System.out.println(scoreBoardString(user.frames()));
+                });
+
         System.out.println();
     }
 
