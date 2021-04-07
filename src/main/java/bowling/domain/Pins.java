@@ -12,4 +12,8 @@ public interface Pins {
     ScoreRule scoreRule();
 
     List<Pin> pins();
+
+    Score score();
+
+    BonusChance bonusChance();
 }

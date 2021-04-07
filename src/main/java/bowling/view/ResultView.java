@@ -7,7 +7,8 @@ import java.util.stream.IntStream;
 
 public class ResultView {
     private static final String DEFAULT_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final String SCORE_EMPTY = "      |";
+    private static final String FRAME_EMPTY = "      |";
+    private static final String SCORE_FIRST = "|      |";
     private static final String PIPE = "|";
     private static final int FRAME_MAX_SIZE = 10;
     private static final int DEFAULT_SIZE = 1;
@@ -17,17 +18,15 @@ public class ResultView {
 
     public void bowlingBoard(Frames frames) {
         System.out.println(DEFAULT_BOARD);
-
-        StringBuilder builder = new StringBuilder();
-        builder.append(stringToName(frames));
-        builder.append(printFrameBoard(frames));
-
-        System.out.println(builder.toString());
+        System.out.println(frameBoardString(frames));
+        System.out.println(scoreBoardString(frames));
         System.out.println();
     }
 
-    private String printFrameBoard(Frames frames) {
+    private String scoreBoardString(Frames frames) {
         StringBuilder builder = new StringBuilder();
+        builder.append(SCORE_FIRST);
+
         IntStream.rangeClosed(DEFAULT_SIZE, FRAME_MAX_SIZE)
                 .forEach(size -> builder.append(frameScore(size, frames)));
 
@@ -35,23 +34,57 @@ public class ResultView {
     }
 
     private String frameScore(int size, Frames frames) {
+        List<FrameScore> scores = frames.scores();
+        if (size <= scores.size()
+                && !isEndFrameScore(size, scores)) {
+            return scoreToString(size, scores);
+        }
+        return FRAME_EMPTY;
+    }
+
+    private String scoreToString(int size, List<FrameScore> scores) {
+        int sum = scores.stream()
+                    .limit(size)
+                    .mapToInt(FrameScore::aggregateScore)
+                    .sum();
+
+        return String.format(" %3d  " + PIPE, sum);
+    }
+
+    private boolean isEndFrameScore(int size, List<FrameScore> scores) {
+        return scores.stream()
+                .limit(size)
+                .anyMatch(score -> score.isAggregateEnd());
+    }
+
+    private String frameBoardString(Frames frames) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(nameToString(frames));
+
+        IntStream.rangeClosed(DEFAULT_SIZE, FRAME_MAX_SIZE)
+                .forEach(size -> builder.append(framePins(size, frames)));
+
+        return builder.toString();
+    }
+
+    private String framePins(int size, Frames frames) {
         List<Frame> frameList = frames.frames();
         if (!frameList.isEmpty()
                 && size <= frameList.size()) {
-            return stringToFrame(frameList.get(index(size)));
+            return frameToString(frameList.get(index(size)));
         }
-        return SCORE_EMPTY;
+        return FRAME_EMPTY;
     }
 
-    private String stringToFrame(Frame frame) {
+    private String frameToString(Frame frame) {
         Pins pins = frame.pins();
         if (pins.getClass() == FinalPins.class) {
-            return stringToFinal(pins);
+            return finalToString(pins);
         }
-        return stringToNormal(pins);
+        return normalToString(pins);
     }
 
-    private String stringToNormal(Pins pins) {
+    private String normalToString(Pins pins) {
         List<Pin> pinList = pins.pins();
         StringBuilder builder = new StringBuilder();
 
@@ -63,7 +96,7 @@ public class ResultView {
         boolean isSpare = ScoreRule.SPARE == scoreRule;
         int maxLength = isSpare ? DEFAULT_SIZE : pinList.size();
 
-        stringToPins(pinList, builder, ZERO, maxLength);
+        pinsToString(pinList, builder, ZERO, maxLength);
 
         if (isSpare) {
             builder.append(PIPE + scoreRule.symbol);
@@ -71,17 +104,17 @@ public class ResultView {
         return String.format(" %-3s  " + PIPE, builder.toString());
     }
 
-    private void stringToPins(List<Pin> pinList, StringBuilder builder, int startIndex, int maxLength) {
+    private void pinsToString(List<Pin> pinList, StringBuilder builder, int startIndex, int maxLength) {
         for (int i = startIndex; i < maxLength; i++) {
             addBuilderPipe(builder);
             Pin pin = pinList.get(i);
             String symbol = pin.scoreRule(IS_NOT_FIRST).symbol;
-            symbol = stringToSymbol(pin, symbol);
+            symbol = symbolToString(pin, symbol);
             builder.append(symbol);
         }
     }
 
-    private String stringToSymbol(Pin pin, String symbol) {
+    private String symbolToString(Pin pin, String symbol) {
         if (symbol.isEmpty()) {
             symbol = String.valueOf(pin.pin());
         }
@@ -94,18 +127,18 @@ public class ResultView {
         }
     }
 
-    public String stringToFinal(Pins pins) {
+    public String finalToString(Pins pins) {
         List<Pin> pinList = pins.pins();
         StringBuilder builder = new StringBuilder();
 
-        int result = stringToFinalStrike(pinList, builder);
+        int result = finalStrikeToString(pinList, builder);
 
-        stringToPins(pinList, builder, result, pinList.size());
+        pinsToString(pinList, builder, result, pinList.size());
 
         return String.format(" %-5s" + PIPE, builder.toString());
     }
 
-    private int stringToFinalStrike(List<Pin> pinList, StringBuilder builder) {
+    private int finalStrikeToString(List<Pin> pinList, StringBuilder builder) {
         int result;
         for (result = ZERO; result < pinList.size(); result++) {
             if (!pinList.get(result).isStrike()) {
@@ -117,7 +150,7 @@ public class ResultView {
         return result;
     }
 
-    private String stringToName(Frames frames) {
+    private String nameToString(Frames frames) {
         return String.format(PIPE + " %4s " + PIPE, frames.name());
     }
 

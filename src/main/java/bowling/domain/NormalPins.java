@@ -8,7 +8,7 @@ public class NormalPins implements Pins{
     private static final String MAX_OVER_PINS = "넘어뜨리는 볼링핀은 10개가 최대입니다.";
     private static final int MAX_PINS = 10;
     private static final int NORMAL_PINS_MAX_SIZE = 2;
-    private static final int FIRST_INDEX = 0;
+    private static final int ZERO = 0;
     private static final boolean IS_FIRST = true;
 
     private List<Pin> pins;
@@ -49,10 +49,9 @@ public class NormalPins implements Pins{
         return Collections.unmodifiableList(pins);
     }
 
-    private void validMaxPins() {
-        if (accumulatedPins() > MAX_PINS) {
-            throw new IllegalArgumentException(MAX_OVER_PINS);
-        }
+    @Override
+    public Score score() {
+        return Score.of(accumulatedPins());
     }
 
     private int accumulatedPins() {
@@ -61,7 +60,19 @@ public class NormalPins implements Pins{
                 .sum();
     }
 
+    @Override
+    public BonusChance bonusChance() {
+        return BonusChance.of(scoreRule().bonusChance);
+    }
+
+    private void validMaxPins() {
+        if (accumulatedPins() > MAX_PINS) {
+            throw new IllegalArgumentException(MAX_OVER_PINS);
+        }
+    }
+
     private boolean isStrike() {
-        return ScoreRule.STRIKE == pins.get(FIRST_INDEX).scoreRule(IS_FIRST);
+        return ScoreRule.STRIKE == pins.get(ZERO)
+                                        .scoreRule(IS_FIRST);
     }
 }
