@@ -29,8 +29,7 @@ public class NormalFrame implements Frame {
     private void initializePinCounts(List<PinCount> pinCounts) {
         try {
             pinCounts.forEach(this::addPinCount);
-        } catch (IllegalArgumentException |
-                IllegalStateException exception) {
+        } catch (IllegalArgumentException | IllegalStateException exception) {
             throw new IllegalArgumentException("유효하지 않는 투구 값들 입니다.");
         }
 
@@ -61,6 +60,11 @@ public class NormalFrame implements Frame {
         return next;
     }
 
+    public FinalFrame last() {
+        FinalFrame next = FinalFrame.of(frameNumber.next(), new ArrayList<>(), this, null);
+        this.nextFrame = next;
+        return next;
+    }
     public void addPinCount(int pinCount) {
         addPinCount(new PinCount(pinCount));
     }

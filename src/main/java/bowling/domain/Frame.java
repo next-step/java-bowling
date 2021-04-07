@@ -11,4 +11,6 @@ public interface Frame {
     Frame nextFrame();
 
     FrameNumber number();
+
+    boolean isLast();
 }

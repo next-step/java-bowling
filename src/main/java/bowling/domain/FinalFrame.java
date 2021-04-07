@@ -49,9 +49,6 @@ public class FinalFrame implements Frame {
         return new FinalFrame(frameNumber, pinCounts, previousFrame, nextFrame);
     }
 
-    public static FinalFrame ofPrevious(FrameNumber frameNumber,Frame previousFrame) {
-        return new FinalFrame(frameNumber, new ArrayList<>(), previousFrame, null);
-    }
 
     public void addPinCount(int pinCount) {
         addPinCount(new PinCount(pinCount));
@@ -78,7 +75,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame nextFrame() {
-        return null;
+        throw new IllegalStateException("마지막 프레임 이빈다.");
     }
 
     private boolean isTryAll() {

@@ -41,8 +41,7 @@ public class Frames {
             throw new IllegalArgumentException("생성할 프레임 수 가 너무 적습니다.");
         }
         List<Frame> frames = new ArrayList<>();
-        initNormalFrames(frames, totalNumberOfFrame - 1);
-        initFinalFrame(frames);
+        initFrames(frames, totalNumberOfFrame);
         return new Frames(frames);
     }
 
@@ -50,29 +49,24 @@ public class Frames {
         return new Frames(frames);
     }
 
-    private static void initNormalFrames(List<Frame> frames, int normalFrameCount) {
+    private static void initFrames(List<Frame> frames, int totalNumberOfFrame) {
         NormalFrame previousFrame = NormalFrame.first();
         frames.add(previousFrame);
-        for (int i = 1; i <= normalFrameCount - 1; i++) {
+        for (int i = 1; i <= totalNumberOfFrame - 2; i++) {
             NormalFrame currentFrame = previousFrame.next();
             frames.add(currentFrame);
             previousFrame = currentFrame;
         }
-    }
-
-    private static void initFinalFrame(List<Frame> frames) {
-        Frame previousFrame = frames.get(frames.size() - 1);
-
-        frames.add(FinalFrame.ofPrevious(previousFrame.number().next(),previousFrame))
+        frames.add(previousFrame.last());
     }
 
     public FramesResult result() {
-        return new FramesResult(normalFrames, finalFrame);
+        return new FramesResult(frames);
     }
 
     public boolean isDone() {
         return frames.stream()
-                .allMatch(frame -> frame.isDone());
+                .allMatch(Frame::isDone);
     }
 
     public void addPinCount(int pintCount) {
@@ -80,7 +74,7 @@ public class Frames {
             throw new IllegalStateException("이미 전체 프레임을 다 play하셨습니다.");
         }
         currentFrame.addPinCount(pintCount);
-        if (currentFrame.isDone()) {
+        if (currentFrame.isDone() && !currentFrame.isLast()) {
             currentFrame = currentFrame.nextFrame();
         }
     }
