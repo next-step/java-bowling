@@ -7,15 +7,18 @@ import java.util.List;
 
 public class Answers {
 
-    private Answers(){
+    private List<Answer> answers;
 
+    private Answers(List<Answer> answers) {
+        this.answers = answers;
     }
 
-    public static List<DeleteHistory> ofDelete(List<Answer> answers, User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        for (Answer answer : answers) {
+        for(Answer answer: this.answers){
             deleteHistories.add(answer.delete(loginUser));
         }
-        return deleteHistories;
+        return new DeleteHistories(deleteHistories);
     }
+
 }
