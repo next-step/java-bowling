@@ -19,7 +19,7 @@ public class FramesTest {
     void init() {
         int totalNumberOfFrame = 10;
         Frames frames = Frames.init(totalNumberOfFrame);
-        FramesResult result = frames.result();
+        FrameResults result = frames.result();
 
         List<NormalFrameResult> normalFrameResults = result.normalFrameResults();
         FinalFrameResult finalFrameResult = result.finalFrameResult();
@@ -81,7 +81,7 @@ public class FramesTest {
         frames.addPinCount(firstPinCountOfSecondFrame);
         frames.addPinCount(secondPinCountOfSecondFrame);
 
-        FramesResult result = frames.result();
+        FrameResults result = frames.result();
         List<NormalFrameResult> normalFrameResults = result.normalFrameResults();
         FinalFrameResult finalFrameResult = result.finalFrameResult();
 

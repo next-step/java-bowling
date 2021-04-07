@@ -1,22 +1,24 @@
 package bowling.dto;
 
+import bowling.domain.FrameNumber;
 import bowling.domain.FrameScoreResult;
-import bowling.domain.PinCount;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FrameResult {
+
+    private int frameNumber;
 
     private FrameScoreResult frameScoreResult;
 
     private List<Integer> pinCounts;
 
-    public FrameResult(FrameScoreResult frameScoreResult, List<PinCount> pinCounts) {
-        this.frameScoreResult = frameScoreResult;
-        this.pinCounts = pinCounts.stream()
-                .map(PinCount::count)
-                .collect(Collectors.toList());
+    public FrameResult(FrameNumber frameNumber,List<Integer> pinCounts) {
+        this.frameNumber = frameNumber.number();
+        Integer sum = pinCounts.stream()
+                .reduce(0, Integer::sum);
+        this.frameScoreResult = FrameScoreResult.of(sum,pinCounts.size());
+        this.pinCounts = pinCounts;
     }
 
     public FrameScoreResult frameScoreResult() {

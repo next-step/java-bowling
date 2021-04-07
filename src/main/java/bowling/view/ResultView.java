@@ -32,10 +32,10 @@ public class ResultView {
     }
 
     private static void printScoreBoardBody(PlayResult playResult) {
-        FramesResult framesResult = playResult.framesResult();
+        FrameResults frameResults = playResult.framesResult();
         String playerName = playerNameInString(playResult.playerName());
-        String normalFramesInString = normalFramesInString(framesResult.normalFrameResults());
-        String finalFrameInString = finalFrameInString(framesResult.finalFrameResult());
+        String normalFramesInString = normalFramesInString(frameResults.normalFrameResults());
+        String finalFrameInString = finalFrameInString(frameResults.finalFrameResult());
 
         System.out.print(playerName + normalFramesInString + finalFrameInString);
         printEmptyLine();

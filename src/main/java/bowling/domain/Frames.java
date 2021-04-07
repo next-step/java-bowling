@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.dto.FramesResult;
+import bowling.dto.FrameResults;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -60,8 +60,8 @@ public class Frames {
         frames.add(previousFrame.last());
     }
 
-    public FramesResult result() {
-        return new FramesResult(frames);
+    public FrameResults result() {
+        return new FrameResults(frames);
     }
 
     public boolean isDone() {

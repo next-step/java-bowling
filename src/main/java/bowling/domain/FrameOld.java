@@ -47,9 +47,9 @@ public class FrameOld {
         pinCounts.add(new PinCount(pinCount));
     }
 
-    public FrameResult result() {
-        return new FrameResult(scoreResult(), pinCounts);
-    }
+//    public FrameResult result() {
+//        return new FrameResult(scoreResult(), pinCounts);
+//    }
 
     private FrameScoreResult scoreResult() {
         if (totalPinCounts() == MAX_TOTAL_PIN_COUNTS && pinCounts.size() == MAX_TRY_COUNT - 1) {

@@ -7,19 +7,19 @@ public class PlayResult {
 
     private String playerName;
 
-    private FramesResult framesResult;
+    private FrameResults frameResults;
 
     public PlayResult(PlayerName playerName, Frames frames) {
         this.playerName = playerName.name();
-        this.framesResult = frames.result();
+        this.frameResults = frames.result();
     }
 
     public String playerName() {
         return playerName;
     }
 
-    public FramesResult framesResult() {
-        return framesResult;
+    public FrameResults framesResult() {
+        return frameResults;
     }
 
 }
