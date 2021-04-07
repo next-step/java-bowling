@@ -1,6 +1,6 @@
 package bowling.dto;
 
-import bowling.domain.Frame;
+import bowling.domain.FrameOld;
 import bowling.domain.FrameNumber;
 
 import java.util.List;
@@ -12,10 +12,10 @@ public class FinalFrameResult {
 
     private List<FrameResult> frameResults;
 
-    public FinalFrameResult(FrameNumber frameNumber, List<Frame> frames) {
+    public FinalFrameResult(FrameNumber frameNumber, List<FrameOld> frames) {
         this.frameNumber = frameNumber.number();
         this.frameResults = frames.stream()
-                .map(Frame::result)
+                .map(FrameOld::result)
                 .collect(Collectors.toList());
     }
 
