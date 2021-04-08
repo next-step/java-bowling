@@ -16,7 +16,7 @@ public class FramesTest {
 
     public void playGame(Frames frames, List<Integer> countOfDownPins) {
         countOfDownPins.forEach(downPin -> {
-            if (frames.isPlay()) {
+            if (frames.isPlayComplited()) {
                 frames.play(downPin);
             }
         });

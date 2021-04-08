@@ -40,14 +40,14 @@ public class Frames {
         if (frames.isEmpty()) {
             return true;
         }
-        return isLastIndexFrameEnd();
+        return isLastIndexFrameEnd(frames.size() - MINUS_INDEX_ONE);
     }
 
-    public boolean isPlay() {
+    public boolean isPlayComplited() {
         if (frames.size() < MAX_SIZE) {
             return true;
         }
-        return !isLastIndexFrameEnd();
+        return !isLastIndexFrameEnd(frames.size() - MINUS_INDEX_ONE);
     }
 
     public List<Frame> frames() {
@@ -59,16 +59,19 @@ public class Frames {
     }
 
     public void scoreInit() {
-        if (isLastIndexFrameEnd()) {
+        if (isLastIndexFrameEnd(frames.size() - MINUS_INDEX_ONE)) {
             scores.add(FrameScore.of(frames.get(frames.size() - MINUS_INDEX_ONE)));
         }
     }
 
-    public boolean isLastIndexFrameEnd() {
+    public boolean isLastIndexFrameEnd(int frameNumber) {
         if (frames.isEmpty()) {
             return false;
         }
-        return frames.get(frames.size() - MINUS_INDEX_ONE).isEnd();
+        if (frames.size() == frameNumber) {
+            return false;
+        }
+        return frames.get(frameNumber).isEnd();
     }
 
     private List<FrameScore> addScore(int countOfDownPin) {

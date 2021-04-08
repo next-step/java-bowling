@@ -19,7 +19,7 @@ public class ResultView {
     public void bowlingBoard(Users users) {
         System.out.println(DEFAULT_BOARD);
 
-        users.users().forEach(user -> {
+        users.forEach(user -> {
                     System.out.print(nameToString(user.name()));
                     System.out.println(frameBoardString(user.frames()));
                     System.out.println(scoreBoardString(user.frames()));

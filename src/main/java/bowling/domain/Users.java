@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Users {
     private static final String MIN_SIZE_UNDER = "최소 참여자는 1명 입니다.";
@@ -17,13 +18,8 @@ public class Users {
         return new Users(users);
     }
 
-    public List<User> users() {
-        return users;
-    }
-
-    public boolean isAllPlay() {
-        return users.stream()
-                .allMatch(user -> user.isPlay());
+    public void forEach(Consumer<? super User> users) {
+        this.users.forEach(users);
     }
 
     private static void validMinSize(List<User> users) {
