@@ -65,10 +65,8 @@ public class Frames {
     }
 
     public boolean isFrameCompleted(int frameNumber) {
-        if (frames.isEmpty()) {
-            return false;
-        }
-        if (frames.size() == frameNumber) {
+        if (frames.isEmpty()
+                || frames.size() == frameNumber) {
             return false;
         }
         return frames.get(frameNumber).isEnd();
