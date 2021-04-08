@@ -1,6 +1,4 @@
-package bowling.domain;
-
-import java.util.List;
+package bowling.domain.frame;
 
 public interface Frame {
 
@@ -16,5 +14,7 @@ public interface Frame {
 
     boolean isLast();
 
-    List<Integer> pinCounts();
+    Score socre();
+
+//    List<Integer> pinCounts();
 }

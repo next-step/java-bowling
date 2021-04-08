@@ -1,6 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.dto.FrameResult;
+import bowling.domain.State.StateType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,23 +51,23 @@ public class FrameOld {
 //        return new FrameResult(scoreResult(), pinCounts);
 //    }
 
-    private FrameScoreResult scoreResult() {
+    private StateType scoreResult() {
         if (totalPinCounts() == MAX_TOTAL_PIN_COUNTS && pinCounts.size() == MAX_TRY_COUNT - 1) {
-            return FrameScoreResult.STRIKE;
+            return StateType.STRIKE;
         }
 
         if (totalPinCounts() == MAX_TOTAL_PIN_COUNTS && pinCounts.size() == MAX_TRY_COUNT) {
-            return FrameScoreResult.SPARE;
+            return StateType.SPARE;
         }
 
         if (totalPinCounts() < MAX_TOTAL_PIN_COUNTS && pinCounts.size() == MAX_TRY_COUNT) {
-            return FrameScoreResult.MISS;
+            return StateType.MISS;
         }
 
-        return FrameScoreResult.NONE;
+        return StateType.NONE;
     }
 
-    public boolean isMatch(FrameScoreResult frameScoreResult) {
+    public boolean isMatch(StateType frameScoreResult) {
         return frameScoreResult == scoreResult();
     }
 
