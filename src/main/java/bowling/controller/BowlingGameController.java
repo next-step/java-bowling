@@ -1,9 +1,5 @@
 package bowling.controller;
 
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.function.Function;
-
 import bowling.entity.Player;
 import bowling.entity.Players;
 import bowling.views.InputView;
@@ -24,21 +20,15 @@ public class BowlingGameController {
 		Players players = makePlayers(count);
 		while (players.isKeepGoing()) {
 			int turn = players.turn();
-			players.getPlayers().forEach(playerRunFunc.apply(inputView).apply(turn, players));
+			players.getPlayers().forEach((player) -> playerRunFrame(turn, players, player));
 		}
-
 	}
 
-	private Function<InputView, BiFunction<Integer, Players, Consumer<Player>>> playerRunFunc = (inputView) -> (turn, players) -> (player) -> {
-		while (player.isKeepGoing(turn)) {
+	private void playerRunFrame(int turn, Players players, Player player) {
+		while (player.isKeepGoingTurn(turn)) {
 			player.addPlayerFrameScore(inputView.getFrameScore(player));
 			showGame(players);
 		}
-	};
-
-	private Player makePlayer() {
-		String name = inputView.getUserName();
-		return new Player(name);
 	}
 
 	private Players makePlayers(int count) {
@@ -47,12 +37,6 @@ public class BowlingGameController {
 
 	private int makePeopleCount() {
 		return inputView.getPeopleCount();
-	}
-
-	private void showGame(Player player) {
-		outputView.showFrames();
-		outputView.showPlayerFrames(player);
-		outputView.showPlayerFrameScore(player);
 	}
 
 	private void showGame(Players players) {
