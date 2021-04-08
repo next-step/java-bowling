@@ -1,5 +1,6 @@
 package bowling.entity;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,10 +21,10 @@ public class Players {
 
 	public boolean isKeepGoing() {
 		return players.stream()
-			.anyMatch(Player::isEnd);
+			.anyMatch(Player::isGameEnd);
 	}
 
 	public List<Player> getPlayers() {
-		return players;
+		return Collections.unmodifiableList(players);
 	}
 }
