@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.FrameScoreResult;
+import bowling.domain.State.StateType;
 import bowling.dto.*;
 import bowling.util.StringUtils;
 
@@ -94,22 +94,22 @@ public class ResultView {
     }
 
     private static String frameResultInString(FrameResult frameResult) {
-        FrameScoreResult frameScoreResult = frameResult.frameScoreResult();
+        StateType frameScoreResult = frameResult.frameScoreResult();
         List<Integer> pinCounts = frameResult.pinCounts();
 
-        if (frameScoreResult == FrameScoreResult.STRIKE) {
+        if (frameScoreResult == StateType.STRIKE) {
             return strikeFrameResultInString();
         }
 
-        if (frameScoreResult == FrameScoreResult.SPARE) {
+        if (frameScoreResult == StateType.SPARE) {
             return spareFrameResultInString(pinCounts);
         }
 
-        if (frameScoreResult == FrameScoreResult.MISS) {
+        if (frameScoreResult == StateType.MISS) {
             return missFrameResultInString(pinCounts);
         }
 
-        if (frameScoreResult == FrameScoreResult.NONE) {
+        if (frameScoreResult == StateType.NONE) {
             return nonFrameResultInString(pinCounts);
         }
 

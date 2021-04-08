@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frame.FrameNumber;
+import bowling.domain.frame.Frames;
 import bowling.dto.PlayResult;
 
 public class Player {

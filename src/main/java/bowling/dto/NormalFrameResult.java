@@ -1,7 +1,7 @@
 package bowling.dto;
 
-import bowling.domain.FrameOld;
-import bowling.domain.FrameNumber;
+import bowling.domain.frame.FrameOld;
+import bowling.domain.frame.FrameNumber;
 
 public class NormalFrameResult {
 

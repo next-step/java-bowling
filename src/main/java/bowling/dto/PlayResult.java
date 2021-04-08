@@ -1,6 +1,6 @@
 package bowling.dto;
 
-import bowling.domain.Frames;
+import bowling.domain.frame.Frames;
 import bowling.domain.PlayerName;
 
 public class PlayResult {

@@ -1,7 +1,7 @@
 package bowling.dto;
 
-import bowling.domain.Frame;
-import bowling.domain.NormalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 
 import java.util.ArrayList;
 import java.util.List;

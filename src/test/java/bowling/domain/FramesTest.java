@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.State.StateType;
+import bowling.domain.frame.*;
 import bowling.dto.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -85,14 +87,14 @@ public class FramesTest {
         List<NormalFrameResult> normalFrameResults = result.normalFrameResults();
         FinalFrameResult finalFrameResult = result.finalFrameResult();
 
-        List<FrameScoreResult> normalFrameScoreResults = normalFrameResults.stream()
+        List<StateType> normalFrameScoreResults = normalFrameResults.stream()
                 .map(normalFrameResult -> normalFrameResult.frameResult().frameScoreResult())
                 .collect(Collectors.toList());
         List<Integer> normalFramePinCounts = normalFrameResults.stream()
                 .flatMap(normalFrameResult -> normalFrameResult.frameResult().pinCounts().stream())
                 .collect(Collectors.toList());
 
-        List<FrameScoreResult> finalFrameScoreResults = finalFrameResult.frameResults().stream()
+        List<StateType> finalFrameScoreResults = finalFrameResult.frameResults().stream()
                 .map(FrameResult::frameScoreResult)
                 .collect(Collectors.toList());
         List<Integer> finalFramePinCounts = finalFrameResult.frameResults().stream()
@@ -100,7 +102,7 @@ public class FramesTest {
                 .collect(Collectors.toList());
 
 
-        List<FrameScoreResult> actualTotalFrameScoreResults = Stream.of(normalFrameScoreResults, finalFrameScoreResults)
+        List<StateType> actualTotalFrameScoreResults = Stream.of(normalFrameScoreResults, finalFrameScoreResults)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
@@ -109,7 +111,7 @@ public class FramesTest {
                 .collect(Collectors.toList());
 
 
-        assertThat(actualTotalFrameScoreResults).containsExactlyInAnyOrder(FrameScoreResult.STRIKE, FrameScoreResult.MISS, FrameScoreResult.NONE);
+        assertThat(actualTotalFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.MISS, StateType.NONE);
         assertThat(actualTotalFramePinCounts).containsExactlyInAnyOrder(strikePinCount, firstPinCountOfSecondFrame, secondPinCountOfSecondFrame);
         assertThat(frames.currentFrameNumber()).isEqualTo(3);
     }

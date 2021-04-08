@@ -1,7 +1,7 @@
 package bowling.dto;
 
-import bowling.domain.FrameNumber;
-import bowling.domain.FrameScoreResult;
+import bowling.domain.frame.FrameNumber;
+import bowling.domain.State.StateType;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class FrameResult {
 
     private int frameNumber;
 
-    private FrameScoreResult frameScoreResult;
+    private StateType stateType;
 
     private List<Integer> pinCounts;
 
@@ -17,11 +17,11 @@ public class FrameResult {
         this.frameNumber = frameNumber.number();
         Integer sum = pinCounts.stream()
                 .reduce(0, Integer::sum);
-        this.frameScoreResult = FrameScoreResult.of(sum,pinCounts.size());
+        this.frameScoreResult = StateType.of(sum,pinCounts.size());
         this.pinCounts = pinCounts;
     }
 
-    public FrameScoreResult frameScoreResult() {
+    public StateType frameScoreResult() {
         return frameScoreResult;
     }
 

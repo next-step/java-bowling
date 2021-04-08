@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.State.StateType;
+import bowling.domain.frame.FrameOld;
+import bowling.domain.frame.PinCount;
 import bowling.dto.FrameResult;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +31,7 @@ public class FrameOldTest {
         frame.addPinCount(pinCount);
         FrameResult result = frame.result();
 
-        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.NONE);
+        assertThat(result.frameScoreResult()).isEqualTo(StateType.NONE);
         assertThat(result.pinCounts()).containsExactly(pinCount);
     }
 
@@ -60,7 +63,7 @@ public class FrameOldTest {
 
         FrameResult result = frame.result();
         assertThat(frame.isDone()).isTrue();
-        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.STRIKE);
+        assertThat(result.frameScoreResult()).isEqualTo(StateType.STRIKE);
         assertThat(result.pinCounts()).containsExactly(strikePinCounts);
     }
 
@@ -75,7 +78,7 @@ public class FrameOldTest {
 
         FrameResult result = frame.result();
         assertThat(frame.isDone()).isTrue();
-        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.SPARE);
+        assertThat(result.frameScoreResult()).isEqualTo(StateType.SPARE);
         assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
     }
 
@@ -89,7 +92,7 @@ public class FrameOldTest {
 
         FrameResult result = frame.result();
         assertThat(frame.isDone()).isTrue();
-        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.MISS);
+        assertThat(result.frameScoreResult()).isEqualTo(StateType.MISS);
         assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
     }
 
@@ -101,7 +104,7 @@ public class FrameOldTest {
 
         FrameResult result = frame.result();
         assertThat(frame.isDone()).isFalse();
-        assertThat(result.frameScoreResult()).isEqualTo(FrameScoreResult.NONE);
+        assertThat(result.frameScoreResult()).isEqualTo(StateType.NONE);
         assertThat(result.pinCounts()).containsExactly(firstPinCount);
     }
 
@@ -112,7 +115,7 @@ public class FrameOldTest {
         int secondPinCount = 6;
         frame.addPinCount(firstPinCount);
         frame.addPinCount(secondPinCount);
-        FrameScoreResult expected = FrameScoreResult.MISS;
+        StateType expected = StateType.MISS;
 
         assertThat(frame.isMatch(expected)).isTrue();
     }
