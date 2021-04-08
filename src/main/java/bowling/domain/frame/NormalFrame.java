@@ -100,10 +100,10 @@ public class NormalFrame implements Frame {
     }
 
     public boolean isMatchCurrentState(StateType stateType) {
-        pinCounts.isMatchCurrentState(stateType);
+        return pinCounts.isMatchCurrentState(stateType);
     }
 
-    public FrameState currentState() {
-       return pinCounts.currentState().type();
+    public StateType currentState() {
+       return pinCounts.currentState();
     }
 }

@@ -54,32 +54,32 @@ public class PinCounts {
                 .reduce(0, Integer::sum);
     }
 
-    public FrameState currentState() {
+    public StateType currentState() {
 
         int totalCount = totalPinCounts();
 
         if (totalCount == MAX_TOTAL_PIN_COUNTS && pinCounts.size() == MAX_TRY_COUNT - 1) {
-            return new StrikeState();
+            return StateType.STRIKE;
         }
 
         if (totalCount == MAX_TOTAL_PIN_COUNTS && pinCounts.size() == MAX_TRY_COUNT) {
-            return new SpareState();
+            return StateType.SPARE;
         }
 
         if (totalCount < MAX_TOTAL_PIN_COUNTS && totalCount > 0
                 && pinCounts.size() == MAX_TRY_COUNT) {
-            return new MissState();
+            return StateType.MISS;
         }
 
         if (totalCount == 0 && pinCounts.size() == MAX_TRY_COUNT) {
-            return new GutterState();
+            return StateType.MISS;
         }
 
-        return new NoneState();
+        return StateType.NONE;
     }
 
     public boolean isMatchCurrentState(StateType stateType) {
-        return currentState().isMatch(stateType);
+        return currentState()==stateType;
     }
 
 
