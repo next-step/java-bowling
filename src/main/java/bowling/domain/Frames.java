@@ -40,14 +40,14 @@ public class Frames {
         if (frames.isEmpty()) {
             return true;
         }
-        return isLastIndexFrameEnd(frames.size() - MINUS_INDEX_ONE);
+        return isFrameCompleted(frames.size() - MINUS_INDEX_ONE);
     }
 
     public boolean isPlayComplited() {
         if (frames.size() < MAX_SIZE) {
             return true;
         }
-        return !isLastIndexFrameEnd(frames.size() - MINUS_INDEX_ONE);
+        return !isFrameCompleted(frames.size() - MINUS_INDEX_ONE);
     }
 
     public List<Frame> frames() {
@@ -59,12 +59,12 @@ public class Frames {
     }
 
     public void scoreInit() {
-        if (isLastIndexFrameEnd(frames.size() - MINUS_INDEX_ONE)) {
+        if (isFrameCompleted(frames.size() - MINUS_INDEX_ONE)) {
             scores.add(FrameScore.of(frames.get(frames.size() - MINUS_INDEX_ONE)));
         }
     }
 
-    public boolean isLastIndexFrameEnd(int frameNumber) {
+    public boolean isFrameCompleted(int frameNumber) {
         if (frames.isEmpty()) {
             return false;
         }

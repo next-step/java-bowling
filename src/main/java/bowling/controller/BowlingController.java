@@ -27,7 +27,7 @@ public class BowlingController {
     }
 
     public void bowlingPlay(int frameNumber, Users users, User user) {
-        while (!user.isEndFrame(frameNumber)) {
+        while (!user.isFrameCompleted(frameNumber)) {
             user.play(inputView.score(user));
             resultView.bowlingBoard(users);
         }
