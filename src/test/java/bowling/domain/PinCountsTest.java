@@ -11,18 +11,18 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class FrameOldTest {
+public class PinCountsTest {
 
     @Test
     void create_from_total_pin_counts_more_than_10_throw_exception() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-                new PinCounts(Arrays.asList(new PinCount(5),new PinCount(11))));
+                new PinCounts(Arrays.asList(new PinCount(5), new PinCount(11))));
     }
 
     @Test
     void create_from_pin_count_list_size_more_than_2_throw_exception() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-                new PinCounts(Arrays.asList(new PinCount(5),new PinCount(5),new PinCount(5))));
+                new PinCounts(Arrays.asList(new PinCount(5), new PinCount(5), new PinCount(5))));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class FrameOldTest {
         pinCounts.add(pinCount);
 
         PinCountsResult result = pinCounts.result();
-        assertThat(result.stateType()).isEqualTo(StateType.STRIKE);
+        assertThat(result.stateType()).isEqualTo(StateType.NONE);
         assertThat(result.pinCounts()).containsExactly(pinCount);
     }
 
@@ -80,7 +80,7 @@ public class FrameOldTest {
         PinCountsResult result = pinCounts.result();
         assertThat(pinCounts.isDone()).isTrue();
         assertThat(pinCounts.isMatchCurrentState(StateType.SPARE)).isTrue();
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount, secondPinCount);
     }
 
     @Test
@@ -94,7 +94,7 @@ public class FrameOldTest {
         PinCountsResult result = pinCounts.result();
         assertThat(pinCounts.isDone()).isTrue();
         assertThat(pinCounts.isMatchCurrentState(StateType.MISS)).isTrue();
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount, secondPinCount);
     }
 
     @Test
@@ -104,7 +104,7 @@ public class FrameOldTest {
         pinCounts.add(firstPinCount);
 
         PinCountsResult result = pinCounts.result();
-        assertThat(pinCounts.isDone()).isTrue();
+        assertThat(pinCounts.isDone()).isFalse();
         assertThat(pinCounts.isMatchCurrentState(StateType.NONE)).isTrue();
         assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount);
     }

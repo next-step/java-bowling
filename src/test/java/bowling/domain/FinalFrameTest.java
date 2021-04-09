@@ -2,7 +2,6 @@ package bowling.domain;
 
 import bowling.domain.State.StateType;
 import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.PinCount;
 import bowling.dto.FinalFrameResult;
 import bowling.dto.PinCountsResult;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class FinalFrameTest {
 
@@ -50,7 +50,7 @@ public class FinalFrameTest {
                 .collect(Collectors.toList());
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.STRIKE, StateType.STRIKE);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount,strikePinCount,strikePinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount, strikePinCount, strikePinCount);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class FinalFrameTest {
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.STRIKE, StateType.NONE);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstStrikePinCount,secondStrikePinCount,lastPinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstStrikePinCount, secondStrikePinCount, lastPinCount);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class FinalFrameTest {
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.SPARE);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount,firstSparePinCount,secondSparePinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount, firstSparePinCount, secondSparePinCount);
     }
 
     @Test
@@ -110,7 +110,7 @@ public class FinalFrameTest {
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.MISS);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount,firstMissPinCount,secondMissPinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount, firstMissPinCount, secondMissPinCount);
     }
 
     @Test
@@ -130,7 +130,7 @@ public class FinalFrameTest {
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.SPARE, StateType.NONE);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(lastPinCount,firstMissPinCount,secondMissPinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(lastPinCount, firstMissPinCount, secondMissPinCount);
     }
 
     @Test
@@ -150,7 +150,7 @@ public class FinalFrameTest {
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.SPARE, StateType.STRIKE);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount,firstSparePinCount,secondSparePinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount, firstSparePinCount, secondSparePinCount);
     }
 
     @Test
@@ -168,10 +168,8 @@ public class FinalFrameTest {
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.MISS);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstMissPinCount,secondMissPinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstMissPinCount, secondMissPinCount);
     }
-
-
 
 
 }

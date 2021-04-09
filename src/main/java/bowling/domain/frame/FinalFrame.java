@@ -77,15 +77,14 @@ public class FinalFrame implements Frame {
             throw new IllegalStateException("이미 끝난 프레임 입니다.");
         }
         NormalFrame currentFrame = currentFrame();
+        if (currentFrame.isDone()) {
+            NormalFrame next = currentFrame.next();
+            frames.add(next);
+            currentFrame = next;
+        }
         currentFrame.addPinCount(pinCount);
-        addFrameIfNecessary(currentFrame);
     }
 
-    private void addFrameIfNecessary(NormalFrame currentFrame) {
-        if (frames.size() < MAX_HIT_COUNT && currentFrame.isDone()) {
-            frames.add(currentFrame.next());
-        }
-    }
 
     private NormalFrame currentFrame() {
         return frames.get(frames.size() - 1);

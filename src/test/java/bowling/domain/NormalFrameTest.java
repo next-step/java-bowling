@@ -21,7 +21,7 @@ public class NormalFrameTest {
 
 
     @ParameterizedTest
-    @CsvSource(value = {"1,3,4", "10,8","8,8","5,6","7,10"}, delimiter = ':')
+    @CsvSource(value = {"1,3,4", "10,8", "8,8", "5,6", "7,10"}, delimiter = ':')
     @DisplayName("유효하지 투구값으로 생성")
     void create_from_invalid_pin_count_list_throw_exception(String pinCountsInString) {
         String nameSeparator = ",";
@@ -30,7 +30,7 @@ public class NormalFrameTest {
                 .map(pinCountInString -> new PinCount(Integer.parseInt(pinCountInString)))
                 .collect(Collectors.toList());
         assertThatIllegalArgumentException().isThrownBy(() ->
-                NormalFrame.of(new FrameNumber(10),list,null)
+                NormalFrame.of(new FrameNumber(10), list, null)
         );
     }
 
@@ -96,7 +96,7 @@ public class NormalFrameTest {
         PinCountsResult result = normalFrame.result().pinCountsResult();
         assertThat(normalFrame.isDone()).isTrue();
         assertThat(result.stateType()).isEqualTo(StateType.SPARE);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount, secondPinCount);
     }
 
     @Test
@@ -110,7 +110,7 @@ public class NormalFrameTest {
         PinCountsResult result = normalFrame.result().pinCountsResult();
         assertThat(normalFrame.isDone()).isTrue();
         assertThat(result.stateType()).isEqualTo(StateType.MISS);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount, secondPinCount);
     }
 
     @Test
