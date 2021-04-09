@@ -20,30 +20,32 @@ public class QuestionTest {
     @DisplayName("Question을 삭제하면 데이터상태가 삭제상태인 true로 변한다.")
     @Test
     void testCase1() {
-        Question question = Q1.delete();
+        Q1.delete();
 
-        assertThat(question.isDeleted()).isEqualTo(true);
-        assertThat(Q2.isDeleted()).isEqualTo(false);
+        assertThat(Q1.isDeleted()).isTrue();
     }
 
-    @DisplayName("로그인 사용자와 질문한 사람이 같은 경우 삭제 가능하다.")
+    @DisplayName("로그인 사용자와 질문한 사람이 같다.")
     @Test
     void testCase2() {
-        Question question = Q1.delete(UserTest.JAVAJIGI);
-        Question question2 = Q2.delete(UserTest.JAVAJIGI);
-
-        assertThat(question.isDeleted()).isEqualTo(true);
-        assertThat(question2.isDeleted()).isEqualTo(false);
+        assertThat(Q1.isOwner(UserTest.JAVAJIGI)).isTrue();
     }
 
-    @DisplayName("답변이 없는 경우 삭제가 가능하다.")
+    @DisplayName("로그인 사용자와 질문한 사람이 같지 않으면 예외가 발생한다.")
     @Test
     void testCase3() {
-        Q2.addAnswer(new Answer());
-        Question question = Q1.delete(UserTest.JAVAJIGI);
-        Question question2 = Q2.delete(UserTest.SANJIGI);
-
-        assertThat(question.isDeleted()).isEqualTo(true);
-        assertThat(question2.isDeleted()).isEqualTo(false);
+        assertThatThrownBy(()-> {
+            Q1.isOwner(UserTest.SANJIGI);
+        }).isInstanceOf(RuntimeException.class);
     }
+
+    @DisplayName("질문이 삭제되면 답변도 삭제히스토리에 같이 저장된다.")
+    @Test
+    void testCase4() {
+        DeleteHistorys delete = Q1.delete();
+
+        assertThat(delete.size()).isEqualTo(1);
+    }
+
+    
 }

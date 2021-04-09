@@ -1,10 +1,10 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -18,10 +18,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -39,7 +37,7 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Question(long id, String title, String contents, List<Answer> answers) {
+    public Question(long id, String title, String contents, Answers answers) {
         super(id);
         this.title = title;
         this.contents = contents;
@@ -61,25 +59,26 @@ public class Question extends AbstractEntity {
     }
 
     public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
+        if(!writer.equals(loginUser)){
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        return Optional.ofNullable(answers)
+        .map(answer ->answer.isOwner(loginUser))
+        .orElse(true);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
-    public Question delete() {
+    public DeleteHistorys delete() {
+        DeleteHistorys delete = Optional.ofNullable(answers)
+                .map(Answers::delete)
+                .orElseGet(DeleteHistorys::of);
         this.deleted = true;
-        return this;
+        delete.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+        return delete;
     }
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
@@ -87,10 +86,5 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public Question delete(User user) {
-        if(isOwner(user) && answers.size() == 0){
-            return delete();
-        }
-        return this;
-    }
+
 }
