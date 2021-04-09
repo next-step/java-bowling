@@ -37,7 +37,7 @@ public class QnAService {
         Question question = findQuestionById(questionId);
 
         if(question.isOwner(loginUser)){
-            DeleteHistorys deleteHistorys = question.delete(DeleteHistorys.of());
+            DeleteHistorys deleteHistorys = question.delete();
             deleteHistoryService.saveAll(deleteHistorys.toList());
         }
     }

@@ -11,9 +11,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
 @Embeddable
 public class Answers {
 
@@ -56,10 +53,10 @@ public class Answers {
                 .count();
     }
 
-    public DeleteHistorys delete(DeleteHistorys deleteHistorys) {
+    public DeleteHistorys delete(List<DeleteHistory> deleteHistorys) {
            answers.stream()
                     .map(Answer::delete)
-                    .forEach(answer -> deleteHistorys.add(ContentType.ANSWER, answer.getId(), answer.getWriter()));
-        return deleteHistorys;
+                    .forEach(answer -> deleteHistorys.add(new DeleteHistory(ContentType.ANSWER,answer.getId(),answer.getWriter(),LocalDateTime.now())));
+        return DeleteHistorys.of(deleteHistorys);
     }
 }

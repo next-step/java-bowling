@@ -4,7 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -46,7 +48,8 @@ class AnswersTest {
     @Test
     void testCase4() {
         Answers answers = createAnswers(UserTest.JAVAJIGI, UserTest.SANJIGI);
-        DeleteHistorys delete = answers.delete(DeleteHistorys.of());
+        List<DeleteHistory> deleteHistoryList = new ArrayList<>();
+        DeleteHistorys delete = answers.delete(deleteHistoryList);
 
         assertThat(delete.size()).isEqualTo(2);
     }

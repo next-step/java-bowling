@@ -4,6 +4,7 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,13 +71,16 @@ public class Question extends AbstractEntity {
         .orElse(true);
     }
 
-    public DeleteHistorys delete(DeleteHistorys deleteHistorys) {
+    public DeleteHistorys delete() {
         this.deleted = true;
-        deleteHistorys.add(ContentType.QUESTION, getId(), getWriter());
+
+        List<DeleteHistory> deleteHistoryList = new ArrayList<>();
+        deleteHistoryList.add(new DeleteHistory(ContentType.QUESTION, getId(),getWriter(), LocalDateTime.now()));
 
         Answers answers = Optional.ofNullable(this.answers)
                 .orElseGet(Answers::of);
-        return answers.delete(deleteHistorys);
+
+        return answers.delete(deleteHistoryList);
     }
 
     public boolean isDeleted() {
