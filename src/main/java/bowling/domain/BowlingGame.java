@@ -26,6 +26,6 @@ public class BowlingGame {
     }
 
     public void play(int pintCount) {
-        player.addPinCounts(pintCount);
+        player.addPinCount(pintCount);
     }
 }
