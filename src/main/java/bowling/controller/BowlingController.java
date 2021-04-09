@@ -5,6 +5,8 @@ import bowling.domain.Users;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
+import java.util.stream.IntStream;
+
 public class BowlingController {
     private static int LAST_FRAME_NUMBER = 10;
     private InputView inputView;
@@ -20,14 +22,12 @@ public class BowlingController {
 
         resultView.bowlingBoard(users);
 
-        for (int i = 0; i < LAST_FRAME_NUMBER; i++) {
-            int frameNumber = i;
-            users.forEach(user -> bowlingPlay(frameNumber, users, user));
-        }
+        IntStream.range(0, LAST_FRAME_NUMBER)
+                .forEach(frameIndex -> users.forEach(user -> bowlingPlay(frameIndex, users, user)));
     }
 
-    public void bowlingPlay(int frameNumber, Users users, User user) {
-        while (!user.isFrameCompleted(frameNumber)) {
+    public void bowlingPlay(int frameIndex, Users users, User user) {
+        while (!user.isFrameCompleted(frameIndex)) {
             user.play(inputView.score(user));
             resultView.bowlingBoard(users);
         }

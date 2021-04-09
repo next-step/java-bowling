@@ -64,12 +64,12 @@ public class Frames {
         }
     }
 
-    public boolean isFrameCompleted(int frameNumber) {
+    public boolean isFrameCompleted(int frameIndex) {
         if (frames.isEmpty()
-                || frames.size() == frameNumber) {
+                || (frames.size() - MINUS_INDEX_ONE) < frameIndex) {
             return false;
         }
-        return frames.get(frameNumber).isEnd();
+        return frames.get(frameIndex).isEnd();
     }
 
     private List<FrameScore> addScore(int countOfDownPin) {

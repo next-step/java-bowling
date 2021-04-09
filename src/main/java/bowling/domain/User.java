@@ -29,8 +29,8 @@ public class User {
         return frames;
     }
 
-    public boolean isFrameCompleted(int frameNumber) {
-        return frames.isFrameCompleted(frameNumber);
+    public boolean isFrameCompleted(int frameIndex) {
+        return frames.isFrameCompleted(frameIndex);
     }
 
     public void play(int score) {
