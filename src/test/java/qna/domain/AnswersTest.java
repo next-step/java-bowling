@@ -1,6 +1,5 @@
 package qna.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,6 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class AnswersTest {
 
@@ -48,7 +46,7 @@ class AnswersTest {
     @Test
     void testCase4() {
         Answers answers = createAnswers(UserTest.JAVAJIGI, UserTest.SANJIGI);
-        DeleteHistorys delete = answers.delete(DeleteHistorys.of());
+        DeleteHistorys delete = answers.delete();
 
         assertThat(delete.size()).isEqualTo(2);
     }
@@ -57,8 +55,7 @@ class AnswersTest {
         Question Q1 = new Question("title1", "contents1").writeBy(user);
         Answer A1 = new Answer(user, Q1, "Answers Contents1");
         Answer A2 = new Answer(user2, Q1, "Answers Contents2");
-        Q1.addAnswer(A1);
-        Q1.addAnswer(A2);
+
         return new Answers(Arrays.asList(A1, A2));
 
     }
