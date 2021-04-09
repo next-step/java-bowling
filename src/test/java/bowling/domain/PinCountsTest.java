@@ -48,11 +48,11 @@ public class PinCountsTest {
 
     @Test
     void add_pin_count_over_max_total_pin_counts_throw_exception() {
-        FrameOld frame = new FrameOld();
-        frame.addPinCount(5);
+        PinCounts pinCounts = new PinCounts();
+        pinCounts.add(5);
 
         assertThatIllegalArgumentException().isThrownBy(() ->
-                frame.addPinCount(9));
+                pinCounts.add(9));
     }
 
     @Test
@@ -94,6 +94,20 @@ public class PinCountsTest {
         assertThat(pinCounts.isDone()).isTrue();
         assertThat(pinCounts.isMatchCurrentState(StateType.MISS)).isTrue();
         assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount, secondPinCount);
+    }
+
+    @Test
+    void result_when_gutter() {
+        PinCounts pinCounts = new PinCounts();
+        int firstPinCount = 0;
+        int secondPinCount = 0;
+        pinCounts.add(firstPinCount);
+        pinCounts.add(secondPinCount);
+
+        PinCountsResult result = pinCounts.result();
+        assertThat(pinCounts.isDone()).isTrue();
+        assertThat(pinCounts.isMatchCurrentState(StateType.GUTTER)).isTrue();
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
     }
 
     @Test
