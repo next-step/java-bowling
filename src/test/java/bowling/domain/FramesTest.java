@@ -34,16 +34,17 @@ public class FramesTest {
     @Test
     void is_done_true() {
         int lastFrameNumber = 4;
-        List<PinCount> strikePinCount = Arrays.asList(new PinCount(10));
-        List<PinCount> sparePinCount = Arrays.asList(new PinCount(5), new PinCount(5));
-        List<PinCount> missPinCount = Arrays.asList(new PinCount(3), new PinCount(4));
+        List<PinCount> strikePinCounts = Arrays.asList(new PinCount(10));
+        List<PinCount> sparePinCounts = Arrays.asList(new PinCount(5), new PinCount(5));
+        List<PinCount> missPinCounts = Arrays.asList(new PinCount(3), new PinCount(4));
 
-        NormalFrame normalFrame1 = NormalFrame.of(new FrameNumber(1), strikePinCount);
-        NormalFrame normalFrame2 = NormalFrame.of(new FrameNumber(2), sparePinCount);
-        NormalFrame normalFrame3 = NormalFrame.of(new FrameNumber(3), missPinCount);
-        FinalFrame finalFrame = FinalFrame.of(new FrameNumber(lastFrameNumber),missPinCount);
+        NormalFrame finalBonusFrame1 = NormalFrame.of(new FrameNumber(1), missPinCounts, null);
+        FinalFrame finalFrame = FinalFrame.of(new FrameNumber(lastFrameNumber),Arrays.asList(finalBonusFrame1));
+        NormalFrame normalFrame3 = NormalFrame.of(new FrameNumber(3), missPinCounts, finalFrame);
+        NormalFrame normalFrame2 = NormalFrame.of(new FrameNumber(2),sparePinCounts,normalFrame3);
+        NormalFrame normalFrame1 = NormalFrame.of(new FrameNumber(1),strikePinCounts,normalFrame2);
 
-        Frames frames = Frames.from(Arrays.asList(normalFrame1, normalFrame2, normalFrame3), finalFrame);
+        Frames frames = Frames.from(Arrays.asList(normalFrame1, normalFrame2, normalFrame3, finalFrame));
 
         assertThat(frames.isDone()).isTrue();
         assertThat(frames.currentFrameNumber()).isEqualTo(lastFrameNumber);
@@ -56,13 +57,13 @@ public class FramesTest {
         List<PinCount> sparePinCount = Arrays.asList(new PinCount(5), new PinCount(5));
         List<PinCount> emptyPinCount = new ArrayList<>();
 
-        NormalFrame normalFrame1 = NormalFrame.of(new FrameNumber(1), strikePinCount);
-        NormalFrame normalFrame2 = NormalFrame.of(new FrameNumber(2), sparePinCount);
-        NormalFrame normalFrame4 = NormalFrame.of(new FrameNumber(4), emptyPinCount);
-        NormalFrame normalFrame3 = NormalFrame.of(new FrameNumber(3), emptyPinCount);
         FinalFrame finalFrame = FinalFrame.from(5);
+        NormalFrame normalFrame4 = NormalFrame.of(new FrameNumber(4), emptyPinCount,finalFrame);
+        NormalFrame normalFrame3 = NormalFrame.of(new FrameNumber(3), emptyPinCount,normalFrame4);
+        NormalFrame normalFrame2 = NormalFrame.of(new FrameNumber(2), sparePinCount,normalFrame3);
+        NormalFrame normalFrame1 = NormalFrame.of(new FrameNumber(1), strikePinCount,normalFrame2);
 
-        Frames frames = Frames.from(Arrays.asList(normalFrame4, normalFrame1, normalFrame2, normalFrame3), finalFrame);
+        Frames frames = Frames.from(Arrays.asList(normalFrame4, normalFrame1, normalFrame2, normalFrame3, finalFrame));
 
         assertThat(frames.isDone()).isFalse();
         assertThat(frames.currentFrameNumber()).isEqualTo(firstUndoneFrameNumber);
@@ -75,11 +76,11 @@ public class FramesTest {
         int firstPinCountOfSecondFrame = 5;
         int secondPinCountOfSecondFrame = 3;
 
-        NormalFrame firstStrikeNormalFrame = NormalFrame.of(new FrameNumber(1), Arrays.asList(new PinCount(strikePinCount)));
-        NormalFrame secondUnDoneNormalFrame = NormalFrame.of(new FrameNumber(2), new ArrayList<>());
         FinalFrame thirdFinalFrame = FinalFrame.from(3);
+        NormalFrame secondUnDoneNormalFrame = NormalFrame.of(new FrameNumber(2), new ArrayList<>(),thirdFinalFrame);
+        NormalFrame firstStrikeNormalFrame = NormalFrame.of(new FrameNumber(1), Arrays.asList(new PinCount(strikePinCount)),secondUnDoneNormalFrame);
 
-        Frames frames = Frames.from(Arrays.asList(firstStrikeNormalFrame, secondUnDoneNormalFrame), thirdFinalFrame);
+        Frames frames = Frames.from(Arrays.asList(firstStrikeNormalFrame, secondUnDoneNormalFrame, thirdFinalFrame));
         frames.addPinCount(firstPinCountOfSecondFrame);
         frames.addPinCount(secondPinCountOfSecondFrame);
 
@@ -88,18 +89,16 @@ public class FramesTest {
         FinalFrameResult finalFrameResult = result.finalFrameResult();
 
         List<StateType> normalFrameScoreResults = normalFrameResults.stream()
-                .map(normalFrameResult -> normalFrameResult.frameResult().frameScoreResult())
+                .map(normalFrameResult -> normalFrameResult.pinCountsResult().stateType())
                 .collect(Collectors.toList());
         List<Integer> normalFramePinCounts = normalFrameResults.stream()
-                .flatMap(normalFrameResult -> normalFrameResult.frameResult().pinCounts().stream())
+                .flatMap(normalFrameResult -> normalFrameResult.pinCounts().stream())
                 .collect(Collectors.toList());
 
-        List<StateType> finalFrameScoreResults = finalFrameResult.frameResults().stream()
-                .map(FrameResult::frameScoreResult)
+        List<StateType> finalFrameScoreResults = finalFrameResult.pinCountsResult().stream()
+                .map(PinCountsResult::stateType)
                 .collect(Collectors.toList());
-        List<Integer> finalFramePinCounts = finalFrameResult.frameResults().stream()
-                .flatMap(frameResult -> frameResult.pinCounts().stream())
-                .collect(Collectors.toList());
+        List<Integer> finalFramePinCounts = finalFrameResult.pinCounts();
 
 
         List<StateType> actualTotalFrameScoreResults = Stream.of(normalFrameScoreResults, finalFrameScoreResults)

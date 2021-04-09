@@ -11,12 +11,12 @@ public class FinalFrameResult implements FrameResult {
 
     private int frameNumber;
 
-    private List<PinCountResult> pinCountResults = new ArrayList<>();
+    private List<PinCountsResult> pinCountsResults = new ArrayList<>();
 
     public FinalFrameResult(FrameNumber frameNumber, List<NormalFrame> frames) {
         this.frameNumber = frameNumber.number();
         frames.forEach(normalFrame -> {
-            pinCountResults.add(normalFrame.result().frameResult());
+            pinCountsResults.add(normalFrame.result().pinCountsResult());
         });
     }
 
@@ -26,12 +26,12 @@ public class FinalFrameResult implements FrameResult {
 
     @Override
     public List<Integer> pinCounts() {
-        return pinCountResults.stream().flatMap(pinCountResult -> pinCountResult.pinCounts().stream())
+        return pinCountsResults.stream().flatMap(pinCountResult -> pinCountResult.pinCounts().stream())
                 .collect(Collectors.toList());
     }
 
-    public List<PinCountResult> frameResults() {
-        return pinCountResults;
+    public List<PinCountsResult> pinCountsResult() {
+        return pinCountsResults;
     }
 
 }

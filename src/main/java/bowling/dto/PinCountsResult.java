@@ -5,15 +5,15 @@ import bowling.domain.frame.PinCounts;
 
 import java.util.List;
 
-public class PinCountResult {
+public class PinCountsResult {
 
     private StateType stateType;
 
     private List<Integer> pinCounts;
 
-    public PinCountResult(PinCounts pinCounts) {
-        this.stateType = pinCounts.currentState();
-        this.pinCounts = pinCounts.pinCountsAsInt();
+    public PinCountsResult(StateType stateType, List<Integer> pinCounts) {
+        this.stateType = stateType;
+        this.pinCounts = pinCounts;
     }
 
     public StateType stateType() {

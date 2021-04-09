@@ -14,6 +14,8 @@ public interface Frame {
 
     boolean isLast();
 
+  //  FinalFrameResult result();
+
 //    Score score();
 
 //    List<Integer> pinCounts();

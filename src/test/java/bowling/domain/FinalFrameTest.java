@@ -2,43 +2,17 @@ package bowling.domain;
 
 import bowling.domain.State.StateType;
 import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.PinCount;
 import bowling.dto.FinalFrameResult;
-import bowling.dto.FrameResult;
-import org.junit.jupiter.api.DisplayName;
+import bowling.dto.PinCountsResult;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 
 public class FinalFrameTest {
-
-    @Test
-    void create_from_try_more_than_3_throw_exception() {
-        assertThatIllegalArgumentException().isThrownBy(() ->
-                FinalFrame.of(new FrameNumber(10),Arrays.asList(new PinCount(10),new PinCount(10),new PinCount(3),new PinCount(3)))
-        );
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"10,7,7", "10,8,8","8,8","5,6"}, delimiter = ':')
-    @DisplayName("유효하지 투구값으로 생성")
-    void create_from_invalid_pin_count_list_throw_exception(String pinCountsInString) {
-        String nameSeparator = ",";
-        String[] pinCountsInArray = pinCountsInString.split(nameSeparator);
-        List<PinCount> list = Arrays.stream(pinCountsInArray)
-                .map(pinCountInString -> new PinCount(Integer.parseInt(pinCountInString)))
-                .collect(Collectors.toList());
-        assertThatIllegalArgumentException().isThrownBy(() ->
-                FinalFrame.of(new FrameNumber(10),list)
-        );
-    }
 
     @Test
     void create() {
@@ -69,12 +43,14 @@ public class FinalFrameTest {
         finalFrame.addPinCount(strikePinCount);
         finalFrame.addPinCount(strikePinCount);
 
-        List<FrameResult> frameResults = finalFrame.result().frameResults();
+
+        FinalFrameResult result = finalFrame.result();
+        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
+                .map(PinCountsResult::stateType)
+                .collect(Collectors.toList());
         assertThat(finalFrame.isDone()).isTrue();
-        for (FrameResult frameResult : frameResults) {
-            assertThat(frameResult.frameScoreResult()).isEqualTo(StateType.STRIKE);
-            assertThat(frameResult.pinCounts()).containsExactly(strikePinCount);
-        }
+        assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.STRIKE, StateType.STRIKE);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount,strikePinCount,strikePinCount);
     }
 
     @Test
@@ -87,17 +63,14 @@ public class FinalFrameTest {
         finalFrame.addPinCount(secondStrikePinCount);
         finalFrame.addPinCount(lastPinCount);
 
-        List<FrameResult> frameResults = finalFrame.result().frameResults();
-        List<StateType> actualFrameScoreResults = frameResults.stream()
-                .map(FrameResult::frameScoreResult)
-                .collect(Collectors.toList());
-        List<Integer> actualPinCounts = frameResults.stream()
-                .flatMap(frameResult -> frameResult.pinCounts().stream())
+        FinalFrameResult result = finalFrame.result();
+        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
+                .map(PinCountsResult::stateType)
                 .collect(Collectors.toList());
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.STRIKE, StateType.NONE);
-        assertThat(actualPinCounts).containsExactlyInAnyOrder(firstStrikePinCount,secondStrikePinCount,lastPinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstStrikePinCount,secondStrikePinCount,lastPinCount);
     }
 
     @Test
@@ -110,17 +83,14 @@ public class FinalFrameTest {
         finalFrame.addPinCount(firstSparePinCount);
         finalFrame.addPinCount(secondSparePinCount);
 
-        List<FrameResult> frameResults = finalFrame.result().frameResults();
-        List<StateType> actualFrameScoreResults = frameResults.stream()
-                .map(FrameResult::frameScoreResult)
-                .collect(Collectors.toList());
-        List<Integer> actualPinCounts = frameResults.stream()
-                .flatMap(frameResult -> frameResult.pinCounts().stream())
+        FinalFrameResult result = finalFrame.result();
+        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
+                .map(PinCountsResult::stateType)
                 .collect(Collectors.toList());
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.SPARE);
-        assertThat(actualPinCounts).containsExactlyInAnyOrder(strikePinCount,firstSparePinCount,secondSparePinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount,firstSparePinCount,secondSparePinCount);
     }
 
     @Test
@@ -133,17 +103,14 @@ public class FinalFrameTest {
         finalFrame.addPinCount(firstMissPinCount);
         finalFrame.addPinCount(secondMissPinCount);
 
-        List<FrameResult> frameResults = finalFrame.result().frameResults();
-        List<StateType> actualFrameScoreResults = frameResults.stream()
-                .map(FrameResult::frameScoreResult)
-                .collect(Collectors.toList());
-        List<Integer> actualPinCounts = frameResults.stream()
-                .flatMap(frameResult -> frameResult.pinCounts().stream())
+        FinalFrameResult result = finalFrame.result();
+        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
+                .map(PinCountsResult::stateType)
                 .collect(Collectors.toList());
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.MISS);
-        assertThat(actualPinCounts).containsExactlyInAnyOrder(strikePinCount,firstMissPinCount,secondMissPinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount,firstMissPinCount,secondMissPinCount);
     }
 
     @Test
@@ -156,17 +123,14 @@ public class FinalFrameTest {
         finalFrame.addPinCount(secondMissPinCount);
         finalFrame.addPinCount(lastPinCount);
 
-        List<FrameResult> frameResults = finalFrame.result().frameResults();
-        List<StateType> actualFrameScoreResults = frameResults.stream()
-                .map(FrameResult::frameScoreResult)
-                .collect(Collectors.toList());
-        List<Integer> actualPinCounts = frameResults.stream()
-                .flatMap(frameResult -> frameResult.pinCounts().stream())
+        FinalFrameResult result = finalFrame.result();
+        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
+                .map(PinCountsResult::stateType)
                 .collect(Collectors.toList());
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.SPARE, StateType.NONE);
-        assertThat(actualPinCounts).containsExactlyInAnyOrder(lastPinCount,firstMissPinCount,secondMissPinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(lastPinCount,firstMissPinCount,secondMissPinCount);
     }
 
     @Test
@@ -179,17 +143,14 @@ public class FinalFrameTest {
         finalFrame.addPinCount(secondSparePinCount);
         finalFrame.addPinCount(strikePinCount);
 
-        List<FrameResult> frameResults = finalFrame.result().frameResults();
-        List<StateType> actualFrameScoreResults = frameResults.stream()
-                .map(FrameResult::frameScoreResult)
-                .collect(Collectors.toList());
-        List<Integer> actualPinCounts = frameResults.stream()
-                .flatMap(frameResult -> frameResult.pinCounts().stream())
+        FinalFrameResult result = finalFrame.result();
+        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
+                .map(PinCountsResult::stateType)
                 .collect(Collectors.toList());
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.SPARE, StateType.STRIKE);
-        assertThat(actualPinCounts).containsExactlyInAnyOrder(strikePinCount,firstSparePinCount,secondSparePinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount,firstSparePinCount,secondSparePinCount);
     }
 
     @Test
@@ -200,17 +161,14 @@ public class FinalFrameTest {
         finalFrame.addPinCount(firstMissPinCount);
         finalFrame.addPinCount(secondMissPinCount);
 
-        List<FrameResult> frameResults = finalFrame.result().frameResults();
-        List<StateType> actualFrameScoreResults = frameResults.stream()
-                .map(FrameResult::frameScoreResult)
-                .collect(Collectors.toList());
-        List<Integer> actualPinCounts = frameResults.stream()
-                .flatMap(frameResult -> frameResult.pinCounts().stream())
+        FinalFrameResult result = finalFrame.result();
+        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
+                .map(PinCountsResult::stateType)
                 .collect(Collectors.toList());
 
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.MISS);
-        assertThat(actualPinCounts).containsExactlyInAnyOrder(firstMissPinCount,secondMissPinCount);
+        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstMissPinCount,secondMissPinCount);
     }
 
 

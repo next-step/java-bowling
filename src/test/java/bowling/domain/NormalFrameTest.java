@@ -4,8 +4,8 @@ import bowling.domain.State.StateType;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PinCount;
-import bowling.dto.FrameResult;
 import bowling.dto.NormalFrameResult;
+import bowling.dto.PinCountsResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,7 +30,7 @@ public class NormalFrameTest {
                 .map(pinCountInString -> new PinCount(Integer.parseInt(pinCountInString)))
                 .collect(Collectors.toList());
         assertThatIllegalArgumentException().isThrownBy(() ->
-                NormalFrame.of(new FrameNumber(10),list)
+                NormalFrame.of(new FrameNumber(10),list,null)
         );
     }
 
@@ -52,17 +52,13 @@ public class NormalFrameTest {
 
     @Test
     void add_pin_count() {
-        int frameNumber = 3;
         int pinCount = 6;
-        NormalFrame normalFrame = new NormalFrame(frameNumber);
+        NormalFrame normalFrame = NormalFrame.first();
         normalFrame.addPinCount(pinCount);
 
-        NormalFrameResult result = normalFrame.result();
-
-        assertThat(result.frameNumber()).isEqualTo(frameNumber);
-        FrameResult frameResult = result.frameResult();
-        assertThat(frameResult.frameScoreResult()).isEqualTo(StateType.NONE);
-        assertThat(frameResult.pinCounts()).containsExactly(pinCount);
+        PinCountsResult result = normalFrame.result().pinCountsResult();
+        assertThat(result.stateType()).isEqualTo(StateType.NONE);
+        assertThat(result.pinCounts()).containsExactly(pinCount);
     }
 
     @Test
@@ -82,9 +78,9 @@ public class NormalFrameTest {
         int strikePinCounts = 10;
         normalFrame.addPinCount(strikePinCounts);
 
-        FrameResult result = normalFrame.result().frameResult();
+        PinCountsResult result = normalFrame.result().pinCountsResult();
         assertThat(normalFrame.isDone()).isTrue();
-        assertThat(result.frameScoreResult()).isEqualTo(StateType.STRIKE);
+        assertThat(result.stateType()).isEqualTo(StateType.STRIKE);
         assertThat(result.pinCounts()).containsExactly(strikePinCounts);
     }
 
@@ -97,9 +93,9 @@ public class NormalFrameTest {
         normalFrame.addPinCount(firstPinCount);
         normalFrame.addPinCount(secondPinCount);
 
-        FrameResult result = normalFrame.result().frameResult();
+        PinCountsResult result = normalFrame.result().pinCountsResult();
         assertThat(normalFrame.isDone()).isTrue();
-        assertThat(result.frameScoreResult()).isEqualTo(StateType.SPARE);
+        assertThat(result.stateType()).isEqualTo(StateType.SPARE);
         assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
     }
 
@@ -111,9 +107,9 @@ public class NormalFrameTest {
         normalFrame.addPinCount(firstPinCount);
         normalFrame.addPinCount(secondPinCount);
 
-        FrameResult result = normalFrame.result().frameResult();
+        PinCountsResult result = normalFrame.result().pinCountsResult();
         assertThat(normalFrame.isDone()).isTrue();
-        assertThat(result.frameScoreResult()).isEqualTo(StateType.MISS);
+        assertThat(result.stateType()).isEqualTo(StateType.MISS);
         assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
     }
 
@@ -123,9 +119,9 @@ public class NormalFrameTest {
         int firstPinCount = 2;
         normalFrame.addPinCount(firstPinCount);
 
-        FrameResult result = normalFrame.result().frameResult();
+        PinCountsResult result = normalFrame.result().pinCountsResult();
         assertThat(normalFrame.isDone()).isFalse();
-        assertThat(result.frameScoreResult()).isEqualTo(StateType.NONE);
+        assertThat(result.stateType()).isEqualTo(StateType.NONE);
         assertThat(result.pinCounts()).containsExactly(firstPinCount);
     }
 

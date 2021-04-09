@@ -16,14 +16,14 @@ public class Frames {
     private Frame currentFrame;
 
     private Frames(List<Frame> frames) {
-        validateEmptyNormalFrames(frames);
+        validateEmptyFrames(frames);
         this.frames = frames.stream()
                 .sorted(Comparator.comparing(Frame::number))
                 .collect(Collectors.toList());
         this.currentFrame = frameToStartFrom(this.frames);
     }
 
-    private void validateEmptyNormalFrames(List<Frame> frames) {
+    private void validateEmptyFrames(List<Frame> frames) {
         if (frames.isEmpty()) {
             throw new IllegalArgumentException("frame의 갯수는 0보다 커야 합니다.");
         }

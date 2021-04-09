@@ -1,9 +1,11 @@
 package bowling.domain.frame;
 
 import bowling.domain.State.*;
+import bowling.dto.PinCountsResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PinCounts {
 
@@ -44,6 +46,10 @@ public class PinCounts {
         pinCounts.add(pinCount);
     }
 
+    public void add(int pinCount) {
+        add(new PinCount(pinCount));
+    }
+
     public boolean isDone() {
         return pinCounts.size() >= MAX_TRY_COUNT || totalPinCounts() >= MAX_TOTAL_PIN_COUNTS;
     }
@@ -54,7 +60,7 @@ public class PinCounts {
                 .reduce(0, Integer::sum);
     }
 
-    public StateType currentState() {
+    private StateType currentState() {
 
         int totalCount = totalPinCounts();
 
@@ -82,6 +88,17 @@ public class PinCounts {
         return currentState()==stateType;
     }
 
+    private List<Integer> pinCountsAsInt() {
+        return pinCounts.stream()
+                .map(PinCount::count)
+                .collect(Collectors.toList());
+    }
 
+    public PinCountsResult result() {
+       return new PinCountsResult(currentState(),pinCountsAsInt());
+    }
 
+    public int hitCount() {
+        return pinCounts.size();
+    }
 }

@@ -3,17 +3,19 @@ package bowling.domain.frame;
 import bowling.domain.State.StateType;
 import bowling.dto.FinalFrameResult;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FinalFrame implements Frame {
 
-    private static final int MAX_FRAME_COUNT = 3;
+    private static final int MAX_HIT_COUNT = 3;
 
 //    private static final int MAX_TOTAL_PIN_COUNTS_PER_FRAME = 10;
 //
 //    private final List<PinCount> pinCounts = new ArrayList<>();
 
-    private final List<NormalFrame> frames;
+    private final List<NormalFrame> frames = new ArrayList<>();
 
     private final FrameNumber frameNumber;
 
@@ -22,13 +24,13 @@ public class FinalFrame implements Frame {
     private FinalFrame(FrameNumber frameNumber, List<NormalFrame> frames) {
         validateFrames(frames);
         this.frameNumber = frameNumber;
-        this.frames = frames;
-       // this.nextFrame = nextFrame;
+        this.frames.addAll(frames);
+        // this.nextFrame = nextFrame;
     }
 
     private void validateFrames(List<NormalFrame> frames) {
-        if(frames.size() > MAX_FRAME_COUNT) {
-            throw new IllegalArgumentException("frame 숫자가 너무 많습니다.");
+        if (totalHitCount(frames) > MAX_HIT_COUNT) {
+            throw new IllegalArgumentException("투구수가 너무 많습니다.");
         }
     }
 
@@ -55,6 +57,10 @@ public class FinalFrame implements Frame {
         return new FinalFrame(frameNumber, frames);
     }
 
+    public static FinalFrame from(int frameNumber) {
+        return FinalFrame.of(new FrameNumber(frameNumber), Arrays.asList(NormalFrame.first()));
+    }
+
 
     public void addPinCount(int pinCount) {
         addPinCount(new PinCount(pinCount));
@@ -76,7 +82,7 @@ public class FinalFrame implements Frame {
     }
 
     private void addFrameIfNecessary(NormalFrame currentFrame) {
-        if(frames.size() < MAX_FRAME_COUNT && currentFrame.isDone()) {
+        if (frames.size() < MAX_HIT_COUNT && currentFrame.isDone()) {
             frames.add(currentFrame.next());
         }
     }
@@ -107,7 +113,7 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isTryAll() {
-        return frames.size() >= MAX_FRAME_COUNT;
+        return totalHitCount(this.frames) >= MAX_HIT_COUNT;
     }
 
     private boolean isMissAtFirstFrame() {
@@ -122,8 +128,14 @@ public class FinalFrame implements Frame {
 //        return false;
     }
 
+    private int totalHitCount(List<NormalFrame> frames) {
+        return frames.stream()
+                .map(NormalFrame::hitCount)
+                .reduce(0, Integer::sum);
+    }
+
     public FinalFrameResult result() {
-        return new FinalFrameResult(frameNumber, null);
+        return new FinalFrameResult(frameNumber, frames);
     }
 
 

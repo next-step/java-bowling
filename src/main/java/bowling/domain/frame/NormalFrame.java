@@ -1,11 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.State.FrameState;
-import bowling.domain.State.MissState;
 import bowling.domain.State.StateType;
 import bowling.dto.NormalFrameResult;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,7 +46,7 @@ public class NormalFrame implements Frame {
     }
 
     public static NormalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts, Frame nextFrame) {
-        return new NormalFrame(frameNumber, new PinCounts(),nextFrame);
+        return new NormalFrame(frameNumber, new PinCounts(pinCounts),nextFrame);
     }
 
     public NormalFrame next() {
@@ -57,6 +54,7 @@ public class NormalFrame implements Frame {
         this.nextFrame = next;
         return next;
     }
+
 
     public FinalFrame last() {
         FinalFrame next = FinalFrame.of(frameNumber.next(),Arrays.asList(NormalFrame.first()));
@@ -71,12 +69,6 @@ public class NormalFrame implements Frame {
         pinCounts.add(pinCount);
     }
 
-//    private int totalPinCounts(List<PinCount> pinCounts) {
-//        return pinCounts.stream()
-//                .map(PinCount::count)
-//                .reduce(0, Integer::sum);
-//    }
-
     public boolean isDone() {
         return pinCounts.isDone();
     }
@@ -87,7 +79,7 @@ public class NormalFrame implements Frame {
     }
 
     public NormalFrameResult result() {
-        return new NormalFrameResult(frameNumber, null);
+        return new NormalFrameResult(frameNumber, pinCounts);
     }
 
     public FrameNumber number() {
@@ -103,7 +95,14 @@ public class NormalFrame implements Frame {
         return pinCounts.isMatchCurrentState(stateType);
     }
 
-    public StateType currentState() {
-       return pinCounts.currentState();
+    public int hitCount() {
+        return pinCounts.hitCount();
     }
+//    public StateType currentState() {
+//       return pinCounts.currentState();
+//    }
+//
+//    public List<Integer> pinCountsAsInt() {
+//        return pinCounts.pinCountsAsInt();
+//    }
 }

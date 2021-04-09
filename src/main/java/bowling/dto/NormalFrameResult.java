@@ -9,11 +9,11 @@ public class NormalFrameResult implements FrameResult {
 
     private int frameNumber;
 
-    private PinCountResult pinCountResult;
+    private PinCountsResult pinCountsResult;
 
     public NormalFrameResult(FrameNumber frameNumber, PinCounts pinCounts) {
         this.frameNumber = frameNumber.number();
-        this.pinCountResult = new PinCountResult(pinCounts);
+        this.pinCountsResult = pinCounts.result();
     }
 
     public int frameNumber() {
@@ -22,10 +22,10 @@ public class NormalFrameResult implements FrameResult {
 
     @Override
     public List<Integer> pinCounts() {
-        return pinCountResult.pinCounts();
+        return pinCountsResult.pinCounts();
     }
 
-    public PinCountResult frameResult() {
-        return pinCountResult;
+    public PinCountsResult pinCountsResult() {
+        return pinCountsResult;
     }
 }

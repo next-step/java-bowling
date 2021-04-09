@@ -69,18 +69,18 @@ public class ResultView {
         StringBuilder stringBuilder = new StringBuilder();
         for (NormalFrameResult normalFrameResult : normalFrameResults) {
             stringBuilder.append(FRAME_SEPARATOR);
-            stringBuilder.append(StringUtils.center(frameResultInString(normalFrameResult.frameResult()), FIXED_FRAME_SPACE));
+            stringBuilder.append(StringUtils.center(frameResultInString(normalFrameResult.pinCountsResult()), FIXED_FRAME_SPACE));
         }
         return stringBuilder.toString();
     }
 
     private static String finalFrameInString(FinalFrameResult finalFrameResult) {
-        List<PinCountResult> frameResults = finalFrameResult.frameResults();
+        List<PinCountsResult> frameResults = finalFrameResult.pinCountsResult();
         String finalFrameResultInString = StringUtils.center(finalFrameResultInString(frameResults), FIXED_FRAME_SPACE);
         return FRAME_SEPARATOR + finalFrameResultInString + FRAME_SEPARATOR;
     }
 
-    private static String finalFrameResultInString(List<PinCountResult> frameResults) {
+    private static String finalFrameResultInString(List<PinCountsResult> frameResults) {
         if (frameResults.isEmpty()) {
             return EMPTY_PIN_COUNT_REPRESENTATION;
         }
@@ -93,9 +93,9 @@ public class ResultView {
         return stringBuilder.toString();
     }
 
-    private static String frameResultInString(PinCountResult pinCountResult) {
-        StateType stateType = pinCountResult.stateType();
-        List<Integer> pinCounts = pinCountResult.pinCounts();
+    private static String frameResultInString(PinCountsResult pinCountsResult) {
+        StateType stateType = pinCountsResult.stateType();
+        List<Integer> pinCounts = pinCountsResult.pinCounts();
 
         if (stateType == StateType.STRIKE) {
             return strikeFrameResultInString();
