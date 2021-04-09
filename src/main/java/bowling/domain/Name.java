@@ -12,10 +12,15 @@ public class Name {
     private String name;
 
     public Name(String name){
+        this.name = verifiedName(name);
+    }
+
+    private String verifiedName(String name){
+        name = name.trim();
         if(!valid(name)){
             throw new CustomException(ErrorCode.INVALID_NAME);
         }
-        this.name = name;
+        return name;
     }
 
     private boolean valid(String name){
