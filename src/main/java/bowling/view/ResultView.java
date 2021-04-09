@@ -75,12 +75,12 @@ public class ResultView {
     }
 
     private static String finalFrameInString(FinalFrameResult finalFrameResult) {
-        List<FrameResult> frameResults = finalFrameResult.frameResults();
+        List<PinCountResult> frameResults = finalFrameResult.frameResults();
         String finalFrameResultInString = StringUtils.center(finalFrameResultInString(frameResults), FIXED_FRAME_SPACE);
         return FRAME_SEPARATOR + finalFrameResultInString + FRAME_SEPARATOR;
     }
 
-    private static String finalFrameResultInString(List<FrameResult> frameResults) {
+    private static String finalFrameResultInString(List<PinCountResult> frameResults) {
         if (frameResults.isEmpty()) {
             return EMPTY_PIN_COUNT_REPRESENTATION;
         }
@@ -93,23 +93,23 @@ public class ResultView {
         return stringBuilder.toString();
     }
 
-    private static String frameResultInString(FrameResult frameResult) {
-        StateType frameScoreResult = frameResult.frameScoreResult();
-        List<Integer> pinCounts = frameResult.pinCounts();
+    private static String frameResultInString(PinCountResult pinCountResult) {
+        StateType stateType = pinCountResult.stateType();
+        List<Integer> pinCounts = pinCountResult.pinCounts();
 
-        if (frameScoreResult == StateType.STRIKE) {
+        if (stateType == StateType.STRIKE) {
             return strikeFrameResultInString();
         }
 
-        if (frameScoreResult == StateType.SPARE) {
+        if (stateType == StateType.SPARE) {
             return spareFrameResultInString(pinCounts);
         }
 
-        if (frameScoreResult == StateType.MISS) {
+        if (stateType == StateType.MISS) {
             return missFrameResultInString(pinCounts);
         }
 
-        if (frameScoreResult == StateType.NONE) {
+        if (stateType == StateType.NONE) {
             return nonFrameResultInString(pinCounts);
         }
 

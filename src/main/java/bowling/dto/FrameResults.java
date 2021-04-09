@@ -1,5 +1,6 @@
 package bowling.dto;
 
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 
@@ -8,27 +9,26 @@ import java.util.List;
 
 public class FrameResults {
 
-    private List<FrameResult> frameResults = new ArrayList<>();
+    private List<NormalFrameResult> normalFrameResults = new ArrayList<>();
+
+    private FinalFrameResult finalFrameResult;
 
     public FrameResults(List<Frame> frames) {
-        frameResults.addAll(createNormalFrameResults(frames));
-        frameResults.addAll(frames.get(frames.size() - 1));
+        frames.forEach(frame -> {
+            if (frame instanceof NormalFrame) {
+                normalFrameResults.add(((NormalFrame)frame).result());
+            }else{
+                finalFrameResult = ((FinalFrame)frame).result();
+            }
+        });
     }
 
-    private List<FrameResult> createNormalFrameResults(List<Frame> frames) {
-        List<FrameResult> normalFrameResults = new ArrayList<>();
-        for (int i = 0; i < frames.size() -2; i++) {
-            Frame frame = frames.get(i);
-            frameResults.add(new FrameResult(frame.number(),frame.pinCounts()));
-        }
+    public List<NormalFrameResult> normalFrameResults() {
         return normalFrameResults;
     }
 
-    private List<FrameResult> createFinalFrameResult(Frame frame) {
-        List<Integer> pinCounts = frame.pinCounts();
-        List<NormalFrame> normalFrames = new ArrayList<>();
-        new NormalFrame(frame.number())
+    public FinalFrameResult finalFrameResult() {
+        return finalFrameResult;
     }
-
 
 }

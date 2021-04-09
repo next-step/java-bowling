@@ -1,26 +1,31 @@
 package bowling.dto;
 
-import bowling.domain.frame.FrameOld;
 import bowling.domain.frame.FrameNumber;
+import bowling.domain.frame.PinCounts;
 
-public class NormalFrameResult {
+import java.util.List;
+
+public class NormalFrameResult implements FrameResult {
 
     private int frameNumber;
 
-    private FrameResult frameResult;
+    private PinCountResult pinCountResult;
 
-    public NormalFrameResult(FrameNumber frameNumber, FrameOld frame) {
+    public NormalFrameResult(FrameNumber frameNumber, PinCounts pinCounts) {
         this.frameNumber = frameNumber.number();
-        this.frameResult = frame.result();
+        this.pinCountResult = new PinCountResult(pinCounts);
     }
 
     public int frameNumber() {
         return frameNumber;
     }
 
-    public FrameResult frameResult() {
-        return frameResult;
+    @Override
+    public List<Integer> pinCounts() {
+        return pinCountResult.pinCounts();
     }
 
-
+    public PinCountResult frameResult() {
+        return pinCountResult;
+    }
 }
