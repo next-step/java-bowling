@@ -8,4 +8,7 @@ feat(general): add rough architecture
 feat(name): verify valid names
  - 테스트 코드 추가
  - 이름 시작 전/ 끝난 이후 공백 제거
+
+feat(point): verify valid points
+ - 테스트 코드 추가
 ```

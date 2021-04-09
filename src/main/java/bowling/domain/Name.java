@@ -9,25 +9,25 @@ public class Name {
 
     private static final int VALID_LENGTH = 3;
 
-    private String name;
+    private final String name;
 
-    public Name(String name){
+    public Name(String name) {
         this.name = verifiedName(name);
     }
 
-    private String verifiedName(String name){
+    private String verifiedName(String name) {
         name = name.trim();
-        if(!valid(name)){
+        if (!valid(name)) {
             throw new CustomException(ErrorCode.INVALID_NAME);
         }
         return name;
     }
 
-    private boolean valid(String name){
-        return Pattern.matches("[A-Za-z]+", name) && name.length()==VALID_LENGTH;
+    private boolean valid(String name) {
+        return Pattern.matches("[A-Za-z]+", name) && name.length() == VALID_LENGTH;
     }
 
-    public String name(){
+    public String name() {
         return this.name;
     }
 }

@@ -21,6 +21,7 @@ class NameTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"a", "bb", ";13", "ㄱㄴㅊ", "basqhqert", "][z"})
+    @DisplayName("3글자 영어이름이 아니거나 영어가 아닌 문자가 있으면 INVALID_NAME을 던짐")
     void invalidNameThrowsException(String input) {
         CustomException customException = Assertions.assertThrows(CustomException.class, () -> new Name(input));
         assertThat(customException.errorCode()).isEqualTo(ErrorCode.INVALID_NAME);
