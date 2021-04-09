@@ -97,20 +97,6 @@ public class PinCountsTest {
     }
 
     @Test
-    void result_when_gutter() {
-        PinCounts pinCounts = new PinCounts();
-        int firstPinCount = 0;
-        int secondPinCount = 0;
-        pinCounts.add(firstPinCount);
-        pinCounts.add(secondPinCount);
-
-        PinCountsResult result = pinCounts.result();
-        assertThat(pinCounts.isDone()).isTrue();
-        assertThat(pinCounts.isMatchCurrentState(StateType.GUTTER)).isTrue();
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount,secondPinCount);
-    }
-
-    @Test
     void result_when_none() {
         PinCounts pinCounts = new PinCounts();
         int firstPinCount = 2;

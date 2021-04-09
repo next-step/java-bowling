@@ -77,10 +77,6 @@ public class PinCounts {
             return StateType.MISS;
         }
 
-        if (totalCount == 0 && pinCounts.size() == MAX_TRY_COUNT) {
-            return StateType.GUTTER;
-        }
-
         return StateType.NONE;
     }
 
