@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
 
 public class QuestionTest {
@@ -20,7 +22,7 @@ public class QuestionTest {
     @DisplayName("Question을 삭제하면 데이터상태가 삭제상태인 true로 변한다.")
     @Test
     void testCase1() {
-        Q1.delete();
+        Q1.delete(DeleteHistorys.of());
 
         assertThat(Q1.isDeleted()).isTrue();
     }
@@ -42,7 +44,7 @@ public class QuestionTest {
     @DisplayName("질문이 삭제되면 답변도 삭제히스토리에 같이 저장된다.")
     @Test
     void testCase4() {
-        DeleteHistorys delete = Q1.delete();
+        DeleteHistorys delete = Q1.delete(DeleteHistorys.of());
 
         assertThat(delete.size()).isEqualTo(1);
     }

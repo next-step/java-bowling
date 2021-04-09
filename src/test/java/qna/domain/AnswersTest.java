@@ -46,7 +46,7 @@ class AnswersTest {
     @Test
     void testCase4() {
         Answers answers = createAnswers(UserTest.JAVAJIGI, UserTest.SANJIGI);
-        DeleteHistorys delete = answers.delete();
+        DeleteHistorys delete = answers.delete(DeleteHistorys.of());
 
         assertThat(delete.size()).isEqualTo(2);
     }

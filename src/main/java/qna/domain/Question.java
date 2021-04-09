@@ -4,6 +4,7 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
@@ -54,6 +55,7 @@ public class Question extends AbstractEntity {
     }
 
     public void addAnswer(Answer answer) {
+        this.answers = Answers.of();
         answer.toQuestion(this);
         answers.add(answer);
     }
@@ -68,13 +70,13 @@ public class Question extends AbstractEntity {
         .orElse(true);
     }
 
-    public DeleteHistorys delete() {
-        DeleteHistorys delete = Optional.ofNullable(answers)
-                .map(Answers::delete)
-                .orElseGet(DeleteHistorys::of);
+    public DeleteHistorys delete(DeleteHistorys deleteHistorys) {
         this.deleted = true;
-        delete.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
-        return delete;
+        deleteHistorys.add(ContentType.QUESTION, getId(), getWriter());
+
+        Answers answers = Optional.ofNullable(this.answers)
+                .orElseGet(Answers::of);
+        return answers.delete(deleteHistorys);
     }
 
     public boolean isDeleted() {

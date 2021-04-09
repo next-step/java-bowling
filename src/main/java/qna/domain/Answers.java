@@ -34,6 +34,11 @@ public class Answers {
         return new Answers(answers);
     }
 
+    public static Answers of(){
+        return Answers.of(new ArrayList<>());
+    }
+
+
     public void add(Answer answer) {
         answers.add(answer);
     }
@@ -51,10 +56,10 @@ public class Answers {
                 .count();
     }
 
-    public DeleteHistorys delete() {
-         return  answers.stream()
+    public DeleteHistorys delete(DeleteHistorys deleteHistorys) {
+           answers.stream()
                     .map(Answer::delete)
-                    .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
-                    .collect(collectingAndThen(toList(),DeleteHistorys::of));
+                    .forEach(answer -> deleteHistorys.add(ContentType.ANSWER, answer.getId(), answer.getWriter()));
+        return deleteHistorys;
     }
 }
