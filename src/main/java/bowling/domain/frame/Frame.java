@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.dto.FrameResult;
+
 public interface Frame {
 
     void addPinCount(int pinCount);
@@ -14,7 +16,7 @@ public interface Frame {
 
     boolean isLast();
 
-  //  FinalFrameResult result();
+    FrameResult result();
 
 //    Score score();
 
