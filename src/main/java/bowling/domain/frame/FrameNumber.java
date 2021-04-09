@@ -7,7 +7,7 @@ public class FrameNumber implements Comparable<FrameNumber> {
     private final int number;
 
     public FrameNumber(int number) {
-        if (number < MIN ) {
+        if (number < MIN) {
             throw new IllegalArgumentException("프레임 번호는 1-10사이어야 합니다.");
         }
         this.number = number;
@@ -43,6 +43,6 @@ public class FrameNumber implements Comparable<FrameNumber> {
 
     @Override
     public int compareTo(FrameNumber o) {
-        return Integer.compare(number,o.number);
+        return Integer.compare(number, o.number);
     }
 }

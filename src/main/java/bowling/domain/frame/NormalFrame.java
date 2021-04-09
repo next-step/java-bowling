@@ -8,12 +8,6 @@ import java.util.List;
 
 public class NormalFrame implements Frame {
 
-//    private static final int MAX_TRY_COUNT = 2;
-//
-//    private static final int MAX_TOTAL_PIN_COUNTS = 10;
-//
-//    private final List<PinCount> pinCounts = new ArrayList<>();
-
     private final PinCounts pinCounts;
 
     private final FrameNumber frameNumber;
@@ -26,27 +20,12 @@ public class NormalFrame implements Frame {
         this.nextFrame = nextFrame;
     }
 
-//    private void initializePinCounts(List<PinCount> pinCounts) {
-//        try {
-//            pinCounts.forEach(this::addPinCount);
-//        } catch (IllegalArgumentException | IllegalStateException exception) {
-//            throw new IllegalArgumentException("유효하지 않는 투구 값들 입니다.");
-//        }
-//
-//    }
-
-//    private void validateToAddPinCount(PinCount pinCount) {
-//        if (totalPinCounts(this.pinCounts) + pinCount.count() > MAX_TOTAL_PIN_COUNTS) {
-//            throw new IllegalArgumentException("투구 결과 핀수가 너무 많습니다.");
-//        }
-//    }
-
     public static NormalFrame first() {
         return new NormalFrame(FrameNumber.first(), new PinCounts(), null);
     }
 
     public static NormalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts, Frame nextFrame) {
-        return new NormalFrame(frameNumber, new PinCounts(pinCounts),nextFrame);
+        return new NormalFrame(frameNumber, new PinCounts(pinCounts), nextFrame);
     }
 
     public NormalFrame next() {
@@ -57,10 +36,11 @@ public class NormalFrame implements Frame {
 
 
     public FinalFrame last() {
-        FinalFrame next = FinalFrame.of(frameNumber.next(),Arrays.asList(NormalFrame.first()));
+        FinalFrame next = FinalFrame.of(frameNumber.next(), Arrays.asList(NormalFrame.first()));
         this.nextFrame = next;
         return next;
     }
+
     public void addPinCount(int pinCount) {
         addPinCount(new PinCount(pinCount));
     }
@@ -98,11 +78,5 @@ public class NormalFrame implements Frame {
     public int hitCount() {
         return pinCounts.hitCount();
     }
-//    public StateType currentState() {
-//       return pinCounts.currentState();
-//    }
-//
-//    public List<Integer> pinCountsAsInt() {
-//        return pinCounts.pinCountsAsInt();
-//    }
+
 }

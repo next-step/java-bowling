@@ -1,7 +1,6 @@
 package bowling.dto;
 
 import bowling.domain.State.StateType;
-import bowling.domain.frame.PinCounts;
 
 import java.util.List;
 

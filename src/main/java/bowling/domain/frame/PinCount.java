@@ -19,10 +19,6 @@ public class PinCount {
         return count;
     }
 
-    public int sumCount(PinCount pinCount) {
-        return pinCount.count + count;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

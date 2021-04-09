@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.domain.State.StateType;
-import bowling.domain.frame.FrameOld;
 import bowling.domain.frame.PinCount;
 import bowling.domain.frame.PinCounts;
 import bowling.dto.PinCountsResult;

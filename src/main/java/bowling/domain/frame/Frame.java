@@ -18,7 +18,4 @@ public interface Frame {
 
     FrameResult result();
 
-//    Score score();
-
-//    List<Integer> pinCounts();
 }

@@ -16,9 +16,9 @@ public class FrameResults {
     public FrameResults(List<Frame> frames) {
         frames.forEach(frame -> {
             if (frame instanceof NormalFrame) {
-                normalFrameResults.add(((NormalFrame)frame).result());
-            }else{
-                finalFrameResult = ((FinalFrame)frame).result();
+                normalFrameResults.add(((NormalFrame) frame).result());
+            } else {
+                finalFrameResult = ((FinalFrame) frame).result();
             }
         });
     }

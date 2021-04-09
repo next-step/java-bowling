@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.State.*;
+import bowling.domain.State.StateType;
 import bowling.dto.PinCountsResult;
 
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class PinCounts {
     }
 
     public boolean isMatchCurrentState(StateType stateType) {
-        return currentState()==stateType;
+        return currentState() == stateType;
     }
 
     private List<Integer> pinCountsAsInt() {
@@ -95,7 +95,7 @@ public class PinCounts {
     }
 
     public PinCountsResult result() {
-       return new PinCountsResult(currentState(),pinCountsAsInt());
+        return new PinCountsResult(currentState(), pinCountsAsInt());
     }
 
     public int hitCount() {
