@@ -128,6 +128,9 @@ public class ResultView {
     private static String missFrameResultInString(List<Integer> pinCounts) {
         Integer firstPinCount = pinCounts.get(0);
         Integer secondPinCount = pinCounts.get(1);
+        if(firstPinCount == 0 && secondPinCount ==0){
+            return GUTTER_REPRESENTATION;
+        }
         return pinCountInString(firstPinCount) + FRAME_SEPARATOR + pinCountInString(secondPinCount);
     }
 
