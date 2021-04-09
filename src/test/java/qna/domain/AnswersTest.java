@@ -19,7 +19,7 @@ class AnswersTest {
         Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
         Answer A1 = new Answer(UserTest.JAVAJIGI, Q1, "Answers Contents1");
         Answer A2 = new Answer(UserTest.SANJIGI, Q2, "Answers Contents2");
-        answers = new Answers(Arrays.asList(A1,A2));
+        answers = Answers.of(Arrays.asList(A1,A2));
     }
 
     @DisplayName("질문자와 답변글이 같은지 판별한다.")
@@ -56,7 +56,6 @@ class AnswersTest {
         Answer A1 = new Answer(user, Q1, "Answers Contents1");
         Answer A2 = new Answer(user2, Q1, "Answers Contents2");
 
-        return new Answers(Arrays.asList(A1, A2));
-
+        return Answers.of(Arrays.asList(A1, A2));
     }
 }
