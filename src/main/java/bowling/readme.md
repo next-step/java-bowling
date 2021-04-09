@@ -11,4 +11,7 @@ feat(name): verify valid names
 
 feat(point): verify valid points
  - 테스트 코드 추가
+
+feat(general): add overall architecture
+ - frame, normalFrame, generalFrame 추가
 ```

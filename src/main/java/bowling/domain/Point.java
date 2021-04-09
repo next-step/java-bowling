@@ -4,8 +4,8 @@ import bowling.exception.CustomException;
 import bowling.exception.ErrorCode;
 
 public class Point {
-    private int point;
-    private boolean didClear;
+    private final int point;
+    private final boolean didClear;
 
     public Point(int point) {
         this(point, 0);
