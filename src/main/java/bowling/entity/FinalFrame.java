@@ -57,11 +57,7 @@ public class FinalFrame implements Frame {
 	}
 
 	public void add(int score) {
-		wards.add(
-			FinalFrameWardsFactory.getInstance(wards.size())
-				.getFunc()
-				.apply(score, wards)
-		);
+		wards.add(FinalFrameWardsFactory.getFinalFrameWard(wards.size(), score, wards));
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package bowling.controller;
 
 import bowling.entity.Player;
+import bowling.entity.Players;
 import bowling.views.InputView;
 import bowling.views.OutputView;
 
@@ -14,23 +15,36 @@ public class BowlingGameController {
 	}
 
 	public void run() {
-		Player player = makePlayer();
+		int count = makePeopleCount();
 
-		while(player.isKeepGoing()) {
-			player.addPlayerFrameScore(inputView.getFrameScore(player.currentPlayerFrameIndex()));
-			showGame(player);
+		Players players = makePlayers(count);
+		while (players.isKeepGoing()) {
+			int turn = players.turn();
+			players.getPlayers().forEach((player) -> playerRunFrame(turn, players, player));
 		}
 	}
 
-	private Player makePlayer() {
-		String name = inputView.getUserName();
-		return new Player(name);
+	private void playerRunFrame(int turn, Players players, Player player) {
+		while (player.isKeepGoingTurn(turn)) {
+			player.addPlayerFrameScore(inputView.getFrameScore(player));
+			showGame(players);
+		}
 	}
 
-	private void showGame(Player player) {
+	private Players makePlayers(int count) {
+		return new Players(inputView.getPlayers(count));
+	}
+
+	private int makePeopleCount() {
+		return inputView.getPeopleCount();
+	}
+
+	private void showGame(Players players) {
 		outputView.showFrames();
-		outputView.showPlayerFrames(player);
-		outputView.showPlayerFrameScore(player);
+		players.getPlayers().forEach(player -> {
+			outputView.showPlayerFrames(player);
+			outputView.showPlayerFrameScore(player);
+		});
 	}
 
 }

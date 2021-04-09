@@ -59,9 +59,12 @@ public class Player {
 		return NormalFrame.ofNext(score, playerFrameScore.getFrames().get(playerFrameScore.lastIndex()));
 	}
 
-
-	public boolean isKeepGoing() {
+	public boolean isGameEnd() {
 		return currentPlayerFrameIndex() < 11;
+	}
+
+	public boolean isKeepGoingTurn(int turn) {
+		return turn != currentPlayerFrameIndex();
 	}
 
 	public PlayerFrameScore getPlayerFrameScore() {
