@@ -7,25 +7,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BowlingFinalFrameTest {
 
-    @DisplayName("한번더 투구한다.")
+    @DisplayName("스트라이크면 한번더 투구한다.")
     @Test
-    void case2() {
+    void case1() {
         Score score = Score.first(Point.of(10));
         BowlingFinalFrame bowlingFinalFrame = BowlingFinalFrame.of(score);
 
-        BowlingFrame bowlingFrame = bowlingFinalFrame.play();
-
-        assertThat(bowlingFrame.position()).isEqualTo(Position.of(11));
+        assertThat(bowlingFinalFrame.isOneMoreTime()).isTrue();
     }
 
-    @DisplayName("볼링을 끝마친다.")
+    @DisplayName("스페어면 한번더 투구한다.")
     @Test
-    void case3() {
-        Score score = Score.first(Point.of(4)).next(Point.of(2));
+    void case2() {
+        Score score = Score.first(Point.of(5)).next(Point.of(5));
         BowlingFinalFrame bowlingFinalFrame = BowlingFinalFrame.of(score);
 
-        BowlingFrame bowlingFrame = bowlingFinalFrame.play();
+        assertThat(bowlingFinalFrame.isOneMoreTime()).isTrue();
+    }
 
-        assertThat(bowlingFrame.position()).isEqualTo(Position.of(10));
+    @DisplayName("미스면 한번더 투구한다.")
+    @Test
+    void case3() {
+        Score score = Score.first(Point.of(5)).next(Point.of(4));
+        BowlingFinalFrame bowlingFinalFrame = BowlingFinalFrame.of(score);
+
+        assertThat(bowlingFinalFrame.isOneMoreTime()).isFalse();
     }
 }
