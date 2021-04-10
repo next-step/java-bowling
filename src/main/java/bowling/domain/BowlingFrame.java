@@ -1,9 +1,8 @@
 package bowling.domain;
 
-public class BowlingFrame {
+public interface BowlingFrame {
 
-    private Score score;
-    private BowlingRole bowlingRole;
+    BowlingFrame play();
 
-
+    Position position();
 }
