@@ -17,15 +17,15 @@ class BowlingRoleTest {
     @DisplayName("두개의 포인트 합이 10이면 스페어다.")
     @Test
     void case2() {
-        BowlingRole bowlingRole = BowlingRole.valueOf(10, 0);
-        assertThat(bowlingRole).isEqualTo(BowlingRole.STRIKE);
+        BowlingRole bowlingRole = BowlingRole.valueOf(5, 5);
+        assertThat(bowlingRole).isEqualTo(BowlingRole.SPARE);
     }
 
     @DisplayName("두개의 포인트 합이 10이 아니면 미스다.")
     @Test
     void case3() {
         BowlingRole bowlingRole = BowlingRole.valueOf(5, 4);
-        assertThat(bowlingRole).isEqualTo(BowlingRole.STRIKE);
+        assertThat(bowlingRole).isEqualTo(BowlingRole.MISS);
     }
 
 }

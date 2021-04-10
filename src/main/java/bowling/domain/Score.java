@@ -31,16 +31,7 @@ public class Score {
         return new Score(this.firstPoint, secondPoint);
     }
 
-    public String score() {
-
-        int total = firstPoint.toInt() + secondPoint.toInt();
-
-        if (firstPoint.toInt() == 10) {
-            return "Strike";
-        }
-        if (total == 10) {
-            return "Spare";
-        }
-        return "Miss";
+    public BowlingRole score() {
+        return BowlingRole.valueOf(firstPoint.toInt(), secondPoint.toInt());
     }
 }
