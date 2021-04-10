@@ -18,14 +18,18 @@ public class BowlingFinalFrame implements BowlingFrame {
         return new BowlingFinalFrame(position, score);
     }
 
-    @Override
-    public BowlingFrame play() {
-        return BowlingFinalFrame.of(position.next(), Score.of());
+    public static BowlingFrame of(Position position) {
+        return new BowlingFinalFrame(position, Score.of(Point.of(0), Point.of(0)));
     }
 
     @Override
     public Position position() {
         return position;
+    }
+
+    @Override
+    public BowlingFrame second(Point point) {
+        return new BowlingNormalFrame(position, score.next(point));
     }
 
     public boolean isOneMoreTime() {

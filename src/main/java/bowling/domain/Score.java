@@ -6,6 +6,7 @@ public class Score {
     private final Point firstPoint;
     private final Point secondPoint;
 
+    private static final int POINT_MAX_BOUND = 10;
     private static final int POINT_MIN_BOUND = 0;
 
     private Score(Point firstPoint, Point secondPoint) {
@@ -24,7 +25,7 @@ public class Score {
     public static Score of(Point firstPoint, Point secondPoint) {
         return new Score(firstPoint, secondPoint);
     }
-
+    
     public static Score first(Point firstPoint) {
         return new Score(firstPoint, Point.of(POINT_MIN_BOUND));
     }

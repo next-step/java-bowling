@@ -2,7 +2,7 @@ package bowling.domain;
 
 public interface BowlingFrame {
 
-    BowlingFrame play();
-
     Position position();
+
+    BowlingFrame second(Point point);
 }
