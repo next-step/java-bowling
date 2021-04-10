@@ -17,7 +17,7 @@ public class BowlingNormalFrame implements BowlingFrame {
     @Override
     public BowlingFrame play() {
         if (position.isFinal()) {
-            return new BowlingFinalFrame(position.next(), Score.of());
+            return BowlingFinalFrame.of(position.next(), Score.of());
         }
         return new BowlingNormalFrame(position.next(), Score.of());
     }
