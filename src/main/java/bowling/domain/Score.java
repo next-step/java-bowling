@@ -6,6 +6,8 @@ public class Score {
     private final Point firstPoint;
     private final Point secondPoint;
 
+    private static final int POINT_MIN_BOUND = 0;
+
     private Score(Point firstPoint, Point secondPoint) {
         vaild(firstPoint, secondPoint);
         this.firstPoint = firstPoint;
@@ -24,7 +26,7 @@ public class Score {
     }
 
     public static Score first(Point firstPoint) {
-        return new Score(firstPoint, Point.of(0));
+        return new Score(firstPoint, Point.of(POINT_MIN_BOUND));
     }
 
     public Score next(Point secondPoint) {
