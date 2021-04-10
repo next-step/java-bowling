@@ -18,4 +18,8 @@ public class Point {
     public static Point of(int point) {
         return new Point(point);
     }
+
+    public int toInt() {
+        return point;
+    }
 }
