@@ -19,7 +19,7 @@ public class FinalState implements State {
         states.add(new Ready());
     }
 
-    private FinalState(List<State> states, int tryCount) {
+    public FinalState(List<State> states, int tryCount) {
         this.states.addAll(states);
         this.tryCount = tryCount;
     }
