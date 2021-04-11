@@ -7,13 +7,11 @@ import org.junit.jupiter.api.Test;
 public class NormalFrameTest {
 
     @Test
-    @DisplayName("첫 번째 투구와 투 번째 투구의 합이 10을 초과하면 예외처리가 발생한다.")
-    void throwExceptionWhenTotalOver10() {
+    @DisplayName("첫 번째 투구가 스트라이크인 경우 두 번째 투구는 없다.")
+    void canKnowSecondExist() {
         NormalFrame normalFrame = new NormalFrame();
-        normalFrame.first(new PinNumber(7));
+        normalFrame.play(new PinNumber(10));
 
-        Assertions.assertThatThrownBy(() -> {
-            normalFrame.second(new PinNumber(4));
-        }).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThat(normalFrame.hasSecond()).isEqualTo(false);
     }
 }
