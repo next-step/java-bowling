@@ -2,6 +2,8 @@ package bowling;
 
 public class PinNumber {
 
+    private static final int GUTTER_CONDITION = 0;
+    private static final int STRIKE_CONDITION = 10;
     private final int pinNumber;
 
     public PinNumber(int pinNumber) {
@@ -16,6 +18,10 @@ public class PinNumber {
     }
 
     public boolean isStrike() {
-        return pinNumber == 10;
+        return pinNumber == STRIKE_CONDITION;
+    }
+
+    public boolean isGutter() {
+        return pinNumber == GUTTER_CONDITION;
     }
 }
