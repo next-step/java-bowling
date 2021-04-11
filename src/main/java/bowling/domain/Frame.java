@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 abstract class Frame implements FrameStrategy {
     protected final PinNumbers pinNumbers;
 
@@ -9,8 +7,8 @@ abstract class Frame implements FrameStrategy {
         this.pinNumbers = new PinNumbers();
     }
 
-    public List<PinNumber> getPinNumbers() {
-        return pinNumbers.getPinNumbers();
+    public int size() {
+        return pinNumbers.size();
     }
 
     public String state(int index) {

@@ -18,6 +18,10 @@ public class PinNumbers {
         return pinNumbers;
     }
 
+    public PinNumber index(int index) {
+        return pinNumbers.get(index);
+    }
+
     public void record(PinNumber pinNumber) {
         if (!pinNumber.isStrike()) {
             updateRemainPinNumber(pinNumber);
@@ -43,5 +47,9 @@ public class PinNumbers {
             return FrameState.STRIKE.frameState();
         }
         return FrameState.pairState(pinNumbers.get(index - 2), pinNumbers.get(index - 1));
+    }
+
+    public int size() {
+        return pinNumbers.size();
     }
 }

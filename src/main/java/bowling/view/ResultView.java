@@ -36,7 +36,7 @@ public class ResultView {
     }
 
     private void printProceedingRound(FrameStrategy frame) {
-        int playNumber = frame.getPinNumbers().size();
+        int playNumber = frame.size();
 
         if (playNumber == 1) {
             printState(frame, 1);

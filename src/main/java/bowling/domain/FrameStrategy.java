@@ -1,9 +1,7 @@
 package bowling.domain;
 
-import java.util.List;
-
 public interface FrameStrategy {
-    List<PinNumber> getPinNumbers();
+    int size();
     void play(PinNumber pinNumber);
     String state(int index);
 }
