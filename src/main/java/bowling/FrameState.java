@@ -4,7 +4,6 @@ public enum FrameState {
 
     STRIKE("X"),
     SPARE("/"),
-    MISS(""),
     GUTTER("-");
 
     private final String frameState;
@@ -17,23 +16,23 @@ public enum FrameState {
         return frameState;
     }
 
-    public static FrameState eachState(PinNumber pinNumber) {
-        if (pinNumber.getPinNumber() == 10) {
-            return STRIKE;
+    public static String eachState(PinNumber pinNumber) {
+        if (pinNumber.isStrike()) {
+            return STRIKE.getFrameState();
         }
-        if (pinNumber.getPinNumber() == 0) {
-            return GUTTER;
+        if (pinNumber.isGutter()) {
+            return GUTTER.getFrameState();
         }
-        return MISS;
+        return Integer.toString(pinNumber.getPinNumber());
     }
 
-    public static FrameState finishState(PinNumber first, PinNumber second) {
+    public static String pairState(PinNumber first, PinNumber second) {
         if (first.getPinNumber() + second.getPinNumber() == 10) {
-            return SPARE;
+            return SPARE.getFrameState();
         }
-        if (second.getPinNumber() == 0) {
-            return GUTTER;
+        if (second.isGutter()) {
+            return GUTTER.getFrameState();
         }
-        return MISS;
+        return Integer.toString(second.getPinNumber());
     }
 }
