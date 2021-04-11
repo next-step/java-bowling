@@ -1,30 +1,28 @@
 package bowling.domain;
 
-import bowling.domain.State.StateType;
+import bowling.domain.State.FinalState;
+import bowling.domain.State.State;
 import bowling.domain.frame.FinalFrame;
-import bowling.dto.FinalFrameResult;
-import bowling.dto.PinCountsResult;
+import bowling.domain.frame.FrameNumber;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
-public class FinalFrameTest {
+public class FinalFrameTest extends FrameTest {
 
     @Test
     void create() {
         int frameNumber = 10;
         FinalFrame finalFrame = FinalFrame.from(frameNumber);
 
-        FinalFrameResult result = finalFrame.result();
-        assertThat(result.frameNumber()).isEqualTo(frameNumber);
+        assertThat(finalFrame.number()).isEqualTo(new FrameNumber(frameNumber));
     }
 
 
     @Test
+    @DisplayName("프레임 종료된 이후 게임 플레이시 예외 발생 테스트")
     void add_pin_counts_when_done_throw_exception() {
         FinalFrame finalFrame = FinalFrame.from(10);
         finalFrame.addPinCount(3);
@@ -35,8 +33,47 @@ public class FinalFrameTest {
                 finalFrame.addPinCount(5));
     }
 
+
     @Test
-    void result_when_3_strike() {
+    @DisplayName("1-ready시 현재 상태값 테스트")
+    void current_state_when_1_ready() {
+        FinalFrame finalFrame = FinalFrame.from(10);
+
+        State state = finalFrame.currentState();
+        assertThat(finalFrame.isDone()).isFalse();
+        assertThat(state instanceof FinalState).isTrue();
+        assertThat(state.stateInString()).isEqualTo(EMPTY_SYMBOL);
+    }
+
+    @Test
+    @DisplayName("1-gutter시 현재 상태값 테스트")
+    void current_state_when_1_gutter() {
+        FinalFrame finalFrame = FinalFrame.from(10);
+        finalFrame.addPinCount(0);
+
+        State state = finalFrame.currentState();
+        assertThat(finalFrame.isDone()).isFalse();
+        assertThat(state instanceof FinalState).isTrue();
+        assertThat(state.stateInString()).isEqualTo(GUTTER_SYMBOL);
+    }
+
+
+    @Test
+    @DisplayName("1-hit시 현재 상태값 테스트")
+    void current_state_when_1_hit() {
+        int pinCount = 5;
+        FinalFrame finalFrame = FinalFrame.from(10);
+        finalFrame.addPinCount(pinCount);
+
+        State state = finalFrame.currentState();
+        assertThat(finalFrame.isDone()).isFalse();
+        assertThat(state instanceof FinalState).isTrue();
+        assertThat(state.stateInString()).isEqualTo(pinCount + "");
+    }
+
+    @Test
+    @DisplayName("3-strike시 현재 상태값 테스트")
+    void current_state_when_3_strike() {
         int strikePinCount = 10;
         FinalFrame finalFrame = FinalFrame.from(10);
         finalFrame.addPinCount(strikePinCount);
@@ -44,17 +81,15 @@ public class FinalFrameTest {
         finalFrame.addPinCount(strikePinCount);
 
 
-        FinalFrameResult result = finalFrame.result();
-        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
-                .map(PinCountsResult::stateType)
-                .collect(Collectors.toList());
+        State state = finalFrame.currentState();
         assertThat(finalFrame.isDone()).isTrue();
-        assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.STRIKE, StateType.STRIKE);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount, strikePinCount, strikePinCount);
+        assertThat(state instanceof FinalState).isTrue();
+        assertThat(state.stateInString()).isEqualTo(STRIKE_SYMBOL + SEPARATOR + STRIKE_SYMBOL + SEPARATOR + STRIKE_SYMBOL);
     }
 
     @Test
-    void result_when_2_strike_1_none() {
+    @DisplayName("2-strike,1-hit 현재 상태값 테스트")
+    void current_state_when_2_strike_1_none() {
         int firstStrikePinCount = 10;
         int secondStrikePinCount = 10;
         int lastPinCount = 3;
@@ -63,18 +98,15 @@ public class FinalFrameTest {
         finalFrame.addPinCount(secondStrikePinCount);
         finalFrame.addPinCount(lastPinCount);
 
-        FinalFrameResult result = finalFrame.result();
-        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
-                .map(PinCountsResult::stateType)
-                .collect(Collectors.toList());
-
+        State state = finalFrame.currentState();
         assertThat(finalFrame.isDone()).isTrue();
-        assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.STRIKE, StateType.NONE);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstStrikePinCount, secondStrikePinCount, lastPinCount);
+        assertThat(state instanceof FinalState).isTrue();
+        assertThat(state.stateInString()).isEqualTo(STRIKE_SYMBOL + SEPARATOR + STRIKE_SYMBOL + SEPARATOR + lastPinCount);
     }
 
     @Test
-    void result_when_1_strike_1_spare() {
+    @DisplayName("1-strike,1-spare 현재 상태값 테스트")
+    void current_state_when_1_strike_1_spare() {
         int strikePinCount = 10;
         int firstSparePinCount = 7;
         int secondSparePinCount = 3;
@@ -83,18 +115,15 @@ public class FinalFrameTest {
         finalFrame.addPinCount(firstSparePinCount);
         finalFrame.addPinCount(secondSparePinCount);
 
-        FinalFrameResult result = finalFrame.result();
-        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
-                .map(PinCountsResult::stateType)
-                .collect(Collectors.toList());
-
+        State state = finalFrame.currentState();
         assertThat(finalFrame.isDone()).isTrue();
-        assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.SPARE);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount, firstSparePinCount, secondSparePinCount);
+        assertThat(state instanceof FinalState).isTrue();
+        assertThat(state.stateInString()).isEqualTo(STRIKE_SYMBOL + SEPARATOR + firstSparePinCount + SEPARATOR + SPARE_SYMBOL);
     }
 
     @Test
-    void result_when_1_strike_1_miss() {
+    @DisplayName("1-strike,1-miss 현재 상태값 테스트")
+    void current_state_when_1_strike_1_miss() {
         int strikePinCount = 10;
         int firstMissPinCount = 4;
         int secondMissPinCount = 3;
@@ -103,38 +132,32 @@ public class FinalFrameTest {
         finalFrame.addPinCount(firstMissPinCount);
         finalFrame.addPinCount(secondMissPinCount);
 
-        FinalFrameResult result = finalFrame.result();
-        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
-                .map(PinCountsResult::stateType)
-                .collect(Collectors.toList());
-
+        State state = finalFrame.currentState();
         assertThat(finalFrame.isDone()).isTrue();
-        assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.STRIKE, StateType.MISS);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount, firstMissPinCount, secondMissPinCount);
+        assertThat(state instanceof FinalState).isTrue();
+        assertThat(state.stateInString()).isEqualTo(STRIKE_SYMBOL + SEPARATOR + firstMissPinCount + SEPARATOR + secondMissPinCount);
     }
 
     @Test
-    void result_when_1_spare_1_none() {
-        int firstMissPinCount = 7;
-        int secondMissPinCount = 3;
+    @DisplayName("1-spare,1-hit 현재 상태값 테스트")
+    void current_state_when_1_spare_1_hit() {
+        int firstSparePinCount = 7;
+        int secondSparePinCount = 3;
         int lastPinCount = 5;
         FinalFrame finalFrame = FinalFrame.from(10);
-        finalFrame.addPinCount(firstMissPinCount);
-        finalFrame.addPinCount(secondMissPinCount);
+        finalFrame.addPinCount(firstSparePinCount);
+        finalFrame.addPinCount(secondSparePinCount);
         finalFrame.addPinCount(lastPinCount);
 
-        FinalFrameResult result = finalFrame.result();
-        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
-                .map(PinCountsResult::stateType)
-                .collect(Collectors.toList());
-
+        State state = finalFrame.currentState();
         assertThat(finalFrame.isDone()).isTrue();
-        assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.SPARE, StateType.NONE);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(lastPinCount, firstMissPinCount, secondMissPinCount);
+        assertThat(state instanceof FinalState).isTrue();
+        assertThat(state.stateInString()).isEqualTo(firstSparePinCount + SEPARATOR + SPARE_SYMBOL + SEPARATOR + lastPinCount);
     }
 
     @Test
-    void result_when_1_spare_1_strike() {
+    @DisplayName("1-spare,1-strike 현재 상태값 테스트")
+    void current_state_when_1_spare_1_strike() {
         int firstSparePinCount = 7;
         int secondSparePinCount = 3;
         int strikePinCount = 10;
@@ -143,32 +166,25 @@ public class FinalFrameTest {
         finalFrame.addPinCount(secondSparePinCount);
         finalFrame.addPinCount(strikePinCount);
 
-        FinalFrameResult result = finalFrame.result();
-        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
-                .map(PinCountsResult::stateType)
-                .collect(Collectors.toList());
-
+        State state = finalFrame.currentState();
         assertThat(finalFrame.isDone()).isTrue();
-        assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.SPARE, StateType.STRIKE);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(strikePinCount, firstSparePinCount, secondSparePinCount);
+        assertThat(state instanceof FinalState).isTrue();
+        assertThat(state.stateInString()).isEqualTo(firstSparePinCount + SEPARATOR + SPARE_SYMBOL + SEPARATOR + STRIKE_SYMBOL);
     }
 
     @Test
-    void result_when_1_miss() {
+    @DisplayName("1-miss 현재 상태값 테스트")
+    void current_state_when_1_miss() {
         int firstMissPinCount = 4;
         int secondMissPinCount = 3;
         FinalFrame finalFrame = FinalFrame.from(10);
         finalFrame.addPinCount(firstMissPinCount);
         finalFrame.addPinCount(secondMissPinCount);
 
-        FinalFrameResult result = finalFrame.result();
-        List<StateType> actualFrameScoreResults = result.pinCountsResult().stream()
-                .map(PinCountsResult::stateType)
-                .collect(Collectors.toList());
-
+        State state = finalFrame.currentState();
         assertThat(finalFrame.isDone()).isTrue();
-        assertThat(actualFrameScoreResults).containsExactlyInAnyOrder(StateType.MISS);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstMissPinCount, secondMissPinCount);
+        assertThat(state instanceof FinalState).isTrue();
+        assertThat(state.stateInString()).isEqualTo(firstMissPinCount + SEPARATOR + secondMissPinCount);
     }
 
 
