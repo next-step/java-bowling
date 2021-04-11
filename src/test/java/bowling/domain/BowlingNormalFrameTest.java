@@ -12,7 +12,7 @@ class BowlingNormalFrameTest {
     void case1() {
         BowlingNormalFrame bowlingNormalFrame = BowlingNormalFrame.first(Point.of(0));
 
-        assertThat(bowlingNormalFrame.position()).isEqualTo((Position.of(0)));
+        assertThat(bowlingNormalFrame.position()).isEqualTo((Round.of(0)));
     }
 
     @DisplayName("한 게임이 끝나면 새로운 프레임이 생성된다.")
@@ -21,7 +21,7 @@ class BowlingNormalFrameTest {
         BowlingNormalFrame bowlingNormalFrame = BowlingNormalFrame.first(Point.of(0));
         BowlingFrame newBowlingNormalFrame = bowlingNormalFrame.nextFrame();
 
-        assertThat(newBowlingNormalFrame.position()).isEqualTo(Position.of(1));
+        assertThat(newBowlingNormalFrame.position()).isEqualTo(Round.of(1));
     }
 
 }

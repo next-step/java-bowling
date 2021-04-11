@@ -2,34 +2,34 @@ package bowling.domain;
 
 public class BowlingFinalFrame implements BowlingFrame {
 
-    private final Position position;
+    private final Round round;
     private final Score score;
 
-    private BowlingFinalFrame(Position position, Score score) {
-        this.position = position;
+    private BowlingFinalFrame(Round round, Score score) {
+        this.round = round;
         this.score = score;
     }
 
     public static BowlingFinalFrame of(Score score) {
-        return new BowlingFinalFrame(Position.of(10), score);
+        return new BowlingFinalFrame(Round.of(10), score);
     }
 
-    public static BowlingFrame of(Position position, Score score) {
-        return new BowlingFinalFrame(position, score);
+    public static BowlingFrame of(Round round, Score score) {
+        return new BowlingFinalFrame(round, score);
     }
 
-    public static BowlingFrame of(Position position) {
-        return new BowlingFinalFrame(position, Score.of(Point.of(0), Point.of(0)));
+    public static BowlingFrame of(Round round) {
+        return new BowlingFinalFrame(round, Score.of(Point.of(0), Point.of(0)));
     }
 
     @Override
-    public Position position() {
-        return position;
+    public Round position() {
+        return round;
     }
 
     @Override
     public BowlingFrame second(Point point) {
-        return new BowlingNormalFrame(position, score.next(point));
+        return new BowlingNormalFrame(round, score.next(point));
     }
 
     public boolean isOneMoreTime() {
