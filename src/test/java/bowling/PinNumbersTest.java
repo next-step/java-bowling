@@ -1,5 +1,8 @@
 package bowling;
 
+import bowling.domain.FrameState;
+import bowling.domain.PinNumber;
+import bowling.domain.PinNumbers;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

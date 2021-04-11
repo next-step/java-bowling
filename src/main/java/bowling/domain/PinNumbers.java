@@ -1,4 +1,7 @@
-package bowling;
+package bowling.domain;
+
+import bowling.domain.FrameState;
+import bowling.domain.PinNumber;
 
 import java.util.ArrayList;
 import java.util.List;

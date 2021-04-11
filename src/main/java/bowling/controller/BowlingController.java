@@ -1,4 +1,11 @@
-package bowling;
+package bowling.controller;
+
+import bowling.domain.FinalFrame;
+import bowling.domain.FrameStrategy;
+import bowling.domain.NormalFrame;
+import bowling.domain.PinNumber;
+import bowling.view.InputView;
+import bowling.view.ResultView;
 
 import java.util.ArrayList;
 import java.util.List;

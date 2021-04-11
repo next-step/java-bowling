@@ -1,4 +1,6 @@
-package bowling;
+package bowling.view;
+
+import bowling.domain.FrameStrategy;
 
 import java.util.List;
 
