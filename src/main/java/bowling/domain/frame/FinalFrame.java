@@ -1,64 +1,39 @@
 package bowling.domain.frame;
 
-import bowling.domain.State.StateType;
+import bowling.domain.State.FinalState;
+import bowling.domain.State.State;
 import bowling.dto.FinalFrameResult;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class FinalFrame implements Frame {
 
-    private static final int MAX_HIT_COUNT = 3;
-
-    private final List<NormalFrame> frames = new ArrayList<>();
+    private State state;
 
     private final FrameNumber frameNumber;
 
-
-    private FinalFrame(FrameNumber frameNumber, List<NormalFrame> frames) {
-        validateFrames(frames);
+    private FinalFrame(FrameNumber frameNumber, FinalState finalState) {
         this.frameNumber = frameNumber;
-        this.frames.addAll(frames);
+        this.state = finalState;
     }
 
-    private void validateFrames(List<NormalFrame> frames) {
-        if (totalHitCount(frames) > MAX_HIT_COUNT) {
-            throw new IllegalArgumentException("투구수가 너무 많습니다.");
-        }
-    }
-
-    public static FinalFrame of(FrameNumber frameNumber, List<NormalFrame> frames) {
-        return new FinalFrame(frameNumber, frames);
+    public static FinalFrame of(FrameNumber frameNumber, FinalState finalState) {
+        return new FinalFrame(frameNumber, finalState);
     }
 
     public static FinalFrame from(int frameNumber) {
-        return FinalFrame.of(new FrameNumber(frameNumber), Arrays.asList(NormalFrame.first()));
+        return FinalFrame.of(new FrameNumber(frameNumber), new FinalState());
     }
 
-
+    @Override
     public void addPinCount(int pinCount) {
         addPinCount(new PinCount(pinCount));
     }
 
+    @Override
     public void addPinCount(PinCount pinCount) {
-        if (isDone()) {
-            throw new IllegalStateException("이미 끝난 프레임 입니다.");
-        }
-        NormalFrame currentFrame = currentFrame();
-        if (currentFrame.isDone()) {
-            NormalFrame next = currentFrame.next();
-            frames.add(next);
-            currentFrame = next;
-        }
-        currentFrame.addPinCount(pinCount);
+        state = state.newState(pinCount);
     }
 
-
-    private NormalFrame currentFrame() {
-        return frames.get(frames.size() - 1);
-    }
-
+    @Override
     public FrameNumber number() {
         return frameNumber;
     }
@@ -68,11 +43,9 @@ public class FinalFrame implements Frame {
         return true;
     }
 
+    @Override
     public boolean isDone() {
-        if (isTryAll() || isMissAtFirstFrame()) {
-            return true;
-        }
-        return false;
+        return state.isClosed();
     }
 
     @Override
@@ -80,23 +53,13 @@ public class FinalFrame implements Frame {
         throw new IllegalStateException("마지막 프레임 입니다.");
     }
 
-    private boolean isTryAll() {
-        return totalHitCount(this.frames) >= MAX_HIT_COUNT;
-    }
+   // public FinalFrameResult result() {
+       // return new FinalFrameResult(frameNumber, frames);
+  //  }
 
-    private boolean isMissAtFirstFrame() {
-        NormalFrame firstFrame = frames.get(0);
-        return firstFrame.isMatchCurrentState(StateType.MISS);
-    }
-
-    private int totalHitCount(List<NormalFrame> frames) {
-        return frames.stream()
-                .map(NormalFrame::hitCount)
-                .reduce(0, Integer::sum);
-    }
-
-    public FinalFrameResult result() {
-        return new FinalFrameResult(frameNumber, frames);
+    @Override
+    public State currentState() {
+        return state;
     }
 
 }

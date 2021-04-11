@@ -1,56 +1,56 @@
 package bowling.domain.frame;
 
-import bowling.domain.State.StateType;
-import bowling.dto.NormalFrameResult;
-
-import java.util.Arrays;
-import java.util.List;
+import bowling.domain.State.FinalState;
+import bowling.domain.State.Ready;
+import bowling.domain.State.State;
 
 public class NormalFrame implements Frame {
 
-    private final PinCounts pinCounts;
+    private State state;
 
     private final FrameNumber frameNumber;
 
     private Frame nextFrame;
 
-    private NormalFrame(FrameNumber frameNumber, PinCounts pinCounts, Frame nextFrame) {
+    private NormalFrame(FrameNumber frameNumber, State state, Frame nextFrame) {
         this.frameNumber = frameNumber;
-        this.pinCounts = pinCounts;
+        this.state = state;
         this.nextFrame = nextFrame;
     }
 
     public static NormalFrame first() {
-        return new NormalFrame(FrameNumber.first(), new PinCounts(), null);
+        return new NormalFrame(FrameNumber.first(), new Ready(), null);
     }
 
-    public static NormalFrame of(FrameNumber frameNumber, List<PinCount> pinCounts, Frame nextFrame) {
-        return new NormalFrame(frameNumber, new PinCounts(pinCounts), nextFrame);
+    public static NormalFrame of(FrameNumber frameNumber, State state, Frame nextFrame) {
+        return new NormalFrame(frameNumber, state, nextFrame);
     }
 
     public NormalFrame next() {
-        NormalFrame next = new NormalFrame(frameNumber.next(), new PinCounts(), null);
+        NormalFrame next = new NormalFrame(frameNumber.next(), new Ready(), null);
         this.nextFrame = next;
         return next;
     }
-
 
     public FinalFrame last() {
-        FinalFrame next = FinalFrame.of(frameNumber.next(), Arrays.asList(NormalFrame.first()));
+        FinalFrame next = FinalFrame.of(frameNumber.next(), new FinalState());
         this.nextFrame = next;
         return next;
     }
 
+    @Override
     public void addPinCount(int pinCount) {
         addPinCount(new PinCount(pinCount));
     }
 
+    @Override
     public void addPinCount(PinCount pinCount) {
-        pinCounts.add(pinCount);
+       state = state.newState(pinCount);
     }
 
+    @Override
     public boolean isDone() {
-        return pinCounts.isDone();
+        return state.isClosed();
     }
 
     @Override
@@ -58,10 +58,12 @@ public class NormalFrame implements Frame {
         return nextFrame;
     }
 
-    public NormalFrameResult result() {
-        return new NormalFrameResult(frameNumber, pinCounts);
-    }
+//    @Override
+//    public NormalFrameResult result() {
+//        return new NormalFrameResult(frameNumber, pinCounts);
+//    }
 
+    @Override
     public FrameNumber number() {
         return frameNumber;
     }
@@ -71,12 +73,9 @@ public class NormalFrame implements Frame {
         return nextFrame == null;
     }
 
-    public boolean isMatchCurrentState(StateType stateType) {
-        return pinCounts.isMatchCurrentState(stateType);
-    }
-
-    public int hitCount() {
-        return pinCounts.hitCount();
+    @Override
+    public State currentState() {
+        return state;
     }
 
 }
