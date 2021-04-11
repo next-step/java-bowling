@@ -19,8 +19,9 @@ public class FinalState implements State {
         states.add(new Ready());
     }
 
-    private FinalState(List<State> states) {
+    private FinalState(List<State> states, int tryCount) {
         this.states.addAll(states);
+        this.tryCount = tryCount;
     }
 
     @Override
@@ -35,8 +36,12 @@ public class FinalState implements State {
             states.add(ready);
             lastState = ready;
         }
-        lastState.newState(pinCount);
-        return new FinalState(states);
+        changeLastState(lastState.newState(pinCount));
+        return new FinalState(states, tryCount);
+    }
+
+    private void changeLastState(State newState) {
+        states.set(states.size() - 1, newState);
     }
 
     @Override
@@ -51,9 +56,9 @@ public class FinalState implements State {
     public String stateInString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(states.get(0).stateInString());
-        for (int i = 1; i <= states.size(); i++) {
-            stringBuilder.append(states.get(i).stateInString())
-                    .append(SYMBOL);
+        for (int i = 1; i <= states.size() - 1; i++) {
+            stringBuilder.append(SYMBOL)
+                    .append(states.get(i).stateInString());
         }
         return stringBuilder.toString();
     }

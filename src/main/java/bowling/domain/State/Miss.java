@@ -11,7 +11,7 @@ public class Miss implements State {
     private final PinCount secondPinCount;
 
     public Miss(PinCount firstPinCount, PinCount secondPinCount) {
-        if (firstPinCount.isValid(secondPinCount)) {
+        if (!firstPinCount.isValid(secondPinCount)) {
             throw new IllegalArgumentException("투구 핀수가 너무 많습니다.");
         }
         this.firstPinCount = firstPinCount;
@@ -36,7 +36,7 @@ public class Miss implements State {
         }
 
         String secondPinCountInString = secondPinCount.countInString();
-        if (firstPinCount.isGutter()) {
+        if (secondPinCount.isGutter()) {
             secondPinCountInString = Gutter.SYMBOL;
         }
 

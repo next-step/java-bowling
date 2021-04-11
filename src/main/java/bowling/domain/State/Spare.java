@@ -11,7 +11,7 @@ public class Spare implements State {
     private final PinCount secondPinCount;
 
     public Spare(PinCount firstPinCount, PinCount secondPinCount) {
-        if (firstPinCount.isValid(secondPinCount)) {
+        if (!firstPinCount.isValid(secondPinCount)) {
             throw new IllegalArgumentException("투구 핀수가 너무 많습니다.");
         }
         this.firstPinCount = firstPinCount;

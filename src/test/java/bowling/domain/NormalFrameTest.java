@@ -1,67 +1,33 @@
 package bowling.domain;
 
-import bowling.domain.State.StateType;
+import bowling.domain.State.*;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PinCount;
-import bowling.dto.NormalFrameResult;
-import bowling.dto.PinCountsResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class NormalFrameTest {
 
-
-    @ParameterizedTest
-    @CsvSource(value = {"1,3,4", "10,8", "8,8", "5,6", "7,10"}, delimiter = ':')
-    @DisplayName("유효하지 투구값으로 생성")
-    void create_from_invalid_pin_count_list_throw_exception(String pinCountsInString) {
-        String nameSeparator = ",";
-        String[] pinCountsInArray = pinCountsInString.split(nameSeparator);
-        List<PinCount> list = Arrays.stream(pinCountsInArray)
-                .map(pinCountInString -> new PinCount(Integer.parseInt(pinCountInString)))
-                .collect(Collectors.toList());
-        assertThatIllegalArgumentException().isThrownBy(() ->
-                NormalFrame.of(new FrameNumber(10), list, null)
-        );
-    }
-
     @Test
+    @DisplayName("first로 생성 테스트")
     void first() {
         NormalFrame first = NormalFrame.first();
-        NormalFrameResult result = first.result();
-
-        assertThat(result.frameNumber()).isEqualTo(1);
+        assertThat(first.number()).isEqualTo(FrameNumber.first());
     }
 
     @Test
+    @DisplayName("next로 생성 테스트")
     void next() {
         NormalFrame nextThree = NormalFrame.first().next().next();
-        NormalFrameResult result = nextThree.result();
-
-        assertThat(result.frameNumber()).isEqualTo(3);
+        assertThat(nextThree.number()).isEqualTo(new FrameNumber(3));
     }
 
     @Test
-    void add_pin_count() {
-        int pinCount = 6;
-        NormalFrame normalFrame = NormalFrame.first();
-        normalFrame.addPinCount(pinCount);
-
-        PinCountsResult result = normalFrame.result().pinCountsResult();
-        assertThat(result.stateType()).isEqualTo(StateType.NONE);
-        assertThat(result.pinCounts()).containsExactly(pinCount);
-    }
-
-    @Test
+    @DisplayName("프램이 종료된 이후 게임 플레이시 예외 발생 테스트")
     void add_pin_counts_when_done_throw_exception() {
         NormalFrame normalFrame = NormalFrame.first();
         normalFrame.addPinCount(4);
@@ -73,56 +39,100 @@ public class NormalFrameTest {
     }
 
     @Test
-    void result_when_strike() {
+    @DisplayName("strike시 현재 상태값 테스트")
+    void current_state_when_strike() {
         NormalFrame normalFrame = NormalFrame.first().next();
         int strikePinCounts = 10;
         normalFrame.addPinCount(strikePinCounts);
 
-        PinCountsResult result = normalFrame.result().pinCountsResult();
+        State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isTrue();
-        assertThat(result.stateType()).isEqualTo(StateType.STRIKE);
-        assertThat(result.pinCounts()).containsExactly(strikePinCounts);
+        assertThat(state instanceof Strike).isTrue();
+        assertThat(state.stateInString()).isEqualTo("X");
     }
 
 
     @Test
-    void result_when_spare() {
+    @DisplayName("spare시 현재 상태값 테스트")
+    void current_state_when_spare() {
         NormalFrame normalFrame = NormalFrame.first().next();
         int firstPinCount = 2;
         int secondPinCount = 8;
         normalFrame.addPinCount(firstPinCount);
         normalFrame.addPinCount(secondPinCount);
 
-        PinCountsResult result = normalFrame.result().pinCountsResult();
+        State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isTrue();
-        assertThat(result.stateType()).isEqualTo(StateType.SPARE);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount, secondPinCount);
+        assertThat(state instanceof Spare).isTrue();
+        assertThat(state.stateInString()).isEqualTo(firstPinCount + "|/");
     }
 
     @Test
-    void result_when_miss() {
+    @DisplayName("gutter가 없는 miss시 현재 상태값 테스트")
+    void current_state_when_miss() {
         NormalFrame normalFrame = NormalFrame.first();
         int firstPinCount = 2;
         int secondPinCount = 6;
         normalFrame.addPinCount(firstPinCount);
         normalFrame.addPinCount(secondPinCount);
 
-        PinCountsResult result = normalFrame.result().pinCountsResult();
+        State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isTrue();
-        assertThat(result.stateType()).isEqualTo(StateType.MISS);
-        assertThat(result.pinCounts()).containsExactlyInAnyOrder(firstPinCount, secondPinCount);
+        assertThat(state instanceof Miss).isTrue();
+        assertThat(state.stateInString()).isEqualTo(firstPinCount + "|" + secondPinCount);
     }
 
     @Test
-    void result_when_none() {
+    @DisplayName("gutter가 있는 miss시 현재 상태값 테스트")
+    void current_state_when_miss_with_gutter() {
+        NormalFrame normalFrame = NormalFrame.first();
+        int firstPinCount = 0;
+        int secondPinCount = 6;
+        normalFrame.addPinCount(firstPinCount);
+        normalFrame.addPinCount(secondPinCount);
+
+        State state = normalFrame.currentState();
+        assertThat(normalFrame.isDone()).isTrue();
+        assertThat(state instanceof Miss).isTrue();
+        assertThat(state.stateInString()).isEqualTo("-" + "|" + secondPinCount);
+    }
+
+    @Test
+    @DisplayName("ready시 현재 상태값 테스트")
+    void current_state_when_ready() {
+        NormalFrame normalFrame = NormalFrame.first();
+
+        State state = normalFrame.currentState();
+        assertThat(normalFrame.isDone()).isFalse();
+        assertThat(state instanceof Ready).isTrue();
+        assertThat(state.stateInString()).isEqualTo("");
+    }
+
+    @Test
+    @DisplayName("hit시 현재 상태값 테스트")
+    void current_state_when_hit() {
         NormalFrame normalFrame = NormalFrame.first();
         int firstPinCount = 2;
         normalFrame.addPinCount(firstPinCount);
 
-        PinCountsResult result = normalFrame.result().pinCountsResult();
+        State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isFalse();
-        assertThat(result.stateType()).isEqualTo(StateType.NONE);
-        assertThat(result.pinCounts()).containsExactly(firstPinCount);
+        assertThat(state instanceof Hit).isTrue();
+        assertThat(state.stateInString()).isEqualTo(new PinCount(firstPinCount).countInString());
+    }
+
+
+    @Test
+    @DisplayName("gutter시 현재 상태값 테스트")
+    void current_state_when_gutter() {
+        NormalFrame normalFrame = NormalFrame.first();
+        int firstPinCount = 0;
+        normalFrame.addPinCount(firstPinCount);
+
+        State state = normalFrame.currentState();
+        assertThat(normalFrame.isDone()).isFalse();
+        assertThat(state instanceof Gutter).isTrue();
+        assertThat(state.stateInString()).isEqualTo("-");
     }
 
 
