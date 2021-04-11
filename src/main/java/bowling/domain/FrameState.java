@@ -12,27 +12,27 @@ public enum FrameState {
         this.frameState = frameState;
     }
 
-    public String getFrameState() {
+    public String frameState() {
         return frameState;
     }
 
     public static String eachState(PinNumber pinNumber) {
         if (pinNumber.isStrike()) {
-            return STRIKE.getFrameState();
+            return STRIKE.frameState();
         }
         if (pinNumber.isGutter()) {
-            return GUTTER.getFrameState();
+            return GUTTER.frameState();
         }
-        return Integer.toString(pinNumber.getPinNumber());
+        return Integer.toString(pinNumber.pinNumber());
     }
 
     public static String pairState(PinNumber first, PinNumber second) {
-        if (first.getPinNumber() + second.getPinNumber() == 10) {
-            return SPARE.getFrameState();
+        if (first.pinNumber() + second.pinNumber() == 10) {
+            return SPARE.frameState();
         }
         if (second.isGutter()) {
-            return GUTTER.getFrameState();
+            return GUTTER.frameState();
         }
-        return Integer.toString(second.getPinNumber());
+        return Integer.toString(second.pinNumber());
     }
 }

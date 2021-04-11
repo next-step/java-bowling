@@ -1,8 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.FrameState;
-import bowling.domain.PinNumber;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +26,7 @@ public class PinNumbers {
     }
 
     private void updateRemainPinNumber(PinNumber pinNumber) {
-        remainPinNumber -= pinNumber.getPinNumber();
+        remainPinNumber -= pinNumber.pinNumber();
         if (remainPinNumber < 0) {
             throw new IllegalArgumentException();
         }
@@ -42,8 +39,8 @@ public class PinNumbers {
         if (index == 1) {
             return FrameState.eachState(pinNumbers.get(0));
         }
-        if (pinNumbers.get(index - 1).getPinNumber() == MAX_PIN_NUMBER) {
-            return FrameState.STRIKE.getFrameState();
+        if (pinNumbers.get(index - 1).pinNumber() == MAX_PIN_NUMBER) {
+            return FrameState.STRIKE.frameState();
         }
         return FrameState.pairState(pinNumbers.get(index - 2), pinNumbers.get(index - 1));
     }

@@ -13,7 +13,7 @@ public class PinNumber {
         this.pinNumber = pinNumber;
     }
 
-    public int getPinNumber() {
+    public int pinNumber() {
         return pinNumber;
     }
 
