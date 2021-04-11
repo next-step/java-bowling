@@ -1,0 +1,47 @@
+package bowling;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PinNumbers {
+
+    private static final int MAX_PIN_NUMBER = 10;
+    private final List<PinNumber> pinNumbers;
+    private int remainPinNumber;
+
+    public PinNumbers() {
+        pinNumbers = new ArrayList<>();
+        remainPinNumber = MAX_PIN_NUMBER;
+    }
+
+    public List<PinNumber> getPinNumbers() {
+        return pinNumbers;
+    }
+
+    public void record(PinNumber pinNumber) {
+        if (!pinNumber.isStrike()) {
+            updateRemainPinNumber(pinNumber);
+        }
+        pinNumbers.add(pinNumber);
+    }
+
+    private void updateRemainPinNumber(PinNumber pinNumber) {
+        remainPinNumber -= pinNumber.getPinNumber();
+        if (remainPinNumber < 0) {
+            throw new IllegalArgumentException();
+        }
+        if (remainPinNumber == 0) {
+            remainPinNumber = MAX_PIN_NUMBER;
+        }
+    }
+
+    public String state(int index) {
+        if (index == 1) {
+            return FrameState.eachState(pinNumbers.get(0));
+        }
+        if (pinNumbers.get(index - 1).getPinNumber() == MAX_PIN_NUMBER) {
+            return FrameState.STRIKE.getFrameState();
+        }
+        return FrameState.pairState(pinNumbers.get(index - 2), pinNumbers.get(index - 1));
+    }
+}
