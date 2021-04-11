@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
-public class NormalFrameTest {
+public class NormalFrameTest extends FrameTest {
 
     @Test
     @DisplayName("first로 생성 테스트")
@@ -27,7 +27,7 @@ public class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("프램이 종료된 이후 게임 플레이시 예외 발생 테스트")
+    @DisplayName("프레임 종료된 이후 게임 플레이시 예외 발생 테스트")
     void add_pin_counts_when_done_throw_exception() {
         NormalFrame normalFrame = NormalFrame.first();
         normalFrame.addPinCount(4);
@@ -48,7 +48,7 @@ public class NormalFrameTest {
         State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isTrue();
         assertThat(state instanceof Strike).isTrue();
-        assertThat(state.stateInString()).isEqualTo("X");
+        assertThat(state.stateInString()).isEqualTo(STRIKE_SYMBOL);
     }
 
 
@@ -64,7 +64,7 @@ public class NormalFrameTest {
         State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isTrue();
         assertThat(state instanceof Spare).isTrue();
-        assertThat(state.stateInString()).isEqualTo(firstPinCount + "|/");
+        assertThat(state.stateInString()).isEqualTo(firstPinCount + SPARE_SYMBOL);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class NormalFrameTest {
         State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isTrue();
         assertThat(state instanceof Miss).isTrue();
-        assertThat(state.stateInString()).isEqualTo(firstPinCount + "|" + secondPinCount);
+        assertThat(state.stateInString()).isEqualTo(firstPinCount + SEPARATOR + secondPinCount);
     }
 
     @Test
@@ -94,7 +94,7 @@ public class NormalFrameTest {
         State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isTrue();
         assertThat(state instanceof Miss).isTrue();
-        assertThat(state.stateInString()).isEqualTo("-" + "|" + secondPinCount);
+        assertThat(state.stateInString()).isEqualTo(GUTTER_SYMBOL + SEPARATOR + secondPinCount);
     }
 
     @Test
@@ -105,7 +105,7 @@ public class NormalFrameTest {
         State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isFalse();
         assertThat(state instanceof Ready).isTrue();
-        assertThat(state.stateInString()).isEqualTo("");
+        assertThat(state.stateInString()).isEqualTo(EMPTY_SYMBOL);
     }
 
     @Test
@@ -132,7 +132,7 @@ public class NormalFrameTest {
         State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isFalse();
         assertThat(state instanceof Gutter).isTrue();
-        assertThat(state.stateInString()).isEqualTo("-");
+        assertThat(state.stateInString()).isEqualTo(GUTTER_SYMBOL);
     }
 
 
