@@ -19,6 +19,27 @@ public class PinCount {
         return count;
     }
 
+    public String countInString() {
+        return Integer.toString(count);
+    }
+
+    public boolean isStrike() {
+        return count == MAX_PIN_COUNT;
+    }
+
+    public boolean isGutter() {
+        return count == MIN_PIN_COUNT;
+    }
+
+    public boolean isSpare(PinCount pinCount) {
+        return (pinCount.count + count) == MAX_PIN_COUNT;
+    }
+
+    public boolean isValid(PinCount pinCount) {
+        return (pinCount.count + count) <= MAX_PIN_COUNT;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
