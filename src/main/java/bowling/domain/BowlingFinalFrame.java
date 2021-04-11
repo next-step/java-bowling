@@ -10,29 +10,40 @@ public class BowlingFinalFrame implements BowlingFrame {
         this.score = score;
     }
 
-    public static BowlingFinalFrame of(Score score) {
-        return new BowlingFinalFrame(Round.of(10), score);
-    }
-
-    public static BowlingFrame of(Round round, Score score) {
-        return new BowlingFinalFrame(round, score);
-    }
-
     public static BowlingFrame of(Round round) {
         return new BowlingFinalFrame(round, Score.of(Point.of(0), Point.of(0)));
     }
 
-    @Override
-    public Round position() {
-        return round;
-    }
-
-    @Override
-    public BowlingFrame second(Point point) {
-        return new BowlingNormalFrame(round, score.next(point));
+    public static BowlingFrame first(Round round) {
+        return new BowlingFinalFrame(round, Score.of(Point.of(0), Point.of(0)));
     }
 
     public boolean isOneMoreTime() {
         return score.score() != BowlingRole.MISS;
+    }
+
+    @Override
+    public BowlingFrame secondPitching(Point point) {
+        return null;
+    }
+
+    @Override
+    public BowlingFrame firstPitching(Point point) {
+        return null;
+    }
+
+    @Override
+    public BowlingFrame nextFrame() {
+        return null;
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
+    public boolean isStrike() {
+        return false;
     }
 }

@@ -1,6 +1,7 @@
 package bowling.contorller;
 
 import bowling.domain.BowlingFrame;
+import bowling.domain.Point;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
@@ -17,7 +18,7 @@ public class GameController {
 
     public BowlingFrame play() {
         int point = InputView.inputPoint(bowlingGame.round());
-        BowlingFrame bowlingFrame = bowlingGame.firstPitching(point);
+        BowlingFrame bowlingFrame = bowlingGame.firstPitching(Point.of(point));
         OutputView.firstResultView(BowlingBoardDto.of(player, bowlingFrame));
         boolean isStrike = bowlingFrame.isStrike();
         if (!isStrike) {
@@ -28,7 +29,7 @@ public class GameController {
 
     public BowlingFrame next() {
         int point = InputView.inputPoint(bowlingGame.round());
-        BowlingFrame bowlingFrame = bowlingGame.secondPitching(point);
+        BowlingFrame bowlingFrame = bowlingGame.secondPitching(Point.of(point));
         OutputView.secondResultView(BowlingBoardDto.of(player, bowlingFrame));
         return bowlingFrame;
     }
@@ -36,11 +37,11 @@ public class GameController {
     public static void main(String[] args) {
         String playerName = InputView.inputPlayer();
         GameController gameController = new GameController(playerName);
-        boolean isEnd = true;
+        boolean isEnd;
         do {
-            BowlingFrame play = gameController.play();
-            isEnd = play.isEnd();
-        } while (isEnd);
+            BowlingFrame frame = gameController.play();
+            isEnd = frame.isEnd();
+        } while (!isEnd);
     }
 
 

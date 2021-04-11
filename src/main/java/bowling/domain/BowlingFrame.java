@@ -2,9 +2,14 @@ package bowling.domain;
 
 public interface BowlingFrame {
 
-    Round position();
+    BowlingFrame secondPitching(Point point);
 
-    BowlingFrame second(Point point);
-    
+    BowlingFrame firstPitching(Point point);
+
+    BowlingFrame nextFrame();
+
+    boolean isEnd();
+
+    boolean isStrike();
 
 }
