@@ -32,29 +32,24 @@ public class BowlingController {
             NormalFrame normalFrame = new NormalFrame();
             normalFrames.add(normalFrame);
 
-            playNormalFrame(name, normalFrames, thisFrame, normalFrame);
+            normalFrame.play(new PinNumber(inputView.pinNumber(thisFrame)));
+            resultView.print(name, normalFrames);
             if (!normalFrame.hasSecond()) {
                 continue;
             }
-            playNormalFrame(name, normalFrames, thisFrame, normalFrame);
+            normalFrame.play(new PinNumber(inputView.pinNumber(thisFrame)));
+            resultView.print(name, normalFrames);
         }
 
         FinalFrame finalFrame = new FinalFrame();
         normalFrames.add(finalFrame);
-        playFinalFrame(name, normalFrames, finalFrame);
-        playFinalFrame(name, normalFrames, finalFrame);
-        if (finalFrame.hasThird()) {
-            playFinalFrame(name, normalFrames, finalFrame);
-        }
-    }
-
-    private void playNormalFrame(String name, List<FrameStrategy> normalFrames, int thisFrame, FrameStrategy normalFrame) {
-        normalFrame.play(new PinNumber(inputView.pinNumber(thisFrame)));
-        resultView.print(name, normalFrames);
-    }
-
-    private void playFinalFrame(String name, List<FrameStrategy> normalFrames, FinalFrame finalFrame) {
         finalFrame.play(new PinNumber(inputView.pinNumber(LAST_ROUND)));
         resultView.print(name, normalFrames);
+        finalFrame.play(new PinNumber(inputView.pinNumber(LAST_ROUND)));
+        resultView.print(name, normalFrames);
+        if (finalFrame.hasThird()) {
+            finalFrame.play(new PinNumber(inputView.pinNumber(LAST_ROUND)));
+            resultView.print(name, normalFrames);
+        }
     }
 }
