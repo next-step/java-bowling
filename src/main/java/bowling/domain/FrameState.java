@@ -6,6 +6,7 @@ public enum FrameState {
     SPARE("/"),
     GUTTER("-");
 
+    private static final int MAX_PIN_NUMBER = 10;
     private final String frameState;
 
     FrameState(String frameState) {
@@ -27,7 +28,7 @@ public enum FrameState {
     }
 
     public static String pairState(PinNumber first, PinNumber second) {
-        if (first.pinNumber() + second.pinNumber() == 10) {
+        if (first.pinNumber() + second.pinNumber() == MAX_PIN_NUMBER) {
             return SPARE.frameState();
         }
         if (second.isGutter()) {

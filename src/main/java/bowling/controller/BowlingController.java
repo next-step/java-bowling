@@ -33,7 +33,7 @@ public class BowlingController {
             normalFrames.add(normalFrame);
 
             playNormalFrame(name, normalFrames, thisFrame, normalFrame);
-            if (normalFrame.hasSecond()) {
+            if (!normalFrame.hasSecond()) {
                 continue;
             }
             playNormalFrame(name, normalFrames, thisFrame, normalFrame);

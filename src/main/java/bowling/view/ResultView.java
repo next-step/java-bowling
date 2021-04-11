@@ -13,6 +13,7 @@ public class ResultView {
     private static final String EMPTY_FRAME = "      |";
     private static final String SINGLE_FRAME = "   |";
     private static final String FULL_FRAME = " |";
+    private static final String ROUND_LABEL_FRAME = "  |";
 
     public void print(String name, List<FrameStrategy> frames) {
         printRoundInfo();
@@ -30,7 +31,7 @@ public class ResultView {
         System.out.print(NAME_LABEL);
         for (int thisFrame = FIRST_ROUND; thisFrame <= LAST_ROUND; thisFrame++) {
             String frameNumber = String.format("%02d", thisFrame);
-            System.out.print("  " + frameNumber + "  |");
+            System.out.print("  " + frameNumber + ROUND_LABEL_FRAME);
         }
         System.out.println();
     }

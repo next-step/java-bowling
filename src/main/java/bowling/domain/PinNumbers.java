@@ -14,12 +14,12 @@ public class PinNumbers {
         remainPinNumber = MAX_PIN_NUMBER;
     }
 
-    public List<PinNumber> getPinNumbers() {
-        return pinNumbers;
-    }
-
     public PinNumber index(int index) {
         return pinNumbers.get(index);
+    }
+
+    public int size() {
+        return pinNumbers.size();
     }
 
     public void record(PinNumber pinNumber) {
@@ -47,9 +47,5 @@ public class PinNumbers {
             return FrameState.STRIKE.frameState();
         }
         return FrameState.pairState(pinNumbers.get(index - 2), pinNumbers.get(index - 1));
-    }
-
-    public int size() {
-        return pinNumbers.size();
     }
 }

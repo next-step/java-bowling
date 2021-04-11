@@ -7,7 +7,7 @@ public class PinNumber {
     private final int pinNumber;
 
     public PinNumber(int pinNumber) {
-        if (pinNumber < 0 || pinNumber > 10) {
+        if (pinNumber < GUTTER_CONDITION || pinNumber > STRIKE_CONDITION) {
             throw new IllegalArgumentException();
         }
         this.pinNumber = pinNumber;
