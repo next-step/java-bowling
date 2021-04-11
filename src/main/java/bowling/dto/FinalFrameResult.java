@@ -16,7 +16,7 @@ public class FinalFrameResult implements FrameResult {
     public FinalFrameResult(FrameNumber frameNumber, List<NormalFrame> frames) {
         this.frameNumber = frameNumber.number();
         frames.forEach(normalFrame -> {
-            pinCountsResults.add(normalFrame.result().pinCountsResult());
+            pinCountsResults.add(null);
         });
     }
 

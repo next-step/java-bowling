@@ -1,34 +1,30 @@
 package bowling.dto;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
+import bowling.domain.frame.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FrameResults {
 
-    private List<NormalFrameResult> normalFrameResults = new ArrayList<>();
-
-    private FinalFrameResult finalFrameResult;
+    private List<FrameResult2> frameResults = new ArrayList<>();
 
     public FrameResults(List<Frame> frames) {
         frames.forEach(frame -> {
-            if (frame instanceof NormalFrame) {
-                normalFrameResults.add(((NormalFrame) frame).result());
-            } else {
-                finalFrameResult = ((FinalFrame) frame).result();
-            }
+            frameResults.add(new FrameResult2(frame));
         });
     }
 
+    public List<FrameResult2> results() {
+        return frameResults;
+    }
+
     public List<NormalFrameResult> normalFrameResults() {
-        return normalFrameResults;
+        return null;
     }
 
     public FinalFrameResult finalFrameResult() {
-        return finalFrameResult;
+        return null;
     }
 
 }
