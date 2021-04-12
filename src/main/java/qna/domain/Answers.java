@@ -37,20 +37,10 @@ public class Answers {
     }
 
     public DeleteHistories deleteAllBy(User loginUser, LocalDateTime deleteDate) {
-        validateAllAuthority(loginUser);
         return answers.stream()
-                .map(answer -> answer.delete(deleteDate))
+                .map(answer -> answer.delete(loginUser, deleteDate))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), DeleteHistories::new));
     }
 
-    private void validateAllAuthority(User loginUser) {
-        if (notOwnedAnswerExist(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
-    }
-
-    private boolean notOwnedAnswerExist(User loginUser) {
-        return answers.stream().anyMatch(answer -> !answer.isOwner(loginUser));
-    }
 
 }
