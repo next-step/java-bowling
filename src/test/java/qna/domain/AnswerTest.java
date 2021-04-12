@@ -37,9 +37,9 @@ public class AnswerTest {
   }
 
   @Test
-  @DisplayName("answer를 deleteHistory로 변경")
+  @DisplayName("answer를 deleteHistory로 변경 확인")
   public void turnAnswerIntoDeleteHistory() throws CannotDeleteException {
-        DeleteHistory deleteHistory = new DeleteHistory(A1);
+        DeleteHistory deleteHistory = DeleteHistory.of(A1);
         assertThat(A1.turnAnswerIntoDeleteHistory(UserTest.JAVAJIGI)).isEqualTo(deleteHistory);
   }
 }

@@ -72,11 +72,6 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    @Override
-    public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
-    }
-
     public void delete() {
         this.deleted = true;
     }
@@ -84,7 +79,7 @@ public class Answer extends AbstractEntity {
     public DeleteHistory turnAnswerIntoDeleteHistory(User loginUser) throws CannotDeleteException {
         validateDelete(loginUser);
         delete();
-        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
+        return DeleteHistory.of(this);
     }
 
     public void validateDelete(User loginUser) throws CannotDeleteException {
@@ -92,4 +87,10 @@ public class Answer extends AbstractEntity {
             throw new CannotDeleteException(INVALID_DELETE);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+    }
+
 }
