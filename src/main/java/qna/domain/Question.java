@@ -80,29 +80,11 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
-    /*/*if (!question.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
 
-        List<Answer> answers = question.getAnswers().getAnswers();
-        //List<Answer> answers = new ArrayList<>();
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
-
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        question.setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }*/
     public DeleteHistory turnQuestionIntoDeleteHistory(User loginUser) throws CannotDeleteException {
         validateDelete(loginUser);
-        this.deleted = true;
-        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
+        delete();
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 
     public List<DeleteHistory> turnAnswerIntoDeleteHistory(User loginUser)
