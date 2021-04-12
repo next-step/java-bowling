@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Score;
 import bowling.domain.State.FinalState;
 import bowling.domain.State.Ready;
 import bowling.domain.State.State;
@@ -71,6 +72,31 @@ public class NormalFrame implements Frame {
     @Override
     public State currentState() {
         return state;
+    }
+
+    @Override
+    public Score score() {
+        Score score = currentState().score();
+        if(!currentState().isClosed()){
+            return score;
+        }
+        return calculatedScoreOfNextFrame(score);
+    }
+
+    @Override
+    public Score calculateScore(Score score) {
+        if(!currentState().isClosed()){
+            return score;
+        }
+        Score calculatedScore = currentState().calculateScore(score);
+        return calculatedScoreOfNextFrame(calculatedScore);
+    }
+
+    private Score calculatedScoreOfNextFrame(Score score) {
+        if(score.isDoneCalculating() || isLast()){
+            return score;
+        }
+        return nextFrame.calculateScore(score);
     }
 
 }

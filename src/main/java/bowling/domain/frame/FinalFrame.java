@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Score;
 import bowling.domain.State.FinalState;
 import bowling.domain.State.State;
 
@@ -55,6 +56,19 @@ public class FinalFrame implements Frame {
     @Override
     public State currentState() {
         return state;
+    }
+
+    @Override
+    public Score score() {
+        return currentState().score();
+    }
+
+    @Override
+    public Score calculateScore(Score score) {
+        if(!currentState().isClosed()){
+            return score;
+        }
+        return currentState().calculateScore(score);
     }
 
 }

@@ -1,5 +1,6 @@
 package bowling.domain.State;
 
+import bowling.domain.Score;
 import bowling.domain.frame.PinCount;
 
 import java.util.ArrayList;
@@ -8,6 +9,8 @@ import java.util.List;
 public class FinalState implements State {
 
     private static final int MAX_TRY_COUNT = 3;
+
+    private final static int BONUS_COUNT = 0;
 
     private final List<State> states = new ArrayList<>();
 
@@ -59,6 +62,28 @@ public class FinalState implements State {
                     .append(states.get(i).stateInString());
         }
         return stringBuilder.toString();
+    }
+
+    @Override
+    public Score score() {
+        if (isClosed()) {
+            int totalScoreInInt = states.stream()
+                    .mapToInt(state -> state.score().scoreInInt())
+                    .sum();
+            return Score.of(totalScoreInInt, BONUS_COUNT);
+        }
+        return Score.undefined();
+    }
+
+    @Override
+    public Score calculateScore(Score score) {
+        Score finalScore = score;
+        for (State state : states) {
+            if(finalScore.isDoneCalculating()) return finalScore;
+            if(!state.isClosed()) return finalScore;
+            finalScore = state.calculateScore(finalScore);
+        }
+        return finalScore;
     }
 
     private boolean isFirstStateIsMiss() {

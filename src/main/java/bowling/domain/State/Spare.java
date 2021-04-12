@@ -1,10 +1,13 @@
 package bowling.domain.State;
 
+import bowling.domain.Score;
 import bowling.domain.frame.PinCount;
 
 public class Spare implements State {
 
     public final static String SYMBOL = "|/";
+
+    private final static int BONUS_COUNT = 1;
 
     private final PinCount firstPinCount;
 
@@ -31,5 +34,23 @@ public class Spare implements State {
     @Override
     public String stateInString() {
         return firstPinCount.countInString() + SYMBOL;
+    }
+
+
+    @Override
+    public Score score() {
+        return Score.of(firstPinCount.sum(secondPinCount).count(),BONUS_COUNT);
+    }
+
+    @Override
+    public Score calculateScore(Score score) {
+        Score finalScore = score;
+        if(!finalScore.isDoneCalculating()){
+            finalScore = finalScore.calculatedScore(firstPinCount.count());
+        }
+        if(!finalScore.isDoneCalculating()){
+            finalScore = finalScore.calculatedScore(secondPinCount.count());
+        }
+        return finalScore;
     }
 }

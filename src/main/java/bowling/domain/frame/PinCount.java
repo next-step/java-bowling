@@ -43,6 +43,9 @@ public class PinCount {
         return (pinCount.count + count) <= MAX_PIN_COUNT;
     }
 
+    public PinCount sum(PinCount secondPinCount) {
+        return new PinCount(count + secondPinCount.count);
+    }
 
     @Override
     public boolean equals(Object o) {
