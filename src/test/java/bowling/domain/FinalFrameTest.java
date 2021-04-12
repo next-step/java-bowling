@@ -118,7 +118,7 @@ public class FinalFrameTest extends FrameTestBase {
         State state = finalFrame.currentState();
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(state instanceof FinalState).isTrue();
-        assertThat(state.stateInString()).isEqualTo(STRIKE_SYMBOL + SEPARATOR + firstSparePinCount + SEPARATOR + SPARE_SYMBOL);
+        assertThat(state.stateInString()).isEqualTo(STRIKE_SYMBOL + SEPARATOR + firstSparePinCount + SPARE_SYMBOL);
     }
 
     @Test
@@ -152,7 +152,7 @@ public class FinalFrameTest extends FrameTestBase {
         State state = finalFrame.currentState();
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(state instanceof FinalState).isTrue();
-        assertThat(state.stateInString()).isEqualTo(firstSparePinCount + SEPARATOR + SPARE_SYMBOL + SEPARATOR + lastPinCount);
+        assertThat(state.stateInString()).isEqualTo(firstSparePinCount + SPARE_SYMBOL + SEPARATOR + lastPinCount);
     }
 
     @Test
@@ -169,7 +169,7 @@ public class FinalFrameTest extends FrameTestBase {
         State state = finalFrame.currentState();
         assertThat(finalFrame.isDone()).isTrue();
         assertThat(state instanceof FinalState).isTrue();
-        assertThat(state.stateInString()).isEqualTo(firstSparePinCount + SEPARATOR + SPARE_SYMBOL + SEPARATOR + STRIKE_SYMBOL);
+        assertThat(state.stateInString()).isEqualTo(firstSparePinCount + SPARE_SYMBOL + SEPARATOR + STRIKE_SYMBOL);
     }
 
     @Test
