@@ -6,7 +6,11 @@ import qna.CannotDeleteException;
 
 public class DeleteHistories {
 
-  private List<DeleteHistory> deleteHistories = new ArrayList<>();
+  private List<DeleteHistory> deleteHistories;
+
+  public DeleteHistories(List<DeleteHistory> deleteHistories) {
+    this.deleteHistories = deleteHistories;
+  }
   /*if (!question.isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
@@ -26,10 +30,11 @@ public class DeleteHistories {
             answer.setDeleted(true);
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }*/
-  public void add(User loginUser, Question question) throws CannotDeleteException {
+  public static DeleteHistories of(User loginUser, Question question) throws CannotDeleteException {
+    List<DeleteHistory> deleteHistories = new ArrayList<>();
     deleteHistories.add(question.turnQuestionIntoDeleteHistory(loginUser));
     deleteHistories.addAll(question.turnAnswerIntoDeleteHistory(loginUser));
-
+    return new DeleteHistories(deleteHistories);
   }
 
   public List<DeleteHistory> getDeleteHistories() {

@@ -45,7 +45,7 @@ public class Answers {
   }
 
   public List<DeleteHistory> turnAnswerIntoDeleteHistory(User loginUser) throws CannotDeleteException {
-    
+
     List<DeleteHistory> deleteHistories = new ArrayList<>();
     for (Answer answer : answers) {
       deleteHistories.add(answer.turnAnswerIntoDeleteHistory(loginUser));
