@@ -4,6 +4,7 @@ import bowling.domain.State.FinalState;
 import bowling.domain.State.State;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.FrameNumber;
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

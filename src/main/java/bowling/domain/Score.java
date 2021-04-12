@@ -2,28 +2,26 @@ package bowling.domain;
 
 public class Score {
 
-    private int score;
+    private static final int UNDEFINED_REMAINING_COUNT =  -1;
 
-    private int remainingCount;
+    private final int score;
 
-    public Score(int remainingCount) {
-        this(0, remainingCount);
-    }
+    private final int remainingCount;
 
-    public Score(int score, int remainingCount) {
+    private Score(int score, int remainingCount) {
         this.score = score;
         this.remainingCount = remainingCount;
     }
 
     public static Score undefined() {
-        return new Score(0, -1);
+        return new Score(0 , UNDEFINED_REMAINING_COUNT);
     }
 
-    public static Score of(int count, int bonusCount) {
-        return new Score(count, bonusCount);
+    public static Score of(int score, int remainingCount) {
+        return new Score(score,remainingCount);
     }
 
-    public int score() {
+    public int scoreInInt() {
         return score;
     }
 
@@ -31,19 +29,16 @@ public class Score {
         return remainingCount;
     }
 
+    public Score calculatedScore(int score) {
+        return new Score(this.score+score,remainingCount-1);
+    }
+
     public boolean isDoneCalculating() {
         return remainingCount == 0;
     }
 
-    public Score calculatedScore(int count) {
-        return new Score(score + count, remainingCount - 1);
-    }
-
-    public int scoreInInt() {
-        return score;
-    }
-
     public boolean isUndefined() {
-       return remainingCount == -1;
+        return remainingCount == UNDEFINED_REMAINING_COUNT && score == 0;
     }
+
 }
