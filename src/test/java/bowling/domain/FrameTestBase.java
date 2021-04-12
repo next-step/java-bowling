@@ -1,6 +1,6 @@
 package bowling.domain;
 
-public class FrameTest {
+public class FrameTestBase {
 
     protected static final String GUTTER_SYMBOL="-";
 

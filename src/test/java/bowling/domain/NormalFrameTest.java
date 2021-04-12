@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
-public class NormalFrameTest extends FrameTest {
+public class NormalFrameTest extends FrameTestBase {
 
     @Test
     @DisplayName("first로 생성 테스트")
