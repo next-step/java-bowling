@@ -1,15 +1,30 @@
 package bowling.domain;
 
-public interface BowlingFrame {
+public abstract class BowlingFrame {
 
-    BowlingFrame secondPitching(Point point);
+    private final Round round;
 
-    BowlingFrame firstPitching(Point point);
+    public BowlingFrame(Round round) {
+        this.round = round;
+    }
 
-    BowlingFrame nextFrame();
+    abstract BowlingFrame secondPitching(Point point);
 
-    boolean isEnd();
+    abstract BowlingFrame firstPitching(Point point);
 
-    boolean isStrike();
+    public BowlingFrame nextFrame() {
+        if (round.isFinal()) {
+            return BowlingFinalFrame.of(round.next());
+        }
+        return BowlingNormalFrame.of(round.next());
+    }
+
+    public Round getRound() {
+        return round;
+    }
+
+    abstract boolean isEnd();
+
+    abstract boolean isStrike();
 
 }
