@@ -58,11 +58,6 @@ public class NormalFrame implements Frame {
         return nextFrame;
     }
 
-//    @Override
-//    public NormalFrameResult result() {
-//        return new NormalFrameResult(frameNumber, pinCounts);
-//    }
-
     @Override
     public FrameNumber number() {
         return frameNumber;

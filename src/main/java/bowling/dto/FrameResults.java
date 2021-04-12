@@ -7,24 +7,14 @@ import java.util.List;
 
 public class FrameResults {
 
-    private List<FrameResult2> frameResults = new ArrayList<>();
+    private List<FrameResult> frameResults = new ArrayList<>();
 
     public FrameResults(List<Frame> frames) {
-        frames.forEach(frame -> {
-            frameResults.add(new FrameResult2(frame));
-        });
+        frames.forEach(frame -> frameResults.add(new FrameResult(frame)));
     }
 
-    public List<FrameResult2> results() {
+    public List<FrameResult> results() {
         return frameResults;
-    }
-
-    public List<NormalFrameResult> normalFrameResults() {
-        return null;
-    }
-
-    public FinalFrameResult finalFrameResult() {
-        return null;
     }
 
 }

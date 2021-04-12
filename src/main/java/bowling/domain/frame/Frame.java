@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.State.State;
-import bowling.dto.FrameResult;
 
 public interface Frame {
 
@@ -16,8 +15,6 @@ public interface Frame {
     FrameNumber number();
 
     boolean isLast();
-
-//    FrameResult result();
 
     State currentState();
 

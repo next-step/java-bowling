@@ -1,10 +1,23 @@
 package bowling.dto;
 
-import java.util.List;
+import bowling.domain.frame.Frame;
 
-public interface FrameResult {
+public class FrameResult {
 
-    int frameNumber();
+    private int frameNumber;
 
-    List<Integer> pinCounts();
+    private String state;
+
+    public FrameResult(Frame frame) {
+        this.frameNumber = frame.number().number();
+        this.state = frame.currentState().stateInString();
+    }
+
+    public int frameNumber() {
+        return frameNumber;
+    }
+
+    public String state() {
+        return state;
+    }
 }

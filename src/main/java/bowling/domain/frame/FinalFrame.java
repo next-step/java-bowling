@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.State.FinalState;
 import bowling.domain.State.State;
-import bowling.dto.FinalFrameResult;
 
 public class FinalFrame implements Frame {
 
@@ -52,10 +51,6 @@ public class FinalFrame implements Frame {
     public Frame nextFrame() {
         throw new IllegalStateException("마지막 프레임 입니다.");
     }
-
-   // public FinalFrameResult result() {
-       // return new FinalFrameResult(frameNumber, frames);
-  //  }
 
     @Override
     public State currentState() {
