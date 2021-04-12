@@ -22,6 +22,8 @@ public class Answer extends AbstractEntity {
 
     private boolean deleted = false;
 
+    private static final String INVALID_DELETE = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+
     public Answer() {
     }
 
@@ -87,7 +89,7 @@ public class Answer extends AbstractEntity {
 
     public void validateDelete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+            throw new CannotDeleteException(INVALID_DELETE);
         }
     }
 }

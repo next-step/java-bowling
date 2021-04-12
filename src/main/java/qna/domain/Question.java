@@ -25,6 +25,8 @@ public class Question extends AbstractEntity {
 
     private boolean deleted = false;
 
+    private static final String INVALID_DELETE = "질문을 삭제할 권한이 없습니다.";
+
     public Question() {
     }
 
@@ -77,7 +79,7 @@ public class Question extends AbstractEntity {
 
     private void validateDelete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+            throw new CannotDeleteException(INVALID_DELETE);
         }
     }
 
