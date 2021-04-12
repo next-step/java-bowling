@@ -12,10 +12,10 @@ public class Hit implements State {
 
     @Override
     public State newState(PinCount secondPinCount) {
-        if(firstPinCount.isSpare(secondPinCount)){
-            return new Spare(firstPinCount,secondPinCount);
+        if (firstPinCount.isSpare(secondPinCount)) {
+            return new Spare(firstPinCount, secondPinCount);
         }
-        return new Miss(firstPinCount,secondPinCount);
+        return new Miss(firstPinCount, secondPinCount);
     }
 
     @Override

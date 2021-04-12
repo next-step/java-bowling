@@ -2,7 +2,7 @@ package bowling.domain.State;
 
 import bowling.domain.frame.PinCount;
 
-public class Strike implements State{
+public class Strike implements State {
 
     private final static String SYMBOL = "X";
 

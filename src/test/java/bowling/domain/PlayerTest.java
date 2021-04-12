@@ -29,7 +29,7 @@ public class PlayerTest {
         int totalNumberOfFrame = 3;
         Player player = new Player("tes", totalNumberOfFrame);
         int totalNumberOfStrike = 5;
-        int strikePinCount =10;
+        int strikePinCount = 10;
 
         for (int i = 0; i < totalNumberOfStrike; i++) {
             player.addPinCount(strikePinCount);

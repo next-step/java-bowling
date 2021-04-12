@@ -9,11 +9,11 @@ public class Ready implements State {
     @Override
     public State newState(PinCount pinCount) {
 
-        if(pinCount.isStrike()){
+        if (pinCount.isStrike()) {
             return new Strike();
         }
 
-        if(pinCount.isGutter()){
+        if (pinCount.isGutter()) {
             return new Gutter();
         }
 

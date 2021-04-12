@@ -8,7 +8,7 @@ public class Gutter implements State {
 
     @Override
     public State newState(PinCount pinCount) {
-        return new Miss(new PinCount(0),pinCount);
+        return new Miss(new PinCount(0), pinCount);
     }
 
     @Override

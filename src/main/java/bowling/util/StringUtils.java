@@ -25,11 +25,11 @@ public class StringUtils {
 
     public static boolean isAllAlphabet(String string) {
         return string.chars()
-                .mapToObj(number -> (char)number)
+                .mapToObj(number -> (char) number)
                 .allMatch(StringUtils::isAlphabet);
     }
 
-    private static boolean isAlphabet(Character character){
+    private static boolean isAlphabet(Character character) {
         return (character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z');
     }
 }

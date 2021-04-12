@@ -19,7 +19,7 @@ public class InputView {
     }
 
     public static int pinCount(int frameNumber) {
-        System.out.print(frameNumber+MessageConstant.PINS_COUNT);
+        System.out.print(frameNumber + MessageConstant.PINS_COUNT);
         String count = SCANNER.nextLine()
                 .trim();
         return Integer.parseInt(count);

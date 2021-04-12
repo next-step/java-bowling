@@ -18,7 +18,7 @@ public class StateTest {
         PinCount firstPinCount = new PinCount(first);
         PinCount secondPinCount = new PinCount(second);
         assertThatIllegalArgumentException().isThrownBy(() ->
-                new Miss(firstPinCount,secondPinCount));
+                new Miss(firstPinCount, secondPinCount));
     }
 
     @ParameterizedTest
@@ -28,6 +28,6 @@ public class StateTest {
         PinCount firstPinCount = new PinCount(first);
         PinCount secondPinCount = new PinCount(second);
         assertThatIllegalArgumentException().isThrownBy(() ->
-                new Spare(firstPinCount,secondPinCount));
+                new Spare(firstPinCount, secondPinCount));
     }
 }

@@ -45,7 +45,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public void addPinCount(PinCount pinCount) {
-       state = state.newState(pinCount);
+        state = state.newState(pinCount);
     }
 
     @Override
