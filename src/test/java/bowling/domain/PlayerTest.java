@@ -5,8 +5,6 @@ import bowling.dto.FrameResults;
 import bowling.dto.PlayResult;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayerTest {
@@ -20,10 +18,10 @@ public class PlayerTest {
 
         PlayResult playResult = player.playResult();
         FrameResults frameResults = playResult.framesResult();
-        List<Integer> pinCountsOfFirstFrame = frameResults.normalFrameResults().get(0).pinCounts();
+        String pinCountsOfFirstFrame = frameResults.results().get(0).state();
 
         assertThat(playResult.playerName()).isEqualTo(name);
-        assertThat(pinCountsOfFirstFrame).containsExactlyInAnyOrder(pinCount);
+        assertThat(pinCountsOfFirstFrame).isEqualTo(Integer.toString(pinCount));
     }
 
     @Test
