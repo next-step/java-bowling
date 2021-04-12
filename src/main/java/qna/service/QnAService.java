@@ -33,7 +33,7 @@ public class QnAService {
     }
 
     @Transactional
-    public void deleteQuestion2(User loginUser, long questionId) throws Exception {
+    public void deleteQuestion(User loginUser, long questionId) throws Exception {
         DeleteHistories deleteHistories = findQuestionById(questionId).delete(loginUser);
         deleteHistoryService.saveAll(deleteHistories.getDeleteHistories());
     }
