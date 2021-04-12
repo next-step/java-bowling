@@ -7,8 +7,6 @@ import java.util.List;
 
 public class FinalState implements State {
 
-    private static final String SYMBOL = "|";
-
     private static final int MAX_TRY_COUNT = 3;
 
     private final List<State> states = new ArrayList<>();
@@ -30,18 +28,18 @@ public class FinalState implements State {
             throw new IllegalStateException("이미 종료된 상태입니다.");
         }
         tryCount++;
+        changeLastState(pinCount);
+        return new FinalState(states, tryCount);
+    }
+
+    private void changeLastState(PinCount pinCount) {
         State lastState = lastState();
         if (lastState.isClosed()) {
             Ready ready = new Ready();
             states.add(ready);
             lastState = ready;
         }
-        changeLastState(lastState.newState(pinCount));
-        return new FinalState(states, tryCount);
-    }
-
-    private void changeLastState(State newState) {
-        states.set(states.size() - 1, newState);
+        states.set(states.size() - 1, lastState.newState(pinCount));
     }
 
     @Override
@@ -57,7 +55,7 @@ public class FinalState implements State {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(states.get(0).stateInString());
         for (int i = 1; i <= states.size() - 1; i++) {
-            stringBuilder.append(SYMBOL)
+            stringBuilder.append(Miss.SEPARATOR_SYMBOL)
                     .append(states.get(i).stateInString());
         }
         return stringBuilder.toString();

@@ -4,7 +4,7 @@ import bowling.domain.frame.PinCount;
 
 public class Miss implements State {
 
-    private final String PINCOUNT_SEPARATOR = "|";
+    public final static String SEPARATOR_SYMBOL = "|";
 
     private final PinCount firstPinCount;
 
@@ -40,6 +40,6 @@ public class Miss implements State {
             secondPinCountInString = Gutter.SYMBOL;
         }
 
-        return firstPinCountInString + PINCOUNT_SEPARATOR + secondPinCountInString;
+        return firstPinCountInString + SEPARATOR_SYMBOL + secondPinCountInString;
     }
 }
