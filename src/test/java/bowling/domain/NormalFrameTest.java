@@ -135,5 +135,196 @@ public class NormalFrameTest extends FrameTestBase {
         assertThat(state.stateInString()).isEqualTo(GUTTER_SYMBOL);
     }
 
+    @Test
+    @DisplayName("다음 프레임 ready 상태의 strike frame의 점수")
+    void score_when_strike_with_next_frame_undone() {
+        int strikePinCount = 10;
+        NormalFrame strikeFirstFrame = NormalFrame.first();
+        strikeFirstFrame.addPinCount(strikePinCount);
+        NormalFrame nextFrame =  strikeFirstFrame.next();
+
+        Score frameScore = strikeFirstFrame.score();
+
+        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount);
+        assertThat(frameScore.remainingCount()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("다음 프레임 hit 상태의 strike frame의 점수")
+    void score_when_strike_with_next_frame_one_try() {
+        int strikePinCount = 10;
+        int nextFrameFirstPinCount = 6;
+        NormalFrame strikeFirstFrame = NormalFrame.first();
+        strikeFirstFrame.addPinCount(strikePinCount);
+        NormalFrame nextFrame =  strikeFirstFrame.next();
+        nextFrame.addPinCount(nextFrameFirstPinCount);
+
+        Score frameScore = strikeFirstFrame.score();
+
+        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount);
+        assertThat(frameScore.remainingCount()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("다음 프레임이 spare로 진행된 strike frame의 점수")
+    void score_when_strike_with_next_frame_spare() {
+        int strikePinCount = 10;
+        int nextFrameFirstPinCount = 6;
+        int nextFrameSecondPinCount = 4;
+        NormalFrame strikeFirstFrame = NormalFrame.first();
+        strikeFirstFrame.addPinCount(strikePinCount);
+        NormalFrame nextFrame =  strikeFirstFrame.next();
+        nextFrame.addPinCount(nextFrameFirstPinCount);
+        nextFrame.addPinCount(nextFrameSecondPinCount);
+
+        Score frameScore = strikeFirstFrame.score();
+
+        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount + nextFrameFirstPinCount + nextFrameSecondPinCount);
+        assertThat(frameScore.remainingCount()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("다음 두번 프레임이 스트라이크로 진행된 strike frame의 점수")
+    void score_when_turkey() {
+        int strikePinCount = 10;
+        NormalFrame strikeFirstFrame = NormalFrame.first();
+        NormalFrame nextFrameFirst =  strikeFirstFrame.next();
+        NormalFrame nextFrameSecond =  nextFrameFirst.next();
+        strikeFirstFrame.addPinCount(strikePinCount);
+        nextFrameFirst.addPinCount(strikePinCount);
+        nextFrameSecond.addPinCount(strikePinCount);
+
+        Score frameScore = strikeFirstFrame.score();
+
+        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount * 3);
+        assertThat(frameScore.remainingCount()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("다음 프레임이 ready 상태인 spare frame의 점수")
+    void score_when_spare_with_undone_frame() {
+        int firstPinCount = 5;
+        int secondPinCount = 5;
+        NormalFrame spareFrame = NormalFrame.first();
+        NormalFrame next = spareFrame.next();
+        spareFrame.addPinCount(firstPinCount);
+        spareFrame.addPinCount(secondPinCount);
+
+        Score frameScore = spareFrame.score();
+
+        assertThat(frameScore.scoreInInt()).isEqualTo(firstPinCount + secondPinCount);
+        assertThat(frameScore.remainingCount()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("다음 프레임 miss 상태의 spare frame의 점수")
+    void score_when_spare_with_miss_frame() {
+        int firstPinCount = 5;
+        int secondPinCount = 5;
+        int nextFrameFirstPinCount = 3;
+        int nextFrameSecondPinCount = 5;
+        NormalFrame spareFrame =  NormalFrame.first();
+        spareFrame.addPinCount(firstPinCount);
+        spareFrame.addPinCount(secondPinCount);
+        NormalFrame nextFrameFirst =  spareFrame.next();
+        nextFrameFirst.addPinCount(nextFrameFirstPinCount);
+        nextFrameFirst.addPinCount(nextFrameSecondPinCount);
+
+        Score frameScore = spareFrame.score();
+
+        assertThat(frameScore.scoreInInt()).isEqualTo(firstPinCount + secondPinCount + nextFrameFirstPinCount);
+        assertThat(frameScore.remainingCount()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("다음 프렘임이 진행되지 않은 miss frame점수")
+    void score_when_miss_with_undone() {
+        int firstPinCount = 5;
+        int secondPinCount = 3;
+        NormalFrame missFrame =  NormalFrame.first();
+        missFrame.addPinCount(firstPinCount);
+        missFrame.addPinCount(secondPinCount);
+
+        Score frameScore = missFrame.score();
+
+        assertThat(frameScore.scoreInInt()).isEqualTo(firstPinCount + secondPinCount);
+        assertThat(frameScore.remainingCount()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("다음 프레임이 closed된 miss frame점수")
+    void score_when_miss_with_next_frame_is_closed() {
+        int firstPinCount = 5;
+        int secondPinCount = 3;
+        int nextFrameFirstPinCount = 3;
+        int nextFrameSecondPinCount = 5;
+        NormalFrame missFrame =  NormalFrame.first();
+        missFrame.addPinCount(firstPinCount);
+        missFrame.addPinCount(secondPinCount);
+        NormalFrame nextFrameFirst =  missFrame.next();
+        nextFrameFirst.addPinCount(nextFrameFirstPinCount);
+        nextFrameFirst.addPinCount(nextFrameSecondPinCount);
+
+        Score frameScore = missFrame.score();
+
+        assertThat(frameScore.scoreInInt()).isEqualTo(firstPinCount + secondPinCount);
+        assertThat(frameScore.remainingCount()).isEqualTo(0);
+    }
+
+
+    @Test
+    @DisplayName("다음 두번의 프레임이 closed된 miss frame점수")
+    void score_when_miss_with_next_frame_two_frame_is_closed() {
+        int firstPinCount = 5;
+        int secondPinCount = 3;
+        int nextFrameFirstPinCount = 3;
+        int nextFrameSecondPinCount = 5;
+        NormalFrame missFrame =  NormalFrame.first();
+        missFrame.addPinCount(firstPinCount);
+        missFrame.addPinCount(secondPinCount);
+        NormalFrame nextFrameFirst =  missFrame.next();
+        nextFrameFirst.addPinCount(nextFrameFirstPinCount);
+        nextFrameFirst.addPinCount(nextFrameSecondPinCount);
+        NormalFrame nextFrameSecond =  nextFrameFirst.next();
+        nextFrameSecond.addPinCount(nextFrameFirstPinCount);
+        nextFrameSecond.addPinCount(nextFrameSecondPinCount);
+
+        Score frameScore = missFrame.score();
+
+        assertThat(frameScore.scoreInInt()).isEqualTo(firstPinCount + secondPinCount);
+        assertThat(frameScore.remainingCount()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("hit frame점수")
+    void score_when_hit_state_frame() {
+        int firstPinCount = 5;
+        NormalFrame hitFrame =  NormalFrame.first();
+        hitFrame.addPinCount(firstPinCount);
+
+        Score frameScore = hitFrame.score();
+
+        assertThat(frameScore.isUndefined()).isTrue();
+    }
+
+    @Test
+    @DisplayName("ready frame점수")
+    void score_when_ready_state_frame() {
+        NormalFrame readyFrame =  NormalFrame.first();
+
+        Score frameScore = readyFrame.score();
+
+        assertThat(frameScore.isUndefined()).isTrue();
+    }
+
+    @Test
+    @DisplayName("gutter frame점수")
+    void score_when_gutter_state_frame() {
+        NormalFrame gutterFrame =  NormalFrame.first();
+
+        Score frameScore = gutterFrame.score();
+
+        assertThat(frameScore.isUndefined()).isTrue();
+    }
 
 }
