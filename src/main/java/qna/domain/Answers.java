@@ -23,8 +23,13 @@ public class Answers {
     answers.add(answer);
   }
 
-  public List<Answer> getAnswers() {
-    return answers;
+  public List<DeleteHistory> turnAnswerIntoDeleteHistory(User loginUser)
+      throws CannotDeleteException {
+    List<DeleteHistory> deleteHistories = new ArrayList<>();
+    for (Answer answer : answers) {
+      deleteHistories.add(answer.turnAnswerIntoDeleteHistory(loginUser));
+    }
+    return deleteHistories;
   }
 
   @Override
@@ -42,13 +47,5 @@ public class Answers {
   @Override
   public int hashCode() {
     return Objects.hash(answers);
-  }
-
-  public List<DeleteHistory> turnAnswerIntoDeleteHistory(User loginUser) throws CannotDeleteException {
-    List<DeleteHistory> deleteHistories = new ArrayList<>();
-    for (Answer answer : answers) {
-      deleteHistories.add(answer.turnAnswerIntoDeleteHistory(loginUser));
-    }
-    return deleteHistories;
   }
 }

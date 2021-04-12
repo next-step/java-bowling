@@ -9,88 +9,89 @@ import javax.persistence.*;
 
 @Entity
 public class Answer extends AbstractEntity {
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
-    private User writer;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
-    private Question question;
+  @ManyToOne(optional = false)
+  @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
+  private User writer;
 
-    @Lob
-    private String contents;
+  @ManyToOne(optional = false)
+  @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
+  private Question question;
 
-    private boolean deleted = false;
+  @Lob
+  private String contents;
 
-    private static final String INVALID_DELETE = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+  private boolean deleted = false;
 
-    public Answer() {
+  private static final String INVALID_DELETE = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+
+  public Answer() {
+  }
+
+  public Answer(User writer, Question question, String contents) {
+    this(null, writer, question, contents);
+  }
+
+  public Answer(Long id, User writer, Question question, String contents) {
+    super(id);
+
+    if (writer == null) {
+      throw new UnAuthorizedException();
     }
 
-    public Answer(User writer, Question question, String contents) {
-        this(null, writer, question, contents);
+    if (question == null) {
+      throw new NotFoundException();
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
-        super(id);
+    this.writer = writer;
+    this.question = question;
+    this.contents = contents;
+  }
 
-        if(writer == null) {
-            throw new UnAuthorizedException();
-        }
+  public Answer setDeleted(boolean deleted) {
+    this.deleted = deleted;
+    return this;
+  }
 
-        if(question == null) {
-            throw new NotFoundException();
-        }
+  public boolean isDeleted() {
+    return deleted;
+  }
 
-        this.writer = writer;
-        this.question = question;
-        this.contents = contents;
+  public boolean isOwner(User writer) {
+    return this.writer.equals(writer);
+  }
+
+  public User getWriter() {
+    return writer;
+  }
+
+  public String getContents() {
+    return contents;
+  }
+
+  public void toQuestion(Question question) {
+    this.question = question;
+  }
+
+  public void delete() {
+    this.deleted = true;
+  }
+
+  public DeleteHistory turnAnswerIntoDeleteHistory(User loginUser) throws CannotDeleteException {
+    validateDelete(loginUser);
+    delete();
+    return DeleteHistory.of(this);
+  }
+
+  public void validateDelete(User loginUser) throws CannotDeleteException {
+    if (!isOwner(loginUser)) {
+      throw new CannotDeleteException(INVALID_DELETE);
     }
+  }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
-    }
-
-    public User getWriter() {
-        return writer;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void toQuestion(Question question) {
-        this.question = question;
-    }
-
-    public void delete() {
-        this.deleted = true;
-    }
-
-    public DeleteHistory turnAnswerIntoDeleteHistory(User loginUser) throws CannotDeleteException {
-        validateDelete(loginUser);
-        delete();
-        return DeleteHistory.of(this);
-    }
-
-    public void validateDelete(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException(INVALID_DELETE);
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
-    }
+  @Override
+  public String toString() {
+    return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+  }
 
 }
