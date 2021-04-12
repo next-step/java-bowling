@@ -15,12 +15,16 @@ public class PinCount {
         this.count = count;
     }
 
+    public PinCount(String count) {
+        this(Integer.parseInt(count));
+    }
+
     public int count() {
         return count;
     }
 
     public String countInString() {
-        return Integer.toString(count);
+        return Integer.toString(count());
     }
 
     public boolean isStrike() {
