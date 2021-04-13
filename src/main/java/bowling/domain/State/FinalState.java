@@ -47,10 +47,7 @@ public class FinalState implements State {
 
     @Override
     public boolean isClosed() {
-        if (isTryAll() || isFirstStateIsMiss()) {
-            return true;
-        }
-        return false;
+        return isTryAll() || isFirstStateIsMiss();
     }
 
     @Override
@@ -66,22 +63,22 @@ public class FinalState implements State {
 
     @Override
     public Score score() {
+        int totalScoreInInt = states.stream()
+                .mapToInt(state -> state.score().scoreInInt())
+                .sum();
         if (isClosed()) {
-            int totalScoreInInt = states.stream()
-                    .mapToInt(state -> state.score().scoreInInt())
-                    .sum();
             return Score.of(totalScoreInInt, BONUS_COUNT);
         }
-        return Score.undefined();
+        return Score.unfinished(totalScoreInInt);
     }
 
     @Override
-    public Score calculateScore(Score score) {
-        Score finalScore = score;
+    public Score calculatedScore(Score scoreToCalculate) {
+        Score finalScore = scoreToCalculate;
         for (State state : states) {
             if(finalScore.isDoneCalculating()) return finalScore;
             if(!state.isClosed()) return finalScore;
-            finalScore = state.calculateScore(finalScore);
+            finalScore = state.calculatedScore(finalScore);
         }
         return finalScore;
     }

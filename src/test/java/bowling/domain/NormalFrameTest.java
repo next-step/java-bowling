@@ -304,7 +304,8 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = hitFrame.score();
 
-        assertThat(frameScore.isUndefined()).isTrue();
+        assertThat(frameScore.isUnFinished()).isTrue();
+        assertThat(frameScore.scoreInInt()).isEqualTo(firstPinCount);
     }
 
     @Test
@@ -314,7 +315,7 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = readyFrame.score();
 
-        assertThat(frameScore.isUndefined()).isTrue();
+        assertThat(frameScore.isUnFinished()).isTrue();
     }
 
     @Test
@@ -324,7 +325,7 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = gutterFrame.score();
 
-        assertThat(frameScore.isUndefined()).isTrue();
+        assertThat(frameScore.isUnFinished()).isTrue();
     }
 
 }

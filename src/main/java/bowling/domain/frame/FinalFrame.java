@@ -64,11 +64,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Score calculateScore(Score score) {
+    public Score calculatedScore(Score scoreToCalculate) {
         if(!currentState().isClosed()){
-            return score;
+            return scoreToCalculate;
         }
-        return currentState().calculateScore(score);
+        return currentState().calculatedScore(scoreToCalculate);
     }
 
 }

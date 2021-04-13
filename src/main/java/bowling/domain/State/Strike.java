@@ -32,11 +32,11 @@ public class Strike implements State {
     }
 
     @Override
-    public Score calculateScore(Score score) {
-        if(!score.isDoneCalculating()){
-            return score.calculatedScore(PIN_COUNT);
+    public Score calculatedScore(Score scoreToCalculate) {
+        if(!scoreToCalculate.isDoneCalculating()){
+            return scoreToCalculate.calculatedScore(PIN_COUNT);
         }
-        return score;
+        return scoreToCalculate;
     }
 
 }

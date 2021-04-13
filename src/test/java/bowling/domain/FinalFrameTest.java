@@ -304,11 +304,12 @@ public class FinalFrameTest extends FrameTestBase {
 
         Score frameScore = finalFrame.score();
 
-        assertThat(frameScore.isUndefined()).isTrue();
+        assertThat(frameScore.scoreInInt()).isEqualTo(firstStrikePinCount + secondStrikePinCount);
+        assertThat(frameScore.isUnFinished()).isTrue();
     }
 
     @Test
-    @DisplayName("finalframe close된 1strike+1hit상태의 점수")
+    @DisplayName("finalframe close된 1spare+1hit상태의 점수")
     void score_when_closed_1_spare_1_hit() {
         int firstSparePinCount = 4;
         int secondSparePinCount = 6;

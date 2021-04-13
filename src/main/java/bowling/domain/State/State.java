@@ -13,6 +13,6 @@ public interface State {
 
     Score score();
 
-    Score calculateScore(Score score);
+    Score calculatedScore(Score scoreToCalculate);
 
 }

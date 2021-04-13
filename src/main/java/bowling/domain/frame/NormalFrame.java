@@ -84,19 +84,19 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Score calculateScore(Score score) {
+    public Score calculatedScore(Score scoreToCalculate) {
         if(!currentState().isClosed()){
-            return score;
+            return scoreToCalculate;
         }
-        Score calculatedScore = currentState().calculateScore(score);
+        Score calculatedScore = currentState().calculatedScore(scoreToCalculate);
         return calculatedScoreOfNextFrame(calculatedScore);
     }
 
-    private Score calculatedScoreOfNextFrame(Score score) {
-        if(score.isDoneCalculating() || isLast()){
-            return score;
+    private Score calculatedScoreOfNextFrame(Score scoreToCalculate) {
+        if(scoreToCalculate.isDoneCalculating() || isLast()){
+            return scoreToCalculate;
         }
-        return nextFrame.calculateScore(score);
+        return nextFrame.calculatedScore(scoreToCalculate);
     }
 
 }

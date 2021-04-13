@@ -21,6 +21,6 @@ public interface Frame {
 
     Score score();
 
-    Score calculateScore(Score score);
+    Score calculatedScore(Score scoreToCalculate);
 
 }

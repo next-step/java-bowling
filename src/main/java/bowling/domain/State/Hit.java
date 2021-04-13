@@ -31,11 +31,11 @@ public class Hit implements State {
 
     @Override
     public Score score() {
-        return Score.undefined();
+        return Score.unfinished(firstPinCount.count());
     }
 
     @Override
-    public Score calculateScore(Score score) {
+    public Score calculatedScore(Score scoreToCalculate) {
         throw new IllegalStateException("점수를 계산 할 수 없습니다.");
     }
 }

@@ -2,7 +2,7 @@ package bowling.domain;
 
 public class Score {
 
-    private static final int UNDEFINED_REMAINING_COUNT =  -1;
+    private static final int UNFINISHED_REMAINING_COUNT = -1;
 
     private final int score;
 
@@ -13,12 +13,12 @@ public class Score {
         this.remainingCount = remainingCount;
     }
 
-    public static Score undefined() {
-        return new Score(0 , UNDEFINED_REMAINING_COUNT);
+    public static Score unfinished(int score) {
+        return new Score(score, UNFINISHED_REMAINING_COUNT);
     }
 
     public static Score of(int score, int remainingCount) {
-        return new Score(score,remainingCount);
+        return new Score(score, remainingCount);
     }
 
     public int scoreInInt() {
@@ -29,16 +29,18 @@ public class Score {
         return remainingCount;
     }
 
-    public Score calculatedScore(int score) {
-        return new Score(this.score+score,remainingCount-1);
+    public Score calculatedScore(int toAdd) {
+        if(remainingCount <= 0){
+            throw new IllegalStateException("더이상 계산 할 수 없습니다.");
+        }
+        return new Score(this.score + toAdd, remainingCount - 1);
     }
 
     public boolean isDoneCalculating() {
-        return remainingCount == 0;
+        return remainingCount <= 0;
     }
 
-    public boolean isUndefined() {
-        return remainingCount == UNDEFINED_REMAINING_COUNT && score == 0;
+    public boolean isUnFinished() {
+        return remainingCount == UNFINISHED_REMAINING_COUNT;
     }
-
 }

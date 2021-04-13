@@ -43,8 +43,8 @@ public class Spare implements State {
     }
 
     @Override
-    public Score calculateScore(Score score) {
-        Score finalScore = score;
+    public Score calculatedScore(Score scoreToCalculate) {
+        Score finalScore = scoreToCalculate;
         if(!finalScore.isDoneCalculating()){
             finalScore = finalScore.calculatedScore(firstPinCount.count());
         }

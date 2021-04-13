@@ -24,11 +24,11 @@ public class Gutter implements State {
 
     @Override
     public Score score() {
-        return Score.undefined();
+        return Score.unfinished(0);
     }
 
     @Override
-    public Score calculateScore(Score score) {
+    public Score calculatedScore(Score scoreToCalculate) {
         throw new IllegalStateException("점수를 계산 할 수 없습니다.");
     }
 }
