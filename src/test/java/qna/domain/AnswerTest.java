@@ -21,12 +21,17 @@ class AnswerTest {
     @DisplayName("응답 삭제처리 테스트")
     @Test
     void deleted_답변_삭제테스트() {
-        // given
-        Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         // when
-        assertThat(answer.isDeleted()).isFalse();
-        answer.deleted();
+        assertThat(A1.isDeleted()).isFalse();
+        A1.deleted();
         // then
-        assertThat(answer.isDeleted()).isTrue();
+        assertThat(A1.isDeleted()).isTrue();
     }
+
+    @DisplayName("응답 작성자 확인 테스트")
+    @Test
+    void isOwner_작성자_확인테스트() {
+        assertThat(A1.isOwner(UserTest.JAVAJIGI)).isTrue();
+    }
+
 }
