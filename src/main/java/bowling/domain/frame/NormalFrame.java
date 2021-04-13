@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
+import bowling.domain.score.Score;
 import bowling.domain.State.FinalState;
 import bowling.domain.State.Ready;
 import bowling.domain.State.State;
@@ -93,7 +93,7 @@ public class NormalFrame implements Frame {
     }
 
     private Score calculatedScoreOfNextFrame(Score scoreToCalculate) {
-        if(scoreToCalculate.isDoneCalculating() || isLast()){
+        if(!scoreToCalculate.isNecessaryToCalculateMore() || isLast()){
             return scoreToCalculate;
         }
         return nextFrame.calculatedScore(scoreToCalculate);

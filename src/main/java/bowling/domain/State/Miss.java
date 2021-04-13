@@ -1,13 +1,12 @@
 package bowling.domain.State;
 
-import bowling.domain.Score;
+import bowling.domain.score.FinishedScore;
+import bowling.domain.score.Score;
 import bowling.domain.frame.PinCount;
 
 public class Miss implements State {
 
     public final static String SEPARATOR_SYMBOL = "|";
-
-    public final static int BONUS_COUNT = 0;
 
     private final PinCount firstPinCount;
 
@@ -48,16 +47,16 @@ public class Miss implements State {
 
     @Override
     public Score score() {
-        return Score.of(firstPinCount.sum(secondPinCount).count(),BONUS_COUNT);
+        return new FinishedScore(firstPinCount.sum(secondPinCount).count());
     }
 
     @Override
     public Score calculatedScore(Score scoreToCalculate) {
         Score finalScore = scoreToCalculate;
-        if(!finalScore.isDoneCalculating()){
+        if(finalScore.isNecessaryToCalculateMore()){
             finalScore = finalScore.calculatedScore(firstPinCount.count());
         }
-        if(!finalScore.isDoneCalculating()){
+        if(finalScore.isNecessaryToCalculateMore()){
             finalScore = finalScore.calculatedScore(secondPinCount.count());
         }
         return finalScore;

@@ -1,6 +1,7 @@
 package bowling.domain.State;
 
-import bowling.domain.Score;
+import bowling.domain.score.Score;
+import bowling.domain.score.UnFinishedScore;
 import bowling.domain.frame.PinCount;
 
 public class Strike implements State {
@@ -28,12 +29,12 @@ public class Strike implements State {
 
     @Override
     public Score score() {
-        return Score.of(PIN_COUNT,BONUS_COUNT);
+        return new UnFinishedScore(PIN_COUNT,BONUS_COUNT);
     }
 
     @Override
     public Score calculatedScore(Score scoreToCalculate) {
-        if(!scoreToCalculate.isDoneCalculating()){
+        if(scoreToCalculate.isNecessaryToCalculateMore()){
             return scoreToCalculate.calculatedScore(PIN_COUNT);
         }
         return scoreToCalculate;

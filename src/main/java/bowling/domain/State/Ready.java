@@ -1,6 +1,7 @@
 package bowling.domain.State;
 
-import bowling.domain.Score;
+import bowling.domain.score.Score;
+import bowling.domain.score.UnDefinedScore;
 import bowling.domain.frame.PinCount;
 
 public class Ready implements State {
@@ -33,7 +34,7 @@ public class Ready implements State {
 
     @Override
     public Score score() {
-        return Score.unfinished(0);
+        return new UnDefinedScore(0);
     }
 
     @Override

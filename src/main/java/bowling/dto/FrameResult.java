@@ -1,6 +1,5 @@
 package bowling.dto;
 
-import bowling.domain.Score;
 import bowling.domain.frame.Frame;
 
 public class FrameResult {
@@ -9,16 +8,12 @@ public class FrameResult {
 
     private String state;
 
-    private int fullyCalculatedScore;
+    private ScoreDto score;
 
     public FrameResult(Frame frame) {
         this.frameNumber = frame.number().number();
         this.state = frame.currentState().stateInString();
-        Score score = frame.score();
-        if(score.isUnFinished() || !score.isDoneCalculating()){
-            this.fullyCalculatedScore =
-        }
-        this.fullyCalculatedScore = score.scoreInInt();
+        this.score = new ScoreDto(frame.score());
     }
 
     public int frameNumber() {

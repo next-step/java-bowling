@@ -1,6 +1,7 @@
 package bowling.domain.State;
 
-import bowling.domain.Score;
+import bowling.domain.score.Score;
+import bowling.domain.score.UnFinishedScore;
 import bowling.domain.frame.PinCount;
 
 public class Spare implements State {
@@ -39,16 +40,16 @@ public class Spare implements State {
 
     @Override
     public Score score() {
-        return Score.of(firstPinCount.sum(secondPinCount).count(),BONUS_COUNT);
+        return new UnFinishedScore(firstPinCount.sum(secondPinCount).count(),BONUS_COUNT);
     }
 
     @Override
     public Score calculatedScore(Score scoreToCalculate) {
         Score finalScore = scoreToCalculate;
-        if(!finalScore.isDoneCalculating()){
+        if(finalScore.isNecessaryToCalculateMore()){
             finalScore = finalScore.calculatedScore(firstPinCount.count());
         }
-        if(!finalScore.isDoneCalculating()){
+        if(finalScore.isNecessaryToCalculateMore()){
             finalScore = finalScore.calculatedScore(secondPinCount.count());
         }
         return finalScore;
