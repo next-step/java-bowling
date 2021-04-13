@@ -9,12 +9,24 @@ class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
     public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
-    @DisplayName("")
+    @DisplayName("응답 생섵 테스트")
     @Test
     void created_생성테스트() {
         // when
         Answer expected = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         // then
         assertThat(A1).isEqualTo(expected);
+    }
+
+    @DisplayName("응답 삭제처리 테스트")
+    @Test
+    void deleted_답변_삭제테스트() {
+        // given
+        Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        // when
+        assertThat(answer.isDeleted()).isFalse();
+        answer.deleted();
+        // then
+        assertThat(answer.isDeleted()).isTrue();
     }
 }
