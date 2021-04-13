@@ -45,7 +45,7 @@ public class Answer extends AbstractEntity {
     this.contents = contents;
   }
 
-  public Answer setDeleted(boolean deleted) {
+  protected Answer setDeleted(boolean deleted) {
     this.deleted = deleted;
     return this;
   }
