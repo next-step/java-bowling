@@ -1,9 +1,6 @@
 package bowling.view;
 
-import bowling.dto.FrameResult;
-import bowling.dto.FrameResults;
-import bowling.dto.PlayResult;
-import bowling.dto.ScoreBoard;
+import bowling.dto.*;
 import bowling.util.StringUtils;
 
 import java.util.List;
@@ -12,6 +9,8 @@ import java.util.stream.Collectors;
 public class ResultView {
 
     public static final String FRAME_SEPARATOR = "|";
+
+    public static final String EMPTY_SCORE = "";
 
     private static final int FIXED_FRAME_SPACE = 6;
 
@@ -29,16 +28,32 @@ public class ResultView {
     private static void printScoreBoardBody(PlayResult playResult) {
         FrameResults frameResults = playResult.framesResult();
         String playerName = playerNameInString(playResult.playerName());
-        String framesInString = framesInString(frameResults.results());
+        String framesInString = framesInString(frameResults.allStates());
 
         System.out.print(FRAME_SEPARATOR + playerName + framesInString + FRAME_SEPARATOR);
         printEmptyLine();
+        System.out.print(scoresInString(frameResults.allScores()));
+        printEmptyLine();
     }
 
-    private static String framesInString(List<FrameResult> results) {
-        return results.stream()
-                .map(frameResult -> StringUtils.center(frameResult.state(), FIXED_FRAME_SPACE))
+    private static String framesInString(List<String> states) {
+        return states.stream()
+                .map(state -> StringUtils.center(state, FIXED_FRAME_SPACE))
                 .collect(Collectors.joining(FRAME_SEPARATOR));
+    }
+
+    private static String scoresInString(List<ScoreDto> scores) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(FRAME_SEPARATOR);
+        stringBuilder.append(StringUtils.center(EMPTY_SCORE, FIXED_FRAME_SPACE));
+        stringBuilder.append(FRAME_SEPARATOR);
+        String scoresInString = scores.stream()
+                .map(scoreDto -> scoreDto.isFullyCalculated() ? String.valueOf(scoreDto.currentScore()) : EMPTY_SCORE)
+                .map(formattedScore -> StringUtils.center(formattedScore, FIXED_FRAME_SPACE))
+                .collect(Collectors.joining(FRAME_SEPARATOR));
+        stringBuilder.append(scoresInString);
+        stringBuilder.append(FRAME_SEPARATOR);
+        return stringBuilder.toString();
     }
 
     private static void printScoreBoardHeader(int totalNumberOfFrame) {

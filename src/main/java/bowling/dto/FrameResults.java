@@ -4,6 +4,7 @@ import bowling.domain.frame.Frame;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FrameResults {
 
@@ -16,5 +17,19 @@ public class FrameResults {
     public List<FrameResult> results() {
         return frameResults;
     }
+
+
+    public List<String> allStates() {
+       return frameResults.stream()
+                .map(FrameResult::state)
+                .collect(Collectors.toList());
+    }
+
+    public List<ScoreDto> allScores(){
+        return frameResults.stream()
+                .map(FrameResult::score)
+                .collect(Collectors.toList());
+    }
+
 
 }

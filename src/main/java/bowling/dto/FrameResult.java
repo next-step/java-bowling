@@ -23,4 +23,8 @@ public class FrameResult {
     public String state() {
         return state;
     }
+
+    public ScoreDto score() {
+        return score;
+    }
 }

@@ -3,6 +3,8 @@ package bowling.dto;
 import bowling.domain.PlayerName;
 import bowling.domain.frame.Frames;
 
+import java.util.List;
+
 public class PlayResult {
 
     private String playerName;
@@ -21,5 +23,7 @@ public class PlayResult {
     public FrameResults framesResult() {
         return frameResults;
     }
+
+
 
 }
