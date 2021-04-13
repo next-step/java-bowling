@@ -3,6 +3,8 @@ package qna.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -50,5 +52,21 @@ public class QuestionTest {
         Q1.deleted();
         // then
         assertThat(Q1.isDeleted()).isFalse();
+    }
+
+    @DisplayName("질문에 응답 추가 테스트")
+    @Test
+    void add_응답_추가테스트() {
+        // given
+        Answer answer = new Answer(UserTest.SANJIGI, QuestionTest.Q2, "Answer contents3");
+        Q1.addAnswer(answer);
+        // when
+        List<Answer> answers = Q1.getAnswers();
+        Answer item = answers.get(0);
+        // then
+        assertAll(
+                () -> assertThat(item.getWriter()).isEqualTo(UserTest.SANJIGI),
+                () -> assertThat(item.getContents()).isEqualTo("Answer contents3")
+        );
     }
 }
