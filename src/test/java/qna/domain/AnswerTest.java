@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswerTest {
@@ -18,12 +17,5 @@ public class AnswerTest {
     assertThatThrownBy(() ->
         A1.hasOthers(UserTest.SANJIGI)
     ).isInstanceOf(CannotDeleteException.class);
-  }
-
-  @Test
-  @DisplayName("[Answer] 답변 작성자 일치 여부 테스트")
-  void is_owner_test() {
-    assertThat(A1.isOwner(UserTest.JAVAJIGI)).isTrue();
-    assertThat(A1.isOwner(UserTest.SANJIGI)).isFalse();
   }
 }
