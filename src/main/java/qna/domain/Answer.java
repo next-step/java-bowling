@@ -48,9 +48,14 @@ public class Answer extends AbstractEntity {
     this.contents = contents;
   }
 
-  public Answer setDeleted(boolean deleted) {
+  private Answer setDeleted(boolean deleted) {
     this.deleted = deleted;
     return this;
+  }
+
+
+  public void delete() {
+    setDeleted(true);
   }
 
   public boolean isDeleted() {
@@ -73,17 +78,13 @@ public class Answer extends AbstractEntity {
     this.question = question;
   }
 
-  public void delete() {
-    this.deleted = true;
-  }
-
-  public DeleteHistory turnAnswerIntoDeleteHistory(User loginUser) throws CannotDeleteException {
+  public DeleteHistory turnAnswerIntoDeleteHistory(User loginUser) {
     validateDelete(loginUser);
     delete();
-    return DeleteHistory.of(this);
+    return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
   }
 
-  public void validateDelete(User loginUser) throws CannotDeleteException {
+  public void validateDelete(User loginUser) {
     if (!isOwner(loginUser)) {
       throw new CannotDeleteException(INVALID_DELETE);
     }

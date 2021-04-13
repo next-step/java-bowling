@@ -23,13 +23,10 @@ public class Answers {
     answers.add(answer);
   }
 
-  public List<DeleteHistory> turnAnswerIntoDeleteHistory(User loginUser)
-      throws CannotDeleteException {
-    List<DeleteHistory> deleteHistories = new ArrayList<>();
-    for (Answer answer : answers) {
-      deleteHistories.add(answer.turnAnswerIntoDeleteHistory(loginUser));
-    }
-    return deleteHistories;
+  public List<DeleteHistory> turnAnswerIntoDeleteHistory(User loginUser) {
+    return answers.stream()
+        .map(answer -> answer.turnAnswerIntoDeleteHistory(loginUser))
+        .collect(Collectors.toList());
   }
 
   @Override

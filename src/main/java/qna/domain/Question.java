@@ -77,30 +77,30 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public void delete() {
-        this.deleted = true;
-    }
 
-    public void validateDelete(User loginUser) throws CannotDeleteException {
+    public void validateDelete(User loginUser) {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException(INVALID_DELETE);
         }
     }
 
-    public DeleteHistory turnQuestionIntoDeleteHistory(User loginUser) throws CannotDeleteException {
+    public DeleteHistory turnQuestionIntoDeleteHistory(User loginUser) {
         validateDelete(loginUser);
         delete();
-        return DeleteHistory.of(this);
+        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
     }
 
-    public List<DeleteHistory> turnAnswerIntoDeleteHistory(User loginUser)
-        throws CannotDeleteException {
+    public List<DeleteHistory> turnAnswerIntoDeleteHistory(User loginUser) {
         return answers.turnAnswerIntoDeleteHistory(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
+    private Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
+    }
+
+    public void delete() {
+        setDeleted(true);
     }
 
     public boolean isDeleted() {
@@ -115,7 +115,4 @@ public class Question extends AbstractEntity {
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
-
-
-
 }

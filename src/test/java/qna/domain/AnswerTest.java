@@ -4,6 +4,7 @@ package qna.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import qna.CannotDeleteException;
@@ -39,7 +40,9 @@ public class AnswerTest {
   @Test
   @DisplayName("answer를 deleteHistory로 변경 확인")
   public void turnAnswerIntoDeleteHistory() throws CannotDeleteException {
-    DeleteHistory deleteHistory = DeleteHistory.of(A1);
+    DeleteHistory deleteHistory = new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(),
+        LocalDateTime
+            .now());
     assertThat(A1.turnAnswerIntoDeleteHistory(UserTest.JAVAJIGI)).isEqualTo(deleteHistory);
   }
 }

@@ -51,7 +51,7 @@ public class QuestionTest {
   @Test
   @DisplayName("quetion을 deletehistory로 변경 확인")
   public void turnQuestionIntoDeleteHistory() throws CannotDeleteException {
-    DeleteHistory deleteHistory = DeleteHistory.of(Q1);
+    DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now());;
     assertThat(Q1.turnQuestionIntoDeleteHistory(UserTest.JAVAJIGI)).isEqualTo(deleteHistory);
   }
 
