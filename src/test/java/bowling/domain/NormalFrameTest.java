@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.score.Score;
 import bowling.domain.State.*;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.NormalFrame;
@@ -145,8 +146,9 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = strikeFirstFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(2);
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isTrue();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
     }
 
     @Test
@@ -161,8 +163,9 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = strikeFirstFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(2);
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isTrue();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
     }
 
     @Test
@@ -179,8 +182,9 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = strikeFirstFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount + nextFrameFirstPinCount + nextFrameSecondPinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(0);
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount + nextFrameFirstPinCount + nextFrameSecondPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
     }
 
     @Test
@@ -196,8 +200,9 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = strikeFirstFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount * 3);
-        assertThat(frameScore.remainingCount()).isEqualTo(0);
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount * 3);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
     }
 
     @Test
@@ -212,8 +217,9 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = spareFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(firstPinCount + secondPinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(1);
+        assertThat(frameScore.currentScore()).isEqualTo(firstPinCount + secondPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isTrue();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
     }
 
     @Test
@@ -232,8 +238,28 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = spareFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(firstPinCount + secondPinCount + nextFrameFirstPinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(0);
+        assertThat(frameScore.currentScore()).isEqualTo(firstPinCount + secondPinCount + nextFrameFirstPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
+    }
+
+    @Test
+    @DisplayName("다음 프레임 hit 상태의 spare frame의 점수")
+    void score_when_spare_with_hit_frame() {
+        int firstPinCount = 5;
+        int secondPinCount = 5;
+        int nextFrameFirstPinCount = 3;
+        NormalFrame spareFrame =  NormalFrame.first();
+        spareFrame.addPinCount(firstPinCount);
+        spareFrame.addPinCount(secondPinCount);
+        NormalFrame nextFrameFirst =  spareFrame.next();
+        nextFrameFirst.addPinCount(nextFrameFirstPinCount);
+
+        Score frameScore = spareFrame.score();
+
+        assertThat(frameScore.currentScore()).isEqualTo(firstPinCount + secondPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isTrue();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
     }
 
     @Test
@@ -247,8 +273,9 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = missFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(firstPinCount + secondPinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(0);
+        assertThat(frameScore.currentScore()).isEqualTo(firstPinCount + secondPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
     }
 
     @Test
@@ -267,8 +294,9 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = missFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(firstPinCount + secondPinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(0);
+        assertThat(frameScore.currentScore()).isEqualTo(firstPinCount + secondPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
     }
 
 
@@ -291,8 +319,9 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = missFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(firstPinCount + secondPinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(0);
+        assertThat(frameScore.currentScore()).isEqualTo(firstPinCount + secondPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
     }
 
     @Test
@@ -304,8 +333,9 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = hitFrame.score();
 
-        assertThat(frameScore.isUnFinished()).isTrue();
-        assertThat(frameScore.scoreInInt()).isEqualTo(firstPinCount);
+        assertThat(frameScore.currentScore()).isEqualTo(firstPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
     }
 
     @Test
@@ -315,7 +345,8 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = readyFrame.score();
 
-        assertThat(frameScore.isUnFinished()).isTrue();
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
     }
 
     @Test
@@ -325,7 +356,8 @@ public class NormalFrameTest extends FrameTestBase {
 
         Score frameScore = gutterFrame.score();
 
-        assertThat(frameScore.isUnFinished()).isTrue();
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
     }
 
 }

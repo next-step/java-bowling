@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.score.Score;
 import bowling.domain.State.FinalState;
 import bowling.domain.State.State;
 import bowling.domain.frame.FinalFrame;
@@ -189,7 +190,6 @@ public class FinalFrameTest extends FrameTestBase {
     }
 
 
-
     @Test
     @DisplayName("ready상태의 finalframe 이전 strike frame점수")
     void score_when_strike_frame_before_ready_final_frame() {
@@ -197,10 +197,12 @@ public class FinalFrameTest extends FrameTestBase {
         NormalFrame strikeFrame = NormalFrame.first();
         strikeFrame.addPinCount(strikePinCount);
         strikeFrame.last();
+
         Score frameScore = strikeFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(2);
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isTrue();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
     }
 
     @Test
@@ -216,8 +218,9 @@ public class FinalFrameTest extends FrameTestBase {
 
         Score frameScore = strikeFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(2);
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isTrue();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
     }
 
 
@@ -234,8 +237,9 @@ public class FinalFrameTest extends FrameTestBase {
 
         Score frameScore = strikeFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount * 3);
-        assertThat(frameScore.remainingCount()).isEqualTo(0);
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount * 3);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
     }
 
     @Test
@@ -252,12 +256,13 @@ public class FinalFrameTest extends FrameTestBase {
 
         Score frameScore = strikeFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount + lastFrameFirstPinCount + lastFrameSecondPinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(0);
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount + lastFrameFirstPinCount + lastFrameSecondPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
     }
 
     @Test
-    @DisplayName("strike+spare finalframe 이전 strike frame점수")
+    @DisplayName("strike+spare+hit finalframe 이전 strike frame점수")
     void score_when_strike_frame_before_strike_and_spare_final_frame() {
         int strikePinCount = 10;
         int lastFrameFirstPinCount = 10;
@@ -272,8 +277,28 @@ public class FinalFrameTest extends FrameTestBase {
 
         Score frameScore = strikeFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(strikePinCount + lastFrameFirstPinCount + lastFrameSecondPinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(0);
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount + lastFrameFirstPinCount + lastFrameSecondPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
+    }
+
+    @Test
+    @DisplayName("strike+spare+ready unclosed finalframe 이전 strike frame점수")
+    void score_when_strike_frame_before_strike_and_spare_unclosed_final_frame() {
+        int strikePinCount = 10;
+        int lastFrameFirstPinCount = 10;
+        int lastFrameSecondPinCount = 5;
+        NormalFrame strikeFrame = NormalFrame.first();
+        strikeFrame.addPinCount(strikePinCount);
+        FinalFrame last = strikeFrame.last();
+        last.addPinCount(lastFrameFirstPinCount);
+        last.addPinCount(lastFrameSecondPinCount);
+
+        Score frameScore = strikeFrame.score();
+
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isTrue();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
     }
 
 
@@ -288,8 +313,9 @@ public class FinalFrameTest extends FrameTestBase {
 
         Score frameScore = finalFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(firstMissPinCount + secondMissPinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(0);
+        assertThat(frameScore.currentScore()).isEqualTo(firstMissPinCount + secondMissPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
     }
 
 
@@ -304,8 +330,9 @@ public class FinalFrameTest extends FrameTestBase {
 
         Score frameScore = finalFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(firstStrikePinCount + secondStrikePinCount);
-        assertThat(frameScore.isUnFinished()).isTrue();
+        assertThat(frameScore.currentScore()).isEqualTo(firstStrikePinCount + secondStrikePinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
     }
 
     @Test
@@ -321,8 +348,9 @@ public class FinalFrameTest extends FrameTestBase {
 
         Score frameScore = finalFrame.score();
 
-        assertThat(frameScore.scoreInInt()).isEqualTo(firstSparePinCount + secondSparePinCount + thirdPinCount);
-        assertThat(frameScore.remainingCount()).isEqualTo(0);
+        assertThat(frameScore.currentScore()).isEqualTo(firstSparePinCount + secondSparePinCount + thirdPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
     }
 
 }
