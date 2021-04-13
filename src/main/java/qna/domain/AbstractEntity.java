@@ -61,10 +61,6 @@ public class AbstractEntity {
 
     @Override
     public String toString() {
-        return "AbstractEntity{" +
-                "id=" + id +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+        return String.format("%s, %s, %s", id, createdAt, updatedAt);
     }
 }

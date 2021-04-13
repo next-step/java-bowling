@@ -19,6 +19,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * 해당 테스트 케이스가 깨지지 않도록 서비스의 비즈니스 로직을 도메인으로 이동하는 것이 목표
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class QnaServiceTest {
     @Mock

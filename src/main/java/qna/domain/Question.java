@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Boolean.TRUE;
+
 @Entity
 public class Question extends AbstractEntity {
     @Column(length = 100, nullable = false)
@@ -75,9 +77,8 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public void deleted() {
+        this.deleted = TRUE;
     }
 
     public boolean isDeleted() {
