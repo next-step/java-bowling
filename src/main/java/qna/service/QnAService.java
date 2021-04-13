@@ -39,6 +39,7 @@ public class QnAService {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
+        // 응답 리스트를 반복하면서 작성자가 같지 않으면 예외 처리
         List<Answer> answers = question.getAnswers();
         for (Answer answer : answers) {
             if (!answer.isOwner(loginUser)) {
@@ -46,13 +47,18 @@ public class QnAService {
             }
         }
 
+        // 이력 등록
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        question.deleted();
+        question.deleted(); // 삭제 처리
+        // 질문지 삭제 처리
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
+
+        // 질의 답 삭제 처리
         for (Answer answer : answers) {
             answer.deleted();
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
+
         deleteHistoryService.saveAll(deleteHistories);
     }
 }
