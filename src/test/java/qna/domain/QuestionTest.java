@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -17,5 +18,37 @@ public class QuestionTest {
         Question expected = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
         // then
         assertThat(Q1).isEqualTo(expected);
+    }
+
+    @DisplayName("질문 정보 확인 테스트")
+    @Test
+    void getInfo_질문_정보_확인테스트() {
+        assertAll(
+                () -> assertThat(Q1.getTitle()).isEqualTo("title1"),
+                () -> assertThat(Q1.getWriter()).isEqualTo(UserTest.JAVAJIGI),
+                () -> assertThat(Q1.getContents()).isEqualTo("contents1")
+        );
+    }
+
+    @DisplayName("질문 작성자 확인 테스트")
+    @Test
+    void isOwner_작성자_확인테스트() {
+        assertThat(Q1.isOwner(UserTest.JAVAJIGI)).isTrue();
+    }
+
+    @DisplayName("질문 삭제처리 확인 테스트")
+    @Test
+    void isDeleted_삭제_확인테스트() {
+        assertThat(Q1.isDeleted()).isFalse();
+    }
+
+    @DisplayName("질문 삭제 처리 테스트")
+    @Test
+    void deleted_삭제_처리테스트() {
+        // when
+        assertThat(Q1.isDeleted()).isTrue();
+        Q1.deleted();
+        // then
+        assertThat(Q1.isDeleted()).isFalse();
     }
 }
