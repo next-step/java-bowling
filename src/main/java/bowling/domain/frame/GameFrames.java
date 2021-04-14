@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
-public class GameFrames {
+import bowling.domain.Endable;
+import bowling.domain.Playable;
+
+public class GameFrames implements Playable, Endable {
     private NormalFrames normalFrames;
     private FinalFrame finalFrame;
 
@@ -9,6 +12,7 @@ public class GameFrames {
         this.finalFrame = new FinalFrame();
     }
 
+    @Override
     public void throwBall(int point) {
         if (!normalFrames.ended()) {
             normalFrames.throwBall(point);
@@ -19,6 +23,7 @@ public class GameFrames {
         }
     }
 
+    @Override
     public boolean ended() {
         return normalFrames.ended() && finalFrame.ended();
     }

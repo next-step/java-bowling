@@ -1,5 +1,5 @@
 package bowling.domain;
 
-public interface BallThrowable {
+public interface Playable {
     void throwBall(int point);
 }

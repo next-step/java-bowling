@@ -1,10 +1,10 @@
 package bowling.domain.frame;
 
-import bowling.domain.BallThrowable;
+import bowling.domain.Playable;
 import bowling.domain.Endable;
 import bowling.domain.Point;
 
-public class FinalFrame implements BallThrowable, Endable {
+public class FinalFrame implements Playable, Endable {
 
     private static final int FRAME_COUNT = 10;
 

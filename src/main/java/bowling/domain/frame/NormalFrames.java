@@ -1,12 +1,12 @@
 package bowling.domain.frame;
 
-import bowling.domain.BallThrowable;
+import bowling.domain.Playable;
 import bowling.domain.Endable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalFrames implements BallThrowable, Endable {
+public class NormalFrames implements Playable, Endable {
 
     private static final int LAST_FRAME = 9;
 

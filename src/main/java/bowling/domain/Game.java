@@ -2,7 +2,7 @@ package bowling.domain;
 
 import bowling.domain.frame.GameFrames;
 
-public class Game implements Endable, BallThrowable {
+public class Game implements Endable, Playable {
     private int frameCount;
     private GameFrames gameFrames;
 

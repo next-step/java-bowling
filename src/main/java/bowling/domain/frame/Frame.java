@@ -1,10 +1,10 @@
 package bowling.domain.frame;
 
-import bowling.domain.BallThrowable;
+import bowling.domain.Playable;
 import bowling.domain.Endable;
 import bowling.domain.Point;
 
-public class Frame implements BallThrowable, Endable {
+public class Frame implements Playable, Endable {
     private Point firstPoint;
     private Point secondPoint;
 
