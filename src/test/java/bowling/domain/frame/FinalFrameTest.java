@@ -31,7 +31,6 @@ class FinalFrameTest {
         assertThat(finalFrame.ended()).isFalse();
 
         finalFrame.throwBall(prePoint);
-        finalFrame.throwBall(curPoint);
         assertThat(finalFrame.ended()).isTrue();
     }
 

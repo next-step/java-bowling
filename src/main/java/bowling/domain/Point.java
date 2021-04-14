@@ -6,8 +6,8 @@ import bowling.exception.ErrorCode;
 public class Point {
 
     private static final int NULL = 0;
-    private static final boolean PLAYED = true;
-    private static final boolean NOT_PLAYED = false;
+    public static final boolean PLAYED = true;
+    public static final boolean NOT_PLAYED = false;
     private static final int CLEARED = 10;
 
     private int point;

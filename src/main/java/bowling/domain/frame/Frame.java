@@ -39,4 +39,11 @@ public class Frame implements BallThrowable, Endable {
         return secondPoint.spared(this.firstPoint);
     }
 
+    public Point firstPoint() {
+        return firstPoint;
+    }
+
+    public Point secondPoint() {
+        return secondPoint;
+    }
 }

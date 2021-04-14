@@ -26,4 +26,8 @@ feat(gameFrames): add gameFrame class
 
 feat(view): add view method
  - 입력창과 출력창을 점수를 제외하고 추가 
+
+fix(finalFrames): fix rule misunderstanding
+ - 마지막 프레임에 보너스 투구를 1회로 수정
+ - 출력 로직 추가
 ```

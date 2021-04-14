@@ -36,4 +36,8 @@ public class NormalFrames implements BallThrowable, Endable {
     public int frameCount() {
         return frames.size();
     }
+
+    public List<Frame> frames() {
+        return frames;
+    }
 }

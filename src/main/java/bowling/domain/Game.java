@@ -25,4 +25,8 @@ public class Game implements Endable, BallThrowable {
     public boolean ended() {
         return gameFrames.ended();
     }
+
+    public GameFrames gameFrames() {
+        return gameFrames;
+    }
 }

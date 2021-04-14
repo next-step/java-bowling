@@ -18,8 +18,8 @@ class GameFramesTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10,10,10,10,10,10,10,10,10,10,10:1,2,3,4,5,6,7,8,9,10,11",
-            "1,3,2,8,10,10,10,10,10,10,10,6,4,10:1,1,2,2,3,4,5,6,7,8,9,10,10,11"}, delimiter = ':')
+    @CsvSource(value = {"10,10,10,10,10,10,10,10,10,10,10:1,2,3,4,5,6,7,8,9,10,10",
+            "1,3,2,8,10,10,10,10,10,10,10,6,4,10:1,1,2,2,3,4,5,6,7,8,9,10,10,10"}, delimiter = ':')
     void canDetermineFrame(String points, String frames) {
         List<Integer> integerPoints = Arrays.stream(points.split(","))
                 .map(Integer::parseInt)

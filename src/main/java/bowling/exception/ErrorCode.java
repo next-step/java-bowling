@@ -14,4 +14,12 @@ public enum ErrorCode {
         this.code = code;
         this.message = message;
     }
+
+    public String code(){
+        return this.code;
+    }
+
+    public String message(){
+        return this.message;
+    }
 }

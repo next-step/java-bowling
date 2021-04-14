@@ -2,35 +2,35 @@ package bowling.domain.frame;
 
 import bowling.domain.BallThrowable;
 import bowling.domain.Endable;
+import bowling.domain.Point;
 
 public class FinalFrame implements BallThrowable, Endable {
 
-    private static final int BONUS_FRAME_COUNT = 11;
     private static final int FRAME_COUNT = 10;
 
     private Frame frame;
-    private Frame bonusFrame;
+    private Point bonusPoint;
 
     public FinalFrame() {
         this.frame = new Frame();
-        this.bonusFrame = new Frame();
+        this.bonusPoint = new Point();
     }
 
     @Override
     public boolean ended() {
         if (frame.isStrike() || frame.isSpare()) {
-            return bonusFrame.ended();
+            return bonusPoint.played();
         }
         return frame.ended();
     }
 
     @Override
     public void throwBall(int point) {
-        if ((frame.isStrike() || frame.isSpare()) && bonusFrame.ended()) {
+        if ((frame.isStrike() || frame.isSpare()) && bonusPoint.played()) {
             return;
         }
-        if ((frame.isStrike() || frame.isSpare()) && !bonusFrame.ended()) {
-            bonusFrame.throwBall(point);
+        if ((frame.isStrike() || frame.isSpare()) && !bonusPoint.played()) {
+            bonusPoint.throwBall(point);
             return;
         }
         if (frame.ended()) {
@@ -40,12 +40,14 @@ public class FinalFrame implements BallThrowable, Endable {
     }
 
     public int frameCount() {
-        if (bonusFrame.ended()) {
-            return BONUS_FRAME_COUNT;
-        }
-        if (frame.isStrike() || frame.isSpare()) {
-            return BONUS_FRAME_COUNT;
-        }
         return FRAME_COUNT;
+    }
+
+    public Frame frame() {
+        return frame;
+    }
+
+    public Point bonusFrame(){
+        return bonusPoint;
     }
 }

@@ -29,4 +29,12 @@ public class GameFrames {
         }
         return normalFrames.frameCount();
     }
+
+    public NormalFrames normalFrames() {
+        return normalFrames;
+    }
+
+    public FinalFrame finalFrame() {
+        return finalFrame;
+    }
 }
