@@ -20,8 +20,6 @@ public class Answers {
     @OrderBy("id ASC")
     private final List<Answer> answers = new ArrayList<>();
 
-    public Answers() { }
-
     public void add(Answer answer) {
         answers.add(answer);
     }
