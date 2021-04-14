@@ -55,12 +55,12 @@ public class QuestionTest {
         Answer answer = new Answer(UserTest.SANJIGI, QuestionTest.Q2, "Answer contents3");
         Q1.addAnswer(answer);
         // when
-        List<Answer> answers = Q1.getAnswers();
+        List<Answer> answers = Q1.answersToQuestion();
         Answer item = answers.get(0);
         // then
         assertAll(
-                () -> assertThat(item.getWriter()).isEqualTo(UserTest.SANJIGI),
-                () -> assertThat(item.getContents()).isEqualTo("Answer contents3")
+                () -> assertThat(item.writer()).isEqualTo(UserTest.SANJIGI),
+                () -> assertThat(item.contents()).isEqualTo("Answer contents3")
         );
     }
 }

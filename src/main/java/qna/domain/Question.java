@@ -86,8 +86,8 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers.getAnswers();
+    public List<Answer> answersToQuestion() {
+        return answers.answers();
     }
 
     private void checkAuthorization(User loginUser) {

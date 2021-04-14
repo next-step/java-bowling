@@ -60,11 +60,11 @@ public class Answer extends AbstractEntity {
         return this.writer.equals(writer);
     }
 
-    public User getWriter() {
+    public User writer() {
         return writer;
     }
 
-    public String getContents() {
+    public String contents() {
         return contents;
     }
 

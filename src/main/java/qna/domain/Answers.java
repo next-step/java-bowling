@@ -41,7 +41,7 @@ public class Answers {
                 .collect(Collectors.toList());
     }
 
-    public List<Answer> getAnswers() {
+    public List<Answer> answers() {
         return Collections.unmodifiableList(answers);
     }
 }

@@ -38,13 +38,13 @@ class AnswerTest {
     @DisplayName("응답 작성자 조회 테스트")
     @Test
     void getWriter_작성자_조회테스트() {
-        assertThat(A1.getWriter()).isEqualTo(UserTest.JAVAJIGI);
+        assertThat(A1.writer()).isEqualTo(UserTest.JAVAJIGI);
     }
 
     @DisplayName("응답 contents 확인 테스트")
     @Test
     void getContents_질문_조회테스트() {
-        assertThat(A1.getContents()).isEqualTo("Answers Contents1");
+        assertThat(A1.contents()).isEqualTo("Answers Contents1");
     }
 
 }
