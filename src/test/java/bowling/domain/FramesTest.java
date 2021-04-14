@@ -64,7 +64,7 @@ public class FramesTest extends FrameTestBase {
 
     @Test
     @DisplayName("마지막 프레임 직전까지 완료시 결과 테스트")
-    void add_pin_count() {
+    void result() {
         int firstPinCountOfSecondFrame = 5;
         int secondPinCountOfSecondFrame = 3;
 
@@ -76,11 +76,20 @@ public class FramesTest extends FrameTestBase {
         frames.addPinCount(firstPinCountOfSecondFrame);
         frames.addPinCount(secondPinCountOfSecondFrame);
 
-        List<String> states = frames.result()
+        int expectedFirstFrameScore = 10 + firstPinCountOfSecondFrame + secondPinCountOfSecondFrame;
+        int expectedSecondFrameScore = firstPinCountOfSecondFrame + secondPinCountOfSecondFrame;
+        int expectedLastFrameScore = 0;
+
+        List<FrameResult> result = frames.result();
+        List<String> states = result
                 .stream().map(FrameResult::state)
+                .collect(Collectors.toList());
+        List<Integer> scores = result
+                .stream().map(frameResult -> frameResult.score().currentScore())
                 .collect(Collectors.toList());
 
         assertThat(states).containsExactlyInAnyOrder(STRIKE_SYMBOL, firstPinCountOfSecondFrame + SEPARATOR + secondPinCountOfSecondFrame, EMPTY_SYMBOL);
+        assertThat(scores).containsExactlyInAnyOrder(expectedFirstFrameScore,expectedSecondFrameScore,expectedLastFrameScore);
     }
 
 }
