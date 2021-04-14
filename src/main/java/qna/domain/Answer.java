@@ -5,6 +5,8 @@ import qna.UnAuthorizedException;
 
 import javax.persistence.*;
 
+import java.time.LocalDateTime;
+
 import static java.lang.Boolean.TRUE;
 
 @Entity
@@ -45,8 +47,9 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public void deleted() {
+    protected DeleteHistory deleteAnswers() {
         this.deleted = TRUE;
+        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }
 
     public boolean isDeleted() {

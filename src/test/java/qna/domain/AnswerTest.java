@@ -23,7 +23,7 @@ class AnswerTest {
     void deleted_답변_삭제테스트() {
         // when
         assertThat(A1.isDeleted()).isFalse();
-        A1.deleted();
+        A1.deleteAnswers();
         // then
         assertThat(A1.isDeleted()).isTrue();
     }
@@ -45,4 +45,5 @@ class AnswerTest {
     void getContents_질문_조회테스트() {
         assertThat(A1.getContents()).isEqualTo("Answers Contents1");
     }
+
 }
