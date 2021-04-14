@@ -1,5 +1,9 @@
 package bowling.domain.state;
 
-public class Miss {
+public class Miss implements State {
 
+  @Override
+  public State play(int pinCount) {
+    return null;
+  }
 }
