@@ -18,7 +18,7 @@ public class Hit implements  State{
       return new Spare();
     }
 
-    return new Miss();
+    return new Miss(newPinCount);
   }
 
   @Override

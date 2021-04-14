@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
 public class Frame {

@@ -10,7 +10,7 @@ public class FirstGutter implements State {
     if (pinCount == 10) {
       return new Spare();
     }
-    return new Miss();
+    return new Miss(pinCount);
   }
 
   @Override
