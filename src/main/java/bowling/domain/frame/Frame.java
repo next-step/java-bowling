@@ -14,7 +14,7 @@ public class Frame {
 
 
   public void play(int pinCount) {
-    validateBawlingCount(pinCount);
+    validatePinCount(pinCount);
     state = state.play(pinCount);
   }
 
@@ -22,8 +22,8 @@ public class Frame {
     return this;
   }
 
-  private void validateBawlingCount(int pinCount) {
-    if (pinCount < 1 || pinCount > 10) {
+  private void validatePinCount(int pinCount) {
+    if (pinCount < 0 || pinCount > 10) {
       throw new IllegalArgumentException();
     }
   }

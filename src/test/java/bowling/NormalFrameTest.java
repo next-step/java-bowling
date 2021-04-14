@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.state.FirstGutter;
 import bowling.domain.state.Hit;
 import bowling.domain.state.Ready;
 import bowling.domain.state.Spare;
@@ -32,6 +33,17 @@ public class NormalFrameTest {
     Frame nextFrame = firstFrame.next();
     assertThat(nextFrame.getPlayCount()).isEqualTo(1);
     assertThat(nextFrame.getState()).isInstanceOf(Strike.class);
+  }
+
+  @Test
+  @DisplayName("첫 프레임에 Gutter를 친 경우")
+  public void playGutter() {
+    Frame firstFrame = NormalFrame.createFirst();
+    firstFrame.play(0);
+    Frame nextFrame = firstFrame.next();
+    assertThat(nextFrame.getState()).isInstanceOf(FirstGutter.class);
+    assertThat(nextFrame.getPlayCount()).isEqualTo(1);
+
   }
 
 }
