@@ -47,8 +47,8 @@ public class BowlingGameController {
     private static void printSingleScore(boolean isFullyCalculated, int accumulatesScore) {
         if (isFullyCalculated) {
             ResultView.printScore(accumulatesScore);
-        } else {
-            ResultView.printEmptyScore();
+            return;
         }
+        ResultView.printEmptyScore();
     }
 }
