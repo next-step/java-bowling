@@ -38,20 +38,14 @@ public class QuestionTest {
         assertThat(Q1.isOwner(UserTest.JAVAJIGI)).isTrue();
     }
 
-    @DisplayName("질문 삭제처리 확인 테스트")
-    @Test
-    void isDeleted_삭제_확인테스트() {
-        assertThat(Q1.isDeleted()).isFalse();
-    }
-
     @DisplayName("질문 삭제 처리 테스트")
     @Test
     void deleted_삭제_처리테스트() {
         // when
-        assertThat(Q1.isDeleted()).isTrue();
-        Q1.deleted();
-        // then
         assertThat(Q1.isDeleted()).isFalse();
+        Q1.deleteQuestion();
+        // then
+        assertThat(Q1.isDeleted()).isTrue();
     }
 
     @DisplayName("질문에 응답 추가 테스트")

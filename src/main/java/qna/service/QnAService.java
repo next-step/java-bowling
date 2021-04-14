@@ -32,33 +32,17 @@ public class QnAService {
                 .orElseThrow(NotFoundException::new);
     }
 
+    /**
+     * 1. 질문 게시글 권한 체크
+     * 2. 답변 중에 다른 사람이 작성한 글이 있는지 확인
+     * 3. 질문 삭제처리
+     * 4. 질문 삭제처리 이력 저장
+     * 5. 답변 삭제처리 이력 저장
+     */
     @Transactional
-    public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
+    public void deleteQuestion(User loginUser, long questionId) {
         Question question = findQuestionById(questionId);
-        if (!question.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-
-        // 응답 리스트를 반복하면서 작성자가 같지 않으면 예외 처리
-        List<Answer> answers = question.getAnswers();
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
-
-        // 이력 등록
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        question.deleted(); // 삭제 처리
-        // 질문지 삭제 처리
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-
-        // 질의 답 삭제 처리
-        for (Answer answer : answers) {
-            answer.deleted();
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
-
-        deleteHistoryService.saveAll(deleteHistories);
+        List<DeleteHistory> deleteArticles = question.deleteQuestion(loginUser);
+        deleteHistoryService.saveAll(deleteArticles);
     }
 }

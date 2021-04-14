@@ -1,6 +1,10 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Boolean.TRUE;
@@ -41,18 +45,8 @@ public class Question extends AbstractEntity {
         return title;
     }
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
     public String getContents() {
         return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
     }
 
     public User getWriter() {
@@ -73,8 +67,19 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public void deleted() {
+    public List<DeleteHistory> deleteQuestion(User loginUser){
+        List<DeleteHistory> deleteList = new ArrayList<>();
+
+        checkAuthorization(loginUser);
+        deleteList.add(deleteQuestion());
+        deleteList.addAll(answers.deleteAll());
+
+        return deleteList;
+    }
+
+    protected DeleteHistory deleteQuestion() {
         this.deleted = TRUE;
+        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
     }
 
     public boolean isDeleted() {
@@ -82,11 +87,18 @@ public class Question extends AbstractEntity {
     }
 
     public List<Answer> getAnswers() {
-        return answers.answers;
+        return answers.getAnswers();
+    }
+
+    private void checkAuthorization(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+        answers.checkAuthorization(loginUser);
     }
 
     @Override
     public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+        return String.format("%s, %s, %s, %s", getId(), title, contents, writer);
     }
 }

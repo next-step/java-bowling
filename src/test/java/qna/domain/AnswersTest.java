@@ -22,7 +22,7 @@ class AnswersTest {
         answers.add(A1);
         // then
         assertThatExceptionOfType(CannotDeleteException.class)
-                .isThrownBy(() -> answers.deleteAnswers(UserTest.SANJIGI));
+                .isThrownBy(() -> answers.checkAuthorization(UserTest.SANJIGI));
     }
 
     @DisplayName("답변 게시물 삭제처리 리스트 확인 테스트")
