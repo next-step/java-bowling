@@ -11,7 +11,7 @@ public class Hit implements  State{
   @Override
   public State play(int newPinCount) {
     if(newPinCount == 0) {
-      return new Gutter();
+      return new SecondGutter();
     }
 
     if(pinCount + newPinCount == 10) {

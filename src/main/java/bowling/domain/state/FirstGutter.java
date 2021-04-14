@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-public class Gutter implements State {
+public class FirstGutter implements State {
 
   @Override
   public State play(int pinCount) {

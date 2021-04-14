@@ -9,7 +9,7 @@ public class Ready implements  State {
     }
 
     if (pinCount == 0) {
-      return new Gutter();
+      return new FirstGutter();
     }
 
     return new Hit(pinCount);

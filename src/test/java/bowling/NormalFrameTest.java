@@ -5,7 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.state.Hit;
 import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
 import bowling.domain.state.Strike;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -29,6 +31,7 @@ public class NormalFrameTest {
 
     Frame nextFrame = firstFrame.next();
     assertThat(nextFrame.getPlayCount()).isEqualTo(1);
-    assertThat(nextFrame.getStatus()).isInstanceOf(Strike.class);
+    assertThat(nextFrame.getState()).isInstanceOf(Strike.class);
   }
+
 }

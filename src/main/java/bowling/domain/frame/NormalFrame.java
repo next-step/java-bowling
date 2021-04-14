@@ -14,4 +14,14 @@ public class NormalFrame extends Frame {
     return new NormalFrame(0, new Ready());
   }
 
+  @Override
+  public Frame next() {
+    if (getPlayCount() == 9) {
+      return new FinalFrame(10, new Ready());
+    }
+    if (getState().isEnd()) {
+      return new NormalFrame(getPlayCount() + 1, getState());
+    }
+    return this;
+  }
 }

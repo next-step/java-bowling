@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
 public class Frame {
@@ -18,16 +19,7 @@ public class Frame {
     state = state.play(pinCount);
   }
 
-/*Frame firstFrame = NormalFrame.createFirst();//0, ready
-    firstFrame.play(10);//strike상
-
-    Frame nextFrame = firstFrame.next();
-    assertThat(nextFrame.getPlayCount()).isEqualTo(1);//1, strike
-    assertThat(nextFrame.getStatus()).isInstanceOf(Strike.class);*/
   public Frame next() {
-    if (state.isEnd()) {
-      return new Frame(playCount + 1, state);
-    }
     return this;
   }
 
@@ -41,7 +33,7 @@ public class Frame {
     return playCount;
   }
 
-  public State getStatus() {
+  public State getState() {
     return state;
   }
 

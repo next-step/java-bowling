@@ -9,6 +9,6 @@ public class Spare implements State {
 
   @Override
   public boolean isEnd() {
-    return false;
+    return true;
   }
 }
