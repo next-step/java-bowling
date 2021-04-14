@@ -4,7 +4,13 @@ public class FirstGutter implements State {
 
   @Override
   public State play(int pinCount) {
-    return null;
+    if (pinCount == 0) {
+      return new SecondGutter();
+    }
+    if (pinCount == 10) {
+      return new Spare();
+    }
+    return new Miss();
   }
 
   @Override
