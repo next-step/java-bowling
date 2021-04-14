@@ -13,4 +13,9 @@ public class Spare implements State {
   public boolean isEnd() {
     return true;
   }
+
+  @Override
+  public boolean isBonus() {
+    return true;
+  }
 }

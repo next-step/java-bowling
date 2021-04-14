@@ -17,4 +17,9 @@ public class FirstGutter implements State {
   public boolean isEnd() {
     return false;
   }
+
+  @Override
+  public boolean isBonus() {
+    return false;
+  }
 }

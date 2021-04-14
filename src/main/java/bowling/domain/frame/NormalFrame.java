@@ -11,16 +11,16 @@ public class NormalFrame extends Frame {
   }
 
   public static NormalFrame createFirst() {
-    return new NormalFrame(0, new Ready());
+    return new NormalFrame(1, new Ready());
   }
 
   @Override
   public Frame next() {
     if (getPlayCount() == 9) {
-      return new FinalFrame(10, getState());
+      return new FinalFrame(10, new Ready());
     }
     if (getState().isEnd()) {
-      return new NormalFrame(getPlayCount() + 1, getState());
+      return new NormalFrame(getPlayCount() + 1, new Ready());
     }
     return this;
   }

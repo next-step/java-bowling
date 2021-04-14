@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.state.State;
 
-public class Frame {
+public abstract class Frame {
 
   private int playCount;
   private State state;
@@ -12,14 +12,11 @@ public class Frame {
     this.state = state;
   }
 
+  public abstract Frame next();
 
   public void play(int pinCount) {
     validatePinCount(pinCount);
     state = state.play(pinCount);
-  }
-
-  public Frame next() {
-    return this;
   }
 
   private void validatePinCount(int pinCount) {

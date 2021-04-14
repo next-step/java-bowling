@@ -12,4 +12,9 @@ public class SecondGutter implements State {
   public boolean isEnd() {
     return true;
   }
+
+  @Override
+  public boolean isBonus() {
+    return false;
+  }
 }
