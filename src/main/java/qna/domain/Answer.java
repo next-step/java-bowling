@@ -1,5 +1,6 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -7,69 +8,76 @@ import javax.persistence.*;
 
 @Entity
 public class Answer extends AbstractEntity {
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
-    private User writer;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
-    private Question question;
+  @ManyToOne(optional = false)
+  @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
+  private User writer;
 
-    @Lob
-    private String contents;
+  @ManyToOne(optional = false)
+  @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
+  private Question question;
 
-    private boolean deleted = false;
+  @Lob
+  private String contents;
 
-    public Answer() {
+  private boolean deleted = false;
+
+  public Answer() {
+  }
+
+  public Answer(User writer, Question question, String contents) {
+    this(null, writer, question, contents);
+  }
+
+  public Answer(Long id, User writer, Question question, String contents) {
+    super(id);
+
+    if (writer == null) {
+      throw new UnAuthorizedException();
     }
 
-    public Answer(User writer, Question question, String contents) {
-        this(null, writer, question, contents);
+    if (question == null) {
+      throw new NotFoundException();
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
-        super(id);
+    this.writer = writer;
+    this.question = question;
+    this.contents = contents;
+  }
 
-        if(writer == null) {
-            throw new UnAuthorizedException();
-        }
+  protected Answer setDeleted(boolean deleted) {
+    this.deleted = deleted;
+    return this;
+  }
 
-        if(question == null) {
-            throw new NotFoundException();
-        }
+  public boolean isDeleted() {
+    return deleted;
+  }
 
-        this.writer = writer;
-        this.question = question;
-        this.contents = contents;
+  public void hasOthers(User loginUser) throws CannotDeleteException {
+    if (!isOwner(loginUser)) {
+      throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
+  }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
+  private boolean isOwner(User writer) {
+    return this.writer.equals(writer);
+  }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
+  public User getWriter() {
+    return writer;
+  }
 
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
-    }
+  public String getContents() {
+    return contents;
+  }
 
-    public User getWriter() {
-        return writer;
-    }
+  public void toQuestion(Question question) {
+    this.question = question;
+  }
 
-    public String getContents() {
-        return contents;
-    }
-
-    public void toQuestion(Question question) {
-        this.question = question;
-    }
-
-    @Override
-    public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
-    }
+  @Override
+  public String toString() {
+    return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+  }
 }
