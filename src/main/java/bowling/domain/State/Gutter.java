@@ -8,9 +8,14 @@ public class Gutter implements State {
 
     public final static String SYMBOL = "-";
 
+    private final static int PIN_COUNT = 0;
+
     @Override
     public State newState(PinCount pinCount) {
-        return new Miss(new PinCount(0), pinCount);
+        if (pinCount.isStrike()) {
+            return new Spare(new PinCount(PIN_COUNT), pinCount);
+        }
+        return new Miss(new PinCount(PIN_COUNT), pinCount);
     }
 
     @Override
