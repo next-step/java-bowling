@@ -89,7 +89,7 @@ public class FramesTest extends FrameTestBase {
                 .collect(Collectors.toList());
 
         assertThat(states).containsExactlyInAnyOrder(STRIKE_SYMBOL, firstPinCountOfSecondFrame + SEPARATOR + secondPinCountOfSecondFrame, EMPTY_SYMBOL);
-        assertThat(scores).containsExactlyInAnyOrder(expectedFirstFrameScore,expectedSecondFrameScore,expectedLastFrameScore);
+        assertThat(scores).containsExactlyInAnyOrder(expectedFirstFrameScore, expectedSecondFrameScore, expectedLastFrameScore);
     }
 
 }
