@@ -2,6 +2,7 @@ package qna.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,6 +20,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * 해당 테스트 케이스가 깨지지 않도록 서비스의 비즈니스 로직을 도메인으로 이동하는 것이 목표
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class QnaServiceTest {
     @Mock
@@ -40,6 +44,7 @@ public class QnaServiceTest {
         question.addAnswer(answer);
     }
 
+    @DisplayName("QnA 게시물 삭제처리 테스트")
     @Test
     public void delete_성공() throws Exception {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
@@ -51,6 +56,7 @@ public class QnaServiceTest {
         verifyDeleteHistories();
     }
 
+    @DisplayName("QnA 게시물 권한 체크 예외처리 테스트")
     @Test
     public void delete_다른_사람이_쓴_글() throws Exception {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
@@ -60,6 +66,7 @@ public class QnaServiceTest {
         }).isInstanceOf(CannotDeleteException.class);
     }
 
+    @DisplayName("QnA 게시물 삭제처리 기능 테스트")
     @Test
     public void delete_성공_질문자_답변자_같음() throws Exception {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
@@ -71,6 +78,7 @@ public class QnaServiceTest {
         verifyDeleteHistories();
     }
 
+    @DisplayName("QnA 게시물 내에 다른 작성자가 쓴 답변으로 인하여 게시물 삭제 불가 테스트")
     @Test
     public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
