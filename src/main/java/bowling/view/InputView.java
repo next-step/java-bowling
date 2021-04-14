@@ -10,8 +10,8 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public int getPoint() {
-        System.out.println("점수를 입력하세요");
+    public int getPoint(int frameCount) {
+        System.out.printf(String.format("%d프레임 투구 : ", frameCount));
         return Integer.parseInt(scanner.nextLine().trim());
     }
 

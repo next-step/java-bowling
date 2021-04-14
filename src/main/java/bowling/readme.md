@@ -23,4 +23,7 @@ feat(general): add business logic
 
 feat(gameFrames): add gameFrame class
  - 프레임을 표시해줄 수 있는 게임 프레임 생성
+
+feat(view): add view method
+ - 입력창과 출력창을 점수를 제외하고 추가 
 ```
