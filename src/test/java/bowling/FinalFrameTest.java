@@ -1,12 +1,13 @@
 package bowling;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import bowling.domain.Player;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.state.Ready;
-import bowling.domain.state.SecondGutter;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
@@ -33,5 +34,15 @@ public class FinalFrameTest {
     assertThat(frame.next()).isInstanceOf(FinalFrame.class);
   }
 
+  @Test
+  @DisplayName("마지막에 스트라이크나 스페어를 친 경우 아닌 경우 한 번 더 투구 기회가 없다.")
+  public void bonus2() {
+    assertThatThrownBy(() -> {
+      Frame frame = new FinalFrame(10, new Ready());
+      frame.play(8);
+      frame.play(1);
+      frame.next();
+    }).isInstanceOf(IllegalArgumentException.class);
+  }
 
 }
