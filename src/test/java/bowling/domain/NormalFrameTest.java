@@ -69,6 +69,21 @@ public class NormalFrameTest extends FrameTestBase {
     }
 
     @Test
+    @DisplayName("gutter가 있는 spare시 현재 상태값 테스트")
+    void current_state_when_spare_with_gutter() {
+        NormalFrame normalFrame = NormalFrame.first().next();
+        int firstPinCount = 0;
+        int secondPinCount = 10;
+        normalFrame.addPinCount(firstPinCount);
+        normalFrame.addPinCount(secondPinCount);
+
+        State state = normalFrame.currentState();
+        assertThat(normalFrame.isDone()).isTrue();
+        assertThat(state instanceof Spare).isTrue();
+        assertThat(state.stateInString()).isEqualTo(firstPinCount + SPARE_SYMBOL);
+    }
+
+    @Test
     @DisplayName("gutter가 없는 miss시 현재 상태값 테스트")
     void current_state_when_miss() {
         NormalFrame normalFrame = NormalFrame.first();
