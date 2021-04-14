@@ -76,10 +76,16 @@ public class FinalState implements State {
     public Score calculatedScore(Score scoreToCalculate) {
         Score finalScore = scoreToCalculate;
         for (State state : states) {
-            if(!finalScore.isNecessaryToCalculateMore()) return finalScore;
-            finalScore = state.calculatedScore(finalScore);
+            finalScore = nextCalculatedScore(state, finalScore);
         }
         return finalScore;
+    }
+
+    private Score nextCalculatedScore(State state, Score finalScore) {
+        if (!finalScore.isNecessaryToCalculateMore()) {
+            return finalScore;
+        }
+        return state.calculatedScore(finalScore);
     }
 
     private boolean isFirstStateIsMiss() {
