@@ -31,7 +31,7 @@ public class Answers {
 
   public List<DeleteHistory> answerHistories() {
     return answers.stream()
-        .map(answer -> new DeleteHistory(answer.setDeleted(true), LocalDateTime.now()))
+        .map(answer -> new DeleteHistory(answer.markDeleted(), LocalDateTime.now()))
         .collect(Collectors.toList());
   }
 }
