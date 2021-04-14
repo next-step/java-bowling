@@ -14,11 +14,12 @@ public class FinalFrame extends Frame {
     if (getState().isBonus()) {
       return new FinalFrame(10, new Ready());
     }
-
-    if (getState().isEnd()) {
-      throw new IllegalArgumentException("");
-    }
     return this;
+  }
+
+  @Override
+  public boolean isEnd() {
+    return getState().isEnd();
   }
 
 }

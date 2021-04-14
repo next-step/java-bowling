@@ -4,7 +4,7 @@ import bowling.domain.frame.Frame;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Frams {
+public class Frames {
   List<Frame> frams = new ArrayList<>();
 
 }

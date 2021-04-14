@@ -42,6 +42,7 @@ public class FinalFrameTest {
       frame.play(8);
       frame.play(1);
       frame.next();
+      frame.play(5);
     }).isInstanceOf(IllegalArgumentException.class);
   }
 

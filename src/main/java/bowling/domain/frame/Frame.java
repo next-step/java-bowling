@@ -33,4 +33,7 @@ public abstract class Frame {
     return state;
   }
 
+  public boolean isEnd() {
+    return false;
+  }
 }
