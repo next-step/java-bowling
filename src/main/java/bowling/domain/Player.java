@@ -15,7 +15,7 @@ public class Player {
   }
 
   private void validateName(String name) {
-    if (name.length() > 3 || !pattern.matcher(name).matches()) {
+    if (name.length() != 3 || !pattern.matcher(name).matches()) {
       throw new IllegalArgumentException(INVALID_NAME);
     }
   }
