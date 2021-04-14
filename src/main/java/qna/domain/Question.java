@@ -72,7 +72,7 @@ public class Question extends AbstractEntity {
 
         checkAuthorization(loginUser);
         deleteList.add(deleteQuestion());
-        deleteList.addAll(answers.deleteAll());
+        deleteList.addAll(answers.deleteAll(loginUser));
 
         return deleteList;
     }
@@ -94,7 +94,6 @@ public class Question extends AbstractEntity {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-        answers.checkAuthorization(loginUser);
     }
 
     @Override

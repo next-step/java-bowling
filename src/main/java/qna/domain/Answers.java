@@ -24,7 +24,7 @@ public class Answers {
         answers.add(answer);
     }
 
-    public void checkAuthorization(User loginUser) {
+    protected void checkAuthorization(User loginUser) {
         if (isAuthorizationMatches(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
@@ -34,7 +34,8 @@ public class Answers {
         return answers.stream().anyMatch(answer -> !answer.isOwner(loginUser));
     }
 
-    public List<DeleteHistory> deleteAll() {
+    public List<DeleteHistory> deleteAll(User loginUser) {
+        isAuthorizationMatches(loginUser);
         return answers.stream()
                 .map(Answer::deleteAnswers)
                 .collect(Collectors.toList());

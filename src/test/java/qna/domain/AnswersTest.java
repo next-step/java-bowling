@@ -33,7 +33,7 @@ class AnswersTest {
         // when
         answers.add(A1);
         answers.add(A3);
-        List<DeleteHistory> deleteHistories = answers.deleteAll();
+        List<DeleteHistory> deleteHistories = answers.deleteAll(UserTest.JAVAJIGI);
         // then
         assertThat(deleteHistories.size()).isEqualTo(2);
     }
