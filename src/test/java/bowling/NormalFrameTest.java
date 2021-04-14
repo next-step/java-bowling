@@ -18,6 +18,4 @@ public class NormalFrameTest {
       normalFrame.play(11);
     }).isInstanceOf(IllegalArgumentException.class);
   }
-
-  
 }

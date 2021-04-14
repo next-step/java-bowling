@@ -19,12 +19,12 @@ public class NormalFrame {
     return new NormalFrame(1, new Ready());
   }
 
-  public void play(int bawlingCount) {
-    validateBawlingCount(bawlingCount);
+  public void play(int pinCount) {
+    validateBawlingCount(pinCount);
   }
 
-  private void validateBawlingCount(int bawlingCount) {
-    if (bawlingCount < 1 || bawlingCount > 10) {
+  private void validateBawlingCount(int pinCount) {
+    if (pinCount < 1 || pinCount > 10) {
       throw new IllegalArgumentException();
     }
   }
