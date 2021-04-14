@@ -14,6 +14,7 @@ public class NormalFrames implements BallThrowable, Endable {
 
     public NormalFrames() {
         this.frames = new ArrayList<>();
+        frames.add(new Frame());
     }
 
     @Override
@@ -23,9 +24,6 @@ public class NormalFrames implements BallThrowable, Endable {
 
     @Override
     public void throwBall(int point) {
-        if (this.frames.isEmpty()) {
-            frames.add(new Frame());
-        }
         int lastIndex = frames.size() - 1;
         if (!frames.get(lastIndex).ended()) {
             frames.get(lastIndex).throwBall(point);
@@ -33,5 +31,9 @@ public class NormalFrames implements BallThrowable, Endable {
         if (frames.get(lastIndex).ended() && frames.size() < LAST_FRAME) {
             frames.add(new Frame());
         }
+    }
+
+    public int frameCount() {
+        return frames.size();
     }
 }

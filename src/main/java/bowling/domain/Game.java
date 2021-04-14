@@ -1,29 +1,28 @@
 package bowling.domain;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.NormalFrames;
+import bowling.domain.frame.GameFrames;
 
-public class Game {
-    private NormalFrames normalFrames;
-    private FinalFrame finalFrame;
+public class Game implements Endable, BallThrowable {
+    private int frameCount;
+    private GameFrames gameFrames;
 
     public Game() {
-        this.normalFrames = new NormalFrames();
-        this.finalFrame = new FinalFrame();
+        this.frameCount = 1;
+        this.gameFrames = new GameFrames();
     }
 
+    public int frameCount() {
+        return this.frameCount;
+    }
+
+    @Override
     public void throwBall(int point) {
-        if (!normalFrames.ended()) {
-            normalFrames.throwBall(point);
-            return;
-        }
-        if (!finalFrame.ended()) {
-            finalFrame.throwBall(point);
-        }
+        gameFrames.throwBall(point);
+        frameCount = gameFrames.frameCount();
     }
 
+    @Override
     public boolean ended() {
-        return normalFrames.ended() && finalFrame.ended();
+        return gameFrames.ended();
     }
-
 }

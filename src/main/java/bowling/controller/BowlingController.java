@@ -1,7 +1,6 @@
 package bowling.controller;
 
 import bowling.domain.Game;
-import bowling.domain.Point;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
