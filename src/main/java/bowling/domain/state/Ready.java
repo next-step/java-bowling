@@ -14,4 +14,9 @@ public class Ready implements  State {
 
     return new Hit(pinCount);
   }
+
+  @Override
+  public boolean isEnd() {
+    return false;
+  }
 }

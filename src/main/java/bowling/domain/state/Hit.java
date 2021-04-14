@@ -20,4 +20,9 @@ public class Hit implements  State{
 
     return new Miss();
   }
+
+  @Override
+  public boolean isEnd() {
+    return false;
+  }
 }

@@ -6,4 +6,9 @@ public class Spare implements State {
   public State play(int pinCount) {
     return null;
   }
+
+  @Override
+  public boolean isEnd() {
+    return false;
+  }
 }

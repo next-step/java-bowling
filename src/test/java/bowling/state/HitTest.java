@@ -5,9 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import bowling.domain.state.Gutter;
 import bowling.domain.state.Hit;
 import bowling.domain.state.Miss;
-import bowling.domain.state.Ready;
 import bowling.domain.state.Spare;
-import bowling.domain.state.Strike;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
