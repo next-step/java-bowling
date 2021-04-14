@@ -30,4 +30,6 @@ feat(view): add view method
 fix(finalFrames): fix rule misunderstanding
  - 마지막 프레임에 보너스 투구를 1회로 수정
  - 출력 로직 추가
+
+feat(resultView): add point print logic
 ```

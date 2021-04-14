@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.Game;
 import bowling.domain.Name;
 import bowling.domain.Point;
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 
 public class ResultView {
@@ -48,13 +49,64 @@ public class ResultView {
     }
 
     private String stringFinalFramePoint(Game game){
-        Frame frame = game.gameFrames()
-                .finalFrame()
-                .frame();
-        if(frame.firstPoint().played()== Point.NOT_PLAYED){
-            return "   ";
+        FinalFrame finalFrame = game.gameFrames()
+                .finalFrame();
+        if(finalFrame.ended()){
+            return stringFinalFrameEndedPoint(finalFrame);
         }
-        return "***";
+        return stringFinalFrameNotEndedPoint(finalFrame);
+    }
+
+    private String stringFinalFrameEndedPoint(FinalFrame finalFrame){
+        Frame frame = finalFrame.frame();
+        Point bonusPoint = finalFrame.bonusPoint();
+        if(frame.isStrike()){
+            return stringFinalFrameEndedStrikePoint(bonusPoint);
+        }
+        if(frame.isSpare()){
+            return stringFinalFrameEndedSparePoint(frame, bonusPoint);
+        }
+        return frame.firstPoint().point()+"|"+ frame.secondPoint().point();
+    }
+
+    private String stringFinalFrameEndedStrikePoint(Point point){
+        if (point.striked()){
+            return "x|x";
+        }
+        if(point.guttered()){
+            return "x|-";
+        }
+        return "x|"+point.point();
+    }
+
+    private String stringFinalFrameEndedSparePoint(Frame frame, Point point){
+        if(point.striked()){
+            return frame.firstPoint().point()+"|/|x";
+        }
+        if(point.guttered()){
+            return frame.firstPoint().point()+"|/|-";
+        }
+        return frame.firstPoint().point()+"|/|"+point.point();
+    }
+
+    private String stringFinalFrameNotEndedPoint(FinalFrame finalFrame){
+        Frame frame = finalFrame.frame();
+        if (frame.firstPoint().played()==Point.NOT_PLAYED){
+            return EMPTY_SPACE;
+        }
+        if (frame.isStrike()){
+            return "x| ";
+        }
+        if(frame.isSpare() && frame.firstPoint().guttered()){
+            return "-|/|";
+        }
+        if(frame.isSpare() && !frame.firstPoint().guttered()){
+            return frame.firstPoint().point()+"|/|";
+        }
+        if(frame.firstPoint().guttered()){
+            return "-|";
+        }
+        return frame.firstPoint().point()+"|";
     }
 
     private String stringNormalFramePoint(Game game, int count){
@@ -62,28 +114,39 @@ public class ResultView {
                 .normalFrames()
                 .frames()
                 .get(count-1);
-        if(frame.firstPoint().played()==Point.NOT_PLAYED){
-            return EMPTY_SPACE;
+        if(frame.ended()){
+            return stringNormalFrameEndedPoint(frame);
         }
+        return stringNormalFramedNotEndedPoint(frame);
+    }
+
+    private String stringNormalFrameEndedPoint(Frame frame){
         if(frame.isStrike()){
             return STRIKE_STRING;
         }
-        if(frame.isSpare()){
-            return stringSpare(frame.firstPoint().point());
+        if(frame.isSpare() && frame.firstPoint().guttered()){
+            return "-|/";
         }
-        if(frame.secondPoint().played()==Point.NOT_PLAYED){
-            return stringSinglePoint(frame.firstPoint().point());
+        if(frame.isSpare() && !frame.firstPoint().guttered()){
+            return frame.firstPoint().point()+"|/";
         }
-        return frame.firstPoint().point() + "/" + frame.secondPoint().point();
+        if(frame.firstPoint().guttered()){
+            return "-|"+frame.secondPoint().point();
+        }
+        if(frame.secondPoint().guttered()){
+            return frame.firstPoint().point()+"|-";
+        }
+        return frame.firstPoint().point()+"|"+frame.secondPoint().point();
     }
 
-    private String stringSpare(int firstPoint){
-        return firstPoint + "|/";
+    private String stringNormalFramedNotEndedPoint(Frame frame){
+        if(frame.firstPoint().played()==Point.NOT_PLAYED){
+            return EMPTY_SPACE;
+        }
+        if(frame.firstPoint().guttered()){
+            return "-| ";
+        }
+        return frame.firstPoint().point()+"| ";
     }
-
-    private String stringSinglePoint(int firstPoint){
-        return firstPoint + "  ";
-    }
-
 
 }

@@ -47,7 +47,7 @@ public class FinalFrame implements BallThrowable, Endable {
         return frame;
     }
 
-    public Point bonusFrame(){
+    public Point bonusPoint(){
         return bonusPoint;
     }
 }

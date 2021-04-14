@@ -73,4 +73,7 @@ public class Point {
         return this.played;
     }
 
+    public boolean guttered() {
+        return point==NULL;
+    }
 }
