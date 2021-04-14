@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.dto.*;
+import bowling.dto.PlayResult;
 import bowling.util.StringUtils;
 
 import java.util.List;
@@ -16,24 +16,20 @@ public class ResultView {
 
     private static final String HEADER_PLAYER_NAME_REPRESENTATION = "NAME";
 
-    public static void printScoreBoard(ScoreBoard scoreBoard) {
-        printScoreBoardHeader(scoreBoard.totalNumberOfFrame());
-        printScoreBoardBody(scoreBoard.playResult());
-    }
-
-    private static void printEmptyLine() {
+    public static void printEmptyLine() {
         System.out.println();
     }
 
-    private static void printScoreBoardBody(PlayResult playResult) {
-        FrameResults frameResults = playResult.framesResult();
+    public static void printFrameStates(PlayResult playResult) {
         String playerName = playerNameInString(playResult.playerName());
-        String framesInString = framesInString(frameResults.allStates());
+        String framesInString = framesInString(playResult.allStates());
 
         System.out.print(FRAME_SEPARATOR + playerName + framesInString + FRAME_SEPARATOR);
         printEmptyLine();
-        System.out.print(scoresInString(frameResults.allScores()));
-        printEmptyLine();
+    }
+
+    private static String playerNameInString(String name) {
+        return StringUtils.center(name, FIXED_FRAME_SPACE) + FRAME_SEPARATOR;
     }
 
     private static String framesInString(List<String> states) {
@@ -42,26 +38,7 @@ public class ResultView {
                 .collect(Collectors.joining(FRAME_SEPARATOR));
     }
 
-    private static String scoresInString(List<ScoreDto> scores) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(FRAME_SEPARATOR);
-        stringBuilder.append(StringUtils.center(EMPTY_SCORE, FIXED_FRAME_SPACE));
-        stringBuilder.append(FRAME_SEPARATOR);
-        String scoresInString = scores.stream()
-                .map(scoreDto -> scoreDto.isFullyCalculated() ? String.valueOf(scoreDto.currentScore()) : EMPTY_SCORE)
-                .map(formattedScore -> StringUtils.center(formattedScore, FIXED_FRAME_SPACE))
-                .collect(Collectors.joining(FRAME_SEPARATOR));
-        stringBuilder.append(scoresInString);
-        stringBuilder.append(FRAME_SEPARATOR);
-        return stringBuilder.toString();
-    }
-
-    private static void printScoreBoardHeader(int totalNumberOfFrame) {
-        System.out.print(playerNameHeaderAndFrameNumbersInString(totalNumberOfFrame));
-        printEmptyLine();
-    }
-
-    private static String playerNameHeaderAndFrameNumbersInString(int totalNumberOfFrame) {
+    public static void printScoreBoardHeader(int totalNumberOfFrame) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(FRAME_SEPARATOR);
         stringBuilder.append(StringUtils.center(HEADER_PLAYER_NAME_REPRESENTATION, FIXED_FRAME_SPACE));
@@ -73,11 +50,20 @@ public class ResultView {
             stringBuilder.append(formattedFrameNumber);
         }
         stringBuilder.append(FRAME_SEPARATOR);
-        return stringBuilder.toString();
+
+        System.out.print(stringBuilder.toString());
+        printEmptyLine();
     }
 
-    private static String playerNameInString(String name) {
-        return StringUtils.center(name, FIXED_FRAME_SPACE) + FRAME_SEPARATOR;
+    public static void printScoreHeader() {
+        System.out.print(FRAME_SEPARATOR + StringUtils.center(EMPTY_SCORE, FIXED_FRAME_SPACE) + FRAME_SEPARATOR);
     }
 
+    public static void printScore(int accumulatesScore) {
+        System.out.print(StringUtils.center(String.valueOf(accumulatesScore), FIXED_FRAME_SPACE)+FRAME_SEPARATOR  );
+    }
+
+    public static void printEmptyScore() {
+        System.out.print( StringUtils.center(EMPTY_SCORE, FIXED_FRAME_SPACE) +FRAME_SEPARATOR );
+    }
 }

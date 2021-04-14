@@ -3,7 +3,6 @@ package bowling.domain;
 import bowling.domain.State.*;
 import bowling.domain.frame.*;
 import bowling.dto.FrameResult;
-import bowling.dto.FrameResults;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +18,8 @@ public class FramesTest extends FrameTestBase {
     void init() {
         int totalNumberOfFrame = 10;
         Frames frames = Frames.init(totalNumberOfFrame);
-        FrameResults result = frames.result();
 
-        List<FrameResult> results = result.results();
+        List<FrameResult> results = frames.result();
 
         assertThat(results.size()).isEqualTo(totalNumberOfFrame);
         assertThat(frames.currentFrameNumber()).isEqualTo(FrameNumber.first());
@@ -78,9 +76,8 @@ public class FramesTest extends FrameTestBase {
         frames.addPinCount(firstPinCountOfSecondFrame);
         frames.addPinCount(secondPinCountOfSecondFrame);
 
-        FrameResults result = frames.result();
-        List<String> states = result.results().stream()
-                .map(FrameResult::state)
+        List<String> states = frames.result()
+                .stream().map(FrameResult::state)
                 .collect(Collectors.toList());
 
         assertThat(states).containsExactlyInAnyOrder(STRIKE_SYMBOL, firstPinCountOfSecondFrame + SEPARATOR + secondPinCountOfSecondFrame, EMPTY_SYMBOL);
