@@ -6,8 +6,8 @@ public class Round {
 
     private final int round;
 
-    private static final int FIRST_ROUND = 0;
-    private static final int FINAL_ROUND = 9;
+    private static final int FIRST_ROUND = 1;
+    private static final int FINAL_ROUND = 10;
 
     private Round(int round) {
         this.round = round;
