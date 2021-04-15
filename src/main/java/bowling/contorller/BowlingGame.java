@@ -1,44 +1,38 @@
 package bowling.contorller;
 
-import bowling.domain.BowlingFrame;
-import bowling.domain.BowlingNormalFrame;
+import bowling.domain.BowlingBoard;
+import bowling.domain.Player;
 import bowling.domain.Point;
-
-import java.util.ArrayList;
-import java.util.List;
+import bowling.dto.BowlingBoardDto;
+import bowling.dto.PlayerDto;
+import bowling.view.InputView;
+import bowling.view.OutputView;
 
 public class BowlingGame {
 
-    private List<BowlingFrame> bowlingFrameList;
+    private final Player player;
+    private final BowlingBoard bowlingBoard;
 
-    public BowlingGame(List<BowlingFrame> bowlingFrameList) {
-        this.bowlingFrameList = bowlingFrameList;
+    public BowlingGame(String playerName) {
+        this.player = Player.of(playerName);
+        this.bowlingBoard = BowlingBoard.of();
     }
 
-    public static BowlingGame of() {
-        List<BowlingFrame> bowlingFrameList = new ArrayList<>();
-        bowlingFrameList.add(BowlingNormalFrame.first());
-        return new BowlingGame(bowlingFrameList);
+    public void play() {
+        int point = InputView.inputPoint(bowlingBoard.round());
+        OutputView.printResultView(PlayerDto.of(player));
+        BowlingBoard nextBowling;
+        boolean isEnd = false;
+        do {
+            nextBowling = bowlingBoard.pitching(Point.of(point));
+            OutputView.printResultView(PlayerDto.of(player), BowlingBoardDto.of(nextBowling));
+            isEnd = bowlingBoard.isEnd();
+        } while (!isEnd);
     }
 
-    public int round() {
-        return bowlingFrameList.size();
-    }
-
-    private BowlingFrame getFrame() {
-        return bowlingFrameList.get(bowlingFrameList.size() - 1);
-    }
-
-    public BowlingFrame firstPitching(Point point) {
-        BowlingFrame bowlingFrame = getFrame().firstPitching(point);
-        bowlingFrameList.set(round() - 1, bowlingFrame);
-        return bowlingFrame;
-    }
-
-    public BowlingFrame secondPitching(Point point) {
-        BowlingFrame bowlingFrame = getFrame().secondPitching(point);
-        bowlingFrameList.set(round() - 1, bowlingFrame);
-        bowlingFrameList.add(bowlingFrame.nextFrame());
-        return getFrame().secondPitching(point);
+    public static void main(String[] args) {
+        String playerName = InputView.inputPlayer();
+        BowlingGame gameController = new BowlingGame(playerName);
+        gameController.play();
     }
 }

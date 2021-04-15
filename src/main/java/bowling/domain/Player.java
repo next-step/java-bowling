@@ -1,4 +1,4 @@
-package bowling.contorller;
+package bowling.domain;
 
 public class Player {
 
