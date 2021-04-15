@@ -10,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 public class ResultView {
 
   private static final String HEADER ="| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-  private static final String BONUS_TEN_FRAME = "  10  |";
   private static final String DIVIDER = "|";
 
   public void printResult(Player player, Frames frames) {

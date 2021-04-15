@@ -4,6 +4,7 @@ public class FirstGutter implements State {
 
   @Override
   public State play(int pinCount) {
+
     if (pinCount == 0) {
       return new SecondGutter();
     }
