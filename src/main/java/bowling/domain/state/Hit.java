@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-public class Hit implements  State{
+public class Hit implements State {
 
   private final int pinCount;
   private static final String INVALID_TOTAL_PINCOUNT = "총 친 핀의 개수는 0개 이상 10개 이하여야 합니다.";
@@ -14,11 +14,11 @@ public class Hit implements  State{
   @Override
   public State play(int newPinCount) {
     validateNewPinCount(newPinCount);
-    if(newPinCount == 0) {
+    if (newPinCount == 0) {
       return new SecondGutter();
     }
 
-    if(pinCount + newPinCount == 10) {
+    if (pinCount + newPinCount == 10) {
       return new Spare();
     }
 

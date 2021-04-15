@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Frames {
+
   private final List<Frame> frames = new ArrayList<>();
 
   public void add(Frame frame) {

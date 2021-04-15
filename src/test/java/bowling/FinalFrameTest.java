@@ -3,7 +3,6 @@ package bowling;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import bowling.domain.Player;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
@@ -24,7 +23,7 @@ public class FinalFrameTest {
   @Test
   @DisplayName("마지막에 스트라이크나 스페어를 친 경우 한 번 더 투구 기회가 있다.")
   public void bonus() {
-    Frame frame = new FinalFrame(10,new Ready());
+    Frame frame = new FinalFrame(10, new Ready());
     frame.play(10);
     assertThat(frame.next()).isInstanceOf(FinalFrame.class);
 

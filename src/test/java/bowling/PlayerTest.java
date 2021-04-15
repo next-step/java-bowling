@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class PlayerTest {
 
   @ParameterizedTest
-  @ValueSource(strings = {"abcd","bcds","$@s"})
+  @ValueSource(strings = {"abcd", "bcds", "$@s"})
   @DisplayName("player 이름은 3개의 영문자 확인")
   public void create(String str) {
     assertThatThrownBy(() -> {

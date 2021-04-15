@@ -5,7 +5,6 @@ import bowling.domain.state.State;
 
 public class NormalFrame extends Frame {
 
-
   public NormalFrame(int playCount, State state) {
     super(playCount, state);
   }

@@ -3,12 +3,8 @@ package bowling.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
-import bowling.domain.state.FirstGutter;
 import bowling.domain.state.Hit;
 import bowling.domain.state.Miss;
-import bowling.domain.state.Ready;
 import bowling.domain.state.SecondGutter;
 import bowling.domain.state.Spare;
 import org.junit.Test;
@@ -17,6 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class HitTest {
+
   @Test
   @DisplayName("play 확인")
   public void play() {
@@ -26,7 +23,7 @@ public class HitTest {
   }
 
   @ParameterizedTest
-  @ValueSource(ints = {12,14})
+  @ValueSource(ints = {12, 14})
   @DisplayName("총 친 핀의 개수는 0개 이상 10개 이하여야 한다.")
   public void validateNewPinCount(int number) {
     assertThatThrownBy(() -> {

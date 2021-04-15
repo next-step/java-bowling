@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-public class Ready implements  State {
+public class Ready implements State {
 
   @Override
   public State play(int pinCount) {
@@ -27,7 +27,7 @@ public class Ready implements  State {
 
   @Override
   public String getString() {
-    return null;
+    return "";
   }
 
 }

@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ResultView {
 
-  private static final String HEADER ="| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+  private static final String HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
   private static final String DIVIDER = "|";
 
   public void printResult(Player player, Frames frames) {
@@ -32,11 +32,10 @@ public class ResultView {
   }
 
 
-
   private void printFrames(List<Frame> frames) {
     String str = "";
     int lastIndex = frames.size() - 1;
-    for (int i = 0; i<= lastIndex; i++) {
+    for (int i = 0; i <= lastIndex; i++) {
       State state = frames.get(i).getState();
       str += addState(state, i, lastIndex);
 
@@ -51,7 +50,7 @@ public class ResultView {
   }
 
   private void printRemainDivider(int size) {
-    for (int i = 0 ; i<size; i++) {
+    for (int i = 0; i < size; i++) {
       printText("");
     }
   }

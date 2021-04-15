@@ -8,6 +8,7 @@ public class Player {
   private final static String INVALID_PATTERN_REGEX = "^[a-zA-Z]*$";
   private final static Pattern pattern = Pattern.compile(INVALID_PATTERN_REGEX);
   private final static String INVALID_NAME = "잘못된 이름입니다.";
+  private final static int NAME_LENGTH = 3;
 
   public Player(String name) {
     validateName(name);
@@ -15,7 +16,7 @@ public class Player {
   }
 
   private void validateName(String name) {
-    if (name.length() != 3 || !pattern.matcher(name).matches()) {
+    if (name.length() != NAME_LENGTH || !pattern.matcher(name).matches()) {
       throw new IllegalArgumentException(INVALID_NAME);
     }
   }

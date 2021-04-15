@@ -4,8 +4,10 @@ import bowling.domain.frame.Frame;
 import java.util.Scanner;
 
 public class InputView {
+
   private final Scanner scanner = new Scanner(System.in);
   private static final String INPUT_NAME = "플레이어 이름은(3 english letters)?: ";
+
   public String inputName() {
     System.out.print(INPUT_NAME);
     return scanner.nextLine();

@@ -2,15 +2,14 @@ package bowling.state;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import bowling.domain.state.Hit;
 import bowling.domain.state.Miss;
-import bowling.domain.state.SecondGutter;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class MissTest {
+
   @Test
   @DisplayName("play 확인")
   public void play() {
