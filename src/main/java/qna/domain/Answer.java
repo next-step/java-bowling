@@ -2,11 +2,15 @@ package qna.domain;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
-
-import javax.persistence.*;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -71,13 +75,13 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public DeleteHistory delete(User user) throws CannotDeleteException {
+    public DeleteHistory delete(User user) {
         validateForDelete(user);
         setDeleted(true);
         return new DeleteHistory(ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now());
     }
 
-    private void validateForDelete(User user) throws CannotDeleteException {
+    private void validateForDelete(User user) {
         if (!isOwner(user)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }

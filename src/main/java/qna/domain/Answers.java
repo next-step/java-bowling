@@ -1,6 +1,5 @@
 package qna.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,8 +10,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.Where;
-
-import qna.CannotDeleteException;
 
 @Embeddable
 public class Answers {
@@ -28,7 +25,7 @@ public class Answers {
     public Answers() {
     }
 
-    public List<DeleteHistory> deleteAll(User user) throws CannotDeleteException {
+    public List<DeleteHistory> deleteAll(User user) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
             deleteHistories.add(answer.delete(user));

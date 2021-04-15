@@ -29,7 +29,7 @@ public class AnswerTest {
     }
 
     @Test
-    void 삭제_테스트() throws CannotDeleteException {
+    void 삭제_테스트() {
         // when
         answer.delete(UserTest.JAVAJIGI);
         // then

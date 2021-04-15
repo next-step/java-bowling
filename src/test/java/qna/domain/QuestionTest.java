@@ -37,7 +37,7 @@ public class QuestionTest {
     }
 
     @Test
-    void 삭제_테스트() throws CannotDeleteException {
+    void 삭제_테스트() {
         question.delete(UserTest.JAVAJIGI);
         assertThat(question.isDeleted()).isTrue();
     }
