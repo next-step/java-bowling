@@ -24,4 +24,11 @@ public class NormalFrame extends Frame {
     }
     return this;
   }
+
+
+  @Override
+  public Frame get() {
+    return new NormalFrame(getPlayCount(), getState());
+  }
+
 }

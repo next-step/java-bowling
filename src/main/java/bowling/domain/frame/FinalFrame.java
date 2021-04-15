@@ -5,7 +5,7 @@ import bowling.domain.state.State;
 
 public class FinalFrame extends Frame {
 
-  private static boolean end = false;
+  private static boolean usedBonus = false;
 
   public FinalFrame(int playCount, State state) {
     super(playCount, state);
@@ -13,8 +13,8 @@ public class FinalFrame extends Frame {
 
   @Override
   public Frame next() {
-    if (getState().isBonus() && !end) {
-      end = true;
+    if (getState().isBonus() && !usedBonus) {
+      usedBonus = true;
       return new FinalFrame(10, new Ready());
     }
     return this;
@@ -24,5 +24,11 @@ public class FinalFrame extends Frame {
   public boolean isEnd() {
     return getState().isEnd();
   }
+
+  @Override
+  public Frame get() {
+    return new FinalFrame(getPlayCount(), getState());
+  }
+
 
 }

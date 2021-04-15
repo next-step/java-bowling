@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 public class Hit implements  State{
 
-  private int pinCount;
+  private final int pinCount;
 
   public Hit(int pinCount) {
     this.pinCount = pinCount;
@@ -29,5 +29,10 @@ public class Hit implements  State{
   @Override
   public boolean isBonus() {
     return false;
+  }
+
+  @Override
+  public String getString() {
+    return String.valueOf(pinCount);
   }
 }

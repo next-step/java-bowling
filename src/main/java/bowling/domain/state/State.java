@@ -7,4 +7,6 @@ public interface State {
   boolean isEnd();
 
   boolean isBonus();
+
+  String getString();
 }

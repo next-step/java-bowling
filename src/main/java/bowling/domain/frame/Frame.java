@@ -8,6 +8,8 @@ public abstract class Frame {
   private State state;
   private static final String END_GAME = "더이상 게임 진행할 수 없습니다.";
   private static final String WRONG_PIN_COUNT = "잘못된 수를 입력했습니다.";
+  private static final int START_PLAY_COUNT = 1;
+  private static final int END_PLAY_COUNT = 10;
 
   public Frame(int playCount, State state) {
     validatePlayCount(playCount);
@@ -16,12 +18,14 @@ public abstract class Frame {
   }
 
   private void validatePlayCount(int playCount) {
-    if (playCount < 1 || playCount > 11) {
+    if (playCount < START_PLAY_COUNT || playCount > END_PLAY_COUNT) {
       throw new IllegalArgumentException(END_GAME);
     }
   }
 
   public abstract Frame next();
+
+  public abstract Frame get();
 
   public void play(int pinCount) {
     validatePinCount(pinCount);
@@ -45,4 +49,5 @@ public abstract class Frame {
   public boolean isEnd() {
     return false;
   }
+
 }

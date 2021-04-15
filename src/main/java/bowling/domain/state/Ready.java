@@ -24,4 +24,10 @@ public class Ready implements  State {
   public boolean isBonus() {
     return false;
   }
+
+  @Override
+  public String getString() {
+    return null;
+  }
+
 }

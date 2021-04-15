@@ -22,4 +22,9 @@ public class FirstGutter implements State {
   public boolean isBonus() {
     return false;
   }
+
+  @Override
+  public String getString() {
+    return "-";
+  }
 }

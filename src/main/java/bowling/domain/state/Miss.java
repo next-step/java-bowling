@@ -2,8 +2,8 @@ package bowling.domain.state;
 
 public class Miss implements State {
 
-  private int pinCount;
-  private static final String END = "더이상 진행할 수 없습니다.";
+  private final int pinCount;
+  private static final String END_PLAY = "더이상 진행할 수 없습니다.";
 
   public Miss(int pinCount) {
     this.pinCount = pinCount;
@@ -12,7 +12,7 @@ public class Miss implements State {
 
   @Override
   public State play(int pinCount) {
-    throw new IllegalArgumentException(END);
+    throw new IllegalArgumentException(END_PLAY);
   }
 
   @Override
@@ -23,5 +23,10 @@ public class Miss implements State {
   @Override
   public boolean isBonus() {
     return false;
+  }
+
+  @Override
+  public String getString() {
+    return String.valueOf(pinCount);
   }
 }
