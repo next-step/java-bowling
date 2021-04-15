@@ -24,7 +24,7 @@ class AnswerTest {
     void deleted_답변_삭제테스트() {
         // when
         assertThat(A1.isDeleted()).isFalse();
-        A1.deleteAnswers();
+        A1.deleteAnswers(UserTest.JAVAJIGI);
         // then
         assertThat(A1.isDeleted()).isTrue();
     }
