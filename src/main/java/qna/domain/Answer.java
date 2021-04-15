@@ -54,7 +54,7 @@ public class Answer extends AbstractEntity {
   }
 
 
-  public void delete() {
+  private void delete() {
     setDeleted(true);
   }
 
@@ -84,7 +84,7 @@ public class Answer extends AbstractEntity {
     return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
   }
 
-  public void validateDelete(User loginUser) {
+  private void validateDelete(User loginUser) {
     if (!isOwner(loginUser)) {
       throw new CannotDeleteException(INVALID_DELETE);
     }

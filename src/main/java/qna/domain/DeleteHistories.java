@@ -2,7 +2,6 @@ package qna.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import qna.CannotDeleteException;
 
 public class DeleteHistories {
 

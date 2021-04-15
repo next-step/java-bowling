@@ -9,7 +9,6 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import org.hibernate.annotations.Where;
-import qna.CannotDeleteException;
 
 @Embeddable
 public class Answers {
