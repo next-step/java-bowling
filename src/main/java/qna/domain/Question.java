@@ -22,10 +22,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -35,12 +33,14 @@ public class Question extends AbstractEntity {
     public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
+        answers = new Answers();
     }
 
     public Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
+        answers = new Answers();
     }
 
     public String getTitle() {
@@ -88,29 +88,20 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException{
-        if (!isOwner(loginUser)) {
+    private void authorityValidate(User user) throws CannotDeleteException {
+        if (!isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
+    }
 
-        List<Answer> answers = getAnswers();
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        authorityValidate(loginUser);
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        deleteHistories.addAll(answers.deleteAll(loginUser));
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
 
         setDeleted(true);
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
         return deleteHistories;
     }
 
