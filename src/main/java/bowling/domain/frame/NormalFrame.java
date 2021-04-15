@@ -16,18 +16,16 @@ public class NormalFrame extends Frame {
   @Override
   public Frame next() {
     if (getPlayCount() == 9) {
-      return new FinalFrame(10, new Ready());
+      return FinalFrame.of(10, new Ready());
     }
     if (getState().isEnd()) {
-      return new NormalFrame(getPlayCount() + 1, new Ready());
+      return NormalFrame.of(getPlayCount() + 1, new Ready());
     }
-    return this;
+    return NormalFrame.of(getPlayCount(), getState());
   }
 
-
-  @Override
-  public Frame get() {
-    return new NormalFrame(getPlayCount(), getState());
+  public static NormalFrame of(int playCount, State state) {
+    return new NormalFrame(playCount, state);
   }
 
 }

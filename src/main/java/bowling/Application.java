@@ -21,7 +21,7 @@ public class Application {
 
     while (!frame.isEnd()) {
       frame.play(inputView.inputPinCount(frame));
-      frames.add(frame.get());
+      frames.add(frame);
       resultView.printResult(player, frames);
       frame = frame.next();
 

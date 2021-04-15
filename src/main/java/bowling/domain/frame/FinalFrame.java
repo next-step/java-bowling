@@ -15,20 +15,18 @@ public class FinalFrame extends Frame {
   public Frame next() {
     if (getState().isBonus() && !usedBonus) {
       usedBonus = true;
-      return new FinalFrame(10, new Ready());
+      return FinalFrame.of(10, new Ready());
     }
-    return this;
+    return FinalFrame.of(getPlayCount(), getState());
+  }
+
+  public static FinalFrame of(int playCount, State state) {
+    return new FinalFrame(playCount, state);
   }
 
   @Override
   public boolean isEnd() {
     return getState().isEnd();
   }
-
-  @Override
-  public Frame get() {
-    return new FinalFrame(getPlayCount(), getState());
-  }
-
 
 }

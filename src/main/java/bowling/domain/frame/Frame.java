@@ -25,8 +25,6 @@ public abstract class Frame {
 
   public abstract Frame next();
 
-  public abstract Frame get();
-
   public void play(int pinCount) {
     validatePinCount(pinCount);
     state = state.play(pinCount);
