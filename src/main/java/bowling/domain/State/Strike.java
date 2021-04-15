@@ -2,7 +2,6 @@ package bowling.domain.State;
 
 import bowling.domain.score.Score;
 import bowling.domain.score.UnFinishedScore;
-import bowling.domain.frame.PinCount;
 
 public class Strike implements State {
 

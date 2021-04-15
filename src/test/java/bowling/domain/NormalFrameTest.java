@@ -4,7 +4,7 @@ import bowling.domain.score.Score;
 import bowling.domain.State.*;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.frame.PinCount;
+import bowling.domain.State.PinCount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

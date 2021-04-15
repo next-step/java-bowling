@@ -3,7 +3,6 @@ package bowling.domain.State;
 import bowling.domain.score.FinishedScore;
 import bowling.domain.score.Score;
 import bowling.domain.score.UnDefinedScore;
-import bowling.domain.frame.PinCount;
 
 import java.util.ArrayList;
 import java.util.List;
