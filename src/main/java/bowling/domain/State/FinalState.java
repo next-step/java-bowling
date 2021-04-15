@@ -63,8 +63,10 @@ public class FinalState implements State {
     @Override
     public Score score() {
         int totalScoreInInt = states.stream()
-                .mapToInt(state -> state.score().currentScore())
-                .sum();
+                .reduce(0,
+                        (accumulated, state) -> state.score().sumCurrentScore(accumulated),
+                        Integer::sum);
+
         if (isClosed()) {
             return new FinishedScore(totalScoreInInt);
         }
