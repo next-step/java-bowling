@@ -38,7 +38,7 @@ class ScoreTest {
 
         Score first = Score.first(firstPoint);
 
-        assertThat(first.score()).isEqualTo(BowlingRole.STRIKE);
+        assertThat(first.type()).isEqualTo(BowlingRole.STRIKE);
     }
 
     @DisplayName("첫번쨰 포인트와 두번째 포인트 합이 10이면 스페어다.")
@@ -50,7 +50,7 @@ class ScoreTest {
         Score first = Score.first(firstPoint);
         Score score = first.next(secondPoint);
 
-        assertThat(score.score()).isEqualTo(BowlingRole.SPARE);
+        assertThat(score.type()).isEqualTo(BowlingRole.SPARE);
     }
 
     @DisplayName("모든 포인트가 0이면 미스다.")
@@ -61,6 +61,6 @@ class ScoreTest {
 
         Score first = Score.first(firstPoint);
         Score score = first.next(secondPoint);
-        assertThat(score.score()).isEqualTo(BowlingRole.MISS);
+        assertThat(score.type()).isEqualTo(BowlingRole.MISS);
     }
 }
