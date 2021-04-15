@@ -24,9 +24,5 @@ public class FinalFrame extends Frame {
     return new FinalFrame(playCount, state);
   }
 
-  @Override
-  public boolean isEnd() {
-    return getState().isEnd();
-  }
 
 }

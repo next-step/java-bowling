@@ -47,7 +47,7 @@ public abstract class Frame {
   }
 
   public boolean isEnd() {
-    return false;
+    return getState().isEnd();
   }
 
 }
