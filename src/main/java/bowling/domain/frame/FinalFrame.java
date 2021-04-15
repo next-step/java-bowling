@@ -66,7 +66,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score calculatedScore(Score scoreToCalculate) {
-        if(!currentState().isClosed()){
+        if (!currentState().isClosed()) {
             return scoreToCalculate;
         }
         return currentState().calculatedScore(scoreToCalculate);

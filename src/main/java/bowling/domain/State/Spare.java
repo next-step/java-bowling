@@ -38,16 +38,16 @@ public class Spare implements State {
 
     @Override
     public Score score() {
-        return new UnFinishedScore(firstPinCount.sumCount(secondPinCount),BONUS_COUNT);
+        return new UnFinishedScore(firstPinCount.sumCount(secondPinCount), BONUS_COUNT);
     }
 
     @Override
     public Score calculatedScore(Score scoreToCalculate) {
         Score finalScore = scoreToCalculate;
-        if(finalScore.isNecessaryToCalculateMore()){
+        if (finalScore.isNecessaryToCalculateMore()) {
             finalScore = finalScore.calculatedScore(firstPinCount.count());
         }
-        if(finalScore.isNecessaryToCalculateMore()){
+        if (finalScore.isNecessaryToCalculateMore()) {
             finalScore = finalScore.calculatedScore(secondPinCount.count());
         }
         return finalScore;

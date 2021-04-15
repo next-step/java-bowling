@@ -33,11 +33,11 @@ public class UnFinishedScore implements Score {
 
     @Override
     public Score calculatedScore(int toAdd) {
-        if(remainingCount == 0){
+        if (remainingCount == 0) {
             throw new IllegalStateException("더이상 계산 할 수 없습니다.");
         }
-        if(remainingCount == 1){
-           return new FinishedScore(this.score + toAdd);
+        if (remainingCount == 1) {
+            return new FinishedScore(this.score + toAdd);
         }
         return new UnFinishedScore(this.score + toAdd, remainingCount - 1);
     }

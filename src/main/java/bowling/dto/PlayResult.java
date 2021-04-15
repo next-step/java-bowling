@@ -27,7 +27,7 @@ public class PlayResult {
                 .collect(Collectors.toList());
     }
 
-    public List<ScoreDto> allScores(){
+    public List<ScoreDto> allScores() {
         return frameResults.stream()
                 .map(FrameResult::score)
                 .collect(Collectors.toList());

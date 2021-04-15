@@ -28,12 +28,12 @@ public class Strike implements State {
 
     @Override
     public Score score() {
-        return new UnFinishedScore(PIN_COUNT,BONUS_COUNT);
+        return new UnFinishedScore(PIN_COUNT, BONUS_COUNT);
     }
 
     @Override
     public Score calculatedScore(Score scoreToCalculate) {
-        if(scoreToCalculate.isNecessaryToCalculateMore()){
+        if (scoreToCalculate.isNecessaryToCalculateMore()) {
             return scoreToCalculate.calculatedScore(PIN_COUNT);
         }
         return scoreToCalculate;

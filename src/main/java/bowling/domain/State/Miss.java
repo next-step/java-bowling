@@ -52,10 +52,10 @@ public class Miss implements State {
     @Override
     public Score calculatedScore(Score scoreToCalculate) {
         Score finalScore = scoreToCalculate;
-        if(finalScore.isNecessaryToCalculateMore()){
+        if (finalScore.isNecessaryToCalculateMore()) {
             finalScore = finalScore.calculatedScore(firstPinCount.count());
         }
-        if(finalScore.isNecessaryToCalculateMore()){
+        if (finalScore.isNecessaryToCalculateMore()) {
             finalScore = finalScore.calculatedScore(secondPinCount.count());
         }
         return finalScore;

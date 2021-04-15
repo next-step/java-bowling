@@ -60,10 +60,10 @@ public class ResultView {
     }
 
     public static void printScore(int accumulatesScore) {
-        System.out.print(StringUtils.center(String.valueOf(accumulatesScore), FIXED_FRAME_SPACE)+FRAME_SEPARATOR  );
+        System.out.print(StringUtils.center(String.valueOf(accumulatesScore), FIXED_FRAME_SPACE) + FRAME_SEPARATOR);
     }
 
     public static void printEmptyScore() {
-        System.out.print( StringUtils.center(EMPTY_SCORE, FIXED_FRAME_SPACE) +FRAME_SEPARATOR );
+        System.out.print(StringUtils.center(EMPTY_SCORE, FIXED_FRAME_SPACE) + FRAME_SEPARATOR);
     }
 }
