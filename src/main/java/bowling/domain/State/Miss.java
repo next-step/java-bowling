@@ -46,7 +46,7 @@ public class Miss implements State {
 
     @Override
     public Score score() {
-        return new FinishedScore(firstPinCount.sum(secondPinCount).count());
+        return new FinishedScore(firstPinCount.sumCount(secondPinCount));
     }
 
     @Override

@@ -36,10 +36,9 @@ public class Spare implements State {
         return firstPinCount.countInString() + SYMBOL;
     }
 
-
     @Override
     public Score score() {
-        return new UnFinishedScore(firstPinCount.sum(secondPinCount).count(),BONUS_COUNT);
+        return new UnFinishedScore(firstPinCount.sumCount(secondPinCount),BONUS_COUNT);
     }
 
     @Override

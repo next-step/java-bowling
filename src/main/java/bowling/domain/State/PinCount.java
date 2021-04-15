@@ -43,8 +43,8 @@ public class PinCount {
         return (pinCount.count + count) <= MAX_PIN_COUNT;
     }
 
-    public PinCount sum(PinCount secondPinCount) {
-        return new PinCount(count + secondPinCount.count);
+    public int sumCount(PinCount secondPinCount) {
+        return count + secondPinCount.count;
     }
 
     @Override
