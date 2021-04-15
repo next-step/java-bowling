@@ -1,16 +1,20 @@
 package bowling.domain;
 
+import bowling.dto.ScoreDto;
+
 public class BowlingFinalFrame extends BowlingFrame {
 
     private final Score score;
+    private final Score bonusScore;
 
-    private BowlingFinalFrame(Round round, Score score) {
+    private BowlingFinalFrame(Round round, Score score, Score bonusScore) {
         super(round);
         this.score = score;
+        this.bonusScore = bonusScore;
     }
 
     public static BowlingFrame of(Round round) {
-        return new BowlingFinalFrame(round, Score.of(Point.of(0), Point.of(0)));
+        return new BowlingFinalFrame(round, Score.of(Point.of(0), Point.of(0)), Score.of(Point.of(0), Point.of(0)));
     }
 
     @Override
@@ -25,13 +29,14 @@ public class BowlingFinalFrame extends BowlingFrame {
 
 
     @Override
-    public boolean isEnd() {
-        return false;
+    public BowlingRole isType() {
+        return score.type();
     }
 
+
     @Override
-    public boolean isStrike() {
-        return false;
+    public ScoreDto toDto() {
+        return ScoreDto.of(score);
     }
 
 }

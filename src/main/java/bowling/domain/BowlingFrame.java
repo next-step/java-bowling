@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.dto.ScoreDto;
+
 public abstract class BowlingFrame {
 
     private final Round round;
@@ -23,8 +25,7 @@ public abstract class BowlingFrame {
         return round;
     }
 
-    abstract boolean isEnd();
+    abstract BowlingRole isType();
 
-    abstract boolean isStrike();
-
+    abstract ScoreDto toDto();
 }

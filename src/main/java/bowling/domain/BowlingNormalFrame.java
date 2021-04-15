@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.dto.ScoreDto;
+
 public class BowlingNormalFrame extends BowlingFrame {
 
     private final Score score;
@@ -17,6 +19,11 @@ public class BowlingNormalFrame extends BowlingFrame {
         return new BowlingNormalFrame(round, Score.of(Point.of(0), Point.of(0)));
     }
 
+    public static BowlingNormalFrame first(Round round) {
+        return new BowlingNormalFrame(round, Score.of(Point.of(0), Point.of(0)));
+    }
+
+
     @Override
     public BowlingFrame secondPitching(Point point) {
         return new BowlingNormalFrame(getRound(), score.next(point));
@@ -27,14 +34,15 @@ public class BowlingNormalFrame extends BowlingFrame {
         return new BowlingNormalFrame(getRound(), Score.first(point));
     }
 
+
     @Override
-    public boolean isEnd() {
-        return false;
+    public BowlingRole isType() {
+        return score.type();
     }
 
     @Override
-    public boolean isStrike() {
-        return false;
+    public ScoreDto toDto() {
+        return ScoreDto.of(score);
     }
 
 
