@@ -10,7 +10,7 @@ public class NormalFrame extends Frame {
   }
 
   public static NormalFrame createFirst() {
-    return new NormalFrame(1, new Ready());
+    return NormalFrame.of(1, new Ready());
   }
 
   @Override
