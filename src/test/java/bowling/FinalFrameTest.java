@@ -35,7 +35,7 @@ public class FinalFrameTest {
 
   @Test
   @DisplayName("마지막에 스트라이크나 스페어를 친 경우 아닌 경우 한 번 더 투구 기회가 없다.")
-  public void bonus2() {
+  public void notBonus() {
     assertThatThrownBy(() -> {
       Frame frame = new FinalFrame(10, new Ready());
       frame.play(8);

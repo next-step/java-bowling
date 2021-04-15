@@ -7,22 +7,15 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.state.Ready;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 
 public class NormalFrameTest {
-
-  private Frame firstFrame;
-
-  @BeforeEach
-  void setUp() {
-    firstFrame = NormalFrame.createFirst();
-  }
 
   @Test
   @DisplayName("잘못된 핀 개수 확인")
   public void validatePinCount() {
     assertThatThrownBy(() -> {
+      Frame firstFrame = NormalFrame.createFirst();
       firstFrame.play(11);
     }).isInstanceOf(IllegalArgumentException.class);
   }
@@ -36,24 +29,27 @@ public class NormalFrameTest {
   }
 
   @Test
-  @DisplayName("첫 프레임에 스트라이크를 칠 경우")
-  public void play() {
+  @DisplayName("첫 프레임에 스트라이크를 칠 경우 다음 프레임을 쳐야한다.")
+  public void playStrike() {
+    Frame firstFrame = NormalFrame.createFirst();
     firstFrame.play(10);
     Frame nextFrame = firstFrame.next();
     assertThat(nextFrame.getPlayCount()).isEqualTo(2);
   }
 
   @Test
-  @DisplayName("첫 프레임에 Gutter를 친 경우")
+  @DisplayName("첫 프레임에 Gutter를 친 경우 현재 프레임에 한 번 더 쳐야한다.")
   public void playGutter() {
+    Frame firstFrame = NormalFrame.createFirst();
     firstFrame.play(0);
     Frame nextFrame = firstFrame.next();
     assertThat(nextFrame.getPlayCount()).isEqualTo(1);
   }
 
   @Test
-  @DisplayName("첫 판에 핀 3개 친 경우")
-  public void play3() {
+  @DisplayName("첫 투구에 hit를 친 경우 현재 프레임에 한 번 더 쳐야한다.")
+  public void playHit() {
+    Frame firstFrame = NormalFrame.createFirst();
     firstFrame.play(3);
     Frame nextFrame = firstFrame.next();
     assertThat(nextFrame.getPlayCount()).isEqualTo(1);

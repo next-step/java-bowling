@@ -10,6 +10,8 @@ public abstract class Frame {
   private static final String WRONG_PIN_COUNT = "잘못된 수를 입력했습니다.";
   private static final int START_PLAY_COUNT = 1;
   private static final int END_PLAY_COUNT = 10;
+  private static final int MIN_PIN_COUNT = 0;
+  private static final int MAX_PIN_COUNT = 10;
 
   public Frame(int playCount, State state) {
     validatePlayCount(playCount);
@@ -31,7 +33,7 @@ public abstract class Frame {
   }
 
   private void validatePinCount(int pinCount) {
-    if (pinCount < 0 || pinCount > 10) {
+    if (pinCount < MIN_PIN_COUNT || pinCount > MAX_PIN_COUNT) {
       throw new IllegalArgumentException(WRONG_PIN_COUNT);
     }
   }
