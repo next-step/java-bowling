@@ -26,9 +26,9 @@ public class QuestionTest {
     @Test
     void getInfo_질문_정보_확인테스트() {
         assertAll(
-                () -> assertThat(Q1.getTitle()).isEqualTo("title1"),
-                () -> assertThat(Q1.getWriter()).isEqualTo(UserTest.JAVAJIGI),
-                () -> assertThat(Q1.getContents()).isEqualTo("contents1")
+                () -> assertThat(Q1.contentTitle()).isEqualTo("title1"),
+                () -> assertThat(Q1.writer()).isEqualTo(UserTest.JAVAJIGI),
+                () -> assertThat(Q1.content()).isEqualTo("contents1")
         );
     }
 
