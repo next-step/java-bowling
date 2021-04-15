@@ -19,11 +19,14 @@ public class AnswersTest {
     }
 
     @Test
-    void 삭제_테스트() {
+    void 삭제_테스트() throws CannotDeleteException {
         Answer answer1 = new Answer(1L, UserTest.JAVAJIGI, QuestionTest.Q1, "contents1");
         Answer answer2 = new Answer(2L, UserTest.JAVAJIGI, QuestionTest.Q1, "contents2");
         Answers answers = new Answers(Arrays.asList(answer1, answer2));
+
         answers.deleteAll(UserTest.JAVAJIGI);
-        assertThat(answers.isdeleted()).isTrue();
+        answers.answers().forEach(answer -> {
+            assertThat(answer.isDeleted()).isTrue();
+        });
     }
 }
