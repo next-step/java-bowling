@@ -26,7 +26,7 @@ public class NormalFrame implements Frame {
 
   @Override
   public Frame next() {
-    if (getPlayCount() == 9) {
+    if (getPlayCount() == 9 && getState().isEnd()) {
       return FinalFrame.createWithReady();
     }
     if (getState().isEnd()) {
