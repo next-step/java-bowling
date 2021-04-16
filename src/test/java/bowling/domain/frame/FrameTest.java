@@ -15,7 +15,7 @@ public class FrameTest {
     private Frame frame;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         this.frame = new Frame();
     }
 
