@@ -1,53 +1,88 @@
 package bowling.domain.frame;
 
 import bowling.domain.Playable;
-import bowling.domain.Endable;
 import bowling.domain.Point;
+import bowling.exception.CustomException;
+import bowling.exception.ErrorCode;
 
-public class FinalFrame implements Playable, Endable {
+public class FinalFrame implements Playable {
 
-    private static final int FRAME_COUNT = 10;
+    private static final int FIRST = 0;
+    private static final int SECOND = 1;
+    private static final int THIRD = 2;
 
-    private Frame frame;
-    private Point bonusPoint;
+    private boolean hasExtra;
+    private Point[] points;
 
     public FinalFrame() {
-        this.frame = new Frame();
-        this.bonusPoint = new Point();
+        this.hasExtra = false;
+        this.points = points();
+    }
+
+    private Point[] points() {
+        return new Point[]{new Point(), new Point(), new Point()};
     }
 
     @Override
     public boolean ended() {
-        if (frame.isStrike() || frame.isSpare()) {
-            return bonusPoint.played();
+        if (hasExtra) {
+            return points[THIRD].played();
         }
-        return frame.ended();
+        return points[SECOND].played();
     }
 
     @Override
     public void throwBall(int point) {
-        if ((frame.isStrike() || frame.isSpare()) && bonusPoint.played()) {
+        if (hasExtra) {
+            throwExtraBall(point);
             return;
         }
-        if ((frame.isStrike() || frame.isSpare()) && !bonusPoint.played()) {
-            bonusPoint.throwBall(point);
+        throwNormalBall(point);
+        giveExtraChancesIfNeeded();
+    }
+
+    private void throwExtraBall(int point) {
+        if (!points[SECOND].played()) {
+            points[SECOND].throwBall(point);
             return;
         }
-        if (frame.ended()) {
+        points[THIRD].throwBall(point);
+    }
+
+    private void throwNormalBall(int point) {
+        if (!points[FIRST].played()) {
+            points[FIRST].throwBall(point);
             return;
         }
-        frame.throwBall(point);
+        if (!valid(points[FIRST], point)) {
+            throw new CustomException(ErrorCode.INVALID_POINT_SUM);
+        }
+        points[SECOND].throwBall(point);
     }
 
-    public int frameCount() {
-        return FRAME_COUNT;
+    private boolean valid(Point prePoint, int curPoint) {
+        Point point = new Point();
+        point.throwBall(curPoint);
+        return !prePoint.overs(point);
     }
 
-    public Frame frame() {
-        return frame;
+    private void giveExtraChancesIfNeeded() {
+        if (points[FIRST].striked()) {
+            hasExtra = true;
+            return;
+        }
+        if (points[SECOND].spared(points[FIRST])) {
+            hasExtra = true;
+        }
     }
 
-    public Point bonusPoint(){
-        return bonusPoint;
+    @Override
+    public boolean striked() {
+        return points[FIRST].striked();
+    }
+
+    @Override
+    public boolean spared() {
+        return points[FIRST].spared(points[SECOND]);
     }
 }

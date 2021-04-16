@@ -9,6 +9,8 @@ public class Name {
 
     private static final int VALID_LENGTH = 3;
 
+    private static final String VALID_NAME_REGEX = "[A-Za-z]+";
+
     private final String name;
 
     public Name(String name) {
@@ -24,7 +26,7 @@ public class Name {
     }
 
     private boolean valid(String name) {
-        return Pattern.matches("[A-Za-z]+", name) && name.length() == VALID_LENGTH;
+        return Pattern.matches(VALID_NAME_REGEX, name) && name.length() == VALID_LENGTH;
     }
 
     public String name() {

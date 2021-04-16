@@ -146,4 +146,6 @@ fix(finalFrames): fix rule misunderstanding
 feat(resultView): add point print logic
 
 docs(docs): add roles & responsibilities
+
+fix(general): fix last frame logic
 ```

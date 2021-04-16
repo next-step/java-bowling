@@ -15,11 +15,11 @@ public enum ErrorCode {
         this.message = message;
     }
 
-    public String code(){
+    public String code() {
         return this.code;
     }
 
-    public String message(){
+    public String message() {
         return this.message;
     }
 }

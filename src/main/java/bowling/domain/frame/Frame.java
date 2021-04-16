@@ -1,10 +1,9 @@
 package bowling.domain.frame;
 
 import bowling.domain.Playable;
-import bowling.domain.Endable;
 import bowling.domain.Point;
 
-public class Frame implements Playable, Endable {
+public class Frame implements Playable {
     private Point firstPoint;
     private Point secondPoint;
 
@@ -13,10 +12,12 @@ public class Frame implements Playable, Endable {
         this.secondPoint = new Point();
     }
 
+    @Override
     public boolean ended() {
-        return isStrike() || secondPoint.played();
+        return striked() || secondPoint.played();
     }
 
+    @Override
     public void throwBall(int point) {
         if (secondPoint.played()) {
             return;
@@ -28,12 +29,14 @@ public class Frame implements Playable, Endable {
         firstPoint.throwBall(point);
     }
 
-    public boolean isStrike() {
+    @Override
+    public boolean striked() {
         return firstPoint.striked();
     }
 
-    public boolean isSpare() {
-        if (isStrike()) {
+    @Override
+    public boolean spared() {
+        if (striked()) {
             return false;
         }
         return secondPoint.spared(this.firstPoint);

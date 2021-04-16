@@ -6,8 +6,11 @@ import bowling.exception.ErrorCode;
 public class Point {
 
     private static final int NULL = 0;
+
     public static final boolean PLAYED = true;
     public static final boolean NOT_PLAYED = false;
+
+    private static final int GUTTERED = 0;
     private static final int CLEARED = 10;
 
     private int point;
@@ -50,7 +53,7 @@ public class Point {
     }
 
     private boolean valid(int point) {
-        return point >= 0 && point <= 10;
+        return point >= GUTTERED && point <= CLEARED;
     }
 
     private boolean valid(Point prePoint, int curPoint) {
@@ -69,11 +72,15 @@ public class Point {
         return this.point + point.point == CLEARED;
     }
 
+    public boolean overs(Point point) {
+        return this.point + point.point > CLEARED;
+    }
+
     public boolean played() {
         return this.played;
     }
 
     public boolean guttered() {
-        return point==NULL;
+        return point == GUTTERED;
     }
 }
