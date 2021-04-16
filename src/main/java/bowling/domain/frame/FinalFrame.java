@@ -6,9 +6,10 @@ import bowling.domain.state.State;
 
 public class FinalFrame implements Frame {
 
-  private static boolean usedBonus = false;
   private final Frame frame;
   private static final int FINAL_PLAY_COUNT = 10;
+  private static final int FINAL_FRAME_COUNT = 3;
+  private static int count;
 
   public FinalFrame(State state) {
     this.frame = BaseFrame.of(FINAL_PLAY_COUNT, state);
@@ -24,8 +25,8 @@ public class FinalFrame implements Frame {
 
   @Override
   public Frame next() {
-    if (getState().isBonus() && !usedBonus) {
-      usedBonus = true;
+    count++;
+    if (getState().isBonus() && count < FINAL_FRAME_COUNT) {
       return createWithReady();
     }
     return FinalFrame.of(getState());
