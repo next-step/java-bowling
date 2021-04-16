@@ -23,11 +23,11 @@ public class FinalFrameTest {
   @Test
   @DisplayName("마지막에 스트라이크나 스페어를 친 경우 한 번 더 투구 기회가 있다.")
   public void bonus() {
-    Frame frame = new FinalFrame(10, new Ready());
+    Frame frame = new FinalFrame(new Ready());
     frame.play(10);
     assertThat(frame.next()).isInstanceOf(FinalFrame.class);
 
-    frame = new FinalFrame(10, new Ready());
+    frame = new FinalFrame(new Ready());
     frame.play(4);
     frame.play(6);
     assertThat(frame.next()).isInstanceOf(FinalFrame.class);
@@ -37,7 +37,7 @@ public class FinalFrameTest {
   @DisplayName("마지막에 스트라이크나 스페어를 친 경우 아닌 경우 한 번 더 투구 기회가 없다.")
   public void notBonus() {
     assertThatThrownBy(() -> {
-      Frame frame = new FinalFrame(10, new Ready());
+      Frame frame = new FinalFrame(new Ready());
       frame.play(8);
       frame.play(1);
       frame.next();

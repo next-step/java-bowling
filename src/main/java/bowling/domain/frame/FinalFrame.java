@@ -3,30 +3,52 @@ package bowling.domain.frame;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
-public class FinalFrame extends Frame {
+public class FinalFrame implements Frame {
 
   private static boolean usedBonus = false;
+  private final Frame frame;
+  private static final int FINAL_PLAY_COUNT = 10;
 
-  public FinalFrame(int playCount, State state) {
-    super(playCount, state);
+  public FinalFrame(State state) {
+    this.frame = BaseFrame.of(FINAL_PLAY_COUNT, state);
   }
 
-  public static FinalFrame create() {
-    return FinalFrame.of(10, new Ready());
+  public static Frame createWithReady() {
+    return FinalFrame.of(new Ready());
+  }
+
+  public static FinalFrame of(State state) {
+    return new FinalFrame(state);
   }
 
   @Override
   public Frame next() {
     if (getState().isBonus() && !usedBonus) {
       usedBonus = true;
-      return create();
+      return createWithReady();
     }
-    return FinalFrame.of(getPlayCount(), getState());
+    return FinalFrame.of(getState());
   }
 
-  public static FinalFrame of(int playCount, State state) {
-    return new FinalFrame(playCount, state);
+
+  @Override
+  public void play(int pinCount) {
+    frame.play(pinCount);
   }
 
+  @Override
+  public int getPlayCount() {
+    return frame.getPlayCount();
+  }
+
+  @Override
+  public State getState() {
+    return frame.getState();
+  }
+
+  @Override
+  public boolean isEnd() {
+    return frame.getState().isEnd();
+  }
 
 }

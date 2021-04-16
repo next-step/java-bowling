@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.Frames;
 import bowling.domain.Player;
+import bowling.domain.frame.BaseFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.view.InputView;
