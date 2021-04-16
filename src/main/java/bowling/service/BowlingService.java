@@ -1,14 +1,24 @@
 package bowling.service;
 
+import bowling.domain.Score;
+import bowling.domain.frame.Frame;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class BowlingService {
 
-    private int score;
+    private final Score score = new Score();
+    private final List<Frame> frames = new ArrayList<>();
 
     public void pitch(int pins) {
-        this.score += pins;
+        frames.add(new Frame(pins));
     }
 
     public int totalScore() {
-        return score;
+        for(Frame frame : frames) {
+            score.plusScore(frame.score());
+        }
+        return score.totalScore();
     }
 }

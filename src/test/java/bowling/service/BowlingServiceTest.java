@@ -36,5 +36,4 @@ class BowlingServiceTest {
         assertThat(bowlingService.totalScore()).isEqualTo(score);
     }
 
-
 }
