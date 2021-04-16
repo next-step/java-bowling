@@ -1,13 +1,16 @@
 package bowling.domain.frame;
 
-public class Frame {
-    private final int pins;
+import java.util.Arrays;
 
-    public Frame(int pins) {
-        this.pins = pins;
+public class Frame {
+    private final int[] pins = new int[2];
+
+    public Frame(int firstBall, int secondBall) {
+        this.pins[0] = firstBall;
+        this.pins[1] = secondBall;
     }
 
     public int score() {
-        return pins;
+        return Arrays.stream(pins).sum();
     }
 }

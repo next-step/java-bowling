@@ -11,8 +11,8 @@ public class BowlingService {
     private final Score score = new Score();
     private final List<Frame> frames = new ArrayList<>();
 
-    public void pitch(int pins) {
-        frames.add(new Frame(pins));
+    public void pitch(int firstBall, int secondBall) {
+        frames.add(new Frame(firstBall, secondBall));
     }
 
     public int totalScore() {
