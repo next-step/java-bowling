@@ -10,22 +10,27 @@ public class NormalFrame extends Frame {
   }
 
   public static NormalFrame createFirst() {
-    return NormalFrame.of(1, new Ready());
+    return create(1);
+  }
+
+  public static NormalFrame of(int playCount, State state) {
+    return new NormalFrame(playCount, state);
+  }
+
+  private static NormalFrame create(int playCount) {
+    return NormalFrame.of(playCount, new Ready());
   }
 
   @Override
   public Frame next() {
     if (getPlayCount() == 9) {
-      return FinalFrame.of(10, new Ready());
+      return FinalFrame.create();
     }
     if (getState().isEnd()) {
-      return NormalFrame.of(getPlayCount() + 1, new Ready());
+      return create(getPlayCount() + 1);
     }
-    return NormalFrame.of(getPlayCount(), getState());
-  }
 
-  public static NormalFrame of(int playCount, State state) {
-    return new NormalFrame(playCount, state);
+    return NormalFrame.of(getPlayCount(), getState());
   }
 
 }

@@ -11,11 +11,15 @@ public class FinalFrame extends Frame {
     super(playCount, state);
   }
 
+  public static FinalFrame create() {
+    return FinalFrame.of(10, new Ready());
+  }
+
   @Override
   public Frame next() {
     if (getState().isBonus() && !usedBonus) {
       usedBonus = true;
-      return FinalFrame.of(10, new Ready());
+      return create();
     }
     return FinalFrame.of(getPlayCount(), getState());
   }
