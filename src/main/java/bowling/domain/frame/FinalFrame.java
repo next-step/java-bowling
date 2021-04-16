@@ -7,9 +7,9 @@ import bowling.exception.ErrorCode;
 
 public class FinalFrame implements Playable {
 
-    private static final int FIRST = 0;
-    private static final int SECOND = 1;
-    private static final int THIRD = 2;
+    public static final int FIRST = 0;
+    public static final int SECOND = 1;
+    public static final int THIRD = 2;
 
     private boolean hasExtra;
     private Point[] points;
@@ -84,5 +84,13 @@ public class FinalFrame implements Playable {
     @Override
     public boolean spared() {
         return points[FIRST].spared(points[SECOND]);
+    }
+
+    public boolean hasExtra() {
+        return hasExtra;
+    }
+
+    public Point[] getPoints() {
+        return points;
     }
 }

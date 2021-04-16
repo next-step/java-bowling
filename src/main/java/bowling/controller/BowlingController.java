@@ -15,7 +15,7 @@ public class BowlingController {
         Game game = new Game();
         while (!game.ended()) {
             game.throwBall(inputView.getPoint(game.frameCount()));
-//            resultView.printScoreBoard(game, name);
+            resultView.printScoreBoard(game, name);
         }
     }
 }

@@ -43,7 +43,10 @@ public class Game {
     }
 
     public boolean ended() {
-        if (frameIndex < LAST_FRAME) {
+        if (frameIndex < numberToIndex(LAST_FRAME)) {
+            return false;
+        }
+        if (frames[numberToIndex(LAST_FRAME)] == null) {
             return false;
         }
         return frames[numberToIndex(LAST_FRAME)].ended();
@@ -59,5 +62,9 @@ public class Game {
 
     public int frameCount() {
         return indexToNumber(frameIndex);
+    }
+
+    public Playable[] getFrames() {
+        return frames;
     }
 }

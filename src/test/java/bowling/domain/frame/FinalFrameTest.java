@@ -30,7 +30,7 @@ class FinalFrameTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"1:9", "0:10", "5:5", "6:4"}, delimiter = ':')
+    @CsvSource(value = {"1:9", "0:10", "5:5", "6:4", "10:2"}, delimiter = ':')
     void canThrowBonusBall(int prePoint, int curPoint) {
         finalFrame.throwBall(prePoint);
         finalFrame.throwBall(curPoint);

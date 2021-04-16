@@ -4,6 +4,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +35,23 @@ class GameTest {
             softAssertions.assertThat(game.frameCount()).isEqualTo(frameCounts.get(count));
             game.throwBall(integerPoints.get(count));
         }
+        softAssertions.assertAll();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"10,10,10,10,10,10,10,10,10,10,10,10",
+            "1,3,2,8,10,10,10,10,10,10,10,6,4,10"})
+    void canDetermineEnd(String points) {
+        List<Integer> integerPoints = Arrays.stream(points.split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        for (Integer integerPoint : integerPoints) {
+            softAssertions.assertThat(game.ended()).isFalse();
+            game.throwBall(integerPoint);
+        }
+        softAssertions.assertThat(game.ended()).isTrue();
         softAssertions.assertAll();
     }
 
