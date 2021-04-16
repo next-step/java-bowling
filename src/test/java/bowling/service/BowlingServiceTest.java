@@ -21,14 +21,20 @@ class BowlingServiceTest {
         assertThat(bowlingService.totalScore()).isZero();
     }
 
+    private void pitches(int pitch, int frames, BowlingService bowlingService) {
+        for (int i = 0; i < frames; i++) {
+            bowlingService.pitch(pitch);
+        }
+    }
+
     @DisplayName("점수 합산 테스트")
     @ParameterizedTest(name = "총 10 프레임 각 투구 시 {0} 개 넘어뜨려 전체 스코어 {1} 확인 테스트")
     @CsvSource(value = {"1,20", "2,40"})
     void pitch_10프레임_투구_테스트(int pitch, int score) {
         BowlingService bowlingService = new BowlingService();
-        for(int i = 0 ; i < 20 ; i++) {
-            bowlingService.pitch(pitch);
-        }
+        pitches(pitch, 20, bowlingService);
         assertThat(bowlingService.totalScore()).isEqualTo(score);
     }
+
+
 }

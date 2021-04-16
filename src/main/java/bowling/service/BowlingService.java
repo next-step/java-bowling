@@ -4,8 +4,8 @@ public class BowlingService {
 
     private int score;
 
-    public void pitch(int pitch) {
-        this.score += pitch;
+    public void pitch(int pins) {
+        this.score += pins;
     }
 
     public int totalScore() {
