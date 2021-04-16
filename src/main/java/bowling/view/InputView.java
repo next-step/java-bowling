@@ -14,7 +14,7 @@ public class InputView {
 
     //1프레임 투구 : 10
     public static int inputPoint(int round) {
-        System.out.print(round + "1프레임 투구 : ");
+        System.out.print(round + "프레임 투구 : ");
         return scanner.nextInt();
     }
 }
