@@ -58,7 +58,7 @@ public class BaseFrame implements Frame {
 
   @Override
   public boolean isEnd() {
-    return getState().isEnd();
+    return false;
   }
 
 }
