@@ -1,24 +1,14 @@
 package bowling.service;
 
-import bowling.domain.Score;
-import bowling.domain.frame.Frame;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class BowlingService {
 
-    private final Score score = new Score();
-    private final List<Frame> frames = new ArrayList<>();
+    // 전체 게임은 총 10프레임
 
-    public void pitch(int firstBall, int secondBall) {
-        frames.add(new Frame(firstBall, secondBall));
+    public BowlingService() {
+
     }
 
-    public int totalScore() {
-        for(Frame frame : frames) {
-            score.plusScore(frame.score());
-        }
-        return score.totalScore();
+    public void game() {
+
     }
 }
