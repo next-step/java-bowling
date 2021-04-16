@@ -1,16 +1,19 @@
 package bowling.domain.state;
 
+import bowling.domain.PinCount;
+
 public class FirstGutter implements State {
 
   @Override
-  public State play(int pinCount) {
-
-    if (pinCount == 0) {
+  public State play(PinCount pinCount) {
+    if (pinCount.isGutter()) {
       return new SecondGutter();
     }
-    if (pinCount == 10) {
+
+    if (pinCount.isStrike()) {
       return new Spare();
     }
+
     return new Miss(pinCount);
   }
 

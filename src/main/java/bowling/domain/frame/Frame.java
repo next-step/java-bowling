@@ -1,12 +1,13 @@
 package bowling.domain.frame;
 
+import bowling.domain.PinCount;
 import bowling.domain.state.State;
 
 public interface Frame {
 
   Frame next();
 
-  void play(int pinCount);
+  void play(PinCount pinCount);
 
   int getPlayCount();
 

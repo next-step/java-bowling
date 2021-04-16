@@ -1,44 +1,35 @@
 package bowling.domain.state;
 
+import bowling.domain.PinCount;
+
 public class Hit implements State {
 
-  private final int pinCount;
-  private static final String INVALID_TOTAL_PINCOUNT = "총 친 핀의 개수는 0개 이상 10개 이하여야 합니다.";
-  private static final String INVALID_PINCOUNT = "핀의 개수는 0개 이상 10개 이하여야 합니다.";
-  private static final int MIN_PIN_COUNT = 0;
-  private static final int MAX_PIN_COUNT = 10;
+  private final PinCount pinCount;
 
-  public Hit(int pinCount) {
-    validatePinCount(pinCount);
+  public Hit(PinCount pinCount) {
     this.pinCount = pinCount;
   }
 
+  public Hit(int pinCount) {
+    this(new PinCount(pinCount));
+  }
+
   @Override
-  public State play(int newPinCount) {
-    validateNewPinCount(newPinCount);
-    if (newPinCount == MIN_PIN_COUNT) {
+  public State play(PinCount newPinCount) {
+
+    pinCount.validateNewPinCount(newPinCount);
+
+    if (newPinCount.isGutter()) {
       return new SecondGutter();
     }
 
-    if (pinCount + newPinCount == MAX_PIN_COUNT) {
+    if (pinCount.totalSumIsTen(newPinCount)) {
       return new Spare();
     }
 
     return new Miss(newPinCount);
   }
 
-
-  private void validateNewPinCount(int newPinCount) {
-    if (pinCount + newPinCount > MAX_PIN_COUNT || pinCount + newPinCount < MIN_PIN_COUNT) {
-      throw new IllegalArgumentException(INVALID_TOTAL_PINCOUNT);
-    }
-  }
-
-  private void validatePinCount(int pinCount) {
-    if (pinCount > MAX_PIN_COUNT || pinCount < MIN_PIN_COUNT) {
-      throw new IllegalArgumentException(INVALID_PINCOUNT);
-    }
-  }
 
   @Override
   public boolean isEnd() {
@@ -52,6 +43,6 @@ public class Hit implements State {
 
   @Override
   public String getString() {
-    return String.valueOf(pinCount);
+    return String.valueOf(pinCount.getPinCount());
   }
 }
