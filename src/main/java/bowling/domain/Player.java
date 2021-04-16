@@ -2,10 +2,13 @@ package bowling.domain;
 
 public class Player {
 
+    private static final int MAX_NAME_LENGTH = 3;
+
     private final String playerName;
 
+
     public Player(String playerName) {
-        if (playerName.length() != 3) {
+        if (playerName.length() != MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("플레이어 이름은 3글자여야 합니다.");
         }
         this.playerName = playerName;

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BowlingBoardDto {
-
     private final List<ScoreDto> scoreDtoList;
     private final ThrowsState throwsState;
 

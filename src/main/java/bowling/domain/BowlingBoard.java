@@ -11,6 +11,8 @@ public class BowlingBoard {
     private final List<BowlingFrame> bowlingFrameList;
     private final ThrowsState throwsState;
 
+    private static final int FINAL_ROUND = 10;
+
     public BowlingBoard(List<BowlingFrame> bowlingFrameList, ThrowsState throwsState) {
         this.bowlingFrameList = bowlingFrameList;
         this.throwsState = throwsState;
@@ -35,12 +37,17 @@ public class BowlingBoard {
     }
 
     public BowlingBoard firstPitching(Point point) {
-        bowlingFrameList.set(round() - 1, getFrame().firstPitching(point));
+        BowlingFrame bowlingFrame = getFrame().firstPitching(point);
+        bowlingFrameList.set(round() - 1, bowlingFrame);
+        if (bowlingFrame.isType() == BowlingRole.STRIKE) {
+            createNextFrame();
+            return BowlingBoard.of(bowlingFrameList, ThrowsState.FIRST_THROWS);
+        }
         return BowlingBoard.of(bowlingFrameList, ThrowsState.SECOND_THROWS);
     }
 
     public BowlingBoard secondPitching(Point point) {
-        if (round() == 10) {
+        if (round() == FINAL_ROUND) {
             return BowlingBoard.of(bowlingFrameList, ThrowsState.FINISH_THROWS);
         }
         bowlingFrameList.set(round() - 1, getFrame().secondPitching(point));
@@ -75,7 +82,7 @@ public class BowlingBoard {
     }
 
     private void createNextFrame() {
-        if (bowlingFrameList.size() != 10) {
+        if (bowlingFrameList.size() != FINAL_ROUND) {
             bowlingFrameList.add(getFrame().nextFrame());
         }
     }
