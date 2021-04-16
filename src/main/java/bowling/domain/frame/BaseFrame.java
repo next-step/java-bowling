@@ -5,7 +5,7 @@ import bowling.domain.state.State;
 
 public class BaseFrame implements Frame {
 
-  private int playCount;
+  private final int playCount;
   private State state;
   private static final String INVALID_END_GAME = "더이상 게임 진행할 수 없습니다.";
   private static final int MIN_PLAY_COUNT = 1;

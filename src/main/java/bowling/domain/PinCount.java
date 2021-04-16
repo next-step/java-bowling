@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.MAX;
 
 public class PinCount {
 
