@@ -3,8 +3,8 @@ package bowling.domain.state;
 public class Miss implements State {
 
   private final int pinCount;
-  private static final String END_PLAY = "더이상 진행할 수 없습니다.";
-  private static final String INVALID_PINCOUNT = "핀의 개수는 0개 이상 10개 이하여야 합니다.";
+  private static final String INVALID_END_PLAY = "더이상 진행할 수 없습니다.";
+  private static final String INVALID_PIN_COUNT = "핀의 개수는 0개 이상 10개 이하여야 합니다.";
 
   public Miss(int pinCount) {
     validatePinCount(pinCount);
@@ -13,7 +13,7 @@ public class Miss implements State {
 
   @Override
   public State play(int pinCount) {
-    throw new IllegalArgumentException(END_PLAY);
+    throw new IllegalArgumentException(INVALID_END_PLAY);
   }
 
   @Override
@@ -33,7 +33,7 @@ public class Miss implements State {
 
   private void validatePinCount(int pinCount) {
     if (pinCount > 10 || pinCount < 0) {
-      throw new IllegalArgumentException(INVALID_PINCOUNT);
+      throw new IllegalArgumentException(INVALID_PIN_COUNT);
     }
   }
 }
