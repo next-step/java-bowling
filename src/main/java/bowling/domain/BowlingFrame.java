@@ -14,9 +14,11 @@ public abstract class BowlingFrame {
 
     abstract BowlingFrame firstPitching(Point point);
 
+    abstract BowlingFrame bonusPitching(Point point);
+
     public BowlingFrame nextFrame() {
         if (round.isFinal()) {
-            return BowlingFinalFrame.of(round.next());
+            return BowlingFinalFrame.first(round.next());
         }
         return BowlingNormalFrame.of(round.next());
     }

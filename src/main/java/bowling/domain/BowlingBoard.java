@@ -9,21 +9,21 @@ import java.util.stream.Collectors;
 public class BowlingBoard {
 
     private final List<BowlingFrame> bowlingFrameList;
-    private final boolean isFirstThrow;
+    private final ThrowsState throwsState;
 
-    public BowlingBoard(List<BowlingFrame> bowlingFrameList, boolean isFirstThrow) {
+    public BowlingBoard(List<BowlingFrame> bowlingFrameList, ThrowsState throwsState) {
         this.bowlingFrameList = bowlingFrameList;
-        this.isFirstThrow = isFirstThrow;
+        this.throwsState = throwsState;
     }
 
     public static BowlingBoard of() {
         List<BowlingFrame> bowlingFrameList = new ArrayList<>();
         bowlingFrameList.add(BowlingNormalFrame.first(Round.first()));
-        return new BowlingBoard(bowlingFrameList, true);
+        return new BowlingBoard(bowlingFrameList, ThrowsState.FIRST_THROWS);
     }
 
-    public static BowlingBoard of(List<BowlingFrame> bowlingFrameList, boolean isFirstThrow) {
-        return new BowlingBoard(bowlingFrameList, isFirstThrow);
+    public static BowlingBoard of(List<BowlingFrame> bowlingFrameList, ThrowsState throwsState) {
+        return new BowlingBoard(bowlingFrameList, throwsState);
     }
 
     public int round() {
@@ -34,14 +34,22 @@ public class BowlingBoard {
         return bowlingFrameList.get(bowlingFrameList.size() - 1);
     }
 
-    public List<BowlingFrame> firstPitching(Point point) {
-        getFrame().firstPitching(point);
-        return bowlingFrameList;
+    public BowlingBoard firstPitching(Point point) {
+        bowlingFrameList.set(round() - 1, getFrame().firstPitching(point));
+        return BowlingBoard.of(bowlingFrameList, ThrowsState.SECOND_THROWS);
     }
 
-    public List<BowlingFrame> secondPitching(Point point) {
-        getFrame().secondPitching(point);
-        return bowlingFrameList;
+    public BowlingBoard secondPitching(Point point) {
+        if (round() == 10) {
+            return BowlingBoard.of(bowlingFrameList, ThrowsState.FINISH_THROWS);
+        }
+        bowlingFrameList.set(round() - 1, getFrame().secondPitching(point));
+        return BowlingBoard.of(bowlingFrameList, ThrowsState.FIRST_THROWS);
+    }
+
+    public BowlingBoard bonusPitching(Point point) {
+        bowlingFrameList.set(round() - 1, getFrame().bonusPitching(point));
+        return BowlingBoard.of(bowlingFrameList, ThrowsState.BONUS_THROWS);
     }
 
     public boolean isType(BowlingRole type) {
@@ -49,11 +57,27 @@ public class BowlingBoard {
     }
 
     public BowlingBoard pitching(Point point) {
-        if (isFirstThrow) {
-            bowlingFrameList.add(getFrame().nextFrame());
-            return BowlingBoard.of(firstPitching(point), isType(BowlingRole.STRIKE));
+        if (throwsState == ThrowsState.SECOND_THROWS) {
+            BowlingBoard bowlingBoard = secondPitching(point);
+            createNextFrame();
+            return bowlingBoard;
         }
-        return BowlingBoard.of(secondPitching(point), true);
+
+        if (throwsState == ThrowsState.SECOND_THROWS && isType(BowlingRole.STRIKE)) {
+            return bonusPitching(point);
+        }
+
+        if (throwsState == ThrowsState.FINISH_THROWS && isType(BowlingRole.SPARE)) {
+            return bonusPitching(point);
+        }
+
+        return firstPitching(point);
+    }
+
+    private void createNextFrame() {
+        if (bowlingFrameList.size() != 10) {
+            bowlingFrameList.add(getFrame().nextFrame());
+        }
     }
 
     public List<ScoreDto> toScoreDto() {
@@ -63,6 +87,17 @@ public class BowlingBoard {
     }
 
     public boolean isEnd() {
-        return getFrame() instanceof BowlingFinalFrame || isType(BowlingRole.MISS) || !isFirstThrow;
+        if (throwsState == ThrowsState.FINISH_THROWS && isType(BowlingRole.MISS)) {
+            return true;
+        }
+        return throwsState == ThrowsState.BONUS_THROWS;
+    }
+
+    public boolean isSameState(ThrowsState throwsState) {
+        return this.throwsState == throwsState;
+    }
+
+    public ThrowsState state() {
+        return throwsState;
     }
 }

@@ -34,7 +34,11 @@ public class BowlingNormalFrame extends BowlingFrame {
         return new BowlingNormalFrame(getRound(), Score.first(point));
     }
 
-
+    @Override
+    public BowlingFrame bonusPitching(Point point) {
+        return new BowlingNormalFrame(getRound(), score.next(point));
+    }
+    
     @Override
     public BowlingRole isType() {
         return score.type();
