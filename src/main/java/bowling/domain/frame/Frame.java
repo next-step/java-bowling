@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.State.PinCount;
+import bowling.domain.score.Score;
 import bowling.domain.State.State;
 
 public interface Frame {
@@ -17,5 +19,9 @@ public interface Frame {
     boolean isLast();
 
     State currentState();
+
+    Score score();
+
+    Score calculatedScore(Score scoreToCalculate);
 
 }

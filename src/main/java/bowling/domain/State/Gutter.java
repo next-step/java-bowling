@@ -1,14 +1,20 @@
 package bowling.domain.State;
 
-import bowling.domain.frame.PinCount;
+import bowling.domain.score.Score;
+import bowling.domain.score.UnDefinedScore;
 
 public class Gutter implements State {
 
     public final static String SYMBOL = "-";
 
+    private final static int PIN_COUNT = 0;
+
     @Override
     public State newState(PinCount pinCount) {
-        return new Miss(new PinCount(0), pinCount);
+        if (pinCount.isStrike()) {
+            return new Spare(new PinCount(PIN_COUNT), pinCount);
+        }
+        return new Miss(new PinCount(PIN_COUNT), pinCount);
     }
 
     @Override
@@ -19,5 +25,15 @@ public class Gutter implements State {
     @Override
     public String stateInString() {
         return SYMBOL;
+    }
+
+    @Override
+    public Score score() {
+        return new UnDefinedScore(0);
+    }
+
+    @Override
+    public Score calculatedScore(Score scoreToCalculate) {
+        throw new IllegalStateException("점수를 계산 할 수 없습니다.");
     }
 }

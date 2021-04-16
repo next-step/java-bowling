@@ -1,6 +1,8 @@
 package bowling.domain.State;
 
-import bowling.domain.frame.PinCount;
+import bowling.domain.score.FinishedScore;
+import bowling.domain.score.Score;
+import bowling.domain.score.UnDefinedScore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +46,7 @@ public class FinalState implements State {
 
     @Override
     public boolean isClosed() {
-        if (isTryAll() || isFirstStateIsMiss()) {
-            return true;
-        }
-        return false;
+        return isTryAll() || isFirstStateIsMiss();
     }
 
     @Override
@@ -59,6 +58,35 @@ public class FinalState implements State {
                     .append(states.get(i).stateInString());
         }
         return stringBuilder.toString();
+    }
+
+    @Override
+    public Score score() {
+        int totalScoreInInt = states.stream()
+                .reduce(0,
+                        (accumulated, state) -> state.score().sumCurrentScore(accumulated),
+                        Integer::sum);
+
+        if (isClosed()) {
+            return new FinishedScore(totalScoreInInt);
+        }
+        return new UnDefinedScore(totalScoreInInt);
+    }
+
+    @Override
+    public Score calculatedScore(Score scoreToCalculate) {
+        Score finalScore = scoreToCalculate;
+        for (State state : states) {
+            finalScore = nextCalculatedScore(state, finalScore);
+        }
+        return finalScore;
+    }
+
+    private Score nextCalculatedScore(State state, Score finalScore) {
+        if (!finalScore.isNecessaryToCalculateMore()) {
+            return finalScore;
+        }
+        return state.calculatedScore(finalScore);
     }
 
     private boolean isFirstStateIsMiss() {

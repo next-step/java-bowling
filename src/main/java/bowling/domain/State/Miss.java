@@ -1,6 +1,7 @@
 package bowling.domain.State;
 
-import bowling.domain.frame.PinCount;
+import bowling.domain.score.FinishedScore;
+import bowling.domain.score.Score;
 
 public class Miss implements State {
 
@@ -41,5 +42,22 @@ public class Miss implements State {
         }
 
         return firstPinCountInString + SEPARATOR_SYMBOL + secondPinCountInString;
+    }
+
+    @Override
+    public Score score() {
+        return new FinishedScore(firstPinCount.sumCount(secondPinCount));
+    }
+
+    @Override
+    public Score calculatedScore(Score scoreToCalculate) {
+        Score finalScore = scoreToCalculate;
+        if (finalScore.isNecessaryToCalculateMore()) {
+            finalScore = finalScore.calculatedScore(firstPinCount.count());
+        }
+        if (finalScore.isNecessaryToCalculateMore()) {
+            finalScore = finalScore.calculatedScore(secondPinCount.count());
+        }
+        return finalScore;
     }
 }

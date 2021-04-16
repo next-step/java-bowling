@@ -3,7 +3,6 @@ package bowling.domain;
 import bowling.domain.State.*;
 import bowling.domain.frame.*;
 import bowling.dto.FrameResult;
-import bowling.dto.FrameResults;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +18,8 @@ public class FramesTest extends FrameTestBase {
     void init() {
         int totalNumberOfFrame = 10;
         Frames frames = Frames.init(totalNumberOfFrame);
-        FrameResults result = frames.result();
 
-        List<FrameResult> results = result.results();
+        List<FrameResult> results = frames.result();
 
         assertThat(results.size()).isEqualTo(totalNumberOfFrame);
         assertThat(frames.currentFrameNumber()).isEqualTo(FrameNumber.first());
@@ -66,7 +64,7 @@ public class FramesTest extends FrameTestBase {
 
     @Test
     @DisplayName("마지막 프레임 직전까지 완료시 결과 테스트")
-    void add_pin_count() {
+    void result() {
         int firstPinCountOfSecondFrame = 5;
         int secondPinCountOfSecondFrame = 3;
 
@@ -78,12 +76,20 @@ public class FramesTest extends FrameTestBase {
         frames.addPinCount(firstPinCountOfSecondFrame);
         frames.addPinCount(secondPinCountOfSecondFrame);
 
-        FrameResults result = frames.result();
-        List<String> states = result.results().stream()
-                .map(FrameResult::state)
+        int expectedFirstFrameScore = 10 + firstPinCountOfSecondFrame + secondPinCountOfSecondFrame;
+        int expectedSecondFrameScore = firstPinCountOfSecondFrame + secondPinCountOfSecondFrame;
+        int expectedLastFrameScore = 0;
+
+        List<FrameResult> result = frames.result();
+        List<String> states = result
+                .stream().map(FrameResult::state)
+                .collect(Collectors.toList());
+        List<Integer> scores = result
+                .stream().map(frameResult -> frameResult.score().currentScore())
                 .collect(Collectors.toList());
 
         assertThat(states).containsExactlyInAnyOrder(STRIKE_SYMBOL, firstPinCountOfSecondFrame + SEPARATOR + secondPinCountOfSecondFrame, EMPTY_SYMBOL);
+        assertThat(scores).containsExactlyInAnyOrder(expectedFirstFrameScore, expectedSecondFrameScore, expectedLastFrameScore);
     }
 
 }

@@ -1,6 +1,7 @@
 package bowling.domain.State;
 
-import bowling.domain.frame.PinCount;
+import bowling.domain.score.Score;
+import bowling.domain.score.UnDefinedScore;
 
 public class Hit implements State {
 
@@ -26,5 +27,15 @@ public class Hit implements State {
     @Override
     public String stateInString() {
         return firstPinCount.countInString();
+    }
+
+    @Override
+    public Score score() {
+        return new UnDefinedScore(firstPinCount.count());
+    }
+
+    @Override
+    public Score calculatedScore(Score scoreToCalculate) {
+        throw new IllegalStateException("점수를 계산 할 수 없습니다.");
     }
 }

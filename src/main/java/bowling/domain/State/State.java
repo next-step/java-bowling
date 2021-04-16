@@ -1,6 +1,6 @@
 package bowling.domain.State;
 
-import bowling.domain.frame.PinCount;
+import bowling.domain.score.Score;
 
 public interface State {
 
@@ -9,5 +9,9 @@ public interface State {
     boolean isClosed();
 
     String stateInString();
+
+    Score score();
+
+    Score calculatedScore(Score scoreToCalculate);
 
 }

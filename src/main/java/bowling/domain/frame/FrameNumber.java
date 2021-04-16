@@ -17,7 +17,6 @@ public class FrameNumber implements Comparable<FrameNumber> {
         return new FrameNumber(MIN);
     }
 
-
     public FrameNumber next() {
         return new FrameNumber(number + 1);
     }

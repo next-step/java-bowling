@@ -1,9 +1,10 @@
 package bowling.domain;
 
 import bowling.domain.frame.FrameNumber;
-import bowling.dto.FrameResults;
 import bowling.dto.PlayResult;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,8 +18,8 @@ public class PlayerTest {
         player.addPinCount(pinCount);
 
         PlayResult playResult = player.playResult();
-        FrameResults frameResults = playResult.framesResult();
-        String pinCountsOfFirstFrame = frameResults.results().get(0).state();
+        List<String> states = playResult.allStates();
+        String pinCountsOfFirstFrame = states.get(0);
 
         assertThat(playResult.playerName()).isEqualTo(name);
         assertThat(pinCountsOfFirstFrame).isEqualTo(Integer.toString(pinCount));

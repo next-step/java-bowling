@@ -1,9 +1,11 @@
 package bowling.domain;
 
+import bowling.domain.score.Score;
 import bowling.domain.State.FinalState;
 import bowling.domain.State.State;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.FrameNumber;
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -187,5 +189,168 @@ public class FinalFrameTest extends FrameTestBase {
         assertThat(state.stateInString()).isEqualTo(firstMissPinCount + SEPARATOR + secondMissPinCount);
     }
 
+
+    @Test
+    @DisplayName("ready상태의 finalframe 이전 strike frame점수")
+    void score_when_strike_frame_before_ready_final_frame() {
+        int strikePinCount = 10;
+        NormalFrame strikeFrame = NormalFrame.first();
+        strikeFrame.addPinCount(strikePinCount);
+        strikeFrame.last();
+
+        Score frameScore = strikeFrame.score();
+
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isTrue();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
+    }
+
+    @Test
+    @DisplayName("strike+hit상태의 finalframe 이전 strike frame점수")
+    void score_when_strike_frame_before_strike_and_hit_final_frame() {
+        int strikePinCount = 10;
+        int firstPinCountOfFinalFrame = 5;
+        NormalFrame strikeFrame = NormalFrame.first();
+        strikeFrame.addPinCount(strikePinCount);
+        FinalFrame last = strikeFrame.last();
+        last.addPinCount(strikePinCount);
+        last.addPinCount(firstPinCountOfFinalFrame);
+
+        Score frameScore = strikeFrame.score();
+
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isTrue();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
+    }
+
+
+    @Test
+    @DisplayName("turkey finalframe 이전 strike frame점수")
+    void score_when_strike_frame_before_turkey_final_frame() {
+        int strikePinCount = 10;
+        NormalFrame strikeFrame = NormalFrame.first();
+        strikeFrame.addPinCount(strikePinCount);
+        FinalFrame last = strikeFrame.last();
+        last.addPinCount(strikePinCount);
+        last.addPinCount(strikePinCount);
+        last.addPinCount(strikePinCount);
+
+        Score frameScore = strikeFrame.score();
+
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount * 3);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
+    }
+
+    @Test
+    @DisplayName("miss finalframe 이전 strike frame점수")
+    void score_when_strike_frame_before_miss_final_frame() {
+        int strikePinCount = 10;
+        int lastFrameFirstPinCount = 3;
+        int lastFrameSecondPinCount = 5;
+        NormalFrame strikeFrame = NormalFrame.first();
+        strikeFrame.addPinCount(strikePinCount);
+        FinalFrame last = strikeFrame.last();
+        last.addPinCount(lastFrameFirstPinCount);
+        last.addPinCount(lastFrameSecondPinCount);
+
+        Score frameScore = strikeFrame.score();
+
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount + lastFrameFirstPinCount + lastFrameSecondPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
+    }
+
+    @Test
+    @DisplayName("strike+spare+hit finalframe 이전 strike frame점수")
+    void score_when_strike_frame_before_strike_and_spare_final_frame() {
+        int strikePinCount = 10;
+        int lastFrameFirstPinCount = 10;
+        int lastFrameSecondPinCount = 5;
+        int lastFrameThirdPinCount = 5;
+        NormalFrame strikeFrame = NormalFrame.first();
+        strikeFrame.addPinCount(strikePinCount);
+        FinalFrame last = strikeFrame.last();
+        last.addPinCount(lastFrameFirstPinCount);
+        last.addPinCount(lastFrameSecondPinCount);
+        last.addPinCount(lastFrameThirdPinCount);
+
+        Score frameScore = strikeFrame.score();
+
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount + lastFrameFirstPinCount + lastFrameSecondPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
+    }
+
+    @Test
+    @DisplayName("strike+spare+ready unclosed finalframe 이전 strike frame점수")
+    void score_when_strike_frame_before_strike_and_spare_unclosed_final_frame() {
+        int strikePinCount = 10;
+        int lastFrameFirstPinCount = 10;
+        int lastFrameSecondPinCount = 5;
+        NormalFrame strikeFrame = NormalFrame.first();
+        strikeFrame.addPinCount(strikePinCount);
+        FinalFrame last = strikeFrame.last();
+        last.addPinCount(lastFrameFirstPinCount);
+        last.addPinCount(lastFrameSecondPinCount);
+
+        Score frameScore = strikeFrame.score();
+
+        assertThat(frameScore.currentScore()).isEqualTo(strikePinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isTrue();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
+    }
+
+
+    @Test
+    @DisplayName("finalframe miss상태의 점수")
+    void score_when_closed_miss() {
+        int firstMissPinCount = 4;
+        int secondMissPinCount = 3;
+        FinalFrame finalFrame = FinalFrame.from(10);
+        finalFrame.addPinCount(firstMissPinCount);
+        finalFrame.addPinCount(secondMissPinCount);
+
+        Score frameScore = finalFrame.score();
+
+        assertThat(frameScore.currentScore()).isEqualTo(firstMissPinCount + secondMissPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
+    }
+
+
+    @Test
+    @DisplayName("finalframe closed되지 않은 2strike+ready상태의 점수")
+    void score_when_not_closed_2_strike_1_ready() {
+        int firstStrikePinCount = 10;
+        int secondStrikePinCount = 10;
+        FinalFrame finalFrame = FinalFrame.from(10);
+        finalFrame.addPinCount(firstStrikePinCount);
+        finalFrame.addPinCount(secondStrikePinCount);
+
+        Score frameScore = finalFrame.score();
+
+        assertThat(frameScore.currentScore()).isEqualTo(firstStrikePinCount + secondStrikePinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isFalse();
+    }
+
+    @Test
+    @DisplayName("finalframe close된 1spare+1hit상태의 점수")
+    void score_when_closed_1_spare_1_hit() {
+        int firstSparePinCount = 4;
+        int secondSparePinCount = 6;
+        int thirdPinCount = 6;
+        FinalFrame finalFrame = FinalFrame.from(10);
+        finalFrame.addPinCount(firstSparePinCount);
+        finalFrame.addPinCount(secondSparePinCount);
+        finalFrame.addPinCount(thirdPinCount);
+
+        Score frameScore = finalFrame.score();
+
+        assertThat(frameScore.currentScore()).isEqualTo(firstSparePinCount + secondSparePinCount + thirdPinCount);
+        assertThat(frameScore.isNecessaryToCalculateMore()).isFalse();
+        assertThat(frameScore.isFullyCalculated()).isTrue();
+    }
 
 }

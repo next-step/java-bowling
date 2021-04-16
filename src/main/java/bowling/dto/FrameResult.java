@@ -8,9 +8,12 @@ public class FrameResult {
 
     private String state;
 
+    private ScoreDto score;
+
     public FrameResult(Frame frame) {
         this.frameNumber = frame.number().number();
         this.state = frame.currentState().stateInString();
+        this.score = new ScoreDto(frame.score());
     }
 
     public int frameNumber() {
@@ -19,5 +22,9 @@ public class FrameResult {
 
     public String state() {
         return state;
+    }
+
+    public ScoreDto score() {
+        return score;
     }
 }

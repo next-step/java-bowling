@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.State;
 
 public class PinCount {
 
@@ -43,6 +43,9 @@ public class PinCount {
         return (pinCount.count + count) <= MAX_PIN_COUNT;
     }
 
+    public int sumCount(PinCount secondPinCount) {
+        return count + secondPinCount.count;
+    }
 
     @Override
     public boolean equals(Object o) {
