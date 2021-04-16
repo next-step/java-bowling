@@ -78,10 +78,17 @@ public class Question extends AbstractEntity {
     }
 
 
-    public void validateDelete(User loginUser) {
+    private void validateDelete(User loginUser) {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException(INVALID_DELETE);
         }
+    }
+
+    public DeleteHistories delete(User loginUser) {
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.add(turnQuestionIntoDeleteHistory(loginUser));
+        deleteHistories.addAll(turnAnswerIntoDeleteHistory(loginUser));
+        return deleteHistories;
     }
 
     public DeleteHistory turnQuestionIntoDeleteHistory(User loginUser) {
@@ -99,7 +106,7 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void delete() {
+    private void delete() {
         setDeleted(true);
     }
 
@@ -115,4 +122,5 @@ public class Question extends AbstractEntity {
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
+
 }

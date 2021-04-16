@@ -17,24 +17,9 @@ public class AnswerTest {
       "Answers Contents2");
 
   @Test
-  @DisplayName("삭제 확인")
-  public void isDeleted() {
-    A1.delete();
-    assertThat(A1.isDeleted()).isTrue();
-  }
-
-  @Test
   @DisplayName("답변자인지 확인")
   public void isOwner() {
     assertThat(A1.isOwner(UserTest.JAVAJIGI)).isTrue();
-  }
-
-  @Test
-  @DisplayName("다른 사람이 쓴 답변이 있을 경우 삭제 불가")
-  public void validateDelete() {
-    assertThatThrownBy(() -> {
-      A1.validateDelete(UserTest.SANJIGI);
-    }).isInstanceOf(CannotDeleteException.class);
   }
 
   @Test

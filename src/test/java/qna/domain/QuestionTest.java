@@ -23,13 +23,6 @@ public class QuestionTest {
   }
 
   @Test
-  @DisplayName("질문 삭제 확인")
-  public void isDeleted() {
-    Q1.delete();
-    assertThat(Q1.isDeleted()).isTrue();
-  }
-
-  @Test
   @DisplayName("답변 추가 확인")
   public void addAnswer() {
     Q1.addAnswer(AnswerTest.A1);
@@ -38,14 +31,6 @@ public class QuestionTest {
     answers.add(AnswerTest.A1);
 
     assertThat(Q1.getAnswers()).isEqualTo(answers);
-  }
-
-  @Test
-  @DisplayName("삭제할 수 있는 사람인지 확인")
-  public void validateDelete() {
-    assertThatThrownBy(() -> {
-      Q1.validateDelete(UserTest.SANJIGI);
-    }).isInstanceOf(CannotDeleteException.class);
   }
 
   @Test
