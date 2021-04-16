@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Frames;
+import bowling.domain.FrameResult;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.state.State;
@@ -12,13 +12,13 @@ public class ResultView {
   private static final String HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
   private static final String DIVIDER = "|";
 
-  public void printResult(Player player, Frames frames) {
+  public void printResult(Player player, FrameResult frameResult) {
     printHeader();
 
     System.out.print(DIVIDER);
     printText(player.getName());
 
-    printFrames(frames.getFrames());
+    printFrames(frameResult.getFrames());
     System.out.print(System.lineSeparator());
   }
 

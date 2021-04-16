@@ -1,8 +1,7 @@
 package bowling;
 
-import bowling.domain.Frames;
+import bowling.domain.FrameResult;
 import bowling.domain.Player;
-import bowling.domain.frame.BaseFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.view.InputView;
@@ -18,12 +17,12 @@ public class Application {
     Player player = new Player(inputView.inputName());
 
     Frame frame = NormalFrame.createFirst();
-    Frames frames = new Frames();
+    FrameResult frameResult = new FrameResult();
 
     while (!frame.isEnd()) {
       frame.play(inputView.inputPinCount(frame));
-      frames.add(frame);
-      resultView.printResult(player, frames);
+      frameResult.add(frame);
+      resultView.printResult(player, frameResult);
       frame = frame.next();
 
     }

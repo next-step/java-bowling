@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Frames {
+public class FrameResult {
 
   private final List<Frame> frames = new ArrayList<>();
 
