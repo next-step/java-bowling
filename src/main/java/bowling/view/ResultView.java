@@ -24,7 +24,7 @@ public class ResultView {
   }
 
   private void printFrames2(FrameResult frameResult) {
-    for (Entry<Integer, List<State>> state : frameResult.getFrames().entrySet()) {
+    for (Entry<Integer, List<State>> state : frameResult.getResult().entrySet()) {
       printText(printState(state.getValue()));
     }
   }
@@ -32,7 +32,7 @@ public class ResultView {
   private String printState(List<State> states) {
     return states.stream()
         .map(state -> state.getString())
-        .collect(Collectors.joining("|"));
+        .collect(Collectors.joining(DIVIDER));
   }
 
 

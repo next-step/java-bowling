@@ -10,10 +10,12 @@ import java.util.Map;
 
 public class FrameResult {
   private static final Map<Integer, List<State>> result = new HashMap<>();
+  private static final int MIN_PLAY_COUNT = 1;
+  private static final int MAX_PLAY_COUNT = 10;
 
   static {
-    for (int i = 1; i<= 10; i++) {
-      result.put(i, new ArrayList<>());
+    for (int index = MIN_PLAY_COUNT; index<= MAX_PLAY_COUNT; index++) {
+      result.put(index, new ArrayList<>());
     }
   }
 
@@ -21,7 +23,7 @@ public class FrameResult {
     result.get(playCount).add(state);
   }
 
-  public Map<Integer, List<State>> getFrames() {
+  public Map<Integer, List<State>> getResult() {
     return Collections.unmodifiableMap(result);
   }
 }
