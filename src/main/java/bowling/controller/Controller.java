@@ -1,23 +1,21 @@
-package bowling.domain.controller;
+package bowling.controller;
 
 import bowling.domain.Player;
-import bowling.domain.view.InputView;
-import bowling.domain.view.ResultView;
+import bowling.domain.frame.Frames;
+import bowling.view.InputView;
+import bowling.view.ResultView;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Controller {
 
     public static void startBowling() {
-        List<Player> players = InputView.enterUserNames()
-                .stream()
-                .map(Player::get)
-                .collect(Collectors.toList());
+        String player = InputView.inputUserNames();
 
-        ResultView.printPlayer(players);
-        
-
+        Frames frames = Frames.init();
+        while (!frames.isLastFrame()) {
+            int pinCount = InputView.inputPinCount(frames.getCurrentRound());
+            frames.pitch(pinCount);
+            ResultView.printScore(Player.get(player).getPlayer(), frames.getFrames());
+        }
     }
-
 }
