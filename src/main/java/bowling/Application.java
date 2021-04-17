@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.controller.BowlingGameController;
 import bowling.domain.FrameResult;
 import bowling.domain.PinCount;
 import bowling.domain.Player;
@@ -12,6 +13,7 @@ import bowling.view.ResultView;
 public class Application {
 
   public static void main(String[] args) {
+    /*
     InputView inputView = new InputView();
     ResultView resultView = new ResultView();
 
@@ -27,5 +29,9 @@ public class Application {
       frame = frame.next();
 
     }
+     */
+    BowlingGameController bowlingGameController = new BowlingGameController();
+    bowlingGameController.run();
+
   }
 }
