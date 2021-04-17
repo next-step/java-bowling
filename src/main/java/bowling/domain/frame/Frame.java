@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +28,6 @@ public abstract class Frame {
 
     public int getPinsSize() {
         return pins.size();
-    }
-
-    public FrameRound getRound() {
-        return frameRound;
-    }
-
-    public int getFrameRoundNumber() {
-        return frameRound.getRound();
     }
 
     public Pin getPin(int index) {
