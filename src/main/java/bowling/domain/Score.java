@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 import java.util.stream.Stream;
 
@@ -17,6 +17,14 @@ public enum Score {
         this.count = count;
         this.type = type;
         this.first = first;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public boolean isFirst() {
