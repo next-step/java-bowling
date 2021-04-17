@@ -108,17 +108,21 @@ public class Question extends AbstractEntity {
     private List<DeleteHistory> createDeleteHistories() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         this.setDeleted(true);
-        deleteHistories.add(createDeleteHistory(ContentType.QUESTION, getId(), getWriter()));
+        deleteHistories.add(questionDeleteHistory(getId(), getWriter()));
 
         for (Answer answer : answers.list()) {
             answer.setDeleted(true);
-            deleteHistories.add(createDeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter()));
+            deleteHistories.add(answerDeleteHistory(answer.getId(), answer.getWriter()));
         }
 
         return deleteHistories;
     }
 
-    private DeleteHistory createDeleteHistory(ContentType question, Long id, User writer) {
-        return new DeleteHistory(question, id, writer, LocalDateTime.now());
+    private DeleteHistory questionDeleteHistory(Long id, User writer) {
+        return new DeleteHistory(ContentType.QUESTION, id, writer, LocalDateTime.now());
+    }
+
+    private DeleteHistory answerDeleteHistory(Long id, User writer) {
+        return new DeleteHistory(ContentType.ANSWER, id, writer, LocalDateTime.now());
     }
 }
