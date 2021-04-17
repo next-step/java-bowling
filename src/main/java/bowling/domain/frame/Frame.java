@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.PinCount;
+import bowling.domain.Score;
 import bowling.domain.state.State;
 
 public interface Frame {
@@ -14,4 +15,6 @@ public interface Frame {
   void play(PinCount pinCount);
 
   Frame nextFrame();
+
+  Score getScore();
 }

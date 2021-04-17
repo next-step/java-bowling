@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.PinCount;
+import bowling.domain.Score;
 
 public class Hit implements State {
 
@@ -24,10 +25,10 @@ public class Hit implements State {
     }
 
     if (pinCount.totalSumIsTen(newPinCount)) {
-      return new Spare();
+      return new Spare(pinCount,newPinCount);
     }
 
-    return new Miss(newPinCount);
+    return new Miss(pinCount, newPinCount);
   }
 
 
@@ -44,5 +45,10 @@ public class Hit implements State {
   @Override
   public String getString() {
     return String.valueOf(pinCount.getPinCount());
+  }
+
+  @Override
+  public Score getScore() {
+    return new Score(pinCount.getPinCount(), 0);
   }
 }

@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.PinCount;
+import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.Spare;
 import bowling.domain.state.State;
@@ -78,6 +79,11 @@ public class FinalFrame implements Frame {
   @Override
   public Frame nextFrame() {
     return this;
+  }
+
+  @Override
+  public Score getScore() {
+    return null;
   }
 
 }

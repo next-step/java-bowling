@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.PinCount;
+import bowling.domain.Score;
 
 public class SecondGutter implements State {
 
@@ -24,5 +25,11 @@ public class SecondGutter implements State {
   @Override
   public String getString() {
     return "-";
+  }
+
+  //?
+  @Override
+  public Score getScore() {
+    return new Score(0,0);
   }
 }

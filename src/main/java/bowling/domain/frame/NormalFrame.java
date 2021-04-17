@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.PinCount;
+import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
@@ -79,5 +80,11 @@ public class NormalFrame implements Frame {
       return next;
     }
     return this;
+  }
+
+  @Override
+  public Score getScore() {
+    Score score = state.getScore();
+    return null;
   }
 }

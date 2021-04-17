@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.PinCount;
+import bowling.domain.Score;
 
 public interface State {
 
@@ -11,4 +12,6 @@ public interface State {
   boolean isBonus();
 
   String getString();
+
+  Score getScore();
 }

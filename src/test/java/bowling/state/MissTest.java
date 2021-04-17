@@ -15,7 +15,7 @@ public class MissTest {
   @DisplayName("play 확인")
   public void play() {
     assertThatThrownBy(() -> {
-      new Miss(8).play(new PinCount(3));
+      new Miss(0, 8).play(new PinCount(3));
     }).isInstanceOf(IllegalArgumentException.class);
   }
 
@@ -25,7 +25,7 @@ public class MissTest {
   @DisplayName("친 핀의 개수는 0개 이상 10개 이하여야 한다.")
   public void validatePinCount(int number) {
     assertThatThrownBy(() -> {
-      new Miss(number);
+      new Miss(0, number);
     }).isInstanceOf(IllegalArgumentException.class);
   }
 }

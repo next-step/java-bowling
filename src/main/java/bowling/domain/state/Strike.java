@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.PinCount;
+import bowling.domain.Score;
 
 public class Strike implements State {
 
@@ -24,5 +25,10 @@ public class Strike implements State {
   @Override
   public String getString() {
     return "x";
+  }
+
+  @Override
+  public Score getScore() {
+    return new Score(10, 2);
   }
 }

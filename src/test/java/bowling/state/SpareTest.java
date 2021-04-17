@@ -13,7 +13,7 @@ public class SpareTest {
   @DisplayName("play 확인")
   public void play() {
     assertThatThrownBy(() -> {
-      new Spare().play(new PinCount(3));
+      new Spare(new PinCount(0),new PinCount(10)).play(new PinCount(3));
     }).isInstanceOf(IllegalArgumentException.class);
   }
 }

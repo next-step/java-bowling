@@ -48,4 +48,11 @@ public class PinCount {
   }
 
 
+  public int sum(PinCount newPinCount) {
+    return newPinCount.sum(pinCount);
+  }
+
+  private int sum(int newPinCount) {
+    return pinCount + newPinCount;
+  }
 }
