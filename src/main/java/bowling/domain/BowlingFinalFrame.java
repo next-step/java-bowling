@@ -39,7 +39,7 @@ public class BowlingFinalFrame extends BowlingFrame {
 
     @Override
     public BowlingFrame bonusPitching(Point point) {
-        return BowlingFinalFrame.of(FinalRound.of(), score, BonusScore.of(round(), score, point));
+        return BowlingFinalFrame.of(FinalRound.of(), score, BonusScore.of(FinalRound.of(), score, point));
     }
 
     @Override

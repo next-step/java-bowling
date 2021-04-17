@@ -1,9 +1,8 @@
 package bowling.domain;
 
 import java.util.Arrays;
-import java.util.function.Predicate;
 
-public enum BowlingRole implements Predicate<Score> {
+public enum BowlingRole {
     STRIKE(10, true),
     SPARE(10, false),
     MISS(0, false);
@@ -30,8 +29,7 @@ public enum BowlingRole implements Predicate<Score> {
                 .findAny()
                 .orElse(MISS);
     }
-
-    @Override
+    
     public boolean test(Score score) {
         return score.total() == getTotal() && score.isStrike() == isStrike();
     }

@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public abstract class Round {
 
     private static final int FIRST_ROUND = 1;
@@ -33,5 +35,16 @@ public abstract class Round {
         return NormalRound.of(FIRST_ROUND);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Round round1 = (Round) o;
+        return round == round1.round;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(round);
+    }
 }

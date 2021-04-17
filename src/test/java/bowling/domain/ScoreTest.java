@@ -37,7 +37,6 @@ class ScoreTest {
         Point firstPoint = Point.of(10);
 
         Score first = Score.first(firstPoint);
-
         assertThat(first.type()).isEqualTo(BowlingRole.STRIKE);
     }
 

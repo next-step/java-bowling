@@ -6,7 +6,7 @@ public class FinalRound extends Round {
         super(round);
     }
 
-    public static Round of(int round) {
+    public static FinalRound of(int round) {
         if (round != 10) {
             throw new IllegalArgumentException("마지막 라운드는 10라운드여야 합니다.");
         }
@@ -16,4 +16,5 @@ public class FinalRound extends Round {
     public static FinalRound of() {
         return new FinalRound(10);
     }
+
 }

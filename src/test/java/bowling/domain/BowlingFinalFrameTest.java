@@ -13,7 +13,7 @@ class BowlingFinalFrameTest {
     @Test
     void case1() {
         Point point = Point.of(5);
-        BowlingFinalFrame initFrame = BowlingFinalFrame.first(NormalRound.of(10));
+        BowlingFinalFrame initFrame = BowlingFinalFrame.first(FinalRound.of());
 
         BowlingFrame bowlingFrame = initFrame.firstPitching(point);
 
@@ -25,7 +25,7 @@ class BowlingFinalFrameTest {
     void case2() {
         Point firstPoint = Point.of(5);
         Point secondPoint = Point.of(4);
-        BowlingFinalFrame initFrame = BowlingFinalFrame.first(NormalRound.of(10));
+        BowlingFinalFrame initFrame = BowlingFinalFrame.first(FinalRound.of());
 
         BowlingFrame firstFrame = initFrame.firstPitching(firstPoint);
         BowlingFrame secondFrame = firstFrame.secondPitching(secondPoint);
@@ -37,7 +37,7 @@ class BowlingFinalFrameTest {
     @DisplayName("스페어 또는 스트라이크를 만족 못하면 보너스 투구를 할 수 없다.")
     @Test
     void case3() {
-        BowlingFrame finalFrame = BowlingFinalFrame.of(NormalRound.of(10), Score.of(Point.of(3), Point.of(6)));
+        BowlingFrame finalFrame = BowlingFinalFrame.of(FinalRound.of(), Score.of(Point.of(3), Point.of(6)));
 
         assertThatThrownBy(() -> {
             finalFrame.bonusPitching(Point.of(5));
@@ -47,7 +47,7 @@ class BowlingFinalFrameTest {
     @DisplayName("보너스 투구를 한다.")
     @Test
     void case4() {
-        BowlingFrame bowlingFrame = BowlingFinalFrame.of(NormalRound.of(10), Score.of(Point.of(4), Point.of(6)));
+        BowlingFrame bowlingFrame = BowlingFinalFrame.of(FinalRound.of(), Score.of(Point.of(4), Point.of(6)));
         BowlingFrame bonusFrame = bowlingFrame.bonusPitching(Point.of(5));
 
         ScoreDto scoreDto = bonusFrame.toDto();
@@ -59,7 +59,7 @@ class BowlingFinalFrameTest {
     @Test
     void case5() {
         assertThatThrownBy(() -> {
-            BowlingFinalFrame.first(NormalRound.of(1));
+            BowlingFinalFrame.first(FinalRound.of(1));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }
