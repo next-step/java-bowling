@@ -14,7 +14,7 @@ public class QuestionTest {
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
     @Test
-    @DisplayName("Question을 삭제할때 작성자가 다르면 예외가 발생한다")
+    @DisplayName("Question 삭제할때 작성자가 다르면 예외가 발생한다")
     void checkPossibleDelete() {
         assertThatThrownBy(() -> {
             Q1.delete(UserTest.SANJIGI);
@@ -22,7 +22,7 @@ public class QuestionTest {
     }
 
     @Test
-    @DisplayName("Question을 삭제하면 deleted 인스턴스 변수가 true로 변경된다")
+    @DisplayName("Question 삭제하면 deleted 가  true 로 변경된다")
     void delete() {
         // given
         Q1.delete(UserTest.JAVAJIGI);
@@ -35,7 +35,7 @@ public class QuestionTest {
     }
 
     @Test
-    @DisplayName("Question을 삭제하면 history가 생성된다")
+    @DisplayName("Question 삭제하면 deleteHistory 생성된다")
     void deleteHistory() {
         // given
         DeleteHistory deleteHistory = Q1.delete(UserTest.JAVAJIGI);
