@@ -27,10 +27,10 @@ public class Answers {
         this.answers.add(answer);
     }
 
-    public List<DeleteHistory> delete() {
+    public List<DeleteHistory> delete(User loginUser) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
-            deleteHistories.add(answer.delete());
+            deleteHistories.add(answer.delete(loginUser));
         }
         return deleteHistories;
     }
