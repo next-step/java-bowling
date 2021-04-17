@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +44,7 @@ public class Frames {
     }
 
     public boolean isLastFrame() {
-        return frames.get(FrameRound.MAX_ROUND - 1).isFinal();
+        return frames.get(FrameRound.MAX_ROUND - 1).isLast();
     }
 
     public Frame getCurrentFrame() {
@@ -57,10 +57,6 @@ public class Frames {
 
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
-    }
-
-    public boolean isCurrentFinalRound() {
-        return getCurrentRound() == FrameRound.MAX_ROUND;
     }
 
     @Override
