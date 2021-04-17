@@ -22,6 +22,10 @@ public class FinalFrame implements Frame {
 
   @Override
   public void play(PinCount pinCount) {
+    if (isEnd()) {
+      throw new IllegalArgumentException();
+    }
+
     State currentState = states.getLast();
 
     if (currentState.isEnd()) {
@@ -56,6 +60,10 @@ public class FinalFrame implements Frame {
   private boolean hasBonus() {
     return states.stream()
         .anyMatch(this::isStrikeOrSpare);
+  }
+
+  public int getStatesSize() {
+    return states.size();
   }
 
   @Override
