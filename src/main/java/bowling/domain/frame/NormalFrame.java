@@ -3,13 +3,16 @@ package bowling.domain.frame;
 import bowling.domain.PinCount;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
+import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
   private final Frame frame;
 
   public NormalFrame(int playCount, State state) {
+
     this.frame = BaseFrame.of(playCount, state);
+
   }
 
   public static Frame of(int playCount, State state) {
@@ -34,6 +37,7 @@ public class NormalFrame implements Frame {
     }
 
     return NormalFrame.of(getPlayCount(), getState());
+
   }
 
   @Override
@@ -52,8 +56,25 @@ public class NormalFrame implements Frame {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    NormalFrame that = (NormalFrame) o;
+    return Objects.equals(frame, that.frame);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(frame);
+  }
+
+  @Override
   public boolean isEnd() {
-    return false;
+    return getState().isEnd();
   }
 
 }

@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.PinCount;
 import bowling.domain.state.State;
+import java.util.Objects;
 
 public class BaseFrame implements Frame {
 
@@ -49,7 +50,23 @@ public class BaseFrame implements Frame {
 
   @Override
   public boolean isEnd() {
-    return false;
+    return state.isEnd();
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    BaseFrame baseFrame = (BaseFrame) o;
+    return playCount == baseFrame.playCount && Objects.equals(state, baseFrame.state);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(playCount, state);
+  }
 }

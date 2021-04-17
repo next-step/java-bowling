@@ -30,7 +30,18 @@ InputView inputView = new InputView();
 
     Player player = new Player(inputView.inputName());
     BawlingGame bawlingGame = new BawlingGame(player);
-    resultView.printInit(player, bawlingGame);
+    resultView.printResult(player, bawlingGame);
+
+    while(!bawlingGame.isEnd()) {
+
+      int index = bawlingGame.getFrameCount();
+
+      int pinCount = inputView.inputPinCount(index);
+      bawlingGame.play(pinCount);
+
+      resultView.printResult(player, bawlingGame);
+
+    }
 
 
   }

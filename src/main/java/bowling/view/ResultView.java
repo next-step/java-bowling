@@ -25,15 +25,17 @@ public class ResultView {
     return str;
   }
 
-  public void printInit(Player player, BawlingGame bawlingGame) {
+
+  public void printResult(Player player, BawlingGame bawlingGame) {
     printHeader();
 
     System.out.print(DIVIDER);
     System.out.print(printText(player.getName()));
 
     printFrame(bawlingGame.getFrames().getFrames());
-
+    System.out.print(System.lineSeparator());
   }
+
   public void printFrame(List<Frame> frames) {
     int bound = frames.size();
     StringBuilder builder = new StringBuilder();
@@ -68,7 +70,6 @@ public class ResultView {
     FinalFrame finalFrame = (FinalFrame) frame;
     return finalFrame.getState().getString();
   }
-
 
 
 }
