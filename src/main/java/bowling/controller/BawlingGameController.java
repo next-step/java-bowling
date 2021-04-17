@@ -1,6 +1,5 @@
 package bowling.controller;
 
-import bowling.domain.BawlingGame;
 import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -25,23 +24,6 @@ InputView inputView = new InputView();
     }
 
  */
-    InputView inputView = new InputView();
-    ResultView resultView = new ResultView();
-
-    Player player = new Player(inputView.inputName());
-    BawlingGame bawlingGame = new BawlingGame(player);
-    resultView.printResult(player, bawlingGame);
-
-    while(!bawlingGame.isEnd()) {
-
-      int index = bawlingGame.getFrameCount();
-
-      int pinCount = inputView.inputPinCount(index);
-      bawlingGame.play(pinCount);
-
-      resultView.printResult(player, bawlingGame);
-
-    }
 
 
   }

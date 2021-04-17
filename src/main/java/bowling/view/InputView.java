@@ -14,11 +14,6 @@ public class InputView {
     return scanner.nextLine();
   }
 
-  public int inputPinCount(int index) {
-    System.out.print(String.format(INPUT_PIN_COUNT, index));
-    return scanner.nextInt();
-  }
-
   public int inputPinCount(Frame frame) {
     System.out.print(String.format(INPUT_PIN_COUNT, frame.getPlayCount()));
     return scanner.nextInt();

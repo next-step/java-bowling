@@ -1,12 +1,10 @@
 package bowling.view;
 
-import bowling.domain.BawlingGame;
+import bowling.domain.FrameResult;
 import bowling.domain.Player;
-import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
+import bowling.domain.state.State;
 import java.util.List;
-import java.util.stream.IntStream;
 import org.apache.commons.lang3.StringUtils;
 
 public class ResultView {
@@ -14,62 +12,54 @@ public class ResultView {
   private static final String HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
   private static final String DIVIDER = "|";
 
+  public void printResult(Player player, FrameResult frameResult) {
+    printHeader();
+
+    System.out.print(DIVIDER);
+    printText(player.getName());
+
+    printFrames(frameResult.getFrames());
+    System.out.print(System.lineSeparator());
+  }
 
   private void printHeader() {
     System.out.println(HEADER);
   }
 
-  private String printText(String text) {
-    String str = StringUtils.center(text, 6);
-    str += DIVIDER;
+  private void printText(String str) {
+    System.out.print(StringUtils.center(str, 6));
+    System.out.print(DIVIDER);
+  }
+
+
+  private void printFrames(List<Frame> frames) {
+    String str = "";
+    int lastIndex = frames.size() - 1;
+    for (int i = 0; i <= lastIndex; i++) {
+      State state = frames.get(i).getState();
+      str += addState(state, i, lastIndex);
+
+      if (state.isEnd() || i == lastIndex) {
+        printText(str);
+        str = "";
+      }
+    }
+
+    printRemainDivider(10 - frames.get(lastIndex).getPlayCount());
+
+  }
+
+  private void printRemainDivider(int size) {
+    for (int i = 0; i < size; i++) {
+      printText("");
+    }
+  }
+
+  private String addState(State state, int currentIndex, int lastIndex) {
+    String str = state.getString();
+    if (!state.isEnd() && currentIndex != lastIndex) {
+      str += DIVIDER;
+    }
     return str;
   }
-
-
-  public void printResult(Player player, BawlingGame bawlingGame) {
-    printHeader();
-
-    System.out.print(DIVIDER);
-    System.out.print(printText(player.getName()));
-
-    printFrame(bawlingGame.getFrames().getFrames());
-    System.out.print(System.lineSeparator());
-  }
-
-  public void printFrame(List<Frame> frames) {
-    int bound = frames.size();
-    StringBuilder builder = new StringBuilder();
-    IntStream.range(0, bound)
-        .mapToObj(i -> printDetailFrames(i, frames))
-        .forEach(builder::append);
-    System.out.print(builder);
-
-    printRemainDevider(frames.size());
-
-  }
-
-  private void printRemainDevider(int size) {
-    for (int i = size; i< 10; i++) {
-      System.out.print(printText(""));
-    }
-  }
-
-  private String printDetailFrames(int index, List<Frame> frames) {
-    if (!(index == 9)&& !(frames.get(index) instanceof FinalFrame)) {
-      return printText(printNormalFrame(frames.get(index)));
-    }
-    return printText(printFinalFrame(frames.get(index)));
-  }
-
-  private static String printNormalFrame(Frame frame) {
-    NormalFrame normalFrame = (NormalFrame) frame;
-    return normalFrame.getState().getString();
-  }
-
-  private static String printFinalFrame(Frame frame) {
-    FinalFrame finalFrame = (FinalFrame) frame;
-    return finalFrame.getState().getString();
-  }
-
-
 }
