@@ -100,7 +100,7 @@ class BowlingBoardTest {
         List<BowlingFrame> frameList = IntStream.range(1, round)
                 .mapToObj(i -> BowlingNormalFrame.of(i, (Point.of(5))))
                 .collect(Collectors.toList());
-        frameList.add(BowlingFinalFrame.of(Round.of(10), Score.of(finalFirstPoint, finalSecondPoint)));
+        frameList.add(BowlingFinalFrame.of(NormalRound.of(10), Score.of(finalFirstPoint, finalSecondPoint)));
         return frameList;
     }
 

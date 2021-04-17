@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RoundTest {
+class NormalRoundTest {
 
     @DisplayName("포지션은 처음 시작은 0이다.")
     @Test

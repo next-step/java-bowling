@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 public class BowlingBoard {
 
+    private static final int FINAL_ROUND = 10;
+
     private final List<BowlingFrame> bowlingFrameList;
     private final ThrowsState throwsState;
 
-    private static final int FINAL_ROUND = 10;
-
-    public BowlingBoard(List<BowlingFrame> bowlingFrameList, ThrowsState throwsState) {
+    private BowlingBoard(List<BowlingFrame> bowlingFrameList, ThrowsState throwsState) {
         this.bowlingFrameList = bowlingFrameList;
         this.throwsState = throwsState;
     }

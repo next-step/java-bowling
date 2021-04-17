@@ -17,13 +17,13 @@ public abstract class BowlingFrame {
     abstract BowlingFrame bonusPitching(Point point);
 
     public BowlingFrame nextFrame() {
-        if (round.isFinal()) {
-            return BowlingFinalFrame.first(round.next());
+        if (round.equals(Round.of(9))) {
+            return BowlingFinalFrame.first(FinalRound.of());
         }
         return BowlingNormalFrame.of(round.next());
     }
 
-    public Round getRound() {
+    public Round round() {
         return round;
     }
 

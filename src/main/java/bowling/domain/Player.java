@@ -8,13 +8,13 @@ public class Player {
 
 
     public Player(String playerName) {
-        if (playerName.length() != MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException("플레이어 이름은 3글자여야 합니다.");
-        }
         this.playerName = playerName;
     }
 
     public static Player of(String playerName) {
+        if (playerName.length() != MAX_NAME_LENGTH) {
+            throw new IllegalArgumentException("플레이어 이름은 3글자여야 합니다.");
+        }
         return new Player(playerName);
     }
 

@@ -16,8 +16,7 @@ public class Score {
     }
 
     private void valid(Point firstPoint, Point secondPoint) {
-        int total = firstPoint.toInt() + secondPoint.toInt();
-        if (total > POINT_MAX_BOUND) {
+        if (firstPoint.toInt() + secondPoint.toInt() > POINT_MAX_BOUND) {
             throw new IllegalArgumentException("두 스코어의 합은 10을 넘을 수 없습니다.");
         }
     }
@@ -35,7 +34,7 @@ public class Score {
     }
 
     public BowlingRole type() {
-        return BowlingRole.valueOf(firstPoint(), secondPoint());
+        return BowlingRole.valueOf(this);
     }
 
     public int firstPoint() {
@@ -46,4 +45,11 @@ public class Score {
         return secondPoint.toInt();
     }
 
+    public boolean isStrike() {
+        return firstPoint() == 10;
+    }
+
+    public int total() {
+        return firstPoint() + secondPoint();
+    }
 }

@@ -9,44 +9,37 @@ public class BowlingFinalFrame extends BowlingFrame {
     private final Score score;
     private final BonusScore bonusScore;
 
-    private BowlingFinalFrame(Round round, Score score, BonusScore bonusScore) {
+    private BowlingFinalFrame(FinalRound round, Score score, BonusScore bonusScore) {
         super(round);
-        valid(round);
         this.score = score;
         this.bonusScore = bonusScore;
     }
 
-    private void valid(Round round) {
-        if (!round.equals(Round.of(FINAL_ROUND))) {
-            throw new IllegalArgumentException("Final 라운드는 10라운드 여야 합니다.");
-        }
-    }
-
-    public static BowlingFinalFrame first(Round round) {
+    public static BowlingFinalFrame first(FinalRound round) {
         return new BowlingFinalFrame(round, Score.of(Point.of(0), Point.of(0)), BonusScore.empty());
     }
 
-    public static BowlingFrame of(Round round, Score score) {
+    public static BowlingFrame of(FinalRound round, Score score) {
         return new BowlingFinalFrame(round, score, BonusScore.empty());
     }
 
-    public static BowlingFrame of(Round round, Score score, BonusScore bonusScore) {
+    public static BowlingFrame of(FinalRound round, Score score, BonusScore bonusScore) {
         return new BowlingFinalFrame(round, score, bonusScore);
     }
 
     @Override
     public BowlingFrame secondPitching(Point point) {
-        return BowlingFinalFrame.of(getRound(), score.next(point));
+        return BowlingFinalFrame.of(FinalRound.of(), score.next(point));
     }
 
     @Override
     public BowlingFrame firstPitching(Point point) {
-        return BowlingFinalFrame.of(getRound(), Score.first(point));
+        return BowlingFinalFrame.of(FinalRound.of(), Score.first(point));
     }
 
     @Override
     public BowlingFrame bonusPitching(Point point) {
-        return BowlingFinalFrame.of(getRound(), score, BonusScore.of(getRound(), score, point));
+        return BowlingFinalFrame.of(FinalRound.of(), score, BonusScore.of(round(), score, point));
     }
 
     @Override

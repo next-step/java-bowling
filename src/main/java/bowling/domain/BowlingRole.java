@@ -1,17 +1,38 @@
 package bowling.domain;
 
-public enum BowlingRole {
-    STRIKE, SPARE, MISS;
+import java.util.Arrays;
+import java.util.function.Predicate;
 
-    private static final int POINT_MAX_BOUND = 10;
+public enum BowlingRole implements Predicate<Score> {
+    STRIKE(10, true),
+    SPARE(10, false),
+    MISS(0, false);
 
-    public static BowlingRole valueOf(int first, int second) {
-        if (first == POINT_MAX_BOUND) {
-            return STRIKE;
-        }
-        if (first + second == POINT_MAX_BOUND) {
-            return SPARE;
-        }
-        return MISS;
+    private final int total;
+    private final boolean isStrike;
+
+    BowlingRole(int total, boolean isStrike) {
+        this.total = total;
+        this.isStrike = isStrike;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public boolean isStrike() {
+        return isStrike;
+    }
+
+    public static BowlingRole valueOf(Score score) {
+        return Arrays.stream(values())
+                .filter(role -> role.test(score))
+                .findAny()
+                .orElse(MISS);
+    }
+
+    @Override
+    public boolean test(Score score) {
+        return score.total() == getTotal() && score.isStrike() == isStrike();
     }
 }

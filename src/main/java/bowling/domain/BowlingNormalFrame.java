@@ -26,17 +26,17 @@ public class BowlingNormalFrame extends BowlingFrame {
 
     @Override
     public BowlingFrame secondPitching(Point point) {
-        return new BowlingNormalFrame(getRound(), score.next(point));
+        return new BowlingNormalFrame(round(), score.next(point));
     }
 
     @Override
     public BowlingFrame firstPitching(Point point) {
-        return new BowlingNormalFrame(getRound(), Score.first(point));
+        return new BowlingNormalFrame(round(), Score.first(point));
     }
 
     @Override
     public BowlingFrame bonusPitching(Point point) {
-        return new BowlingNormalFrame(getRound(), score.next(point));
+        return new BowlingNormalFrame(round(), score.next(point));
     }
     
     @Override

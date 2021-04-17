@@ -3,6 +3,7 @@ package bowling.contorller;
 import bowling.domain.BowlingBoard;
 import bowling.domain.Player;
 import bowling.domain.Point;
+import bowling.domain.ThrowsState;
 import bowling.dto.BowlingBoardDto;
 import bowling.dto.PlayerDto;
 import bowling.view.InputView;
@@ -19,15 +20,21 @@ public class BowlingGame {
     }
 
     public void play() {
-        int point = InputView.inputPoint(bowlingBoard.round());
         OutputView.printResultView(PlayerDto.of(player));
-        BowlingBoard nextBowling;
-        boolean isEnd = false;
-        do {
-            nextBowling = bowlingBoard.pitching(Point.of(point));
-            OutputView.printResultView(PlayerDto.of(player), BowlingBoardDto.of(nextBowling));
-            isEnd = bowlingBoard.isEnd();
-        } while (!isEnd);
+        BowlingBoard nextBowling = bowlingBoard;
+        while (!nextBowling.isEnd()) {
+            int point = InputView.inputPoint(nextBowling.round());
+            nextBowling = nextBowling.pitching(Point.of(point));
+            int round = round(nextBowling);
+            OutputView.printResultView(round, PlayerDto.of(player), BowlingBoardDto.of(nextBowling));
+        }
+    }
+
+    private int round(BowlingBoard nextBowling) {
+        if (nextBowling.state() == ThrowsState.FIRST_THROWS && nextBowling.round() != 1) {
+            return nextBowling.round() - 1;
+        }
+        return nextBowling.round();
     }
 
     public static void main(String[] args) {

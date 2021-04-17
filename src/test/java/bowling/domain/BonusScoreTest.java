@@ -10,7 +10,7 @@ class BonusScoreTest {
     @Test
     void case1() {
         Assertions.assertThatThrownBy(() -> {
-            BonusScore.of(Round.of(9), Score.of(Point.of(5), Point.of(5)), Point.of(5));
+            BonusScore.of(NormalRound.of(9), Score.of(Point.of(5), Point.of(5)), Point.of(5));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -18,7 +18,7 @@ class BonusScoreTest {
     @Test
     void case2() {
         Assertions.assertThatThrownBy(() -> {
-            BonusScore.of(Round.of(10), Score.of(Point.of(5), Point.of(4)), Point.of(5));
+            BonusScore.of(NormalRound.of(10), Score.of(Point.of(5), Point.of(4)), Point.of(5));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }
