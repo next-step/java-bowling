@@ -20,12 +20,10 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
-
     private boolean deleted = false;
+
+    @Embedded
+    private Answers answers;
 
     public Question() {
     }
@@ -33,12 +31,14 @@ public class Question extends AbstractEntity {
     public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
+        this.answers = new Answers();
     }
 
     public Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
+        this.answers = new Answers();
     }
 
     public String getTitle() {
@@ -72,7 +72,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
@@ -83,14 +83,11 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) {
         checkQuestionWriter(loginUser);
-        List<Answer> answers = getAnswers();
-        checkAnswerWriter(loginUser, answers);
+        checkAnswerWriter(loginUser);
         deleted = true;
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
-        for (Answer answer : answers) {
-            deleteHistories.add(answer.delete());
-        }
+        deleteHistories.addAll(answers.delete());
         return deleteHistories;
     }
 
@@ -100,8 +97,8 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public void checkAnswerWriter(User loginUser, List<Answer> answers) {
-        for (Answer answer : answers) {
+    public void checkAnswerWriter(User loginUser) {
+        for (Answer answer : answers.answers()) {
             if (!answer.isOwner(loginUser)) {
                 throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
             }
