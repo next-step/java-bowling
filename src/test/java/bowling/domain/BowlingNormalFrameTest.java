@@ -77,26 +77,28 @@ class BowlingNormalFrameTest {
     @DisplayName("Score Type이 MISS면 현재 스코어 합을 내보낸다.")
     @Test
     void case6() {
-        BowlingNormalFrame initFrame = BowlingNormalFrame.first(Round.first(), Score.of(Point.of(1), Point.of(5)));
-        int score = initFrame.score();
+        BowlingNormalFrame initFrame = BowlingNormalFrame.of(Round.first(), Score.of(Point.of(1), Point.of(5)));
+        int score = initFrame.calculateOfScore();
         Assertions.assertThat(score).isEqualTo(6);
     }
 
     @DisplayName("Score Type이 SPARE면 현재 스코어 합+ 다음 프레임 첫번쨰 포인트를 내보낸다.")
     @Test
-    void case6() {
-        BowlingNormalFrame initFrame = BowlingNormalFrame.first(Round.first(), Score.of(Point.of(5), Point.of(5)));
-        BowlingFrame bowlingFrame = initFrame.nextFrame().firstPitching(Point.of(4));
-        int score = initFrame.score();
+    void case7() {
+        BowlingNormalFrame initFrame = BowlingNormalFrame.of(Round.first(), Score.of(Point.of(5), Point.of(5)));
+        BowlingFrame bowlingFrame = initFrame.nextFrame();
+        BowlingFrame bowlingFrame1 = bowlingFrame.firstPitching(Point.of(4));
+        int score = initFrame.calculateOfScore();
         Assertions.assertThat(score).isEqualTo(14);
     }
 
     @DisplayName("Score Type이 STRIKE면 현재 스코어 합+ 다음 프레임 첫번쨰 포인트를 내보낸다.")
     @Test
-    void case6() {
-        BowlingNormalFrame initFrame = BowlingNormalFrame.first(Round.first(), Score.of(Point.of(10), Point.of(0)));
+    void case8() {
+        BowlingNormalFrame initFrame = BowlingNormalFrame.of(Round.first(), Score.of(Point.of(10), Point.of(0)));
         BowlingFrame bowlingFrame = initFrame.nextFrame().firstPitching(Point.of(4)).secondPitching(Point.of(5));
-        int score = initFrame.score();
-        Assertions.assertThat(score).isEqualTo(10);
+        int score = initFrame.calculateOfScore();
+        Assertions.assertThat(score).isEqualTo(19);
     }
+
 }
