@@ -13,7 +13,7 @@ public class AnswerTest {
     @DisplayName("답변 삭제 전후의 삭제 상태 확인 테스트")
     public void 삭제전후_상태_테스트() {
         assertThat(A1.isDeleted()).isEqualTo(false);
-        A1.delete(UserTest.JAVAJIGI);
+        A1.delete();
         assertThat(A1.isDeleted()).isEqualTo(true);
     }
 }

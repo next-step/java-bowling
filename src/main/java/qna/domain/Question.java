@@ -45,19 +45,10 @@ public class Question extends AbstractEntity {
         return title;
     }
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
     public String getContents() {
         return contents;
     }
 
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
 
     public User getWriter() {
         return writer;
@@ -75,11 +66,6 @@ public class Question extends AbstractEntity {
 
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
-    }
-
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
     }
 
     public boolean isDeleted() {
@@ -103,8 +89,7 @@ public class Question extends AbstractEntity {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
         for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+            deleteHistories.add(answer.delete());
         }
         return deleteHistories;
     }
