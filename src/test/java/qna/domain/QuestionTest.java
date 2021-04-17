@@ -11,16 +11,16 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 public class QuestionTest {
-    public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-    public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    public static final Question Q1 = new Question(1, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+    public static final Question Q2 = new Question(2, "title2", "contents2").writeBy(UserTest.SANJIGI);
     public static final Question Q3;
     public static final Question Q4;
 
     static {
-        Q3 = new Question("title3", "contents3").writeBy(UserTest.JAVAJIGI);
+        Q3 = new Question(3, "title3", "contents3").writeBy(UserTest.JAVAJIGI);
         Q3.addAnswer(AnswerTest.A2);
 
-        Q4 = new Question("title4", "contents4").writeBy(UserTest.JAVAJIGI);
+        Q4 = new Question(4, "title4", "contents4").writeBy(UserTest.JAVAJIGI);
         Q4.addAnswer(AnswerTest.A1);
     }
 
@@ -55,7 +55,7 @@ public class QuestionTest {
 
         List<DeleteHistory> expected = Arrays.asList(
             new DeleteHistory(ContentType.QUESTION, deletedQuestion.getId(), deletedQuestion.getWriter(), LocalDateTime.now()),
-            new DeleteHistory(ContentType.ANSWER, deletedQuestion.getId(), deletedQuestion.getWriter(), LocalDateTime.now())
+            new DeleteHistory(ContentType.ANSWER, AnswerTest.A1.getId(), deletedQuestion.getWriter(), LocalDateTime.now())
         );
 
         assertThat(deletedQuestion.createDeleteHistories()).containsExactlyInAnyOrderElementsOf(expected);

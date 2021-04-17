@@ -1,5 +1,6 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -45,8 +46,19 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public Answer beDeletedBy(User user) {
+        checkIfAnswerIsOwnedBy(user);
+
+        Answer deletedAnswer = new Answer(getId(), writer, question, contents);
+        deletedAnswer.deleted = true;
+
+        return deletedAnswer;
+    }
+
+    private void checkIfAnswerIsOwnedBy(User user) {
+        if (!this.isOwner(user)) {
+            throw new CannotDeleteException("답변을 작성한 사람만 지울 수 있습니다.");
+        }
     }
 
     public boolean isDeleted() {
@@ -76,7 +88,7 @@ public class Answer extends AbstractEntity {
     }
 
     private void checkIfDeleted() {
-        if (!isDeleted()) {
+        if (!this.deleted) {
             throw new IllegalStateException("삭제된 상태일 때만 히스토리를 만들 수 있습니다.");
         }
     }

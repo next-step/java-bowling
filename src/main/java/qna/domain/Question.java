@@ -1,14 +1,11 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.stream.Collectors.toCollection;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -22,10 +19,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     @Column
     private boolean deleted = false;
@@ -84,7 +79,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
@@ -94,37 +89,29 @@ public class Question extends AbstractEntity {
     }
 
     public Question beDeletedBy(User owner) {
-        checkIfUserIsReallyOwner(owner);
-        setDeleted();
+        checkIfQuestionIsOwnedBy(owner);
 
-        answers.forEach(answer -> answer.setDeleted(true));
+        Question deletedQuestion = new Question(getId(), this.title, this.contents);
+        deletedQuestion.writer = this.writer;
+        deletedQuestion.deleted = true;
+        deletedQuestion.answers = this.answers.beDeletedBy(owner);
 
-        return this;
+        return deletedQuestion;
     }
 
-    private void checkIfUserIsReallyOwner(User owner) {
+    private void checkIfQuestionIsOwnedBy(User owner) {
         if (!isOwner(owner)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-
-        for (Answer answer : getAnswers()) {
-            if (!answer.isOwner(owner)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
-    }
-
-    private void setDeleted() {
-        this.deleted = true;
     }
 
     public List<DeleteHistory> createDeleteHistories() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(makeDeleteHistoryOfQuestion());
 
-        return getAnswers().stream()
-                           .map(Answer::createAnswerDeleteHistory)
-                           .collect(toCollection(() -> deleteHistories));
+        deleteHistories.addAll(answers.createDeleteHistories());
+
+        return deleteHistories;
     }
 
     private DeleteHistory makeDeleteHistoryOfQuestion() {

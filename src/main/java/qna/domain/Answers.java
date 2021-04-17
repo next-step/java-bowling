@@ -33,14 +33,7 @@ public class Answers {
     }
 
     public List<DeleteHistory> createDeleteHistories() {
-        checkIfAllAnswersDeleted();
         return answers.stream().map(Answer::createAnswerDeleteHistory).collect(Collectors.toList());
-    }
-
-    private void checkIfAllAnswersDeleted() {
-        answers.stream().filter(answer -> !answer.isDeleted()).findAny().ifPresent(ignored -> {
-            throw new IllegalStateException("삭제되지 않은 답변이 존재합니다.");
-        });
     }
 
     public Answers beDeletedBy(User user) {
