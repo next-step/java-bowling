@@ -52,7 +52,7 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public boolean isOwner(User writer) {
+    public boolean isSameWriter(User writer) {
         return this.writer.equals(writer);
     }
 
