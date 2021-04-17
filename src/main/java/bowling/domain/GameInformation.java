@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
+import bowling.domain.state.State;
 
 public class GameInformation {
 
@@ -19,8 +19,8 @@ public class GameInformation {
     return frameResult;
   }
 
-  public void addFrameResult(Frame frame) {
-    frameResult.add(frame.getPlayCount(), frame.getState());
+  public void addFrameResult(int playCount, State state) {
+    frameResult.add(playCount, state);
   }
 
   public Player getPlayer() {

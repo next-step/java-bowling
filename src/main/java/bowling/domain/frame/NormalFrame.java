@@ -6,10 +6,21 @@ import bowling.domain.state.State;
 
 public class NormalFrame implements Frame {
 
-  private final Frame frame;
+
+  private static final String INVALID_END_GAME = "더이상 게임 진행할 수 없습니다.";
+  private static final int MIN_PLAY_COUNT = 1;
+  private static final int MAX_PLAY_COUNT = 10;
+
+  /////
+  private Frame next;
+  private int playCount;
+  private State state;
+
 
   public NormalFrame(int playCount, State state) {
-    this.frame = BaseFrame.of(playCount, state);
+
+    this.playCount = playCount;
+    this.state = state;
   }
 
   public static Frame of(int playCount, State state) {
@@ -24,31 +35,33 @@ public class NormalFrame implements Frame {
     return NormalFrame.of(playCount, new Ready());
   }
 
-  @Override
-  public Frame next() {
-    if (getPlayCount() == 9) {
-      return FinalFrame.createWithReady();
-    }
-    if (getState().isEnd()) {
-      return createWithReady(getPlayCount() + 1);
+
+  public Frame createFrame() {
+    if (playCount  == 9) {
+      return new FinalFrame();
     }
 
-    return NormalFrame.of(getPlayCount(), getState());
+    return new NormalFrame(playCount + 1, new Ready());
   }
 
   @Override
   public void play(PinCount pinCount) {
-    frame.play(pinCount);
+    this.state = state.play(pinCount);
+
+    if (state.isEnd()) {
+      this.next = createFrame();
+    }
+
   }
 
   @Override
   public int getPlayCount() {
-    return frame.getPlayCount();
+    return playCount;
   }
 
   @Override
   public State getState() {
-    return frame.getState();
+    return state;
   }
 
   @Override
@@ -56,4 +69,11 @@ public class NormalFrame implements Frame {
     return false;
   }
 
+  @Override
+  public Frame nextFrame() {
+    if (next != null) {
+      return next;
+    }
+    return this;
+  }
 }

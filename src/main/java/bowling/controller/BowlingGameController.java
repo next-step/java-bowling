@@ -4,6 +4,8 @@ import bowling.domain.GameInformation;
 import bowling.domain.PinCount;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -15,18 +17,21 @@ public class BowlingGameController {
     ResultView resultView = new ResultView();
 
     GameInformation gameInformation = new GameInformation(inputView.inputName());
-    Frame frame = NormalFrame.createFirst();
+    Frame frame = new NormalFrame(1, new Ready());
 
     while(!frame.isEnd()) {
       frame.play(new PinCount(inputView.inputPinCount(frame)));
 
-      gameInformation.addFrameResult(frame);
+      State state = frame.getState();
+      int playCount = frame.getPlayCount();
+
+      gameInformation.addFrameResult(playCount,state);
 
       resultView.printResult2(gameInformation);
-      frame = frame.next();
+
+      frame = frame.nextFrame();
 
     }
-
   }
 
 
