@@ -1,20 +1,16 @@
 package bowling.controller;
 
-import bowling.domain.FrameResult;
-import bowling.domain.PinCount;
+import bowling.domain.BawlingGame;
 import bowling.domain.Player;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
-public class GameController {
+public class BawlingGameController {
 
   public void run() {
-
-    InputView inputView = new InputView();
+/*
+InputView inputView = new InputView();
     ResultView resultView = new ResultView();
-
     Player player = new Player(inputView.inputName());
 
     Frame frame = NormalFrame.createFirst();
@@ -27,5 +23,17 @@ public class GameController {
       resultView.printResult2(player, frameResult);
       frame = frame.next();
     }
+
+ */
+    InputView inputView = new InputView();
+    ResultView resultView = new ResultView();
+
+    Player player = new Player(inputView.inputName());
+    BawlingGame bawlingGame = new BawlingGame(player);
+    resultView.printInit(player, bawlingGame);
+
+
   }
+
+
 }
