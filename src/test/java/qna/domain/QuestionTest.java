@@ -40,11 +40,7 @@ public class QuestionTest {
     @DisplayName("삭제 전후의 질문 삭제 상태 확인 테스트")
     public void 삭제전후_상태_테스트() {
         assertThat(Q1.isDeleted()).isEqualTo(false);
-        try {
-            Q1.delete(UserTest.JAVAJIGI);
-            assertThat(Q1.isDeleted()).isEqualTo(true);
-        } catch (CannotDeleteException e) {
-            e.printStackTrace();
-        }
+        Q1.delete(UserTest.JAVAJIGI);
+        assertThat(Q1.isDeleted()).isEqualTo(true);
     }
 }
