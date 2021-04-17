@@ -25,14 +25,14 @@ class AnswersTest {
 
     @Test
     @DisplayName("일부 답변의 작성자가 로그인한 사람과 다르면 삭제할 수 없다.")
-    void deleteAnswers() {
+    void cannotDeleteAnswersIfOtherUserOwnSomeAnswers() {
         assertThatThrownBy(() -> SHUFFLED_ANSWERS.beDeletedBy(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
     @DisplayName("삭제된 답변에서 삭제 히스토리를 생성한다.")
     void createDeleteHistoriesFromDeletedAnswers() {
-        Answers deletedAnswers = JAVAJIGI_ANSWERS.beDeletedBy();
+        Answers deletedAnswers = JAVAJIGI_ANSWERS.beDeletedBy(UserTest.JAVAJIGI);
 
         List<DeleteHistory> expected = Arrays.asList(
             new DeleteHistory(ContentType.ANSWER, A1.getId(), Q1.getWriter(), LocalDateTime.now()),
