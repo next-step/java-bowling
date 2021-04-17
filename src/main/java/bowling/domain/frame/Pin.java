@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.Objects;
 
@@ -42,6 +42,10 @@ public class Pin {
 
     public int getCount() {
         return count;
+    }
+
+    public String convertString() {
+        return String.valueOf(count);
     }
 
     @Override
