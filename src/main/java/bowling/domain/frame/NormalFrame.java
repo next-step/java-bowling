@@ -11,14 +11,13 @@ public class NormalFrame implements Frame {
   private static final int MIN_PLAY_COUNT = 1;
   private static final int MAX_PLAY_COUNT = 10;
 
-  /////
   private Frame next;
   private int playCount;
   private State state;
 
 
   public NormalFrame(int playCount, State state) {
-
+    validatePlayCount(playCount);
     this.playCount = playCount;
     this.state = state;
   }
@@ -35,13 +34,18 @@ public class NormalFrame implements Frame {
     return NormalFrame.of(playCount, new Ready());
   }
 
-
   public Frame createFrame() {
     if (playCount  == 9) {
       return new FinalFrame();
     }
 
     return new NormalFrame(playCount + 1, new Ready());
+  }
+
+  private void validatePlayCount(int playCount) {
+    if (playCount < MIN_PLAY_COUNT || playCount > MAX_PLAY_COUNT) {
+      throw new IllegalArgumentException();
+    }
   }
 
   @Override

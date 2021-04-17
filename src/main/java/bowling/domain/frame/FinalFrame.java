@@ -10,7 +10,8 @@ import java.util.LinkedList;
 public class FinalFrame implements Frame {
 
   private static final int FINAL_PLAY_COUNT = 10;
-  private static final int FINAL_FRAME_COUNT = 3;
+  private static final int FINAL_FRAME_COUNT_IF_HAS_BONUS = 3;
+  private static final int FINAL_FRAME_COUNT_IF_HAS_NOT_BONUS = 2;
 
   private LinkedList<State> states = new LinkedList<>();
 
@@ -21,8 +22,6 @@ public class FinalFrame implements Frame {
 
   @Override
   public void play(PinCount pinCount) {
-    validate();
-
     State currentState = states.getLast();
 
     if (currentState.isEnd()) {
@@ -40,15 +39,9 @@ public class FinalFrame implements Frame {
 
   }
 
-  private void validate() {
-    if (isEnd()) {
-      throw new IllegalArgumentException();
-    }
-  }
-
   @Override
   public int getPlayCount() {
-    return 10;
+    return FINAL_PLAY_COUNT;
   }
 
   @Override
@@ -68,10 +61,10 @@ public class FinalFrame implements Frame {
   @Override
   public boolean isEnd() {
     if (hasBonus()) {
-      return states.size() == 3;
+      return states.size() == FINAL_FRAME_COUNT_IF_HAS_BONUS;
     }
 
-    return states.size() == 2;
+    return states.size() == FINAL_FRAME_COUNT_IF_HAS_NOT_BONUS;
   }
 
   @Override

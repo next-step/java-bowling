@@ -17,7 +17,8 @@ public class BowlingGameController {
     ResultView resultView = new ResultView();
 
     GameInformation gameInformation = new GameInformation(inputView.inputName());
-    Frame frame = new NormalFrame(1, new Ready());
+
+    Frame frame = NormalFrame.createFirst();
 
     while(!frame.isEnd()) {
       frame.play(new PinCount(inputView.inputPinCount(frame)));

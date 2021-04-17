@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
 public class NormalFrameTest {
-/*
+
   @Test
   @DisplayName("잘못된 핀 개수 확인")
   public void validatePinCount() {
@@ -25,35 +25,32 @@ public class NormalFrameTest {
   @DisplayName("게임 진행 횟수 확인")
   public void validatePlayCount() {
     assertThatThrownBy(() -> {
-      NormalFrame normalFrame = new NormalFrame(12);
+      NormalFrame normalFrame = new NormalFrame(12, new Ready());
     }).isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
   @DisplayName("첫 프레임에 스트라이크를 칠 경우 다음 프레임을 쳐야한다.")
   public void playStrike() {
-    Frame firstFrame = NormalFrame.createFirst();
-    firstFrame.play(new PinCount(10));
-    Frame nextFrame = firstFrame.next();
-    assertThat(nextFrame.getPlayCount()).isEqualTo(2);
+    Frame frame = NormalFrame.createFirst();
+    frame.play(new PinCount(10));
+    assertThat(frame.nextFrame().getPlayCount()).isEqualTo(2);
   }
 
   @Test
   @DisplayName("첫 프레임에 Gutter를 친 경우 현재 프레임에 한 번 더 쳐야한다.")
   public void playGutter() {
-    Frame firstFrame = NormalFrame.createFirst();
-    firstFrame.play(new PinCount(0));
-    Frame nextFrame = firstFrame.next();
-    assertThat(nextFrame.getPlayCount()).isEqualTo(1);
+    Frame frame = NormalFrame.createFirst();
+    frame.play(new PinCount(0));
+    assertThat(frame.nextFrame().getPlayCount()).isEqualTo(1);
   }
 
   @Test
   @DisplayName("첫 투구에 hit를 친 경우 현재 프레임에 한 번 더 쳐야한다.")
   public void playHit() {
-    Frame firstFrame = NormalFrame.createFirst();
-    firstFrame.play(new PinCount(3));
-    Frame nextFrame = firstFrame.next();
-    assertThat(nextFrame.getPlayCount()).isEqualTo(1);
+    Frame frame = NormalFrame.createFirst();
+    frame.play(new PinCount(3));
+    assertThat(frame.nextFrame().getPlayCount()).isEqualTo(1);
   }
-*/
+
 }
