@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 public class NormalFrame extends Frame {
 
@@ -26,11 +26,11 @@ public class NormalFrame extends Frame {
 
     private void validatePinCount(int pinCount) {
         if ((pinCountSum() + pinCount) > Pin.MAX_PIN_COUNT) {
-            throw new IllegalArgumentException("핀의 개수가 30개를 넘을 수 없습니다.");
+            throw new IllegalArgumentException("핀의 개수가 10개를 넘을 수 없습니다.");
         }
 
-        if ((getPinsSize() + 1) > BONUS_PITCH) {
-            throw new IllegalArgumentException("최대 3회 투구 가능합니다.");
+        if ((getPinsSize() + 1) > MAX_PITCH) {
+            throw new IllegalArgumentException("최대 2회 투구 가능합니다.");
         }
     }
 
