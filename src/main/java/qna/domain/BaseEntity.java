@@ -28,8 +28,7 @@ public class BaseEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public BaseEntity() {
-    }
+    protected BaseEntity() {}
 
     public BaseEntity(Long id) {
         this.id = id;

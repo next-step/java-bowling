@@ -33,8 +33,7 @@ public class Question extends BaseEntity {
 
     private boolean deleted = false;
 
-    public Question() {
-    }
+    protected Question() {}
 
     public Question(String title, String contents) {
         this.title = title;

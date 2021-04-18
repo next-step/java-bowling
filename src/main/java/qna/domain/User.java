@@ -21,8 +21,7 @@ public class User extends BaseEntity {
 
     private String email;
 
-    public User() {
-    }
+    protected User() {}
 
     public User(String userId, String password, String name, String email) {
         this(null, userId, password, name, email);
