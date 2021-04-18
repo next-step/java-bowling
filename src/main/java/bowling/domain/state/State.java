@@ -1,14 +1,15 @@
 package bowling.domain.state;
 
-import bowling.domain.PinCount;
+import bowling.domain.Score;
 
 public interface State {
+    State play(int fallenPin);
 
-  State play(PinCount pinCount);
+    boolean isFinish();
 
-  boolean isEnd();
+    int getPitchCount();
 
-  boolean isBonus();
+    Score getScore();
 
-  String getString();
+    int getTotalCount();
 }

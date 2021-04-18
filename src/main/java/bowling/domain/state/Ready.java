@@ -1,35 +1,44 @@
 package bowling.domain.state;
 
-import bowling.domain.PinCount;
+import bowling.domain.Score;
+import org.apache.logging.log4j.util.Strings;
 
 public class Ready implements State {
 
-  @Override
-  public State play(PinCount pinCount) {
-    if (pinCount.isStrike()) {
-      return new Strike();
+    private static final String INVALID_SCORE = "프레임이 종료된 후에 점수를 생성 할 수 있습니다.";
+
+    @Override
+    public State play(int fallenPin) {
+        if (fallenPin == 10) {
+            return new Strike();
+        }
+        return new FirstBowl(fallenPin);
     }
 
-    if (pinCount.isGutter()) {
-      return new FirstGutter();
+    @Override
+    public int getPitchCount() {
+        return 0;
     }
 
-    return new Hit(pinCount);
-  }
+    @Override
+    public int getTotalCount() {
+        return 0;
+    }
 
-  @Override
-  public boolean isEnd() {
-    return false;
-  }
 
-  @Override
-  public boolean isBonus() {
-    return false;
-  }
+    @Override
+    public String toString() {
+        return Strings.EMPTY;
+    }
 
-  @Override
-  public String getString() {
-    return "";
-  }
+    @Override
+    public boolean isFinish() {
+        return false;
+    }
+
+    @Override
+    public Score getScore() {
+        throw new IllegalStateException(INVALID_SCORE);
+    }
 
 }

@@ -1,59 +1,100 @@
 package bowling.domain.frame;
 
-import bowling.domain.PinCount;
+import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
+import java.util.Objects;
+
 public class NormalFrame implements Frame {
 
-  private final Frame frame;
+    public static final int MAX_PLAY_COUNT = 8;
+    public static final int MIN_PLAY_COUNT = 0;
+    private static final String INVALID_PLAY_COUNT = "normal frame은 0번 이상 9번 미만 프레임만 가능합니다.";
+    public static final String INVALID_END_PLAY = "더이상 진행 할 수 없습니다.";
+    private final int playCount;
+    private State state;
+    private Score score;
 
-  public NormalFrame(int playCount, State state) {
-    this.frame = BaseFrame.of(playCount, state);
-  }
 
-  public static Frame of(int playCount, State state) {
-    return new NormalFrame(playCount, state);
-  }
-
-  public static Frame createFirst() {
-    return createWithReady(1);
-  }
-
-  private static Frame createWithReady(int playCount) {
-    return NormalFrame.of(playCount, new Ready());
-  }
-
-  @Override
-  public Frame next() {
-    if (getPlayCount() == 9) {
-      return FinalFrame.createWithReady();
-    }
-    if (getState().isEnd()) {
-      return createWithReady(getPlayCount() + 1);
+    public NormalFrame(int playCount) {
+        this(playCount, new Ready());
     }
 
-    return NormalFrame.of(getPlayCount(), getState());
-  }
+    public NormalFrame(int playCount, State state) {
+        validate(playCount);
+        this.playCount = playCount;
+        this.state = state;
+    }
 
-  @Override
-  public void play(PinCount pinCount) {
-    frame.play(pinCount);
-  }
+    private void validate(int playCount) {
+        if (playCount < MIN_PLAY_COUNT || playCount > MAX_PLAY_COUNT) {
+            throw new IllegalArgumentException(INVALID_PLAY_COUNT);
+        }
+    }
 
-  @Override
-  public int getPlayCount() {
-    return frame.getPlayCount();
-  }
+    public static NormalFrame createFirst() {
+        return new NormalFrame(MIN_PLAY_COUNT);
+    }
 
-  @Override
-  public State getState() {
-    return frame.getState();
-  }
+    public NormalFrame next() {
+        return new NormalFrame(playCount + 1);
+    }
 
-  @Override
-  public boolean isEnd() {
-    return false;
-  }
+    public void play(int count) {
+        if (this.isEnd()) {
+            throw new IllegalArgumentException(INVALID_END_PLAY);
+        }
 
+        this.state = state.play(count);
+        createScore();
+    }
+
+    @Override
+    public String getFallenPins() {
+        return state.toString();
+    }
+
+    @Override
+    public int getScore() {
+        return this.score.getScore();
+    }
+
+    @Override
+    public void calculateScore(int playCount, int count) {
+        if (this.playCount == playCount || score.isEndCalculate()) {
+            return;
+        }
+
+        score.addScore(count);
+    }
+
+    public boolean hasScore() {
+        return Objects.nonNull(score) && score.isEndCalculate();
+    }
+
+    private void createScore() {
+        if (!state.isFinish()) {
+            return;
+        }
+
+        this.score = state.getScore();
+    }
+
+    public boolean isEnd() {
+        return state.isFinish();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalFrame frame = (NormalFrame) o;
+        return playCount == frame.playCount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(playCount);
+    }
 }
