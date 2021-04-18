@@ -15,7 +15,7 @@ public class InputView {
         return in.nextLine();
     }
 
-    public Integer inputPitch(int frameNumber) {
+    public int inputPitch(int frameNumber) {
         String pin = in.nextLine();
         System.out.printf("%s 프레임 투구 : %s ", frameNumber, pin);
         return Integer.parseInt(pin);

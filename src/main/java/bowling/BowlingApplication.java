@@ -26,7 +26,7 @@ public class BowlingApplication {
         while (!bowling.isLastGame()) {
             int tryCount = bowling.tryingCount();
             // 투구로 pin을 쓰러뜨린다.
-            Integer pins = inputView.inputPitch(tryCount);
+            int pins = inputView.inputPitch(tryCount);
             // 투구 값을 프레임에 값 업데이트
             bowling.bowl(pins);
             // 투구당 결과 값 출력

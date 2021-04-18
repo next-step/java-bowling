@@ -15,7 +15,7 @@ public class Frames {
         this.frames.add(frame);
     }
 
-    public void bowl(Integer pins) {
+    public void bowl(int pins) {
         if (isNextFrame()) {
             frames.add(new Frame(0, 0));
         }
@@ -32,5 +32,10 @@ public class Frames {
 
     protected Frame currentFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(frames);
     }
 }
