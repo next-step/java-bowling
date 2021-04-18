@@ -134,7 +134,7 @@ public class NormalFrameTest extends FrameTestBase {
         State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isFalse();
         assertThat(state instanceof Hit).isTrue();
-        assertThat(state.stateInString()).isEqualTo(new PinCount(firstPinCount).countInString());
+        assertThat(state.stateInString()).isEqualTo(PinCount.of(firstPinCount).countInString());
     }
 
 

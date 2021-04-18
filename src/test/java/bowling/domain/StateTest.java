@@ -15,8 +15,8 @@ public class StateTest {
     @CsvSource(value = {"1:10", "2:9", "7:7", "8:5", "5:7"}, delimiter = ':')
     @DisplayName("잘못된 pinCount로 miss생성시 예외 발생 테스트")
     void create_miss_with_invalid_pinCounts(String first, String second) {
-        PinCount firstPinCount = new PinCount(first);
-        PinCount secondPinCount = new PinCount(second);
+        PinCount firstPinCount = PinCount.of(first);
+        PinCount secondPinCount = PinCount.of(second);
         assertThatIllegalArgumentException().isThrownBy(() ->
                 new Miss(firstPinCount, secondPinCount));
     }
@@ -25,8 +25,8 @@ public class StateTest {
     @CsvSource(value = {"1:10", "2:9", "7:7", "8:5", "5:7"}, delimiter = ':')
     @DisplayName("잘못된 pinCount로 spare생성시 예외 발생 테스트")
     void create_spare_with_invalid_pinCounts(String first, String second) {
-        PinCount firstPinCount = new PinCount(first);
-        PinCount secondPinCount = new PinCount(second);
+        PinCount firstPinCount = PinCount.of(first);
+        PinCount secondPinCount = PinCount.of(second);
         assertThatIllegalArgumentException().isThrownBy(() ->
                 new Spare(firstPinCount, secondPinCount));
     }

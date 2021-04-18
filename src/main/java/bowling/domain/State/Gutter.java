@@ -12,9 +12,9 @@ public class Gutter implements State {
     @Override
     public State newState(PinCount pinCount) {
         if (pinCount.isStrike()) {
-            return new Spare(new PinCount(PIN_COUNT), pinCount);
+            return new Spare(PinCount.of(PIN_COUNT), pinCount);
         }
-        return new Miss(new PinCount(PIN_COUNT), pinCount);
+        return new Miss(PinCount.of(PIN_COUNT), pinCount);
     }
 
     @Override

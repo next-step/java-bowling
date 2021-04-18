@@ -42,7 +42,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public void addPinCount(int pinCount) {
-        addPinCount(new PinCount(pinCount));
+        addPinCount(PinCount.of(pinCount));
     }
 
     @Override

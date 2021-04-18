@@ -28,8 +28,8 @@ public class FramesTest extends FrameTestBase {
     @Test
     void is_done_true() {
         FrameNumber lastFrameNumber = new FrameNumber(4);
-        State missState = new Miss(new PinCount(3), new PinCount(4));
-        State spareState = new Miss(new PinCount(5), new PinCount(5));
+        State missState = new Miss(PinCount.of(3), PinCount.of(4));
+        State spareState = new Miss(PinCount.of(5), PinCount.of(5));
         State strikeState = new Strike();
         FinalState finalState = new FinalState(Arrays.asList(missState), 1);
 
@@ -47,7 +47,7 @@ public class FramesTest extends FrameTestBase {
     @Test
     void is_done_false() {
         FrameNumber firstUndoneFrameNumber = new FrameNumber(3);
-        State spareState = new Miss(new PinCount(5), new PinCount(5));
+        State spareState = new Miss(PinCount.of(5), PinCount.of(5));
         State strikeState = new Strike();
 
         FinalFrame finalFrame = FinalFrame.from(5);

@@ -1,22 +1,40 @@
 package bowling.domain.State;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PinCount {
 
     private static final int MIN_PIN_COUNT = 0;
 
     private static final int MAX_PIN_COUNT = 10;
 
+    private static final Map<Integer, PinCount> pinCountCache = new HashMap<>();
+
     private final int count;
 
-    public PinCount(int count) {
+    static {
+        for (int i = MIN_PIN_COUNT; i <= MAX_PIN_COUNT; i++) {
+            pinCountCache.put(i, new PinCount(i));
+        }
+    }
+
+    private PinCount(int count) {
         if (count < MIN_PIN_COUNT || count > MAX_PIN_COUNT) {
             throw new IllegalArgumentException("투구수는 0-10사이어야 합니다.");
         }
         this.count = count;
     }
 
-    public PinCount(String count) {
-        this(Integer.parseInt(count));
+    public static PinCount of(int count) {
+        if (!pinCountCache.containsKey(count)) {
+            throw new IllegalArgumentException("올바르지 않는 투구 수 입니다.");
+        }
+        return pinCountCache.get(count);
+    }
+
+    public static PinCount of(String count) {
+        return of(Integer.parseInt(count));
     }
 
     public int count() {
