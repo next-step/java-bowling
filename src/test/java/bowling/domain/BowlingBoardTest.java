@@ -96,6 +96,19 @@ class BowlingBoardTest {
         assertThat(finalBoard.isSameState(ThrowsState.BONUS_THROWS)).isTrue();
     }
 
+    @DisplayName("각 라운드 점수를 계산한다.")
+    @Test
+    void case9() {
+        int round = 10;
+        Point finalFirstPoint = Point.of(3);
+        Point finalSecondPoint = Point.of(2);
+
+        BowlingBoard bowlingBoard = BowlingBoard.of(createFrames(round, finalFirstPoint, finalSecondPoint), ThrowsState.FINISH_THROWS);
+        List<Integer> list = bowlingBoard.calculate();
+        assertThat(list).contains(5, 10, 15, 20, 25, 30, 35, 40, 45, 50);
+    }
+    
+
     private List<BowlingFrame> createFrames(int round, Point finalFirstPoint, Point finalSecondPoint) {
         List<BowlingFrame> frameList = IntStream.range(1, round)
                 .mapToObj(i -> BowlingNormalFrame.of(i, (Point.of(5))))
