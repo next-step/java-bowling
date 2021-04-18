@@ -1,39 +1,24 @@
 package bowling.controller;
 
-import bowling.domain.GameInformation;
-import bowling.domain.PinCount;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
-import bowling.domain.state.Ready;
-import bowling.domain.state.State;
+import bowling.domain.BowlingGame;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingGameController {
+    public void run(){
 
-  public void run() {
+        InputView inputView = new InputView();
+        ResultView resultView = new ResultView();
 
-    InputView inputView = new InputView();
-    ResultView resultView = new ResultView();
+        String playerName = inputView.inputName();
+        BowlingGame game = new BowlingGame(playerName);
 
-    GameInformation gameInformation = new GameInformation(inputView.inputName());
+        resultView.printEmptyResult(playerName);
 
-    Frame frame = NormalFrame.createFirst();
-
-    while(!frame.isEnd()) {
-      frame.play(new PinCount(inputView.inputPinCount(frame)));
-
-      State state = frame.getState();
-      int playCount = frame.getPlayCount();
-
-      gameInformation.addFrameResult(playCount,state);
-
-      resultView.printResult2(gameInformation);
-
-      frame = frame.nextFrame();
-
+        while (!game.isEnd()) {
+            int count = inputView.inputPinCount(game.getFrameCount());
+            game.play(count);
+            resultView.printResult(playerName, game.getFrames(), game.getScore());
+        }
     }
-  }
-
-
 }
