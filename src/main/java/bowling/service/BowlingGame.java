@@ -21,7 +21,7 @@ public class BowlingGame {
         this.user = user;
     }
 
-    // 핀을 넘어뜨렸을 때, 핀에 대한 값을 합산 ?
+    // 투구
     public void bowl(Integer pins) {
         frame.get(frameNumber).bowl(pins);
     }
@@ -35,7 +35,7 @@ public class BowlingGame {
     }
 
     public int frameNumber() {
-        if (frame.get(frameNumber).tryCount() > 1) {
+        if (frame.get(frameNumber).nextFrame()) {
             frameNumber++;
         }
         return frameNumber;

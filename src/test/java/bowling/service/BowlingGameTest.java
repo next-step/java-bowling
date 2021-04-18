@@ -28,6 +28,6 @@ class BowlingGameTest {
 
         int frameNumber = bowlingGame.frameNumber();
 
-        assertThat(frameNumber).isEqualTo(2);
+        assertThat(frameNumber).isEqualTo(1);
     }
 }

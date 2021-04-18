@@ -23,4 +23,8 @@ public class Frame {
     public int tryCount() {
         return tryCount;
     }
+
+    public boolean nextFrame() {
+        return tryCount > 1;
+    }
 }
