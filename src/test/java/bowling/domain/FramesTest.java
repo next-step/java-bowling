@@ -15,7 +15,7 @@ class FramesTest {
         // when
         frames.bowl(5);
         // then
-        assertThat(frames.currentFrame()).isEqualTo(Frame.valueOf(5, 1));
+        assertThat(frames.currentFrame()).isEqualTo(Frame.valueOf(1, 5));
     }
 
     @DisplayName("다음 프레임 생성 여부 테스트")
@@ -37,7 +37,7 @@ class FramesTest {
         // when
         frames.bowl(3);
         frames.bowl(7);
-        frames.bowl(10);
+        frames.bowl(6);
 
         assertThat(frames.tryCount()).isEqualTo(1);
     }
