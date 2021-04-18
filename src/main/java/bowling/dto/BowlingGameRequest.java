@@ -1,14 +1,16 @@
 package bowling.dto;
 
+import java.util.List;
+
 public class BowlingGameRequest {
 
-    private String playerName;
+    private List<String> playerNames;
 
-    public BowlingGameRequest(String playerName) {
-        this.playerName = playerName;
+    public BowlingGameRequest(List<String> playerNames) {
+        this.playerNames = playerNames;
     }
 
-    public String playerName() {
-        return playerName;
+    public List<String> playerNames() {
+        return playerNames;
     }
 }

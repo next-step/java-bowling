@@ -7,25 +7,25 @@ public class BowlingGame {
 
     private static final int TOTAL_NUMBER_OF_FRAME = 10;
 
-    private final Player player;
+    private final Players players;
 
     public BowlingGame(BowlingGameRequest bowlingGameRequest) {
-        player = new Player(bowlingGameRequest.playerName(), TOTAL_NUMBER_OF_FRAME);
+        players = new Players(bowlingGameRequest.playerNames(), TOTAL_NUMBER_OF_FRAME);
     }
 
     public ScoreBoard scoreBoard() {
-        return new ScoreBoard(player, TOTAL_NUMBER_OF_FRAME);
+        return new ScoreBoard(players, TOTAL_NUMBER_OF_FRAME);
     }
 
     public boolean isDone() {
-        return player.isDone();
-    }
-
-    public int currentFrameNumber() {
-        return player.currentFrameNumber().number();
+        return players.isDone();
     }
 
     public void play(int pintCount) {
-        player.addPinCount(pintCount);
+        players.play(pintCount);
+    }
+
+    public String playingPlayer() {
+        return players.playingPlayer().name();
     }
 }

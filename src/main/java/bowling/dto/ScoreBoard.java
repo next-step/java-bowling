@@ -1,20 +1,22 @@
 package bowling.dto;
 
-import bowling.domain.Player;
+import bowling.domain.Players;
+
+import java.util.List;
 
 public class ScoreBoard {
 
     private int totalNumberOfFrame;
 
-    private PlayResult playResult;
+    private List<PlayResult> playResults;
 
-    public ScoreBoard(Player player, int totalNumberOfFrame) {
-        this.playResult = player.playResult();
+    public ScoreBoard(Players players, int totalNumberOfFrame) {
+        this.playResults = players.playResults();
         this.totalNumberOfFrame = totalNumberOfFrame;
     }
 
-    public PlayResult playResult() {
-        return playResult;
+    public List<PlayResult> playResults() {
+        return playResults;
     }
 
     public int totalNumberOfFrame() {
