@@ -1,6 +1,6 @@
 package bowling.service;
 
-public class BowlingService {
+public class BowlingGame {
 
     private int frameNumber = 0;
 

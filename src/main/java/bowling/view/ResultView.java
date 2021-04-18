@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.service.BowlingService;
+import bowling.service.BowlingGame;
 
 import java.io.PrintStream;
 
@@ -18,7 +18,7 @@ public class ResultView {
 
     }
 
-    public void printResult(BowlingService bowling) {
+    public void printResult(BowlingGame bowling) {
 
     }
 }
