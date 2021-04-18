@@ -28,12 +28,12 @@ public class Frame {
         if (this.pins > 10) {
             throw new PinOutOfSizeException("10개 이상의 핀을 쓰러뜨릴 수 없습니다.");
         }
-        if(tryCount == 0 && this.pins == 10) {
+        if (tryCount == 0 && this.pins == 10) {
             status = "STRIKE";
             tryCount++;
-        } else if(tryCount == 1 && this.pins == 10){
+        } else if (tryCount == 1 && this.pins == 10) {
             status = "SPARE";
-        } else if(this.pins == 0) {
+        } else if (this.pins == 0) {
             status = "MISS";
         }
         tryCount++;
@@ -67,6 +67,6 @@ public class Frame {
 
     @Override
     public String toString() {
-        return String.format("%d, %d", tryCount, pins);
+        return String.format("%d", pins);
     }
 }

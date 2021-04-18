@@ -3,6 +3,8 @@ package bowling.service;
 import bowling.domain.Frame;
 import bowling.domain.Frames;
 
+import java.util.List;
+
 /**
  * 볼링 게임은 10개 프레임, 사용자, 프레임 구분할 수 있는 번호를 갖는다.
  */
@@ -36,6 +38,14 @@ public class BowlingGame {
 
     public int frameNumber() {
         return frameNumber;
+    }
+
+    public String user() {
+        return user;
+    }
+
+    public List<Frame> frames() {
+        return frames.list();
     }
 
     @Override

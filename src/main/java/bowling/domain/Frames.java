@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,6 +37,10 @@ public class Frames {
 
     protected Frame currentFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    public List<Frame> list() {
+        return Collections.unmodifiableList(frames);
     }
 
     @Override
