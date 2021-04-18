@@ -69,6 +69,23 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        checkAuthorization(loginUser);
+        this.setDeleted(true);
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(DeleteHistory.ofQuestion(getId(), getWriter()));
+        deleteHistories.addAll(answers.delete(loginUser));
+
+        return deleteHistories;
+    }
+
+    private void checkAuthorization(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
@@ -89,31 +106,5 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
-
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
-        checkAuthorization(loginUser);
-        answers.checkWriters(loginUser);
-
-        return createDeleteHistories();
-    }
-
-    private void checkAuthorization(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-    }
-
-    private List<DeleteHistory> createDeleteHistories() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        this.setDeleted(true);
-        deleteHistories.add(DeleteHistory.ofQuestion(getId(), getWriter()));
-
-        for (Answer answer : answers.list()) {
-            answer.setDeleted(true);
-            deleteHistories.add(DeleteHistory.ofAnswer(answer.getId(), answer.getWriter()));
-        }
-
-        return deleteHistories;
     }
 }
