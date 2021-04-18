@@ -30,4 +30,18 @@ class BowlingGameTest {
 
         assertThat(frameNumber).isEqualTo(1);
     }
+
+    @DisplayName("볼링 게임 1프레임 투구 후에 2 프레임으로 넘어가는지 확인 테스트")
+    @Test
+    void bowl_다음_프레임_추가테스트() {
+        BowlingGame bowlingGame = new BowlingGame("KSR");
+        bowlingGame.bowl(5);
+        bowlingGame.bowl(5);
+        bowlingGame.bowl(5);
+        bowlingGame.bowl(5);
+
+        int frameNumber = bowlingGame.frameNumber();
+
+        assertThat(frameNumber).isEqualTo(2);
+    }
 }
