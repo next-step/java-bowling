@@ -97,6 +97,10 @@ public class Question extends AbstractEntity {
         answers.delete(loginUser);
     }
 
+    public DeleteHistorys historys() {
+        return new DeleteHistorys(this);
+    }
+
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
