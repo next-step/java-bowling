@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class QnAService {
     private static final Logger log = LoggerFactory.getLogger(QnAService.class);
 
@@ -26,7 +27,6 @@ public class QnAService {
         this.deleteHistoryService = deleteHistoryService;
     }
 
-    @Transactional(readOnly = true)
     public Question findQuestionById(Long id) {
         return questionRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(NotFoundException::new);

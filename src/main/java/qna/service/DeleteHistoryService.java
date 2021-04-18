@@ -9,6 +9,7 @@ import qna.domain.DeleteHistoryRepository;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class DeleteHistoryService {
     private final DeleteHistoryRepository deleteHistoryRepository;
 
