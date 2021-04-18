@@ -39,6 +39,9 @@ public class BowlingBoard {
     public BowlingBoard firstPitching(Point point) {
         BowlingFrame bowlingFrame = getFrame().firstPitching(point);
         bowlingFrameList.set(round() - 1, bowlingFrame);
+        if (bowlingFrame.isType() == BowlingRole.STRIKE && round() == FINAL_ROUND) {
+            return BowlingBoard.of(bowlingFrameList, ThrowsState.SECOND_THROWS);
+        }
         if (bowlingFrame.isType() == BowlingRole.STRIKE) {
             createNextFrame();
             return BowlingBoard.of(bowlingFrameList, ThrowsState.FIRST_THROWS);
@@ -47,10 +50,10 @@ public class BowlingBoard {
     }
 
     public BowlingBoard secondPitching(Point point) {
+        bowlingFrameList.set(round() - 1, getFrame().secondPitching(point));
         if (round() == FINAL_ROUND) {
             return BowlingBoard.of(bowlingFrameList, ThrowsState.FINISH_THROWS);
         }
-        bowlingFrameList.set(round() - 1, getFrame().secondPitching(point));
         return BowlingBoard.of(bowlingFrameList, ThrowsState.FIRST_THROWS);
     }
 
@@ -64,14 +67,13 @@ public class BowlingBoard {
     }
 
     public BowlingBoard pitching(Point point) {
+        if (throwsState == ThrowsState.SECOND_THROWS && isType(BowlingRole.STRIKE) && round() == 10) {
+            return bonusPitching(point);
+        }
         if (throwsState == ThrowsState.SECOND_THROWS) {
             BowlingBoard bowlingBoard = secondPitching(point);
             createNextFrame();
             return bowlingBoard;
-        }
-
-        if (throwsState == ThrowsState.SECOND_THROWS && isType(BowlingRole.STRIKE)) {
-            return bonusPitching(point);
         }
 
         if (throwsState == ThrowsState.FINISH_THROWS && isType(BowlingRole.SPARE)) {
@@ -94,7 +96,12 @@ public class BowlingBoard {
     }
 
     public boolean isEnd() {
-        if (throwsState == ThrowsState.FINISH_THROWS && isType(BowlingRole.MISS)) {
+        System.out.println(round());
+        if (round() > 2) {
+            System.out.println(bowlingFrameList.get(round() - 1).isType());
+        }
+
+        if (throwsState == ThrowsState.FINISH_THROWS && getFrame().isType() == BowlingRole.MISS) {
             return true;
         }
         return throwsState == ThrowsState.BONUS_THROWS;
@@ -106,5 +113,12 @@ public class BowlingBoard {
 
     public ThrowsState state() {
         return throwsState;
+    }
+
+    public List<Integer> calculate() {
+        ScoreAccumulator scoreAccumulator = new ScoreAccumulator();
+        return bowlingFrameList.stream()
+                .map(frame -> scoreAccumulator.sum(frame.calculateOfScore()))
+                .collect(Collectors.toList());
     }
 }
