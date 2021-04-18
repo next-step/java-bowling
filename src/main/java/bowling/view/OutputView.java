@@ -15,9 +15,47 @@ public class OutputView {
     private static final int FIRST_ROUND = 1;
 
     public static void printResultView(int round, PlayerDto player, BowlingBoardDto bowlingBoardDto) {
-
         printRound();
         printBoard(round, player.getPlayerName(), bowlingBoardDto);
+        printPoint(round, bowlingBoardDto);
+    }
+
+    private static void printPoint(int round, BowlingBoardDto bowlingBoardDto) {
+        List<ScoreDto> scoreDtoList = bowlingBoardDto.getScoreDtoList();
+        List<Integer> framePoints = bowlingBoardDto.getFramePoint();
+        ThrowsState throwsState = bowlingBoardDto.getThrowsState();
+
+        List<String> point = IntStream.range(0, round)
+                .mapToObj(i -> framePoints.get(i) > 10 ? String.format("|  %d  ", framePoints.get(i)) : String.format("|  %d   ", framePoints.get(i)))
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < round; i++) {
+            makeEmptyScore(round, scoreDtoList, throwsState, point);
+        }
+
+        System.out.print("|      ");
+        System.out.print(point.stream().collect(Collectors.joining()));
+        unusedGames(round);
+    }
+
+    private static void makeEmptyScore(int round, List<ScoreDto> scoreDtoList, ThrowsState throwsState, List<String> point) {
+        if (scoreDtoList.get(round - 1).getScoreType() == BowlingRole.STRIKE && throwsState != ThrowsState.BONUS_THROWS) {
+            point.set(round - 1, "|      ");
+        }
+        if (scoreDtoList.get(round - 1).getScoreType() == BowlingRole.SPARE && throwsState != ThrowsState.BONUS_THROWS) {
+            point.set(round - 1, "|      ");
+        }
+        if (round != 1 && scoreDtoList.get(round - 2).getScoreType() == BowlingRole.STRIKE && throwsState == ThrowsState.SECOND_THROWS) {
+            point.set(round - 2, "|      ");
+            point.set(round - 1, "|      ");
+        }
+    }
+
+    private static void unusedGames(int round) {
+        for (int i = round; i < FINAL_ROUND; i++) {
+            System.out.print("|      ");
+        }
+        System.out.println("|");
     }
 
     private static void printBoard(int round, String playerName, BowlingBoardDto bowlingBoardDto) {
@@ -28,10 +66,7 @@ public class OutputView {
 
         System.out.print("|  " + playerName + " ");
         System.out.print(point);
-        for (int i = round; i < FINAL_ROUND; i++) {
-            System.out.print("|      ");
-        }
-        System.out.println("|");
+        unusedGames(round);
     }
 
     private static String printScore(ScoreDto scoreDto, ThrowsState throwsState, int size, int round) {
@@ -46,6 +81,7 @@ public class OutputView {
         if (scoreDto.getScoreType() == BowlingRole.SPARE) {
             return String.format("|  %s|/ ", first);
         }
+
         return String.format("|  %s|%s ", first, second);
     }
 
