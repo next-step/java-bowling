@@ -24,9 +24,9 @@ public class BowlingApplication {
         BowlingGame bowling = new BowlingGame(name);
         // 볼링 게임은 10라운드까지 반복
         while (!bowling.isLastGame()) {
-            int tryCount = bowling.tryingCount();
+            int frameNo = bowling.frameNumber();
             // 투구로 pin을 쓰러뜨린다.
-            int pins = inputView.inputPitch(tryCount);
+            int pins = inputView.inputPitch(frameNo + 1);
             // 투구 값을 프레임에 값 업데이트
             bowling.bowl(pins);
             // 투구당 결과 값 출력

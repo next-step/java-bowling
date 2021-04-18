@@ -17,9 +17,13 @@ public class Frames {
 
     public void bowl(int pins) {
         if (isNextFrame()) {
-            frames.add(new Frame(0, 0));
+            frames.add(nextFrame());
         }
         currentFrame().bowl(pins);
+    }
+
+    private Frame nextFrame() {
+        return new Frame(0, 0);
     }
 
     public boolean isNextFrame() {

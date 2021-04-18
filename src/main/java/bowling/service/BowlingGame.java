@@ -23,8 +23,7 @@ public class BowlingGame {
     public void bowl(int pins) {
         frames.bowl(pins);
 
-        // 투구 후에 시도 횟수 확인 후에 다음 프레임으로
-        if (frames.isNextFrame()) {
+        if (frames.isNextFrame()) { // 2 시도로 다음 프레임확인
             frameNumber++;
         }
     }
@@ -43,10 +42,6 @@ public class BowlingGame {
 
     @Override
     public String toString() {
-        return "BowlingGame{" +
-                "frames=" + frames +
-                ", user='" + user + '\'' +
-                ", frameNumber=" + frameNumber +
-                '}';
+        return String.format("%s, %s, %s", user, frameNumber, frames);
     }
 }
