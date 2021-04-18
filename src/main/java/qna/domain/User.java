@@ -1,9 +1,10 @@
 package qna.domain;
 
-import java.util.Objects;
+import qna.UnAuthorizedException;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import qna.UnAuthorizedException;
+import java.util.Objects;
 
 @Entity
 public class User extends BaseEntity {
@@ -98,7 +99,7 @@ public class User extends BaseEntity {
         }
 
         return name.equals(target.name) &&
-            email.equals(target.email);
+                email.equals(target.email);
     }
 
     public boolean isGuestUser() {

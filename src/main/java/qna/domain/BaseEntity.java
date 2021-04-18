@@ -1,17 +1,13 @@
 package qna.domain;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.StringJoiner;
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -58,9 +54,9 @@ public class BaseEntity {
     @Override
     public String toString() {
         return new StringJoiner(", ", BaseEntity.class.getSimpleName() + "[", "]")
-            .add("id=" + id)
-            .add("createdAt=" + createdAt)
-            .add("updatedAt=" + updatedAt)
-            .toString();
+                .add("id=" + id)
+                .add("createdAt=" + createdAt)
+                .add("updatedAt=" + updatedAt)
+                .toString();
     }
 }
