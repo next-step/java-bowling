@@ -87,7 +87,7 @@ class BowlingNormalFrameTest {
     void case7() {
         BowlingNormalFrame initFrame = BowlingNormalFrame.of(Round.first(), Score.of(Point.of(5), Point.of(5)));
         BowlingFrame bowlingFrame = initFrame.nextFrame();
-        BowlingFrame bowlingFrame1 = bowlingFrame.firstPitching(Point.of(4));
+         bowlingFrame.firstPitching(Point.of(4));
         int score = initFrame.calculateOfScore();
         Assertions.assertThat(score).isEqualTo(14);
     }
@@ -96,7 +96,7 @@ class BowlingNormalFrameTest {
     @Test
     void case8() {
         BowlingNormalFrame initFrame = BowlingNormalFrame.of(Round.first(), Score.of(Point.of(10), Point.of(0)));
-        BowlingFrame bowlingFrame = initFrame.nextFrame().firstPitching(Point.of(4)).secondPitching(Point.of(5));
+        initFrame.nextFrame().firstPitching(Point.of(4)).secondPitching(Point.of(5));
         int score = initFrame.calculateOfScore();
         Assertions.assertThat(score).isEqualTo(19);
     }
