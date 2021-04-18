@@ -21,7 +21,7 @@ public class BowlingGame {
 
     public BowlingGame(String user) {
         this.frame = new ArrayList<>();
-        this.frameNumber = 0;
+        this.frameNumber = 1;
         this.pins = 0;
         this.user = user;
     }
@@ -44,6 +44,9 @@ public class BowlingGame {
     }
 
     public int frameNumber() {
+        if(this.tryCount > 1) {
+            frameNumber++;
+        }
         return frameNumber;
     }
 }
