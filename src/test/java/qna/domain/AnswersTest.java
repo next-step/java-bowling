@@ -7,7 +7,9 @@ import qna.CannotDeleteException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -21,27 +23,30 @@ public class AnswersTest {
 
     @Test
     @DisplayName("인자로 받은 로그인 사용자가 모든 답변의 작성자가 아닐 경우 예외가 발생한다.")
-    public void checkWriters() throws Exception {
-        assertThatThrownBy(() -> answers.checkWriters(UserTest.SANJIGI))
+    public void delete() throws Exception {
+        assertThatThrownBy(() -> answers.delete(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
 
     @Test
-    @DisplayName("인자로 받은 로그인 사용자가 모든 답변의 작성자일 경우 예외가 발생하지 않는다.")
-    public void checkWriters_allSameWriters() throws Exception {
-        answers.checkWriters(UserTest.JAVAJIGI);
+    @DisplayName("인자로 받은 로그인 사용자가 모든 답변의 작성자일 경우 모든 답변 삭제 이력을 반환한다.")
+    public void delete_all_same_writers() throws Exception {
+        List<DeleteHistory> delete = answers.delete(UserTest.JAVAJIGI);
+        assertThat(delete).containsExactly(
+                DeleteHistory.ofAnswer(AnswerTest.A1.getId(), AnswerTest.A1.getWriter()),
+                DeleteHistory.ofAnswer(AnswerTest.A1.getId(), AnswerTest.A1.getWriter()));
     }
 
     @Test
     @DisplayName("답변이 존재하지 않는 경우 예외가 발생하지 않는다.")
-    public void checkWriters_noneAnswers() throws Exception {
+    public void delete_none_answers() throws Exception {
         //given
         Answers answers = new Answers();
 
         //when
-        answers.checkWriters(UserTest.SANJIGI);
-        answers.checkWriters(UserTest.JAVAJIGI);
+        answers.delete(UserTest.SANJIGI);
+        answers.delete(UserTest.JAVAJIGI);
     }
 
     @Test
