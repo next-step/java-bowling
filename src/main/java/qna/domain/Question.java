@@ -60,7 +60,7 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public List<DeleteHistory> deleteQuestion(User loginUser){
+    public List<DeleteHistory> deleteQuestion(User loginUser) {
         List<DeleteHistory> deleteList = new ArrayList<>();
 
         checkAuthorization(loginUser);

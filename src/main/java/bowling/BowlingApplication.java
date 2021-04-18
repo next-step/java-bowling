@@ -23,7 +23,7 @@ public class BowlingApplication {
         // 볼링 게임 시작
         BowlingGame bowling = new BowlingGame(name);
         // 볼링 게임은 10라운드까지 반복
-        while(!bowling.isLast()) {
+        while (!bowling.isLast()) {
             int tryCount = bowling.tryingCount();
             // 투구로 pin을 쓰러뜨린다.
             Integer pins = inputView.inputPitch(tryCount);
