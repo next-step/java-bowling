@@ -39,11 +39,6 @@ public class BaseEntity {
         return id;
     }
 
-    public BaseEntity setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
