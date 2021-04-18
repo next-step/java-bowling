@@ -23,7 +23,7 @@ public class Frames {
         return currentFrame().tryCount() > 1;
     }
 
-    private Frame currentFrame() {
+    protected Frame currentFrame() {
         return frames.get(frames.size() - 1);
     }
 
