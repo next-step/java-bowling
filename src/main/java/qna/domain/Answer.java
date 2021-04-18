@@ -73,7 +73,7 @@ public class Answer extends AbstractEntity {
     public DeleteHistory delete(User loginUser) {
         checkAnswerWriter(loginUser);
         deleted = true;
-        return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
+        return DeleteHistory.ofAnswer(getId(), getWriter());
     }
 
     public void checkAnswerWriter(User loginUser) {
