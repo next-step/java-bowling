@@ -21,7 +21,9 @@ public class QnAService {
     private final AnswerRepository answerRepository;
     private final DeleteHistoryService deleteHistoryService;
 
-    public QnAService(QuestionRepository questionRepository, AnswerRepository answerRepository, DeleteHistoryService deleteHistoryService) {
+    public QnAService(QuestionRepository questionRepository,
+                      AnswerRepository answerRepository,
+                      DeleteHistoryService deleteHistoryService) {
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
         this.deleteHistoryService = deleteHistoryService;
