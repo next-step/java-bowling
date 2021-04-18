@@ -4,10 +4,11 @@ import java.util.Objects;
 
 public class Pin {
 
-    private final int count;
     private static final int MIN_PIN_COUNT = 0;
     private static final int MAX_PIN_COUNT = 10;
     private static final String INVALID_PIN_COUNT = "잘못된 수를 입력했습니다.";
+    private final int count;
+
 
     public Pin(int count) {
         validate(count);

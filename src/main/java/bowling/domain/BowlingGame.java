@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class BowlingGame {
+
+    public static final String INVALID_END_PLAY = "더이상 진행 할 수 없습니다.";
     private final Player player;
     private final Frames frames;
-    public static final String INVALID_END_PLAY = "더이상 진행 할 수 없습니다.";
 
     public BowlingGame(String name) {
         this(new Player(name), new Frames());

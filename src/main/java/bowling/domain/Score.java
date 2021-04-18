@@ -3,8 +3,8 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Score {
-    public static final int FULL_SCORE = 10;
 
+    public static final int FULL_SCORE = 10;
     private int score;
     private int left;
 

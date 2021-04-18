@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 
-    private LinkedList<State> states;
-    private Score score;
     private static final int MIN_PITCH_COUNT = 2;
     private static final int MAX_PITCH_COUNT = 3;
     public static final String INVALID_END_PLAY = "더이상 진행 할 수 없습니다.";
+    private LinkedList<State> states;
+    private Score score;
 
     public FinalFrame() {
         this.states = new LinkedList<>();

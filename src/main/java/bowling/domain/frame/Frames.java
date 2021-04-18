@@ -9,9 +9,10 @@ import java.util.stream.Collectors;
 
 public class Frames {
 
-    private final List<Frame> frames;
     public static final int MAX_PLAY_COUNT = 10;
     public static final String INVALID_END_PLAY = "더이상 진행 할 수 없습니다.";
+    private final List<Frame> frames;
+
 
     public Frames() {
         this.frames = new ArrayList<>();

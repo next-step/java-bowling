@@ -8,13 +8,14 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
-    private final int playCount;
-    private State state;
-    private Score score;
     public static final int MAX_PLAY_COUNT = 8;
     public static final int MIN_PLAY_COUNT = 0;
     private static final String INVALID_PLAY_COUNT = "normal frame은 0번 이상 9번 미만 프레임만 가능합니다.";
     public static final String INVALID_END_PLAY = "더이상 진행 할 수 없습니다.";
+    private final int playCount;
+    private State state;
+    private Score score;
+
 
     public NormalFrame(int playCount) {
         this(playCount, new Ready());

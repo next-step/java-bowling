@@ -4,10 +4,11 @@ import bowling.domain.Pin;
 import bowling.domain.Score;
 
 public class Miss implements State {
-    private final Pin firstPin;
-    private final Pin secondPin;
+
     private static final String INVALID_END_PLAY = "더이상 진행할 수 없습니다.";
     private static final String INVALID_PIN_COUNT = "잘못된 투구입니다.";
+    private final Pin firstPin;
+    private final Pin secondPin;
 
     public Miss(int firstPin, int secondPin) {
         this(new Pin(firstPin), new Pin(secondPin));
