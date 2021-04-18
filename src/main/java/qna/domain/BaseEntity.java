@@ -45,26 +45,20 @@ public class BaseEntity {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (id ^ (id >>> 32));
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof BaseEntity)) {
+            return false;
+        }
+        BaseEntity that = (BaseEntity) o;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        BaseEntity other = (BaseEntity) obj;
-        return Objects.equals(id, other.id);
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 
     @Override
