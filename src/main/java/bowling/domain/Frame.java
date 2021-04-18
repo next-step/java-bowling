@@ -10,9 +10,17 @@ public class Frame {
     private int pins;
     private String status;
 
-    public Frame(int tryCount, int pins) {
+    private Frame(int tryCount, int pins) {
         this.tryCount = tryCount;
         this.pins = pins;
+    }
+
+    public static Frame init() {
+        return new Frame(0, 0);
+    }
+
+    public static Frame valueOf(int tryCount, int pins) {
+        return new Frame(tryCount, pins);
     }
 
     public void bowl(int pin) {

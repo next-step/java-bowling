@@ -23,7 +23,7 @@ public class Frames {
     }
 
     private Frame nextFrame() {
-        return new Frame(0, 0);
+        return Frame.init();
     }
 
     public boolean isNextFrame() {

@@ -11,7 +11,7 @@ class FrameTest {
     @Test
     void bowl_투구_테스트() {
         // given
-        Frame frame = new Frame(0, 0);
+        Frame frame = Frame.init();
         // when
         frame.bowl(3);
         int tryCount = frame.tryCount();
@@ -23,7 +23,7 @@ class FrameTest {
     @Test
     void bowl_2구_테스트() {
         // given
-        Frame frame = new Frame(0, 0);
+        Frame frame = Frame.init();
         // when
         frame.bowl(3);
         frame.bowl(3);
@@ -35,7 +35,7 @@ class FrameTest {
     @Test
     void bowl_미스_확인테스트() {
         // given
-        Frame frame = new Frame(0, 0);
+        Frame frame = Frame.init();
         // when
         frame.bowl(0);
         frame.bowl(0);
@@ -50,7 +50,7 @@ class FrameTest {
     @Test
     void bowl_스트라이크_확인테스트() {
         // given
-        Frame frame = new Frame(0, 0);
+        Frame frame = Frame.init();
         // when
         frame.bowl(10);
         String state = frame.state();
@@ -63,7 +63,7 @@ class FrameTest {
     @Test
     void bowl_스페어_확인테스트() {
         // given
-        Frame frame = new Frame(0, 0);
+        Frame frame = Frame.init();
         // when
         frame.bowl(9);
         frame.bowl(1);

@@ -12,14 +12,12 @@ public class BowlingGame {
     private final String user;
     private int frameNumber;
 
-    // 볼링 게임을 진행하기 위해서 플레이어 이름을 전달 받아 게임에 대한 기본 값을을 설정한다.
     public BowlingGame(String user) {
-        this.frames = new Frames(new Frame(0, 0));
+        this.frames = new Frames(Frame.init());
         this.user = user;
         this.frameNumber = 0;
     }
 
-    // 투구
     public void bowl(int pins) {
         frames.bowl(pins);
 
