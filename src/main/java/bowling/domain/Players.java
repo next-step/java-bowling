@@ -41,6 +41,7 @@ public class Players {
 
     private Player findLeastPlayedPlayer() {
         return players.stream()
+                .filter(player -> !player.isDone())
                 .min(Comparator.comparing(Player::currentFrameNumber))
                 .orElse(players.get(0));
     }

@@ -19,6 +19,10 @@ public class Player {
         this(new PlayerName(playerName), Frames.init(totalNumberOfFrame));
     }
 
+    public Player(String playerName, Frames Frames) {
+        this(new PlayerName(playerName), Frames);
+    }
+
     public void addPinCount(int pintCount) {
         if (isDone()) {
             throw new IllegalStateException("이미 전체 프레임을 다 play하셨습니다.");
