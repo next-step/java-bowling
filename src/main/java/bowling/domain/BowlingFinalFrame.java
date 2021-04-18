@@ -51,4 +51,17 @@ public class BowlingFinalFrame extends BowlingFrame {
     public ScoreDto toDto() {
         return ScoreDto.of(score, bonusScore);
     }
+
+    @Override
+    public int calculateOfScore() {
+        if (score.type() == BowlingRole.SPARE || score.type() == BowlingRole.STRIKE) {
+            return this.score.total() + bonusScore.point();
+        }
+        return score.total();
+    }
+
+    @Override
+    public Score score() {
+        return score;
+    }
 }
