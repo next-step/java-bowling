@@ -1,15 +1,22 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.StringJoiner;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class AbstractEntity {
+public class BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,10 +28,10 @@ public class AbstractEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public AbstractEntity() {
+    public BaseEntity() {
     }
 
-    public AbstractEntity(Long id) {
+    public BaseEntity(Long id) {
         this.id = id;
     }
 
@@ -32,7 +39,7 @@ public class AbstractEntity {
         return id;
     }
 
-    public AbstractEntity setId(Long id) {
+    public BaseEntity setId(Long id) {
         this.id = id;
         return this;
     }
@@ -47,24 +54,25 @@ public class AbstractEntity {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        AbstractEntity other = (AbstractEntity) obj;
-        if (id != other.id)
-            return false;
-        return true;
+        }
+        BaseEntity other = (BaseEntity) obj;
+        return Objects.equals(id, other.id);
     }
 
     @Override
     public String toString() {
-        return "AbstractEntity{" +
-                "id=" + id +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+        return new StringJoiner(", ", BaseEntity.class.getSimpleName() + "[", "]")
+            .add("id=" + id)
+            .add("createdAt=" + createdAt)
+            .add("updatedAt=" + updatedAt)
+            .toString();
     }
 }
