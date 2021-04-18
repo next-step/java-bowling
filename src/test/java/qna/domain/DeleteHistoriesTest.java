@@ -2,23 +2,31 @@ package qna.domain;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static qna.domain.AnswerTest.A1;
-import static qna.domain.QuestionTest.Q1;
 import static qna.domain.UserTest.JAVAJIGI;
 
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DeleteHistoriesTest {
 
+  private Question question;
+  private Answer answer;
+
+  @BeforeEach
+  void setUp() {
+    question = new Question("title1", "contents1").writeBy(JAVAJIGI);
+    answer = new Answer(JAVAJIGI, question, "Answers Contents1");
+  }
+
   @Test
   @DisplayName("질문으로 답변과 질문이 모두 포함된, 삭제기록을 만든다.")
   void from() {
     //given
-    Q1.addAnswer(A1);
+    question.addAnswer(answer);
     //when
-    DeleteHistories deleteHistories = DeleteHistories.from(Q1);
+    DeleteHistories deleteHistories = DeleteHistories.from(question);
     //then
     List<DeleteHistory> historyList = deleteHistories.getList();
     assertAll(

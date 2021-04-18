@@ -12,18 +12,10 @@ public class Answers {
     this.answers = answers;
   }
 
-  public void delete() {
-    answers.stream().forEach(Answer::delete);
-  }
-
-  public void checkReplierIsOwner(User owner) throws CannotDeleteException {
-    if (existNotOwnerReplier(owner)) {
-      throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+  public void delete(User owner) throws CannotDeleteException {
+    for (Answer answer : answers) {
+      answer.delete(owner);
     }
-  }
-
-  private boolean existNotOwnerReplier(User owner) {
-    return answers.stream().anyMatch(answer -> !answer.isOwner(owner));
   }
 
   public List<Answer> getList() {

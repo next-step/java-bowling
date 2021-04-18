@@ -15,24 +15,23 @@ public class AnswersTest {
 
   @Test
   @DisplayName("작성자가 아닌 답변자가 존재하면, exception")
-  void checkReplierIsOwner_fail() {
+  void checkOwner_fail() {
     //given
     Answers answers = new Answers(Arrays.asList(A1, A2));
     //when
     //then
     assertThatExceptionOfType(CannotDeleteException.class)
-        .isThrownBy(() -> answers.checkReplierIsOwner(JAVAJIGI))
+        .isThrownBy(() -> answers.delete(JAVAJIGI))
         .withMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
   }
 
   @Test
   void delete() throws CannotDeleteException {
     //given
-    Answers answers = new Answers(Arrays.asList(A1, A2));
+    Answers answers = new Answers(Arrays.asList(A1));
     //when
-    answers.delete();
+    answers.delete(JAVAJIGI);
     //then
     assertThat(answers.getAnswer(0).isDeleted()).isTrue();
-    assertThat(answers.getAnswer(1).isDeleted()).isTrue();
   }
 }
