@@ -31,19 +31,9 @@ public class Answers {
         return new Answers(Arrays.asList(answers));
     }
 
-    public List<DeleteHistory> createDeleteHistories() {
-        return answers.stream().map(Answer::createAnswerDeleteHistory).collect(Collectors.toList());
-    }
-
-    public Answers beDeletedBy(User user) {
+    public List<DeleteHistory> beDeletedBy(User user) {
         return answers.stream()
                       .map(answer -> answer.beDeletedBy(user))
-                      .collect(Collectors.collectingAndThen(Collectors.toList(), Answers::new));
-    }
-
-    public List<DeleteHistory> beDeletedBy2(User user) {
-        return answers.stream()
-                      .map(answer -> answer.beDeletedBy2(user))
                       .collect(Collectors.toList());
     }
 

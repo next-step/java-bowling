@@ -3,7 +3,6 @@ package qna.domain;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,24 +87,14 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public Question beDeletedBy(User owner) {
-        checkIfQuestionIsOwnedBy(owner);
-
-        Question deletedQuestion = new Question(getId(), this.title, this.contents);
-        deletedQuestion.writer = this.writer;
-        deletedQuestion.deleted = true;
-        deletedQuestion.answers = this.answers.beDeletedBy(owner);
-
-        return deletedQuestion;
-    }
-
-    public List<DeleteHistory> beDeletedBy2(User owner) {
+    public List<DeleteHistory> beDeletedBy(User owner) {
         checkIfQuestionIsOwnedBy(owner);
 
         this.deleted = true;
 
-        List<DeleteHistory> deleteHistories = answers.beDeletedBy2(owner);
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(DeleteHistory.of(this));
+        deleteHistories.addAll(answers.beDeletedBy(owner));
 
         return deleteHistories;
     }
@@ -114,23 +103,6 @@ public class Question extends AbstractEntity {
         if (!isOwner(owner)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-    }
-
-    public List<DeleteHistory> createDeleteHistories() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(makeDeleteHistoryOfQuestion());
-
-        deleteHistories.addAll(answers.createDeleteHistories());
-
-        return deleteHistories;
-    }
-
-    private DeleteHistory makeDeleteHistoryOfQuestion() {
-        if (!isDeleted()) {
-            throw new IllegalStateException("질문이 삭제된 상태여야 히스토리를 생성할 수 있습니다.");
-        }
-
-        return new DeleteHistory(ContentType.QUESTION, getId(), this.writer, LocalDateTime.now());
     }
 
 }

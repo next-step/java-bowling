@@ -3,11 +3,13 @@ package qna.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qna.NotFoundException;
+import qna.domain.DeleteHistory;
 import qna.domain.Question;
 import qna.domain.QuestionRepository;
 import qna.domain.User;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
@@ -26,9 +28,8 @@ public class QnAService {
 
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) {
-        Question deletedQuestion = findQuestionById(questionId).beDeletedBy(loginUser);
+        List<DeleteHistory> deleteHistories = findQuestionById(questionId).beDeletedBy(loginUser);
 
-        questionRepository.save(deletedQuestion);
-        deleteHistoryService.saveAll(deletedQuestion.createDeleteHistories());
+        deleteHistoryService.saveAll(deleteHistories);
     }
 }

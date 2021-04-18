@@ -37,13 +37,13 @@ class AnswersTest {
             DeleteHistory.of(a3)
         );
 
-        assertThat(javajigiAnswers.beDeletedBy2(UserTest.JAVAJIGI)).containsExactlyInAnyOrderElementsOf(expected);
+        assertThat(javajigiAnswers.beDeletedBy(UserTest.JAVAJIGI)).containsExactlyInAnyOrderElementsOf(expected);
     }
 
     @Test
     @DisplayName("일부 답변의 작성자가 로그인한 사람과 다르면 삭제할 수 없다.")
     void cannotDeleteAnswersIfOtherUserOwnSomeAnswers() {
-        assertThatThrownBy(() -> shuffledAnswers.beDeletedBy2(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> shuffledAnswers.beDeletedBy(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 
 }

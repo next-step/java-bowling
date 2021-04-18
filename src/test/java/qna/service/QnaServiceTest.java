@@ -14,7 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -45,7 +46,9 @@ public class QnaServiceTest {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThat(question.isDeleted()).isFalse();
-        assertThatCode(() -> qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId())).doesNotThrowAnyException();
+        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
+
+        assertThat(question.isDeleted()).isTrue();
         verifyDeleteHistories();
     }
 
@@ -61,8 +64,11 @@ public class QnaServiceTest {
     public void delete_성공_질문자_답변자_같음() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
-        assertThatCode(() -> qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId())).doesNotThrowAnyException();
 
+        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
+
+        assertThat(question.isDeleted()).isTrue();
+        assertThat(answer.isDeleted()).isTrue();
         verifyDeleteHistories();
     }
 

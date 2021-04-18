@@ -25,7 +25,7 @@ public class AnswerTest {
     void deleteAnswer() {
         Answer answer = javajigiAnswer();
 
-        assertThat(answer.beDeletedBy2(UserTest.JAVAJIGI)).isEqualTo(DeleteHistory.of(answer));
+        assertThat(answer.beDeletedBy(UserTest.JAVAJIGI)).isEqualTo(DeleteHistory.of(answer));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class AnswerTest {
     void cannotDeleteAnswerIfItIsNotOwned() {
         Answer answer = sanjigiAnswer();
 
-        assertThatThrownBy(() -> answer.beDeletedBy2(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> answer.beDeletedBy(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 
 }

@@ -26,20 +26,20 @@ public class QuestionTest {
     @Test
     @DisplayName("로그인한 유저가 질문자가 아니면 삭제할 수 없다.")
     void shouldNotDeleteQuestionIfLoggedInUserIsNotOwnThat() {
-        assertThatThrownBy(() -> q1.beDeletedBy2(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> q1.beDeletedBy(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
     @DisplayName("답변글 중 본인이 작성한 것이 아닌 답변글이 있으면 삭제할 수 없다.")
     void shouldNotDeleteQuestionIfAnswerIsNotMine() {
         q1.addAnswer(AnswerTest.sanjigiAnswer());
-        assertThatThrownBy(() -> q1.beDeletedBy2(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> q1.beDeletedBy(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
     @DisplayName("질문한 사람이 로그인한 사람과 같다면 삭제할 수 있다.")
     void canDeleteQuestionIfUserOwnQuestion() {
-        assertThat(q1.beDeletedBy2(UserTest.JAVAJIGI)).containsExactly(DeleteHistory.of(q1));
+        assertThat(q1.beDeletedBy(UserTest.JAVAJIGI)).containsExactly(DeleteHistory.of(q1));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class QuestionTest {
         Answer answer = AnswerTest.javajigiAnswer();
         q1.addAnswer(answer);
 
-        assertThat(q1.beDeletedBy2(UserTest.JAVAJIGI)).contains(DeleteHistory.of(q1), DeleteHistory.of(answer));
+        assertThat(q1.beDeletedBy(UserTest.JAVAJIGI)).contains(DeleteHistory.of(q1), DeleteHistory.of(answer));
     }
 
 }
