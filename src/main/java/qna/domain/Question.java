@@ -73,10 +73,11 @@ public class Question extends AbstractEntity {
         return new Answers(answers);
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
         checkOwner(loginUser);
         getAnswers().delete(writer);
         this.deleted = true;
+        return DeleteHistories.from(this);
     }
 
     private void checkOwner(User user) throws CannotDeleteException {
