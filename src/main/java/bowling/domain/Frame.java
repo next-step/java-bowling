@@ -8,18 +8,27 @@ public class Frame {
 
     private int tryCount;
     private int pins;
+    private String status;
 
     public Frame(int tryCount, int pins) {
         this.tryCount = tryCount;
         this.pins = pins;
     }
 
-    public void bowl(int pins) {
-        this.pins += pins;
+    public void bowl(int pin) {
+        this.pins += pin;
         if (this.pins > 10) {
             throw new PinOutOfSizeException("10개 이상의 핀을 쓰러뜨릴 수 없습니다.");
         }
-        this.tryCount++;
+        if(tryCount == 0 && this.pins == 10) {
+            status = "STRIKE";
+            tryCount++;
+        } else if(tryCount == 1 && this.pins == 10){
+            status = "SPARE";
+        } else if(this.pins == 0) {
+            status = "MISS";
+        }
+        tryCount++;
     }
 
     public int tryCount() {
@@ -28,6 +37,10 @@ public class Frame {
 
     public boolean isNextFrame() {
         return tryCount > 1;
+    }
+
+    public String state() {
+        return status;
     }
 
     @Override
