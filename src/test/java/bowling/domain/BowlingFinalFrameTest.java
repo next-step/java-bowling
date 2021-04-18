@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.dto.ScoreDto;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -61,5 +62,31 @@ class BowlingFinalFrameTest {
         assertThatThrownBy(() -> {
             BowlingFinalFrame.first(FinalRound.of(1));
         }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("Score Type이 MISS면 현재 스코어 합을 내보낸다.")
+    @Test
+    void case6() {
+        BowlingFrame initFrame = BowlingFinalFrame.of(FinalRound.of(), Score.of(Point.of(1), Point.of(5)));
+        int score = initFrame.calculateOfScore();
+        Assertions.assertThat(score).isEqualTo(6);
+    }
+
+    @DisplayName("Score Type이 SPARE나 STRIKE면 현재 스코어 합+ 보너스 포인트를 내보낸다.")
+    @Test
+    void case7() {
+        //SPARE
+        BowlingFrame initFrame = BowlingFinalFrame.of(FinalRound.of(), Score.of(Point.of(5), Point.of(5)));
+        BowlingFrame bowlingFrame = initFrame.bonusPitching(Point.of(4));
+
+        //STRIKE
+        BowlingFrame initFrame2 = BowlingFinalFrame.of(FinalRound.of(), Score.of(Point.of(10), Point.of(0)));
+        BowlingFrame bowlingFrame2 = initFrame2.bonusPitching(Point.of(4));
+
+        int score = bowlingFrame.calculateOfScore();
+        int score2 = bowlingFrame2.calculateOfScore();
+
+        Assertions.assertThat(score).isEqualTo(14);
+        Assertions.assertThat(score2).isEqualTo(14);
     }
 }
