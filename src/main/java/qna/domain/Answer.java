@@ -54,6 +54,13 @@ public class Answer extends AbstractEntity {
 
         return deletedAnswer;
     }
+    public DeleteHistory beDeletedBy2(User user) {
+        checkIfAnswerIsOwnedBy(user);
+
+        this.deleted = true;
+
+        return DeleteHistory.of(this);
+    }
 
     private void checkIfAnswerIsOwnedBy(User user) {
         if (!this.isOwner(user)) {

@@ -99,6 +99,17 @@ public class Question extends AbstractEntity {
         return deletedQuestion;
     }
 
+    public List<DeleteHistory> beDeletedBy2(User owner) {
+        checkIfQuestionIsOwnedBy(owner);
+
+        this.deleted = true;
+
+        List<DeleteHistory> deleteHistories = answers.beDeletedBy2(owner);
+        deleteHistories.add(DeleteHistory.of(this));
+
+        return deleteHistories;
+    }
+
     private void checkIfQuestionIsOwnedBy(User owner) {
         if (!isOwner(owner)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
