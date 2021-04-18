@@ -27,8 +27,8 @@ public class Answers {
         this.answers.add(answer);
     }
 
-    public List<DeleteHistory> delete(User loginUser) {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+    public DeleteHistories delete(User loginUser) {
+        DeleteHistories deleteHistories = new DeleteHistories();
         for (Answer answer : answers) {
             deleteHistories.add(answer.delete(loginUser));
         }

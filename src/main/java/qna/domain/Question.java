@@ -80,11 +80,10 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> delete(User loginUser) {
+    public DeleteHistories delete(User loginUser) {
         checkQuestionWriter(loginUser);
         deleted = true;
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(DeleteHistory.ofQuestion(getId(), getWriter()));
+        DeleteHistories deleteHistories = DeleteHistories.from(DeleteHistory.ofQuestion(getId(), getWriter()));
         deleteHistories.addAll(answers.delete(loginUser));
         return deleteHistories;
     }
