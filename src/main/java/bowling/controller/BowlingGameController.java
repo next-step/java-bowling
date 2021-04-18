@@ -4,6 +4,9 @@ import bowling.service.BowlingService;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
+/**
+ * 볼링 비즈니스 로직
+ */
 public class BowlingGameController {
 
     private final InputView inputView;
@@ -24,8 +27,9 @@ public class BowlingGameController {
         BowlingService bowling = new BowlingService();
         // 볼링 게임은 10라운드까지 반복
         while(!bowling.isLast()) {
+            int tryCount = bowling.tryingCount();
             // 투구로 pin을 쓰러뜨린다.
-            String pins = inputView.inputPitch();
+            String pins = inputView.inputPitch(tryCount);
             // 투구 값을 프레임에 값 업데이트
             bowling.bowl(pins);
             // 투구당 결과 값 출력
