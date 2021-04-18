@@ -9,13 +9,17 @@ public class PinCount {
 
     private static final int MAX_PIN_COUNT = 10;
 
-    private static final Map<Integer, PinCount> pinCountCache = new HashMap<>();
+    private static final Map<Integer, PinCount> CACHE = new HashMap<>();
+
+    public static final PinCount STRIKE = new PinCount(MAX_PIN_COUNT);
+
+    public static final PinCount GUTTER = new PinCount(MIN_PIN_COUNT);
 
     private final int count;
 
     static {
         for (int i = MIN_PIN_COUNT; i <= MAX_PIN_COUNT; i++) {
-            pinCountCache.put(i, new PinCount(i));
+            CACHE.put(i, new PinCount(i));
         }
     }
 
@@ -27,10 +31,10 @@ public class PinCount {
     }
 
     public static PinCount of(int count) {
-        if (!pinCountCache.containsKey(count)) {
+        if (!CACHE.containsKey(count)) {
             throw new IllegalArgumentException("올바르지 않는 투구 수 입니다.");
         }
-        return pinCountCache.get(count);
+        return CACHE.get(count);
     }
 
     public static PinCount of(String count) {

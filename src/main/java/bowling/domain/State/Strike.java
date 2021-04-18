@@ -7,8 +7,6 @@ public class Strike implements State {
 
     private final static String SYMBOL = "X";
 
-    private final static int PIN_COUNT = 10;
-
     private final static int BONUS_COUNT = 2;
 
     @Override
@@ -28,13 +26,13 @@ public class Strike implements State {
 
     @Override
     public Score score() {
-        return new UnFinishedScore(PIN_COUNT, BONUS_COUNT);
+        return new UnFinishedScore(PinCount.STRIKE.count(), BONUS_COUNT);
     }
 
     @Override
     public Score calculatedScore(Score scoreToCalculate) {
         if (scoreToCalculate.isNecessaryToCalculateMore()) {
-            return scoreToCalculate.calculatedScore(PIN_COUNT);
+            return scoreToCalculate.calculatedScore(PinCount.STRIKE.count());
         }
         return scoreToCalculate;
     }
