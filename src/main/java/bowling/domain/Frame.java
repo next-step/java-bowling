@@ -6,15 +6,15 @@ import java.util.Objects;
 
 public class Frame {
 
-    private Integer pins;
     private int tryCount;
+    private int pins;
 
-    public Frame(Integer pins, int tryCount) {
-        this.pins = pins;
+    public Frame(int tryCount, int pins) {
         this.tryCount = tryCount;
+        this.pins = pins;
     }
 
-    public void bowl(Integer pins) {
+    public void bowl(int pins) {
         this.pins += pins;
         if (this.pins > 10) {
             throw new PinOutOfSizeException("10개 이상의 핀을 쓰러뜨릴 수 없습니다.");
@@ -35,8 +35,8 @@ public class Frame {
         if (this == o) return true;
         if (!(o instanceof Frame)) return false;
         final Frame frame = (Frame) o;
-        return tryCount == frame.tryCount
-                && Objects.equals(pins, frame.pins);
+        return pins == frame.pins
+                && tryCount == frame.tryCount;
     }
 
     @Override

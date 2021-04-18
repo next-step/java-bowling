@@ -12,15 +12,10 @@ public class Frames {
     }
 
     public void bowl(Integer pins) {
-        if(nextFrame()) {
+        if (isNextFrame()) {
             frames.add(new Frame(0, 0));
         }
         currentFrame().bowl(pins);
-
-    }
-
-    private boolean nextFrame() {
-        return currentFrame().tryCount() > 1;
     }
 
     protected Frame currentFrame() {
