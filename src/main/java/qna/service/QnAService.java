@@ -8,23 +8,23 @@ import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.domain.*;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("qnaService")
+@Service
 public class QnAService {
     private static final Logger log = LoggerFactory.getLogger(QnAService.class);
 
-    @Resource(name = "questionRepository")
-    private QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
+    private final DeleteHistoryService deleteHistoryService;
 
-    @Resource(name = "answerRepository")
-    private AnswerRepository answerRepository;
-
-    @Resource(name = "deleteHistoryService")
-    private DeleteHistoryService deleteHistoryService;
+    public QnAService(QuestionRepository questionRepository, AnswerRepository answerRepository, DeleteHistoryService deleteHistoryService) {
+        this.questionRepository = questionRepository;
+        this.answerRepository = answerRepository;
+        this.deleteHistoryService = deleteHistoryService;
+    }
 
     @Transactional(readOnly = true)
     public Question findQuestionById(Long id) {
