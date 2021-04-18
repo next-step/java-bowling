@@ -9,12 +9,36 @@ class FramesTest {
 
     @DisplayName("프레임 일급 컬렉션 투구 테스트")
     @Test
-    void create_프레임_투구테스트() {
+    void currentFrame_프레임_투구테스트() {
         // given
         Frames frames = new Frames(new Frame(0, 0));
         // when
         frames.bowl(5);
         // then
         assertThat(frames.currentFrame()).isEqualTo(new Frame(5, 1));
+    }
+
+    @DisplayName("다음 프레임 생성 여부 테스트")
+    @Test
+    void isNextFrame_다음_프레임_확인테스트() {
+        // given
+        Frames frames = new Frames(new Frame(0, 0));
+        // when
+        frames.bowl(3);
+        frames.bowl(7);
+        // then
+        assertThat(frames.isNextFrame()).isTrue();
+    }
+
+    @DisplayName("투구 시 시도 횟수 확인 테스트")
+    @Test
+    void tryCount_시도횟수_확인테스트() {
+        Frames frames = new Frames(new Frame(0, 0));
+        // when
+        frames.bowl(3);
+        frames.bowl(7);
+        frames.bowl(10);
+
+        assertThat(frames.tryCount()).isEqualTo(1);
     }
 }

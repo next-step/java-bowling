@@ -18,15 +18,15 @@ public class Frames {
         currentFrame().bowl(pins);
     }
 
-    protected Frame currentFrame() {
-        return frames.get(frames.size() - 1);
-    }
-
     public boolean isNextFrame() {
-        return currentFrame().nextFrame();
+        return currentFrame().isNextFrame();
     }
 
     public int tryCount() {
         return currentFrame().tryCount();
+    }
+
+    protected Frame currentFrame() {
+        return frames.get(frames.size() - 1);
     }
 }
