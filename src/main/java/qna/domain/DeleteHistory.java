@@ -38,12 +38,16 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public static DeleteHistory from(Question question) {
-        return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
+    private static DeleteHistory of(ContentType contentType, Long contentId, User deletedBy) {
+        return new DeleteHistory(contentType, contentId, deletedBy, LocalDateTime.now());
     }
 
-    public static DeleteHistory from(Answer answer) {
-        return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
+    public static DeleteHistory ofQuestion(Long contentId, User deletedBy) {
+        return of(ContentType.QUESTION, contentId, deletedBy);
+    }
+
+    public static DeleteHistory ofAnswer(Long contentId, User deletedBy) {
+        return of(ContentType.ANSWER, contentId, deletedBy);
     }
 
     @Override

@@ -2,7 +2,8 @@ package qna.domain;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import qna.CannotDeleteException;
 import qna.FunctionWithCannotDeleteException;
 
@@ -14,14 +15,15 @@ public class Answers {
     this.answers = answers;
   }
 
-  public void delete(User owner) throws CannotDeleteException {
-    answers.forEach(wrapper(answer -> answer.delete(owner)));
+  public List<DeleteHistory> delete(User owner) throws CannotDeleteException {
+    return answers.stream().map(wrapper(answer -> answer.delete(owner)))
+        .collect(Collectors.toList());
   }
 
-  private <T, E extends CannotDeleteException> Consumer<T> wrapper(FunctionWithCannotDeleteException<T, E> fe) {
+  private <T, R, E extends CannotDeleteException> Function<T, R> wrapper(FunctionWithCannotDeleteException<T, R, E> fe) {
     return arg -> {
       try {
-        fe.apply(arg);
+        return fe.apply(arg);
       } catch (CannotDeleteException e) {
         throw new CannotDeleteException(e.getMessage());
       }

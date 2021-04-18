@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static qna.domain.UserTest.JAVAJIGI;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,9 +25,11 @@ class DeleteHistoriesTest {
   @DisplayName("질문으로 답변과 질문이 모두 포함된, 삭제기록을 만든다.")
   void from() {
     //given
-    question.addAnswer(answer);
+    List<DeleteHistory> histories = new ArrayList<>();
+    histories.add(DeleteHistory.ofQuestion(question.getId(), JAVAJIGI));
+    histories.add(DeleteHistory.ofAnswer(answer.getId(), JAVAJIGI));
     //when
-    DeleteHistories deleteHistories = DeleteHistories.from(question);
+    DeleteHistories deleteHistories = DeleteHistories.from(histories);
     //then
     List<DeleteHistory> historyList = deleteHistories.getList();
     assertAll(

@@ -1,6 +1,6 @@
 package qna;
 
 @FunctionalInterface
-public interface FunctionWithCannotDeleteException<T, E extends CannotDeleteException> {
-  void apply(T t) throws E;
+public interface FunctionWithCannotDeleteException<T, R, E extends CannotDeleteException> {
+  R apply(T t) throws E;
 }

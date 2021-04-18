@@ -69,9 +69,10 @@ public class Answer extends AbstractEntity {
     return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
   }
 
-  public void delete(User questionOwner) throws CannotDeleteException {
+  public DeleteHistory delete(User questionOwner) throws CannotDeleteException {
     checkOwner(questionOwner);
     this.deleted = true;
+    return DeleteHistory.ofAnswer(getId(), questionOwner);
   }
 
   public void checkOwner(User questionOwner) throws CannotDeleteException {

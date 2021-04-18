@@ -24,7 +24,7 @@ class DeleteHistoryTest {
   void fromQuestion() {
     //given
     //when
-    DeleteHistory history = DeleteHistory.from(question);
+    DeleteHistory history = DeleteHistory.ofQuestion(question.getId(), JAVAJIGI);
     //then
     assertAll(
         () -> assertEquals(history.getContentId(), question.getId()),
@@ -38,7 +38,7 @@ class DeleteHistoryTest {
   void fromAnswer() {
     //given
     //when
-    DeleteHistory history = DeleteHistory.from(answer);
+    DeleteHistory history = DeleteHistory.ofAnswer(answer.getId(), JAVAJIGI);
     //then
     assertAll(
         () -> assertEquals(history.getContentId(), answer.getId()),
