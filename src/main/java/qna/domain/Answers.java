@@ -39,7 +39,9 @@ public class Answers {
     }
 
     public void deleteAll(User user) {
-
+        for (Answer answer : answers) {
+            answer.delete(user);
+        }
     }
 
     @Override

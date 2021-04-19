@@ -18,7 +18,7 @@ class AnswersTest {
     @BeforeEach
     void setUp() {
         answers = new Answers();
-        answer = new Answer();
+        answer = TestFixture.A1;
 
         answers.add(answer);
     }
@@ -55,9 +55,6 @@ class AnswersTest {
         answers.deleteAll(TestFixture.JAVAJIGI);
 
         // then
-        assertAll(
-                () -> assertThat(answers.size()).isEqualTo(0),
-                () -> assertThat(answers.answers()).doesNotContain(answer)
-        );
+        assertThat(answer.isDeleted()).isTrue();
     }
 }
