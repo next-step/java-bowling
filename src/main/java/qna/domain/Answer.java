@@ -64,6 +64,10 @@ public class Answer extends BaseEntity {
         return contents;
     }
 
+    public void delete(User user) {
+
+    }
+
     public void toQuestion(Question question) {
         this.question = question;
     }
@@ -82,4 +86,5 @@ public class Answer extends BaseEntity {
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
+
 }
