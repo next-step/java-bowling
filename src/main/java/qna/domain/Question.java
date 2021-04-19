@@ -89,7 +89,7 @@ public class Question extends BaseEntity {
     }
 
     public void delete() {
-
+        this.deleted = true;
     }
 
     @Override
