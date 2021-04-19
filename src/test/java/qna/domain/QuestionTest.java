@@ -4,8 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.TestFixture;
+import qna.exception.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class QuestionTest {
 
@@ -36,5 +38,13 @@ class QuestionTest {
 
         //then
         assertThat(question.isDeleted()).isTrue();
+    }
+
+    @Test
+    @DisplayName("로그인 사용자와 질문한 사람이 다른 경우 예외가 발생한다.")
+    void deleteByDifferentUser() {
+        assertThatThrownBy(() -> question.delete(TestFixture.SANJIGI))
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessage("질문을 삭제할 권한이 없습니다.");
     }
 }
