@@ -47,4 +47,17 @@ class QuestionTest {
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage(CannotDeleteException.NO_DELETE_PERMISSION);
     }
+
+    @Test
+    @DisplayName("답변이 없는 경우 삭제가 가능하다.")
+    void deleteWithoutAnswer() {
+        // given
+        question = TestFixture.Q2;
+
+        // when
+        question.delete(TestFixture.SANJIGI);
+
+        // then
+        assertThat(question.isDeleted()).isTrue();
+    }
 }
