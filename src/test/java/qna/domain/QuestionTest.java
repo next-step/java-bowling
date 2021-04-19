@@ -13,7 +13,7 @@ public class QuestionTest {
 
     @Test
     @DisplayName("사용자를 인자로 받아 질문을 삭제한다.")
-    public void delete() throws Exception {
+    public void delete() {
         //given
         Question question = new Question("test", "content").writeBy(UserTest.JAVAJIGI);
 
@@ -26,7 +26,7 @@ public class QuestionTest {
 
     @Test
     @DisplayName("삭제를 시도한 로그인 사용자가 질문한 사람이 아닐 경우 예외가 발생한다.")
-    public void delete_error() throws Exception {
+    public void delete_error() {
         assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("질문을 삭제할 권한이 없습니다.");

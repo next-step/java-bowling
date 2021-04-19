@@ -40,7 +40,7 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_성공() throws Exception {
+    public void delete_성공() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThat(question.isDeleted()).isFalse();
@@ -51,7 +51,7 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_다른_사람이_쓴_글() throws Exception {
+    public void delete_다른_사람이_쓴_글() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {
@@ -60,7 +60,7 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_성공_질문자_답변자_같음() throws Exception {
+    public void delete_성공_질문자_답변자_같음() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
@@ -71,7 +71,7 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
+    public void delete_답변_중_다른_사람이_쓴_글() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {

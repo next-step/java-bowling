@@ -13,7 +13,7 @@ public class AnswerTest {
 
     @Test
     @DisplayName("인자로 받은 로그인 사용자가 답변 작성자와 일치할 경우 삭제 이력을 반환한다.")
-    public void delete() throws Exception {
+    public void delete() {
         //given
         Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "test");
 
@@ -25,7 +25,7 @@ public class AnswerTest {
 
     @Test
     @DisplayName("인자로 받은 로그인 사용자가 답변 작성자와 일치하지 않을 경우 예외가 발생한다.")
-    public void delete_by_different_writer() throws Exception {
+    public void delete_by_different_writer() {
         Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "test");
         assertThatThrownBy(() -> answer.delete(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class)
