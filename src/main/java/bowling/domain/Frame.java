@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Frame {
 
-    public static enum State { STRIKE, SPARE, MISS }
+    public enum State { STRIKE, SPARE, MISS;}
     private int tryCount;
     private int pins;
     private State status;
@@ -51,6 +51,7 @@ public class Frame {
     public State state() {
         return status;
     }
+
 
     @Override
     public boolean equals(final Object o) {

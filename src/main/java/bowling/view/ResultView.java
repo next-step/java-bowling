@@ -7,9 +7,12 @@ import java.util.stream.Stream;
 
 public class ResultView {
 
-    public static final String GUIDE_BOWLING_UI_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    public static final String GUIDE_BOWLING_BOARD_BODY_FORMATTER = "  %-4s|";
-    public static final String WHITE_SPACE = "";
+    private static final String GUIDE_BOWLING_UI_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+    private static final String GUIDE_BOWLING_BOARD_BODY_FORMATTER = "  %-4s|";
+    private static final String WHITE_SPACE = "";
+    private static final String STRIKE = "X";
+    private static final String GUTTER = "-";
+    private static final String SPARE = "/";
     private final PrintStream out;
 
     public ResultView() {
@@ -26,7 +29,9 @@ public class ResultView {
     public void printResult(BowlingGame bowling) {
         printBoardHeader();
         System.out.print("|  " + bowling.user() + " |");
-        bowling.frames().stream()
+        bowling.frames()
+                .stream()
+
                 .map(frame -> printBoardBody(frame.toString()))
                 .forEach(System.out::print);
         printEmptyBody(bowling);
@@ -35,7 +40,7 @@ public class ResultView {
 
     private void printEmptyBody(BowlingGame bowling) {
         Stream.generate(() -> printBoardBody(WHITE_SPACE))
-                .limit(10 - bowling.frameNumber())
+                .limit(10 - bowling.frames.frameNumber())
                 .forEach(System.out::print);
     }
 

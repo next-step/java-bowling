@@ -26,7 +26,7 @@ class BowlingGameTest {
         bowlingGame.bowl(5);
         bowlingGame.bowl(5);
 
-        int frameNumber = bowlingGame.frameNumber();
+        int frameNumber = bowlingGame.frames.frameNumber();
 
         assertThat(frameNumber).isEqualTo(1);
     }
@@ -40,7 +40,7 @@ class BowlingGameTest {
         bowlingGame.bowl(5);
         bowlingGame.bowl(5);
 
-        int frameNumber = bowlingGame.frameNumber();
+        int frameNumber = bowlingGame.frames.frameNumber();
 
         assertThat(frameNumber).isEqualTo(2);
     }

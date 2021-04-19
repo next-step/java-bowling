@@ -10,34 +10,25 @@ import java.util.List;
  */
 public class BowlingGame {
 
-    private final Frames frames;
+    public static final int BOWLING_LAST_FRAME = 10;
+    public final Frames frames;
     private final String user;
-    private int frameNumber;
 
     public BowlingGame(String user) {
         this.frames = new Frames(Frame.init());
         this.user = user;
-        this.frameNumber = 0;
     }
 
     public void bowl(int pins) {
         frames.bowl(pins);
 
         if (frames.isNextFrame()) {
-            frameNumber++;
+            frames.nextFrame();
         }
-    }
-
-    public boolean isLastGame() {
-        return frameNumber == 10;
     }
 
     public int tryingCount() {
         return frames.tryCount();
-    }
-
-    public int frameNumber() {
-        return frameNumber;
     }
 
     public String user() {
@@ -48,8 +39,15 @@ public class BowlingGame {
         return frames.list();
     }
 
+    public boolean isLast() {
+        return frames.isLastFrame();
+    }
+
+    public int currentFrameNumber() {
+        return frames.frameNumber();
+    }
     @Override
     public String toString() {
-        return String.format("%s, %s, %s", user, frameNumber, frames);
+        return String.format("%s, %s", user, frames);
     }
 }
