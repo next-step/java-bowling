@@ -65,7 +65,7 @@ public class Answer extends BaseEntity {
     }
 
     public void delete(User user) {
-
+        deleted = true;
     }
 
     public void toQuestion(Question question) {
