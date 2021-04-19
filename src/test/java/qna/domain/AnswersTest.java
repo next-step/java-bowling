@@ -30,6 +30,6 @@ public class AnswersTest {
 		Answer answer1 = new Answer(1L, UserTest.JAVAJIGI, QuestionTest.Q1, "contents1");
 		Answer answer2 = new Answer(2L, UserTest.SANJIGI, QuestionTest.Q1, "contents2");
 		Answers answers = new Answers(Arrays.asList(answer1, answer2));
-		assertThatThrownBy(() -> answers.deleteAll(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
+		assertThatThrownBy(() -> answers.deleteAll(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class).hasMessage("다른사람의 답변이라 삭제할 수 없습니다.");
 	}
 }

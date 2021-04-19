@@ -21,7 +21,7 @@ public class AnswerTest {
     @Test
     @DisplayName("유효하지 않은 삭제 테스트 : 내 게시글이 아닐 때")
     void invalidDeleteTest() {
-        assertThatThrownBy(() -> answer.delete(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> answer.delete(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class).hasMessage("다른사람의 답변이라 삭제할 수 없습니다.");
     }
 
     @Test
