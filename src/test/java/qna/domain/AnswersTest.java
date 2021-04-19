@@ -20,4 +20,17 @@ class AnswersTest {
     void create_with_emptyList() {
         assertThat(new Answers(new ArrayList<>())).isEqualTo(new Answers());
     }
+
+    @Test
+    @DisplayName("answers에 answer를 추가할 수 있다.")
+    void add() {
+        // given
+        final Answers answers = new Answers();
+
+        // when
+        answers.add(new Answer());
+
+        // then
+        assertThat(answers.size()).isEqualTo(1);
+    }
 }

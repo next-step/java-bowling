@@ -24,6 +24,14 @@ public class Answers {
         this.answers = answers;
     }
 
+    public void add(Answer answer) {
+
+    }
+
+    public int size() {
+        return 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
