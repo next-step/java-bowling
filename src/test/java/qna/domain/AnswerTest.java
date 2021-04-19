@@ -24,6 +24,18 @@ public class AnswerTest {
     }
 
     @Test
+    @DisplayName("삭제 성공 시, 삭제 상태를 참으로 변환한다.")
+    public void isDeleted() {
+        //given
+        Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "test");
+
+        //when
+        answer.delete(UserTest.JAVAJIGI);
+
+        then(answer.isDeleted()).isTrue();
+    }
+
+    @Test
     @DisplayName("인자로 받은 로그인 사용자가 답변 작성자와 일치하지 않을 경우 예외가 발생한다.")
     public void delete_by_different_writer() {
         Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "test");
