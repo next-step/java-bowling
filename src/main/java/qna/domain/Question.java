@@ -83,7 +83,7 @@ public class Question extends BaseEntity {
         return answers;
     }
 
-    public void delete() {
+    public void delete(User loginUser) {
         this.deleted = true;
     }
 
