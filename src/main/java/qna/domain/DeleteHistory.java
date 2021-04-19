@@ -1,8 +1,15 @@
 package qna.domain;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class DeleteHistory {
@@ -31,6 +38,18 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+    private static DeleteHistory of(ContentType contentType, Long contentId, User deletedBy) {
+        return new DeleteHistory(contentType, contentId, deletedBy, LocalDateTime.now());
+    }
+
+    public static DeleteHistory ofQuestion(Long contentId, User deletedBy) {
+        return of(ContentType.QUESTION, contentId, deletedBy);
+    }
+
+    public static DeleteHistory ofAnswer(Long contentId, User deletedBy) {
+        return of(ContentType.ANSWER, contentId, deletedBy);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,5 +70,17 @@ public class DeleteHistory {
     public String toString() {
         return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
                 + deletedBy + ", createDate=" + createDate + "]";
+    }
+
+    public ContentType getContentType() {
+        return contentType;
+    }
+
+    public Long getContentId() {
+        return contentId;
+    }
+
+    public User getDeletedBy() {
+        return deletedBy;
     }
 }
