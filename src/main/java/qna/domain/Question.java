@@ -88,6 +88,10 @@ public class Question extends BaseEntity {
         return answers;
     }
 
+    public void delete() {
+
+    }
+
     @Override
     public boolean equals(Object o) {
         return super.equals(o);
