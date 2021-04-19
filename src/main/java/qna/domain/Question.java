@@ -85,10 +85,14 @@ public class Question extends BaseEntity {
     }
 
     public void delete(User loginUser) {
+        validateOwner(loginUser);
+        deleted = true;
+    }
+
+    private void validateOwner(User loginUser) {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException(CannotDeleteException.NO_DELETE_PERMISSION);
         }
-        this.deleted = true;
     }
 
     @Override
