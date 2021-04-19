@@ -25,9 +25,8 @@ public class Answers extends AbstractEntity{
         this.answers.add(answer);
     }
 
-    private Answers setDeleted(boolean deleted) {
+    private void setDeleted(boolean deleted) {
         answers.forEach(answer -> answer.setDeleted(deleted));
-        return this;
     }
 
     public boolean isOwner(User writer) {
