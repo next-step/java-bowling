@@ -79,11 +79,6 @@ public class Question extends BaseEntity {
         return deleted;
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public List<Answer> getAnswers() {
         return answers;
     }
