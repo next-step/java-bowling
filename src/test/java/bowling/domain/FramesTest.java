@@ -1,7 +1,10 @@
 package bowling.domain;
 
 import bowling.domain.State.*;
-import bowling.domain.frame.*;
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.FrameNumber;
+import bowling.domain.frame.Frames;
+import bowling.domain.frame.NormalFrame;
 import bowling.dto.FrameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

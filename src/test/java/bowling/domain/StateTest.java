@@ -1,8 +1,8 @@
 package bowling.domain;
 
 import bowling.domain.State.Miss;
-import bowling.domain.State.Spare;
 import bowling.domain.State.PinCount;
+import bowling.domain.State.Spare;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

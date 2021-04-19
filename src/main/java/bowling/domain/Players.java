@@ -9,20 +9,20 @@ import java.util.stream.Collectors;
 public class Players {
     private final List<Player> players;
 
-    public Players(List<Player> players){
+    public Players(List<Player> players) {
         validateSize(players);
         this.players = players;
     }
 
     private void validateSize(List<Player> players) {
-        if(players.isEmpty()){
+        if (players.isEmpty()) {
             throw new IllegalArgumentException("player수가 너무 적습니다.");
         }
     }
 
     public Players(List<String> names, int totalNumberOfFrame) {
         this(names.stream()
-                .map(name -> new Player(name,totalNumberOfFrame))
+                .map(name -> new Player(name, totalNumberOfFrame))
                 .collect(Collectors.toList()));
     }
 

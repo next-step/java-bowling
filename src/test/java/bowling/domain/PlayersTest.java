@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.State.Ready;
 import bowling.domain.State.Strike;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.FrameNumber;
@@ -90,7 +89,7 @@ public class PlayersTest {
         assertThat(players.playingPlayer()).isEqualTo(secondPlayerInFirstFrame);
     }
 
-    private void playLastFrameOfFirstPlayer(Players players){
+    private void playLastFrameOfFirstPlayer(Players players) {
         players.play(5);
         players.play(4);
     }
