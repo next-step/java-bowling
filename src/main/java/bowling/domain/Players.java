@@ -43,7 +43,7 @@ public class Players {
         return players.stream()
                 .filter(player -> !player.isDone())
                 .min(Comparator.comparing(Player::currentFrameNumber))
-                .orElse(players.get(0));
+                .orElseThrow(() -> new IllegalStateException("플레이어가 없습니다."));
     }
 
     public List<PlayResult> playResults() {
