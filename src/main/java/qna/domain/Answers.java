@@ -38,6 +38,10 @@ public class Answers {
         return answers;
     }
 
+    public void deleteAll(User user) {
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
