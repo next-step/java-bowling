@@ -25,11 +25,11 @@ public class Answers {
     }
 
     public void add(Answer answer) {
-
+        answers.add(answer);
     }
 
     public int size() {
-        return 0;
+        return answers.size();
     }
 
     @Override
