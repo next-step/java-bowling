@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -84,6 +85,9 @@ public class Question extends BaseEntity {
     }
 
     public void delete(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(CannotDeleteException.NO_DELETE_PERMISSION);
+        }
         this.deleted = true;
     }
 
