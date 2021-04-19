@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class AnswersTest {
 
@@ -26,11 +27,15 @@ class AnswersTest {
     void add() {
         // given
         final Answers answers = new Answers();
+        final Answer answer = new Answer();
 
         // when
-        answers.add(new Answer());
+        answers.add(answer);
 
         // then
-        assertThat(answers.size()).isEqualTo(1);
+        assertAll(
+                () -> assertThat(answers.size()).isEqualTo(1),
+                () -> assertThat(answers.answers()).contains(answer)
+        );
     }
 }

@@ -32,6 +32,10 @@ public class Answers {
         return answers.size();
     }
 
+    public List<Answer> answers() {
+        return answers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
