@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.Frame;
 import bowling.service.BowlingGame;
 
 import java.io.PrintStream;
@@ -31,11 +32,24 @@ public class ResultView {
         System.out.print("|  " + bowling.user() + " |");
         bowling.frames()
                 .stream()
-
-                .map(frame -> printBoardBody(frame.toString()))
+                .map(this::printCondition)
                 .forEach(System.out::print);
         printEmptyBody(bowling);
         System.out.println();
+    }
+
+    private String printCondition(Frame frame) {
+
+        if (frame.state().equals(Frame.State.STRIKE)) {
+            return printBoardBody("X");
+        }
+        if (frame.state().equals(Frame.State.SPARE)) {
+            return printBoardBody("/");
+        }
+        if (frame.state().equals(Frame.State.GUTTER)) {
+            return printBoardBody("-");
+        }
+        return printBoardBody(frame.toString());
     }
 
     private void printEmptyBody(BowlingGame bowling) {

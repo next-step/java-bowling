@@ -31,7 +31,7 @@ class FrameTest {
         assertThat(tryCount).isEqualTo(2);
     }
 
-    @DisplayName("투구 상태 확인 테스트")
+    @DisplayName("투구 초구(0), 2구(0) GUTTER 확인 테스트")
     @Test
     void bowl_미스_확인테스트() {
         // given
@@ -40,10 +40,8 @@ class FrameTest {
         frame.bowl(0);
         frame.bowl(0);
         Frame.State state = frame.state();
-        int tryCount = frame.tryCount();
         // then
-        assertThat(tryCount).isEqualTo(2);
-        assertThat(state).isEqualTo(Frame.State.MISS);
+        assertThat(state).isEqualTo(Frame.State.GUTTER);
     }
 
     @DisplayName("투구 스트라이크 테스트")

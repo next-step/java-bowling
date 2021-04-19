@@ -46,6 +46,7 @@ public class BowlingGame {
     public int currentFrameNumber() {
         return frames.frameNumber();
     }
+
     @Override
     public String toString() {
         return String.format("%s, %s", user, frames);

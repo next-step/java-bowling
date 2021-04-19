@@ -2,40 +2,50 @@ package bowling.domain;
 
 import bowling.exception.PinOutOfSizeException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Frame {
 
-    public enum State { STRIKE, SPARE, MISS;}
-    private int tryCount;
-    private int pins;
-    private State status;
+    public enum State {STRIKE, SPARE, MISS, GUTTER, DEFAULT}
 
-    private Frame(int tryCount, int pins) {
+    private int tryCount;
+    private final List<Integer> pins;
+    private State status = State.DEFAULT;
+
+    private Frame(final int tryCount, final int pins) {
         this.tryCount = tryCount;
-        this.pins = pins;
+        this.pins = new ArrayList<>();
     }
 
     public static Frame init() {
         return new Frame(0, 0);
     }
 
-    public static Frame valueOf(int tryCount, int pins) {
+    public static Frame valueOf(final int tryCount, final int pins) {
         return new Frame(tryCount, pins);
     }
 
-    public void bowl(int pin) {
-        this.pins += pin;
-        if (this.pins > 10) {
+    public void bowl(final int pin) {
+        if (pin > 10) {
             throw new PinOutOfSizeException("10개 이상의 핀을 쓰러뜨릴 수 없습니다.");
         }
-        if (tryCount == 0 && this.pins == 10) {
+
+        bowlingState(pin);
+        pins.add(pin);
+    }
+
+    private void bowlingState(int pin) {
+        if (tryCount == 0 && pin == 10) {
             status = State.STRIKE;
             tryCount++;
-        } else if (tryCount == 1 && this.pins == 10) {
+        } else if (tryCount == 1 && pin == 10) {
             status = State.SPARE;
-        } else if (tryCount == 1 && this.pins == 0) {
+        } else if (tryCount == 1 && (pin > 1 && pin < 10)) {
             status = State.MISS;
+        } else if (pin == 0) {
+            status = State.GUTTER;
         }
         tryCount++;
     }
@@ -51,7 +61,6 @@ public class Frame {
     public State state() {
         return status;
     }
-
 
     @Override
     public boolean equals(final Object o) {
@@ -69,6 +78,6 @@ public class Frame {
 
     @Override
     public String toString() {
-        return String.format("%d", pins);
+        return String.valueOf(pins);
     }
 }
