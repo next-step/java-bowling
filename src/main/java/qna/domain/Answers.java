@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.exception.CannotDeleteException;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -39,6 +40,14 @@ public class Answers {
     }
 
     public void deleteAll(User user) {
+        try {
+            deleteAllAnswers(user);
+        } catch (CannotDeleteException e) {
+            throw new CannotDeleteException(CannotDeleteException.DIFFERENT_USERS_ANSWER_CONTAINED);
+        }
+    }
+
+    private void deleteAllAnswers(User user) {
         for (Answer answer : answers) {
             answer.delete(user);
         }
