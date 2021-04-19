@@ -69,11 +69,11 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
         checkAuthorization(loginUser);
         this.setDeleted(true);
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        DeleteHistories deleteHistories = new DeleteHistories();
         deleteHistories.add(DeleteHistory.ofQuestion(getId(), getWriter()));
         deleteHistories.addAll(answers.delete(loginUser));
 
