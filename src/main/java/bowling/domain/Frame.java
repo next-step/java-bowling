@@ -6,9 +6,10 @@ import java.util.Objects;
 
 public class Frame {
 
+    public static enum State { STRIKE, SPARE, MISS }
     private int tryCount;
     private int pins;
-    private String status;
+    private State status;
 
     private Frame(int tryCount, int pins) {
         this.tryCount = tryCount;
@@ -29,12 +30,12 @@ public class Frame {
             throw new PinOutOfSizeException("10개 이상의 핀을 쓰러뜨릴 수 없습니다.");
         }
         if (tryCount == 0 && this.pins == 10) {
-            status = "STRIKE";
+            status = State.STRIKE;
             tryCount++;
         } else if (tryCount == 1 && this.pins == 10) {
-            status = "SPARE";
-        } else if (this.pins == 0) {
-            status = "MISS";
+            status = State.SPARE;
+        } else if (tryCount == 1 && this.pins == 0) {
+            status = State.MISS;
         }
         tryCount++;
     }
@@ -47,7 +48,7 @@ public class Frame {
         return tryCount > 1;
     }
 
-    public String state() {
+    public State state() {
         return status;
     }
 

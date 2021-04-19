@@ -39,11 +39,11 @@ class FrameTest {
         // when
         frame.bowl(0);
         frame.bowl(0);
-        String state = frame.state();
+        Frame.State state = frame.state();
         int tryCount = frame.tryCount();
         // then
         assertThat(tryCount).isEqualTo(2);
-        assertThat(state).isEqualTo("MISS");
+        assertThat(state).isEqualTo(Frame.State.MISS);
     }
 
     @DisplayName("투구 스트라이크 테스트")
@@ -53,10 +53,10 @@ class FrameTest {
         Frame frame = Frame.init();
         // when
         frame.bowl(10);
-        String state = frame.state();
+        Frame.State state = frame.state();
         // then
         assertThat(frame.isNextFrame()).isTrue();
-        assertThat(state).isEqualTo("STRIKE");
+        assertThat(state).isEqualTo(Frame.State.STRIKE);
     }
 
     @DisplayName("투구 스페어 테스트")
@@ -67,9 +67,9 @@ class FrameTest {
         // when
         frame.bowl(9);
         frame.bowl(1);
-        String state = frame.state();
+        Frame.State state = frame.state();
         // then
         assertThat(frame.isNextFrame()).isTrue();
-        assertThat(state).isEqualTo("SPARE");
+        assertThat(state).isEqualTo(Frame.State.SPARE);
     }
 }

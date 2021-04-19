@@ -23,7 +23,7 @@ public class BowlingGame {
     public void bowl(int pins) {
         frames.bowl(pins);
 
-        if (frames.isNextFrame()) { // 2 시도로 다음 프레임확인
+        if (frames.isNextFrame()) {
             frameNumber++;
         }
     }
