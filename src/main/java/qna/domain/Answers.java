@@ -25,7 +25,7 @@ public class Answers extends AbstractEntity{
         this.answers.add(answer);
     }
 
-    public Answers setDeleted(boolean deleted) {
+    private Answers setDeleted(boolean deleted) {
         answers.forEach(answer -> answer.setDeleted(deleted));
         return this;
     }

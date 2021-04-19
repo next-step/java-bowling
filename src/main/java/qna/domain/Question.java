@@ -4,8 +4,6 @@ import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -76,7 +74,7 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
+    private Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
     }
@@ -97,8 +95,8 @@ public class Question extends AbstractEntity {
         answers.delete(loginUser);
     }
 
-    public DeleteHistorys historys() {
-        return new DeleteHistorys(this);
+    public DeleteHistories historys() {
+        return new DeleteHistories(this);
     }
 
     @Override

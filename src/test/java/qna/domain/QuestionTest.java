@@ -19,4 +19,11 @@ public class QuestionTest {
                 })
                 .withMessage("질문을 삭제할 권한이 없습니다.");
     }
+
+    @Test
+    @DisplayName(value = "삭제 성공")
+    void delete() throws CannotDeleteException {
+        Q1.delete(UserTest.JAVAJIGI);
+        Q2.delete(UserTest.SANJIGI);
+    }
 }

@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DeleteHistorys {
+public class DeleteHistories {
     private final List<DeleteHistory> deleteHistory = new ArrayList<>();
 
-    public DeleteHistorys(Question question) {
+    public DeleteHistories(Question question) {
         add(question);
     }
 
