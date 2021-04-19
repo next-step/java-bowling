@@ -42,7 +42,7 @@ class QnaServiceTest {
     }
 
     @Test
-    void delete_성공() throws Exception {
+    void delete_성공() {
         given(questionRepository.findByIdAndDeletedFalse(question.getId())).willReturn(Optional.of(question));
 
         assertThat(question.isDeleted()).isFalse();
@@ -61,7 +61,7 @@ class QnaServiceTest {
     }
 
     @Test
-    void delete_성공_질문자_답변자_같음() throws Exception {
+    void delete_성공_질문자_답변자_같음() {
         given(questionRepository.findByIdAndDeletedFalse(question.getId())).willReturn(Optional.of(question));
 
         qnAService.deleteQuestion(TestFixture.JAVAJIGI, question.getId());
