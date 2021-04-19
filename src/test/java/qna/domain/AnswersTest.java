@@ -4,10 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.TestFixture;
+import qna.exception.CannotDeleteException;
 
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class AnswersTest {
@@ -56,5 +58,18 @@ class AnswersTest {
 
         // then
         assertThat(answer.isDeleted()).isTrue();
+    }
+
+    @Test
+    @DisplayName("답변 전체 삭제시 다른 사용자가 답변한 경우 예외를 던진다.")
+    void deleteAllFailsByDifferentUser() {
+        // given
+        answers.add(TestFixture.A2);
+
+        // when
+        // then
+        assertThatThrownBy(() -> answers.deleteAll(TestFixture.JAVAJIGI))
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessage(CannotDeleteException.DIFFERENT_USERS_ANSWER_CONTAINED);
     }
 }
