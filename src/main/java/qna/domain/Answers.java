@@ -1,7 +1,5 @@
 package qna.domain;
 
-import qna.CannotDeleteException;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
@@ -25,20 +23,8 @@ public class Answers extends AbstractEntity{
         this.answers.add(answer);
     }
 
-    private void setDeleted(boolean deleted) {
-        answers.forEach(answer -> answer.setDeleted(deleted));
-    }
-
-    public boolean isOwner(User writer) {
-        return answers.stream()
-                .allMatch(answer -> answer.isOwner(writer));
-    }
-
-    public void delete(User loginUser) throws CannotDeleteException {
-        if(!isOwner(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
-        setDeleted(true);
+    public void delete(User loginUser) {
+        answers.forEach(answer -> answer.delete(loginUser));
     }
 
     public List<Answer> answers() {
