@@ -76,6 +76,10 @@ public class Answer extends BaseEntity {
         }
     }
 
+    public boolean isDeletable(User user) {
+        return false;
+    }
+
     public void toQuestion(Question question) {
         this.question = question;
     }
@@ -94,5 +98,4 @@ public class Answer extends BaseEntity {
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
-
 }

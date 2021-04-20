@@ -48,4 +48,16 @@ class AnswerTest {
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage(CannotDeleteException.NO_DELETE_PERMISSION);
     }
+
+    @Test
+    @DisplayName("삭제가 가능하면 참을 반환한다.")
+    void isDeletable() {
+        assertThat(answer.isDeletable(TestFixture.JAVAJIGI)).isTrue();
+    }
+
+    @Test
+    @DisplayName("삭제가 불가능하면 거짓을 반환한다.")
+    void isNotDeletable() {
+        assertThat(answer.isDeletable(TestFixture.SANJIGI)).isFalse();
+    }
 }
