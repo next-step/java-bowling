@@ -15,6 +15,7 @@ public class AnswerTest {
     @Test
     void delete() {
         assertThatCode(() -> A1.delete(UserTest.JAVAJIGI)).doesNotThrowAnyException();
+        assertThat(A1.isDeleted()).isTrue();
     }
 
     @Test

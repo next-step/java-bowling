@@ -19,6 +19,7 @@ public class QuestionTest {
     @Test
     void delete() {
         assertThatCode(() -> Q1.delete(UserTest.JAVAJIGI)).doesNotThrowAnyException();
+        assertThat(Q1.isDeleted()).isTrue();
     }
 
     @Test
@@ -26,6 +27,7 @@ public class QuestionTest {
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
         question.addAnswer(A1);
         assertThatCode(() -> question.delete(UserTest.JAVAJIGI)).doesNotThrowAnyException();
+        assertThat(question.isDeleted()).isTrue();
     }
 
     @Test
