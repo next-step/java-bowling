@@ -25,4 +25,21 @@ class DeleteHistoryTest {
                 () -> assertThat(questionDeleteHistory.getDeletedBy()).isEqualTo(TestFixture.JAVAJIGI)
         );
     }
+
+    @Test
+    @DisplayName("Answer 삭제 기록 정적팩토리 메서드 테스트")
+    void answerDeleteHistory() {
+        // given
+        final long answerId = 100L;
+
+        // when
+        DeleteHistory questionDeleteHistory = DeleteHistory.createAnswerHistory(answerId, TestFixture.JAVAJIGI);
+
+        // then
+        assertAll(
+                () -> assertThat(questionDeleteHistory.getContentType()).isEqualTo(ContentType.ANSWER),
+                () -> assertThat(questionDeleteHistory.getContentId()).isEqualTo(answerId),
+                () -> assertThat(questionDeleteHistory.getDeletedBy()).isEqualTo(TestFixture.JAVAJIGI)
+        );
+    }
 }

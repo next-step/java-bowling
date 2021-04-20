@@ -34,6 +34,10 @@ public class DeleteHistory {
         return new DeleteHistory(ContentType.QUESTION, questionId, deletedBy, LocalDateTime.now());
     }
 
+    public static DeleteHistory createAnswerHistory(long answerId, User deletedBy) {
+        return null;
+    }
+
     public Long getId() {
         return id;
     }
