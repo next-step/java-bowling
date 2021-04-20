@@ -16,6 +16,14 @@ public final class DeleteHistories {
         this.deleteHistories = deleteHistories;
     }
 
+    public List<DeleteHistory> deleteHistories() {
+        return null;
+    }
+
+    public void add(DeleteHistory deleteHistory) {
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -28,4 +36,5 @@ public final class DeleteHistories {
     public int hashCode() {
         return Objects.hash(deleteHistories);
     }
+
 }
