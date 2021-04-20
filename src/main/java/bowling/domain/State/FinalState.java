@@ -68,9 +68,9 @@ public class FinalState implements State {
                         Integer::sum);
 
         if (isClosed()) {
-            return new FinishedScore(totalScoreInInt);
+            return FinishedScore.of(totalScoreInInt);
         }
-        return new UnDefinedScore(totalScoreInInt);
+        return UnDefinedScore.of(totalScoreInInt);
     }
 
     @Override

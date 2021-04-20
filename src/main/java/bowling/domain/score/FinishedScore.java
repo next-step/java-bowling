@@ -4,8 +4,12 @@ public class FinishedScore implements Score {
 
     private final int score;
 
-    public FinishedScore(int score) {
+    private FinishedScore(int score) {
         this.score = score;
+    }
+
+    public static FinishedScore of(int score) {
+        return new FinishedScore(score);
     }
 
     @Override

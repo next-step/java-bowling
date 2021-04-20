@@ -31,7 +31,7 @@ public class Hit implements State {
 
     @Override
     public Score score() {
-        return new UnDefinedScore(firstPinCount.count());
+        return UnDefinedScore.of(firstPinCount.count());
     }
 
     @Override

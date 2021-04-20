@@ -33,7 +33,7 @@ public class Ready implements State {
 
     @Override
     public Score score() {
-        return new UnDefinedScore(0);
+        return UnDefinedScore.ofEmpty();
     }
 
     @Override
