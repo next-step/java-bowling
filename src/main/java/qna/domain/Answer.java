@@ -7,7 +7,7 @@ import qna.exception.UnAuthorizedException;
 import javax.persistence.*;
 
 @Entity
-public class Answer extends BaseEntity {
+public final class Answer extends BaseEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Embeddable
-public class Answers {
+public final class Answers {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")

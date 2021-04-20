@@ -5,7 +5,7 @@ import qna.exception.CannotDeleteException;
 import javax.persistence.*;
 
 @Entity
-public class Question extends BaseEntity {
+public final class Question extends BaseEntity {
 
     @Column(length = 100, nullable = false)
     private String title;

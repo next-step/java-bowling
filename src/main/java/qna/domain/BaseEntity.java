@@ -11,7 +11,7 @@ import java.util.StringJoiner;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class BaseEntity {
+public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class BaseEntity {
 
     protected BaseEntity() {}
 
-    public BaseEntity(Long id) {
+    protected BaseEntity(Long id) {
         this.id = id;
     }
 
