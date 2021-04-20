@@ -65,9 +65,10 @@ public class Answer extends BaseEntity {
         return contents;
     }
 
-    public void delete(User user) {
+    public DeleteHistory delete(User user) {
         validateOwner(user);
         deleted = true;
+        return null;
     }
 
     private void validateOwner(User user) {
