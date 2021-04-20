@@ -30,12 +30,28 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+    public DeleteHistory(Long id, ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
+        this.id = id;
+        this.contentType = contentType;
+        this.contentId = contentId;
+        this.deletedBy = deletedBy;
+        this.createDate = createDate;
+    }
+
     public static DeleteHistory createQuestionHistory(Long questionId, User deletedBy) {
         return new DeleteHistory(ContentType.QUESTION, questionId, deletedBy, LocalDateTime.now());
     }
 
+    public static DeleteHistory createQuestionHistory(Long id, Long questionId, User deletedBy) {
+        return new DeleteHistory(id, ContentType.QUESTION, questionId, deletedBy, LocalDateTime.now());
+    }
+
     public static DeleteHistory createAnswerHistory(Long answerId, User deletedBy) {
         return new DeleteHistory(ContentType.ANSWER, answerId, deletedBy, LocalDateTime.now());
+    }
+
+    public static DeleteHistory createAnswerHistory(Long id, Long answerId, User deletedBy) {
+        return new DeleteHistory(id, ContentType.ANSWER, answerId, deletedBy, LocalDateTime.now());
     }
 
     public Long getId() {
