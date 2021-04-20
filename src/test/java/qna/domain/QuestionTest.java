@@ -57,10 +57,13 @@ class QuestionTest {
         question = new Question("title", "contents").writeBy(SANJIGI);
 
         // when
-        question.delete(SANJIGI);
+        final DeleteHistories deleteHistories = question.delete(SANJIGI);
 
         // then
-        assertThat(question.isDeleted()).isTrue();
+        assertAll(
+                () -> assertThat(question.isDeleted()).isTrue(),
+                () -> assertThat(deleteHistories.deleteHistories()).hasSize(1)
+        );
     }
 
     @Test
