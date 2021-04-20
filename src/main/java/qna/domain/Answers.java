@@ -39,9 +39,9 @@ public class Answers {
         return answers;
     }
 
-    public void deleteAll(User user) {
+    public DeleteHistories deleteAll(User user) {
         validateDeletableAnswers(user);
-        deleteAllAnswers(user);
+        return deleteAllAnswers(user);
     }
 
     private void validateDeletableAnswers(User user) {
@@ -56,10 +56,11 @@ public class Answers {
         }
     }
 
-    private void deleteAllAnswers(User user) {
+    private DeleteHistories deleteAllAnswers(User user) {
         for (Answer answer : answers) {
             answer.delete(user);
         }
+        return null;
     }
 
     @Override

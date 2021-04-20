@@ -51,10 +51,13 @@ class AnswersTest {
     void deleteAll() {
         // given
         // when
-        answers.deleteAll(TestFixture.JAVAJIGI);
+        final DeleteHistories deleteHistories = answers.deleteAll(TestFixture.JAVAJIGI);
 
         // then
-        assertThat(answer.isDeleted()).isTrue();
+        assertAll(
+                () -> assertThat(answer.isDeleted()).isTrue(),
+                () -> assertThat(deleteHistories.deleteHistories()).hasSize(1)
+        );
     }
 
     @Test
