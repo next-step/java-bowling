@@ -7,8 +7,6 @@ import bowling.service.BowlingGame;
 import java.io.PrintStream;
 import java.util.stream.Stream;
 
-import static java.lang.System.out;
-
 public class ResultView {
 
     private static final String GUIDE_BOWLING_UI_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";

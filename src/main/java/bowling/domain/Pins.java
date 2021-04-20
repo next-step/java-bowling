@@ -4,6 +4,8 @@ import bowling.exception.PinsOutOfSizeException;
 
 import java.util.Objects;
 
+import static bowling.domain.Pin.BOWLING_PIN_MAX_SIZE;
+
 public class Pins {
 
     private final Pin firstPin;
@@ -15,7 +17,7 @@ public class Pins {
     }
 
     public static Pins valueOf(int firstPin, int secondPin) {
-        if (firstPin + secondPin > 10) {
+        if (firstPin + secondPin > BOWLING_PIN_MAX_SIZE) {
             throw new PinsOutOfSizeException();
         }
         return new Pins(Pin.of(firstPin), Pin.of(secondPin));

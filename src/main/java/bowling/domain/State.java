@@ -5,7 +5,5 @@ public enum State {
     SPARE,
     MISS,
     GUTTER,
-    DEFAULT
-
-
+    DEFAULT;
 }
