@@ -7,43 +7,45 @@ import java.util.stream.IntStream;
 
 public class Frames {
 
-  private final List<NormalFrame> frames;
+  private static final int FINAL_ROUND = 10;
+  private final List<Frame> frames;
   private Round round;
 
-  public Frames(List<NormalFrame> frames) {
+  public Frames(List<Frame> frames) {
     this.frames = frames;
     this.round = Round.firstRound();
   }
 
   public static Frames init() {
-    List<NormalFrame> frames = normalFrames();
+    List<Frame> frames = normalFrames();
+    frames.add(FinalFrame.of());
     return new Frames(frames);
   }
 
-  private static List<NormalFrame> normalFrames() {
-    return IntStream.range(0, 10)
-        .mapToObj(i -> new NormalFrame())
+  private static List<Frame> normalFrames() {
+    return IntStream.range(0, 9)
+        .mapToObj(Round::new)
+        .map(NormalFrame::new)
         .collect(Collectors.toList());
   }
 
   public void throwBall(int countOfHitPin) {
-    NormalFrame frame = frames.get(round() - 1);
+    Frame frame = frames.get(round() - 1);
     frame.play(countOfHitPin);
-
-    if (frame.isEnd()) {
+    if (frame.isEndFrame()) {
       round = round.next();
     }
   }
 
   public boolean isContinue() {
-    return round() == 10;
+    return frames.get(FINAL_ROUND - 1).isLastFrame();
   }
 
   public int round() {
     return round.round();
   }
 
-  public List<NormalFrame> frames() {
+  public List<Frame> frames() {
     return Collections.unmodifiableList(frames);
   }
 }
