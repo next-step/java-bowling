@@ -1,6 +1,7 @@
 package qna.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +18,7 @@ public final class DeleteHistories {
     }
 
     public List<DeleteHistory> deleteHistories() {
-        return deleteHistories;
+        return Collections.unmodifiableList(deleteHistories);
     }
 
     public void add(DeleteHistory deleteHistory) {

@@ -8,6 +8,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,7 +37,7 @@ public class Answers {
     }
 
     public List<Answer> answers() {
-        return answers;
+        return Collections.unmodifiableList(answers);
     }
 
     public DeleteHistories deleteAll(User user) {
