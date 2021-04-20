@@ -47,7 +47,7 @@ public class QuestionTest {
         Q1.delete(UserTest.JAVAJIGI);
         assertThat(Q1.deleteHistorys()).usingElementComparatorIgnoringFields("createDate")
             .isEqualTo(Collections.singletonList(
-                new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now())));
+                DeleteHistory.of(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now())));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class QuestionTest {
         question.delete(UserTest.JAVAJIGI);
         assertThat(question.deleteHistorys()).usingElementComparatorIgnoringFields("createDate")
             .isEqualTo(Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now())));
+                DeleteHistory.of(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now()),
+                DeleteHistory.of(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now())));
     }
 }
