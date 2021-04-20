@@ -10,6 +10,10 @@ public class Pins {
   private static final int BONUS = 2;
   private final List<Pin> pins;
 
+  public Pins(List<Pin> pins) {
+    this.pins = pins;
+  }
+
   public Pins() {
     this.pins = new ArrayList<>();
   }
