@@ -24,7 +24,7 @@ public class Frame {
     }
 
     public static Frame init() {
-        return new Frame(FIRST_BALL, 0);
+        return new Frame(FIRST_BALL, BOWLING_PIN_MIN_SIZE);
     }
 
     public static Frame valueOf(final int tryCount, final Integer... pins) {
@@ -33,7 +33,7 @@ public class Frame {
 
     public void bowl(final int pin) {
         pins.add(tryCount, pin);
-        if (sum() > 10) {
+        if (sum() > BOWLING_PIN_MAX_SIZE) {
             throw new PinOutOfSizeException("10개 이상의 핀을 쓰러뜨릴 수 없습니다.");
         }
         bowlingState(pin);
