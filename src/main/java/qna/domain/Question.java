@@ -80,10 +80,11 @@ public class Question extends BaseEntity {
         return answers.answers();
     }
 
-    public void delete(User loginUser) {
+    public DeleteHistories delete(User loginUser) {
         validateOwner(loginUser);
         answers.deleteAll(loginUser);
         deleted = true;
+        return null;
     }
 
     private void validateOwner(User loginUser) {
