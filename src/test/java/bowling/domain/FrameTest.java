@@ -39,9 +39,9 @@ class FrameTest {
         // when
         frame.bowl(0);
         frame.bowl(0);
-        Frame.State state = frame.state();
+        State state = frame.state();
         // then
-        assertThat(state).isEqualTo(Frame.State.GUTTER);
+        assertThat(state).isEqualTo(State.GUTTER);
     }
 
     @DisplayName("투구 스트라이크 테스트")
@@ -51,10 +51,10 @@ class FrameTest {
         Frame frame = Frame.init();
         // when
         frame.bowl(10);
-        Frame.State state = frame.state();
+        State state = frame.state();
         // then
         assertThat(frame.isNextFrame()).isTrue();
-        assertThat(state).isEqualTo(Frame.State.STRIKE);
+        assertThat(state).isEqualTo(State.STRIKE);
     }
 
     @DisplayName("투구 스페어 테스트")
@@ -65,9 +65,9 @@ class FrameTest {
         // when
         frame.bowl(9);
         frame.bowl(1);
-        Frame.State state = frame.state();
+        State state = frame.state();
         // then
         assertThat(frame.isNextFrame()).isTrue();
-        assertThat(state).isEqualTo(Frame.State.SPARE);
+        assertThat(state).isEqualTo(State.SPARE);
     }
 }

@@ -3,48 +3,51 @@ package bowling.domain;
 import bowling.exception.PinOutOfSizeException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class Frame {
 
-    public enum State {STRIKE, SPARE, MISS, GUTTER, DEFAULT}
+    public static final int FIRST_BALL = 0;
+    public static final int SECOND_BALL = 1;
+    public static final int BOWLING_PIN_MAX_SIZE = 10;
+    public static final int BOWLING_PIN_MIN_SIZE = 0;
 
-    private int tryCount;
-    private final List<Integer> pins;
+    private final List<Integer> pins = new ArrayList<>();
     private State status = State.DEFAULT;
+    private int tryCount;
 
-    private Frame(final int tryCount, final int pins) {
+    private Frame(final int tryCount, final Integer... pins) {
         this.tryCount = tryCount;
-        this.pins = new ArrayList<>();
+        this.pins.addAll(Arrays.asList(pins));
     }
 
     public static Frame init() {
-        return new Frame(0, 0);
+        return new Frame(FIRST_BALL, 0);
     }
 
-    public static Frame valueOf(final int tryCount, final int pins) {
+    public static Frame valueOf(final int tryCount, final Integer... pins) {
         return new Frame(tryCount, pins);
     }
 
     public void bowl(final int pin) {
-        if (pin > 10) {
+        pins.add(tryCount, pin);
+        if (sum() > 10) {
             throw new PinOutOfSizeException("10개 이상의 핀을 쓰러뜨릴 수 없습니다.");
         }
-
         bowlingState(pin);
-        pins.add(pin);
     }
 
-    private void bowlingState(int pin) {
-        if (tryCount == 0 && pin == 10) {
+    private void bowlingState(final int pin) {
+        if (tryCount == FIRST_BALL && pin == BOWLING_PIN_MAX_SIZE) {
             status = State.STRIKE;
             tryCount++;
-        } else if (tryCount == 1 && pin == 10) {
+        } else if (tryCount == SECOND_BALL && sum() == BOWLING_PIN_MAX_SIZE) {
             status = State.SPARE;
-        } else if (tryCount == 1 && (pin > 1 && pin < 10)) {
+        } else if (tryCount == SECOND_BALL && (sum() > BOWLING_PIN_MIN_SIZE && sum() < BOWLING_PIN_MAX_SIZE)) {
             status = State.MISS;
-        } else if (pin == 0) {
+        } else if (sum() == 0) {
             status = State.GUTTER;
         }
         tryCount++;
@@ -60,6 +63,15 @@ public class Frame {
 
     public State state() {
         return status;
+    }
+
+    public int pin(int index) {
+        return pins.get(index);
+    }
+
+    public int sum() {
+        return pins.stream()
+                .mapToInt(Integer::intValue).sum();
     }
 
     @Override
@@ -78,6 +90,6 @@ public class Frame {
 
     @Override
     public String toString() {
-        return String.valueOf(pins);
+        return String.format("%s, %s, %s", tryCount, pins, status);
     }
 }

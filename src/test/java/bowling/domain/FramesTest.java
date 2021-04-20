@@ -11,7 +11,7 @@ class FramesTest {
     @Test
     void currentFrame_프레임_투구테스트() {
         // given
-        Frames frames = new Frames(Frame.valueOf(0, 0));
+        Frames frames = new Frames(Frame.init());
         // when
         frames.bowl(5);
         // then

@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.Frame;
+import bowling.domain.State;
 import bowling.service.BowlingGame;
 
 import java.io.PrintStream;
@@ -39,17 +40,42 @@ public class ResultView {
     }
 
     private String printCondition(Frame frame) {
+        int tryCount = frame.tryCount();
+        if (tryCount == 2) { // SPARE, MISS
+            return printValue(frame);
+        }
+        // 기본 출력
+        return printState(frame);
+    }
 
-        if (frame.state().equals(Frame.State.STRIKE)) {
-            return printBoardBody("X");
+    private String printState(Frame frame) {
+        if (frame.state().equals(State.GUTTER)) { // 1구 0점
+            return printBoardBody("-" + "|");
         }
-        if (frame.state().equals(Frame.State.SPARE)) {
-            return printBoardBody("/");
+        // 1구 n점
+        return printBoardBody(pin(frame, 0) + "|");
+    }
+
+    private String printValue(Frame frame) {
+        if (frame.state().equals(State.STRIKE)) { // 1구 스트라이크
+            return printBoardBody("X ");
         }
-        if (frame.state().equals(Frame.State.GUTTER)) {
-            return printBoardBody("-");
+        if (frame.state().equals(State.SPARE)) { // 2구 스페어
+            return printBoardBody(pin(frame, 0) + "|" + "/");
         }
-        return printBoardBody(frame.toString());
+        if (frame.state().equals(State.GUTTER)) { // 2구 거터
+            return printBoardBody("-" + "|" + "-");
+        }
+        // 2구 미스
+        return printBoardBody(pin(frame, 0) + "|" + pin(frame, 1));
+    }
+
+    private String pin(Frame frame, int index) {
+        Integer integer = frame.pin(index);
+        if (integer == 0) {
+            return "-";
+        }
+        return String.valueOf(integer);
     }
 
     private void printEmptyBody(BowlingGame bowling) {
