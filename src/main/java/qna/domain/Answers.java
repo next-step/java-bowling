@@ -40,9 +40,18 @@ public class Answers {
     }
 
     public void deleteAll(User user) {
-        try {
-            deleteAllAnswers(user);
-        } catch (CannotDeleteException e) {
+        validateDeletableAnswers(user);
+        deleteAllAnswers(user);
+    }
+
+    private void validateDeletableAnswers(User user) {
+        for (Answer answer : answers) {
+            validateDeletableAnswer(answer, user);
+        }
+    }
+
+    private void validateDeletableAnswer(Answer answer, User user) {
+        if (!answer.isDeletable(user)) {
             throw new CannotDeleteException(CannotDeleteException.DIFFERENT_USERS_ANSWER_CONTAINED);
         }
     }
