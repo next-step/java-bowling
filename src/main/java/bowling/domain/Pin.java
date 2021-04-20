@@ -5,6 +5,7 @@ import bowling.exception.PinOutOfSizeException;
 import java.util.Objects;
 
 public class Pin {
+
     public static final int BOWLING_PIN_MAX_SIZE = 10;
     public static final int BOWLING_PIN_MIN_SIZE = 0;
     private final int value;
@@ -14,7 +15,7 @@ public class Pin {
     }
 
     public static Pin of(final int pin) {
-        if(pin < BOWLING_PIN_MIN_SIZE || pin > BOWLING_PIN_MAX_SIZE) {
+        if (pin < BOWLING_PIN_MIN_SIZE || pin > BOWLING_PIN_MAX_SIZE) {
             throw new PinOutOfSizeException();
         }
         return new Pin(pin);
