@@ -19,7 +19,9 @@ class AnswersTest {
         Answers answers = Answers.of();
         answers.add(A1);
         answers.add(A3);
+
         List<DeleteHistory> deleteHistories = answers.delete(UserTest.JAVAJIGI);
+
         assertThat(deleteHistories).usingRecursiveComparison().ignoringFields("createDate")
             .isEqualTo(Arrays.asList(
                 DeleteHistory.of(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now()),
@@ -31,6 +33,7 @@ class AnswersTest {
         Answers answers = Answers.of();
         answers.add(A1);
         answers.add(A2);
+
         assertThatThrownBy(() -> answers.delete(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 }
