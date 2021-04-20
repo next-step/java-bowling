@@ -57,10 +57,11 @@ public class Answers {
     }
 
     private DeleteHistories deleteAllAnswers(User user) {
+        final DeleteHistories deleteHistories = new DeleteHistories();
         for (Answer answer : answers) {
-            answer.delete(user);
+            deleteHistories.add(answer.delete(user));
         }
-        return null;
+        return deleteHistories;
     }
 
     @Override
