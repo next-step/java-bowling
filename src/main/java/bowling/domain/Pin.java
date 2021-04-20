@@ -24,4 +24,23 @@ public class Pin {
   public String convertToString() {
     return String.valueOf(pin);
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    Pin pin1 = (Pin) o;
+
+    return pin == pin1.pin;
+  }
+
+  @Override
+  public int hashCode() {
+    return pin;
+  }
 }
