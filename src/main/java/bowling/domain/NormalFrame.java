@@ -1,40 +1,35 @@
 package bowling.domain;
 
-public class NormalFrame {
+import static java.lang.Boolean.FALSE;
 
-  private final Pins pins = new Pins();
+public class NormalFrame extends Frame {
 
-  public NormalFrame() {
+  private static final int NORMAL_FRAME_MAX_SIZE = 2;
+  private static final int MAX_PIN_COUNT = 10;
+
+  public NormalFrame(Round round) {
+    super(round);
   }
 
-  public void play(int countOfHitPin) {
-    validateHitPin(countOfHitPin);
-    pins.add(new Pin(countOfHitPin));
+  public void validateHitPin(int countOfHitPin) {
+    if (pins.totalHitPin() + countOfHitPin > MAX_PIN_COUNT) {
+      throw new IllegalArgumentException("핀의 갯수는 " + MAX_PIN_COUNT + "개를 넘을 수 없습니다.");
+    }
   }
 
-  public boolean isStrike() {
+  private Score score() {
+    return Score.score(pins.totalHitPin(), pins.size() < NORMAL_FRAME_MAX_SIZE);
+  }
+
+  private boolean isStrike() {
     return score() == Score.STRIKE;
   }
 
-  public Score score() {
-    return Score.score(pins.totalHitPin(), pins.size() < 2);
+  public boolean isEndFrame() {
+    return pins.size() >= NORMAL_FRAME_MAX_SIZE || isStrike();
   }
 
-  public boolean isEnd() {
-    return pins.size() >= 2 || isStrike();
-  }
-
-  public boolean isEmpty() {
-    return pins.size() == 0;
-  }
-
-  public Pins pins() {
-    return pins;
-  }
-
-  private void validateHitPin(int countOfHitPin) {
-    if (pins.totalHitPin() + countOfHitPin > 10) {
-      throw new IllegalArgumentException("핀의 갯수는 10개를 넘을 수 없습니다.");
-    }
+  public boolean isLastFrame() {
+    return FALSE;
   }
 }
