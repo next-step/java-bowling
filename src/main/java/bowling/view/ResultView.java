@@ -7,6 +7,8 @@ import bowling.service.BowlingGame;
 import java.io.PrintStream;
 import java.util.stream.Stream;
 
+import static java.lang.System.out;
+
 public class ResultView {
 
     private static final String GUIDE_BOWLING_UI_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
@@ -23,20 +25,20 @@ public class ResultView {
 
     public void printBoard(String name) {
         printBoardHeader();
-        System.out.printf("|  %s |      |      |      |      |      |      |      |      |      |      |", name);
-        System.out.println();
+        out.printf("|  %s |      |      |      |      |      |      |      |      |      |      |", name);
+        out.println();
 
     }
 
     public void printResult(BowlingGame bowling) {
         printBoardHeader();
-        System.out.print("|  " + bowling.user() + " |");
+        out.print("|  " + bowling.user() + " |");
         bowling.frames()
                 .stream()
                 .map(this::printCondition)
-                .forEach(System.out::print);
+                .forEach(out::print);
         printEmptyBody(bowling);
-        System.out.println();
+        out.println();
     }
 
     private String printCondition(Frame frame) {
@@ -81,11 +83,11 @@ public class ResultView {
     private void printEmptyBody(BowlingGame bowling) {
         Stream.generate(() -> printBoardBody(WHITE_SPACE))
                 .limit(10 - bowling.frames.frameNumber())
-                .forEach(System.out::print);
+                .forEach(out::print);
     }
 
     private void printBoardHeader() {
-        System.out.println(GUIDE_BOWLING_UI_BOARD);
+        out.println(GUIDE_BOWLING_UI_BOARD);
     }
 
     private String printBoardBody(String item) {

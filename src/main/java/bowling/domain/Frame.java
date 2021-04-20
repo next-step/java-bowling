@@ -11,8 +11,6 @@ public class Frame {
 
     public static final int FIRST_BALL = 0;
     public static final int SECOND_BALL = 1;
-    public static final int BOWLING_PIN_MAX_SIZE = 10;
-    public static final int BOWLING_PIN_MIN_SIZE = 0;
 
     private final List<Integer> pins = new ArrayList<>();
     private State status = State.DEFAULT;
@@ -24,7 +22,7 @@ public class Frame {
     }
 
     public static Frame init() {
-        return new Frame(FIRST_BALL, BOWLING_PIN_MIN_SIZE);
+        return new Frame(FIRST_BALL, Pin.BOWLING_PIN_MIN_SIZE);
     }
 
     public static Frame valueOf(final int tryCount, final Integer... pins) {
@@ -33,19 +31,19 @@ public class Frame {
 
     public void bowl(final int pin) {
         pins.add(tryCount, pin);
-        if (sum() > BOWLING_PIN_MAX_SIZE) {
+        if (sum() > Pin.BOWLING_PIN_MAX_SIZE) {
             throw new PinOutOfSizeException("10개 이상의 핀을 쓰러뜨릴 수 없습니다.");
         }
         bowlingState(pin);
     }
 
     private void bowlingState(final int pin) {
-        if (tryCount == FIRST_BALL && pin == BOWLING_PIN_MAX_SIZE) {
+        if (tryCount == FIRST_BALL && pin == Pin.BOWLING_PIN_MAX_SIZE) {
             status = State.STRIKE;
             tryCount++;
-        } else if (tryCount == SECOND_BALL && sum() == BOWLING_PIN_MAX_SIZE) {
+        } else if (tryCount == SECOND_BALL && sum() == Pin.BOWLING_PIN_MAX_SIZE) {
             status = State.SPARE;
-        } else if (tryCount == SECOND_BALL && (sum() > BOWLING_PIN_MIN_SIZE && sum() < BOWLING_PIN_MAX_SIZE)) {
+        } else if (tryCount == SECOND_BALL && (sum() > Pin.BOWLING_PIN_MIN_SIZE && sum() < Pin.BOWLING_PIN_MAX_SIZE)) {
             status = State.MISS;
         } else if (sum() == 0) {
             status = State.GUTTER;
