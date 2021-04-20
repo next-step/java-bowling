@@ -19,9 +19,15 @@ class PinsTest {
         assertThat(second).isEqualTo(expected);
     }
 
+    @DisplayName("1구 스트라이크 점수 확인")
     @Test
     void testCase2() {
+        // given
         Pins first = Pins.first(10);
-
+        // when
+        int totalScore = first.totalScore();
+        // then
+        assertThat(totalScore).isEqualTo(10);
     }
+
 }

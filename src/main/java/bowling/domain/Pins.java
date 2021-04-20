@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.state.FrameState;
 import bowling.exception.PinsOutOfSizeException;
 
 import java.util.Objects;
