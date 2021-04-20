@@ -17,11 +17,11 @@ public final class DeleteHistories {
     }
 
     public List<DeleteHistory> deleteHistories() {
-        return null;
+        return deleteHistories;
     }
 
     public void add(DeleteHistory deleteHistory) {
-
+        deleteHistories.add(deleteHistory);
     }
 
     @Override
