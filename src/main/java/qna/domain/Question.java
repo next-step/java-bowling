@@ -82,6 +82,7 @@ public class Question extends BaseEntity {
 
     public void delete(User loginUser) {
         validateOwner(loginUser);
+        answers.deleteAll(loginUser);
         deleted = true;
     }
 

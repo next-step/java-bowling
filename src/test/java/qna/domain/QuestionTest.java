@@ -16,7 +16,7 @@ class QuestionTest {
 
     @BeforeEach
     void setUp() {
-        question = TestFixture.Q1;
+        question = new Question("title1", "contents1").writeBy(TestFixture.JAVAJIGI);
     }
 
     @Test
@@ -53,7 +53,7 @@ class QuestionTest {
     @DisplayName("답변이 없는 경우 삭제가 가능하다.")
     void deleteWithoutAnswer() {
         // given
-        question = TestFixture.Q2;
+        question = new Question("title", "contents").writeBy(TestFixture.SANJIGI);
 
         // when
         question.delete(TestFixture.SANJIGI);
@@ -66,7 +66,7 @@ class QuestionTest {
     @DisplayName("질문자와 답변글의 모든 답변자가 같은 경우 삭제가 가능하다.")
     void deleteWithSameOwner() {
         // given
-        question = TestFixture.Q2;
+        question = new Question("title", "contents").writeBy(TestFixture.SANJIGI);
         Answer answer = new Answer(TestFixture.SANJIGI, question, "Answers Contents");
         question.addAnswer(answer);
 
