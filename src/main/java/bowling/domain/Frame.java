@@ -36,5 +36,5 @@ public abstract class Frame {
 
   abstract public boolean isLastFrame();
 
-  abstract public void validateHitPin(int countOfHitPin);
+  abstract protected void validateHitPin(int countOfHitPin);
 }

@@ -14,7 +14,7 @@ public class FinalFrame extends Frame {
     return new FinalFrame();
   }
 
-  public void validateHitPin(int countOfHitPin) {
+  protected void validateHitPin(int countOfHitPin) {
     if (pins.totalHitPin() + countOfHitPin > MAX_PIN_COUNT) {
       throw new IllegalArgumentException("핀의 갯수는 " + MAX_PIN_COUNT + "개를 넘을 수 없습니다.");
     }
