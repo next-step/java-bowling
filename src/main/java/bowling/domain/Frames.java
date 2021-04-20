@@ -12,12 +12,14 @@ import java.util.List;
  */
 public class Frames {
 
+    private static final int FRAME_START_NUMBER = 0;
+    private static final int FRAME_NEXT_NUMBER = 1;
     private final List<Frame> frames = new ArrayList<>();
     private int frameNumber;
 
     public Frames(Frame frame) {
         this.frames.add(frame);
-        this.frameNumber = 0;
+        this.frameNumber = FRAME_START_NUMBER;
     }
 
     public void bowl(int pins) {
@@ -28,7 +30,11 @@ public class Frames {
     }
 
     public void nextFrame() {
-        frameNumber = frameNumber + 1;
+        frameNumber = frameNumber + FRAME_NEXT_NUMBER;
+    }
+
+    protected Frame currentFrame() {
+        return frames.get(frames.size() - 1);
     }
 
     public boolean isNextFrame() {
@@ -39,20 +45,16 @@ public class Frames {
         return currentFrame().tryCount();
     }
 
-    protected Frame currentFrame() {
-        return frames.get(frames.size() - 1);
-    }
-
-    public List<Frame> list() {
-        return Collections.unmodifiableList(frames);
-    }
-
     public boolean isLastFrame() {
         return frameNumber == BowlingGame.BOWLING_LAST_FRAME;
     }
 
     public int frameNumber() {
         return frameNumber;
+    }
+
+    public List<Frame> list() {
+        return Collections.unmodifiableList(frames);
     }
 
     @Override

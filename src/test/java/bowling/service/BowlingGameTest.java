@@ -1,7 +1,10 @@
 package bowling.service;
 
+import bowling.domain.Frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,9 +17,9 @@ class BowlingGameTest {
         BowlingGame bowlingGame = new BowlingGame("KSR");
         // when
         bowlingGame.bowl(3);
-        int tryingCount = bowlingGame.tryingCount();
+        List<Frame> frames = bowlingGame.frames();
         // then
-        assertThat(tryingCount).isEqualTo(1);
+        assertThat(frames.get(0).tryCount()).isEqualTo(1);
     }
 
     @DisplayName("볼링 게임 2구 시 다음 프레임으로 넘어가기 테스트")

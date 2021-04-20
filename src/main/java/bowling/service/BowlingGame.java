@@ -27,10 +27,6 @@ public class BowlingGame {
         }
     }
 
-    public int tryingCount() {
-        return frames.tryCount();
-    }
-
     public String user() {
         return user;
     }
