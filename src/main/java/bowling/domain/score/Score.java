@@ -4,12 +4,14 @@ public interface Score {
 
     int currentScore();
 
-    int sumCurrentScore(int scoreToSum);
-
     boolean isNecessaryToCalculateMore();
 
     boolean isFullyCalculated();
 
     Score calculatedScore(int toAdd);
+
+    default int sumCurrentScore(int scoreToSum) {
+        return currentScore() + scoreToSum;
+    }
 
 }

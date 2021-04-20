@@ -14,11 +14,6 @@ public class FinishedScore implements Score {
     }
 
     @Override
-    public int sumCurrentScore(int scoreToSum) {
-        return score + scoreToSum;
-    }
-
-    @Override
     public boolean isNecessaryToCalculateMore() {
         return false;
     }
