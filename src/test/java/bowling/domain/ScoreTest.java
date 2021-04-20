@@ -15,7 +15,7 @@ public class ScoreTest {
     @Test
     void create_finished_score() {
         int score = 5;
-        FinishedScore finishedScore = FinishedScore.of(score);
+        Score finishedScore = FinishedScore.of(score);
 
         assertThat(finishedScore.currentScore()).isEqualTo(score);
         assertThat(finishedScore.isNecessaryToCalculateMore()).isFalse();
@@ -26,7 +26,7 @@ public class ScoreTest {
 
     @Test
     void create_empty_undefined_score() {
-        UnDefinedScore finishedScore = UnDefinedScore.ofEmpty();
+        Score finishedScore = UnDefinedScore.ofEmpty();
 
         assertThat(finishedScore.currentScore()).isEqualTo(0);
         assertThat(finishedScore.isNecessaryToCalculateMore()).isFalse();
@@ -38,7 +38,7 @@ public class ScoreTest {
     @Test
     void create_not_empty_undefined_score() {
         int score = 5;
-        UnDefinedScore finishedScore = UnDefinedScore.of(score);
+        Score finishedScore = UnDefinedScore.of(score);
 
         assertThat(finishedScore.currentScore()).isEqualTo(score);
         assertThat(finishedScore.isNecessaryToCalculateMore()).isFalse();
