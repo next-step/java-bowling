@@ -82,9 +82,11 @@ public class Question extends BaseEntity {
 
     public DeleteHistories delete(User loginUser) {
         validateOwner(loginUser);
-        answers.deleteAll(loginUser);
+        final DeleteHistories deleteHistories = answers.deleteAll(loginUser);
+
         deleted = true;
-        return null;
+        deleteHistories.add(DeleteHistory.createQuestionHistory(getId(), loginUser));
+        return deleteHistories;
     }
 
     private void validateOwner(User loginUser) {
