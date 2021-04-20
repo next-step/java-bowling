@@ -25,8 +25,7 @@ public class AnswerTest {
 
     @Test
     void delete_히스토리_생성() throws CannotDeleteException {
-        A1.delete(UserTest.JAVAJIGI);
-        assertThat(A1.deleteHistory()).isEqualToIgnoringGivenFields(
+        assertThat(A1.delete(UserTest.JAVAJIGI)).isEqualToIgnoringGivenFields(
             DeleteHistory.of(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now()), "createDate");
     }
 }

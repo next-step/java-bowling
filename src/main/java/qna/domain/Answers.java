@@ -29,16 +29,10 @@ public class Answers implements Iterable<Answer> {
         answers.add(answer);
     }
 
-    public void delete(User questionWriter) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            answer.delete(questionWriter);
-        }
-    }
-
-    public List<DeleteHistory> deleteHistorys() {
+    public List<DeleteHistory> delete(User questionWriter) throws CannotDeleteException {
         List<DeleteHistory> deleteHistorys = new ArrayList<>();
         for (Answer answer : answers) {
-            deleteHistorys.add(answer.deleteHistory());
+            deleteHistorys.add(answer.delete(questionWriter));
         }
         return deleteHistorys;
     }

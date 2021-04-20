@@ -44,8 +44,7 @@ public class QuestionTest {
 
     @Test
     void delete_히스토리_생성() throws CannotDeleteException {
-        Q1.delete(UserTest.JAVAJIGI);
-        assertThat(Q1.deleteHistorys()).usingElementComparatorIgnoringFields("createDate")
+        assertThat(Q1.delete(UserTest.JAVAJIGI)).usingElementComparatorIgnoringFields("createDate")
             .isEqualTo(Collections.singletonList(
                 DeleteHistory.of(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now())));
     }
@@ -54,8 +53,7 @@ public class QuestionTest {
     void delete_답변까지_히스토리_생성() throws CannotDeleteException {
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
         question.addAnswer(A1);
-        question.delete(UserTest.JAVAJIGI);
-        assertThat(question.deleteHistorys()).usingElementComparatorIgnoringFields("createDate")
+        assertThat(question.delete(UserTest.JAVAJIGI)).usingElementComparatorIgnoringFields("createDate")
             .isEqualTo(Arrays.asList(
                 DeleteHistory.of(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now()),
                 DeleteHistory.of(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now())));
