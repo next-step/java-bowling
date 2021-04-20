@@ -77,7 +77,7 @@ public class Answer extends BaseEntity {
     }
 
     public boolean isDeletable(User user) {
-        return false;
+        return isOwner(user);
     }
 
     public void toQuestion(Question question) {
