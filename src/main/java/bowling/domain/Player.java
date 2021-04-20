@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Player {
@@ -22,6 +23,10 @@ public class Player {
     }
   }
 
+  public String name() {
+    return player;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -33,7 +38,7 @@ public class Player {
 
     Player player1 = (Player) o;
 
-    return player != null ? player.equals(player1.player) : player1.player == null;
+    return Objects.equals(player, player1.player);
   }
 
   @Override

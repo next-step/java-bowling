@@ -28,4 +28,8 @@ public enum Score {
 
     return score;
   }
+
+  public String mark() {
+    return mark;
+  }
 }
