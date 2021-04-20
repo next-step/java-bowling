@@ -3,7 +3,6 @@ package qna.domain;
 import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Question extends BaseEntity {
@@ -74,10 +73,6 @@ public class Question extends BaseEntity {
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers.answers();
     }
 
     public DeleteHistories delete(User loginUser) {
