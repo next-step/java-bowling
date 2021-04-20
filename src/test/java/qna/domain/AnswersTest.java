@@ -40,9 +40,6 @@ class AnswersTest {
     @Test
     @DisplayName("answers에 answer를 추가할 수 있다.")
     void add() {
-        // given
-        // when
-        // then
         assertAll(
                 () -> assertThat(answers.size()).isEqualTo(1),
                 () -> assertThat(answers.answers()).contains(answer)
