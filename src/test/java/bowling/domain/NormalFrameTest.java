@@ -1,10 +1,9 @@
 package bowling.domain;
 
-import bowling.domain.score.Score;
 import bowling.domain.State.*;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.State.PinCount;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -80,7 +79,7 @@ public class NormalFrameTest extends FrameTestBase {
         State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isTrue();
         assertThat(state instanceof Spare).isTrue();
-        assertThat(state.stateInString()).isEqualTo(firstPinCount + SPARE_SYMBOL);
+        assertThat(state.stateInString()).isEqualTo(GUTTER_SYMBOL + SPARE_SYMBOL);
     }
 
     @Test

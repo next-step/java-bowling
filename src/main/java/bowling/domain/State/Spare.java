@@ -33,7 +33,11 @@ public class Spare implements State {
 
     @Override
     public String stateInString() {
-        return firstPinCount.countInString() + SYMBOL;
+        String firstPinCountInString = firstPinCount.countInString();
+        if (firstPinCount.isGutter()) {
+            firstPinCountInString = Gutter.SYMBOL;
+        }
+        return firstPinCountInString + SYMBOL;
     }
 
     @Override
