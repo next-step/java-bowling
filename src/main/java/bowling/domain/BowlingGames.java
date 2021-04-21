@@ -21,7 +21,7 @@ public class BowlingGames {
     return Collections.unmodifiableList(bowlingGames);
   }
 
-  public void play(Player player, int count) {
+  public void play(Player player, Pin count) {
     findBowlingGameByPlayer(player).play(count);
   }
 

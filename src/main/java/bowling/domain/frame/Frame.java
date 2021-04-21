@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
-public interface Frame {
+import bowling.domain.Pin;
 
-    void play(int count);
+public interface Frame {
 
     boolean isEnd();
 
@@ -12,7 +12,9 @@ public interface Frame {
 
     int getScore();
 
-    void calculateScore(int index, int count);
+    void calculateScore(int index, Pin count);
 
     boolean hasScore();
+
+    void play(Pin pinCount);
 }

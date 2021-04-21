@@ -2,6 +2,7 @@ package bowling.controller;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGames;
+import bowling.domain.Pin;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 import java.util.List;
@@ -42,7 +43,7 @@ public class BowlingGameController {
 
     while (bowlingGame.isFrameCount(currentFrameCount)) {
       int count = inputView.inputPinCountByPlayer(bowlingGame.getPlayer());
-      bowlingGame.play(count);
+      bowlingGame.play(new Pin(count));
       resultView.printResult(bowlingGames);
     }
   }

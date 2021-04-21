@@ -47,7 +47,7 @@ public class Miss implements State {
     }
 
     @Override
-    public State play(int fallenPin) {
+    public State play(Pin fallenPin) {
         throw new IllegalArgumentException(INVALID_END_PLAY);
     }
 

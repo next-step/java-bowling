@@ -61,4 +61,8 @@ public class Pin {
         }
         return String.valueOf(count);
     }
+
+    public boolean isStrike() {
+        return count == 10;
+    }
 }

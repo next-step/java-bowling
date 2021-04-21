@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
@@ -41,12 +42,12 @@ public class NormalFrame implements Frame {
         return new NormalFrame(playCount + 1);
     }
 
-    public void play(int count) {
+    public void play(Pin pinCount) {
         if (this.isEnd()) {
             throw new IllegalArgumentException(INVALID_END_PLAY);
         }
 
-        this.state = state.play(count);
+        this.state = state.play(pinCount);
         createScore();
     }
 
@@ -61,14 +62,13 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public void calculateScore(int playCount, int count) {
+    public void calculateScore(int playCount, Pin count) {
         if (this.playCount == playCount || score.isEndCalculate()) {
             return;
         }
 
         score.addScore(count);
     }
-
     public boolean hasScore() {
         return Objects.nonNull(score) && score.isEndCalculate();
     }

@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,7 +33,7 @@ public class NormalFrameTest {
     @DisplayName("첫 프레임에 스트라이크를 쳤을 경우 확인")
     void playStrike() {
         NormalFrame frame = NormalFrame.createFirst();
-        frame.play(10);
+        frame.play(new Pin(10));
         assertThat(frame.getFallenPins()).isEqualTo("X");
     }
 
@@ -41,8 +42,8 @@ public class NormalFrameTest {
     @DisplayName("첫 프레임에 스페어를 쳤을 경우 확인")
     void playSpare() {
         NormalFrame frame = NormalFrame.createFirst();
-        frame.play(7);
-        frame.play(3);
+        frame.play(new Pin(7));
+        frame.play(new Pin(3));
 
         assertThat(frame.getFallenPins()).isEqualTo("7|/");
     }
@@ -52,10 +53,10 @@ public class NormalFrameTest {
     @DisplayName("Normal 프레임에서는 투구 기회가 2번뿐이다.")
     void playOnlyTwoCount() {
         NormalFrame frame = NormalFrame.createFirst();
-        frame.play(3);
-        frame.play(4);
+        frame.play(new Pin(3));
+        frame.play(new Pin(4));
 
-        assertThatThrownBy(() -> frame.play(3))
+        assertThatThrownBy(() -> frame.play(new Pin(3)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -64,9 +65,9 @@ public class NormalFrameTest {
     @DisplayName("첫 프레임에 스트라이크를 쳤을 경우 더이상 해당 프레임에서는 투구 기회가 없다.")
     void playOnelyOneCountIfStrike() {
         NormalFrame frame = NormalFrame.createFirst();
-        frame.play(10);
+        frame.play(new Pin(10));
 
-        assertThatThrownBy(() -> frame.play(2))
+        assertThatThrownBy(() -> frame.play(new Pin(2)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -76,8 +77,8 @@ public class NormalFrameTest {
     @DisplayName("점수 계산 확인")
     void calculate(int first, int second, int expectScore, boolean expectHasScore) {
         NormalFrame frame = NormalFrame.createFirst();
-        frame.play(first);
-        frame.play(second);
+        frame.play(new Pin(first));
+        frame.play(new Pin(second));
 
         assertThat(frame.getScore()).isEqualTo(expectScore);
         assertThat(frame.hasScore()).isEqualTo(expectHasScore);
@@ -88,7 +89,7 @@ public class NormalFrameTest {
     @DisplayName("점수 계산 스트라이크 일때 확인")
     void calculateIfStrike() {
         NormalFrame frame = NormalFrame.createFirst();
-        frame.play(10);
+        frame.play(new Pin(10));
 
         assertThat(frame.getScore()).isEqualTo(10);
         assertThat(frame.hasScore()).isEqualTo(false);

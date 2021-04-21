@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,7 @@ public class SpareTest {
     @DisplayName("Spare에서는 더이상 투구 할 수 없다.")
     void play() {
         Spare spare = new Spare(6, 4);
-        assertThatThrownBy(() -> spare.play(3))
+        assertThatThrownBy(() -> spare.play(new Pin(3)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

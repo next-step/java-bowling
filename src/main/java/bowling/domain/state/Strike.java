@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.Pin;
 import bowling.domain.Score;
 
 public class Strike implements State {
@@ -27,7 +28,7 @@ public class Strike implements State {
     }
 
     @Override
-    public State play(int fallenPin) {
+    public State play(Pin fallenPin) {
         throw new IllegalArgumentException(INVALID_END_PLAY);
     }
 

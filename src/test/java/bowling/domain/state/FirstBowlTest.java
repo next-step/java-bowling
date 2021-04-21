@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ public class FirstBowlTest {
     @DisplayName("첫번째 볼 다음 miss를 쳤을 경우 확인")
     void playMiss() {
         FirstBowl firstBowl = new FirstBowl(3);
-        State state = firstBowl.play(4);
+        State state = firstBowl.play(new Pin(4));
         assertThat(state).isInstanceOf(Miss.class);
     }
 
@@ -20,7 +21,7 @@ public class FirstBowlTest {
     @DisplayName("첫번째 볼 다음 spare를 쳤을 경우 확인")
     void playSpare() {
         FirstBowl firstBowl = new FirstBowl(2);
-        State state = firstBowl.play(8);
+        State state = firstBowl.play(new Pin(8));
         assertThat(state).isInstanceOf(Spare.class);
     }
 }

@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 
+import bowling.domain.Pin;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Frames {
     public Frames() {
         this.frames = new ArrayList<>();
     }
-
+/*
     public void play(int count) {
         if (isEnd()) {
             throw new IllegalArgumentException(INVALID_END_PLAY);
@@ -27,14 +28,23 @@ public class Frames {
         getLastFrame().play(count);
         calculateScore(count);
     }
-
-    private void calculateScore(int count) {
-        for (Frame frame : frames) {
-            int index = frames.size() - 1;
-            frame.calculateScore(index, count);
+*/
+    public void play(Pin pinCount) {
+        if (isEnd()) {
+            throw new IllegalArgumentException(INVALID_END_PLAY);
         }
+
+        makeFrame();
+        getLastFrame().play(pinCount);
+        calculateScore(pinCount);
     }
 
+    private void calculateScore(Pin pinCount) {
+        for (Frame frame : frames) {
+            int index = frames.size() - 1;
+            frame.calculateScore(index, pinCount);
+        }
+    }
     private void makeFrame() {
         if (frames.isEmpty()) {
             frames.add(NormalFrame.createFirst());
@@ -100,6 +110,7 @@ public class Frames {
     public int hashCode() {
         return Objects.hash(frames);
     }
+
 
 
 }

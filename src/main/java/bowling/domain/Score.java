@@ -24,12 +24,16 @@ public class Score {
     public static Score ofStrike() {
         return new Score(FULL_SCORE, 2);
     }
-
+/*
     public void addScore(int count) {
         this.left--;
         this.score += count;
     }
-
+*/
+    public void addScore(Pin pinCount) {
+        this.left--;
+        this.score += pinCount.getCount();
+    }
     public int getScore() {
         return score;
     }

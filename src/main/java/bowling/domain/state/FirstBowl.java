@@ -17,12 +17,12 @@ public class FirstBowl implements State {
     }
 
     @Override
-    public State play(int fallenPin) {
-        if (firstPin.isSpare(new Pin(fallenPin))) {
-            return new Spare(firstPin, new Pin(fallenPin));
+    public State play(Pin fallenPin) {
+        if (firstPin.isSpare(fallenPin)) {
+            return new Spare(firstPin, fallenPin);
         }
 
-        return new Miss(firstPin, new Pin(fallenPin));
+        return new Miss(firstPin, fallenPin);
     }
 
     @Override

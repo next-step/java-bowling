@@ -13,7 +13,7 @@ public class BowlingGamesTest {
   void play() {
     BowlingGames bowlingGames = new BowlingGames(Arrays.asList("mdy","guu"));
     Player player = new Player("mdy");
-    bowlingGames.play(player, 10);
+    bowlingGames.play(player, new Pin(10));
 
     assertThat(bowlingGames.getFrames(player).size()).isEqualTo(1);
   }
@@ -25,7 +25,7 @@ public class BowlingGamesTest {
     Player player = new Player("mdy");
 
     for (int i = 0; i < 12; i++) {
-      bowlingGames.play(player, 10);
+      bowlingGames.play(player, new Pin(10));
     }
 
     assertThat(bowlingGames.isEnd()).isFalse();
@@ -39,8 +39,8 @@ public class BowlingGamesTest {
     Player player2 = new Player("guu");
 
     for (int i = 0; i < 12; i++) {
-      bowlingGames.play(player, 10);
-      bowlingGames.play(player2, 10);
+      bowlingGames.play(player, new Pin(10));
+      bowlingGames.play(player2, new Pin(10));
     }
 
     assertThat(bowlingGames.isEnd()).isTrue();

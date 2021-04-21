@@ -23,12 +23,12 @@ public class BowlingGame {
         this.frames = frames;
     }
 
-    public void play(int count) {
-        if (isEnd()) {
+    public void play(Pin pinCount) {
+        if(isEnd()) {
             throw new IllegalArgumentException(INVALID_END_PLAY);
         }
 
-        frames.play(count);
+        frames.play(pinCount);
     }
 
     public boolean isEnd() {
@@ -78,6 +78,7 @@ public class BowlingGame {
     public int hashCode() {
         return Objects.hash(player);
     }
+
 
 
 }

@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.Spare;
@@ -22,7 +23,7 @@ public class FinalFrame implements Frame {
         states.add(new Ready());
     }
 
-    public void play(int count) {
+    public void play(Pin pinCount) {
         if (this.isEnd()) {
             throw new IllegalArgumentException(INVALID_END_PLAY);
         }
@@ -33,9 +34,10 @@ public class FinalFrame implements Frame {
 
         State state = states.getLast();
         states.removeLast();
-        states.addLast(state.play(count));
+        states.addLast(state.play(pinCount));
 
         createScore();
+
     }
 
     private void createScore() {
@@ -93,7 +95,9 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public void calculateScore(int index, int count) {
+    public void calculateScore(int index, Pin count) {
 
     }
+
+
 }
