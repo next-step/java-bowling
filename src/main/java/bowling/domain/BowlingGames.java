@@ -31,4 +31,9 @@ public class BowlingGames {
   public Frames getFrames(Player player) {
     return findBowlingGameByPlayer(player).getFrames();
   }
+
+  public boolean isEnd() {
+    return this.bowlingGames.stream()
+        .allMatch(BowlingGame::isEnd);
+  }
 }

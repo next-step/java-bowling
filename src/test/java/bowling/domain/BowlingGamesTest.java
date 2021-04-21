@@ -17,4 +17,32 @@ public class BowlingGamesTest {
 
     assertThat(bowlingGames.getFrames(player).size()).isEqualTo(1);
   }
+
+  @Test
+  @DisplayName("isEnd 확인")
+  void isEndReturnFalse() {
+    BowlingGames bowlingGames = new BowlingGames(Arrays.asList("mdy", "guu"));
+    Player player = new Player("mdy");
+
+    for (int i = 0; i < 12; i++) {
+      bowlingGames.play(player, 10);
+    }
+
+    assertThat(bowlingGames.isEnd()).isFalse();
+  }
+
+  @Test
+  @DisplayName("isEnd 확인")
+  void isEndReturnTrue() {
+    BowlingGames bowlingGames = new BowlingGames(Arrays.asList("mdy", "guu"));
+    Player player = new Player("mdy");
+    Player player2 = new Player("guu");
+
+    for (int i = 0; i < 12; i++) {
+      bowlingGames.play(player, 10);
+      bowlingGames.play(player2, 10);
+    }
+
+    assertThat(bowlingGames.isEnd()).isTrue();
+  }
 }
