@@ -9,10 +9,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BowlingGameController {
-    public void run(){
 
-        InputView inputView = new InputView();
-        ResultView resultView = new ResultView();
+    InputView inputView = new InputView();
+    ResultView resultView = new ResultView();
+
+    public void run(){
 
         String playerName = inputView.inputName();
         BowlingGame game = new BowlingGame(playerName);
@@ -27,8 +28,7 @@ public class BowlingGameController {
     }
 
     public void run2() {
-        InputView inputView = new InputView();
-        ResultView resultView = new ResultView();
+
 
         int playerCount= inputView.inputPlayerCount();
 
@@ -40,7 +40,28 @@ public class BowlingGameController {
 
         resultView.printResult(bowlingGames);
 
-
+        while(!bowlingGames.isEnd()) {
+            playBowlingGame(bowlingGames);
+        }
 
     }
+
+    private void playBowlingGame(BowlingGames bowlingGames) {
+        for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
+            play(bowlingGames, bowlingGame);
+        }
+    }
+
+    private void play(BowlingGames bowlingGames, BowlingGame bowlingGame) {
+        int currentFrameCount = bowlingGame.getFrameCount();
+
+        while(bowlingGame.isFrameCount(currentFrameCount)) {
+            int count = inputView.inputPinCountByPlayer(bowlingGame.getPlayer());
+            bowlingGame.play(count);
+            resultView.printResult(bowlingGames);
+
+        }
+    }
+
+
 }

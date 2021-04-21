@@ -63,6 +63,9 @@ public class BowlingGame {
         return player;
     }
 
+    public boolean isFrameCount(int currentFrameCount) {
+        return getFrameCount() == currentFrameCount;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,4 +78,6 @@ public class BowlingGame {
     public int hashCode() {
         return Objects.hash(player);
     }
+
+
 }

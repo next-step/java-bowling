@@ -19,13 +19,9 @@ public class ResultView {
     private static final String HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
 
     public void printResult(BowlingGames bowlingGames) {
-        printHeader();
-
         for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
-            printText(bowlingGame.getPlayer().getName());
-            printFrames(bowlingGame.getFrames().getFrames());
-
-            printScores(bowlingGame.getScore());
+            printResult(bowlingGame.getPlayer().getName(), bowlingGame.getFrames().getFrames(),
+                bowlingGame.getScore());
 
         }
     }
