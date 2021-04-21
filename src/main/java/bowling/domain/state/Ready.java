@@ -10,12 +10,15 @@ public class Ready implements State {
 
     @Override
     public State play(Pin fallenPin) {
+        if (fallenPin.isGutter()) {
+            return new FirstGutter();
+        }
+
         if (fallenPin.isStrike()) {
             return new Strike();
         }
         return new FirstBowl(fallenPin);
     }
-
     @Override
     public int getPitchCount() {
         return 0;

@@ -56,13 +56,19 @@ public class Pin {
 
     @Override
     public String toString() {
+        /*
         if (count == 0) {
             return "-";
         }
+         */
         return String.valueOf(count);
     }
 
     public boolean isStrike() {
         return count == 10;
+    }
+
+    public boolean isGutter() {
+        return count == 0;
     }
 }

@@ -43,6 +43,9 @@ public class Miss implements State {
 
     @Override
     public String toString() {
+        if (firstPin.isGutter()) {
+            return "-|" + secondPin.toString();
+        }
         return firstPin.toString() + "|" + secondPin.toString();
     }
 

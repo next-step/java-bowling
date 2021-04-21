@@ -42,7 +42,12 @@ public class Spare implements State {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
+        if (firstPin.isGutter()) {
+            return "-|/";
+        }
+
         return firstPin.toString() + "|/";
     }
 

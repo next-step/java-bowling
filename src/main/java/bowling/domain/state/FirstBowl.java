@@ -18,6 +18,10 @@ public class FirstBowl implements State {
 
     @Override
     public State play(Pin fallenPin) {
+        if (fallenPin.isGutter()) {
+            return new SecondGutter(firstPin);
+        }
+
         if (firstPin.isSpare(fallenPin)) {
             return new Spare(firstPin, fallenPin);
         }
