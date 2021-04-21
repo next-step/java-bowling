@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class SecondGutterTest {
+
   @Test
   @DisplayName("두번째 거터에선 더이상 투구할 수 없다.")
   void play() {

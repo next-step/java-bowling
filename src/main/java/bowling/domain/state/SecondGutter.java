@@ -30,6 +30,7 @@ public class SecondGutter implements State {
   public int getPitchCount() {
     return 2;
   }
+
   @Override
   public Score getScore() {
     return new Score(firstPin.getCount(), 0);
@@ -52,6 +53,6 @@ public class SecondGutter implements State {
       return "-|-";
     }
 
-    return firstPin.toString()+ "|-";
+    return firstPin.toString() + "|-";
   }
 }

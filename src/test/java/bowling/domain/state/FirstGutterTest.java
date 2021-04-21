@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class FirstGutterTest {
+
   @Test
   @DisplayName("첫번째 거터에서 0개를 쳤을 경우")
   void playSecondGutter() {
