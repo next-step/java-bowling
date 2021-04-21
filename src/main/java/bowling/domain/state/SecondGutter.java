@@ -47,6 +47,11 @@ public class SecondGutter implements State {
 
   @Override
   public String toString() {
+
+    if (firstPin.isGutter()) {
+      return "-|-";
+    }
+
     return firstPin.toString()+ "|-";
   }
 }

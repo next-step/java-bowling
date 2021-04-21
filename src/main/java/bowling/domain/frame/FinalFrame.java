@@ -3,14 +3,12 @@ package bowling.domain.frame;
 import bowling.domain.Pin;
 import bowling.domain.Score;
 import bowling.domain.state.Ready;
-import bowling.domain.state.Spare;
 import bowling.domain.state.State;
-import bowling.domain.state.Strike;
 
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
-public class FinalFrame implements Frame {
+public class FinalFrame extends Frame {
 
     private static final int MIN_PITCH_COUNT = 2;
     private static final int MAX_PITCH_COUNT = 3;
@@ -39,6 +37,7 @@ public class FinalFrame implements Frame {
         createScore();
 
     }
+
 
     private void createScore() {
         this.score = new Score(sumAllCount(), 0);
@@ -94,10 +93,7 @@ public class FinalFrame implements Frame {
         return isEnd();
     }
 
-    @Override
-    public void calculateScore(int index, Pin count) {
 
-    }
 
 
 }

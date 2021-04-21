@@ -7,7 +7,7 @@ import bowling.domain.state.State;
 
 import java.util.Objects;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
 
     public static final int MAX_PLAY_COUNT = 8;
     public static final int MIN_PLAY_COUNT = 0;
