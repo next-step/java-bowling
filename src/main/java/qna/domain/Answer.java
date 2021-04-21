@@ -75,13 +75,13 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
-    public DeleteHistory delete(User user) throws CannotDeleteException {
+    public DeleteHistory delete(User user)  {
         validateDeleteUser(user);
         setDeleted(true);
         return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 
-    private void validateDeleteUser(User user) throws CannotDeleteException {
+    private void validateDeleteUser(User user)  {
         if (user == null) {
             throw new IllegalArgumentException("유저 정보를 입력해 주세요.");
         }
