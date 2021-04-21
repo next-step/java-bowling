@@ -56,11 +56,6 @@ public class Pin {
 
     @Override
     public String toString() {
-        /*
-        if (count == 0) {
-            return "-";
-        }
-         */
         return String.valueOf(count);
     }
 
