@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.*;
 
 public class StateTest {
@@ -197,12 +199,10 @@ public class StateTest {
 
     @Test
     @DisplayName("final state 1-miss로 변경시 테스트")
-    void final_state_with_1_miss() {
+    void final_state_when_1_miss() {
         PinCount firstMissPinCount = PinCount.of(4);
         PinCount secondMissPinCount = PinCount.of(3);
-        State initialFinalState = new FinalState();
-        State interimFinalState = initialFinalState.newState(firstMissPinCount);
-        State finalState = interimFinalState.newState(secondMissPinCount);
+        State finalState = new FinalState(Arrays.asList(new Miss(firstMissPinCount,secondMissPinCount)),1);
         UnFinishedScore strikeUnFinishedScore = UnFinishedScore.ofStrike(10);
 
         assertThat(finalState.isClosed()).isTrue();
@@ -211,87 +211,73 @@ public class StateTest {
         assertThat(finalState.calculatedScore(strikeUnFinishedScore).currentScore()).isEqualTo(PinCount.STRIKE.count() + firstMissPinCount.sumCount(secondMissPinCount));
     }
 
-//    @Test
-//    @DisplayName("3-strike시 현재 상태값 테스트")
-//    void current_state_when_3_strike() {
-//        int strikePinCount = 10;
-//        FinalFrame finalFrame = FinalFrame.from(10);
-//        finalFrame.addPinCount(strikePinCount);
-//        finalFrame.addPinCount(strikePinCount);
-//        finalFrame.addPinCount(strikePinCount);
-//
-//
-//        State state = finalFrame.currentState();
-//        assertThat(finalFrame.isDone()).isTrue();
-//        assertThat(state instanceof FinalState).isTrue();
-//        assertThat(state.stateInString()).isEqualTo(STRIKE_STATE + SEPARATOR + STRIKE_STATE + SEPARATOR + STRIKE_STATE);
-//    }
-//
-//    @Test
-//    @DisplayName("2-strike,1-hit 현재 상태값 테스트")
-//    void current_state_when_2_strike_1_none() {
-//        int firstStrikePinCount = 10;
-//        int secondStrikePinCount = 10;
-//        int lastPinCount = 3;
-//        FinalFrame finalFrame = FinalFrame.from(10);
-//        finalFrame.addPinCount(firstStrikePinCount);
-//        finalFrame.addPinCount(secondStrikePinCount);
-//        finalFrame.addPinCount(lastPinCount);
-//
-//        State state = finalFrame.currentState();
-//        assertThat(finalFrame.isDone()).isTrue();
-//        assertThat(state instanceof FinalState).isTrue();
-//        assertThat(state.stateInString()).isEqualTo(STRIKE_STATE + SEPARATOR + STRIKE_STATE + SEPARATOR + lastPinCount);
-//    }
-//
-//    @Test
-//    @DisplayName("1-strike,1-spare 현재 상태값 테스트")
-//    void current_state_when_1_strike_1_spare() {
-//        int strikePinCount = 10;
-//        int firstSparePinCount = 7;
-//        int secondSparePinCount = 3;
-//        FinalFrame finalFrame = FinalFrame.from(10);
-//        finalFrame.addPinCount(strikePinCount);
-//        finalFrame.addPinCount(firstSparePinCount);
-//        finalFrame.addPinCount(secondSparePinCount);
-//
-//        State state = finalFrame.currentState();
-//        assertThat(finalFrame.isDone()).isTrue();
-//        assertThat(state instanceof FinalState).isTrue();
-//        assertThat(state.stateInString()).isEqualTo(STRIKE_STATE + SEPARATOR + firstSparePinCount + SPARE_SATE);
-//    }
-//
-//    @Test
-//    @DisplayName("1-strike,1-miss 현재 상태값 테스트")
-//    void current_state_when_1_strike_1_miss() {
-//        int strikePinCount = 10;
-//        int firstMissPinCount = 4;
-//        int secondMissPinCount = 3;
-//        FinalFrame finalFrame = FinalFrame.from(10);
-//        finalFrame.addPinCount(strikePinCount);
-//        finalFrame.addPinCount(firstMissPinCount);
-//        finalFrame.addPinCount(secondMissPinCount);
-//
-//        State state = finalFrame.currentState();
-//        assertThat(finalFrame.isDone()).isTrue();
-//        assertThat(state instanceof FinalState).isTrue();
-//        assertThat(state.stateInString()).isEqualTo(STRIKE_STATE + SEPARATOR + firstMissPinCount + SEPARATOR + secondMissPinCount);
-//    }
-//
+    @Test
+    @DisplayName("final state 3-strike 테스트")
+    void final_state_when_3_strike() {
+        int strikePinCount = 10;
+        State finalState = new FinalState(Arrays.asList(new Strike(),new Strike(),new Strike()),3);
+        UnFinishedScore strikeUnFinishedScore = UnFinishedScore.ofStrike(strikePinCount);
+
+        assertThat(finalState.isClosed()).isTrue();
+        assertThat(finalState.score() instanceof FinishedScore).isTrue();
+        assertThat(finalState.stateInString()).isEqualTo(STRIKE_STATE + SEPARATOR + STRIKE_STATE + SEPARATOR + STRIKE_STATE);
+        assertThat(finalState.calculatedScore(strikeUnFinishedScore).currentScore()).isEqualTo(strikePinCount * 3);
+    }
+
+    @Test
+    @DisplayName("final state 2-strike,1-hit 테스트")
+    void final_state_when_2_strike_1_none() {
+        PinCount lastPinCount = PinCount.of(4);
+        State finalState = new FinalState(Arrays.asList(new Strike(),new Strike(),new Hit(lastPinCount)),3);
+        UnFinishedScore spareUnfinishedScore = UnFinishedScore.ofSpare(10);
+
+        assertThat(finalState.isClosed()).isTrue();
+        assertThat(finalState.score() instanceof FinishedScore).isTrue();
+        assertThat(finalState.stateInString()).isEqualTo(STRIKE_STATE + SEPARATOR + STRIKE_STATE + SEPARATOR + lastPinCount.countInString());
+        assertThat(finalState.calculatedScore(spareUnfinishedScore).currentScore()).isEqualTo(PinCount.STRIKE.count() + spareUnfinishedScore.currentScore());
+    }
+
+    @Test
+    @DisplayName("final state 1-strike,1-spare 테스트")
+    void final_state_when_1_strike_1_spare() {
+        PinCount firstPinCount = PinCount.of(4);
+        PinCount secondPinCount = PinCount.of(6);
+        State finalState = new FinalState(Arrays.asList(new Strike(),new Spare(firstPinCount,secondPinCount)),3);
+        UnFinishedScore spareUnfinishedScore = UnFinishedScore.ofSpare(10);
+
+        assertThat(finalState.isClosed()).isTrue();
+        assertThat(finalState.score() instanceof FinishedScore).isTrue();
+        assertThat(finalState.stateInString()).isEqualTo(STRIKE_STATE + SEPARATOR + firstPinCount.countInString() + SPARE_SATE);
+        assertThat(finalState.calculatedScore(spareUnfinishedScore).currentScore()).isEqualTo(PinCount.STRIKE.count() + spareUnfinishedScore.currentScore());
+    }
+
+    @Test
+    @DisplayName("1-strike,1-miss 현재 상태값 테스트")
+    void final_state_when_1_strike_1_miss() {
+        PinCount firstPinCount = PinCount.of(4);
+        PinCount secondPinCount = PinCount.of(4);
+        State finalState = new FinalState(Arrays.asList(new Strike(),new Miss(firstPinCount,secondPinCount)),3);
+        UnFinishedScore spareUnfinishedScore = UnFinishedScore.ofSpare(10);
+
+        assertThat(finalState.isClosed()).isTrue();
+        assertThat(finalState.score() instanceof FinishedScore).isTrue();
+        assertThat(finalState.stateInString()).isEqualTo(STRIKE_STATE + SEPARATOR + firstPinCount.countInString() + SEPARATOR + secondPinCount.countInString());
+        assertThat(finalState.calculatedScore(spareUnfinishedScore).currentScore()).isEqualTo(PinCount.STRIKE.count() + spareUnfinishedScore.currentScore());
+    }
+
 //    @Test
 //    @DisplayName("1-spare,1-hit 현재 상태값 테스트")
-//    void current_state_when_1_spare_1_hit() {
-//        int firstSparePinCount = 7;
-//        int secondSparePinCount = 3;
-//        int lastPinCount = 5;
-//        FinalFrame finalFrame = FinalFrame.from(10);
-//        finalFrame.addPinCount(firstSparePinCount);
-//        finalFrame.addPinCount(secondSparePinCount);
-//        finalFrame.addPinCount(lastPinCount);
+//    void final_state_when_1_spare_1_hit() {
+//        PinCount firstPinCount = PinCount.of(6);
+//        PinCount secondPinCount = PinCount.of(4);
+//        PinCount thirdPinCount = PinCount.of(4);
+//        State finalState = new FinalState(Arrays.asList(new Spare(firstPinCount,secondPinCount),new Hit(thirdPinCount)),3);
+//        UnFinishedScore spareUnfinishedScore = UnFinishedScore.ofSpare(10);
 //
-//        State state = finalFrame.currentState();
-//        assertThat(finalFrame.isDone()).isTrue();
-//        assertThat(state instanceof FinalState).isTrue();
+//        assertThat(finalState.isClosed()).isTrue();
+//        assertThat(finalState.score() instanceof FinishedScore).isTrue();
+//        assertThat(finalState.stateInString()).isEqualTo(irstSparePinCount + SPARE_SATE + SEPARATOR + lastPinCount);
+//        assertThat(finalState.calculatedScore(spareUnfinishedScore).currentScore()).isEqualTo(PinCount.STRIKE.count() + spareUnfinishedScore.currentScore());
 //        assertThat(state.stateInString()).isEqualTo(firstSparePinCount + SPARE_SATE + SEPARATOR + lastPinCount);
 //    }
 //
