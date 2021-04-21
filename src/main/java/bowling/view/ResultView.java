@@ -4,13 +4,7 @@ import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGames;
 import bowling.domain.frame.Frame;
 import java.util.ArrayList;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.Collections;
 import java.util.List;
-
-import static java.lang.String.join;
-import static java.util.stream.Collectors.joining;
 
 public class ResultView {
 
@@ -41,10 +35,25 @@ public class ResultView {
     }
 
     private void printText(String str) {
-        System.out.print(StringUtils.center(str, 6));
+        System.out.print(center(str, 6));
         System.out.print(DIVIDER);
     }
 
+    private String center(String s, int size) {
+        char pad = ' ';
+        if (s == null || size <= s.length())
+            return s;
+
+        StringBuilder sb = new StringBuilder(size);
+        for (int i = 0; i < (size - s.length()) / 2; i++) {
+            sb.append(pad);
+        }
+        sb.append(s);
+        while (sb.length() < size) {
+            sb.append(pad);
+        }
+        return sb.toString();
+    }
 
     public void printEmptyResult(String playerName) {
         printResultDetail(playerName, new ArrayList<>(), new ArrayList<>());
