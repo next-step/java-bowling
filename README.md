@@ -8,6 +8,8 @@
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
 
+# 1단계 - 질문 삭제하기 기능 리팩토링
+
 ## 질문 삭제하기 요구사항
 * 질문 데이터를 완전히 삭제하는 것이 아니라 데이터의 상태를 삭제 상태(deleted - boolean type)로 변경한다.
 * 로그인 사용자와 질문한 사람이 같은 경우 삭제 가능하다.
