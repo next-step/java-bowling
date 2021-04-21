@@ -32,4 +32,8 @@ public class Answers {
                 .map(answer -> answer.delete(loginUser))
                 .collect(Collectors.toList());
     }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
 }
