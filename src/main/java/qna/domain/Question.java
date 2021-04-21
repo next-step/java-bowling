@@ -1,6 +1,5 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
@@ -20,10 +19,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -69,8 +66,7 @@ public class Question extends AbstractEntity {
     }
 
     public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
+        answers.add(answer, this);
     }
 
     public boolean isOwner(User loginUser) {
@@ -86,7 +82,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
@@ -101,19 +97,10 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
-        for (Answer answer : this.answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
-
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         this.setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
-        for (Answer answer : this.answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
+        deleteHistories.addAll(answers.delete(loginUser));
         return deleteHistories;
     }
 }
