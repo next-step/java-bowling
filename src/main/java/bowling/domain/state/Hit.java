@@ -23,6 +23,6 @@ public class Hit implements FrameState {
 
     @Override
     public String printResult() {
-        return printScore(pin) + "|";
+        return printScore(pin) + BOWLING_STATE_SPLIT_DELIMITER;
     }
 }

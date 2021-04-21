@@ -17,6 +17,6 @@ public class Miss implements FrameState {
 
     @Override
     public String printResult() {
-        return printScore(firstPin) + "|" + printScore(downPin);
+        return printScore(firstPin) + BOWLING_STATE_SPLIT_DELIMITER + printScore(downPin);
     }
 }

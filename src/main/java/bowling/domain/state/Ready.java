@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import org.apache.logging.log4j.util.Strings;
 
 import static bowling.domain.Pin.BOWLING_PIN_MAX_SIZE;
 
@@ -17,6 +18,6 @@ public class Ready extends BaseState {
 
     @Override
     public String printResult() {
-        return "";
+        return Strings.EMPTY;
     }
 }

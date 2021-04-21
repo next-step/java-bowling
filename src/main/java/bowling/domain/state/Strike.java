@@ -4,6 +4,6 @@ public class Strike extends BaseState {
 
     @Override
     public String printResult() {
-        return "X";
+        return BOWLING_STATE_STRIKE;
     }
 }

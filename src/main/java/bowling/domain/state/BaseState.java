@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import org.apache.logging.log4j.util.Strings;
+
 public abstract class BaseState implements FrameState {
 
     @Override
@@ -9,7 +11,7 @@ public abstract class BaseState implements FrameState {
 
     @Override
     public String printResult() {
-        return "";
+        return Strings.EMPTY;
     }
 
     @Override
