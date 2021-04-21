@@ -13,6 +13,7 @@ public class ResultView {
     private static final String HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
 
     public void printResult(BowlingGames bowlingGames) {
+
         for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
             printResultDetail(bowlingGame.getPlayer().getName(), bowlingGame.getFrames().getFrames(),
                 bowlingGame.getScore());
@@ -55,8 +56,11 @@ public class ResultView {
         return sb.toString();
     }
 
-    public void printEmptyResult(String playerName) {
-        printResultDetail(playerName, new ArrayList<>(), new ArrayList<>());
+    public void printEmptyResult(List<String> playerNames) {
+        for (String playerName : playerNames) {
+            printResultDetail(playerName, new ArrayList<>(), new ArrayList<>());
+        }
+
     }
 
     private void printHeader() {
@@ -65,8 +69,11 @@ public class ResultView {
 
 
     private void printFrames(List<Frame> frames) {
+
         frames.forEach(frame -> printText(frame.getFallenPins()));
+
     }
+
 
     private void printRemainDivider(int size) {
         for (int i = size; i< MAX_FRAME_COUNT; i++) {

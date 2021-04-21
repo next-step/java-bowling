@@ -24,7 +24,7 @@ public class BowlingGameController {
 
     BowlingGames bowlingGames = new BowlingGames(playerNames);
 
-    resultView.printResult(bowlingGames);
+    resultView.printEmptyResult(playerNames);
 
     while (!bowlingGames.isEnd()) {
       playBowlingGame(bowlingGames);

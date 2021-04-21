@@ -56,6 +56,7 @@ public class NormalFrame extends Frame {
         return state.toString();
     }
 
+
     @Override
     public int getScore() {
         return this.score.getScore();
