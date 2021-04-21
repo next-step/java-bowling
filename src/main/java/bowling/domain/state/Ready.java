@@ -29,6 +29,11 @@ public class Ready implements State {
         return 0;
     }
 
+    @Override
+    public boolean isStrikeOrSpare() {
+        return false;
+    }
+
 
     @Override
     public String toString() {

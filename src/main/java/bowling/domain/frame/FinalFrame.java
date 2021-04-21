@@ -58,7 +58,7 @@ public class FinalFrame implements Frame {
 
     private boolean hasBonusPitch() {
         return states.stream()
-                .anyMatch(state -> state instanceof Strike || state instanceof Spare);
+            .anyMatch(state -> state.isStrikeOrSpare());
     }
 
     private int sumAllPitchCount() {
