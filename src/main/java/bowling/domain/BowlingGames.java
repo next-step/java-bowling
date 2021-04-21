@@ -1,13 +1,13 @@
 package bowling.domain;
 
 import bowling.domain.frame.Frames;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BowlingGames {
 
+  private static final String INVALID_PLAYER = "player가 존재하지 않습니다.";
   private final List<BowlingGame> bowlingGames;
 
   public BowlingGames(List<String> players) {
@@ -29,8 +29,7 @@ public class BowlingGames {
     return bowlingGames.stream()
         .filter(bowlingGame -> bowlingGame.equalToPlayer(player))
         .findFirst()
-        .orElseThrow(() -> new IllegalArgumentException("player가 존재하지 않습니다."));
-
+        .orElseThrow(() -> new IllegalArgumentException(INVALID_PLAYER));
   }
 
   public Frames getFrames(Player player) {

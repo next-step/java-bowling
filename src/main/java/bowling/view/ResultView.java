@@ -20,13 +20,12 @@ public class ResultView {
 
     public void printResult(BowlingGames bowlingGames) {
         for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
-            printResult(bowlingGame.getPlayer().getName(), bowlingGame.getFrames().getFrames(),
+            printResultDetail(bowlingGame.getPlayer().getName(), bowlingGame.getFrames().getFrames(),
                 bowlingGame.getScore());
-
         }
     }
 
-    public void printResult(String playerName, List<Frame> frames, List<Integer> scores) {
+    public void printResultDetail(String playerName, List<Frame> frames, List<Integer> scores) {
         printHeader();
 
         System.out.print(DIVIDER);
@@ -48,7 +47,7 @@ public class ResultView {
 
 
     public void printEmptyResult(String playerName) {
-        printResult(playerName, new ArrayList<>(), new ArrayList<>());
+        printResultDetail(playerName, new ArrayList<>(), new ArrayList<>());
     }
 
     private void printHeader() {
@@ -70,6 +69,5 @@ public class ResultView {
     private void printScores(List<Integer> scores) {
         scores.forEach(score -> printText(String.valueOf(score)));
     }
-
 
 }
