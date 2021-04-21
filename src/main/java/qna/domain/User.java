@@ -1,13 +1,14 @@
 package qna.domain;
 
-import qna.UnAuthorizedException;
+import qna.exception.UnAuthorizedException;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.Objects;
 
 @Entity
-public class User extends AbstractEntity {
+public class User extends BaseEntity {
+
     public static final GuestUser GUEST_USER = new GuestUser();
 
     @Column(unique = true, nullable = false)
@@ -21,8 +22,7 @@ public class User extends AbstractEntity {
 
     private String email;
 
-    public User() {
-    }
+    protected User() {}
 
     public User(String userId, String password, String name, String email) {
         this(null, userId, password, name, email);
@@ -106,15 +106,26 @@ public class User extends AbstractEntity {
         return false;
     }
 
-    private static class GuestUser extends User {
-        @Override
-        public boolean isGuestUser() {
-            return true;
-        }
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     @Override
     public String toString() {
         return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
+    }
+
+    private static class GuestUser extends User {
+
+        @Override
+        public boolean isGuestUser() {
+            return true;
+        }
     }
 }

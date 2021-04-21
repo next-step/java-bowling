@@ -1,13 +1,12 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-public class Question extends AbstractEntity {
+public final class Question extends BaseEntity {
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -18,15 +17,12 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
-    public Question() {
-    }
+    protected Question() {}
 
     public Question(String title, String contents) {
         this.title = title;
@@ -75,17 +71,33 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public DeleteHistories delete(User loginUser) {
+        validateOwner(loginUser);
+        final DeleteHistories deleteHistories = answers.deleteAll(loginUser);
+
+        deleted = true;
+        deleteHistories.add(DeleteHistory.createQuestionHistory(getId(), loginUser));
+        return deleteHistories;
+    }
+
+    private void validateOwner(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(CannotDeleteException.NO_DELETE_PERMISSION);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     @Override

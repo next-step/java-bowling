@@ -1,12 +1,14 @@
 package qna.domain;
 
-import qna.NotFoundException;
-import qna.UnAuthorizedException;
+import qna.exception.CannotDeleteException;
+import qna.exception.NotFoundException;
+import qna.exception.UnAuthorizedException;
 
 import javax.persistence.*;
 
 @Entity
-public class Answer extends AbstractEntity {
+public final class Answer extends BaseEntity {
+
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -20,8 +22,7 @@ public class Answer extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public Answer() {
-    }
+    protected Answer() {}
 
     public Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
@@ -30,22 +31,17 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
         this.writer = writer;
         this.question = question;
         this.contents = contents;
-    }
-
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
     }
 
     public boolean isDeleted() {
@@ -64,8 +60,34 @@ public class Answer extends AbstractEntity {
         return contents;
     }
 
+    public DeleteHistory delete(User user) {
+        validateOwner(user);
+        deleted = true;
+        return DeleteHistory.createAnswerHistory(getId(), user);
+    }
+
+    private void validateOwner(User user) {
+        if (!isOwner(user)) {
+            throw new CannotDeleteException(CannotDeleteException.NO_DELETE_PERMISSION);
+        }
+    }
+
+    public boolean isDeletable(User user) {
+        return isOwner(user);
+    }
+
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     @Override
