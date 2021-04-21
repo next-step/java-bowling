@@ -4,10 +4,7 @@ import bowling.domain.Pin;
 import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
-
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
 
@@ -79,19 +76,16 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public String getFallenPins() {
-        return states.stream()
-                .map(State::toString)
-                .collect(Collectors.joining("|"));
-    }
-
-    @Override
     public int getScore() {
         return this.score.getScore();
     }
 
     public boolean hasScore() {
         return isEnd();
+    }
+
+    public LinkedList<State> getStates() {
+        return states;
     }
 
 }

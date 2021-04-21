@@ -1,6 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
+import bowling.domain.state.Spare;
+import bowling.domain.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,7 +36,7 @@ public class NormalFrameTest {
     void playStrike() {
         NormalFrame frame = NormalFrame.createFirst();
         frame.play(new Pin(10));
-        assertThat(frame.getFallenPins()).isEqualTo("X");
+        assertThat(frame.getState()).isInstanceOf(Strike.class);
     }
 
 
@@ -44,8 +46,7 @@ public class NormalFrameTest {
         NormalFrame frame = NormalFrame.createFirst();
         frame.play(new Pin(7));
         frame.play(new Pin(3));
-
-        assertThat(frame.getFallenPins()).isEqualTo("7|/");
+        assertThat(frame.getState()).isInstanceOf(Spare.class);
     }
 
 

@@ -7,8 +7,6 @@ public abstract class Frame {
 
     abstract Frame next();
 
-    public abstract String getFallenPins();
-
     abstract int getScore();
 
     void calculateScore(int index, Pin count) {

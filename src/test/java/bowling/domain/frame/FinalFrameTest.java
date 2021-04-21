@@ -1,6 +1,14 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
+import bowling.domain.state.FirstBowl;
+import bowling.domain.state.Miss;
+import bowling.domain.state.State;
+import bowling.view.ResultView;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,30 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class FinalFrameTest {
-
-    @Test
-    @DisplayName("3개, 4개 친 경우 2번의 기회가 있다.")
-    void playTwoCount() {
-        FinalFrame frame = new FinalFrame();
-        frame.play(new Pin(3));
-        frame.play(new Pin(4));
-
-        assertThat(frame.getFallenPins()).isEqualTo("3|4");
-    }
-
-
-    @ParameterizedTest
-    @CsvSource(value = {"3, 7, 1, 3|/|1", "10, 10, 10, X|X|X", "10, 4, 1, X|4|1"})
-    @DisplayName("스트라이크나 스페어인경우 3번의 기회가 있다.")
-    void playThreeCount(int first, int second, int third, String expect) {
-        FinalFrame frame = new FinalFrame();
-        frame.play(new Pin(first));
-        frame.play(new Pin(second));
-        frame.play(new Pin(third));
-
-        assertThat(frame.getFallenPins()).isEqualTo(expect);
-    }
-
 
     @Test
     @DisplayName("스트라이크나 스페어가 아닌 경우 3번째 투구를 못친다.")
@@ -95,4 +79,7 @@ public class FinalFrameTest {
 
         assertThat(frame.getScore()).isEqualTo(expectScore);
     }
+
+
 }
+

@@ -52,12 +52,6 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public String getFallenPins() {
-        return state.toString();
-    }
-
-
-    @Override
     public int getScore() {
         return this.score.getScore();
     }
@@ -97,5 +91,9 @@ public class NormalFrame extends Frame {
     @Override
     public int hashCode() {
         return Objects.hash(playCount);
+    }
+
+    public State getState() {
+        return state;
     }
 }

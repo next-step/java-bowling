@@ -2,13 +2,18 @@ package bowling.view;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGames;
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
+import bowling.domain.state.State;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResultView {
 
-    public static final int MAX_FRAME_COUNT = 10;
+    public static final int MAX_FRAME_INDEX = 9;
     public static final String DIVIDER = "|";
     private static final String HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
 
@@ -69,14 +74,44 @@ public class ResultView {
 
 
     private void printFrames(List<Frame> frames) {
+        for (int i = 0; i< frames.size(); i++) {
+            printFrame(i, frames);
+        }
 
-        frames.forEach(frame -> printText(frame.getFallenPins()));
+    }
 
+    private void printFrame(int index, List<Frame> frames) {
+        if (!isFinalFrame(index)) {
+            printNormalFrame(frames.get(index));
+            return;
+
+        }
+        printFinalFrame(frames.get(index));
+    }
+
+    private void printFinalFrame(Frame frame) {
+        FinalFrame finalFrame = (FinalFrame) frame;
+        printText(makeStatesToString(((FinalFrame) frame).getStates()));
+    }
+
+    public static String makeStatesToString(LinkedList<State> states) {
+        return states.stream()
+            .map(State::toString)
+            .collect(Collectors.joining("|"));
+    }
+
+    private void printNormalFrame(Frame frame) {
+        NormalFrame normalFrame = (NormalFrame) frame;
+        printText(normalFrame.getState().toString());
+    }
+
+    private boolean isFinalFrame(int index) {
+        return index == MAX_FRAME_INDEX;
     }
 
 
     private void printRemainDivider(int size) {
-        for (int i = size; i< MAX_FRAME_COUNT; i++) {
+        for (int i = size; i<= MAX_FRAME_INDEX; i++) {
             printText("");
         }
         System.out.print(System.lineSeparator());
