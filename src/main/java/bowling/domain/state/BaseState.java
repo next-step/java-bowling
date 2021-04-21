@@ -4,6 +4,12 @@ import org.apache.logging.log4j.util.Strings;
 
 public abstract class BaseState implements FrameState {
 
+    protected final int firstPin;
+
+    BaseState(int firstPin) {
+        this.firstPin = firstPin;
+    }
+
     @Override
     public FrameState bowl(int pin) {
         return new Ready();
@@ -14,8 +20,15 @@ public abstract class BaseState implements FrameState {
         return Strings.EMPTY;
     }
 
+    protected String printScore(int pin) {
+        if (pin == 0) {
+            return BOWLING_PRINT_GUTTER;
+        }
+        return String.valueOf(pin);
+    }
+
     @Override
-    public String printScore(int pin) {
-        return FrameState.super.printScore(pin);
+    public int totalScore() {
+        return 0;
     }
 }

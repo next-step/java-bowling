@@ -3,21 +3,24 @@ package bowling.domain.state;
 import bowling.domain.Pins;
 import org.apache.logging.log4j.util.Strings;
 
-import static bowling.domain.Pin.BOWLING_PIN_MAX_SIZE;
-
 public class Ready extends BaseState {
 
+    public Ready() {
+        super(0);
+    }
+
     @Override
-    public FrameState bowl(int pin) {
-        Pins first = Pins.first(pin);
-        if (first.first() == BOWLING_PIN_MAX_SIZE) {
+    public FrameState bowl(int downPins) {
+        Pins pitch = Pins.valueOf(downPins, 0);
+        if (pitch.isStrike()) {
             return new Strike();
         }
-        return new Hit(pin);
+        return new Hit(downPins);
     }
 
     @Override
     public String printResult() {
         return Strings.EMPTY;
     }
+
 }

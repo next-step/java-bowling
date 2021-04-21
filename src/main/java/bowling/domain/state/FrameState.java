@@ -11,10 +11,5 @@ public interface FrameState {
 
     String printResult();
 
-    default String printScore(int pin) {
-        if (pin == 0) {
-            return BOWLING_PRINT_GUTTER;
-        }
-        return String.valueOf(pin);
-    }
+    int totalScore();
 }

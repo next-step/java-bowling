@@ -20,7 +20,6 @@ class FrameStateTest {
         );
     }
 
-
     @DisplayName("Hit 상태 2구 시 상태 테스트")
     @Test
     void testCase2() {
