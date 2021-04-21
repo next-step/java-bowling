@@ -24,6 +24,10 @@ public class Answers {
         answers.add(answer);
     }
 
+    public int count() {
+        return answers.size();
+    }
+
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();

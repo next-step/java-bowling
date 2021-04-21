@@ -1,11 +1,26 @@
 package qna.domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 class AnswersTest {
+
+    @Test
+    @DisplayName("답변등록 테스트")
+    void registerAnswer() {
+        // given
+        Answers answers = new Answers();
+
+        // when
+        answers.add(AnswerTest.A1, QuestionTest.Q1);
+
+        // then
+        assertThat(1).isEqualTo(answers.count());
+    }
 
     @Test
     @DisplayName("다른 사람의 답변이 존재하는 경우 답변삭제 불가")
@@ -15,6 +30,6 @@ class AnswersTest {
         answers.add(AnswerTest.A2, QuestionTest.Q1);
 
         // when then
-        Assertions.assertThrows(CannotDeleteException.class, () -> answers.delete(UserTest.JAVAJIGI), "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        assertThrows(CannotDeleteException.class, () -> answers.delete(UserTest.JAVAJIGI), "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
 }
