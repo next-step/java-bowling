@@ -13,7 +13,7 @@ public abstract class BaseState implements FrameState {
     }
 
     @Override
-    public String isGutter(int pin) {
-        return FrameState.super.isGutter(pin);
+    public String printScore(int pin) {
+        return FrameState.super.printScore(pin);
     }
 }

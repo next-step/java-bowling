@@ -23,6 +23,6 @@ public class Hit implements FrameState {
 
     @Override
     public String printResult() {
-        return isGutter(pin) + "|";
+        return printScore(pin) + "|";
     }
 }

@@ -8,6 +8,17 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class FrameStateTest {
 
+    @DisplayName("State Ready 상태에서 투구 시 상태 확인 테스트")
+    @Test
+    void testCase2() {
+        assertAll(
+                () -> assertThat(new Ready().bowl(10).printResult()).isEqualTo("X"),
+                () -> assertThat(new Ready().bowl(10)).isInstanceOf(Strike.class),
+                () -> assertThat(new Ready().bowl(2).printResult()).isEqualTo("2|"),
+                () -> assertThat(new Ready().bowl(2)).isInstanceOf(Hit.class)
+        );
+    }
+
     @DisplayName("State 정보 확인")
     @Test
     void testCase1() {
@@ -19,12 +30,9 @@ class FrameStateTest {
         );
     }
 
-    @DisplayName("State Ready를 통한 상태 확인 테스트")
+    @DisplayName("State ")
     @Test
-    void testCase2() {
-        assertAll(
-                () -> assertThat(new Ready().bowl(10).printResult()).isEqualTo("X"),
-                () -> assertThat(new Ready().bowl(2).printResult()).isEqualTo("2|")
-        );
+    void testCase3() {
+
     }
 }

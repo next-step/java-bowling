@@ -6,7 +6,7 @@ public interface FrameState {
 
     String printResult();
 
-    default String isGutter(int pin) {
+    default String printScore(int pin) {
         if (pin == 0) {
             return "-";
         }

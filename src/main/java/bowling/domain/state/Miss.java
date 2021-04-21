@@ -17,6 +17,6 @@ public class Miss implements FrameState {
 
     @Override
     public String printResult() {
-        return isGutter(firstPin) + "|" + isGutter(downPin);
+        return printScore(firstPin) + "|" + printScore(downPin);
     }
 }
