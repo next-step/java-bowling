@@ -18,17 +18,7 @@ public class Frames {
     public Frames() {
         this.frames = new ArrayList<>();
     }
-/*
-    public void play(int count) {
-        if (isEnd()) {
-            throw new IllegalArgumentException(INVALID_END_PLAY);
-        }
 
-        makeFrame();
-        getLastFrame().play(count);
-        calculateScore(count);
-    }
-*/
     public void play(Pin pinCount) {
         if (isEnd()) {
             throw new IllegalArgumentException(INVALID_END_PLAY);
@@ -41,7 +31,7 @@ public class Frames {
 
     private void calculateScore(Pin pinCount) {
         for (Frame frame : frames) {
-            int index = frames.size() - 1;
+            int index = size() - 1;
             frame.calculateScore(index, pinCount);
         }
     }
@@ -55,9 +45,12 @@ public class Frames {
             return;
         }
 
-        frames.add(frames.size() > NormalFrame.MAX_PLAY_COUNT ? new FinalFrame() : getLastFrame().next());
+        frames.add(nextFrame());
     }
 
+    private Frame nextFrame() {
+        return size() > NormalFrame.MAX_PLAY_COUNT ? new FinalFrame() : getLastFrame().next();
+    }
 
     private boolean isFinalFrame() {
         return frames.size() == MAX_PLAY_COUNT;
@@ -72,7 +65,7 @@ public class Frames {
             throw new IllegalArgumentException(INVALID_END_PLAY);
         }
 
-        return frames.get(frames.size() - 1);
+        return frames.get(size() - 1);
     }
 
     public List<Frame> getFrames() {
@@ -81,10 +74,10 @@ public class Frames {
 
     public int getIndex() {
         if (frames.isEmpty() || getLastFrame().isEnd()) {
-            return frames.size() + 1;
+            return size() + 1;
         }
 
-        return frames.size();
+        return size();
     }
 
     public List<Integer> getScores() {
