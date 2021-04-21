@@ -30,6 +30,6 @@ class AnswersTest {
         answers.add(AnswerTest.A2, QuestionTest.Q1);
 
         // when then
-        assertThrows(CannotDeleteException.class, () -> answers.delete(UserTest.JAVAJIGI), "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        assertThrows(CannotDeleteException.class, () -> answers.deleteAll(UserTest.JAVAJIGI), "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
 }
