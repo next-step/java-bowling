@@ -47,5 +47,5 @@ public class BowlingGameController {
       resultView.printResult(bowlingGames);
     }
   }
-  
+
 }
