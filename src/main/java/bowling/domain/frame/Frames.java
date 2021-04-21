@@ -84,6 +84,10 @@ public class Frames {
                 .collect(Collectors.toList());
     }
 
+    public int size() {
+        return frames.size();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,4 +100,6 @@ public class Frames {
     public int hashCode() {
         return Objects.hash(frames);
     }
+
+
 }

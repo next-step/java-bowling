@@ -34,8 +34,8 @@ public class BowlingGame {
         return frames.isEnd();
     }
 
-    public List<Frame> getFrames() {
-        return frames.getFrames();
+    public Frames getFrames() {
+        return frames;
     }
 
     public int getFrameCount() {
@@ -54,6 +54,10 @@ public class BowlingGame {
         return totalScores;
     }
 
+    public boolean equalToPlayer(Player player) {
+        return this.player.equals(player);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,4 +70,5 @@ public class BowlingGame {
     public int hashCode() {
         return Objects.hash(player);
     }
+
 }

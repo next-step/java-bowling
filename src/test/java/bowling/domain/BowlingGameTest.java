@@ -29,7 +29,7 @@ public class BowlingGameTest {
         bowlingGame.play(third);
         bowlingGame.play(fourth);
 
-        assertThat(bowlingGame.getFrames()).hasSize(expect);
+        assertThat(bowlingGame.getFrames().size()).isEqualTo(expect);
     }
 
 

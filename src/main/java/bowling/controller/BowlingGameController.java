@@ -18,7 +18,7 @@ public class BowlingGameController {
         while (!game.isEnd()) {
             int count = inputView.inputPinCount(game.getFrameCount());
             game.play(count);
-            resultView.printResult(playerName, game.getFrames(), game.getScore());
+            resultView.printResult(playerName, game.getFrames().getFrames(), game.getScore());
         }
     }
 }
