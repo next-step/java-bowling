@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.frame.Frames;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,10 @@ public class BowlingGames {
         .distinct()
         .map(BowlingGame::new)
         .collect(Collectors.toList());
+  }
+
+  public List<BowlingGame> getBowlingGames() {
+    return Collections.unmodifiableList(bowlingGames);
   }
 
   public void play(Player player, int count) {

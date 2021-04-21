@@ -13,8 +13,6 @@ public class Player {
     private final static Pattern pattern = Pattern.compile(INVALID_PATTERN_REGEX);
     private final String name;
 
-
-
     public Player(String name) {
         validate(name);
         this.name = name;
@@ -25,6 +23,10 @@ public class Player {
             name.length() != NAME_LENGTH || !pattern.matcher(name).matches()) {
             throw new IllegalArgumentException(INVALID_NAME);
         }
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -39,4 +41,6 @@ public class Player {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+
 }

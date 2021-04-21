@@ -6,6 +6,7 @@ import bowling.domain.frame.Frames;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import qna.domain.User;
 
 public class BowlingGame {
 
@@ -58,6 +59,10 @@ public class BowlingGame {
         return this.player.equals(player);
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,5 +75,4 @@ public class BowlingGame {
     public int hashCode() {
         return Objects.hash(player);
     }
-
 }

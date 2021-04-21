@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.frame.Frame;
 import java.util.ArrayList;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +17,18 @@ public class ResultView {
     public static final int MAX_FRAME_COUNT = 10;
     public static final String DIVIDER = "|";
     private static final String HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+
+    public void printResult(BowlingGames bowlingGames) {
+        printHeader();
+
+        for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
+            printText(bowlingGame.getPlayer().getName());
+            printFrames(bowlingGame.getFrames().getFrames());
+
+            printScores(bowlingGame.getScore());
+
+        }
+    }
 
     public void printResult(String playerName, List<Frame> frames, List<Integer> scores) {
         printHeader();
@@ -60,4 +74,6 @@ public class ResultView {
     private void printScores(List<Integer> scores) {
         scores.forEach(score -> printText(String.valueOf(score)));
     }
+
+
 }
