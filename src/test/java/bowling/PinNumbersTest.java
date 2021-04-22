@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.FrameState;
+import bowling.domain.FrameResult;
 import bowling.domain.PinNumber;
 import bowling.domain.PinNumbers;
 import org.assertj.core.api.Assertions;
@@ -26,7 +26,7 @@ public class PinNumbersTest {
         PinNumbers pinNumbers = new PinNumbers();
         pinNumbers.record(new PinNumber(10));
 
-        Assertions.assertThat(pinNumbers.result(1)).isEqualTo(FrameState.STRIKE.frameState());
+        Assertions.assertThat(pinNumbers.result(1)).isEqualTo(FrameResult.STRIKE.frameResult());
     }
 
     @Test
@@ -37,6 +37,6 @@ public class PinNumbersTest {
         pinNumbers.record(new PinNumber(3));
         pinNumbers.record(new PinNumber(5));
 
-        Assertions.assertThat(pinNumbers.result(2)).isEqualTo(FrameState.SPARE.frameState());
+        Assertions.assertThat(pinNumbers.result(2)).isEqualTo(FrameResult.SPARE.frameResult());
     }
 }

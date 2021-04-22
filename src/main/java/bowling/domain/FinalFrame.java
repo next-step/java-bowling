@@ -6,8 +6,8 @@ public class FinalFrame extends Frame {
     private static final int GUARANTEED_OPPORTUNITY = 2;
 
     public boolean hasThird() {
-        return result(1).equals(FrameState.STRIKE.frameState()) ||
-                result(2).equals(FrameState.SPARE.frameState());
+        return result(1).equals(FrameResult.STRIKE.frameResult()) ||
+                result(2).equals(FrameResult.SPARE.frameResult());
     }
 
     @Override

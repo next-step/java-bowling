@@ -42,11 +42,11 @@ public class PinNumbers {
 
     public String result(int index) {
         if (index == 1) {
-            return FrameState.eachState(pinNumbers.get(0));
+            return FrameResult.eachResult(pinNumbers.get(0));
         }
         if (pinNumbers.get(index - 1).pinNumber() == MAX_PIN_NUMBER) {
-            return FrameState.STRIKE.frameState();
+            return FrameResult.STRIKE.frameResult();
         }
-        return FrameState.pairState(pinNumbers.get(index - 2), pinNumbers.get(index - 1));
+        return FrameResult.pairResult(pinNumbers.get(index - 2), pinNumbers.get(index - 1));
     }
 }

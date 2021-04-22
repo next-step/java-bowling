@@ -18,27 +18,27 @@ public enum ResultByPlayNumber implements Result {
     ONE(1) {
         @Override
         public void print(FrameStrategy frame) {
-            printState(frame, 1);
+            printEachPitch(frame, 1);
             System.out.print(SINGLE_FRAME);
         }
     },
     TWO(2) {
         @Override
         public void print(FrameStrategy frame) {
-            printState(frame, 1);
+            printEachPitch(frame, 1);
             System.out.print(BOUNDARY);
-            printState(frame, 2);
+            printEachPitch(frame, 2);
             System.out.print(FULL_FRAME);
         }
     },
     THREE(3) {
         @Override
         public void print(FrameStrategy frame) {
-            printState(frame, 1);
+            printEachPitch(frame, 1);
             System.out.print(BOUNDARY);
-            printState(frame, 2);
+            printEachPitch(frame, 2);
             System.out.print(BOUNDARY);
-            printState(frame, 3);
+            printEachPitch(frame, 3);
             System.out.println(FULL_FRAME);
         }
     };
@@ -53,12 +53,12 @@ public enum ResultByPlayNumber implements Result {
         this.playNumber = playNumber;
     }
 
-    private static void printState(FrameStrategy frame, int index) {
-        String frameState = frame.result(index);
-        System.out.print(frameState);
+    private static void printEachPitch(FrameStrategy frame, int index) {
+        String pitchResult = frame.result(index);
+        System.out.print(pitchResult);
     }
 
-    public static void resultString(int playNumber, FrameStrategy frame) {
+    public static void printResult(FrameStrategy frame, int playNumber) {
         Arrays.stream(values())
                 .filter(value -> value.playNumber == playNumber)
                 .findFirst()

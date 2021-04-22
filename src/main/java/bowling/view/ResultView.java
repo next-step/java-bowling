@@ -35,7 +35,7 @@ public class ResultView {
 
     private void printProceedingRound(FrameStrategy frame) {
         int playNumber = frame.size();
-        ResultByPlayNumber.resultString(playNumber, frame);
+        ResultByPlayNumber.printResult(frame, playNumber);
     }
 
     private void printRemainingRound(int proceedingRound) {
