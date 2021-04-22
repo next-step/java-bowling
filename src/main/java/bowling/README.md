@@ -16,26 +16,43 @@
 - 투구 한번 당 쓰러진 볼링핀 관리
 - 최대 10개, 최소 1개 
 
+
 ### State
 - 각 프레임 당 쓰러진 볼링핀에 의한 상태 표현
 - 인터페이스(Strike, Spare, Miss)
 - 볼링핀 갯수 기반 새로운 상태 도출
 
+
 ### Miss
 - 2개의 BowlingPin 선언을 통해 투구당 쓰러진 볼링 핀 기록
 - 2번의 투구를 통해 모든 볼링핀이 쓰러지지 않았을 때의 상태
+
 
 ### Spare
 - 2개의 BowlingPin 선언을 통해 투구당 쓰러진 볼링 핀 기록
 - 2번의 투구를 통해 모든 볼링핀이 쓰러졌을 때의 상태
 
+
 ### Strike
 - 한번의 투구를 통해 모든 볼링핀이 쓰려졌을 때의 상태
 
 
-### TryCount
+### AttemptNumber
 - 프레임 당 시도 횟수 관리
+- 인터페이스(NormalAttemptNumber, FinalAttemptNumber)
+  
+
+### NormalAttemptNumber
+- NormalFrame 시도 횟수 관리
 - 최대 2번 투구
+- 마지막 투구 인지 판단
+
+
+### FinalAttemptNumber
+- FinalFrame 시도 횟수 관리
+- 최대 3번 투구
+- 마지막 투구 인지 판단  
+- 보너스 투구 인지 판단
 
 
 ### Frame
@@ -43,14 +60,17 @@
 - 인터페이스(NormalFrame, FinalFrame)
 - 볼링 투구 시, 횟수와 상태 변경
 - 다음 프레임 생성
-- 프레임 종료 체크(총 2번의 투구)
+- 프레임 종료 체크
+
 
 ### NormalFrame
 - 1~9 프레임 담당
 - 최대 2번 투구
 
+
 ### FinalFrame
 - 마지막 프레임 담당
+- Frame List 관리
 - 최대 3번 투구
-  - 첫번째 스트라이크일 경우
+  - 1번째 투구 시, 스트라이크일 경우
   - 2번째 투구 시, 스페어일 경우
