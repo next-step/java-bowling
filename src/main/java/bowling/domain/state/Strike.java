@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
 public class Strike implements State {
+    private static final String SYMBOL = "X";
+
     private final BowlingPin bowlingPin;
 
     private Strike(BowlingPin bowlingPin) {
@@ -14,5 +16,15 @@ public class Strike implements State {
     @Override
     public BowlingPin firstHit() {
         return bowlingPin;
+    }
+
+    @Override
+    public String score() {
+        return SYMBOL;
+    }
+
+    @Override
+    public String totalScore() {
+        return SYMBOL;
     }
 }

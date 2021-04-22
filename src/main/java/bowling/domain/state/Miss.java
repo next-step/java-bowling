@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
 public class Miss implements State {
+    public static final String PARTITION = "|";
+
     private final BowlingPin firstPin;
     private final BowlingPin secondPin;
 
@@ -20,5 +22,15 @@ public class Miss implements State {
     @Override
     public BowlingPin firstHit() {
         return firstPin;
+    }
+
+    @Override
+    public String score() {
+        return firstPin.score();
+    }
+
+    @Override
+    public String totalScore() {
+        return firstPin.score() + PARTITION + secondPin.score();
     }
 }

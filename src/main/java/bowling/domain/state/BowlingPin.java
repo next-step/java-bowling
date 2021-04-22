@@ -5,6 +5,7 @@ import java.util.Objects;
 public class BowlingPin {
     private static final int MAX_PIN_COUNT = 10;
     private static final int MIN_PIN_COUNT = 0;
+    private static final String GUTTER_SYMBOL = "-";
 
     private final int pin;
 
@@ -29,6 +30,13 @@ public class BowlingPin {
 
     public BowlingPin sum(BowlingPin bowlingPin) {
         return of(this.pin + bowlingPin.pin);
+    }
+
+    public String score() {
+        if (this.pin == MIN_PIN_COUNT) {
+            return GUTTER_SYMBOL;
+        }
+        return String.valueOf(pin);
     }
 
     @Override

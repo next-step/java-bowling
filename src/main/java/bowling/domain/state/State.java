@@ -16,4 +16,6 @@ public interface State {
     }
 
     BowlingPin firstHit();
+    String score();
+    String totalScore();
 }

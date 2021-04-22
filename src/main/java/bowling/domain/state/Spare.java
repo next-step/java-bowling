@@ -1,6 +1,9 @@
 package bowling.domain.state;
 
 public class Spare implements State {
+    public static final String PARTITION = "|";
+    private static final String SYMBOL = "/";
+
     private final BowlingPin firstPin;
     private final BowlingPin secondPin;
 
@@ -16,5 +19,15 @@ public class Spare implements State {
     @Override
     public BowlingPin firstHit() {
         return firstPin;
+    }
+
+    @Override
+    public String score() {
+        return firstPin.score();
+    }
+
+    @Override
+    public String totalScore() {
+        return firstPin.score() + PARTITION + SYMBOL;
     }
 }
