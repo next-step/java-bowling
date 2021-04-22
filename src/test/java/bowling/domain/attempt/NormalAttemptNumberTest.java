@@ -52,4 +52,13 @@ public class NormalAttemptNumberTest {
         Assertions.assertThrows(IllegalStateException.class, () -> attemptNumber.isBonusAttempt());
     }
 
+    @Test
+    void 두번째_투구_전_확인_테스트() {
+        // given
+        AttemptNumber attemptNumber = NormalAttemptNumber.of(1);
+        AttemptNumber attemptNumber2 = NormalAttemptNumber.of(2);
+        // when & then
+        assertThat(attemptNumber.isSecondAttempt()).isTrue();
+        assertThat(attemptNumber2.isSecondAttempt()).isFalse();
+    }
 }

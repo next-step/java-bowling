@@ -29,6 +29,12 @@ public class FinalAttemptNumber implements AttemptNumber {
     }
 
     @Override
+    public boolean isSecondAttempt() {
+        return this.attemptNumber > FIRST_ATTEMPT
+            && this.attemptNumber < LAST_ATTEMPT_NUMBER;
+    }
+
+    @Override
     public int increase() {
         if (this.attemptNumber == BONUS_ATTEMPT_NUMBER) {
             throw new IllegalStateException("보너스 투구 기회가 존재하지 않아 증가할수 없습니다.");

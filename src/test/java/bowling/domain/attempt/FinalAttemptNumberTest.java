@@ -53,4 +53,16 @@ public class FinalAttemptNumberTest {
         assertThat(FinalAttemptNumber.of(2).isBonusAttempt()).isFalse();
         assertThat(FinalAttemptNumber.of(3).isBonusAttempt()).isTrue();
     }
+
+    @Test
+    void 두번째_투구_전_확인_테스트() {
+        // given
+        AttemptNumber attemptNumber = FinalAttemptNumber.of(1);
+        AttemptNumber attemptNumber2 = FinalAttemptNumber.of(2);
+        AttemptNumber attemptNumber3 = FinalAttemptNumber.of(3);
+        // when & then
+        assertThat(attemptNumber.isSecondAttempt()).isTrue();
+        assertThat(attemptNumber2.isSecondAttempt()).isFalse();
+        assertThat(attemptNumber3.isSecondAttempt()).isFalse();
+    }
 }
