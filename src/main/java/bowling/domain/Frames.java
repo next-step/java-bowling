@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Frames {
 
+    private static final int LAST_ROUND = 10;
+
     private final List<FrameStrategy> frames;
 
     public Frames() {
@@ -19,7 +21,7 @@ public class Frames {
     public void proceedRound(int frameNumber, PinNumber pinNumber) {
         frames.get(frameNumber - 1).play(pinNumber);
 
-        if (!hasRemainTurn(frameNumber) && frameNumber <= 9) {
+        if (!hasRemainTurn(frameNumber) && frameNumber < LAST_ROUND) {
             frames.add(frames.get(frameNumber - 1).nextFrame(frameNumber));
         }
     }
