@@ -37,18 +37,18 @@
 - 한번의 투구를 통해 모든 볼링핀이 쓰려졌을 때의 상태
 
 
-### AttemptNumber
+### PitchNumber
 - 프레임 당 시도 횟수 관리
-- 인터페이스(NormalAttemptNumber, FinalAttemptNumber)
+- 인터페이스(NormalPitchNumber, FinalPitchNumber)
   
 
-### NormalAttemptNumber
+### NormalPitchNumber
 - NormalFrame 시도 횟수 관리
 - 최대 2번 투구
 - 마지막 투구 인지 판단
 
 
-### FinalAttemptNumber
+### FinalPitchNumber
 - FinalFrame 시도 횟수 관리
 - 최대 3번 투구
 - 마지막 투구 인지 판단  
