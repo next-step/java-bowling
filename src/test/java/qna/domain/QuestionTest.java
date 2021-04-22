@@ -23,7 +23,7 @@ public class QuestionTest {
         assertThat(Q1.isDeleted()).isTrue();
         assertThat(deleteHistories).usingElementComparatorIgnoringFields("createDate")
             .isEqualTo(Collections.singletonList(
-                DeleteHistory.of(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now())));
+                DeleteHistory.ofQuestion(Q1.getId(), Q1.getWriter(), LocalDateTime.now())));
     }
 
     @Test
@@ -36,8 +36,8 @@ public class QuestionTest {
         assertThat(question.isDeleted()).isTrue();
         assertThat(deleteHistories).usingElementComparatorIgnoringFields("createDate")
             .isEqualTo(Arrays.asList(
-                DeleteHistory.of(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now()),
-                DeleteHistory.of(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now())));
+                DeleteHistory.ofQuestion(Q1.getId(), Q1.getWriter(), LocalDateTime.now()),
+                DeleteHistory.ofAnswer(A1.getId(), A1.getWriter(), LocalDateTime.now())));
     }
 
     @Test

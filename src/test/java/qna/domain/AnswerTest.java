@@ -17,7 +17,7 @@ public class AnswerTest {
 
         assertThat(A1.isDeleted()).isTrue();
         assertThat(deleteHistory).isEqualToIgnoringGivenFields(
-            DeleteHistory.of(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now()), "createDate");
+            DeleteHistory.ofAnswer(A1.getId(), A1.getWriter(), LocalDateTime.now()), "createDate");
     }
 
     @Test

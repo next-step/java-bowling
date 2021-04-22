@@ -24,8 +24,8 @@ class AnswersTest {
 
         assertThat(deleteHistories).usingRecursiveComparison().ignoringFields("createDate")
             .isEqualTo(Arrays.asList(
-                DeleteHistory.of(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now()),
-                DeleteHistory.of(ContentType.ANSWER, A3.getId(), A3.getWriter(), LocalDateTime.now())));
+                DeleteHistory.ofAnswer(A1.getId(), A1.getWriter(), LocalDateTime.now()),
+                DeleteHistory.ofAnswer(A3.getId(), A3.getWriter(), LocalDateTime.now())));
     }
 
     @Test
