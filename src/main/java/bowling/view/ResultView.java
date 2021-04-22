@@ -16,7 +16,7 @@ public class ResultView {
 
   public static void showScoreBoard(Frames frames, Player player) {
     roundSection();
-    scoreSection(frames, player);
+    stateSection(frames, player);
   }
 
   private static void roundSection() {
@@ -27,13 +27,13 @@ public class ResultView {
     System.out.println();
   }
 
-  public static void scoreSection(Frames frames, Player player) {
+  public static void stateSection(Frames frames, Player player) {
     System.out.print(SEPARATOR + alignText(player.name()) + SEPARATOR);
-    System.out.print(scoreResult(frames.frames()));
+    System.out.print(stateResult(frames.frames()));
     System.out.println();
   }
 
-  private static String scoreResult(List<Frame> frames) {
+  private static String stateResult(List<Frame> frames) {
     return frames.stream()
         .map(ResultView::eachFrameResult)
         .collect(Collectors.joining(SEPARATOR));
