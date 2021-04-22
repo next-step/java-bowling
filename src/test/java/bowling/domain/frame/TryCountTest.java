@@ -21,7 +21,7 @@ public class TryCountTest {
 
     @Test
     void 시도_횟수_최대_테스트() {
-        assertThat(TryCount.of(2).isMax()).isTrue();
-        assertThat(TryCount.of(1).isMax()).isFalse();
+        assertThat(TryCount.of(2).isMaxHit()).isTrue();
+        assertThat(TryCount.of(1).isMaxHit()).isFalse();
     }
 }
