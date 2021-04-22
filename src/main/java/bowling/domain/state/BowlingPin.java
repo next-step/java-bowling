@@ -24,7 +24,7 @@ public class BowlingPin {
     }
 
     public boolean isMax() {
-        return this.pin == 10;
+        return this.pin == MAX_PIN_COUNT;
     }
 
     public BowlingPin sum(BowlingPin bowlingPin) {
