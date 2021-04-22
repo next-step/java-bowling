@@ -9,19 +9,16 @@ public class ResultView {
     private static final int FIRST_ROUND = 1;
     private static final int LAST_ROUND = 10;
     private static final String NAME_LABEL = "| NAME |";
-    private static final String BOUNDARY = "|";
     private static final String EMPTY_FRAME = "      |";
-    private static final String SINGLE_FRAME = "   |";
-    private static final String FULL_FRAME = " |";
     private static final String ROUND_LABEL_FRAME = "  |";
 
     public void print(String name, List<FrameStrategy> frames) {
         printRoundInfo();
 
         System.out.print("|  " + name + " |");
-        for (FrameStrategy normalFrame : frames) {
+        for (FrameStrategy frame : frames) {
             System.out.print("  ");
-            printProceedingRound(normalFrame);
+            printProceedingRound(frame);
         }
 
         printRemainingRound(frames.size());
@@ -38,30 +35,7 @@ public class ResultView {
 
     private void printProceedingRound(FrameStrategy frame) {
         int playNumber = frame.size();
-
-        if (playNumber == 1) {
-            printState(frame, 1);
-            System.out.print(SINGLE_FRAME);
-        }
-        if (playNumber == 2) {
-            printState(frame, 1);
-            System.out.print(BOUNDARY);
-            printState(frame, 2);
-            System.out.print(FULL_FRAME);
-        }
-        if (playNumber == 3) {
-            printState(frame, 1);
-            System.out.print(BOUNDARY);
-            printState(frame, 2);
-            System.out.print(BOUNDARY);
-            printState(frame, 3);
-            System.out.println(FULL_FRAME);
-        }
-    }
-
-    private void printState(FrameStrategy frame, int index) {
-        String frameState = frame.result(index);
-        System.out.print(frameState);
+        ResultByPlayNumber.resultString(playNumber, frame);
     }
 
     private void printRemainingRound(int proceedingRound) {
