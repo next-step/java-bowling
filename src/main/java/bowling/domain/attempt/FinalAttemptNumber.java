@@ -10,6 +10,7 @@ public class FinalAttemptNumber implements AttemptNumber {
     private final int attemptNumber;
 
     private FinalAttemptNumber(int attemptNumber) {
+        validate(attemptNumber);
         this.attemptNumber = attemptNumber;
     }
 
@@ -21,8 +22,17 @@ public class FinalAttemptNumber implements AttemptNumber {
         return new FinalAttemptNumber(FIRST_ATTEMPT);
     }
 
+    private void validate(int attemptNumber) {
+        if (attemptNumber < FIRST_ATTEMPT || attemptNumber > BONUS_ATTEMPT_NUMBER) {
+            throw new IllegalArgumentException("유효한 투구 시도 횟수가 아닙니다.");
+        }
+    }
+
     @Override
     public int increase() {
+        if (this.attemptNumber == BONUS_ATTEMPT_NUMBER) {
+            throw new IllegalStateException("보너스 투구 기회가 존재하지 않아 증가할수 없습니다.");
+        }
         return this.attemptNumber + 1;
     }
 
