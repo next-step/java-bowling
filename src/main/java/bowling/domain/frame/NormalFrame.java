@@ -6,6 +6,7 @@ import bowling.domain.attempt.AttemptNumber;
 import bowling.domain.attempt.NormalAttemptNumber;
 import bowling.domain.state.BowlingPin;
 import bowling.domain.state.State;
+import bowling.domain.state.Strike;
 
 public class NormalFrame implements Frame {
     private State state;
@@ -43,6 +44,9 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isDone() {
+        if (state instanceof Strike) {
+            return true;
+        }
         return attemptNumber.isLastAttempt();
     }
 

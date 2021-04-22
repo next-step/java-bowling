@@ -20,7 +20,7 @@ public class NormalFrameTest {
         Frame normalFrame = NormalFrame.of(0);
         // when & then
         normalFrame.bowl(10);
-        assertThat(normalFrame.isDone()).isFalse();
+        assertThat(normalFrame.isDone()).isTrue();
     }
 
     @Test
