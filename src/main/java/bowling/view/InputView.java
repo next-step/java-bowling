@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class InputView {
     private static final String INPUT_PLAYER_NAME = "플레이어 이름은(3 english letters)?: ";
-    public static final String CHECK_NULL_OR_EMPTY = "null 또는 공백인지 확인해주세요.";
+    private static final String CHECK_NULL_OR_EMPTY = "null 또는 공백인지 확인해주세요.";
 
     private final Scanner scanner;
 
@@ -17,6 +17,14 @@ public class InputView {
         String name = scanner.nextLine().trim();
         checkNullOrEmpty(name);
         return name;
+    }
+
+    public String PinCount(int index) {
+        System.out.println();
+        System.out.printf("%d프레임 투구 : ", index + 1);
+        String knockedDownPinCount = scanner.nextLine().trim();
+        checkNullOrEmpty(knockedDownPinCount);
+        return knockedDownPinCount;
     }
 
     private void checkNullOrEmpty(String name) {
