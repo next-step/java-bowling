@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.pin;
 
 import bowling.exception.PinOutOfSizeException;
 
@@ -15,10 +15,26 @@ public class Pin {
     }
 
     public static Pin of(final int pin) {
-        if (pin < BOWLING_PIN_MIN_SIZE || pin > BOWLING_PIN_MAX_SIZE) {
+        if (isLessThanMinSize(pin) || isLargerThanMaxSize(pin)) {
             throw new PinOutOfSizeException();
         }
         return new Pin(pin);
+    }
+
+    private static boolean isLargerThanMaxSize(final int pin) {
+        return pin > BOWLING_PIN_MAX_SIZE;
+    }
+
+    private static boolean isLessThanMinSize(final int pin) {
+        return pin < BOWLING_PIN_MIN_SIZE;
+    }
+
+    public boolean isOutOfSize(final int secondPin) {
+        return value + secondPin > BOWLING_PIN_MAX_SIZE;
+    }
+
+    public boolean isLessThanMaxSize() {
+        return value < BOWLING_PIN_MAX_SIZE;
     }
 
     public int value() {
@@ -36,5 +52,10 @@ public class Pin {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }

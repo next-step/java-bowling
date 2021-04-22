@@ -1,6 +1,11 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.*;
+import bowling.domain.engine.State;
+import bowling.domain.state.finish.Miss;
+import bowling.domain.state.finish.Spare;
+import bowling.domain.state.finish.Strike;
+import bowling.domain.state.run.Hit;
+import bowling.domain.state.run.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +19,7 @@ class NormalFrameTest {
         // given
         NormalFrame frame = new NormalFrame();
         // when
-        FrameState actual = frame.state();
+        State actual = frame.state();
         // then
         assertThat(actual).isInstanceOf(Ready.class);
     }
@@ -59,8 +64,8 @@ class NormalFrameTest {
         // given
         NormalFrame frame = new NormalFrame();
         // when
-        frame.bowl(0);
-        frame.bowl(0);
+        frame.bowl(3);
+        frame.bowl(2);
         // then
         assertThat(frame.state()).isInstanceOf(Miss.class);
     }
@@ -75,4 +80,17 @@ class NormalFrameTest {
         // then
         assertThat(frame.state()).isInstanceOf(Hit.class);
     }
+
+    @DisplayName("2구 시 다음 프레임 투구 테스트")
+    @Test
+    void testCase7() {
+        // given
+        NormalFrame frame = new NormalFrame();
+        // when
+        frame.bowl(3);
+        frame.bowl(3);
+        // then
+        assertThat(frame.score()).isEqualTo(6);
+    }
+
 }

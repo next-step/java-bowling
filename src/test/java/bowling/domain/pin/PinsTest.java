@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.pin;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ class PinsTest {
     @Test
     void testCase1() {
         // given
-        Pins first = Pins.first(1);
+        Pins first = Pins.valueOf(1, 0);
         Pins second = first.second(2);
         // when
         Pins expected = Pins.valueOf(1, 2);
@@ -19,15 +19,24 @@ class PinsTest {
         assertThat(second).isEqualTo(expected);
     }
 
-    @DisplayName("1구 스트라이크 점수 확인")
+    @DisplayName("초구 스트라이크 점수 확인")
     @Test
     void testCase2() {
         // given
-        Pins first = Pins.first(10);
+        Pins first = Pins.valueOf(10, 0);
         // when
-        int totalScore = first.totalScore();
+        int totalScore = first.normalScore();
         // then
         assertThat(totalScore).isEqualTo(10);
     }
 
+    @DisplayName("초구 스트라이크 확인 테스트")
+    @Test
+    void testCase3() {
+        Pins init = Pins.init();
+
+        Pins first = init.first(10);
+
+        assertThat(first.isStrike()).isTrue();
+    }
 }

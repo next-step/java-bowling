@@ -199,17 +199,63 @@ public class QnAService {
 
 > 객체 지향 설계 해보기
 
-- BowlingApplication
-	- 볼링 게임에 대한 전체적인 로직을 담당
+- 코드 설계
+	- BowlingApplication
+		- 전체적인 비즈니스 코드를 담당
+	
+	- BowlingGame
+		- 게임에 대한 퍼블릭 인터페이스 제공
+	
+	- Frame
+	    - BaseFrame 
+			- NormalFrame
+			- FinalFrame
+		- FrameFactory
 
-- BowlingGame
-	- 볼링 투구 인터페이스 제공
-	- 전체 프레임 관리
-	- 사용자 관리
+	- Frames
+		- 프레임 관련 일급 컬렉션
+		- 투구, 다음 프레임 추가
+	
+	![Frame 1](docs/bowling_frame_1.png)
 
-- Frames
-	- 프레임 라운드
-	- 프레임 리스트
-	- 현재 프레임
-		- 프레임의 시도 횟수
-		- 
+	- State
+	    - 투구, 1 ~ 9라운드 출력, 10 라운드 출력
+		- Ready
+		- Hit
+		- Miss
+		- Spare
+		- Strike
+	
+	![State 1](docs/bowling_state_1.png)
+  
+	- Pin
+	    - 투구 시 넘어진 핀에 대한 관리
+		
+	- BonusPin
+	    - 보너스 투구
+	
+	- Pins
+		- 초구
+		- 2구 (1 ~ 9 라운드, 10 라운드) 
+	
+> 투구 상태(State)에 대한 고민
+
+- 투구 전 상태(Ready)
+- 투구 시 상태(Hit)
+- 투구 결과 값에 대한 상태(Strike, Spare, Miss)
+
+			Ready
+			/   \
+		 Hit     Strike
+		/   \
+	Spare   MISS
+			   \
+                GUTTER
+
+
+> 10 프레임 3구 조건
+
+- 초구, 2구에 Strike 또는 Spare 상태가 있는 경우 3구 시도 가능
+
+
+![볼링(그리기) 클래스 다이어그램](docs/bowling_1.png)
