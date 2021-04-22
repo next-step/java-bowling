@@ -1,19 +1,14 @@
 package bowling.controller;
 
-import bowling.domain.FinalFrame;
-import bowling.domain.FrameStrategy;
-import bowling.domain.NormalFrame;
-import bowling.domain.PinNumber;
+import bowling.domain.*;
 import bowling.view.InputView;
 import bowling.view.ResultView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BowlingController {
 
     private static final int FIRST_ROUND = 1;
     private static final int LAST_ROUND = 10;
+
     private final InputView inputView;
     private final ResultView resultView;
 
@@ -25,31 +20,18 @@ public class BowlingController {
     public void run() {
         String name = inputView.name();
 
-        List<FrameStrategy> normalFrames = new ArrayList<>();
-        resultView.print(name, normalFrames);
+        Frames frames = new Frames();
+        resultView.print(name, frames.getFrames());
 
-        for (int thisFrame = FIRST_ROUND; thisFrame < LAST_ROUND; thisFrame++) {
-            NormalFrame normalFrame = new NormalFrame();
-            normalFrames.add(normalFrame);
-
-            normalFrame.play(new PinNumber(inputView.pinNumber(thisFrame)));
-            resultView.print(name, normalFrames);
-            if (!normalFrame.hasSecond()) {
-                continue;
-            }
-            normalFrame.play(new PinNumber(inputView.pinNumber(thisFrame)));
-            resultView.print(name, normalFrames);
+        for (int frameNumber = FIRST_ROUND; frameNumber <= LAST_ROUND; frameNumber++) {
+            playRound(frameNumber, name, frames);
         }
+    }
 
-        FinalFrame finalFrame = new FinalFrame();
-        normalFrames.add(finalFrame);
-        finalFrame.play(new PinNumber(inputView.pinNumber(LAST_ROUND)));
-        resultView.print(name, normalFrames);
-        finalFrame.play(new PinNumber(inputView.pinNumber(LAST_ROUND)));
-        resultView.print(name, normalFrames);
-        if (finalFrame.hasThird()) {
-            finalFrame.play(new PinNumber(inputView.pinNumber(LAST_ROUND)));
-            resultView.print(name, normalFrames);
+    private void playRound(int frameNumber, String name, Frames frames) {
+        while (frames.hasRemainTurn(frameNumber)) {
+            frames.proceedRound(frameNumber, new PinNumber(inputView.pinNumber(frameNumber)));
+            resultView.print(name, frames.getFrames());
         }
     }
 }
