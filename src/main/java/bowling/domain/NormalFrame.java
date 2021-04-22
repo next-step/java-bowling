@@ -17,12 +17,12 @@ public class NormalFrame extends Frame {
     }
   }
 
-  private Score score() {
-    return Score.score(pins.totalHitPin(), pins.size() < NORMAL_FRAME_MAX_SIZE);
+  private ScoreSymbol symbol() {
+    return ScoreSymbol.symbol(pins.totalHitPin(), pins.size() < NORMAL_FRAME_MAX_SIZE);
   }
 
   private boolean isStrike() {
-    return score() == Score.STRIKE;
+    return symbol() == ScoreSymbol.STRIKE;
   }
 
   public boolean isEndFrame() {
@@ -32,4 +32,5 @@ public class NormalFrame extends Frame {
   public boolean isLastFrame() {
     return FALSE;
   }
+
 }
