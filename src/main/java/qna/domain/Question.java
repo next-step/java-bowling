@@ -88,9 +88,14 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
+    public List<DeleteHistory> deleteQuestionAndAnswers() {
+
+    }
+
     public void checkIsOwner(User user) {
 
     }
+
 
     @Override
     public String toString() {
