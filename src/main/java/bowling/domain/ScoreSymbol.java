@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.Arrays;
 
-public enum Score {
+public enum ScoreSymbol {
   STRIKE(10, "X"),
   SPARE(10, "/"),
   GUTTER(0, "-"),
@@ -11,22 +11,22 @@ public enum Score {
   private final int pin;
   private final String mark;
 
-  Score(int pin, String mark) {
+  ScoreSymbol(int pin, String mark) {
     this.pin = pin;
     this.mark = mark;
   }
 
-  public static Score score(int pin, boolean isFirst) {
-    Score score = Arrays.stream(values())
+  public static ScoreSymbol symbol(int pin, boolean isFirst) {
+    ScoreSymbol scoreSymbol = Arrays.stream(values())
         .filter(bowl -> bowl.pin == pin)
         .findFirst()
         .orElse(MISS);
 
-    if (!isFirst && score == STRIKE) {
-      return Score.SPARE;
+    if (!isFirst && scoreSymbol == STRIKE) {
+      return ScoreSymbol.SPARE;
     }
 
-    return score;
+    return scoreSymbol;
   }
 
   public String mark() {
