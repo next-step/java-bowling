@@ -6,6 +6,7 @@ import java.util.List;
 public class PinNumbers {
 
     private static final int MAX_PIN_NUMBER = 10;
+
     private final List<PinNumber> pinNumbers;
     private int remainPinNumber;
 

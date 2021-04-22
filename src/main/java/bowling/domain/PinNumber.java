@@ -4,6 +4,7 @@ public class PinNumber {
 
     private static final int GUTTER_CONDITION = 0;
     private static final int STRIKE_CONDITION = 10;
+
     private final int pinNumber;
 
     public PinNumber(int pinNumber) {

@@ -7,6 +7,7 @@ public enum FrameState {
     GUTTER("-");
 
     private static final int MAX_PIN_NUMBER = 10;
+
     private final String frameState;
 
     FrameState(String frameState) {
