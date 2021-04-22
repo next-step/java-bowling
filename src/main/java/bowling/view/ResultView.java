@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 public class ResultView {
 
   private static final String SEPARATOR = "|";
+  private static final String LINE_SEPARATOR = System.lineSeparator();
   private static final String BLANK = " ";
   private static final int MAX_BLANK_SIZE = 6;
   private static final char SPACE = ' ';
@@ -24,13 +25,12 @@ public class ResultView {
     IntStream.rangeClosed(1, 10)
         .mapToObj(i -> alignText(String.format("%02d", i)) + SEPARATOR)
         .forEach(System.out::print);
-    System.out.println();
+    System.out.print(LINE_SEPARATOR);
   }
 
   public static void stateSection(Frames frames, Player player) {
     System.out.print(SEPARATOR + alignText(player.name()) + SEPARATOR);
-    System.out.print(stateResult(frames.frames()));
-    System.out.println();
+    System.out.println(stateResult(frames.frames()) + SEPARATOR);
   }
 
   private static String stateResult(List<Frame> frames) {
