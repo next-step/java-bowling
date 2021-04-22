@@ -1,4 +1,8 @@
-package bowling.domain;
+package bowling.domain.concrete;
+
+import bowling.domain.engine.Pins;
+import bowling.domain.engine.PitchResult;
+import bowling.domain.engine.Records;
 
 public class FinalFrame {
 

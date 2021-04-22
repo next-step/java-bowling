@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.concrete;
 
+import bowling.domain.engine.PitchResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
