@@ -75,6 +75,6 @@ public class FinalFrameTest {
         // given
         Frame frame = FinalFrame.init();
         // when & then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> frame.next());
+        Assertions.assertThrows(IllegalStateException.class, () -> frame.next());
     }
 }
