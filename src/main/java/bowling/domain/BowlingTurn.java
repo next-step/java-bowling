@@ -17,21 +17,22 @@ public class BowlingTurn {
     }
 
     public void play(int pinCount) {
+        frames.bowl(pinCount);
     }
 
     public boolean isEndTurn() {
-        return false;
+        return frames.isDone();
     }
 
     public boolean isEndAllTurn() {
-        return false;
-    }
-
-    public Frames frames() {
-        return this.frames;
+        return frames.isAllDone();
     }
 
     public Player player() {
         return this.player;
+    }
+
+    public Frames frames() {
+        return this.frames;
     }
 }
