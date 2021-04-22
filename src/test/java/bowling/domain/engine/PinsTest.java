@@ -26,5 +26,16 @@ class PinsTest {
 
         assertThatThrownBy(() -> pins.knockDown(PitchResult.wrap(6))).isInstanceOf(IllegalArgumentException.class);
     }
-    
+
+    @Test
+    @DisplayName("리셋하면 핀의 개수를 다시 10 개로 되돌린다.")
+    void resetPins() {
+        Pins pins = new Pins();
+        pins.knockDown(PitchResult.wrap(10));
+        assertThat(pins.isAllCleared()).isTrue();
+
+        pins.reset();
+        assertThat(pins.isAllCleared()).isFalse();
+    }
+
 }

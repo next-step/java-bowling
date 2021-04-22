@@ -22,7 +22,7 @@ public class FinalFrame implements Frame {
         pins.knockDown(pitchResult);
 
         if (pins.isAllCleared()) {
-            resetPins();
+            pins.reset();
         }
     }
 
@@ -30,10 +30,5 @@ public class FinalFrame implements Frame {
     public boolean isEnded() {
         return records.isMissed() || records.throwCounts() == MAXIMUM_THROW_CHANCES;
     }
-
-    private void resetPins() {
-        pins = new Pins();
-    }
-
 
 }

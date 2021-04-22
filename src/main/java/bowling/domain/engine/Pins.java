@@ -18,4 +18,8 @@ public class Pins {
         return remains == 0;
     }
 
+    public void reset() {
+        remains = MAXIMUM_PINS;
+    }
+
 }
