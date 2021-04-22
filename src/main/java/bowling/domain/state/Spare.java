@@ -12,4 +12,9 @@ public class Spare implements State {
     public static Spare of(BowlingPin firstPin, BowlingPin secondPin) {
         return new Spare(firstPin, secondPin);
     }
+
+    @Override
+    public BowlingPin firstHit() {
+        return firstPin;
+    }
 }

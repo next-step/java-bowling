@@ -16,4 +16,9 @@ public class Miss implements State {
     public static Miss of(BowlingPin firstPin, BowlingPin secondPin) {
         return new Miss(firstPin, secondPin);
     }
+
+    @Override
+    public BowlingPin firstHit() {
+        return firstPin;
+    }
 }

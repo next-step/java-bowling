@@ -3,7 +3,7 @@ package bowling.domain.state;
 public interface State {
     static State newState(BowlingPin bowlingPin) {
         if (bowlingPin.isMax()) {
-            return new Strike();
+            return Strike.of(bowlingPin);
         }
         return Miss.of(bowlingPin);
     }
@@ -14,4 +14,6 @@ public interface State {
         }
         return Miss.of(firstPin, secondPin);
     }
+
+    BowlingPin firstHit();
 }

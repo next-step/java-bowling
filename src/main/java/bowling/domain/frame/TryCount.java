@@ -17,10 +17,18 @@ public class TryCount {
         return new TryCount(tryCount);
     }
 
+    public static TryCount first() {
+        return new TryCount(FIRST_TRY);
+    }
+
     private void validate(int tryCount) {
         if (tryCount < FIRST_TRY || tryCount > MAX_TRY_HIT) {
             throw new IllegalArgumentException("유효한 시도 횟수가 아닙니다.");
         }
+    }
+
+    public int toInteger() {
+        return this.tryCount;
     }
 
     public boolean isFirstHit() {
