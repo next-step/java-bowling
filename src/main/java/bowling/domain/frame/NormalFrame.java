@@ -2,33 +2,35 @@ package bowling.domain.frame;
 
 import java.util.Objects;
 
+import bowling.domain.attempt.AttemptNumber;
+import bowling.domain.attempt.NormalAttemptNumber;
 import bowling.domain.state.BowlingPin;
 import bowling.domain.state.State;
 
 public class NormalFrame implements Frame {
     private State state;
-    private TryCount tryCount;
+    private AttemptNumber attemptNumber;
 
-    private NormalFrame(TryCount tryCount) {
-        this.tryCount = tryCount;
+    private NormalFrame(AttemptNumber normalAttemptNumber) {
+        this.attemptNumber = normalAttemptNumber;
     }
 
     public static Frame init() {
-        return new NormalFrame(TryCount.first());
+        return new NormalFrame(NormalAttemptNumber.first());
     }
 
     public static Frame of(int tryCount) {
-        return new NormalFrame(TryCount.of(tryCount));
+        return new NormalFrame(NormalAttemptNumber.of(tryCount));
     }
 
     @Override
     public void bowl(int pinCount) {
         this.state = this.getState(pinCount);
-        this.tryCount = TryCount.of(this.tryCount.toInteger() + 1);
+        this.attemptNumber = NormalAttemptNumber.of(attemptNumber.increase());
     }
 
     private State getState(int pinCount) {
-        if (tryCount.isFirstHit()) {
+        if (attemptNumber.isFirstAttempt()) {
             return State.newState(BowlingPin.of(pinCount));
         }
         return State.newState(state.firstHit(), BowlingPin.of(pinCount));
@@ -41,7 +43,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isDone() {
-        return tryCount.isMaxHit();
+        return attemptNumber.isLastAttempt();
     }
 
     @Override
@@ -51,11 +53,11 @@ public class NormalFrame implements Frame {
         if (o == null || getClass() != o.getClass())
             return false;
         NormalFrame that = (NormalFrame)o;
-        return Objects.equals(state, that.state) && Objects.equals(tryCount, that.tryCount);
+        return Objects.equals(state, that.state) && Objects.equals(attemptNumber, that.attemptNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(state, tryCount);
+        return Objects.hash(state, attemptNumber);
     }
 }
