@@ -88,6 +88,10 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
+    public void checkIsOwner(User user) {
+
+    }
+
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
