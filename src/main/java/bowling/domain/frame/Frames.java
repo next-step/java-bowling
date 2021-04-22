@@ -47,6 +47,7 @@ public class Frames {
 
     // 전체 프레임 끝남 여부
     public boolean isAllDone() {
-        return frames.stream().allMatch(frame -> frame.isDone());
+        return frames.size() == MAX_NORMAL_FRAME_COUNT + 1
+            && frames.stream().allMatch(frame -> frame.isDone());
     }
 }

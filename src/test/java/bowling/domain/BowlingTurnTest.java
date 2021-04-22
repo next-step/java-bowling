@@ -14,8 +14,8 @@ public class BowlingTurnTest {
         // given
         BowlingTurn bowlingTurn = BowlingTurn.of("LDH");
         // when & then
-        assertThat(bowlingTurn.frames().getFrames()).isEqualTo(Frames.init().getFrames());
-        assertThat(bowlingTurn.player()).isEqualTo(Player.of("LDH"));
+        assertThat(bowlingTurn.frames()).isEqualTo(Frames.init().getFrames());
+        assertThat(bowlingTurn.player()).isEqualTo(Player.of("LDH").toString());
     }
 
     @Test
