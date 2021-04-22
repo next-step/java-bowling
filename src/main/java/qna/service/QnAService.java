@@ -1,7 +1,5 @@
 package qna.service;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -12,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.domain.AnswerRepository;
-import qna.domain.DeleteHistory;
 import qna.domain.Question;
 import qna.domain.QuestionRepository;
 import qna.domain.User;

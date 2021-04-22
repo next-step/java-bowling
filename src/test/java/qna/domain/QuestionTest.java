@@ -14,17 +14,22 @@ public class QuestionTest {
 	public static Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
 	private Question question;
+	private Answer answer;
 
 	@BeforeEach
 	void setUp() {
 		question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+		question.addAnswer(new Answer(1L, UserTest.JAVAJIGI, question, "contents1"));
+		question.addAnswer(new Answer(2L, UserTest.JAVAJIGI, question, "contents2"));
 	}
 
 	@Test
 	@DisplayName("본인 질문 정상 삭제")
 	void validDeleteTest() throws CannotDeleteException {
-		question.deleteQuestion(UserTest.JAVAJIGI);
+		question.delete(UserTest.JAVAJIGI);
 		assertThat(question.isDeleted()).isTrue();
+		assertThat(question.getAnswers().answers().get(0).isDeleted()).isTrue();
+		assertThat(question.getAnswers().answers().get(1).isDeleted()).isTrue();
 
 	}
 
@@ -32,7 +37,7 @@ public class QuestionTest {
 	@DisplayName("본인 질문이 아닌 사람의 글 삭제")
 	void invalidDeleteTest() {
 		assertThatThrownBy(() -> {
-			question.deleteQuestion(UserTest.SANJIGI);
+			question.delete(UserTest.SANJIGI);
 		}).isInstanceOf(CannotDeleteException.class).hasMessage("질문을 삭제할 권한이 없습니다.");
 	}
 
