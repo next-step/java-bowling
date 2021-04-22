@@ -1,10 +1,12 @@
 package bowling.domain;
 
 abstract class Frame implements FrameStrategy {
-    protected final PinNumbers pinNumbers;
+    protected PinNumbers pinNumbers;
+    protected Frame next;
 
-    protected Frame() {
+    public Frame() {
         this.pinNumbers = new PinNumbers();
+        this.next = null;
     }
 
     public int size() {

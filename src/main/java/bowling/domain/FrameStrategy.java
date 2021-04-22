@@ -4,4 +4,6 @@ public interface FrameStrategy {
     int size();
     void play(PinNumber pinNumber);
     String state(int index);
+    boolean hasNext();
+    FrameStrategy nextFrame(int frameNumber);
 }
