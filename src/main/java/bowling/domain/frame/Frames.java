@@ -20,6 +20,20 @@ public class Frames {
     }
 
     public void bowl(int pinCount) {
+        if (isDone()) {
+            frames.add(nextFrame(currentFrame()));
+        }
+        currentFrame().bowl(pinCount);
+    }
+
+    private Frame currentFrame() {
+        return frames.get(frames.size() - 1);
+    }
+
+    private Frame nextFrame(Frame frame) {
+        if (frames.size() == MAX_NORMAL_FRAME_COUNT)
+            return FinalFrame.init();
+        return frame.next();
     }
 
     public List<Frame> getFrames() {
