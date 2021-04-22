@@ -40,7 +40,7 @@ public class PinNumbers {
         }
     }
 
-    public String state(int index) {
+    public String result(int index) {
         if (index == 1) {
             return FrameState.eachState(pinNumbers.get(0));
         }

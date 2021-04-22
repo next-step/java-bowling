@@ -26,7 +26,7 @@ public class PinNumbersTest {
         PinNumbers pinNumbers = new PinNumbers();
         pinNumbers.record(new PinNumber(10));
 
-        Assertions.assertThat(pinNumbers.state(1)).isEqualTo(FrameState.STRIKE.frameState());
+        Assertions.assertThat(pinNumbers.result(1)).isEqualTo(FrameState.STRIKE.frameState());
     }
 
     @Test
@@ -37,6 +37,6 @@ public class PinNumbersTest {
         pinNumbers.record(new PinNumber(3));
         pinNumbers.record(new PinNumber(5));
 
-        Assertions.assertThat(pinNumbers.state(2)).isEqualTo(FrameState.SPARE.frameState());
+        Assertions.assertThat(pinNumbers.result(2)).isEqualTo(FrameState.SPARE.frameState());
     }
 }

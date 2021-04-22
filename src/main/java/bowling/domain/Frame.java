@@ -13,8 +13,8 @@ abstract class Frame implements FrameStrategy {
         return pinNumbers.size();
     }
 
-    public String state(int index) {
-        return pinNumbers.state(index);
+    public String result(int index) {
+        return pinNumbers.result(index);
     }
 
     public void play(PinNumber pinNumber) {

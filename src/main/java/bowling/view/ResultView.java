@@ -60,7 +60,7 @@ public class ResultView {
     }
 
     private void printState(FrameStrategy frame, int index) {
-        String frameState = frame.state(index);
+        String frameState = frame.result(index);
         System.out.print(frameState);
     }
 
