@@ -9,11 +9,15 @@ public class StateTest {
     @Test
     void 미스_생성_테스트() {
         assertThat(State.newState(BowlingPin.of(3))).isInstanceOf(Miss.class);
+        assertThat(State.newState(BowlingPin.of(0), BowlingPin.of(9))).isInstanceOf(Miss.class);
+        assertThat(State.newState(BowlingPin.of(9), BowlingPin.of(0))).isInstanceOf(Miss.class);
+        assertThat(State.newState(BowlingPin.of(3), BowlingPin.of(6))).isInstanceOf(Miss.class);
     }
 
     @Test
     void 스페어_생성_테스트() {
         assertThat(State.newState(BowlingPin.of(0), BowlingPin.of(10))).isInstanceOf(Spare.class);
+        assertThat(State.newState(BowlingPin.of(3), BowlingPin.of(7))).isInstanceOf(Spare.class);
     }
 
     @Test
