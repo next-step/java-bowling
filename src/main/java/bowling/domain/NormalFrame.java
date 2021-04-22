@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import static java.lang.Boolean.FALSE;
-
 public class NormalFrame extends Frame {
 
   private static final int NORMAL_FRAME_MAX_SIZE = 2;
@@ -30,7 +28,7 @@ public class NormalFrame extends Frame {
   }
 
   public boolean isLastFrame() {
-    return FALSE;
+    return false;
   }
 
 }
