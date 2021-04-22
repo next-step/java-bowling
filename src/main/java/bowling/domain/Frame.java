@@ -2,7 +2,6 @@ package bowling.domain;
 
 public abstract class Frame {
 
-  private static final int FIRST_THROW = 1;
   protected final Pins pins;
   protected Round round;
 
@@ -16,20 +15,16 @@ public abstract class Frame {
     pins.add(new Pin(countOfHitPin));
   }
 
-  public boolean isFirstThrow() {
-    return pins.size() == FIRST_THROW;
-  }
-
   public boolean isEmpty() {
     return pins.isEmpty();
   }
 
-  public Pins pins() {
-    return pins;
-  }
-
   public boolean isFinalRound() {
     return round.isFinalRound();
+  }
+
+  public String frameSymbol() {
+    return pins.frameState();
   }
 
   abstract public boolean isEndFrame();
