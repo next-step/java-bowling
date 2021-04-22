@@ -29,7 +29,7 @@ public class Pins {
         .sum();
   }
 
-  public int countUptoSecondThrow() {
+  public int countUptoSecondPin() {
     return first().pin() + second().pin();
   }
 
@@ -60,7 +60,7 @@ public class Pins {
     if (pins.size() == SECOND + 1) {
       return state(first()) + SEPARATOR + nextState();
     }
-    return containBonusThrow();
+    return containBonusPin();
   }
 
   private String state(Pin pin) {
@@ -72,14 +72,14 @@ public class Pins {
   }
 
   private String nextState() {
-    ScoreSymbol scoreSymbol = ScoreSymbol.symbol(countUptoSecondThrow(), false);
+    ScoreSymbol scoreSymbol = ScoreSymbol.symbol(countUptoSecondPin(), false);
     if (scoreSymbol == ScoreSymbol.SPARE) {
       return scoreSymbol.mark();
     }
     return state(second());
   }
 
-  private String containBonusThrow() {
+  private String containBonusPin() {
     return state(first()) + SEPARATOR + nextState() + SEPARATOR + state(bonus());
   }
 }

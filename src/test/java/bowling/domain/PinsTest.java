@@ -29,6 +29,6 @@ public class PinsTest {
         .collect(Collectors.toList());
     Pins pins = new Pins(pin);
 
-    assertThat(pins.countUptoSecondThrow()).isEqualTo(10);
+    assertThat(pins.countUptoSecondPin()).isEqualTo(10);
   }
 }
