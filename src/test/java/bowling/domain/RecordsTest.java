@@ -12,7 +12,7 @@ class RecordsTest {
     @DisplayName("저장된 기록이 스트라이크인지 확인한다.")
     void existsStrikeInRecords() {
         Records records = new Records();
-        records.add(new PitchResult(10));
+        records.add(PitchResult.wrap(10));
 
         assertAll(
             () -> assertThat(records.isStrike()).isTrue(),
@@ -25,8 +25,8 @@ class RecordsTest {
     @DisplayName("두 번의 시도로 10 개의 핀이 쓰러졌다면 스페어 처리가 된 것이다.")
     void checkIfSpare() {
         Records records = new Records();
-        records.add(new PitchResult(8));
-        records.add(new PitchResult(2));
+        records.add(PitchResult.wrap(8));
+        records.add(PitchResult.wrap(2));
 
         assertAll(
             () -> assertThat(records.isStrike()).isFalse(),
@@ -39,8 +39,8 @@ class RecordsTest {
     @DisplayName("두 번의 시도를 다 쓰고도 핀이 남았다면 미스 처리가 된 것이다.")
     void checkIfMissed() {
         Records records = new Records();
-        records.add(new PitchResult(8));
-        records.add(new PitchResult(1));
+        records.add(PitchResult.wrap(8));
+        records.add(PitchResult.wrap(1));
 
         assertAll(
             () -> assertThat(records.isSpare()).isFalse(),

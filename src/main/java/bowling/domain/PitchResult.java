@@ -9,12 +9,17 @@ public class PitchResult {
 
     private final int value;
 
-    public PitchResult(int value) {
+    private PitchResult(int value) {
         validate(value);
         this.value = value;
     }
 
-    private void validate(int value) {
+    public static PitchResult wrap(int value) {
+        validate(value);
+        return new PitchResult(value);
+    }
+
+    private static void validate(int value) {
         if (value < MINIMUM_VALUE || MAXIMUM_VALUE < value) {
             throw new IllegalArgumentException("쓰러트릴 수 있는 핀의 개수는 0 이상 10 이하 입니다.");
         }

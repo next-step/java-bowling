@@ -12,8 +12,8 @@ class PitchResultTest {
     @DisplayName("0 이상 10 이하의 값이 아니면 예외 처리한다.")
     void throwExceptionIfValueIsOutOfRange() {
         assertAll(
-            () -> assertThatThrownBy(() -> new PitchResult(-1)).isInstanceOf(IllegalArgumentException.class),
-            () -> assertThatThrownBy(() -> new PitchResult(11)).isInstanceOf(IllegalArgumentException.class)
+            () -> assertThatThrownBy(() -> PitchResult.wrap(-1)).isInstanceOf(IllegalArgumentException.class),
+            () -> assertThatThrownBy(() -> PitchResult.wrap(11)).isInstanceOf(IllegalArgumentException.class)
         );
     }
     

@@ -13,7 +13,7 @@ class PinsTest {
     void canKnockDownTenPins() {
         Pins pins = new Pins();
 
-        pins.knockDown(new PitchResult(10));
+        pins.knockDown(PitchResult.wrap(10));
 
         assertThat(pins.isAllCleared()).isTrue();
     }
@@ -22,9 +22,9 @@ class PinsTest {
     @DisplayName("현재 남아있는 핀의 개수보다 더 많은 핀을 쓰러뜨릴 수 없다.")
     void cannotKnockDown() {
         Pins pins = new Pins();
-        pins.knockDown(new PitchResult(5));
+        pins.knockDown(PitchResult.wrap(5));
 
-        assertThatThrownBy(() -> pins.knockDown(new PitchResult(6))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> pins.knockDown(PitchResult.wrap(6))).isInstanceOf(IllegalArgumentException.class);
     }
     
 }
