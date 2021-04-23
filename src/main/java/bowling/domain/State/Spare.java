@@ -7,16 +7,13 @@ public class Spare implements State {
 
     public final static String SYMBOL = "|/";
 
-    private final PinCount firstPinCount;
+    private final PinCounts pinCounts;
 
-    private final PinCount secondPinCount;
-
-    public Spare(PinCount firstPinCount, PinCount secondPinCount) {
-        if (!firstPinCount.isValid(secondPinCount)) {
-            throw new IllegalArgumentException("투구 핀수가 너무 많습니다.");
+    public Spare(PinCounts pinCounts) {
+        if (!pinCounts.isSpare()) {
+            throw new IllegalArgumentException("spare 가 아닌 PinCounts입니다.");
         }
-        this.firstPinCount = firstPinCount;
-        this.secondPinCount = secondPinCount;
+        this.pinCounts = pinCounts;
     }
 
     @Override
@@ -31,26 +28,25 @@ public class Spare implements State {
 
     @Override
     public String stateInString() {
-        String firstPinCountInString = firstPinCount.countInString();
-        if (firstPinCount.isGutter()) {
-            firstPinCountInString = Gutter.SYMBOL;
+        if (pinCounts.firstPinCount().isGutter()) {
+            return Gutter.SYMBOL + SYMBOL;
         }
-        return firstPinCountInString + SYMBOL;
+        return pinCounts.firstPinCount().countInString() + SYMBOL;
     }
 
     @Override
     public Score score() {
-        return UnFinishedScore.ofSpare(firstPinCount.sumCount(secondPinCount));
+        return UnFinishedScore.ofSpare(pinCounts.totalCount());
     }
 
     @Override
     public Score calculatedScore(Score scoreToCalculate) {
         Score finalScore = scoreToCalculate;
         if (finalScore.isNecessaryToCalculateMore()) {
-            finalScore = finalScore.calculatedScore(firstPinCount.count());
+            finalScore = finalScore.calculatedScore(pinCounts.firstPinCount().count());
         }
         if (finalScore.isNecessaryToCalculateMore()) {
-            finalScore = finalScore.calculatedScore(secondPinCount.count());
+            finalScore = finalScore.calculatedScore(pinCounts.secondPinCount().count());
         }
         return finalScore;
     }

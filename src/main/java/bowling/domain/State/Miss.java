@@ -7,16 +7,13 @@ public class Miss implements State {
 
     public final static String SEPARATOR_SYMBOL = "|";
 
-    private final PinCount firstPinCount;
+    private final PinCounts pinCounts;
 
-    private final PinCount secondPinCount;
-
-    public Miss(PinCount firstPinCount, PinCount secondPinCount) {
-        if (!firstPinCount.isValid(secondPinCount)) {
-            throw new IllegalArgumentException("투구 핀수가 너무 많습니다.");
+    public Miss(PinCounts pinCounts) {
+        if (pinCounts.isSpare()) {
+            throw new IllegalArgumentException("miss 가 아닌 PinCounts입니다.");
         }
-        this.firstPinCount = firstPinCount;
-        this.secondPinCount = secondPinCount;
+        this.pinCounts = pinCounts;
     }
 
     @Override
@@ -31,13 +28,13 @@ public class Miss implements State {
 
     @Override
     public String stateInString() {
-        String firstPinCountInString = firstPinCount.countInString();
-        if (firstPinCount.isGutter()) {
+        String firstPinCountInString = pinCounts.firstPinCount().countInString();
+        if (pinCounts.firstPinCount().isGutter()) {
             firstPinCountInString = Gutter.SYMBOL;
         }
 
-        String secondPinCountInString = secondPinCount.countInString();
-        if (secondPinCount.isGutter()) {
+        String secondPinCountInString = pinCounts.secondPinCount().countInString();
+        if (pinCounts.secondPinCount().isGutter()) {
             secondPinCountInString = Gutter.SYMBOL;
         }
 
@@ -46,17 +43,17 @@ public class Miss implements State {
 
     @Override
     public Score score() {
-        return FinishedScore.of(firstPinCount.sumCount(secondPinCount));
+        return FinishedScore.of(pinCounts.totalCount());
     }
 
     @Override
     public Score calculatedScore(Score scoreToCalculate) {
         Score finalScore = scoreToCalculate;
         if (finalScore.isNecessaryToCalculateMore()) {
-            finalScore = finalScore.calculatedScore(firstPinCount.count());
+            finalScore = finalScore.calculatedScore(pinCounts.firstPinCount().count());
         }
         if (finalScore.isNecessaryToCalculateMore()) {
-            finalScore = finalScore.calculatedScore(secondPinCount.count());
+            finalScore = finalScore.calculatedScore(pinCounts.secondPinCount().count());
         }
         return finalScore;
     }
