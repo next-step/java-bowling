@@ -26,9 +26,9 @@ public class QuestionTest {
     @Test
     void getInfo_질문_정보_확인테스트() {
         assertAll(
-                () -> assertThat(Q1.getTitle()).isEqualTo("title1"),
-                () -> assertThat(Q1.getWriter()).isEqualTo(UserTest.JAVAJIGI),
-                () -> assertThat(Q1.getContents()).isEqualTo("contents1")
+                () -> assertThat(Q1.contentTitle()).isEqualTo("title1"),
+                () -> assertThat(Q1.writer()).isEqualTo(UserTest.JAVAJIGI),
+                () -> assertThat(Q1.content()).isEqualTo("contents1")
         );
     }
 
@@ -55,12 +55,12 @@ public class QuestionTest {
         Answer answer = new Answer(UserTest.SANJIGI, QuestionTest.Q2, "Answer contents3");
         Q1.addAnswer(answer);
         // when
-        List<Answer> answers = Q1.getAnswers();
+        List<Answer> answers = Q1.answersToQuestion();
         Answer item = answers.get(0);
         // then
         assertAll(
-                () -> assertThat(item.getWriter()).isEqualTo(UserTest.SANJIGI),
-                () -> assertThat(item.getContents()).isEqualTo("Answer contents3")
+                () -> assertThat(item.writer()).isEqualTo(UserTest.SANJIGI),
+                () -> assertThat(item.contents()).isEqualTo("Answer contents3")
         );
     }
 }

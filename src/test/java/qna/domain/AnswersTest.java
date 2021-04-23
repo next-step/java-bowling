@@ -22,7 +22,7 @@ class AnswersTest {
         answers.add(A1);
         // then
         assertThatExceptionOfType(CannotDeleteException.class)
-                .isThrownBy(() -> answers.checkAuthorization(UserTest.SANJIGI));
+                .isThrownBy(() -> answers.deleteAll(UserTest.SANJIGI));
     }
 
     @DisplayName("답변 게시물 삭제처리 리스트 확인 테스트")
@@ -33,7 +33,7 @@ class AnswersTest {
         // when
         answers.add(A1);
         answers.add(A3);
-        List<DeleteHistory> deleteHistories = answers.deleteAll();
+        List<DeleteHistory> deleteHistories = answers.deleteAll(UserTest.JAVAJIGI);
         // then
         assertThat(deleteHistories.size()).isEqualTo(2);
     }

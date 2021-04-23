@@ -7,16 +7,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Boolean.TRUE;
-
 @Entity
 public class Question extends AbstractEntity {
 
-    @Column(length = 100, nullable = false)
-    private String title;
+    public static final String GUIDE_ERR_AUTHORIZATION = "질문을 삭제할 권한이 없습니다.";
 
-    @Lob
-    private String contents;
+    @Embedded
+    private QuestionContents questionContents;
 
     @Embedded
     private final Answers answers = new Answers();
@@ -25,31 +22,22 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    private boolean deleted = false;
+    @Embedded
+    private final Deleted deleted = new Deleted();
 
     public Question() {
     }
 
     public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
+        this(0L, title, contents);
     }
 
     public Question(long id, String title, String contents) {
         super(id);
-        this.title = title;
-        this.contents = contents;
+        this.questionContents = new QuestionContents(title, contents);
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public User getWriter() {
+    public User writer() {
         return writer;
     }
 
@@ -63,42 +51,54 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
+    public Question update(QuestionContents questionContents) {
+        this.questionContents = questionContents;
+        return this;
+    }
+
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
-    public List<DeleteHistory> deleteQuestion(User loginUser){
+    public List<DeleteHistory> deleteQuestion(User loginUser) {
         List<DeleteHistory> deleteList = new ArrayList<>();
 
         checkAuthorization(loginUser);
         deleteList.add(deleteQuestion());
-        deleteList.addAll(answers.deleteAll());
+        deleteList.addAll(answers.deleteAll(loginUser));
 
         return deleteList;
     }
 
     protected DeleteHistory deleteQuestion() {
-        this.deleted = TRUE;
-        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
+        deleted.delete();
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer(), LocalDateTime.now());
     }
 
     public boolean isDeleted() {
-        return deleted;
+        return deleted.isDelete();
     }
 
-    public List<Answer> getAnswers() {
-        return answers.getAnswers();
+    public List<Answer> answersToQuestion() {
+        return answers.answers();
     }
 
     private void checkAuthorization(User loginUser) {
         if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+            throw new CannotDeleteException(GUIDE_ERR_AUTHORIZATION);
         }
-        answers.checkAuthorization(loginUser);
+    }
+
+    public String contentTitle() {
+        return questionContents.getTitle();
+    }
+
+    public String content() {
+        return questionContents.getContents();
     }
 
     @Override
     public String toString() {
-        return String.format("%s, %s, %s, %s", getId(), title, contents, writer);
+        return String.format("%s, %s,  %s", getId(), questionContents, writer);
     }
 }

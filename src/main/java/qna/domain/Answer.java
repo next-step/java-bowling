@@ -1,16 +1,15 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
-
 import java.time.LocalDateTime;
-
-import static java.lang.Boolean.TRUE;
 
 @Entity
 public class Answer extends AbstractEntity {
+    public static final String GUIDE_ERR_DELETE_ANSWER = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -22,7 +21,8 @@ public class Answer extends AbstractEntity {
     @Lob
     private String contents;
 
-    private boolean deleted = false;
+    @Embedded
+    private final Deleted deleted = new Deleted();
 
     public Answer() {
     }
@@ -34,11 +34,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -47,24 +47,27 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    protected DeleteHistory deleteAnswers() {
-        this.deleted = TRUE;
+    protected DeleteHistory deleteAnswers(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(GUIDE_ERR_DELETE_ANSWER);
+        }
+        deleted.delete();
         return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }
 
     public boolean isDeleted() {
-        return deleted;
+        return deleted.isDelete();
     }
 
     public boolean isOwner(User writer) {
         return this.writer.equals(writer);
     }
 
-    public User getWriter() {
+    public User writer() {
         return writer;
     }
 
-    public String getContents() {
+    public String contents() {
         return contents;
     }
 

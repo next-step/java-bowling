@@ -1,7 +1,6 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
-import qna.CannotDeleteException;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -24,21 +23,13 @@ public class Answers {
         answers.add(answer);
     }
 
-    public void checkAuthorization(User loginUser) {
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
-    }
-
-    public List<DeleteHistory> deleteAll() {
+    public List<DeleteHistory> deleteAll(User loginUser) {
         return answers.stream()
-                .map(Answer::deleteAnswers)
+                .map(answer -> answer.deleteAnswers(loginUser))
                 .collect(Collectors.toList());
     }
 
-    public List<Answer> getAnswers() {
+    public List<Answer> answers() {
         return Collections.unmodifiableList(answers);
     }
 }
