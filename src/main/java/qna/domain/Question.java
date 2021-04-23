@@ -1,6 +1,6 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,10 +18,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -67,8 +65,7 @@ public class Question extends AbstractEntity {
     }
 
     public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
+        answers.add(answer, this);
     }
 
     public boolean isOwner(User loginUser) {
@@ -84,12 +81,38 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public List<DeleteHistory> delete(User loginUser) {
+        validateDeleteUser(loginUser);
+        this.setDeleted(true);
+        return this.assembleDeleteHistories(createDeleteHistory(), answers.deleteAll(loginUser));
+    }
+
+    private void validateDeleteUser(User loginUser)  {
+        if (loginUser == null) {
+            throw new IllegalArgumentException("유저 정보를 입력해 주세요.");
+        }
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private DeleteHistory createDeleteHistory() {
+        return new DeleteHistory(this);
+    }
+
+    private List<DeleteHistory> assembleDeleteHistories(DeleteHistory deleteHistory, List<DeleteHistory> answerDeleteHistories) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(deleteHistory);
+        deleteHistories.addAll(answerDeleteHistories);
+        return deleteHistories;
     }
 }

@@ -1,0 +1,39 @@
+package qna.domain;
+
+import org.hibernate.annotations.Where;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Embeddable;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Embeddable
+public class Answers {
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @Where(clause = "deleted = false")
+    @OrderBy("id ASC")
+    private final List<Answer> answers = new ArrayList<>();
+
+    public void add(Answer answer, Question question) {
+        answer.toQuestion(question);
+        answers.add(answer);
+    }
+
+    public int count() {
+        return answers.size();
+    }
+
+    public List<DeleteHistory> deleteAll(User loginUser) {
+        return answers.stream()
+                .map(answer -> answer.delete(loginUser))
+                .collect(Collectors.toList());
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+}
