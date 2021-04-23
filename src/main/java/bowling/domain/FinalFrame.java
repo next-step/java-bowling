@@ -2,8 +2,8 @@ package bowling.domain;
 
 public class FinalFrame implements Frame {
     private static final String CANNOT_THROW_THIRD_BOWL = "3구를 던질수 없습니다.";
+    private static final int FINAL_INDEX = 9;
 
-    private final int finalIndex = 9;
     private final FrameBowls frameBowls;
 
     public FinalFrame() {
@@ -80,7 +80,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public int index() {
-        return finalIndex;
+        return FINAL_INDEX;
     }
 
     @Override
