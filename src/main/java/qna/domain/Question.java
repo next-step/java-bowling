@@ -1,95 +1,95 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
-import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import qna.CannotDeleteException;
+
 @Entity
 public class Question extends AbstractEntity {
-    @Column(length = 100, nullable = false)
-    private String title;
 
-    @Lob
-    private String contents;
+	@Embedded
+	private QuestionBody questionBody;
 
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
-    private User writer;
+	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+	private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+	@Embedded
+	private Answers answers;
 
-    private boolean deleted = false;
+	private boolean deleted = false;
 
-    public Question() {
-    }
+	public Question() {
+	}
 
-    public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
-    }
+	public Question(String title, String contents) {
+		this.questionBody = new QuestionBody(title, contents);
+		this.answers = new Answers();
+	}
 
-    public Question(long id, String title, String contents) {
-        super(id);
-        this.title = title;
-        this.contents = contents;
-    }
+	public Question(long id, String title, String contents) {
+		super(id);
+		this.questionBody = new QuestionBody(title, contents);
+		this.answers = new Answers();
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public User getWriter() {
+		return writer;
+	}
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
+	public Question writeBy(User loginUser) {
+		this.writer = loginUser;
+		return this;
+	}
 
-    public String getContents() {
-        return contents;
-    }
+	public void addAnswer(Answer answer) {
+		answer.toQuestion(this);
+		answers.add(answer);
+	}
 
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
+	public boolean isOwner(User loginUser) {
+		return writer.equals(loginUser);
+	}
 
-    public User getWriter() {
-        return writer;
-    }
+	public boolean isDeleted() {
+		return deleted;
+	}
 
-    public Question writeBy(User loginUser) {
-        this.writer = loginUser;
-        return this;
-    }
+	public Answers getAnswers() {
+		return answers;
+	}
 
-    public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
-    }
+	@Override
+	public String toString() {
+		return "Question{" +
+			"questionBody=" + questionBody +
+			", writer=" + writer +
+			", answers=" + answers +
+			", deleted=" + deleted +
+			'}';
+	}
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
+	public List<DeleteHistory> delete(User loginUser) {
+		List<DeleteHistory> deleteHistories = new ArrayList<>();
+		deleteHistories.add(deleteQuestion(loginUser));
+		deleteHistories.addAll(answers.deleteAll(loginUser));
+		return deleteHistories;
+	}
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
+	private DeleteHistory deleteQuestion(User loginUser) {
+		if (!this.isOwner(loginUser)) {
+			throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+		}
+		this.deleted = true;
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    @Override
-    public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
+		return new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now());
+	}
 }
