@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class FrameTest {
+public class NormalFrameTest {
 
     @Test
     @DisplayName("노말 프레임은 10번 진행 시 에러")

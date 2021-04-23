@@ -1,4 +1,4 @@
-package bowling;
+package bowling.state;
 
 import bowling.domain.state.FirstBowl;
 import bowling.domain.state.Miss;
