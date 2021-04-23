@@ -3,7 +3,7 @@ package bowling.contorller;
 import bowling.domain.BowlingBoard;
 import bowling.domain.Player;
 import bowling.domain.Point;
-import bowling.domain.ThrowsState;
+import bowling.domain.ThrowCount;
 import bowling.dto.BowlingBoardDto;
 import bowling.dto.PlayerDto;
 import bowling.view.InputView;
@@ -31,7 +31,7 @@ public class BowlingGame {
     }
 
     private int round(BowlingBoard nextBowling) {
-        if (nextBowling.state() == ThrowsState.FIRST_THROWS && nextBowling.round() != 1) {
+        if (nextBowling.state().equals(ThrowCount.fisrt()) && nextBowling.round() != 1) {
             return nextBowling.round() - 1;
         }
         return nextBowling.round();

@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum BowlingRole {
     STRIKE(10, true),
     SPARE(10, false),
-    MISS(0, false);
+    MISS(0, false),
+    EMPTY(-1, false);
 
     private final int total;
     private final boolean isStrike;
