@@ -20,6 +20,7 @@ public class BowlingController {
         Player player = new Player(inputView.playerName());
         Frames frames = new Frames();
         playGame(player.name(), frames);
+        inputView.close();
     }
 
     private void playGame(Name name, Frames frames) {
