@@ -18,7 +18,7 @@ class BowlingBoardTest {
         Point finalFirstPoint = Point.of(8);
         Point finalSecondPoint = Point.of(1);
 
-        BowlingBoard bowlingBoard = BowlingBoard.of(createFrames(round, finalFirstPoint, finalSecondPoint), ThrowsState.FINISH_THROWS);
+        BowlingBoard bowlingBoard = BowlingBoard.of(createFrames(round, finalFirstPoint, finalSecondPoint), ThrowCount.of(3));
 
         assertThat(bowlingBoard.isEnd()).isTrue();
     }
@@ -29,7 +29,7 @@ class BowlingBoardTest {
         int round = 10;
         Point finalFirstPoint = Point.of(9);
         Point finalSecondPoint = Point.of(1);
-        BowlingBoard bowlingBoard = BowlingBoard.of(createFrames(round, finalFirstPoint, finalSecondPoint), ThrowsState.FINISH_THROWS);
+        BowlingBoard bowlingBoard = BowlingBoard.of(createFrames(round, finalFirstPoint, finalSecondPoint), ThrowCount.of(2));
 
         assertThat(bowlingBoard.isEnd()).isFalse();
     }
@@ -40,7 +40,7 @@ class BowlingBoardTest {
         int round = 10;
         Point finalFirstPoint = Point.of(10);
         Point finalSecondPoint = Point.of(0);
-        BowlingBoard bowlingBoard = BowlingBoard.of(createFrames(round, finalFirstPoint, finalSecondPoint), ThrowsState.FIRST_THROWS);
+        BowlingBoard bowlingBoard = BowlingBoard.of(createFrames(round, finalFirstPoint, finalSecondPoint), ThrowCount.of(1));
 
         assertThat(bowlingBoard.isEnd()).isFalse();
     }
@@ -49,7 +49,7 @@ class BowlingBoardTest {
     @Test
     void case4() {
         BowlingBoard bowlingBoard = BowlingBoard.of();
-        assertThat(bowlingBoard.isSameState(ThrowsState.FIRST_THROWS)).isTrue();
+        assertThat(bowlingBoard.state()).isEqualTo(ThrowCount.of(0));
     }
 
     @DisplayName("첫번째 피칭 후 상태는 SECOND_THROWS 이다")
@@ -57,7 +57,7 @@ class BowlingBoardTest {
     void case5() {
         BowlingBoard initBoard = BowlingBoard.of();
         BowlingBoard bowlingBoard = initBoard.pitching(Point.of(5));
-        assertThat(bowlingBoard.isSameState(ThrowsState.SECOND_THROWS)).isTrue();
+        assertThat(bowlingBoard.state()).isEqualTo(ThrowCount.of(1));
     }
 
     @DisplayName("두번째 피칭 후 상태는 다시 FIRST_THROWS 이다")
@@ -68,7 +68,7 @@ class BowlingBoardTest {
 
         BowlingBoard lastBowlingBoard = bowlingBoard.pitching(Point.of(4));
 
-        assertThat(lastBowlingBoard.isSameState(ThrowsState.FIRST_THROWS)).isTrue();
+        assertThat(lastBowlingBoard.state()).isEqualTo(ThrowCount.of(0));
     }
 
     @DisplayName("마지막 라운드 두번째 피칭 후 상태는 FINISH_THROWS이다.")
@@ -78,36 +78,40 @@ class BowlingBoardTest {
         Point finalFirstPoint = Point.of(8);
         Point finalSecondPoint = Point.of(0);
 
-        BowlingBoard bowlingBoard = BowlingBoard.of(createFrames(round, finalFirstPoint, finalSecondPoint), ThrowsState.FIRST_THROWS);
-        BowlingBoard finalBoard = bowlingBoard.secondPitching(Point.of(1));
+        BowlingBoard bowlingBoard = BowlingBoard.of(createFrames(round, finalFirstPoint, finalSecondPoint), ThrowCount.of(1));
+        BowlingBoard finalBoard = bowlingBoard.pitching(Point.of(1));
 
-        assertThat(finalBoard.isSameState(ThrowsState.FINISH_THROWS)).isTrue();
+        assertThat(finalBoard.state()).isEqualTo(ThrowCount.of(3));
     }
 
-    @DisplayName("마지막 라운드 보너스 피칭 후 상태는 BONUS_THROWS이다.")
+    @DisplayName("마지막 라운드 보너스 피칭 후 상태는 End_THROWS이다.")
     @Test
     void case8() {
         int round = 10;
         Point finalFirstPoint = Point.of(8);
         Point finalSecondPoint = Point.of(2);
 
-        BowlingBoard bowlingBoard = BowlingBoard.of(createFrames(round, finalFirstPoint, finalSecondPoint), ThrowsState.FINISH_THROWS);
-        BowlingBoard finalBoard = bowlingBoard.bonusPitching(Point.of(5));
-        assertThat(finalBoard.isSameState(ThrowsState.BONUS_THROWS)).isTrue();
+        BowlingBoard bowlingBoard = BowlingBoard.of(createFrames(round, finalFirstPoint, finalSecondPoint), ThrowCount.of(2));
+        BowlingBoard finalBoard = bowlingBoard.pitching(Point.of(1));
+        assertThat(finalBoard.state()).isEqualTo(ThrowCount.of(3));
     }
 
     @DisplayName("각 라운드 점수를 계산한다.")
     @Test
     void case9() {
-        int round = 10;
-        Point finalFirstPoint = Point.of(3);
-        Point finalSecondPoint = Point.of(2);
+        BowlingBoard bowlingBoard = BowlingBoard.of();
+        BowlingBoard firstBoard = bowlingBoard.pitching(Point.of(2));
+        BowlingBoard secondBoard = firstBoard.pitching(Point.of(3));
+        BowlingBoard thirdBoard = secondBoard.pitching(Point.of(2));
+        BowlingBoard fourthBoard = thirdBoard.pitching(Point.of(3));
+        BowlingBoard fifthBoard = fourthBoard.pitching(Point.of(3));
 
-        BowlingBoard bowlingBoard = BowlingBoard.of(createFrames(round, finalFirstPoint, finalSecondPoint), ThrowsState.FINISH_THROWS);
-        List<Integer> list = bowlingBoard.calculate();
-        assertThat(list).contains(5, 10, 15, 20, 25, 30, 35, 40, 45, 50);
+        List<FramePoint> framePoints = fifthBoard.framePoint();
+        List<Integer> collect = framePoints.stream().map(FramePoint::toInt).collect(Collectors.toList());
+        
+        assertThat(collect).contains(5, 10, 13);
     }
-    
+
 
     private List<BowlingFrame> createFrames(int round, Point finalFirstPoint, Point finalSecondPoint) {
         List<BowlingFrame> frameList = IntStream.range(1, round)
@@ -116,5 +120,6 @@ class BowlingBoardTest {
         frameList.add(BowlingFinalFrame.of(FinalRound.of(), Score.of(finalFirstPoint, finalSecondPoint)));
         return frameList;
     }
+
 
 }

@@ -14,7 +14,7 @@ class BowlingFinalFrameTest {
     @Test
     void case1() {
         Point point = Point.of(5);
-        BowlingFinalFrame initFrame = BowlingFinalFrame.first(FinalRound.of());
+        BowlingFinalFrame initFrame = BowlingFinalFrame.first(FinalRound.of(), FramePoint.first());
 
         BowlingFrame bowlingFrame = initFrame.firstPitching(point);
 
@@ -26,7 +26,7 @@ class BowlingFinalFrameTest {
     void case2() {
         Point firstPoint = Point.of(5);
         Point secondPoint = Point.of(4);
-        BowlingFinalFrame initFrame = BowlingFinalFrame.first(FinalRound.of());
+        BowlingFinalFrame initFrame = BowlingFinalFrame.first(FinalRound.of(), FramePoint.first());
 
         BowlingFrame firstFrame = initFrame.firstPitching(firstPoint);
         BowlingFrame secondFrame = firstFrame.secondPitching(secondPoint);
@@ -60,7 +60,7 @@ class BowlingFinalFrameTest {
     @Test
     void case5() {
         assertThatThrownBy(() -> {
-            BowlingFinalFrame.first(FinalRound.of(1));
+            BowlingFinalFrame.first(FinalRound.of(1), FramePoint.first());
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -68,8 +68,8 @@ class BowlingFinalFrameTest {
     @Test
     void case6() {
         BowlingFrame initFrame = BowlingFinalFrame.of(FinalRound.of(), Score.of(Point.of(1), Point.of(5)));
-        int score = initFrame.calculateOfScore();
-        Assertions.assertThat(score).isEqualTo(6);
+        FramePoint framePoint = initFrame.calculateOfScore();
+        Assertions.assertThat(framePoint.toInt()).isEqualTo(6);
     }
 
     @DisplayName("Score Type이 SPARE나 STRIKE면 현재 스코어 합+ 보너스 포인트를 내보낸다.")
@@ -83,10 +83,10 @@ class BowlingFinalFrameTest {
         BowlingFrame initFrame2 = BowlingFinalFrame.of(FinalRound.of(), Score.of(Point.of(10), Point.of(0)));
         BowlingFrame bowlingFrame2 = initFrame2.bonusPitching(Point.of(4));
 
-        int score = bowlingFrame.calculateOfScore();
-        int score2 = bowlingFrame2.calculateOfScore();
+        FramePoint framePoint = bowlingFrame.calculateOfScore();
+        FramePoint framePoint2 = bowlingFrame2.calculateOfScore();
 
-        Assertions.assertThat(score).isEqualTo(14);
-        Assertions.assertThat(score2).isEqualTo(14);
+        Assertions.assertThat(framePoint.toInt()).isEqualTo(14);
+        Assertions.assertThat(framePoint2.toInt()).isEqualTo(14);
     }
 }

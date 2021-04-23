@@ -6,14 +6,17 @@ public abstract class BowlingFrame {
 
     private final Round round;
     private BowlingFrame nextFrame;
+    private final FramePoint framePoint;
 
-    public BowlingFrame(Round round) {
+    public BowlingFrame(Round round, FramePoint framePoint) {
         this.round = round;
+        this.framePoint = framePoint;
     }
 
-    public BowlingFrame(Round round, BowlingFrame nextFrame) {
+    public BowlingFrame(Round round, BowlingFrame nextFrame, FramePoint framePoint) {
         this.round = round;
         this.nextFrame = nextFrame;
+        this.framePoint = framePoint;
     }
 
     abstract BowlingFrame secondPitching(Point point);
@@ -24,10 +27,10 @@ public abstract class BowlingFrame {
 
     public BowlingFrame nextFrame() {
         if (round.equals(Round.of(9))) {
-            this.nextFrame = BowlingFinalFrame.first(FinalRound.of());
+            this.nextFrame = BowlingFinalFrame.first(FinalRound.of(), FramePoint.of(calculateOfScore().toInt()));
             return this.nextFrame;
         }
-        this.nextFrame = BowlingNormalFrame.of(round.next());
+        this.nextFrame = BowlingNormalFrame.of(round.next(), FramePoint.of(calculateOfScore().toInt()));
         return this.nextFrame;
     }
 
@@ -35,11 +38,15 @@ public abstract class BowlingFrame {
         return round;
     }
 
+    public FramePoint framePoint() {
+        return framePoint;
+    }
+
     abstract BowlingRole isType();
 
     abstract ScoreDto toDto();
 
-    public abstract int calculateOfScore();
+    public abstract FramePoint calculateOfScore();
 
     public abstract Score score();
 
