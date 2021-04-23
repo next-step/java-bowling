@@ -2,9 +2,12 @@ package bowling.view;
 
 import bowling.domain.Game;
 import bowling.domain.Name;
+import bowling.domain.frame.Frames;
+import bowling.domain.point.FinalPoints;
 import bowling.domain.point.Point;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
+import bowling.domain.point.Points;
 
 public class ResultView {
 
@@ -46,11 +49,11 @@ public class ResultView {
     private StringBuilder pointStringBuilder(Game game, StringBuilder stringBuilder) {
         for (int count = 1; count <= 9; count++) {
             stringBuilder.append(EMPTY_SPACE_DOUBLE);
-            stringBuilder.append(normalFrameString((Frame) game.getFrames()[count - 1]));
+            stringBuilder.append(normalFrameString((Frame) game.getFrames().getFrames().get(count - 1)));
             stringBuilder.append(RIGHT_BOX_SINGLE_SPACE);
         }
         stringBuilder.append(EMPTY_SPACE_DOUBLE);
-        stringBuilder.append(finalFrameString((FinalFrame) game.getFrames()[FINAL_FRAME_INDEX]));
+        stringBuilder.append(finalFrameString((FinalFrame) game.getFrames().getFrames().get(FINAL_FRAME_INDEX)));
         stringBuilder.append(RIGHT_BOX_SINGLE_SPACE);
 
         return stringBuilder;
@@ -63,7 +66,8 @@ public class ResultView {
         if (frame.ended()) {
             return normalFrameEndedString(frame);
         }
-        return String.format(NORMAL_FRAME_FORMAT, gutterIfNeeded(frame.firstPoint()), DIVIDER, EMPTY_SPACE_SINGLE);
+        return String.format(NORMAL_FRAME_FORMAT, gutterIfNeeded(frame.getPoints()
+                .getFirstPoint()), DIVIDER, EMPTY_SPACE_SINGLE);
     }
 
     private String normalFrameEndedString(Frame frame) {
@@ -71,9 +75,11 @@ public class ResultView {
             return String.format(NORMAL_FRAME_FORMAT, STRIKE, EMPTY_SPACE_SINGLE, EMPTY_SPACE_SINGLE);
         }
         if (frame.spared()) {
-            return String.format(NORMAL_FRAME_FORMAT, gutterIfNeeded(frame.firstPoint()), DIVIDER, SPARE);
+            return String.format(NORMAL_FRAME_FORMAT, gutterIfNeeded(frame.getPoints()
+                    .getFirstPoint()), DIVIDER, SPARE);
         }
-        return String.format(NORMAL_FRAME_FORMAT, gutterIfNeeded(frame.firstPoint()), DIVIDER, gutterIfNeeded(frame.secondPoint()));
+        return String.format(NORMAL_FRAME_FORMAT, gutterIfNeeded(frame.getPoints()
+                .getFirstPoint()), DIVIDER, gutterIfNeeded(frame.getPoints().getSecondPoint()));
     }
 
     private String finalFrameString(FinalFrame frame) {
@@ -87,32 +93,34 @@ public class ResultView {
     }
 
     private String finalFrameEndedString(FinalFrame frame) {
-        if (frame.hasExtra() && frame.striked()) {
-            return String.format(FINAL_FRAME_FORMAT, STRIKE, DIVIDER, convertIfNeeded(frame.getPoints()[FinalFrame.SECOND]),
-                    DIVIDER, convertIfNeeded(frame.getPoints()[FinalFrame.THIRD]));
+        FinalPoints finalPoints = frame.getFinalPoints();
+        if (finalPoints.hasExtra() && frame.striked()) {
+            return String.format(FINAL_FRAME_FORMAT, STRIKE, DIVIDER, convertIfNeeded(finalPoints.getPoints().get(FinalPoints.SECOND)),
+                    DIVIDER, convertIfNeeded(finalPoints.getPoints().get(FinalPoints.THIRD)));
         }
-        if (frame.hasExtra() && frame.spared()) {
-            return String.format(FINAL_FRAME_FORMAT, gutterIfNeeded(frame.getPoints()[FinalFrame.FIRST]), DIVIDER, SPARE,
-                    DIVIDER, convertIfNeeded(frame.getPoints()[FinalFrame.SECOND]));
+        if (finalPoints.hasExtra() && finalPoints.spared()) {
+            return String.format(FINAL_FRAME_FORMAT, gutterIfNeeded(finalPoints.getPoints().get(FinalPoints.FIRST)),
+                    DIVIDER, SPARE, DIVIDER, convertIfNeeded(finalPoints.getPoints().get(FinalPoints.SECOND)));
         }
-        return String.format(FINAL_FRAME_FORMAT, gutterIfNeeded(frame.getPoints()[FinalFrame.FIRST]), DIVIDER, convertIfNeeded(frame.getPoints()[FinalFrame.SECOND]),
-                DIVIDER, GUTTER);
+        return String.format(FINAL_FRAME_FORMAT, gutterIfNeeded(finalPoints.getPoints().get(FinalPoints.FIRST)),
+                DIVIDER, convertIfNeeded(finalPoints.getPoints().get(FinalPoints.SECOND)), DIVIDER, GUTTER);
     }
 
     private String finalFrameNotEndedString(FinalFrame frame) {
-        if (frame.striked() && !frame.getPoints()[FinalFrame.SECOND].played()) {
+        FinalPoints finalPoints = frame.getFinalPoints();
+        if (frame.striked() && !finalPoints.getPoints().get(FinalPoints.SECOND).played()) {
             return String.format(FINAL_FRAME_FORMAT, STRIKE, DIVIDER, EMPTY_SPACE_SINGLE,
                     DIVIDER, EMPTY_SPACE_SINGLE);
         }
-        if (frame.striked() && !frame.getPoints()[FinalFrame.THIRD].played()) {
-            return String.format(FINAL_FRAME_FORMAT, STRIKE, DIVIDER, convertIfNeeded(frame.getPoints()[FinalFrame.SECOND]),
-                    DIVIDER, EMPTY_SPACE_SINGLE);
+        if (frame.striked() && !finalPoints.getPoints().get(FinalPoints.THIRD).played()) {
+            return String.format(FINAL_FRAME_FORMAT, STRIKE, DIVIDER,
+                    convertIfNeeded(finalPoints.getPoints().get(FinalPoints.SECOND)), DIVIDER, EMPTY_SPACE_SINGLE);
         }
         if (frame.spared()) {
-            return String.format(FINAL_FRAME_FORMAT, gutterIfNeeded(frame.getPoints()[FinalFrame.FIRST]), DIVIDER, SPARE,
+            return String.format(FINAL_FRAME_FORMAT, gutterIfNeeded(finalPoints.getPoints().get(FinalPoints.FIRST)), DIVIDER, SPARE,
                     DIVIDER, EMPTY_SPACE_SINGLE);
         }
-        return String.format(FINAL_FRAME_FORMAT, gutterIfNeeded(frame.getPoints()[FinalFrame.FIRST]), DIVIDER, EMPTY_SPACE_SINGLE,
+        return String.format(FINAL_FRAME_FORMAT, gutterIfNeeded(finalPoints.getPoints().get(FinalPoints.FIRST)), DIVIDER, EMPTY_SPACE_SINGLE,
                 DIVIDER, EMPTY_SPACE_SINGLE);
     }
 

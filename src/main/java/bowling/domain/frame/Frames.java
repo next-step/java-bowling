@@ -29,7 +29,7 @@ public class Frames {
     }
 
     private void addFrame() {
-        if(frames.size()<9){
+        if(frames.size()<NORMAL_FRAME_COUNT){
             frames.add(new Frame());
             return;
         }
@@ -47,12 +47,11 @@ public class Frames {
         return number - 1;
     }
 
-    private int indexToNumber(int number) {
-        return number + 1;
-    }
-
     public int frameCount() {
-        return indexToNumber(frames.size());
+        if(frames.isEmpty() || frames.get(frames.size()-1).ended()){
+            return frames.size()+1;
+        }
+        return frames.size();
     }
 
     public List<Playable> getFrames() {

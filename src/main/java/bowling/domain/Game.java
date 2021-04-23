@@ -1,70 +1,28 @@
 package bowling.domain;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 
 public class Game {
 
-    private static final int FIRST_FRAME = 1;
-    private static final int LAST_FRAME = 10;
-
-    private int frameIndex;
-    private Playable[] frames;
+    private Frames frames;
 
     public Game() {
-        this.frameIndex = numberToIndex(FIRST_FRAME);
-        this.frames = new Playable[LAST_FRAME];
+        this.frames = new Frames();
     }
 
     public void throwBall(int point) {
-        AddFrameIfNeeded();
-        frames[frameIndex].throwBall(point);
-        addFrameCountIfNeeded();
-    }
-
-    private void AddFrameIfNeeded() {
-        if (frames[frameIndex] == null) {
-            addFrame();
-        }
-    }
-
-    private void addFrame() {
-        if (frameIndex < numberToIndex(LAST_FRAME)) {
-            frames[frameIndex] = new Frame();
-            return;
-        }
-        frames[frameIndex] = new FinalFrame();
-    }
-
-    private void addFrameCountIfNeeded() {
-        if (frames[frameIndex].ended() && frameIndex < numberToIndex(LAST_FRAME)) {
-            frameIndex++;
-        }
+        frames.throwBall(point);
     }
 
     public boolean ended() {
-        if (frameIndex < numberToIndex(LAST_FRAME)) {
-            return false;
-        }
-        if (frames[numberToIndex(LAST_FRAME)] == null) {
-            return false;
-        }
-        return frames[numberToIndex(LAST_FRAME)].ended();
-    }
-
-    private int numberToIndex(int number) {
-        return number - 1;
-    }
-
-    private int indexToNumber(int number) {
-        return number + 1;
+        return frames.ended();
     }
 
     public int frameCount() {
-        return indexToNumber(frameIndex);
+        return frames.frameCount();
     }
 
-    public Playable[] getFrames() {
+    public Frames getFrames() {
         return frames;
     }
 }
