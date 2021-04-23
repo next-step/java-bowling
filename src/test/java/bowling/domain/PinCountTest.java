@@ -64,4 +64,14 @@ public class PinCountTest {
     }
 
 
+    @ParameterizedTest
+    @CsvSource(value = {"3:4:true", "10:8:false", "8:8:false", "5:6:false", "7:10:false", "1:9:true"}, delimiter = ':')
+    void is_valid(String first, String second, String expectedResult) {
+        PinCount firstPinCount = PinCount.of(first);
+        PinCount secondPinCount = PinCount.of(second);
+
+        assertThat(firstPinCount.isValid(secondPinCount)).isEqualTo(Boolean.valueOf(expectedResult));
+        assertThat(secondPinCount.isValid(firstPinCount)).isEqualTo(Boolean.valueOf(expectedResult));
+    }
+
 }
