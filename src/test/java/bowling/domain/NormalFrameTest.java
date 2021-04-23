@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.PinCount.PinCount;
 import bowling.domain.State.*;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.NormalFrame;

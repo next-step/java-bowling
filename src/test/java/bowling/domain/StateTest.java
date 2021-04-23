@@ -1,8 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.PinCount.PinCount;
-import bowling.domain.PinCount.PinCounts;
 import bowling.domain.State.*;
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.score.FinishedScore;
 import bowling.domain.score.Score;
 import bowling.domain.score.UnDefinedScore;

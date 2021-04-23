@@ -1,7 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.PinCount.PinCount;
-import bowling.domain.PinCount.PinCounts;
+import bowling.domain.State.PinCount;
+import bowling.domain.State.PinCounts;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

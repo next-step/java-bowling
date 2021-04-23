@@ -1,4 +1,4 @@
-package bowling.domain.PinCount;
+package bowling.domain.State;
 
 import java.util.ArrayList;
 import java.util.List;

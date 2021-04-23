@@ -1,6 +1,5 @@
 package bowling.domain.State;
 
-import bowling.domain.PinCount.PinCount;
 import bowling.domain.score.Score;
 
 public interface State {
