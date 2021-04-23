@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Frames {
-    private static final int NORMAL_FRAME_INDEX_MAX = 8;
+    private static final int FINAL_FRAME_INDEX = 9;
     private static final int FIRST_FRAME_INDEX = 0;
 
     private final List<Frame> frames;
@@ -16,7 +16,7 @@ public class Frames {
     }
 
     private static List<Frame> init() {
-        List<Frame> frames = IntStream.range(0, NORMAL_FRAME_INDEX_MAX + 1)
+        List<Frame> frames = IntStream.range(0, FINAL_FRAME_INDEX)
                 .mapToObj(NormalFrame::new)
                 .collect(Collectors.toList());
 
