@@ -16,7 +16,7 @@ public class NormalFrame implements Frame {
             throw new IllegalStateException("이미 프레임이 종료된 상태입니다.");
         }
 
-        records.add(pitchResult);
+        records.save(pitchResult);
         pins.knockDown(pitchResult);
     }
 

@@ -10,7 +10,7 @@ public class FinalFrame implements Frame {
     private static final int MAXIMUM_THROW_CHANCES = 3;
 
     private final Records records = new Records();
-    private Pins pins = new Pins();
+    private final Pins pins = new Pins();
 
     @Override
     public void throwBall(PitchResult pitchResult) {
@@ -18,7 +18,7 @@ public class FinalFrame implements Frame {
             throw new IllegalStateException("이미 프레임이 종료된 상태입니다.");
         }
 
-        records.add(pitchResult);
+        records.save(pitchResult);
         pins.knockDown(pitchResult);
 
         if (pins.isAllCleared()) {

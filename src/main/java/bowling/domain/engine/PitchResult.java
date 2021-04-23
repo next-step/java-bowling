@@ -41,4 +41,8 @@ public class PitchResult {
     public int hashCode() {
         return Objects.hash(getValue());
     }
+
+    public String export() {
+        return String.valueOf(value);
+    }
 }

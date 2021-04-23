@@ -1,30 +1,54 @@
 package bowling.domain.engine;
 
+import bowling.dto.RecordsDto;
+import bowling.util.ListUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static bowling.domain.engine.RecordType.*;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
+
 public class Records {
 
-    private final List<PitchResult> results = new ArrayList<>();
+    private static final int REGULAR_CHANCES = 2;
 
-    public void add(PitchResult pitchResult) {
-        results.add(pitchResult);
+    private final List<Record> recordList = new ArrayList<>();
+
+    public void save(PitchResult pitchResult) {
+        if (recordList.isEmpty()) {
+            recordList.add(Record.of(pitchResult));
+        } else {
+            Record lastRecord = ListUtils.getLastElement(recordList);
+            recordList.add(lastRecord.nextRecord(pitchResult));
+        }
+    }
+
+    public RecordsDto export() {
+        return recordList.stream()
+                         .map(Record::export)
+                         .collect(collectingAndThen(toList(), RecordsDto::new));
     }
 
     public boolean isStrike() {
-        return !results.isEmpty() && results.get(0).getValue() == Pins.MAXIMUM_PINS;
-    }
-
-    public boolean isSpare() {
-        return results.size() == 2 && results.stream().mapToInt(PitchResult::getValue).sum() == Pins.MAXIMUM_PINS;
+        return throwCounts() != 0 && recordList.get(0).getRecordType() == STRIKE;
     }
 
     public boolean isMissed() {
-        return results.size() == 2 && results.stream().mapToInt(PitchResult::getValue).sum() < Pins.MAXIMUM_PINS;
+        long normalRecordCounts =  recordList.stream()
+                                             .limit(REGULAR_CHANCES)
+                                             .map(Record::getRecordType)
+                                             .filter(recordType -> recordType == NUMBER || recordType == GUTTER)
+                                             .count();
+        return throwCounts() >= REGULAR_CHANCES && normalRecordCounts == REGULAR_CHANCES;
+    }
+
+    public boolean isSpare() {
+        return throwCounts() >= REGULAR_CHANCES && recordList.get(1).getRecordType() == SPARE;
     }
 
     public int throwCounts() {
-        return results.size();
+        return recordList.size();
     }
-
 }
