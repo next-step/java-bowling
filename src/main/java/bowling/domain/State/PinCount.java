@@ -57,6 +57,14 @@ public class PinCount {
         return count == MIN_PIN_COUNT;
     }
 
+    public boolean isSpare(PinCount pinCount) {
+        return (pinCount.count + count) == MAX_PIN_COUNT;
+    }
+
+    public boolean isValid(PinCount pinCount) {
+        return (pinCount.count + count) <= MAX_PIN_COUNT;
+    }
+
     public int sumCount(PinCount secondPinCount) {
         return count + secondPinCount.count;
     }

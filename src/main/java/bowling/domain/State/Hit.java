@@ -3,14 +3,12 @@ package bowling.domain.State;
 import bowling.domain.score.Score;
 import bowling.domain.score.UnDefinedScore;
 
-import java.util.Arrays;
-
 public class Hit implements State {
 
     private final PinCount firstPinCount;
 
     public Hit(PinCount firstPinCount) {
-        if (firstPinCount.isStrike() || firstPinCount.isGutter()) {
+        if(firstPinCount.isStrike() || firstPinCount.isGutter()){
             throw new IllegalArgumentException("strike 또는 gutter가 올 수 없습니다.");
         }
         this.firstPinCount = firstPinCount;
@@ -18,11 +16,10 @@ public class Hit implements State {
 
     @Override
     public State newState(PinCount secondPinCount) {
-        PinCounts pinCounts = new PinCounts(Arrays.asList(firstPinCount, secondPinCount));
-        if (pinCounts.isSpare()) {
-            return new Spare(pinCounts);
+        if (firstPinCount.isSpare(secondPinCount)) {
+            return new Spare(firstPinCount, secondPinCount);
         }
-        return new Miss(pinCounts);
+        return new Miss(firstPinCount, secondPinCount);
     }
 
     @Override

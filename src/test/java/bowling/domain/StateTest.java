@@ -77,7 +77,7 @@ public class StateTest {
         PinCount firstPinCount = PinCount.of(7);
         PinCount secondPinCount = PinCount.of(1);
 
-        State miss = new Miss(new PinCounts(Arrays.asList(firstPinCount, secondPinCount)));
+        State miss = new Miss(firstPinCount, secondPinCount);
 
         assertThat(miss.isClosed()).isTrue();
         assertThat(miss.stateInString()).isEqualTo(firstPinCount.countInString() + SEPARATOR + secondPinCount.countInString());
@@ -94,8 +94,7 @@ public class StateTest {
         PinCount secondPinCount = PinCount.of(second);
 
         assertThatIllegalArgumentException().isThrownBy(() ->
-                new Miss(new PinCounts(Arrays.asList(firstPinCount, secondPinCount)))
-        );
+                new Miss(firstPinCount, secondPinCount));
     }
 
     @Test
@@ -104,7 +103,7 @@ public class StateTest {
         PinCount secondPinCount = PinCount.of(1);
         UnFinishedScore strikeUnFinishedScore = UnFinishedScore.ofStrike(10);
 
-        State miss = new Miss(new PinCounts(Arrays.asList(firstPinCount, secondPinCount)));
+        State miss = new Miss(firstPinCount, secondPinCount);
         Score calculatedScore = miss.calculatedScore(strikeUnFinishedScore);
 
         assertThat(calculatedScore.currentScore()).isEqualTo(PinCount.STRIKE.count() + firstPinCount.sumCount(secondPinCount));
@@ -116,7 +115,7 @@ public class StateTest {
         PinCount firstPinCount = PinCount.of(5);
         PinCount secondPinCount = PinCount.of(5);
 
-        State spare = new Spare(new PinCounts(Arrays.asList(firstPinCount, secondPinCount)));
+        State spare = new Spare(firstPinCount, secondPinCount);
 
         assertThat(spare.isClosed()).isTrue();
         assertThat(spare.stateInString()).isEqualTo(firstPinCount.countInString() + SPARE_SATE);
@@ -132,8 +131,7 @@ public class StateTest {
         PinCount firstPinCount = PinCount.of(first);
         PinCount secondPinCount = PinCount.of(second);
         assertThatIllegalArgumentException().isThrownBy(() ->
-                new Spare(new PinCounts(Arrays.asList(firstPinCount, secondPinCount)))
-        );
+                new Spare(firstPinCount, secondPinCount));
     }
 
     @Test
@@ -142,7 +140,7 @@ public class StateTest {
         PinCount secondPinCount = PinCount.of(5);
         UnFinishedScore strikeUnFinishedScore = UnFinishedScore.ofStrike(10);
 
-        State spare = new Spare(new PinCounts(Arrays.asList(firstPinCount, secondPinCount)));
+        State spare = new Spare(firstPinCount, secondPinCount);
         Score calculatedScore = spare.calculatedScore(strikeUnFinishedScore);
 
         assertThat(calculatedScore.currentScore()).isEqualTo(PinCount.STRIKE.count() + firstPinCount.sumCount(secondPinCount));
@@ -220,7 +218,7 @@ public class StateTest {
     void final_state_when_1_miss() {
         PinCount firstMissPinCount = PinCount.of(4);
         PinCount secondMissPinCount = PinCount.of(3);
-        State finalState = new FinalState(Arrays.asList(new Miss(new PinCounts(Arrays.asList(firstMissPinCount, secondMissPinCount)))), 1);
+        State finalState = new FinalState(Arrays.asList(new Miss(firstMissPinCount, secondMissPinCount)), 1);
         UnFinishedScore strikeUnFinishedScore = UnFinishedScore.ofStrike(10);
 
         assertThat(finalState.isClosed()).isTrue();
@@ -260,7 +258,7 @@ public class StateTest {
     void final_state_when_1_strike_1_spare() {
         PinCount firstPinCount = PinCount.of(4);
         PinCount secondPinCount = PinCount.of(6);
-        State finalState = new FinalState(Arrays.asList(new Strike(), new Spare(new PinCounts(Arrays.asList(firstPinCount, secondPinCount)))), 3);
+        State finalState = new FinalState(Arrays.asList(new Strike(), new Spare(firstPinCount, secondPinCount)), 3);
         UnFinishedScore spareUnfinishedScore = UnFinishedScore.ofSpare(10);
 
         assertThat(finalState.isClosed()).isTrue();
@@ -274,7 +272,7 @@ public class StateTest {
     void final_state_when_1_strike_1_miss() {
         PinCount firstPinCount = PinCount.of(4);
         PinCount secondPinCount = PinCount.of(4);
-        State finalState = new FinalState(Arrays.asList(new Strike(), new Miss(new PinCounts(Arrays.asList(firstPinCount, secondPinCount)))), 3);
+        State finalState = new FinalState(Arrays.asList(new Strike(), new Miss(firstPinCount, secondPinCount)), 3);
         UnFinishedScore spareUnfinishedScore = UnFinishedScore.ofSpare(10);
 
         assertThat(finalState.isClosed()).isTrue();
@@ -289,7 +287,7 @@ public class StateTest {
         PinCount firstPinCount = PinCount.of(6);
         PinCount secondPinCount = PinCount.of(4);
         PinCount thirdPinCount = PinCount.of(4);
-        State finalState = new FinalState(Arrays.asList(new Spare(new PinCounts(Arrays.asList(firstPinCount, secondPinCount))), new Hit(thirdPinCount)), 3);
+        State finalState = new FinalState(Arrays.asList(new Spare(firstPinCount, secondPinCount), new Hit(thirdPinCount)), 3);
         UnFinishedScore spareUnfinishedScore = UnFinishedScore.ofSpare(10);
 
         assertThat(finalState.isClosed()).isTrue();
@@ -303,7 +301,7 @@ public class StateTest {
     void current_state_when_1_spare_1_strike() {
         PinCount firstPinCount = PinCount.of(6);
         PinCount secondPinCount = PinCount.of(4);
-        State finalState = new FinalState(Arrays.asList(new Spare(new PinCounts(Arrays.asList(firstPinCount, secondPinCount))), new Strike()), 3);
+        State finalState = new FinalState(Arrays.asList(new Spare(firstPinCount, secondPinCount), new Strike()), 3);
         UnFinishedScore spareUnfinishedScore = UnFinishedScore.ofSpare(10);
 
         assertThat(finalState.isClosed()).isTrue();

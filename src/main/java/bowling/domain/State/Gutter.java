@@ -3,19 +3,16 @@ package bowling.domain.State;
 import bowling.domain.score.Score;
 import bowling.domain.score.UnDefinedScore;
 
-import java.util.Arrays;
-
 public class Gutter implements State {
 
     public static final String SYMBOL = "-";
 
     @Override
     public State newState(PinCount pinCount) {
-        PinCounts pinCounts = new PinCounts(Arrays.asList(PinCount.GUTTER, pinCount));
-        if (pinCounts.isSpare()) {
-            return new Spare(pinCounts);
+        if (PinCount.GUTTER.isSpare(pinCount)) {
+            return new Spare(PinCount.GUTTER, pinCount);
         }
-        return new Miss(pinCounts);
+        return new Miss(PinCount.GUTTER, pinCount);
     }
 
     @Override
