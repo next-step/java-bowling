@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.point.Point;
 import bowling.exception.CustomException;
 import bowling.exception.ErrorCode;
 import org.junit.jupiter.api.BeforeEach;

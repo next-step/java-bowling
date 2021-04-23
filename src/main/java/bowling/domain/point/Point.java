@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.point;
 
 import bowling.exception.CustomException;
 import bowling.exception.ErrorCode;

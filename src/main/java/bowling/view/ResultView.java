@@ -2,7 +2,7 @@ package bowling.view;
 
 import bowling.domain.Game;
 import bowling.domain.Name;
-import bowling.domain.Point;
+import bowling.domain.point.Point;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 

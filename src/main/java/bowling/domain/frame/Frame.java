@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Playable;
-import bowling.domain.Point;
+import bowling.domain.point.Point;
 
 public class Frame implements Playable {
     private Point firstPoint;

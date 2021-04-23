@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Playable;
-import bowling.domain.Point;
+import bowling.domain.point.Point;
 import bowling.exception.CustomException;
 import bowling.exception.ErrorCode;
 
