@@ -85,18 +85,6 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public boolean checkWriter(User user) throws CannotDeleteException {
-        if (!isOwner(user)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-        return true;
-    }
-
-    public DeleteHistory toDeleteHistory() {
-        setDeleted(true);
-        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
-    }
-    
     public DeleteHistory delete(User user) throws CannotDeleteException {
         if (!isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
