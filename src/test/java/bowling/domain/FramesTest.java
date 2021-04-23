@@ -50,7 +50,7 @@ public class FramesTest extends FrameTestBase {
     @Test
     void is_done_false() {
         FrameNumber firstUndoneFrameNumber = new FrameNumber(3);
-        State spareState = new Miss(PinCount.of(5), PinCount.of(5));
+        State spareState = new Spare(PinCount.of(5), PinCount.of(5));
         State strikeState = new Strike();
 
         FinalFrame finalFrame = FinalFrame.from(5);
