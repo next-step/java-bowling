@@ -16,6 +16,19 @@ public class NameTest {
         assertThat(name).isEqualTo(new Name("KSB"));
     }
 
+    @Test()
+    @DisplayName("null 또는 공백일경우 예외가 발생한다.")
+    public void checkNullOrEmpty() throws Exception {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Name(null))
+                .withMessage("null 또는 공백인지 확인해주세요.");
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Name(" "))
+                .withMessage("null 또는 공백인지 확인해주세요.");
+
+    }
+
     @ParameterizedTest()
     @ValueSource(strings = {"성빈", "123"})
     @DisplayName("영문 이름이 아닐 경우 예외가 발생한다.")
