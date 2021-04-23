@@ -1,52 +1,37 @@
 package bowling.domain.frame;
 
 import bowling.domain.Playable;
-import bowling.domain.Point;
+import bowling.domain.point.Points;
 
 public class Frame implements Playable {
-    private Point firstPoint;
-    private Point secondPoint;
+
+    private Points points;
 
     public Frame() {
-        this.firstPoint = new Point();
-        this.secondPoint = new Point();
+        this.points = new Points();
     }
 
     @Override
     public boolean ended() {
-        return striked() || secondPoint.played();
+        return points.ended();
     }
 
     @Override
     public void throwBall(int point) {
-        if (secondPoint.played()) {
-            return;
-        }
-        if (firstPoint.played()) {
-            secondPoint.throwBall(firstPoint, point);
-            return;
-        }
-        firstPoint.throwBall(point);
+        points.throwBall(point);
     }
 
     @Override
     public boolean striked() {
-        return firstPoint.striked();
+        return points.striked();
     }
 
     @Override
     public boolean spared() {
-        if (striked()) {
-            return false;
-        }
-        return secondPoint.spared(this.firstPoint);
+        return points.spared();
     }
 
-    public Point firstPoint() {
-        return firstPoint;
-    }
-
-    public Point secondPoint() {
-        return secondPoint;
+    public Points getPoints() {
+        return points;
     }
 }
