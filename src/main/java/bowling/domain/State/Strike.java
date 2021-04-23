@@ -1,5 +1,6 @@
 package bowling.domain.State;
 
+import bowling.domain.PinCount.PinCount;
 import bowling.domain.score.Score;
 import bowling.domain.score.UnFinishedScore;
 

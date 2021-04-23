@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.State.PinCount;
+import bowling.domain.PinCount.PinCount;
 import bowling.domain.State.State;
 import bowling.domain.score.Score;
 
