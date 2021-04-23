@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.PlayerNameLengthException;
+
 import java.util.Objects;
 
 public final class PlayerName {
@@ -7,7 +9,15 @@ public final class PlayerName {
     private final String name;
 
     public PlayerName(String name) {
+        validateNameLength(name);
         this.name = name;
+    }
+
+    private void validateNameLength(String name) {
+        final int length = name.length();
+        if (length < 1 || length > 3) {
+            throw new PlayerNameLengthException(name);
+        }
     }
 
     @Override
