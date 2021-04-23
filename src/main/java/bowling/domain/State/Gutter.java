@@ -5,7 +5,7 @@ import bowling.domain.score.UnDefinedScore;
 
 public class Gutter implements State {
 
-    public final static String SYMBOL = "-";
+    public static final String SYMBOL = "-";
 
     @Override
     public State newState(PinCount pinCount) {
