@@ -14,17 +14,20 @@ public class QuestionTest {
     @DisplayName("로그인 유저가 작성한 질문이 아닌경우 예외를 반환한다.")
     @Test
     void checkWriter_예외() {
-        assertThatThrownBy(() -> Q1.checkWriter(UserTest.SANJIGI))
+        assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class);
 
-        assertThatThrownBy(() -> Q2.checkWriter(UserTest.JAVAJIGI))
+        assertThatThrownBy(() -> Q2.delete(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class);
     }
 
     @DisplayName("로그인 유저가 작성한 질문일 경우 true를 반환한다.")
     @Test
     void checkWriter() throws CannotDeleteException {
-        assertThat(Q1.checkWriter(UserTest.JAVAJIGI)).isTrue();
-        assertThat(Q2.checkWriter(UserTest.SANJIGI)).isTrue();
+        Q1.delete(UserTest.JAVAJIGI);
+        Q2.delete(UserTest.SANJIGI);
+
+        assertThat(Q1.isDeleted()).isTrue();
+        assertThat(Q2.isDeleted()).isTrue();
     }
 }
