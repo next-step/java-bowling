@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Frames {
 
-    private static final int NORMAL_FRAME_COUNT = 9;
-    private static final int TOTAL_FRAME_COUNT = 10;
+    public static final int NORMAL_FRAME_COUNT = 9;
+    public static final int TOTAL_FRAME_COUNT = 10;
 
     private List<Playable> frames;
 

@@ -2,12 +2,18 @@ package bowling.view;
 
 import bowling.domain.Game;
 import bowling.domain.Name;
+import bowling.domain.Playable;
 import bowling.domain.frame.Frames;
 import bowling.domain.point.FinalPoints;
 import bowling.domain.point.Point;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.point.Points;
+
+import java.util.List;
+
+import static bowling.domain.frame.Frames.NORMAL_FRAME_COUNT;
+import static bowling.domain.frame.Frames.TOTAL_FRAME_COUNT;
 
 public class ResultView {
 
@@ -47,49 +53,56 @@ public class ResultView {
     }
 
     private StringBuilder pointStringBuilder(Game game, StringBuilder stringBuilder) {
-        for (int count = 1; count <= 9; count++) {
-            stringBuilder.append(EMPTY_SPACE_DOUBLE);
-            stringBuilder.append(normalFrameString((Frame) game.getFrames().getFrames().get(count - 1)));
-            stringBuilder.append(RIGHT_BOX_SINGLE_SPACE);
-        }
-        stringBuilder.append(EMPTY_SPACE_DOUBLE);
-        stringBuilder.append(finalFrameString((FinalFrame) game.getFrames().getFrames().get(FINAL_FRAME_INDEX)));
-        stringBuilder.append(RIGHT_BOX_SINGLE_SPACE);
-
+        normalFrameStrings(game.getFrames(), stringBuilder);
+        stringBuilder.append(finalFrameStrings(game.getFrames()));
         return stringBuilder;
     }
 
-    private String normalFrameString(Frame frame) {
-        if (frame == null) {
-            return EMPTY_SPACE_TRIPLE;
+    private void normalFrameStrings(Frames frames, StringBuilder stringBuilder){
+        int normalFrameCount = Math.min(frames.getFrames().size(), NORMAL_FRAME_COUNT);
+        for (int count = 1; count <= normalFrameCount; count++) {
+            stringBuilder.append(EMPTY_SPACE_DOUBLE);
+            Frame frame = (Frame) frames.getFrames().get(count-1);
+            Points points = frame.getPoints();
+            stringBuilder.append(normalPointsString(points));
+            stringBuilder.append(RIGHT_BOX_SINGLE_SPACE);
         }
-        if (frame.ended()) {
-            return normalFrameEndedString(frame);
+        for(int count = normalFrameCount+1;count<=NORMAL_FRAME_COUNT;count++){
+            stringBuilder.append(EMPTY_SPACE_DOUBLE);
+            stringBuilder.append(EMPTY_SPACE_TRIPLE);
+            stringBuilder.append(RIGHT_BOX_SINGLE_SPACE);
         }
-        return String.format(NORMAL_FRAME_FORMAT, gutterIfNeeded(frame.getPoints()
-                .getFirstPoint()), DIVIDER, EMPTY_SPACE_SINGLE);
     }
 
-    private String normalFrameEndedString(Frame frame) {
-        if (frame.striked()) {
+    private String finalFrameStrings(Frames frames){
+        if(frames.getFrames().size()<=NORMAL_FRAME_COUNT){
+            return String.format(NORMAL_FRAME_FORMAT,
+                    EMPTY_SPACE_TRIPLE,EMPTY_SPACE_TRIPLE,RIGHT_BOX_DOUBLE_SPACE);
+        }
+        FinalFrame finalFrame = (FinalFrame)frames.getFrames().get(FINAL_FRAME_INDEX);
+        if(finalFrame.ended()){
+            return String.format(NORMAL_FRAME_FORMAT, EMPTY_SPACE_DOUBLE, finalFrameEndedString(finalFrame), RIGHT_BOX_SINGLE_SPACE);
+        }
+        return String.format(NORMAL_FRAME_FORMAT, EMPTY_SPACE_DOUBLE, finalFrameNotEndedString(finalFrame), RIGHT_BOX_SINGLE_SPACE);
+    }
+
+    private String normalPointsString(Points points){
+        if(points.ended()){
+            return normalPointsEndedString(points);
+        }
+        return String.format(NORMAL_FRAME_FORMAT, gutterIfNeeded(points.getFirstPoint()), DIVIDER, EMPTY_SPACE_SINGLE);
+    }
+
+    private String normalPointsEndedString(Points points){
+        if (points.striked()) {
             return String.format(NORMAL_FRAME_FORMAT, STRIKE, EMPTY_SPACE_SINGLE, EMPTY_SPACE_SINGLE);
         }
-        if (frame.spared()) {
-            return String.format(NORMAL_FRAME_FORMAT, gutterIfNeeded(frame.getPoints()
+        if (points.spared()) {
+            return String.format(NORMAL_FRAME_FORMAT, gutterIfNeeded(points
                     .getFirstPoint()), DIVIDER, SPARE);
         }
-        return String.format(NORMAL_FRAME_FORMAT, gutterIfNeeded(frame.getPoints()
-                .getFirstPoint()), DIVIDER, gutterIfNeeded(frame.getPoints().getSecondPoint()));
-    }
-
-    private String finalFrameString(FinalFrame frame) {
-        if (frame == null) {
-            return EMPTY_SPACE_TRIPLE + EMPTY_SPACE_DOUBLE;
-        }
-        if (frame.ended()) {
-            return finalFrameEndedString(frame);
-        }
-        return finalFrameNotEndedString(frame);
+        return String.format(NORMAL_FRAME_FORMAT, gutterIfNeeded(points
+                .getFirstPoint()), DIVIDER, gutterIfNeeded(points.getSecondPoint()));
     }
 
     private String finalFrameEndedString(FinalFrame frame) {
