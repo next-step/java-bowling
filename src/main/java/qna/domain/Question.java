@@ -94,8 +94,9 @@ public class Question extends AbstractEntity {
         return new ArrayList<>();
     }
 
-    public Optional<DeleteHistory> deleteQuestion(User user) {
-        return null;
+    public Optional<DeleteHistory> deleteQuestion(User user) throws Exception {
+        checkIsOwner(user);
+        return Optional.of(new DeleteHistory(this, user));
     }
 
     public void checkIsOwner(User user) throws Exception {

@@ -38,7 +38,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void deleteQuestion_같은_사람이_쓴_질문() {
+    public void deleteQuestion_같은_사람이_쓴_질문() throws Exception {
         // given
         Optional<DeleteHistory> expectDeleteHistoryQ1 = Optional.of(new DeleteHistory(Q1, UserTest.JAVAJIGI));
         Optional<DeleteHistory> expectDeleteHistoryQ2 = Optional.of(new DeleteHistory(Q2, UserTest.SANJIGI));
@@ -58,10 +58,10 @@ public class QuestionTest {
 
         // then
         assertThatThrownBy(() -> {
-            Q1.checkIsOwner(UserTest.SANJIGI);
+            Q1.deleteQuestion(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
         assertThatThrownBy(() -> {
-            Q2.checkIsOwner(UserTest.JAVAJIGI);
+            Q2.deleteQuestion(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
