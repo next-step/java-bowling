@@ -70,8 +70,9 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public Optional<DeleteHistory> deleteAnswer(User user) {
-        return null;
+    public Optional<DeleteHistory> deleteAnswer(User user) throws Exception {
+        checkIsOwner(user);
+        return Optional.of(new DeleteHistory(this, user));
     }
 
     public void checkIsOwner(User user) throws Exception {

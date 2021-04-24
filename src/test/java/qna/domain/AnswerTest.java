@@ -28,13 +28,13 @@ public class AnswerTest {
     }
 
     @Test
-    public void deleteAnswer_같은_사람이_쓴_댓글() {
+    public void deleteAnswer_같은_사람이_쓴_댓글() throws Exception {
         // given
         Optional<DeleteHistory> expectDeleteHistoryA1 = Optional.of(new DeleteHistory(A1, UserTest.JAVAJIGI));
         Optional<DeleteHistory> expectDeleteHistoryA2 = Optional.of(new DeleteHistory(A2, UserTest.SANJIGI));
         // when
         Optional<DeleteHistory> resultDeleteHistoryA1 = A1.deleteAnswer(UserTest.JAVAJIGI);
-        Optional<DeleteHistory> resultDeleteHistoryA2 = A1.deleteAnswer(UserTest.JAVAJIGI);
+        Optional<DeleteHistory> resultDeleteHistoryA2 = A2.deleteAnswer(UserTest.SANJIGI);
         // then
         Assertions.assertThat(resultDeleteHistoryA1).isEqualTo(expectDeleteHistoryA1);
         Assertions.assertThat(resultDeleteHistoryA2).isEqualTo(expectDeleteHistoryA2);
