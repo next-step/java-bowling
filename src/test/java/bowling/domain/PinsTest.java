@@ -31,4 +31,43 @@ public class PinsTest {
 
     assertThat(pins.countUptoSecondPin()).isEqualTo(10);
   }
+
+  @Test
+  @DisplayName("[Pins] 스트라이크인 경우 최종 state는 한개")
+  void strike_state_test() {
+    List<Pin> pin = Stream.of(10)
+        .map(Pin::new)
+        .collect(Collectors.toList());
+    Pins pins = new Pins(pin);
+
+    int size = pins.frameState().size();
+
+    assertThat(size).isEqualTo(1);
+  }
+
+  @Test
+  @DisplayName("[Pins] 스페어인 경우 최종 state는 두개")
+  void spare_state_test() {
+    List<Pin> pin = Stream.of(5, 5)
+        .map(Pin::new)
+        .collect(Collectors.toList());
+    Pins pins = new Pins(pin);
+
+    int size = pins.frameState().size();
+
+    assertThat(size).isEqualTo(2);
+  }
+
+  @Test
+  @DisplayName("[Pins] 보너스 프레임 최종 state는 세개")
+  void bonuse_frame_state_test() {
+    List<Pin> pin = Stream.of(4, 6, 10)
+        .map(Pin::new)
+        .collect(Collectors.toList());
+    Pins pins = new Pins(pin);
+
+    int size = pins.frameState().size();
+
+    assertThat(size).isEqualTo(3);
+  }
 }
