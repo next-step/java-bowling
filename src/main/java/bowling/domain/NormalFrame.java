@@ -15,10 +15,6 @@ public class NormalFrame extends Frame {
     }
   }
 
-  private ScoreSymbol symbol() {
-    return ScoreSymbol.symbol(pins.totalHitPin(), pins.size() < NORMAL_FRAME_MAX_SIZE);
-  }
-
   private boolean isStrike() {
     return symbol() == ScoreSymbol.STRIKE;
   }
