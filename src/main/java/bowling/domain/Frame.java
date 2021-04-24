@@ -7,7 +7,7 @@ public interface Frame {
 
     int index();
 
-    FrameBowls bowls();
+    PinCounts pinCounts();
 
     Frame next();
 }
