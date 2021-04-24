@@ -62,17 +62,4 @@ public class PinCount {
     public int hashCode() {
         return Objects.hash(pinCount);
     }
-
-    @Override
-    public String toString() {
-        if (isStrike()) {
-            return "X";
-        }
-
-        if (isGutter()) {
-            return "-";
-        }
-
-        return String.valueOf(pinCount);
-    }
 }
