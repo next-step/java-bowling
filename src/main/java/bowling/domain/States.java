@@ -6,7 +6,7 @@ import java.util.List;
 
 public class States {
 
-  private List<String> states;
+  private final List<String> states;
 
   public States() {
     this.states = new ArrayList<>();
