@@ -44,7 +44,7 @@ public class QuestionTest {
 
         // then
         assertThatThrownBy(() -> {
-            Q2.checkAnswersAllOwner(UserTest.JAVAJIGI);
+            Q2.checkAnswersAllOwner(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
