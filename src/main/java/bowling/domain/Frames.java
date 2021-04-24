@@ -9,13 +9,14 @@ import java.util.stream.IntStream;
 public class Frames {
 
   private static final int FINAL_ROUND = 10;
+  private static final int FIRST_ROUND = 1;
   private final List<Frame> frames;
   private int frameRound;
   private List<Integer> scores;
 
   public Frames(List<Frame> frames) {
     this.frames = frames;
-    this.frameRound = 1;
+    this.frameRound = FIRST_ROUND;
     this.scores = new ArrayList<>();
   }
 
