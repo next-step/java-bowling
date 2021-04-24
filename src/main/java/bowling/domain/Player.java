@@ -26,7 +26,7 @@ public class Player {
         return !bowling.isEnded();
     }
 
-    public int currentFrame() {
+    public int getNextFrameNumber() {
         return bowling.getNextFrameNumber();
     }
 
