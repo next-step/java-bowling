@@ -12,6 +12,6 @@ public class FramesTest {
   void init_frames_test() {
     Frames frames = Frames.init();
     int frameSize = frames.frames().size();
-    assertThat(frameSize).isEqualTo(10);
+    assertThat(frameSize).isEqualTo(1);
   }
 }
