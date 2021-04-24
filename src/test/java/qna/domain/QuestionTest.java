@@ -36,17 +36,6 @@ public class QuestionTest {
         }).isInstanceOf(CannotDeleteException.class);
     }
 
-    @Test
-    public void checkAnswersAllOwner() throws Exception {
-        // given
-
-        // when
-
-        // then
-        assertThatThrownBy(() -> {
-            Q2.checkAnswersAllOwner(UserTest.SANJIGI);
-        }).isInstanceOf(CannotDeleteException.class);
-    }
 
     @Test
     public void deleteQuestionAndAnswers() throws Exception {

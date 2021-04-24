@@ -50,5 +50,8 @@ public class AnswerTest {
         assertThatThrownBy(() -> {
             A1.checkIsOwner(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> {
+            A2.checkIsOwner(UserTest.JAVAJIGI);
+        }).isInstanceOf(CannotDeleteException.class);
     }
 }

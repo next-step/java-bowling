@@ -99,11 +99,6 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public void checkAnswersAllOwner(User user) throws Exception {
-        for (Answer answer : answers) {
-            answer.checkIsOwner(user);
-        }
-    }
 
     @Override
     public String toString() {
