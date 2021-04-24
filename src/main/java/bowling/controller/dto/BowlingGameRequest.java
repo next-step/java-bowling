@@ -5,6 +5,10 @@ public class BowlingGameRequest {
     private final String participantName;
     private final int pitchCount;
 
+    public BowlingGameRequest(String participantName) {
+        this(participantName, 0);
+    }
+
     public BowlingGameRequest(String participantName, int pitchCount) {
         this.participantName = participantName;
         this.pitchCount = pitchCount;
