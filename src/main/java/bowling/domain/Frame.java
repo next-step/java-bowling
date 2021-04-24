@@ -6,7 +6,6 @@ import org.springframework.util.ObjectUtils;
 public abstract class Frame {
 
   private static final int NORMAL_FRAME_MAX_SIZE = 2;
-  private static final int TOTAL_NORMAL_FRAME = 9;
   protected final Pins pins;
   protected Score score;
 
