@@ -43,7 +43,7 @@ public class ResultView {
     if (frame.isEmpty()) {
       return alignText(BLANK);
     }
-    return alignText(frame.frameSymbol());
+    return alignText(String.join(SEPARATOR, frame.frameState()));
   }
 
   private static String alignText(String text) {

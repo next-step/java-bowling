@@ -8,7 +8,6 @@ public class Pins {
   private static final int FIRST = 0;
   private static final int SECOND = 1;
   private static final int BONUS = 2;
-  private static final String SEPARATOR = "|";
   private final List<Pin> pins;
 
   public Pins(List<Pin> pins) {
@@ -53,14 +52,17 @@ public class Pins {
     return pins.isEmpty();
   }
 
-  public String frameState() {
-    if (pins.size() == FIRST + 1) {
-      return state(first());
-    }
+  public List<String> frameState() {
+    States states = new States();
+    states.add(state(first()));
     if (pins.size() == SECOND + 1) {
-      return state(first()) + SEPARATOR + nextState();
+      states.add(nextState());
     }
-    return containBonusPin();
+    if (pins.size() == BONUS + 1) {
+      states.add(nextState());
+      states.add(state(bonus()));
+    }
+    return states.states();
   }
 
   private String state(Pin pin) {
@@ -77,9 +79,5 @@ public class Pins {
       return scoreSymbol.mark();
     }
     return state(second());
-  }
-
-  private String containBonusPin() {
-    return state(first()) + SEPARATOR + nextState() + SEPARATOR + state(bonus());
   }
 }

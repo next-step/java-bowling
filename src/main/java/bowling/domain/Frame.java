@@ -1,7 +1,10 @@
 package bowling.domain;
 
+import java.util.List;
+
 public abstract class Frame {
 
+  private static final int NORMAL_FRAME_MAX_SIZE = 2;
   protected final Pins pins;
   protected Round round;
 
@@ -23,8 +26,12 @@ public abstract class Frame {
     return round.isFinalRound();
   }
 
-  public String frameSymbol() {
+  public List<String> frameState() {
     return pins.frameState();
+  }
+
+  protected ScoreSymbol symbol() {
+    return ScoreSymbol.symbol(pins.totalHitPin(), pins.size() < NORMAL_FRAME_MAX_SIZE);
   }
 
   abstract public boolean isEndFrame();
