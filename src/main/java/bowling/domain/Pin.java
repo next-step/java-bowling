@@ -1,28 +1,27 @@
-package bowling.domain.pin;
+package bowling.domain;
 
 import java.util.Objects;
 
-public class NormalPin implements Pin {
+public class Pin {
     public static final int MAX_PIN_COUNT = 10;
     public static final int MIN_PIN_COUNT = 0;
 
     private int pin;
 
-    private NormalPin(int countOfDownPin) {
+    private Pin(final int countOfDownPin) {
         this.pin = countOfDownPin;
     }
 
-    public static NormalPin from(int countOfDownPin) {
+    public static Pin from(final int countOfDownPin) {
         if (countOfDownPin > MAX_PIN_COUNT) {
             throw new IllegalArgumentException("핀은 최대 10개까지 쓰러뜨릴 수 있습니다.");
         }
         if (countOfDownPin < MIN_PIN_COUNT) {
             throw new IllegalArgumentException("핀은 최소 0개까지 쓰러뜨릴 수 있습니다.");
         }
-        return new NormalPin(countOfDownPin);
+        return new Pin(countOfDownPin);
     }
 
-    @Override
     public int getPin() {
         return pin;
     }
@@ -31,8 +30,8 @@ public class NormalPin implements Pin {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NormalPin normalPin1 = (NormalPin) o;
-        return pin == normalPin1.pin;
+        Pin pin1 = (Pin) o;
+        return pin == pin1.pin;
     }
 
     @Override
