@@ -11,12 +11,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
-    public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-    public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
-    public static final Question Q3 = new Question("title3", "contents3").writeBy(UserTest.SANJIGI);
+    public static Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+    public static Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    public static Question Q3 = new Question("title3", "contents3").writeBy(UserTest.SANJIGI);
 
     @BeforeEach
     public void beforeEach() {
+        Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+        Q3 = new Question("title3", "contents3").writeBy(UserTest.SANJIGI);
+
         Q1.addAnswer(AnswerTest.A1);
         Q2.addAnswer(AnswerTest.A1);
         Q2.addAnswer(AnswerTest.A1);
@@ -70,9 +74,7 @@ public class QuestionTest {
     @Test
     public void deleteAnswers_질문자가_같은_경우() throws Exception {
         // given
-        Q1.addAnswer(AnswerTest.A1);
         List<DeleteHistory> expectDeleteAnswers = new ArrayList<>();
-        expectDeleteAnswers.add(new DeleteHistory(AnswerTest.A1, UserTest.JAVAJIGI));
         expectDeleteAnswers.add(new DeleteHistory(AnswerTest.A1, UserTest.JAVAJIGI));
 
         // when
