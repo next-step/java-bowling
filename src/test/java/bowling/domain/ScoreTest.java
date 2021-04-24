@@ -39,4 +39,14 @@ public class ScoreTest {
 
     assertThat(score).isEqualTo(new Score(pins.totalHitPin(), 0));
   }
+
+  @Test
+  void score_bowl_test() {
+    Score score = new Score(10, 2);
+
+    score.bowl(5);
+
+    assertThat(score.getScore()).isEqualTo(15);
+    assertThat(score.getLeft()).isEqualTo(1);
+  }
 }
