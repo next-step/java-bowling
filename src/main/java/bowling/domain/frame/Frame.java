@@ -2,19 +2,17 @@ package bowling.domain.frame;
 
 import bowling.domain.Pin;
 
-public abstract class Frame {
+public interface Frame {
 
-  abstract boolean isEnd();
+  boolean isEnd();
 
-  abstract Frame next();
+  Frame next();
 
-  abstract int getScore();
+  int getScore();
 
-  void calculateScore(int index, Pin count) {
+  void calculateScore(int index, Pin count);
 
-  }
+  boolean hasScore();
 
-  abstract boolean hasScore();
-
-  abstract void play(Pin pinCount);
+  void play(Pin pinCount);
 }

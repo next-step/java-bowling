@@ -14,6 +14,4 @@ public interface State {
   Score getScore();
 
   int getTotalCount();
-
-  boolean isStrikeOrSpare();
 }

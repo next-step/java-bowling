@@ -42,11 +42,6 @@ public class Spare implements State {
   }
 
   @Override
-  public boolean isStrikeOrSpare() {
-    return true;
-  }
-
-  @Override
   public String toString() {
     if (firstPin.isGutter()) {
       return "-|/";

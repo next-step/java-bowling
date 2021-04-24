@@ -40,11 +40,6 @@ public class FirstBowl implements State {
   }
 
   @Override
-  public boolean isStrikeOrSpare() {
-    return false;
-  }
-
-  @Override
   public String toString() {
     return firstPin.toString();
   }

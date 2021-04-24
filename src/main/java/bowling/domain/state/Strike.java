@@ -28,11 +28,6 @@ public class Strike implements State {
   }
 
   @Override
-  public boolean isStrikeOrSpare() {
-    return true;
-  }
-
-  @Override
   public State play(Pin fallenPin) {
     throw new IllegalArgumentException(INVALID_END_PLAY);
   }

@@ -42,11 +42,6 @@ public class SecondGutter implements State {
   }
 
   @Override
-  public boolean isStrikeOrSpare() {
-    return false;
-  }
-
-  @Override
   public String toString() {
 
     if (firstPin.isGutter()) {

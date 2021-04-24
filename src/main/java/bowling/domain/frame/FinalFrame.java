@@ -3,10 +3,12 @@ package bowling.domain.frame;
 import bowling.domain.Pin;
 import bowling.domain.Score;
 import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
 import bowling.domain.state.State;
+import bowling.domain.state.Strike;
 import java.util.LinkedList;
 
-public class FinalFrame extends Frame {
+public class FinalFrame implements Frame {
 
   private static final int MIN_PITCH_COUNT = 2;
   private static final int MAX_PITCH_COUNT = 3;
@@ -55,7 +57,15 @@ public class FinalFrame extends Frame {
 
   private boolean hasBonusPitch() {
     return states.stream()
-        .anyMatch(state -> state.isStrikeOrSpare());
+        .anyMatch(state -> isStrikeOrSpare(state));
+  }
+
+  private boolean isStrikeOrSpare(State state) {
+    if (state instanceof Strike || state instanceof Spare) {
+      return true;
+    }
+
+    return false;
   }
 
   private int sumAllPitchCount() {
@@ -86,6 +96,11 @@ public class FinalFrame extends Frame {
 
   public LinkedList<State> getStates() {
     return states;
+  }
+
+  @Override
+  public void calculateScore(int index, Pin count) {
+
   }
 
 }

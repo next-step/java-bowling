@@ -61,7 +61,7 @@ public class BowlingGame {
     return player;
   }
 
-  public boolean isFrameCount(int currentFrameCount) {
+  public boolean isCurrentFrame(int currentFrameCount) {
     return getFrameCount() == currentFrameCount;
   }
 

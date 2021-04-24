@@ -39,11 +39,6 @@ public class FirstGutter implements State {
   }
 
   @Override
-  public boolean isStrikeOrSpare() {
-    return false;
-  }
-
-  @Override
   public String toString() {
     return "-";
   }

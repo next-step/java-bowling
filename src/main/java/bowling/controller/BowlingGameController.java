@@ -41,7 +41,7 @@ public class BowlingGameController {
   private void play(BowlingGames bowlingGames, BowlingGame bowlingGame) {
     int currentFrameCount = bowlingGame.getFrameCount();
 
-    while (bowlingGame.isFrameCount(currentFrameCount)) {
+    while (bowlingGame.isCurrentFrame(currentFrameCount)) {
       int count = inputView.inputPinCountByPlayer(bowlingGame.getPlayer());
       bowlingGame.play(new Pin(count));
       resultView.printResult(bowlingGames);
