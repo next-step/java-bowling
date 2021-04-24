@@ -32,8 +32,4 @@ public class Score {
     }
     return new Score(pins.totalHitPin(), 0);
   }
-
-  public static Score finalFrame() {
-    return new Score(0, 3);
-  }
 }
