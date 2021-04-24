@@ -6,7 +6,6 @@ import qna.CannotDeleteException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -41,11 +40,11 @@ public class QuestionTest {
     @Test
     public void deleteQuestion_같은_사람이_쓴_질문() throws Exception {
         // given
-        Optional<DeleteHistory> expectDeleteHistoryQ1 = Optional.of(new DeleteHistory(Q1, UserTest.JAVAJIGI));
-        Optional<DeleteHistory> expectDeleteHistoryQ2 = Optional.of(new DeleteHistory(Q2, UserTest.SANJIGI));
+        DeleteHistory expectDeleteHistoryQ1 = new DeleteHistory(Q1, UserTest.JAVAJIGI);
+        DeleteHistory expectDeleteHistoryQ2 = new DeleteHistory(Q2, UserTest.SANJIGI);
         // when
-        Optional<DeleteHistory> resultDeleteHistoryQ1 = Q1.deleteQuestion(UserTest.JAVAJIGI);
-        Optional<DeleteHistory> resultDeleteHistoryQ2 = Q2.deleteQuestion(UserTest.SANJIGI);
+        DeleteHistory resultDeleteHistoryQ1 = Q1.deleteQuestion(UserTest.JAVAJIGI);
+        DeleteHistory resultDeleteHistoryQ2 = Q2.deleteQuestion(UserTest.SANJIGI);
         // then
         assertThat(resultDeleteHistoryQ1).isEqualTo(expectDeleteHistoryQ1);
         assertThat(resultDeleteHistoryQ2).isEqualTo(expectDeleteHistoryQ2);
@@ -54,7 +53,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void deleteQuestion_다른_사람이_쓴_질문() {
+    public void deleteQuestion_다른_사람이_쓴_질문() throws Exception {
         // given
 
         // when
@@ -69,7 +68,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void deleteAnswers_질문자가_같은_경우() {
+    public void deleteAnswers_질문자가_같은_경우() throws Exception {
         // given
         Q1.addAnswer(AnswerTest.A1);
         List<DeleteHistory> expectDeleteAnswers = new ArrayList<>();
@@ -83,7 +82,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void deleteAnswers_질문이_없는_경우() {
+    public void deleteAnswers_질문이_없는_경우() throws Exception {
         // given
 
         // when
@@ -94,7 +93,7 @@ public class QuestionTest {
 
 
     @Test
-    public void deleteQuestionAndAnswers() throws Exception {
+    public void deleteQuestionAndAnswers_질문자_답변자_동일함() throws Exception {
         // given
         List<DeleteHistory> expectDeleteHistoriesQ1 = new ArrayList<>();
         expectDeleteHistoriesQ1.add(new DeleteHistory(Q1, UserTest.JAVAJIGI));
@@ -105,9 +104,32 @@ public class QuestionTest {
 
         // then
         assertThat(resultDeleteHistoriesQ1).isEqualTo(expectDeleteHistoriesQ1);
+    }
+
+    @Test
+    public void deleteQuestionAndAnswers_질문자_답변자_동일하지않음() throws Exception {
+        // given
+
+        // when
+
+        // then
         assertThatThrownBy(() -> {
             Q2.deleteQuestionAndAnswers(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
+    }
+
+    @Test
+    public void deleteQuestionAndAnswers_답변_없음() throws Exception {
+        // given
+        List<DeleteHistory> expectDeleteHistoriesQ3 = new ArrayList<>();
+        expectDeleteHistoriesQ3.add(new DeleteHistory(Q3, UserTest.SANJIGI));
+
+
+        // when
+        List<DeleteHistory> resultDeleteHistoriesQ3 = Q3.deleteQuestionAndAnswers(UserTest.SANJIGI);
+
+        // then
+        assertThat(resultDeleteHistoriesQ3).isEqualTo(expectDeleteHistoriesQ3);
     }
 
 

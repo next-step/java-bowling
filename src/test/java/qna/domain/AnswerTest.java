@@ -4,8 +4,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswerTest {
@@ -30,11 +28,11 @@ public class AnswerTest {
     @Test
     public void deleteAnswer_같은_사람이_쓴_댓글() throws Exception {
         // given
-        Optional<DeleteHistory> expectDeleteHistoryA1 = Optional.of(new DeleteHistory(A1, UserTest.JAVAJIGI));
-        Optional<DeleteHistory> expectDeleteHistoryA2 = Optional.of(new DeleteHistory(A2, UserTest.SANJIGI));
+        DeleteHistory expectDeleteHistoryA1 = new DeleteHistory(A1, UserTest.JAVAJIGI);
+        DeleteHistory expectDeleteHistoryA2 = new DeleteHistory(A2, UserTest.SANJIGI);
         // when
-        Optional<DeleteHistory> resultDeleteHistoryA1 = A1.deleteAnswer(UserTest.JAVAJIGI);
-        Optional<DeleteHistory> resultDeleteHistoryA2 = A2.deleteAnswer(UserTest.SANJIGI);
+        DeleteHistory resultDeleteHistoryA1 = A1.deleteAnswer(UserTest.JAVAJIGI);
+        DeleteHistory resultDeleteHistoryA2 = A2.deleteAnswer(UserTest.SANJIGI);
         // then
         Assertions.assertThat(resultDeleteHistoryA1).isEqualTo(expectDeleteHistoryA1);
         Assertions.assertThat(resultDeleteHistoryA2).isEqualTo(expectDeleteHistoryA2);

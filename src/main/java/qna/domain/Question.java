@@ -6,7 +6,6 @@ import qna.CannotDeleteException;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -95,14 +94,18 @@ public class Question extends AbstractEntity {
         return new ArrayList<>();
     }
 
-    public Optional<DeleteHistory> deleteQuestion(User user) throws Exception {
+    public DeleteHistory deleteQuestion(User user) throws Exception {
         checkIsOwner(user);
         setDeleteStatusTrue();
-        return Optional.of(new DeleteHistory(this, user));
+        return new DeleteHistory(this, user);
     }
 
-    public List<DeleteHistory> deleteAnswers(User user) {
-        return new ArrayList<>();
+    public List<DeleteHistory> deleteAnswers(User user) throws Exception {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        for (Answer answer : answers) {
+            deleteHistories.add(answer.deleteAnswer(user));
+        }
+        return deleteHistories;
     }
 
     public void checkIsOwner(User user) throws Exception {

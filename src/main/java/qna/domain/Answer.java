@@ -5,7 +5,6 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -70,10 +69,10 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public Optional<DeleteHistory> deleteAnswer(User user) throws Exception {
+    public DeleteHistory deleteAnswer(User user) throws Exception {
         checkIsOwner(user);
         setDeleteStatusTrue();
-        return Optional.of(new DeleteHistory(this, user));
+        return new DeleteHistory(this, user);
     }
 
     public void checkIsOwner(User user) throws Exception {
