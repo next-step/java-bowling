@@ -1,15 +1,14 @@
 package bowling.domain;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Frames {
     private static final int FINAL_FRAME_INDEX = 9;
-    private static final int FIRST_FRAME_INDEX = 0;
 
     private final List<Frame> frames;
+    private int currentIndex;
 
     public Frames() {
         this(init());
@@ -27,10 +26,19 @@ public class Frames {
 
     public Frames(List<Frame> frames) {
         this.frames = frames;
+        this.currentIndex = 0;
     }
 
-    public Frame first() {
-        return get(FIRST_FRAME_INDEX);
+    public int currentIndex() {
+        return currentIndex;
+    }
+
+    public void throwBowl(String pinCount) {
+        Frame Frame = get(currentIndex);
+        Frame = Frame.throwBowl(pinCount);
+        update(Frame);
+        Frame = Frame.next();
+        currentIndex = Frame.index();
     }
 
     public boolean isAllFinished() {
@@ -46,7 +54,9 @@ public class Frames {
         frames.set(frame.index(), frame);
     }
 
-    public List<Frame> list() {
-        return Collections.unmodifiableList(frames);
+    public List<FrameResult> results() {
+        return frames.stream()
+                .map(FrameResult::new)
+                .collect(Collectors.toList());
     }
 }
