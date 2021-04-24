@@ -44,7 +44,7 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public void setDeleted(boolean deleted) {
+    private void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
@@ -56,7 +56,7 @@ public class Answer extends AbstractEntity {
         return this.writer.equals(writer);
     }
 
-    public void answerAuthCheck(User writer) throws CannotDeleteException {
+    private void answerAuthCheck(User writer) throws CannotDeleteException {
         if (!isOwner(writer)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
@@ -73,5 +73,10 @@ public class Answer extends AbstractEntity {
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+    }
+
+    public void delete(User loginUser) throws CannotDeleteException {
+        answerAuthCheck(loginUser);
+        setDeleted(true);
     }
 }

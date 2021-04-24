@@ -31,8 +31,7 @@ public class Answers {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
         for (Answer answer : answers) {
-            answer.answerAuthCheck(loginUser);
-            answer.setDeleted(true);
+            answer.delete(loginUser);
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
 
@@ -41,5 +40,9 @@ public class Answers {
 
     public void add(Answer answer) {
         answers.add(answer);
+    }
+
+    public boolean isDeleted() {
+        return answers.stream().allMatch(Answer::isDeleted);
     }
 }

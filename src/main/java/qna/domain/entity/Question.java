@@ -1,6 +1,5 @@
 package qna.domain.entity;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 import qna.domain.ContentType;
 
@@ -67,7 +66,7 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public boolean deleteAuthCheck(User loginUser) throws CannotDeleteException {
+    public boolean checkOwnerUser(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
@@ -78,7 +77,7 @@ public class Question extends AbstractEntity {
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-        this.deleteAuthCheck(loginUser);
+        this.checkOwnerUser(loginUser);
         this.deleted = true;
 
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now()));

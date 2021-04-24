@@ -19,12 +19,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswersTest {
 
-    List<Answer> answerList;
-    Answers answers;
-    Answer newAnswer;
+    private List<Answer> answerList;
+    private Answers answers;
+    private Answer newAnswer;
 
     @BeforeEach
-    void setup() {
+    public void setup() {
         answerList = new ArrayList<>();
         answerList.add(AnswerTest.A1);
         newAnswer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents3");
@@ -35,6 +35,13 @@ public class AnswersTest {
     @Test
     @DisplayName("답변 삭제")
     public void answerDelete() throws CannotDeleteException {
+        answers.delete(UserTest.JAVAJIGI);
+        assertThat(answers.isDeleted()).isTrue();
+    }
+
+    @Test
+    @DisplayName("답변 삭제 이력")
+    public void answerDeleteHistory() throws CannotDeleteException {
         List<DeleteHistory> delete = answers.delete(UserTest.JAVAJIGI);
 
         List<DeleteHistory> deleteHistories = Arrays.asList(
