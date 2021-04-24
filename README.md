@@ -82,3 +82,18 @@
     - 스트라이크 or 스페어 투구 1번더 가능 (총 세번)
   
 ### 역할
+  - domain
+    - frame
+      - FinalFrame (10 프레임)
+      - Frame      (프레임 추상 클래스)
+      - NormalFrame(1~9 프레임)
+
+  - Pin        (볼링 핀)
+  - Frames     (프레임 일급컬렉션)
+  - Player     (플레이어(참가자))
+  - Round      (볼링 라운드 (1~10))
+  - ScoreSymbol(볼링 스코어)
+    
+  - view
+    - InputView
+    - ResultView
