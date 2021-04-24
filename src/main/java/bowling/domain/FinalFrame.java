@@ -3,6 +3,8 @@ package bowling.domain;
 public class FinalFrame implements Frame {
     private static final String CANNOT_THROW_THIRD_BOWL = "3구를 던질수 없습니다.";
     private static final int FINAL_INDEX = 9;
+    private static final int FIRST_PIN_COUNT_INDEX = 0;
+    private static final int PIN_COUNT_MAX = 10;
 
     private final PinCounts pinCounts;
 
@@ -32,8 +34,8 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isThirdThrowPossible() {
-        return pinCounts.pinCounts().get(0).isStrike()
-                || (!pinCounts.pinCounts().get(0).isStrike() && pinCounts.totalPinCount() == 10);
+        return pinCounts.pinCounts().get(FIRST_PIN_COUNT_INDEX).isStrike()
+                || (!pinCounts.pinCounts().get(FIRST_PIN_COUNT_INDEX).isStrike() && pinCounts.totalPinCount() == PIN_COUNT_MAX);
     }
 
     public Frame throwBowl(int pinCount) {
