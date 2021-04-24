@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
@@ -42,9 +43,13 @@ public class QuestionTest {
         expectDeleteHistoriesQ1.add(new DeleteHistory(AnswerTest.A1, UserTest.JAVAJIGI));
 
         // when
+        List<DeleteHistory> resultDeleteHistoriesQ1 = Q1.deleteQuestionAndAnswers(UserTest.JAVAJIGI);
 
         // then
-
+        Assertions.assertThat(resultDeleteHistoriesQ1).isEqualTo(expectDeleteHistoriesQ1);
+        assertThatThrownBy(() -> {
+            Q2.deleteQuestionAndAnswers(UserTest.JAVAJIGI);
+        }).isInstanceOf(CannotDeleteException.class);
     }
 
 

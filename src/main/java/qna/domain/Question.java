@@ -88,8 +88,8 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public List<DeleteHistory> deleteQuestionAndAnswers() {
-
+    public List<DeleteHistory> deleteQuestionAndAnswers(User user) {
+        return new ArrayList<>();
     }
 
     public void checkIsOwner(User user) {
