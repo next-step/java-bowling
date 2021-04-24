@@ -52,7 +52,7 @@ public class ResultView {
   private static void scoreSection(Frames frames) {
     System.out.print(SEPARATOR + alignText(BLANK) + SEPARATOR);
     System.out.print(scoreResult(frames.frameScores()) + scoreSeparator(frames.frameScores()));
-    System.out.println(emptyFrame(frames.frameScores().size()));
+    System.out.println(emptyScore(frames.frameScores().size()));
   }
 
   private static String scoreResult(List<Integer> scores) {
@@ -65,7 +65,7 @@ public class ResultView {
     return scores.isEmpty() ? EMPTY : SEPARATOR;
   }
 
-  private static String emptyFrame(int size) {
+  private static String emptyScore(int size) {
     int emptyFrameSize = TOTAL_FRAME_SIZE - size;
     return IntStream.rangeClosed(0, emptyFrameSize)
         .mapToObj(i -> alignText(BLANK))
