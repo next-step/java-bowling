@@ -9,7 +9,10 @@ public enum Mark {
     DELIMETER("|"),
     EMPTY ("");
 
-    public static final int PIN_COUNT_MAX = 10;
+    private static final int PIN_COUNT_MAX = 10;
+    private static final int FIRST_PIN_COUNT_INDEX = 0;
+    private static final int SECOND_PIN_COUNT_INDEX = 1;
+    private static final int THIRD_PIN_COUNT_INDEX = 2;
 
     private final String Mark;
 
@@ -23,14 +26,14 @@ public enum Mark {
         }
 
         if (pinCounts.size() == 1) {
-            return firstMark(pinCounts.get(0));
+            return firstMark(pinCounts.get(FIRST_PIN_COUNT_INDEX));
         }
 
         if (pinCounts.size() == 2) {
-            return secondMark(pinCounts.get(0), pinCounts.get(1));
+            return secondMark(pinCounts.get(FIRST_PIN_COUNT_INDEX), pinCounts.get(SECOND_PIN_COUNT_INDEX));
         }
 
-        return thirdMark(pinCounts.get(0), pinCounts.get(1), pinCounts.get(2));
+        return thirdMark(pinCounts.get(FIRST_PIN_COUNT_INDEX), pinCounts.get(SECOND_PIN_COUNT_INDEX), pinCounts.get(THIRD_PIN_COUNT_INDEX));
     }
 
     protected static String firstMark(PinCount pinCount) {
