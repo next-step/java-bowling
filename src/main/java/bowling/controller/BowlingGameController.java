@@ -11,8 +11,7 @@ public class BowlingGameController {
 
         while (player.checkPlaying()) {
             int numberOfPines = inputView.receiveNumberOfKnockedDownPins(player.getNextFrameNumber());
-            player.throwBall(numberOfPines);
-            resultView.printStateOfPlayer(player.export());
+            resultView.printStateOfPlayer(player.throwBall(numberOfPines));
         }
     }
 

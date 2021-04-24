@@ -18,8 +18,10 @@ public class Player {
         return new Player(PlayerName.wrap(name), new Bowling());
     }
 
-    public void throwBall(int numberOfPins) {
+    public PlayerDto throwBall(int numberOfPins) {
         bowling.throwBall(PitchResult.wrap(numberOfPins));
+
+        return PlayerDto.of(playerName, bowling);
     }
 
     public boolean checkPlaying() {
@@ -28,9 +30,5 @@ public class Player {
 
     public int getNextFrameNumber() {
         return bowling.getNextFrameNumber();
-    }
-
-    public PlayerDto export() {
-        return PlayerDto.of(playerName, bowling);
     }
 }
