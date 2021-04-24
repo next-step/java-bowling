@@ -6,6 +6,7 @@ import qna.CannotDeleteException;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -93,12 +94,15 @@ public class Question extends AbstractEntity {
         return new ArrayList<>();
     }
 
+    public Optional<DeleteHistory> deleteQuestion(User user) {
+        return null;
+    }
+
     public void checkIsOwner(User user) throws Exception {
         if (!isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
-
 
     @Override
     public String toString() {
