@@ -14,13 +14,6 @@ public abstract class Frame {
     pins = new Pins();
   }
 
-  public Frame next(int round) {
-    if (round == TOTAL_NORMAL_FRAME) {
-      return FinalFrame.of();
-    }
-    return NormalFrame.of();
-  }
-
   public void play(int countOfHitPin) {
     validateHitPin(countOfHitPin);
     pins.add(new Pin(countOfHitPin));

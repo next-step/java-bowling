@@ -33,25 +33,20 @@ public class ResultView {
 
   private static void stateSection(Frames frames, Player player) {
     System.out.print(SEPARATOR + alignText(player.name()) + SEPARATOR);
-    System.out.print(stateResult(frames.frames()) + stateSeparator(frames.frames()));
-    System.out.println(emptyFrame(frames.round()));
+    System.out.println(stateResult(frames.frames()) + SEPARATOR);
   }
 
   private static String stateResult(List<Frame> frames) {
     return frames.stream()
         .map(ResultView::eachFrameState)
-        .collect(Collectors.joining());
+        .collect(Collectors.joining(SEPARATOR));
   }
 
   private static String eachFrameState(Frame frame) {
     if (frame.isEmpty()) {
       return alignText(BLANK);
     }
-    return alignText(String.join(SEPARATOR, frame.frameState())) + SEPARATOR;
-  }
-
-  private static String stateSeparator(List<Frame> frames) {
-    return frames.size() == TOTAL_FRAME_SIZE ? EMPTY : SEPARATOR;
+    return alignText(String.join(SEPARATOR, frame.frameState()));
   }
 
   private static void scoreSection(Frames frames) {

@@ -3,39 +3,42 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Frames {
 
-  private static final int TOTAL_FRAME_SIZE = 10;
+  private static final int FINAL_ROUND = 10;
   private final List<Frame> frames;
+  private int frameRound;
   private List<Integer> scores;
 
   public Frames(List<Frame> frames) {
     this.frames = frames;
+    this.frameRound = 1;
     this.scores = new ArrayList<>();
   }
 
   public static Frames init() {
-    List<Frame> frames = new ArrayList<>();
-    frames.add(NormalFrame.of());
+    List<Frame> frames = normalFrames();
+    frames.add(FinalFrame.of());
     return new Frames(frames);
   }
 
+  private static List<Frame> normalFrames() {
+    return IntStream.range(0, 9)
+        .mapToObj(i -> new NormalFrame())
+        .collect(Collectors.toList());
+  }
+
   public void throwBall(int countOfHitPin) {
-    Frame frame = frames.get(frames.size() - 1);
+    Frame frame = frames.get(frameRound - 1);
     frame.play(countOfHitPin);
 
     calculateScore(countOfHitPin);
     if (frame.isEndFrame()) {
-      addFrame(frame);
       frame.initScore();
-    }
-  }
-
-  private void addFrame(Frame frame) {
-    if (frames.size() < TOTAL_FRAME_SIZE) {
-      Frame next = frame.next(frames.size());
-      frames.add(next);
+      frameRound++;
     }
   }
 
@@ -49,7 +52,7 @@ public class Frames {
 
   public List<Integer> frameScores() {
     this.scores = new ArrayList<>();
-    for (int i = 0; i < frames.size(); i++) {
+    for (int i = 0; i < FINAL_ROUND; i++) {
       addScore(frames.get(i), i);
     }
     return scores;
@@ -71,11 +74,11 @@ public class Frames {
   }
 
   public boolean isContinue() {
-    return frames.get(frames.size() - 1).isLastFrame();
+    return frames.get(FINAL_ROUND - 1).isLastFrame();
   }
 
   public int round() {
-    return frames.size();
+    return frameRound;
   }
 
   public List<Frame> frames() {
