@@ -3,6 +3,7 @@ package qna.domain;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Boolean.TRUE;
@@ -98,9 +99,10 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) {
         validateOwner(loginUser);
-        List<DeleteHistory> deleteHistories = answers.deleteBy(loginUser);
         this.deleted = DELETED;
-        deleteHistories.add(DeleteHistory.ofQuestion(this.getId(), this.writer));
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(DeleteHistory.ofQuestion(this.getId(), loginUser));
+        deleteHistories.addAll(answers.deleteBy(loginUser));
         return deleteHistories;
     }
 

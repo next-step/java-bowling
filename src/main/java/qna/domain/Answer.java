@@ -55,9 +55,6 @@ public class Answer extends AbstractEntity {
     }
 
     public boolean isOwner(User writer) {
-        System.out.println(writer.getUserId());
-        System.out.println(this.writer.getUserId());
-        System.out.println(this.writer.equals(writer));
         return this.writer.equals(writer);
     }
 
@@ -76,7 +73,7 @@ public class Answer extends AbstractEntity {
     public DeleteHistory delete(User loginUser) {
         validateOwner(loginUser);
         this.deleted = DELETED;
-        return DeleteHistory.ofAnswer(this.getId(), this.writer);
+        return DeleteHistory.ofAnswer(this.getId(), loginUser);
     }
 
     private void validateOwner(User loginUser) {
