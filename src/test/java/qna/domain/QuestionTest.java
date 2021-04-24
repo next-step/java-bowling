@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
@@ -8,11 +9,16 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static qna.domain.UserTest.JAVAJIGI;
 
 public class QuestionTest {
-    public static final Question Q1 = new Question("title1", "contents1").writeBy(JAVAJIGI);
-    public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    public static Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+    public static Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+
+    @BeforeEach
+    void setUp() {
+        Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    }
 
     @DisplayName("질문을 생성한다")
     @Test
@@ -30,7 +36,7 @@ public class QuestionTest {
     @Test
     void questionDeleteTest() {
         Q1.addAnswer(AnswerTest.A1);
-        Q1.delete(JAVAJIGI);
+        Q1.delete(UserTest.JAVAJIGI);
         assertThat(Q1.isDeleted()).isEqualTo(TRUE);
         assertThat(AnswerTest.A1.isDeleted()).isEqualTo(TRUE);
         Q2.delete(UserTest.SANJIGI);
@@ -41,6 +47,6 @@ public class QuestionTest {
     @Test
     void questionWitAnswerDeleteExceptionTest() {
         Q1.addAnswer(AnswerTest.A2);
-        assertThatThrownBy(() -> Q1.delete(JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 }

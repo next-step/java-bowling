@@ -55,6 +55,9 @@ public class Answer extends AbstractEntity {
     }
 
     public boolean isOwner(User writer) {
+        System.out.println(writer.getUserId());
+        System.out.println(this.writer.getUserId());
+        System.out.println(this.writer.equals(writer));
         return this.writer.equals(writer);
     }
 
