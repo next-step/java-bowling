@@ -6,11 +6,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ScoreTest {
 
   @Test
+  @DisplayName("[Score] strike 인 경우 Score 생성 테스트")
   void create_strike_score_test() {
     Pins pins = new Pins(Collections.singletonList(new Pin(10)));
 
@@ -20,6 +22,7 @@ public class ScoreTest {
   }
 
   @Test
+  @DisplayName("[Score] spare 인 경우 Score 생성 테스트")
   void create_spare_score_test() {
     Pins pins = new Pins(Collections.singletonList(new Pin(10)));
 
@@ -29,6 +32,7 @@ public class ScoreTest {
   }
 
   @Test
+  @DisplayName("[Score] miss 인 경우 Score 생성 테스트")
   void create_miss_score_test() {
     List<Pin> pin = Stream.of(5, 4)
         .map(Pin::new)
@@ -41,6 +45,7 @@ public class ScoreTest {
   }
 
   @Test
+  @DisplayName("[Score] bowl 메소드 테스트")
   void score_bowl_test() {
     Score score = new Score(10, 2);
 
