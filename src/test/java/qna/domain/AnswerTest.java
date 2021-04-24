@@ -38,6 +38,8 @@ public class AnswerTest {
         // then
         Assertions.assertThat(resultDeleteHistoryA1).isEqualTo(expectDeleteHistoryA1);
         Assertions.assertThat(resultDeleteHistoryA2).isEqualTo(expectDeleteHistoryA2);
+        Assertions.assertThat(A1.isDeleted()).isTrue();
+        Assertions.assertThat(A2.isDeleted()).isTrue();
     }
 
     @Test
