@@ -4,78 +4,54 @@ public class FinalFrame implements Frame {
     private static final String CANNOT_THROW_THIRD_BOWL = "3구를 던질수 없습니다.";
     private static final int FINAL_INDEX = 9;
 
-    private final FrameBowls frameBowls;
+    private final PinCounts pinCounts;
 
     public FinalFrame() {
-        this(new FinalFrameBowls());
+        this(new FinalPinCounts());
     }
 
-    private FinalFrame(FrameBowls frameBowls) {
-        this.frameBowls = frameBowls;
+    private FinalFrame(PinCounts pinCounts) {
+        this.pinCounts = pinCounts;
     }
 
     @Override
     public Frame throwBowl(String pinCount) {
-        if (!frameBowls.isFirstBowlThrown()) {
-            return firstBowl(pinCount);
+        if (pinCounts.pinCounts().isEmpty()) {
+            return addBowl(pinCount);
         }
 
-        if (!frameBowls.isSecondBowlThrown()) {
-            return secondBowl(pinCount);
+        if (pinCounts.pinCounts().size() == 1) {
+            return addBowl(pinCount);
         }
 
         if (isThirdThrowPossible()) {
-            return thirdBowl(pinCount);
+            return addBowl(pinCount);
         }
 
         throw new IllegalArgumentException(CANNOT_THROW_THIRD_BOWL);
     }
 
     private boolean isThirdThrowPossible() {
-        return frameBowls.isFirstBowlStrike() || frameBowls.isSecondBowlSpare();
+        return pinCounts.pinCounts().get(0).isStrike()
+                || (!pinCounts.pinCounts().get(0).isStrike() && pinCounts.totalPinCount() == 10);
     }
 
     public Frame throwBowl(int pinCount) {
         return throwBowl(String.valueOf(pinCount));
     }
 
-    private Frame firstBowl(int firstPinCount) {
-        return new FinalFrame(new FinalFrameBowls().firstThrow(firstPinCount));
+    private Frame addBowl(int pinPinCount) {
+        pinCounts.knockDown(pinPinCount);
+        return new FinalFrame(pinCounts);
     }
 
-    private Frame firstBowl(String firstPinCount) {
-        return firstBowl(Integer.parseInt(firstPinCount));
-    }
-
-    private Frame secondBowl(int secondPinCount) {
-        return new FinalFrame(frameBowls.secondThrow(secondPinCount));
-    }
-
-    private Frame secondBowl(String secondPinCount) {
-        return secondBowl(Integer.parseInt(secondPinCount));
-    }
-
-    private FinalFrame thirdBowl(int thirdPinCount) {
-        FinalFrameBowls frameBowls = (FinalFrameBowls) this.frameBowls;
-        return new FinalFrame(frameBowls.thirdThrow(thirdPinCount));
-    }
-
-    private FinalFrame thirdBowl(String thirdPinCount) {
-        return thirdBowl(Integer.parseInt(thirdPinCount));
+    private Frame addBowl(String firstPinCount) {
+        return addBowl(Integer.parseInt(firstPinCount));
     }
 
     @Override
     public boolean isFinished() {
-        FinalFrameBowls bowls = (FinalFrameBowls) frameBowls;
-
-        if (isThirdThrowPossible() && bowls.isThirdBowlThrown())
-            return true;
-
-        if (isThirdThrowPossible() && !bowls.isThirdBowlThrown()) {
-            return false;
-        }
-
-        return (!isThirdThrowPossible()) && bowls.isSecondBowlThrown();
+        return pinCounts.isFinished();
     }
 
     @Override
@@ -84,52 +60,12 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public FrameBowls bowls() {
-        return frameBowls;
+    public PinCounts pinCounts() {
+        return pinCounts;
     }
 
     @Override
     public Frame next() {
         return this;
-    }
-
-    @Override
-    public String toString() {
-        FinalFrameBowls bowls = (FinalFrameBowls) this.frameBowls;
-
-        if (isAllNotThrown()) {
-            return "      ";
-        }
-
-        if (!bowls.isFirstBowlStrike() && bowls.isSecondBowlSpare() && !bowls.isThirdBowlThrown()) {
-            return " " + bowls.firstPinCount().toString() + "|" + "/" + " ";
-        }
-
-        if (isFirstAndSecondThrown() && !isThirdThrowPossible()) {
-            return " " + bowls.firstPinCount().toString() + "|" + bowls.secondPinCount().toString() + "  ";
-        }
-
-        if (isFirstAndSecondThrown() && isThirdThrowPossible() && !bowls.isThirdBowlThrown()) {
-            return " " + bowls.firstPinCount().toString() + "|" + bowls.secondPinCount().toString() + "  ";
-        }
-
-        if (isOnlyFirstThrown()) {
-            return " " + bowls.firstPinCount().toString() + "    ";
-        }
-
-        return " " + bowls.firstPinCount().toString() + "|" + bowls.secondPinCount().toString() + "|" + bowls.thirdPinCount().toString();
-    }
-
-    private boolean isFirstAndSecondThrown() {
-        return frameBowls.isFirstBowlThrown() && frameBowls.isSecondBowlThrown();
-    }
-
-    private boolean isOnlyFirstThrown() {
-        return frameBowls.isFirstBowlThrown() && !frameBowls.isSecondBowlThrown();
-    }
-
-    private boolean isAllNotThrown() {
-        FinalFrameBowls bowls = (FinalFrameBowls) this.frameBowls;
-        return !bowls.isFirstBowlThrown() && !bowls.isSecondBowlSpare() && !bowls.isThirdBowlThrown();
     }
 }

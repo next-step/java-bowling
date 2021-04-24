@@ -14,11 +14,9 @@ public class FinalFrameTest {
     @DisplayName("초구를 던지지 않았을 경우, 초구를 던진다.")
     public void throwBowl_firstBowl() throws Exception {
         Frame frame = new FinalFrame().throwBowl(1);
-        FinalFrameBowls bowls = (FinalFrameBowls) frame.bowls();
+        PinCounts pinCounts = frame.pinCounts();
 
-        assertThat(bowls.isFirstBowlThrown()).isTrue();
-        assertThat(bowls.isSecondBowlThrown()).isFalse();
-        assertThat(bowls.isThirdBowlThrown()).isFalse();
+        assertThat(pinCounts.pinCounts().size()).isEqualTo(1);
     }
 
     @Test
@@ -26,25 +24,21 @@ public class FinalFrameTest {
     public void throwBowl_secondBall() throws Exception {
         Frame firstThrown = new FinalFrame().throwBowl(1);
         Frame secondThrown = firstThrown.throwBowl("2");
-        FinalFrameBowls bowls = (FinalFrameBowls) secondThrown.bowls();
+        PinCounts pinCounts = secondThrown.pinCounts();
 
-        assertThat(bowls.isFirstBowlThrown()).isTrue();
-        assertThat(bowls.isSecondBowlThrown()).isTrue();
-        assertThat(bowls.isThirdBowlThrown()).isFalse();
+        assertThat(pinCounts.pinCounts().size()).isEqualTo(2);
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10, 1, 1", "5, 5, 1"})
+    @CsvSource(value = {"10, 1, 1", "5, 5, 1", "0, 10 ,10"})
     @DisplayName("초구 스트라이크 또는 2구 스페어일 경우, 3구를 던진다.")
     public void throwBowl_thirdBowl(int firstPinCount, String secondPinCount, String thirdPinCount) throws Exception {
         Frame firstThrown = new FinalFrame().throwBowl(firstPinCount);
         Frame secondThrown = firstThrown.throwBowl(secondPinCount);
         Frame thirdThrown = secondThrown.throwBowl(thirdPinCount);
-        FinalFrameBowls bowls = (FinalFrameBowls) thirdThrown.bowls();
+        PinCounts pinCounts = thirdThrown.pinCounts();
 
-        assertThat(bowls.isFirstBowlThrown()).isTrue();
-        assertThat(bowls.isSecondBowlThrown()).isTrue();
-        assertThat(bowls.isThirdBowlThrown()).isTrue();
+        assertThat(pinCounts.pinCounts().size()).isEqualTo(3);
     }
 
     @Test
