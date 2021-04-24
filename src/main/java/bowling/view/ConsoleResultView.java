@@ -37,7 +37,7 @@ public class ConsoleResultView implements ResultView {
         StringBuilder stringBuilder = new StringBuilder(DELIMITER);
         stringBuilder.append(alignMiddle(playerDto.getPlayerName())).append(DELIMITER);
 
-        List<RecordsDto> frameRecords = playerDto.getBowlingDto().getFrameRecords();
+        List<RecordsDto> frameRecords = playerDto.getFramesDto().getRecords();
 
         frameRecords.forEach(recordsDto -> {
             String record = alignMiddle(String.join(DELIMITER, recordsDto.getRecords()));

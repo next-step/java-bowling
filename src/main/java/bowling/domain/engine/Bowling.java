@@ -1,27 +1,18 @@
 package bowling.domain.engine;
 
-import bowling.dto.BowlingDto;
-import bowling.util.ListUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
+import bowling.dto.FramesDto;
 
 public class Bowling {
 
-    private static final int TOTAL_FRAMES = 10;
-
     private final FrameCreator frameCreator = new FrameCreator();
-    private final List<Frame> frames = new ArrayList<>();
+    private final Frames frames;
 
     public Bowling() {
-        frames.add(frameCreator.create());
+        frames = Frames.initialize(frameCreator.create());
     }
 
     public void throwBall(PitchResult pitchResult) {
-        Frame currentFrame = ListUtils.getLastElement(frames);
+        Frame currentFrame = frames.getLast();
         if (currentFrame.isEnded()) {
             currentFrame = goToNextFrame();
         }
@@ -29,12 +20,8 @@ public class Bowling {
         currentFrame.throwBall(pitchResult);
     }
 
-    public int currentFrame() {
-        if (ListUtils.getLastElement(frames).isEnded()) {
-            return frames.size() + 1;
-        } else {
-            return frames.size();
-        }
+    public int getNextFrameNumber() {
+        return frames.getNextFrameNumber();
     }
 
     private Frame goToNextFrame() {
@@ -45,11 +32,11 @@ public class Bowling {
     }
 
     public boolean isEnded() {
-        return frames.size() == TOTAL_FRAMES && ListUtils.getLastElement(frames).isEnded();
+        return frames.isAllFrameEnded();
     }
 
-    public BowlingDto export() {
-        return frames.stream().map(Frame::export).collect(collectingAndThen(toList(), BowlingDto::new));
+    public FramesDto exportFrames() {
+        return frames.export();
     }
 
 }

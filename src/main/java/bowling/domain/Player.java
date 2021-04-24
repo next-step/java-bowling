@@ -27,7 +27,7 @@ public class Player {
     }
 
     public int currentFrame() {
-        return bowling.currentFrame();
+        return bowling.getNextFrameNumber();
     }
 
     public PlayerDto export() {
