@@ -27,7 +27,7 @@ public class Answer extends AbstractEntity {
     @Column
     private boolean deleted = false;
 
-    public Answer() {
+    protected Answer() {
     }
 
     public Answer(User writer, Question question, String contents) {
@@ -50,11 +50,6 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
@@ -75,15 +70,20 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    @Override
-    public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+    public DeleteHistory delete(User loginUser) {
+        validateOwner(loginUser);
+        this.deleted = DELETED;
+        return DeleteHistory.ofAnswer(this.getId(), this.writer);
     }
 
-    public void delete(User loginUser) {
+    private void validateOwner(User loginUser) {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("답변을 삭제할 권한이 없습니다.");
         }
-        this.deleted = DELETED;
+    }
+
+    @Override
+    public String toString() {
+        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 }
