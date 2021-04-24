@@ -11,6 +11,8 @@ import static java.util.stream.Collectors.toList;
 
 public class Bowling {
 
+    private static final int TOTAL_FRAMES = 10;
+
     private final FrameCreator frameCreator = new FrameCreator();
     private final List<Frame> frames = new ArrayList<>();
 
@@ -27,11 +29,23 @@ public class Bowling {
         currentFrame.throwBall(pitchResult);
     }
 
+    public int currentFrame() {
+        if (ListUtils.getLastElement(frames).isEnded()) {
+            return frames.size() + 1;
+        } else {
+            return frames.size();
+        }
+    }
+
     private Frame goToNextFrame() {
         Frame nextFrame = frameCreator.create();
         frames.add(nextFrame);
 
         return nextFrame;
+    }
+
+    public boolean isEnded() {
+        return frames.size() == TOTAL_FRAMES && ListUtils.getLastElement(frames).isEnded();
     }
 
     public BowlingDto export() {

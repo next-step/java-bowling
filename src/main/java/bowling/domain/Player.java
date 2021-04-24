@@ -22,6 +22,14 @@ public class Player {
         bowling.throwBall(PitchResult.wrap(numberOfPins));
     }
 
+    public boolean checkPlaying() {
+        return !bowling.isEnded();
+    }
+
+    public int currentFrame() {
+        return bowling.currentFrame();
+    }
+
     public PlayerDto export() {
         return PlayerDto.of(playerName, bowling);
     }
