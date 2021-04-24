@@ -48,10 +48,10 @@ public class AnswerTest {
 
         // then
         assertThatThrownBy(() -> {
-            A1.checkIsOwner(UserTest.SANJIGI);
+            A1.deleteAnswer(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
         assertThatThrownBy(() -> {
-            A2.checkIsOwner(UserTest.JAVAJIGI);
+            A2.deleteAnswer(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 }
