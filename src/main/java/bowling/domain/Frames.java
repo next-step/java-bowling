@@ -9,14 +9,13 @@ import java.util.stream.IntStream;
 public class Frames {
 
   private static final int FINAL_ROUND = 10;
-  private static final int FIRST_ROUND = 1;
   private final List<Frame> frames;
-  private int frameRound;
+  private Round round;
   private List<Integer> scores;
 
   public Frames(List<Frame> frames) {
     this.frames = frames;
-    this.frameRound = FIRST_ROUND;
+    this.round = Round.firstRound();
     this.scores = new ArrayList<>();
   }
 
@@ -33,13 +32,13 @@ public class Frames {
   }
 
   public void throwBall(int countOfHitPin) {
-    Frame frame = frames.get(frameRound - 1);
+    Frame frame = frames.get(round() - 1);
     frame.play(countOfHitPin);
 
     calculateScore(countOfHitPin);
     if (frame.isEndFrame()) {
       frame.initScore();
-      frameRound++;
+      round = round.next();
     }
   }
 
@@ -79,7 +78,7 @@ public class Frames {
   }
 
   public int round() {
-    return frameRound;
+    return round.round();
   }
 
   public List<Frame> frames() {
