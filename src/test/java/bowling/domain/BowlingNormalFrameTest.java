@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.dto.ScoreDto;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,9 +27,9 @@ class BowlingNormalFrameTest {
         Point secondPoint = Point.of(4);
         BowlingNormalFrame initFrame = BowlingNormalFrame.first(Round.first());
 
-        BowlingFrame firstFrame = initFrame.firstPitching(firstPoint);
-        BowlingFrame secondFrame = firstFrame.secondPitching(secondPoint);
-        ScoreDto scoreDto = secondFrame.toDto();
+        initFrame.firstPitching(firstPoint);
+        initFrame.secondPitching(secondPoint);
+        ScoreDto scoreDto = initFrame.toDto();
 
         assertThat(scoreDto.getBowlingPoint()).contains(5, 4);
     }
@@ -39,8 +40,8 @@ class BowlingNormalFrameTest {
         Point firstPoint = Point.of(10);
         BowlingNormalFrame initFrame = BowlingNormalFrame.first(Round.first());
 
-        BowlingFrame firstFrame = initFrame.firstPitching(firstPoint);
-        ScoreDto scoreDto = firstFrame.toDto();
+        initFrame.firstPitching(firstPoint);
+        ScoreDto scoreDto = initFrame.toDto();
 
         assertThat(scoreDto.getScoreType()).isEqualTo(BowlingRole.STRIKE);
     }
@@ -52,9 +53,9 @@ class BowlingNormalFrameTest {
         Point secondPoint = Point.of(3);
         BowlingNormalFrame initFrame = BowlingNormalFrame.first(Round.first());
 
-        BowlingFrame firstFrame = initFrame.firstPitching(firstPoint);
-        BowlingFrame secondFrame = firstFrame.secondPitching(secondPoint);
-        ScoreDto scoreDto = secondFrame.toDto();
+        initFrame.firstPitching(firstPoint);
+        initFrame.secondPitching(secondPoint);
+        ScoreDto scoreDto = initFrame.toDto();
 
         assertThat(scoreDto.getScoreType()).isEqualTo(BowlingRole.SPARE);
     }
@@ -66,10 +67,38 @@ class BowlingNormalFrameTest {
         Point secondPoint = Point.of(2);
         BowlingNormalFrame initFrame = BowlingNormalFrame.first(Round.first());
 
-        BowlingFrame firstFrame = initFrame.firstPitching(firstPoint);
-        BowlingFrame secondFrame = firstFrame.secondPitching(secondPoint);
-        ScoreDto scoreDto = secondFrame.toDto();
+        initFrame.firstPitching(firstPoint);
+        initFrame.secondPitching(secondPoint);
+        ScoreDto scoreDto = initFrame.toDto();
 
         assertThat(scoreDto.getScoreType()).isEqualTo(BowlingRole.MISS);
     }
+
+    @DisplayName("Score Type이 MISS면 현재 스코어 합을 내보낸다.")
+    @Test
+    void case6() {
+        BowlingNormalFrame initFrame = BowlingNormalFrame.of(Round.first(), Score.of(Point.of(1), Point.of(5)));
+        FramePoint framePoint = initFrame.calculateOfScore();
+        Assertions.assertThat(framePoint.toInt()).isEqualTo(6);
+    }
+
+    @DisplayName("Score Type이 SPARE면 현재 스코어 합+ 다음 프레임 첫번쨰 포인트를 내보낸다.")
+    @Test
+    void case7() {
+        BowlingNormalFrame initFrame = BowlingNormalFrame.of(Round.first(), Score.of(Point.of(5), Point.of(5)));
+        BowlingFrame bowlingFrame = initFrame.nextFrame();
+        bowlingFrame.firstPitching(Point.of(4));
+        FramePoint framePoint = initFrame.calculateOfScore();
+        Assertions.assertThat(framePoint.toInt()).isEqualTo(14);
+    }
+
+    @DisplayName("Score Type이 STRIKE면 현재 스코어 합+ 다음 프레임 첫번쨰 포인트를 내보낸다.")
+    @Test
+    void case8() {
+        BowlingNormalFrame initFrame = BowlingNormalFrame.of(Round.first(), Score.of(Point.of(10), Point.of(0)));
+        initFrame.nextFrame().firstPitching(Point.of(4)).secondPitching(Point.of(5));
+        FramePoint framePoint = initFrame.calculateOfScore();
+        Assertions.assertThat(framePoint.toInt()).isEqualTo(19);
+    }
+
 }

@@ -1,7 +1,7 @@
 package bowling.view;
 
 import bowling.domain.BowlingRole;
-import bowling.domain.ThrowsState;
+import bowling.domain.ThrowCount;
 import bowling.dto.BowlingBoardDto;
 import bowling.dto.PlayerDto;
 import bowling.dto.ScoreDto;
@@ -15,29 +15,64 @@ public class OutputView {
     private static final int FIRST_ROUND = 1;
 
     public static void printResultView(int round, PlayerDto player, BowlingBoardDto bowlingBoardDto) {
-
         printRound();
         printBoard(round, player.getPlayerName(), bowlingBoardDto);
+        printPoint(round, bowlingBoardDto);
     }
 
-    private static void printBoard(int round, String playerName, BowlingBoardDto bowlingBoardDto) {
+    private static void printPoint(int round, BowlingBoardDto bowlingBoardDto) {
         List<ScoreDto> scoreDtoList = bowlingBoardDto.getScoreDtoList();
-        String point = IntStream.range(0, round)
-                .mapToObj(i -> printScore(scoreDtoList.get(i), bowlingBoardDto.getThrowsState(), round, i))
-                .collect(Collectors.joining());
+        List<Integer> framePoints = bowlingBoardDto.getFramePoint();
+        ThrowCount throwCount = bowlingBoardDto.getThrowCount();
 
-        System.out.print("|  " + playerName + " ");
-        System.out.print(point);
+        List<String> point = IntStream.range(0, round)
+                .mapToObj(i -> framePoints.get(i) > 10 ? String.format("|  %d  ", framePoints.get(i)) : String.format("|  %d   ", framePoints.get(i)))
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < round; i++) {
+            makeEmptyScore(round, scoreDtoList, throwCount, point);
+        }
+
+        System.out.print("|      ");
+        System.out.print(String.join("", point));
+        unusedGames(round);
+    }
+
+    private static void makeEmptyScore(int round, List<ScoreDto> scoreDtoList, ThrowCount throwCount, List<String> point) {
+        if (scoreDtoList.get(round - 1).getScoreType() == BowlingRole.STRIKE && !throwCount.equals(ThrowCount.of(3))) {
+            point.set(round - 1, "|      ");
+        }
+        if (scoreDtoList.get(round - 1).getScoreType() == BowlingRole.SPARE && !throwCount.equals(ThrowCount.of(3))) {
+            point.set(round - 1, "|      ");
+        }
+        if (round != 1 && scoreDtoList.get(round - 2).getScoreType() == BowlingRole.STRIKE && !throwCount.equals(ThrowCount.of(3))) {
+            point.set(round - 2, "|      ");
+            point.set(round - 1, "|      ");
+        }
+    }
+
+    private static void unusedGames(int round) {
         for (int i = round; i < FINAL_ROUND; i++) {
             System.out.print("|      ");
         }
         System.out.println("|");
     }
 
-    private static String printScore(ScoreDto scoreDto, ThrowsState throwsState, int size, int round) {
+    private static void printBoard(int round, String playerName, BowlingBoardDto bowlingBoardDto) {
+        List<ScoreDto> scoreDtoList = bowlingBoardDto.getScoreDtoList();
+        String point = IntStream.range(0, round)
+                .mapToObj(i -> printScore(scoreDtoList.get(i), bowlingBoardDto.getThrowCount(), round, i))
+                .collect(Collectors.joining());
+
+        System.out.print("|  " + playerName + " ");
+        System.out.print(point);
+        unusedGames(round);
+    }
+
+    private static String printScore(ScoreDto scoreDto, ThrowCount throwCount, int size, int round) {
         String first = bowlingSymbol(scoreDto.getBowlingPoint().get(0));
         String second = bowlingSymbol(scoreDto.getBowlingPoint().get(1));
-        if (throwsState == ThrowsState.SECOND_THROWS && size == (round + 1)) {
+        if (throwCount.equals(ThrowCount.of(1)) && size == (round + 1)) {
             return String.format("|  %s   ", first);
         }
         if (scoreDto.getScoreType() == BowlingRole.STRIKE) {
@@ -46,6 +81,7 @@ public class OutputView {
         if (scoreDto.getScoreType() == BowlingRole.SPARE) {
             return String.format("|  %s|/ ", first);
         }
+
         return String.format("|  %s|%s ", first, second);
     }
 

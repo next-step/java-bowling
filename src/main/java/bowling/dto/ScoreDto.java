@@ -35,9 +35,9 @@ public class ScoreDto {
     public static List<Integer> createBowlingPoint(List<Score> scores) {
         List<Integer> bowlingPoint = new ArrayList<>();
         int bound = scores.size();
-        IntStream.range(0, bound).forEach(i -> {
-            bowlingPoint.add(scores.get(i).firstPoint());
-            bowlingPoint.add(scores.get(i).secondPoint());
+        IntStream.range(0, bound).forEach(index -> {
+            bowlingPoint.add(scores.get(index).firstPoint());
+            bowlingPoint.add(scores.get(index).secondPoint());
         });
         return bowlingPoint;
     }

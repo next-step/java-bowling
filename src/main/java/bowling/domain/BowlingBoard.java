@@ -8,83 +8,30 @@ import java.util.stream.Collectors;
 
 public class BowlingBoard {
 
-    private static final int FINAL_ROUND = 10;
-
     private final List<BowlingFrame> bowlingFrameList;
-    private final ThrowsState throwsState;
+    private final ThrowCount throwCount;
 
-    private BowlingBoard(List<BowlingFrame> bowlingFrameList, ThrowsState throwsState) {
+    private BowlingBoard(List<BowlingFrame> bowlingFrameList, ThrowCount throwCount) {
         this.bowlingFrameList = bowlingFrameList;
-        this.throwsState = throwsState;
+        this.throwCount = throwCount;
     }
 
     public static BowlingBoard of() {
         List<BowlingFrame> bowlingFrameList = new ArrayList<>();
         bowlingFrameList.add(BowlingNormalFrame.first(Round.first()));
-        return new BowlingBoard(bowlingFrameList, ThrowsState.FIRST_THROWS);
+        return new BowlingBoard(bowlingFrameList, ThrowCount.fisrt());
     }
 
-    public static BowlingBoard of(List<BowlingFrame> bowlingFrameList, ThrowsState throwsState) {
-        return new BowlingBoard(bowlingFrameList, throwsState);
+    public static BowlingBoard of(List<BowlingFrame> bowlingFrameList, ThrowCount throwCount) {
+        return new BowlingBoard(bowlingFrameList, throwCount);
     }
 
     public int round() {
         return bowlingFrameList.size();
     }
 
-    private BowlingFrame getFrame() {
-        return bowlingFrameList.get(bowlingFrameList.size() - 1);
-    }
-
-    public BowlingBoard firstPitching(Point point) {
-        BowlingFrame bowlingFrame = getFrame().firstPitching(point);
-        bowlingFrameList.set(round() - 1, bowlingFrame);
-        if (bowlingFrame.isType() == BowlingRole.STRIKE) {
-            createNextFrame();
-            return BowlingBoard.of(bowlingFrameList, ThrowsState.FIRST_THROWS);
-        }
-        return BowlingBoard.of(bowlingFrameList, ThrowsState.SECOND_THROWS);
-    }
-
-    public BowlingBoard secondPitching(Point point) {
-        if (round() == FINAL_ROUND) {
-            return BowlingBoard.of(bowlingFrameList, ThrowsState.FINISH_THROWS);
-        }
-        bowlingFrameList.set(round() - 1, getFrame().secondPitching(point));
-        return BowlingBoard.of(bowlingFrameList, ThrowsState.FIRST_THROWS);
-    }
-
-    public BowlingBoard bonusPitching(Point point) {
-        bowlingFrameList.set(round() - 1, getFrame().bonusPitching(point));
-        return BowlingBoard.of(bowlingFrameList, ThrowsState.BONUS_THROWS);
-    }
-
-    public boolean isType(BowlingRole type) {
-        return getFrame().isType() == type;
-    }
-
     public BowlingBoard pitching(Point point) {
-        if (throwsState == ThrowsState.SECOND_THROWS) {
-            BowlingBoard bowlingBoard = secondPitching(point);
-            createNextFrame();
-            return bowlingBoard;
-        }
-
-        if (throwsState == ThrowsState.SECOND_THROWS && isType(BowlingRole.STRIKE)) {
-            return bonusPitching(point);
-        }
-
-        if (throwsState == ThrowsState.FINISH_THROWS && isType(BowlingRole.SPARE)) {
-            return bonusPitching(point);
-        }
-
-        return firstPitching(point);
-    }
-
-    private void createNextFrame() {
-        if (bowlingFrameList.size() != FINAL_ROUND) {
-            bowlingFrameList.add(getFrame().nextFrame());
-        }
+        return ThrowsState.throwBall(point, bowlingFrameList, throwCount);
     }
 
     public List<ScoreDto> toScoreDto() {
@@ -94,17 +41,16 @@ public class BowlingBoard {
     }
 
     public boolean isEnd() {
-        if (throwsState == ThrowsState.FINISH_THROWS && isType(BowlingRole.MISS)) {
-            return true;
-        }
-        return throwsState == ThrowsState.BONUS_THROWS;
+        return throwCount.equals(ThrowCount.of(3));
     }
 
-    public boolean isSameState(ThrowsState throwsState) {
-        return this.throwsState == throwsState;
+    public List<FramePoint> framePoint() {
+        return bowlingFrameList.stream()
+                .map(BowlingFrame::calculateOfScore)
+                .collect(Collectors.toList());
     }
 
-    public ThrowsState state() {
-        return throwsState;
+    public ThrowCount state() {
+        return throwCount;
     }
 }

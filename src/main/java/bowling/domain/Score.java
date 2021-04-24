@@ -1,18 +1,19 @@
 package bowling.domain;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Score {
 
-    private final Point firstPoint;
-    private final Point secondPoint;
+    private final List<Point> pointList;
 
     private static final int POINT_MAX_BOUND = 10;
     private static final int POINT_MIN_BOUND = 0;
 
     private Score(Point firstPoint, Point secondPoint) {
         valid(firstPoint, secondPoint);
-        this.firstPoint = firstPoint;
-        this.secondPoint = secondPoint;
+        this.pointList = Arrays.asList(firstPoint, secondPoint);
     }
 
     private void valid(Point firstPoint, Point secondPoint) {
@@ -25,12 +26,16 @@ public class Score {
         return new Score(firstPoint, secondPoint);
     }
 
+    public static Score initScore() {
+        return new Score(Point.of(), Point.of(POINT_MIN_BOUND));
+    }
+
     public static Score first(Point firstPoint) {
         return new Score(firstPoint, Point.of(POINT_MIN_BOUND));
     }
 
     public Score next(Point secondPoint) {
-        return new Score(this.firstPoint, secondPoint);
+        return new Score(pointList.get(0), secondPoint);
     }
 
     public BowlingRole type() {
@@ -38,11 +43,11 @@ public class Score {
     }
 
     public int firstPoint() {
-        return firstPoint.toInt();
+        return pointList.get(0).toInt();
     }
 
     public int secondPoint() {
-        return secondPoint.toInt();
+        return pointList.get(1).toInt();
     }
 
     public boolean isStrike() {
