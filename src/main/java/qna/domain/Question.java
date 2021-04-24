@@ -1,9 +1,6 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,25 +15,25 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private final Answers answers;
 
     private boolean deleted = false;
 
     public Question() {
+        answers = new Answers();
     }
 
     public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
+        answers = new Answers();
     }
 
     public Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
+        answers = new Answers();
     }
 
     public String getTitle() {
@@ -85,11 +82,19 @@ public class Question extends AbstractEntity {
     }
 
     public List<Answer> getAnswers() {
-        return answers;
+        return answers.answers();
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public void delete(User loginUser)  {
+        if (!isOwner(loginUser)) {
+            throw new IllegalArgumentException("잘못된 loginUser");
+        }
+        answers.delete(loginUser);
+        setDeleted(true);
     }
 }
