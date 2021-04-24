@@ -62,19 +62,19 @@ public class ResultView {
     private String finalFrameScoreToString(Frame frame) {
         int firstPin = frame.getFirstPin();
         if (frame.isFirst()) {
-            return getType(firstPin);
+            return pinToString(firstPin);
         }
         if (frame.isSecond()) {
-            return getType(firstPin) + PIPE +  nextType(frame);
+            return pinToString(firstPin) + PIPE +  nextPinToString(frame);
         }
         if (frame.isBonus()) {
             int bonusPin = frame.getBonusPin();
-            return getType(firstPin) + PIPE + nextType(frame) + PIPE + getType(bonusPin);
+            return pinToString(firstPin) + PIPE + nextPinToString(frame) + PIPE + pinToString(bonusPin);
         }
-        return getType(firstPin) + PIPE + nextType(frame);
+        return pinToString(firstPin) + PIPE + nextPinToString(frame);
     }
 
-    private String getType(int pin) {
+    private String pinToString(int pin) {
         if (pin == Pin.MAX_PIN_COUNT) {
             return ScoreSymbol.STRIKE.getSymbol();
         }
@@ -84,14 +84,14 @@ public class ResultView {
         return String.valueOf(pin);
     }
 
-    private String nextType(Frame frame) {
+    private String nextPinToString(Frame frame) {
         int firstPin = frame.getFirstPin();
         int secondPin = frame.getSecondPin();
 
         if ((firstPin + secondPin) == Pin.MAX_PIN_COUNT) {
             return ScoreSymbol.SPARE.getSymbol();
         }
-        return getType(secondPin);
+        return pinToString(secondPin);
     }
 
     private String printEmptyFrame(Frames frames) {
