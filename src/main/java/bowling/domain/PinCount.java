@@ -10,10 +10,6 @@ public class PinCount {
 
     private final int pinCount;
 
-    public PinCount() {
-        this(BOUND_MIN);
-    }
-
     public PinCount(int pinCount) {
         checkBound(pinCount);
         this.pinCount = pinCount;
