@@ -24,4 +24,12 @@ public enum ScoreSymbol {
                 .findFirst()
                 .orElse(MISS);
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public int getPin() {
+        return pin;
+    }
 }
