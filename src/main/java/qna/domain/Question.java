@@ -91,7 +91,7 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> deleteQuestionAndAnswers(User user) {
-
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         return new ArrayList<>();
     }
 
@@ -99,6 +99,10 @@ public class Question extends AbstractEntity {
         checkIsOwner(user);
         setDeleteStatusTrue();
         return Optional.of(new DeleteHistory(this, user));
+    }
+
+    public List<DeleteHistory> deleteAnswers(User user) {
+        return new ArrayList<>();
     }
 
     public void checkIsOwner(User user) throws Exception {

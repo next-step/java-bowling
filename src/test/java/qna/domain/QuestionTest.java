@@ -1,6 +1,5 @@
 package qna.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
@@ -9,11 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    public static final Question Q3 = new Question("title3", "contents3").writeBy(UserTest.SANJIGI);
 
     @BeforeEach
     public void beforeEach() {
@@ -46,10 +47,10 @@ public class QuestionTest {
         Optional<DeleteHistory> resultDeleteHistoryQ1 = Q1.deleteQuestion(UserTest.JAVAJIGI);
         Optional<DeleteHistory> resultDeleteHistoryQ2 = Q2.deleteQuestion(UserTest.SANJIGI);
         // then
-        Assertions.assertThat(resultDeleteHistoryQ1).isEqualTo(expectDeleteHistoryQ1);
-        Assertions.assertThat(resultDeleteHistoryQ2).isEqualTo(expectDeleteHistoryQ2);
-        Assertions.assertThat(Q1.isDeleted()).isTrue();
-        Assertions.assertThat(Q2.isDeleted()).isTrue();
+        assertThat(resultDeleteHistoryQ1).isEqualTo(expectDeleteHistoryQ1);
+        assertThat(resultDeleteHistoryQ2).isEqualTo(expectDeleteHistoryQ2);
+        assertThat(Q1.isDeleted()).isTrue();
+        assertThat(Q2.isDeleted()).isTrue();
     }
 
     @Test
@@ -67,6 +68,30 @@ public class QuestionTest {
         }).isInstanceOf(CannotDeleteException.class);
     }
 
+    @Test
+    public void deleteAnswers_질문자가_같은_경우() {
+        // given
+        Q1.addAnswer(AnswerTest.A1);
+        List<DeleteHistory> expectDeleteAnswers = new ArrayList<>();
+        expectDeleteAnswers.add(new DeleteHistory(AnswerTest.A1, UserTest.JAVAJIGI));
+        expectDeleteAnswers.add(new DeleteHistory(AnswerTest.A1, UserTest.JAVAJIGI));
+
+        // when
+        List<DeleteHistory> resultDeleteAnswers = Q1.deleteAnswers(UserTest.JAVAJIGI);
+        // then
+        assertThat(resultDeleteAnswers).isEqualTo(expectDeleteAnswers);
+    }
+
+    @Test
+    public void deleteAnswers_질문이_없는_경우() {
+        // given
+
+        // when
+        List<DeleteHistory> resultDeleteAnswers = Q3.deleteAnswers(UserTest.JAVAJIGI);
+        // then
+        assertThat(resultDeleteAnswers).isEmpty();
+    }
+
 
     @Test
     public void deleteQuestionAndAnswers() throws Exception {
@@ -79,7 +104,7 @@ public class QuestionTest {
         List<DeleteHistory> resultDeleteHistoriesQ1 = Q1.deleteQuestionAndAnswers(UserTest.JAVAJIGI);
 
         // then
-        Assertions.assertThat(resultDeleteHistoriesQ1).isEqualTo(expectDeleteHistoriesQ1);
+        assertThat(resultDeleteHistoriesQ1).isEqualTo(expectDeleteHistoriesQ1);
         assertThatThrownBy(() -> {
             Q2.deleteQuestionAndAnswers(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
