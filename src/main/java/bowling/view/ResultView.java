@@ -12,6 +12,7 @@ public class ResultView {
   private static final String SEPARATOR = "|";
   private static final String LINE_SEPARATOR = System.lineSeparator();
   private static final String BLANK = " ";
+  private static final String EMPTY = "";
   private static final int MAX_BLANK_SIZE = 6;
   private static final int TOTAL_FRAME_SIZE = 10;
   private static final char SPACE = ' ';
@@ -30,7 +31,7 @@ public class ResultView {
     System.out.print(LINE_SEPARATOR);
   }
 
-  public static void stateSection(Frames frames, Player player) {
+  private static void stateSection(Frames frames, Player player) {
     System.out.print(SEPARATOR + alignText(player.name()) + SEPARATOR);
     System.out.print(stateResult(frames.frames()) + stateSeparator(frames.frames()));
     System.out.println(emptyFrame(frames.round()));
@@ -38,20 +39,22 @@ public class ResultView {
 
   private static String stateResult(List<Frame> frames) {
     return frames.stream()
-        .filter(frame -> !frame.isEmpty())
         .map(ResultView::eachFrameState)
-        .collect(Collectors.joining(SEPARATOR));
+        .collect(Collectors.joining());
   }
 
   private static String eachFrameState(Frame frame) {
-    return alignText(String.join(SEPARATOR, frame.frameState()));
+    if (frame.isEmpty()) {
+      return alignText(BLANK);
+    }
+    return alignText(String.join(SEPARATOR, frame.frameState())) + SEPARATOR;
   }
 
   private static String stateSeparator(List<Frame> frames) {
-    return frames.size() == 1  ? "" : SEPARATOR;
+    return frames.size() == TOTAL_FRAME_SIZE ? EMPTY : SEPARATOR;
   }
 
-  public static void scoreSection(Frames frames) {
+  private static void scoreSection(Frames frames) {
     System.out.print(SEPARATOR + alignText(BLANK) + SEPARATOR);
     System.out.print(scoreResult(frames.frameScores()) + scoreSeparator(frames.frameScores()));
     System.out.println(emptyFrame(frames.frameScores().size()));
@@ -64,12 +67,12 @@ public class ResultView {
   }
 
   private static String scoreSeparator(List<Integer> scores) {
-    return scores.isEmpty()  ? "" : SEPARATOR;
+    return scores.isEmpty() ? EMPTY : SEPARATOR;
   }
 
   private static String emptyFrame(int size) {
-    int empty = TOTAL_FRAME_SIZE - size;
-    return IntStream.rangeClosed(0, empty)
+    int emptyFrameSize = TOTAL_FRAME_SIZE - size;
+    return IntStream.rangeClosed(0, emptyFrameSize)
         .mapToObj(i -> alignText(BLANK))
         .collect(Collectors.joining(SEPARATOR));
   }
