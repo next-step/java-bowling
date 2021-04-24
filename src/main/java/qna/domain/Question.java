@@ -89,9 +89,11 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public List<DeleteHistory> deleteQuestionAndAnswers(User user) {
+    public List<DeleteHistory> deleteQuestionAndAnswers(User user) throws Exception {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        return new ArrayList<>();
+        deleteHistories.add(deleteQuestion(user));
+        deleteHistories.addAll(deleteAnswers(user));
+        return deleteHistories;
     }
 
     public DeleteHistory deleteQuestion(User user) throws Exception {
