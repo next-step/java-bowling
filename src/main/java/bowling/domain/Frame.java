@@ -1,16 +1,24 @@
 package bowling.domain;
 
 import java.util.List;
+import org.springframework.util.ObjectUtils;
 
 public abstract class Frame {
 
   private static final int NORMAL_FRAME_MAX_SIZE = 2;
+  private static final int TOTAL_NORMAL_FRAME = 9;
   protected final Pins pins;
-  protected Round round;
+  protected Score score;
 
-  public Frame(Round round) {
-    this.round = round;
+  public Frame() {
     pins = new Pins();
+  }
+
+  public Frame next(int round) {
+    if (round == TOTAL_NORMAL_FRAME) {
+      return FinalFrame.of();
+    }
+    return NormalFrame.of();
   }
 
   public void play(int countOfHitPin) {
@@ -18,12 +26,16 @@ public abstract class Frame {
     pins.add(new Pin(countOfHitPin));
   }
 
-  public boolean isEmpty() {
-    return pins.isEmpty();
+  public void initScore() {
+    this.score = Score.of(symbol(), pins);
   }
 
-  public boolean isFinalRound() {
-    return round.isFinalRound();
+  public boolean hasScore() {
+    return !ObjectUtils.isEmpty(score);
+  }
+
+  public boolean isEmpty() {
+    return pins.isEmpty();
   }
 
   public List<String> frameState() {

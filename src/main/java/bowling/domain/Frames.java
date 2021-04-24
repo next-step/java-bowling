@@ -3,85 +3,79 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Frames {
 
-  private static final int FINAL_ROUND = 10;
+  private static final int TOTAL_FRAME_SIZE = 10;
   private final List<Frame> frames;
-  private final List<Score> scores;
-  private List<Integer> result;
-  private Round round;
+  private List<Integer> scores;
 
   public Frames(List<Frame> frames) {
     this.frames = frames;
-    this.round = Round.firstRound();
     this.scores = new ArrayList<>();
-    this.result = new ArrayList<>();
   }
 
   public static Frames init() {
-    List<Frame> frames = normalFrames();
-    frames.add(FinalFrame.of());
+    List<Frame> frames = new ArrayList<>();
+    frames.add(NormalFrame.of());
     return new Frames(frames);
   }
 
-  private static List<Frame> normalFrames() {
-    return IntStream.range(0, 9)
-        .mapToObj(Round::new)
-        .map(NormalFrame::new)
-        .collect(Collectors.toList());
-  }
-
   public void throwBall(int countOfHitPin) {
-    Frame frame = frames.get(round() - 1);
+    Frame frame = frames.get(frames.size() - 1);
     frame.play(countOfHitPin);
 
-    calculateScores(countOfHitPin);
+    calculateScore(countOfHitPin);
     if (frame.isEndFrame()) {
-      initScore(frame);
-      round = round.next();
+      addFrame(frame);
+      frame.initScore();
     }
   }
 
-  private void initScore(Frame frame) {
-    scores.add(Score.of(frame));
+  private void addFrame(Frame frame) {
+    if (frames.size() < TOTAL_FRAME_SIZE) {
+      Frame next = frame.next(frames.size());
+      frames.add(next);
+    }
   }
 
-  private void calculateScores(int countOfPins) {
-    scores.stream()
+  private void calculateScore(int countOfPins) {
+    frames.stream()
+        .filter(Frame::hasScore)
+        .map(frame -> frame.score)
         .filter(score -> !score.canCalculateScore())
         .forEach(score -> score.bowl(countOfPins));
   }
 
-  public List<Integer> frameScore() {
-    this.result = new ArrayList<>();
-    for (int i = 0; i < scores.size(); i++) {
-      add(scores.get(i), i);
+  public List<Integer> frameScores() {
+    this.scores = new ArrayList<>();
+    for (int i = 0; i < frames.size(); i++) {
+      addScore(frames.get(i), i);
     }
-    return result;
+    return scores;
   }
 
-  private void add(Score score, int index) {
-    if (score.canCalculateScore()) {
-      result.add(sum(index));
+  private void addScore(Frame frame, int index) {
+    Score score = frame.score;
+    if (frame.hasScore() && score.canCalculateScore()) {
+      scores.add(accumulateScores(index));
     }
   }
 
-  private int sum(int index) {
-    return scores.stream()
+  private int accumulateScores(int index) {
+    return frames.stream()
         .limit(index + 1)
+        .map(frame -> frame.score)
         .map(Score::getScore)
         .reduce(0, Integer::sum);
   }
 
   public boolean isContinue() {
-    return frames.get(FINAL_ROUND - 1).isLastFrame();
+    return frames.get(frames.size() - 1).isLastFrame();
   }
 
   public int round() {
-    return round.round();
+    return frames.size();
   }
 
   public List<Frame> frames() {

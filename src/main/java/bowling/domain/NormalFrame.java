@@ -5,8 +5,11 @@ public class NormalFrame extends Frame {
   private static final int NORMAL_FRAME_MAX_SIZE = 2;
   private static final int MAX_PIN_COUNT = 10;
 
-  public NormalFrame(Round round) {
-    super(round);
+  public NormalFrame() {
+  }
+
+  public static NormalFrame of() {
+    return new NormalFrame();
   }
 
   protected void validateHitPin(int countOfHitPin) {
@@ -26,5 +29,4 @@ public class NormalFrame extends Frame {
   public boolean isLastFrame() {
     return false;
   }
-
 }

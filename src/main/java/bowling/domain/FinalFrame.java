@@ -7,10 +7,6 @@ public class FinalFrame extends Frame {
   private static final int FINAL_MAX_PIN_COUNT = 30;
   private static final int SECOND_ROUND = 2;
 
-  public FinalFrame() {
-    super(Round.finalRound());
-  }
-
   public static FinalFrame of() {
     return new FinalFrame();
   }

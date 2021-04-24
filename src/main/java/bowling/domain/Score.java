@@ -23,14 +23,17 @@ public class Score {
     this.left -= 1;
   }
 
-  public static Score of(Frame frame) {
-    ScoreSymbol symbol = frame.symbol();
+  public static Score of(ScoreSymbol symbol, Pins pins) {
     if (symbol == ScoreSymbol.STRIKE) {
       return new Score(10, 2);
     }
     if (symbol == ScoreSymbol.SPARE) {
       return new Score(10, 1);
     }
-    return new Score(frame.pins.totalHitPin(), 0);
+    return new Score(pins.totalHitPin(), 0);
+  }
+
+  public static Score finalFrame() {
+    return new Score(0, 3);
   }
 }
