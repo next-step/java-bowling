@@ -4,6 +4,7 @@ import bowling.domain.engine.Frame;
 import bowling.domain.engine.Pins;
 import bowling.domain.engine.PitchResult;
 import bowling.domain.engine.Records;
+import bowling.dto.RecordsDto;
 
 public class NormalFrame implements Frame {
 
@@ -25,4 +26,8 @@ public class NormalFrame implements Frame {
         return records.isStrike() || records.isMissed() || records.isSpare();
     }
 
+    @Override
+    public RecordsDto export() {
+        return records.export();
+    }
 }

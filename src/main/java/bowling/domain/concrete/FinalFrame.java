@@ -4,6 +4,7 @@ import bowling.domain.engine.Frame;
 import bowling.domain.engine.Pins;
 import bowling.domain.engine.PitchResult;
 import bowling.domain.engine.Records;
+import bowling.dto.RecordsDto;
 
 public class FinalFrame implements Frame {
 
@@ -31,4 +32,8 @@ public class FinalFrame implements Frame {
         return records.isMissed() || records.throwCounts() == MAXIMUM_THROW_CHANCES;
     }
 
+    @Override
+    public RecordsDto export() {
+        return records.export();
+    }
 }
