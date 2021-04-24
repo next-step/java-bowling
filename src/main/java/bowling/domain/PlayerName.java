@@ -2,7 +2,7 @@ package bowling.domain;
 
 public class PlayerName {
 
-    private static final String PLAYER_NAME_REGEXP = "^[a-zA-Z]{3}$";
+    private static final String PLAYER_NAME_CONDITION = "^[a-zA-Z]{3}$";
 
     private final String name;
 
@@ -16,12 +16,12 @@ public class PlayerName {
     }
 
     private static void validate(String name) {
-        if(!name.matches(PLAYER_NAME_REGEXP)) {
+        if(!name.matches(PLAYER_NAME_CONDITION)) {
             throw new IllegalArgumentException("플레이어 이름은 알파벳 세 글자여야 합니다.");
         }
     }
 
-    public String getName() {
+    public String export() {
         return name;
     }
 }

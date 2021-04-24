@@ -1,7 +1,6 @@
 package bowling.domain.engine;
 
 import bowling.dto.BowlingDto;
-import bowling.dto.ViewObject;
 import bowling.util.ListUtils;
 
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class Bowling {
     }
 
     public BowlingDto export() {
-        return frames.stream().map(ViewObject::export).collect(collectingAndThen(toList(), BowlingDto::new));
+        return frames.stream().map(Frame::export).collect(collectingAndThen(toList(), BowlingDto::new));
     }
 
 }
