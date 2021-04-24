@@ -91,11 +91,13 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> deleteQuestionAndAnswers(User user) {
+
         return new ArrayList<>();
     }
 
     public Optional<DeleteHistory> deleteQuestion(User user) throws Exception {
         checkIsOwner(user);
+        setDeleteStatusTrue();
         return Optional.of(new DeleteHistory(this, user));
     }
 
@@ -103,6 +105,10 @@ public class Question extends AbstractEntity {
         if (!isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
+    }
+
+    private void setDeleteStatusTrue() {
+        this.deleted = true;
     }
 
     @Override

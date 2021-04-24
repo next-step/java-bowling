@@ -72,6 +72,7 @@ public class Answer extends AbstractEntity {
 
     public Optional<DeleteHistory> deleteAnswer(User user) throws Exception {
         checkIsOwner(user);
+        setDeleteStatusTrue();
         return Optional.of(new DeleteHistory(this, user));
     }
 
@@ -79,6 +80,10 @@ public class Answer extends AbstractEntity {
         if (!isOwner(user)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
+    }
+
+    private void setDeleteStatusTrue() {
+        this.deleted = true;
     }
 
     @Override
