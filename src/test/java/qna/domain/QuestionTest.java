@@ -21,7 +21,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void checkIsOwner_다른사람이_쓴_글() {
+    public void checkIsOwner_다른사람이_쓴_글() throws Exception {
         // given
 
         // when
@@ -31,12 +31,12 @@ public class QuestionTest {
             Q1.checkIsOwner(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
         assertThatThrownBy(() -> {
-            Q1.checkIsOwner(UserTest.JAVAJIGI);
+            Q2.checkIsOwner(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
-    public void deleteQuestionAndAnswers() {
+    public void deleteQuestionAndAnswers() throws Exception {
         // given
         List<DeleteHistory> expectDeleteHistoriesQ1 = new ArrayList<>();
         expectDeleteHistoriesQ1.add(new DeleteHistory(Q1, UserTest.JAVAJIGI));
