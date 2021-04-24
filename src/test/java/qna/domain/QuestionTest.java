@@ -11,9 +11,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
-    public static Question Q1;
-    public static Question Q2;
-    public static Question Q3;
+    public static Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+    public static Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    public static Question Q3 = new Question("title3", "contents3").writeBy(UserTest.SANJIGI);
 
     @BeforeEach
     public void beforeEach() {
