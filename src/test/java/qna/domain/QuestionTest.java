@@ -18,6 +18,7 @@ public class QuestionTest {
     public void beforeEach() {
         Q1.addAnswer(AnswerTest.A1);
         Q2.addAnswer(AnswerTest.A1);
+        Q2.addAnswer(AnswerTest.A1);
     }
 
     @Test
@@ -32,6 +33,18 @@ public class QuestionTest {
         }).isInstanceOf(CannotDeleteException.class);
         assertThatThrownBy(() -> {
             Q2.checkIsOwner(UserTest.JAVAJIGI);
+        }).isInstanceOf(CannotDeleteException.class);
+    }
+
+    @Test
+    public void checkAnswersAllOwner() throws Exception {
+        // given
+
+        // when
+
+        // then
+        assertThatThrownBy(() -> {
+            Q2.checkAnswersAllOwner(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 

@@ -93,9 +93,15 @@ public class Question extends AbstractEntity {
         return new ArrayList<>();
     }
 
-    public void checkIsOwner(User user) throws CannotDeleteException {
+    public void checkIsOwner(User user) throws Exception {
         if (!isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    public void checkAnswersAllOwner(User user) throws Exception {
+        for (Answer answer : answers) {
+            answer.checkIsOwner(user);
         }
     }
 
