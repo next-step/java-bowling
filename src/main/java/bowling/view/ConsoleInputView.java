@@ -18,7 +18,7 @@ public class ConsoleInputView implements InputView {
 
     private String getUserInput() {
         printMessage(System.lineSeparator());
-        Scanner scanner = new Scanner(System.in).useDelimiter(System.lineSeparator() + "|\n");
+        Scanner scanner = new Scanner(System.in).useDelimiter(System.lineSeparator());
         return scanner.next();
     }
 
