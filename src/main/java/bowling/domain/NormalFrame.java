@@ -6,50 +6,43 @@ public class NormalFrame implements Frame{
     private static final int NORMAL_FRAME_INDEX_MAX = 8;
 
     private final int index;
-    private final FrameBowls frameBowls;
+    private final PinCounts pinCounts;
 
     public NormalFrame(int index) {
-        this(index, new NormalFrameBowls());
+        this(index, new NormalPinCounts());
     }
 
-    public NormalFrame(int index, FrameBowls FrameBowls) {
+    public NormalFrame(int index, PinCounts FrameBowls) {
         this.index = index;
-        this.frameBowls = FrameBowls;
+        this.pinCounts = FrameBowls;
     }
 
     @Override
     public Frame throwBowl(String pinCount) {
-        if (!frameBowls.isFirstBowlThrown()) {
-            return firstBowl(pinCount);
+        if (pinCounts.pinCounts().isEmpty()) {
+            return addBowl(pinCount);
         }
 
-        return secondBowl(pinCount);
+        return addBowl(pinCount);
     }
 
     public Frame throwBowl(int pinCount) {
         return throwBowl(String.valueOf(pinCount));
     }
 
-    private Frame firstBowl(int firstPinCount) {
-        return new NormalFrame(index, frameBowls.firstThrow(firstPinCount));
+    private Frame addBowl(int pinCount) {
+        pinCounts.knockDown(pinCount);
+        return new NormalFrame(index, pinCounts);
     }
 
-    private Frame firstBowl(String firstPinCount) {
-        return firstBowl(Integer.parseInt(firstPinCount));
-    }
-
-    private Frame secondBowl(int secondPinCount) {
-        return new NormalFrame(index, frameBowls.secondThrow(secondPinCount));
-    }
-
-    private Frame secondBowl(String secondPinCount) {
-        return secondBowl(Integer.parseInt(secondPinCount));
+    private Frame addBowl(String pinCount) {
+        return addBowl(Integer.parseInt(pinCount));
     }
 
     @Override
     public Frame next() {
         if (isFinished() && index < NORMAL_FRAME_INDEX_MAX) {
-            return new NormalFrame(index + 1, new NormalFrameBowls());
+            return new NormalFrame(index + 1, new NormalPinCounts());
         }
 
         if (isFinished() && index == NORMAL_FRAME_INDEX_MAX) {
@@ -61,11 +54,7 @@ public class NormalFrame implements Frame{
 
     @Override
     public boolean isFinished() {
-        return frameBowls.isFirstBowlStrike() || isAllThrown();
-    }
-
-    private boolean isAllThrown() {
-        return frameBowls.isFirstBowlThrown() && frameBowls.isSecondBowlThrown();
+        return pinCounts.isFinished();
     }
 
     @Override
@@ -74,8 +63,8 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public FrameBowls bowls() {
-        return frameBowls;
+    public PinCounts pinCounts() {
+        return pinCounts;
     }
 
     @Override
@@ -84,36 +73,11 @@ public class NormalFrame implements Frame{
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
         return index == that.index &&
-                Objects.equals(frameBowls, that.frameBowls);
+                Objects.equals(pinCounts, that.pinCounts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(index, frameBowls);
-    }
-
-    @Override
-    public String toString() {
-        if (isAllNotThrown()) {
-            return "      ";
-        }
-
-        if (frameBowls.isFirstBowlStrike() || isOnlyFirstThrown()) {
-            return "  " + frameBowls.firstPinCount().toString() + "   ";
-        }
-
-        if (frameBowls.isSecondBowlSpare()) {
-            return "  " + frameBowls.firstPinCount().toString() + "|" + "/" +" ";
-        }
-
-        return "  " + frameBowls.firstPinCount().toString() + "|" + frameBowls.secondPinCount().toString() + " ";
-    }
-
-    private boolean isAllNotThrown() {
-        return !frameBowls.isFirstBowlThrown() && !frameBowls.isSecondBowlThrown();
-    }
-
-    private boolean isOnlyFirstThrown() {
-        return frameBowls.isFirstBowlThrown() && !frameBowls.isSecondBowlThrown();
+        return Objects.hash(index, pinCounts);
     }
 }

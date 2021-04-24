@@ -8,21 +8,20 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 public class NormalFrameTest {
 
+
     @Test
     @DisplayName("초구를 던지지 않았을 경우, 초구를 던진다.")
-    public void throwBowl_firstBowl() throws Exception {
+    public void throwBowl_first() throws Exception {
         Frame normalFrame = new NormalFrame(0).throwBowl(1);
-        assertThat(normalFrame.bowls().isFirstBowlThrown()).isTrue();
-        assertThat(normalFrame.bowls().isSecondBowlThrown()).isFalse();
+        assertThat(normalFrame.pinCounts().pinCounts().size()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("초구를 던졌을 경우, 2구를 던진다.")
-    public void throwBowl_secondBall() throws Exception {
+    public void throwBowl_second() throws Exception {
         Frame firstThrown = new NormalFrame(0).throwBowl(1);
         Frame secondThrown = firstThrown.throwBowl("2");
-        assertThat(secondThrown.bowls().isFirstBowlThrown()).isTrue();
-        assertThat(secondThrown.bowls().isSecondBowlThrown()).isTrue();
+        assertThat(secondThrown.pinCounts().pinCounts().size()).isEqualTo(2);
     }
 
     @Test
