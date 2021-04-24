@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 
 public class Frames {
     private static final int FINAL_FRAME_INDEX = 9;
+    private static final int FIRST_INDEX = 0;
 
     private final List<Frame> frames;
     private int currentIndex;
@@ -26,7 +27,7 @@ public class Frames {
 
     public Frames(List<Frame> frames) {
         this.frames = frames;
-        this.currentIndex = 0;
+        this.currentIndex = FIRST_INDEX;
     }
 
     public int currentIndex() {
