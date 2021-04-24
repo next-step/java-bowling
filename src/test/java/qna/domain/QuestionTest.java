@@ -86,8 +86,8 @@ public class QuestionTest {
         List<DeleteHistory> delete = question.delete(UserTest.JAVAJIGI);
 
         List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, AnswerTest.A1.getId(), AnswerTest.A1.getWriter(), LocalDateTime.now()));
+                DeleteHistory.questionHistory(question.getId(), question.getWriter()),
+                DeleteHistory.answerHistory(AnswerTest.A1.getId(), AnswerTest.A1.getWriter()));
 
         assertThat(delete.equals(deleteHistories)).isTrue();
     }

@@ -31,8 +31,7 @@ public class Answers {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
         for (Answer answer : answers) {
-            answer.delete(loginUser);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+            deleteHistories.add(answer.delete(loginUser));
         }
 
         return deleteHistories;
