@@ -1,5 +1,6 @@
-package bowling.domain.engine.frame.state;
+package bowling.domain.concrete.frame.state;
 
+import bowling.domain.engine.frame.state.State;
 import bowling.domain.engine.roll.Roll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

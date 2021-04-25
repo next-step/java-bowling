@@ -1,5 +1,6 @@
-package bowling.domain.engine.frame.state;
+package bowling.domain.concrete.frame.state;
 
+import bowling.domain.engine.frame.state.Finished;
 import bowling.domain.engine.roll.RollResult;
 
 public class Miss extends Finished {

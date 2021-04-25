@@ -1,13 +1,17 @@
-package bowling.domain.engine.frame.state;
+package bowling.domain.concrete.frame.state.bonus;
 
+import bowling.domain.engine.frame.state.State;
+import bowling.domain.engine.frame.state.bonus.BonusFinished;
 import bowling.domain.engine.roll.RollResult;
 
-public class Spare extends Finished {
+public class BonusSpare extends BonusFinished {
 
     private final RollResult firstRollResult;
     private final RollResult secondRollResult;
 
-    public Spare(RollResult firstRollResult, RollResult secondRollResult) {
+    public BonusSpare(State beforeState,
+                      RollResult firstRollResult, RollResult secondRollResult) {
+        super(beforeState);
         validate(firstRollResult, secondRollResult);
         this.firstRollResult = firstRollResult;
         this.secondRollResult = secondRollResult;
@@ -32,6 +36,6 @@ public class Spare extends Finished {
 
     @Override
     public String export() {
-        return firstRollResult.export() + "|/";
+        return String.join("|", super.export(), firstRollResult.export(), "/");
     }
 }
