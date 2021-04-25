@@ -3,6 +3,7 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
@@ -35,6 +36,24 @@ public class PinCountTest {
         PinCount pinCount = new PinCount(10);
         boolean isStrike = pinCount.isStrike();
         assertThat(isStrike).isTrue();
+    }
+
+    @Test
+    @DisplayName("쓰러진 개수가 0개일 경우 참을 반환한다.")
+    public void isGutter() throws Exception {
+        PinCount pinCount = new PinCount(0);
+        boolean isGutter = pinCount.isGutter();
+        assertThat(isGutter).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"1, 9", "2, 8", "3, 7"})
+    @DisplayName("이전 쓰러진 핀의 개수를 인자와 합친 값이 10일 경우, 참을 반환한다.")
+    public void isSpare(int firstCount, int secondCount) throws Exception {
+        PinCount firstPinCount = new PinCount(firstCount);
+        PinCount secondPinCount = new PinCount(secondCount);
+        boolean isSpare = secondPinCount.isSpare(firstPinCount);
+        assertThat(isSpare).isTrue();
     }
 
     @Test
