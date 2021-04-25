@@ -53,4 +53,8 @@ public class Round {
     public int hashCode() {
         return Objects.hash(round);
     }
+
+    public boolean isFinalRound() {
+        return false;
+    }
 }

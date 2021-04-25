@@ -31,11 +31,16 @@ public class RoundTest {
 
     @DisplayName("다음 라운드를 생성한다")
     @Test
-    public void nextRoundTest() {
+    void nextRoundTest() {
         Round round = Round.from(1);
         assertThat(Round.from(2)).isEqualTo(round.nextRound());
     }
 
-
+    @DisplayName("마지막 라운드인지 판별한다")
+    @Test
+    void isFinalRoundTest() {
+        Round round = Round.finalRound();
+        assertThat(round.isFinalRound()).isTrue();
+    }
 
 }
