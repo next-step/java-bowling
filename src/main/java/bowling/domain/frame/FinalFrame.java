@@ -19,9 +19,4 @@ public final class FinalFrame extends Frame {
     public void knockDownPin(Pin pin) {
 
     }
-
-    @Override
-    public RoundNumber roundNumber() {
-        return super.roundNumber();
-    }
 }
