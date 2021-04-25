@@ -13,7 +13,7 @@ public class InputView {
         return name;
     }
 
-    public String PinCount(int index) {
+    public String pinCount(int index) {
         System.out.println();
         System.out.printf("%d프레임 투구 : ", index + 1);
         String knockedDownPinCount = scanner.nextLine().trim();
