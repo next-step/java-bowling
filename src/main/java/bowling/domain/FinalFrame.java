@@ -38,10 +38,6 @@ public class FinalFrame implements Frame {
                 || (!pinCounts.pinCounts().get(FIRST_PIN_COUNT_INDEX).isStrike() && pinCounts.totalPinCount() == PIN_COUNT_MAX);
     }
 
-    public Frame throwBowl(int pinCount) {
-        return throwBowl(String.valueOf(pinCount));
-    }
-
     private Frame addBowl(int pinPinCount) {
         pinCounts.knockDown(pinPinCount);
         return new FinalFrame(pinCounts);
