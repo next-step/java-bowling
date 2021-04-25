@@ -1,113 +1,63 @@
 package bowling.domain;
 
-import java.util.List;
-
 public enum Mark {
-    STRIKE ("X"),
-    SPARE ("/"),
-    GUTTER ("-"),
-    DELIMETER("|"),
-    EMPTY ("");
+    STRIKE("X"),
+    SPARE("/"),
+    GUTTER("-");
 
-    private static final int PIN_COUNT_MAX = 10;
-    private static final int FIRST_PIN_COUNT_INDEX = 0;
-    private static final int SECOND_PIN_COUNT_INDEX = 1;
-    private static final int THIRD_PIN_COUNT_INDEX = 2;
+    private final String mark;
 
-    private final String Mark;
-
-    Mark(String Mark) {
-        this.Mark = Mark;
+    Mark(String mark) {
+        this.mark = mark;
     }
 
-    public static String convert(List<PinCount> pinCounts) {
-        if (pinCounts.isEmpty()) {
-            return EMPTY.Mark;
-        }
-
-        if (pinCounts.size() == 1) {
-            return firstMark(pinCounts.get(FIRST_PIN_COUNT_INDEX));
-        }
-
-        if (pinCounts.size() == 2) {
-            return secondMark(pinCounts.get(FIRST_PIN_COUNT_INDEX), pinCounts.get(SECOND_PIN_COUNT_INDEX));
-        }
-
-        return thirdMark(pinCounts.get(FIRST_PIN_COUNT_INDEX), pinCounts.get(SECOND_PIN_COUNT_INDEX), pinCounts.get(THIRD_PIN_COUNT_INDEX));
-    }
-
-    protected static String firstMark(PinCount pinCount) {
+    public static String firstMark(PinCount pinCount) {
         if (pinCount.isStrike()) {
-            return STRIKE.Mark;
+            return STRIKE.mark;
         }
 
         if (pinCount.isGutter()) {
-            return GUTTER.Mark;
+            return GUTTER.mark;
         }
 
         return String.valueOf(pinCount.value());
     }
 
-    protected static String secondMark(PinCount firstPinCount, PinCount secondPinCount) {
-        String firstMark = firstMark(firstPinCount);
+    public static String secondMark(PinCount firstPinCount, PinCount secondPinCount) {
 
         if (firstPinCount.isStrike() && secondPinCount.isStrike()) {
-            return firstMark + DELIMETER.Mark + STRIKE.Mark;
+            return STRIKE.mark;
         }
 
-        if (!firstPinCount.isStrike() && firstPinCount.plus(secondPinCount) == PIN_COUNT_MAX) {
-            return firstMark + DELIMETER.Mark + SPARE.Mark;
+        if (!firstPinCount.isStrike() && secondPinCount.isSpare(firstPinCount)) {
+            return SPARE.mark;
         }
 
         if (secondPinCount.isGutter()) {
-            return firstMark + DELIMETER.Mark + GUTTER.Mark;
+            return GUTTER.mark;
         }
 
-        return firstMark + DELIMETER.Mark + secondPinCount.value();
+        return String.valueOf(secondPinCount.value());
     }
 
-    protected static String thirdMark(PinCount firstPinCount, PinCount secondPinCount, PinCount thirdPinCount) {
-        String secondMark = secondMark(firstPinCount, secondPinCount);
+    public static String thirdMark(PinCount firstPinCount, PinCount secondPinCount, PinCount thirdPinCount) {
 
-        if (isAllStrike(firstPinCount, secondPinCount, thirdPinCount)
-                || isOnlyThirdStrike(firstPinCount, secondPinCount, thirdPinCount)) {
-            return secondMark + DELIMETER.Mark + STRIKE.Mark;
+        if (thirdPinCount.isStrike()) {
+            return STRIKE.mark;
         }
 
         if (isThirdSpare(firstPinCount, secondPinCount, thirdPinCount)) {
-            return secondMark + DELIMETER.Mark + SPARE.Mark;
+            return SPARE.mark;
         }
 
-        if (isThirdGutterWithFirstStrike(firstPinCount, secondPinCount, thirdPinCount)
-                || isThirdGutterWithSecondSpare(firstPinCount, secondPinCount, thirdPinCount)
-                || isThirdGutterWithFirstAndSecondStrike(firstPinCount, secondPinCount, thirdPinCount)){
-            return secondMark + DELIMETER.Mark + GUTTER.Mark;
+        if (thirdPinCount.isGutter()) {
+            return GUTTER.mark;
         }
 
-        return secondMark + DELIMETER.Mark + thirdPinCount.value();
-    }
-
-    private static boolean isAllStrike(PinCount firstPinCount, PinCount secondPinCount, PinCount thirdPinCount) {
-        return firstPinCount.isStrike() && secondPinCount.isStrike() && thirdPinCount.isStrike();
-    }
-
-    private static boolean isOnlyThirdStrike(PinCount firstPinCount, PinCount secondPinCount, PinCount thirdPinCount) {
-        return !firstPinCount.isStrike() && firstPinCount.plus(secondPinCount) == PIN_COUNT_MAX && thirdPinCount.isStrike();
+        return String.valueOf(thirdPinCount.value());
     }
 
     private static boolean isThirdSpare(PinCount firstPinCount, PinCount secondPinCount, PinCount thirdPinCount) {
-        return firstPinCount.isStrike() && !secondPinCount.isStrike() && secondPinCount.plus(thirdPinCount) == PIN_COUNT_MAX;
-    }
-
-    private static boolean isThirdGutterWithFirstStrike(PinCount firstPinCount, PinCount secondPinCount, PinCount thirdPinCount) {
-        return firstPinCount.isStrike() && !secondPinCount.isStrike() && thirdPinCount.isGutter();
-    }
-
-    private static boolean isThirdGutterWithSecondSpare(PinCount firstPinCount, PinCount secondPinCount, PinCount thirdPinCount) {
-        return !firstPinCount.isStrike() && firstPinCount.plus(secondPinCount) == PIN_COUNT_MAX && thirdPinCount.isGutter();
-    }
-
-    private static boolean isThirdGutterWithFirstAndSecondStrike(PinCount firstPinCount, PinCount secondPinCount, PinCount thirdPinCount) {
-        return firstPinCount.isStrike() && secondPinCount.isStrike() && thirdPinCount.isGutter();
+        return firstPinCount.isStrike() && !secondPinCount.isStrike() && thirdPinCount.isSpare(secondPinCount);
     }
 }
