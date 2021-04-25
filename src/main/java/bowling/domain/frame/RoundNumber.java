@@ -28,7 +28,7 @@ public final class RoundNumber {
     }
 
     public RoundNumber nextRoundNumber() {
-        return null;
+        return new RoundNumber(roundNumber + 1);
     }
 
     @Override
