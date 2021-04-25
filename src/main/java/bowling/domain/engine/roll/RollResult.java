@@ -28,6 +28,10 @@ public abstract class RollResult implements Exportable<String> {
         return this.value + secondRoll.value == MAX;
     }
 
+    public boolean exceedMaximumPins(RollResult secondRoll) {
+        return this.value + secondRoll.value > MAX;
+    }
+
     @Override
     public String export() {
         if (value == MAX) {

@@ -18,10 +18,18 @@ public class Playing implements State {
 
     @Override
     public State transit(RollResult secondRoll) {
+        validateTransit(secondRoll);
+
         if (firstRoll.isClearWith(secondRoll)) {
             return new Spare(firstRoll, secondRoll);
         }
         return new Miss(firstRoll, secondRoll);
+    }
+
+    private void validateTransit(RollResult secondRoll) {
+        if(firstRoll.exceedMaximumPins(secondRoll)) {
+            throw new IllegalArgumentException("두 번의 투구에서 쓰러트린 핀의 개수가 10 보다 클 수 없습니다.");
+        }
     }
 
     @Override

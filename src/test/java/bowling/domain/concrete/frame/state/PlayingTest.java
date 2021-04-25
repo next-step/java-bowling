@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayingTest {
 
@@ -30,6 +31,13 @@ class PlayingTest {
     @DisplayName("핀이 남으면 Miss 상태로 이전된다.")
     void transitToMiss() {
         assertThat(playingState.transit(Roll.result(1))).isInstanceOf(Miss.class);
+    }
+
+    @Test
+    @DisplayName("두 번의 투구에서 쓰러트린 핀의 수가 10 보다 크면 예외 처리한다.")
+    void throwExceptionIfNumberOfPinsExceedTen() {
+        assertThatThrownBy(() -> playingState.transit(Roll.result(3)))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

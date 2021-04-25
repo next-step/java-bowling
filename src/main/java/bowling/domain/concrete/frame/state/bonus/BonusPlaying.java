@@ -24,7 +24,12 @@ public class BonusPlaying implements BonusState {
         if (!rollResult.isClear() && rollResult.isClearWith(secondRollResult)) {
             return new BonusSpare(beforeState, rollResult, secondRollResult);
         }
-        return new FinishedDoubleRoll(beforeState, rollResult, secondRollResult);
+
+        if (rollResult.isClear()) {
+            return new FinishedDoubleRoll(beforeState, rollResult, secondRollResult);
+        }
+
+        return new BonusMiss(beforeState, rollResult, secondRollResult);
     }
 
     @Override
