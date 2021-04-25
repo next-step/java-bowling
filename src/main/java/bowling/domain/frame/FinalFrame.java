@@ -7,7 +7,7 @@ public final class FinalFrame extends Frame {
     }
 
     public static FinalFrame from(FrameScore frameScore) {
-        return new FinalFrame(new RoundNumber(RoundNumber.MAX), frameScore);
+        return new FinalFrame(RoundNumber.MAX_ROUND_NUMBER, frameScore);
     }
 
     @Override

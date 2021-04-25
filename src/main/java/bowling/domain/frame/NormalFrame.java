@@ -14,7 +14,7 @@ public final class NormalFrame extends Frame {
     }
 
     private static void validateNormalRoundNumber(RoundNumber roundNumber) {
-        if (roundNumber.value() == RoundNumber.MAX) {
+        if (RoundNumber.MAX_ROUND_NUMBER.equals(roundNumber)) {
             throw new IllegalNormalFrameException();
         }
     }

@@ -7,6 +7,7 @@ import java.util.Objects;
 public final class RoundNumber {
 
     public static final int MAX = 10;
+    public static final RoundNumber MAX_ROUND_NUMBER = new RoundNumber(MAX);
     private static final int MIN = 1;
     private static final int FIRST_ROUND_NUMBER = 1;
 
