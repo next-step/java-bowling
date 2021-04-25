@@ -24,6 +24,15 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
+
+    public DeleteHistory(Question question, User user) {
+        this(ContentType.QUESTION, question.getId(), user, LocalDateTime.now());
+    }
+
+    public DeleteHistory(Answer answer, User user) {
+        this(ContentType.ANSWER, answer.getId(), user, LocalDateTime.now());
+    }
+
     public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
         this.contentType = contentType;
         this.contentId = contentId;
@@ -31,10 +40,15 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         DeleteHistory that = (DeleteHistory) o;
         return Objects.equals(id, that.id) &&
                 contentType == that.contentType &&

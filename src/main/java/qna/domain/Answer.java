@@ -1,5 +1,6 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -30,11 +31,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -68,8 +69,25 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
+    public DeleteHistory deleteAnswer(User user) throws Exception {
+        checkIsOwner(user);
+        setDeleteStatusTrue();
+        return new DeleteHistory(this, user);
+    }
+
+    public void checkIsOwner(User user) throws Exception {
+        if (!isOwner(user)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
+    private void setDeleteStatusTrue() {
+        this.deleted = true;
+    }
+
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
+
 }
