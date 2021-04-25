@@ -16,7 +16,7 @@ class FinalPinsTest {
     void create() {
         // given
         final Pin firstPin = new Pin();
-        final Pin secondPin = new Pin();
+        final Pin secondPin = new Pin(0);
         final Pin thirdPin = new Pin();
 
         // when
