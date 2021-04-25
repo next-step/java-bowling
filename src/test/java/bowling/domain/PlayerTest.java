@@ -18,8 +18,17 @@ class PlayerTest {
 
     @DisplayName("플레이어의 이름은 3글자를 초과할 수 없다")
     @Test
-    void initExceptionTest() {
+    void initLengthExceptionTest() {
         assertThatThrownBy(() -> Player.from("pandahun"))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("플레이어의 이름이 영어가 아니면 예외를 발생시킨다")
+    @Test
+    void initLanguageExceptionTest() {
+        assertThatThrownBy(() -> {
+            Player.from("1");
+            Player.from("다훈");
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 }
