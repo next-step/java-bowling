@@ -26,7 +26,7 @@ public class AnswerTest {
                 .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
 
-    @DisplayName("삭제가 되었을 때 상태값이 true 로 변경되었는지 테스트")
+    @DisplayName("삭제가 되었을 때 삭제상태값이 true 로 변경되었는지 테스트")
     @Test
     void 변환_삭제상태() throws CannotDeleteException {
         // when

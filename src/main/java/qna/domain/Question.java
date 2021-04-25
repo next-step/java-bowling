@@ -7,6 +7,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Boolean.TRUE;
+
 @Entity
 public class Question extends AbstractEntity {
     @Column(length = 100, nullable = false)
@@ -96,6 +98,7 @@ public class Question extends AbstractEntity {
 
     public void delete(User loginUser) throws CannotDeleteException {
         validateOwner(loginUser);
+        setDeleted(TRUE);
     }
 
     private void validateOwner(User loginUser) throws CannotDeleteException {
