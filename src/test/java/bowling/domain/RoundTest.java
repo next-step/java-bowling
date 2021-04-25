@@ -29,4 +29,13 @@ public class RoundTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("다음 라운드를 생성한다")
+    @Test
+    public void nextRoundTest() {
+        Round round = Round.from(1);
+        assertThat(Round.from(2)).isEqualTo(round.nextRound());
+    }
+
+
+
 }
