@@ -44,4 +44,17 @@ class RoundNumberTest {
         // then
         assertThat(roundNumber).isEqualTo(new RoundNumber(firstRoundNumber));
     }
+
+    @Test
+    @DisplayName("다음 라운드 번호를 생성한다.")
+    void nextRoundNumber() {
+        // given
+        final RoundNumber firstRoundNumber = RoundNumber.firstRoundNumber();
+
+        // when
+        final RoundNumber nextRoundNumber = firstRoundNumber.nextRoundNumber();
+
+        // then
+        assertThat(nextRoundNumber).isEqualTo(new RoundNumber(2));
+    }
 }
