@@ -10,7 +10,7 @@ public class FrameCreator {
     private int count = 1;
 
     public Frame create() {
-        return count++ < MAX_FRAMES ? new NormalFrame() : new FinalFrame();
+        return count++ < MAX_FRAMES ? NormalFrame.init() : FinalFrame.init();
     }
 
 }

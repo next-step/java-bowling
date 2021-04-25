@@ -1,12 +1,14 @@
 package bowling.domain.engine.frame;
 
-import bowling.domain.engine.PitchResult;
-import bowling.dto.RecordsDto;
+import bowling.domain.engine.roll.RollResult;
+import bowling.dto.Exportable;
 
-public interface Frame {
+public interface Frame extends Exportable<String> {
 
-    void throwBall(PitchResult pitchResult);
+    void roll(RollResult rollResult);
+
     boolean isEnded();
-    RecordsDto export();
+
+    String export();
 
 }

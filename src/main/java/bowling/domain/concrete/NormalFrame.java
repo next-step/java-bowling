@@ -1,33 +1,38 @@
 package bowling.domain.concrete;
 
-import bowling.domain.engine.Pins;
-import bowling.domain.engine.PitchResult;
-import bowling.domain.engine.Records;
 import bowling.domain.engine.frame.Frame;
-import bowling.dto.RecordsDto;
+import bowling.domain.engine.frame.state.State;
+import bowling.domain.engine.frame.state.StateFactory;
+import bowling.domain.engine.roll.RollResult;
 
 public class NormalFrame implements Frame {
 
-    private final Pins pins = new Pins();
-    private final Records records = new Records();
+    private State state;
+
+    private NormalFrame(State state) {
+        this.state = state;
+    }
+
+    public static NormalFrame init() {
+        return new NormalFrame(StateFactory.ready());
+    }
 
     @Override
-    public void throwBall(PitchResult pitchResult) {
+    public void roll(RollResult rollResult) {
         if (isEnded()) {
             throw new IllegalStateException("이미 프레임이 종료된 상태입니다.");
         }
 
-        records.save(pitchResult);
-        pins.knockDown(pitchResult);
+        this.state = state.transit(rollResult);
     }
 
     @Override
     public boolean isEnded() {
-        return records.isStrike() || records.isMissed() || records.isSpare();
+        return state.isFinished();
     }
 
     @Override
-    public RecordsDto export() {
-        return records.export();
+    public String export() {
+        return state.export();
     }
 }

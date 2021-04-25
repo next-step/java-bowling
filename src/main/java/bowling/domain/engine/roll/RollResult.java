@@ -30,6 +30,9 @@ public abstract class RollResult implements Exportable<String> {
 
     @Override
     public String export() {
+        if (value == MAX) {
+            return "X";
+        }
         return String.valueOf(value);
     }
 }

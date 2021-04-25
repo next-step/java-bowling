@@ -1,39 +1,44 @@
 package bowling.domain.concrete;
 
-import bowling.domain.engine.Pins;
-import bowling.domain.engine.PitchResult;
-import bowling.domain.engine.Records;
 import bowling.domain.engine.frame.Frame;
-import bowling.dto.RecordsDto;
+import bowling.domain.engine.frame.state.State;
+import bowling.domain.engine.frame.state.StateFactory;
+import bowling.domain.engine.roll.RollResult;
+
 
 public class FinalFrame implements Frame {
 
-    private static final int MAXIMUM_THROW_CHANCES = 3;
+    private State state;
 
-    private final Records records = new Records();
-    private final Pins pins = new Pins();
+    private FinalFrame(State state) {
+        this.state = state;
+    }
+
+    public static FinalFrame init() {
+        return new FinalFrame(StateFactory.ready());
+    }
 
     @Override
-    public void throwBall(PitchResult pitchResult) {
+    public void roll(RollResult rollResult) {
         if (isEnded()) {
             throw new IllegalStateException("이미 프레임이 종료된 상태입니다.");
         }
 
-        records.save(pitchResult);
-        pins.knockDown(pitchResult);
-
-        if (pins.isAllCleared()) {
-            pins.reset();
+        if (state.isFinished() && state.canPromoteToBonusState()) {
+            state = state.continueInBonus().transit(rollResult);
+            return ;
         }
+
+        state = state.transit(rollResult);
     }
 
     @Override
     public boolean isEnded() {
-        return records.isMissed() || records.throwCounts() == MAXIMUM_THROW_CHANCES;
+        return state.isFinished() && !state.canPromoteToBonusState();
     }
 
     @Override
-    public RecordsDto export() {
-        return records.export();
+    public String export() {
+        return state.export();
     }
 }

@@ -1,6 +1,7 @@
 package bowling.domain.concrete;
 
-import bowling.domain.engine.PitchResult;
+import bowling.domain.engine.roll.Roll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +11,17 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class NormalFrameTest {
 
+    private NormalFrame normalFrame;
+
+    @BeforeEach
+    void setUp() {
+        normalFrame = NormalFrame.init();
+    }
+
     @Test
     @DisplayName("첫 투구에서 모든 핀을 쓰러트리면 프레임을 종료한다.")
     void strike() {
-        NormalFrame normalFrame = new NormalFrame();
-        normalFrame.throwBall(PitchResult.wrap(10));
+        normalFrame.roll(Roll.result(10));
 
         assertThat(normalFrame.isEnded()).isTrue();
     }
@@ -22,13 +29,13 @@ class NormalFrameTest {
     @Test
     @DisplayName("두 번째 투구까지 마쳤다면 프레임을 종료한다.")
     void missedOrSpare() {
-        NormalFrame missedFrame = new NormalFrame();
-        missedFrame.throwBall(PitchResult.wrap(7));
-        missedFrame.throwBall(PitchResult.wrap(2));
+        NormalFrame missedFrame = NormalFrame.init();
+        missedFrame.roll(Roll.result(7));
+        missedFrame.roll(Roll.result(2));
 
-        NormalFrame spareFrame = new NormalFrame();
-        spareFrame.throwBall(PitchResult.wrap(8));
-        spareFrame.throwBall(PitchResult.wrap(2));
+        NormalFrame spareFrame = NormalFrame.init();
+        spareFrame.roll(Roll.result(8));
+        spareFrame.roll(Roll.result(2));
 
         assertAll(
             () -> assertThat(missedFrame.isEnded()).isTrue(),
@@ -39,23 +46,23 @@ class NormalFrameTest {
     @Test
     @DisplayName("이미 종료된 프레임에서 공을 더 던질 수 없다.")
     void cannotThrowBallIfFrameAlreadyEnded() {
-        NormalFrame strikeFrame = new NormalFrame();
-        strikeFrame.throwBall(PitchResult.wrap(10));
+        NormalFrame strikeFrame = NormalFrame.init();
+        strikeFrame.roll(Roll.result(10));
 
-        NormalFrame missedFrame = new NormalFrame();
-        missedFrame.throwBall(PitchResult.wrap(7));
-        missedFrame.throwBall(PitchResult.wrap(2));
+        NormalFrame missedFrame = NormalFrame.init();
+        missedFrame.roll(Roll.result(7));
+        missedFrame.roll(Roll.result(2));
 
-        NormalFrame spareFrame = new NormalFrame();
-        spareFrame.throwBall(PitchResult.wrap(8));
-        spareFrame.throwBall(PitchResult.wrap(2));
+        NormalFrame spareFrame = NormalFrame.init();
+        spareFrame.roll(Roll.result(8));
+        spareFrame.roll(Roll.result(2));
 
         assertAll(
-            () -> assertThatThrownBy(() -> strikeFrame.throwBall(PitchResult.wrap(0)))
+            () -> assertThatThrownBy(() -> strikeFrame.roll(Roll.result(0)))
                 .isInstanceOf(IllegalStateException.class),
-            () -> assertThatThrownBy(() -> missedFrame.throwBall(PitchResult.wrap(0)))
+            () -> assertThatThrownBy(() -> missedFrame.roll(Roll.result(0)))
                 .isInstanceOf(IllegalStateException.class),
-            () -> assertThatThrownBy(() -> spareFrame.throwBall(PitchResult.wrap(0)))
+            () -> assertThatThrownBy(() -> spareFrame.roll(Roll.result(0)))
                 .isInstanceOf(IllegalStateException.class)
         );
     }
