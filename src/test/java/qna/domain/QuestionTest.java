@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -97,12 +98,14 @@ public class QuestionTest {
     @Test
     public void deleteQuestionAndAnswers_질문자_답변자_동일함() throws Exception {
         // given
-        List<DeleteHistory> expectDeleteHistoriesQ1 = new ArrayList<>();
-        expectDeleteHistoriesQ1.add(new DeleteHistory(Q1, UserTest.JAVAJIGI));
-        expectDeleteHistoriesQ1.add(new DeleteHistory(AnswerTest.A1, UserTest.JAVAJIGI));
+        List<DeleteHistory> expectDeleteHistoriesQ1List = new ArrayList<>();
+        expectDeleteHistoriesQ1List.add(new DeleteHistory(Q1, UserTest.JAVAJIGI));
+        expectDeleteHistoriesQ1List.add(new DeleteHistory(AnswerTest.A1, UserTest.JAVAJIGI));
+        DeleteHistories expectDeleteHistoriesQ1 = new DeleteHistories(expectDeleteHistoriesQ1List);
+
 
         // when
-        List<DeleteHistory> resultDeleteHistoriesQ1 = Q1.deleteQuestionAndAnswers(UserTest.JAVAJIGI);
+        DeleteHistories resultDeleteHistoriesQ1 = Q1.deleteQuestionAndAnswers(UserTest.JAVAJIGI);
 
         // then
         assertThat(resultDeleteHistoriesQ1).isEqualTo(expectDeleteHistoriesQ1);
@@ -123,15 +126,13 @@ public class QuestionTest {
     @Test
     public void deleteQuestionAndAnswers_답변_없음() throws Exception {
         // given
-        List<DeleteHistory> expectDeleteHistoriesQ3 = new ArrayList<>();
-        expectDeleteHistoriesQ3.add(new DeleteHistory(Q3, UserTest.SANJIGI));
-
+        DeleteHistories expectDeleteHistories = new DeleteHistories(Arrays.asList(new DeleteHistory(Q3, UserTest.SANJIGI)));
 
         // when
-        List<DeleteHistory> resultDeleteHistoriesQ3 = Q3.deleteQuestionAndAnswers(UserTest.SANJIGI);
+        DeleteHistories resultDeleteHistoriesQ3 = Q3.deleteQuestionAndAnswers(UserTest.SANJIGI);
 
         // then
-        assertThat(resultDeleteHistoriesQ3).isEqualTo(expectDeleteHistoriesQ3);
+        assertThat(resultDeleteHistoriesQ3).isEqualTo(expectDeleteHistories);
     }
 
 
