@@ -28,7 +28,7 @@ public class Pins {
         .sum();
   }
 
-  public int countUptoSecondThrow() {
+  public int countUptoSecondPin() {
     return first().pin() + second().pin();
   }
 
@@ -36,19 +36,48 @@ public class Pins {
     return pins.size();
   }
 
-  public Pin first() {
+  private Pin first() {
     return pins.get(FIRST);
   }
 
-  public Pin second() {
+  private Pin second() {
     return pins.get(SECOND);
   }
 
-  public Pin bonus() {
+  private Pin bonus() {
     return pins.get(BONUS);
   }
 
   public boolean isEmpty() {
     return pins.isEmpty();
+  }
+
+  public List<String> frameState() {
+    States states = new States();
+    states.add(state(first()));
+    if (pins.size() == SECOND + 1) {
+      states.add(nextState());
+    }
+    if (pins.size() == BONUS + 1) {
+      states.add(nextState());
+      states.add(state(bonus()));
+    }
+    return states.states();
+  }
+
+  private String state(Pin pin) {
+    ScoreSymbol scoreSymbol = ScoreSymbol.symbol(pin.pin(), true);
+    if (scoreSymbol == ScoreSymbol.STRIKE || scoreSymbol == ScoreSymbol.GUTTER) {
+      return scoreSymbol.mark();
+    }
+    return pin.convertToString();
+  }
+
+  private String nextState() {
+    ScoreSymbol scoreSymbol = ScoreSymbol.symbol(countUptoSecondPin(), false);
+    if (scoreSymbol == ScoreSymbol.SPARE) {
+      return scoreSymbol.mark();
+    }
+    return state(second());
   }
 }

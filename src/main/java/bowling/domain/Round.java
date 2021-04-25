@@ -14,10 +14,6 @@ public class Round {
     return new Round(FIRST_ROUND);
   }
 
-  public static Round finalRound() {
-    return new Round(FINAL_ROUND);
-  }
-
   public Round next() {
     return new Round(this.round + 1);
   }

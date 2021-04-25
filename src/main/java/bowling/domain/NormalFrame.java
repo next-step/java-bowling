@@ -1,15 +1,9 @@
 package bowling.domain;
 
-import static java.lang.Boolean.FALSE;
-
 public class NormalFrame extends Frame {
 
   private static final int NORMAL_FRAME_MAX_SIZE = 2;
   private static final int MAX_PIN_COUNT = 10;
-
-  public NormalFrame(Round round) {
-    super(round);
-  }
 
   protected void validateHitPin(int countOfHitPin) {
     if (pins.totalHitPin() + countOfHitPin > MAX_PIN_COUNT) {
@@ -17,12 +11,8 @@ public class NormalFrame extends Frame {
     }
   }
 
-  private Score score() {
-    return Score.score(pins.totalHitPin(), pins.size() < NORMAL_FRAME_MAX_SIZE);
-  }
-
   private boolean isStrike() {
-    return score() == Score.STRIKE;
+    return symbol() == ScoreSymbol.STRIKE;
   }
 
   public boolean isEndFrame() {
@@ -30,6 +20,6 @@ public class NormalFrame extends Frame {
   }
 
   public boolean isLastFrame() {
-    return FALSE;
+    return false;
   }
 }

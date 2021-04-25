@@ -18,17 +18,6 @@ public class RoundTest {
   @DisplayName("[Round] 마지막 라운드 생성 테스트")
   void create_final_round_test() {
     Round round = new Round(10);
-    assertThat(round).isEqualTo(Round.finalRound());
+    assertThat(round).isEqualTo(new Round(10));
   }
-
-  @Test
-  @DisplayName("[Round] 마지막 판정 테스트")
-  void is_final_round_test() {
-    Round round = new Round(10);
-    assertThat(round.isFinalRound()).isTrue();
-  }
-
-
-
-
 }

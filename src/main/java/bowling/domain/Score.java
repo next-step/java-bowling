@@ -1,35 +1,63 @@
 package bowling.domain;
 
-import java.util.Arrays;
+public class Score {
 
-public enum Score {
-  STRIKE(10, "X"),
-  SPARE(10, "/"),
-  GUTTER(0, "-"),
-  MISS(-1, "");
+  private int score;
+  private int left;
 
-  private final int pin;
-  private final String mark;
-
-  Score(int pin, String mark) {
-    this.pin = pin;
-    this.mark = mark;
+  public Score(int score, int left) {
+    this.score = score;
+    this.left = left;
   }
 
-  public static Score score(int pin, boolean isFirst) {
-    Score score = Arrays.stream(values())
-        .filter(bowl -> bowl.pin == pin)
-        .findFirst()
-        .orElse(MISS);
+  public int getScore() {
+    return this.score;
+  }
 
-    if (!isFirst && score == STRIKE) {
-      return Score.SPARE;
+  public int getLeft() {
+    return this.left;
+  }
+
+  public boolean canCalculateScore() {
+    return left == 0;
+  }
+
+  public void bowl(int countOfPins) {
+    this.score += countOfPins;
+    this.left -= 1;
+  }
+
+  public static Score of(ScoreSymbol symbol, Pins pins) {
+    if (symbol == ScoreSymbol.STRIKE) {
+      return new Score(10, 2);
+    }
+    if (symbol == ScoreSymbol.SPARE) {
+      return new Score(10, 1);
+    }
+    return new Score(pins.totalHitPin(), 0);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
 
-    return score;
+    Score score1 = (Score) o;
+
+    if (score != score1.score) {
+      return false;
+    }
+    return left == score1.left;
   }
 
-  public String mark() {
-    return mark;
+  @Override
+  public int hashCode() {
+    int result = score;
+    result = 31 * result + left;
+    return result;
   }
 }
