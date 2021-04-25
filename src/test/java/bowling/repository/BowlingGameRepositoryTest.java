@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BowlingGameRepositoryTest {
@@ -25,10 +27,10 @@ class BowlingGameRepositoryTest {
         repository.save(lds, new Frames());
 
         // when
-        Frames frames = repository.findByParticipant(lds);
+        Optional<Frames> frames = repository.findByParticipant(lds);
 
         // then
-        assertThat(frames).isNotNull();
+        assertThat(frames.isPresent()).isTrue();
     }
 
     @Test
@@ -39,10 +41,10 @@ class BowlingGameRepositoryTest {
         repository.save(lds, new Frames());
 
         // when
-        Frames frames = repository.findByParticipant(lds);
+        Frames frames = repository.findByParticipant(lds).get();
         frames.pitch(10);
         frames.pitch(2);
-        Frames frames2 = repository.findByParticipant(lds);
+        Frames frames2 = repository.findByParticipant(lds).get();
 
         // then
         assertThat(frames).isEqualTo(frames2);
