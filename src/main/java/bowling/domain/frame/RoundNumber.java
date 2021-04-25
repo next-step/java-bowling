@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public final class RoundNumber {
 
+    public static final int MAX = 10;
     private static final int MIN = 1;
-    private static final int MAX = 10;
     private static final int FIRST_ROUND_NUMBER = 1;
 
     private final int roundNumber;
@@ -25,6 +25,10 @@ public final class RoundNumber {
         if (roundNumber < MIN || roundNumber > MAX) {
             throw new InvalidRoundNumberException(roundNumber);
         }
+    }
+
+    public int value() {
+        return roundNumber;
     }
 
     public RoundNumber nextRoundNumber() {

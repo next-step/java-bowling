@@ -19,10 +19,10 @@ class NormalFrameTest {
         final FrameScore frameScore = new FrameScore();
 
         // when
-        final Frame frame = new NormalFrame(roundNumber, frameScore);
+        final Frame frame = NormalFrame.of(roundNumber, frameScore);
 
         // then
-        assertThat(frame).isEqualTo(new NormalFrame(roundNumber, frameScore));
+        assertThat(frame).isEqualTo(NormalFrame.of(roundNumber, frameScore));
     }
 
     @Test
@@ -37,7 +37,7 @@ class NormalFrameTest {
         final Frame frame = NormalFrame.createFirstFrame();
 
         // then
-        assertThat(frame).isEqualTo(new NormalFrame(roundNumber, frameScore));
+        assertThat(frame).isEqualTo(NormalFrame.of(roundNumber, frameScore));
     }
 
     @ParameterizedTest
@@ -48,19 +48,19 @@ class NormalFrameTest {
         final RoundNumber roundNumber = new RoundNumber(roundNumberSource);
         final RoundNumber nextRoundNumber = new RoundNumber(roundNumberSource + 1);
         final FrameScore frameScore = new FrameScore();
-        final Frame frame = new NormalFrame(roundNumber, frameScore);
+        final Frame frame = NormalFrame.of(roundNumber, frameScore);
 
         // when
         final Frame nextFrame = frame.createNextFrame();
 
         // then
-        assertThat(nextFrame).isEqualTo(new NormalFrame(nextRoundNumber, frameScore));
+        assertThat(nextFrame).isEqualTo(NormalFrame.of(nextRoundNumber, frameScore));
     }
 
     @Test
     @DisplayName("Normal Frame은 10라운드가 될 수 없다.")
     void NormalFrameCannotBeTenRound() {
-        assertThatThrownBy(() -> new NormalFrame(new RoundNumber(10), new FrameScore()))
+        assertThatThrownBy(() -> NormalFrame.of(new RoundNumber(10), new FrameScore()))
                 .isInstanceOf(IllegalNormalFrameException.class)
                 .hasMessage(IllegalNormalFrameException.ILLEGAL_NORMAL_FRAME_ROUND);
     }
