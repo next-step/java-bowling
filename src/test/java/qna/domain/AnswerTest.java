@@ -15,7 +15,7 @@ public class AnswerTest {
 
     @DisplayName("작성자가 아닌 다른 사람이 삭제 요청을 했을시 예외처리 발생 여부 테스트")
     @Test
-    void 예외_작성자() {
+    void 예외_다른_작성자() {
         // when and then
         assertThatThrownBy(() -> A1.delete(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class)
