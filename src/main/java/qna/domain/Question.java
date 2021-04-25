@@ -99,10 +99,10 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) {
         validateOwner(loginUser);
-        this.deleted = DELETED;
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(DeleteHistory.ofQuestion(this.getId(), loginUser));
         deleteHistories.addAll(answers.deleteBy(loginUser));
+        this.deleted = DELETED;
         return deleteHistories;
     }
 
