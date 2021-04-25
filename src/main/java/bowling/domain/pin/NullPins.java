@@ -16,6 +16,6 @@ public final class NullPins implements Pins {
 
     @Override
     public FrameStatus frameStatus() {
-        return null;
+        return FrameStatus.NONE;
     }
 }
