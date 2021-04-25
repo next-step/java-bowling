@@ -37,4 +37,9 @@ public class FinalFrame extends Frame {
         return scoreBoards;
     }
 
+    @Override
+    public Frame next() {
+        throw new IllegalStateException("마지막 프레임입니다.");
+    }
+
 }

@@ -37,6 +37,7 @@ abstract class Frame {
         return this.before != null;
     }
 
+    abstract public Frame next();
     abstract public void pitch(Pitch pitch);
     abstract public boolean isFinished();
     abstract public List<String> getScoreBoards();

@@ -21,6 +21,7 @@ public class NormalFrame extends Frame {
         return new NormalFrame(FIRST_NUMBER, new Pitches());
     }
 
+    @Override
     public Frame next() {
         validateCreateNextFrame();
         if (hasNext()) {
