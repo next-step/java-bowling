@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class DeleteHistories {
-    private final List<DeleteHistory> deleteHistories;
+    private List<DeleteHistory> deleteHistories;
 
     public DeleteHistories(List<DeleteHistory> deleteHistories) {
         this.deleteHistories = deleteHistories;
@@ -12,6 +12,10 @@ public class DeleteHistories {
 
     public List<DeleteHistory> deleteHistories() {
         return this.deleteHistories;
+    }
+
+    public void add(DeleteHistory deleteHistory) {
+        this.deleteHistories.add(deleteHistory);
     }
 
     @Override
