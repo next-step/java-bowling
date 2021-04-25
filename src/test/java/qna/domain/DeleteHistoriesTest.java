@@ -47,4 +47,20 @@ class DeleteHistoriesTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @DisplayName("DeleteHistories 인스턴스가 쇼유한 값에 데이터 추가 여부 테스트")
+    @Test
+    void 추가() {
+        // given
+        List<DeleteHistory> deleteHistoryList = new ArrayList<>();
+        DeleteHistory deleteHistory = new DeleteHistory();
+
+        // when
+        DeleteHistories deleteHistories = new DeleteHistories(deleteHistoryList);
+        deleteHistories.add(deleteHistory);
+        int actual = deleteHistories.histories().size();
+
+        // then
+        assertThat(actual).isEqualTo(1);
+    }
+
 }
