@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Frames;
+import bowling.domain.frame.Frames;
 import java.util.Scanner;
 
 public class InputView {

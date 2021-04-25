@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.ScoreSymbol;
 
 public class NormalFrame extends Frame {
 
