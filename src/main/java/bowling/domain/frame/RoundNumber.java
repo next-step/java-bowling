@@ -16,6 +16,10 @@ public final class RoundNumber {
         this.roundNumber = roundNumber;
     }
 
+    public static RoundNumber firstRoundNumber() {
+        return null;
+    }
+
     private void validateRoundNumber(int roundNumber) {
         if (roundNumber < MIN || roundNumber > MAX) {
             throw new InvalidRoundNumberException(roundNumber);

@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.exception.InvalidRoundNumberException;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -29,5 +30,18 @@ class RoundNumberTest {
         assertThatThrownBy(() -> new RoundNumber(invalidRoundNumberSource))
                 .isInstanceOf(InvalidRoundNumberException.class)
                 .hasMessage(InvalidRoundNumberException.INVALID_ROUND_NUMBER + invalidRoundNumberSource);
+    }
+
+    @Test
+    @DisplayName("첫번째 라운드 번호를 생성한다.")
+    void firstRoundNumber() {
+        // given
+        final int firstRoundNumber = 1;
+
+        // when
+        final RoundNumber roundNumber = RoundNumber.firstRoundNumber();
+
+        // then
+        assertThat(roundNumber).isEqualTo(new RoundNumber(firstRoundNumber));
     }
 }
