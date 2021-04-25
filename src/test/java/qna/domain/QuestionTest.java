@@ -29,13 +29,13 @@ public class QuestionTest {
 
     @Test
     @DisplayName("질문을 삭제하면, DeleteHistory의 List을 반환한다.")
-    void deleteQuestionTest() {
+    void deleteQuestionTest() throws CannotDeleteException {
         assertThat(Q1.delete(UserTest.JAVAJIGI).size()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("질문을 삭제하면, 질문에 달린 답변까지 삭제된다.")
-    void deleteQuestionWithAnswersTest() {
+    void deleteQuestionWithAnswersTest() throws CannotDeleteException {
         Q1.addAnswer(AnswerTest.A1);
         Q1.addAnswer(AnswerTest.A1);
 
