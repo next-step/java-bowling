@@ -8,11 +8,11 @@ public class Gutter implements State {
     public static final String SYMBOL = "-";
 
     @Override
-    public State newState(PinCount pinCount) {
-        if (PinCount.GUTTER.isSpare(pinCount)) {
-            return new Spare(PinCount.GUTTER, pinCount);
+    public State newState(PinCount secondPinCount) {
+        if (secondPinCount.isSpare(PinCount.GUTTER)) {
+            return new Spare(PinCount.GUTTER, secondPinCount);
         }
-        return new Miss(PinCount.GUTTER, pinCount);
+        return new Miss(PinCount.GUTTER, secondPinCount);
     }
 
     @Override
