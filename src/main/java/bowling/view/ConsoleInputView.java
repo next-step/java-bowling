@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class ConsoleInputView implements InputView {
 
+    private static final Scanner SCANNER = new Scanner(System.in).useDelimiter(System.lineSeparator());
+
     @Override
     public String receivePlayerName() {
         printMessage("플레이어 이름은(3 english letters)? : ");
@@ -17,13 +19,11 @@ public class ConsoleInputView implements InputView {
     }
 
     private String getUserInput() {
-        printMessage(System.lineSeparator());
-        Scanner scanner = new Scanner(System.in).useDelimiter(System.lineSeparator());
-        return scanner.next();
+        return SCANNER.next();
     }
 
     private void printMessage(String message) {
-        System.out.println(message);
+        System.out.print(message);
     }
 
 }
