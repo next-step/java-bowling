@@ -18,4 +18,11 @@ public class Answers {
         this.answers.add(answer);
     }
 
+    public DeleteHistories deleteAnswers(User user) throws Exception {
+        DeleteHistories deleteHistories = new DeleteHistories();
+        for (Answer answer : answers) {
+            deleteHistories.add(answer.deleteAnswer(user));
+        }
+        return deleteHistories;
+    }
 }
