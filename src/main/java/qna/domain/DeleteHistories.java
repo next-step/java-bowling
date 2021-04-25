@@ -18,4 +18,8 @@ public class DeleteHistories {
     public void add(DeleteHistory deleteHistory) {
         deleteHistories.add(deleteHistory);
     }
+
+    public List<DeleteHistory> histories() {
+        return deleteHistories;
+    }
 }
