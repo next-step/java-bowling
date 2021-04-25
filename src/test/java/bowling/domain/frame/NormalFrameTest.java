@@ -79,4 +79,10 @@ class NormalFrameTest {
         // then
         assertThat(nextFrame).isEqualTo(FinalFrame.from(frameScore));
     }
+
+    @Test
+    @DisplayName("NormalFrame은 FinalFrame이 아니다.")
+    void isFinalFrame() {
+        assertThat(NormalFrame.createFirstFrame().isFinalFrame()).isFalse();
+    }
 }

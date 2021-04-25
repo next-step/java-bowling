@@ -26,6 +26,11 @@ public final class NormalFrame extends Frame {
     }
 
     @Override
+    public boolean isFinalFrame() {
+        return false;
+    }
+
+    @Override
     public Frame createNextFrame() {
         final RoundNumber roundNumber = roundNumber();
         if (roundNumber.value() == MAX_NORMAL_FRAME_ROUND_NUMBER) {

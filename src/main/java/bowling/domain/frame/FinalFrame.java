@@ -13,6 +13,11 @@ public final class FinalFrame extends Frame {
     }
 
     @Override
+    public boolean isFinalFrame() {
+        return false;
+    }
+
+    @Override
     public Frame createNextFrame() {
         throw new NoNextFrameException();
     }

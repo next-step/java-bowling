@@ -35,4 +35,10 @@ class FinalFrameTest {
                 .isInstanceOf(NoNextFrameException.class)
                 .hasMessage(NoNextFrameException.FINAL_FRAME_CANNOT_CREATE_NEXT_FRAME);
     }
+
+    @Test
+    @DisplayName("FinalFrame은 FinalFrame이 아니다.")
+    void isFinalFrame() {
+        assertThat(FinalFrame.from(new FrameScore()).isFinalFrame()).isTrue();
+    }
 }

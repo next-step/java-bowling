@@ -12,6 +12,8 @@ public abstract class Frame {
         this.frameScore = frameScore;
     }
 
+    public abstract boolean isFinalFrame();
+
     public abstract Frame createNextFrame();
 
     public abstract void knockDownPin(Pin pin);
