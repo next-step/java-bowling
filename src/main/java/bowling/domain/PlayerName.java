@@ -6,6 +6,9 @@ import java.util.Objects;
 
 public final class PlayerName {
 
+    private static final int MIN_LENGTH = 1;
+    private static final int MAX_LENGTH = 3;
+
     private final String name;
 
     public PlayerName(String name) {
@@ -15,7 +18,7 @@ public final class PlayerName {
 
     private void validateNameLength(String name) {
         final int length = name.length();
-        if (length < 1 || length > 3) {
+        if (length < MIN_LENGTH || length > MAX_LENGTH) {
             throw new PlayerNameLengthException(name);
         }
     }
