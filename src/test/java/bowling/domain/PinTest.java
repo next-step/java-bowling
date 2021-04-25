@@ -12,7 +12,7 @@ public class PinTest {
     @Test
     void initTest() {
         Pin pin = new Pin(10);
-        assertThat(pin).isEqualTo(new Pin(10));
+        assertThat(pin.count()).isEqualTo(10);
     }
 
     @DisplayName("핀은 0 ~ 10의 값을 가진다")
