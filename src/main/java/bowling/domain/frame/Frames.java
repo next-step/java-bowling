@@ -19,8 +19,8 @@ public final class Frames {
     private static List<Frame> makeFrames() {
         List<Frame> frames = new ArrayList<>();
         frames.add(NormalFrame.createFirstFrame());
-        for (int i = 1; i < RoundNumber.MAX; i++) {
-            frames.add(frames.get(i - 1).createNextFrame());
+        for (int i = 0; i < RoundNumber.MAX - 1; i++) {
+            frames.add(frames.get(i).createNextFrame());
         }
         return frames;
     }
