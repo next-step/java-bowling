@@ -1,11 +1,13 @@
 package bowling.domain.frame;
 
+import bowling.exception.IllegalNormalFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalFrameTest {
 
@@ -53,5 +55,13 @@ class NormalFrameTest {
 
         // then
         assertThat(nextFrame).isEqualTo(new NormalFrame(nextRoundNumber, frameScore));
+    }
+
+    @Test
+    @DisplayName("Normal Frame은 10라운드가 될 수 없다.")
+    void NormalFrameCannotBeTenRound() {
+        assertThatThrownBy(() -> new NormalFrame(new RoundNumber(10), new FrameScore()))
+                .isInstanceOf(IllegalNormalFrameException.class)
+                .hasMessage(IllegalNormalFrameException.ILLEGAL_NORMAL_FRAME_ROUND);
     }
 }
