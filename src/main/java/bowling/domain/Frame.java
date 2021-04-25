@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.List;
+
 abstract class Frame {
 
     private final int number;
@@ -37,5 +39,5 @@ abstract class Frame {
 
     abstract public void pitch(Pitch pitch);
     abstract public boolean isFinished();
-    abstract public String printScoreBoard();
+    abstract public List<String> getScoreBoards();
 }

@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.List;
+
 public class NormalFrame extends Frame {
 
     private static final int FIRST_NUMBER = 1;
@@ -64,8 +66,8 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public String printScoreBoard() {
-        return null;
+    public List<String> getScoreBoards() {
+        return pitches().getScoreBoards();
     }
 
 }

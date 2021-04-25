@@ -3,6 +3,9 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -195,6 +198,79 @@ class NormalFrameTest {
         assertThatIllegalStateException()
                 .isThrownBy(first::before)
                 .withMessageMatching("이전 프레임이 존재하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("스트라이크 점수판 출력")
+    void scoreBoards_strike() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        // then
+        assertThat(1).isEqualTo(normalFrame.getScoreBoards().size());
+        assertThat(Collections.singletonList("X")).isEqualTo(normalFrame.getScoreBoards());
+    }
+
+    @Test
+    @DisplayName("스페어 점수판 출력")
+    void scoreBoards_spare() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(7));
+        normalFrame.pitch(new Pitch(3));
+
+        // then
+        assertThat(2).isEqualTo(normalFrame.getScoreBoards().size());
+        assertThat(Arrays.asList("7", "/")).isEqualTo(normalFrame.getScoreBoards());
+    }
+
+    @Test
+    @DisplayName("미스 점수판 출력")
+    void scoreBoards_miss() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(7));
+        normalFrame.pitch(new Pitch(2));
+
+        // then
+        assertThat(2).isEqualTo(normalFrame.getScoreBoards().size());
+        assertThat(Arrays.asList("7", "2")).isEqualTo(normalFrame.getScoreBoards());
+    }
+
+    @Test
+    @DisplayName("거터 점수판 출력")
+    void scoreBoards_gutter() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+        NormalFrame normalFrame2 = NormalFrame.first();
+        NormalFrame normalFrame3 = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(7));
+        normalFrame.pitch(new Pitch(0));
+
+        normalFrame2.pitch(new Pitch(0));
+        normalFrame2.pitch(new Pitch(7));
+
+        normalFrame3.pitch(new Pitch(0));
+        normalFrame3.pitch(new Pitch(0));
+
+        // then
+        assertThat(2).isEqualTo(normalFrame.getScoreBoards().size());
+        assertThat(Arrays.asList("7", "-")).isEqualTo(normalFrame.getScoreBoards());
+
+        assertThat(2).isEqualTo(normalFrame2.getScoreBoards().size());
+        assertThat(Arrays.asList("-", "7")).isEqualTo(normalFrame2.getScoreBoards());
+
+        assertThat(2).isEqualTo(normalFrame3.getScoreBoards().size());
+        assertThat(Arrays.asList("-", "-")).isEqualTo(normalFrame3.getScoreBoards());
     }
 
 }
