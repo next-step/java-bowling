@@ -1,10 +1,14 @@
 package bowling.domain.frame;
 
+import bowling.exception.InvalidPinCountException;
+
 import java.util.Objects;
 
 public final class Pin {
 
     private static final int DEFAULT_PIN_COUNT = 10;
+    private static final int MIN_COUNT = 0;
+    private static final int MAX_COUNT = 10;
 
     private final int pin;
 
@@ -13,7 +17,14 @@ public final class Pin {
     }
 
     public Pin(final int pin) {
+        validatePinCount(pin);
         this.pin = pin;
+    }
+
+    private void validatePinCount(int pin) {
+        if (pin < MIN_COUNT || pin > MAX_COUNT) {
+            throw new InvalidPinCountException();
+        }
     }
 
     @Override
