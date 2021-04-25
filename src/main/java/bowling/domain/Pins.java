@@ -52,4 +52,8 @@ public class Pins {
             throw new IllegalStateException(PIN_SIZE_EXCEPTION_MESSAGE);
         }
     }
+
+    public int tryCount() {
+        return pins.size();
+    }
 }
