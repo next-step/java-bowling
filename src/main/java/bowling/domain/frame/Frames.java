@@ -70,9 +70,8 @@ public class Frames {
   private int accumulateScores(int index) {
     return frames.stream()
         .limit(index + 1)
-        .map(frame -> frame.score)
-        .map(Score::getScore)
-        .reduce(0, Integer::sum);
+        .mapToInt(frame -> frame.score.getScore())
+        .sum();
   }
 
   public boolean isContinue() {
