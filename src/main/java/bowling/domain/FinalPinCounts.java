@@ -89,7 +89,7 @@ public class FinalPinCounts implements PinCounts {
     }
 
     private boolean isSecondBowlSpare() {
-        return !isFirstBowlStrike() && pinCounts.get(FIRST_PIN_COUNT_INDEX).plus(pinCounts.get(SECOND_PIN_COUNT_INDEX)) == SPARE;
+        return !isFirstBowlStrike() && pinCounts.get(SECOND_PIN_COUNT_INDEX).isSpare(pinCounts.get(FIRST_PIN_COUNT_INDEX));
     }
 
     protected boolean isSecondBowlStrike() {

@@ -29,6 +29,10 @@ public class PinCount {
         return pinCount == BOUND_MIN;
     }
 
+    public boolean isSpare(PinCount previousPinCount) {
+        return !previousPinCount.isStrike() && plus(previousPinCount) == BOUND_MAX;
+    }
+
     public int value() {
         return pinCount;
     }
