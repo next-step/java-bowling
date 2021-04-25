@@ -4,7 +4,6 @@ public class NormalFrame extends Frame {
 
     private static final int FIRST_NUMBER = 1;
     private static final int LAST_NUMBER = 9;
-    private static final int MAX_PITCH_ABLE_COUNT = 2;
 
     private Frame next;
 
