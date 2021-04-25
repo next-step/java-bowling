@@ -20,7 +20,7 @@ class PinTest {
         final Pin pin = new Pin(pinCount);
 
         // then
-        assertThat(pin).isEqualTo(new Pin(pinCount));
+        assertThat(pin.pinCount()).isEqualTo(pinCount);
     }
 
     @Test
@@ -33,7 +33,7 @@ class PinTest {
         final Pin pin = new Pin();
 
         // then
-        assertThat(pin).isEqualTo(new Pin(defaultPinCount));
+        assertThat(pin.pinCount()).isEqualTo(defaultPinCount);
     }
 
     @ParameterizedTest

@@ -27,6 +27,10 @@ public final class Pin {
         }
     }
 
+    public int pinCount() {
+        return pin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
