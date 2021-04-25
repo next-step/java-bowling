@@ -2,15 +2,19 @@ package bowling.domain.frame;
 
 import java.util.Objects;
 
-public final class Frame {
+public abstract class Frame {
 
     private final RoundNumber roundNumber;
     private final FrameScore frameScore;
 
-    public Frame(RoundNumber roundNumber, FrameScore frameScore) {
+    protected Frame(RoundNumber roundNumber, FrameScore frameScore) {
         this.roundNumber = roundNumber;
         this.frameScore = frameScore;
     }
+
+    public abstract Frame createNextFrame();
+
+    public abstract void knockDownPin(Pin pin);
 
     @Override
     public boolean equals(Object o) {
