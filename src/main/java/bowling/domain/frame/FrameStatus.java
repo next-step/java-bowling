@@ -9,7 +9,19 @@ public enum FrameStatus {
     GUTTER,
     NONE;
 
+    private static final int MAX_PIN_COUNT = 10;
+    private static final int ZERO_PIN_COUNT = 0;
+
     public static FrameStatus of(Pin firstPin, Pin secondPin) {
-        return null;
+        if (firstPin.pinCount() == MAX_PIN_COUNT) {
+            return STRIKE;
+        }
+        if (firstPin.pinCount() + secondPin.pinCount() == MAX_PIN_COUNT) {
+            return SPARE;
+        }
+        if (firstPin.pinCount() + secondPin.pinCount() == ZERO_PIN_COUNT) {
+            return GUTTER;
+        }
+        return MISS;
     }
 }
