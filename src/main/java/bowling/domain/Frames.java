@@ -29,11 +29,27 @@ public class Frames implements Iterable<Frame> {
     }
 
     public int lastFrameNumber() {
+        if (isEmpty()) {
+            throw new IllegalStateException("프레임이 존재하지 않습니다. 투구를 실행해 주세요.");
+        }
         return lastFrame().number();
     }
 
+    public int nextTurnNumber() {
+        if (isEmpty()) {
+            return NormalFrame.FIRST_NUMBER;
+        }
+        if (isFinished()) {
+            return lastFrameNumber();
+        }
+        if (lastFrame().isFinished()) {
+            return lastFrameNumber() + 1;
+        }
+        return lastFrameNumber();
+    }
+
     public boolean isFinished() {
-        return lastFrame() instanceof FinalFrame && lastFrame().isFinished();
+        return !isEmpty() && lastFrame() instanceof FinalFrame && lastFrame().isFinished();
     }
 
     private boolean isEmpty() {
