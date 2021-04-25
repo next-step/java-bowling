@@ -1,22 +1,45 @@
 package bowling.domain.frame;
 
+import java.util.Objects;
+
 public final class FinalPins implements Pins {
 
-    public FinalPins(Pin firstPin, Pin secondPin, Pin thirdPin) {
+    private final NormalPins pins;
+    private final Pin thirdPin;
 
+    public FinalPins(Pin firstPin, Pin secondPin, Pin thirdPin) {
+        this(new NormalPins(firstPin, secondPin), thirdPin);
+    }
+
+    public FinalPins(NormalPins pins, Pin thirdPin) {
+        this.pins = pins;
+        this.thirdPin = thirdPin;
     }
 
     @Override
     public Pin firstPin() {
-        return null;
+        return pins.firstPin();
     }
 
     @Override
     public Pin secondPin() {
-        return null;
+        return pins.secondPin();
     }
 
     public Pin thirdPin() {
-        return null;
+        return thirdPin;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FinalPins finalPins = (FinalPins) o;
+        return Objects.equals(pins, finalPins.pins) && Objects.equals(thirdPin, finalPins.thirdPin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pins, thirdPin);
     }
 }
