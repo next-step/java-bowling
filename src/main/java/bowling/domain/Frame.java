@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.List;
 
-abstract class Frame {
+public abstract class Frame {
 
     private final int number;
     private final Pitches pitches;
