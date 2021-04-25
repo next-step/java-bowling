@@ -44,4 +44,30 @@ class PitchesTest {
         assertThat(0).isEqualTo(pitchesNonPitch.count());
         assertThat(2).isEqualTo(pitches.count());
     }
+
+    @Test
+    @DisplayName("스트라이크")
+    void strike() {
+        // given
+        Pitches pitches = new Pitches();
+
+        // when
+        pitches.add(new Pitch(10));
+
+        // then
+        assertThat(pitches.isStrike()).isTrue();
+    }
+
+    @Test
+    @DisplayName("스페어 갯수")
+    void spare() {
+        // given
+        Pitches pitches = new Pitches();
+
+        // when
+        pitches.add(new Pitch(7));
+
+        // then
+        assertThat(3).isEqualTo(pitches.spare());
+    }
 }

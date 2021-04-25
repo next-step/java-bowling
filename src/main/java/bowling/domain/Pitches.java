@@ -8,6 +8,8 @@ import java.util.function.Consumer;
 
 public class Pitches implements Iterable<Pitch> {
 
+    private static final int STRIKE_COUNT = 10;
+
     private final List<Pitch> values;
 
     public Pitches() {
@@ -30,6 +32,14 @@ public class Pitches implements Iterable<Pitch> {
 
     public void add(Pitch pitch) {
         values.add(pitch);
+    }
+
+    public boolean isStrike() {
+        return count() == 1 && pinDownCount() == STRIKE_COUNT;
+    }
+
+    public int spare() {
+        return STRIKE_COUNT - pinDownCount();
     }
 
     @Override

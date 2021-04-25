@@ -4,7 +4,6 @@ public class NormalFrame extends Frame {
 
     private static final int FIRST_NUMBER = 1;
     private static final int LAST_NUMBER = 9;
-    private static final int STRIKE_COUNT = 10;
     private static final int MAX_PITCH_ABLE_COUNT = 2;
 
     private Frame next;
@@ -69,7 +68,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean isFinished() {
-        return pitches().pinDownCount() == STRIKE_COUNT || pitches().count() == MAX_PITCH_ABLE_COUNT;
+        return pitches().isStrike() || pitches().count() == MAX_PITCH_ABLE_COUNT;
     }
 
     @Override
@@ -79,6 +78,6 @@ public class NormalFrame extends Frame {
 
     @Override
     int spare() {
-        return STRIKE_COUNT - pitches().pinDownCount();
+        return pitches().spare();
     }
 }
