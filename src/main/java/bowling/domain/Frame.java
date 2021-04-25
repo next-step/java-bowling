@@ -1,19 +1,36 @@
 package bowling.domain;
 
-public class Frame {
+public abstract class Frame {
 
-    public static Frame from(Round round) {
-        return new Frame();
+    private static final String TRY_COUNT_EXCEPTION_MESSAGE = "최대 2번까지 시도할 수 있습니다";
+
+    protected Round round;
+    protected Pins pins;
+
+    public Frame(Round round) {
+        this.round = round;
+        this.pins = new Pins();
     }
 
     public boolean isLastRound() {
-        return false;
+        return round.isFinalRound();
     }
 
     public void throwBall(int hitCount) {
+        validateTry();
+        validateHitCount(hitCount);
+        pins.add(new Pin(hitCount));
     }
 
-    public boolean roundEnded() {
-        return false;
+    protected void validateTry() {
+        if (roundEnded()) {
+            throw new IllegalStateException(TRY_COUNT_EXCEPTION_MESSAGE);
+        }
     }
+
+    protected abstract void validateHitCount(int hitCount);
+
+    public abstract boolean roundEnded();
+
+    protected abstract boolean isStrike();
 }
