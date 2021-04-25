@@ -4,20 +4,19 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PinsTest {
 
-    private static List<Pin> pinList;
     private static Pins pins;
 
     @BeforeAll
     static void init() {
-        pinList = Arrays.asList(new Pin(5), new Pin(5), new Pin(2));
-        pins = new Pins(pinList);
+        pins = new Pins();
+        pins.add(new Pin(5));
+        pins.add(new Pin(5));
+        pins.add(new Pin(2));
     }
 
     @DisplayName("투구로 쓰러트린 핀의 갯수를 얻는다")
@@ -48,5 +47,11 @@ public class PinsTest {
     @Test
     void pinsBonusTryTest() {
         assertThat(pins.bonusTryCount()).isEqualTo(2);
+    }
+
+    @DisplayName("3번 이상의 투구는 할 수 없다")
+    @Test
+    void pinsExceptionTest() {
+        assertThatThrownBy(() -> pins.add(new Pin(2))).isInstanceOf(IllegalStateException.class);
     }
 }
