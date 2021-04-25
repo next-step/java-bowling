@@ -42,4 +42,35 @@
                 - Records: 각 투구 당 기록을 보관
                     - Record: 투구 1회의 기록을 추상화
         - FrameCreator: 프레임 생성 책임 부여
+    
+### 1차 피드백
 
+- 피드백에서 가장 중요한 것이 규칙 2(else 예약어를 쓰지 않는다) 제거하기
+    - State 패턴 적용이 필요
+- 핀 개수에 대한 캐싱 적용해보기
+- 테스트 공통 데이터에 대해 `@BeforeEach` 로 정리
+- 그 외 가독성을 위한 코드 정리
+
+#### `Records` 와 `Record` 의 리팩토링
+
+분기문을 최소화하기 위해 State 패턴을 적용해봐야 한다.
+
+- State 패턴 구조
+    - State를 사용하는 `Context` 와 `State`, 그리고 `State` 를 구현한 `ConcreteState` 로 나뉜다.
+- FSM 정의해보기
+    - `Context` 가 Frame 일 것이므로, Frame 을 기준으로 생각
+    - Frame 시작 전 (READY) -> Frame 플레이 중 (PLAYING) -> Frame 종료 (FINISHED)
+        - 좀 더 세분화하면?
+             - Finished 상태는 `STRIKE`, `SPARE`, `MISS` 로 구체화 가능
+- `Context` 의 행동 정의
+    - 공을 던지는 행위
+        - 던질 때 마다 상태가 바뀌어야 함
+        - 쓰려트린 핀의 개수를 출력해야 하므로, 이를 저장할 방법도 마련해야 함 
+- `State` 의 행동 정의
+    - `Frame` 이 종료되었는지 확인할 때 사용할 메소드
+
+##### References
+
+- [디자인 패턴 - 상태 패턴(State Pattern)](https://velog.io/@y_dragonrise/%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4-%EC%83%81%ED%83%9C-%ED%8C%A8%ED%84%B4State-Pattern)
+- [State](https://refactoring.guru/design-patterns/state)
+    
