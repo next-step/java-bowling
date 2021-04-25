@@ -1,20 +1,21 @@
-package bowling.domain.concrete;
+package bowling.domain.concrete.frame;
 
 import bowling.domain.engine.frame.Frame;
 import bowling.domain.engine.frame.state.State;
 import bowling.domain.engine.frame.state.StateFactory;
 import bowling.domain.engine.roll.RollResult;
 
-public class NormalFrame implements Frame {
+
+public class FinalFrame implements Frame {
 
     private State state;
 
-    private NormalFrame(State state) {
+    private FinalFrame(State state) {
         this.state = state;
     }
 
-    public static NormalFrame init() {
-        return new NormalFrame(StateFactory.ready());
+    public static FinalFrame init() {
+        return new FinalFrame(StateFactory.ready());
     }
 
     @Override
@@ -23,12 +24,17 @@ public class NormalFrame implements Frame {
             throw new IllegalStateException("이미 프레임이 종료된 상태입니다.");
         }
 
-        this.state = state.transit(rollResult);
+        if (state.isFinished() && state.canPromoteToBonusState()) {
+            state = state.continueInBonus().transit(rollResult);
+            return ;
+        }
+
+        state = state.transit(rollResult);
     }
 
     @Override
     public boolean isEnded() {
-        return state.isFinished();
+        return state.isFinished() && !state.canPromoteToBonusState();
     }
 
     @Override

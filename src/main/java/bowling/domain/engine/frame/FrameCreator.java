@@ -1,7 +1,7 @@
 package bowling.domain.engine.frame;
 
-import bowling.domain.concrete.FinalFrame;
-import bowling.domain.concrete.NormalFrame;
+import bowling.domain.concrete.frame.FinalFrame;
+import bowling.domain.concrete.frame.NormalFrame;
 
 public class FrameCreator {
 

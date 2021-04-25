@@ -1,8 +1,10 @@
-package bowling.domain.engine.roll;
+package bowling.domain.concrete.roll;
 
-class GutterResult extends RollResult {
+import bowling.domain.engine.roll.RollResult;
 
-    GutterResult() {
+public class GutterResult extends RollResult {
+
+    public GutterResult() {
         super(0);
     }
 

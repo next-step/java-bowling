@@ -1,5 +1,8 @@
 package bowling.domain.engine.roll;
 
+import bowling.domain.concrete.roll.GutterResult;
+import bowling.domain.concrete.roll.NormalResult;
+
 public class Roll {
 
     private Roll() {}

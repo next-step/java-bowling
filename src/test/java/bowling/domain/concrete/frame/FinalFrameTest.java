@@ -1,4 +1,4 @@
-package bowling.domain.concrete;
+package bowling.domain.concrete.frame;
 
 import bowling.domain.engine.roll.Roll;
 import org.junit.jupiter.api.DisplayName;
