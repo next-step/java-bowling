@@ -35,9 +35,15 @@ public class NormalFrame extends Frame {
     }
 
     private Frame createNextFrame() {
-        // TODO: isLast 만족 시 FinalFrame 리턴
-        this.next = new NormalFrame(number() + 1, this);
+        this.next = createNextFrame(isLast());
         return this.next;
+    }
+
+    private Frame createNextFrame(boolean isLast) {
+        if (isLast) {
+            return new FinalFrame(number() + 1, this);
+        }
+        return new NormalFrame(number() + 1, this);
     }
 
     private boolean isLast() {
@@ -50,25 +56,12 @@ public class NormalFrame extends Frame {
 
     @Override
     public void pitch(Pitch pitch) {
-        validatePitch(pitch);
         pitches().add(pitch);
-    }
-
-    private void validatePitch(Pitch pitch) {
-        if (pitch == null) {
-            throw new IllegalArgumentException("투구 정보를 입력해 주세요.");
-        }
-        if (isFinished()) {
-            throw new IllegalStateException("종료된 프레임입니다.");
-        }
-        if (spare() < pitch.value()) {
-            throw new IllegalArgumentException("핀 처리횟수가 남은 핀수를 초과합니다. 투구정보를 확인해 주세요.");
-        }
     }
 
     @Override
     public boolean isFinished() {
-        return pitches().isStrike() || pitches().count() == MAX_PITCH_ABLE_COUNT;
+        return pitches().isFinished();
     }
 
     @Override
