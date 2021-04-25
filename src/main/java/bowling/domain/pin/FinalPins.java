@@ -1,5 +1,7 @@
 package bowling.domain.pin;
 
+import bowling.domain.frame.FrameStatus;
+
 import java.util.Objects;
 
 public final class FinalPins implements Pins {
@@ -24,6 +26,11 @@ public final class FinalPins implements Pins {
     @Override
     public Pin secondPin() {
         return pins.secondPin();
+    }
+
+    @Override
+    public FrameStatus frameStatus() {
+        return null;
     }
 
     public Pin thirdPin() {
