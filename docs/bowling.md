@@ -90,3 +90,9 @@
         - [x] 투구 수행
         - [x] 마지막 프레임인지 확인
     - [x] `NormalFrame`에 첫번째 프레임을 생성하는 기능을 추가한다.
+- [x] `Pin`의 목록을 관리하는 클래스를 정의한다.
+    - [x] 기본적으로 두 개의 Pin을 관리하는 `NormalPins`
+    - [x] 마지막 Frame에서 사용되는 `FinalPins` 가 있다.
+- [ ] `Pins`를 이용해 FrameScore를 개선한다.
+    - [ ] FrameScore는 `Pins` 와 `FrameStatus`를 가진다.
+    - [ ] FrameScore는 해당 프레임이 종료되었는지 확인하는 메서드를 가져야한다.
