@@ -6,6 +6,8 @@ import qna.UnAuthorizedException;
 
 import javax.persistence.*;
 
+import static java.lang.Boolean.TRUE;
+
 @Entity
 public class Answer extends AbstractEntity {
     @ManyToOne(optional = false)
@@ -76,6 +78,7 @@ public class Answer extends AbstractEntity {
 
     public void delete(User loginUser) throws CannotDeleteException {
         validateOwner(loginUser);
+        setDeleted(TRUE);
     }
 
     private void validateOwner(User loginUser) throws CannotDeleteException {
