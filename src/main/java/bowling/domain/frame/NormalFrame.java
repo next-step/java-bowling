@@ -6,6 +6,10 @@ public final class NormalFrame extends Frame {
         super(roundNumber, frameScore);
     }
 
+    public static Frame createFirstFrame() {
+        return null;
+    }
+
     @Override
     public Frame createNextFrame() {
         return null;

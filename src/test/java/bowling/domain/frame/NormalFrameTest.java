@@ -20,4 +20,19 @@ class NormalFrameTest {
         // then
         assertThat(frame).isEqualTo(new NormalFrame(roundNumber, frameScore));
     }
+
+    @Test
+    @DisplayName("첫 프레임을 생성한다.")
+    void createFirstFrame() {
+        // given
+        final int firstRoundNumber = 1;
+        final RoundNumber roundNumber = new RoundNumber(firstRoundNumber);
+        final FrameScore frameScore = new FrameScore();
+
+        // when
+        final Frame frame = NormalFrame.createFirstFrame();
+
+        // then
+        assertThat(frame).isEqualTo(new NormalFrame(roundNumber, frameScore));
+    }
 }
