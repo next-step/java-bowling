@@ -4,7 +4,7 @@ import java.util.List;
 
 public class NormalFrame extends Frame {
 
-    private static final int FIRST_NUMBER = 1;
+    public static final int FIRST_NUMBER = 1;
     private static final int LAST_NUMBER = 9;
 
     private Frame next;
