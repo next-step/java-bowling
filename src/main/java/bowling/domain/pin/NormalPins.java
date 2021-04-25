@@ -26,7 +26,7 @@ public final class NormalPins implements Pins {
 
     @Override
     public FrameStatus frameStatus() {
-        return null;
+        return FrameStatus.of(firstPin, secondPin);
     }
 
     @Override
