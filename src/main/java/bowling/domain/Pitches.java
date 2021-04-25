@@ -1,10 +1,11 @@
 package bowling.domain;
 
-import java.util.*;
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
-public class Pitches implements Iterable<Pitch> {
+public class Pitches {
 
     private static final int MAX_PITCH_ABLE_COUNT = 2;
     private static final int FIRST_INDEX = 0;
@@ -82,20 +83,5 @@ public class Pitches implements Iterable<Pitch> {
         return values.stream()
                 .map(Pitch::toString)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public Iterator<Pitch> iterator() {
-        return values.iterator();
-    }
-
-    @Override
-    public void forEach(Consumer<? super Pitch> action) {
-        Iterable.super.forEach(action);
-    }
-
-    @Override
-    public Spliterator<Pitch> spliterator() {
-        return Iterable.super.spliterator();
     }
 }
