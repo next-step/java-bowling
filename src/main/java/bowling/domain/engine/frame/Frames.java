@@ -1,4 +1,4 @@
-package bowling.domain.engine;
+package bowling.domain.engine.frame;
 
 import bowling.dto.FramesDto;
 import bowling.util.ListUtils;

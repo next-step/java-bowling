@@ -1,5 +1,8 @@
 package bowling.domain.engine;
 
+import bowling.domain.engine.frame.Frame;
+import bowling.domain.engine.frame.FrameCreator;
+import bowling.domain.engine.frame.Frames;
 import bowling.dto.FramesDto;
 
 public class Bowling {

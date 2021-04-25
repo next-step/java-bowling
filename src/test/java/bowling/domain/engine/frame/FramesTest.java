@@ -1,7 +1,8 @@
-package bowling.domain.engine;
+package bowling.domain.engine.frame;
 
 import bowling.domain.concrete.FinalFrame;
 import bowling.domain.concrete.NormalFrame;
+import bowling.domain.engine.PitchResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

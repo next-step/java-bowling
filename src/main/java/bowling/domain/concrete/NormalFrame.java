@@ -1,9 +1,9 @@
 package bowling.domain.concrete;
 
-import bowling.domain.engine.Frame;
 import bowling.domain.engine.Pins;
 import bowling.domain.engine.PitchResult;
 import bowling.domain.engine.Records;
+import bowling.domain.engine.frame.Frame;
 import bowling.dto.RecordsDto;
 
 public class NormalFrame implements Frame {

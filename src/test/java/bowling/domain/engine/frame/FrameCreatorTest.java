@@ -1,4 +1,4 @@
-package bowling.domain.engine;
+package bowling.domain.engine.frame;
 
 import bowling.domain.concrete.FinalFrame;
 import bowling.domain.concrete.NormalFrame;
