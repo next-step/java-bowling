@@ -14,7 +14,7 @@ public final class FinalFrame extends Frame {
 
     @Override
     public boolean isFinalFrame() {
-        return false;
+        return true;
     }
 
     @Override
