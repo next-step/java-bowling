@@ -43,7 +43,9 @@ public class Frames {
     }
 
     public FramesDto export() {
-        return frames.stream().map(Frame::export).collect(collectingAndThen(toList(), FramesDto::new));
+        return frames.stream()
+                     .map(Frame::export)
+                     .collect(collectingAndThen(toList(), FramesDto::new));
     }
 
 }
