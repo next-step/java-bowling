@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.NullPins;
 import bowling.domain.pin.Pins;
 
 import java.util.Objects;
@@ -10,8 +11,7 @@ public final class FrameScore {
     private final FrameStatus frameStatus;
 
     public FrameScore() {
-        // TODO: Null Object Pattern
-        this(null, FrameStatus.NONE);
+        this(new NullPins());
     }
 
     public FrameScore(Pins pins) {

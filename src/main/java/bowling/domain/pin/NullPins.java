@@ -2,7 +2,11 @@ package bowling.domain.pin;
 
 import bowling.domain.frame.FrameStatus;
 
+import java.util.Objects;
+
 public final class NullPins implements Pins {
+
+    private final FrameStatus frameStatus = FrameStatus.NONE;
 
     @Override
     public Pin firstPin() {
@@ -16,6 +20,19 @@ public final class NullPins implements Pins {
 
     @Override
     public FrameStatus frameStatus() {
-        return FrameStatus.NONE;
+        return frameStatus;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NullPins nullPins = (NullPins) o;
+        return frameStatus == nullPins.frameStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameStatus);
     }
 }
