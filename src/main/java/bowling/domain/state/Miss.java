@@ -2,11 +2,11 @@ package bowling.domain.state;
 
 import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
-import bowling.domain.exception.PinsCountException;
 import bowling.dto.StateDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Miss implements State{
     private static final String state = "Miss";
@@ -43,5 +43,19 @@ public class Miss implements State{
         pins.add(Integer.valueOf(firstPins.pins()));
         pins.add(Integer.valueOf(secondPins.pins()));
         return new StateDTO(state(),pins);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Miss)) return false;
+        Miss miss = (Miss) o;
+        return firstPins.equals(miss.firstPins) &&
+                secondPins.equals(miss.secondPins);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstPins, secondPins);
     }
 }

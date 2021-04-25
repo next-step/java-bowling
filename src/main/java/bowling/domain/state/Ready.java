@@ -4,6 +4,7 @@ import bowling.domain.Pins;
 import bowling.dto.StateDTO;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Ready implements State{
     private static final String state = "Ready";
@@ -35,5 +36,16 @@ public class Ready implements State{
     @Override
     public StateDTO exportStateDTO() {
         return new StateDTO(state(), new ArrayList<>());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Ready)) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(state);
     }
 }

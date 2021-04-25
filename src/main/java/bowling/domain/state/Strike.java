@@ -5,12 +5,13 @@ import bowling.dto.StateDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Strike implements State{
     private static final String state = "Strike";
     private Strike(){}
 
-    public static State create() {
+    public static Strike create() {
         return new Strike();
     }
 
@@ -34,5 +35,16 @@ public class Strike implements State{
         List<Integer> pins = new ArrayList<>();
         pins.add(Integer.valueOf(MAX_PINS));
         return new StateDTO(state(),pins);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Strike)) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(state);
     }
 }
