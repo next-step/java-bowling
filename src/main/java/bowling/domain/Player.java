@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.dto.PlayerDTO;
 
 public class Player {
     private final Name name;
@@ -26,5 +27,9 @@ public class Player {
 
     public Frame nthFrame(int round) {
         return frames.nthFrame(round - 1);
+    }
+
+    public PlayerDTO exportPlayerDTO(){
+        return new PlayerDTO(name.name(), frames.exportFramesDTO());
     }
 }
