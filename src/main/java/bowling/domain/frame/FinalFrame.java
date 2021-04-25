@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.exception.NoNextFrameException;
+
 public final class FinalFrame extends Frame {
 
     private FinalFrame(RoundNumber roundNumber, FrameScore frameScore) {
@@ -12,7 +14,7 @@ public final class FinalFrame extends Frame {
 
     @Override
     public Frame createNextFrame() {
-        return null;
+        throw new NoNextFrameException();
     }
 
     @Override
