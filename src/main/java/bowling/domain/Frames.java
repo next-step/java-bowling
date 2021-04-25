@@ -15,6 +15,11 @@ public class Frames {
         this(init());
     }
 
+    public Frames(List<Frame> frames) {
+        this.frames = frames;
+        this.currentIndex = FIRST_INDEX;
+    }
+
     private static List<Frame> init() {
         List<Frame> frames = IntStream.range(0, FINAL_FRAME_INDEX)
                 .mapToObj(NormalFrame::new)
@@ -23,11 +28,6 @@ public class Frames {
         frames.add(new FinalFrame());
 
         return frames;
-    }
-
-    public Frames(List<Frame> frames) {
-        this.frames = frames;
-        this.currentIndex = FIRST_INDEX;
     }
 
     public int currentIndex() {
