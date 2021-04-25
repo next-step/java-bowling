@@ -4,6 +4,9 @@ import bowling.domain.Frames;
 import bowling.domain.Participant;
 import bowling.repository.BowlingGameRepository;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 public class BowlingGameService {
 
     private final BowlingGameRepository repository;
@@ -17,11 +20,12 @@ public class BowlingGameService {
     }
 
     public void pitchBall(Participant participant, int pinDownCount) {
-        Frames frames = repository.findByParticipant(participant);
+        Frames frames = findFrames(participant);
         frames.pitch(pinDownCount);
     }
 
     public Frames findFrames(Participant participant) {
-        return repository.findByParticipant(participant);
+        Optional<Frames> frames = repository.findByParticipant(participant);
+        return frames.orElseThrow(() -> new NoSuchElementException("존재하지 않는 참가자입니다."));
     }
 }
