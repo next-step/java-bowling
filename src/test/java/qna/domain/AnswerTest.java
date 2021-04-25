@@ -43,11 +43,12 @@ public class AnswerTest {
     @DisplayName("삭제가 되었을 때 반환 값으로 삭제 내역을 기록한 객체를 반환하는지 테스트")
     @Test
     void 반환_삭제기록(){
-        // when
 
         // then
         assertAll(
+                () -> assertThat(A1.delete(UserTest.JAVAJIGI)).isNotNull(),
                 () -> assertThat(A1.delete(UserTest.JAVAJIGI)).isInstanceOf(DeleteHistory.class),
+                () -> assertThat(A2.delete(UserTest.SANJIGI)).isNotNull(),
                 () -> assertThat(A2.delete(UserTest.SANJIGI)).isInstanceOf(DeleteHistory.class)
         );
     }

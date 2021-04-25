@@ -6,6 +6,8 @@ import qna.UnAuthorizedException;
 
 import javax.persistence.*;
 
+import java.time.LocalDateTime;
+
 import static java.lang.Boolean.TRUE;
 
 @Entity
@@ -76,9 +78,10 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistory delete(User loginUser) throws CannotDeleteException {
         validateOwner(loginUser);
         setDeleted(TRUE);
+        return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 
     private void validateOwner(User loginUser) throws CannotDeleteException {
