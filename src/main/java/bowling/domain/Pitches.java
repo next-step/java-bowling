@@ -8,8 +8,8 @@ import java.util.function.Consumer;
 
 public class Pitches implements Iterable<Pitch> {
 
-    private static final int STRIKE_COUNT = 10;
     private static final int MAX_PITCH_ABLE_COUNT = 2;
+    private static final int FIRST_INDEX = 0;
 
     private final List<Pitch> values;
 
@@ -49,15 +49,27 @@ public class Pitches implements Iterable<Pitch> {
     }
 
     public boolean isStrike() {
-        return count() == 1 && pinDownCount() == STRIKE_COUNT;
+        return count() == 1 && first().isStrike();
     }
 
     public boolean isSpare() {
-        return count() > 1 && pinDownCount() == STRIKE_COUNT;
+        return isFull() && pinDownCount() == Pitch.STRIKE_COUNT;
+    }
+
+    public boolean isMiss() {
+        return isFull() && pinDownCount() < Pitch.STRIKE_COUNT;
+    }
+
+    private Pitch first() {
+        return values.get(FIRST_INDEX);
+    }
+
+    private boolean isFull() {
+        return count() == MAX_PITCH_ABLE_COUNT;
     }
 
     public int spare() {
-        return STRIKE_COUNT - pinDownCount();
+        return Pitch.STRIKE_COUNT - pinDownCount();
     }
 
     public boolean isFinished() {

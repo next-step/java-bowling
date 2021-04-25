@@ -2,6 +2,7 @@ package bowling.domain;
 
 public class Pitch {
 
+    public static final int STRIKE_COUNT = 10;
     private static final int MIN_DOWN_COUNT = 0;
     private static final int MAX_DOWN_COUNT = 10;
 
@@ -20,5 +21,9 @@ public class Pitch {
 
     public int value() {
         return this.value;
+    }
+
+    public boolean isStrike() {
+        return this.value == STRIKE_COUNT;
     }
 }
