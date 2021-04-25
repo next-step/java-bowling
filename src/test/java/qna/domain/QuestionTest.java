@@ -6,6 +6,7 @@ import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -22,4 +23,19 @@ public class QuestionTest {
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("질문을 삭제할 권한이 없습니다.");
     }
+
+    @DisplayName("삭제가 되었을 때 상태값이 true 로 변경되었는지 테스트")
+    @Test
+    void 변환_삭제상태() throws CannotDeleteException {
+        // when
+        Q1.delete(UserTest.JAVAJIGI);
+        Q2.delete(UserTest.SANJIGI);
+
+        // then
+        assertAll(
+                () -> assertThat(Q1.isDeleted()).isTrue(),
+                () -> assertThat(Q2.isDeleted()).isTrue()
+        );
+    }
+
 }
