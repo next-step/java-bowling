@@ -24,9 +24,10 @@
 * BowlingGameRepository : 참가자별 볼링정보를 조회하고 저장하기 위한 리포지토리 클래스
 ### [Domain Object]
 * BowlingGame : Frame 정보를 List 형태로 갖는 일급컬렉션 도메인 클래스
-* Frame : 볼링 한 회차 정보를 표현하는 도메인 인터페이스
+* Frame : 볼링 한 회차 정보를 표현하는 도메인 추상 클래스
 * NormalFrame : 최종회차를 제외한 나머지 회차를 표현하는 도메인 클래스
 * FinalFrame : 마지막 회차를 표현하기 위한 도메인 클래스
-* PinDownCount : 핀 처리 횟수를 표현하기 위한 도메인 클래스
+* Pitches : 투구처리의 집합을 표현하는 일급컬렉션 도메인 클래스 
+* Pitch : 투구 한번을 표현하기 위한 도메인 클래스
 ### [Infra]
 * BowlingGameDatabase : 볼링게임 진행내역을 저장하기 위한 데이터베이스

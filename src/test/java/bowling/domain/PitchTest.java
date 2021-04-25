@@ -8,16 +8,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-class PinDownCountTest {
+class PitchTest {
 
     @Test
     @DisplayName("핀 처리 횟수 정상")
     void create() {
         // given when
-        PinDownCount pinDownCount = new PinDownCount(3);
+        Pitch pitch = new Pitch(3);
 
         // then
-        assertThat(3).isEqualTo(pinDownCount.value());
+        assertThat(3).isEqualTo(pitch.value());
     }
 
     @ParameterizedTest
@@ -26,7 +26,7 @@ class PinDownCountTest {
     void create_overRange(int param) {
         // given when then
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new PinDownCount(param))
+                .isThrownBy(() -> new Pitch(param))
                 .withMessageMatching("핀 처리 갯수는 0 이상 10 이하의 수 여야 합니다.");
     }
 }

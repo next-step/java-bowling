@@ -1,13 +1,13 @@
 package bowling.domain;
 
-public class PinDownCount {
+public class Pitch {
 
     private static final int MIN_DOWN_COUNT = 0;
     private static final int MAX_DOWN_COUNT = 10;
 
     private final int value;
 
-    public PinDownCount(int value) {
+    public Pitch(int value) {
         validate(value);
         this.value = value;
     }
