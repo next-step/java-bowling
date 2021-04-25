@@ -1,12 +1,18 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
 
+import static java.lang.Boolean.TRUE;
+
 @Entity
 public class Answer extends AbstractEntity {
+
+    private static final boolean DELETED = TRUE;
+
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -18,9 +24,10 @@ public class Answer extends AbstractEntity {
     @Lob
     private String contents;
 
+    @Column
     private boolean deleted = false;
 
-    public Answer() {
+    protected Answer() {
     }
 
     public Answer(User writer, Question question, String contents) {
@@ -43,11 +50,6 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
@@ -66,6 +68,18 @@ public class Answer extends AbstractEntity {
 
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    public DeleteHistory delete(User loginUser) {
+        validateOwner(loginUser);
+        this.deleted = DELETED;
+        return DeleteHistory.ofAnswer(this.getId(), loginUser);
+    }
+
+    private void validateOwner(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("답변을 삭제할 권한이 없습니다.");
+        }
     }
 
     @Override
