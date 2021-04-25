@@ -1,13 +1,25 @@
 package bowling.domain.frame;
 
+import bowling.exception.InvalidRoundNumberException;
+
 import java.util.Objects;
 
 public final class RoundNumber {
 
+    private static final int MIN = 1;
+    private static final int MAX = 10;
+
     private final int roundNumber;
 
     public RoundNumber(int roundNumber) {
+        validateRoundNumber(roundNumber);
         this.roundNumber = roundNumber;
+    }
+
+    private void validateRoundNumber(int roundNumber) {
+        if (roundNumber < MIN || roundNumber > MAX) {
+            throw new InvalidRoundNumberException(roundNumber);
+        }
     }
 
     @Override
