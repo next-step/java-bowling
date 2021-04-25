@@ -32,14 +32,4 @@ public final class NormalFrame extends Frame {
     public void knockDownPin(Pin pin) {
 
     }
-
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 }
