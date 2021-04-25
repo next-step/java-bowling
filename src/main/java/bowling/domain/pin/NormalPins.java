@@ -1,13 +1,10 @@
 package bowling.domain.pin;
 
 import bowling.domain.frame.FrameStatus;
-import bowling.exception.TooManyPinCountException;
 
 import java.util.Objects;
 
 public final class NormalPins implements Pins {
-
-    public static final int MAX_PIN_COUNT = 10;
 
     private final Pin firstPin;
     private final Pin secondPin;
@@ -19,9 +16,7 @@ public final class NormalPins implements Pins {
     }
 
     private void validatePinCount(Pin firstPin, Pin secondPin) {
-        if (firstPin.pinCount() + secondPin.pinCount() > MAX_PIN_COUNT) {
-            throw new TooManyPinCountException();
-        }
+        firstPin.sum(secondPin);
     }
 
     @Override

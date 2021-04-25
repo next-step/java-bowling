@@ -1,7 +1,7 @@
 package bowling.domain.pin;
 
 import bowling.domain.frame.FrameStatus;
-import bowling.exception.TooManyPinCountException;
+import bowling.exception.InvalidPinCountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,8 +41,8 @@ class NormalPinsTest {
         // when
         // then
         assertThatThrownBy(() -> new NormalPins(firstPin, secondPin))
-                .isInstanceOf(TooManyPinCountException.class)
-                .hasMessage(TooManyPinCountException.TOO_MANY_PIN_COUNT);
+                .isInstanceOf(InvalidPinCountException.class)
+                .hasMessage(InvalidPinCountException.INVALID_PIN_COUNT);
     }
 
     @ParameterizedTest
