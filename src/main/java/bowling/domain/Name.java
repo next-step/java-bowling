@@ -18,24 +18,14 @@ public class Name {
     }
 
     private void validate(String name) {
-        checkNullOrEmpty(name);
-        checkAlphabet(name);
-        checkLength(name);
-    }
-
-    private void checkNullOrEmpty(String input) {
-        if (input == null || input.trim().isEmpty()) {
+        if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException(CHECK_NULL_OR_EMPTY);
         }
-    }
 
-    private void checkAlphabet(String name) {
         if (!Pattern.matches(ALPHABET_PATTERN, name)) {
             throw new IllegalArgumentException(CHECK_ALPHABET);
         }
-    }
 
-    private void checkLength(String name) {
         if (name.length() != NAME_LENGTH_STANDARD) {
             throw new IllegalArgumentException(CHECK_NAME_LENGTH);
         }
