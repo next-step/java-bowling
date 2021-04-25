@@ -4,5 +4,6 @@ public enum FrameStatus {
     STRIKE,
     SPARE,
     MISS,
-    GUTTER
+    GUTTER,
+    NONE;
 }
