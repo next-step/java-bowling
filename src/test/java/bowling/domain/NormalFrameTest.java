@@ -15,7 +15,7 @@ class NormalFrameTest {
         NormalFrame startFrame = NormalFrame.first();
 
         // when then
-        assertThat(1).isEqualTo(startFrame.getNumber());
+        assertThat(1).isEqualTo(startFrame.number());
     }
 
     @Test
@@ -116,6 +116,85 @@ class NormalFrameTest {
         assertThatIllegalStateException()
                 .isThrownBy(() -> startFrame.pitch(new Pitch(8)))
                 .withMessageMatching("종료된 프레임입니다.");
+    }
+
+    @Test
+    @DisplayName("다음 프레임 생성")
+    void next() {
+        // given
+        NormalFrame startFrame = NormalFrame.first();
+
+        // when
+        startFrame.pitch(new Pitch(5));
+        startFrame.pitch(new Pitch(3));
+        Frame nextFrame = startFrame.next();
+
+        // then
+        assertThat(2).isEqualTo(nextFrame.number());
+        assertThat(startFrame).isEqualTo(nextFrame.before());
+        assertThat(1).isEqualTo(nextFrame.before().number());
+    }
+
+    @Test
+    @DisplayName("다음 프레임 두 번 조회 시, 생성된 기존 프레임 반환")
+    void next_createdFrame() {
+        // given
+        NormalFrame startFrame = NormalFrame.first();
+
+        // when
+        startFrame.pitch(new Pitch(5));
+        startFrame.pitch(new Pitch(3));
+        Frame nextFrame = startFrame.next();
+        Frame nextFrame2 = startFrame.next();
+
+        // then
+        assertThat(nextFrame).isEqualTo(nextFrame2);
+    }
+
+    @Test
+    @DisplayName("프레임이 종료되지 않은 경우, 다음 프레임을 생성하거나 조회할 수 없음")
+    void next_frameIsNotFinished() {
+        // given
+        NormalFrame frameWithPitch = NormalFrame.first();
+        NormalFrame frameWithoutPitch = NormalFrame.first();
+
+        // when
+        frameWithPitch.pitch(new Pitch(5));
+
+        // then
+        assertThatIllegalStateException()
+                .isThrownBy(frameWithPitch::next)
+                .withMessageMatching("종료되지 않은 프레임입니다. 다음 프레임을 시작할 수 없습니다.");
+        assertThatIllegalStateException()
+                .isThrownBy(frameWithoutPitch::next)
+                .withMessageMatching("종료되지 않은 프레임입니다. 다음 프레임을 시작할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("이전 프레임 조회")
+    void before() {
+        // given
+        NormalFrame first = NormalFrame.first();
+
+        // when
+        first.pitch(new Pitch(10));
+        Frame next = first.next();
+        Frame before = next.before();
+
+        // then
+        assertThat(first).isEqualTo(before);
+    }
+
+    @Test
+    @DisplayName("첫 번째 프레임은 이전 프레임을 가질 수 없음")
+    void before_firstFrame() {
+        // given
+        NormalFrame first = NormalFrame.first();
+
+        // when then
+        assertThatIllegalStateException()
+                .isThrownBy(first::before)
+                .withMessageMatching("이전 프레임이 존재하지 않습니다.");
     }
 
 }

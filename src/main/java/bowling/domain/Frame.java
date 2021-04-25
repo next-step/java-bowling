@@ -2,16 +2,37 @@ package bowling.domain;
 
 abstract class Frame {
 
-    protected final int number;
-    protected final Pitches pitches;
+    private final int number;
+    private final Pitches pitches;
+    private Frame before;
+
+    protected Frame(int number, Frame before) {
+        this(number, new Pitches());
+        this.before = before;
+    }
 
     protected Frame(int number, Pitches pitches) {
         this.number = number;
         this.pitches = pitches;
     }
 
-    public int getNumber() {
+    public int number() {
         return number;
+    }
+
+    public Pitches pitches() {
+        return pitches;
+    }
+
+    public Frame before() {
+        if (!hasBefore()) {
+            throw new IllegalStateException("이전 프레임이 존재하지 않습니다.");
+        }
+        return this.before;
+    }
+
+    private boolean hasBefore() {
+        return this.before != null;
     }
 
     abstract public void pitch(Pitch pitch);
