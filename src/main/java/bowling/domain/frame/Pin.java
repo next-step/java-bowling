@@ -4,10 +4,12 @@ import java.util.Objects;
 
 public final class Pin {
 
+    private static final int DEFAULT_PIN_COUNT = 10;
+
     private final int pin;
 
     public Pin() {
-        this(0);
+        this(DEFAULT_PIN_COUNT);
     }
 
     public Pin(final int pin) {
