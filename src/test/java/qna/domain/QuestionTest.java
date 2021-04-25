@@ -72,28 +72,6 @@ public class QuestionTest {
         }).isInstanceOf(CannotDeleteException.class);
     }
 
-    @Test
-    public void deleteAnswers_질문자가_같은_경우() throws Exception {
-        // given
-        List<DeleteHistory> expectDeleteAnswers = new ArrayList<>();
-        expectDeleteAnswers.add(new DeleteHistory(AnswerTest.A1, UserTest.JAVAJIGI));
-
-        // when
-        List<DeleteHistory> resultDeleteAnswers = Q1.deleteAnswers(UserTest.JAVAJIGI);
-        // then
-        assertThat(resultDeleteAnswers).isEqualTo(expectDeleteAnswers);
-    }
-
-    @Test
-    public void deleteAnswers_질문이_없는_경우() throws Exception {
-        // given
-
-        // when
-        List<DeleteHistory> resultDeleteAnswers = Q3.deleteAnswers(UserTest.JAVAJIGI);
-        // then
-        assertThat(resultDeleteAnswers).isEmpty();
-    }
-
 
     @Test
     public void deleteQuestionAndAnswers_질문자_답변자_동일함() throws Exception {

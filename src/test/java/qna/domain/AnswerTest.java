@@ -4,6 +4,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.util.Arrays;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswerTest {
@@ -54,4 +57,32 @@ public class AnswerTest {
             A2.deleteAnswer(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
+
+
+    @Test
+    public void deleteAnswers_질문자가_같은_경우() throws Exception {
+        // given
+        DeleteHistories expectDeleteAnswers = new DeleteHistories();
+        expectDeleteAnswers.add(new DeleteHistory(AnswerTest.A1, UserTest.JAVAJIGI));
+        expectDeleteAnswers.add(new DeleteHistory(AnswerTest.A1, UserTest.JAVAJIGI));
+        Answers answers = new Answers(Arrays.asList(A1, A1));
+
+        // when
+        DeleteHistories resultDeleteAnswers = answers.deleteAnswers(UserTest.JAVAJIGI);
+        // then
+        assertThat(resultDeleteAnswers).isEqualTo(expectDeleteAnswers);
+    }
+
+    @Test
+    public void deleteAnswers_질문이_없는_경우() throws Exception {
+        // given
+        Answers answers = new Answers();
+
+        // when
+        DeleteHistories resultDeleteAnswers = answers.deleteAnswers(UserTest.JAVAJIGI);
+
+        // then
+        assertThat(resultDeleteAnswers.isEmpty()).isTrue();
+    }
+
 }

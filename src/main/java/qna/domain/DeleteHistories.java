@@ -27,6 +27,10 @@ public class DeleteHistories {
         this.deleteHistories.addAll(deleteHistories.deleteHistories());
     }
 
+    public boolean isEmpty() {
+        return this.deleteHistories.isEmpty();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
