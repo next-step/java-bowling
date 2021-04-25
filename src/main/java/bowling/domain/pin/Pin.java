@@ -32,7 +32,7 @@ public final class Pin {
     }
 
     public Pin sum(Pin other) {
-        return null;
+        return new Pin(pin + other.pin);
     }
 
     @Override
