@@ -1,6 +1,8 @@
 package qna.domain;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -90,11 +92,23 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void delete(User loginUser)  {
+    public List<DeleteHistory> delete(User loginUser) {
         if (!isOwner(loginUser)) {
             throw new IllegalArgumentException("잘못된 loginUser");
         }
-        answers.delete(loginUser);
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(deleteQuestion());
+        deleteHistories.addAll(deleteAnswers(loginUser));
+        return deleteHistories;
+    }
+
+    private List<DeleteHistory> deleteAnswers(User loginUser) {
+        return answers.delete(loginUser);
+    }
+
+    private DeleteHistory deleteQuestion() {
         setDeleted(true);
+        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
     }
 }

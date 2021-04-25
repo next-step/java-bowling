@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,14 +25,17 @@ public class Answers {
         answers.add(answer);
     }
 
-    public void delete(User loginUser) {
+    public List<DeleteHistory> delete(User loginUser) {
         if (!isDeletable(loginUser)) {
             throw new IllegalArgumentException("잘못된 loginUser");
         }
 
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
             answer.setDeleted(true);
+            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
+        return deleteHistories;
     }
 
     public List<Answer> answers() {
