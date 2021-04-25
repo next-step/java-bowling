@@ -1,5 +1,8 @@
 package bowling.domain.frame;
 
+import bowling.dto.FrameDTO;
+import bowling.dto.FramesDTO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,5 +43,13 @@ public class Frames {
 
     public void bowl(int pitch, int index) {
         nthFrame(index).bowl(pitch);
+    }
+
+    public FramesDTO exportFramesDTO() {
+        List<FrameDTO> frames = new ArrayList<>();
+        for (Frame frame : this.frames) {
+            frames.add(frame.exportFrameDTO());
+        }
+        return new FramesDTO(frames);
     }
 }
