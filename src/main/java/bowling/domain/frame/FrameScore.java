@@ -8,7 +8,7 @@ public final class FrameScore {
     private final FrameStatus frameStatus;
 
     public FrameScore() {
-        this(null, null);
+        this(new Pin(), FrameStatus.NONE);
     }
 
     public FrameScore(Pin pin, FrameStatus frameStatus) {
