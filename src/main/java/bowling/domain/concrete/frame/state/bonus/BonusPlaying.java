@@ -34,6 +34,6 @@ public class BonusPlaying implements BonusState {
 
     @Override
     public String export() {
-        return rollResult.export();
+        return beforeState.export() + "|" + rollResult.export();
     }
 }

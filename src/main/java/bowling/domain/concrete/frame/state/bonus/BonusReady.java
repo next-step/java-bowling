@@ -39,6 +39,6 @@ public class BonusReady implements BonusState {
 
     @Override
     public String export() {
-        return "";
+        return beforeState.export();
     }
 }
