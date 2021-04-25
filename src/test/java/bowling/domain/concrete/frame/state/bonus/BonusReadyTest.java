@@ -20,7 +20,7 @@ class BonusReadyTest {
     @BeforeEach
     void setUp() {
         finishedRegularState = new Strike(Roll.result(10));
-        bonusState = new BonusReady(bonusState, 1);
+        bonusState = new BonusReady(finishedRegularState, 1);
     }
 
     @Test
@@ -50,9 +50,9 @@ class BonusReadyTest {
     }
 
     @Test
-    @DisplayName("BonusReady 상태에서는 빈 문자열을 내보낸다.")
+    @DisplayName("BonusReady 상태에서는 이전 정규 프레임 상태를 내보낸다.")
     void export() {
-        assertThat(bonusState.export()).isEmpty();
+        assertThat(bonusState.export()).isEqualTo("X");
     }
 
 }

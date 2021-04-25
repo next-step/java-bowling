@@ -54,15 +54,15 @@ class BonusPlayingTest {
     }
 
     @Test
-    @DisplayName("BonusPlaying 상태에서는 첫 번째 투구의 결과를 내보낸다.")
+    @DisplayName("BonusPlaying 상태에서는 정규 프레임 상태와 첫 번째 투구의 결과 합쳐 내보낸다.")
     void export() {
         State gutter = new BonusReady(finishedRegularState, 2).transit(Roll.result(0));
         State normal = new BonusReady(finishedRegularState, 2).transit(Roll.result(5));
 
         assertAll(
-            () -> assertThat(bonusState.export()).isEqualTo("X"),
-            () -> assertThat(gutter.export()).isEqualTo("-"),
-            () -> assertThat(normal.export()).isEqualTo("5")
+            () -> assertThat(bonusState.export()).isEqualTo("X|X"),
+            () -> assertThat(gutter.export()).isEqualTo("X|-"),
+            () -> assertThat(normal.export()).isEqualTo("X|5")
         );
     }
 
