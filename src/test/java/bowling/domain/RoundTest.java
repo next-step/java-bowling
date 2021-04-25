@@ -42,5 +42,4 @@ public class RoundTest {
         Round round = Round.finalRound();
         assertThat(round.isFinalRound()).isTrue();
     }
-
 }
