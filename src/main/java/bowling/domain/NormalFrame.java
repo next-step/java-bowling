@@ -68,8 +68,4 @@ public class NormalFrame extends Frame {
         return null;
     }
 
-    @Override
-    int spare() {
-        return pitches().spare();
-    }
 }

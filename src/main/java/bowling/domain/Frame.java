@@ -38,5 +38,4 @@ abstract class Frame {
     abstract public void pitch(Pitch pitch);
     abstract public boolean isFinished();
     abstract public String printScoreBoard();
-    abstract int spare();
 }
