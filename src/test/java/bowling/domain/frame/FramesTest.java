@@ -14,13 +14,13 @@ class FramesTest {
     @DisplayName("Frames를 생성한다.")
     void create() {
         // given
-        final Frames frames = new Frames();
+        final Frames frames = Frames.initialize();
         final List<Frame> frameList = frames.value();
 
         // when
         // then
         assertAll(
-                () -> assertThat(frames).isEqualTo(new Frames()),
+                () -> assertThat(frames).isEqualTo(Frames.initialize()),
                 () -> assertThat(frameList.get(0)).isEqualTo(NormalFrame.createFirstFrame()),
                 () -> assertThat(frameList.get(frameList.size() - 1)).isEqualTo(FinalFrame.from(new FrameScore()))
         );
