@@ -1,10 +1,10 @@
 package bowling.domain.engine.frame;
 
+import bowling.domain.engine.roll.RollResult;
 import bowling.dto.FramesDto;
-import bowling.util.ListUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -13,33 +13,33 @@ public class Frames {
 
     private static final int TOTAL_FRAMES = 10;
 
-    private final List<Frame> frames = new ArrayList<>();
+    private final FrameCreator frameCreator = new FrameCreator();
+    private final Deque<Frame> frames = new ArrayDeque<>();
 
-    private Frames() {}
-
-    public static Frames initialize(Frame firstFrame) {
-        Frames frames = new Frames();
-        frames.add(firstFrame);
-
-        return frames;
+    public Frames() {
+        frames.add(frameCreator.create());
     }
 
-    public void add(Frame frame) {
-        frames.add(frame);
-    }
+    public void roll(RollResult rollResult) {
+        Frame currentFrame = frames.getLast();
+        if (frames.getLast().isEnded()) {
+            currentFrame = frameCreator.create();
+            frames.add(currentFrame);
+        }
 
-    public Frame getLast() {
-        return ListUtils.getLastElement(frames);
+        currentFrame.roll(rollResult);
     }
 
     public int getNextFrameNumber() {
-        int nextFrameNumber = frames.size() + (getLast().isEnded() ? 1 : 0);
+        if (frames.getLast().isEnded()) {
+            return frames.size() + 1;
+        }
 
-        return nextFrameNumber > TOTAL_FRAMES ? -1 : nextFrameNumber;
+        return frames.size();
     }
 
     public boolean isAllFrameEnded() {
-        return frames.size() == TOTAL_FRAMES && getLast().isEnded();
+        return frames.size() == TOTAL_FRAMES && frames.getLast().isEnded();
     }
 
     public FramesDto export() {

@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.dto.PlayerDto;
-import bowling.dto.RecordsDto;
 
 import java.util.List;
 
@@ -37,11 +36,11 @@ public class ConsoleResultView implements ResultView {
         StringBuilder stringBuilder = new StringBuilder(DELIMITER);
         stringBuilder.append(alignMiddle(playerDto.getPlayerName())).append(DELIMITER);
 
-        List<RecordsDto> frameRecords = playerDto.getFramesDto().getRecords();
+        List<String> frameRecords = playerDto.getFramesDto().getFrames();
 
-        frameRecords.forEach(recordsDto -> {
-            String record = alignMiddle(String.join(DELIMITER, recordsDto.getRecords()));
-            stringBuilder.append(record).append(DELIMITER);
+        frameRecords.forEach(frameRecord -> {
+            String centeredRecord = alignMiddle(String.join(DELIMITER, frameRecord));
+            stringBuilder.append(centeredRecord).append(DELIMITER);
         });
 
         for (int i = 0; i < TOTAL_FRAMES - frameRecords.size(); i++){

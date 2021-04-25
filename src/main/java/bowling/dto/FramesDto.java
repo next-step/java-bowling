@@ -4,13 +4,13 @@ import java.util.List;
 
 public class FramesDto {
 
-    private final List<RecordsDto> recordsDtoList;
+    private final List<String> frames;
 
-    public FramesDto(List<RecordsDto> recordsDtoList) {
-        this.recordsDtoList = recordsDtoList;
+    public FramesDto(List<String> frames) {
+        this.frames = frames;
     }
 
-    public List<RecordsDto> getRecords() {
-        return recordsDtoList;
+    public List<String> getFrames() {
+        return frames;
     }
 }

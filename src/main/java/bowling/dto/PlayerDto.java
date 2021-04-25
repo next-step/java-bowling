@@ -1,7 +1,7 @@
 package bowling.dto;
 
 import bowling.domain.PlayerName;
-import bowling.domain.engine.Bowling;
+import bowling.domain.engine.frame.Frames;
 
 public class PlayerDto {
 
@@ -13,8 +13,8 @@ public class PlayerDto {
         this.framesDto = framesDto;
     }
 
-    public static PlayerDto of(PlayerName playerName, Bowling bowling) {
-        return new PlayerDto(playerName.export(), bowling.exportFrames());
+    public static PlayerDto of(PlayerName playerName, Frames frames) {
+        return new PlayerDto(playerName.export(), frames.export());
     }
 
     public String getPlayerName() {
