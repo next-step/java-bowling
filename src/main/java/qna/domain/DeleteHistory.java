@@ -1,5 +1,7 @@
 package qna.domain;
 
+import qna.dto.DeleteHistoryDTO;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -24,11 +26,11 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
+    public DeleteHistory(ContentType contentType, DeleteHistoryDTO deleteHistoryDTO) {
         this.contentType = contentType;
-        this.contentId = contentId;
-        this.deletedBy = deletedBy;
-        this.createDate = createDate;
+        this.contentId = deleteHistoryDTO.getQuestionId();
+        this.deletedBy = deleteHistoryDTO.getWriter();
+        this.createDate = deleteHistoryDTO.getDateTime();
     }
 
     @Override
