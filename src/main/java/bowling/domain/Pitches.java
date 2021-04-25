@@ -18,7 +18,7 @@ public class Pitches implements Iterable<Pitch> {
         this.values = values;
     }
 
-    public int sum() {
+    public int pinDownCount() {
         return values.stream()
                 .mapToInt(Pitch::value)
                 .sum();
