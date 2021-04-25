@@ -1,6 +1,7 @@
 package bowling.state;
 
 import bowling.domain.exception.CannotBowlException;
+import bowling.domain.state.State;
 import bowling.domain.state.Strike;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class StrikeTest {
-    private Strike strike;
+    private State strike;
 
     @BeforeEach
     void setUp() {

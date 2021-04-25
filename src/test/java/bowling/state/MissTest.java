@@ -3,6 +3,7 @@ package bowling.state;
 import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
 import bowling.domain.state.Miss;
+import bowling.domain.state.State;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class MissTest {
-    private Miss miss;
+    private State miss;
 
     @BeforeEach
     void setUp() {

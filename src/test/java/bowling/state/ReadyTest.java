@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ReadyTest {
-    private Ready ready;
+    private State ready;
 
     @BeforeEach
     void setUp() {

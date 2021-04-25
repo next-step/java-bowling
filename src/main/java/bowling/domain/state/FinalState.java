@@ -1,24 +1,27 @@
-package bowling.domain.frame;
+package bowling.domain.state;
 
 import bowling.domain.exception.CannotBowlException;
-import bowling.domain.exception.NoRemainingFrameException;
-import bowling.domain.state.*;
+import bowling.dto.StateDTO;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
-public class FinalFrame implements Frame{
+public class FinalState implements State{
+    private static final String state = "FinalState";
     private static final String STRIKE = "Strike";
     private static final String Spare = "Spare";
     private static final String Miss = "Miss";
+    private LinkedList<State> states;
     private int pitchCount = 0;
-    private LinkedList<State> states = new LinkedList<>();
 
-    private FinalFrame() {
+    private FinalState() {
+        states = new LinkedList<>();
         states.add(Ready.create());
     }
 
-    public static FinalFrame of(){
-        return new FinalFrame();
+    public static FinalState create() {
+        return new FinalState();
     }
 
     private boolean threePitchFinished(State state) {
@@ -36,11 +39,22 @@ public class FinalFrame implements Frame{
     }
 
     @Override
-    public Frame bowl(int pins) {
+    public boolean isFinished() {
+        State state = states.getFirst();
+        return threePitchFinished(state) || state.state().equals(Miss);
+    }
+
+    @Override
+    public String state() {
+        return state;
+    }
+
+    @Override
+    public State bowl(int pitch) {
         if(isFinished()) {
             throw new CannotBowlException();
         }
-        State state = states.getLast().bowl(pins);
+        State state = states.getLast().bowl(pitch);
         states.set(states.size()-1,state);
         addBonusState(state);
         pitchCount++;
@@ -48,13 +62,11 @@ public class FinalFrame implements Frame{
     }
 
     @Override
-    public boolean isFinished() {
-        State state = states.getFirst();
-        return threePitchFinished(state) || state.state().equals(Miss);
-    }
-
-    @Override
-    public Frame getNext() {
-        throw new NoRemainingFrameException();
+    public StateDTO exportStateDTO() {
+        List<Integer> pins = new ArrayList<>();
+        for(State state : states) {
+            pins.addAll(state.exportStateDTO().pins());
+        }
+        return new StateDTO(state(),pins);
     }
 }
