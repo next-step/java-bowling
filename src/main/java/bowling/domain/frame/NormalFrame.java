@@ -7,7 +7,7 @@ public final class NormalFrame extends Frame {
     }
 
     public static Frame createFirstFrame() {
-        return null;
+        return new NormalFrame(RoundNumber.firstRoundNumber(), new FrameScore());
     }
 
     @Override
