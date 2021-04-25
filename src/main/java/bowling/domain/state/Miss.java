@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
+import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
+import bowling.domain.exception.PinsCountException;
 import bowling.dto.StateDTO;
 
 import java.util.ArrayList;
@@ -8,15 +10,15 @@ import java.util.List;
 
 public class Miss implements State{
     private static final String state = "Miss";
-    private final int firstPins;
-    private final int secondPins;
+    private final Pins firstPins;
+    private final Pins secondPins;
 
-    private Miss(int firstPins, int secondPins) {
+    private Miss(Pins firstPins, Pins secondPins) {
         this.firstPins = firstPins;
         this.secondPins = secondPins;
     }
 
-    public static Miss of(int firstPins, int secondPins) {
+    public static Miss of(Pins firstPins, Pins secondPins) {
         return new Miss(firstPins, secondPins);
     }
 
@@ -31,15 +33,15 @@ public class Miss implements State{
     }
 
     @Override
-    public State bowl(int pins) {
+    public State bowl(int pitch) {
         throw new CannotBowlException();
     }
 
     @Override
     public StateDTO exportStateDTO() {
         List<Integer> pins = new ArrayList<>();
-        pins.add(Integer.valueOf(this.firstPins));
-        pins.add(Integer.valueOf(this.secondPins));
+        pins.add(Integer.valueOf(firstPins.pins()));
+        pins.add(Integer.valueOf(secondPins.pins()));
         return new StateDTO(state(),pins);
     }
 }

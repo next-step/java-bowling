@@ -25,7 +25,7 @@ public class Strike implements State{
     }
 
     @Override
-    public State bowl(int pins) {
+    public State bowl(int pitch) {
         throw new CannotBowlException();
     }
 
