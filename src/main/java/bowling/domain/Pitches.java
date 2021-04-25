@@ -1,15 +1,14 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class Pitches implements Iterable<Pitch> {
 
     private static final int MAX_PITCH_ABLE_COUNT = 2;
     private static final int FIRST_INDEX = 0;
+    private static final String SPARE_MARK = "/";
 
     private final List<Pitch> values;
 
@@ -74,6 +73,15 @@ public class Pitches implements Iterable<Pitch> {
 
     public boolean isFinished() {
         return isStrike() || count() == MAX_PITCH_ABLE_COUNT;
+    }
+
+    public List<String> getScoreBoards() {
+        if (isSpare()) {
+            return Arrays.asList(first().toString(), SPARE_MARK);
+        }
+        return values.stream()
+                .map(Pitch::toString)
+                .collect(Collectors.toList());
     }
 
     @Override

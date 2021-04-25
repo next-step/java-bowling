@@ -3,8 +3,10 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 class PitchesTest {
 
@@ -143,5 +145,78 @@ class PitchesTest {
         assertThatIllegalStateException()
                 .isThrownBy(() -> pitches.add(new Pitch(8)))
                 .withMessageMatching("종료된 프레임입니다.");
+    }
+
+    @Test
+    @DisplayName("스트라이크 점수판 출력")
+    void scoreBoards_strike() {
+        // given
+        Pitches pitches = new Pitches();
+
+        // when
+        pitches.add(new Pitch(10));
+
+        // then
+        assertThat(1).isEqualTo(pitches.getScoreBoards().size());
+        assertThat(Collections.singletonList("X")).isEqualTo(pitches.getScoreBoards());
+    }
+
+    @Test
+    @DisplayName("스페어 점수판 출력")
+    void scoreBoards_spare() {
+        // given
+        Pitches pitches = new Pitches();
+
+        // when
+        pitches.add(new Pitch(7));
+        pitches.add(new Pitch(3));
+
+        // then
+        assertThat(2).isEqualTo(pitches.getScoreBoards().size());
+        assertThat(Arrays.asList("7", "/")).isEqualTo(pitches.getScoreBoards());
+    }
+
+    @Test
+    @DisplayName("미스 점수판 출력")
+    void scoreBoards_miss() {
+        // given
+        Pitches pitches = new Pitches();
+
+        // when
+        pitches.add(new Pitch(7));
+        pitches.add(new Pitch(2));
+
+        // then
+        assertThat(2).isEqualTo(pitches.getScoreBoards().size());
+        assertThat(Arrays.asList("7", "2")).isEqualTo(pitches.getScoreBoards());
+    }
+
+    @Test
+    @DisplayName("거터 점수판 출력")
+    void scoreBoards_gutter() {
+        // given
+        Pitches pitches = new Pitches();
+        Pitches pitches2 = new Pitches();
+        Pitches pitches3 = new Pitches();
+
+        // when
+        pitches.add(new Pitch(7));
+        pitches.add(new Pitch(0));
+
+        pitches2.add(new Pitch(0));
+        pitches2.add(new Pitch(7));
+
+        pitches3.add(new Pitch(0));
+        pitches3.add(new Pitch(0));
+
+        // then
+        assertThat(2).isEqualTo(pitches.getScoreBoards().size());
+        assertThat(Arrays.asList("7", "-")).isEqualTo(pitches.getScoreBoards());
+
+        assertThat(2).isEqualTo(pitches2.getScoreBoards().size());
+        assertThat(Arrays.asList("-", "7")).isEqualTo(pitches2.getScoreBoards());
+
+        assertThat(2).isEqualTo(pitches3.getScoreBoards().size());
+        assertThat(Arrays.asList("-", "-")).isEqualTo(pitches3.getScoreBoards());
     }
 }
