@@ -7,6 +7,10 @@ public final class FrameScore {
     private final Pin pin;
     private final FrameStatus frameStatus;
 
+    public FrameScore() {
+        this(null, null);
+    }
+
     public FrameScore(Pin pin, FrameStatus frameStatus) {
         this.pin = pin;
         this.frameStatus = frameStatus;
