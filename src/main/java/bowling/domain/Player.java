@@ -4,11 +4,11 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
 public class Player {
-    private final String name;
+    private final Name name;
     private final Frames frames;
 
     public Player(String name) {
-        this.name = name;
+        this.name = new Name(name);
         this.frames = Frames.init();
     }
 
@@ -17,7 +17,7 @@ public class Player {
     }
 
     public String name() {
-        return name;
+        return name.name();
     }
 
     public boolean isNthFrameFinished(int round) {
