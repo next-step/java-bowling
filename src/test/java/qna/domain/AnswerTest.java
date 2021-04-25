@@ -20,7 +20,7 @@ public class AnswerTest {
 
     @Test
     @DisplayName("답변 작성자가 본인이면, 삭제하고 히스토리를 남긴다.")
-    void deleteAnswerByWriterTest() {
+    void deleteAnswerByWriterTest() throws CannotDeleteException {
         assertThat(A1.delete(UserTest.JAVAJIGI)).isInstanceOf(DeleteHistory.class);
     }
 }
