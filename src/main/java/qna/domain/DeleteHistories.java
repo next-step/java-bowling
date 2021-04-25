@@ -14,4 +14,8 @@ public class DeleteHistories {
     public DeleteHistories(List<DeleteHistory> deleteHistories) {
         this.deleteHistories = deleteHistories;
     }
+
+    public void add(DeleteHistory deleteHistory) {
+        deleteHistories.add(deleteHistory);
+    }
 }

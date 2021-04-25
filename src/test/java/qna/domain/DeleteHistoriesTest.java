@@ -32,4 +32,19 @@ class DeleteHistoriesTest {
         // then
         assertThat(deleteHistories).isNotNull();
     }
+
+    @DisplayName("DeleteHistories 인스턴스가 쇼유한 값을 반환하는지 테스트")
+    @Test
+    void 반환() {
+        // given
+        List<DeleteHistory> expected = new ArrayList<>();
+
+        // when
+        DeleteHistories deleteHistories = new DeleteHistories(expected);
+        List<DeleteHistory> actual = deleteHistories.histories();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
 }
