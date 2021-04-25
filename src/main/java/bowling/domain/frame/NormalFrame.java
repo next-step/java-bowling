@@ -12,7 +12,7 @@ public final class NormalFrame extends Frame {
 
     @Override
     public Frame createNextFrame() {
-        return null;
+        return new NormalFrame(roundNumber().nextRoundNumber(), new FrameScore());
     }
 
     @Override

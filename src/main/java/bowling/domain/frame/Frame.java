@@ -16,6 +16,10 @@ public abstract class Frame {
 
     public abstract void knockDownPin(Pin pin);
 
+    public RoundNumber roundNumber() {
+        return roundNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
