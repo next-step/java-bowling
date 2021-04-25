@@ -83,7 +83,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public DeleteHistories deleteQuestionAndAnswers(User user) throws Exception {
+    public DeleteHistories delete(User user) throws Exception {
         DeleteHistories deleteHistories = new DeleteHistories();
         deleteHistories.add(deleteQuestion(user));
         deleteHistories.addAll(answers.deleteAnswers(user));

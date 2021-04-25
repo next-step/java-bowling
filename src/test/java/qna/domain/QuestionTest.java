@@ -83,7 +83,7 @@ public class QuestionTest {
 
 
         // when
-        DeleteHistories resultDeleteHistoriesQ1 = Q1.deleteQuestionAndAnswers(UserTest.JAVAJIGI);
+        DeleteHistories resultDeleteHistoriesQ1 = Q1.delete(UserTest.JAVAJIGI);
 
         // then
         assertThat(resultDeleteHistoriesQ1).isEqualTo(expectDeleteHistoriesQ1);
@@ -97,7 +97,7 @@ public class QuestionTest {
 
         // then
         assertThatThrownBy(() -> {
-            Q2.deleteQuestionAndAnswers(UserTest.JAVAJIGI);
+            Q2.delete(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
@@ -107,7 +107,7 @@ public class QuestionTest {
         DeleteHistories expectDeleteHistories = new DeleteHistories(Arrays.asList(new DeleteHistory(Q3, UserTest.SANJIGI)));
 
         // when
-        DeleteHistories resultDeleteHistoriesQ3 = Q3.deleteQuestionAndAnswers(UserTest.SANJIGI);
+        DeleteHistories resultDeleteHistoriesQ3 = Q3.delete(UserTest.SANJIGI);
 
         // then
         assertThat(resultDeleteHistoriesQ3).isEqualTo(expectDeleteHistories);

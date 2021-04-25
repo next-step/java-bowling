@@ -31,7 +31,7 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws Exception {
         Question question = findQuestionById(questionId);
-        DeleteHistories deleteHistories = question.deleteQuestionAndAnswers(loginUser);
+        DeleteHistories deleteHistories = question.delete(loginUser);
         deleteHistoryService.saveAll(deleteHistories);
     }
 }
