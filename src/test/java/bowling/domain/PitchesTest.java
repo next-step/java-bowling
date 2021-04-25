@@ -28,4 +28,20 @@ class PitchesTest {
         // when then
         assertThat(10).isEqualTo(pitches.pinDownCount());
     }
+
+    @Test
+    @DisplayName("투구횟수 계산")
+    void count() {
+        // given
+        Pitches pitchesNonPitch = new Pitches();
+        Pitches pitches = new Pitches();
+
+        // when
+        pitches.add(new Pitch(1));
+        pitches.add(new Pitch(9));
+
+        // then
+        assertThat(0).isEqualTo(pitchesNonPitch.count());
+        assertThat(2).isEqualTo(pitches.count());
+    }
 }

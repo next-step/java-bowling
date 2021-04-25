@@ -24,6 +24,10 @@ public class Pitches implements Iterable<Pitch> {
                 .sum();
     }
 
+    public int count() {
+        return values.size();
+    }
+
     public void add(Pitch pitch) {
         values.add(pitch);
     }
