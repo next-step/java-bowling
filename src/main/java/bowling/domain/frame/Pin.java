@@ -6,6 +6,10 @@ public final class Pin {
 
     private final int pin;
 
+    public Pin() {
+        this(0);
+    }
+
     public Pin(final int pin) {
         this.pin = pin;
     }

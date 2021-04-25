@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -18,5 +19,18 @@ class PinTest {
 
         // then
         assertThat(pin).isEqualTo(new Pin(pinCount));
+    }
+
+    @Test
+    @DisplayName("기본 생성자로 생성시 10개의 핀이 생성된다.")
+    void defaultConstructor() {
+        // given
+        final int defaultPinCount = 10;
+
+        // when
+        final Pin pin = new Pin();
+
+        // then
+        assertThat(pin).isEqualTo(new Pin(defaultPinCount));
     }
 }
