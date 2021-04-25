@@ -77,7 +77,7 @@ public class Pitches implements Iterable<Pitch> {
 
     public List<String> getScoreBoards() {
         if (isSpare()) {
-            return Arrays.asList(first().toString(), SPARE_MARK);
+            return new ArrayList<>(Arrays.asList(first().toString(), SPARE_MARK));
         }
         return values.stream()
                 .map(Pitch::toString)
