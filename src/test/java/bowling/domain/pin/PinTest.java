@@ -44,4 +44,20 @@ class PinTest {
                 .isInstanceOf(InvalidPinCountException.class)
                 .hasMessage(InvalidPinCountException.INVALID_PIN_COUNT);
     }
+
+    @Test
+    @DisplayName("Pin의 개수를 더할 수 있다.")
+    void sum() {
+        // given
+        final int firstCount = 3;
+        final int secondCount = 5;
+        final Pin firstPin = new Pin(firstCount);
+        final Pin secondPin = new Pin(secondCount);
+
+        // when
+        final Pin sum = firstPin.sum(secondPin);
+
+        // then
+        assertThat(sum.pinCount()).isEqualTo(firstCount + secondCount);
+    }
 }

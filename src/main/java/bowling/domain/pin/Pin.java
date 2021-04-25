@@ -31,6 +31,10 @@ public final class Pin {
         return pin;
     }
 
+    public Pin sum(Pin other) {
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
