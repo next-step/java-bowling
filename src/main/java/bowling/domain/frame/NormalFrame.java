@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
 import bowling.exception.IllegalNormalFrameException;
 
 public final class NormalFrame extends Frame {

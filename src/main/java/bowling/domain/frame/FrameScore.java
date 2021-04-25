@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
+
 import java.util.Objects;
 
 public final class FrameScore {

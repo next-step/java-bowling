@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.pin;
 
 import bowling.exception.InvalidPinCountException;
 import org.junit.jupiter.api.DisplayName;

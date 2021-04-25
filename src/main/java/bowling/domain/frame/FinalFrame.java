@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
 import bowling.exception.NoNextFrameException;
 
 public final class FinalFrame extends Frame {
