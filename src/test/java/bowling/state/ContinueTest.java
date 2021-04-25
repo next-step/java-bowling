@@ -47,7 +47,7 @@ public class ContinueTest {
 
     @ParameterizedTest(name = "넘어뜨린 핀 개수 예외 테스트")
     @ValueSource(ints = {5,7,-1,11})
-    void bowlToSpareTest(int secondPitch) {
+    void pinsCountExceptionTest(int secondPitch) {
         assertThatThrownBy(() -> continueState.bowl(secondPitch))
                 .isInstanceOf(PinsCountException.class)
                 .hasMessage("넘어뜨린 핀수는 0에서 10 사이의 정수여야 합니다.");

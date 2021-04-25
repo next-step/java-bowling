@@ -42,7 +42,7 @@ public class ReadyTest {
 
     @ParameterizedTest(name = "넘어뜨린 핀 개수 예외 테스트")
     @ValueSource(ints = {11, -1, 15})
-    void bowlToSpareTest(int pitch) {
+    void pinsCountExceptionTest(int pitch) {
         assertThatThrownBy(() -> ready.bowl(pitch))
                 .isInstanceOf(PinsCountException.class)
                 .hasMessage("넘어뜨린 핀수는 0에서 10 사이의 정수여야 합니다.");
