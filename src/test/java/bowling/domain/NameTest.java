@@ -6,21 +6,21 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayerTest {
+public class NameTest {
 
   @Test
-  @DisplayName("[Player] 참가자 객체 생성 테스트")
-  void create_player() {
+  @DisplayName("[Name] 참가자 이름 생성 테스트")
+  void create_name() {
     String name = "NHJ";
-    Player player = new Player(name);
-    assertThat(player).isEqualTo(new Player(name));
+    Name player = new Name(name);
+    assertThat(player).isEqualTo(new Name(name));
   }
 
   @Test
   @DisplayName("[Player] 이름의 길이가 3글자가 넘는 경우 예외 처리 테스트")
   void invalid_name_length() {
     String player = "crong";
-    assertThatThrownBy(() -> new Player(player))
+    assertThatThrownBy(() -> new Name(player))
         .isInstanceOf(IllegalArgumentException.class);
   }
 
@@ -28,7 +28,7 @@ public class PlayerTest {
   @DisplayName("[Player] 영문이 아닌 문자를 입력했을 경우 예외 처리 테스트")
   void invalid_name() {
     String player = "나나";
-    assertThatThrownBy(() -> new Player(player))
+    assertThatThrownBy(() -> new Name(player))
         .isInstanceOf(IllegalArgumentException.class);
   }
 }

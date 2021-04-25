@@ -2,7 +2,7 @@ package bowling.view;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
-import bowling.domain.Player;
+import bowling.domain.Name;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -17,9 +17,9 @@ public class ResultView {
   private static final int TOTAL_FRAME_SIZE = 10;
   private static final char SPACE = ' ';
 
-  public static void showScoreBoard(Frames frames, Player player) {
+  public static void showScoreBoard(Frames frames, Name name) {
     roundSection();
-    stateSection(frames, player);
+    stateSection(frames, name);
     scoreSection(frames);
   }
 
@@ -31,7 +31,7 @@ public class ResultView {
     System.out.print(LINE_SEPARATOR);
   }
 
-  private static void stateSection(Frames frames, Player player) {
+  private static void stateSection(Frames frames, Name player) {
     System.out.print(SEPARATOR + alignText(player.name()) + SEPARATOR);
     System.out.println(stateResult(frames.frames()) + SEPARATOR);
   }
