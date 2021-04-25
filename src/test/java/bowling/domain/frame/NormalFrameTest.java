@@ -64,4 +64,19 @@ class NormalFrameTest {
                 .isInstanceOf(IllegalNormalFrameException.class)
                 .hasMessage(IllegalNormalFrameException.ILLEGAL_NORMAL_FRAME_ROUND);
     }
+
+    @Test
+    @DisplayName("9프레임의 다음 프레임은 FinalFrame이다.")
+    void NineFrameNextFrame() {
+        // given
+        final RoundNumber nineRoundNumber = new RoundNumber(9);
+        final FrameScore frameScore = new FrameScore();
+        final Frame nineFrame = NormalFrame.of(nineRoundNumber, frameScore);
+
+        // when
+        final Frame nextFrame = nineFrame.createNextFrame();
+
+        // then
+        assertThat(nextFrame).isEqualTo(FinalFrame.from(frameScore));
+    }
 }
