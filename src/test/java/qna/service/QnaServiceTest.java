@@ -8,6 +8,10 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import qna.CannotDeleteException;
 import qna.domain.*;
+import qna.domain.entity.Answer;
+import qna.domain.entity.DeleteHistory;
+import qna.domain.entity.Question;
+import qna.domain.repository.QuestionRepository;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -57,7 +61,7 @@ public class QnaServiceTest {
 
         assertThatThrownBy(() -> {
             qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        }).isInstanceOf(CannotDeleteException.class).hasMessageContaining("질문을 삭제할 권한이 없습니다.");
     }
 
     @Test
@@ -77,13 +81,14 @@ public class QnaServiceTest {
 
         assertThatThrownBy(() -> {
             qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        }).isInstanceOf(CannotDeleteException.class).hasMessageContaining("질문을 삭제할 권한이 없습니다.");
     }
 
     private void verifyDeleteHistories() {
         List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+                DeleteHistory.questionHistory(question.getId(), question.getWriter()),
+                DeleteHistory.answerHistory(answer.getId(), answer.getWriter()));
+
         verify(deleteHistoryService).saveAll(deleteHistories);
     }
 }

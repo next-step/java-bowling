@@ -1,4 +1,4 @@
-package qna.domain;
+package qna.domain.entity;
 
 import qna.UnAuthorizedException;
 
@@ -36,49 +36,21 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    public String getUserId() {
+    private String getUserId() {
         return userId;
     }
 
-    public User setUserId(String userId) {
-        this.userId = userId;
-        return this;
-    }
-
-    public String getPassword() {
+    private String getPassword() {
         return password;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public User setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
     }
 
     public void update(User loginUser, User target) {
         if (!matchUserId(loginUser.getUserId())) {
-            throw new UnAuthorizedException();
+            throw new UnAuthorizedException("로그인 계정만 수정이 가능 합니다.");
         }
 
         if (!matchPassword(target.getPassword())) {
-            throw new UnAuthorizedException();
+            throw new UnAuthorizedException("패스워드 정보가 틀립니다.");
         }
 
         this.name = target.name;
@@ -98,8 +70,7 @@ public class User extends AbstractEntity {
             return false;
         }
 
-        return name.equals(target.name) &&
-                email.equals(target.email);
+        return name.equals(target.name) && email.equals(target.email);
     }
 
     public boolean isGuestUser() {
