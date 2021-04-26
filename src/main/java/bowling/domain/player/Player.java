@@ -1,6 +1,7 @@
-package bowling.domain;
+package bowling.domain.player;
 
 import bowling.domain.frame.Frames;
+import bowling.domain.player.Name;
 
 public class Player {
 

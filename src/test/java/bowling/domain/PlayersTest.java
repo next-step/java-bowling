@@ -2,6 +2,8 @@ package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.domain.player.Player;
+import bowling.domain.player.Players;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

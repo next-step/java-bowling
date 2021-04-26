@@ -1,7 +1,7 @@
 package bowling.controller;
 
-import bowling.domain.Player;
-import bowling.domain.Players;
+import bowling.domain.player.Player;
+import bowling.domain.player.Players;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 import java.util.List;
