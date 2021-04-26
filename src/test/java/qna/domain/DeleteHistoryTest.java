@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DeleteHistoryTest {
 
-    @DisplayName("DeleteHistory 인스턴스 생성 여부 테스트")
+    @DisplayName("DeleteHistory 인스턴스를 Answer 인스턴스 하나로 생성 가능 여부 테스트")
     @Test
-    void 생성() {
+    void 생성_Answer() {
         DeleteHistory deleteHistory = new DeleteHistory(AnswerTest.A1);
 
         assertThat(deleteHistory).isNotNull();
