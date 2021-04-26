@@ -4,6 +4,8 @@ import bowling.domain.engine.frame.state.Finished;
 import bowling.domain.engine.frame.state.bonus.BonusState;
 import bowling.domain.engine.frame.state.bonus.BonusStateFactory;
 import bowling.domain.engine.roll.RollResult;
+import bowling.dto.RollResultsDto;
+import bowling.dto.StateDto;
 
 public class Strike extends Finished {
 
@@ -34,6 +36,6 @@ public class Strike extends Finished {
 
     @Override
     public String export() {
-        return strikeRoll.export();
+        return StateDto.STRIKE.export(RollResultsDto.of(strikeRoll));
     }
 }

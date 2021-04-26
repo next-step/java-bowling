@@ -2,6 +2,8 @@ package bowling.domain.concrete.frame.state;
 
 import bowling.domain.engine.frame.state.State;
 import bowling.domain.engine.roll.RollResult;
+import bowling.dto.RollResultsDto;
+import bowling.dto.StateDto;
 
 public class Playing implements State {
 
@@ -34,6 +36,6 @@ public class Playing implements State {
 
     @Override
     public String export() {
-        return firstRoll.export();
+        return StateDto.PLAYING.export(RollResultsDto.of(firstRoll));
     }
 }
