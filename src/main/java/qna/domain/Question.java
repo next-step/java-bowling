@@ -72,11 +72,6 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
@@ -92,7 +87,7 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) {
         validateDeleteUser(loginUser);
-        this.setDeleted(true);
+        this.deleted = true;
         return this.assembleDeleteHistories(createDeleteHistory(), answers.deleteAll(loginUser));
     }
 
