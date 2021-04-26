@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -30,5 +31,25 @@ public class Frames {
 
     public int size() {
         return frames.size();
+    }
+
+    public boolean isContinue() {
+        return !round.isFinalRound();
+    }
+
+    public List<Frame> frames() {
+        return Collections.unmodifiableList(frames);
+    }
+
+    public void throwBall(int topplePin) {
+        Frame nowFrame = frames.get(round.round() - 1);
+        nowFrame.throwBall(topplePin);
+        if (nowFrame.roundEnded()) {
+            round = round.nextRound();
+        }
+    }
+
+    public int round() {
+        return round.round();
     }
 }
