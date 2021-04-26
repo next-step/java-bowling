@@ -20,7 +20,7 @@ class NormalFrameTest {
     void create() {
         // given
         final RoundNumber roundNumber = new RoundNumber(1);
-        final FrameScore frameScore = new FrameScore();
+        final FrameScore frameScore = new NormalFrameScore();
 
         // when
         final Frame frame = NormalFrame.of(roundNumber, frameScore);
@@ -35,7 +35,7 @@ class NormalFrameTest {
         // given
         final int firstRoundNumber = 1;
         final RoundNumber roundNumber = new RoundNumber(firstRoundNumber);
-        final FrameScore frameScore = new FrameScore();
+        final FrameScore frameScore = new NormalFrameScore();
 
         // when
         final Frame frame = NormalFrame.createFirstFrame();
@@ -51,7 +51,7 @@ class NormalFrameTest {
         // given
         final RoundNumber roundNumber = new RoundNumber(roundNumberSource);
         final RoundNumber nextRoundNumber = new RoundNumber(roundNumberSource + 1);
-        final FrameScore frameScore = new FrameScore();
+        final FrameScore frameScore = new NormalFrameScore();
         final Frame frame = NormalFrame.of(roundNumber, frameScore);
 
         // when
@@ -64,7 +64,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("Normal Frame은 10라운드가 될 수 없다.")
     void NormalFrameCannotBeTenRound() {
-        assertThatThrownBy(() -> NormalFrame.of(new RoundNumber(10), new FrameScore()))
+        assertThatThrownBy(() -> NormalFrame.of(new RoundNumber(10), new NormalFrameScore()))
                 .isInstanceOf(IllegalNormalFrameException.class)
                 .hasMessage(IllegalNormalFrameException.ILLEGAL_NORMAL_FRAME_ROUND);
     }
@@ -74,7 +74,7 @@ class NormalFrameTest {
     void NineFrameNextFrame() {
         // given
         final RoundNumber nineRoundNumber = new RoundNumber(9);
-        final FrameScore frameScore = new FrameScore();
+        final FrameScore frameScore = new NormalFrameScore();
         final Frame nineFrame = NormalFrame.of(nineRoundNumber, frameScore);
 
         // when
@@ -98,7 +98,7 @@ class NormalFrameTest {
         final Pin firstPin = new Pin(firstPinCount);
         final Pin secondPin = new Pin(secondPinCount);
         final Pins pins = new NormalPins(firstPin, secondPin);
-        final Frame frame = NormalFrame.of(RoundNumber.firstRoundNumber(), new FrameScore(pins));
+        final Frame frame = NormalFrame.of(RoundNumber.firstRoundNumber(), new NormalFrameScore(pins));
 
         // when
         final String status = frame.status();

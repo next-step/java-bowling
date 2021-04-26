@@ -18,7 +18,7 @@ class FinalFrameTest {
     @DisplayName("FrameScore를 받아 마지막 프레임을 생성한다.")
     void create() {
         // given
-        final FrameScore frameScore = new FrameScore();
+        final FrameScore frameScore = new NormalFrameScore();
 
         // when
         final FinalFrame finalFrame = FinalFrame.from(frameScore);
@@ -31,7 +31,7 @@ class FinalFrameTest {
     @DisplayName("FinalFrame의 다음 프레임은 생성되지 않는다.")
     void nextFrame() {
         // given
-        final FrameScore frameScore = new FrameScore();
+        final FrameScore frameScore = new NormalFrameScore();
         final FinalFrame finalFrame = FinalFrame.from(frameScore);
 
         // when
@@ -44,7 +44,7 @@ class FinalFrameTest {
     @Test
     @DisplayName("FinalFrame은 FinalFrame이다.")
     void isFinalFrame() {
-        assertThat(FinalFrame.from(new FrameScore()).isFinalFrame()).isTrue();
+        assertThat(FinalFrame.from(new NormalFrameScore()).isFinalFrame()).isTrue();
     }
 
     @ParameterizedTest
@@ -56,7 +56,7 @@ class FinalFrameTest {
         final Pin secondPin = new Pin(secondPinCount);
         final Pin thirdPin = new Pin(thirdPinCount);
         final Pins pins = new FinalPins(firstPin, secondPin, thirdPin);
-        final Frame frame = FinalFrame.from(new FrameScore(pins));
+        final Frame frame = FinalFrame.from(new NormalFrameScore(pins));
 
         // when
         final String status = frame.status();

@@ -23,7 +23,7 @@ public final class NormalFrame extends Frame {
     }
 
     public static Frame createFirstFrame() {
-        return NormalFrame.of(RoundNumber.firstRoundNumber(), new FrameScore());
+        return NormalFrame.of(RoundNumber.firstRoundNumber(), new NormalFrameScore());
     }
 
     @Override
@@ -33,11 +33,10 @@ public final class NormalFrame extends Frame {
 
     @Override
     public Frame createNextFrame() {
-        final RoundNumber roundNumber = roundNumber();
         if (roundNumber.value() == MAX_NORMAL_FRAME_ROUND_NUMBER) {
-            return FinalFrame.from(new FrameScore());
+            return FinalFrame.from(new NormalFrameScore());
         }
-        return NormalFrame.of(roundNumber.nextRoundNumber(), new FrameScore());
+        return NormalFrame.of(roundNumber.nextRoundNumber(), new NormalFrameScore());
     }
 
     @Override
@@ -47,6 +46,6 @@ public final class NormalFrame extends Frame {
 
     @Override
     public String status() {
-        return frameScore().status();
+        return frameScore.status();
     }
 }

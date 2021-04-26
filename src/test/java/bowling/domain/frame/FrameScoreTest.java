@@ -18,18 +18,18 @@ class FrameScoreTest {
         final Pins pins = new NormalPins(new Pin(), new Pin(0));
 
         // when
-        final FrameScore frameScore = new FrameScore(pins);
+        final FrameScore frameScore = new NormalFrameScore(pins);
 
         // then
-        assertThat(frameScore).isEqualTo(new FrameScore(pins));
+        assertThat(frameScore).isEqualTo(new NormalFrameScore(pins));
     }
 
     @Test
     @DisplayName("해당 Frame이 종료되었는지 반환한다.")
     void isEnded() {
         // given
-        final FrameScore endedFrame = new FrameScore(new NormalPins(new Pin(), new Pin(0)));
-        final FrameScore notEndedFrame = new FrameScore();
+        final FrameScore endedFrame = new NormalFrameScore(new NormalPins(new Pin(), new Pin(0)));
+        final FrameScore notEndedFrame = new NormalFrameScore();
 
         // when
         // then

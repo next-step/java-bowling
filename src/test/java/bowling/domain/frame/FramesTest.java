@@ -22,7 +22,7 @@ class FramesTest {
         assertAll(
                 () -> assertThat(frames).isEqualTo(Frames.initialize()),
                 () -> assertThat(frameList.get(0)).isEqualTo(NormalFrame.createFirstFrame()),
-                () -> assertThat(frameList.get(frameList.size() - 1)).isEqualTo(FinalFrame.from(new FrameScore()))
+                () -> assertThat(frameList.get(frameList.size() - 1)).isEqualTo(FinalFrame.from(new NormalFrameScore()))
         );
     }
 }

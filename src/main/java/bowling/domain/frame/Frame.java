@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public abstract class Frame {
 
-    private final RoundNumber roundNumber;
-    private final FrameScore frameScore;
+    protected final RoundNumber roundNumber;
+    protected final FrameScore frameScore;
 
     protected Frame(RoundNumber roundNumber, FrameScore frameScore) {
         this.roundNumber = roundNumber;
@@ -21,14 +21,6 @@ public abstract class Frame {
     public abstract void knockDownPin(Pin pin);
 
     public abstract String status();
-
-    public RoundNumber roundNumber() {
-        return roundNumber;
-    }
-
-    protected FrameScore frameScore() {
-        return frameScore;
-    }
 
     @Override
     public boolean equals(Object o) {
