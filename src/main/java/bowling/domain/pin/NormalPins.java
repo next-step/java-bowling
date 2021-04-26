@@ -10,13 +10,8 @@ public final class NormalPins implements Pins {
     private final Pin secondPin;
 
     public NormalPins(Pin firstPin, Pin secondPin) {
-        validatePinCount(firstPin, secondPin);
         this.firstPin = firstPin;
         this.secondPin = secondPin;
-    }
-
-    private void validatePinCount(Pin firstPin, Pin secondPin) {
-        firstPin.sum(secondPin);
     }
 
     @Override

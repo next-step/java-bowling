@@ -92,7 +92,7 @@ class NormalFrameTest {
 
     @ParameterizedTest
     @CsvSource({"10,0,X", "9,1,9|/", "3,4,3|4", "0,0,-|-"})
-    @DisplayName("조건별로 출력이 다르다.")
+    @DisplayName("NormalFrame은 조건별로 출력이 다르다.")
     void status(int firstPinCount, int secondPinCount, String expected) {
         // given
         final Pin firstPin = new Pin(firstPinCount);

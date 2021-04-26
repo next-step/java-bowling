@@ -1,14 +1,12 @@
 package bowling.domain.pin;
 
 import bowling.domain.frame.FrameStatus;
-import bowling.exception.InvalidPinCountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class NormalPinsTest {
@@ -29,20 +27,6 @@ class NormalPinsTest {
                 () -> assertThat(pins.firstPin()).isEqualTo(firstPin),
                 () -> assertThat(pins.secondPin()).isEqualTo(secondPin)
         );
-    }
-
-    @Test
-    @DisplayName("NormalPins는 둘을 합쳐 최대 10개의 핀이 쓰러져야 한다.")
-    void validate() {
-        // given
-        final Pin firstPin = new Pin();
-        final Pin secondPin = new Pin();
-
-        // when
-        // then
-        assertThatThrownBy(() -> new NormalPins(firstPin, secondPin))
-                .isInstanceOf(InvalidPinCountException.class)
-                .hasMessage(InvalidPinCountException.INVALID_PIN_COUNT);
     }
 
     @ParameterizedTest
