@@ -38,6 +38,6 @@ public class PlayerTest {
     void nameLengthExceptionTest(String name) {
         assertThatThrownBy(() -> new Player(name))
                 .isInstanceOf(NameLengthException.class)
-                .hasMessage("이름은 영문 3글자로 이루어져야 합니다");
+                .hasMessage("이름은 영문 3글자로 이루어져야 합니다.");
     }
 }
