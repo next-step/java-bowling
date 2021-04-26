@@ -1,5 +1,7 @@
 package bowling.dto;
 
+import bowling.dto.statedto.StateDTO;
+
 public class FrameDTO {
     private final StateDTO stateDTO;
 

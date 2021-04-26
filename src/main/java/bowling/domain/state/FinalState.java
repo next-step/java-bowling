@@ -1,7 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.exception.CannotBowlException;
-import bowling.dto.StateDTO;
+import bowling.dto.statedto.FinalStateDTO;
+import bowling.dto.statedto.StateDTO;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -32,10 +33,11 @@ public class FinalState implements State{
         return (state.state().equals(STRIKE) || state.state().equals(Spare));
     }
 
-    private void addBonusState(State state) {
-        if(isClear(state) && pitchCount < 3){
+    private State addBonusState(State state) {
+        if(isClear(state)){
             states.add(Ready.create());
         }
+        return states.getLast();
     }
 
     @Override
@@ -54,19 +56,19 @@ public class FinalState implements State{
         if(isFinished()) {
             throw new CannotBowlException();
         }
-        State state = states.getLast().bowl(pitch);
-        states.set(states.size()-1,state);
-        addBonusState(state);
+        State state = states.getLast();
+        state = addBonusState(state);
+        states.set(states.size()-1,state.bowl(pitch));
         pitchCount++;
         return this;
     }
 
     @Override
     public StateDTO exportStateDTO() {
-        List<Integer> pins = new ArrayList<>();
+        List<StateDTO> stateDTOList = new ArrayList<>();
         for(State state : states) {
-            pins.addAll(state.exportStateDTO().pins());
+            stateDTOList.add(state.exportStateDTO());
         }
-        return new StateDTO(state(),pins);
+        return new FinalStateDTO(state(), stateDTOList);
     }
 }

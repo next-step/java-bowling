@@ -1,7 +1,6 @@
 package bowling;
 
 import bowling.domain.Player;
-import bowling.domain.exception.CannotBowlException;
 import bowling.domain.exception.NameLengthException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

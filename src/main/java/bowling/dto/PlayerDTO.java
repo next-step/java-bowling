@@ -13,7 +13,7 @@ public class PlayerDTO {
         return name;
     }
 
-    public FramesDTO frameDTO() {
+    public FramesDTO framesDTO() {
         return frames;
     }
 }

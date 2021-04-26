@@ -1,10 +1,10 @@
-package bowling.dto;
+package bowling.dto.statedto;
 
 import java.util.List;
 
 public class StateDTO {
-    private final String state;
-    private final List<Integer> pins;
+    public final String state;
+    public final List<Integer> pins;
 
     public StateDTO(String state, List<Integer> pins) {
         this.state = state;

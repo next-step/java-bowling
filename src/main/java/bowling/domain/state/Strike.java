@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.exception.CannotBowlException;
-import bowling.dto.StateDTO;
+import bowling.dto.statedto.StateDTO;
 
 import java.util.ArrayList;
 import java.util.List;
