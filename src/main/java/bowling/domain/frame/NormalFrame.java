@@ -20,8 +20,4 @@ public class NormalFrame extends Frame {
   public boolean isEndFrame() {
     return pins.size() >= NORMAL_FRAME_MAX_SIZE || isStrike();
   }
-
-  public boolean isLastFrame() {
-    return false;
-  }
 }

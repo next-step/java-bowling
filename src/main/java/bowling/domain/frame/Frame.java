@@ -44,7 +44,5 @@ public abstract class Frame {
 
   abstract public boolean isEndFrame();
 
-  abstract public boolean isLastFrame();
-
   abstract protected void validateHitPin(int countOfHitPin);
 }

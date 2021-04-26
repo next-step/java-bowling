@@ -23,8 +23,4 @@ public class FinalFrame extends Frame {
     }
     return pins.size() >= FINAL_FRAME_MAX_SIZE;
   }
-
-  public boolean isLastFrame() {
-    return isEndFrame();
-  }
 }
