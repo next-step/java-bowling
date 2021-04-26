@@ -23,11 +23,6 @@ public final class NormalFrameScore extends FrameScore {
     }
 
     @Override
-    public boolean isEnded() {
-        return FrameStatus.NONE != frameStatus;
-    }
-
-    @Override
     public String status() {
         if (frameStatus == FrameStatus.STRIKE) {
             return STRIKE_PIN_STATUS;

@@ -14,7 +14,9 @@ public abstract class FrameScore {
         this.frameStatus = frameStatus;
     }
 
-    public abstract boolean isEnded();
+    public boolean isEnded() {
+        return FrameStatus.NONE != frameStatus;
+    }
 
     public abstract String status();
 
