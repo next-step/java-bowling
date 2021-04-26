@@ -1,17 +1,21 @@
 package bowling.view;
 
-import bowling.controller.dto.BowlingGameRequest;
+import bowling.controller.BowlingGameController;
 import bowling.controller.dto.BowlingGameResponse;
-
-import java.util.Arrays;
 
 public class BowlingGameApplication {
 
     public static void main(String[] args) {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
-        BowlingGameRequest bowlingGameRequest = inputView.inputParticipant();
+        BowlingGameController controller = new BowlingGameController();
 
-        outputView.printFrame(new BowlingGameResponse("LDS", 1, false, Arrays.asList("1|/", "5|4")));
+        BowlingGameResponse response = controller.startGame(inputView.inputParticipant());
+        outputView.printFrame(response);
+
+        while (!response.isFinished()) {
+            response = controller.pitchBall(inputView.inputPitch(response.getParticipantName(), response.getNextFrameNumber()));
+            outputView.printFrame(response);
+        }
     }
 }
