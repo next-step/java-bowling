@@ -13,7 +13,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        playerName = new PlayerName("KSD");
+        playerName = PlayerName.valueOf("KSD");
     }
 
     @Test

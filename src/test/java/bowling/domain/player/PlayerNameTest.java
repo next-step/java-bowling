@@ -17,17 +17,17 @@ class PlayerNameTest {
     void create(final String name) {
         // given
         // when
-        final PlayerName playerName = new PlayerName(name);
+        final PlayerName playerName = PlayerName.valueOf(name);
 
         // then
-        assertThat(playerName).isEqualTo(new PlayerName(name));
+        assertThat(playerName).isEqualTo(PlayerName.valueOf(name));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"", "ABCD"})
     @DisplayName("사용자의 이름은 1~3자여야 한다.")
     void playerNameLength(final String invalidName) {
-        assertThatThrownBy(() -> new PlayerName(invalidName))
+        assertThatThrownBy(() -> PlayerName.valueOf(invalidName))
                 .isInstanceOf(PlayerNameLengthException.class)
                 .hasMessage(PlayerNameLengthException.PLAYER_NAME_RANGE_MESSAGE + invalidName);
     }
@@ -36,7 +36,7 @@ class PlayerNameTest {
     @ValueSource(strings = {"김선동", "123"})
     @DisplayName("사용자의 이름으로 사용될 수 있는 문자는 영문 대소문자만 허용된다.")
     void playerNameCharacter(final String invalidName) {
-        assertThatThrownBy(() -> new PlayerName(invalidName))
+        assertThatThrownBy(() -> PlayerName.valueOf(invalidName))
                 .isInstanceOf(NotAllowedPlayerNameCharacterException.class)
                 .hasMessage(NotAllowedPlayerNameCharacterException.NOT_ALLOWED_PLAYER_NAME_CHARACTER + invalidName);
     }

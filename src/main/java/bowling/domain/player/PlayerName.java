@@ -13,24 +13,28 @@ public final class PlayerName {
 
     private final String name;
 
-    public PlayerName(String name) {
-        validatePlayerName(name);
+    private PlayerName(String name) {
         this.name = name;
     }
 
-    private void validatePlayerName(String name) {
+    public static PlayerName valueOf(String name) {
+        validatePlayerName(name);
+        return new PlayerName(name);
+    }
+
+    private static void validatePlayerName(String name) {
         validateNameLength(name);
         validateNameCharacter(name);
     }
 
-    private void validateNameLength(String name) {
+    private static void validateNameLength(String name) {
         final int length = name.length();
         if (length < MIN_LENGTH || length > MAX_LENGTH) {
             throw new PlayerNameLengthException(name);
         }
     }
 
-    private void validateNameCharacter(String name) {
+    private static void validateNameCharacter(String name) {
         if (!name.matches(VALID_NAME_REGEX)) {
             throw new NotAllowedPlayerNameCharacterException(name);
         }
