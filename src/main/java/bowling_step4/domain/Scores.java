@@ -3,7 +3,6 @@ package bowling_step4.domain;
 
 import bowling_step4.domain.frame.Frame;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,11 +13,11 @@ public class Scores {
     this(new ArrayList<>());
   }
 
-  public Scores(final List<Score> scores) {
+  public Scores(List<Score> scores) {
     this.scores = scores;
   }
 
-  public void accumulate(final Frame frame) {
+  public void add(Frame frame) {
     Score score = frame.getScore();
     if (score.isNotAddable() ) {
       return;
@@ -29,14 +28,12 @@ public class Scores {
       return;
     }
 
-    Score prevScore = scores.get(scores.size() - 1);
-    Score nextScore = prevScore.add(score);
+    Score beforeScore = scores.get(scores.size() - 1);
+    Score nextScore = beforeScore.add(score);
     scores.add(nextScore);
   }
 
-  public List<Integer> getScores() {
-    return scores.stream()
-        .map(score -> score.getScore())
-        .collect(Collectors.toList());
+  public List<Score> getScores() {
+    return scores;
   }
 }

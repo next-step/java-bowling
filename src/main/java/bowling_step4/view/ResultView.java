@@ -2,6 +2,7 @@ package bowling_step4.view;
 
 import bowling_step4.domain.BowlingGame;
 import bowling_step4.domain.BowlingGames;
+import bowling_step4.domain.Score;
 import bowling_step4.domain.frame.FinalFrame;
 import bowling_step4.domain.frame.Frame;
 import bowling_step4.domain.frame.NormalFrame;
@@ -24,7 +25,7 @@ public class ResultView {
     }
   }
 
-  public void printResultDetail(String playerName, List<Frame> frames, List<Integer> scores) {
+  public void printResultDetail(String playerName, List<Frame> frames, List<Score> scores) {
     printHeader();
 
     System.out.print(DIVIDER);
@@ -116,8 +117,8 @@ public class ResultView {
     System.out.print(System.lineSeparator());
   }
 
-  private void printScores(List<Integer> scores) {
-    scores.forEach(score -> printText(String.valueOf(score)));
+  private void printScores(List<Score> scores) {
+    scores.forEach(score -> printText(String.valueOf(score.getScore())));
   }
 
 }

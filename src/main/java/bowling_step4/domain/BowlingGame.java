@@ -40,7 +40,7 @@ public class BowlingGame {
     return frames.getIndex();
   }
 
-  public List<Integer> getScore() {
+  public List<Score> getScore() {
     return frames.getScores();
   }
 

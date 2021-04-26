@@ -1,6 +1,7 @@
 package bowling_step4.domain.frame;
 
 import bowling_step4.domain.Pin;
+import bowling_step4.domain.Score;
 import bowling_step4.domain.Scores;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,11 +59,11 @@ public class Frames {
     return size();
   }
 
-  public List<Integer> getScores() {
+  public List<Score> getScores() {
 
     Scores scores = new Scores();
     for (Frame frame : frames) {
-      scores.accumulate(frame);
+      scores.add(frame);
     }
 
     return scores.getScores();
