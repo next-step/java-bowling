@@ -7,6 +7,11 @@ import java.util.Objects;
 
 public final class FrameScore {
 
+    public static final String PIN_DELIMITER = "|";
+    public static final String SPARE_PIN_STATUS = "/";
+    public static final String STRIKE_PIN_STATUS = "X";
+    public static final String EMPTY_STRING = "";
+
     private final Pins pins;
     private final FrameStatus frameStatus;
 
@@ -25,6 +30,19 @@ public final class FrameScore {
 
     public boolean isEnded() {
         return FrameStatus.NONE != frameStatus;
+    }
+
+    public String status() {
+        if (frameStatus == FrameStatus.STRIKE) {
+            return STRIKE_PIN_STATUS;
+        }
+        if (frameStatus == FrameStatus.SPARE) {
+            return pins.firstPin().status() + PIN_DELIMITER + SPARE_PIN_STATUS;
+        }
+        if (frameStatus == FrameStatus.NONE) {
+            return EMPTY_STRING;
+        }
+        return pins.firstPin().status() + PIN_DELIMITER + pins.secondPin().status();
     }
 
     @Override

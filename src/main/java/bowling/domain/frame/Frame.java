@@ -26,6 +26,10 @@ public abstract class Frame {
         return roundNumber;
     }
 
+    protected FrameScore frameScore() {
+        return frameScore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
