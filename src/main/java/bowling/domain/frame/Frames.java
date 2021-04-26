@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Frames {
@@ -13,8 +14,8 @@ public class Frames {
         return 0;
     }
 
-    public void addScore() {
-
+    public Frames addScore(int score) {
+        return new Frames(new ArrayList<>());
     }
 
 }

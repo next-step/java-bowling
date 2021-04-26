@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.NormalFrame;
@@ -43,4 +44,43 @@ public class FramesTest {
         // then
         Assertions.assertThat(frames.nextFrame()).isEqualTo(expectNextFrame);
     }
+
+    @Test
+    public void addFrame_10번째_프레임() {
+        // given
+        int ADD_SCORE = 3;
+        Frame normalFrame = NormalFrame.valueOf(Arrays.asList(3, 4));
+        List<Frame> frameList = new ArrayList<>();
+        IntStream.range(0, 9)
+                .forEach(i -> frameList.add(normalFrame));
+        Frames frames = new Frames(frameList);
+        frameList.add(FinalFrame.valueOf(ADD_SCORE));
+        Frames expectFrames = new Frames(frameList);
+        // when
+        Frames resultFrames = frames.addScore(ADD_SCORE);
+
+        // then
+        Assertions.assertThat(resultFrames).isEqualTo(expectFrames);
+    }
+
+    @Test
+    public void addFrame_6번째_프레임() {
+        // given
+        int ADD_SCORE = 3;
+        Frame normalFrame = NormalFrame.valueOf(Arrays.asList(3, 4));
+        List<Frame> frameList = new ArrayList<>();
+        IntStream.range(0, 5)
+                .forEach(i -> frameList.add(normalFrame));
+        frameList.add(NormalFrame.valueOf(3));
+        Frames frames = new Frames(frameList);
+        frameList.get(5).addScore(ADD_SCORE);
+        Frames expectFrames = new Frames(frameList);
+
+        // when
+        Frames resultFrames = frames.addScore(ADD_SCORE);
+
+        // then
+        Assertions.assertThat(resultFrames).isEqualTo(expectFrames);
+    }
+
 }
