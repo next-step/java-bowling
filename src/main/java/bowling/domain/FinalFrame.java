@@ -2,8 +2,6 @@ package bowling.domain;
 
 public class FinalFrame implements Frame {
     private static final int FINAL_INDEX = 9;
-    private static final int FIRST_PIN_COUNT_INDEX = 0;
-    private static final int SECOND_PIN_COUNT_INDEX = 1;
     private static final int PIN_COUNT_MAX = 10;
     private static final int PIN_COUNTS_EMPTY = 0;
     private static final int PIN_COUNTS_SINGLE_SIZE = 1;
@@ -90,11 +88,11 @@ public class FinalFrame implements Frame {
         }
 
         if (previousScoreChance == 1) {
-            return Score.Miss(pinCounts.pinCounts().get(FIRST_PIN_COUNT_INDEX).value() + previousScoreValue);
+            return Score.Miss(pinCounts.firstPinCount().value() + previousScoreValue);
         }
 
-        return Score.Miss(pinCounts.pinCounts().get(FIRST_PIN_COUNT_INDEX).value()
-                + pinCounts.pinCounts().get(SECOND_PIN_COUNT_INDEX).value()
+        return Score.Miss(pinCounts.firstPinCount().value()
+                + pinCounts.secondPinCount().value()
                 + previousScoreValue);
     }
 }

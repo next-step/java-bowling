@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
     private static final int NORMAL_FRAME_INDEX_MAX = 8;
-    private static final int FIRST_FRAME_INDEX = 0;
     private static final int PIN_COUNTS_EMPTY = 0;
     private static final int PIN_COUNTS_SINGLE_SIZE = 1;
     private static final int PIN_COUNTS_SIZE_MAX = 2;
@@ -81,7 +80,7 @@ public class NormalFrame implements Frame {
         }
 
         if (previousScoreChance == 1) {
-            return Score.Miss(pinCounts.pinCounts().get(FIRST_FRAME_INDEX).value() + previousScoreValue);
+            return Score.Miss(pinCounts.firstPinCount().value() + previousScoreValue);
         }
 
         if (pinCounts().isFirstPinCountStrike()) {

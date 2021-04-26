@@ -85,7 +85,7 @@ public class FinalPinCounts implements PinCounts {
     }
 
     protected boolean isSecondPinCountStrike() {
-        return pinCounts.get(SECOND_PIN_COUNT_INDEX).isStrike();
+        return secondPinCount().isStrike();
     }
 
     @Override

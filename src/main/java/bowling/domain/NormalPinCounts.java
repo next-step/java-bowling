@@ -8,7 +8,6 @@ import java.util.Objects;
 public class NormalPinCounts implements PinCounts {
     private static final int TOTAL_PIN_COUNT_MAX = 10;
     private static final int PIN_COUNTS_SIZE_MAX = 2;
-    private static final int FIRST_PIN_COUNT_INDEX = 0;
     private static final String CHECK_BOUND = "총 쓰러뜨린 개수가 10을 초과하는 지 확인해주세요.";
     private static final String CANNOT_THROW_SECOND_BOWL = "초구가 스트라이크이기 때문에 2구를 던질 수 없습니다.";
     private static final String CANNOT_THROW_BOWL_ANYMORE = "해당 프레임의 모든 공을 이미 던지셨습니다.";
@@ -57,7 +56,7 @@ public class NormalPinCounts implements PinCounts {
     }
 
     private void checkSpareBound(int pinCount) {
-        int totalPinCount = pinCounts.get(FIRST_PIN_COUNT_INDEX).plus(pinCount);
+        int totalPinCount = firstPinCount().plus(pinCount);
         if (!isFirstPinCountStrike() && totalPinCount > TOTAL_PIN_COUNT_MAX) {
             throw new IllegalArgumentException(CHECK_BOUND);
         }

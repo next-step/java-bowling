@@ -22,4 +22,12 @@ public interface PinCounts {
     default boolean isSecondPinCountSpare() {
         return !isFirstPinCountStrike() && pinCounts().get(1).isSpare(pinCounts().get(0));
     }
+
+    default PinCount firstPinCount() {
+        return pinCounts().get(0);
+    }
+
+    default PinCount secondPinCount() {
+        return pinCounts().get(1);
+    }
 }
