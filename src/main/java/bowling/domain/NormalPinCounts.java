@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class NormalPinCounts implements PinCounts {
-    private static final int TOTAL_PIN_COUNT_MAX = 10;
-    private static final int PIN_COUNTS_SIZE_MAX = 2;
+    private static final int NORMAL_PIN_COUNTS_SIZE_MAX = 2;
     private static final String CHECK_BOUND = "총 쓰러뜨린 개수가 10을 초과하는 지 확인해주세요.";
     private static final String CANNOT_THROW_SECOND_BOWL = "초구가 스트라이크이기 때문에 2구를 던질 수 없습니다.";
     private static final String CANNOT_THROW_BOWL_ANYMORE = "해당 프레임의 모든 공을 이미 던지셨습니다.";
@@ -63,7 +62,7 @@ public class NormalPinCounts implements PinCounts {
     }
 
     private void checkAllThrown() {
-        if (pinCounts.size() >= PIN_COUNTS_SIZE_MAX) {
+        if (pinCounts.size() >= NORMAL_PIN_COUNTS_SIZE_MAX) {
             throw new IllegalArgumentException(CANNOT_THROW_BOWL_ANYMORE);
         }
     }
@@ -81,7 +80,7 @@ public class NormalPinCounts implements PinCounts {
         }
 
         return isFirstPinCountStrike() ||
-                (pinCounts.size() == PIN_COUNTS_SIZE_MAX);
+                (pinCounts.size() == NORMAL_PIN_COUNTS_SIZE_MAX);
     }
 
     @Override

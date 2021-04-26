@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class FinalPinCounts implements PinCounts {
-    private static final int PIN_COUNTS_MAX_SIZE = 3;
+    private static final int FINAL_PIN_COUNTS_SIZE_MAX = 3;
     private static final int SPARE = 10;
     private static final int FIRST_PIN_COUNT_INDEX = 0;
     private static final int SECOND_PIN_COUNT_INDEX = 1;
@@ -36,14 +36,14 @@ public class FinalPinCounts implements PinCounts {
             return;
         }
 
-        if (pinCounts.size() == 1 && !isOverPinCountForSecondBowlSpare(pinCount)) {
+        if (pinCounts.size() == PIN_COUNTS_SINGLE_SIZE && !isOverPinCountForSecondBowlSpare(pinCount)) {
             pinCounts.add(knockedDownPinCount);
             return;
         }
 
         checkThirdBowlAvailable();
 
-        if (pinCounts.size() == 2 && !isOverPinCountForThirdBowlSpare(pinCount)) {
+        if (pinCounts.size() == FINAL_PIN_COUNTS_SIZE_MAX - 1 && !isOverPinCountForThirdBowlSpare(pinCount)) {
             pinCounts.add(knockedDownPinCount);
         }
     }
@@ -67,7 +67,7 @@ public class FinalPinCounts implements PinCounts {
     }
 
     private boolean isThirdBowlAvailable() {
-        return pinCounts.size() == 2 && (isFirstPinCountStrike() || isSecondPinCountSpare());
+        return pinCounts.size() == FINAL_PIN_COUNTS_SIZE_MAX - 1 && (isFirstPinCountStrike() || isSecondPinCountSpare());
     }
 
     private boolean isOverPinCountForThirdBowlSpare(int pinCount) {
@@ -79,7 +79,7 @@ public class FinalPinCounts implements PinCounts {
     }
 
     private void checkAllThrown() {
-        if (pinCounts.size() >= PIN_COUNTS_MAX_SIZE) {
+        if (pinCounts.size() >= FINAL_PIN_COUNTS_SIZE_MAX) {
             throw new IllegalArgumentException(CANNOT_THROW_ANYMORE);
         }
     }
@@ -96,7 +96,7 @@ public class FinalPinCounts implements PinCounts {
     @Override
     public boolean isFinished() {
         if (pinCounts.isEmpty()
-                || (pinCounts.size() == 1)
+                || (pinCounts.size() == PIN_COUNTS_SINGLE_SIZE)
                 || isThirdBowlAvailable()) {
             return false;
         }
@@ -104,7 +104,7 @@ public class FinalPinCounts implements PinCounts {
     }
 
     private boolean isAllThrown() {
-        return pinCounts.size() == PIN_COUNTS_MAX_SIZE;
+        return pinCounts.size() == FINAL_PIN_COUNTS_SIZE_MAX;
     }
 
     @Override

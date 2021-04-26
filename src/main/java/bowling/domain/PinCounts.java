@@ -3,6 +3,9 @@ package bowling.domain;
 import java.util.List;
 
 public interface PinCounts {
+    int PIN_COUNTS_EMPTY = 0;
+    int PIN_COUNTS_SINGLE_SIZE = 1;
+    int TOTAL_PIN_COUNT_MAX = 10;
 
     void knockDown(int pinCount);
 
