@@ -31,7 +31,7 @@ class FinalFrameTest {
 
         // when
         // then
-        assertThatThrownBy(() -> finalFrame.createNextFrame())
+        assertThatThrownBy(finalFrame::createNextFrame)
                 .isInstanceOf(NoNextFrameException.class)
                 .hasMessage(NoNextFrameException.FINAL_FRAME_CANNOT_CREATE_NEXT_FRAME);
     }
