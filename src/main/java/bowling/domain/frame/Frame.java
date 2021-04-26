@@ -1,5 +1,30 @@
 package bowling.domain.frame;
 
-public abstract class Frame {
 
+import java.util.List;
+import java.util.Objects;
+
+public abstract class Frame {
+    protected List<Score> scores;
+
+    abstract boolean isFinished();
+
+    abstract void addScore(int score);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Frame frame = (Frame) o;
+        return Objects.equals(scores, frame.scores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scores);
+    }
 }
