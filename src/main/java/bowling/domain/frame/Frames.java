@@ -50,9 +50,8 @@ public class Frames {
 
   public List<Integer> frameScores() {
     this.scores = new ArrayList<>();
-    for (int i = 0; i < FINAL_ROUND; i++) {
-      addScore(frames.get(i), i);
-    }
+    IntStream.range(0, FINAL_ROUND)
+        .forEach(i -> addScore(frames.get(i), i));
     return scores;
   }
 
