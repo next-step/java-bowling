@@ -1,6 +1,5 @@
 package bowling.domain.player;
 
-import bowling.domain.player.Player;
 import java.util.Collections;
 import java.util.List;
 
