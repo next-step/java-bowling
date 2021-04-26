@@ -15,4 +15,16 @@ public class Player {
   public Frames frames() {
     return frames;
   }
+
+  public boolean isEndFrame(int currFrame) {
+    return frames.isEndFrame(currFrame);
+  }
+
+  public void throwBall(int countOfHitPin, int currFrame) {
+    frames.throwBall(countOfHitPin, currFrame);
+  }
+
+  public Name name() {
+    return name;
+  }
 }

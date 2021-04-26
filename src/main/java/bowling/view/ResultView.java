@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.Players;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.Name;
@@ -17,10 +18,13 @@ public class ResultView {
   private static final int TOTAL_FRAME_SIZE = 10;
   private static final char SPACE = ' ';
 
-  public static void showScoreBoard(Frames frames, Name name) {
+  public static void showScoreBoard(Players players) {
     roundSection();
-    stateSection(frames, name);
-    scoreSection(frames);
+    players.players()
+        .forEach(player -> {
+          stateSection(player.frames(), player.name());
+          scoreSection(player.frames());
+        });
   }
 
   private static void roundSection() {
@@ -31,8 +35,8 @@ public class ResultView {
     System.out.print(LINE_SEPARATOR);
   }
 
-  private static void stateSection(Frames frames, Name player) {
-    System.out.print(SEPARATOR + alignText(player.name()) + SEPARATOR);
+  private static void stateSection(Frames frames, Name name) {
+    System.out.print(SEPARATOR + alignText(name.name()) + SEPARATOR);
     System.out.println(stateResult(frames.frames()) + SEPARATOR);
   }
 

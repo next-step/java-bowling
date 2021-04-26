@@ -33,8 +33,8 @@ public class Frames {
         .collect(Collectors.toList());
   }
 
-  public void throwBall(int countOfHitPin) {
-    Frame frame = frames.get(round() - 1);
+  public void throwBall(int countOfHitPin, int currFrame) {
+    Frame frame = frames.get(currFrame);
     frame.play(countOfHitPin);
 
     calculateScore(countOfHitPin);
@@ -80,6 +80,10 @@ public class Frames {
 
   public int round() {
     return round.round();
+  }
+
+  public boolean isEndFrame(int currFrame) {
+    return frames.get(currFrame).isEndFrame();
   }
 
   public List<Frame> frames() {
