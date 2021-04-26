@@ -74,3 +74,23 @@
 - [디자인 패턴 - 상태 패턴(State Pattern)](https://velog.io/@y_dragonrise/%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4-%EC%83%81%ED%83%9C-%ED%8C%A8%ED%84%B4State-Pattern)
 - [State](https://refactoring.guru/design-patterns/state)
     
+### 2차 피드백
+
+- Domain 과 View 분리
+    - 모든 미션에서 항상 피드백 받은 부분
+    - 이제 그만 실수할 때도 됐는데..
+    - `State` 및 `RollResult` 에서 뷰 로직이 들어있는 상황
+    - DTO 패키지에서 출력될 방식을 결정
+- `FinalFrame` 개선
+    - `LinkedList` 로 `State` 목록 관리
+    - 추가 투구 횟수를 별도의 클래스로 관리
+
+#### 리팩토링 방안
+
+- Domain 과 View 분리
+    - `Enum` 을 활용하여 Converter 를 다시 만들고, 각 구현체에 Enum 멤버를 직접 삽입하여 구현
+    - `RollResult` 의 Child Class 모두 제거
+- `FinalFrame` 개선
+    - `LinkedList` 로 `State` 목록 관리
+    - 추가 투구 횟수를 별도의 클래스로 관리
+
