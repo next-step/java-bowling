@@ -13,17 +13,19 @@ public class BowlingController {
   private static final int FINAL_ROUND = 10;
 
   public void run() {
-    int countOfPlayer = InputView.inputCountOfPlayer();
-    List<Player> player = IntStream.range(0, countOfPlayer)
-        .mapToObj(i -> new Player(InputView.inputOfPlayerName(i)))
-        .collect(Collectors.toList());
-
-    Players players = new Players(player);
+    Players players = new Players(initPlayers());
     ResultView.showScoreBoard(players);
 
-    for (int i = 0; i < FINAL_ROUND; i++) {
-      play(players, i);
-    }
+    IntStream.range(0, FINAL_ROUND)
+        .forEach(i -> play(players, i));
+  }
+
+  private List<Player> initPlayers() {
+    int countOfPlayer = InputView.inputCountOfPlayer();
+
+    return IntStream.range(0, countOfPlayer)
+        .mapToObj(i -> new Player(InputView.inputOfPlayerName(i)))
+        .collect(Collectors.toList());
   }
 
   private void play(Players players, int currFrame) {
