@@ -1,6 +1,5 @@
 package bowling.view;
 
-import bowling.domain.Frame;
 import java.util.Scanner;
 
 public class InputView {
@@ -12,8 +11,8 @@ public class InputView {
     return SCANNER.nextLine();
   }
 
-  public static int getHitPinsCount(Frame frame) {
-    System.out.printf("%d프레임 투구 : ", frame.getNumber());
+  public static int getHitPinsCount(int frameNumber) {
+    System.out.printf("%d프레임 투구 : ", frameNumber);
     return Integer.parseInt(SCANNER.nextLine());
   }
 
