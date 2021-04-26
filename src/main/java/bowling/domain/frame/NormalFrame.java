@@ -20,12 +20,18 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean isFinished() {
+        if (scores.size() == 2) {
+            return true;
+        }
+        if (scores.get(0) == Score.STRIKE) {
+            return true;
+        }
         return false;
     }
 
     @Override
-    public void addScore(int score) {
-
+    public Frame addScore(int score) {
+        return NormalFrame.valueOf(3);
     }
 
     private static List<Score> generateScores(List<Integer> scores) {
