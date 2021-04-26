@@ -1,20 +1,46 @@
 package bowling;
 
-import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.NormalFrame;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public class FramesTest {
+
     @Test
-    public void tempTest() {
+    public void nextFrame_10번째_프레임() {
         // given
-        Frames frames = new Frames(Arrays.asList(NormalFrame.valueOf(3), FinalFrame.valueOf(3)));
+        Frame normalFrame = NormalFrame.valueOf(Arrays.asList(3, 4));
+        List<Frame> frameList = new ArrayList<>();
+        IntStream.range(0, 9)
+                .forEach(i -> frameList.add(normalFrame));
+        Frames frames = new Frames(frameList);
+        int expectNextFrame = 10;
         // when
 
         // then
+        Assertions.assertThat(frames.nextFrame()).isEqualTo(expectNextFrame);
+    }
 
+    @Test
+    public void nextFrame_6번째_프레임() {
+        // given
+        Frame normalFrame = NormalFrame.valueOf(Arrays.asList(3, 4));
+        List<Frame> frameList = new ArrayList<>();
+        IntStream.range(0, 5)
+                .forEach(i -> frameList.add(normalFrame));
+        frameList.add(NormalFrame.valueOf(3));
+        Frames frames = new Frames(frameList);
+        int expectNextFrame = 6;
+        // when
+
+        // then
+        Assertions.assertThat(frames.nextFrame()).isEqualTo(expectNextFrame);
     }
 }

@@ -9,9 +9,12 @@ public class Frames {
         this.frames = frames;
     }
 
-    public boolean isFinished(int index) {
-        return frames.get(index).isFinished();
+    public int nextFrame() {
+        return 0;
     }
 
-    
+    public void addScore() {
+
+    }
+
 }
