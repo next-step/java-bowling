@@ -6,6 +6,11 @@ import java.util.Objects;
 
 public abstract class FrameScore {
 
+    public static final String PIN_DELIMITER = "|";
+    public static final String SPARE_PIN_STATUS = "/";
+    public static final String STRIKE_PIN_STATUS = "X";
+    public static final String EMPTY_STRING = "";
+
     protected final Pins pins;
     protected final FrameStatus frameStatus;
 

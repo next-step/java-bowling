@@ -5,11 +5,6 @@ import bowling.domain.pin.Pins;
 
 public final class NormalFrameScore extends FrameScore {
 
-    public static final String PIN_DELIMITER = "|";
-    public static final String SPARE_PIN_STATUS = "/";
-    public static final String STRIKE_PIN_STATUS = "X";
-    public static final String EMPTY_STRING = "";
-
     public NormalFrameScore() {
         this(new NullPins());
     }
