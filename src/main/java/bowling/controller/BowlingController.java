@@ -27,6 +27,7 @@ public class BowlingController {
             String pinCount = inputView.pinCount(frames.currentIndex());
             frames.throwBowl(pinCount);
             resultView.printMark(name, frames.marks());
+            resultView.printScore(frames.scores());
         }
     }
 }
