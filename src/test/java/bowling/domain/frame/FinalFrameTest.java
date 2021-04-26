@@ -37,7 +37,7 @@ class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("FinalFrame은 FinalFrame이 아니다.")
+    @DisplayName("FinalFrame은 FinalFrame이다.")
     void isFinalFrame() {
         assertThat(FinalFrame.from(new FrameScore()).isFinalFrame()).isTrue();
     }
