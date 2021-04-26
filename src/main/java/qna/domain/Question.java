@@ -88,7 +88,7 @@ public class Question extends AbstractEntity {
     public List<DeleteHistory> delete(User loginUser) {
         validateDeleteUser(loginUser);
         this.deleted = true;
-        return this.assembleDeleteHistories(createDeleteHistory(), answers.deleteAll(loginUser));
+        return this.assembleDeleteHistories(new DeleteHistory(this), answers.deleteAll(loginUser));
     }
 
     private void validateDeleteUser(User loginUser)  {
@@ -98,10 +98,6 @@ public class Question extends AbstractEntity {
         if (!this.isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-    }
-
-    private DeleteHistory createDeleteHistory() {
-        return new DeleteHistory(this);
     }
 
     private List<DeleteHistory> assembleDeleteHistories(DeleteHistory deleteHistory, List<DeleteHistory> answerDeleteHistories) {
