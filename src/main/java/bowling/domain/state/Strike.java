@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
 import bowling.dto.StateDTO;
 
@@ -9,10 +10,13 @@ import java.util.Objects;
 
 public class Strike implements State{
     private static final String state = "STRIKE";
-    private Strike(){}
+    private final Pins pins;
+    private Strike(Pins pins){
+        this.pins = pins;
+    }
 
-    public static Strike create() {
-        return new Strike();
+    public static Strike of(Pins pins) {
+        return new Strike(pins);
     }
 
     @Override
@@ -33,7 +37,7 @@ public class Strike implements State{
     @Override
     public StateDTO exportStateDTO() {
         List<Integer> pins = new ArrayList<>();
-        pins.add(Integer.valueOf(MAX_PINS));
+        pins.add(this.pins.pins());
         return new StateDTO(state(),pins);
     }
 

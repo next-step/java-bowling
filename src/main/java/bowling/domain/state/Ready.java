@@ -26,10 +26,10 @@ public class Ready implements State{
 
     @Override
     public State bowl(int pitch) {
-        if(pitch == MAX_PINS){
-            return Strike.create();
-        }
         Pins pins = Pins.ofFirstPitch(pitch);
+        if(pins.isStrike()){
+            return Strike.of(pins);
+        }
         return Continue.of(pins);
     }
 

@@ -34,6 +34,10 @@ public class Pins {
         return this.pins;
     }
 
+    public boolean isStrike() {
+        return pins == MAX_PINS;
+    }
+
     public boolean isSpare(Pins secondPins){
         if(pins() + secondPins.pins() == MAX_PINS){
             return true;
