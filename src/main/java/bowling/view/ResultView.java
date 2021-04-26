@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.player.Player;
 import bowling.domain.player.Players;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
@@ -21,10 +22,7 @@ public class ResultView {
   public static void showScoreBoard(Players players) {
     roundSection();
     players.players()
-        .forEach(player -> {
-          stateSection(player.frames(), player.name());
-          scoreSection(player.frames());
-        });
+        .forEach(ResultView::eachPlayerStateAndScore);
   }
 
   private static void roundSection() {
@@ -33,6 +31,11 @@ public class ResultView {
         .mapToObj(i -> alignText(String.format("%02d", i)) + SEPARATOR)
         .forEach(System.out::print);
     System.out.print(LINE_SEPARATOR);
+  }
+
+  private static void eachPlayerStateAndScore(Player player) {
+    stateSection(player.frames(), player.name());
+    scoreSection(player.frames());
   }
 
   private static void stateSection(Frames frames, Name name) {
