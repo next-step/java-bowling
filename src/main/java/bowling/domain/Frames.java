@@ -55,9 +55,9 @@ public class Frames {
         frames.set(frame.index(), frame);
     }
 
-    public List<FrameResult> results() {
+    public List<FrameMark> marks() {
         return frames.stream()
-                .map(FrameResult::new)
+                .map(FrameMark::new)
                 .collect(Collectors.toList());
     }
 }

@@ -21,12 +21,12 @@ public class BowlingController {
     }
 
     private void playGame(Name name, Frames frames) {
-        resultView.printResult(name, frames.results());
+        resultView.printMark(name, frames.marks());
 
         while (!frames.isAllFinished()) {
             String pinCount = inputView.pinCount(frames.currentIndex());
             frames.throwBowl(pinCount);
-            resultView.printResult(name, frames.results());
+            resultView.printMark(name, frames.marks());
         }
     }
 }

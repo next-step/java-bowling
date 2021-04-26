@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class FrameResult {
+public class FrameMark {
     private static final int FIRST_PIN_COUNT_INDEX = 0;
     private static final int SECOND_PIN_COUNT_INDEX = 1;
     private static final int THIRD_PIN_COUNT_INDEX = 2;
@@ -13,7 +13,7 @@ public class FrameResult {
     private final Frame frame;
     private List<String> marks;
 
-    public FrameResult(Frame frame) {
+    public FrameMark(Frame frame) {
         this.frame = frame;
         this.marks = new ArrayList<>();
     }
@@ -53,7 +53,7 @@ public class FrameResult {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FrameResult that = (FrameResult) o;
+        FrameMark that = (FrameMark) o;
         return Objects.equals(frame, that.frame);
     }
 
