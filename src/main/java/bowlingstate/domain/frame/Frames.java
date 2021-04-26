@@ -10,7 +10,6 @@ import java.util.stream.IntStream;
 public class Frames {
 
   private static final int FINAL_ROUND = 10;
-  private static final int FIRST_ROUND = 1;
   private final List<Frame> frames;
   private List<Integer> scores;
 
