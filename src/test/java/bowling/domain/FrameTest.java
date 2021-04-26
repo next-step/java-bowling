@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -67,4 +68,27 @@ class FrameTest {
     int bonus = frame.getBonusBeforeFrame(Result.SPARE);
     assertEquals(bonus, 4);
   }
+
+  @Test
+  @DisplayName("strike한 frame은 종료된다.")
+  void isEnd_true_strike() {
+    frame.play(10);
+    assertTrue(frame.isEnd());
+  }
+
+  @Test
+  @DisplayName("두번 플레이한 frame은 종료된다.")
+  void isEnd_true() {
+    frame.play(4);
+    frame.play(4);
+    assertTrue(frame.isEnd());
+  }
+
+  @Test
+  @DisplayName("strike가 아닌 한번 플레이한 frame은 종료되지 않는다.")
+  void isEnd_false() {
+    frame.play(4);
+    assertFalse(frame.isEnd());
+  }
+
 }
