@@ -7,11 +7,14 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Embeddable
-public class Answers {
+public class Answers implements Iterable<Answer> {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
@@ -35,5 +38,20 @@ public class Answers {
 
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    @Override
+    public Iterator<Answer> iterator() {
+        return answers.iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super Answer> action) {
+        Iterable.super.forEach(action);
+    }
+
+    @Override
+    public Spliterator<Answer> spliterator() {
+        return Iterable.super.spliterator();
     }
 }
