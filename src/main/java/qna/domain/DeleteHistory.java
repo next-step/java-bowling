@@ -24,6 +24,10 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
+    public DeleteHistory(Question question) {
+        this(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
+    }
+
     public DeleteHistory(Answer answer) {
         this(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
     }
@@ -34,6 +38,7 @@ public class DeleteHistory {
         this.deletedBy = deletedBy;
         this.createDate = createDate;
     }
+
 
     @Override
     public boolean equals(Object o) {
