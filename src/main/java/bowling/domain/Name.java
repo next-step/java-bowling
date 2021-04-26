@@ -5,7 +5,6 @@ import bowling.domain.exception.NameLengthException;
 import java.util.regex.Pattern;
 
 public class Name {
-    private static final int MAX_NAME_LENGTH = 3;
     private final static String NAME_REGEX = "^[a-zA-Z]{3}$";
     private final static Pattern PATTERN_NAME = Pattern.compile(NAME_REGEX);
     private final String name;
