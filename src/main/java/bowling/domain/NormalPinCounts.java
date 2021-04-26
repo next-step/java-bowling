@@ -27,9 +27,9 @@ public class NormalPinCounts implements PinCounts {
         this.pinCounts = pinCounts;
     }
 
-    private void checkBound(List<PinCount> bowls) {
-        Integer totalPinCount = bowls.stream()
-                .reduce(0, (pinCount, bowl) -> bowl.plus(pinCount), (lastPinCount, result) -> result);
+    private void checkBound(List<PinCount> pinCounts) {
+        Integer totalPinCount = pinCounts.stream()
+                .reduce(0, (total, pinCount) -> pinCount.plus(total), (lastPinCount, result) -> result);
 
         if (totalPinCount > TOTAL_PIN_COUNT_MAX) {
             throw new IllegalArgumentException(CHECK_BOUND);
@@ -51,14 +51,14 @@ public class NormalPinCounts implements PinCounts {
     }
 
     private void checkStrike() {
-        if (pinCounts.get(FIRST_PIN_COUNT_INDEX).isStrike()) {
+        if (isFirstPinCountStrike()) {
             throw new IllegalArgumentException(CANNOT_THROW_SECOND_BOWL);
         }
     }
 
     private void checkSpareBound(int pinCount) {
         int totalPinCount = pinCounts.get(FIRST_PIN_COUNT_INDEX).plus(pinCount);
-        if (!pinCounts.get(FIRST_PIN_COUNT_INDEX).isStrike() && totalPinCount > TOTAL_PIN_COUNT_MAX) {
+        if (!isFirstPinCountStrike() && totalPinCount > TOTAL_PIN_COUNT_MAX) {
             throw new IllegalArgumentException(CHECK_BOUND);
         }
     }
@@ -77,11 +77,11 @@ public class NormalPinCounts implements PinCounts {
     @Override
     public boolean isFinished() {
         if (pinCounts.isEmpty()
-                || (pinCounts.size() == 1 && !pinCounts.get(FIRST_PIN_COUNT_INDEX).isStrike())) {
+                || (pinCounts.size() == 1 && !isFirstPinCountStrike())) {
             return false;
         }
 
-        return pinCounts.get(FIRST_PIN_COUNT_INDEX).isStrike() ||
+        return isFirstPinCountStrike() ||
                 (pinCounts.size() == PIN_COUNTS_SIZE_MAX);
     }
 
