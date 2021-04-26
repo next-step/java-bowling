@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import java.util.Arrays;
+
 public enum Score {
     GUTTER("-", 0),
     ONE("1", 1),
@@ -23,6 +25,16 @@ public enum Score {
     }
 
     public static Score valueOf(int score) {
-        return null;
+        return Arrays.stream(values())
+                .filter(i -> i.score == score)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException());
+    }
+
+    public static Score valueOf(Score previousScore, int score) {
+        if (previousScore.score + score == 10) {
+            return SPARE;
+        }
+        return valueOf(score);
     }
 }

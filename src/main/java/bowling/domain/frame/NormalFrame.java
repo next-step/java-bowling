@@ -31,8 +31,18 @@ public class NormalFrame extends Frame {
 
     @Override
     public Frame addScore(int score) {
-        return NormalFrame.valueOf(3);
+        if (scores.size() == 0) {
+            return new NormalFrame(Arrays.asList(Score.valueOf(score)));
+        }
+        if (scores.size() == 1) {
+
+        }
     }
+
+    private boolean isSpare(int score) {
+
+    }
+
 
     private static List<Score> generateScores(List<Integer> scores) {
         return scores.stream()
