@@ -26,7 +26,7 @@ public class ResultView {
         for (FrameDTO frameDTO : framesDTO.frames()) {
             frames.add(formatState(frameDTO));
         }
-        System.out.println(addDelimiter(frames));
+        System.out.println(joinFrames(frames));
     }
 
     private static String formatState(FrameDTO frameDTO) {
@@ -47,7 +47,7 @@ public class ResultView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private static String addDelimiter(List<String> frames) {
+    private static String joinFrames(List<String> frames) {
         String result = DELIMITER;
         result += frames.stream().collect(Collectors.joining(DELIMITER));
         result += DELIMITER;
