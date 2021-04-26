@@ -2,8 +2,9 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class NormalFrame implements Frame{
+public class NormalFrame implements Frame {
     private static final int NORMAL_FRAME_INDEX_MAX = 8;
+    private static final int FIRST_FRAME_INDEX = 0;
     private static final int PIN_COUNT_SIZE_MAX = 2;
     private static final String CANNOT_THROW_MORE_THAN_TWO = "2번을 초과하여 던질 수 없습니다.";
 
@@ -48,6 +49,44 @@ public class NormalFrame implements Frame{
         }
 
         return new FinalFrame();
+    }
+
+    @Override
+    public Score score() {
+        if (!isFinished()) {
+            return Score.unCountableScore();
+        }
+
+        if (pinCounts.isFirstPinCountStrike()) {
+            return Score.Strike(pinCounts.totalPinCount());
+        }
+
+        if (pinCounts.isSecondPinCountSpare()) {
+            return Score.Spare(pinCounts.totalPinCount());
+        }
+
+        return Score.Miss(pinCounts.totalPinCount());
+    }
+
+    @Override
+    public Score add(Score previousScore) {
+        int previousScoreChance = previousScore.leftOpportunity();
+        int previousScoreValue = previousScore.value();
+
+        if (pinCounts().pinCounts().isEmpty()
+                || (previousScoreChance == 2 && pinCounts.pinCounts().size() == 1 && !pinCounts().isFirstPinCountStrike())) {
+            return Score.unCountableScore();
+        }
+
+        if (previousScoreChance == 1) {
+            return Score.Miss(pinCounts.pinCounts().get(FIRST_FRAME_INDEX).value() + previousScoreValue);
+        }
+
+        if (pinCounts().isFirstPinCountStrike()) {
+            return Score.Spare(pinCounts.totalPinCount() + previousScoreValue);
+        }
+        System.out.println("abc");
+        return Score.Miss(pinCounts.totalPinCount() + previousScoreValue);
     }
 
     @Override
