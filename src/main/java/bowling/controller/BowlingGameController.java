@@ -10,12 +10,13 @@ import bowling.view.ResultView;
 import java.util.List;
 
 public class BowlingGameController {
+
     public static void run() {
         BowlingGame bowlingGame = new BowlingGame(InputView.bowlingGameRequest());
         printScoreBoard(bowlingGame.scoreBoard());
         while (!bowlingGame.isDone()) {
-            int currentFrameNumber = bowlingGame.currentFrameNumber();
-            int pintCount = InputView.pinCount(currentFrameNumber);
+            String playingPlayer = bowlingGame.playingPlayer();
+            int pintCount = InputView.pinCount(playingPlayer);
             bowlingGame.play(pintCount);
             printScoreBoard(bowlingGame.scoreBoard());
         }
@@ -23,8 +24,11 @@ public class BowlingGameController {
 
     private static void printScoreBoard(ScoreBoard scoreBoard) {
         ResultView.printScoreBoardHeader(scoreBoard.totalNumberOfFrame());
+        scoreBoard.playResults()
+                .forEach(BowlingGameController::printPersonalPlayResult);
+    }
 
-        PlayResult playResult = scoreBoard.playResult();
+    private static void printPersonalPlayResult(PlayResult playResult) {
         printFrames(playResult);
         printScores(playResult.allScores());
         ResultView.printEmptyLine();
@@ -35,11 +39,11 @@ public class BowlingGameController {
     }
 
     private static void printScores(List<ScoreDto> scores) {
-        int accumulatesScore = 0;
+        int accumulatedScore = 0;
         ResultView.printScoreHeader();
         for (ScoreDto score : scores) {
-            accumulatesScore += score.currentScore();
-            printSingleScore(score.isFullyCalculated(), accumulatesScore);
+            accumulatedScore += score.currentScore();
+            printSingleScore(score.isFullyCalculated(), accumulatedScore);
         }
         ResultView.printEmptyLine();
     }

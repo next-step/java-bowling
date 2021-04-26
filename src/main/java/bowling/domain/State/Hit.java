@@ -8,6 +8,9 @@ public class Hit implements State {
     private final PinCount firstPinCount;
 
     public Hit(PinCount firstPinCount) {
+        if(firstPinCount.isStrike() || firstPinCount.isGutter()){
+            throw new IllegalArgumentException("strike 또는 gutter가 올 수 없습니다.");
+        }
         this.firstPinCount = firstPinCount;
     }
 
@@ -31,7 +34,7 @@ public class Hit implements State {
 
     @Override
     public Score score() {
-        return new UnDefinedScore(firstPinCount.count());
+        return UnDefinedScore.of(firstPinCount.count());
     }
 
     @Override

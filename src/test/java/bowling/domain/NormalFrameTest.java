@@ -1,10 +1,9 @@
 package bowling.domain;
 
-import bowling.domain.score.Score;
 import bowling.domain.State.*;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.State.PinCount;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -80,7 +79,7 @@ public class NormalFrameTest extends FrameTestBase {
         State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isTrue();
         assertThat(state instanceof Spare).isTrue();
-        assertThat(state.stateInString()).isEqualTo(firstPinCount + SPARE_SYMBOL);
+        assertThat(state.stateInString()).isEqualTo(GUTTER_SYMBOL + SPARE_SYMBOL);
     }
 
     @Test
@@ -134,7 +133,7 @@ public class NormalFrameTest extends FrameTestBase {
         State state = normalFrame.currentState();
         assertThat(normalFrame.isDone()).isFalse();
         assertThat(state instanceof Hit).isTrue();
-        assertThat(state.stateInString()).isEqualTo(new PinCount(firstPinCount).countInString());
+        assertThat(state.stateInString()).isEqualTo(PinCount.of(firstPinCount).countInString());
     }
 
 
@@ -157,7 +156,7 @@ public class NormalFrameTest extends FrameTestBase {
         int strikePinCount = 10;
         NormalFrame strikeFirstFrame = NormalFrame.first();
         strikeFirstFrame.addPinCount(strikePinCount);
-        NormalFrame nextFrame =  strikeFirstFrame.next();
+        NormalFrame nextFrame = strikeFirstFrame.next();
 
         Score frameScore = strikeFirstFrame.score();
 
@@ -173,7 +172,7 @@ public class NormalFrameTest extends FrameTestBase {
         int nextFrameFirstPinCount = 6;
         NormalFrame strikeFirstFrame = NormalFrame.first();
         strikeFirstFrame.addPinCount(strikePinCount);
-        NormalFrame nextFrame =  strikeFirstFrame.next();
+        NormalFrame nextFrame = strikeFirstFrame.next();
         nextFrame.addPinCount(nextFrameFirstPinCount);
 
         Score frameScore = strikeFirstFrame.score();
@@ -191,7 +190,7 @@ public class NormalFrameTest extends FrameTestBase {
         int nextFrameSecondPinCount = 4;
         NormalFrame strikeFirstFrame = NormalFrame.first();
         strikeFirstFrame.addPinCount(strikePinCount);
-        NormalFrame nextFrame =  strikeFirstFrame.next();
+        NormalFrame nextFrame = strikeFirstFrame.next();
         nextFrame.addPinCount(nextFrameFirstPinCount);
         nextFrame.addPinCount(nextFrameSecondPinCount);
 
@@ -207,8 +206,8 @@ public class NormalFrameTest extends FrameTestBase {
     void score_when_turkey() {
         int strikePinCount = 10;
         NormalFrame strikeFirstFrame = NormalFrame.first();
-        NormalFrame nextFrameFirst =  strikeFirstFrame.next();
-        NormalFrame nextFrameSecond =  nextFrameFirst.next();
+        NormalFrame nextFrameFirst = strikeFirstFrame.next();
+        NormalFrame nextFrameSecond = nextFrameFirst.next();
         strikeFirstFrame.addPinCount(strikePinCount);
         nextFrameFirst.addPinCount(strikePinCount);
         nextFrameSecond.addPinCount(strikePinCount);
@@ -244,10 +243,10 @@ public class NormalFrameTest extends FrameTestBase {
         int secondPinCount = 5;
         int nextFrameFirstPinCount = 3;
         int nextFrameSecondPinCount = 5;
-        NormalFrame spareFrame =  NormalFrame.first();
+        NormalFrame spareFrame = NormalFrame.first();
         spareFrame.addPinCount(firstPinCount);
         spareFrame.addPinCount(secondPinCount);
-        NormalFrame nextFrameFirst =  spareFrame.next();
+        NormalFrame nextFrameFirst = spareFrame.next();
         nextFrameFirst.addPinCount(nextFrameFirstPinCount);
         nextFrameFirst.addPinCount(nextFrameSecondPinCount);
 
@@ -264,10 +263,10 @@ public class NormalFrameTest extends FrameTestBase {
         int firstPinCount = 5;
         int secondPinCount = 5;
         int nextFrameFirstPinCount = 3;
-        NormalFrame spareFrame =  NormalFrame.first();
+        NormalFrame spareFrame = NormalFrame.first();
         spareFrame.addPinCount(firstPinCount);
         spareFrame.addPinCount(secondPinCount);
-        NormalFrame nextFrameFirst =  spareFrame.next();
+        NormalFrame nextFrameFirst = spareFrame.next();
         nextFrameFirst.addPinCount(nextFrameFirstPinCount);
 
         Score frameScore = spareFrame.score();
@@ -282,7 +281,7 @@ public class NormalFrameTest extends FrameTestBase {
     void score_when_miss_with_undone() {
         int firstPinCount = 5;
         int secondPinCount = 3;
-        NormalFrame missFrame =  NormalFrame.first();
+        NormalFrame missFrame = NormalFrame.first();
         missFrame.addPinCount(firstPinCount);
         missFrame.addPinCount(secondPinCount);
 
@@ -300,10 +299,10 @@ public class NormalFrameTest extends FrameTestBase {
         int secondPinCount = 3;
         int nextFrameFirstPinCount = 3;
         int nextFrameSecondPinCount = 5;
-        NormalFrame missFrame =  NormalFrame.first();
+        NormalFrame missFrame = NormalFrame.first();
         missFrame.addPinCount(firstPinCount);
         missFrame.addPinCount(secondPinCount);
-        NormalFrame nextFrameFirst =  missFrame.next();
+        NormalFrame nextFrameFirst = missFrame.next();
         nextFrameFirst.addPinCount(nextFrameFirstPinCount);
         nextFrameFirst.addPinCount(nextFrameSecondPinCount);
 
@@ -322,13 +321,13 @@ public class NormalFrameTest extends FrameTestBase {
         int secondPinCount = 3;
         int nextFrameFirstPinCount = 3;
         int nextFrameSecondPinCount = 5;
-        NormalFrame missFrame =  NormalFrame.first();
+        NormalFrame missFrame = NormalFrame.first();
         missFrame.addPinCount(firstPinCount);
         missFrame.addPinCount(secondPinCount);
-        NormalFrame nextFrameFirst =  missFrame.next();
+        NormalFrame nextFrameFirst = missFrame.next();
         nextFrameFirst.addPinCount(nextFrameFirstPinCount);
         nextFrameFirst.addPinCount(nextFrameSecondPinCount);
-        NormalFrame nextFrameSecond =  nextFrameFirst.next();
+        NormalFrame nextFrameSecond = nextFrameFirst.next();
         nextFrameSecond.addPinCount(nextFrameFirstPinCount);
         nextFrameSecond.addPinCount(nextFrameSecondPinCount);
 
@@ -343,7 +342,7 @@ public class NormalFrameTest extends FrameTestBase {
     @DisplayName("hit frame점수")
     void score_when_hit_state_frame() {
         int firstPinCount = 5;
-        NormalFrame hitFrame =  NormalFrame.first();
+        NormalFrame hitFrame = NormalFrame.first();
         hitFrame.addPinCount(firstPinCount);
 
         Score frameScore = hitFrame.score();
@@ -356,7 +355,7 @@ public class NormalFrameTest extends FrameTestBase {
     @Test
     @DisplayName("ready frame점수")
     void score_when_ready_state_frame() {
-        NormalFrame readyFrame =  NormalFrame.first();
+        NormalFrame readyFrame = NormalFrame.first();
 
         Score frameScore = readyFrame.score();
 
@@ -367,7 +366,7 @@ public class NormalFrameTest extends FrameTestBase {
     @Test
     @DisplayName("gutter frame점수")
     void score_when_gutter_state_frame() {
-        NormalFrame gutterFrame =  NormalFrame.first();
+        NormalFrame gutterFrame = NormalFrame.first();
 
         Score frameScore = gutterFrame.score();
 

@@ -5,16 +5,14 @@ import bowling.domain.score.UnDefinedScore;
 
 public class Gutter implements State {
 
-    public final static String SYMBOL = "-";
-
-    private final static int PIN_COUNT = 0;
+    public static final String SYMBOL = "-";
 
     @Override
-    public State newState(PinCount pinCount) {
-        if (pinCount.isStrike()) {
-            return new Spare(new PinCount(PIN_COUNT), pinCount);
+    public State newState(PinCount secondPinCount) {
+        if (secondPinCount.isSpare(PinCount.GUTTER)) {
+            return new Spare(PinCount.GUTTER, secondPinCount);
         }
-        return new Miss(new PinCount(PIN_COUNT), pinCount);
+        return new Miss(PinCount.GUTTER, secondPinCount);
     }
 
     @Override
@@ -29,7 +27,7 @@ public class Gutter implements State {
 
     @Override
     public Score score() {
-        return new UnDefinedScore(0);
+        return UnDefinedScore.ofEmpty();
     }
 
     @Override

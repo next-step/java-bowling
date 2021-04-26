@@ -6,17 +6,21 @@ import bowling.dto.PlayResult;
 
 public class Player {
 
-    private final PlayerName name;
+    private final PlayerName playerName;
 
     private final Frames frames;
 
-    private Player(PlayerName name, Frames frames) {
-        this.name = name;
+    private Player(PlayerName playerName, Frames frames) {
+        this.playerName = playerName;
         this.frames = frames;
     }
 
-    public Player(String name, int totalNumberOfFrame) {
-        this(new PlayerName(name), Frames.init(totalNumberOfFrame));
+    public Player(String playerName, int totalNumberOfFrame) {
+        this(new PlayerName(playerName), Frames.init(totalNumberOfFrame));
+    }
+
+    public Player(String playerName, Frames Frames) {
+        this(new PlayerName(playerName), Frames);
     }
 
     public void addPinCount(int pintCount) {
@@ -35,6 +39,10 @@ public class Player {
     }
 
     public PlayResult playResult() {
-        return new PlayResult(name, frames);
+        return new PlayResult(playerName, frames);
+    }
+
+    public String name() {
+        return playerName.name();
     }
 }

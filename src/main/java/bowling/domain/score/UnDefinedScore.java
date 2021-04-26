@@ -4,18 +4,21 @@ public class UnDefinedScore implements Score {
 
     private final int score;
 
-    public UnDefinedScore(int score) {
+    private UnDefinedScore(int score) {
         this.score = score;
+    }
+
+    public static UnDefinedScore of(int score) {
+        return new UnDefinedScore(score);
+    }
+
+    public static UnDefinedScore ofEmpty() {
+        return new UnDefinedScore(0);
     }
 
     @Override
     public int currentScore() {
         return score;
-    }
-
-    @Override
-    public int sumCurrentScore(int scoreToSum) {
-        return score + scoreToSum;
     }
 
     @Override

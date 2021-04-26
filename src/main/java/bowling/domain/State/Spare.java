@@ -7,8 +7,6 @@ public class Spare implements State {
 
     public final static String SYMBOL = "|/";
 
-    private final static int BONUS_COUNT = 1;
-
     private final PinCount firstPinCount;
 
     private final PinCount secondPinCount;
@@ -33,12 +31,16 @@ public class Spare implements State {
 
     @Override
     public String stateInString() {
-        return firstPinCount.countInString() + SYMBOL;
+        String firstPinCountInString = firstPinCount.countInString();
+        if (firstPinCount.isGutter()) {
+            firstPinCountInString = Gutter.SYMBOL;
+        }
+        return firstPinCountInString + SYMBOL;
     }
 
     @Override
     public Score score() {
-        return new UnFinishedScore(firstPinCount.sumCount(secondPinCount), BONUS_COUNT);
+        return UnFinishedScore.ofSpare(firstPinCount.sumCount(secondPinCount));
     }
 
     @Override

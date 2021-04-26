@@ -1,9 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.State.PinCount;
-import bowling.domain.score.Score;
 import bowling.domain.State.FinalState;
+import bowling.domain.State.PinCount;
 import bowling.domain.State.State;
+import bowling.domain.score.Score;
 
 public class FinalFrame implements Frame {
 
@@ -26,7 +26,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public void addPinCount(int pinCount) {
-        addPinCount(new PinCount(pinCount));
+        addPinCount(PinCount.of(pinCount));
     }
 
     @Override
