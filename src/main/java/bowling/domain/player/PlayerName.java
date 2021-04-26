@@ -40,6 +40,10 @@ public final class PlayerName {
         }
     }
 
+    public String value() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

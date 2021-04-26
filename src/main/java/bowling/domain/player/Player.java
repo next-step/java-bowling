@@ -18,6 +18,14 @@ public final class Player {
         this.frames = frames;
     }
 
+    public String playerName() {
+        return playerName.value();
+    }
+
+    public Frames frames() {
+        return frames;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
