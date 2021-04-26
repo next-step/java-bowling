@@ -84,9 +84,9 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-//    public List<Answer> getAnswers() {
-//        return answers;
-//    }
+    public Answers getAnswers() {
+        return answers;
+    }
 
     @Override
     public String toString() {
@@ -103,10 +103,6 @@ public class Question extends AbstractEntity {
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
 
         deleteHistories.addAll(answers.deleteAll(loginUser));
-//        List<Answer> answers = getAnswers();
-//        for (Answer answer : answers) {
-//            deleteHistories.add(answer.delete(loginUser));
-//        }
 
         return deleteHistories;
     }
