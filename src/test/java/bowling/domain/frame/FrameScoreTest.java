@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class FrameScoreTest {
 
@@ -21,5 +22,20 @@ class FrameScoreTest {
 
         // then
         assertThat(frameScore).isEqualTo(new FrameScore(pins));
+    }
+
+    @Test
+    @DisplayName("해당 Frame이 종료되었는지 반환한다.")
+    void isEnded() {
+        // given
+        final FrameScore endedFrame = new FrameScore(new NormalPins(new Pin(), new Pin(0)));
+        final FrameScore notEndedFrame = new FrameScore();
+
+        // when
+        // then
+        assertAll(
+                () -> assertThat(endedFrame.isEnded()).isTrue(),
+                () -> assertThat(notEndedFrame.isEnded()).isFalse()
+        );
     }
 }

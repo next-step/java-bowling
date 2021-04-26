@@ -23,6 +23,10 @@ public final class FrameScore {
         this.frameStatus = frameStatus;
     }
 
+    public boolean isEnded() {
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
