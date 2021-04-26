@@ -10,4 +10,8 @@ public interface Frame {
     PinCounts pinCounts();
 
     Frame next();
+
+    Score score();
+
+    Score add(Score score);
 }
