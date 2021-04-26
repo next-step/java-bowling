@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Continue implements State{
-    private static final String state = "Continue";
+    private static final String state = "CONTINUE";
     private final Pins pins;
 
     private Continue(Pins pins){

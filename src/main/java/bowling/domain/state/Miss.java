@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Miss implements State{
-    private static final String state = "Miss";
+    private static final String state = "MISS";
     private final Pins firstPins;
     private final Pins secondPins;
 

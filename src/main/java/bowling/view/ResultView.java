@@ -1,6 +1,5 @@
 package bowling.view;
 
-import bowling.domain.frame.Frame;
 import bowling.dto.FrameDTO;
 import bowling.dto.FramesDTO;
 import bowling.dto.PlayerDTO;
@@ -15,11 +14,11 @@ import static bowling.view.StateView.*;
 public class ResultView {
     private static final String FRAME_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String NAME_FORMAT = "  %-3s ";
-    private static final String DELIMITER = "|";
+    private static final String TWO_PITCH_FORMAT = "  %-4s";
+    private static final String THREE_PITCH_FORMAT = " %-5s";
     private static final int THREE_PITCH_STATE_LENGTH = 5;
 
-    private ResultView() {
-    }
+    private ResultView() {}
 
     private static void printFrames(String name, FramesDTO framesDTO) {
         List<String> frames = new ArrayList<>();
@@ -42,7 +41,7 @@ public class ResultView {
     private static String joinStates(List<StateDTO> stateDTOList) {
         List<String> states = new ArrayList<>();
         for(StateDTO stateDTO : stateDTOList){
-            states.add(stateMap.get(stateDTO.state()).apply(stateDTO));
+            states.add(StateView.valueOf(stateDTO.state()).stateView(stateDTO));
         }
         return states.stream()
                 .collect(Collectors.joining(DELIMITER));

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Strike implements State{
-    private static final String state = "Strike";
+    private static final String state = "STRIKE";
     private Strike(){}
 
     public static Strike create() {

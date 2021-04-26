@@ -11,9 +11,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class FinalFrame implements Frame{
-    private static final String STRIKE = "Strike";
-    private static final String Spare = "Spare";
-    private static final String Miss = "Miss";
+    private static final String STRIKE = "STRIKE";
+    private static final String SPARE = "SPARE";
+    private static final String MISS = "MISS";
     private int pitchCount = 0;
     private LinkedList<State> states = new LinkedList<>();
 
@@ -30,7 +30,7 @@ public class FinalFrame implements Frame{
     }
 
     private boolean isClear(State state) {
-        return (state.state().equals(STRIKE) || state.state().equals(Spare));
+        return (state.state().equals(STRIKE) || state.state().equals(SPARE));
     }
 
     private void addBonusState() {
@@ -54,7 +54,7 @@ public class FinalFrame implements Frame{
     @Override
     public boolean isFinished() {
         State state = states.getFirst();
-        return threePitchFinished(state) || state.state().equals(Miss);
+        return threePitchFinished(state) || state.state().equals(MISS);
     }
 
     @Override

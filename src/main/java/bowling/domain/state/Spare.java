@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Spare implements State {
-    private static final String state = "Spare";
+    private static final String state = "SPARE";
     private final Pins firstPins;
     private final Pins secondPins;
 

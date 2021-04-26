@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Ready implements State{
-    private static final String state = "Ready";
+    private static final String state = "READY";
     private Ready(){}
 
     public static Ready create(){
