@@ -1,21 +1,29 @@
 package bowling.domain.concrete.frame;
 
+import bowling.domain.engine.frame.FinalFrameCount;
 import bowling.domain.engine.frame.Frame;
 import bowling.domain.engine.frame.state.State;
 import bowling.domain.engine.frame.state.StateFactory;
 import bowling.domain.engine.roll.RollResult;
+import bowling.dto.FinalFrameExporter;
+
+import java.util.LinkedList;
 
 
 public class FinalFrame implements Frame {
 
-    private State state;
+    private final LinkedList<State> states;
+    private final FinalFrameCount finalFrameCount;
 
-    private FinalFrame(State state) {
-        this.state = state;
+    private FinalFrame(LinkedList<State> states) {
+        this.states = states;
+        this.finalFrameCount = new FinalFrameCount();
     }
 
     public static FinalFrame init() {
-        return new FinalFrame(StateFactory.ready());
+        LinkedList<State> states = new LinkedList<>();
+        states.add(StateFactory.ready());
+        return new FinalFrame(states);
     }
 
     @Override
@@ -24,21 +32,22 @@ public class FinalFrame implements Frame {
             throw new IllegalStateException("이미 프레임이 종료된 상태입니다.");
         }
 
-        if (state.isFinished() && state.canPromoteToBonusState()) {
-            state = state.continueInBonus().transit(rollResult);
-            return ;
-        }
+        State lastState = states.removeLast().transit(rollResult);
+        finalFrameCount.changeCount(lastState);
+        states.add(lastState);
 
-        state = state.transit(rollResult);
+        if (lastState.isFinished() && !finalFrameCount.isFinished()) {
+            states.add(StateFactory.ready());
+        }
     }
 
     @Override
     public boolean isEnded() {
-        return state.isFinished() && !state.canPromoteToBonusState();
+        return finalFrameCount.isFinished();
     }
 
     @Override
     public String export() {
-        return state.export();
+        return FinalFrameExporter.export(states);
     }
 }

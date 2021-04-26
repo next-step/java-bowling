@@ -1,15 +1,11 @@
 package bowling.domain.concrete.frame.state;
 
 import bowling.domain.engine.frame.state.Finished;
-import bowling.domain.engine.frame.state.bonus.BonusState;
-import bowling.domain.engine.frame.state.bonus.BonusStateFactory;
 import bowling.domain.engine.roll.RollResult;
 import bowling.dto.RollResultsDto;
 import bowling.dto.StateDto;
 
 public class Spare extends Finished {
-
-    private static final int BONUS_LEFT_COUNT = 1;
 
     private final RollResult firstRollResult;
     private final RollResult secondRollResult;
@@ -40,11 +36,6 @@ public class Spare extends Finished {
     @Override
     public boolean canPromoteToBonusState() {
         return true;
-    }
-
-    @Override
-    public BonusState continueInBonus() {
-        return BonusStateFactory.ready(this, BONUS_LEFT_COUNT);
     }
 
     @Override

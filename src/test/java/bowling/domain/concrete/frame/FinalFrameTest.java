@@ -53,6 +53,12 @@ class FinalFrameTest {
         strikeFrame.roll(Roll.result(10));
         assertThat(strikeFrame.isEnded()).isTrue();
 
+        FinalFrame strikeFrame2 = FinalFrame.init();
+        strikeFrame2.roll(Roll.result(10));
+        strikeFrame2.roll(Roll.result(6));
+        strikeFrame2.roll(Roll.result(4));
+        assertThat(strikeFrame2.isEnded()).isTrue();
+
         FinalFrame spareFrame = FinalFrame.init();
         spareFrame.roll(Roll.result(6));
         spareFrame.roll(Roll.result(4));
@@ -65,6 +71,8 @@ class FinalFrameTest {
         assertThat(missedFrame.isEnded()).isTrue();
 
         assertAll(
+            () -> assertThatThrownBy(() -> strikeFrame.roll(Roll.result(10)))
+                    .isInstanceOf(IllegalStateException.class),
             () -> assertThatThrownBy(() -> strikeFrame.roll(Roll.result(10)))
                     .isInstanceOf(IllegalStateException.class),
             () -> assertThatThrownBy(() -> spareFrame.roll(Roll.result(10)))

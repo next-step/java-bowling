@@ -22,7 +22,7 @@ public class Frames {
 
     public void roll(RollResult rollResult) {
         Frame currentFrame = frames.getLast();
-        if (frames.getLast().isEnded()) {
+        if (currentFrame.isEnded()) {
             currentFrame = frameCreator.create();
             frames.add(currentFrame);
         }
