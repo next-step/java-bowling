@@ -27,4 +27,9 @@ public final class FinalFrame extends Frame {
     public void knockDownPin(Pin pin) {
 
     }
+
+    @Override
+    public String status() {
+        return null;
+    }
 }

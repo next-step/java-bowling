@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.player.Player;
 import bowling.domain.player.PlayerName;
 import bowling.exception.PlayerNameValidationException;
 
@@ -8,7 +9,8 @@ public final class BowlingController {
     private BowlingController() {}
 
     public static void run() {
-        final PlayerName playerName = playerName(InputView.inputPlayerName());
+        final Player player = new Player(playerName(InputView.inputPlayerName()));
+        OutputView.printScoreBoard(player);
     }
 
     private static PlayerName playerName(final String playerName) {

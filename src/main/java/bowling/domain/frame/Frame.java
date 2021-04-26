@@ -20,6 +20,8 @@ public abstract class Frame {
 
     public abstract void knockDownPin(Pin pin);
 
+    public abstract String status();
+
     public RoundNumber roundNumber() {
         return roundNumber;
     }

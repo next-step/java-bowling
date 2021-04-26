@@ -44,4 +44,9 @@ public final class NormalFrame extends Frame {
     public void knockDownPin(Pin pin) {
 
     }
+
+    @Override
+    public String status() {
+        return null;
+    }
 }
