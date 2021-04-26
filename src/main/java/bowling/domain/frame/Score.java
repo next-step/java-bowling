@@ -21,4 +21,8 @@ public enum Score {
         this.expression = expression;
         this.score = score;
     }
+
+    public static Score valueOf(int score) {
+        return null;
+    }
 }
