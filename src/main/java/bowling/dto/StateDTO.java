@@ -1,4 +1,4 @@
-package bowling.dto.statedto;
+package bowling.dto;
 
 import java.util.List;
 

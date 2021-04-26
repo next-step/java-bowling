@@ -1,9 +1,10 @@
 package bowling.view;
 
+import bowling.domain.frame.Frame;
 import bowling.dto.FrameDTO;
 import bowling.dto.FramesDTO;
 import bowling.dto.PlayerDTO;
-import bowling.dto.statedto.StateDTO;
+import bowling.dto.StateDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +25,27 @@ public class ResultView {
         List<String> frames = new ArrayList<>();
         frames.add(String.format(NAME_FORMAT, name));
         for (FrameDTO frameDTO : framesDTO.frames()) {
-            frames.add(formatState(frameDTO.stateDTO()));
+            frames.add(formatState(frameDTO));
         }
         System.out.println(addDelimiter(frames));
     }
 
-    private static String formatState(StateDTO stateDTO) {
-        String state = stateMap.get(stateDTO.state()).apply(stateDTO);
+    private static String formatState(FrameDTO frameDTO) {
+        String state = joinStates(frameDTO.stateDTOList());
         String STATE_FORMAT = TWO_PITCH_FORMAT;
         if (state.length() >= THREE_PITCH_STATE_LENGTH) {
             STATE_FORMAT = THREE_PITCH_FORMAT;
         }
-        return String.format(STATE_FORMAT, stateMap.get(stateDTO.state()).apply(stateDTO));
+        return String.format(STATE_FORMAT, state);
+    }
+
+    private static String joinStates(List<StateDTO> stateDTOList) {
+        List<String> states = new ArrayList<>();
+        for(StateDTO stateDTO : stateDTOList){
+            states.add(stateMap.get(stateDTO.state()).apply(stateDTO));
+        }
+        return states.stream()
+                .collect(Collectors.joining(DELIMITER));
     }
 
     private static String addDelimiter(List<String> frames) {

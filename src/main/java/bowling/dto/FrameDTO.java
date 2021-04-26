@@ -1,15 +1,15 @@
 package bowling.dto;
 
-import bowling.dto.statedto.StateDTO;
+import java.util.List;
 
 public class FrameDTO {
-    private final StateDTO stateDTO;
+    private final List<StateDTO> stateDTOList;
 
-    public FrameDTO(StateDTO stateDTO) {
-        this.stateDTO = stateDTO;
+    public FrameDTO(List<StateDTO> stateDTOList) {
+        this.stateDTOList = stateDTOList;
     }
 
-    public StateDTO stateDTO(){
-        return stateDTO;
+    public List<StateDTO> stateDTOList(){
+        return stateDTOList;
     }
 }

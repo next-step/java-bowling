@@ -32,7 +32,7 @@ public class Frames {
     }
 
     private static Frame initFirstFrame(List<Frame> frames) {
-        Frame frame = Frame.init();
+        Frame frame = NormalFrame.init();
         frames.add(frame);
         return frame;
     }

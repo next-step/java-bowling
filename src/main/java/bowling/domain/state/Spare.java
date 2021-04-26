@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
-import bowling.dto.statedto.StateDTO;
+import bowling.dto.StateDTO;
 
 import java.util.ArrayList;
 import java.util.List;

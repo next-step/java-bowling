@@ -1,14 +1,10 @@
 package bowling.view;
 
-import bowling.dto.statedto.FinalStateDTO;
-import bowling.dto.statedto.StateDTO;
+import bowling.dto.StateDTO;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class StateView {
     private static final String EMPTY = "";
@@ -21,7 +17,6 @@ public class StateView {
     private static final String MISS = "Miss";
     private static final String SPARE = "Spare";
     private static final String STRIKE = "Strike";
-    private static final String FINAL_STATE = "FinalState";
     private static final int MIN_PINS = 0;
 
     public static final String TWO_PITCH_FORMAT = "  %-4s";
@@ -34,7 +29,6 @@ public class StateView {
         stateMap.put(MISS, StateView::missView);
         stateMap.put(SPARE, StateView::spareView);
         stateMap.put(STRIKE, StateView::strikeView);
-        stateMap.put(FINAL_STATE, StateView::finalStateView);
     }
 
     private static String printPins(int pins) {
@@ -69,16 +63,5 @@ public class StateView {
 
     public static String strikeView(StateDTO stateDTO) {
         return Strike;
-    }
-
-    public static String finalStateView(StateDTO stateDTO) {
-        FinalStateDTO finalStateDTO = (FinalStateDTO) stateDTO;
-        List<StateDTO> stateDTOList = finalStateDTO.stateDTOList();
-        List<String> states = new ArrayList<>();
-        for (StateDTO DTO : stateDTOList) {
-            states.add(stateMap.get(DTO.state()).apply(DTO));
-        }
-        return states.stream()
-                .collect(Collectors.joining(DELIMITER));
     }
 }
