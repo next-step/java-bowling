@@ -21,10 +21,6 @@ public class Pin {
     return pin;
   }
 
-  public String convertToString() {
-    return String.valueOf(pin);
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
