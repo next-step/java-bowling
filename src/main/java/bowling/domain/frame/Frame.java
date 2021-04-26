@@ -9,7 +9,7 @@ public abstract class Frame {
 
     public abstract boolean isFinished();
 
-    public abstract void addScore(int score);
+    public abstract Frame addScore(int score);
 
     @Override
     public boolean equals(Object o) {

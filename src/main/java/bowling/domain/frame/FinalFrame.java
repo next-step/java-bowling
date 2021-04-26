@@ -20,12 +20,18 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isFinished() {
+        if (scores.size() == 3) {
+            return true;
+        }
+        if (scores.size() == 2 && (scores.get(0) != Score.STRIKE && scores.get(1) == Score.SPARE)) {
+            return true;
+        }
         return false;
     }
 
     @Override
-    public void addScore(int score) {
-
+    public Frame addScore(int score) {
+        return FinalFrame.valueOf(3);
     }
 
     private static List<Score> generateScores(List<Integer> scores) {
