@@ -23,6 +23,7 @@ public class ResultView {
     roundSection();
     players.players()
         .forEach(ResultView::eachPlayerStateAndScore);
+    System.out.print(LINE_SEPARATOR);
   }
 
   private static void roundSection() {
