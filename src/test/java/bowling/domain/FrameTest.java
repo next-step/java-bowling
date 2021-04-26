@@ -64,4 +64,10 @@ public class FrameTest {
         assertThat(finalFrame.roundEnded()).isTrue();
     }
 
+    @DisplayName("프레임이 아직 시작 안한지 확인한다")
+    @Test
+    void frameNotYetTest() {
+        Frame frame = NormalFrame.from(Round.firstRound());
+        assertThat(frame.isNotYetStart()).isTrue();
+    }
 }
