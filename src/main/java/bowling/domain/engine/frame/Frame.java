@@ -1,6 +1,6 @@
 package bowling.domain.engine.frame;
 
-import bowling.domain.engine.roll.RollResult;
+import bowling.domain.RollResult;
 import bowling.dto.Exportable;
 
 public interface Frame extends Exportable<String> {

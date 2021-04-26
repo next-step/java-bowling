@@ -1,7 +1,7 @@
 package bowling.domain.concrete.frame.state;
 
+import bowling.domain.RollResult;
 import bowling.domain.engine.frame.state.State;
-import bowling.domain.engine.roll.RollResult;
 import bowling.dto.RollResultsDto;
 import bowling.dto.StateDto;
 

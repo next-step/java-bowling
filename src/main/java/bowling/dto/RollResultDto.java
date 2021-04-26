@@ -1,6 +1,6 @@
 package bowling.dto;
 
-import bowling.domain.engine.roll.RollResult;
+import bowling.domain.RollResult;
 
 public class RollResultDto {
 

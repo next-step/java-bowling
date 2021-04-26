@@ -1,9 +1,9 @@
 package bowling.domain.concrete.frame;
 
+import bowling.domain.RollResult;
 import bowling.domain.engine.frame.Frame;
 import bowling.domain.engine.frame.state.State;
 import bowling.domain.engine.frame.state.StateFactory;
-import bowling.domain.engine.roll.RollResult;
 
 public class NormalFrame implements Frame {
 

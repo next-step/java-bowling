@@ -1,22 +1,30 @@
-package bowling.domain.engine.roll;
+package bowling.domain;
 
 import bowling.dto.Exportable;
 
 import java.util.Objects;
+import java.util.stream.IntStream;
 
-public abstract class RollResult implements Exportable<String> {
+public class RollResult implements Exportable<String> {
 
     private static final int MIN = 0;
     private static final int MAX = 10;
+    private static final RollResult[] CACHE = IntStream.rangeClosed(MIN, MAX)
+                                                       .mapToObj(RollResult::new)
+                                                       .toArray(RollResult[]::new);
 
     private final int value;
 
-    protected RollResult(int value) {
-        validate(value);
+    private RollResult(int value) {
         this.value = value;
     }
 
-    private void validate(int value) {
+    public static RollResult of(int numberOfPins) {
+        validate(numberOfPins);
+        return CACHE[numberOfPins];
+    }
+
+    private static void validate(int value) {
         if (value < MIN || MAX < value) {
             throw new IllegalArgumentException("쓰러트릴 수 있는 핀의 개수는 0 이상 10 이하 입니다.");
         }

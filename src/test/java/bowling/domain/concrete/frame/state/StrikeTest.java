@@ -1,8 +1,7 @@
 package bowling.domain.concrete.frame.state;
 
+import bowling.domain.RollResult;
 import bowling.domain.engine.frame.state.State;
-import bowling.domain.engine.roll.Roll;
-import bowling.domain.engine.roll.RollResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,14 +15,14 @@ class StrikeTest {
 
     @BeforeEach
     void setUp() {
-        RollResult firstRoll = Roll.result(10);
+        RollResult firstRoll = RollResult.of(10);
         strikeState = new Strike(firstRoll);
     }
 
     @Test
     @DisplayName("Strike 상태는 더 이상 다른 상태로 바뀔 수 없다.")
     void cannotTransit() {
-        assertThatThrownBy(() -> strikeState.transit(Roll.result(0)))
+        assertThatThrownBy(() -> strikeState.transit(RollResult.of(0)))
             .isInstanceOf(IllegalStateException.class);
     }
 
@@ -42,7 +41,7 @@ class StrikeTest {
     @Test
     @DisplayName("핀을 전부 쓰러트리지 않은 결과로 초기화하면 예외 처리한다.")
     void throwExceptionIfSomePinsRemain() {
-        assertThatThrownBy(() -> new Strike(Roll.result(6))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Strike(RollResult.of(6))).isInstanceOf(IllegalArgumentException.class);
     }
     
 }

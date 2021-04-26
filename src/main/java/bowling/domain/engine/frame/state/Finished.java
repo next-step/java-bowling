@@ -1,6 +1,6 @@
 package bowling.domain.engine.frame.state;
 
-import bowling.domain.engine.roll.RollResult;
+import bowling.domain.RollResult;
 
 public abstract class Finished implements State {
 

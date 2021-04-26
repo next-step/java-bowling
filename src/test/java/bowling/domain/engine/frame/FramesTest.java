@@ -1,6 +1,6 @@
 package bowling.domain.engine.frame;
 
-import bowling.domain.engine.roll.Roll;
+import bowling.domain.RollResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,14 +10,14 @@ class FramesTest {
 
     static Frames allFinishedFrames() {
         Frames frames = new Frames();
-        frames.roll(Roll.result(10));
+        frames.roll(RollResult.of(10));
 
         for (int i = 0; i < 8; i++){
-            frames.roll(Roll.result(10));
+            frames.roll(RollResult.of(10));
         }
 
-        frames.roll(Roll.result(7));
-        frames.roll(Roll.result(2));
+        frames.roll(RollResult.of(7));
+        frames.roll(RollResult.of(2));
 
         return frames;
     }
@@ -28,7 +28,7 @@ class FramesTest {
         Frames frames = new Frames();
         assertThat(frames.getNextFrameNumber()).isEqualTo(1);
 
-        frames.roll(Roll.result(10));
+        frames.roll(RollResult.of(10));
 
         assertThat(frames.getNextFrameNumber()).isEqualTo(2);
     }
