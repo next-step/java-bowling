@@ -5,7 +5,9 @@ import java.util.Objects;
 public class NormalFrame implements Frame {
     private static final int NORMAL_FRAME_INDEX_MAX = 8;
     private static final int FIRST_FRAME_INDEX = 0;
-    private static final int PIN_COUNT_SIZE_MAX = 2;
+    private static final int PIN_COUNTS_EMPTY = 0;
+    private static final int PIN_COUNTS_SINGLE_SIZE = 1;
+    private static final int PIN_COUNTS_SIZE_MAX = 2;
     private static final String CANNOT_THROW_MORE_THAN_TWO = "2번을 초과하여 던질 수 없습니다.";
 
     private final int index;
@@ -22,7 +24,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame throwBowl(String pinCount) {
-        if (pinCounts.pinCounts().size() == PIN_COUNT_SIZE_MAX) {
+        if (size() == PIN_COUNTS_SIZE_MAX) {
             throw new IllegalArgumentException(CANNOT_THROW_MORE_THAN_TWO);
         }
 
@@ -73,8 +75,8 @@ public class NormalFrame implements Frame {
         int previousScoreChance = previousScore.leftOpportunity();
         int previousScoreValue = previousScore.value();
 
-        if (pinCounts().pinCounts().isEmpty()
-                || (previousScoreChance == 2 && pinCounts.pinCounts().size() == 1 && !pinCounts().isFirstPinCountStrike())) {
+        if (size() == PIN_COUNTS_EMPTY
+                || (previousScoreChance == 2 && size() == PIN_COUNTS_SINGLE_SIZE && !pinCounts().isFirstPinCountStrike())) {
             return Score.unCountableScore();
         }
 
@@ -85,7 +87,7 @@ public class NormalFrame implements Frame {
         if (pinCounts().isFirstPinCountStrike()) {
             return Score.Spare(pinCounts.totalPinCount() + previousScoreValue);
         }
-        System.out.println("abc");
+
         return Score.Miss(pinCounts.totalPinCount() + previousScoreValue);
     }
 

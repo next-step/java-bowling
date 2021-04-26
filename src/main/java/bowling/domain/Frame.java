@@ -14,4 +14,8 @@ public interface Frame {
     Score score();
 
     Score add(Score score);
+
+    default int size() {
+        return pinCounts().pinCounts().size();
+    }
 }
