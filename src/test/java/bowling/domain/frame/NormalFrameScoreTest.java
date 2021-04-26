@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class FrameScoreTest {
+class NormalFrameScoreTest {
 
     @Test
     @DisplayName("Pins를 입력받아 FrameScore를 생성한다.")
