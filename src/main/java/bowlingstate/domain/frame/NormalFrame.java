@@ -1,14 +1,12 @@
 package bowlingstate.domain.frame;
 
 import bowlingstate.domain.Pin;
-import bowlingstate.domain.ScoreSymbol;
 import bowlingstate.domain.state.Ready;
 import bowlingstate.domain.state.State;
 import java.util.List;
 
 public class NormalFrame extends Frame {
 
-  private static final int NORMAL_FRAME_MAX_SIZE = 2;
   private static final int MAX_PIN_COUNT = 10;
   private State state;
 
@@ -27,10 +25,6 @@ public class NormalFrame extends Frame {
     }
   }
 
-  private boolean isStrike() {
-    return symbol() == ScoreSymbol.STRIKE;
-  }
-
   public void play(int countOfHitPin) {
     validateHitPin(countOfHitPin);
     pins.add(new Pin(countOfHitPin));
@@ -42,6 +36,6 @@ public class NormalFrame extends Frame {
   }
 
   public boolean isEndFrame() {
-    return pins.size() >= NORMAL_FRAME_MAX_SIZE || isStrike();
+    return state.isFinished();
   }
 }

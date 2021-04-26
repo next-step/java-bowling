@@ -2,7 +2,6 @@ package bowlingstate.domain.frame;
 
 import bowlingstate.domain.Pins;
 import bowlingstate.domain.Score;
-import bowlingstate.domain.ScoreSymbol;
 import bowlingstate.domain.state.Ready;
 import bowlingstate.domain.state.State;
 import java.util.List;
@@ -10,7 +9,6 @@ import org.springframework.util.ObjectUtils;
 
 public abstract class Frame {
 
-  private static final int NORMAL_FRAME_MAX_SIZE = 2;
   protected final Pins pins;
   protected State state;
   protected Score score;
@@ -26,10 +24,6 @@ public abstract class Frame {
 
   public boolean isEmpty() {
     return pins.isEmpty();
-  }
-
-  protected ScoreSymbol symbol() {
-    return ScoreSymbol.symbol(pins.totalHitPin(), pins.size() < NORMAL_FRAME_MAX_SIZE);
   }
 
   abstract public void initScore();
