@@ -14,7 +14,7 @@ public class QuestionTest {
     @Test
     @DisplayName("작성자가 본인이 아니면, 질문을 삭제할 수 없다.")
     void cannotDeleteQuestionByOtherUser() {
-        assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI))
+        assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI).toReadOnlyList())
                 .isInstanceOf(CannotDeleteException.class);
     }
 
@@ -23,14 +23,17 @@ public class QuestionTest {
     void cannotDeleteQuestionWithAnswers() {
         Q1.addAnswer(AnswerTest.A2);
 
-        assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI))
+        assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI).toReadOnlyList())
                 .isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
     @DisplayName("질문을 삭제하면, DeleteHistory의 List을 반환한다.")
     void deleteQuestionTest() throws CannotDeleteException {
-        assertThat(Q1.delete(UserTest.JAVAJIGI).size()).isEqualTo(1);
+        assertThat(Q1.delete(UserTest.JAVAJIGI)
+                .toReadOnlyList()
+                .size())
+                .isEqualTo(1);
     }
 
     @Test
@@ -39,6 +42,9 @@ public class QuestionTest {
         Q1.addAnswer(AnswerTest.A1);
         Q1.addAnswer(AnswerTest.A1);
 
-        assertThat(Q1.delete(UserTest.JAVAJIGI).size()).isEqualTo(3);
+        assertThat(Q1.delete(UserTest.JAVAJIGI)
+                .toReadOnlyList()
+                .size())
+                .isEqualTo(3);
     }
 }
