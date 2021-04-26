@@ -26,6 +26,10 @@ public class Score {
     return this.score;
   }
 
+  public int getLeft() {
+    return this.left;
+  }
+
   public boolean canCalculateScore() {
     return left == 0;
   }

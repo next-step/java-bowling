@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Strike implements State {
 
-  private static final String STRIKE_SYMBOL = "X";
+  public static final String STRIKE_SYMBOL = "X";
 
   @Override
   public State bowl(int countOfHitPin) {

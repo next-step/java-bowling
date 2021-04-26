@@ -32,5 +32,4 @@ public class Pins {
   public boolean isEmpty() {
     return pins.isEmpty();
   }
-
 }
