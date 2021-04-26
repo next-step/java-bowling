@@ -30,7 +30,11 @@ public class Answers implements Iterable<Answer> {
         return answers.size();
     }
 
-    public List<DeleteHistory> deleteAll(User loginUser) {
+    public DeleteHistories deleteAll(User loginUser) {
+        return new DeleteHistories(createDeleteHistories(loginUser));
+    }
+
+    private List<DeleteHistory> createDeleteHistories(User loginUser) {
         return answers.stream()
                 .map(answer -> answer.delete(loginUser))
                 .collect(Collectors.toList());

@@ -85,7 +85,7 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> delete(User loginUser) {
+    public DeleteHistories delete(User loginUser) {
         validateDeleteUser(loginUser);
         this.deleted = true;
         return this.assembleDeleteHistories(new DeleteHistory(this), answers.deleteAll(loginUser));
@@ -100,10 +100,7 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private List<DeleteHistory> assembleDeleteHistories(DeleteHistory deleteHistory, List<DeleteHistory> answerDeleteHistories) {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(deleteHistory);
-        deleteHistories.addAll(answerDeleteHistories);
-        return deleteHistories;
+    private DeleteHistories assembleDeleteHistories(DeleteHistory deleteHistory, DeleteHistories answerDeleteHistories) {
+        return new DeleteHistories(deleteHistory, answerDeleteHistories);
     }
 }
