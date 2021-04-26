@@ -4,6 +4,7 @@ public class FinalFrame implements Frame {
     private static final String CANNOT_THROW_THIRD_BOWL = "3구를 던질수 없습니다.";
     private static final int FINAL_INDEX = 9;
     private static final int FIRST_PIN_COUNT_INDEX = 0;
+    private static final int SECOND_PIN_COUNT_INDEX = 1;
     private static final int PIN_COUNT_MAX = 10;
 
     private final PinCounts pinCounts;
@@ -34,8 +35,8 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isThirdThrowPossible() {
-        return pinCounts.pinCounts().get(FIRST_PIN_COUNT_INDEX).isStrike()
-                || (!pinCounts.pinCounts().get(FIRST_PIN_COUNT_INDEX).isStrike() && pinCounts.totalPinCount() == PIN_COUNT_MAX);
+        return pinCounts.isFirstPinCountStrike()
+                || (!pinCounts.isFirstPinCountStrike() && pinCounts.totalPinCount() == PIN_COUNT_MAX);
     }
 
     private Frame addBowl(int pinPinCount) {
@@ -65,5 +66,33 @@ public class FinalFrame implements Frame {
     @Override
     public Frame next() {
         return this;
+    }
+
+    @Override
+    public Score score() {
+        if (!isFinished()) {
+            return Score.unCountableScore();
+        }
+
+        return Score.Miss(pinCounts.totalPinCount());
+    }
+
+    @Override
+    public Score add(Score previousScore) {
+        int previousScoreChance = previousScore.leftOpportunity();
+        int previousScoreValue = previousScore.value();
+
+        if (pinCounts().pinCounts().isEmpty()
+                || (previousScoreChance == 2 && pinCounts.pinCounts().size() <= 1)) {
+            return Score.unCountableScore();
+        }
+
+        if (previousScoreChance == 1) {
+            return Score.Miss(pinCounts.pinCounts().get(FIRST_PIN_COUNT_INDEX).value() + previousScoreValue);
+        }
+
+        return Score.Miss(pinCounts.pinCounts().get(FIRST_PIN_COUNT_INDEX).value()
+                + pinCounts.pinCounts().get(SECOND_PIN_COUNT_INDEX).value()
+                + previousScoreValue);
     }
 }
