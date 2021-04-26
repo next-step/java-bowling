@@ -1,9 +1,9 @@
 package bowling.contorller;
 
-import bowling.domain.BowlingBoard;
-import bowling.domain.Player;
-import bowling.domain.Point;
-import bowling.domain.ThrowCount;
+import bowling.domain.bowlingboard.BowlingBoard;
+import bowling.domain.bowlingboard.Player;
+import bowling.domain.bowlingboard.ThrowCount;
+import bowling.domain.score.Point;
 import bowling.dto.BowlingBoardDto;
 import bowling.dto.PlayerDto;
 import bowling.view.InputView;

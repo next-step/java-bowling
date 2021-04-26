@@ -1,8 +1,8 @@
 package bowling.dto;
 
-import bowling.domain.BonusScore;
 import bowling.domain.BowlingRole;
-import bowling.domain.Score;
+import bowling.domain.score.BonusScore;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.Arrays;

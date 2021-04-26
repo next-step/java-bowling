@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.score.Score;
+
 import java.util.Arrays;
 
 public enum BowlingRole {

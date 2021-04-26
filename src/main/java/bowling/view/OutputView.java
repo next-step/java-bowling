@@ -1,7 +1,7 @@
 package bowling.view;
 
 import bowling.domain.BowlingRole;
-import bowling.domain.ThrowCount;
+import bowling.domain.bowlingboard.ThrowCount;
 import bowling.dto.BowlingBoardDto;
 import bowling.dto.PlayerDto;
 import bowling.dto.ScoreDto;

@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.score;
 
+
+import bowling.domain.BowlingRole;
 
 import java.util.Arrays;
 import java.util.List;

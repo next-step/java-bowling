@@ -1,5 +1,11 @@
-package bowling.domain;
+package bowling.domain.bowlingboard;
 
+import bowling.domain.ThrowsState;
+import bowling.domain.frame.BowlingFrame;
+import bowling.domain.frame.BowlingNormalFrame;
+import bowling.domain.frame.round.Round;
+import bowling.domain.score.FramePoint;
+import bowling.domain.score.Point;
 import bowling.dto.ScoreDto;
 
 import java.util.ArrayList;

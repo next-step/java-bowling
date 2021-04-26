@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame.round;
 
 public class FinalRound extends Round {
 

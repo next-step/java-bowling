@@ -1,5 +1,11 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.BowlingRole;
+import bowling.domain.frame.round.FinalRound;
+import bowling.domain.frame.round.Round;
+import bowling.domain.score.FramePoint;
+import bowling.domain.score.Point;
+import bowling.domain.score.Score;
 import bowling.dto.ScoreDto;
 
 public abstract class BowlingFrame {

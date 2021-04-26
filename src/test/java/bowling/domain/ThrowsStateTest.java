@@ -1,5 +1,14 @@
 package bowling.domain;
 
+import bowling.domain.bowlingboard.BowlingBoard;
+import bowling.domain.bowlingboard.ThrowCount;
+import bowling.domain.frame.BowlingFinalFrame;
+import bowling.domain.frame.BowlingFrame;
+import bowling.domain.frame.BowlingNormalFrame;
+import bowling.domain.frame.round.FinalRound;
+import bowling.domain.frame.round.Round;
+import bowling.domain.score.Point;
+import bowling.domain.score.Score;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

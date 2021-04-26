@@ -1,4 +1,7 @@
-package bowling.domain;
+package bowling.domain.score;
+
+import bowling.domain.BowlingRole;
+import bowling.domain.frame.round.Round;
 
 public class BonusScore {
 

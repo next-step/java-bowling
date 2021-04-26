@@ -1,8 +1,8 @@
 package bowling.dto;
 
-import bowling.domain.BowlingBoard;
-import bowling.domain.FramePoint;
-import bowling.domain.ThrowCount;
+import bowling.domain.bowlingboard.BowlingBoard;
+import bowling.domain.bowlingboard.ThrowCount;
+import bowling.domain.score.FramePoint;
 
 import java.util.ArrayList;
 import java.util.List;

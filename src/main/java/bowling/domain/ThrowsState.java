@@ -1,5 +1,11 @@
 package bowling.domain;
 
+import bowling.domain.bowlingboard.BowlingBoard;
+import bowling.domain.bowlingboard.ThrowCount;
+import bowling.domain.frame.BowlingFrame;
+import bowling.domain.frame.round.FinalRound;
+import bowling.domain.score.Point;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
