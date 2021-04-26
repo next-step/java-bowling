@@ -7,9 +7,9 @@ import java.util.Objects;
 public abstract class Frame {
     protected List<Score> scores;
 
-    abstract boolean isFinished();
+    public abstract boolean isFinished();
 
-    abstract void addScore(int score);
+    public abstract void addScore(int score);
 
     @Override
     public boolean equals(Object o) {

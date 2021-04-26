@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class FinalFrame extends Frame {
@@ -8,6 +9,9 @@ public class FinalFrame extends Frame {
         this.scores = scores;
     }
 
+    public static FinalFrame valueOf(int score) {
+        return new FinalFrame(Arrays.asList(Score.valueOf(score)));
+    }
 
     @Override
     public boolean isFinished() {
@@ -15,7 +19,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    void addScore(int score) {
+    public void addScore(int score) {
 
     }
 }

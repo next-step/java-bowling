@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,9 +32,9 @@ public class FrameTest {
 
     @ParameterizedTest
     @MethodSource("NormalFrame_프레임이_끝난_경우")
-    public void NormalFrameIsFinished_프레임이_끝난경우1(int score1, int score2) {
+    public void NormalFrameIsFinished_프레임이_끝난_경우1(int score1, int score2) {
         // given
-        NormalFrame normalFrame = NormalFrame.valueOf(Arrays.asList(score1, score2));
+        Frame normalFrame = NormalFrame.valueOf(Arrays.asList(score1, score2));
 
         // when
 
@@ -43,15 +44,41 @@ public class FrameTest {
     }
 
     @Test
-    public void NormalFrameIsFinished_프레임이_끝난경우2() {
+    public void NormalFrameIsFinished_프레임이_끝난_경우2() {
         // given
-        NormalFrame normalFrame = NormalFrame.valueOf(Arrays.asList(10));
+        Frame normalFrame = NormalFrame.valueOf(Arrays.asList(10));
 
         // when
 
 
         // then
         assertThat(normalFrame.isFinished()).isTrue();
+    }
+
+    private static Stream<Arguments> NormalFrame_프레임이_안끝난_경우() {
+        return Stream.of(
+                arguments(0),
+                arguments(1),
+                arguments(2),
+                arguments(3),
+                arguments(4),
+                arguments(5),
+                arguments(6),
+                arguments(7),
+                arguments(8),
+                arguments(9)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("NormalFrame_프레임이_안끝난_경우")
+    public void NormalFrameIsFinished_프레임이_안끝난_경우(int score) {
+        // given
+        Frame normalFrame = NormalFrame.valueOf(score);
+        // when
+
+        // then
+        assertThat(normalFrame.isFinished()).isFalse();
     }
 
 
