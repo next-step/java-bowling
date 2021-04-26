@@ -41,7 +41,7 @@ public class QuestionTest {
 
     @DisplayName("삭제가 되었을 때 반환 값으로 삭제 내역들을 기록한 객체를 반환하는지 테스트")
     @Test
-    void 반환_삭제기록들(){
+    void 반환_삭제기록들() {
 
         // then
         assertAll(
