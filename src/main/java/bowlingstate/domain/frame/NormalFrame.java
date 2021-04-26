@@ -14,7 +14,6 @@ public class NormalFrame extends Frame {
     this.state = new Ready();
   }
 
-  @Override
   public void initScore() {
     this.score = state.of();
   }
