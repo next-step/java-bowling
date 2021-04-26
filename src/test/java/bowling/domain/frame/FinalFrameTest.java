@@ -48,7 +48,7 @@ class FinalFrameTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"10,10,10,X|X|X", "10,0,10,X|-|X", "0,10,10|-|/|X", "9,1,3,9|/|3", "3,4,0,3|4", "0,0,0,-|-"})
+    @CsvSource({"10,10,10,X|X|X", "10,0,10,X|-|/", "0,10,10|-|/|X", "9,1,3,9|/|3", "3,4,0,3|4", "0,0,0,-|-"})
     @DisplayName("FinalFrame은 조건별로 출력이 다르다.")
     void status(int firstPinCount, int secondPinCount, int thirdPinCount, String expected) {
         // given
