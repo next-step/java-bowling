@@ -3,7 +3,7 @@ package bowling.domain.concrete.frame.state;
 import bowling.domain.RollResult;
 import bowling.domain.engine.frame.state.State;
 import bowling.dto.RollResultsDto;
-import bowling.dto.StateDto;
+import bowling.dto.StateExporter;
 
 public class Playing implements State {
 
@@ -36,6 +36,6 @@ public class Playing implements State {
 
     @Override
     public String export() {
-        return StateDto.PLAYING.export(RollResultsDto.of(firstRoll));
+        return StateExporter.PLAYING.export(RollResultsDto.of(firstRoll));
     }
 }

@@ -3,7 +3,7 @@ package bowling.domain.concrete.frame.state;
 import bowling.domain.RollResult;
 import bowling.domain.engine.frame.state.Finished;
 import bowling.dto.RollResultsDto;
-import bowling.dto.StateDto;
+import bowling.dto.StateExporter;
 
 public class Miss extends Finished {
 
@@ -35,6 +35,6 @@ public class Miss extends Finished {
 
     @Override
     public String export() {
-        return StateDto.MISS.export(RollResultsDto.of(firstRollResult, secondRollResult));
+        return StateExporter.MISS.export(RollResultsDto.of(firstRollResult, secondRollResult));
     }
 }

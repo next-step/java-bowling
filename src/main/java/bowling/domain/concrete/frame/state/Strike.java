@@ -3,7 +3,7 @@ package bowling.domain.concrete.frame.state;
 import bowling.domain.RollResult;
 import bowling.domain.engine.frame.state.Finished;
 import bowling.dto.RollResultsDto;
-import bowling.dto.StateDto;
+import bowling.dto.StateExporter;
 
 public class Strike extends Finished {
 
@@ -27,6 +27,6 @@ public class Strike extends Finished {
 
     @Override
     public String export() {
-        return StateDto.STRIKE.export(RollResultsDto.of(strikeRoll));
+        return StateExporter.STRIKE.export(RollResultsDto.of(strikeRoll));
     }
 }
