@@ -3,8 +3,7 @@ package bowling.domain.engine.frame;
 import bowling.domain.RollResult;
 import bowling.dto.FramesDto;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.LinkedList;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -14,7 +13,7 @@ public class Frames {
     private static final int TOTAL_FRAMES = 10;
 
     private final FrameCreator frameCreator = new FrameCreator();
-    private final Deque<Frame> frames = new ArrayDeque<>();
+    private final LinkedList<Frame> frames = new LinkedList<>();
 
     public Frames() {
         frames.add(frameCreator.create());
