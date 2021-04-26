@@ -1,9 +1,13 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.NormalPins;
+import bowling.domain.pin.Pin;
+import bowling.domain.pin.Pins;
 import bowling.exception.IllegalNormalFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -84,5 +88,22 @@ class NormalFrameTest {
     @DisplayName("NormalFrame은 FinalFrame이 아니다.")
     void isFinalFrame() {
         assertThat(NormalFrame.createFirstFrame().isFinalFrame()).isFalse();
+    }
+
+    @ParameterizedTest
+    @CsvSource({"10,0,X", "9,1,9|/", "3,4,3|4", "0,0,-|-"})
+    @DisplayName("조건별로 출력이 다르다.")
+    void status(int firstPinCount, int secondPinCount, String expected) {
+        // given
+        final Pin firstPin = new Pin(firstPinCount);
+        final Pin secondPin = new Pin(secondPinCount);
+        final Pins pins = new NormalPins(firstPin, secondPin);
+        final Frame frame = NormalFrame.of(RoundNumber.firstRoundNumber(), new FrameScore(pins));
+
+        // when
+        final String status = frame.status();
+
+        // then
+        assertThat(status).isEqualTo(expected);
     }
 }
