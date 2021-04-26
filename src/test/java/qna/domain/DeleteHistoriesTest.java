@@ -63,4 +63,22 @@ class DeleteHistoriesTest {
         assertThat(actual).isEqualTo(1);
     }
 
+    @DisplayName("DeleteHistories 인스턴스가 쇼유한 값에 리스트 타입의 데이터 추가 여부 테스트")
+    @Test
+    void 추가_all() {
+        // given
+        List<DeleteHistory> deleteHistoryList = new ArrayList<>();
+        List<DeleteHistory> extractList = new ArrayList<>();
+        DeleteHistory deleteHistory = new DeleteHistory();
+
+        // when
+        DeleteHistories deleteHistories = new DeleteHistories(deleteHistoryList);
+        extractList.add(deleteHistory);
+        deleteHistories.addAll(extractList);
+        int actual = deleteHistories.histories().size();
+
+        // then
+        assertThat(actual).isEqualTo(1);
+    }
+
 }
