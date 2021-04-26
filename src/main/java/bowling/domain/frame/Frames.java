@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.Round;
 import bowling.domain.Score;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,12 +11,10 @@ public class Frames {
 
   private static final int FINAL_ROUND = 10;
   private final List<Frame> frames;
-  private Round round;
   private List<Integer> scores;
 
   public Frames(List<Frame> frames) {
     this.frames = frames;
-    this.round = Round.firstRound();
     this.scores = new ArrayList<>();
   }
 
@@ -40,7 +37,6 @@ public class Frames {
     calculateScore(countOfHitPin);
     if (frame.isEndFrame()) {
       frame.initScore();
-      round = round.next();
     }
   }
 
@@ -72,14 +68,6 @@ public class Frames {
         .limit(index + 1)
         .mapToInt(frame -> frame.score.getScore())
         .sum();
-  }
-
-  public boolean isContinue() {
-    return frames.get(FINAL_ROUND - 1).isLastFrame();
-  }
-
-  public int round() {
-    return round.round();
   }
 
   public boolean isEndFrame(int currFrame) {
