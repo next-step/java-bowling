@@ -37,7 +37,7 @@ public class ReadyTest {
     @DisplayName("Strike 상태로 변경 확인 테스트")
     void bowlToStrikeTest() {
         Pins pins = Pins.ofFirstPitch(10);
-        assertThat(ready.bowl(10)).isEqualTo(Strike.create());
+        assertThat(ready.bowl(10)).isEqualTo(Strike.of(pins));
     }
 
     @ParameterizedTest(name = "넘어뜨린 핀 개수 예외 테스트")

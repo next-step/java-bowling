@@ -1,5 +1,6 @@
 package bowling.state;
 
+import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
 import bowling.domain.state.State;
 import bowling.domain.state.Strike;
@@ -15,7 +16,8 @@ public class StrikeTest {
 
     @BeforeEach
     void setUp() {
-        strike = Strike.create();
+        Pins pins = Pins.ofFirstPitch(10);
+        strike = Strike.of(pins);
     }
 
     @Test

@@ -1,14 +1,13 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
-import bowling.domain.exception.CannotBowlException;
 import bowling.dto.StateDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Strike implements State{
+public class Strike extends FinishedState{
     private static final String state = "STRIKE";
     private final Pins pins;
     private Strike(Pins pins){
@@ -20,18 +19,8 @@ public class Strike implements State{
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
-    }
-
-    @Override
     public String state() {
         return state;
-    }
-
-    @Override
-    public State bowl(int pitch) {
-        throw new CannotBowlException();
     }
 
     @Override
