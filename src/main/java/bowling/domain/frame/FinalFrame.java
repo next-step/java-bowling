@@ -1,99 +1,106 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.Spare;
 import bowling.domain.state.State;
 import bowling.domain.state.Strike;
-
 import java.util.LinkedList;
-import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 
-    private static final int MIN_PITCH_COUNT = 2;
-    private static final int MAX_PITCH_COUNT = 3;
-    public static final String INVALID_END_PLAY = "더이상 진행 할 수 없습니다.";
-    private LinkedList<State> states;
-    private Score score;
+  private static final int MIN_PITCH_COUNT = 2;
+  private static final int MAX_PITCH_COUNT = 3;
+  public static final String INVALID_END_PLAY = "더이상 진행 할 수 없습니다.";
+  private LinkedList<State> states;
+  private Score score;
 
-    public FinalFrame() {
-        this.states = new LinkedList<>();
-        states.add(new Ready());
+  public FinalFrame() {
+    this.states = new LinkedList<>();
+    states.add(new Ready());
+  }
+
+  public void play(Pin pinCount) {
+    if (this.isEnd()) {
+      throw new IllegalArgumentException(INVALID_END_PLAY);
     }
 
-    public void play(int count) {
-        if (this.isEnd()) {
-            throw new IllegalArgumentException(INVALID_END_PLAY);
-        }
-
-        if (states.getLast().isFinish()) {
-            states.add(new Ready());
-        }
-
-        State state = states.getLast();
-        states.removeLast();
-        states.addLast(state.play(count));
-
-        createScore();
+    if (states.getLast().isFinish()) {
+      states.add(new Ready());
     }
 
-    private void createScore() {
-        this.score = new Score(sumAllCount(), 0);
+    State state = states.getLast();
+    states.removeLast();
+    states.addLast(state.play(pinCount));
+
+    createScore();
+
+  }
+
+
+  private void createScore() {
+    this.score = new Score(sumAllCount(), 0);
+  }
+
+  public boolean isEnd() {
+    if (states.isEmpty()) {
+      return false;
     }
 
-    public boolean isEnd() {
-        if (states.isEmpty()) {
-            return false;
-        }
-
-        if (!hasBonusPitch() && this.sumAllPitchCount() == MIN_PITCH_COUNT) {
-            return true;
-        }
-
-        return this.sumAllPitchCount() == MAX_PITCH_COUNT;
+    if (!hasBonusPitch() && this.sumAllPitchCount() == MIN_PITCH_COUNT) {
+      return true;
     }
 
-    private boolean hasBonusPitch() {
-        return states.stream()
-                .anyMatch(state -> state instanceof Strike || state instanceof Spare);
+    return this.sumAllPitchCount() == MAX_PITCH_COUNT;
+  }
+
+  private boolean hasBonusPitch() {
+    return states.stream()
+        .anyMatch(state -> isStrikeOrSpare(state));
+  }
+
+  private boolean isStrikeOrSpare(State state) {
+    if (state instanceof Strike || state instanceof Spare) {
+      return true;
     }
 
-    private int sumAllPitchCount() {
-        return states.stream()
-                .mapToInt(State::getPitchCount)
-                .sum();
-    }
+    return false;
+  }
 
-    private int sumAllCount() {
-        return states.stream()
-                .mapToInt(State::getTotalCount)
-                .sum();
-    }
+  private int sumAllPitchCount() {
+    return states.stream()
+        .mapToInt(State::getPitchCount)
+        .sum();
+  }
 
-    @Override
-    public Frame next() {
-        throw new IllegalArgumentException(INVALID_END_PLAY);
-    }
+  private int sumAllCount() {
+    return states.stream()
+        .mapToInt(State::getTotalCount)
+        .sum();
+  }
 
-    @Override
-    public String getFallenPins() {
-        return states.stream()
-                .map(State::toString)
-                .collect(Collectors.joining("|"));
-    }
+  @Override
+  public Frame next() {
+    throw new IllegalArgumentException(INVALID_END_PLAY);
+  }
 
-    @Override
-    public int getScore() {
-        return this.score.getScore();
-    }
+  @Override
+  public int getScore() {
+    return this.score.getScore();
+  }
 
-    public boolean hasScore() {
-        return isEnd();
-    }
+  public boolean hasScore() {
+    return isEnd();
+  }
 
-    @Override
-    public void calculateScore(int index, int count) {
+  public LinkedList<State> getStates() {
+    return states;
+  }
 
-    }
+  @Override
+  public void calculateScore(int index, Pin count) {
+
+  }
+
 }

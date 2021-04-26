@@ -1,18 +1,18 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pin;
+
 public interface Frame {
 
-    void play(int count);
+  boolean isEnd();
 
-    boolean isEnd();
+  Frame next();
 
-    Frame next();
+  int getScore();
 
-    String getFallenPins();
+  void calculateScore(int index, Pin count);
 
-    int getScore();
+  boolean hasScore();
 
-    void calculateScore(int index, int count);
-
-    boolean hasScore();
+  void play(Pin pinCount);
 }

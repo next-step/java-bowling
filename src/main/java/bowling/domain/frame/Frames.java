@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 
+import bowling.domain.Pin;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,91 +10,104 @@ import java.util.stream.Collectors;
 
 public class Frames {
 
-    public static final int MAX_PLAY_COUNT = 10;
-    public static final String INVALID_END_PLAY = "더이상 진행 할 수 없습니다.";
-    private final List<Frame> frames;
+  public static final int MAX_PLAY_COUNT = 10;
+  public static final String INVALID_END_PLAY = "더이상 진행 할 수 없습니다.";
+  private final List<Frame> frames;
 
 
-    public Frames() {
-        this.frames = new ArrayList<>();
+  public Frames() {
+    this.frames = new ArrayList<>();
+  }
+
+  public void play(Pin pinCount) {
+    if (isEnd()) {
+      throw new IllegalArgumentException(INVALID_END_PLAY);
     }
 
-    public void play(int count) {
-        if (isEnd()) {
-            throw new IllegalArgumentException(INVALID_END_PLAY);
-        }
+    makeFrame();
+    getLastFrame().play(pinCount);
+    calculateScore(pinCount);
+  }
 
-        makeFrame();
-        getLastFrame().play(count);
-        calculateScore(count);
+  private void calculateScore(Pin pinCount) {
+    for (Frame frame : frames) {
+      int index = size() - 1;
+      frame.calculateScore(index, pinCount);
+    }
+  }
+
+  private void makeFrame() {
+    if (frames.isEmpty()) {
+      frames.add(NormalFrame.createFirst());
+      return;
     }
 
-    private void calculateScore(int count) {
-        for (Frame frame : frames) {
-            int index = frames.size() - 1;
-            frame.calculateScore(index, count);
-        }
+    if (!getLastFrame().isEnd()) {
+      return;
     }
 
-    private void makeFrame() {
-        if (frames.isEmpty()) {
-            frames.add(NormalFrame.createFirst());
-            return;
-        }
+    frames.add(nextFrame());
+  }
 
-        if (!getLastFrame().isEnd()) {
-            return;
-        }
+  private Frame nextFrame() {
+    return size() > NormalFrame.MAX_PLAY_COUNT ? new FinalFrame() : getLastFrame().next();
+  }
 
-        frames.add(frames.size() > NormalFrame.MAX_PLAY_COUNT ? new FinalFrame() : getLastFrame().next());
+  private boolean isFinalFrame() {
+    return frames.size() == MAX_PLAY_COUNT;
+  }
+
+  public boolean isEnd() {
+    return isFinalFrame() && getLastFrame().isEnd();
+  }
+
+  private Frame getLastFrame() {
+    if (frames.isEmpty()) {
+      throw new IllegalArgumentException(INVALID_END_PLAY);
     }
 
+    return frames.get(size() - 1);
+  }
 
-    private boolean isFinalFrame() {
-        return frames.size() == MAX_PLAY_COUNT;
+  public List<Frame> getFrames() {
+    return Collections.unmodifiableList(frames);
+  }
+
+  public int getIndex() {
+    if (frames.isEmpty() || getLastFrame().isEnd()) {
+      return size() + 1;
     }
 
-    public boolean isEnd() {
-        return isFinalFrame() && getLastFrame().isEnd();
-    }
+    return size();
+  }
 
-    private Frame getLastFrame() {
-        if (frames.isEmpty()) {
-            throw new IllegalArgumentException(INVALID_END_PLAY);
-        }
+  public List<Integer> getScores() {
+    return frames.stream()
+        .filter(Frame::hasScore)
+        .map(Frame::getScore)
+        .collect(Collectors.toList());
+  }
 
-        return frames.get(frames.size() - 1);
-    }
+  public int size() {
+    return frames.size();
+  }
 
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
-    }
+  @Override
+  public boolean equals(Object o) {
+      if (this == o) {
+          return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+          return false;
+      }
+    Frames frames1 = (Frames) o;
+    return Objects.equals(frames, frames1.frames);
+  }
 
-    public int getIndex() {
-        if (frames.isEmpty() || getLastFrame().isEnd()) {
-            return frames.size() + 1;
-        }
+  @Override
+  public int hashCode() {
+    return Objects.hash(frames);
+  }
 
-        return frames.size();
-    }
 
-    public List<Integer> getScores() {
-        return frames.stream()
-                .filter(Frame::hasScore)
-                .map(Frame::getScore)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Frames frames1 = (Frames) o;
-        return Objects.equals(frames, frames1.frames);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(frames);
-    }
 }

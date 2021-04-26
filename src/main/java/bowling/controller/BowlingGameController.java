@@ -1,24 +1,51 @@
 package bowling.controller;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
+import bowling.domain.Pin;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BowlingGameController {
-    public void run(){
 
-        InputView inputView = new InputView();
-        ResultView resultView = new ResultView();
+  private final InputView inputView = new InputView();
+  private final ResultView resultView = new ResultView();
 
-        String playerName = inputView.inputName();
-        BowlingGame game = new BowlingGame(playerName);
+  public void run() {
 
-        resultView.printEmptyResult(playerName);
+    int playerCount = inputView.inputPlayerCount();
 
-        while (!game.isEnd()) {
-            int count = inputView.inputPinCount(game.getFrameCount());
-            game.play(count);
-            resultView.printResult(playerName, game.getFrames(), game.getScore());
-        }
+    List<String> playerNames = IntStream.range(0, playerCount)
+        .mapToObj(index -> inputView.inputName())
+        .collect(Collectors.toList());
+
+    BowlingGames bowlingGames = new BowlingGames(playerNames);
+
+    resultView.printEmptyResult(playerNames);
+
+    while (!bowlingGames.isEnd()) {
+      playBowlingGame(bowlingGames);
     }
+
+  }
+
+  private void playBowlingGame(BowlingGames bowlingGames) {
+    for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
+      play(bowlingGames, bowlingGame);
+    }
+  }
+
+  private void play(BowlingGames bowlingGames, BowlingGame bowlingGame) {
+    int currentFrameCount = bowlingGame.getFrameCount();
+
+    while (bowlingGame.isCurrentFrame(currentFrameCount)) {
+      int count = inputView.inputPinCountByPlayer(bowlingGame.getPlayer());
+      bowlingGame.play(new Pin(count));
+      resultView.printResult(bowlingGames);
+    }
+  }
+
 }
