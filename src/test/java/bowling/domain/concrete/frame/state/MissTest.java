@@ -38,7 +38,7 @@ class MissTest {
     @Test
     @DisplayName("Miss 상태에서는 두 투구의 결과를 | 로 구분하여 표기하며, 이를 내보낸다.")
     void export() {
-        assertThat(missState.export()).isEqualTo(firstRoll.export() + "|" + secondRoll.export());
+        assertThat(missState.export()).isEqualTo(firstRoll.getValue() + "|" + secondRoll.getValue());
     }
 
     @Test

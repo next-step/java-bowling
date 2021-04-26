@@ -1,11 +1,9 @@
 package bowling.domain;
 
-import bowling.dto.Exportable;
-
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class RollResult implements Exportable<String> {
+public class RollResult {
 
     private static final int MIN = 0;
     private static final int MAX = 10;
@@ -44,14 +42,6 @@ public class RollResult implements Exportable<String> {
 
     public int getValue() {
         return value;
-    }
-
-    @Override
-    public String export() {
-        if (value == MAX) {
-            return "X";
-        }
-        return String.valueOf(value);
     }
 
     @Override

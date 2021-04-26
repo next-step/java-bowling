@@ -36,7 +36,7 @@ class SpareTest {
     @Test
     @DisplayName("Spare 상태에서는 마지막 투구를 / 로 표기하며, 이를 내보낸다.")
     void export() {
-        assertThat(spareState.export()).isEqualTo(firstRoll.export() + "|/");
+        assertThat(spareState.export()).isEqualTo(firstRoll.getValue() + "|/");
     }
 
     @Test
