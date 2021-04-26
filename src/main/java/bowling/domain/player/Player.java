@@ -9,6 +9,10 @@ public final class Player {
     private final PlayerName playerName;
     private final Frames frames;
 
+    public Player(PlayerName playerName) {
+        this(null, null);
+    }
+
     public Player(PlayerName playerName, Frames frames) {
         this.playerName = playerName;
         this.frames = frames;
