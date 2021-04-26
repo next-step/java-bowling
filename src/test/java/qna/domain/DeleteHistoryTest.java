@@ -15,4 +15,12 @@ class DeleteHistoryTest {
 
         assertThat(deleteHistory).isNotNull();
     }
+
+    @DisplayName("DeleteHistory 인스턴스를 Question 인스턴스 하나로 생성 가능 여부 테스트")
+    @Test
+    void 생성_Question() {
+        DeleteHistory deleteHistory = new DeleteHistory(QuestionTest.Q1);
+
+        assertThat(deleteHistory).isNotNull();
+    }
 }
