@@ -57,4 +57,8 @@ public class Round {
     public boolean isFinalRound() {
         return round == FINAL_ROUND;
     }
+
+    public int round() {
+        return round;
+    }
 }

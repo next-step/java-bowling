@@ -26,4 +26,8 @@ public enum ScoreMark {
         }
         return findScoreMark;
     }
+
+    public String mark() {
+        return this.mark;
+    }
 }

@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Pins {
@@ -48,12 +49,24 @@ public class Pins {
     }
 
     private void validatePinSize() {
-        if (pins.size() > PIN_SIZE_BOUND ) {
+        if (pins.size() > PIN_SIZE_BOUND) {
             throw new IllegalStateException(PIN_SIZE_EXCEPTION_MESSAGE);
         }
     }
 
     public int tryCount() {
         return pins.size();
+    }
+
+    public List<Pin> pins() {
+        return Collections.unmodifiableList(pins);
+    }
+
+    public Pin firstPin() {
+        return pins.get(FIRST_TRY);
+    }
+
+    public Pin bonusPin() {
+        return pins.get(BONUS_TRY);
     }
 }
