@@ -1,6 +1,7 @@
 package bowlingstate.domain.frame;
 
 import bowlingstate.domain.Pin;
+import bowlingstate.domain.Score;
 import bowlingstate.domain.state.Ready;
 import bowlingstate.domain.state.State;
 import java.util.ArrayList;
@@ -48,10 +49,8 @@ public class FinalFrame extends Frame {
     states.add(currState.bowl(countOfHitPin));
   }
 
-  @Override
   public void initScore() {
-    State currState = states.getLast();
-    score = currState.of();
+    score = new Score(pins.totalHitPin(), 0);
   }
 
   public boolean isEndFrame() {
