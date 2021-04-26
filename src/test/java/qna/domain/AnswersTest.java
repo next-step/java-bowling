@@ -36,12 +36,17 @@ public class AnswersTest {
     @Test
     void 반환_삭제기록들() {
         // given
-        List<Answer> answerList = new ArrayList<>(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
+        List<Answer> answerListA1 = new ArrayList<>(Arrays.asList(AnswerTest.A1));
+        List<Answer> answerListA2 = new ArrayList<>(Arrays.asList(AnswerTest.A2));
 
-        Answers answers = new Answers(answerList);
+        Answers answersA1 = new Answers(answerListA1);
+        Answers answersA2 = new Answers(answerListA2);
+
         assertAll(
-                () -> assertThat(answers.delete(UserTest.JAVAJIGI)).isNotNull(),
-                () -> assertThat(answers.delete(UserTest.JAVAJIGI)).isInstanceOf(DeleteHistories.class)
+                () -> assertThat(answersA1.delete(UserTest.JAVAJIGI)).isNotNull(),
+                () -> assertThat(answersA1.delete(UserTest.JAVAJIGI)).isInstanceOf(DeleteHistories.class),
+                () -> assertThat(answersA2.delete(UserTest.SANJIGI)).isNotNull(),
+                () -> assertThat(answersA2.delete(UserTest.SANJIGI)).isInstanceOf(DeleteHistories.class)
         );
     }
 }
