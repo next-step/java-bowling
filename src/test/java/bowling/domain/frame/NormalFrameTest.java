@@ -20,7 +20,7 @@ class NormalFrameTest {
     void create() {
         // given
         final RoundNumber roundNumber = new RoundNumber(1);
-        final FrameScore frameScore = new NormalFrameScore();
+        final NormalFrameScore frameScore = new NormalFrameScore();
 
         // when
         final Frame frame = NormalFrame.of(roundNumber, frameScore);
@@ -35,7 +35,7 @@ class NormalFrameTest {
         // given
         final int firstRoundNumber = 1;
         final RoundNumber roundNumber = new RoundNumber(firstRoundNumber);
-        final FrameScore frameScore = new NormalFrameScore();
+        final NormalFrameScore frameScore = new NormalFrameScore();
 
         // when
         final Frame frame = NormalFrame.createFirstFrame();
@@ -51,7 +51,7 @@ class NormalFrameTest {
         // given
         final RoundNumber roundNumber = new RoundNumber(roundNumberSource);
         final RoundNumber nextRoundNumber = new RoundNumber(roundNumberSource + 1);
-        final FrameScore frameScore = new NormalFrameScore();
+        final NormalFrameScore frameScore = new NormalFrameScore();
         final Frame frame = NormalFrame.of(roundNumber, frameScore);
 
         // when
@@ -74,7 +74,7 @@ class NormalFrameTest {
     void NineFrameNextFrame() {
         // given
         final RoundNumber nineRoundNumber = new RoundNumber(9);
-        final FrameScore frameScore = new NormalFrameScore();
+        final NormalFrameScore frameScore = new NormalFrameScore();
         final Frame nineFrame = NormalFrame.of(nineRoundNumber, frameScore);
 
         // when

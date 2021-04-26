@@ -7,11 +7,11 @@ public final class NormalFrame extends Frame {
 
     public static final int MAX_NORMAL_FRAME_ROUND_NUMBER = 9;
 
-    private NormalFrame(RoundNumber roundNumber, FrameScore frameScore) {
+    private NormalFrame(RoundNumber roundNumber, NormalFrameScore frameScore) {
         super(roundNumber, frameScore);
     }
 
-    public static Frame of(RoundNumber roundNumber, FrameScore frameScore) {
+    public static Frame of(RoundNumber roundNumber, NormalFrameScore frameScore) {
         validateNormalRoundNumber(roundNumber);
         return new NormalFrame(roundNumber, frameScore);
     }
