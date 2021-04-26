@@ -24,7 +24,7 @@ public class Player {
 
     private static void validateNameFormat(String name) {
         if (!Pattern.matches(NAME_LANGUAGE_PATTERN, name)) {
-            throw new IllegalArgumentException("NAME_LANGUAGE_EXCEPTION_MESSAGE");
+            throw new IllegalArgumentException(NAME_LANGUAGE_EXCEPTION_MESSAGE);
         }
     }
 
