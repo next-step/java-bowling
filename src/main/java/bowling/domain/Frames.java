@@ -60,4 +60,21 @@ public class Frames {
                 .map(FrameMark::new)
                 .collect(Collectors.toList());
     }
+
+    public List<Integer> scores() {
+        return frames.stream()
+                .map(this::score)
+                .collect(Collectors.toList());
+    }
+
+    private int score(Frame frame) {
+        Score score = frame.score();
+
+        while (score.isOpportunityLeft()) {
+            frame = frames.get(frame.next().index());
+            score = frame.add(score);
+        }
+
+        return score.value();
+    }
 }
