@@ -19,7 +19,13 @@ public class DeleteHistories {
         deleteHistories.add(deleteHistory);
     }
 
+    public void addAll(DeleteHistories additionalDeleteHistories) {
+        deleteHistories.addAll(additionalDeleteHistories.histories());
+    }
+
     public List<DeleteHistory> histories() {
         return deleteHistories;
     }
+
+
 }

@@ -49,4 +49,6 @@ public class AnswersTest {
                 () -> assertThat(answersA2.delete(UserTest.SANJIGI)).isInstanceOf(DeleteHistories.class)
         );
     }
+
+
 }

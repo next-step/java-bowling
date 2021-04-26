@@ -68,13 +68,13 @@ class DeleteHistoriesTest {
     void 추가_all() {
         // given
         List<DeleteHistory> deleteHistoryList = new ArrayList<>();
-        List<DeleteHistory> extractList = new ArrayList<>();
+        DeleteHistories additionalDeleteHistories = new DeleteHistories();
         DeleteHistory deleteHistory = new DeleteHistory();
 
         // when
         DeleteHistories deleteHistories = new DeleteHistories(deleteHistoryList);
-        extractList.add(deleteHistory);
-        deleteHistories.addAll(extractList);
+        additionalDeleteHistories.add(deleteHistory);
+        deleteHistories.addAll(additionalDeleteHistories);
         int actual = deleteHistories.histories().size();
 
         // then

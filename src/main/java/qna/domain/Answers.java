@@ -33,4 +33,8 @@ public class Answers {
         }
         return deleteHistories;
     }
+
+    public void add(Answer answer) {
+        answers.add(answer);
+    }
 }
