@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.FinalPins;
 import bowling.domain.pin.Pin;
-import bowling.domain.pin.Pins;
 import bowling.exception.NoNextFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,15 +47,15 @@ class FinalFrameTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"10,10,10,X|X|X", "10,0,10,X|-|/", "0,10,10|-|/|X", "9,1,3,9|/|3", "3,4,0,3|4", "0,0,0,-|-"})
+    @CsvSource({"10,10,10,X|X|X", "10,0,10,X|-|/", "0,10,10,-|/|X", "9,1,3,9|/|3", "3,4,0,3|4", "0,0,0,-|-"})
     @DisplayName("FinalFrame은 조건별로 출력이 다르다.")
     void status(int firstPinCount, int secondPinCount, int thirdPinCount, String expected) {
         // given
         final Pin firstPin = new Pin(firstPinCount);
         final Pin secondPin = new Pin(secondPinCount);
         final Pin thirdPin = new Pin(thirdPinCount);
-        final Pins pins = new FinalPins(firstPin, secondPin, thirdPin);
-        final Frame frame = FinalFrame.from(new NormalFrameScore(pins));
+        final FinalPins pins = new FinalPins(firstPin, secondPin, thirdPin);
+        final Frame frame = FinalFrame.from(new FinalFrameScore(pins));
 
         // when
         final String status = frame.status();

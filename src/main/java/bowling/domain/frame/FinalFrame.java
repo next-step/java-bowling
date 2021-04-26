@@ -30,6 +30,6 @@ public final class FinalFrame extends Frame {
 
     @Override
     public String status() {
-        return null;
+        return frameScore.status();
     }
 }
