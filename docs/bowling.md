@@ -90,6 +90,6 @@
 - [x] `Pin`의 목록을 관리하는 클래스를 정의한다.
     - [x] 기본적으로 두 개의 Pin을 관리하는 `NormalPins`
     - [x] 마지막 Frame에서 사용되는 `FinalPins` 가 있다.
-- [ ] `Pins`를 이용해 FrameScore를 개선한다.
-    - [ ] FrameScore는 `Pins` 와 `FrameStatus`를 가진다.
-    - [ ] FrameScore는 해당 프레임이 종료되었는지 확인하는 메서드를 가져야한다.
+- [x] `Pins`를 이용해 FrameScore를 개선한다.
+    - [x] FrameScore는 `Pins` 와 `FrameStatus`를 가진다.
+    - [x] FrameScore는 해당 프레임이 종료되었는지 확인하는 메서드를 가져야한다.

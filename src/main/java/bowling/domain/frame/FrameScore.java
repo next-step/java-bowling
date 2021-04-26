@@ -24,7 +24,7 @@ public final class FrameScore {
     }
 
     public boolean isEnded() {
-        return false;
+        return FrameStatus.NONE != frameStatus;
     }
 
     @Override
