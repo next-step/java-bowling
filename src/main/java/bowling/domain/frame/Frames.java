@@ -37,8 +37,8 @@ public class Frames {
         return frame;
     }
 
-    public Frame nthFrame(int index) {
-        return frames.get(index);
+    public Frame nthFrame(int frameNo) {
+        return frames.get(frameNo);
     }
 
     public void bowl(int pitch, int index) {
