@@ -24,12 +24,9 @@ public class FinalFrame extends Frame {
   }
 
   public List<String> frameState() {
-    List<String> s = new ArrayList<>();
-
-    for (State state : states) {
-      s.addAll(state.state());
-    }
-    return s;
+    List<String> frameState = new ArrayList<>();
+    states.forEach(state -> frameState.addAll(state.state()));
+    return frameState;
   }
 
   protected void validateHitPin(int countOfHitPin) {
