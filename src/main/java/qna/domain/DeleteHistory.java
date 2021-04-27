@@ -24,12 +24,21 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
+    public DeleteHistory(Question question) {
+        this(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
+    }
+
+    public DeleteHistory(Answer answer) {
+        this(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
+    }
+
     public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
         this.contentType = contentType;
         this.contentId = contentId;
         this.deletedBy = deletedBy;
         this.createDate = createDate;
     }
+
 
     @Override
     public boolean equals(Object o) {
