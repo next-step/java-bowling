@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,9 +29,11 @@ public class FinalFrameTest {
     @MethodSource("FinalFrame_프레임이_끝난_경우_2번_던지기")
     public void FinalFrame_프레임이_끝난_경우_2번_던지기(int score1, int score2) {
         // given
-        Frame finalFrame = FinalFrame.valueOf(Arrays.asList(score1, score2));
+        Frame finalFrame = new FinalFrame();
 
         // when
+        finalFrame = finalFrame.addScore(score1);
+        finalFrame = finalFrame.addScore(score2);
 
         // then
         assertThat(finalFrame.isFinished()).isTrue();
@@ -53,9 +54,12 @@ public class FinalFrameTest {
     @MethodSource("FinalFrame_프레임이_끝난_경우_3번_던지기")
     public void FinalFrame_프레임이_끝난_경우_3번_던지기(int score1, int score2, int score3) {
         // given
-        Frame finalFrame = FinalFrame.valueOf(Arrays.asList(score1, score2, score3));
+        Frame finalFrame = new FinalFrame();
 
         // when
+        finalFrame = finalFrame.addScore(score1);
+        finalFrame = finalFrame.addScore(score2);
+        finalFrame = finalFrame.addScore(score3);
 
         // then
         assertThat(finalFrame.isFinished()).isTrue();
@@ -76,9 +80,11 @@ public class FinalFrameTest {
     @MethodSource("FinalFrame_프레임이_끝나지_않은_경우_2번_던지기")
     public void FinalFrame_프레임이_끝나지_않은_경우_2번_던지기(int score1, int score2) {
         // given
-        Frame finalFrame = FinalFrame.valueOf(Arrays.asList(score1, score2));
+        Frame finalFrame = new FinalFrame();
 
         // when
+        finalFrame = finalFrame.addScore(score1);
+        finalFrame = finalFrame.addScore(score2);
 
         // then
         assertThat(finalFrame.isFinished()).isFalse();
@@ -104,9 +110,10 @@ public class FinalFrameTest {
     @MethodSource("FinalFrame_프레임이_끝나지_않은_경우_1번_던지기")
     public void FinalFrame_프레임이_끝나지_않은_경우_1번_던지기(int score1) {
         // given
-        Frame finalFrame = FinalFrame.valueOf(Arrays.asList(score1));
+        Frame finalFrame = new FinalFrame();
 
         // when
+        finalFrame.addScore(score1);
 
         // then
         assertThat(finalFrame.isFinished()).isFalse();

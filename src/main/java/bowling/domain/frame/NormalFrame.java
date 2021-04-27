@@ -11,7 +11,7 @@ public class NormalFrame extends Frame {
         this.scores = new ArrayList<>();
     }
 
-    private NormalFrame(List<Score> scores) {
+    public NormalFrame(List<Score> scores) {
         this.scores = scores;
     }
 

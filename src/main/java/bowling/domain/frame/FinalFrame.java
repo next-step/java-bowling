@@ -1,10 +1,15 @@
 package bowling.domain.frame;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
+
+    public FinalFrame() {
+        this.scores = new ArrayList<>();
+    }
 
     public FinalFrame(List<Score> scores) {
         this.scores = scores;
