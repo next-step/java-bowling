@@ -1,11 +1,16 @@
 package bowling.domain.frame;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class NormalFrame extends Frame {
+    public NormalFrame() {
+        this.scores = new ArrayList<>();
+    }
+
     private NormalFrame(List<Score> scores) {
         this.scores = scores;
     }
@@ -35,14 +40,10 @@ public class NormalFrame extends Frame {
             return new NormalFrame(Arrays.asList(Score.valueOf(score)));
         }
         if (scores.size() == 1) {
-
+            return new NormalFrame(Arrays.asList(scores.get(0), Score.valueOf(scores.get(0), score)));
         }
+        return this;
     }
-
-    private boolean isSpare(int score) {
-
-    }
-
 
     private static List<Score> generateScores(List<Integer> scores) {
         return scores.stream()
