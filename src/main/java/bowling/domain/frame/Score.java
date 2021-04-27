@@ -40,4 +40,8 @@ public enum Score {
         }
         return valueOf(score);
     }
+
+    public String getExpression() {
+        return this.expression;
+    }
 }

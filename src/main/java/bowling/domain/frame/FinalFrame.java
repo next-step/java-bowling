@@ -47,6 +47,11 @@ public class FinalFrame extends Frame {
         }
     }
 
+    @Override
+    public String toPrint() {
+        return null;
+    }
+
     private List<Score> add(Score score) {
         this.scores.add(score);
         return this.scores;

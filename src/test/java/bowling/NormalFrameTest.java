@@ -127,4 +127,19 @@ public class NormalFrameTest {
         // then
         assertThat(normalFrame.isFinished()).isFalse();
     }
+
+    private static Stream<Arguments> toPrint() {
+        return Stream.of(
+                arguments(0, 5),
+                arguments(1, 9),
+                arguments(2, 8),
+                arguments(3, 4),
+                arguments(4, 3),
+                arguments(5, 5),
+                arguments(6, 4),
+                arguments(7, 1),
+                arguments(8, 1),
+                arguments(9, 1)
+        );
+    }
 }

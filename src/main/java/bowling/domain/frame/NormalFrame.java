@@ -41,7 +41,15 @@ public class NormalFrame extends Frame {
             return;
         }
     }
-    
+
+    @Override
+    public String toPrint() {
+        StringBuilder sb = new StringBuilder();
+        this.scores.stream()
+                .forEach(score -> sb.append(score.getExpression()));
+        return sb.toString();
+    }
+
     @Override
     public boolean equals(Object o) {
         return super.equals(o);

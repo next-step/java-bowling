@@ -11,6 +11,8 @@ public abstract class Frame {
 
     public abstract void addScore(int score) throws Exception;
 
+    public abstract String toPrint();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

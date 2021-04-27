@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class Frames {
+public final class Frames {
     private final List<Frame> frames;
 
     public Frames() {
