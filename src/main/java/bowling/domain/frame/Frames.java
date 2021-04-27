@@ -1,74 +1,86 @@
 package bowling.domain.frame;
 
-import java.util.Collections;
+import bowling.domain.Pin;
+
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Frames {
 
+    public static final int MAX_FRAME_COUNT = 10;
     private final List<Frame> frames;
-    private FrameRound currentRound;
 
-    public Frames(List<Frame> frames) {
-        this.frames = frames;
-        this.currentRound = FrameRound.start();
+    public Frames() {
+        this.frames = new LinkedList<>();
     }
 
-    public static Frames get(List<Frame> frames) {
-        return new Frames(frames);
+    public void bowl(int countOfPin) {
+        if (isEnd()) {
+            throw new IllegalArgumentException("프레임이 종료되었습니다.");
+        }
+
+        createFrame();
+        getLastFrame().bowl(countOfPin);
+        calculateScore(countOfPin);
     }
 
-    public static Frames init() {
-        List<Frame> frames = createNormalFrames();
-        frames.add(FinalFrame.get());
-
-        return get(frames);
-    }
-
-    private static List<Frame> createNormalFrames() {
-        return IntStream.range(FrameRound.MIN_ROUND, FrameRound.MAX_ROUND)
-                .mapToObj(FrameRound::get)
-                .map(NormalFrame::get)
-                .collect(Collectors.toList());
-    }
-
-    public void pitch(int pinPoint) {
-        Frame frame = frames.get(getCurrentRound() - 1);
-        frame.pitch(pinPoint);
-
-        if (frame.isNextFrame()) {
-            currentRound = currentRound.next();
+    private void calculateScore(int countOfPin) {
+        for (Frame frame : frames) {
+            frame.calculateScore(frames.size() - 1, countOfPin);
         }
     }
 
-    public boolean isLastFrame() {
-        return frames.get(FrameRound.MAX_ROUND - 1).isLast();
+    private void createFrame() {
+        if (frames.isEmpty()) {
+            frames.add(NormalFrame.first());
+            return;
+        }
+
+        if (!getLastFrame().isEnd()) {
+            return;
+        }
+
+        Frame finalFrame = frames.size() > NormalFrame.MAX_NORMAL_FRAME_NUMBER ? new FinalFrame() : getLastFrame().next();
+        frames.add(finalFrame);
     }
 
-    public Frame getCurrentFrame() {
-        return frames.get(getCurrentRound() - 1);
+    public boolean isFinalFrame() {
+        return frames.size() == MAX_FRAME_COUNT;
     }
 
-    public int getCurrentRound() {
-        return currentRound.getRound();
+    public boolean isEnd() {
+        return  isFinalFrame() && getLastFrame().isEnd();
+    }
+
+    private Frame getLastFrame() {
+        if (frames.isEmpty()) {
+            throw new IllegalArgumentException("프레임이 비었습니다.");
+        }
+
+        return frames.get(frames.size() - 1);
+    }
+
+    public List<Integer> getScores() {
+        return frames.stream()
+                .filter(Frame::hasScore)
+                .map(Frame::getScore)
+                .collect(Collectors.toList());
+    }
+
+    public int getFrameNumber() {
+        if (frames.isEmpty() || getLastFrame().isEnd()) {
+            return frames.size() + 1;
+        }
+
+        return frames.size();
     }
 
     public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
+        return frames;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Frames frames1 = (Frames) o;
-        return Objects.equals(frames, frames1.frames) && Objects.equals(currentRound, frames1.currentRound);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(frames, currentRound);
+    public int size() {
+        return frames.size();
     }
 }

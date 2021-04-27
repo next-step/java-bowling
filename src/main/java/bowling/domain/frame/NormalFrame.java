@@ -1,52 +1,100 @@
 package bowling.domain.frame;
 
-public class NormalFrame extends Frame {
+import bowling.domain.Score;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
 
-    public static final int MAX_PITCH = 2;
+import java.util.Objects;
 
-    public NormalFrame(FrameRound frameRound) {
-        super(frameRound);
+public class NormalFrame implements Frame {
+
+    public static final int MIN_NORMAL_FRAME_NUMBER = 0;
+    public static final int MAX_NORMAL_FRAME_NUMBER = 8;
+    public static final int ADD_FRAME_NUMBER = 1;
+    public static final String INVALID_FRAME_NUMBER = "적절하지 못한 프레임 숫자가 들어왔습니다.";
+    public static final String INVALID_FRAME = "더 이상 진행할 수 없습니다.";
+
+    private final int frameNumber;
+    private State state;
+    private Score score;
+
+    private NormalFrame(int frameNumber) {
+        this(frameNumber, new Ready());
     }
 
-    public static Frame get(FrameRound frameRound) {
-        return new NormalFrame(frameRound);
+    private NormalFrame(int frameNumber, State state) {
+        if (frameNumber > MAX_NORMAL_FRAME_NUMBER || frameNumber < MIN_NORMAL_FRAME_NUMBER) {
+            throw new IllegalArgumentException(INVALID_FRAME_NUMBER);
+        }
+        this.frameNumber = frameNumber;
+        this.state = state;
     }
+
+    public static NormalFrame of(int frameNumber) {
+        return new NormalFrame(frameNumber);
+    }
+
+    public static NormalFrame first() {
+        return new NormalFrame(MIN_NORMAL_FRAME_NUMBER);
+    }
+
 
     @Override
-    Frame next() {
-        FrameRound nextFrameRound = frameRound.next();
-        return new NormalFrame(nextFrameRound);
-    }
-
-    @Override
-    public void pitch(int pinCount) {
-        validatePinCount(pinCount);
-        pins.add(Pin.from(pinCount));
-    }
-
-    private void validatePinCount(int pinCount) {
-        if ((pinCountSum() + pinCount) > Pin.MAX_PIN_COUNT) {
-            throw new IllegalArgumentException("핀의 개수가 10개를 넘을 수 없습니다.");
+    public void bowl(int count) {
+        if (isEnd()) {
+            throw new IllegalArgumentException(INVALID_FRAME);
         }
 
-        if ((getPinsSize() + 1) > MAX_PITCH) {
-            throw new IllegalArgumentException("최대 2회 투구 가능합니다.");
+        this.state = state.bowl(count);
+        if (state.isFinish()) {
+            this.score = state.getScore();
         }
     }
 
     @Override
-    public Boolean isNextFrame() {
-        if (getPinsSize() == MAX_PITCH) {
-            return true;
-        }
-
-        return pinCountSum() == Pin.MAX_PIN_COUNT;
+    public boolean isEnd() {
+        return state.isFinish();
     }
 
     @Override
-    boolean isLast() {
-        return false;
+    public Frame next() {
+        return NormalFrame.of(frameNumber + ADD_FRAME_NUMBER);
     }
 
+    @Override
+    public String getFallenPins() {
+        return state.toString();
+    }
 
+    @Override
+    public int getScore() {
+        return score.getScore();
+    }
+
+    @Override
+    public void calculateScore(int index, int count) {
+        if (frameNumber == index || score.isEndCalculate()) {
+            return ;
+        }
+
+        score.addScore(count);
+    }
+
+    @Override
+    public boolean hasScore() {
+        return Objects.nonNull(score) && score.isEndCalculate();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalFrame frame = (NormalFrame) o;
+        return frameNumber == frame.frameNumber;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber);
+    }
 }

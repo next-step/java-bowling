@@ -1,41 +1,57 @@
 package bowling.domain;
 
-import java.util.stream.Stream;
+import java.util.Objects;
 
-public enum Score {
+public class Score {
 
-    STRIKE(10, "X", true),
-    SPARE(10, "/", false),
-    MISS(-1, "", false),
-    GUTTER(0, "-", false);
+    public static final int TOTAL_SCORE = 10;
+    public static final int MISS_LEFT = 0;
+    public static final int SPARE_LEFT = 1;
+    public static final int STRIKE_LEFT = 2;
 
-    private int count;
-    private String type;
-    private boolean first;
+    private int score;
+    private int left;
 
-    Score(int count, String type, boolean first) {
-        this.count = count;
-        this.type = type;
-        this.first = first;
+    public Score(int score, int left) {
+        this.score = score;
+        this.left = left;
     }
 
-    public int getCount() {
-        return count;
+    public static Score ofMiss(int score) {
+        return new Score(score, MISS_LEFT);
     }
 
-    public String getType() {
-        return type;
+    public static Score ofSpare() {
+        return new Score(TOTAL_SCORE, SPARE_LEFT);
     }
 
-    public boolean isFirst() {
-        return first;
+    public static Score ofStrike() {
+        return new Score(TOTAL_SCORE, STRIKE_LEFT);
     }
 
-    public static Score of(int pinCount, boolean first) {
-        Score[] values = values();
-        return Stream.of(values)
-                .filter(score -> score.count == pinCount && score.isFirst() == first)
-                .findFirst()
-                .orElse(MISS);
+    public void addScore(int score) {
+        this.score += score;
+        this.left--;
+    }
+
+    public boolean isEndCalculate() {
+        return left == 0;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score && left == score1.left;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score, left);
     }
 }
