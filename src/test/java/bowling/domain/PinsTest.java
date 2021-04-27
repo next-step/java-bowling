@@ -26,7 +26,23 @@ class PinsTest {
         Pins pins = Pins.init();
         Pins remain = pins.hit(hitCount);
 
+        // then
         assertThat(remain).isNotNull();
+    }
+
+    @DisplayName("Pins 인스턴스가 가진 갯수가 동일한 경우 같은 인스턴스로 비교하는지 테스트")
+    @Test
+    void 비교_핀_갯수_기준() {
+        // given
+        int hitCount = 5;
+
+        // when
+        Pins pins = Pins.init();
+        Pins expected = pins.hit(hitCount);
+        Pins actual = pins.hit(hitCount);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
     }
 
 }
