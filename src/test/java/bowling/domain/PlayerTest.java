@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.NameSizeMissMatchException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,10 +29,10 @@ class PlayerTest {
         // given
         String name = "POBI";
 
-        // when
+        // when and then
         assertThatThrownBy(() -> Player.from(name))
                 .isInstanceOf(NameSizeMissMatchException.class)
-                .hasMessage("(+"+name+"+)은 영문 3글자 또는 그 이하가 아닙니다.");
+                .hasMessage("( "+name+" )은 영문 3글자 또는 그 이하가 아닙니다.");
     }
 
 
