@@ -102,7 +102,7 @@
     - [x] FrameScore: Pins에 쓰러진 핀의 개수를 전달한다. 새로운 FrameScore를 반환한다.
     - [x] Frame: FrameScore에 쓰러진 핀의 개수를 전달한다. FrameScore를 교체한다.(불변 포기)
     - [x] Frames: 해당 Frame에 쓰러진 핀의 개수를 전달한다.
-    - [ ] Player: 쓰러진 핀의 개수를 입력받는다.
+    - [x] Player: 쓰러진 핀의 개수를 입력받는다.
     - [ ] 투구가 불가능한 경우 예외를 반환한다.
 - [ ] FinalFrame 개선
     - [ ] 출력부분이 너무 똥이다.

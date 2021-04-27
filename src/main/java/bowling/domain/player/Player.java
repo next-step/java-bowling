@@ -29,11 +29,11 @@ public final class Player {
     }
 
     public boolean isEnded(RoundNumber roundNumber) {
-        return frames().isEnded(roundNumber);
+        return frames.isEnded(roundNumber);
     }
 
     public void knockDownPin(RoundNumber roundNumber, Pin pin) {
-
+        frames.knockDownPin(roundNumber, pin);
     }
 
     @Override
