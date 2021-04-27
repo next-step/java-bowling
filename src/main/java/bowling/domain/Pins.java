@@ -13,6 +13,7 @@ public class Pins {
     private static final int BONUS_TRY = 2;
     private static final int PIN_SIZE_BOUND = 3;
     private static final int STRIKE_COUNT = 10;
+    private static final int CONVERT_CORRECTION = 1;
     private static final String PIN_SIZE_EXCEPTION_MESSAGE = String.format("최대 %d회의 시도만 가능합니다", PIN_SIZE_BOUND);
 
     private List<Pin> pins;
@@ -75,5 +76,17 @@ public class Pins {
 
     public boolean isStrike() {
         return totalCount() == STRIKE_COUNT;
+    }
+
+    public boolean isFirstTry() {
+        return this.tryCount() == tryToCount(FIRST_TRY);
+    }
+
+    public boolean isBonusTry() {
+        return this.tryCount() == tryToCount(BONUS_TRY);
+    }
+
+    private int tryToCount(int tryCount) {
+        return tryCount + CONVERT_CORRECTION;
     }
 }

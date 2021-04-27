@@ -15,10 +15,6 @@ public class OutputView {
     private static final String BLANK = " ";
     private static final String BOARD_SEPARATOR = "|";
     private static final int SQUARE_LENGTH = 6;
-    private static final int START_ROUND = 1;
-    private static final int FINAL_ROUND = 10;
-    private static final int FIRST_TRY = 0;
-    private static final int BONUS_TRY = 2;
 
     private OutputView() {
     }
@@ -54,11 +50,11 @@ public class OutputView {
     private static String scoreMarks(Pins pins) {
         List<String> marks = new ArrayList<>();
         marks.add(findMark(pins.firstPin()));
-        if (pins.tryCount() == FIRST_TRY + 1) {
+        if (pins.isFirstTry()) {
             return String.join(BOARD_SEPARATOR, marks);
         }
         marks.add(secondMark(pins));
-        if (pins.tryCount() == BONUS_TRY + 1) {
+        if (pins.isBonusTry()) {
             marks.add(findMark(pins.bonusPin()));
         }
         return String.join(BOARD_SEPARATOR, marks);
@@ -82,7 +78,7 @@ public class OutputView {
 
     private static void showRoundTable() {
         System.out.print(BOARD_SEPARATOR + centeredText("NAME") + BOARD_SEPARATOR);
-        IntStream.rangeClosed(START_ROUND, FINAL_ROUND)
+        IntStream.rangeClosed(Round.finalRound().round(), Round.finalRound().round())
                 .mapToObj(OutputView::convertRound)
                 .forEach(System.out::print);
         System.out.println();
