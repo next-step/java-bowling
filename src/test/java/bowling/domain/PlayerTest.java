@@ -20,4 +20,17 @@ class PlayerTest {
         // then
         assertThat(player).isNotNull();
     }
+
+    @DisplayName("Player 인스턴스 생성 여부 테스트")
+    @Test
+    void 검증_() {
+        // given
+        String name = "KWJ";
+
+        // when
+        Player player = Player.from(name);
+
+        // then
+        assertThat(player).isNotNull();
+    }
 }
