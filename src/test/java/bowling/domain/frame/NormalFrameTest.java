@@ -111,12 +111,26 @@ class NormalFrameTest {
     @DisplayName("Frame이 종료되었는지 확인한다.")
     void isEnded() {
         // given
-        final NormalFrameScore normalFrameScore = new NormalFrameScore();
+        final Frame firstFrame = NormalFrame.createFirstFrame();
 
         // when
-        final boolean ended = normalFrameScore.isEnded();
+        final boolean ended = firstFrame.isEnded();
 
         // then
         assertThat(ended).isFalse();
+    }
+
+    @Test
+    @DisplayName("투구를 한다. 투구를 한 후 상태가 변경된다.")
+    void knockDownPin() {
+        // given
+        final Frame firstFrame = NormalFrame.createFirstFrame();
+        final Pin strikePin = new Pin();
+
+        // when
+        firstFrame.knockDownPin(strikePin);
+
+        // then
+        assertThat(firstFrame.isEnded()).isTrue();
     }
 }

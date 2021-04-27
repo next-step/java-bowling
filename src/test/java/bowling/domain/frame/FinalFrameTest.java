@@ -63,4 +63,18 @@ class FinalFrameTest {
         // then
         assertThat(status).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("투구를 한다. 투구를 한 후 상태가 변경된다.")
+    void knockDownPin() {
+        // given
+        final FinalFrame finalFrame = FinalFrame.from(new FinalFrameScore(new FinalPins()));
+        final Pin pin = new Pin(0);
+
+        // when
+        finalFrame.knockDownPin(pin);
+
+        // then
+        assertThat(finalFrame.isEnded()).isFalse();
+    }
 }
