@@ -35,6 +35,13 @@ public final class Pins {
         }
     }
 
+    public final boolean isClear() {
+        if (remain == CLEAR) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,4 +54,6 @@ public final class Pins {
     public int hashCode() {
         return Objects.hash(remain);
     }
+
+
 }
