@@ -37,6 +37,32 @@ public class FramesTest {
         // then
         assertThat(frames.nowFrame()).isEqualTo(expectNowFrame);
     }
+
+    private static Stream<Arguments> isFinished() {
+        return Stream.of(
+                arguments(Arrays.asList(1, 5, 3, 4, 2, 3), false),
+                arguments(Arrays.asList(1, 9, 10, 10, 10, 10), false),
+                arguments(Arrays.asList(1, 5, 3, 4, 2, 3, 10, 10, 10, 10, 10, 10, 10, 1, 9), true),
+                arguments(Arrays.asList(1, 5, 3, 4, 2, 3, 10, 10, 10, 10, 10, 10, 10, 10, 10), true),
+                arguments(Arrays.asList(1, 5, 3, 4, 2, 3, 10, 10, 10, 10, 10, 10, 1, 3), true),
+                arguments(Arrays.asList(), false)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("isFinished")
+    public void isFinished(List<Integer> scores, boolean expectIsFinished) throws Exception {
+        // given
+        Frames frames = new Frames();
+        for (int score : scores) {
+            frames = frames.addScore(score);
+        }
+
+        // when
+
+        // then
+        assertThat(frames.isFinished()).isEqualTo(expectIsFinished);
+    }
 //
 //    @Test
 //    public void addScore_10번째_프레임() throws Exception {
