@@ -30,6 +30,10 @@ public final class Frames {
         return Collections.unmodifiableList(frames);
     }
 
+    public boolean isEnded(RoundNumber roundNumber) {
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

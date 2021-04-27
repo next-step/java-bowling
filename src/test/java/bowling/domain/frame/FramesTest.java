@@ -25,4 +25,17 @@ class FramesTest {
                 () -> assertThat(frameList.get(frameList.size() - 1)).isEqualTo(FinalFrame.from(new NormalFrameScore()))
         );
     }
+
+    @Test
+    @DisplayName("지정된 Frame이 종료되었는지 확인한다.")
+    void isEnded() {
+        // given
+        final Frames frames = Frames.initialize();
+
+        // when
+        final boolean ended = frames.isEnded(new RoundNumber(1));
+
+        // then
+        assertThat(ended).isFalse();
+    }
 }
