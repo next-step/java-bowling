@@ -21,7 +21,7 @@ public class FinalFrame extends Frame {
 
     public boolean roundEnded() {
         if (pins.tryCount() == SECOND_TRY) {
-            return !isStrike();
+            return hasNoBonusTry();
         }
         return pins.tryCount() >= MAX_TRY_COUNT;
     }
@@ -38,7 +38,7 @@ public class FinalFrame extends Frame {
         }
     }
 
-    protected boolean isStrike() {
-        return pins.totalCount() >= NOT_BONUS_MAX_COUNT;
+    private boolean hasNoBonusTry() {
+        return pins.totalCount() < NOT_BONUS_MAX_COUNT;
     }
 }

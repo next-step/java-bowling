@@ -35,6 +35,4 @@ public abstract class Frame {
     protected abstract void validateTry();
 
     protected abstract void validateHitCount(int hitCount);
-
-    protected abstract boolean isStrike();
 }

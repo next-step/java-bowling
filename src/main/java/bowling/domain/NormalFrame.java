@@ -18,7 +18,7 @@ public class NormalFrame extends Frame {
     }
 
     public boolean roundEnded() {
-        return pins.tryCount() == MAX_TRY_COUNT || isStrike();
+        return pins.tryCount() == MAX_TRY_COUNT || pins.isStrike();
     }
 
     protected void validateTry() {
@@ -31,9 +31,5 @@ public class NormalFrame extends Frame {
         if (pins.totalCount() + hitCount > MAX_PIN_COUNT) {
             throw new IllegalStateException(HIT_COUNT_EXCEPTION_MESSAGE);
         }
-    }
-
-    protected boolean isStrike() {
-        return pins.totalCount() == MAX_PIN_COUNT;
     }
 }
