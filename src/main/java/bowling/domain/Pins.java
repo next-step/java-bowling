@@ -8,7 +8,6 @@ public final class Pins {
 
     private static final int MAXIMUM_COUNT = 10;
     private static final int MINIMUM_COUNT = 0;
-    public static final int CLEAR = 0;
 
     private int remain;
 
@@ -29,17 +28,21 @@ public final class Pins {
         return new Pins(Math.subtractExact(remain, hitCount));
     }
 
-    private final void validateOverCount(int hitCount) {
+    private final void validateOverCount(final int hitCount) {
         if (remain < hitCount) {
             throw new InputOverHitCountException(hitCount, remain);
         }
     }
 
     public final boolean isClear() {
-        if (remain == CLEAR) {
+        if (remain == MINIMUM_COUNT) {
             return true;
         }
         return false;
+    }
+
+    public final int hittedCount() {
+        return Math.subtractExact(MAXIMUM_COUNT, remain);
     }
 
     @Override

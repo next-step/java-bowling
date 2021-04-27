@@ -99,8 +99,8 @@ class PinsTest {
 
         // then
         assertAll(
-                () -> assertThat(pins.hit(allHitCount).hittedCount()).isFalse(0),
-                () -> assertThat(pins.hit(noHitCount).hittedCount()).isEqualTo(10)
+                () -> assertThat(pins.hit(allHitCount).hittedCount()).isEqualTo(allHitCount),
+                () -> assertThat(pins.hit(noHitCount).hittedCount()).isEqualTo(noHitCount)
         );
     }
 
