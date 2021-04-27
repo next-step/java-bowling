@@ -26,20 +26,17 @@ public class PlayerBowlingBoard {
         return bowlingBoard;
     }
 
-    public void pitching(Point point) {
-        bowlingBoard = bowlingBoard.pitching(point);
-    }
-
-    public boolean isSamePlayer(Player currentThrowPlayer) {
-        return player.equals(currentThrowPlayer);
-    }
-
-
-    public boolean isSamePosition(int playerPosition) {
-        return player.isSamePosition(playerPosition);
+    public void pitching(Point point, Round round) {
+        if (round.equals(bowlingBoard.round())) {
+            bowlingBoard = bowlingBoard.pitching(point);
+        }
     }
 
     public Round round() {
         return bowlingBoard.round();
+    }
+
+    public ThrowCount state() {
+        return bowlingBoard.state();
     }
 }

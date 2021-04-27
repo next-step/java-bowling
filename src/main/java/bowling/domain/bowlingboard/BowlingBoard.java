@@ -22,6 +22,7 @@ public class BowlingBoard {
         this.throwCount = throwCount;
     }
 
+
     public static BowlingBoard of() {
         List<BowlingFrame> bowlingFrameList = new ArrayList<>();
         bowlingFrameList.add(BowlingNormalFrame.first(Round.first()));
