@@ -31,7 +31,7 @@ public final class Frames {
     }
 
     public boolean isEnded(RoundNumber roundNumber) {
-        return false;
+        return frames.get(roundNumber.value() - 1).isEnded();
     }
 
     @Override

@@ -96,7 +96,7 @@
 - [ ] Frame이 종료되었는지 확인하는 기능을 구현한다.
     - [x] FrameScore: FrameStatus가 NOT_ENDED인가?
     - [x] Frame: FrameScore 호출
-    - [ ] Frames: 해당 Frame 호출
+    - [x] Frames: 해당 Frame 호출
     - [ ] Player: Frame 번호를 넘겨준다.
         - [ ] Frame 번호를 Pool로 관리해야할까? (자주 액세스 되지 않으므로 관계없을듯.)
 - [ ] 투구 기능을 구현한다.
