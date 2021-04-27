@@ -1,12 +1,16 @@
 package bowling.domain.concrete.frame.state;
 
 import bowling.domain.RollResult;
+import bowling.domain.engine.frame.Score;
+import bowling.domain.engine.frame.state.CannotCompleteScoreException;
+import bowling.domain.engine.frame.state.CannotInitializeScoreException;
 import bowling.domain.engine.frame.state.State;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ReadyTest {
 
@@ -40,5 +44,18 @@ class ReadyTest {
     void export() {
         assertThat(readyState.export()).isEmpty();
     }
-    
+
+    @Test
+    @DisplayName("Ready 상태에서는 점수를 생성할 수 없다.")
+    void cannotCreateScoreInReady() {
+        assertThatThrownBy(() -> readyState.createScore()).isInstanceOf(CannotInitializeScoreException.class);
+    }
+
+    @Test
+    @DisplayName("Ready 상태에서는 Score 에 추가 점수를 넣어 줄 수 없다.")
+    void cannotCompleteScoreInReady() {
+        Score score = Score.initStrikeScore();
+        assertThatThrownBy(() -> readyState.addScoreTo(score)).isInstanceOf(CannotCompleteScoreException.class);
+    }
+
 }

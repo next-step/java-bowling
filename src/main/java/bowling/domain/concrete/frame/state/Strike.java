@@ -1,6 +1,7 @@
 package bowling.domain.concrete.frame.state;
 
 import bowling.domain.RollResult;
+import bowling.domain.engine.frame.Score;
 import bowling.domain.engine.frame.state.Finished;
 import bowling.dto.RollResultsDto;
 import bowling.dto.StateExporter;
@@ -28,5 +29,15 @@ public class Strike extends Finished {
     @Override
     public String export() {
         return StateExporter.STRIKE.export(RollResultsDto.of(strikeRoll));
+    }
+
+    @Override
+    public Score createScore() {
+        return Score.initStrikeScore();
+    }
+
+    @Override
+    public Score addScoreTo(Score score) {
+        return score.inject(strikeRoll);
     }
 }

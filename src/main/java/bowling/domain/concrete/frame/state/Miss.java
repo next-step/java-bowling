@@ -1,6 +1,7 @@
 package bowling.domain.concrete.frame.state;
 
 import bowling.domain.RollResult;
+import bowling.domain.engine.frame.Score;
 import bowling.domain.engine.frame.state.Finished;
 import bowling.dto.RollResultsDto;
 import bowling.dto.StateExporter;
@@ -37,4 +38,25 @@ public class Miss extends Finished {
     public String export() {
         return StateExporter.MISS.export(RollResultsDto.of(firstRollResult, secondRollResult));
     }
+
+    @Override
+    public Score addScoreTo(Score score) {
+        Score completedScore = score.inject(firstRollResult);
+
+        if (!completedScore.isCalculationCompleted()) {
+            completedScore = completedScore.inject(secondRollResult);
+        }
+
+        return completedScore;
+    }
+
+    @Override
+    public Score createScore() {
+        return Score.initReadyToUseScore(getKnockedDownPins());
+    }
+
+    private int getKnockedDownPins() {
+        return firstRollResult.getValue() + secondRollResult.getValue();
+    }
+
 }
