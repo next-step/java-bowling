@@ -9,6 +9,14 @@ public final class NormalPins implements Pins {
     private final Pin firstPin;
     private final Pin secondPin;
 
+    public NormalPins() {
+        this(null, null);
+    }
+
+    public NormalPins(Pin firstPin) {
+        this(firstPin, null);
+    }
+
     public NormalPins(Pin firstPin, Pin secondPin) {
         this.firstPin = firstPin;
         this.secondPin = secondPin;
@@ -31,7 +39,10 @@ public final class NormalPins implements Pins {
 
     @Override
     public Pins knockDownPin(Pin pin) {
-        return null;
+        if (firstPin == null) {
+            return new NormalPins(pin);
+        }
+        return new NormalPins(firstPin, pin);
     }
 
     @Override
