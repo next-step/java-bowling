@@ -15,19 +15,18 @@ public class BowlingController {
 
     public void run() {
         Player player = new Player(inputView.playerName());
-        Frames frames = new Frames();
-        playGame(player.name(), frames);
+        playGame(player);
         inputView.close();
     }
 
-    protected void playGame(Name name, Frames frames) {
-        resultView.printMark(name, frames.marks());
+    protected void playGame(Player player) {
+        resultView.printMark(player.name(), player.marks());
 
-        while (!frames.isAllFinished()) {
-            String pinCount = inputView.pinCount(frames.currentIndex());
-            frames.throwBowl(pinCount);
-            resultView.printMark(name, frames.marks());
-            resultView.printScore(frames.scores());
+        while (!player.hasFinishedGame()) {
+            String pinCount = inputView.pinCount(player.currentFrameIndex());
+            player.throwBowl(pinCount);
+            resultView.printMark(player.name(), player.marks());
+            resultView.printScore(player.scores());
         }
     }
 }

@@ -3,6 +3,7 @@ package bowling.controller;
 import bowling.domain.FrameMark;
 import bowling.domain.Frames;
 import bowling.domain.Name;
+import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +28,7 @@ class BowlingControllerTest {
     @Test
     @DisplayName("프레임 별 핀 수를 입력받고 해당 결과 표시, 점수 출력을 모든 프레임 종료시 까지 반복한다.")
     public void playGame() throws Exception {
-        systemUnderTest.playGame(new Name("KSB"), new Frames());
+        systemUnderTest.playGame(new Player("KSB"));
         assertThat(String.join(" -> ", record)).isEqualTo("printMark " +
                 "-> pinCount -> printMark -> printScore " +
                 "-> pinCount -> printMark -> printScore " +
