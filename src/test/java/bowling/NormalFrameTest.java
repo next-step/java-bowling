@@ -46,6 +46,19 @@ public class NormalFrameTest {
     }
 
 
+    @Test
+    public void NormalFrame_addScore_STRIKE() throws Exception {
+        // given
+        Frame normalFrame = new NormalFrame();
+        Frame expectFrame = new NormalFrame(Arrays.asList(Score.STRIKE));
+        // when
+        normalFrame = normalFrame.addScore(10);
+
+        // then
+        assertThat(normalFrame).isEqualTo(expectFrame);
+    }
+
+
     private static Stream<Arguments> NormalFrame_프레임이_끝난_경우() {
         return Stream.of(
                 arguments(0, 5),
