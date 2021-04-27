@@ -46,7 +46,7 @@ class AnswersTest {
         answers.deleteAll(UserTest.JAVAJIGI);
 
         // then
-        for (Answer answer : answers.getAnswers()) {
+        for (Answer answer : answers) {
             assertThat(answer.isDeleted()).isTrue();
         }
     }
