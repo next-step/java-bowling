@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.BowlingRole;
 import bowling.domain.bowlingboard.ThrowCount;
 import bowling.dto.BowlingBoardDto;
+import bowling.dto.PlayerBowlingBoardDto;
 import bowling.dto.PlayerDto;
 import bowling.dto.ScoreDto;
 
@@ -14,8 +15,14 @@ public class OutputView {
     private static final int FINAL_ROUND = 10;
     private static final int FIRST_ROUND = 1;
 
-    public static void printResultView(int round, PlayerDto player, BowlingBoardDto bowlingBoardDto) {
+    public static void printResultView(int round, PlayerBowlingBoardDto playerBowlingBoardDto) {
         printRound();
+
+        IntStream.rangeClosed(0, playerBowlingBoardDto.size())
+                .forEach(i -> printPlayerScore(round, playerBowlingBoardDto.getPlayerDto(i), playerBowlingBoardDto.getBowlingBoardDto(i)));
+    }
+
+    private static void printPlayerScore(int round, PlayerDto player, BowlingBoardDto bowlingBoardDto) {
         printBoard(round, player.getPlayerName(), bowlingBoardDto);
         printPoint(round, bowlingBoardDto);
     }
@@ -100,7 +107,7 @@ public class OutputView {
         System.out.println(name + round + "|  10  |");
     }
 
-    public static void printResultView(PlayerDto playerDto) {
-        printResultView(0, playerDto, BowlingBoardDto.of());
+    public static void printResultView(PlayerBowlingBoardDto playerBowlingBoardDto) {
+        printResultView(0, playerBowlingBoardDto);
     }
 }

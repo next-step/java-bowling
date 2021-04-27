@@ -1,5 +1,7 @@
 package bowling.domain.bowlingboard;
 
+import bowling.domain.frame.round.Round;
+
 import java.util.Objects;
 
 public class ThrowCount {
@@ -24,6 +26,12 @@ public class ThrowCount {
         return new ThrowCount(MIN_THROW_COUNT);
     }
 
+    public ThrowCount next(Round round) {
+        if (throwCount == 1 && round.round() < 10) {
+            return new ThrowCount(0);
+        }
+        return new ThrowCount(throwCount + 1);
+    }
 
     @Override
     public boolean equals(Object o) {

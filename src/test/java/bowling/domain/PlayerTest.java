@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.bowlingboard.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,7 @@ class PlayerTest {
     @Test
     void case1() {
         Assertions.assertThatThrownBy(() -> {
-            Player.of("4444");
+            Player.of("4444", 0);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }

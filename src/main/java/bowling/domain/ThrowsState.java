@@ -4,6 +4,7 @@ import bowling.domain.bowlingboard.BowlingBoard;
 import bowling.domain.bowlingboard.ThrowCount;
 import bowling.domain.frame.BowlingFrame;
 import bowling.domain.frame.round.FinalRound;
+import bowling.domain.frame.round.Round;
 import bowling.domain.score.Point;
 
 import java.util.Arrays;
@@ -84,6 +85,14 @@ public enum ThrowsState {
 
     private boolean isSame(ThrowCount throwCount) {
         return this.throwCount.equals(throwCount);
+    }
+
+    public ThrowsState next(Round round) {
+        ThrowCount next = this.throwCount.next(round);
+        return Arrays.stream(values()).
+                filter(state -> state.isSame(next))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("던지는 기회는 최소 0번 최대 3번입니다."));
     }
 }
 

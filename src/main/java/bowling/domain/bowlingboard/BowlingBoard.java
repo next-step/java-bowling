@@ -32,8 +32,8 @@ public class BowlingBoard {
         return new BowlingBoard(bowlingFrameList, throwCount);
     }
 
-    public int round() {
-        return bowlingFrameList.size();
+    public Round round() {
+        return Round.of(bowlingFrameList.size());
     }
 
     public BowlingBoard pitching(Point point) {

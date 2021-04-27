@@ -1,6 +1,6 @@
 package bowling.dto;
 
-import bowling.domain.bowlingboard.Player;
+import bowling.domain.Player;
 
 public class PlayerDto {
 

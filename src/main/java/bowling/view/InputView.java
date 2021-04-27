@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.domain.Player;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -13,7 +15,7 @@ public class InputView {
     }
 
     //1프레임 투구 : 10
-    public static int inputPoint(String playerName) {
+    public static int inputPoint(Player playerName) {
         System.out.print(playerName + "'s turn : ");
         return scanner.nextInt();
     }
