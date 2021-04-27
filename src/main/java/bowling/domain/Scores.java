@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class Scores {
 
+    private static final int CALCULATION_NOT_COMPLETED = -1;
     private static final int FIRST_FRAME = 0;
 
     private final Map<Integer, Score> scores;
@@ -22,8 +23,8 @@ public class Scores {
     }
 
     public void record(int frameNumber, int score) {
-        if (score == -1) {
-            scores.put(frameNumber, new Score(score));
+        if (score == CALCULATION_NOT_COMPLETED) {
+            scores.put(frameNumber, new Score(CALCULATION_NOT_COMPLETED));
             return;
         }
         scores.put(frameNumber, new Score(cumulativeScore(frameNumber) + score));
