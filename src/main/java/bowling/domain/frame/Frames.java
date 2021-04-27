@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +34,10 @@ public final class Frames {
 
     public boolean isEnded(RoundNumber roundNumber) {
         return frames.get(roundNumber.value() - 1).isEnded();
+    }
+
+    public void knockDownPin(RoundNumber roundNumber, Pin pin) {
+
     }
 
     @Override

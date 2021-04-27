@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,5 +38,20 @@ class FramesTest {
 
         // then
         assertThat(ended).isFalse();
+    }
+
+    @Test
+    @DisplayName("지정된 Frame의 Pin을 쓰러뜨린다.")
+    void knockDownPin() {
+        // given
+        final Frames frames = Frames.initialize();
+        final RoundNumber roundNumber = new RoundNumber(1);
+        final Pin strikePin = new Pin();
+
+        // when
+        frames.knockDownPin(roundNumber, strikePin);
+
+        // then
+        assertThat(frames.isEnded(roundNumber)).isTrue();
     }
 }
