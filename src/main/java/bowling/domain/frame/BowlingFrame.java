@@ -25,11 +25,11 @@ public abstract class BowlingFrame {
         this.framePoint = framePoint;
     }
 
-    abstract BowlingFrame secondPitching(Point point);
+    public abstract BowlingFrame secondPitching(Point point);
 
-    abstract BowlingFrame firstPitching(Point point);
+    public abstract BowlingFrame firstPitching(Point point);
 
-    abstract BowlingFrame bonusPitching(Point point);
+    public abstract BowlingFrame bonusPitching(Point point);
 
     public BowlingFrame nextFrame() {
         if (round.equals(Round.of(9))) {
@@ -48,9 +48,9 @@ public abstract class BowlingFrame {
         return framePoint;
     }
 
-    abstract BowlingRole isType();
+    public abstract BowlingRole isType();
 
-    abstract ScoreDto toDto();
+    public abstract ScoreDto toDto();
 
     public abstract FramePoint calculateOfScore();
 
