@@ -27,4 +27,11 @@ public abstract class Frame {
     public int hashCode() {
         return Objects.hash(scores);
     }
+
+    @Override
+    public String toString() {
+        return "Frame{" +
+                "scores=" + scores +
+                '}';
+    }
 }

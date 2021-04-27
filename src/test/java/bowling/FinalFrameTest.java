@@ -43,6 +43,7 @@ public class FinalFrameTest {
         finalFrame = finalFrame.addScore(score3);
 
         // then
+        System.out.println(finalFrame);
         assertThat(finalFrame).isEqualTo(expectFrame);
     }
 

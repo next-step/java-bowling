@@ -42,6 +42,7 @@ public class FinalFrame extends Frame {
         if (isFinished()) {
             throw new Exception();
         }
+        List<Score> result = this.scores;
         if (scores.size() == 0) {
             return new FinalFrame(Arrays.asList(Score.valueOf(score)));
         }
@@ -49,9 +50,14 @@ public class FinalFrame extends Frame {
             return new FinalFrame(Arrays.asList(scores.get(0), Score.valueOf(scores.get(0), score)));
         }
         if (scores.size() == 2) {
-            return new FinalFrame(Arrays.asList(scores.get(1), Score.valueOf(scores.get(1), score)));
+            return new FinalFrame(Arrays.asList(scores.get(0), scores.get(1), Score.valueOf(scores.get(1), score)));
         }
         return this;
+    }
+
+    private List<Score> add(Score score) {
+        this.scores.add(score);
+        return this.scores;
     }
 
     private static List<Score> generateScores(List<Integer> scores) {
@@ -68,5 +74,10 @@ public class FinalFrame extends Frame {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }
