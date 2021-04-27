@@ -99,7 +99,7 @@
     - [x] Player: Frame 번호를 넘겨준다.
 - [ ] 투구 기능을 구현한다.
     - [x] Pins: 쓰러진 Pin의 개수를 전달하고, 새로운 Pins를 반환한다.
-    - [ ] FrameScore: Pins에 쓰러진 핀의 개수를 전달한다. 새로운 FrameScore를 반환한다.
+    - [x] FrameScore: Pins에 쓰러진 핀의 개수를 전달한다. 새로운 FrameScore를 반환한다.
     - [ ] Frame: FrameScore에 쓰러진 핀의 개수를 전달한다. FrameScore를 교체한다.(불변 포기)
     - [ ] Frames: 해당 Frame에 쓰러진 핀의 개수를 전달한다.
     - [ ] Player: 쓰러진 핀의 개수를 입력받는다.
