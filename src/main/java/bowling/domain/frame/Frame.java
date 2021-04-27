@@ -7,7 +7,7 @@ import java.util.Objects;
 public abstract class Frame {
 
     protected final RoundNumber roundNumber;
-    protected final FrameScore frameScore;
+    protected FrameScore frameScore;
 
     protected Frame(RoundNumber roundNumber, FrameScore frameScore) {
         this.roundNumber = roundNumber;

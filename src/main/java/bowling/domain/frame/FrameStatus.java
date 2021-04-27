@@ -13,11 +13,11 @@ public enum FrameStatus {
     private static final int ZERO_PIN_COUNT = 0;
 
     public static FrameStatus of(Pin firstPin, Pin secondPin) {
+        if (firstPin != null && firstPin.pinCount() == MAX_PIN_COUNT) {
+            return STRIKE;
+        }
         if (firstPin == null || secondPin == null) {
             return NOT_ENDED;
-        }
-        if (firstPin.pinCount() == MAX_PIN_COUNT) {
-            return STRIKE;
         }
         if (firstPin.pinCount() + secondPin.pinCount() == MAX_PIN_COUNT) {
             return SPARE;
