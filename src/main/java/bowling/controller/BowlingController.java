@@ -18,20 +18,19 @@ public class BowlingController {
     }
 
     public void run() {
-        String name = inputView.name();
-
-        Frames frames = new Frames();
-        resultView.print(name, frames.getFrames());
+        Frames frames = new Frames(new User(inputView.name()));
+        resultView.print(frames);
 
         for (int frameNumber = FIRST_ROUND; frameNumber <= LAST_ROUND; frameNumber++) {
-            playRound(frameNumber, name, frames);
+            playRound(frameNumber, frames);
         }
     }
 
-    private void playRound(int frameNumber, String name, Frames frames) {
+    private void playRound(int frameNumber, Frames frames) {
         while (frames.hasRemainTurn(frameNumber)) {
             frames.proceedRound(frameNumber, new PinNumber(inputView.pinNumber(frameNumber)));
-            resultView.print(name, frames.getFrames());
+            frames.calculateScore(frameNumber);
+            resultView.print(frames);
         }
     }
 }

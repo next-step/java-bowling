@@ -1,27 +1,31 @@
 package bowling.view;
 
 import bowling.domain.FrameStrategy;
-
-import java.util.List;
+import bowling.domain.Frames;
+import bowling.domain.Score;
+import bowling.domain.User;
 
 public class ResultView {
 
     private static final int FIRST_ROUND = 1;
     private static final int LAST_ROUND = 10;
+    private static final int CALCULATION_NOT_COMPLETED = -1;
     private static final String NAME_LABEL = "| NAME |";
     private static final String EMPTY_FRAME = "      |";
     private static final String ROUND_LABEL_FRAME = "  |";
+    private static final String EMPTY_SCORE = "";
 
-    public void print(String name, List<FrameStrategy> frames) {
+    public void print(Frames frames) {
         printRoundInfo();
 
-        System.out.print("|  " + name + " |");
-        for (FrameStrategy frame : frames) {
+        System.out.print("|  " + frames.getUser().name() + " |");
+        for (FrameStrategy frame : frames.getFrames()) {
             System.out.print("  ");
             printProceedingRound(frame);
         }
 
-        printRemainingRound(frames.size());
+        printRemainingRound(frames.getFrames().size());
+        printScore(frames);
     }
 
     private void printRoundInfo() {
@@ -43,5 +47,24 @@ public class ResultView {
             System.out.print(EMPTY_FRAME);
         }
         System.out.println();
+    }
+
+    private void printScore(Frames frames) {
+        System.out.print("|      |");
+        User user = frames.getUser();
+
+        for (Score score : user.getScores().values()) {
+            String frameScore = Integer.toString(score.score());
+            frameScore = getFrameScore(frameScore);
+            System.out.print(String.format("%4s", frameScore) + ROUND_LABEL_FRAME);
+        }
+        printRemainingRound(frames.getUser().scoreSize());
+    }
+
+    private String getFrameScore(String frameScore) {
+        if (frameScore.equals(Integer.toString(CALCULATION_NOT_COMPLETED))) {
+            frameScore = EMPTY_SCORE;
+        }
+        return frameScore;
     }
 }
