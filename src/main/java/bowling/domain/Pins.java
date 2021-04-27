@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.InputOverHitCountException;
+
 import java.util.Objects;
 
 public final class Pins {
@@ -22,7 +24,14 @@ public final class Pins {
     }
 
     public final Pins hit(final int hitCount) {
+        validateOverCount(hitCount);
         return new Pins(Math.subtractExact(remain, hitCount));
+    }
+
+    private final void validateOverCount(int hitCount) {
+        if (remain < hitCount) {
+            throw new InputOverHitCountException(hitCount, remain);
+        }
     }
 
     @Override

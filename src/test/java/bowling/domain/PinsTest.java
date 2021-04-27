@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.InputOverHitCountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +13,10 @@ class PinsTest {
     @DisplayName("Pins 인스턴스 생성 여부 테스트")
     @Test
     void 생성() {
+        // when
         Pins pins = Pins.init();
 
+        // then
         assertThat(pins).isNotNull();
     }
 
