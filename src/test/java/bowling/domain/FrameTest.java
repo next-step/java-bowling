@@ -12,6 +12,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class FrameTest {
 
+  public static final String SCORE_FORMAT = "  %s|%s ";
+  public static final String STRIKE_FORMAT = "  %s   ";
   private Frame frame;
 
   @BeforeEach
@@ -95,7 +97,7 @@ class FrameTest {
   @DisplayName("strike 시, x 자로 출력된다.")
   void getScoreString_strike() {
     frame.play(10);
-    assertEquals(frame.getScoreBoard(), Result.STRIKE.getMark());
+    assertEquals(frame.getScoreBoard(), String.format(STRIKE_FORMAT, Result.STRIKE.getMark()));
   }
 
   @Test
@@ -105,7 +107,7 @@ class FrameTest {
     int secondHit = 6;
     frame.play(firstHit);
     frame.play(secondHit);
-    assertEquals(frame.getScoreBoard(), String.format(" %s | %s ", firstHit, Result.SPARE.getMark()));
+    assertEquals(frame.getScoreBoard(), String.format(SCORE_FORMAT, firstHit, Result.SPARE.getMark()));
   }
 
   @Test
@@ -115,6 +117,6 @@ class FrameTest {
     int secondHit = 6;
     frame.play(firstHit);
     frame.play(secondHit);
-    assertEquals(frame.getScoreBoard(), String.format(" %s | %s ", Frame.GUTTER_MARK, secondHit));
+    assertEquals(frame.getScoreBoard(), String.format(SCORE_FORMAT, Frame.GUTTER_MARK, secondHit));
   }
 }
