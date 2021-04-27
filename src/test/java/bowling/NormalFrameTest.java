@@ -38,8 +38,8 @@ public class NormalFrameTest {
         Frame normalFrame = new NormalFrame();
 
         // when
-        normalFrame = normalFrame.addScore(score1);
-        normalFrame = normalFrame.addScore(score2);
+        normalFrame.addScore(score1);
+        normalFrame.addScore(score2);
 
         // then
         assertThat(normalFrame).isEqualTo(expectFrame);
@@ -52,7 +52,7 @@ public class NormalFrameTest {
         Frame normalFrame = new NormalFrame();
         Frame expectFrame = new NormalFrame(Arrays.asList(Score.STRIKE));
         // when
-        normalFrame = normalFrame.addScore(10);
+        normalFrame.addScore(10);
 
         // then
         assertThat(normalFrame).isEqualTo(expectFrame);
@@ -81,8 +81,8 @@ public class NormalFrameTest {
         Frame normalFrame = new NormalFrame();
 
         // when
-        normalFrame = normalFrame.addScore(score1);
-        normalFrame = normalFrame.addScore(score2);
+        normalFrame.addScore(score1);
+        normalFrame.addScore(score2);
 
         // then
         assertThat(normalFrame.isFinished()).isTrue();
@@ -94,7 +94,7 @@ public class NormalFrameTest {
         Frame normalFrame = new NormalFrame();
 
         // when
-        normalFrame = normalFrame.addScore(10);
+        normalFrame.addScore(10);
 
         // then
         assertThat(normalFrame.isFinished()).isTrue();
@@ -122,7 +122,7 @@ public class NormalFrameTest {
         Frame normalFrame = new NormalFrame();
 
         // when
-        normalFrame = normalFrame.addScore(score);
+        normalFrame.addScore(score);
 
         // then
         assertThat(normalFrame.isFinished()).isFalse();

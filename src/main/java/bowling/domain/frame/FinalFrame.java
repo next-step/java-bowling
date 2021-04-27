@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,14 +12,6 @@ public class FinalFrame extends Frame {
 
     public FinalFrame(List<Score> scores) {
         this.scores = scores;
-    }
-
-    public static FinalFrame valueOf(int score) {
-        return new FinalFrame(Arrays.asList(Score.valueOf(score)));
-    }
-
-    public static FinalFrame valueOf(List<Integer> scores) {
-        return new FinalFrame(generateScores(scores));
     }
 
     @Override
@@ -38,21 +29,23 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public Frame addScore(int score) throws Exception {
+    public void addScore(int score) throws Exception {
         if (isFinished()) {
             throw new Exception();
         }
         List<Score> result = this.scores;
         if (scores.size() == 0) {
-            return new FinalFrame(Arrays.asList(Score.valueOf(score)));
+            this.scores.add(Score.valueOf(score));
+            return;
         }
         if (scores.size() == 1) {
-            return new FinalFrame(Arrays.asList(scores.get(0), Score.valueOf(scores.get(0), score)));
+            this.scores.add(Score.valueOf(scores.get(0), score));
+            return;
         }
         if (scores.size() == 2) {
-            return new FinalFrame(Arrays.asList(scores.get(0), scores.get(1), Score.valueOf(scores.get(1), score)));
+            this.scores.add(Score.valueOf(scores.get(1), score));
+            return;
         }
-        return this;
     }
 
     private List<Score> add(Score score) {

@@ -38,9 +38,9 @@ public class FinalFrameTest {
         Frame finalFrame = new FinalFrame();
 
         // when
-        finalFrame = finalFrame.addScore(score1);
-        finalFrame = finalFrame.addScore(score2);
-        finalFrame = finalFrame.addScore(score3);
+        finalFrame.addScore(score1);
+        finalFrame.addScore(score2);
+        finalFrame.addScore(score3);
 
         // then
         System.out.println(finalFrame);
@@ -66,8 +66,8 @@ public class FinalFrameTest {
         Frame finalFrame = new FinalFrame();
 
         // when
-        finalFrame = finalFrame.addScore(score1);
-        finalFrame = finalFrame.addScore(score2);
+        finalFrame.addScore(score1);
+        finalFrame.addScore(score2);
 
         // then
         assertThat(finalFrame.isFinished()).isTrue();
@@ -91,9 +91,9 @@ public class FinalFrameTest {
         Frame finalFrame = new FinalFrame();
 
         // when
-        finalFrame = finalFrame.addScore(score1);
-        finalFrame = finalFrame.addScore(score2);
-        finalFrame = finalFrame.addScore(score3);
+        finalFrame.addScore(score1);
+        finalFrame.addScore(score2);
+        finalFrame.addScore(score3);
 
         // then
         assertThat(finalFrame.isFinished()).isTrue();
@@ -117,8 +117,8 @@ public class FinalFrameTest {
         Frame finalFrame = new FinalFrame();
 
         // when
-        finalFrame = finalFrame.addScore(score1);
-        finalFrame = finalFrame.addScore(score2);
+        finalFrame.addScore(score1);
+        finalFrame.addScore(score2);
 
         // then
         assertThat(finalFrame.isFinished()).isFalse();

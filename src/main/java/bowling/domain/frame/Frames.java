@@ -16,34 +16,22 @@ public class Frames {
         this.frames = frames;
     }
 
+    public Frames addScore(int score) throws Exception {
+        if (isFinished()) {
+            throw new IndexOutOfBoundsException();
+        }
+        this.frames.get(nowFrame()).addScore(score);
+        return new Frames(this.frames);
+    }
+
     public boolean isFinished() {
-        if (nowFrameIndex() > 9) {
+        if (nowFrame() > 9) {
             return true;
         }
         return false;
     }
 
-    public int nextFrame() {
-        if (frames.isEmpty()) {
-            return 0;
-        }
-        if (frames.get(nowFrameIndex() - 1).isFinished()) {
-            return nowFrameIndex() + 1;
-        }
-        return nowFrameIndex();
-    }
-
-    public Frames addScore(int score) throws Exception {
-        if (nowFrameIndex() == nextFrame()) {
-            frames.get(nowFrameIndex()).addScore(score);
-        }
-        if (nextFrame() == 9) {
-            frames.get(nextFrame()).addScore(score);
-        }
-        return new Frames(this.frames);
-    }
-
-    private int nowFrameIndex() {
+    public int nowFrame() {
         return IntStream.range(0, 10)
                 .filter(i -> !frames.get(i).isFinished())
                 .findFirst()
