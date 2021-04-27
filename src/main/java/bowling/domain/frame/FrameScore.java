@@ -19,11 +19,11 @@ public abstract class FrameScore {
         this.frameStatus = frameStatus;
     }
 
+    public abstract String status();
+
     public boolean isEnded() {
         return FrameStatus.NOT_ENDED != frameStatus;
     }
-
-    public abstract String status();
 
     @Override
     public boolean equals(Object o) {
