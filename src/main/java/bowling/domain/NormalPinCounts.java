@@ -35,36 +35,37 @@ public class NormalPinCounts implements PinCounts {
     }
 
     public void knockDown(int pinCount) {
-        PinCount knockedDownPinCount = new PinCount(pinCount);
-
-        if (pinCounts.isEmpty()) {
-            pinCounts.add(knockedDownPinCount);
-            return;
-        }
-
+        checkAllThrown();
         checkStrike();
         checkSpareBound(pinCount);
-        checkAllThrown();
+
+        PinCount knockedDownPinCount = new PinCount(pinCount);
         pinCounts.add(knockedDownPinCount);
-    }
-
-    private void checkStrike() {
-        if (isFirstPinCountStrike()) {
-            throw new IllegalArgumentException(CANNOT_THROW_SECOND_BOWL);
-        }
-    }
-
-    private void checkSpareBound(int pinCount) {
-        int totalPinCount = firstPinCount().plus(pinCount);
-        if (!isFirstPinCountStrike() && totalPinCount > TOTAL_PIN_COUNT_MAX) {
-            throw new IllegalArgumentException(CHECK_BOUND);
-        }
     }
 
     private void checkAllThrown() {
         if (pinCounts.size() >= NORMAL_PIN_COUNTS_SIZE_MAX) {
             throw new IllegalArgumentException(CANNOT_THROW_BOWL_ANYMORE);
         }
+    }
+
+    private void checkStrike() {
+        if (isPinCountsSizeOne()
+                && isFirstPinCountStrike()) {
+            throw new IllegalArgumentException(CANNOT_THROW_SECOND_BOWL);
+        }
+    }
+
+    private void checkSpareBound(int pinCount) {
+        if (isPinCountsSizeOne()
+                && !isFirstPinCountStrike()
+                && firstPinCount().plus(pinCount) > TOTAL_PIN_COUNT_MAX) {
+            throw new IllegalArgumentException(CHECK_BOUND);
+        }
+    }
+
+    private boolean isPinCountsSizeOne() {
+        return pinCounts.size() == PIN_COUNTS_SINGLE_SIZE;
     }
 
     @Override
@@ -75,7 +76,7 @@ public class NormalPinCounts implements PinCounts {
     @Override
     public boolean isFinished() {
         if (pinCounts.isEmpty()
-                || (pinCounts.size() == 1 && !isFirstPinCountStrike())) {
+                || (isPinCountsSizeOne() && !isFirstPinCountStrike())) {
             return false;
         }
 
