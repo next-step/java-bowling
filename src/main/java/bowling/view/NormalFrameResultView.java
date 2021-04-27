@@ -25,10 +25,10 @@ public class NormalFrameResultView extends ResultView implements ResultViewType 
             builder.append(DELIMITER);
         }
         if (index == 1 && fallPins == 10) {
-            return builder.append("X").toString();
+            return builder.append(SYMBOL_STRIKE).toString();
         }
         if (index == 2 && sum == 10) {
-            return builder.append("/").toString();
+            return builder.append(SYMBOL_SPARE).toString();
         }
         return builder.append(convertZeroToHyphen(fallPins)).toString();
     }

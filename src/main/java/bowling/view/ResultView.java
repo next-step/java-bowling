@@ -14,6 +14,10 @@ public class ResultView {
     private static final String BOARD_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     protected static final String DELIMITER = "|";
     protected static final String EMPTY_FRAME = "      |";
+    protected static final String SYMBOL_STRIKE = "X";
+    protected static final String SYMBOL_SPARE = "/";
+    protected static final String SYMBOL_GUTTER = "-";
+    protected static final String ZERO = "0";
 
     public void initBoard(Player player) {
         printBoard(player, new Frames());
@@ -49,6 +53,6 @@ public class ResultView {
     }
 
     protected String convertZeroToHyphen(int fallPins) {
-        return String.valueOf(fallPins).replace("0", "-");
+        return String.valueOf(fallPins).replace(ZERO, SYMBOL_GUTTER);
     }
 }

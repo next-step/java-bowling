@@ -28,22 +28,22 @@ public class FinalFrameResultView extends ResultView implements ResultViewType {
             builder.append(DELIMITER);
         }
         if (index == 1 && fallPins == 10) {
-            return builder.append("X").toString();
+            return builder.append(SYMBOL_STRIKE).toString();
         }
         if (index == 2 && sum == 10 && firstPitchFallPins != 10) {
-            return builder.append("/").toString();
+            return builder.append(SYMBOL_SPARE).toString();
         }
         if (index == 2 && sum == 20) {
-            return builder.append("X").toString();
+            return builder.append(SYMBOL_STRIKE).toString();
         }
         if (index == 3 && sum == 20 && firstPitchFallPins != 10) {
-            return builder.append("X").toString();
+            return builder.append(SYMBOL_STRIKE).toString();
         }
         if (index == 3 && sum == 20) {
-            return builder.append("/").toString();
+            return builder.append(SYMBOL_SPARE).toString();
         }
         if (sum == 30) {
-            return builder.append("X").toString();
+            return builder.append(SYMBOL_STRIKE).toString();
         }
         return builder.append(convertZeroToHyphen(fallPins)).toString();
     }
