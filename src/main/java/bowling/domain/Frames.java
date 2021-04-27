@@ -7,11 +7,17 @@ public class Frames {
 
     private static final int LAST_ROUND = 10;
 
+    private final User user;
     private final List<FrameStrategy> frames;
 
-    public Frames() {
+    public Frames(User user) {
+        this.user = user;
         frames = new ArrayList<>();
         frames.add(new NormalFrame());
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public List<FrameStrategy> getFrames() {
@@ -28,5 +34,11 @@ public class Frames {
 
     public boolean hasRemainTurn(int frameNumber) {
         return frames.get(frameNumber - 1).hasNext();
+    }
+
+    public void calculateScore(int frameNumber) {
+        for (int i = 0; i < frameNumber; i++) {
+            user.recordScore(i, frames.get(i).score());
+        }
     }
 }
