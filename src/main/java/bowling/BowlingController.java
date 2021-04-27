@@ -24,6 +24,7 @@ public final class BowlingController {
         final RoundNumber roundNumber = new RoundNumber(i);
         while (!player.isEnded(roundNumber)) {
             final Pin pin = downPin(i);
+            player.knockDownPin(roundNumber, pin);
             OutputView.printScoreBoard(player);
         }
     }
