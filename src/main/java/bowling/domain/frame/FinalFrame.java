@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
 
@@ -51,12 +50,6 @@ public class FinalFrame extends Frame {
     private List<Score> add(Score score) {
         this.scores.add(score);
         return this.scores;
-    }
-
-    private static List<Score> generateScores(List<Integer> scores) {
-        return scores.stream()
-                .map(score -> Score.valueOf(score))
-                .collect(Collectors.toList());
     }
 
     @Override

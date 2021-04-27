@@ -3,7 +3,6 @@ package bowling.domain.frame;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class NormalFrame extends Frame {
     public NormalFrame() {
@@ -42,13 +41,7 @@ public class NormalFrame extends Frame {
             return;
         }
     }
-
-    private static List<Score> generateScores(List<Integer> scores) {
-        return scores.stream()
-                .map(score -> Score.valueOf(score))
-                .collect(Collectors.toList());
-    }
-
+    
     @Override
     public boolean equals(Object o) {
         return super.equals(o);
