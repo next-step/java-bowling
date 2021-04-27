@@ -3,21 +3,27 @@ package bowling.domain.engine.frame;
 import bowling.domain.concrete.frame.FinalFrame;
 import bowling.domain.concrete.frame.NormalFrame;
 
+import java.util.LinkedList;
+
 public class FrameCreator {
 
     private static final int MAX_FRAMES = 10;
 
-    private int count = 1;
+    private FrameCreator() {}
 
-    public Frame create() {
-        if (count > MAX_FRAMES) {
-            throw new IllegalStateException("더 이상 프레임을 생성할 수 없습니다.");
+    @SuppressWarnings("java:S1319")
+    public static LinkedList<Frame> createFrames() {
+        LinkedList<Frame> frames = new LinkedList<>();
+        Frame lastCreatedFrame = FinalFrame.init();
+        frames.add(lastCreatedFrame);
+
+
+        for (int i = 0; i < MAX_FRAMES - 1; i++) {
+            lastCreatedFrame = NormalFrame.init(lastCreatedFrame);
+            frames.addFirst(lastCreatedFrame);
         }
 
-        if (count++ == MAX_FRAMES) {
-            return FinalFrame.init();
-        }
-        return NormalFrame.init();
+        return frames;
     }
 
 }

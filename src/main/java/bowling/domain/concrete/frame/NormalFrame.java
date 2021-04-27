@@ -8,13 +8,23 @@ import bowling.domain.engine.frame.state.StateFactory;
 public class NormalFrame implements Frame {
 
     private State state;
+    private Frame nextFrame;
 
     private NormalFrame(State state) {
         this.state = state;
     }
 
+    private NormalFrame(State state, Frame nextFrame) {
+        this.state = state;
+        this.nextFrame = nextFrame;
+    }
+
     public static NormalFrame init() {
         return new NormalFrame(StateFactory.ready());
+    }
+
+    public static NormalFrame init(Frame nextFrame) {
+        return new NormalFrame(StateFactory.ready(), nextFrame);
     }
 
     @Override
