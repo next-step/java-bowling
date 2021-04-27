@@ -15,8 +15,8 @@ public class FinalFrame extends Frame {
         super(round);
     }
 
-    public static FinalFrame from(Round round) {
-        return new FinalFrame(round);
+    public static FinalFrame getFrame() {
+        return new FinalFrame(Round.finalRound());
     }
 
     public boolean roundEnded() {

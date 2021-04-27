@@ -13,7 +13,7 @@ public class FrameTest {
     @Test
     void frameIsFinalRoundTest() {
         Frame firstFrame = NormalFrame.from(Round.firstRound());
-        Frame finalFrame = FinalFrame.from(Round.finalRound());
+        Frame finalFrame = FinalFrame.getFrame();
         assertThat(finalFrame.isLastRound()).isEqualTo(Boolean.TRUE);
         assertThat(firstFrame.isLastRound()).isEqualTo(Boolean.FALSE);
     }
@@ -48,7 +48,7 @@ public class FrameTest {
     @DisplayName("마지막 프레임에서 첫투구에서 스트이크를 하면 총 3번 던질 수 있다")
     @Test
     void throwBallStrikeInFinalTest() {
-        Frame finalFrame = FinalFrame.from(Round.finalRound());
+        Frame finalFrame = FinalFrame.getFrame();
         finalFrame.throwBall(10);
         finalFrame.throwBall(10);
         finalFrame.throwBall(10);
@@ -58,7 +58,7 @@ public class FrameTest {
     @DisplayName("마지막 프레임에서 스페어 처리를 하면 총 3번 던질 수 있다")
     @Test
     void throwBallSpareInFinalTest() {
-        Frame finalFrame = FinalFrame.from(Round.finalRound());
+        Frame finalFrame = FinalFrame.getFrame();
         finalFrame.throwBall(8);
         finalFrame.throwBall(2);
         finalFrame.throwBall(9);

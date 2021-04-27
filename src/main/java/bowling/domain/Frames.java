@@ -19,7 +19,7 @@ public class Frames {
 
     public static Frames init() {
         List<Frame> frames = generateNormalFrame();
-        frames.add(FinalFrame.from(Round.finalRound()));
+        frames.add(FinalFrame.getFrame());
         return new Frames(frames);
     }
 
