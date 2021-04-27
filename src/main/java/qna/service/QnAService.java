@@ -4,8 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import qna.CannotDeleteException;
-import qna.NotFoundException;
+import qna.domain.answer.Answer;
+import qna.domain.answer.AnswerRepository;
+import qna.domain.answer.Answers;
+import qna.domain.user.User;
+import qna.error.CannotDeleteException;
+import qna.error.NotFoundException;
 import qna.domain.*;
 
 import javax.annotation.Resource;
@@ -35,24 +39,14 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
-        if (!question.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
+        question.checkDeletable(loginUser);
 
-        List<Answer> answers = question.getAnswers();
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
+        Answers answers = Answers.of(question.getAnswers());
+        answers.checkAnswers(loginUser);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        question.setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
+        deleteHistories.add(question.delete(questionId));
+        deleteHistories.addAll(answers.deleteAll());
         deleteHistoryService.saveAll(deleteHistories);
     }
 }
