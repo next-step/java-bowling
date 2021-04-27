@@ -19,11 +19,11 @@ public interface PinCounts {
     }
 
     default boolean isFirstPinCountStrike() {
-        return pinCounts().get(0).isStrike();
+        return firstPinCount().isStrike();
     }
 
     default boolean isSecondPinCountSpare() {
-        return !isFirstPinCountStrike() && pinCounts().get(1).isSpare(pinCounts().get(0));
+        return !isFirstPinCountStrike() && secondPinCount().isSpare(firstPinCount());
     }
 
     default PinCount firstPinCount() {
