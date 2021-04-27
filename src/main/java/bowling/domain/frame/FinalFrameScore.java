@@ -34,6 +34,6 @@ public final class FinalFrameScore extends FrameScore {
 
     @Override
     public FrameScore knockDownPin(Pin pin) {
-        return null;
+        return new FinalFrameScore((FinalPins) pins.knockDownPin(pin));
     }
 }
