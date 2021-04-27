@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
 
 import java.util.Objects;
@@ -20,6 +21,8 @@ public abstract class FrameScore {
     }
 
     public abstract String status();
+
+    public abstract FrameScore knockDownPin(Pin pin);
 
     public boolean isEnded() {
         return FrameStatus.NOT_ENDED != frameStatus;

@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.NullPins;
+import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
 
 public final class NormalFrameScore extends FrameScore {
@@ -31,4 +32,8 @@ public final class NormalFrameScore extends FrameScore {
         return pins.firstPin().status() + PIN_DELIMITER + pins.secondPin().status();
     }
 
+    @Override
+    public FrameScore knockDownPin(Pin pin) {
+        return null;
+    }
 }

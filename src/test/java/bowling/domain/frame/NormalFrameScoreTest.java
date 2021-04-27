@@ -38,4 +38,19 @@ class NormalFrameScoreTest {
                 () -> assertThat(notEndedFrame.isEnded()).isFalse()
         );
     }
+
+    @Test
+    @DisplayName("Pin을 쓰러뜨리고, 새로운 FrameScore를 반환한다.")
+    void knockDownPin() {
+        // given
+        final FrameScore beforeFrameScore = new NormalFrameScore();
+        final Pin strikePin = new Pin();
+        final FrameScore expectedFrameScore = new NormalFrameScore(new NormalPins(new Pin()));
+
+        // when
+        final FrameScore afterFrameScore = beforeFrameScore.knockDownPin(strikePin);
+
+        // then
+        assertThat(afterFrameScore).isEqualTo(expectedFrameScore);
+    }
 }

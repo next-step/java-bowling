@@ -31,4 +31,9 @@ public final class FinalFrameScore extends FrameScore {
         }
         return firstPin.status() + PIN_DELIMITER + secondPin.status();
     }
+
+    @Override
+    public FrameScore knockDownPin(Pin pin) {
+        return null;
+    }
 }
