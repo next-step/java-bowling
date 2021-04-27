@@ -47,7 +47,13 @@ public final class FinalPins implements Pins {
 
     @Override
     public Pins knockDownPin(Pin pin) {
-        return null;
+        if (firstPin() == null) {
+            return new FinalPins(pin);
+        }
+        if (secondPin() == null) {
+            return new FinalPins(firstPin(), pin);
+        }
+        return new FinalPins(pins, pin);
     }
 
     public Pin thirdPin() {
