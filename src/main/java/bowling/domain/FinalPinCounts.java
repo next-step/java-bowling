@@ -44,8 +44,9 @@ public class FinalPinCounts implements PinCounts {
         }
 
         checkThirdBowlAvailable();
+        checkOverPinCountForThirdBowlSpare(pinCount);
 
-        if (pinCounts.size() == FINAL_PIN_COUNTS_SIZE_MAX - 1 && !isOverPinCountForThirdBowlSpare(pinCount)) {
+        if (pinCounts.size() == FINAL_PIN_COUNTS_SIZE_MAX - 1) {
             pinCounts.add(knockedDownPinCount);
         }
     }
@@ -72,12 +73,13 @@ public class FinalPinCounts implements PinCounts {
         return pinCounts.size() == FINAL_PIN_COUNTS_SIZE_MAX - 1 && (isFirstPinCountStrike() || isSecondPinCountSpare());
     }
 
-    private boolean isOverPinCountForThirdBowlSpare(int pinCount) {
-        if (isFirstPinCountStrike() && !isSecondPinCountStrike() && addedPinCount(pinCount, SECOND_PIN_COUNT_INDEX) > SPARE) {
+    private void checkOverPinCountForThirdBowlSpare(int pinCount) {
+        if (pinCounts().size() == FINAL_PIN_COUNTS_SIZE_MAX - 1
+                && isFirstPinCountStrike()
+                && !isSecondPinCountStrike()
+                && addedPinCount(pinCount, SECOND_PIN_COUNT_INDEX) > SPARE) {
             throw new IllegalArgumentException(CHECK_THIRD_PIN_COUNT_SPARE_BOUND);
         }
-
-        return false;
     }
 
     private void checkAllThrown() {
