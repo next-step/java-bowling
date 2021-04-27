@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.Frame;
+import bowling.domain.FrameFactory;
 import bowling.domain.Frames;
 import bowling.domain.Player;
 
@@ -41,7 +42,7 @@ public class ResultView {
     private String framePitches(int frameNo, Frames frames) {
         Map<Integer, Frame> frameMap = frames.frames();
         if (frameMap.containsKey(frameNo)) {
-            ResultViewType viewType = ResultViewFactory.factory(frameNo, MAX_FRAME_NO);
+            ResultViewType viewType = FrameFactory.viewFactory(frameNo, MAX_FRAME_NO);
             String frameResult = viewType.frameResult(frameMap.get(frameNo));
             return String.format(" %-3s  " + DELIMITER, frameResult);
         }

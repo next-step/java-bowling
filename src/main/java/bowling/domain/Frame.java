@@ -10,7 +10,7 @@ public class Frame {
     private final Pitches pitches;
 
     public Frame(int frameNo) {
-        this.frameType = FrameFactory.factory(frameNo, MAX_FRAME_NO);
+        this.frameType = FrameFactory.typeFactory(frameNo, MAX_FRAME_NO);
         this.pitches = new Pitches(new ArrayList<>());
     }
 
