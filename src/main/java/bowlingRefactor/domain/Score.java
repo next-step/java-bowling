@@ -1,6 +1,4 @@
-package bowlingRefactor;
-
-import bowlingRefactor.domain.Pin;
+package bowlingRefactor.domain;
 
 import java.util.Objects;
 
@@ -31,6 +29,10 @@ public class Score {
 
     public static Score ofSpare(int score) {
         return new Score(SPARE_LEFT_COUNT, score + Pin.MAX_PIN);
+    }
+
+    public static Score ofNoneScore() {
+        return new Score(NONE_SCORE, DEFAULT_LEFT_COUNT);
     }
 
     public static Score ofDefault() {
