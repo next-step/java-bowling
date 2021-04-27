@@ -1,6 +1,7 @@
 package bowling.domain.player;
 
 import bowling.domain.frame.Frames;
+import bowling.domain.frame.RoundNumber;
 
 import java.util.Objects;
 
@@ -24,6 +25,10 @@ public final class Player {
 
     public Frames frames() {
         return frames;
+    }
+
+    public boolean isEnded(RoundNumber roundNumber) {
+        return false;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package bowling.domain.player;
 
 import bowling.domain.frame.Frames;
+import bowling.domain.frame.RoundNumber;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,5 +39,18 @@ class PlayerTest {
 
         // then
         assertThat(player).isEqualTo(new Player(playerName, Frames.initialize()));
+    }
+
+    @Test
+    @DisplayName("Player가 진행중인 라운드가 끝났는지 확인할 수 있다.")
+    void isEnded() {
+        // given
+        final Player player = new Player(playerName);
+
+        // when
+        final boolean ended = player.isEnded(new RoundNumber(1));
+
+        // then
+        assertThat(ended).isFalse();
     }
 }
