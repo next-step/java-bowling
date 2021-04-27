@@ -22,6 +22,10 @@ public abstract class Frame {
 
     public abstract String status();
 
+    public boolean isEnded() {
+        return frameScore.isEnded();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

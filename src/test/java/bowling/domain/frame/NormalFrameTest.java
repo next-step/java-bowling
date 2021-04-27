@@ -106,4 +106,17 @@ class NormalFrameTest {
         // then
         assertThat(status).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("Frame이 종료되었는지 확인한다.")
+    void isEnded() {
+        // given
+        final NormalFrameScore normalFrameScore = new NormalFrameScore();
+
+        // when
+        final boolean ended = normalFrameScore.isEnded();
+
+        // then
+        assertThat(ended).isFalse();
+    }
 }
