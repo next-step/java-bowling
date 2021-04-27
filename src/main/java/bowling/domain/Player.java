@@ -15,7 +15,7 @@ public class Player implements Exportable<PlayerDto> {
     }
 
     public static Player initialize(String name) {
-        return new Player(PlayerName.wrap(name), new Frames());
+        return new Player(PlayerName.wrap(name), Frames.init());
     }
 
     public PlayerDto throwBall(int numberOfPins) {

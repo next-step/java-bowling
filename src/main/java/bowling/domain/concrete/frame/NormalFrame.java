@@ -2,8 +2,10 @@ package bowling.domain.concrete.frame;
 
 import bowling.domain.RollResult;
 import bowling.domain.engine.frame.Frame;
+import bowling.domain.engine.frame.Score;
 import bowling.domain.engine.frame.state.State;
 import bowling.domain.engine.frame.state.StateFactory;
+
 
 public class NormalFrame implements Frame {
 
@@ -34,6 +36,28 @@ public class NormalFrame implements Frame {
         }
 
         this.state = state.transit(rollResult);
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = state.createScore();
+
+        if (!score.isCalculationCompleted()) {
+            score = nextFrame.addScoreTo(score);
+        }
+
+        return score;
+    }
+
+    @Override
+    public Score addScoreTo(Score score) {
+        score = state.addScoreTo(score);
+
+        if (!score.isCalculationCompleted()) {
+            score = nextFrame.addScoreTo(score);
+        }
+
+        return score;
     }
 
     @Override
