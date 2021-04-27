@@ -59,4 +59,14 @@ public class FinalFrame extends Frame {
                 .map(score -> Score.valueOf(score))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
