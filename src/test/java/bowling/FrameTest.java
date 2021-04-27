@@ -35,10 +35,11 @@ public class FrameTest {
     @MethodSource("NormalFrame_프레임이_끝난_경우")
     public void NormalFrameIsFinished_프레임이_끝난_경우1(int score1, int score2) {
         // given
-        Frame normalFrame = NormalFrame.valueOf(Arrays.asList(score1, score2));
+        Frame normalFrame = new NormalFrame();
 
         // when
-
+        normalFrame = normalFrame.addScore(score1);
+        normalFrame = normalFrame.addScore(score2);
 
         // then
         assertThat(normalFrame.isFinished()).isTrue();
@@ -47,10 +48,10 @@ public class FrameTest {
     @Test
     public void NormalFrameIsFinished_프레임이_끝난_경우2() {
         // given
-        Frame normalFrame = NormalFrame.valueOf(Arrays.asList(10));
+        Frame normalFrame = new NormalFrame();
 
         // when
-
+        normalFrame = normalFrame.addScore(10);
 
         // then
         assertThat(normalFrame.isFinished()).isTrue();
@@ -75,8 +76,10 @@ public class FrameTest {
     @MethodSource("NormalFrame_프레임이_안끝난_경우")
     public void NormalFrameIsFinished_프레임이_안끝난_경우(int score) {
         // given
-        Frame normalFrame = NormalFrame.valueOf(score);
+        Frame normalFrame = new NormalFrame();
+
         // when
+        normalFrame = normalFrame.addScore(score);
 
         // then
         assertThat(normalFrame.isFinished()).isFalse();

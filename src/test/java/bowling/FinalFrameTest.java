@@ -1,2 +1,4 @@
-package bowling;public class FinalFrameTest {
+package bowling;
+
+public class FinalFrameTest {
 }
