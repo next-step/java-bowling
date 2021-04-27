@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.PinValueRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,6 @@ public class PinTest {
         assertThatThrownBy(() -> {
             new Pin(-1);
             new Pin(11);
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(PinValueRangeException.class);
     }
 }

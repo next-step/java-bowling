@@ -1,5 +1,9 @@
 package bowling.domain;
 
+import bowling.exception.NameEmptyException;
+import bowling.exception.NameFormatException;
+import bowling.exception.NameLengthException;
+
 import java.util.regex.Pattern;
 
 public class Player {
@@ -24,16 +28,16 @@ public class Player {
 
     private static void validateNameFormat(String name) {
         if (!Pattern.matches(NAME_LANGUAGE_PATTERN, name)) {
-            throw new IllegalArgumentException(NAME_LANGUAGE_EXCEPTION_MESSAGE);
+            throw new NameFormatException(NAME_LANGUAGE_EXCEPTION_MESSAGE);
         }
     }
 
     private static void validateNameLength(String name) {
         if (name.length() > NAME_MAX_LENGTH) {
-            throw new IllegalArgumentException(NAME_LENGTH_EXCEPTION_MESSAGE);
+            throw new NameLengthException(NAME_LENGTH_EXCEPTION_MESSAGE);
         }
         if (name.trim().isEmpty()) {
-            throw new IllegalArgumentException(NAME_EMPTY_EXCEPTION_MESSAGE);
+            throw new NameEmptyException(NAME_EMPTY_EXCEPTION_MESSAGE);
         }
     }
 

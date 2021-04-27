@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.PinsSizeException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -49,8 +51,8 @@ public class Pins {
     }
 
     private void validatePinSize() {
-        if (pins.size() > PIN_SIZE_BOUND) {
-            throw new IllegalStateException(PIN_SIZE_EXCEPTION_MESSAGE);
+        if (pins.size() >= PIN_SIZE_BOUND) {
+            throw new PinsSizeException(PIN_SIZE_EXCEPTION_MESSAGE);
         }
     }
 

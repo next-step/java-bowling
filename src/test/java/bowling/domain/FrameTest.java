@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.FrameTryException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +42,7 @@ public class FrameTest {
         normalFrame.throwBall(7);
         normalFrame.throwBall(1);
         assertThatThrownBy(() -> normalFrame.throwBall(1))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(FrameTryException.class);
     }
 
     @DisplayName("마지막 프레임에서 첫투구에서 스트이크를 하면 총 3번 던질 수 있다")

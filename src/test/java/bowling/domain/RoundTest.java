@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.RoundRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ public class RoundTest {
     @Test
     void initRoundExceptionTest() {
         assertThatThrownBy(() -> Round.from(11))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(RoundRangeException.class);
     }
 
     @DisplayName("다음 라운드를 생성한다")

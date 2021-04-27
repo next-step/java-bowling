@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.RoundRangeException;
+
 import java.util.Objects;
 
 public class Round {
@@ -21,7 +23,7 @@ public class Round {
 
     private static void validateRound(int round) {
         if (round < FIRST_ROUND || round > FINAL_ROUND) {
-            throw new IllegalArgumentException(ROUND_RANGE_EXCEPTION_MESSAGE);
+            throw new RoundRangeException(ROUND_RANGE_EXCEPTION_MESSAGE);
         }
     }
 

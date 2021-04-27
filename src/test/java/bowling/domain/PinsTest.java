@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.PinsSizeException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,6 @@ public class PinsTest {
     @DisplayName("3번 이상의 투구는 할 수 없다")
     @Test
     void pinsExceptionTest() {
-        assertThatThrownBy(() -> pins.add(new Pin(2))).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> pins.add(new Pin(2))).isInstanceOf(PinsSizeException.class);
     }
 }

@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.FrameTryException;
+
 public abstract class Frame {
 
     private static final String TRY_COUNT_EXCEPTION_MESSAGE = "최대 2번까지 시도할 수 있습니다";
@@ -25,7 +27,7 @@ public abstract class Frame {
 
     protected void validateTry() {
         if (roundEnded()) {
-            throw new IllegalStateException(TRY_COUNT_EXCEPTION_MESSAGE);
+            throw new FrameTryException(TRY_COUNT_EXCEPTION_MESSAGE);
         }
     }
 

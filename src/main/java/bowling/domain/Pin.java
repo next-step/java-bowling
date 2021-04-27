@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import java.util.Objects;
+import bowling.exception.PinValueRangeException;
 
 public class Pin {
 
@@ -17,7 +17,7 @@ public class Pin {
 
     private void validatePin() {
         if (pin < MIN_PIN || pin > MAX_PIN) {
-            throw new IllegalArgumentException(PIN_VALUE_EXCEPTION_MESSAGE);
+            throw new PinValueRangeException(PIN_VALUE_EXCEPTION_MESSAGE);
         }
     }
 
