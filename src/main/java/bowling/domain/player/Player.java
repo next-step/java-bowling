@@ -28,7 +28,7 @@ public final class Player {
     }
 
     public boolean isEnded(RoundNumber roundNumber) {
-        return false;
+        return frames().isEnded(roundNumber);
     }
 
     @Override

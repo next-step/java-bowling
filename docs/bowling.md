@@ -93,12 +93,11 @@
 - [x] `Pins`를 이용해 FrameScore를 개선한다.
     - [x] FrameScore는 `Pins` 와 `FrameStatus`를 가진다.
     - [x] FrameScore는 해당 프레임이 종료되었는지 확인하는 메서드를 가져야한다.
-- [ ] Frame이 종료되었는지 확인하는 기능을 구현한다.
+- [x] Frame이 종료되었는지 확인하는 기능을 구현한다.
     - [x] FrameScore: FrameStatus가 NOT_ENDED인가?
     - [x] Frame: FrameScore 호출
     - [x] Frames: 해당 Frame 호출
-    - [ ] Player: Frame 번호를 넘겨준다.
-        - [ ] Frame 번호를 Pool로 관리해야할까? (자주 액세스 되지 않으므로 관계없을듯.)
+    - [x] Player: Frame 번호를 넘겨준다.
 - [ ] 투구 기능을 구현한다.
     - [x] Pins: 쓰러진 Pin의 개수를 전달하고, 새로운 Pins를 반환한다.
     - [ ] FrameScore: Pins에 쓰러진 핀의 개수를 전달한다. 새로운 FrameScore를 반환한다.
