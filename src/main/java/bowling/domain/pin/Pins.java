@@ -9,4 +9,6 @@ public interface Pins {
     Pin secondPin();
 
     FrameStatus frameStatus();
+
+    Pins knockDownPin(Pin pin);
 }

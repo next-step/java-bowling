@@ -33,6 +33,11 @@ public final class FinalPins implements Pins {
         return FrameStatus.of(firstPin(), secondPin());
     }
 
+    @Override
+    public Pins knockDownPin(Pin pin) {
+        return null;
+    }
+
     public Pin thirdPin() {
         return thirdPin;
     }

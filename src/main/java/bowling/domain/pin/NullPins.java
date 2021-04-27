@@ -24,6 +24,11 @@ public final class NullPins implements Pins {
     }
 
     @Override
+    public Pins knockDownPin(Pin pin) {
+        return null;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

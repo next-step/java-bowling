@@ -44,4 +44,19 @@ class NormalPinsTest {
         // then
         assertThat(frameStatus).isEqualTo(expectedFrameStatus);
     }
+
+    @Test
+    @DisplayName("쓰러진 핀을 전달받으면 새로운 Pins가 반환된다.")
+    void knockDownPin() {
+        // given
+        final NormalPins beforePins = new NormalPins(null, null);
+        final Pin strikePin = new Pin();
+        final NormalPins strikePins = new NormalPins(new Pin(), null);
+
+        // when
+        final Pins afterPins = beforePins.knockDownPin(strikePin);
+
+        // then
+        assertThat(afterPins).isEqualTo(strikePins);
+    }
 }
