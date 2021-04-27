@@ -32,6 +32,9 @@ public enum Score {
     }
 
     public static Score valueOf(Score previousScore, int score) {
+        if (previousScore == STRIKE) {
+            return valueOf(score);
+        }
         if (previousScore.score + score == 10) {
             return SPARE;
         }
