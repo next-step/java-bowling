@@ -36,7 +36,9 @@ public class FinalPinCounts implements PinCounts {
             return;
         }
 
-        if (pinCounts.size() == PIN_COUNTS_SINGLE_SIZE && !isOverPinCountForSecondBowlSpare(pinCount)) {
+        checkOverPinCountForSecondBowlSpare(pinCount);
+
+        if (pinCounts.size() == PIN_COUNTS_SINGLE_SIZE) {
             pinCounts.add(knockedDownPinCount);
             return;
         }
@@ -48,12 +50,12 @@ public class FinalPinCounts implements PinCounts {
         }
     }
 
-    private boolean isOverPinCountForSecondBowlSpare(int pinCount) {
-        if (!isFirstPinCountStrike() && addedPinCount(pinCount, FIRST_PIN_COUNT_INDEX) > SPARE) {
+    private void checkOverPinCountForSecondBowlSpare(int pinCount) {
+        if (pinCounts.size() == PIN_COUNTS_SINGLE_SIZE
+                && !isFirstPinCountStrike()
+                && addedPinCount(pinCount, FIRST_PIN_COUNT_INDEX) > SPARE) {
             throw new IllegalArgumentException(CHECK_SECOND_PIN_COUNT_SPARE_BOUND);
         }
-
-        return false;
     }
 
     private int addedPinCount(int pinCount, int index) {
