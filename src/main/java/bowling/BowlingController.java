@@ -16,6 +16,13 @@ public final class BowlingController {
         OutputView.printScoreBoard(player);
 
         for (int i = RoundNumber.MIN; i <= RoundNumber.MAX; i++) {
+            bowl(player, i);
+        }
+    }
+
+    private static void bowl(Player player, int i) {
+        final RoundNumber roundNumber = new RoundNumber(i);
+        while (!player.isEnded(roundNumber)) {
             final Pin pin = downPin(i);
             OutputView.printScoreBoard(player);
         }
