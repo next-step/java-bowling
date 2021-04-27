@@ -2,6 +2,7 @@ package bowling.domain.player;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.RoundNumber;
+import bowling.domain.pin.Pin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,7 +43,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("Player가 진행중인 라운드가 끝났는지 확인할 수 있다.")
+    @DisplayName("Player는 해당 라운드가 끝났는지 확인할 수 있다.")
     void isEnded() {
         // given
         final Player player = new Player(playerName);
@@ -52,5 +53,20 @@ class PlayerTest {
 
         // then
         assertThat(ended).isFalse();
+    }
+
+    @Test
+    @DisplayName("Player는 해당 라운드의 Pin을 쓰러뜨릴 수 있다.")
+    void knockDownPin() {
+        // given
+        final Player player = new Player(playerName);
+        final RoundNumber roundNumber = new RoundNumber(1);
+        final Pin strikePin = new Pin();
+
+        // when
+        player.knockDownPin(roundNumber, strikePin);
+
+        // then
+        assertThat(player.isEnded(roundNumber)).isTrue();
     }
 }
