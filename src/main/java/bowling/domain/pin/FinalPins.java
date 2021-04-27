@@ -9,6 +9,18 @@ public final class FinalPins implements Pins {
     private final NormalPins pins;
     private final Pin thirdPin;
 
+    public FinalPins() {
+        this(null, null, null);
+    }
+
+    public FinalPins(Pin firstPin) {
+        this(firstPin, null, null);
+    }
+
+    public FinalPins(Pin firstPin, Pin secondPin) {
+        this(firstPin, secondPin, null);
+    }
+
     public FinalPins(Pin firstPin, Pin secondPin, Pin thirdPin) {
         this(new NormalPins(firstPin, secondPin), thirdPin);
     }
