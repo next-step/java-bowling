@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PinsTest {
@@ -43,6 +44,27 @@ class PinsTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("Pins 인스턴스가 가진 갯수를 넘는 값이 들어왔을 경우 예외처리 여부 테스트")
+    @Test
+    void 검증_오버된_수() {
+        // given
+        int overCount = 11;
+        int fistHitCount = 5;
+        int secondHitCount = 6;
+
+        // when
+        Pins pins = Pins.init();
+
+        // then
+        assertThatThrownBy(() -> assertThat(pins.hit(overCount)))
+                .isInstanceOf(InputOverHitCountException.class)
+                .hasMessage("맞은 갯수 (11) 은, 현재 남아있는 갯수 (10) 보다 큽니다.");
+
+        assertThatThrownBy(() -> assertThat(pins.hit(fistHitCount).hit(secondHitCount)))
+                .isInstanceOf(InputOverHitCountException.class)
+                .hasMessage("맞은 갯수 (6) 은, 현재 남아있는 갯수 (5) 보다 큽니다.");
     }
 
 }
