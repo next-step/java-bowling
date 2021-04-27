@@ -87,6 +87,21 @@ class PinsTest {
         );
     }
 
+    @DisplayName("Pins 인스턴스가 줄어든 갯수를 반환하는 테스트")
+    @Test
+    void 반환_맞은_갯수() {
+        // given
+        int allHitCount = 10;
+        int noHitCount = 0;
 
+        // when
+        Pins pins = Pins.init();
+
+        // then
+        assertAll(
+                () -> assertThat(pins.hit(allHitCount).hittedCount()).isFalse(0),
+                () -> assertThat(pins.hit(noHitCount).hittedCount()).isEqualTo(10)
+        );
+    }
 
 }
