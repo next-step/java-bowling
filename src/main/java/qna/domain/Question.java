@@ -2,6 +2,7 @@ package qna.domain;
 
 import org.hibernate.annotations.Where;
 import qna.domain.answer.Answer;
+import qna.domain.answer.Answers;
 import qna.domain.user.User;
 import qna.error.CannotDeleteException;
 
@@ -22,10 +23,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -85,21 +84,23 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public DeleteHistory delete(long questionId){
-        setDeleted(true);
-        return new DeleteHistory(ContentType.QUESTION, questionId, getWriter(), LocalDateTime.now());
+    public List<DeleteHistory> delete(User loginUser){
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(setDeleted(true));
+        deleteHistories.addAll(answers.deleteAll(loginUser));
+        return deleteHistories;
     }
 
-    public Question setDeleted(boolean deleted) {
+    public DeleteHistory setDeleted(boolean deleted) {
         this.deleted = deleted;
-        return this;
+        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 

@@ -3,7 +3,7 @@
 ## 기능 구현
 * [X] Exception 위치 변경
 * [X] Answer, Answers 분리 및 QnaService 로직 수정 (1차 리팩토링)
-* [ ] 2차 리팩토링
+* [X] QnaService에서 Answers 로직 제거 (2차 리팩토링)
 * [ ] 기타 기능 분리
 * [ ] 포맷팅 적용
 
