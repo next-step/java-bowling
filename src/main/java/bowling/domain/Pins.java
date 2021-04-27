@@ -10,7 +10,7 @@ public class Pins {
     private static final int SECOND_TRY = 1;
     private static final int BONUS_TRY = 2;
     private static final int PIN_SIZE_BOUND = 3;
-    private static final String PIN_SIZE_EXCEPTION_MESSAGE = "최대 3회의 시도만 가능합니다";
+    private static final String PIN_SIZE_EXCEPTION_MESSAGE = String.format("최대 %d회의 시도만 가능합니다", PIN_SIZE_BOUND);
 
     private List<Pin> pins;
 
