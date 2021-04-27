@@ -27,7 +27,7 @@ public class FinalFrameTest {
 
     @ParameterizedTest
     @MethodSource("FinalFrame_프레임이_끝난_경우_2번_던지기")
-    public void FinalFrame_프레임이_끝난_경우_2번_던지기(int score1, int score2) {
+    public void FinalFrame_프레임이_끝난_경우_2번_던지기(int score1, int score2) throws Exception {
         // given
         Frame finalFrame = new FinalFrame();
 
@@ -52,7 +52,7 @@ public class FinalFrameTest {
 
     @ParameterizedTest
     @MethodSource("FinalFrame_프레임이_끝난_경우_3번_던지기")
-    public void FinalFrame_프레임이_끝난_경우_3번_던지기(int score1, int score2, int score3) {
+    public void FinalFrame_프레임이_끝난_경우_3번_던지기(int score1, int score2, int score3) throws Exception {
         // given
         Frame finalFrame = new FinalFrame();
 
@@ -78,7 +78,7 @@ public class FinalFrameTest {
 
     @ParameterizedTest
     @MethodSource("FinalFrame_프레임이_끝나지_않은_경우_2번_던지기")
-    public void FinalFrame_프레임이_끝나지_않은_경우_2번_던지기(int score1, int score2) {
+    public void FinalFrame_프레임이_끝나지_않은_경우_2번_던지기(int score1, int score2) throws Exception {
         // given
         Frame finalFrame = new FinalFrame();
 
@@ -108,7 +108,7 @@ public class FinalFrameTest {
 
     @ParameterizedTest
     @MethodSource("FinalFrame_프레임이_끝나지_않은_경우_1번_던지기")
-    public void FinalFrame_프레임이_끝나지_않은_경우_1번_던지기(int score1) {
+    public void FinalFrame_프레임이_끝나지_않은_경우_1번_던지기(int score1) throws Exception {
         // given
         Frame finalFrame = new FinalFrame();
 

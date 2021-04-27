@@ -31,7 +31,7 @@ public class NormalFrameTest {
 
     @ParameterizedTest
     @MethodSource("NormalFrame_프레임이_끝난_경우")
-    public void NormalFrameIsFinished_프레임이_끝난_경우1(int score1, int score2) {
+    public void NormalFrameIsFinished_프레임이_끝난_경우1(int score1, int score2) throws Exception {
         // given
         Frame normalFrame = new NormalFrame();
 
@@ -44,7 +44,7 @@ public class NormalFrameTest {
     }
 
     @Test
-    public void NormalFrameIsFinished_프레임이_끝난_경우2() {
+    public void NormalFrameIsFinished_프레임이_끝난_경우2() throws Exception {
         // given
         Frame normalFrame = new NormalFrame();
 
@@ -72,7 +72,7 @@ public class NormalFrameTest {
 
     @ParameterizedTest
     @MethodSource("NormalFrame_프레임이_안끝난_경우")
-    public void NormalFrameIsFinished_프레임이_안끝난_경우(int score) {
+    public void NormalFrameIsFinished_프레임이_안끝난_경우(int score) throws Exception {
         // given
         Frame normalFrame = new NormalFrame();
 

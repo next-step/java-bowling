@@ -28,15 +28,27 @@ public class FinalFrame extends Frame {
         if (scores.size() == 3) {
             return true;
         }
-        if (scores.size() == 2 && (scores.get(0) != Score.STRIKE && scores.get(1) == Score.SPARE)) {
+        if (scores.size() == 2 && (scores.get(0) != Score.STRIKE && scores.get(1) != Score.SPARE)) {
             return true;
         }
         return false;
     }
 
     @Override
-    public Frame addScore(int score) {
-        return FinalFrame.valueOf(3);
+    public Frame addScore(int score) throws Exception {
+        if (isFinished()) {
+            throw new Exception();
+        }
+        if (scores.size() == 0) {
+            return new FinalFrame(Arrays.asList(Score.valueOf(score)));
+        }
+        if (scores.size() == 1) {
+            return new FinalFrame(Arrays.asList(scores.get(0), Score.valueOf(scores.get(0), score)));
+        }
+        if (scores.size() == 2) {
+            return new FinalFrame(Arrays.asList(scores.get(1), Score.valueOf(scores.get(1), score)));
+        }
+        return this;
     }
 
     private static List<Score> generateScores(List<Integer> scores) {

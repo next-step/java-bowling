@@ -35,7 +35,10 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame addScore(int score) {
+    public Frame addScore(int score) throws Exception {
+        if (isFinished()) {
+            throw new Exception();
+        }
         if (scores.size() == 0) {
             return new NormalFrame(Arrays.asList(Score.valueOf(score)));
         }

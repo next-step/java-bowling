@@ -64,7 +64,7 @@ public class FramesTest {
     }
 
     @Test
-    public void addFrame_6번째_프레임() {
+    public void addFrame_6번째_프레임() throws Exception {
         // given
         int ADD_SCORE = 3;
         Frame normalFrame = NormalFrame.valueOf(Arrays.asList(3, 4));
