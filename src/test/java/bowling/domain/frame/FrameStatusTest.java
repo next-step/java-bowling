@@ -21,6 +21,15 @@ class FrameStatusTest {
         );
     }
 
+    static Stream<Arguments> nullFinalPinSource() {
+        return Stream.of(
+                arguments(null, null, null),
+                arguments(new Pin(9), null, null),
+                arguments(new Pin(), new Pin(), null),
+                arguments(new Pin(9), new Pin(1), null)
+        );
+    }
+
     @ParameterizedTest
     @CsvSource({"10,0,STRIKE", "9,1,SPARE", "3,4,NORMAL", "0,0,MISS"})
     @DisplayName("각 조건에 해당하는 FrameStatus가 반환된다.")
@@ -37,12 +46,40 @@ class FrameStatusTest {
     }
 
     @ParameterizedTest
+    @CsvSource({"10,10,10,NORMAL", "10,0,10,NORMAL", "0,10,10,NORMAL", "9,1,3,NORMAL", "3,4,0,NORMAL", "0,0,0,NORMAL"})
+    @DisplayName("각 조건에 해당하는 FrameStatus가 반환된다.")
+    void of(int firstPinCount, int secondPinCount, int thirdPinCount, FrameStatus expectedFrameStatus) {
+        // given
+        final Pin firstPin = new Pin(firstPinCount);
+        final Pin secondPin = new Pin(secondPinCount);
+        final Pin thirdPin = new Pin(thirdPinCount);
+
+        // when
+        final FrameStatus frameStatus = FrameStatus.of(firstPin, secondPin, thirdPin);
+
+        // then
+        assertThat(frameStatus).isEqualTo(expectedFrameStatus);
+    }
+
+    @ParameterizedTest
     @MethodSource("nullPinSource")
     @DisplayName("경기가 끝나지 않은 경우 NOT_ENDED이다.")
-    void ofNone(Pin firstPin, Pin secondPin) {
+    void ofNotEnded(Pin firstPin, Pin secondPin) {
         // given
         // when
         final FrameStatus frameStatus = FrameStatus.of(firstPin, secondPin);
+
+        // then
+        assertThat(frameStatus).isEqualTo(FrameStatus.NOT_ENDED);
+    }
+
+    @ParameterizedTest
+    @MethodSource("nullFinalPinSource")
+    @DisplayName("경기가 끝나지 않은 경우 NOT_ENDED이다.")
+    void ofFinalNotEnded(Pin firstPin, Pin secondPin, Pin thirdPin) {
+        // given
+        // when
+        final FrameStatus frameStatus = FrameStatus.of(firstPin, secondPin, thirdPin);
 
         // then
         assertThat(frameStatus).isEqualTo(FrameStatus.NOT_ENDED);

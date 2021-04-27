@@ -27,4 +27,17 @@ public enum FrameStatus {
         }
         return NORMAL;
     }
+
+    public static FrameStatus of(Pin firstPin, Pin secondPin, Pin thirdPin) {
+        if (firstPin == null || secondPin == null) {
+            return NOT_ENDED;
+        }
+        if (firstPin.pinCount() == MAX_PIN_COUNT && secondPin.pinCount() == MAX_PIN_COUNT && thirdPin == null) {
+            return NOT_ENDED;
+        }
+        if (firstPin.pinCount() + secondPin.pinCount() == MAX_PIN_COUNT && thirdPin == null) {
+            return NOT_ENDED;
+        }
+        return NORMAL;
+    }
 }

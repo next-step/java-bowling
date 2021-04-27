@@ -42,7 +42,7 @@ public final class FinalPins implements Pins {
 
     @Override
     public FrameStatus frameStatus() {
-        return FrameStatus.of(firstPin(), secondPin());
+        return FrameStatus.of(firstPin(), secondPin(), thirdPin());
     }
 
     @Override
