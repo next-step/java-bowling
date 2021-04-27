@@ -28,27 +28,12 @@ public class FinalPinCounts implements PinCounts {
     @Override
     public void knockDown(int pinCount) {
         checkAllThrown();
-
-        PinCount knockedDownPinCount = new PinCount(pinCount);
-
-        if (pinCounts.isEmpty()) {
-            pinCounts.add(knockedDownPinCount);
-            return;
-        }
-
         checkOverPinCountForSecondBowlSpare(pinCount);
-
-        if (pinCounts.size() == PIN_COUNTS_SINGLE_SIZE) {
-            pinCounts.add(knockedDownPinCount);
-            return;
-        }
-
         checkThirdBowlAvailable();
         checkOverPinCountForThirdBowlSpare(pinCount);
 
-        if (pinCounts.size() == FINAL_PIN_COUNTS_SIZE_MAX - 1) {
-            pinCounts.add(knockedDownPinCount);
-        }
+        PinCount knockedDownPinCount = new PinCount(pinCount);
+        pinCounts.add(knockedDownPinCount);
     }
 
     private void checkOverPinCountForSecondBowlSpare(int pinCount) {
@@ -64,22 +49,27 @@ public class FinalPinCounts implements PinCounts {
     }
 
     private void checkThirdBowlAvailable() {
-        if (!isThirdBowlAvailable()) {
+        if (isPinCountsSizeTwo() && !isThirdBowlAvailable()) {
             throw new IllegalArgumentException(CANNOT_THROW_THIRD);
         }
     }
 
     private boolean isThirdBowlAvailable() {
-        return pinCounts.size() == FINAL_PIN_COUNTS_SIZE_MAX - 1 && (isFirstPinCountStrike() || isSecondPinCountSpare());
+        return isPinCountsSizeTwo()
+                && (isFirstPinCountStrike() || isSecondPinCountSpare());
     }
 
     private void checkOverPinCountForThirdBowlSpare(int pinCount) {
-        if (pinCounts().size() == FINAL_PIN_COUNTS_SIZE_MAX - 1
+        if (isPinCountsSizeTwo()
                 && isFirstPinCountStrike()
                 && !isSecondPinCountStrike()
                 && addedPinCount(pinCount, SECOND_PIN_COUNT_INDEX) > SPARE) {
             throw new IllegalArgumentException(CHECK_THIRD_PIN_COUNT_SPARE_BOUND);
         }
+    }
+
+    private boolean isPinCountsSizeTwo() {
+        return pinCounts.size() == FINAL_PIN_COUNTS_SIZE_MAX - 1;
     }
 
     private void checkAllThrown() {
