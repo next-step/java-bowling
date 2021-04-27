@@ -1,4 +1,6 @@
-package bowlingRefactor;
+package bowlingRefactor.domain;
+
+import java.util.Objects;
 
 public class FrameNumber {
 
@@ -21,5 +23,23 @@ public class FrameNumber {
 
     public boolean isFinalFrame() {
         return frameNumber == MAX_FRAME_NUMBER;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FrameNumber that = (FrameNumber) o;
+        return frameNumber == that.frameNumber;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(frameNumber);
     }
 }
