@@ -25,10 +25,13 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean isFinished() {
+        if (scores.isEmpty()) {
+            return false;
+        }
         if (scores.size() == 2) {
             return true;
         }
-        if (scores.get(0) == Score.STRIKE) {
+        if (scores.get(0).equals(Score.STRIKE)) {
             return true;
         }
         return false;
@@ -52,5 +55,15 @@ public class NormalFrame extends Frame {
         return scores.stream()
                 .map(score -> Score.valueOf(score))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

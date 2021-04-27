@@ -25,6 +25,9 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isFinished() {
+        if (scores.isEmpty()) {
+            return false;
+        }
         if (scores.size() == 3) {
             return true;
         }
