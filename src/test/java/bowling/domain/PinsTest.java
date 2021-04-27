@@ -24,7 +24,7 @@ class PinsTest {
 
         // when
         Pins pins = Pins.init();
-        Pins remain = Pins.hit(hitCount);
+        Pins remain = pins.hit(hitCount);
 
         assertThat(remain).isNotNull();
     }
