@@ -20,7 +20,7 @@ public class BowlingController {
         inputView.close();
     }
 
-    private void playGame(Name name, Frames frames) {
+    protected void playGame(Name name, Frames frames) {
         resultView.printMark(name, frames.marks());
 
         while (!frames.isAllFinished()) {
