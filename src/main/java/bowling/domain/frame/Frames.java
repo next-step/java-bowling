@@ -33,11 +33,15 @@ public final class Frames {
     }
 
     public boolean isEnded(RoundNumber roundNumber) {
-        return frames.get(roundNumber.value() - 1).isEnded();
+        return getFrame(roundNumber).isEnded();
     }
 
     public void knockDownPin(RoundNumber roundNumber, Pin pin) {
+        getFrame(roundNumber).knockDownPin(pin);
+    }
 
+    private Frame getFrame(RoundNumber roundNumber) {
+        return frames.get(roundNumber.value() - 1);
     }
 
     @Override
