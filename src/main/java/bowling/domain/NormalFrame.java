@@ -35,13 +35,7 @@ public class NormalFrame extends Frame {
         if (hasNext()) {
             return CALCULATION_NOT_COMPLETED;
         }
-        if (result(size()).equals(FrameResult.STRIKE.frameResult())) {
-            return scoreInStrike();
-        }
-        if (result(size()).equals(FrameResult.SPARE.frameResult())) {
-            return scoreInSpare();
-        }
-        return pinNumbers.sum();
+        return FrameResult.scoreByResult(this, result(size()));
     }
 
     public int scoreInStrike() {
@@ -76,5 +70,9 @@ public class NormalFrame extends Frame {
             return CALCULATION_NOT_COMPLETED;
         }
         return pinNumbers.sum() + next.pinNumbers.index(0).pinNumber();
+    }
+
+    public int scoreInMiss() {
+        return pinNumbers.sum();
     }
 }
