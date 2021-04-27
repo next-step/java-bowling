@@ -16,4 +16,9 @@ public class InputView {
     return Integer.parseInt(SCANNER.nextLine());
   }
 
+  public static int getBonusHitPinsCount() {
+    System.out.print("보너스 투구 : ");
+    return Integer.parseInt(SCANNER.nextLine());
+  }
+
 }

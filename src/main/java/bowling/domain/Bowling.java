@@ -43,17 +43,16 @@ public class Bowling {
     return current;
   }
 
-  @Override
-  public String toString() {
-    return "Bowling{" +
-        "player='" + player + '\'' +
-        ", frames=" + frames +
-        ", current=" + current +
-        '}';
-  }
-
-  public boolean hasBonusPins() {
+  public boolean hasBonus() {
     Frame frame = getFrame(MAX_FRAME);
     return frame.isSpare() || frame.isStrike();
+  }
+
+  public String getPlayer() {
+    return player;
+  }
+
+  public List<Frame> getFrames() {
+    return frames;
   }
 }

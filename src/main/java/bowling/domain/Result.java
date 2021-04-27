@@ -3,7 +3,7 @@ package bowling.domain;
 public enum Result {
   SPARE("/"),
   STRIKE("X"),
-  NONE(null);
+  MISS(null);
 
   private String mark;
 
@@ -23,8 +23,8 @@ public enum Result {
     return this.equals(SPARE);
   }
 
-  public boolean isNotNone() {
-    return !this.equals(NONE);
+  public boolean isNotMiss() {
+    return !this.equals(MISS);
   }
 
 }

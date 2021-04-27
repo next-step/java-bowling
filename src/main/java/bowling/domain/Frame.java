@@ -2,9 +2,12 @@ package bowling.domain;
 
 public class Frame {
 
+  public static final String GUTTER_MARK = "-";
+  public static final String BLANK = "      ";
+
   private Pins first;
   private Pins second;
-  private Result result = Result.NONE;
+  private Result result = Result.MISS;
 
   public Frame() {}
 
@@ -40,6 +43,18 @@ public class Frame {
     return first.getHitPins();
   }
 
+  private String getFirstScoreString() {
+    return result.isStrike() ? result.getMark() : getScoreString(first.getHitPins());
+  }
+
+  private String getScoreString(int score) {
+    return score == 0 ? GUTTER_MARK : String.valueOf(score);
+  }
+
+  private String getSecondScoreString() {
+    return result.isSpare() ? result.getMark() : getScoreString(second.getHitPins());
+  }
+
   public int getSecondHit() {
     return second.getHitPins();
   }
@@ -67,18 +82,23 @@ public class Frame {
   }
 
   public boolean isEnd() {
-    if (result.isNotNone()) {
+    if (result.isNotMiss()) {
       return true;
     }
     return first != null && second != null;
   }
 
-  @Override
-  public String toString() {
-    return "Frame{" +
-        "first=" + first +
-        ", second=" + second +
-        ", result=" + result +
-        '}';
+  public String getScoreBoard() {
+    if (first == null) {
+      return BLANK;
+    }
+
+    String firstScoreString = getFirstScoreString();
+    if (second == null) {
+      return String.format("  %s   ", firstScoreString);
+    }
+
+    String secondScoreString = getSecondScoreString();
+    return String.format("  %s|%s ", firstScoreString, secondScoreString);
   }
 }

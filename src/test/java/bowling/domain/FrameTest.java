@@ -91,4 +91,30 @@ class FrameTest {
     assertFalse(frame.isEnd());
   }
 
+  @Test
+  @DisplayName("strike 시, x 자로 출력된다.")
+  void getScoreString_strike() {
+    frame.play(10);
+    assertEquals(frame.getScoreBoard(), Result.STRIKE.getMark());
+  }
+
+  @Test
+  @DisplayName("spare 시, n | / 자로 출력된다.")
+  void getScoreString_spare() {
+    int firstHit = 4;
+    int secondHit = 6;
+    frame.play(firstHit);
+    frame.play(secondHit);
+    assertEquals(frame.getScoreBoard(), String.format(" %s | %s ", firstHit, Result.SPARE.getMark()));
+  }
+
+  @Test
+  @DisplayName("미스 시, 쓰러뜨린 숫자로 표시된다., 거터는 - 로 표시된다.")
+  void getScoreString_miss() {
+    int firstHit = 0;
+    int secondHit = 6;
+    frame.play(firstHit);
+    frame.play(secondHit);
+    assertEquals(frame.getScoreBoard(), String.format(" %s | %s ", Frame.GUTTER_MARK, secondHit));
+  }
 }

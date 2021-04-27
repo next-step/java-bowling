@@ -32,11 +32,4 @@ public class Pins {
     return hitPins;
   }
 
-  @Override
-  public String toString() {
-    return "Pins{" +
-        "totalPins=" + totalPins +
-        ", hitPins=" + hitPins +
-        '}';
-  }
 }
