@@ -30,7 +30,7 @@ public final class OutputView {
         for (Frame frame : frames.value()) {
             playerResultBuilder.append("|").append(StringUtils.alignCenter(frame.status(), FRAME_SIZE));
         }
-        playerResultBuilder.append("|");
+        playerResultBuilder.append("|").append("\n");
 
         System.out.println(playerResultBuilder);
     }
