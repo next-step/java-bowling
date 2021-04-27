@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.exception.InputOverHitCountException;
+import bowling.exception.OverHitCountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -62,11 +62,11 @@ class PinsTest {
 
         // then
         assertThatThrownBy(() -> assertThat(pins.hit(overCount)))
-                .isInstanceOf(InputOverHitCountException.class)
+                .isInstanceOf(OverHitCountException.class)
                 .hasMessage("맞은 갯수 (11) 은, 현재 남아있는 갯수 (10) 보다 큽니다.");
 
         assertThatThrownBy(() -> assertThat(pins.hit(fistHitCount).hit(secondHitCount)))
-                .isInstanceOf(InputOverHitCountException.class)
+                .isInstanceOf(OverHitCountException.class)
                 .hasMessage("맞은 갯수 (6) 은, 현재 남아있는 갯수 (5) 보다 큽니다.");
     }
 

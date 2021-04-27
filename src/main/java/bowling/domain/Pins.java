@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.exception.InputOverHitCountException;
+import bowling.exception.OverHitCountException;
 
 import java.util.Objects;
 
@@ -30,7 +30,7 @@ public final class Pins {
 
     private final void validateOverCount(final int hitCount) {
         if (remain < hitCount) {
-            throw new InputOverHitCountException(hitCount, remain);
+            throw new OverHitCountException(hitCount, remain);
         }
     }
 
