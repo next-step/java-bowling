@@ -6,4 +6,5 @@ public interface FrameStrategy {
     String result(int index);
     boolean hasNext();
     FrameStrategy nextFrame(int frameNumber);
+    int score();
 }

@@ -44,9 +44,12 @@ public class PinNumbers {
         if (index == 1) {
             return FrameResult.eachResult(pinNumbers.get(0));
         }
-        if (pinNumbers.get(index - 1).pinNumber() == MAX_PIN_NUMBER) {
-            return FrameResult.STRIKE.frameResult();
-        }
         return FrameResult.pairResult(pinNumbers.get(index - 2), pinNumbers.get(index - 1));
+    }
+
+    public int sum() {
+        return pinNumbers.stream()
+                .mapToInt(PinNumber::pinNumber)
+                .sum();
     }
 }
