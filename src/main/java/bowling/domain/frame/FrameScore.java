@@ -20,7 +20,7 @@ public abstract class FrameScore {
     }
 
     public boolean isEnded() {
-        return FrameStatus.NONE != frameStatus;
+        return FrameStatus.NOT_ENDED != frameStatus;
     }
 
     public abstract String status();

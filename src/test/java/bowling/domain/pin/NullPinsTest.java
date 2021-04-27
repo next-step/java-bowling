@@ -16,6 +16,6 @@ class NullPinsTest {
 
         // when
         // then
-        assertThat(nullPins.frameStatus()).isEqualTo(FrameStatus.NONE);
+        assertThat(nullPins.frameStatus()).isEqualTo(FrameStatus.NOT_ENDED);
     }
 }

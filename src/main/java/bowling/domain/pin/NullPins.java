@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public final class NullPins implements Pins {
 
-    private final FrameStatus frameStatus = FrameStatus.NONE;
+    private final FrameStatus frameStatus = FrameStatus.NOT_ENDED;
 
     @Override
     public Pin firstPin() {

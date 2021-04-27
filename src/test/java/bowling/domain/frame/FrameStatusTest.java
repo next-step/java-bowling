@@ -22,7 +22,7 @@ class FrameStatusTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"10,0,STRIKE", "9,1,SPARE", "3,4,MISS", "0,0,GUTTER"})
+    @CsvSource({"10,0,STRIKE", "9,1,SPARE", "3,4,NORMAL", "0,0,MISS"})
     @DisplayName("각 조건에 해당하는 FrameStatus가 반환된다.")
     void of(int firstPinCount, int secondPinCount, FrameStatus expectedFrameStatus) {
         // given
@@ -38,13 +38,13 @@ class FrameStatusTest {
 
     @ParameterizedTest
     @MethodSource("nullPinSource")
-    @DisplayName("경기가 끝나지 않은 경우 None이다.")
+    @DisplayName("경기가 끝나지 않은 경우 NOT_ENDED이다.")
     void ofNone(Pin firstPin, Pin secondPin) {
         // given
         // when
         final FrameStatus frameStatus = FrameStatus.of(firstPin, secondPin);
 
         // then
-        assertThat(frameStatus).isEqualTo(FrameStatus.NONE);
+        assertThat(frameStatus).isEqualTo(FrameStatus.NOT_ENDED);
     }
 }

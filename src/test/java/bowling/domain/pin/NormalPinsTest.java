@@ -30,7 +30,7 @@ class NormalPinsTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"10,0,STRIKE", "9,1,SPARE", "3,4,MISS", "0,0,GUTTER"})
+    @CsvSource({"10,0,STRIKE", "9,1,SPARE", "3,4,NORMAL", "0,0,MISS"})
     @DisplayName("각 조건에 해당하는 FrameStatus가 반환된다.")
     void frameStatus(int firstPinCount, int secondPinCount, FrameStatus expectedFrameStatus) {
         // given

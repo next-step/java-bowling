@@ -6,15 +6,15 @@ public enum FrameStatus {
     STRIKE,
     SPARE,
     MISS,
-    GUTTER,
-    NONE;
+    NORMAL,
+    NOT_ENDED;
 
     private static final int MAX_PIN_COUNT = 10;
     private static final int ZERO_PIN_COUNT = 0;
 
     public static FrameStatus of(Pin firstPin, Pin secondPin) {
         if (firstPin == null || secondPin == null) {
-            return NONE;
+            return NOT_ENDED;
         }
         if (firstPin.pinCount() == MAX_PIN_COUNT) {
             return STRIKE;
@@ -23,8 +23,8 @@ public enum FrameStatus {
             return SPARE;
         }
         if (firstPin.pinCount() + secondPin.pinCount() == ZERO_PIN_COUNT) {
-            return GUTTER;
+            return MISS;
         }
-        return MISS;
+        return NORMAL;
     }
 }

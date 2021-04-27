@@ -25,7 +25,7 @@ public final class NormalFrameScore extends FrameScore {
         if (frameStatus == FrameStatus.SPARE) {
             return pins.firstPin().status() + PIN_DELIMITER + SPARE_PIN_STATUS;
         }
-        if (frameStatus == FrameStatus.NONE) {
+        if (frameStatus == FrameStatus.NOT_ENDED) {
             return EMPTY_STRING;
         }
         return pins.firstPin().status() + PIN_DELIMITER + pins.secondPin().status();

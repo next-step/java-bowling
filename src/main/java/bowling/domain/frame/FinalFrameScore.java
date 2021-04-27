@@ -15,7 +15,7 @@ public final class FinalFrameScore extends FrameScore {
 
     @Override
     public String status() {
-        if (frameStatus == FrameStatus.NONE) {
+        if (frameStatus == FrameStatus.NOT_ENDED) {
             return EMPTY_STRING;
         }
         final FinalPins finalPins = (FinalPins) pins;
