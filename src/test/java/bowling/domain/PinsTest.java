@@ -70,4 +70,21 @@ class PinsTest {
                 .hasMessage("맞은 갯수 (6) 은, 현재 남아있는 갯수 (5) 보다 큽니다.");
     }
 
+    @DisplayName("Pins 인스턴스가 가진 갯수가 0인지 확인하는 테스트")
+    @Test
+    void 반환_클리어() {
+        // given
+        int allHitCount = 10;
+        int noHitCount = 0;
+
+        // when
+        Pins pins = Pins.init();
+
+        // then
+        assertAll(
+                () -> assertThat(pins.hit(allHitCount).isClear()).isTrue(),
+                () -> assertThat(pins.hit(noHitCount).isClear()).isFalse()
+        );
+    }
+
 }
