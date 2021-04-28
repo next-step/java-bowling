@@ -2,8 +2,7 @@ package bowling.domain.concrete.frame.state;
 
 import bowling.domain.RollResult;
 import bowling.domain.engine.frame.Score;
-import bowling.domain.engine.frame.state.CannotCompleteScoreException;
-import bowling.domain.engine.frame.state.CannotInitializeScoreException;
+import bowling.domain.engine.frame.state.CannotCalculateScoreException;
 import bowling.domain.engine.frame.state.State;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,7 +55,7 @@ class PlayingTest {
     @Test
     @DisplayName("Playing 상태에서는 점수를 생성할 수 없다.")
     void cannotCreateScoreInReady() {
-        assertThatThrownBy(() -> playingState.createScore()).isInstanceOf(CannotInitializeScoreException.class);
+        assertThatThrownBy(() -> playingState.createScore()).isInstanceOf(CannotCalculateScoreException.class);
     }
 
     @Test
@@ -72,7 +71,7 @@ class PlayingTest {
     void cannotGiveScoreTwoTimesInPlaying() {
         Score strikeScore = Score.initStrikeScore();
 
-        assertThatThrownBy(() -> playingState.addScoreTo(strikeScore)).isInstanceOf(CannotCompleteScoreException.class);
+        assertThatThrownBy(() -> playingState.addScoreTo(strikeScore)).isInstanceOf(CannotCalculateScoreException.class);
     }
     
 }
