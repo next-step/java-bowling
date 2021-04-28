@@ -45,8 +45,13 @@ public class NormalFrame extends Frame {
     @Override
     public String toPrint() {
         StringBuilder sb = new StringBuilder();
-        this.scores.stream()
+        this.scores
                 .forEach(score -> sb.append(score.getExpression()));
+
+        if (scores.size() == 2) {
+            sb.insert(1, "|");
+        }
+
         return sb.toString();
     }
 
