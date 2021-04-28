@@ -85,6 +85,10 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
+    public void delete() {
+        this.deleted = true;
+    }
+
     public List<Answer> getAnswers() {
         return answers;
     }
