@@ -1,9 +1,11 @@
 package qna.domain;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
@@ -36,5 +38,12 @@ public class QuestionTest {
         Q1.delete();
 
         assertTrue(Q1.isDeleted());
+    }
+
+    @Test
+    void writeHistory() {
+        List<DeleteHistory> deleteHistories = Q1.writeHistory();
+
+        assertEquals(Q1.getId(), deleteHistories.get(0).getContentId());
     }
 }
