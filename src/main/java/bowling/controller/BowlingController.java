@@ -21,7 +21,8 @@ public class BowlingController {
 		ResultView.printBoard(frames, player);
 
 		while (frames.isContinueFrame()) {
-			frames.bowl(InputView.inputHittingNumber(frames));
+			int currentFrame = frames.currentFrame();
+			frames.bowl(InputView.inputHittingNumber(currentFrame));
 			ResultView.printBoard(frames, player);
 		}
 	}

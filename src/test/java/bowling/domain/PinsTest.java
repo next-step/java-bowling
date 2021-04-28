@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import bowling.exception.InvalidPinNumberException;
+
 public class PinsTest {
 
 	private Pins pins;
@@ -31,7 +33,7 @@ public class PinsTest {
 		assertThatThrownBy(() -> {
 			pins.play(5);
 			pins.play(6);
-		}).isInstanceOf(IllegalArgumentException.class).hasMessage("쓰러트릴 핀 갯수는 총 10개를 넘을 수 없습니다.");
+		}).isInstanceOf(InvalidPinNumberException.class).hasMessage("쓰러트릴 핀 갯수는 총 10개를 넘을 수 없습니다.");
 	}
 
 	@Test
@@ -39,7 +41,7 @@ public class PinsTest {
 	void invalidPlayTest2() {
 		assertThatThrownBy(() -> {
 			pins.play(-1);
-		}).isInstanceOf(IllegalArgumentException.class).hasMessage("쓰러트릴 핀 갯수는 0개 이하일 수 없습니다.");
+		}).isInstanceOf(InvalidPinNumberException.class).hasMessage("쓰러트릴 핀 갯수는 0개 이하일 수 없습니다.");
 	}
 
 }

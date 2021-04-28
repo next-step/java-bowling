@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.InvalidPlayCountException;
+
 public abstract class Frame {
 	protected final int frameNumber;
 	private final Pins pins;
@@ -13,7 +15,7 @@ public abstract class Frame {
 
 	public void bowl(int hittingNumber) {
 		if (isEndFrame()) {
-			throw new RuntimeException("횟수를 초과했습니다.");
+			throw new InvalidPlayCountException("횟수를 초과했습니다.");
 		}
 		validatePlayCount();
 		pins.play(hittingNumber);

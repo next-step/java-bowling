@@ -29,6 +29,7 @@ public class Frames {
 	public int currentFrame() {
 		return currentFrame;
 	}
+
 	public void bowl(int hittingNumber) {
 		Frame frame = frames.get(currentFrame - 1);
 		if (!frame.isEndFrame()) {
@@ -40,7 +41,7 @@ public class Frames {
 	}
 
 	public boolean isContinueFrame() {
-		return !(currentFrame == 10 && frames.get(currentFrame-1).isEndFrame());
+		return !(currentFrame == 10 && frames.get(currentFrame - 1).isEndFrame());
 	}
 
 	public int size() {
@@ -51,7 +52,4 @@ public class Frames {
 		return Collections.unmodifiableList(frames);
 	}
 
-	public PinStatus currentScore() {
-		return frames.get(currentFrame-1).pinStatus();
-	}
 }

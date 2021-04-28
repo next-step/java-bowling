@@ -2,9 +2,13 @@ package bowling.domain;
 
 import java.util.Objects;
 
+import bowling.exception.InvalidFrameNumberException;
+import bowling.exception.InvalidPlayCountException;
+
 public class FinalFrame extends Frame {
 	private static final int FINAL_FRAME_NUMBER = 10;
 	private static final String FRAME_ERROR_MESSAGE = "Final Frame은 10프레임만 가능합니다.";
+	private static final String INVALID_PLAY_ERROR_MESSAGE = "최대 3회까지만 투구 가능합니다.";
 
 	public FinalFrame(int frameNumber) {
 		super(frameNumber);
@@ -12,24 +16,18 @@ public class FinalFrame extends Frame {
 
 	protected void validateFrameNumber(int frameNumber) {
 		if (FINAL_FRAME_NUMBER != frameNumber) {
-			throw new IllegalArgumentException(FRAME_ERROR_MESSAGE);
+			throw new InvalidFrameNumberException(FRAME_ERROR_MESSAGE);
 		}
 	}
 
 	protected void validatePlayCount() {
 		if (playCount > 2) {
-			throw new RuntimeException("최대 3회까지만 투구 가능합니다.");
+			throw new InvalidPlayCountException(INVALID_PLAY_ERROR_MESSAGE);
 		}
 	}
 
 	public boolean isEndFrame() {
-		if (playCount < 2) {
-			return false;
-		}
-		if ((pinStatus().firstPin() + pinStatus().secondPin() < 10) || playCount > 2) {
-			return true;
-		}
-		return false;
+		return (playCount > 1 && pinStatus().firstPin() + pinStatus().secondPin() < 10) || playCount > 2;
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.InvalidPinNumberException;
+
 public class Pins {
 	private static final int MIN_PIN = 0;
 	private static final int MAX_PIN = 10;
@@ -25,15 +27,15 @@ public class Pins {
 
 	private void validateHittingNumber(int hittingNumber) {
 		if (hittingNumber < MIN_PIN) {
-			throw new IllegalArgumentException(MIN_PIN_ERROR_MSG);
+			throw new InvalidPinNumberException(MIN_PIN_ERROR_MSG);
 		}
 		int firstPin = pinStatus.totalPin();
 		int maxPin = firstPin + hittingNumber;
 		if (frameNumber != 10 && maxPin > MAX_PIN) {
-			throw new IllegalArgumentException(MAX_PIN_ERROR_MSG);
+			throw new InvalidPinNumberException(MAX_PIN_ERROR_MSG);
 		}
 		if (frameNumber == 10 && hittingNumber > MAX_PIN) {
-			throw new IllegalArgumentException(MAX_PIN_ERROR_MSG);
+			throw new InvalidPinNumberException(MAX_PIN_ERROR_MSG);
 		}
 	}
 }

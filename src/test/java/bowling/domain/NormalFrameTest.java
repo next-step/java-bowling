@@ -34,7 +34,8 @@ public class NormalFrameTest {
 		normalFrame.bowl(4);
 		assertThat(normalFrame.pinStatus().firstPin()).isEqualTo(5);
 		assertThat(normalFrame.pinStatus().secondPin()).isEqualTo(4);
-		assertThat(Score.score(normalFrame.pinStatus().secondPin(), normalFrame.pinStatus().firstPin(), 2)).isEqualTo(Score.MISS);
+		assertThat(Score.score(normalFrame.pinStatus().pinSize(1), normalFrame.pinStatus().pinSize(0), 0, 2)).isEqualTo(
+			Score.MISS);
 	}
 
 	@Test
@@ -54,7 +55,8 @@ public class NormalFrameTest {
 		normalFrame.bowl(5);
 		assertThat(normalFrame.pinStatus().firstPin()).isEqualTo(5);
 		assertThat(normalFrame.pinStatus().secondPin()).isEqualTo(5);
-		assertThat(Score.score(normalFrame.pinStatus().secondPin(), normalFrame.pinStatus().firstPin(), 2)).isEqualTo(Score.SPARE);
+		assertThat(Score.score(normalFrame.pinStatus().secondPin(), normalFrame.pinStatus().firstPin(), 2)).isEqualTo(
+			Score.SPARE);
 	}
 
 	@Test
@@ -65,6 +67,7 @@ public class NormalFrameTest {
 		normalFrame.bowl(0);
 		assertThat(normalFrame.pinStatus().firstPin()).isEqualTo(0);
 		assertThat(normalFrame.pinStatus().secondPin()).isEqualTo(0);
-		assertThat(Score.score(normalFrame.pinStatus().secondPin(), normalFrame.pinStatus().firstPin(), 2)).isEqualTo(Score.GUTTER);
+		assertThat(Score.score(normalFrame.pinStatus().secondPin(), normalFrame.pinStatus().firstPin(), 2)).isEqualTo(
+			Score.GUTTER);
 	}
 }

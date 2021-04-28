@@ -41,7 +41,7 @@ public class PinStatusTest {
 	}
 
 	@Test
-	@DisplayName("스페어 처리")
+	@DisplayName("스페어 처리 : 첫투구가 0이고, 이후 스페어처리")
 	void spareTest() {
 		pinStatus.add(0);
 		pinStatus.add(10);
@@ -50,7 +50,7 @@ public class PinStatusTest {
 	}
 
 	@Test
-	@DisplayName("스페어 처리2")
+	@DisplayName("스페어 처리2 : 첫투구가 0이 아니고, 이후 스페어처리")
 	void spareTest2() {
 		pinStatus.add(5);
 		pinStatus.add(5);
@@ -60,7 +60,7 @@ public class PinStatusTest {
 	}
 
 	@Test
-	@DisplayName("MISS 테스트")
+	@DisplayName("MISS 테스트: 첫투구가 0이 아니면서, 스페어처리 못함")
 	void missTest() {
 		pinStatus.add(5);
 		pinStatus.add(3);
@@ -70,7 +70,7 @@ public class PinStatusTest {
 	}
 
 	@Test
-	@DisplayName("MISS 테스트2")
+	@DisplayName("MISS 테스트2 : 첫투구가 0이면서, 이후 스페어처리 못함")
 	void missTest2() {
 		pinStatus.add(0);
 		pinStatus.add(9);
