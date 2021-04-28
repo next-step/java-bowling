@@ -1,6 +1,9 @@
-package step4.view.;
+package step4.view;
 
-import bowling.domain.*;
+import step4.domain.Frames;
+import step4.domain.Name;
+import step4.domain.Score;
+import step4.domain.Scores;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -12,24 +15,20 @@ public class ResultView {
     private static final String BLANK = "";
     private static final int UN_COUNTABLE_SCORE = -1;
 
-    public void printResult(List<Name> names, List<Marks> marks, List<Scores> scores) {
+    public void printResult(List<Name> names, List<Frames> frames) {
         IntStream.range(0, names.size())
                 .forEach(i -> {
-                    printMark(names.get(i), marks.get(i));
-                    printScore(scores.get(i));
+                    printMark(names.get(i), frames.get(i).marks());
+                    printScore(frames.get(i).scores());
                 });
     }
 
-    private void printMark(Name name, Marks marks) {
+    private void printMark(Name name, List<String> marks) {
         System.out.println(SCORE_HEADER);
         System.out.print(DELIMETER);
 
         System.out.printf(PRINT_FORMAT, name.name());
-        marks.marks()
-                .stream()
-                .map(Mark::symbols)
-                .map(symbols -> String.join(DELIMETER, symbols))
-                .forEach((symbols) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, symbols)));
+        marks.forEach((symbols) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, symbols)));
 
         System.out.println(DELIMETER);
     }
