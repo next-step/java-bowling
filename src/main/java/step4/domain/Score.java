@@ -1,4 +1,4 @@
-package step4.domain.;
+package step4.domain;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ public class Score {
     private final int leftOpportunity;
     private final int score;
 
-    private Score(int leftOpportunity, int score) {
+    public Score(int leftOpportunity, int score) {
         this.leftOpportunity = leftOpportunity;
         this.score = score;
     }
@@ -18,16 +18,16 @@ public class Score {
         return new Score(NO_CHANCE, UN_COUNTABLE_SCORE);
     }
 
-    public static Score Strike(int score) {
-        return new Score(2, score);
+    public static Score Strike() {
+        return new Score(2, PinCount.BOUND_MAX);
     }
 
-    public static Score Spare(int score) {
-        return new Score(1, score);
+    public static Score Spare() {
+        return new Score(1, PinCount.BOUND_MAX);
     }
 
     public static Score Miss(int score) {
-        return new Score(0, score);
+        return new Score(NO_CHANCE, score);
     }
 
     public int leftOpportunity() {
@@ -36,6 +36,14 @@ public class Score {
 
     public int value() {
         return score;
+    }
+
+    public Score add(Score score) {
+        return new Score(leftOpportunity - 1, this.score + score.value());
+    }
+
+    public Score add(int score) {
+        return new Score(leftOpportunity - 1, this.score + score);
     }
 
     public boolean isOpportunityLeft() {
