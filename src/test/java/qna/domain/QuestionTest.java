@@ -23,4 +23,10 @@ public class QuestionTest {
     void checkPermissionNotEqualUser() {
         assertThrows(CannotDeleteException.class, () -> Q1.checkPermission(UserTest.SANJIGI));
     }
+
+    @Test
+    @DisplayName("다른 사람이 쓴 답변이 있으면 삭제불가")
+    void checkOwnerAnswers() {
+        assertThrows(CannotDeleteException.class, () -> Q1.checkOwnerAnswers(UserTest.SANJIGI));
+    }
 }
