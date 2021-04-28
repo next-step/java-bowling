@@ -132,3 +132,4 @@
 - [ ] 프레임이 종료되지 않았더라도 상태가 출력되어야 함.
 - [ ] 출력부분 분리: `Status` 라는 DTO를 정의해보자.
 - [ ] FrameStatus가 아니라 PinStatus면 어떨까?
+- [ ] Pins 개선 -> List Collection으로 구현하면 어떨까?
