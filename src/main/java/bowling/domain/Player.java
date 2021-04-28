@@ -24,7 +24,7 @@ public class Player {
         frames.throwBowl(pinCount);
     }
 
-    public List<Mark> marks() {
+    public Marks marks() {
         return frames.marks();
     }
 

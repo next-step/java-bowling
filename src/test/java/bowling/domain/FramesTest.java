@@ -44,7 +44,7 @@ class FramesTest {
     @Test()
     @DisplayName("각 프레임 입력에 따른 결과 표식을 반환한다..")
     public void marks() throws Exception {
-        String result = frames.marks()
+        String result = frames.marks().marks()
                 .stream()
                 .map(Mark::symbols)
                 .map(symbols -> String.join(" | ", symbols))

@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.Mark;
+import bowling.domain.Marks;
 import bowling.domain.Name;
 
 import java.util.List;
@@ -13,12 +14,13 @@ public class ResultView {
     private static final String BLANK = "";
     private static final int UN_COUNTABLE_SCORE = -1;
 
-    public void printMark(Name name, List<Mark> marks) {
+    public void printMark(Name name, Marks marks) {
         System.out.println(SCORE_HEADER);
         System.out.print(DELIMETER);
 
         System.out.printf(PRINT_FORMAT, name.name());
-        marks.stream()
+        marks.marks()
+                .stream()
                 .map(Mark::symbols)
                 .map(symbols -> String.join(DELIMETER, symbols))
                 .forEach((symbols) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, symbols)));

@@ -55,10 +55,10 @@ public class Frames {
         frames.set(frame.index(), frame);
     }
 
-    public List<Mark> marks() {
-        return frames.stream()
+    public Marks marks() {
+        return new Marks(frames.stream()
                 .map(Mark::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     public List<Integer> scores() {
