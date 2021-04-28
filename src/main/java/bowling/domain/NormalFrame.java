@@ -45,7 +45,7 @@ public class NormalFrame extends Frame {
         if (next.pinNumbers.index(0).isStrike()) {
             return scoreInDouble();
         }
-        return pinNumbers.sum() + next.pinNumbers.sum();
+        return sum() + next.sum();
     }
 
     private int scoreInDouble() {
@@ -55,24 +55,24 @@ public class NormalFrame extends Frame {
         if (next.next.pinNumbers.size() == EMPTY_FRAME) {
             return CALCULATION_NOT_COMPLETED;
         }
-        return pinNumbers.sum() + next.pinNumbers.sum() + next.next.pinNumbers.index(0).pinNumber();
+        return sum() + next.sum() + next.next.pinNumbers.index(0).pinNumber();
     }
 
     private int scoreByFinalFrame() {
         if (next.pinNumbers.size() < REQUIRED_PIN_COUNT) {
             return CALCULATION_NOT_COMPLETED;
         }
-        return pinNumbers.sum() + next.pinNumbers.index(0).pinNumber() + next.pinNumbers.index(1).pinNumber();
+        return sum() + next.pinNumbers.index(0).pinNumber() + next.pinNumbers.index(1).pinNumber();
     }
 
     public int scoreInSpare() {
         if (next.pinNumbers.size() == EMPTY_FRAME) {
             return CALCULATION_NOT_COMPLETED;
         }
-        return pinNumbers.sum() + next.pinNumbers.index(0).pinNumber();
+        return sum() + next.pinNumbers.index(0).pinNumber();
     }
 
     public int scoreInMiss() {
-        return pinNumbers.sum();
+        return sum();
     }
 }

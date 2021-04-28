@@ -20,4 +20,8 @@ abstract class Frame implements FrameStrategy {
     public void play(PinNumber pinNumber) {
         pinNumbers.record(pinNumber);
     }
+
+    public int sum() {
+        return pinNumbers.sum();
+    }
 }

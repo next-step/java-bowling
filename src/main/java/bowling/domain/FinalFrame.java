@@ -30,6 +30,6 @@ public class FinalFrame extends Frame {
         if (hasNext()) {
             return CALCULATION_NOT_COMPLETED;
         }
-        return pinNumbers.sum();
+        return sum();
     }
 }

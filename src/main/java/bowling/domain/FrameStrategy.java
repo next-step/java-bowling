@@ -7,4 +7,5 @@ public interface FrameStrategy {
     boolean hasNext();
     FrameStrategy nextFrame(int frameNumber);
     int score();
+    int sum();
 }
