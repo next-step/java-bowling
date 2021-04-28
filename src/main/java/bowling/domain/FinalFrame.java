@@ -1,10 +1,10 @@
 package bowling.domain;
 
+import static bowling.domain.PinCounts.*;
+
 public class FinalFrame implements Frame {
-    private static final String CANNOT_THROW_THIRD_BOWL = "3구를 던질수 없습니다.";
     private static final int FINAL_INDEX = 9;
-    private static final int FIRST_PIN_COUNT_INDEX = 0;
-    private static final int PIN_COUNT_MAX = 10;
+    private static final String CANNOT_THROW_THIRD_BOWL = "3구를 던질수 없습니다.";
 
     private final PinCounts pinCounts;
 
@@ -18,11 +18,11 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame throwBowl(String pinCount) {
-        if (pinCounts.pinCounts().isEmpty()) {
+        if (size() == PIN_COUNTS_EMPTY) {
             return addBowl(pinCount);
         }
 
-        if (pinCounts.pinCounts().size() == 1) {
+        if (size() == PIN_COUNTS_SINGLE_SIZE) {
             return addBowl(pinCount);
         }
 
@@ -34,8 +34,8 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isThirdThrowPossible() {
-        return pinCounts.pinCounts().get(FIRST_PIN_COUNT_INDEX).isStrike()
-                || (!pinCounts.pinCounts().get(FIRST_PIN_COUNT_INDEX).isStrike() && pinCounts.totalPinCount() == PIN_COUNT_MAX);
+        return pinCounts.isFirstPinCountStrike()
+                || (!pinCounts.isFirstPinCountStrike() && pinCounts.totalPinCount() == TOTAL_PIN_COUNT_MAX);
     }
 
     private Frame addBowl(int pinPinCount) {
@@ -65,5 +65,33 @@ public class FinalFrame implements Frame {
     @Override
     public Frame next() {
         return this;
+    }
+
+    @Override
+    public Score score() {
+        if (!isFinished()) {
+            return Score.unCountableScore();
+        }
+
+        return Score.Miss(pinCounts.totalPinCount());
+    }
+
+    @Override
+    public Score add(Score previousScore) {
+        int previousScoreChance = previousScore.leftOpportunity();
+        int previousScoreValue = previousScore.value();
+
+        if (size() == PIN_COUNTS_EMPTY
+                || (previousScoreChance == 2 && size() <= PIN_COUNTS_SINGLE_SIZE)) {
+            return Score.unCountableScore();
+        }
+
+        if (previousScoreChance == 1) {
+            return Score.Miss(pinCounts.firstPinCount().value() + previousScoreValue);
+        }
+
+        return Score.Miss(pinCounts.firstPinCount().value()
+                + pinCounts.secondPinCount().value()
+                + previousScoreValue);
     }
 }

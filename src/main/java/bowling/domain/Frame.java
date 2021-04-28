@@ -10,4 +10,12 @@ public interface Frame {
     PinCounts pinCounts();
 
     Frame next();
+
+    Score score();
+
+    Score add(Score score);
+
+    default int size() {
+        return pinCounts().pinCounts().size();
+    }
 }

@@ -72,4 +72,63 @@ public class FinalFrameTest {
 
         assertThat(lastThrown.isFinished()).isTrue();
     }
+
+    @Test
+    @DisplayName("해당 프레임이 완료되지 않았을 경우, 카운트 할 수 없는 점수를 반환한다.")
+    public void score_unCountableScore() throws Exception {
+        Frame secondAvailable = new FinalFrame().throwBowl("1");
+        Frame thirdAvailableBySpare = new FinalFrame().throwBowl("1").throwBowl("9");
+        Frame thirdAvailableByStrike = new FinalFrame().throwBowl("10").throwBowl("2");
+
+        assertThat(secondAvailable.score()).isEqualTo(Score.unCountableScore());
+        assertThat(thirdAvailableBySpare.score()).isEqualTo(Score.unCountableScore());
+        assertThat(thirdAvailableByStrike.score()).isEqualTo(Score.unCountableScore());
+    }
+
+    @Test
+    @DisplayName("해당 프레임이 완료됐을 경우, 최종 점수를 반환한다.")
+    public void score_Miss() throws Exception {
+        Frame secondFinished = new FinalFrame().throwBowl("1").throwBowl("2");
+        Frame thirdFinishedWithSpare = new FinalFrame().throwBowl("1").throwBowl("9").throwBowl("1");
+        Frame thirdFinishedWithStrike = new FinalFrame().throwBowl("10").throwBowl("2").throwBowl("8");
+
+        assertThat(secondFinished.score()).isEqualTo(Score.Miss(3));
+        assertThat(thirdFinishedWithSpare.score()).isEqualTo(Score.Miss(11));
+        assertThat(thirdFinishedWithStrike.score()).isEqualTo(Score.Miss(20));
+    }
+
+    @Test
+    @DisplayName("프레임이 한 번도 플레이 되지 않은 경우, 카운트 할 수 없는 점수를 반환한다.")
+    public void add_with_empty_pinCount() throws Exception {
+        Frame notThrownFrame = new FinalFrame();
+        Score score = notThrownFrame.add(Score.Strike(10));
+        assertThat(score).isEqualTo(Score.unCountableScore());
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"0", "9"})
+    @DisplayName("점수를 2번 더할 수 있는 점수가 인자로 들어오지만, 최종 프레임이 한 번 이하로 플레이 되었을 경우, 카운트 할 수 없는 점수를 반환한다.")
+    public void add_score_with_two_opportunities_fail(String firstPinCount) throws Exception {
+        Frame firstThownFrame = new FinalFrame().throwBowl(firstPinCount);
+        Score score = firstThownFrame.add(Score.Strike(10));
+        assertThat(score).isEqualTo(Score.unCountableScore());
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"0", "9"})
+    @DisplayName("점수를 1번 더할 수 있는 점수가 인자로 들어오고, 최종 프레임이 한 번 이상 플레이가 되었다면, 최종 점수(최종 프레임 초구 점수 + 인자로 받은 점수)를 반환한다.")
+    public void add_score_with_one_opportunity(String firstPinCount) throws Exception {
+        Frame frame = new FinalFrame().throwBowl(firstPinCount);
+        Score score = frame.add(Score.Spare(10));
+        assertThat(score).isEqualTo(Score.Miss(10 + Integer.parseInt(firstPinCount)));
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"1, 8", "2, 7", "3, 6", "4, 5"})
+    @DisplayName("점수를 2번 더할 수 있는 점수가 인자로 들어오고, 최종 프레임이 두 번 플레이가 되었다면, 최종 점수(최종 프레임 초구, 2구 점수 + 인자로 받은 점수)를 반환한다.")
+    public void add_score_with_two_opportunities(String firstPinCount, String secondPinCount) throws Exception {
+        Frame frame = new FinalFrame().throwBowl(firstPinCount).throwBowl(secondPinCount);
+        Score score = frame.add(Score.Strike(10));
+        assertThat(score).isEqualTo(Score.Miss(10 + Integer.parseInt(firstPinCount) + Integer.parseInt(secondPinCount)));
+    }
 }
