@@ -1,58 +1,38 @@
 package bowling.domain;
 
+import java.util.Arrays;
+
 public class Frame {
 
-  public static final String GUTTER_MARK = "-";
-  public static final String BLANK = "      ";
+  private static final String GUTTER_MARK = "-";
+  private static final String BLANK = "      ";
+  private static final String ONLY_FIRST_SCORE_FORMAT = "  %s   ";
+  private static final String SCORE_FORMAT = "  %s|%s ";
 
-  private Pins first;
-  private Pins second;
-  private Result result = Result.MISS;
+  private Pitching first;
+  private Pitching second;
 
   public Frame() {}
 
   public void play(int hitCount) {
-    if (first != null && second == null) {
+    if (first != null && !first.getResult().isStrike()) {
       playSecondBall(hitCount);
     }
-
     if (first == null) {
       playFirst(hitCount);
     }
   }
 
   private void playFirst(int hitCount) {
-    this.first = new Pins(hitCount);
-    if (first.isClear()) {
-      this.result = Result.STRIKE;
-    }
+    this.first = Pitching.firstPitching(hitCount);
   }
 
   private void playSecondBall(int hitCount) {
-    if (this.result.isStrike()) {
-      return;
-    }
-
-    this.second = new Pins(first.getLeftCount(), hitCount);
-    if (second.isClear()) {
-      this.result = Result.SPARE;
-    }
+    this.second = first.secondPitching(hitCount);
   }
 
   public int getFirstHit() {
     return first.getHitPins();
-  }
-
-  private String getFirstScoreString() {
-    return result.isStrike() ? result.getMark() : getScoreString(first.getHitPins());
-  }
-
-  private String getScoreString(int score) {
-    return score == 0 ? GUTTER_MARK : String.valueOf(score);
-  }
-
-  private String getSecondScoreString() {
-    return result.isSpare() ? result.getMark() : getScoreString(second.getHitPins());
   }
 
   public int getSecondHit() {
@@ -60,45 +40,43 @@ public class Frame {
   }
 
   private int getTotalHit() {
-    if (second == null) {
-      return getFirstHit();
+    return Arrays.asList(first, second).stream()
+        .map(Pitching::getHitPins)
+        .reduce((a, b) -> a + b)
+        .orElse(0);
+  }
+
+  public Result getResult() {
+    if (first == null) {
+      return Result.NONE;
     }
-    return getFirstHit() + getSecondHit();
-  }
-
-  public boolean isStrike() {
-    return result.isStrike();
-  }
-
-  public boolean isSpare() {
-    return result.isSpare();
-  }
-
-  public int getBonusBeforeFrame(Result result) {
-    if (result.isStrike()) {
-      return getTotalHit();
+    Result firstResult = first.getResult();
+    if (firstResult.isStrike() || second == null) {
+      return firstResult;
     }
-    return first.getHitPins();
+    return second.getResult();
   }
 
   public boolean isEnd() {
-    if (result.isNotMiss()) {
+    if (getResult().isNotMiss()) {
       return true;
     }
     return first != null && second != null;
   }
 
-  public String getScoreBoard() {
-    if (first == null) {
-      return BLANK;
-    }
+  public boolean hasBonus() {
+    return getResult().isNotMiss();
+  }
 
-    String firstScoreString = getFirstScoreString();
-    if (second == null) {
-      return String.format("  %s   ", firstScoreString);
-    }
+  public boolean isStrike() {
+    return getResult().isStrike();
+  }
 
-    String secondScoreString = getSecondScoreString();
-    return String.format("  %s|%s ", firstScoreString, secondScoreString);
+  public Pitching getFirst() {
+    return first;
+  }
+
+  public Pitching getSecond() {
+    return second;
   }
 }

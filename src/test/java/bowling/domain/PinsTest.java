@@ -2,6 +2,7 @@ package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,5 +36,12 @@ class PinsTest {
     assertThatIllegalArgumentException()
         .isThrownBy(() -> new Pins(10, 11))
         .withMessage("쓰러진핀의 갯수는 0이상 남은 핀이하 여야한다.");
+  }
+
+  @Test
+  @DisplayName("쓰러뜨린 핀의 수가 0이면 거터이다.")
+  void isGutter() {
+    Pins pins = new Pins(0);
+    assertTrue(pins.isGutter());
   }
 }

@@ -6,16 +6,16 @@ import java.util.stream.IntStream;
 
 public class Bowling {
 
-  public static final int START_FRAME = 1;
-  public static final int MAX_FRAME = 10;
+  public static final int BASIC_FRAME = 10;
+  private static final int MAX_FRAME = 12;
 
   private String player;
   private List<Frame> frames = new ArrayList<>();
-  private int current = START_FRAME;
+
 
   public Bowling(String player) {
     this.player = player;
-    IntStream.range(0, MAX_FRAME).forEach(i -> frames.add(new Frame()));
+    IntStream.range(0, BASIC_FRAME).forEach(i -> frames.add(new Frame()));
   }
 
   public int size() {
@@ -23,15 +23,11 @@ public class Bowling {
   }
 
   public void play(int hitCount) {
-    Frame frame = getCurrentFrame();
-    frame.play(hitCount);
-    if (frame.isEnd()) {
-      this.current++;
-    }
-  }
-
-  public Frame getCurrentFrame() {
-    return frames.get(current - 1);
+    frames.stream()
+        .filter(frame -> !frame.isEnd())
+        .findFirst()
+        .orElseGet(() -> addBonusFrame())
+        .play(hitCount);
   }
 
   public Frame getFrame(int frameNumber) {
@@ -39,13 +35,51 @@ public class Bowling {
     return frames.get(frameIndex);
   }
 
-  public int getCurrent() {
-    return current;
+  public Frame getCurrentFrame() {
+    return frames.stream()
+        .filter(frame -> !frame.isEnd())
+        .findFirst()
+        .orElseGet(() -> frames.get(frames.size() - 1));
+  }
+
+  public int getCurrentFrameNumber() {
+    Integer currentIndex = frames.stream()
+        .filter(frame -> !frame.isEnd())
+        .findFirst()
+        .map(frame -> frames.indexOf(frame))
+        .orElseGet(() -> frames.size());
+    return currentIndex + 1;
   }
 
   public boolean hasBonus() {
-    Frame frame = getFrame(MAX_FRAME);
-    return frame.isSpare() || frame.isStrike();
+    Frame frame = getFrame(BASIC_FRAME);
+    return frame.hasBonus();
+  }
+
+  public boolean isEnd() {
+    if (getCurrentFrameNumber() <= BASIC_FRAME) {
+      return false;
+    }
+    if (frames.size() >= MAX_FRAME) {
+      return true;
+    }
+    if (frames.size() > BASIC_FRAME) {
+      return isBonusEnd();
+    }
+    return !hasBonus();
+  }
+
+  private boolean isBonusEnd() {
+    if (getFrame(frames.size()).isStrike() && getFrame(BASIC_FRAME).isStrike()) {
+      return false;
+    }
+    return true;
+  }
+
+  public Frame addBonusFrame() {
+    Frame bonusFrame = new Frame();
+    frames.add(bonusFrame);
+    return bonusFrame;
   }
 
   public String getPlayer() {

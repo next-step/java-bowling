@@ -6,35 +6,26 @@ import bowling.view.ResultView;
 
 public class BowlingGame {
 
-  public static final int MAX_FRAME = 10;
+  private Bowling bowling;
 
-  public static void main(String[] args) {
-    Bowling bowling = initGame();
-    playBowling(bowling);
-    if (bowling.hasBonus()) {
-      playBonus(bowling);
-    }
-
+  public BowlingGame(Bowling bowling) {
+    this.bowling = bowling;
   }
 
-  private static Bowling initGame() {
+  public static BowlingGame start() {
     String name = InputView.getName();
     Bowling bowling = new Bowling(name);
     ResultView.printScoreBoard(bowling);
-    return bowling;
+    return new BowlingGame(bowling);
   }
 
-  private static void playBowling(Bowling bowling) {
-    while (bowling.getCurrent() <= MAX_FRAME) {
-      int hitCount = InputView.getHitPinsCount(bowling.getCurrent());
+  public void play() {
+    while (!bowling.isEnd()) {
+      int hitCount = InputView.getHitPinsCount(bowling.getCurrentFrameNumber());
       bowling.play(hitCount);
       ResultView.printScoreBoard(bowling);
     }
-  }
 
-  private static void playBonus(Bowling bowling) {
-    int bonus = InputView.getBonusHitPinsCount();
-    ResultView.printBonus(bowling, bonus);
   }
 
 }

@@ -12,8 +12,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class FrameTest {
 
-  public static final String SCORE_FORMAT = "  %s|%s ";
-  public static final String STRIKE_FORMAT = "  %s   ";
+  private static final String SCORE_FORMAT = "  %s|%s ";
+  private static final String STRIKE_FORMAT = "  %s   ";
+  private static final String GUTTER = "-";
   private Frame frame;
 
   @BeforeEach
@@ -50,25 +51,7 @@ class FrameTest {
   void isSpare() {
     frame.play(5);
     frame.play(5);
-    assertTrue(frame.isSpare());
-  }
-
-  @Test
-  @DisplayName("이전 strike 에 더할 보너스 점수를 구한다.")
-  void getBonusBeforeFrame_strike() {
-    frame.play(4);
-    frame.play(6);
-    int bonus = frame.getBonusBeforeFrame(Result.STRIKE);
-    assertEquals(bonus, 10);
-  }
-
-  @Test
-  @DisplayName("이전 strike 에 더할 보너스 점수를 구한다.")
-  void getBonusBeforeFrame_spare() {
-    frame.play(4);
-    frame.play(6);
-    int bonus = frame.getBonusBeforeFrame(Result.SPARE);
-    assertEquals(bonus, 4);
+    assertTrue(frame.getResult().isSpare());
   }
 
   @Test
@@ -94,29 +77,26 @@ class FrameTest {
   }
 
   @Test
-  @DisplayName("strike 시, x 자로 출력된다.")
-  void getScoreString_strike() {
+  @DisplayName("strike 면, bonus가 있다.")
+  void hasBonus_strike() {
     frame.play(10);
-    assertEquals(frame.getScoreBoard(), String.format(STRIKE_FORMAT, Result.STRIKE.getMark()));
+    assertTrue(frame.hasBonus());
   }
 
   @Test
-  @DisplayName("spare 시, n | / 자로 출력된다.")
-  void getScoreString_spare() {
-    int firstHit = 4;
-    int secondHit = 6;
-    frame.play(firstHit);
-    frame.play(secondHit);
-    assertEquals(frame.getScoreBoard(), String.format(SCORE_FORMAT, firstHit, Result.SPARE.getMark()));
+  @DisplayName("spare 면, bonus가 있다.")
+  void hasBonus_spare() {
+    frame.play(4);
+    frame.play(6);
+    assertTrue(frame.hasBonus());
   }
 
   @Test
-  @DisplayName("미스 시, 쓰러뜨린 숫자로 표시된다., 거터는 - 로 표시된다.")
-  void getScoreString_miss() {
-    int firstHit = 0;
-    int secondHit = 6;
-    frame.play(firstHit);
-    frame.play(secondHit);
-    assertEquals(frame.getScoreBoard(), String.format(SCORE_FORMAT, Frame.GUTTER_MARK, secondHit));
+  @DisplayName("strike, spare 가 아니면 bonus가 없다.")
+  void hasBonus_false() {
+    frame.play(4);
+    frame.play(4);
+    assertFalse(frame.hasBonus());
   }
+
 }

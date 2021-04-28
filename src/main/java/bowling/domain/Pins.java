@@ -32,4 +32,8 @@ public class Pins {
     return hitPins;
   }
 
+  public boolean isGutter() {
+    return hitPins == 0;
+  }
+
 }
