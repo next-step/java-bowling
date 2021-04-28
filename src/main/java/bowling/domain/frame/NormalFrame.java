@@ -69,6 +69,6 @@ public class NormalFrame implements Frame{
     public FrameDTO exportFrameDTO() {
         List<StateDTO> stateDTOList = new ArrayList<>();
         stateDTOList.add(state.exportStateDTO());
-        return new FrameDTO(stateDTOList);
+        return new FrameDTO(stateDTOList, frameScore().score());
     }
 }

@@ -90,6 +90,6 @@ public class FinalFrame implements Frame{
         for(State state : states) {
             stateDTOList.add(state.exportStateDTO());
         }
-        return new FrameDTO(stateDTOList);
+        return new FrameDTO(stateDTOList, frameScore().score());
     }
 }

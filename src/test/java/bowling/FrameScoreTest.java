@@ -38,6 +38,6 @@ public class FrameScoreTest {
     @DisplayName("점수 확인 테스트")
     void scoreTest() {
         FrameScore frameScore = FrameScore.of(7, 0);
-        assertThat(frameScore.Score()).isEqualTo(7);
+        assertThat(frameScore.score()).isEqualTo(7);
     }
 }

@@ -37,7 +37,7 @@ public class FrameScore {
         return triesLeft == TWO_TRIES;
     }
 
-    public int Score() {
+    public int score() {
         return score;
     }
 
