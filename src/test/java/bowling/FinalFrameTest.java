@@ -27,4 +27,15 @@ public class FinalFrameTest {
 
         Assertions.assertThat(finalFrame.hasThird()).isEqualTo(true);
     }
+
+    @Test
+    @DisplayName("현재 프레임의 점수를 알 수 있다.")
+    void scoreInFrame() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.play(new PinNumber(3));
+        finalFrame.play(new PinNumber(7));
+        finalFrame.play(new PinNumber(8));
+
+        Assertions.assertThat(finalFrame.score()).isEqualTo(18);
+    }
 }

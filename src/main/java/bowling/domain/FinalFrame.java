@@ -2,6 +2,8 @@ package bowling.domain;
 
 public class FinalFrame extends Frame {
 
+    private static final int CALCULATION_NOT_COMPLETED = -1;
+
     private static final int FULL_FRAME = 3;
     private static final int GUARANTEED_OPPORTUNITY = 2;
 
@@ -12,14 +14,22 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean hasNext() {
-        if (pinNumbers.size() >= FULL_FRAME) {
+        if (size() >= FULL_FRAME) {
             return false;
         }
-        return pinNumbers.size() < GUARANTEED_OPPORTUNITY || hasThird();
+        return size() < GUARANTEED_OPPORTUNITY || hasThird();
     }
 
     @Override
-    public FrameStrategy nextFrame(int frameNumber) {
+    public FrameStrategy newNextFrame(int frameNumber) {
         return null;
+    }
+
+    @Override
+    public int score() {
+        if (hasNext()) {
+            return CALCULATION_NOT_COMPLETED;
+        }
+        return sum();
     }
 }

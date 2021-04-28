@@ -5,5 +5,7 @@ public interface FrameStrategy {
     void play(PinNumber pinNumber);
     String result(int index);
     boolean hasNext();
-    FrameStrategy nextFrame(int frameNumber);
+    FrameStrategy newNextFrame(int frameNumber);
+    int score();
+    int sum();
 }
