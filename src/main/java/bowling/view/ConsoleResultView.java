@@ -1,23 +1,28 @@
 package bowling.view;
 
+import bowling.dto.FrameStateDto;
+import bowling.dto.FramesDto;
 import bowling.dto.PlayerDto;
+import bowling.dto.ScoreDto;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ConsoleResultView implements ResultView {
 
     private static final String DELIMITER = "|";
     private static final String WHITE_SPACE = " ";
+    private static final String ZERO_PREFIX = "0";
     private static final int ELEMENT_LENGTH = 6;
     private static final int TOTAL_FRAMES = 10;
 
     @Override
     public void printStateOfPlayer(PlayerDto playerDto) {
-        System.out.println(buildHeader());
-        System.out.println(buildBody(playerDto));
+        printHeader();
+        printBody(playerDto);
     }
 
-    private String buildHeader() {
+    private void printHeader() {
         StringBuilder stringBuilder = new StringBuilder(DELIMITER);
         stringBuilder.append(alignCenter("NAME")).append(DELIMITER);
 
@@ -25,33 +30,60 @@ public class ConsoleResultView implements ResultView {
             stringBuilder.append(alignCenter(frameNumber(i))).append(DELIMITER);
         }
 
-        return stringBuilder.toString();
+        printStringBuilder(stringBuilder);
+    }
+
+    private void printBody(PlayerDto playerDto) {
+        FramesDto framesDto = playerDto.getFramesDto();
+
+        List<String> frameStates = framesDto.getStates()
+                                            .stream()
+                                            .map(FrameStateDto::getState)
+                                            .collect(Collectors.toList());
+
+        List<String> frameScores = framesDto.getScores()
+                                            .stream()
+                                            .map(ScoreDto::getScore)
+                                            .collect(Collectors.toList());
+
+        printState(playerDto.getPlayerName(), frameStates);
+        printScore(frameScores);
     }
 
     private String frameNumber(int i) {
         if (i == TOTAL_FRAMES) {
-            return "10";
+            return String.valueOf(TOTAL_FRAMES);
         }
 
-        return "0" + i;
+        return ZERO_PREFIX + i;
     }
 
-    private String buildBody(PlayerDto playerDto) {
+    private void printState(String playerName, List<String> frameStates) {
         StringBuilder stringBuilder = new StringBuilder(DELIMITER);
-        stringBuilder.append(alignCenter(playerDto.getPlayerName())).append(DELIMITER);
+        stringBuilder.append(alignCenter(playerName)).append(DELIMITER);
 
-        List<String> frameRecords = playerDto.getFramesDto().getFrames();
-
-        frameRecords.forEach(frameRecord -> {
-            String centeredRecord = alignCenter(String.join(DELIMITER, frameRecord));
+        frameStates.forEach(frameState -> {
+            String centeredRecord = alignCenter(String.join(DELIMITER, frameState));
             stringBuilder.append(centeredRecord).append(DELIMITER);
         });
 
-        for (int i = 1; i <= TOTAL_FRAMES - frameRecords.size(); i++){
-            stringBuilder.append(alignCenter("")).append(DELIMITER);
-        }
+        printStringBuilder(stringBuilder);
+    }
 
-        return stringBuilder.toString();
+    private void printScore(List<String> frameScores) {
+        StringBuilder stringBuilder = new StringBuilder(DELIMITER);
+        stringBuilder.append(alignCenter("")).append(DELIMITER);
+
+        frameScores.forEach(frameScore -> {
+            String centeredRecord = alignCenter(String.join(DELIMITER, frameScore));
+            stringBuilder.append(centeredRecord).append(DELIMITER);
+        });
+
+        printStringBuilder(stringBuilder);
+    }
+
+    private void printStringBuilder(StringBuilder stringBuilder) {
+        System.out.println(stringBuilder.toString());
     }
 
     private String alignCenter(String string) {

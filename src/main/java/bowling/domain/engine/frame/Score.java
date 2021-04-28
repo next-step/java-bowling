@@ -7,7 +7,7 @@ public class Score {
     private static final int MAX_PINS = 10;
     private static final int STRIKE_INJECTION_COUNT = 2;
     private static final int SPARE_INJECTION_COUNT = 1;
-    private static final int MISS_INJECTION_COUNT = 0;
+    private static final int NO_INJECTION_COUNT = 0;
 
     private final int value;
     private final int injectionCount;
@@ -26,11 +26,7 @@ public class Score {
     }
 
     public static Score initReadyToUseScore(int numberOfPins) {
-        if (numberOfPins >= MAX_PINS) {
-            throw new IllegalArgumentException("스트라이크를 치지 않았을 때만 즉시 사용할 수 있는 점수를 만들 수 있습니다.");
-        }
-
-        return new Score(numberOfPins, MISS_INJECTION_COUNT);
+        return new Score(numberOfPins, NO_INJECTION_COUNT);
     }
 
     public Score inject(RollResult rollResult) {

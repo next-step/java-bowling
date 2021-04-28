@@ -62,7 +62,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String export() {
+    public String exportState() {
         return FinalFrameExporter.export(states);
     }
 

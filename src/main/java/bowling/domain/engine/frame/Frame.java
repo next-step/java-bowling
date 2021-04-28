@@ -12,6 +12,6 @@ public interface Frame {
 
     boolean isEnded();
 
-    String export();
+    String exportState();
 
 }

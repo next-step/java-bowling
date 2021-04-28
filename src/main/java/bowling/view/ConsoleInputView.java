@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ConsoleInputView implements InputView {
 
-    private static final Scanner SCANNER = new Scanner(System.in).useDelimiter(System.lineSeparator());
+    private static final Scanner SCANNER = new Scanner(System.in).useDelimiter(System.lineSeparator() + "|\n");
 
     @Override
     public String receivePlayerName() {

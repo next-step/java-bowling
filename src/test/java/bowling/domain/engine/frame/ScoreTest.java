@@ -44,12 +44,6 @@ class ScoreTest {
     }
 
     @Test
-    @DisplayName("10점으로 즉시 사용할 수 있는 Score 를 생성하려고 하면 예외 처리한다.")
-    void cannotCreateReadyToUseScoreWithMaxPins() {
-        assertThatThrownBy(() -> Score.initReadyToUseScore(10)).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     @DisplayName("스트라이크 상태의 Score 는 두 번의 투구 결과를 필요로 한다.")
     void needTwoRollResultsForStrikeScore() {
         Score strikeScore = Score.initStrikeScore();

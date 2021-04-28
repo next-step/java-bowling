@@ -66,7 +66,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String export() {
+    public String exportState() {
         return state.export();
     }
 }

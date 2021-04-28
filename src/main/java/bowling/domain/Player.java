@@ -1,10 +1,9 @@
 package bowling.domain;
 
 import bowling.domain.engine.frame.Frames;
-import bowling.dto.Exportable;
 import bowling.dto.PlayerDto;
 
-public class Player implements Exportable<PlayerDto> {
+public class Player {
 
     private final PlayerName playerName;
     private final Frames frames;
@@ -21,7 +20,7 @@ public class Player implements Exportable<PlayerDto> {
     public PlayerDto throwBall(int numberOfPins) {
         frames.roll(RollResult.of(numberOfPins));
 
-        return export();
+        return exportFrameState();
     }
 
     public boolean checkPlaying() {
@@ -32,8 +31,7 @@ public class Player implements Exportable<PlayerDto> {
         return frames.getNextFrameNumber();
     }
 
-    @Override
-    public PlayerDto export() {
+    public PlayerDto exportFrameState() {
         return PlayerDto.of(playerName, frames);
     }
 }
