@@ -44,7 +44,7 @@ public final class Pin {
     }
 
     public boolean isMaximum() {
-        return false;
+        return pin == MAX_COUNT;
     }
 
     @Override
