@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Answers {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
@@ -30,12 +31,10 @@ public class Answers {
             throw new IllegalArgumentException("잘못된 loginUser");
         }
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
-        return deleteHistories;
+        return answers.stream()
+                .map(answer -> answer.setDeleted(true))
+                .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
+                .collect(Collectors.toList());
     }
 
     public List<Answer> answers() {
