@@ -14,15 +14,25 @@ public class NormalFrameType implements FrameType {
         validatePitch(point);
         return pitches.pitch(point);
     }
-
-    @Override
-    public boolean isContinue(Pitches pitches) {
-        return !isStrike(pitches) && !isEndPitch(pitches);
-    }
-
+    
     @Override
     public boolean isContinue() {
         return !pitches.isStrike() && !pitches.isEndPitch();
+    }
+
+    @Override
+    public int count() {
+        return pitches.count();
+    }
+
+    @Override
+    public int sum() {
+        return pitches().sum();
+    }
+
+    @Override
+    public Pitches pitches() {
+        return pitches;
     }
 
     private boolean isStrike(Pitches pitches) {

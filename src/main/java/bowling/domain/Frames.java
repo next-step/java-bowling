@@ -24,7 +24,7 @@ public class Frames {
         Frame frame = Optional.ofNullable(frames.get(frameNo))
                 .orElse(new Frame(frameNo));
 
-        frames.put(frameNo, frame.pitch2(point));
+        frames.put(frameNo, frame.pitch(point));
     }
 
     public boolean contains(int frameNo) {

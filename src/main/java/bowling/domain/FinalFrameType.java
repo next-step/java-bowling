@@ -22,13 +22,23 @@ public class FinalFrameType implements FrameType {
     }
 
     @Override
-    public boolean isContinue(Pitches pitches) {
-        return !isOpen(pitches) && !isEndPitch(pitches);
+    public boolean isContinue() {
+        return !pitches.isEndPitchFinal();
     }
 
     @Override
-    public boolean isContinue() {
-        return !pitches.isEndPitchFinal();
+    public int count() {
+        return pitches.count();
+    }
+
+    @Override
+    public int sum() {
+        return pitches().sum();
+    }
+
+    @Override
+    public Pitches pitches() {
+        return pitches;
     }
 
     private boolean isOpen(Pitches pitches) {

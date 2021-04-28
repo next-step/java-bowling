@@ -25,7 +25,7 @@ public class Player {
         if (!frames.contains(frameNo)) {
             return true;
         }
-        return frames.get(frameNo).isContinue2();
+        return frames.get(frameNo).isContinue();
     }
 
     public String name() {
