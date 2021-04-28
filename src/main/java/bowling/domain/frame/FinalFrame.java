@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.FrameScore;
 import bowling.domain.exception.CannotBowlException;
 import bowling.domain.exception.NoRemainingFrameException;
 import bowling.domain.state.*;
@@ -14,6 +15,7 @@ public class FinalFrame implements Frame{
     private static final String STRIKE = "STRIKE";
     private static final String SPARE = "SPARE";
     private static final String MISS = "MISS";
+    private static final int secondStateIndex = 1;
     private int pitchCount = 0;
     private LinkedList<State> states = new LinkedList<>();
 
@@ -46,7 +48,7 @@ public class FinalFrame implements Frame{
         }
         addBonusState();
         State state = states.getLast();
-        states.set(states.size()-1,state.stateAfterBowling(pitch));
+        states.set(states.size()-1,state.stateAfterPitch(pitch));
         pitchCount++;
     }
 
@@ -59,6 +61,27 @@ public class FinalFrame implements Frame{
     @Override
     public Frame next() {
         throw new NoRemainingFrameException();
+    }
+
+    @Override
+    public FrameScore frameScore() {
+        if(!isFinished()){
+            return FrameScore.UNSCORED_SCORE;
+        }
+        FrameScore frameScore = states.getFirst().frameScore();
+        for (int i = 0; i < states.size(); i++) {
+            frameScore = frameScore.addedFrameScore(states.get(i).frameScore());
+        }
+        return frameScore;
+    }
+
+    @Override
+    public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
+        FrameScore frameScore = states.getFirst().frameScoreWithBonus(prevFrameScore);
+        if(frameScore.hasNoTryLeft()) {
+            return frameScore;
+        }
+        return states.get(secondStateIndex).frameScoreWithBonus(frameScore);
     }
 
     @Override

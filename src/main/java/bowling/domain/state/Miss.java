@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.FrameScore;
 import bowling.domain.Pins;
 import bowling.dto.StateDTO;
 
@@ -24,6 +25,19 @@ public class Miss extends FinishedState{
     @Override
     public String state() {
         return state;
+    }
+
+    @Override
+    public FrameScore frameScore() {
+        return FrameScore.of(firstPins.fallingPins() + secondPins.fallingPins(), FrameScore.NO_TRY);
+    }
+
+    @Override
+    public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
+        if(prevFrameScore.hasOneTryLeft()) {
+            return prevFrameScore.frameScoreWithBonus(firstPins.fallingPins(), FrameScore.NO_TRY);
+        }
+        return prevFrameScore.frameScoreWithBonus(firstPins.fallingPins() + secondPins.fallingPins(), FrameScore.NO_TRY);
     }
 
     @Override

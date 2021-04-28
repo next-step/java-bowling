@@ -4,7 +4,7 @@ import bowling.domain.exception.CannotBowlException;
 
 public abstract class FinishedState implements State {
     @Override
-    public State stateAfterBowling(int pitch) {
+    public State stateAfterPitch(int pitch) {
         throw new CannotBowlException();
     }
 

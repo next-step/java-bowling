@@ -6,8 +6,8 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Pins {
-    private static final int MAX_PINS = 10;
-    private static final int MIN_PINS = 0;
+    public static final int MAX_PINS = 10;
+    public static final int MIN_PINS = 0;
     private static final Pins[] CACHE = IntStream.rangeClosed(MIN_PINS, MAX_PINS)
             .mapToObj(Pins::new)
             .toArray(Pins[]::new);

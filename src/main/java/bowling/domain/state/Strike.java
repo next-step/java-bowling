@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.FrameScore;
 import bowling.domain.Pins;
 import bowling.dto.StateDTO;
 
@@ -21,6 +22,19 @@ public class Strike extends FinishedState{
     @Override
     public String state() {
         return state;
+    }
+
+    @Override
+    public FrameScore frameScore() {
+        return FrameScore.of(Pins.MAX_PINS, FrameScore.TWO_TRIES);
+    }
+
+    @Override
+    public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
+        if(prevFrameScore.hasOneTryLeft()) {
+            return prevFrameScore.frameScoreWithBonus(Pins.MAX_PINS, FrameScore.NO_TRY);
+        }
+        return prevFrameScore.frameScoreWithBonus(Pins.MAX_PINS, FrameScore.ONE_TRY);
     }
 
     @Override

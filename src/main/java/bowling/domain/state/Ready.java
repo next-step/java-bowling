@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.FrameScore;
 import bowling.domain.Pins;
 import bowling.dto.StateDTO;
 
@@ -25,12 +26,22 @@ public class Ready implements State{
     }
 
     @Override
-    public State stateAfterBowling(int pitch) {
+    public State stateAfterPitch(int pitch) {
         Pins pins = Pins.ofFirstPitch(pitch);
         if(pins.isStrike()){
             return Strike.of(pins);
         }
         return Continue.of(pins);
+    }
+
+    @Override
+    public FrameScore frameScore() {
+        return FrameScore.UNSCORED_SCORE;
+    }
+
+    @Override
+    public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
+        return FrameScore.UNSCORED_SCORE;
     }
 
     @Override

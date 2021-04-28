@@ -3,10 +3,10 @@ package bowling.domain;
 import java.util.Objects;
 
 public class FrameScore {
+    public static final FrameScore UNSCORED_SCORE = new FrameScore(-1,-1);
     public static final int NO_TRY = 0;
     public static final int ONE_TRY = 1;
     public static final int TWO_TRIES = 2;
-    public static final FrameScore UNSCORED = new FrameScore(-1,-1);
 
     private final int score;
     private final int triesLeft;
@@ -20,7 +20,8 @@ public class FrameScore {
         return new FrameScore(score, triesLeft);
     }
 
-    public FrameScore scoreWithBonus(int score, int triesLeft) {
+
+    public FrameScore frameScoreWithBonus(int score, int triesLeft) {
         return new FrameScore(this.score + score, triesLeft);
     }
 
@@ -38,6 +39,10 @@ public class FrameScore {
 
     public int Score() {
         return score;
+    }
+
+    public FrameScore addedFrameScore(FrameScore frameScore) {
+        return new FrameScore(this.score + frameScore.score, NO_TRY);
     }
 
     @Override

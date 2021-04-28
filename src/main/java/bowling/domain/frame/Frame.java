@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.FrameScore;
 import bowling.dto.FrameDTO;
 
 public interface Frame {
@@ -8,5 +9,7 @@ public interface Frame {
     void bowl(int pitch);
     boolean isFinished();
     Frame next();
+    FrameScore frameScore();
+    FrameScore frameScoreWithBonus(FrameScore prevFrameScore);
     FrameDTO exportFrameDTO();
 }

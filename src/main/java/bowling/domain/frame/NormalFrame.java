@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.FrameScore;
 import bowling.domain.exception.CannotBowlException;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
@@ -34,7 +35,7 @@ public class NormalFrame implements Frame{
         if(state.isFinished()) {
             throw new CannotBowlException();
         }
-        state = state.stateAfterBowling(pitch);
+        state = state.stateAfterPitch(pitch);
     }
 
     @Override
@@ -45,6 +46,24 @@ public class NormalFrame implements Frame{
     @Override
     public Frame next() {
         return nextFrame;
+    }
+
+    @Override
+    public FrameScore frameScore() {
+        FrameScore frameScore = state.frameScore();
+        if(frameScore.hasNoTryLeft()) {
+            return frameScore;
+        }
+        return nextFrame.frameScoreWithBonus(frameScore);
+    }
+
+    @Override
+    public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
+        FrameScore frameScore = state.frameScoreWithBonus(prevFrameScore);
+        if(frameScore.hasNoTryLeft()) {
+            return frameScore;
+        }
+        return nextFrame.frameScoreWithBonus(frameScore);
     }
 
     public FrameDTO exportFrameDTO() {
