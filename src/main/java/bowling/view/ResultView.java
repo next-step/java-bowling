@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.*;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class ResultView {
@@ -11,7 +12,15 @@ public class ResultView {
     private static final String BLANK = "";
     private static final int UN_COUNTABLE_SCORE = -1;
 
-    public void printMark(Name name, Marks marks) {
+    public void printResult(List<Name> names, List<Marks> marks, List<Scores> scores) {
+        IntStream.range(0, names.size())
+                .forEach(i -> {
+                    printMark(names.get(i), marks.get(i));
+                    printScore(scores.get(i));
+                });
+    }
+
+    private void printMark(Name name, Marks marks) {
         System.out.println(SCORE_HEADER);
         System.out.print(DELIMETER);
 
@@ -25,7 +34,7 @@ public class ResultView {
         System.out.println(DELIMETER);
     }
 
-    public void printScore(Scores scores) {
+    private void printScore(Scores scores) {
         System.out.print(DELIMETER);
 
         System.out.printf(PRINT_FORMAT, BLANK);
