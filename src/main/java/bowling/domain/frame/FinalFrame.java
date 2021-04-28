@@ -32,7 +32,6 @@ public class FinalFrame extends Frame {
         if (isFinished()) {
             throw new Exception();
         }
-        List<Score> result = this.scores;
         if (scores.size() == 0) {
             this.scores.add(Score.valueOf(score));
             return;
@@ -49,7 +48,18 @@ public class FinalFrame extends Frame {
 
     @Override
     public String toPrint() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        this.scores
+                .forEach(score -> sb.append(score.getExpression()));
+
+        if (scores.size() == 3) {
+            sb.insert(2, "|");
+        }
+        if (scores.size() >= 2) {
+            sb.insert(1, "|");
+        }
+
+        return sb.toString();
     }
 
     private List<Score> add(Score score) {

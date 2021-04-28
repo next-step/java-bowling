@@ -38,6 +38,12 @@ public final class Frames {
                 .orElse(10);
     }
 
+    public List<String> toPrint() {
+        List<String> result = new ArrayList<>();
+        frames.forEach(frame -> result.add(frame.toPrint()));
+        return result;
+    }
+
     private static List<Frame> generateFrames() {
         List<Frame> result = new ArrayList<>();
         IntStream.range(0, 9)
