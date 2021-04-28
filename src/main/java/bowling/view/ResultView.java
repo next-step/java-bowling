@@ -58,7 +58,7 @@ public class ResultView {
                 .map(i -> user.getScore(frames.frame(i)))
                 .forEach(score -> System.out.print(String.format("%4s", getFrameScore(score)) + ROUND_LABEL_FRAME));
 
-        printRemainingRound(frames.getUser().scoreSize());
+        printRemainingRound(frames.getFrames().size());
     }
 
     private String getFrameScore(int frameScore) {
