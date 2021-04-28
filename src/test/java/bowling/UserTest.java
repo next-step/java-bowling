@@ -9,6 +9,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class UserTest {
     @Test
+    @DisplayName("유저 생성")
     public void createUser(){
         String userName = "lee";
 
