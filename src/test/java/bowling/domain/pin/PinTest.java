@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PinTest {
 
@@ -59,5 +60,20 @@ class PinTest {
 
         // then
         assertThat(sum.pinCount()).isEqualTo(firstCount + secondCount);
+    }
+
+    @Test
+    @DisplayName("Pin이 최대치인지 확인한다.")
+    void isMaximum() {
+        // given
+        final Pin maximumPin = new Pin();
+        final Pin nonMaximumPin = new Pin(3);
+
+        // when
+        // then
+        assertAll(
+                () -> assertThat(maximumPin.isMaximum()).isTrue(),
+                () -> assertThat(nonMaximumPin.isMaximum()).isFalse()
+        );
     }
 }

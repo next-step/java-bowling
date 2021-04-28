@@ -43,6 +43,10 @@ public final class Pin {
         return new Pin(pin + other.pin);
     }
 
+    public boolean isMaximum() {
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
