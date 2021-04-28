@@ -52,7 +52,10 @@ public class NormalFrame extends Frame {
             sb.insert(1, "|");
         }
 
-        return sb.toString();
+        String result = String.format("%-4s", sb.toString());
+        result = String.format("%6s", result);
+
+        return result;
     }
 
     @Override

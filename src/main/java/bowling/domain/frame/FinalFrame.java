@@ -59,7 +59,10 @@ public class FinalFrame extends Frame {
             sb.insert(1, "|");
         }
 
-        return sb.toString();
+        String result = String.format("%-6s", sb.toString());
+        result = String.format("%8s", result);
+
+        return result;
     }
 
     private List<Score> add(Score score) {

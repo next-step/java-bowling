@@ -130,16 +130,16 @@ public class NormalFrameTest {
 
     private static Stream<Arguments> toPrint_score2개() {
         return Stream.of(
-                arguments(0, 5, "-|5"),
-                arguments(1, 9, "1|/"),
-                arguments(2, 8, "2|/"),
-                arguments(3, 4, "3|4"),
-                arguments(4, 3, "4|3"),
-                arguments(5, 5, "5|/"),
-                arguments(6, 4, "6|/"),
-                arguments(7, 1, "7|1"),
-                arguments(8, 1, "8|1"),
-                arguments(9, 1, "9|/")
+                arguments(0, 5, "  -|5 "),
+                arguments(1, 9, "  1|/ "),
+                arguments(2, 8, "  2|/ "),
+                arguments(3, 4, "  3|4 "),
+                arguments(4, 3, "  4|3 "),
+                arguments(5, 5, "  5|/ "),
+                arguments(6, 4, "  6|/ "),
+                arguments(7, 1, "  7|1 "),
+                arguments(8, 1, "  8|1 "),
+                arguments(9, 1, "  9|/ ")
         );
     }
 
@@ -159,9 +159,9 @@ public class NormalFrameTest {
 
     private static Stream<Arguments> toPrint_score1개() {
         return Stream.of(
-                arguments(0, "-"),
-                arguments(10, "X"),
-                arguments(2, "2")
+                arguments(0, "  -   "),
+                arguments(10, "  X   "),
+                arguments(2, "  2   ")
         );
     }
 

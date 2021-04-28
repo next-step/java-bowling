@@ -155,13 +155,13 @@ public class FinalFrameTest {
 
     private static Stream<Arguments> toPrint_score3개() {
         return Stream.of(
-                arguments(1, 9, 5, "1|/|5"),
-                arguments(2, 8, 10, "2|/|X"),
-                arguments(5, 5, 9, "5|/|9"),
-                arguments(6, 4, 0, "6|/|-"),
-                arguments(9, 1, 8, "9|/|8"),
-                arguments(10, 10, 10, "X|X|X"),
-                arguments(10, 1, 9, "X|1|/")
+                arguments(1, 9, 5, "  1|/|5 "),
+                arguments(2, 8, 10, "  2|/|X "),
+                arguments(5, 5, 9, "  5|/|9 "),
+                arguments(6, 4, 0, "  6|/|- "),
+                arguments(9, 1, 8, "  9|/|8 "),
+                arguments(10, 10, 10, "  X|X|X "),
+                arguments(10, 1, 9, "  X|1|/ ")
         );
     }
 
@@ -182,17 +182,17 @@ public class FinalFrameTest {
 
     private static Stream<Arguments> toPrint_score2개() {
         return Stream.of(
-                arguments(0, 5, "-|5"),
-                arguments(1, 9, "1|/"),
-                arguments(2, 8, "2|/"),
-                arguments(3, 4, "3|4"),
-                arguments(4, 3, "4|3"),
-                arguments(5, 5, "5|/"),
-                arguments(6, 4, "6|/"),
-                arguments(7, 1, "7|1"),
-                arguments(8, 1, "8|1"),
-                arguments(9, 1, "9|/"),
-                arguments(10, 10, "X|X")
+                arguments(0, 5, "  -|5   "),
+                arguments(1, 9, "  1|/   "),
+                arguments(2, 8, "  2|/   "),
+                arguments(3, 4, "  3|4   "),
+                arguments(4, 3, "  4|3   "),
+                arguments(5, 5, "  5|/   "),
+                arguments(6, 4, "  6|/   "),
+                arguments(7, 1, "  7|1   "),
+                arguments(8, 1, "  8|1   "),
+                arguments(9, 1, "  9|/   "),
+                arguments(10, 10, "  X|X   ")
         );
     }
 
@@ -212,9 +212,9 @@ public class FinalFrameTest {
 
     private static Stream<Arguments> toPrint_score1개() {
         return Stream.of(
-                arguments(0, "-"),
-                arguments(10, "X"),
-                arguments(2, "2")
+                arguments(0, "  -     "),
+                arguments(10, "  X     "),
+                arguments(2, "  2     ")
         );
     }
 
