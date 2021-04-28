@@ -1,4 +1,4 @@
-package step4.domain.;
+package step4.domain;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,21 +11,15 @@ public class Players {
         this.players = players;
     }
 
-    public List<Marks> marks() {
-        return players.stream()
-                .map(Player::marks)
-                .collect(Collectors.toList());
-    }
-
-    public List<Scores> scores() {
-        return players.stream()
-                .map(Player::scores)
-                .collect(Collectors.toList());
-    }
-
     public List<Name> names() {
         return players.stream()
                 .map(Player::name)
+                .collect(Collectors.toList());
+    }
+
+    public List<Frames> frames() {
+        return players.stream()
+                .map(Player::frames)
                 .collect(Collectors.toList());
     }
 
@@ -37,5 +31,4 @@ public class Players {
         return players.stream()
                 .allMatch(Player::hasFinishedGame);
     }
-
 }
