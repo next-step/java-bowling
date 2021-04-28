@@ -5,6 +5,6 @@ import bowling.dto.StateDTO;
 public interface State {
     boolean isFinished();
     String state();
-    State stateAfterBowling(int pitch);
+    State stateAfterPitch(int pitch);
     StateDTO exportStateDTO();
 }

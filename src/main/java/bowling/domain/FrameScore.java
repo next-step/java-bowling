@@ -20,7 +20,7 @@ public class FrameScore {
         return new FrameScore(score, triesLeft);
     }
 
-    public FrameScore scoreAddedBonus(int score, int triesLeft) {
+    public FrameScore scoreWithBonus(int score, int triesLeft) {
         return new FrameScore(this.score + score, triesLeft);
     }
 
