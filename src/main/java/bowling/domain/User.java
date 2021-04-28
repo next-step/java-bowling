@@ -11,7 +11,9 @@ public class User {
     }
 
     public String toPrint() {
-        return this.user;
+        String result = String.format("%-4s", this.user);
+        result = String.format("%6s", result);
+        return result;
     }
 
 }

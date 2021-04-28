@@ -9,7 +9,7 @@ public class InputView {
     private final static Scanner scanner = new Scanner(System.in);
 
     public static String getPlayerName() {
-        System.out.println(GET_PLAYER_NAME);
+        System.out.print(GET_PLAYER_NAME);
         return scanner.nextLine();
     }
 
@@ -17,7 +17,7 @@ public class InputView {
         StringBuilder sb = new StringBuilder();
         sb.append(nowFrame)
                 .append(GET_FRAME_SCORE);
-        System.out.println(sb);
+        System.out.print(sb);
         return Integer.parseInt(scanner.nextLine());
     }
 }
