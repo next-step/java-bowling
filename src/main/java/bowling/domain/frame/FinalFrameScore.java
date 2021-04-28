@@ -7,6 +7,10 @@ public final class FinalFrameScore extends FrameScore {
 
     public static final int MAX_PIN_COUNT = 10;
 
+    public FinalFrameScore() {
+        this(new FinalPins());
+    }
+
     public FinalFrameScore(FinalPins pins) {
         this(pins, pins.frameStatus());
     }

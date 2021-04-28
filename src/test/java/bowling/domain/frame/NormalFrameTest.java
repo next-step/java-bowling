@@ -74,14 +74,13 @@ class NormalFrameTest {
     void NineFrameNextFrame() {
         // given
         final RoundNumber nineRoundNumber = new RoundNumber(9);
-        final NormalFrameScore frameScore = new NormalFrameScore();
-        final Frame nineFrame = NormalFrame.of(nineRoundNumber, frameScore);
+        final Frame nineFrame = NormalFrame.of(nineRoundNumber, new NormalFrameScore());
 
         // when
         final Frame nextFrame = nineFrame.createNextFrame();
 
         // then
-        assertThat(nextFrame).isEqualTo(FinalFrame.from(frameScore));
+        assertThat(nextFrame).isEqualTo(FinalFrame.from(new FinalFrameScore()));
     }
 
     @Test

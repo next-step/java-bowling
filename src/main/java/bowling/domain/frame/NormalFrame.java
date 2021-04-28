@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.FinalPins;
 import bowling.domain.pin.Pin;
 import bowling.exception.IllegalNormalFrameException;
 
@@ -35,7 +34,7 @@ public final class NormalFrame extends Frame {
     @Override
     public Frame createNextFrame() {
         if (roundNumber.value() == MAX_NORMAL_FRAME_ROUND_NUMBER) {
-            return FinalFrame.from(new FinalFrameScore(new FinalPins()));
+            return FinalFrame.from(new FinalFrameScore());
         }
         return NormalFrame.of(roundNumber.nextRoundNumber(), new NormalFrameScore());
     }

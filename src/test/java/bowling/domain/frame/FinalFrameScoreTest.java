@@ -42,7 +42,7 @@ class FinalFrameScoreTest {
     @DisplayName("Pin을 쓰러뜨리고, 새로운 FrameScore를 반환한다.")
     void knockDownPin() {
         // given
-        final FrameScore beforeFrameScore = new FinalFrameScore(new FinalPins());
+        final FrameScore beforeFrameScore = new FinalFrameScore();
         final Pin strikePin = new Pin();
         final FrameScore expectedFrameScore = new FinalFrameScore(new FinalPins(new Pin()));
 

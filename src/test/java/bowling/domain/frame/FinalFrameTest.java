@@ -68,7 +68,7 @@ class FinalFrameTest {
     @DisplayName("투구를 한다. 투구를 한 후 상태가 변경된다.")
     void knockDownPin() {
         // given
-        final FinalFrame finalFrame = FinalFrame.from(new FinalFrameScore(new FinalPins()));
+        final FinalFrame finalFrame = FinalFrame.from(new FinalFrameScore());
         final Pin pin = new Pin(0);
 
         // when
