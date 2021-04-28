@@ -129,6 +129,6 @@ public class FinalFrameTest {
 			finalFrame.bowl(0);
 			finalFrame.bowl(0);
 			finalFrame.bowl(10);
-		}).isInstanceOf(RuntimeException.class).hasMessage("횟수를 초과했습니다.");
+		}).isInstanceOf(InvalidPlayCountException.class).hasMessage("횟수를 초과했습니다.");
 	}
 }
