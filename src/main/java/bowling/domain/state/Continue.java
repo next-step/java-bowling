@@ -30,7 +30,7 @@ public class Continue implements State{
     }
 
     @Override
-    public State bowl(int pitch) {
+    public State stateAfterBowling(int pitch) {
         Pins secondPins = this.pins.ofSecondPitch(pitch);
         if(pins.isSpare(secondPins)){
             return Spare.of(pins, secondPins);

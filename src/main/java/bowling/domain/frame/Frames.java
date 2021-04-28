@@ -25,7 +25,7 @@ public class Frames {
     private static Frame initFrames(List<Frame> frames) {
         Frame frame = initFirstFrame(frames);
         for (int i = FIRST_FRAME_NO; i < LAST_FRAME_NO; i++) {
-            frame = frame.getNext();
+            frame = frame.next();
             frames.add(frame);
         }
         return frame;

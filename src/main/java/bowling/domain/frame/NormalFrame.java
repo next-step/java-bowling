@@ -30,12 +30,11 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public Frame bowl(int pitch) {
+    public void bowl(int pitch) {
         if(state.isFinished()) {
             throw new CannotBowlException();
         }
-        state = state.bowl(pitch);
-        return this;
+        state = state.stateAfterBowling(pitch);
     }
 
     @Override
@@ -44,7 +43,7 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public Frame getNext() {
+    public Frame next() {
         return nextFrame;
     }
 

@@ -35,7 +35,7 @@ public class ContinueTest {
     void bowlToMissTest() {
         Pins firstPins = Pins.ofFirstPitch(7);
         Pins secondPins = Pins.ofFirstPitch(2);
-        assertThat(continueState.bowl(2)).isEqualTo(Miss.of(firstPins, secondPins));
+        assertThat(continueState.stateAfterBowling(2)).isEqualTo(Miss.of(firstPins, secondPins));
     }
 
     @Test
@@ -43,13 +43,13 @@ public class ContinueTest {
     void bowlToSpareTest() {
         Pins firstPins = Pins.ofFirstPitch(7);
         Pins secondPins = Pins.ofFirstPitch(3);
-        assertThat(continueState.bowl(3)).isEqualTo(Spare.of(firstPins, secondPins));
+        assertThat(continueState.stateAfterBowling(3)).isEqualTo(Spare.of(firstPins, secondPins));
     }
 
     @ParameterizedTest(name = "넘어뜨린 핀 개수 예외 테스트")
     @ValueSource(ints = {5,7,-1,11})
     void pinsCountExceptionTest(int secondPitch) {
-        assertThatThrownBy(() -> continueState.bowl(secondPitch))
+        assertThatThrownBy(() -> continueState.stateAfterBowling(secondPitch))
                 .isInstanceOf(PinsCountException.class)
                 .hasMessage("넘어뜨린 핀수는 0에서 10 사이의 정수여야 합니다.");
     }

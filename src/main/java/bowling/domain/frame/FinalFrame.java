@@ -40,15 +40,14 @@ public class FinalFrame implements Frame{
     }
 
     @Override
-    public Frame bowl(int pitch) {
+    public void bowl(int pitch) {
         if(isFinished()) {
             throw new CannotBowlException();
         }
         addBonusState();
         State state = states.getLast();
-        states.set(states.size()-1,state.bowl(pitch));
+        states.set(states.size()-1,state.stateAfterBowling(pitch));
         pitchCount++;
-        return this;
     }
 
     @Override
@@ -58,7 +57,7 @@ public class FinalFrame implements Frame{
     }
 
     @Override
-    public Frame getNext() {
+    public Frame next() {
         throw new NoRemainingFrameException();
     }
 

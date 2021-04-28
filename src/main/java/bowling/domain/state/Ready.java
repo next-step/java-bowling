@@ -25,7 +25,7 @@ public class Ready implements State{
     }
 
     @Override
-    public State bowl(int pitch) {
+    public State stateAfterBowling(int pitch) {
         Pins pins = Pins.ofFirstPitch(pitch);
         if(pins.isStrike()){
             return Strike.of(pins);
