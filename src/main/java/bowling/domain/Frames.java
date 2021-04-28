@@ -24,6 +24,10 @@ public class Frames {
         return frames;
     }
 
+    public FrameStrategy frame(int index) {
+        return frames.get(index);
+    }
+
     public void proceedRound(int frameNumber, PinNumber pinNumber) {
         frames.get(frameNumber - 1).play(pinNumber);
 
@@ -37,8 +41,9 @@ public class Frames {
     }
 
     public void calculateScore(int frameNumber) {
-        for (int i = 0; i < frameNumber; i++) {
-            user.recordScore(i, frames.get(i).score());
+        user.recordScore(frames.get(0), null);
+        for (int i = 1; i < frameNumber; i++) {
+            user.recordScore(frames.get(i), frames.get(i -1));
         }
     }
 }

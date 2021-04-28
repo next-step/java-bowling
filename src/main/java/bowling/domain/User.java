@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.Map;
-
 public class User {
 
     private final String name;
@@ -16,12 +14,12 @@ public class User {
         return name;
     }
 
-    public Map<Integer, Score> getScores() {
-        return scores.getScores();
+    public int getScore(FrameStrategy frame) {
+        return scores.score(frame);
     }
 
-    public void recordScore(int frameNumber, int score) {
-        scores.record(frameNumber, score);
+    public void recordScore(FrameStrategy frame, FrameStrategy previousFrame) {
+        scores.record(frame, previousFrame);
     }
 
     public int scoreSize() {

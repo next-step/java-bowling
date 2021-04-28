@@ -2,8 +2,9 @@ package bowling.view;
 
 import bowling.domain.FrameStrategy;
 import bowling.domain.Frames;
-import bowling.domain.Score;
 import bowling.domain.User;
+
+import java.util.stream.IntStream;
 
 public class ResultView {
 
@@ -53,18 +54,17 @@ public class ResultView {
         System.out.print("|      |");
         User user = frames.getUser();
 
-        for (Score score : user.getScores().values()) {
-            String frameScore = Integer.toString(score.score());
-            frameScore = getFrameScore(frameScore);
-            System.out.print(String.format("%4s", frameScore) + ROUND_LABEL_FRAME);
-        }
+        IntStream.range(0, frames.getFrames().size())
+                .map(i -> user.getScore(frames.frame(i)))
+                .forEach(score -> System.out.print(String.format("%4s", getFrameScore(score)) + ROUND_LABEL_FRAME));
+
         printRemainingRound(frames.getUser().scoreSize());
     }
 
-    private String getFrameScore(String frameScore) {
-        if (frameScore.equals(Integer.toString(CALCULATION_NOT_COMPLETED))) {
-            frameScore = EMPTY_SCORE;
+    private String getFrameScore(int frameScore) {
+        if (frameScore == CALCULATION_NOT_COMPLETED) {
+            return EMPTY_SCORE;
         }
-        return frameScore;
+        return Integer.toString(frameScore);
     }
 }

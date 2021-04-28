@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 abstract class Frame implements FrameStrategy {
     protected PinNumbers pinNumbers;
     protected Frame next;
@@ -31,5 +33,18 @@ abstract class Frame implements FrameStrategy {
 
     public int secondScore() {
         return pinNumbers.index(0).pinNumber();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frame frame = (Frame) o;
+        return Objects.equals(pinNumbers, frame.pinNumbers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pinNumbers);
     }
 }
