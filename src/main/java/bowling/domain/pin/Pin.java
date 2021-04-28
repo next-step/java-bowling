@@ -7,9 +7,9 @@ import java.util.Objects;
 public final class Pin {
 
     public static final String GUTTER_STATUS = "-";
+    public static final int MIN_COUNT = 0;
+    public static final int MAX_COUNT = 10;
     private static final int DEFAULT_PIN_COUNT = 10;
-    private static final int MIN_COUNT = 0;
-    private static final int MAX_COUNT = 10;
 
     private final int pin;
 
@@ -33,7 +33,7 @@ public final class Pin {
     }
 
     public String status() {
-        if (pin == 0) {
+        if (pin == MIN_COUNT) {
             return GUTTER_STATUS;
         }
         return String.valueOf(pin);
