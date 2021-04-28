@@ -42,15 +42,16 @@ public class ResultView {
 		for (int i = 0; i < frame.playCount(); i++) {
 			int hitSize = frame.pinStatus().pinSize(i);
 			int previousHitSize = i == 0 ? 0 : frame.pinStatus().pinSize(i - 1);
-			sb.append(makeMark(hitSize, previousHitSize, i));
+			int firstHitSize = i == 2 ? frame.pinStatus().pinSize(i - 2) : 0;
+			sb.append(makeMark(hitSize, previousHitSize, firstHitSize, i));
 		}
 		System.out.print(String.format("%-9s", sb.toString()));
 	}
 
-	private static StringBuilder makeMark(int hitSize, int previousHitSize, int i) {
+	private static StringBuilder makeMark(int hitSize, int previousHitSize, int firstHitSize, int i) {
 		StringBuilder sb = new StringBuilder();
 
-		String mark = Score.score(hitSize, previousHitSize, i + 1).mark();
+		String mark = Score.score(hitSize, previousHitSize, firstHitSize, i + 1).mark();
 		String sbMark = mark.equals("-1") ? String.valueOf(hitSize) : mark;
 		if (i > 0) {
 			sb.append(SEPARATOR);

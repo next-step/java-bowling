@@ -24,6 +24,9 @@ public class NormalFrame extends Frame {
 	}
 
 	public boolean isEndFrame() {
+		if (playCount < 1) {
+			return false;
+		}
 		if (pinStatus().firstPin() == 10 || playCount == 2) {
 			return true;
 		}

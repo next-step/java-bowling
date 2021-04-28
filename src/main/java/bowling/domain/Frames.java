@@ -31,7 +31,9 @@ public class Frames {
 	}
 	public void bowl(int hittingNumber) {
 		Frame frame = frames.get(currentFrame - 1);
-		frame.bowl(hittingNumber);
+		if (!frame.isEndFrame()) {
+			frame.bowl(hittingNumber);
+		}
 		if (frame.isEndFrame() && currentFrame < 10) {
 			currentFrame = currentFrame + 1;
 		}

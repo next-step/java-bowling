@@ -12,6 +12,9 @@ public abstract class Frame {
 	}
 
 	public void bowl(int hittingNumber) {
+		if (isEndFrame()) {
+			throw new RuntimeException("횟수를 초과했습니다.");
+		}
 		validatePlayCount();
 		pins.play(hittingNumber);
 		playCount++;

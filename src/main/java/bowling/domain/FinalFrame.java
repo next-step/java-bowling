@@ -26,7 +26,7 @@ public class FinalFrame extends Frame {
 		if (playCount < 2) {
 			return false;
 		}
-		if ((pinStatus().firstPin() + pinStatus().secondPin() < 10) || playCount == 3) {
+		if ((pinStatus().firstPin() + pinStatus().secondPin() < 10) || playCount > 2) {
 			return true;
 		}
 		return false;
