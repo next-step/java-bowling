@@ -1,8 +1,6 @@
 package bowling.contorller;
 
-import bowling.domain.bowlingboard.PlayerBowlingBoard;
 import bowling.domain.bowlingboard.PlayerBowlingBoards;
-import bowling.domain.bowlingboard.ThrowCount;
 import bowling.domain.frame.round.Round;
 import bowling.domain.score.Point;
 import bowling.dto.PlayerBowlingBoardDto;
@@ -36,23 +34,18 @@ public class BowlingGame {
         while (!nextBoard.isEnd()) {
             Round finalCurrentRound = currentRound;
             nextBoard.stream()
-                    .forEach(playerBowlingBoard -> {
-                        if (finalCurrentRound != playerBowlingBoard.round()) {
-                            int round = round(playerBowlingBoard, finalCurrentRound);
-                            int point = InputView.inputPoint(playerBowlingBoard.player());
-                            playerBowlingBoard.pitching(Point.of(point), finalCurrentRound);
-                            OutputView.printResultView(round, PlayerBowlingBoardDto.of(nextBoard, playerBowlingBoard.player()));
-                        }
-                    });
+                    .forEach(playerBowlingBoard -> play(nextBoard, finalCurrentRound, playerBowlingBoard));
             currentRound = nextBoard.round(currentRound);
         }
     }
 
-    private int round(PlayerBowlingBoard nextBoard, Round currentRound) {
-        if (nextBoard.state().equals(ThrowCount.fisrt()) && Round.first() != currentRound) {
-            return currentRound.round() - 1;
+    private void play(PlayerBowlingBoards nextBoard, Round finalCurrentRound, bowling.domain.bowlingboard.PlayerBowlingBoard playerBowlingBoard) {
+        if (finalCurrentRound.equals(playerBowlingBoard.round())) {
+            int round = finalCurrentRound.round();
+            int point = InputView.inputPoint(playerBowlingBoard.player());
+            playerBowlingBoard.pitching(Point.of(point), finalCurrentRound);
+            OutputView.printResultView(round, PlayerBowlingBoardDto.of(nextBoard, playerBowlingBoard.player()));
         }
-        return currentRound.round();
     }
 
     public static void main(String[] args) {
