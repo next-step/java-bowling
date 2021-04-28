@@ -29,8 +29,8 @@ public class Spare extends FinishedState {
     @Override
     public StateDTO exportStateDTO() {
         List<Integer> pins = new ArrayList<>();
-        pins.add(Integer.valueOf(firstPins.pins()));
-        pins.add(Integer.valueOf(secondPins.pins()));
+        pins.add(Integer.valueOf(firstPins.fallingPins()));
+        pins.add(Integer.valueOf(secondPins.fallingPins()));
         return new StateDTO(state(),pins);
     }
 

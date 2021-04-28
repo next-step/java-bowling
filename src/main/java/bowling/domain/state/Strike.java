@@ -26,7 +26,7 @@ public class Strike extends FinishedState{
     @Override
     public StateDTO exportStateDTO() {
         List<Integer> pins = new ArrayList<>();
-        pins.add(this.pins.pins());
+        pins.add(this.pins.fallingPins());
         return new StateDTO(state(),pins);
     }
 

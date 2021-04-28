@@ -5,11 +5,11 @@ import bowling.domain.frame.Frames;
 import bowling.dto.PlayerDTO;
 
 public class Player {
-    private final Name name;
+    private final PlayerName playerName;
     private final Frames frames;
 
     public Player(String name) {
-        this.name = new Name(name);
+        this.playerName = new PlayerName(name);
         this.frames = Frames.init();
     }
 
@@ -18,7 +18,7 @@ public class Player {
     }
 
     public String name() {
-        return name.name();
+        return playerName.name();
     }
 
     public boolean isNthFrameFinished(int round) {
@@ -30,6 +30,6 @@ public class Player {
     }
 
     public PlayerDTO exportPlayerDTO(){
-        return new PlayerDTO(name.name(), frames.exportFramesDTO());
+        return new PlayerDTO(playerName.name(), frames.exportFramesDTO());
     }
 }

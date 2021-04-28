@@ -4,12 +4,12 @@ import bowling.domain.exception.NameLengthException;
 
 import java.util.regex.Pattern;
 
-public class Name {
+public class PlayerName {
     private final static String NAME_REGEX = "^[a-zA-Z]{3}$";
     private final static Pattern PATTERN_NAME = Pattern.compile(NAME_REGEX);
     private final String name;
 
-    public Name(String name) {
+    public PlayerName(String name) {
         validateName(name);
         this.name = name;
     }

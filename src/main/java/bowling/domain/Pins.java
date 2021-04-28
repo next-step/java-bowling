@@ -12,10 +12,10 @@ public class Pins {
             .mapToObj(Pins::new)
             .toArray(Pins[]::new);
 
-    private final int pins;
+    private final int fallingPins;
 
     private Pins(int pitch) {
-        this.pins = pitch;
+        this.fallingPins = pitch;
     }
 
     private static void validatePitch(int pitch) {
@@ -30,21 +30,21 @@ public class Pins {
     }
 
     public Pins ofSecondPitch(int secondPitch) {
-        validatePitch(this.pins + secondPitch);
+        validatePitch(this.fallingPins + secondPitch);
         validatePitch(secondPitch);
         return CACHE[secondPitch];
     }
 
-    public int pins() {
-        return this.pins;
+    public int fallingPins() {
+        return this.fallingPins;
     }
 
     public boolean isStrike() {
-        return pins == MAX_PINS;
+        return fallingPins == MAX_PINS;
     }
 
     public boolean isSpare(Pins secondPins) {
-        if (pins() + secondPins.pins() == MAX_PINS) {
+        if (fallingPins() + secondPins.fallingPins() == MAX_PINS) {
             return true;
         }
         return false;
@@ -55,11 +55,11 @@ public class Pins {
         if (this == o) return true;
         if (!(o instanceof Pins)) return false;
         Pins pins = (Pins) o;
-        return pins() == pins.pins();
+        return fallingPins() == pins.fallingPins();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pins);
+        return Objects.hash(fallingPins);
     }
 }
