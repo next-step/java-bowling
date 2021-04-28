@@ -37,12 +37,9 @@ public class QnAService {
         Question question = findQuestionById(questionId);
         question.checkPermission(loginUser);
 
+        question.checkOwnerAnswers(loginUser);
+
         List<Answer> answers = question.getAnswers();
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         question.setDeleted(true);
