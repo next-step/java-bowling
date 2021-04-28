@@ -1,10 +1,10 @@
-package bowling.view;
+package bowlingstate.view;
 
-import bowling.domain.player.Player;
-import bowling.domain.player.Players;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
-import bowling.domain.player.Name;
+import bowlingstate.domain.frame.Frame;
+import bowlingstate.domain.frame.Frames;
+import bowlingstate.domain.player.Name;
+import bowlingstate.domain.player.Player;
+import bowlingstate.domain.player.Players;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

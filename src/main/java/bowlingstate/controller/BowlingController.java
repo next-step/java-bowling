@@ -1,9 +1,9 @@
-package bowling.controller;
+package bowlingstate.controller;
 
-import bowling.domain.player.Player;
-import bowling.domain.player.Players;
-import bowling.view.InputView;
-import bowling.view.ResultView;
+import bowlingstate.domain.player.Player;
+import bowlingstate.domain.player.Players;
+import bowlingstate.view.InputView;
+import bowlingstate.view.ResultView;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

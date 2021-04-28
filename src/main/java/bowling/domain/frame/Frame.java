@@ -1,5 +1,9 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Pin;
+import bowling.domain.Pins;
+import bowling.domain.Score;
+import bowling.domain.ScoreSymbol;
 import java.util.List;
 import org.springframework.util.ObjectUtils;
 
@@ -39,8 +43,6 @@ public abstract class Frame {
   }
 
   abstract public boolean isEndFrame();
-
-  abstract public boolean isLastFrame();
 
   abstract protected void validateHitPin(int countOfHitPin);
 }

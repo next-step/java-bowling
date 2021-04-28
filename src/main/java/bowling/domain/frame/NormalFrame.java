@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.ScoreSymbol;
 
 public class NormalFrame extends Frame {
 
@@ -17,9 +19,5 @@ public class NormalFrame extends Frame {
 
   public boolean isEndFrame() {
     return pins.size() >= NORMAL_FRAME_MAX_SIZE || isStrike();
-  }
-
-  public boolean isLastFrame() {
-    return false;
   }
 }

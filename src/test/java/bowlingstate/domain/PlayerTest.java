@@ -1,8 +1,8 @@
-package bowling.domain;
+package bowlingstate.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowling.domain.player.Player;
+import bowlingstate.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

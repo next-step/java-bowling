@@ -1,8 +1,8 @@
-package bowling.domain;
+package bowlingstate.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowling.domain.frame.Frames;
+import bowlingstate.domain.frame.Frames;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

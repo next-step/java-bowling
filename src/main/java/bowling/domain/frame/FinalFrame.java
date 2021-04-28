@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 public class FinalFrame extends Frame {
 
@@ -22,9 +22,5 @@ public class FinalFrame extends Frame {
       return pins.totalHitPin() < BONUS_MIN_PIN_COUNT;
     }
     return pins.size() >= FINAL_FRAME_MAX_SIZE;
-  }
-
-  public boolean isLastFrame() {
-    return isEndFrame();
   }
 }

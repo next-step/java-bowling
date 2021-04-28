@@ -1,15 +1,15 @@
-package bowling.domain;
+package bowlingstate.domain.player;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class Player {
+public class Name {
 
   private static final int MAX_NAME_LENGTH = 3;
   private static final String REGEX = "^[a-zA-Z]*$";
   private final String player;
 
-  public Player(String player) {
+  public Name(String player) {
     validateName(player);
     this.player = player;
   }
@@ -36,9 +36,9 @@ public class Player {
       return false;
     }
 
-    Player player1 = (Player) o;
+    Name name1 = (Name) o;
 
-    return Objects.equals(player, player1.player);
+    return Objects.equals(player, name1.player);
   }
 
   @Override

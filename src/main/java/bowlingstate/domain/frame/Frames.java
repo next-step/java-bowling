@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowlingstate.domain.frame;
 
+import bowlingstate.domain.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,12 +11,10 @@ public class Frames {
 
   private static final int FINAL_ROUND = 10;
   private final List<Frame> frames;
-  private Round round;
   private List<Integer> scores;
 
   public Frames(List<Frame> frames) {
     this.frames = frames;
-    this.round = Round.firstRound();
     this.scores = new ArrayList<>();
   }
 
@@ -31,14 +30,13 @@ public class Frames {
         .collect(Collectors.toList());
   }
 
-  public void throwBall(int countOfHitPin) {
-    Frame frame = frames.get(round() - 1);
+  public void throwBall(int countOfHitPin, int currFrame) {
+    Frame frame = frames.get(currFrame);
     frame.play(countOfHitPin);
 
     calculateScore(countOfHitPin);
     if (frame.isEndFrame()) {
       frame.initScore();
-      round = round.next();
     }
   }
 
@@ -52,9 +50,8 @@ public class Frames {
 
   public List<Integer> frameScores() {
     this.scores = new ArrayList<>();
-    for (int i = 0; i < FINAL_ROUND; i++) {
-      addScore(frames.get(i), i);
-    }
+    IntStream.range(0, FINAL_ROUND)
+        .forEach(i -> addScore(frames.get(i), i));
     return scores;
   }
 
@@ -68,17 +65,12 @@ public class Frames {
   private int accumulateScores(int index) {
     return frames.stream()
         .limit(index + 1)
-        .map(frame -> frame.score)
-        .map(Score::getScore)
-        .reduce(0, Integer::sum);
+        .mapToInt(frame -> frame.score.getScore())
+        .sum();
   }
 
-  public boolean isContinue() {
-    return frames.get(FINAL_ROUND - 1).isLastFrame();
-  }
-
-  public int round() {
-    return round.round();
+  public boolean isEndFrame(int currFrame) {
+    return frames.get(currFrame).isEndFrame();
   }
 
   public List<Frame> frames() {

@@ -1,6 +1,6 @@
-package bowling.view;
+package bowlingstate.view;
 
-import bowling.domain.player.Name;
+import bowlingstate.domain.player.Name;
 import java.util.Scanner;
 
 public class InputView {
