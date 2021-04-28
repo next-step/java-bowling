@@ -1,6 +1,5 @@
-package step4.domain.;
+package step4.domain;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Player {
@@ -24,12 +23,8 @@ public class Player {
         frames.throwBowl(pinCount);
     }
 
-    public Marks marks() {
-        return frames.marks();
-    }
-
-    public Scores scores() {
-        return frames.scores();
+    public Frames frames() {
+        return frames;
     }
 
     public int currentFrameIndex() {
