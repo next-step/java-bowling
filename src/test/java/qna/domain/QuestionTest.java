@@ -21,7 +21,8 @@ public class QuestionTest {
     @Test
     void Given_WrongUser_When_Delete_Then_CannotDeleteException() {
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> Q1.delete(UserTest.SANJIGI));
+                .isThrownBy(() -> Q1.delete(UserTest.SANJIGI))
+                .withMessage("잘못된 loginUser");
     }
 
     @Test

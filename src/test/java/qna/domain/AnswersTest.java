@@ -48,7 +48,9 @@ public class AnswersTest {
         answers.add(sanjigiAnswer);
 
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> answers.delete(UserTest.JAVAJIGI));
+                .isThrownBy(() -> answers.delete(UserTest.JAVAJIGI))
+                .withMessage("잘못된 loginUser");
+        ;
         assertThat(javajigiAnswer.isDeleted()).isFalse();
         assertThat(sanjigiAnswer.isDeleted()).isFalse();
     }
