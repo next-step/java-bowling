@@ -1,4 +1,4 @@
-package bowling;
+package bowling.controller;
 
 import bowling.domain.frame.RoundNumber;
 import bowling.domain.pin.Pin;
@@ -6,6 +6,8 @@ import bowling.domain.player.Player;
 import bowling.domain.player.PlayerName;
 import bowling.exception.BowlingException;
 import bowling.exception.PlayerNameValidationException;
+import bowling.view.InputView;
+import bowling.view.OutputView;
 
 public final class BowlingController {
 

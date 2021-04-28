@@ -1,4 +1,4 @@
-package bowling;
+package bowling.view;
 
 import bowling.exception.BowlingException;
 

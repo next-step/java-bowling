@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.controller.BowlingController;
+
 public final class BowlingApplication {
 
     private BowlingApplication() {}
