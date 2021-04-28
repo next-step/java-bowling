@@ -5,9 +5,5 @@ public interface FrameType {
 
     boolean isContinue();
 
-    int count();
-
-    int sum();
-
     Pitches pitches();
 }

@@ -18,14 +18,6 @@ public class Frame {
         return frameType.isContinue();
     }
 
-    public int count() {
-        return frameType.count();
-    }
-
-    public int sum() {
-        return frameType.sum();
-    }
-
     public Pitches pitches() {
         return frameType.pitches();
     }

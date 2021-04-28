@@ -3,6 +3,8 @@ package bowling.domain;
 import java.util.ArrayList;
 
 public class FinalFrameType implements FrameType {
+    private static final int MAX_PITCHES = 3;
+
     private final Pitches pitches;
 
     public FinalFrameType() {
@@ -23,29 +25,11 @@ public class FinalFrameType implements FrameType {
 
     @Override
     public boolean isContinue() {
-        return !pitches.isEndPitchFinal();
-    }
-
-    @Override
-    public int count() {
-        return pitches.count();
-    }
-
-    @Override
-    public int sum() {
-        return pitches().sum();
+        return !((pitches.count() == 2 && pitches.sum() < 10) || pitches.count() == MAX_PITCHES);
     }
 
     @Override
     public Pitches pitches() {
         return pitches;
-    }
-
-    private boolean isOpen(Pitches pitches) {
-        return pitches.count() == 2 && pitches.sum() < 10;
-    }
-
-    private boolean isEndPitch(Pitches pitches) {
-        return pitches.count() == 3;
     }
 }

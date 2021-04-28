@@ -25,12 +25,17 @@ public class Pitches {
                 .intValue();
     }
 
-    public void add(int point) {
-        pitches.add(new Pitch(point));
-    }
-
     public Pitch get(int index) {
         return pitches.get(index);
+    }
+
+    public Pitches pitch(int point) {
+        pitches.add(new Pitch(point));
+        return this;
+    }
+
+    public boolean isStrike() {
+        return pitches.get(0).intValue() == 10;
     }
 
     @Override
@@ -44,22 +49,5 @@ public class Pitches {
     @Override
     public int hashCode() {
         return Objects.hash(pitches);
-    }
-
-    public Pitches pitch(int point) {
-        pitches.add(new Pitch(point));
-        return this;
-    }
-
-    public boolean isStrike() {
-        return pitches.get(0).intValue() == 10;
-    }
-
-    public boolean isEndPitch() {
-        return isStrike() || count() == 2;
-    }
-
-    public boolean isEndPitchFinal() {
-        return (count() == 2 && sum() < 10) || count() == 3;
     }
 }

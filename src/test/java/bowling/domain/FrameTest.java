@@ -93,27 +93,4 @@ public class FrameTest {
         frame.pitch(9);
         assertThat(frame.isContinue()).isFalse();
     }
-
-    @DisplayName("프레임의 투구 합산 결과를 반환한다.")
-    @Test
-    void sum() {
-        int frameNo = 1;
-        Frame frame = new Frame(frameNo);
-        frame.pitch(8);
-        frame.pitch(1);
-
-        assertThat(frame.sum()).isEqualTo(9);
-    }
-
-    @DisplayName("프레임의 투구 횟수를 반환한다.")
-    @Test
-    void count() {
-        int frameNo = 10;
-        Frame frame = new Frame(frameNo);
-        frame.pitch(8);
-        frame.pitch(2);
-        frame.pitch(10);
-
-        assertThat(frame.count()).isEqualTo(3);
-    }
 }
