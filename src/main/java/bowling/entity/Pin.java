@@ -18,8 +18,12 @@ public class Pin {
         }
     }
 
-    public int pin(){
+    public int pin() {
         return pin;
+    }
+
+    public int sumPin(Pin secondPin) {
+        return pin + secondPin.pin();
     }
 
     @Override

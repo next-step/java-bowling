@@ -4,6 +4,7 @@ import bowling.entity.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class PinResultTest {
@@ -50,5 +51,17 @@ public class PinResultTest {
         PinResult secondPinResult = new SecondPinResult(normalScore.pin());
 
         assertThat(secondPinResult.pinResult(fallenPin).equals(new Miss(normalScore.pin(), fallenPin))).isTrue();
+    }
+
+    @Test
+    @DisplayName("미스 생성 실패")
+    public void createMissFail(){
+        NormalScore normalScore = new NormalScore(new Pin(5));
+
+        Pin fallenPin = new Pin(6);
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Miss(normalScore.pin(), fallenPin))
+                .withMessageMatching("프레임 투구의 합은 10을 넘을 수 없습니다.");
     }
 }
