@@ -20,10 +20,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -94,15 +92,7 @@ public class Question extends AbstractEntity {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, super.getId(), this.writer, LocalDateTime.now()));
 
-        for (Answer answer : answers) {
-            answer.delete();
-            answer.writeHistory(deleteHistories);
-        }
-        return deleteHistories;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
+        return answers.delete(deleteHistories);
     }
 
     public void checkPermission(User loginUser) throws CannotDeleteException {
@@ -112,7 +102,7 @@ public class Question extends AbstractEntity {
     }
 
     public void checkOwnerAnswers(User loginUser) throws CannotDeleteException {
-        this.answers.stream()
+        this.answers.value().stream()
             .filter(answer -> answer.isOwner(loginUser))
             .findAny()
             .orElseThrow(() -> new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다."));
