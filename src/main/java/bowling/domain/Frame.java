@@ -24,4 +24,12 @@ abstract class Frame implements FrameStrategy {
     public int sum() {
         return pinNumbers.sum();
     }
+
+    public int firstScore() {
+        return pinNumbers.index(0).pinNumber();
+    }
+
+    public int secondScore() {
+        return pinNumbers.index(0).pinNumber();
+    }
 }

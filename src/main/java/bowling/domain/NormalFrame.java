@@ -55,21 +55,21 @@ public class NormalFrame extends Frame {
         if (next.next.pinNumbers.size() == EMPTY_FRAME) {
             return CALCULATION_NOT_COMPLETED;
         }
-        return sum() + next.sum() + next.next.pinNumbers.index(0).pinNumber();
+        return sum() + next.sum() + next.next.firstScore();
     }
 
     private int scoreByFinalFrame() {
         if (next.pinNumbers.size() < REQUIRED_PIN_COUNT) {
             return CALCULATION_NOT_COMPLETED;
         }
-        return sum() + next.pinNumbers.index(0).pinNumber() + next.pinNumbers.index(1).pinNumber();
+        return sum() + next.firstScore() + next.secondScore();
     }
 
     public int scoreInSpare() {
         if (next.pinNumbers.size() == EMPTY_FRAME) {
             return CALCULATION_NOT_COMPLETED;
         }
-        return sum() + next.pinNumbers.index(0).pinNumber();
+        return sum() + next.firstScore();
     }
 
     public int scoreInMiss() {
