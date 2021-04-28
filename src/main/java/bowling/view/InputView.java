@@ -1,10 +1,11 @@
 package bowling.view;
 
+import bowling.domain.Name;
+
 import java.util.Scanner;
 
 public class InputView {
-    private static final String INPUT_NUMBER_OF_PLAYER = "How many people? : ";
-    private static final String INPUT_PLAYER_NAME = "플레이어 이름은(3 english letters)?: ";
+    private static final String INPUT_NUMBER_OF_PLAYER = "How many people? ";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -14,15 +15,15 @@ public class InputView {
         return numberOfPlayer;
     }
 
-    public String playerName() {
-        System.out.print(INPUT_PLAYER_NAME);
+    public String playerName(int index) {
+        System.out.printf("플레이어 %d의 이름은(3 english letters)?: ", index + 1);
         String name = scanner.nextLine().trim();
         return name;
     }
 
-    public String pinCount(int index) {
+    public String pinCount(Name name) {
         System.out.println();
-        System.out.printf("%d프레임 투구 : ", index + 1);
+        System.out.printf("%s's turn : ", name.name());
         String knockedDownPinCount = scanner.nextLine().trim();
         return knockedDownPinCount;
     }
