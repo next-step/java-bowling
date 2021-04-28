@@ -25,7 +25,7 @@ public abstract class Round {
     }
 
     public Round next() {
-        if (round == 9) {
+        if (round == FINAL_ROUND - FIRST_ROUND) {
             return FinalRound.of(FINAL_ROUND);
         }
         return NormalRound.of(this.round + 1);

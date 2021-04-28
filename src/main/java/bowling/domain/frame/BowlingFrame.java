@@ -10,6 +10,8 @@ import bowling.dto.ScoreDto;
 
 public abstract class BowlingFrame {
 
+    private static final int PREV_FINAL_ROUND = 9;
+
     private final Round round;
     private BowlingFrame nextFrame;
     private final FramePoint framePoint;
@@ -32,7 +34,7 @@ public abstract class BowlingFrame {
     public abstract BowlingFrame bonusPitching(Point point);
 
     public BowlingFrame nextFrame() {
-        if (round.equals(Round.of(9))) {
+        if (round.equals(Round.of(PREV_FINAL_ROUND))) {
             this.nextFrame = BowlingFinalFrame.first(FinalRound.of(), FramePoint.of(calculateOfScore().toInt()));
             return this.nextFrame;
         }

@@ -31,7 +31,7 @@ public class BowlingNormalFrame extends BowlingFrame {
     }
 
     public static BowlingNormalFrame first(Round round) {
-        return new BowlingNormalFrame(round, Score.of(Point.of(0), Point.of(0)), FramePoint.first());
+        return new BowlingNormalFrame(round, Score.initScore(), FramePoint.first());
     }
 
     public static BowlingNormalFrame of(Round round, Score score) {
@@ -77,13 +77,13 @@ public class BowlingNormalFrame extends BowlingFrame {
     public FramePoint calculateOfScore() {
         if (score.type() == BowlingRole.SPARE && getNextFrame() != null) {
             Score nextFrameScore = getNextFrame().score();
-            return FramePoint.of(framePoint().toInt() + this.score.total() + nextFrameScore.firstPoint());
+            return FramePoint.of(framePoint().toInt() + this.score.currentPoint() + nextFrameScore.firstPoint());
         }
         if (score.type() == BowlingRole.STRIKE && getNextFrame() != null) {
             Score nextFrameScore = getNextFrame().score();
-            return FramePoint.of(framePoint().toInt() + this.score.total() + nextFrameScore.total());
+            return FramePoint.of(framePoint().toInt() + this.score.currentPoint() + nextFrameScore.total());
         }
-        return FramePoint.of(framePoint().toInt() + score.total());
+        return FramePoint.of(framePoint().toInt() + score.currentPoint());
     }
 
     @Override

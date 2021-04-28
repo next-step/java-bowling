@@ -18,12 +18,7 @@ public class FramePoint {
         return new FramePoint(INIT_POINT);
     }
 
-    public FramePoint framePoint(int framePoint) {
-        return new FramePoint(this.framePoint + framePoint);
-    }
-
     public int toInt() {
         return framePoint;
     }
-
 }

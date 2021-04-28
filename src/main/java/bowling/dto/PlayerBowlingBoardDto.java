@@ -1,11 +1,9 @@
 package bowling.dto;
 
 import bowling.domain.Player;
-import bowling.domain.bowlingboard.BowlingBoard;
+import bowling.domain.bowlingboard.PlayerBowlingBoards;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PlayerBowlingBoardDto {
 
@@ -17,21 +15,12 @@ public class PlayerBowlingBoardDto {
         this.bowlingBoardDtoList = bowlingBoardDtoList;
     }
 
-    public static PlayerBowlingBoardDto of(List<Player> players, List<BowlingBoard> bowlingBoards) {
-        List<PlayerDto> playerDtos = players.stream()
-                .map(PlayerDto::of)
-                .collect(Collectors.toList());
-
-        List<BowlingBoardDto> bowlingBoardDtos = bowlingBoards.stream()
-                .map(BowlingBoardDto::of)
-                .collect(Collectors.toList());
-        return new PlayerBowlingBoardDto(playerDtos, bowlingBoardDtos);
+    public static PlayerBowlingBoardDto of(PlayerBowlingBoards playerBowlingBoards) {
+        return new PlayerBowlingBoardDto(playerBowlingBoards.playerDtoList(), playerBowlingBoards.bowlingBoardDtoList());
     }
 
-    public static PlayerBowlingBoardDto of(List<Player> players) {
-        return players.stream()
-                .map(PlayerDto::of)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), playerDtos -> new PlayerBowlingBoardDto(playerDtos, new ArrayList<>())));
+    public static PlayerBowlingBoardDto of(PlayerBowlingBoards playerBowlingBoards, Player player) {
+        return new PlayerBowlingBoardDto(playerBowlingBoards.playerDtoList(player), playerBowlingBoards.bowlingBoardDtoList());
     }
 
     public PlayerDto getPlayerDto(int index) {
@@ -43,6 +32,6 @@ public class PlayerBowlingBoardDto {
     }
 
     public int size() {
-        return bowlingBoardDtoList.size();
+        return playerDtoList.size();
     }
 }

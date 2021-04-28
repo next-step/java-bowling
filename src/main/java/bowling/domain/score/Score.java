@@ -8,10 +8,11 @@ import java.util.List;
 
 public class Score {
 
-    private final List<Point> pointList;
-
     private static final int POINT_MAX_BOUND = 10;
     private static final int POINT_MIN_BOUND = 0;
+    private static final int EMPTY_POINT = -1;
+
+    private final List<Point> pointList;
 
     private Score(Point firstPoint, Point secondPoint) {
         valid(firstPoint, secondPoint);
@@ -53,10 +54,20 @@ public class Score {
     }
 
     public boolean isStrike() {
-        return firstPoint() == 10;
+        return firstPoint() == POINT_MAX_BOUND;
+    }
+
+    public int currentPoint() {
+        if (firstPoint() + secondPoint() == EMPTY_POINT) {
+            return POINT_MIN_BOUND;
+        }
+        return total();
     }
 
     public int total() {
-        return firstPoint() + secondPoint();
+        return pointList.stream()
+                .map(Point::toInt)
+                .reduce(Integer::sum)
+                .orElse(POINT_MIN_BOUND);
     }
 }

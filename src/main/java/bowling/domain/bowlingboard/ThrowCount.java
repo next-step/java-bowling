@@ -6,9 +6,10 @@ import java.util.Objects;
 
 public class ThrowCount {
 
-    public static int MIN_THROW_COUNT = 0;
-    public static int MAX_THROW_COUNT = 3;
-    
+    public static final int MIN_THROW_COUNT = 0;
+    public static final int MAX_THROW_COUNT = 3;
+    public static final int FINAL_ROUND = 10;
+
     public final int throwCount;
 
     public ThrowCount(int throwCount) {
@@ -16,7 +17,7 @@ public class ThrowCount {
     }
 
     public static ThrowCount of(int throwCount) {
-        if (MIN_THROW_COUNT < 0 || MAX_THROW_COUNT > 3) {
+        if (throwCount < MIN_THROW_COUNT || throwCount > MAX_THROW_COUNT) {
             throw new IllegalArgumentException("공던지는 기회는 0 ~ 3번 사이입니다.");
         }
         return new ThrowCount(throwCount);
@@ -27,7 +28,7 @@ public class ThrowCount {
     }
 
     public ThrowCount next(Round round) {
-        if (throwCount == 1 && round.round() < 10) {
+        if (throwCount == 1 && round.round() < FINAL_ROUND) {
             return new ThrowCount(0);
         }
         return new ThrowCount(throwCount + 1);
@@ -44,5 +45,12 @@ public class ThrowCount {
     @Override
     public int hashCode() {
         return Objects.hash(throwCount);
+    }
+
+    @Override
+    public String toString() {
+        return "ThrowCount{" +
+                "throwCount=" + throwCount +
+                '}';
     }
 }

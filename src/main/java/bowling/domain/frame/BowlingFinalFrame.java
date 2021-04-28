@@ -9,9 +9,7 @@ import bowling.domain.score.Score;
 import bowling.dto.ScoreDto;
 
 public class BowlingFinalFrame extends BowlingFrame {
-
-    private static final int FINAL_ROUND = 10;
-
+    
     private Score score;
     private BonusScore bonusScore;
 
@@ -65,9 +63,9 @@ public class BowlingFinalFrame extends BowlingFrame {
     @Override
     public FramePoint calculateOfScore() {
         if (score.type() == BowlingRole.SPARE || score.type() == BowlingRole.STRIKE) {
-            return FramePoint.of(framePoint().toInt() + this.score.total() + bonusScore.point());
+            return FramePoint.of(framePoint().toInt() + this.score.currentPoint() + bonusScore.point());
         }
-        return FramePoint.of(framePoint().toInt() + score.total());
+        return FramePoint.of(framePoint().toInt() + score.currentPoint());
     }
 
     @Override

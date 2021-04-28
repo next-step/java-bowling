@@ -49,4 +49,12 @@ public class ScoreDto {
     public BowlingRole getScoreType() {
         return scoreType;
     }
+
+    @Override
+    public String toString() {
+        return "ScoreDto{" +
+                "bowlingPoint=" + bowlingPoint +
+                ", scoreType=" + scoreType +
+                '}';
+    }
 }

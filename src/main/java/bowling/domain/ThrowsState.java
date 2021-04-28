@@ -68,7 +68,7 @@ public enum ThrowsState {
     }
 
     public static BowlingBoard bonusPitching(Point point, List<BowlingFrame> frames) {
-        if (currentFrame(frames).round() != FinalRound.of()) {
+        if (!currentFrame(frames).round().equals(FinalRound.of())) {
             throw new IllegalArgumentException("마지막 라운드에서만 보너스 투구가 가능합니다.");
         }
         currentFrame(frames).bonusPitching(point);

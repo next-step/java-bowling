@@ -14,8 +14,8 @@ public class PlayerBowlingBoard {
         this.bowlingBoard = bowlingBoard;
     }
 
-    public static PlayerBowlingBoard of(String playerName, int position) {
-        return new PlayerBowlingBoard(Player.of(playerName, position), BowlingBoard.of());
+    public static PlayerBowlingBoard of(String playerName) {
+        return new PlayerBowlingBoard(Player.of(playerName), BowlingBoard.of());
     }
 
     public Player player() {

@@ -22,7 +22,9 @@ public class InputView {
 
     //How many people? 2
     public static int playerCount() {
-        System.out.println("How many people? ");
-        return scanner.nextInt();
+        System.out.print("How many people? ");
+        int playerCount = scanner.nextInt();
+        scanner.nextLine();
+        return playerCount;
     }
 }
