@@ -1,9 +1,6 @@
 package bowling.view;
 
-import bowling.domain.FrameStrategy;
-import bowling.domain.Frames;
-import bowling.domain.User;
-
+import bowling.domain.*;
 import java.util.stream.IntStream;
 
 public class ResultView {
@@ -16,17 +13,11 @@ public class ResultView {
     private static final String ROUND_LABEL_FRAME = "  |";
     private static final String EMPTY_SCORE = "";
 
-    public void print(Frames frames) {
+    public void print(Users users) {
         printRoundInfo();
 
-        System.out.print("|  " + frames.getUser().name() + " |");
-        for (FrameStrategy frame : frames.getFrames()) {
-            System.out.print("  ");
-            printProceedingRound(frame);
-        }
-
-        printRemainingRound(frames.getFrames().size());
-        printScore(frames);
+        users.getUsers()
+                .forEach(this::printScoreBoard);
     }
 
     private void printRoundInfo() {
@@ -36,6 +27,17 @@ public class ResultView {
             System.out.print("  " + frameNumber + ROUND_LABEL_FRAME);
         }
         System.out.println();
+    }
+
+    private void printScoreBoard(User user) {
+        System.out.print("|  " + user.name() + " |");
+        for (FrameStrategy frame : user.getFrameList()) {
+            System.out.print("  ");
+            printProceedingRound(frame);
+        }
+
+        printRemainingRound(user.getFrameList().size());
+        printScore(user.getFrames());
     }
 
     private void printProceedingRound(FrameStrategy frame) {
@@ -52,13 +54,12 @@ public class ResultView {
 
     private void printScore(Frames frames) {
         System.out.print("|      |");
-        User user = frames.getUser();
 
-        IntStream.range(0, frames.getFrames().size())
-                .map(i -> user.getScore(frames.frame(i)))
+        IntStream.range(0, frames.frameSize())
+                .map(i -> frames.getScore(frames.frame(i)))
                 .forEach(score -> System.out.print(String.format("%4s", getFrameScore(score)) + ROUND_LABEL_FRAME));
 
-        printRemainingRound(frames.getFrames().size());
+        printRemainingRound(frames.frameSize());
     }
 
     private String getFrameScore(int frameScore) {
