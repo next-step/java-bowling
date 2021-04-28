@@ -10,4 +10,8 @@ public class User {
         this.user = user;
     }
 
+    public String toPrint() {
+        return this.user;
+    }
+
 }
