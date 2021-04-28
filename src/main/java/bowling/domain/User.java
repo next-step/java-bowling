@@ -1,28 +1,35 @@
 package bowling.domain;
 
+import java.util.List;
+
 public class User {
 
     private final String name;
-    private final Scores scores;
+    private final Frames frames;
 
     public User(String name) {
         this.name = name;
-        this.scores = new Scores();
+        this.frames = new Frames();
     }
 
     public String name() {
         return name;
     }
 
-    public int getScore(FrameStrategy frame) {
-        return scores.score(frame);
+    public List<FrameStrategy> getFrameList() {
+        return frames.getFrames();
     }
 
-    public void recordScore(FrameStrategy frame, FrameStrategy previousFrame) {
-        scores.record(frame, previousFrame);
+    public Frames getFrames() {
+        return frames;
     }
 
-    public int scoreSize() {
-        return scores.size();
+    public void proceed(int frameNumber, PinNumber pinNumber) {
+        frames.proceedRound(frameNumber, pinNumber);
+        frames.calculateScore(frameNumber);
+    }
+
+    public boolean hasRemainTurn(int frameNumber) {
+        return frames.hasRemainTurn(frameNumber);
     }
 }
