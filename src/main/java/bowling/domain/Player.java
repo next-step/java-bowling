@@ -20,24 +20,28 @@ public class Player {
         return name;
     }
 
+    public void throwBowl(String pinCount) {
+        frames.throwBowl(pinCount);
+    }
+
     public List<Mark> marks() {
         return frames.marks();
     }
 
-    public boolean hasFinishedGame() {
-        return frames.isAllFinished();
+    public List<Integer> scores() {
+        return frames.scores();
     }
 
     public int currentFrameIndex() {
         return frames.currentIndex();
     }
 
-    public void throwBowl(String pinCount) {
-        frames.throwBowl(pinCount);
+    public boolean hasFinishedGame() {
+        return frames.isAllFinished();
     }
 
-    public List<Integer> scores() {
-        return frames.scores();
+    public boolean hasFinishedFrame(int index) {
+        return frames.get(index).isFinished();
     }
 
     @Override
