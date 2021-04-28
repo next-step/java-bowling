@@ -19,8 +19,17 @@ public class Frame {
         return this;
     }
 
+    public Frame pitch2(int point) {
+        frameType.pitch(point);
+        return this;
+    }
+
     public boolean isContinue() {
         return frameType.isContinue(pitches);
+    }
+
+    public boolean isContinue2() {
+        return frameType.isContinue();
     }
 
     public int count() {
