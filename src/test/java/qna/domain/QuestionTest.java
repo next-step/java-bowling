@@ -2,6 +2,7 @@ package qna.domain;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,5 +29,12 @@ public class QuestionTest {
     @DisplayName("다른 사람이 쓴 답변이 있으면 삭제불가")
     void checkOwnerAnswers() {
         assertThrows(CannotDeleteException.class, () -> Q1.checkOwnerAnswers(UserTest.SANJIGI));
+    }
+
+    @Test
+    void deleted() {
+        Q1.delete();
+
+        assertTrue(Q1.isDeleted());
     }
 }
