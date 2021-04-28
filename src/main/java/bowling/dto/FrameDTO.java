@@ -14,4 +14,8 @@ public class FrameDTO {
     public List<StateDTO> stateDTOList(){
         return stateDTOList;
     }
+
+    public int score() {
+        return score;
+    }
 }

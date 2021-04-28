@@ -14,24 +14,33 @@ import static bowling.view.StateView.*;
 public class ResultView {
     private static final String FRAME_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String NAME_FORMAT = "  %-3s ";
-    private static final String TWO_PITCH_FORMAT = "  %-4s";
+    private static final String FRAME_FORMAT = "  %-4s";
     private static final String THREE_PITCH_FORMAT = " %-5s";
+    private static final String EMPTY = "      ";
+    private static final int UNSCORED_SCORE = -1;
     private static final int THREE_PITCH_STATE_LENGTH = 5;
 
     private ResultView() {}
 
-    private static void printFrames(String name, FramesDTO framesDTO) {
-        List<String> frames = new ArrayList<>();
-        frames.add(String.format(NAME_FORMAT, name));
+    public static void printBoard(PlayerDTO playerDTO) {
+        System.out.println(FRAME_HEADER);
+        printPitch(playerDTO.name(), playerDTO.framesDTO());
+        printScore(playerDTO.framesDTO());
+        System.out.println();
+    }
+
+    private static void printPitch(String name, FramesDTO framesDTO) {
+        List<String> pitches = new ArrayList<>();
+        pitches.add(String.format(NAME_FORMAT, name));
         for (FrameDTO frameDTO : framesDTO.frames()) {
-            frames.add(formatState(frameDTO));
+            pitches.add(formatState(frameDTO));
         }
-        System.out.println(joinFrames(frames));
+        System.out.println(joinFrames(pitches));
     }
 
     private static String formatState(FrameDTO frameDTO) {
         String state = joinStates(frameDTO.stateDTOList());
-        String STATE_FORMAT = TWO_PITCH_FORMAT;
+        String STATE_FORMAT = FRAME_FORMAT;
         if (state.length() >= THREE_PITCH_STATE_LENGTH) {
             STATE_FORMAT = THREE_PITCH_FORMAT;
         }
@@ -54,9 +63,21 @@ public class ResultView {
         return result;
     }
 
-    public static void printBoard(PlayerDTO playerDTO) {
-        System.out.println(FRAME_HEADER);
-        printFrames(playerDTO.name(), playerDTO.framesDTO());
-        System.out.println();
+    private static void printScore(FramesDTO framesDTO) {
+        List<String> scores = new ArrayList<>();
+        scores.add(EMPTY);
+        int cumulativeScore = 0;
+        for (FrameDTO frameDTO : framesDTO.frames()) {
+            cumulativeScore += frameDTO.score();
+            scores.add(formatScore(frameDTO.score(), cumulativeScore));
+        }
+        System.out.println(joinFrames(scores));
+    }
+
+    private static String formatScore(int score, int cumulativeScore) {
+        if(score == UNSCORED_SCORE) {
+            return EMPTY;
+        }
+        return String.format(FRAME_FORMAT, cumulativeScore);
     }
 }

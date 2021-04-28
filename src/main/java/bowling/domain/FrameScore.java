@@ -26,7 +26,7 @@ public class FrameScore {
     }
 
     public boolean hasNoTryLeft() {
-        return triesLeft == NO_TRY;
+        return triesLeft <= NO_TRY;
     }
 
     public boolean hasOneTryLeft() {

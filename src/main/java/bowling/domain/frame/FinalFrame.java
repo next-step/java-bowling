@@ -69,7 +69,7 @@ public class FinalFrame implements Frame{
             return FrameScore.UNSCORED_SCORE;
         }
         FrameScore frameScore = states.getFirst().frameScore();
-        for (int i = 0; i < states.size(); i++) {
+        for (int i = 1; i < states.size(); i++) {
             frameScore = frameScore.addedFrameScore(states.get(i).frameScore());
         }
         return frameScore;
@@ -78,10 +78,17 @@ public class FinalFrame implements Frame{
     @Override
     public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
         FrameScore frameScore = states.getFirst().frameScoreWithBonus(prevFrameScore);
-        if(frameScore.hasNoTryLeft()) {
-            return frameScore;
+        if(frameScore.hasOneTryLeft()) {
+            return frameScoreFromSecondState(frameScore);
         }
-        return states.get(secondStateIndex).frameScoreWithBonus(frameScore);
+        return frameScore;
+    }
+
+    private FrameScore frameScoreFromSecondState(FrameScore frameScore) {
+        if(states.size() > secondStateIndex){
+            return states.get(secondStateIndex).frameScoreWithBonus(frameScore);
+        }
+        return FrameScore.UNSCORED_SCORE;
     }
 
     @Override
