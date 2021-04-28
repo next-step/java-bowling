@@ -1,4 +1,4 @@
-package step4.domain.;
+package step4.domain;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,8 +37,6 @@ public class Frames {
     public void throwBowl(String pinCount) {
         Frame Frame = get(currentIndex);
         Frame = Frame.throwBowl(pinCount);
-        update(Frame);
-        Frame = Frame.next();
         currentIndex = Frame.index();
     }
 
@@ -51,14 +49,11 @@ public class Frames {
         return frames.get(index);
     }
 
-    public void update(Frame frame) {
-        frames.set(frame.index(), frame);
-    }
-
-    public Marks marks() {
-        return new Marks(frames.stream()
-                .map(Mark::new)
-                .collect(Collectors.toList()));
+    public List<String> marks() {
+        return frames.stream()
+                .map(Frame::states)
+                .map(symbols -> String.join("|", symbols))
+                .collect(Collectors.toList());
     }
 
     public Scores scores() {
