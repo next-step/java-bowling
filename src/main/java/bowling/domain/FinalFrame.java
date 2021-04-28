@@ -14,10 +14,10 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean hasNext() {
-        if (pinNumbers.size() >= FULL_FRAME) {
+        if (size() >= FULL_FRAME) {
             return false;
         }
-        return pinNumbers.size() < GUARANTEED_OPPORTUNITY || hasThird();
+        return size() < GUARANTEED_OPPORTUNITY || hasThird();
     }
 
     @Override

@@ -14,10 +14,10 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean hasNext() {
-        if (pinNumbers.size() == FULL_FRAME) {
+        if (size() == FULL_FRAME) {
             return false;
         }
-        return pinNumbers.size() == EMPTY_FRAME || hasSecond();
+        return size() == EMPTY_FRAME || hasSecond();
     }
 
     @Override
