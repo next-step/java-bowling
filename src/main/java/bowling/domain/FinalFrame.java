@@ -21,7 +21,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public FrameStrategy nextFrame(int frameNumber) {
+    public FrameStrategy newNextFrame(int frameNumber) {
         return null;
     }
 

@@ -21,7 +21,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public FrameStrategy nextFrame(int frameNumber) {
+    public FrameStrategy newNextFrame(int frameNumber) {
         if (frameNumber == FINAL_NORMAL_FRAME) {
             next = new FinalFrame();
             return next;

@@ -36,7 +36,7 @@ public class NormalFrameTest {
         normalFrame.play(new PinNumber(7));
 
         int frameNumber = 1;
-        FrameStrategy nextFrame = normalFrame.nextFrame(frameNumber);
+        FrameStrategy nextFrame = normalFrame.newNextFrame(frameNumber);
         nextFrame.play(new PinNumber(8));
         nextFrame.play(new PinNumber(2));
 
@@ -50,7 +50,7 @@ public class NormalFrameTest {
         normalFrame.play(new PinNumber(10));
 
         int frameNumber = 1;
-        FrameStrategy nextFrame = normalFrame.nextFrame(frameNumber);
+        FrameStrategy nextFrame = normalFrame.newNextFrame(frameNumber);
         nextFrame.play(new PinNumber(8));
         nextFrame.play(new PinNumber(2));
 
@@ -63,11 +63,11 @@ public class NormalFrameTest {
         NormalFrame normalFrame = new NormalFrame();
         normalFrame.play(new PinNumber(10));
         int frameNumber = 1;
-        FrameStrategy nextFrame = normalFrame.nextFrame(frameNumber);
+        FrameStrategy nextFrame = normalFrame.newNextFrame(frameNumber);
         nextFrame.play(new PinNumber(10));
 
         frameNumber = 2;
-        nextFrame = nextFrame.nextFrame(frameNumber);
+        nextFrame = nextFrame.newNextFrame(frameNumber);
         nextFrame.play(new PinNumber(5));
         nextFrame.play(new PinNumber(5));
 
