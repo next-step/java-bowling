@@ -13,7 +13,7 @@ class AnswersTest {
 
   @DisplayName("생성 테스트")
   @Test
-  void createTest(){
+  void createTest() {
     List<Answer> answers = new ArrayList<>();
     answers.add(AnswerTest.A1);
 
@@ -22,7 +22,7 @@ class AnswersTest {
 
   @DisplayName("정상 삭제 테스트")
   @Test
-  void deleteTest(){
+  void deleteTest() {
     List<Answer> addingAnswers = new ArrayList<>();
     addingAnswers.add(AnswerTest.A1);
     Answers answers = Answers.of(addingAnswers);
@@ -32,7 +32,7 @@ class AnswersTest {
 
   @DisplayName("답변자가 모두 일치하지 않는 경우 삭제 수행되지 않음")
   @Test
-  void unmatchedUsersDeleteTest(){
+  void unmatchedUsersDeleteTest() {
     List<Answer> addingAnswers = new ArrayList<>();
     addingAnswers.add(AnswerTest.A1);
     addingAnswers.add(AnswerTest.A2);

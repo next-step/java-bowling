@@ -1,10 +1,8 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.domain.answer.Answer;
 import qna.domain.answer.Answers;
 import qna.domain.user.User;
-import qna.error.CannotDeleteException;
 import qna.error.NotEnoughPermissionException;
 
 import javax.persistence.*;
@@ -14,100 +12,96 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
-    @Column(length = 100, nullable = false)
-    private String title;
+  @Embedded
+  private final Answers answers = new Answers();
+  @Column(length = 100, nullable = false)
+  private String title;
+  @Lob
+  private String contents;
+  @ManyToOne
+  @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+  private User writer;
+  private boolean deleted = false;
 
-    @Lob
-    private String contents;
+  public Question() {
+  }
 
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
-    private User writer;
+  public Question(String title, String contents) {
+    this.title = title;
+    this.contents = contents;
+  }
 
-    @Embedded
-    private final Answers answers = new Answers();
+  public Question(long id, String title, String contents) {
+    super(id);
+    this.title = title;
+    this.contents = contents;
+  }
 
-    private boolean deleted = false;
+  public String getTitle() {
+    return title;
+  }
 
-    public Question() {
+  public Question setTitle(String title) {
+    this.title = title;
+    return this;
+  }
+
+  public String getContents() {
+    return contents;
+  }
+
+  public Question setContents(String contents) {
+    this.contents = contents;
+    return this;
+  }
+
+  public User getWriter() {
+    return writer;
+  }
+
+  public Question writeBy(User loginUser) {
+    this.writer = loginUser;
+    return this;
+  }
+
+  public void addAnswer(Answer answer) {
+    answer.toQuestion(this);
+    answers.add(answer);
+  }
+
+  public boolean isOwner(User loginUser) {
+    return writer.equals(loginUser);
+  }
+
+  public void checkDeletable(User loginUser) {
+    if (!isOwner(loginUser)) {
+      throw new NotEnoughPermissionException();
     }
+  }
 
-    public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
-    }
+  public List<DeleteHistory> delete(User loginUser) {
+    checkDeletable(loginUser);
+    List<DeleteHistory> deleteHistories = new ArrayList<>();
+    deleteHistories.add(setDeleted(true));
+    deleteHistories.addAll(answers.deleteAll(loginUser));
+    return deleteHistories;
+  }
 
-    public Question(long id, String title, String contents) {
-        super(id);
-        this.title = title;
-        this.contents = contents;
-    }
+  public DeleteHistory setDeleted(boolean deleted) {
+    this.deleted = deleted;
+    return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public boolean isDeleted() {
+    return deleted;
+  }
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
+  public Answers getAnswers() {
+    return answers;
+  }
 
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
-    public User getWriter() {
-        return writer;
-    }
-
-    public Question writeBy(User loginUser) {
-        this.writer = loginUser;
-        return this;
-    }
-
-    public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
-    }
-
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
-
-    public void checkDeletable(User loginUser){
-        if (!isOwner(loginUser)) {
-           throw new NotEnoughPermissionException();
-        }
-    }
-
-    public List<DeleteHistory> delete(User loginUser){
-        checkDeletable(loginUser);
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(setDeleted(true));
-        deleteHistories.addAll(answers.deleteAll(loginUser));
-        return deleteHistories;
-    }
-
-    public DeleteHistory setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public Answers getAnswers() {
-        return answers;
-    }
-
-    @Override
-    public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
+  @Override
+  public String toString() {
+    return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+  }
 }
