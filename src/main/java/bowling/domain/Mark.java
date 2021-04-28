@@ -5,46 +5,46 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class FrameMark {
+public class Mark {
     private static final int FIRST_PIN_COUNT_INDEX = 0;
     private static final int SECOND_PIN_COUNT_INDEX = 1;
     private static final int THIRD_PIN_COUNT_INDEX = 2;
 
     private final Frame frame;
-    private List<String> marks;
+    private List<String> symbols;
 
-    public FrameMark(Frame frame) {
+    public Mark(Frame frame) {
         this.frame = frame;
-        this.marks = new ArrayList<>();
+        this.symbols = new ArrayList<>();
     }
 
-    public List<String> marks() {
+    public List<String> symbols() {
         List<PinCount> pinCounts = frame.pinCounts().pinCounts();
 
         if (pinCounts.size() == 1) {
-            marks.add(firstMark(pinCounts));
+            symbols.add(firstSymbol(pinCounts));
         }
 
         if (pinCounts.size() == 2) {
-            marks.addAll(Arrays.asList(firstMark(pinCounts), secondMark(pinCounts)));
+            symbols.addAll(Arrays.asList(firstSymbol(pinCounts), secondSymbol(pinCounts)));
         }
 
         if (pinCounts.size() == 3) {
-            marks.addAll(Arrays.asList(firstMark(pinCounts), secondMark(pinCounts), thirdMark(pinCounts)));
+            symbols.addAll(Arrays.asList(firstSymbol(pinCounts), secondSymbol(pinCounts), thirdSymbol(pinCounts)));
         }
 
-        return marks;
+        return symbols;
     }
 
-    private String firstMark(List<PinCount> pinCounts) {
+    private String firstSymbol(List<PinCount> pinCounts) {
         return Symbol.ofFirst(pinCounts.get(FIRST_PIN_COUNT_INDEX));
     }
 
-    private String secondMark(List<PinCount> pinCounts) {
+    private String secondSymbol(List<PinCount> pinCounts) {
         return Symbol.ofSecond(pinCounts.get(FIRST_PIN_COUNT_INDEX), pinCounts.get(SECOND_PIN_COUNT_INDEX));
     }
 
-    private String thirdMark(List<PinCount> pinCounts) {
+    private String thirdSymbol(List<PinCount> pinCounts) {
         return Symbol.ofThird(pinCounts.get(FIRST_PIN_COUNT_INDEX), pinCounts.get(SECOND_PIN_COUNT_INDEX), pinCounts.get(THIRD_PIN_COUNT_INDEX));
     }
 
@@ -53,7 +53,7 @@ public class FrameMark {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FrameMark that = (FrameMark) o;
+        Mark that = (Mark) o;
         return Objects.equals(frame, that.frame);
     }
 

@@ -20,7 +20,7 @@ public class Player {
         return name;
     }
 
-    public List<FrameMark> marks() {
+    public List<Mark> marks() {
         return frames.marks();
     }
 

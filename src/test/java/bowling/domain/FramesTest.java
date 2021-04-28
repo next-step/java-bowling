@@ -46,8 +46,8 @@ class FramesTest {
     public void marks() throws Exception {
         String result = frames.marks()
                 .stream()
-                .map(FrameMark::marks)
-                .map(marks -> String.join(" | ", marks))
+                .map(Mark::symbols)
+                .map(symbols -> String.join(" | ", symbols))
                 .collect(Collectors.joining(" | "));
 
         then(result).isEqualTo("- | - | 1 | - | - | 1 | 1 | / | 9 | / | X | X | X | X | 1 | / | X");

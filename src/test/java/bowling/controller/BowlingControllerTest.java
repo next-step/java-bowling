@@ -1,7 +1,6 @@
 package bowling.controller;
 
-import bowling.domain.FrameMark;
-import bowling.domain.Frames;
+import bowling.domain.Mark;
 import bowling.domain.Name;
 import bowling.domain.Player;
 import bowling.view.InputView;
@@ -55,7 +54,7 @@ class BowlingControllerTest {
 
     class TestingResultView extends ResultView {
         @Override
-        public void printMark(Name name, List<FrameMark> frameMarks) {
+        public void printMark(Name name, List<Mark> marks) {
             record.add("printMark");
         }
 

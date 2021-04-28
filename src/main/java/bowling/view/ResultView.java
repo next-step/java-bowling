@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.FrameMark;
+import bowling.domain.Mark;
 import bowling.domain.Name;
 
 import java.util.List;
@@ -13,15 +13,15 @@ public class ResultView {
     private static final String BLANK = "";
     private static final int UN_COUNTABLE_SCORE = -1;
 
-    public void printMark(Name name, List<FrameMark> frameMarks) {
+    public void printMark(Name name, List<Mark> marks) {
         System.out.println(SCORE_HEADER);
         System.out.print(DELIMETER);
 
         System.out.printf(PRINT_FORMAT, name.name());
-        frameMarks.stream()
-                .map(FrameMark::marks)
-                .map(marks -> String.join(DELIMETER, marks))
-                .forEach((mark) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, mark)));
+        marks.stream()
+                .map(Mark::symbols)
+                .map(symbols -> String.join(DELIMETER, symbols))
+                .forEach((symbols) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, symbols)));
 
         System.out.println(DELIMETER);
     }
