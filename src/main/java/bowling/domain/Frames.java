@@ -61,13 +61,13 @@ public class Frames {
                 .collect(Collectors.toList()));
     }
 
-    public List<Integer> scores() {
-        return frames.stream()
+    public Scores scores() {
+        return new Scores(frames.stream()
                 .map(this::score)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
-    private int score(Frame frame) {
+    private Score score(Frame frame) {
         Score score = frame.score();
 
         while (score.isOpportunityLeft()) {
@@ -75,6 +75,6 @@ public class Frames {
             score = frame.add(score);
         }
 
-        return score.value();
+        return score;
     }
 }

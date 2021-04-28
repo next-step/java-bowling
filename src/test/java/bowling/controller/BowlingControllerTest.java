@@ -3,6 +3,7 @@ package bowling.controller;
 import bowling.domain.Marks;
 import bowling.domain.Name;
 import bowling.domain.Player;
+import bowling.domain.Scores;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,7 +60,7 @@ class BowlingControllerTest {
         }
 
         @Override
-        public void printScore(List<Integer> scores) {
+        public void printScore(Scores scores) {
             record.add("printScore");
         }
     }

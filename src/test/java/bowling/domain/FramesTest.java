@@ -56,8 +56,11 @@ class FramesTest {
     @Test()
     @DisplayName("각 프레임의 입력에 따른 점수를 반환한다.")
     public void scores() throws Exception {
-        List<Integer> result = frames.scores();
+        Scores frameScores = frames.scores();
+        List<Integer> scores = frameScores.scores().stream()
+                .map(Score::value)
+                .collect(Collectors.toList());
 
-        then(result).isEqualTo(Arrays.asList(0, 1, 1, 19, 20, 30, 30, 21, 20, 20));
+        then(scores).isEqualTo(Arrays.asList(0, 1, 1, 19, 20, 30, 30, 21, 20, 20));
     }
 }

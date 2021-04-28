@@ -28,7 +28,7 @@ public class Player {
         return frames.marks();
     }
 
-    public List<Integer> scores() {
+    public Scores scores() {
         return frames.scores();
     }
 

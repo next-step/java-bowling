@@ -1,10 +1,7 @@
 package bowling.view;
 
-import bowling.domain.Mark;
-import bowling.domain.Marks;
-import bowling.domain.Name;
+import bowling.domain.*;
 
-import java.util.List;
 import java.util.stream.IntStream;
 
 public class ResultView {
@@ -28,25 +25,26 @@ public class ResultView {
         System.out.println(DELIMETER);
     }
 
-    public void printScore(List<Integer> scores) {
+    public void printScore(Scores scores) {
         System.out.print(DELIMETER);
 
         System.out.printf(PRINT_FORMAT, BLANK);
-        IntStream.range(0, scores.size())
+        IntStream.range(0, scores.scores().size())
                 .mapToObj((i) -> changeScoreFormat(i, scores))
                 .forEach((score) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, score)));
 
         System.out.println(DELIMETER);
     }
 
-    private String changeScoreFormat(int currentIndex, List<Integer> scores) {
-        if (scores.get(currentIndex) == UN_COUNTABLE_SCORE) {
+    private String changeScoreFormat(int currentIndex, Scores scores) {
+        if (scores.scores().get(currentIndex).value() == UN_COUNTABLE_SCORE) {
             return BLANK;
         }
 
-        return String.valueOf(scores.stream()
+        return String.valueOf(scores.scores()
+                .stream()
                 .limit(currentIndex + 1)
-                .mapToInt(Integer::intValue)
+                .mapToInt(Score::value)
                 .sum());
     }
 }
