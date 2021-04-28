@@ -32,7 +32,7 @@ abstract class Frame implements FrameStrategy {
     }
 
     public int secondScore() {
-        return pinNumbers.index(0).pinNumber();
+        return pinNumbers.index(1).pinNumber();
     }
 
     @Override
