@@ -39,7 +39,7 @@ public class NormalFrame extends Frame {
     }
 
     public int scoreInStrike() {
-        if (next.hasNext() && next.pinNumbers.size() < REQUIRED_PIN_COUNT) {
+        if (next.hasNext() && next.size() < REQUIRED_PIN_COUNT) {
             return CALCULATION_NOT_COMPLETED;
         }
         if (next.pinNumbers.index(0).isStrike()) {
@@ -52,21 +52,21 @@ public class NormalFrame extends Frame {
         if (next.next == null) {
             return scoreByFinalFrame();
         }
-        if (next.next.pinNumbers.size() == EMPTY_FRAME) {
+        if (next.next.size() == EMPTY_FRAME) {
             return CALCULATION_NOT_COMPLETED;
         }
         return sum() + next.sum() + next.next.firstScore();
     }
 
     private int scoreByFinalFrame() {
-        if (next.pinNumbers.size() < REQUIRED_PIN_COUNT) {
+        if (next.size() < REQUIRED_PIN_COUNT) {
             return CALCULATION_NOT_COMPLETED;
         }
         return sum() + next.firstScore() + next.secondScore();
     }
 
     public int scoreInSpare() {
-        if (next.pinNumbers.size() == EMPTY_FRAME) {
+        if (next.size() == EMPTY_FRAME) {
             return CALCULATION_NOT_COMPLETED;
         }
         return sum() + next.firstScore();
