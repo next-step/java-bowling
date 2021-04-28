@@ -37,17 +37,14 @@ public class Answers {
   }
 
   public List<DeleteHistory> deleteAll(User loginUser){
+    checkAnswersDeletable(loginUser);
     return answers.stream().map(answer -> answer.delete(loginUser)).collect(Collectors.toList());
   }
 
-  public void checkAnswers(User loginUser) throws CannotDeleteException {
+  public void checkAnswersDeletable(User loginUser) {
     for (Answer answer : answers) {
       answer.checkDeletable(loginUser);
     }
-  }
-
-  public int size(){
-    return answers.size();
   }
 
   public Optional<Answer> head(){

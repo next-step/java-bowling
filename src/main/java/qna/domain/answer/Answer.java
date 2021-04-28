@@ -5,9 +5,7 @@ import qna.domain.ContentType;
 import qna.domain.DeleteHistory;
 import qna.domain.Question;
 import qna.domain.user.User;
-import qna.error.CannotDeleteException;
-import qna.error.NotFoundException;
-import qna.error.UnAuthorizedException;
+import qna.error.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -59,13 +57,13 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public boolean isOwner(User writer) {
+    private boolean isOwner(User writer) {
         return this.writer.equals(writer);
     }
 
-    public void checkDeletable(User writer) throws CannotDeleteException {
+    public void checkDeletable(User writer) {
         if (!isOwner(writer)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+            throw new MatchingQuestionUserAndAnswerUserException();
         }
     }
 
@@ -87,13 +85,8 @@ public class Answer extends AbstractEntity {
     }
 
     public DeleteHistory delete(User loginUser) {
-        try {
-            checkDeletable(loginUser);
-            setDeleted(true);
-            return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
-        } catch (CannotDeleteException e) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
-
+        checkDeletable(loginUser);
+        setDeleted(true);
+        return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 }

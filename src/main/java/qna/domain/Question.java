@@ -5,6 +5,7 @@ import qna.domain.answer.Answer;
 import qna.domain.answer.Answers;
 import qna.domain.user.User;
 import qna.error.CannotDeleteException;
+import qna.error.NotEnoughPermissionException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -78,13 +79,14 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public void checkDeletable(User loginUser) throws CannotDeleteException {
-        if (isOwner(loginUser)) {
-           throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+    public void checkDeletable(User loginUser){
+        if (!isOwner(loginUser)) {
+           throw new NotEnoughPermissionException();
         }
     }
 
     public List<DeleteHistory> delete(User loginUser){
+        checkDeletable(loginUser);
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(setDeleted(true));
         deleteHistories.addAll(answers.deleteAll(loginUser));
