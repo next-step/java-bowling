@@ -11,7 +11,7 @@ public class Scores {
     private final Map<Integer, Score> scores;
 
     public Scores() {
-        this.scores = new HashMap<>();;
+        this.scores = new HashMap<>();
     }
 
     public Map<Integer, Score> getScores() {
