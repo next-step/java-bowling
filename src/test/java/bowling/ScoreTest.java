@@ -9,34 +9,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ScoreTest {
 
     @Test
-    @DisplayName("스트라이크 반환 테스트")
-    void returnStrike() {
-
-        Score score = Score.of(10, true);
-        assertThat(score).isEqualTo(Score.STRIKE);
+    @DisplayName("미스 확인")
+    void missTest() {
+        Score score = new Score(3, 0);
+        assertThat(score).isEqualTo(Score.ofMiss(3));
     }
 
     @Test
-    @DisplayName("스페어 반환 테스트")
-    void returnSpare() {
-
-        Score score = Score.of(10, false);
-        assertThat(score).isEqualTo(Score.SPARE);
+    @DisplayName("스페어 확인")
+    void spareTest() {
+        Score score = new Score(10, 1);
+        assertThat(score).isEqualTo(Score.ofSpare());
     }
 
     @Test
-    @DisplayName("거터 반환 테스트")
-    void returnGutter() {
-
-        Score score = Score.of(0, false);
-        assertThat(score).isEqualTo(Score.GUTTER);
-    }
-
-    @Test
-    @DisplayName("미스 반환 테스트")
-    void returnMiss() {
-
-        Score score = Score.of(-1, false);
-        assertThat(score).isEqualTo(Score.MISS);
+    @DisplayName("Score bonus 점수 확인")
+    void addScoreTest() {
+        Score score = new Score(10, 1);
+        score.addScore(10);
+        assertThat(score).isEqualTo(new Score(20, 0));
     }
 }

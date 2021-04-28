@@ -1,59 +1,101 @@
 package bowling.domain.frame;
 
-import static bowling.domain.frame.NormalFrame.MAX_PITCH;
+import bowling.domain.Score;
+import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
+import bowling.domain.state.State;
+import bowling.domain.state.Strike;
 
-public class FinalFrame extends Frame {
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-    public static final int MAX_FINAL_PIN_COUNT = 30;
+public class FinalFrame implements Frame {
 
-    public FinalFrame(FrameRound frameRound) {
-        super(frameRound);
-    }
+    private static final int MIN_PITCH_COUNT = 2;
+    private static final int MAX_PITCH_COUNT = 3;
 
-    public static FinalFrame get() {
-        return new FinalFrame(FrameRound.last());
+    private LinkedList<State> states;
+    private Score score;
+    private State state;
+
+    public FinalFrame() {
+        states = new LinkedList<>();
+        states.add(new Ready());
     }
 
     @Override
-    Frame next() {
-        return this;
-    }
-
-    @Override
-    public void pitch(int pinCount) {
-        validatePinCount(pinCount);
-        pins.add(Pin.from(pinCount));
-    }
-
-    private void validatePinCount(int pinCount) {
-        if ((pinCountSum() + pinCount) > MAX_FINAL_PIN_COUNT) {
-            throw new IllegalArgumentException("핀의 개수가 30개를 넘을 수 없습니다.");
+    public void bowl(int count) {
+        if (isEnd()) {
+            throw new IllegalArgumentException("프레임은 종료되었습니다");
         }
 
-        if ((getPinsSize() + 1) > BONUS_PITCH) {
-            throw new IllegalArgumentException("최대 3회 투구 가능합니다.");
+        if (states.getLast().isFinish()) {
+            states.add(new Ready());
         }
+
+        State state = states.getLast();
+        states.removeLast();
+        states.addLast(state.bowl(count));
+        score = new Score(sumCount(), 0);
     }
 
     @Override
-    public Boolean isNextFrame() {
-        return false;
-    }
+    public boolean isEnd() {
+        if (states.isEmpty()) {
+            return false;
+        }
 
-    @Override
-    boolean isLast() {
-        return !isNextPitch();
-    }
-
-    private boolean isNextPitch() {
-        if (getPinsSize() == FIRST_PITCH) {
+        if (!hasBonusPitch() && sumBowlCount() == MIN_PITCH_COUNT) {
             return true;
         }
 
-        if (getPinsSize() == SECOND_PITCH) {
-            return pinCountSum() >= Pin.MAX_PIN_COUNT;
-        }
-
-        return getPinsSize() != BONUS_PITCH;
+        return sumBowlCount() == MAX_PITCH_COUNT;
     }
+
+    private boolean hasBonusPitch() {
+        return states.stream()
+                .anyMatch(state -> state instanceof Strike || state instanceof Spare);
+    }
+
+    private int sumBowlCount() {
+        return states.stream()
+                .mapToInt(State::getPitchCount)
+                .sum();
+    }
+
+    private int sumCount() {
+        return states.stream()
+                .mapToInt(State::getTotalCount)
+                .sum();
+    }
+
+    @Override
+    public Frame next() {
+        throw new IllegalStateException("마지막 프레임입니다.");
+    }
+
+    @Override
+    public String getFallenPins() {
+        return states.stream()
+                .map(State::toString)
+                .collect(Collectors.joining("|"));
+    }
+
+    @Override
+    public int getScore() {
+        return score.getScore();
+    }
+
+    @Override
+    public void calculateScore(int index, int count) {
+
+    }
+
+    @Override
+    public boolean hasScore() {
+        return isEnd();
+    }
+
+
 }
