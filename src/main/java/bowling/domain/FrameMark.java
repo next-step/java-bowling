@@ -37,15 +37,15 @@ public class FrameMark {
     }
 
     private String firstMark(List<PinCount> pinCounts) {
-        return Mark.firstMark(pinCounts.get(FIRST_PIN_COUNT_INDEX));
+        return Symbol.ofFirst(pinCounts.get(FIRST_PIN_COUNT_INDEX));
     }
 
     private String secondMark(List<PinCount> pinCounts) {
-        return Mark.secondMark(pinCounts.get(FIRST_PIN_COUNT_INDEX), pinCounts.get(SECOND_PIN_COUNT_INDEX));
+        return Symbol.ofSecond(pinCounts.get(FIRST_PIN_COUNT_INDEX), pinCounts.get(SECOND_PIN_COUNT_INDEX));
     }
 
     private String thirdMark(List<PinCount> pinCounts) {
-        return Mark.thirdMark(pinCounts.get(FIRST_PIN_COUNT_INDEX), pinCounts.get(SECOND_PIN_COUNT_INDEX), pinCounts.get(THIRD_PIN_COUNT_INDEX));
+        return Symbol.ofThird(pinCounts.get(FIRST_PIN_COUNT_INDEX), pinCounts.get(SECOND_PIN_COUNT_INDEX), pinCounts.get(THIRD_PIN_COUNT_INDEX));
     }
 
 
