@@ -54,7 +54,7 @@ class BowlingControllerTest {
 
     class TestingResultView extends ResultView {
         @Override
-        public void printResult(List<Name> names, List<Frames> frames, List<Scores> scores) {
+        public void printResult(List<BowlingGame> bowlingGames) {
             record.add("printResult");
         }
     }

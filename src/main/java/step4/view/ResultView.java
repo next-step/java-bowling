@@ -1,9 +1,11 @@
 package step4.view;
 
-import step4.domain.*;
+import step4.domain.BowlingGame;
+import step4.domain.Frame;
+import step4.domain.Frames;
+import step4.domain.Name;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static step4.domain.Score.UN_COUNTABLE_SCORE;
 
@@ -13,29 +15,34 @@ public class ResultView {
     private static final String DELIMETER = "|";
     private static final String BLANK = "";
 
-    public void printResult(List<Name> names, List<Frames> frames, List<Scores> scores) {
-        IntStream.range(0, names.size())
-                .forEach(i -> {
-                    printMark(names.get(i), frames.get(i).marks());
-                    printScore(scores.get(i));
-                });
+    public void printResult(List<BowlingGame> bowlingGames) {
+        bowlingGames.forEach(bowlingGame -> {
+            printMark(bowlingGame.name(), bowlingGame.frames());
+            printScore(bowlingGame);
+        });
     }
 
-    private void printMark(Name name, List<String> marks) {
+    private void printMark(Name name, Frames frames) {
         System.out.println(SCORE_HEADER);
         System.out.print(DELIMETER);
 
         System.out.printf(PRINT_FORMAT, name.name());
-        marks.forEach((symbols) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, symbols)));
+
+        frames.frames()
+                .stream()
+                .map(Frame::states)
+                .map(symbols -> String.join(DELIMETER, symbols))
+                .forEach((symbols) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, symbols)));
 
         System.out.println(DELIMETER);
     }
 
-    private void printScore(Scores scores) {
+    private void printScore(BowlingGame bowlingGame) {
         System.out.print(DELIMETER);
 
         System.out.printf(PRINT_FORMAT, BLANK);
-        scores.accumulatedScore().stream()
+        bowlingGame.scores()
+                .accumulatedScore().stream()
                 .map(this::changeScoreFormat)
                 .forEach((score) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, score)));
 

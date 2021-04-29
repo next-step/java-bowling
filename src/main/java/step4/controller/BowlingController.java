@@ -18,19 +18,19 @@ public class BowlingController {
 
     public void run() {
         NumberOfPlayer numberOfPlayer = new NumberOfPlayer(inputView.numberOfPlayer());
-        BowlingGames bowlingGames = createPlayers(numberOfPlayer);
+        BowlingGames bowlingGames = createGames(numberOfPlayer);
         playGame(bowlingGames);
         inputView.close();
     }
 
-    private BowlingGames createPlayers(NumberOfPlayer numberOfPlayer) {
+    private BowlingGames createGames(NumberOfPlayer numberOfPlayer) {
         return new BowlingGames(IntStream.range(0, numberOfPlayer.numberOfPlayer())
                 .mapToObj(i -> new BowlingGame(inputView.playerName(i)))
                 .collect(Collectors.toList()));
     }
 
     protected void playGame(BowlingGames bowlingGames) {
-        resultView.printResult(bowlingGames.names(), bowlingGames.frames(), bowlingGames.scores());
+        resultView.printResult(bowlingGames.bowlingGames());
 
         while (!bowlingGames.isAllFinished()) {
             bowlingGames.bowlingGames()
@@ -43,7 +43,7 @@ public class BowlingController {
 
         while (!bowlingGame.hasFinishedFrame(currentFrameIndex)) {
             bowlingGame.throwBowl(inputView.pinCount(bowlingGame.name()));
-            resultView.printResult(bowlingGames.names(), bowlingGames.frames(), bowlingGames.scores());
+            resultView.printResult(bowlingGames.bowlingGames());
         }
     }
 }
