@@ -50,13 +50,6 @@ public class Frames {
         return frames.get(index);
     }
 
-    public List<String> marks() {
-        return Collections.unmodifiableList(frames.stream()
-                .map(Frame::states)
-                .map(symbols -> String.join("|", symbols))
-                .collect(Collectors.toList()));
-    }
-
     public List<Frame> frames() {
         return Collections.unmodifiableList(frames);
     }
