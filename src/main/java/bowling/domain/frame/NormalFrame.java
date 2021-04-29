@@ -47,13 +47,4 @@ public class NormalFrame extends Frame {
         return scores;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 }
