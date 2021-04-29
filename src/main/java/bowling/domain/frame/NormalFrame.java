@@ -5,7 +5,7 @@ import bowling.exception.IllegalNormalFrameException;
 
 public final class NormalFrame extends Frame {
 
-    public static final int MAX_NORMAL_FRAME_ROUND_NUMBER = 9;
+    public static final RoundNumber MAX_NORMAL_FRAME_ROUND_NUMBER = new RoundNumber(9);
 
     private NormalFrame(RoundNumber roundNumber, NormalFrameScore frameScore) {
         super(roundNumber, frameScore);
@@ -33,7 +33,7 @@ public final class NormalFrame extends Frame {
 
     @Override
     public Frame createNextFrame() {
-        if (roundNumber.value() == MAX_NORMAL_FRAME_ROUND_NUMBER) {
+        if (MAX_NORMAL_FRAME_ROUND_NUMBER.equals(roundNumber)) {
             return FinalFrame.from(new FinalFrameScore());
         }
         return NormalFrame.of(roundNumber.nextRoundNumber(), new NormalFrameScore());
