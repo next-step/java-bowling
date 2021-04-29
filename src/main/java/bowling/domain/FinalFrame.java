@@ -6,8 +6,8 @@ public class FinalFrame extends Frame {
 
     private Pitch bonusPitch;
 
-    protected FinalFrame(int number, Frame before) {
-        super(number, before);
+    protected FinalFrame(int number) {
+        super(number);
     }
 
     private boolean hasBonusPitch() {

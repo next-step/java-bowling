@@ -9,8 +9,8 @@ public class NormalFrame extends Frame {
 
     private Frame next;
 
-    private NormalFrame(int number, NormalFrame before) {
-        super(number, before);
+    private NormalFrame(int number) {
+        super(number);
     }
 
     private NormalFrame(int number, Pitches pitches) {
@@ -43,9 +43,9 @@ public class NormalFrame extends Frame {
 
     private Frame createNextFrame(boolean isLast) {
         if (isLast) {
-            return new FinalFrame(number() + 1, this);
+            return new FinalFrame(number() + 1);
         }
-        return new NormalFrame(number() + 1, this);
+        return new NormalFrame(number() + 1);
     }
 
     private boolean isLast() {

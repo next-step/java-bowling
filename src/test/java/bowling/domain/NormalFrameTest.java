@@ -134,8 +134,6 @@ class NormalFrameTest {
 
         // then
         assertThat(nextFrame.number()).isEqualTo(2);
-        assertThat(nextFrame.before()).isEqualTo(startFrame);
-        assertThat(nextFrame.before().number()).isEqualTo(1);
     }
 
     @Test
@@ -171,33 +169,6 @@ class NormalFrameTest {
         assertThatIllegalStateException()
                 .isThrownBy(frameWithoutPitch::next)
                 .withMessageMatching("종료되지 않은 프레임입니다. 다음 프레임을 시작할 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("이전 프레임 조회")
-    void before() {
-        // given
-        NormalFrame first = NormalFrame.first();
-
-        // when
-        first.pitch(new Pitch(10));
-        Frame next = first.next();
-        Frame before = next.before();
-
-        // then
-        assertThat(first).isEqualTo(before);
-    }
-
-    @Test
-    @DisplayName("첫 번째 프레임은 이전 프레임을 가질 수 없음")
-    void before_firstFrame() {
-        // given
-        NormalFrame first = NormalFrame.first();
-
-        // when then
-        assertThatIllegalStateException()
-                .isThrownBy(first::before)
-                .withMessageMatching("이전 프레임이 존재하지 않습니다.");
     }
 
     @Test
