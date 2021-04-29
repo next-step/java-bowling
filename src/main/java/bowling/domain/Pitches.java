@@ -27,6 +27,10 @@ public class Pitches {
                 .sum();
     }
 
+    public int firstPinDownCount() {
+        return first().value();
+    }
+
     public int count() {
         return values.size();
     }
@@ -74,6 +78,10 @@ public class Pitches {
 
     public boolean isFinished() {
         return isStrike() || count() == MAX_PITCH_ABLE_COUNT;
+    }
+
+    public boolean isEmpty() {
+        return values.isEmpty();
     }
 
     public List<String> getScoreBoards() {

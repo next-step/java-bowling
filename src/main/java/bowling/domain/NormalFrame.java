@@ -6,6 +6,7 @@ public class NormalFrame extends Frame {
 
     public static final int FIRST_NUMBER = 1;
     private static final int LAST_NUMBER = 9;
+    private static final int NON_BONUS = 0;
 
     private Frame next;
 
@@ -32,7 +33,7 @@ public class NormalFrame extends Frame {
 
     private void validateCreateNextFrame() {
         if (!isFinished()) {
-           throw new IllegalStateException("종료되지 않은 프레임입니다. 다음 프레임을 시작할 수 없습니다.");
+            throw new IllegalStateException("종료되지 않은 프레임입니다. 다음 프레임을 시작할 수 없습니다.");
         }
     }
 
@@ -69,6 +70,44 @@ public class NormalFrame extends Frame {
     @Override
     public List<String> getScoreBoards() {
         return pitches().getScoreBoards();
+    }
+
+    @Override
+    public int score() {
+        return pitches().pinDownCount() + bonusScore();
+    }
+
+    private int bonusScore() {
+        if (hasNext()) {
+            return next.bonusScore(pitches());
+        }
+        return NON_BONUS;
+    }
+
+    @Override
+    public int bonusScore(Pitches beforePitches) {
+        if (isDoubleStrike(beforePitches)) {
+            return pitches().pinDownCount() + next.doubleBonusScore();
+        }
+        if (beforePitches.isStrike()) {
+            return pitches().pinDownCount();
+        }
+        if (beforePitches.isSpare()) {
+            return pitches().firstPinDownCount();
+        }
+        return NON_BONUS;
+    }
+
+    private boolean isDoubleStrike(Pitches beforePitches) {
+        return beforePitches.isStrike() && pitches().isStrike();
+    }
+
+    @Override
+    public int doubleBonusScore() {
+        if (pitches().isEmpty()) {
+            return pitches().firstPinDownCount();
+        }
+        return NON_BONUS;
     }
 
 }

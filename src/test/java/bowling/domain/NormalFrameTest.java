@@ -244,4 +244,97 @@ class NormalFrameTest {
         assertThat(normalFrame3.getScoreBoards()).isEqualTo(Arrays.asList("-", "-"));
     }
 
+    @Test
+    @DisplayName("점수계산 - 프레임 미종료")
+    void score_notFinished() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(7));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(7);
+    }
+
+    @Test
+    @DisplayName("점수계산 - 프레임 종료 및 다음 프레임 미시작")
+    void score_finishedAndHasNotNext() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(7));
+        normalFrame.pitch(new Pitch(2));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(9);
+    }
+
+    @Test
+    @DisplayName("점수계산 - 프레임 종료 및 다음 프레임 시작")
+    void score_finishedAndHasNext() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(7));
+        normalFrame.pitch(new Pitch(2));
+        normalFrame.next();
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(9);
+    }
+
+    @Test
+    @DisplayName("점수계산 - 프레임 종료 및 다음 프레임 투구")
+    void score_finishedAndNextFramePitch() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(7));
+        normalFrame.pitch(new Pitch(2));
+
+        Frame next = normalFrame.next();
+        next.pitch(new Pitch(5));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(9);
+    }
+    
+    @Test
+    @DisplayName("점수계산 - 스페어에 의한 보너스점수")
+    void score_spareBonus() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(7));
+        normalFrame.pitch(new Pitch(3));
+
+        Frame next = normalFrame.next();
+        next.pitch(new Pitch(4));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(14);
+    }
+    
+    @Test
+    @DisplayName("점수계산 - 스트라이크에 의한 보너스점수")
+    void score_strikeBonus() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        Frame next = normalFrame.next();
+        next.pitch(new Pitch(2));
+        next.pitch(new Pitch(7));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(19);
+    }
+
 }
