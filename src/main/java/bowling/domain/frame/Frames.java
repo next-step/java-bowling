@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 
 public final class Frames {
     private final List<Frame> frames;
+    public static final Integer FINAL_FRAME = 9;
 
     public Frames() {
         this(generateFrames());
@@ -25,7 +26,7 @@ public final class Frames {
     }
 
     public boolean isFinished() {
-        if (nowFrame() > 9) {
+        if (nowFrame() > FINAL_FRAME) {
             return true;
         }
         return false;
@@ -44,7 +45,7 @@ public final class Frames {
 
     private static List<Frame> generateFrames() {
         List<Frame> result = new ArrayList<>();
-        IntStream.range(0, 9)
+        IntStream.range(0, FINAL_FRAME)
                 .forEach(i -> result.add(new NormalFrame()));
         result.add(new FinalFrame());
         return result;

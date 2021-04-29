@@ -1,13 +1,13 @@
 package bowling.view;
 
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 import bowling.dto.BowlingDto;
 
 import java.util.Map;
 
 public class ResultView {
     private static final String UPPER_FRAME = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10    |";
-    private static final Integer FINAL_FRAME = 9;
 
     public static void printBowling(BowlingDto bowlingDto) {
         StringBuilder sb = new StringBuilder();
@@ -40,7 +40,7 @@ public class ResultView {
         StringBuilder sb = new StringBuilder();
         frames.keySet()
                 .stream()
-                .filter(k -> k < FINAL_FRAME)
+                .filter(k -> k < Frames.FINAL_FRAME)
                 .forEach(k -> sb.append(normalFrameToPrint(frames.get(k)))
                         .append("|"));
         return sb.toString();
@@ -48,7 +48,7 @@ public class ResultView {
 
     private static String getFinalFrame(Map<Integer, Frame> frames) {
         StringBuilder sb = new StringBuilder();
-        sb.append(finalFrameToPrint(frames.get(FINAL_FRAME)))
+        sb.append(finalFrameToPrint(frames.get(Frames.FINAL_FRAME)))
                 .append("|");
         return sb.toString();
     }
