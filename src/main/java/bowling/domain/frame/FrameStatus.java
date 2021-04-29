@@ -28,6 +28,8 @@ public enum FrameStatus {
         return NORMAL;
     }
 
+    // TODO: 마지막 프레임은 상태를 가지지 않도록 변경
+    @Deprecated
     public static FrameStatus of(Pin firstPin, Pin secondPin, Pin thirdPin) {
         if (firstPin == null || secondPin == null) {
             return NOT_ENDED;
