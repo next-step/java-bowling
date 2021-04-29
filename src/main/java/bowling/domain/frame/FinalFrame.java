@@ -65,6 +65,11 @@ public class FinalFrame extends Frame {
         return result;
     }
 
+    @Override
+    public List<Score> getScores() {
+        return scores;
+    }
+
     private List<Score> add(Score score) {
         this.scores.add(score);
         return this.scores;

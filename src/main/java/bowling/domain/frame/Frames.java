@@ -44,6 +44,10 @@ public final class Frames {
         return result;
     }
 
+    public Frame getFrame(int index) {
+        return this.frames.get(index);
+    }
+
     private static List<Frame> generateFrames() {
         List<Frame> result = new ArrayList<>();
         IntStream.range(0, 9)

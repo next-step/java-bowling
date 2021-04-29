@@ -16,4 +16,8 @@ public class User {
         return result;
     }
 
+    public String getUser() {
+        return this.user;
+    }
+
 }

@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
 import java.util.ArrayList;
@@ -28,6 +29,14 @@ public final class Bowling {
 
     public int nowFrame() {
         return this.frames.nowFrame();
+    }
+
+    public Frame getFrame(int index) {
+        return frames.getFrame(index);
+    }
+
+    public User getPlayer() {
+        return this.player;
     }
 
     public List<String> toPrint() {
