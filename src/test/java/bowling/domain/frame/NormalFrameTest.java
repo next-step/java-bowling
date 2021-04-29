@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.TestFixture;
 import bowling.domain.pin.NormalPins;
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
@@ -124,10 +125,9 @@ class NormalFrameTest {
     void knockDownPin() {
         // given
         final Frame firstFrame = NormalFrame.createFirstFrame();
-        final Pin strikePin = new Pin();
 
         // when
-        firstFrame.knockDownPin(strikePin);
+        firstFrame.knockDownPin(TestFixture.STRIKE_PIN);
 
         // then
         assertThat(firstFrame.isEnded()).isTrue();

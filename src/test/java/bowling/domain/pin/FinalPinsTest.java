@@ -1,5 +1,6 @@
 package bowling.domain.pin;
 
+import bowling.domain.TestFixture;
 import bowling.domain.frame.FrameStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,9 +16,9 @@ class FinalPinsTest {
     @DisplayName("FinalPins는 Pin을 세 개 가지고 생성된다.")
     void create() {
         // given
-        final Pin firstPin = new Pin();
+        final Pin firstPin = TestFixture.STRIKE_PIN;
         final Pin secondPin = new Pin(0);
-        final Pin thirdPin = new Pin();
+        final Pin thirdPin = TestFixture.STRIKE_PIN;
 
         // when
         final FinalPins pins = new FinalPins(firstPin, secondPin, thirdPin);
@@ -53,11 +54,10 @@ class FinalPinsTest {
     void knockDownPin() {
         // given
         final FinalPins beforePins = new FinalPins();
-        final Pin strikePin = new Pin();
-        final FinalPins strikePins = new FinalPins(new Pin());
+        final FinalPins strikePins = new FinalPins(TestFixture.STRIKE_PIN);
 
         // when
-        final Pins afterPins = beforePins.knockDownPin(strikePin);
+        final Pins afterPins = beforePins.knockDownPin(TestFixture.STRIKE_PIN);
 
         // then
         assertThat(afterPins).isEqualTo(strikePins);

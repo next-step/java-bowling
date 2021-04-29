@@ -1,5 +1,6 @@
 package bowling.domain.pin;
 
+import bowling.domain.TestFixture;
 import bowling.exception.InvalidPinCountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -66,7 +67,7 @@ class PinTest {
     @DisplayName("Pin이 최대치인지 확인한다.")
     void isMaximum() {
         // given
-        final Pin maximumPin = new Pin();
+        final Pin maximumPin = TestFixture.STRIKE_PIN;
         final Pin nonMaximumPin = new Pin(3);
 
         // when

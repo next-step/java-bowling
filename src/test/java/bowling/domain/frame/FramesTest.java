@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.Pin;
+import bowling.domain.TestFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -46,10 +46,9 @@ class FramesTest {
         // given
         final Frames frames = Frames.initialize();
         final RoundNumber roundNumber = new RoundNumber(1);
-        final Pin strikePin = new Pin();
 
         // when
-        frames.knockDownPin(roundNumber, strikePin);
+        frames.knockDownPin(roundNumber, TestFixture.STRIKE_PIN);
 
         // then
         assertThat(frames.isEnded(roundNumber)).isTrue();

@@ -1,5 +1,6 @@
 package bowling.domain.player;
 
+import bowling.domain.TestFixture;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.RoundNumber;
 import bowling.domain.pin.Pin;
@@ -61,7 +62,7 @@ class PlayerTest {
         // given
         final Player player = new Player(playerName);
         final RoundNumber firstRoundNumber = new RoundNumber(1);
-        player.knockDownPin(firstRoundNumber, new Pin());
+        player.knockDownPin(firstRoundNumber, TestFixture.STRIKE_PIN);
 
         // when
         final boolean ended = player.isEnded(firstRoundNumber);

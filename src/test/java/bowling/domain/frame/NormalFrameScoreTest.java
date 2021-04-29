@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.TestFixture;
 import bowling.domain.pin.NormalPins;
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
@@ -15,7 +16,7 @@ class NormalFrameScoreTest {
     @DisplayName("Pins를 입력받아 FrameScore를 생성한다.")
     void create() {
         // given
-        final Pins pins = new NormalPins(new Pin(), new Pin(0));
+        final Pins pins = new NormalPins(TestFixture.STRIKE_PIN, new Pin(0));
 
         // when
         final FrameScore frameScore = new NormalFrameScore(pins);
@@ -28,7 +29,7 @@ class NormalFrameScoreTest {
     @DisplayName("해당 Frame이 종료되었는지 반환한다.")
     void isEnded() {
         // given
-        final FrameScore endedFrame = new NormalFrameScore(new NormalPins(new Pin(), new Pin(0)));
+        final FrameScore endedFrame = new NormalFrameScore(new NormalPins(TestFixture.STRIKE_PIN, new Pin(0)));
         final FrameScore notEndedFrame = new NormalFrameScore();
 
         // when
@@ -44,11 +45,10 @@ class NormalFrameScoreTest {
     void knockDownPin() {
         // given
         final FrameScore beforeFrameScore = new NormalFrameScore();
-        final Pin strikePin = new Pin();
-        final FrameScore expectedFrameScore = new NormalFrameScore(new NormalPins(new Pin()));
+        final FrameScore expectedFrameScore = new NormalFrameScore(new NormalPins(TestFixture.STRIKE_PIN));
 
         // when
-        final FrameScore afterFrameScore = beforeFrameScore.knockDownPin(strikePin);
+        final FrameScore afterFrameScore = beforeFrameScore.knockDownPin(TestFixture.STRIKE_PIN);
 
         // then
         assertThat(afterFrameScore).isEqualTo(expectedFrameScore);

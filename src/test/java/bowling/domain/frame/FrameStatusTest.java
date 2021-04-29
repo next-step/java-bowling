@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.TestFixture;
 import bowling.domain.pin.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +26,7 @@ class FrameStatusTest {
         return Stream.of(
                 arguments(null, null, null),
                 arguments(new Pin(9), null, null),
-                arguments(new Pin(), new Pin(), null),
+                arguments(TestFixture.STRIKE_PIN, TestFixture.STRIKE_PIN, null),
                 arguments(new Pin(9), new Pin(1), null)
         );
     }
