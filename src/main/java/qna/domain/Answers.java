@@ -40,4 +40,11 @@ public class Answers {
     public List<Answer> getAnswers() {
         return answers;
     }
+
+    public void deleteAll(List<DeleteHistory> deletes) {
+        answers.forEach(answer -> {
+            answer.delete();
+            deletes.add(new DeleteHistory(answer, answer.getWriter()));
+        });
+    }
 }

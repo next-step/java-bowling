@@ -43,6 +43,10 @@ public class Answer extends AbstractEntity {
         return this;
     }
 
+    public void delete() {
+        postInfo.delete();
+    }
+
     public boolean isDeleted() {
         return postInfo.isDeleted();
     }

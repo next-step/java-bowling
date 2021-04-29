@@ -19,8 +19,16 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
+    public DeleteHistory(AbstractEntity post, User deleteBy) {
+        this(new DeleteInfo(post, deleteBy), null);
+    }
+
     public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
-        this.deleteInfo = new DeleteInfo(contentType, contentId, deletedBy);
+        this(new DeleteInfo(contentType, contentId, deletedBy), createDate);
+    }
+
+    public DeleteHistory(DeleteInfo deleteInfo, LocalDateTime createDate) {
+        this.deleteInfo = deleteInfo;
         this.createDate = createDate;
     }
 
