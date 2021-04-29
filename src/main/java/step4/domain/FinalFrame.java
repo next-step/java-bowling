@@ -13,6 +13,7 @@ public class FinalFrame implements Frame {
     private static final int FINAL_INDEX = 9;
     private static final int START = 0;
     private static final int TRY_NUMBER_MAX = 3;
+    private static final String GAME_OVER = "게임이 완료되어 더 이상 공을 던질 수 없습니다.";
 
     private LinkedList<State> states = new LinkedList<>();
     private int tryNumber;
@@ -24,9 +25,12 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame throwBowl(String pinCount) {
+        if (isFinished()) {
+            throw new IllegalStateException(GAME_OVER);
+        }
+
         tryNumber += 1;
         int knockedDownPinCount = Integer.parseInt(pinCount);
-
         State currentState = states.getLast();
 
         if (currentState.isFinished()) {
