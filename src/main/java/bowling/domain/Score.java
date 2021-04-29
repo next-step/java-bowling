@@ -1,11 +1,14 @@
 package bowling.domain;
 
+import bowling.exception.CannotCalculateException;
+
 public class Score {
 
     private static final int NONE_OPPORTUNITY = 0;
     private static final int MAX_SCORE = 10;
     private static final int SPARE_OPPORTUNITY = 1;
     private static final int STRIKE_OPPORTUNITY = 2;
+    private static final String CANNOT_CALCULATE_MESSAGE = "앞 투구가 끝나지 않아 계산 할 수 없습니다.";
 
     private int score;
     private int leftOpportunity;
@@ -32,11 +35,14 @@ public class Score {
     }
 
     public int calculateScore() {
-        return -2;
+        if (!canCalculateScore()) {
+            throw new CannotCalculateException(CANNOT_CALCULATE_MESSAGE);
+        }
+        return this.score;
     }
 
-    public void spreadScore(Score beforeScore) {
-
+    private boolean canCalculateScore() {
+        return leftOpportunity == NONE_OPPORTUNITY;
     }
 
     public void throwBall(int score) {
