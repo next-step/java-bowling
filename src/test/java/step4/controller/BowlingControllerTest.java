@@ -26,8 +26,8 @@ class BowlingControllerTest {
     @Test
     @DisplayName("프레임 별 핀 수를 입력받고 해당 결과 표시, 점수 출력을 모든 프레임 종료시 까지 반복한다.")
     public void playGame() throws Exception {
-        List<Player> players = Collections.singletonList(new Player("KSB"));
-        systemUnderTest.playGame(new Players(players));
+        List<BowlingGame> bowlingGames = Collections.singletonList(new BowlingGame("KSB"));
+        systemUnderTest.playGame(new Players(bowlingGames));
         assertThat(String.join(" -> ", record)).isEqualTo("printResult -> " +
                 "pinCount -> printResult -> " +
                 "pinCount -> printResult -> " +

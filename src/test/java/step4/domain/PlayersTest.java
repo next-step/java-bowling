@@ -14,7 +14,7 @@ public class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        players = new Players(Arrays.asList(new Player("KSB"), new Player("KBS")));
+        players = new Players(Arrays.asList(new BowlingGame("KSB"), new BowlingGame("KBS")));
     }
 
     @Test
@@ -35,11 +35,11 @@ public class PlayersTest {
     @DisplayName("모든 플레이어가 게임을 완료했다면, 참을 반환한다.")
     public void isAllFinished() throws Exception {
         //given
-        Player firstPlayer = players.players().get(0);
-        Player secondPlayer = players.players().get(1);
+        BowlingGame firstBowlingGame = players.players().get(0);
+        BowlingGame secondBowlingGame = players.players().get(1);
         for (int i = 0; i < 12; i++) {
-            firstPlayer.throwBowl("10");
-            secondPlayer.throwBowl("10");
+            firstBowlingGame.throwBowl("10");
+            secondBowlingGame.throwBowl("10");
         }
 
         //when

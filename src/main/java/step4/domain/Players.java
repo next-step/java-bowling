@@ -5,36 +5,36 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Players {
-    private final List<Player> players;
+    private final List<BowlingGame> bowlingGames;
 
-    public Players(List<Player> players) {
-        this.players = players;
+    public Players(List<BowlingGame> bowlingGames) {
+        this.bowlingGames = bowlingGames;
     }
 
     public List<Name> names() {
-        return Collections.unmodifiableList(players.stream()
-                .map(Player::name)
+        return Collections.unmodifiableList(bowlingGames.stream()
+                .map(BowlingGame::name)
                 .collect(Collectors.toList()));
     }
 
     public List<Frames> frames() {
-        return Collections.unmodifiableList(players.stream()
-                .map(Player::frames)
+        return Collections.unmodifiableList(bowlingGames.stream()
+                .map(BowlingGame::frames)
                 .collect(Collectors.toList()));
     }
 
     public List<Scores> scores() {
-        return Collections.unmodifiableList(players.stream()
-                .map(Player::scores)
+        return Collections.unmodifiableList(bowlingGames.stream()
+                .map(BowlingGame::scores)
                 .collect(Collectors.toList()));
     }
 
-    public List<Player> players() {
-        return Collections.unmodifiableList(players);
+    public List<BowlingGame> players() {
+        return Collections.unmodifiableList(bowlingGames);
     }
 
     public boolean isAllFinished() {
-        return players.stream()
-                .allMatch(Player::hasFinishedGame);
+        return bowlingGames.stream()
+                .allMatch(BowlingGame::hasFinishedGame);
     }
 }

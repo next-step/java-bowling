@@ -2,16 +2,16 @@ package step4.domain;
 
 import java.util.Objects;
 
-public class Player {
+public class BowlingGame {
     private final Name name;
     private final Frames frames;
 
-    public Player(Name name) {
+    public BowlingGame(Name name) {
         this.name = name;
         this.frames = new Frames();
     }
 
-    public Player(String name) {
+    public BowlingGame(String name) {
         this(new Name(name));
     }
 
@@ -47,8 +47,8 @@ public class Player {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return Objects.equals(name, player.name);
+        BowlingGame bowlingGame = (BowlingGame) o;
+        return Objects.equals(name, bowlingGame.name);
     }
 
     @Override
