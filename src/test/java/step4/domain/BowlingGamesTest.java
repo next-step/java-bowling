@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -15,20 +14,6 @@ public class BowlingGamesTest {
     @BeforeEach
     void setUp() {
         bowlingGames = new BowlingGames(Arrays.asList(new BowlingGame("KSB"), new BowlingGame("KBS")));
-    }
-
-    @Test
-    @DisplayName("각 플레이어의 결과 점수 리스트를 반환한다.")
-    public void scores() throws Exception {
-        List<Scores> scores = bowlingGames.scores();
-        then(scores).hasSize(2);
-    }
-
-    @Test
-    @DisplayName("각 플레이어의 이름 리스트를 반환한다.")
-    public void names() throws Exception {
-        List<Name> names = bowlingGames.names();
-        then(names).hasSize(2);
     }
 
     @Test
