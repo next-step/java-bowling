@@ -38,4 +38,9 @@ public class DeleteInfo {
     public int hashCode() {
         return Objects.hash(contentType, contentId, deletedBy);
     }
+
+    @Override
+    public String toString() {
+        return "DeleteInfo [contentType=" + contentType + ", contentId=" + contentId + ", deletedBy=" + deletedBy + "]";
+    }
 }

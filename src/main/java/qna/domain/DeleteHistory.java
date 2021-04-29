@@ -10,14 +10,9 @@ public class DeleteHistory {
     @GeneratedValue
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private ContentType contentType;
-
-    private Long contentId;
-
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_deletehistory_to_user"))
-    private User deletedBy;
+    @Embedded
+    @AssociationOverride(name = "deletedBy", joinColumns = @JoinColumn(foreignKey = @ForeignKey(name = "fk_deletehistory_to_user")))
+    private DeleteInfo deleteInfo;
 
     private LocalDateTime createDate = LocalDateTime.now();
 
@@ -25,9 +20,7 @@ public class DeleteHistory {
     }
 
     public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
-        this.contentType = contentType;
-        this.contentId = contentId;
-        this.deletedBy = deletedBy;
+        this.deleteInfo = new DeleteInfo(contentType, contentId, deletedBy);
         this.createDate = createDate;
     }
 
@@ -36,20 +29,17 @@ public class DeleteHistory {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeleteHistory that = (DeleteHistory) o;
-        return Objects.equals(id, that.id) &&
-                contentType == that.contentType &&
-                Objects.equals(contentId, that.contentId) &&
-                Objects.equals(deletedBy, that.deletedBy);
+        return Objects.equals(id, that.id) && Objects.equals(deleteInfo, that.deleteInfo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, contentType, contentId, deletedBy);
+        return Objects.hash(id, deleteInfo, createDate);
     }
+
 
     @Override
     public String toString() {
-        return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
-                + deletedBy + ", createDate=" + createDate + "]";
+        return "DeleteHistory [id=" + id + ", deleteInfo=" + deleteInfo + ", createDate=" + createDate + "]";
     }
 }

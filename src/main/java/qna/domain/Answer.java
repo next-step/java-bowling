@@ -7,18 +7,14 @@ import javax.persistence.*;
 
 @Entity
 public class Answer extends AbstractEntity {
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
-    private User writer;
 
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
     private Question question;
 
-    @Lob
-    private String contents;
-
-    private boolean deleted = false;
+    @Embedded
+    @AssociationOverride(name = "writer", joinColumns = @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"), nullable = false))
+    private PostInfo postInfo;
 
     public Answer() {
     }
@@ -38,30 +34,25 @@ public class Answer extends AbstractEntity {
             throw new NotFoundException();
         }
 
-        this.writer = writer;
+        this.postInfo = new PostInfo(contents, writer);
         this.question = question;
-        this.contents = contents;
     }
 
     public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
+        postInfo.delete();
         return this;
     }
 
     public boolean isDeleted() {
-        return deleted;
+        return postInfo.isDeleted();
     }
 
     public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
+        return postInfo.isOwner(writer);
     }
 
     public User getWriter() {
-        return writer;
-    }
-
-    public String getContents() {
-        return contents;
+        return postInfo.getWriter();
     }
 
     public void toQuestion(Question question) {
@@ -70,6 +61,6 @@ public class Answer extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+        return "Answer [id=" + getId() + ", postInfo=" + postInfo + "]";
     }
 }

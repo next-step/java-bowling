@@ -36,4 +36,22 @@ public class PostInfo {
     public void delete() {
         deleted = true;
     }
+
+    public void writeBy(User writer) {
+        this.writer = writer;
+    }
+
+    public User getWriter() {
+        return writer;
+    }
+
+    @Override
+    public String toString() {
+        return "PostInfo{" +
+                "contents='" + contents + '\'' +
+                ", writer=" + writer +
+                ", deleted=" + deleted +
+                '}';
+    }
+
 }

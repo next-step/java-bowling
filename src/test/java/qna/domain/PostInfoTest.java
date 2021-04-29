@@ -17,6 +17,13 @@ public class PostInfoTest {
     }
 
     @Test
+    void 글쓴이를추가한다() {
+        PostInfo postInfo = new PostInfo("새로운글");
+        postInfo.writeBy(UserTest.JAVAJIGI);
+        assertThat(postInfo.isOwner(UserTest.JAVAJIGI)).isTrue();
+    }
+
+    @Test
     void 글을삭제한다() {
         assertThat(PINF1.isDeleted()).isFalse();
         PINF1.delete();
