@@ -41,10 +41,10 @@ public class Miss extends Finished {
 
     @Override
     public Score addScoreTo(Score score) {
-        Score completedScore = score.inject(firstRollResult);
+        Score completedScore = score.add(firstRollResult);
 
         if (!completedScore.isCalculationCompleted()) {
-            completedScore = completedScore.inject(secondRollResult);
+            completedScore = completedScore.add(secondRollResult);
         }
 
         return completedScore;

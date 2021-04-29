@@ -38,6 +38,6 @@ public class Strike extends Finished {
 
     @Override
     public Score addScoreTo(Score score) {
-        return score.inject(strikeRoll);
+        return score.add(strikeRoll);
     }
 }

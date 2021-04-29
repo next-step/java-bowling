@@ -43,7 +43,7 @@ public class Playing implements State {
 
     @Override
     public Score addScoreTo(Score score) {
-        Score addedScore = score.inject(firstRoll);
+        Score addedScore = score.add(firstRoll);
 
         if (!addedScore.isCalculationCompleted()) {
             throw new CannotCalculateScoreException();

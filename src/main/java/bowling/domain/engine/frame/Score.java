@@ -10,11 +10,11 @@ public class Score {
     private static final int NO_INJECTION_COUNT = 0;
 
     private final int value;
-    private final int injectionCount;
+    private final int completionCount;
 
-    private Score(int value, int injectionCount) {
+    private Score(int value, int completionCount) {
         this.value = value;
-        this.injectionCount = injectionCount;
+        this.completionCount = completionCount;
     }
 
     public static Score initStrikeScore() {
@@ -29,11 +29,11 @@ public class Score {
         return new Score(numberOfPins, NO_INJECTION_COUNT);
     }
 
-    public Score inject(RollResult rollResult) {
+    public Score add(RollResult rollResult) {
         if (isCalculationCompleted()) {
             throw new IllegalStateException("이미 점수 계산이 완료된 상태입니다.");
         }
-        return new Score(this.value + rollResult.getValue(), this.injectionCount - 1);
+        return new Score(this.value + rollResult.getValue(), this.completionCount - 1);
     }
 
     public int getValue() {
@@ -44,7 +44,7 @@ public class Score {
     }
 
     public boolean isCalculationCompleted() {
-        return injectionCount == 0;
+        return completionCount == 0;
     }
 
     public static final class UnavailableScore extends Score {
@@ -58,7 +58,7 @@ public class Score {
         }
 
         @Override
-        public Score inject(RollResult rollResult) {
+        public Score add(RollResult rollResult) {
             throw new IllegalStateException("점수 계산이 허용되지 않습니다.");
         }
 

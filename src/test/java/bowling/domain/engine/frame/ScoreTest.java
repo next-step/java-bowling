@@ -48,8 +48,8 @@ class ScoreTest {
     @DisplayName("스트라이크 상태의 Score 는 두 번의 투구 결과를 필요로 한다.")
     void needTwoRollResultsForStrikeScore() {
         Score strikeScore = Score.initStrikeScore();
-        strikeScore = strikeScore.inject(RollResult.of(10));
-        strikeScore = strikeScore.inject(RollResult.of(3));
+        strikeScore = strikeScore.add(RollResult.of(10));
+        strikeScore = strikeScore.add(RollResult.of(3));
 
         assertThat(strikeScore.getValue()).isEqualTo(23);
     }
@@ -58,7 +58,7 @@ class ScoreTest {
     @DisplayName("스페어 상태의 Score 는 한 번의 투구 결과를 필요로 한다.")
     void needRollResultForStrikeScore() {
         Score spareStrike = Score.initSpareScore();
-        spareStrike = spareStrike.inject(RollResult.of(5));
+        spareStrike = spareStrike.add(RollResult.of(5));
 
         assertThat(spareStrike.getValue()).isEqualTo(15);
     }
@@ -68,7 +68,7 @@ class ScoreTest {
     void cannotUseInterfacesOfUnavailableScore() {
         UnavailableScore score = UnavailableScore.init();
         assertAll(
-            () -> assertThatThrownBy(() -> score.inject(RollResult.of(10))).isInstanceOf(IllegalStateException.class),
+            () -> assertThatThrownBy(() -> score.add(RollResult.of(10))).isInstanceOf(IllegalStateException.class),
             () -> assertThatThrownBy(score::getValue).isInstanceOf(IllegalStateException.class)
         );
     }
