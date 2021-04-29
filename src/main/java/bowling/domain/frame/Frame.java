@@ -8,7 +8,6 @@ public abstract class Frame {
 
     protected final RoundNumber roundNumber;
     protected FrameScore frameScore;
-    protected Frame nextFrame;
 
     protected Frame(RoundNumber roundNumber, FrameScore frameScore) {
         this.roundNumber = roundNumber;
