@@ -104,4 +104,21 @@ class PinsTest {
         );
     }
 
+    @DisplayName("Pins 인스턴스가 캐싱된 객체를 반환하는 테스트")
+    @Test
+    void 반환_캐싱() {
+        // given
+        int hitCount = 5;
+
+        // when
+        Pins actual = Pins.init();
+        Pins expected = Pins.init();
+
+        // then
+        assertAll(
+                () -> assertThat(actual).isSameAs(expected),
+                () -> assertThat(actual.hit(hitCount)).isSameAs(expected.hit(hitCount))
+        );
+    }
+
 }

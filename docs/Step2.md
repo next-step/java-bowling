@@ -60,23 +60,26 @@
 
 # 내가 생각해야할 점
 ## 가장 작은 단위의 클래스들로 나누어보자
-```java
-BowlingArena : 볼링 경기장
-    Player : 유저들 -> 추후 확정에 용이하도록 
-        player : 사용자 
-    Pitch(User 의존)
-        Player - 의존된
-        Frames - 프레임들 -> 인터페이스나 추상 클래스 이용
-            Frame : 프레임 타입의 '구현체'  
-                Pins : 볼링핀(Pin도 만들까 하다 복잡성만 증대 될 것 같다)
 
-볼링의 상태 : enum으로 정리를 할까? 다형성 구현체로 정리할까 고민된다.
-        State.NONE -> State.STRIKE 이런식으로 정리
-```
+* Bowling : 볼링  
+* Player : 사용자
+  * String name;
+  * Frames frames
+* Frames frames  
+  * List<Frame> frames;  
+* Frame : 프레임 타입의 '구현체'
+  * int index;
+  * Frame next
+* State - Running/Ready
+* OutCome = NOT, STRIKE, SPARE, MISS, GUTTER -> Score 를 반환하도록  
+* Pins : 볼링핀(Pin도 만들까 하다 복잡성만 증대 될 것 같다)
+  
 ## 기능 목록
 * [] 사용자의 이름을 입력 받을 수 있어야 한다.
     * [] 3글자 영어가 아닌 경우 에러 발생
-* [] 각 프레임마다의 결과가 반환되어야 한다.
-* [] 예시에는 안 나왔는데 점수 합산도 만들면 좋을 것 같다.  
-
+* [] 콘솔로부터 쓰러뜨린 핀의 갯수를 입력 받을 수 있어야 한다.
+    * [] 쓰러뜨린 핀은 -1 이하 또는 11 이상일 수 없다.
+    * [] 하나의 프레임당 쓰러뜨린 핀들의 합은 10 초과일 수 없다.
+* [] 각 프레임마다의 결과가 반환되어야 한다.  
+* [] 예시에는 안 나왔는데 점수 합산도 만들면 좋을 것 같다.
 

@@ -17,7 +17,7 @@ public final class Player {
         this.name = name.toUpperCase();
     }
 
-    private final void validateSize(String name) {
+    private final void validateSize(final String name) {
         if (name.isEmpty() || name.length() > NAME_SIZE_MAXIMUM) {
             throw new NameSizeMissMatchException(name);
         }
