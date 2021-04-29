@@ -1,23 +1,43 @@
-package bowling.entity;
+package bowling.entity.score;
+
+import bowling.entity.Pin;
 
 import java.util.Objects;
 
-import static bowling.entity.Pin.MAX_PIN_COUNT;
-
-public class Miss implements Score {
+public class Miss implements ScoreType {
     private final Pin firstPin;
     private final Pin secondPin;
 
     public Miss(Pin firstPin, Pin secondPin) {
-        validatePinResult(firstPin, secondPin);
+        firstPin.sumPin(secondPin);
         this.firstPin = firstPin;
         this.secondPin = secondPin;
     }
 
-    private void validatePinResult(Pin firstPin, Pin secondPin) {
-        if (firstPin.sumPin(secondPin) > MAX_PIN_COUNT) {
-            throw new IllegalArgumentException("프레임 투구의 합은 10을 넘을 수 없습니다.");
+    @Override
+    public Pin score() {
+        return secondPin;
+    }
+
+    @Override
+    public String scoreResult() {
+        int pinValue = secondPin.pin();
+
+        if (pinValue == 0) {
+            return firstPin + "/-";
         }
+
+        return firstPin + "|" + pinValue;
+    }
+
+    @Override
+    public boolean isFrameEnd() {
+        return true;
+    }
+
+    @Override
+    public ScoreType pinResult(Pin fallenPin){
+        return new None();
     }
 
     @Override

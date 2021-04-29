@@ -1,14 +1,40 @@
-package bowling.entity;
+package bowling.entity.score;
+
+import bowling.entity.Pin;
 
 import java.util.Objects;
 
-public class Spare implements Score {
+public class Spare implements ScoreType {
     private final Pin firstPin;
     private final Pin secondPin;
 
     public Spare(Pin firstPin, Pin secondPin) {
         this.firstPin = firstPin;
         this.secondPin = secondPin;
+    }
+
+    @Override
+    public Pin score() {
+        return secondPin;
+    }
+
+    @Override
+    public String scoreResult() {
+        return firstPin + "|/";
+    }
+
+    @Override
+    public boolean isFrameEnd() {
+        return true;
+    }
+
+    @Override
+    public ScoreType pinResult(Pin fallenPin) {
+        if (fallenPin.isStrike()) {
+            return new Strike(fallenPin);
+        }
+
+        return new NormalScore(fallenPin);
     }
 
     @Override

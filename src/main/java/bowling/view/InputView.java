@@ -13,4 +13,10 @@ public class InputView {
         return scanner.nextLine();
     }
 
+    public static int framePithInput(int frame){
+        System.out.print(frame + "프레임 투구 : ");
+        return scanner.nextInt();
+    }
+
+
 }

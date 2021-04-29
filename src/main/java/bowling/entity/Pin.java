@@ -3,9 +3,9 @@ package bowling.entity;
 import java.util.Objects;
 
 public class Pin {
-    private final int pin;
     public static final int MAX_PIN_COUNT = 10;
     public static final int MIN_PIN_COUNT = 0;
+    private final int pin;
 
     public Pin(int pin) {
         validatePin(pin);
@@ -23,7 +23,21 @@ public class Pin {
     }
 
     public int sumPin(Pin secondPin) {
-        return pin + secondPin.pin();
+        int sumPin = pin + secondPin.pin();
+
+        if (sumPin > MAX_PIN_COUNT) {
+            throw new IllegalArgumentException("프레임 투구의 합은 10을 넘을 수 없습니다.");
+        }
+
+        return sumPin;
+    }
+
+    public boolean isStrike() {
+        return pin == MAX_PIN_COUNT;
+    }
+
+    public boolean isSpare(Pin fallenPin) {
+        return sumPin(fallenPin) == MAX_PIN_COUNT;
     }
 
     @Override
