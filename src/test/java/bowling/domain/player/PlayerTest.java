@@ -44,7 +44,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("게임을 수행하지 않은 Player의 첫번째 Round의 종료여부는 false 이다.")
+    @DisplayName("게임을 수행하지 않은 Player의 Normal Round의 종료여부는 false 이다.")
     void isEndedNotPlayed() {
         // given
         final Player player = new Player(playerName);
@@ -57,7 +57,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("스트라이크를 친 Player의 Round의 종료여부는 true 이다.")
+    @DisplayName("스트라이크를 친 Player의 Normal Round의 종료여부는 true 이다.")
     void isEndedPlayed() {
         // given
         final Player player = new Player(playerName);
@@ -72,7 +72,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("일반적인 공을 던진 Player의 Round의 종료여부는 false 이다.")
+    @DisplayName("일반적인 공을 던진 Player의 Normal Round의 종료여부는 false 이다.")
     void notEndedPlayed() {
         // given
         final Player player = new Player(playerName);
@@ -87,7 +87,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("거터를 한 번 던진 Player의 Round의 종료여부는 false 이다.")
+    @DisplayName("거터를 한 번 던진 Player의 Normal Round의 종료여부는 false 이다.")
     void notEndedGutterOnce() {
         // given
         final Player player = new Player(playerName);
@@ -102,7 +102,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("거터를 두 번 던진 Player의 Round의 종료여부는 true 이다.")
+    @DisplayName("거터를 두 번 던진 Player의 Normal Round의 종료여부는 true 이다.")
     void notEndedGutterTwice() {
         // given
         final Player player = new Player(playerName);
