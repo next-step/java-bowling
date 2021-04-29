@@ -5,11 +5,11 @@ import bowling.exception.NoNextFrameException;
 
 public final class FinalFrame extends Frame {
 
-    private FinalFrame(RoundNumber roundNumber, FrameScore frameScore) {
+    private FinalFrame(RoundNumber roundNumber, FinalFrameScore frameScore) {
         super(roundNumber, frameScore);
     }
 
-    public static FinalFrame from(FrameScore frameScore) {
+    public static FinalFrame from(FinalFrameScore frameScore) {
         return new FinalFrame(RoundNumber.MAX_ROUND_NUMBER, frameScore);
     }
 

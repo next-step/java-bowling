@@ -14,23 +14,23 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class FinalFrameTest {
 
     @Test
-    @DisplayName("FrameScore를 받아 마지막 프레임을 생성한다.")
+    @DisplayName("FinalFrameScore를 받아 마지막 프레임을 생성한다.")
     void create() {
         // given
-        final FrameScore frameScore = new NormalFrameScore();
+        final FinalFrameScore frameScore = new FinalFrameScore();
 
         // when
         final FinalFrame finalFrame = FinalFrame.from(frameScore);
 
         // then
-        assertThat(finalFrame).isEqualTo(FinalFrame.from(frameScore));
+        assertThat(finalFrame.isFinalFrame()).isTrue();
     }
 
     @Test
     @DisplayName("FinalFrame의 다음 프레임은 생성되지 않는다.")
     void nextFrame() {
         // given
-        final FrameScore frameScore = new NormalFrameScore();
+        final FinalFrameScore frameScore = new FinalFrameScore();
         final FinalFrame finalFrame = FinalFrame.from(frameScore);
 
         // when
@@ -38,12 +38,6 @@ class FinalFrameTest {
         assertThatThrownBy(finalFrame::createNextFrame)
                 .isInstanceOf(NoNextFrameException.class)
                 .hasMessage(NoNextFrameException.FINAL_FRAME_CANNOT_CREATE_NEXT_FRAME);
-    }
-
-    @Test
-    @DisplayName("FinalFrame은 FinalFrame이다.")
-    void isFinalFrame() {
-        assertThat(FinalFrame.from(new NormalFrameScore()).isFinalFrame()).isTrue();
     }
 
     @ParameterizedTest
