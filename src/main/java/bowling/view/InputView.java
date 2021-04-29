@@ -15,8 +15,8 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static String requestPlayerName() {
-        System.out.print(REQUEST_PLAYER_NAME);
+    public static String requestPlayerName(int number) {
+        System.out.printf(REQUEST_PLAYER_NAME, number);
         return SCANNER.nextLine();
     }
 
