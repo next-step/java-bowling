@@ -47,25 +47,6 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public String toPrint() {
-        StringBuilder sb = new StringBuilder();
-        this.scores
-                .forEach(score -> sb.append(score.getExpression()));
-
-        if (scores.size() == 3) {
-            sb.insert(2, "|");
-        }
-        if (scores.size() >= 2) {
-            sb.insert(1, "|");
-        }
-
-        String result = String.format("%-6s", sb.toString());
-        result = String.format("%8s", result);
-
-        return result;
-    }
-
-    @Override
     public List<Score> getScores() {
         return scores;
     }

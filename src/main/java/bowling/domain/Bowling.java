@@ -3,9 +3,6 @@ package bowling.domain;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public final class Bowling {
     private final User player;
     private final Frames frames;
@@ -37,12 +34,5 @@ public final class Bowling {
 
     public User getPlayer() {
         return this.player;
-    }
-
-    public List<String> toPrint() {
-        List<String> result = new ArrayList<>();
-        result.add(player.toPrint());
-        result.addAll(frames.toPrint());
-        return result;
     }
 }

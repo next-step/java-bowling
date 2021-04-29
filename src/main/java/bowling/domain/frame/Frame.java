@@ -11,8 +11,6 @@ public abstract class Frame {
 
     public abstract void addScore(int score) throws Exception;
 
-    public abstract String toPrint();
-
     public abstract List<Score> getScores();
 
     @Override

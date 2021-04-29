@@ -10,12 +10,6 @@ public class User {
         this.user = user;
     }
 
-    public String toPrint() {
-        String result = String.format("%-4s", this.user);
-        result = String.format("%6s", result);
-        return result;
-    }
-
     public String getUser() {
         return this.user;
     }
