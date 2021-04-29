@@ -2,6 +2,11 @@ package bowling.domain;
 
 public class Score {
 
+    private static final int NONE_OPPORTUNITY = 0;
+    private static final int MAX_SCORE = 10;
+    private static final int SPARE_OPPORTUNITY = 1;
+    private static final int STRIKE_OPPORTUNITY = 2;
+
     private int score;
     private int leftOpportunity;
 
@@ -10,8 +15,20 @@ public class Score {
         this.leftOpportunity = leftOpportunity;
     }
 
-    public static Score of(int score, int leftOpportunity) {
-        return new Score(score, leftOpportunity);
+    public static Score ofMiss(int score) {
+        return new Score(score, NONE_OPPORTUNITY);
+    }
+
+    public static Score ofGutter(int score) {
+        return new Score(score, NONE_OPPORTUNITY);
+    }
+
+    public static Score ofSpare() {
+        return new Score(MAX_SCORE, SPARE_OPPORTUNITY);
+    }
+
+    public static Score ofStrike() {
+        return new Score(MAX_SCORE, STRIKE_OPPORTUNITY);
     }
 
     public int calculateScore() {
@@ -23,5 +40,7 @@ public class Score {
     }
 
     public void throwBall(int score) {
+        this.score += score;
+        this.leftOpportunity -= 1;
     }
 }
