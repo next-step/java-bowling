@@ -30,7 +30,7 @@ public class SpareTest {
     @Test
     @DisplayName("bowl 예외 테스트")
     void cannotBowlExceptionTest() {
-        assertThatThrownBy(() -> spare.bowl(3))
+        assertThatThrownBy(() -> spare.stateAfterPitch(3))
                 .isInstanceOf(CannotBowlException.class)
                 .hasMessage("더 이상 투구할 수 없습니다.");
     }

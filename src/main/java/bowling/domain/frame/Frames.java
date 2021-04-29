@@ -10,10 +10,10 @@ import static bowling.domain.frame.Frame.FIRST_FRAME_NO;
 import static bowling.domain.frame.Frame.LAST_FRAME_NO;
 
 public class Frames {
-    private final List<Frame> frames;
+    private final List<Frame> frameList;
 
     private Frames(List<Frame> frames) {
-        this.frames = frames;
+        this.frameList = frames;
     }
 
     public static Frames init() {
@@ -25,7 +25,7 @@ public class Frames {
     private static Frame initFrames(List<Frame> frames) {
         Frame frame = initFirstFrame(frames);
         for (int i = FIRST_FRAME_NO; i < LAST_FRAME_NO; i++) {
-            frame = frame.getNext();
+            frame = frame.next();
             frames.add(frame);
         }
         return frame;
@@ -38,7 +38,7 @@ public class Frames {
     }
 
     public Frame nthFrame(int frameNo) {
-        return frames.get(frameNo);
+        return frameList.get(frameNo);
     }
 
     public void bowl(int pitch, int index) {
@@ -47,7 +47,7 @@ public class Frames {
 
     public FramesDTO exportFramesDTO() {
         List<FrameDTO> frames = new ArrayList<>();
-        for (Frame frame : this.frames) {
+        for (Frame frame : this.frameList) {
             frames.add(frame.exportFrameDTO());
         }
         return new FramesDTO(frames);

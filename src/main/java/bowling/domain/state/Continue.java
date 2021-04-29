@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.FrameScore;
 import bowling.domain.Pins;
 import bowling.dto.StateDTO;
 
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Continue implements State{
-    private static final String state = "CONTINUE";
+    private static final String STATE = "CONTINUE";
     private final Pins pins;
 
     private Continue(Pins pins){
@@ -26,11 +27,11 @@ public class Continue implements State{
 
     @Override
     public String state() {
-        return state;
+        return STATE;
     }
 
     @Override
-    public State bowl(int pitch) {
+    public State stateAfterPitch(int pitch) {
         Pins secondPins = this.pins.ofSecondPitch(pitch);
         if(pins.isSpare(secondPins)){
             return Spare.of(pins, secondPins);
@@ -39,9 +40,22 @@ public class Continue implements State{
     }
 
     @Override
+    public FrameScore frameScore() {
+        return FrameScore.UNSCORED_SCORE;
+    }
+
+    @Override
+    public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
+        if(prevFrameScore.hasOneTryLeft()) {
+            return prevFrameScore.frameScoreWithBonus(pins.fallingPins(), FrameScore.NO_TRY);
+        }
+        return FrameScore.UNSCORED_SCORE;
+    }
+
+    @Override
     public StateDTO exportStateDTO() {
         List<Integer> pins = new ArrayList<>();
-        pins.add(Integer.valueOf(this.pins.pins()));
+        pins.add(Integer.valueOf(this.pins.fallingPins()));
         return new StateDTO(state(),pins);
     }
 

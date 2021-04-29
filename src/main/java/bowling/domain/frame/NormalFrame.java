@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.FrameScore;
 import bowling.domain.exception.CannotBowlException;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
@@ -30,12 +31,11 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public Frame bowl(int pitch) {
+    public void bowl(int pitch) {
         if(state.isFinished()) {
             throw new CannotBowlException();
         }
-        state = state.bowl(pitch);
-        return this;
+        state = state.stateAfterPitch(pitch);
     }
 
     @Override
@@ -44,13 +44,31 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public Frame getNext() {
+    public Frame next() {
         return nextFrame;
+    }
+
+    @Override
+    public FrameScore frameScore() {
+        FrameScore frameScore = state.frameScore();
+        if(frameScore.hasNoTryLeft()) {
+            return frameScore;
+        }
+        return nextFrame.frameScoreWithBonus(frameScore);
+    }
+
+    @Override
+    public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
+        FrameScore frameScore = state.frameScoreWithBonus(prevFrameScore);
+        if(frameScore.hasNoTryLeft()) {
+            return frameScore;
+        }
+        return nextFrame.frameScoreWithBonus(frameScore);
     }
 
     public FrameDTO exportFrameDTO() {
         List<StateDTO> stateDTOList = new ArrayList<>();
         stateDTOList.add(state.exportStateDTO());
-        return new FrameDTO(stateDTOList);
+        return new FrameDTO(stateDTOList, frameScore().score());
     }
 }

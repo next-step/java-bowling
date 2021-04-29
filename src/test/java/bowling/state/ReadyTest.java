@@ -30,20 +30,20 @@ public class ReadyTest {
     @DisplayName("Continue 상태로 변경 확인 테스트")
     void bowlToContinueTest() {
         Pins pins = Pins.ofFirstPitch(7);
-        assertThat(ready.bowl(7)).isEqualTo(Continue.of(pins));
+        assertThat(ready.stateAfterPitch(7)).isEqualTo(Continue.of(pins));
     }
 
     @Test
     @DisplayName("Strike 상태로 변경 확인 테스트")
     void bowlToStrikeTest() {
         Pins pins = Pins.ofFirstPitch(10);
-        assertThat(ready.bowl(10)).isEqualTo(Strike.of(pins));
+        assertThat(ready.stateAfterPitch(10)).isEqualTo(Strike.of(pins));
     }
 
     @ParameterizedTest(name = "넘어뜨린 핀 개수 예외 테스트")
     @ValueSource(ints = {11, -1, 15})
     void pinsCountExceptionTest(int pitch) {
-        assertThatThrownBy(() -> ready.bowl(pitch))
+        assertThatThrownBy(() -> ready.stateAfterPitch(pitch))
                 .isInstanceOf(PinsCountException.class)
                 .hasMessage("넘어뜨린 핀수는 0에서 10 사이의 정수여야 합니다.");
     }
