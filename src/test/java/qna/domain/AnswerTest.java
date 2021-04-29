@@ -3,8 +3,6 @@ package qna.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class AnswerTest {
@@ -20,10 +18,8 @@ public class AnswerTest {
 
     @Test
     void writeHistory() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        DeleteHistory deleteHistory = A1.writeHistory();
 
-        A1.writeHistory(deleteHistories);
-
-        assertEquals(A1.getId(), deleteHistories.get(0).getContentId());
+        assertEquals(A1.getId(), deleteHistory.getContentId());
     }
 }

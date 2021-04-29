@@ -1,8 +1,6 @@
 package qna.domain;
 
 import java.time.LocalDateTime;
-import org.hibernate.annotations.Where;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,8 +89,8 @@ public class Question extends AbstractEntity {
     public List<DeleteHistory> writeHistory() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, super.getId(), this.writer, LocalDateTime.now()));
-
-        return answers.delete(deleteHistories);
+        deleteHistories.addAll(answers.delete());
+        return deleteHistories;
     }
 
     public void checkPermission(User loginUser) throws CannotDeleteException {

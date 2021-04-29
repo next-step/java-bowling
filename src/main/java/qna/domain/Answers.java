@@ -28,10 +28,11 @@ public class Answers {
         list.add(answer);
     }
 
-    public List<DeleteHistory> delete(List<DeleteHistory> deleteHistories) {
+    public List<DeleteHistory> delete() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         list.forEach(answer -> {
             answer.delete();
-            answer.writeHistory(deleteHistories);
+            deleteHistories.add(answer.writeHistory());
         });
         return deleteHistories;
     }
