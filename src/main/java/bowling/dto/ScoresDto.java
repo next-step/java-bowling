@@ -1,6 +1,7 @@
 package bowling.dto;
 
 import bowling.domain.engine.frame.Score;
+import bowling.domain.engine.frame.Score.UnavailableScore;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,12 +20,19 @@ public class ScoresDto {
     public static ScoresDto of(List<Score> scores) {
         Score[] scoreArray = scores.toArray(new Score[0]);
 
-        Arrays.parallelPrefix(scoreArray, (score1, score2) ->
-            Score.initReadyToUseScore(score1.getValue() + score2.getValue()));
+        Arrays.parallelPrefix(scoreArray, ScoresDto::tryToAddTwoScore);
 
         return Arrays.stream(scoreArray)
                      .map(ScoreDto::of)
                      .collect(collectingAndThen(toList(), ScoresDto::new));
+    }
+
+    private static Score tryToAddTwoScore(Score score1, Score score2) {
+        try {
+            return Score.initReadyToUseScore(score1.getValue() + score2.getValue());
+        } catch (IllegalStateException e) {
+            return UnavailableScore.init();
+        }
     }
 
     public List<ScoreDto> getScores() {

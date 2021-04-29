@@ -16,16 +16,8 @@ public class FramesDto {
 
     public static FramesDto of(Frames frames) {
         List<ScoreDto> scoreDtoList = frames.exportScores().getScores();
-        addEmptyScoreDto(scoreDtoList);
 
         return new FramesDto(frames.exportFrameStates(), scoreDtoList);
-    }
-
-    private static void addEmptyScoreDto(List<ScoreDto> scoreDtoList) {
-        int moreScores = 10 - scoreDtoList.size();
-        for(int i = 0; i < moreScores; ++i) {
-            scoreDtoList.add(ScoreDto.empty());
-        }
     }
 
     public List<FrameStateDto> getStates() {
