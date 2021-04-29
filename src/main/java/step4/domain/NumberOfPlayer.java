@@ -5,6 +5,7 @@ import java.util.Objects;
 public class NumberOfPlayer {
     private static final String CHECK_NUMBER_OF_PLAYER_BOUND = "플레이어의 수는 0보다 커야합니다.";
     private static final int BOUND_MIN = 1;
+
     private final int numberOfPlayer;
 
     public NumberOfPlayer(int numberOfPlayer) {

@@ -1,5 +1,6 @@
 package step4.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -32,9 +33,9 @@ public class Scores {
     }
 
     public List<Integer> accumulatedScore() {
-        return IntStream.range(0, scores.size())
+        return Collections.unmodifiableList(IntStream.range(0, scores.size())
                 .mapToObj(this::accumulate)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     private Integer accumulate(int currentIndex) {

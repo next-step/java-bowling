@@ -12,21 +12,21 @@ public class Players {
     }
 
     public List<Name> names() {
-        return players.stream()
+        return Collections.unmodifiableList(players.stream()
                 .map(Player::name)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     public List<Frames> frames() {
-        return players.stream()
+        return Collections.unmodifiableList(players.stream()
                 .map(Player::frames)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     public List<Scores> scores() {
-        return players.stream()
+        return Collections.unmodifiableList(players.stream()
                 .map(Player::scores)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     public List<Player> players() {

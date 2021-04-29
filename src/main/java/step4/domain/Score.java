@@ -19,11 +19,11 @@ public class Score {
     }
 
     public static Score Strike() {
-        return new Score(2, PinCount.BOUND_MAX);
+        return new Score(2, PinCount.PIN_COUNT_MAX);
     }
 
     public static Score Spare() {
-        return new Score(1, PinCount.BOUND_MAX);
+        return new Score(1, PinCount.PIN_COUNT_MAX);
     }
 
     public static Score Miss(int score) {

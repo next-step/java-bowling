@@ -1,5 +1,6 @@
 package step4.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -50,13 +51,13 @@ public class Frames {
     }
 
     public List<String> marks() {
-        return frames.stream()
+        return Collections.unmodifiableList(frames.stream()
                 .map(Frame::states)
                 .map(symbols -> String.join("|", symbols))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     public List<Frame> frames() {
-        return frames;
+        return Collections.unmodifiableList(frames);
     }
 }

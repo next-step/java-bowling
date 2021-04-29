@@ -5,6 +5,7 @@ import step4.domain.state.Spare;
 import step4.domain.state.State;
 import step4.domain.state.Strike;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public class FinalFrame implements Frame {
     private static final int TRY_NUMBER_MAX = 3;
     private static final String GAME_OVER = "게임이 완료되어 더 이상 공을 던질 수 없습니다.";
 
-    private LinkedList<State> states = new LinkedList<>();
+    private final LinkedList<State> states = new LinkedList<>();
     private int tryNumber;
 
     public FinalFrame() {
@@ -61,9 +62,9 @@ public class FinalFrame implements Frame {
 
     @Override
     public List<String> states() {
-        return states.stream()
+        return Collections.unmodifiableList(states.stream()
                 .map(State::marks)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     @Override

@@ -9,11 +9,12 @@ import java.util.List;
 
 public class Miss extends Finished {
     private static final String CHECK_MISS = "두번에 걸쳐 쓰러뜨린 핀의 개수가 10 이상일 수 없습니다.";
+
     private final PinCount firstPinCount;
     private final PinCount secondPinCount;
 
     public Miss(PinCount firstPinCount, PinCount secondPinCount) {
-        if (firstPinCount.plus(secondPinCount) >= PinCount.BOUND_MAX) {
+        if (firstPinCount.plus(secondPinCount) >= PinCount.PIN_COUNT_MAX) {
             throw new IllegalArgumentException(CHECK_MISS);
         }
 

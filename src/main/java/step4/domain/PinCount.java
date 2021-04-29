@@ -3,8 +3,8 @@ package step4.domain;
 import java.util.Objects;
 
 public class PinCount {
-    public static final int BOUND_MIN = 0;
-    public static final int BOUND_MAX = 10;
+    public static final int PIN_COUNT_MIN = 0;
+    public static final int PIN_COUNT_MAX = 10;
     private static final String CHECK_BOUND = "쓰러뜨린 핀의 개수가 0 ~ 10의 범위인지 확인하여 주세요.";
 
     private final int pinCount;
@@ -15,21 +15,21 @@ public class PinCount {
     }
 
     private void checkBound(int pinCount) {
-        if (BOUND_MIN > pinCount || BOUND_MAX < pinCount) {
+        if (PIN_COUNT_MIN > pinCount || PIN_COUNT_MAX < pinCount) {
             throw new IllegalArgumentException(CHECK_BOUND);
         }
     }
 
     public boolean isStrike() {
-        return pinCount == BOUND_MAX;
+        return pinCount == PIN_COUNT_MAX;
     }
 
     public boolean isGutter() {
-        return pinCount == BOUND_MIN;
+        return pinCount == PIN_COUNT_MIN;
     }
 
     public boolean isSpare(PinCount previousPinCount) {
-        return !this.isStrike() && (plus(previousPinCount) == BOUND_MAX);
+        return !this.isStrike() && (plus(previousPinCount) == PIN_COUNT_MAX);
     }
 
     public int value() {

@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Spare extends Finished{
     private static final String CHECK_SPARE = "두번에 걸쳐 쓰러뜨린 핀의 개수가 10이 아닙니다.";
+
     private final PinCount firstPinCount;
     private final PinCount secondPinCount;
 
