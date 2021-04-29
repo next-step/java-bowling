@@ -1,7 +1,6 @@
 package bowling.domain.engine.frame;
 
 import bowling.domain.RollResult;
-import bowling.domain.engine.frame.Score.UnavailableScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -62,22 +61,5 @@ class ScoreTest {
 
         assertThat(spareStrike.getValue()).isEqualTo(15);
     }
-
-    @Test
-    @DisplayName("UnavailableScore 는 점수 계산 관련 인터페이스를 사용할 수 없다.")
-    void cannotUseInterfacesOfUnavailableScore() {
-        UnavailableScore score = UnavailableScore.init();
-        assertAll(
-            () -> assertThatThrownBy(() -> score.add(RollResult.of(10))).isInstanceOf(IllegalStateException.class),
-            () -> assertThatThrownBy(score::getValue).isInstanceOf(IllegalStateException.class)
-        );
-    }
-
-    @Test
-    @DisplayName("UnavailableScore 는 항상 점수 계산이 완료되지 않은 상태로 남아있다.")
-    void alwaysUnableCompleteScore() {
-        assertThat(UnavailableScore.init().isCalculationCompleted()).isFalse();
-    }
-
 
 }

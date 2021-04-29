@@ -1,7 +1,7 @@
 package bowling.dto;
 
 import bowling.domain.engine.frame.Score;
-import bowling.domain.engine.frame.Score.UnavailableScore;
+import bowling.domain.engine.frame.UnavailableScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

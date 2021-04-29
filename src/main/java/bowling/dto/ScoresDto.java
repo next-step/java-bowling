@@ -1,7 +1,7 @@
 package bowling.dto;
 
 import bowling.domain.engine.frame.Score;
-import bowling.domain.engine.frame.Score.UnavailableScore;
+import bowling.domain.engine.frame.UnavailableScore;
 
 import java.util.Arrays;
 import java.util.List;

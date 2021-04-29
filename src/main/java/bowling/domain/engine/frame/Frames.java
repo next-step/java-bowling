@@ -1,7 +1,6 @@
 package bowling.domain.engine.frame;
 
 import bowling.domain.RollResult;
-import bowling.domain.engine.frame.Score.UnavailableScore;
 import bowling.domain.engine.frame.state.CannotCalculateScoreException;
 import bowling.dto.FrameStateDto;
 import bowling.dto.FramesDto;
