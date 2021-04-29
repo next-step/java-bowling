@@ -5,12 +5,13 @@ import step4.domain.*;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static step4.domain.Score.UN_COUNTABLE_SCORE;
+
 public class ResultView {
     private static final String PRINT_FORMAT = "  %-4s";
     private static final String SCORE_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String DELIMETER = "|";
     private static final String BLANK = "";
-    private static final int UN_COUNTABLE_SCORE = -1;
 
     public void printResult(List<Name> names, List<Frames> frames, List<Scores> scores) {
         IntStream.range(0, names.size())

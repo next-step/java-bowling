@@ -50,6 +50,10 @@ public class Score {
         return leftOpportunity > NO_CHANCE;
     }
 
+    public boolean isUnCountable() {
+        return score == UN_COUNTABLE_SCORE;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

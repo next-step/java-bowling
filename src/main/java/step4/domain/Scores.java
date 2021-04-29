@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static step4.domain.Score.UN_COUNTABLE_SCORE;
+
 public class Scores {
     private final List<Score> scores;
 
@@ -36,8 +38,8 @@ public class Scores {
     }
 
     private Integer accumulate(int currentIndex) {
-        if (scores.get(currentIndex).value() == Score.UN_COUNTABLE_SCORE) {
-            return Score.UN_COUNTABLE_SCORE;
+        if (scores.get(currentIndex).isUnCountable()) {
+            return UN_COUNTABLE_SCORE;
         }
 
         return scores.stream()
