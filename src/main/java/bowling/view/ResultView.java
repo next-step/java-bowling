@@ -22,10 +22,12 @@ public class ResultView {
 
     private ResultView() {}
 
-    public static void printBoard(PlayerDTO playerDTO) {
+    public static void printBoard(List<PlayerDTO> playerDTOList) {
         System.out.println(FRAME_HEADER);
-        printPitch(playerDTO.name(), playerDTO.framesDTO());
-        printScore(playerDTO.framesDTO());
+        for(PlayerDTO playerDTO : playerDTOList) {
+            printPitch(playerDTO.name(), playerDTO.framesDTO());
+            printScore(playerDTO.framesDTO());
+        }
         System.out.println();
     }
 
