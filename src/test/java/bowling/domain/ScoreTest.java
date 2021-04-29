@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.CannotCalculateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +22,7 @@ public class ScoreTest {
     @Test
     void calculateScoreWhenSpareTest() {
         Score spareScore = Score.ofSpare();
-        Score nextScore = Score.ofMiss(9);
-        nextScore.spreadScore(spareScore);
+        spareScore.throwBall(9);
         assertThat(spareScore.calculateScore()).isEqualTo(19);
     }
 
@@ -30,8 +30,8 @@ public class ScoreTest {
     @Test
     void calculateScoreWhenStrikeTest() {
         Score strikeScore = Score.ofStrike();
-        Score nextScore = Score.ofMiss(9);
-        nextScore.spreadScore(strikeScore);
+        strikeScore.throwBall(4);
+        strikeScore.throwBall(5);
         assertThat(strikeScore.calculateScore()).isEqualTo(19);
     }
 
@@ -43,6 +43,6 @@ public class ScoreTest {
         assertThatThrownBy(() -> {
             strikeScore.calculateScore();
             spareScore.calculateScore();
-        }).isInstanceOf(IllegalStateException.class);
+        }).isInstanceOf(CannotCalculateException.class);
     }
 }
