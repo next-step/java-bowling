@@ -55,7 +55,7 @@ public class Frames implements Iterable<Frame> {
     }
 
     private boolean isEmpty() {
-        return frames.size() == 0;
+        return frames.isEmpty();
     }
 
     private void start() {
