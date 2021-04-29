@@ -51,12 +51,11 @@ class NormalPinsTest {
     void knockDownPin() {
         // given
         final NormalPins beforePins = new NormalPins();
-        final NormalPins strikePins = new NormalPins(TestFixture.STRIKE_PIN);
 
         // when
         final Pins afterPins = beforePins.knockDownPin(TestFixture.STRIKE_PIN);
 
         // then
-        assertThat(afterPins).isEqualTo(strikePins);
+        assertThat(afterPins).isEqualTo(new NormalPins(TestFixture.STRIKE_PIN));
     }
 }
