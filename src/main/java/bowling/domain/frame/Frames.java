@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -44,7 +44,7 @@ public final class Frames {
     }
 
     private static List<Frame> generateFrames() {
-        List<Frame> result = new ArrayList<>();
+        List<Frame> result = new LinkedList<>();
         IntStream.range(0, FINAL_FRAME)
                 .forEach(i -> result.add(new NormalFrame()));
         result.add(new FinalFrame());
