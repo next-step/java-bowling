@@ -22,7 +22,7 @@ class FrameStatusTest {
         );
     }
 
-    static Stream<Arguments> nullFinalPinSource() {
+    static Stream<Arguments> nullPinsource() {
         return Stream.of(
                 arguments(null, null, null),
                 arguments(new Pin(9), null, null),
@@ -75,7 +75,7 @@ class FrameStatusTest {
     }
 
     @ParameterizedTest
-    @MethodSource("nullFinalPinSource")
+    @MethodSource("nullPinsource")
     @DisplayName("경기가 끝나지 않은 경우 NOT_ENDED이다.")
     void ofFinalNotEnded(Pin firstPin, Pin secondPin, Pin thirdPin) {
         // given

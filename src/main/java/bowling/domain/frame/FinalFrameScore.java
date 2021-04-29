@@ -1,21 +1,21 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.FinalPins;
 import bowling.domain.pin.Pin;
+import bowling.domain.pin.Pins;
 
 public final class FinalFrameScore extends FrameScore {
 
     public static final int MAX_PIN_COUNT = 10;
 
     public FinalFrameScore() {
-        this(new FinalPins());
+        this(new Pins());
     }
 
-    public FinalFrameScore(FinalPins pins) {
+    public FinalFrameScore(Pins pins) {
         this(pins, pins.frameStatus());
     }
 
-    private FinalFrameScore(FinalPins pins, FrameStatus frameStatus) {
+    private FinalFrameScore(Pins pins, FrameStatus frameStatus) {
         super(pins, frameStatus);
     }
 
@@ -24,10 +24,10 @@ public final class FinalFrameScore extends FrameScore {
         if (frameStatus == FrameStatus.NOT_ENDED) {
             return EMPTY_STRING;
         }
-        final FinalPins finalPins = (FinalPins) pins;
-        final Pin firstPin = finalPins.firstPin();
-        final Pin secondPin = finalPins.secondPin();
-        final Pin thirdPin = finalPins.thirdPin();
+        final Pins Pins = pins;
+        final Pin firstPin = Pins.firstPin();
+        final Pin secondPin = Pins.secondPin();
+        final Pin thirdPin = Pins.thirdPin();
 
         if (firstPin.pinCount() == MAX_PIN_COUNT) {
             final boolean isSecondPinStrike = secondPin.pinCount() == MAX_PIN_COUNT;
@@ -41,6 +41,6 @@ public final class FinalFrameScore extends FrameScore {
 
     @Override
     public FrameScore knockDownPin(Pin pin) {
-        return new FinalFrameScore((FinalPins) pins.knockDownPin(pin));
+        return new FinalFrameScore((Pins) pins.knockDownPin(pin));
     }
 }

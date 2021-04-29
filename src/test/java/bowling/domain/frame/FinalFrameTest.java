@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.FinalPins;
 import bowling.domain.pin.Pin;
+import bowling.domain.pin.Pins;
 import bowling.exception.NoNextFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,7 +48,7 @@ class FinalFrameTest {
         final Pin firstPin = new Pin(firstPinCount);
         final Pin secondPin = new Pin(secondPinCount);
         final Pin thirdPin = new Pin(thirdPinCount);
-        final FinalPins pins = new FinalPins(firstPin, secondPin, thirdPin);
+        final Pins pins = new Pins(firstPin, secondPin, thirdPin);
         final Frame frame = FinalFrame.from(new FinalFrameScore(pins));
 
         // when

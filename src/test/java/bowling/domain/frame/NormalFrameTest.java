@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.TestFixture;
-import bowling.domain.pin.NormalPins;
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
 import bowling.exception.IllegalNormalFrameException;
@@ -97,7 +96,7 @@ class NormalFrameTest {
         // given
         final Pin firstPin = new Pin(firstPinCount);
         final Pin secondPin = new Pin(secondPinCount);
-        final Pins pins = new NormalPins(firstPin, secondPin);
+        final Pins pins = new Pins(firstPin, secondPin);
         final Frame frame = NormalFrame.of(RoundNumber.firstRoundNumber(), new NormalFrameScore(pins));
 
         // when

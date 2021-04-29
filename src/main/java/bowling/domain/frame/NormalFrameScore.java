@@ -1,13 +1,12 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.NormalPins;
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
 
 public final class NormalFrameScore extends FrameScore {
 
     public NormalFrameScore() {
-        this(new NormalPins());
+        this(new Pins());
     }
 
     public NormalFrameScore(Pins pins) {

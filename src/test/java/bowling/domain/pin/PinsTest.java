@@ -10,26 +10,60 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class FinalPinsTest {
+class PinsTest {
 
     @Test
-    @DisplayName("FinalPins는 Pin을 세 개 가지고 생성된다.")
-    void create() {
+    @DisplayName("Pins는 Pin을 두 개 가지고 생성된다.")
+    void createOfTwoPin() {
+        // given
+        final Pin firstPin = TestFixture.STRIKE_PIN;
+        final Pin secondPin = new Pin(0);
+
+        // when
+        final Pins pins = new Pins(firstPin, secondPin);
+
+        // then
+        assertAll(
+                () -> assertThat(pins).isEqualTo(new Pins(firstPin, secondPin)),
+                () -> assertThat(pins.firstPin()).isEqualTo(firstPin),
+                () -> assertThat(pins.secondPin()).isEqualTo(secondPin)
+        );
+    }
+
+    @Test
+    @DisplayName("Pins는 Pin을 세 개 가지고 생성된다.")
+    void createOfThreePin() {
         // given
         final Pin firstPin = TestFixture.STRIKE_PIN;
         final Pin secondPin = new Pin(0);
         final Pin thirdPin = TestFixture.STRIKE_PIN;
 
         // when
-        final FinalPins pins = new FinalPins(firstPin, secondPin, thirdPin);
+        final Pins pins = new Pins(firstPin, secondPin, thirdPin);
 
         // then
         assertAll(
-                () -> assertThat(pins).isEqualTo(new FinalPins(firstPin, secondPin, thirdPin)),
+                () -> assertThat(pins).isEqualTo(new Pins(firstPin, secondPin, thirdPin)),
                 () -> assertThat(pins.firstPin()).isEqualTo(firstPin),
                 () -> assertThat(pins.secondPin()).isEqualTo(secondPin),
                 () -> assertThat(pins.thirdPin()).isEqualTo(thirdPin)
         );
+    }
+
+    @ParameterizedTest
+    @CsvSource({"10,0,STRIKE", "9,1,SPARE", "3,4,NORMAL", "0,0,MISS"})
+    @DisplayName("각 조건에 해당하는 FrameStatus가 반환된다.")
+    void frameStatus(int firstPinCount, int secondPinCount, FrameStatus expectedFrameStatus) {
+        // given
+        final Pin firstPin = new Pin(firstPinCount);
+        final Pin secondPin = new Pin(secondPinCount);
+        final Pins Pins = new Pins(firstPin, secondPin);
+
+        // when
+        final FrameStatus frameStatus = Pins.frameStatus();
+
+        // then
+        assertThat(frameStatus).isEqualTo(expectedFrameStatus);
     }
 
     @ParameterizedTest
@@ -40,10 +74,10 @@ class FinalPinsTest {
         final Pin firstPin = new Pin(firstPinCount);
         final Pin secondPin = new Pin(secondPinCount);
         final Pin thirdPin = new Pin(thirdPinCount);
-        final FinalPins finalPins = new FinalPins(firstPin, secondPin, thirdPin);
+        final Pins Pins = new Pins(firstPin, secondPin, thirdPin);
 
         // when
-        final FrameStatus frameStatus = finalPins.frameStatus();
+        final FrameStatus frameStatus = Pins.frameStatus();
 
         // then
         assertThat(frameStatus).isEqualTo(expectedFrameStatus);
@@ -53,13 +87,12 @@ class FinalPinsTest {
     @DisplayName("쓰러진 핀을 전달받으면 새로운 Pins가 반환된다.")
     void knockDownPin() {
         // given
-        final FinalPins beforePins = new FinalPins();
-        final FinalPins strikePins = new FinalPins(TestFixture.STRIKE_PIN);
+        final Pins beforePins = new Pins();
 
         // when
         final Pins afterPins = beforePins.knockDownPin(TestFixture.STRIKE_PIN);
 
         // then
-        assertThat(afterPins).isEqualTo(strikePins);
+        assertThat(afterPins).isEqualTo(new Pins(TestFixture.STRIKE_PIN));
     }
 }
