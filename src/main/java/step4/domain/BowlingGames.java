@@ -4,10 +4,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Players {
+public class BowlingGames {
     private final List<BowlingGame> bowlingGames;
 
-    public Players(List<BowlingGame> bowlingGames) {
+    public BowlingGames(List<BowlingGame> bowlingGames) {
         this.bowlingGames = bowlingGames;
     }
 
@@ -29,7 +29,7 @@ public class Players {
                 .collect(Collectors.toList()));
     }
 
-    public List<BowlingGame> players() {
+    public List<BowlingGame> bowlingGames() {
         return Collections.unmodifiableList(bowlingGames);
     }
 

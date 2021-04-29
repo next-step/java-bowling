@@ -18,32 +18,32 @@ public class BowlingController {
 
     public void run() {
         NumberOfPlayer numberOfPlayer = new NumberOfPlayer(inputView.numberOfPlayer());
-        Players players = createPlayers(numberOfPlayer);
-        playGame(players);
+        BowlingGames bowlingGames = createPlayers(numberOfPlayer);
+        playGame(bowlingGames);
         inputView.close();
     }
 
-    private Players createPlayers(NumberOfPlayer numberOfPlayer) {
-        return new Players(IntStream.range(0, numberOfPlayer.numberOfPlayer())
+    private BowlingGames createPlayers(NumberOfPlayer numberOfPlayer) {
+        return new BowlingGames(IntStream.range(0, numberOfPlayer.numberOfPlayer())
                 .mapToObj(i -> new BowlingGame(inputView.playerName(i)))
                 .collect(Collectors.toList()));
     }
 
-    protected void playGame(Players players) {
-        resultView.printResult(players.names(), players.frames(), players.scores());
+    protected void playGame(BowlingGames bowlingGames) {
+        resultView.printResult(bowlingGames.names(), bowlingGames.frames(), bowlingGames.scores());
 
-        while (!players.isAllFinished()) {
-            players.players()
-                    .forEach(player -> eachFramePlay(player, players));
+        while (!bowlingGames.isAllFinished()) {
+            bowlingGames.bowlingGames()
+                    .forEach(player -> eachFramePlay(player, bowlingGames));
         }
     }
 
-    private void eachFramePlay(BowlingGame bowlingGame, Players players) {
+    private void eachFramePlay(BowlingGame bowlingGame, BowlingGames bowlingGames) {
         int currentFrameIndex = bowlingGame.currentFrameIndex();
 
         while (!bowlingGame.hasFinishedFrame(currentFrameIndex)) {
             bowlingGame.throwBowl(inputView.pinCount(bowlingGame.name()));
-            resultView.printResult(players.names(), players.frames(), players.scores());
+            resultView.printResult(bowlingGames.names(), bowlingGames.frames(), bowlingGames.scores());
         }
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
-public class PlayersTest {
+public class BowlingGamesTest {
     Players players;
 
     @BeforeEach
