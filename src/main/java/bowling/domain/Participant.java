@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 public class Participant {
 
     private static final int NAME_LENGTH = 3;
+    private static final Pattern ALPHABET_PATTERN = Pattern.compile("^[a-zA-Z]*$");
 
     private final String name;
 
@@ -29,7 +30,7 @@ public class Participant {
     }
 
     private static boolean isAlphabet(String participantName) {
-        return Pattern.matches("^[a-zA-Z]*$", participantName);
+        return ALPHABET_PATTERN.matcher(participantName).matches();
     }
 
     public String getName() {
