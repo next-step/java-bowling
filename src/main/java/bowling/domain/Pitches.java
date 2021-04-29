@@ -1,7 +1,11 @@
 package bowling.domain;
 
+import bowling.domain.status.Status;
+import bowling.domain.status.StatusFactory;
+import bowling.domain.status.Symbol;
+
 import java.util.List;
-import java.util.Objects;
+import java.util.function.Consumer;
 
 public class Pitches {
     private final List<Pitch> pitches;
@@ -35,19 +39,22 @@ public class Pitches {
     }
 
     public boolean isStrike() {
-        return pitches.get(0).intValue() == 10;
+        return status().keyword() == Symbol.STRIKE;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pitches pitches1 = (Pitches) o;
-        return Objects.equals(pitches, pitches1.pitches);
+    public Status status() {
+        return StatusFactory.status(this);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(pitches);
+    public String display() {
+        return status().display(this);
+    }
+
+    public void forEach(Consumer<? super Pitch> action) {
+        pitches.forEach(action);
+    }
+
+    public Pitch firstPitch() {
+        return get(0);
     }
 }
