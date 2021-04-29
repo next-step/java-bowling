@@ -5,7 +5,7 @@ public class User {
 
     public User(String user) {
         if (user.length() > 3) {
-            throw new IllegalArgumentException("Max 3 english letters Only");
+            throw new IllegalArgumentException("최대 3자의 영어글자만 가능합니다.");
         }
         this.user = user;
     }
