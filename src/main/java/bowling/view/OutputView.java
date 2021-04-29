@@ -4,7 +4,7 @@ import bowling.controller.dto.BowlingGameResponse;
 
 public class OutputView {
 
-    private final static int boardWidth = 6;
+    private final static int BOARD_WIDTH = 6;
 
     public void printFrame(BowlingGameResponse response) {
         printBoardHeader();
@@ -31,8 +31,8 @@ public class OutputView {
     }
 
     private String alignCenter(String content) {
-        int paddingLeft = (boardWidth - content.length()) / 2;
-        int paddingRight = boardWidth - content.length() - paddingLeft;
+        int paddingLeft = (BOARD_WIDTH - content.length()) / 2;
+        int paddingRight = BOARD_WIDTH - content.length() - paddingLeft;
         return makeBlank(paddingLeft) + content + makeBlank(paddingRight);
     }
 
