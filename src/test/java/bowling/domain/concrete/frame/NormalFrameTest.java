@@ -1,6 +1,7 @@
 package bowling.domain.concrete.frame;
 
 import bowling.domain.RollResult;
+import bowling.domain.engine.frame.state.CannotCalculateScoreException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,6 +66,53 @@ class NormalFrameTest {
             () -> assertThatThrownBy(() -> spareFrame.roll(RollResult.of(0)))
                 .isInstanceOf(IllegalStateException.class)
         );
+    }
+
+    @Test
+    @DisplayName("스트라이크를 쳤다면 다음 두 번의 투구에서 점수를 획득했을 때 점수를 얻을 수 있다.")
+    void strikeScore() {
+        NormalFrame nextFrame = NormalFrame.init();
+        NormalFrame strikeFrame = NormalFrame.init(nextFrame);
+
+        strikeFrame.roll(RollResult.of(10));
+        nextFrame.roll(RollResult.of(5));
+        nextFrame.roll(RollResult.of(3));
+
+        assertThat(strikeFrame.getScore().getValue()).isEqualTo(18);
+    }
+
+    @Test
+    @DisplayName("스페어라면 투구를 한 번 더 한 뒤에 점수를 계산할 수 있다.")
+    void spareScore() {
+        NormalFrame nextFrame = NormalFrame.init();
+        NormalFrame spareFrame = NormalFrame.init(nextFrame);
+
+        spareFrame.roll(RollResult.of(8));
+        spareFrame.roll(RollResult.of(2));
+        nextFrame.roll(RollResult.of(5));
+
+        assertThat(spareFrame.getScore().getValue()).isEqualTo(15);
+    }
+
+    @Test
+    @DisplayName("스트라이크, 스페어 상태가 아니면서 투구를 완료한 프레임에서는 바로 점수를 계산할 수 있다.")
+    void getScore() {
+        normalFrame.roll(RollResult.of(8));
+        normalFrame.roll(RollResult.of(1));
+
+        assertThat(normalFrame.getScore().getValue()).isEqualTo(9);
+    }
+
+    @Test
+    @DisplayName("점수 계산을 완료할 수 없을 때 점수를 가져오려고 시도하면 예외 처리한다.")
+    void cannotGetScoreThatIfCalculationIsNotCompleted() {
+        NormalFrame nextFrame = NormalFrame.init();
+        NormalFrame strikeFrame = NormalFrame.init(nextFrame);
+
+        strikeFrame.roll(RollResult.of(10));
+        nextFrame.roll(RollResult.of(5));
+
+        assertThatThrownBy(strikeFrame::getScore).isInstanceOf(CannotCalculateScoreException.class);
     }
     
 }
