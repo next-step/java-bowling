@@ -30,7 +30,7 @@ class BowlingGameRepositoryTest {
         Optional<Frames> frames = repository.findByParticipant(lds);
 
         // then
-        assertThat(frames.isPresent()).isTrue();
+        assertThat(frames).isPresent();
     }
 
     @Test
