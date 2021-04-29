@@ -30,15 +30,6 @@ public class Question extends AbstractEntity {
         postInfo = new PostInfo(contents);
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
     public User getWriter() {
         return postInfo.getWriter();
     }
@@ -60,17 +51,8 @@ public class Question extends AbstractEntity {
         answers.areOwner(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        postInfo.delete();
-        return this;
-    }
-
     public boolean isDeleted() {
         return postInfo.isDeleted();
-    }
-
-    public List<Answer> getAnswers() {
-        return answers.getAnswers();
     }
 
     @Override

@@ -29,16 +29,11 @@ public class Answers {
         if(answers.stream()
                 .anyMatch(answer -> !answer.isOwner(loginUser))) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-
         }
     }
 
     public void add(Answer answer) {
         answers.add(answer);
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     public void deleteAll(List<DeleteHistory> deletes) {

@@ -26,21 +26,16 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
         this.postInfo = new PostInfo(contents, writer);
         this.question = question;
-    }
-
-    public Answer setDeleted(boolean deleted) {
-        postInfo.delete();
-        return this;
     }
 
     public void delete() {
