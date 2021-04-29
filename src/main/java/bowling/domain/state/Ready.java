@@ -36,12 +36,12 @@ public class Ready implements State{
 
     @Override
     public FrameScore frameScore() {
-        return FrameScore.UNSCORED_SCORE;
+        return FrameScore.of(Pins.MIN_PINS, FrameScore.UNSCORED_SCORE);
     }
 
     @Override
     public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
-        return FrameScore.UNSCORED_SCORE;
+        return FrameScore.of(prevFrameScore.score(), FrameScore.UNSCORED_SCORE);
     }
 
     @Override

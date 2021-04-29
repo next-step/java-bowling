@@ -3,7 +3,7 @@ package bowling.domain;
 import java.util.Objects;
 
 public class FrameScore {
-    public static final FrameScore UNSCORED_SCORE = new FrameScore(-1,-1);
+    public static final int UNSCORED_SCORE = -1;
     public static final int NO_TRY = 0;
     public static final int ONE_TRY = 1;
     public static final int TWO_TRIES = 2;
@@ -39,6 +39,10 @@ public class FrameScore {
 
     public int score() {
         return score;
+    }
+
+    public boolean isUnscoredScore() {
+        return triesLeft == UNSCORED_SCORE;
     }
 
     public FrameScore addedFrameScore(FrameScore frameScore) {

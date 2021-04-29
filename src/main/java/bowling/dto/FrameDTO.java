@@ -4,18 +4,18 @@ import java.util.List;
 
 public class FrameDTO {
     private final List<StateDTO> stateDTOList;
-    private final int score;
+    private final ScoreDTO scoreDTO;
 
-    public FrameDTO(List<StateDTO> stateDTOList, int score) {
+    public FrameDTO(List<StateDTO> stateDTOList, ScoreDTO scoreDTO) {
         this.stateDTOList = stateDTOList;
-        this.score = score;
+        this.scoreDTO = scoreDTO;
     }
 
     public List<StateDTO> stateDTOList(){
         return stateDTOList;
     }
 
-    public int score() {
-        return score;
+    public ScoreDTO scoreDTO() {
+        return scoreDTO;
     }
 }

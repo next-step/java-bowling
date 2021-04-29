@@ -114,7 +114,7 @@ public class NormalFrameTest {
         FrameScore frameScore = currentFrame.frameScore();
 
         // then
-        assertThat(frameScore).isEqualTo(FrameScore.UNSCORED_SCORE);
+        assertThat(frameScore).isEqualTo(FrameScore.of(frameScore.score(), FrameScore.UNSCORED_SCORE));
     }
 
     @Test
@@ -127,6 +127,6 @@ public class NormalFrameTest {
         FrameScore frameScore = currentFrame.frameScore();
 
         // then
-        assertThat(frameScore).isEqualTo(FrameScore.UNSCORED_SCORE);
+        assertThat(frameScore).isEqualTo(FrameScore.of(frameScore.score(), FrameScore.UNSCORED_SCORE));
     }
 }

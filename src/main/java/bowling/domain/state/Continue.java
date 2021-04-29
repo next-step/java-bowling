@@ -41,15 +41,16 @@ public class Continue implements State{
 
     @Override
     public FrameScore frameScore() {
-        return FrameScore.UNSCORED_SCORE;
+        return FrameScore.of(pins.fallingPins(), FrameScore.UNSCORED_SCORE);
     }
 
     @Override
     public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
+        FrameScore addedFrameScore = prevFrameScore.frameScoreWithBonus(pins.fallingPins(), FrameScore.NO_TRY);
         if(prevFrameScore.hasOneTryLeft()) {
-            return prevFrameScore.frameScoreWithBonus(pins.fallingPins(), FrameScore.NO_TRY);
+            return addedFrameScore;
         }
-        return FrameScore.UNSCORED_SCORE;
+        return FrameScore.of(addedFrameScore.score(), FrameScore.UNSCORED_SCORE);
     }
 
     @Override

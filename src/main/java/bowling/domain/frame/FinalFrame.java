@@ -5,6 +5,7 @@ import bowling.domain.exception.CannotBowlException;
 import bowling.domain.exception.NoRemainingFrameException;
 import bowling.domain.state.*;
 import bowling.dto.FrameDTO;
+import bowling.dto.ScoreDTO;
 import bowling.dto.StateDTO;
 
 import java.util.ArrayList;
@@ -65,12 +66,12 @@ public class FinalFrame implements Frame{
 
     @Override
     public FrameScore frameScore() {
-        if(!isFinished()){
-            return FrameScore.UNSCORED_SCORE;
-        }
         FrameScore frameScore = states.getFirst().frameScore();
         for (int i = 1; i < states.size(); i++) {
             frameScore = frameScore.addedFrameScore(states.get(i).frameScore());
+        }
+        if(!isFinished()){
+            return FrameScore.of(frameScore.score(),FrameScore.UNSCORED_SCORE);
         }
         return frameScore;
     }
@@ -88,7 +89,7 @@ public class FinalFrame implements Frame{
         if(states.size() > secondStateIndex){
             return states.get(secondStateIndex).frameScoreWithBonus(frameScore);
         }
-        return FrameScore.UNSCORED_SCORE;
+        return FrameScore.of(frameScore.score(),FrameScore.UNSCORED_SCORE);
     }
 
     @Override
@@ -97,6 +98,8 @@ public class FinalFrame implements Frame{
         for(State state : states) {
             stateDTOList.add(state.exportStateDTO());
         }
-        return new FrameDTO(stateDTOList, frameScore().score());
+        FrameScore frameScore = frameScore();
+        ScoreDTO scoreDTO = new ScoreDTO(frameScore.score(), frameScore.isUnscoredScore());
+        return new FrameDTO(stateDTOList, scoreDTO);
     }
 }

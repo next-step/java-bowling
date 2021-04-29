@@ -5,6 +5,7 @@ import bowling.domain.exception.CannotBowlException;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 import bowling.dto.FrameDTO;
+import bowling.dto.ScoreDTO;
 import bowling.dto.StateDTO;
 
 import java.util.ArrayList;
@@ -69,6 +70,8 @@ public class NormalFrame implements Frame{
     public FrameDTO exportFrameDTO() {
         List<StateDTO> stateDTOList = new ArrayList<>();
         stateDTOList.add(state.exportStateDTO());
-        return new FrameDTO(stateDTOList, frameScore().score());
+        FrameScore frameScore = frameScore();
+        ScoreDTO scoreDTO = new ScoreDTO(frameScore.score(), frameScore.isUnscoredScore());
+        return new FrameDTO(stateDTOList, scoreDTO);
     }
 }
