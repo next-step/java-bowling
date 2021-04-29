@@ -2,6 +2,8 @@ package bowling.utils;
 
 public final class StringUtils {
 
+    public static final String BLANK_STRING = " ";
+
     private StringUtils() {}
 
     public static String padLeft(String padString, int size) {
@@ -10,7 +12,7 @@ public final class StringUtils {
 
     public static String alignCenter(String padString, int size) {
         if (padString == null) {
-            return alignCenter("null", size);
+            return alignCenter(String.valueOf(padString), size);
         }
 
         if (size <= padString.length()) {
@@ -26,11 +28,11 @@ public final class StringUtils {
 
         final int leftSize = (size - padString.length()) / 2;
         for (int i = 0; i < leftSize; i++) {
-            centerBuilder.append(" ");
+            centerBuilder.append(BLANK_STRING);
         }
         centerBuilder.append(padString);
         while (centerBuilder.length() < size) {
-            centerBuilder.append(" ");
+            centerBuilder.append(BLANK_STRING);
         }
         return centerBuilder;
     }
