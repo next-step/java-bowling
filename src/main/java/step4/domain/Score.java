@@ -38,10 +38,6 @@ public class Score {
         return score;
     }
 
-    public Score add(Score score) {
-        return new Score(leftOpportunity - 1, this.score + score.value());
-    }
-
     public Score add(int score) {
         return new Score(leftOpportunity - 1, this.score + score);
     }
