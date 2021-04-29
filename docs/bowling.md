@@ -133,3 +133,4 @@
 - [ ] 출력부분 분리: `Status` 라는 DTO를 정의해보자.
 - [ ] FrameStatus가 아니라 PinStatus면 어떨까?
 - [ ] Pins 개선 -> List Collection으로 구현하면 어떨까?
+- [ ] Frame이 다음 Frame을 알고있는 구조로 구현을 해보자.
