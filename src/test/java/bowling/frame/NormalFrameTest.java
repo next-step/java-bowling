@@ -1,5 +1,6 @@
 package bowling.frame;
 
+import bowling.domain.FrameScore;
 import bowling.domain.exception.CannotBowlException;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
@@ -51,5 +52,81 @@ public class NormalFrameTest {
         assertThatThrownBy(() -> normalFrame.bowl(3))
                 .isInstanceOf(CannotBowlException.class)
                 .hasMessage("더 이상 투구할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("STRIKE 이면 보너스 투구 점수 2개가 더해져서 계산")
+    void strike_calculate_score_test() {
+        // given
+        Frame currentFrame = NormalFrame.init();
+        currentFrame.bowl(10);
+
+        Frame nextFrame = currentFrame.next();
+        nextFrame.bowl(3);
+        nextFrame.bowl(2);
+
+        // when
+        FrameScore frameScore = currentFrame.frameScore();
+
+        // then
+        assertThat(frameScore).isEqualTo(frameScore.of(15, 0));
+    }
+
+    @Test
+    @DisplayName("SPARE 이면 보너스 투구 점수 1개가 더해져서 계산")
+    void spare_calculate_score_test() {
+        // given
+        Frame currentFrame = NormalFrame.init();
+        currentFrame.bowl(7);
+        currentFrame.bowl(3);
+
+        Frame nextFrame = currentFrame.next();
+        nextFrame.bowl(2);
+
+        // when
+        FrameScore frameScore = currentFrame.frameScore();
+
+        // then
+        assertThat(frameScore).isEqualTo(frameScore.of(12, 0));
+    }
+
+    @Test
+    @DisplayName("miss 일 때 점수 계산")
+    void miss_calculate_score_test() {
+        // given
+        Frame currentFrame = NormalFrame.init();
+        currentFrame.bowl(7);
+        currentFrame.bowl(2);
+
+        // when
+        FrameScore frameScore = currentFrame.frameScore();
+
+        // then
+        assertThat(frameScore).isEqualTo(frameScore.of(9, 0));
+    }
+
+    @Test
+    @DisplayName("ready 일 때 점수 계산")
+    void ready_calculate_score_test() {
+        // given
+        Frame currentFrame = NormalFrame.init();
+        // when
+        FrameScore frameScore = currentFrame.frameScore();
+
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.UNSCORED_SCORE);
+    }
+
+    @Test
+    @DisplayName("continue 일 때 점수 계산")
+    void continue_calculate_score_test() {
+        // given
+        Frame currentFrame = NormalFrame.init();
+        currentFrame.bowl(4);
+        // when
+        FrameScore frameScore = currentFrame.frameScore();
+
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.UNSCORED_SCORE);
     }
 }
