@@ -77,12 +77,43 @@ class PlayerTest {
         // given
         final Player player = new Player(playerName);
         final RoundNumber roundNumber = new RoundNumber(1);
-        final Pin strikePin = new Pin(5);
+        player.knockDownPin(roundNumber, new Pin(5));
 
         // when
-        player.knockDownPin(roundNumber, strikePin);
+        final boolean ended = player.isEnded(roundNumber);
 
         // then
-        assertThat(player.isEnded(roundNumber)).isFalse();
+        assertThat(ended).isFalse();
+    }
+
+    @Test
+    @DisplayName("거터를 한 번 던진 Player의 Round의 종료여부는 false 이다.")
+    void notEndedGutterOnce() {
+        // given
+        final Player player = new Player(playerName);
+        final RoundNumber roundNumber = new RoundNumber(1);
+        player.knockDownPin(roundNumber, TestFixture.GUTTER_PIN);
+
+        // when
+        final boolean ended = player.isEnded(roundNumber);
+
+        // then
+        assertThat(ended).isFalse();
+    }
+
+    @Test
+    @DisplayName("거터를 두 번 던진 Player의 Round의 종료여부는 true 이다.")
+    void notEndedGutterTwice() {
+        // given
+        final Player player = new Player(playerName);
+        final RoundNumber roundNumber = new RoundNumber(1);
+        player.knockDownPin(roundNumber, TestFixture.GUTTER_PIN);
+        player.knockDownPin(roundNumber, TestFixture.GUTTER_PIN);
+
+        // when
+        final boolean ended = player.isEnded(roundNumber);
+
+        // then
+        assertThat(ended).isTrue();
     }
 }
