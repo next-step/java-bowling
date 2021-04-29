@@ -27,6 +27,10 @@ public class Player {
         return frames;
     }
 
+    public Scores scores() {
+        return new Scores(frames);
+    }
+
     public int currentFrameIndex() {
         return frames.currentIndex();
     }

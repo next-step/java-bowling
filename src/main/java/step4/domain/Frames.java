@@ -56,20 +56,7 @@ public class Frames {
                 .collect(Collectors.toList());
     }
 
-    public Scores scores() {
-        return new Scores(frames.stream()
-                .map(this::score)
-                .collect(Collectors.toList()));
-    }
-
-    private Score score(Frame frame) {
-        Score score = frame.score();
-
-        while (score.isOpportunityLeft()) {
-            frame = frames.get(frame.next().index());
-            score = frame.add(score);
-        }
-
-        return score;
+    public List<Frame> frames() {
+        return frames;
     }
 }

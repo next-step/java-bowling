@@ -23,6 +23,12 @@ public class Players {
                 .collect(Collectors.toList());
     }
 
+    public List<Scores> scores() {
+        return players.stream()
+                .map(Player::scores)
+                .collect(Collectors.toList());
+    }
+
     public List<Player> players() {
         return Collections.unmodifiableList(players);
     }

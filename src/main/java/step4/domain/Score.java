@@ -3,7 +3,7 @@ package step4.domain;
 import java.util.Objects;
 
 public class Score {
-    private static final int UN_COUNTABLE_SCORE = -1;
+    public static final int UN_COUNTABLE_SCORE = -1;
     private static final int NO_CHANCE = 0;
 
     private final int leftOpportunity;

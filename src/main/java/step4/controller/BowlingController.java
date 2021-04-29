@@ -1,8 +1,6 @@
 package step4.controller;
 
-import step4.domain.NumberOfPlayer;
-import step4.domain.Player;
-import step4.domain.Players;
+import step4.domain.*;
 import step4.view.InputView;
 import step4.view.ResultView;
 
@@ -32,7 +30,7 @@ public class BowlingController {
     }
 
     protected void playGame(Players players) {
-        resultView.printResult(players.names(), players.frames());
+        resultView.printResult(players.names(), players.frames(), players.scores());
 
         while (!players.isAllFinished()) {
             players.players()
@@ -45,7 +43,7 @@ public class BowlingController {
 
         while (!player.hasFinishedFrame(currentFrameIndex)) {
             player.throwBowl(inputView.pinCount(player.name()));
-            resultView.printResult(players.names(), players.frames());
+            resultView.printResult(players.names(), players.frames(), players.scores());
         }
     }
 }

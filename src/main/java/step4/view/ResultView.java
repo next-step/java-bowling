@@ -1,9 +1,6 @@
 package step4.view;
 
-import step4.domain.Frames;
-import step4.domain.Name;
-import step4.domain.Score;
-import step4.domain.Scores;
+import step4.domain.*;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -15,11 +12,11 @@ public class ResultView {
     private static final String BLANK = "";
     private static final int UN_COUNTABLE_SCORE = -1;
 
-    public void printResult(List<Name> names, List<Frames> frames) {
+    public void printResult(List<Name> names, List<Frames> frames, List<Scores> scores) {
         IntStream.range(0, names.size())
                 .forEach(i -> {
                     printMark(names.get(i), frames.get(i).marks());
-                    printScore(frames.get(i).scores());
+                    printScore(scores.get(i));
                 });
     }
 
@@ -37,22 +34,18 @@ public class ResultView {
         System.out.print(DELIMETER);
 
         System.out.printf(PRINT_FORMAT, BLANK);
-        IntStream.range(0, scores.scores().size())
-                .mapToObj((i) -> changeScoreFormat(i, scores))
+        scores.accumulatedScore().stream()
+                .map(this::changeScoreFormat)
                 .forEach((score) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, score)));
 
         System.out.println(DELIMETER);
     }
 
-    private String changeScoreFormat(int currentIndex, Scores scores) {
-        if (scores.scores().get(currentIndex).value() == UN_COUNTABLE_SCORE) {
+    private String changeScoreFormat(Integer currentScore) {
+        if (currentScore == UN_COUNTABLE_SCORE) {
             return BLANK;
         }
 
-        return String.valueOf(scores.scores()
-                .stream()
-                .limit(currentIndex + 1)
-                .mapToInt(Score::value)
-                .sum());
+        return String.valueOf(currentScore);
     }
 }
