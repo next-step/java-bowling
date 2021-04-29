@@ -1,13 +1,6 @@
 package bowling.domain;
 
-import java.util.Arrays;
-
 public class Frame {
-
-  private static final String GUTTER_MARK = "-";
-  private static final String BLANK = "      ";
-  private static final String ONLY_FIRST_SCORE_FORMAT = "  %s   ";
-  private static final String SCORE_FORMAT = "  %s|%s ";
 
   private Pitching first;
   private Pitching second;
@@ -37,13 +30,6 @@ public class Frame {
 
   public int getSecondHit() {
     return second.getHitPins();
-  }
-
-  private int getTotalHit() {
-    return Arrays.asList(first, second).stream()
-        .map(Pitching::getHitPins)
-        .reduce((a, b) -> a + b)
-        .orElse(0);
   }
 
   public Result getResult() {
