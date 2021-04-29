@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Miss extends FinishedState{
-    private static final String state = "MISS";
+    private static final String STATE = "MISS";
     private final Pins firstPins;
     private final Pins secondPins;
 
@@ -24,7 +24,7 @@ public class Miss extends FinishedState{
 
     @Override
     public String state() {
-        return state;
+        return STATE;
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Strike extends FinishedState{
-    private static final String state = "STRIKE";
+    private static final String STATE = "STRIKE";
     private final Pins pins;
     private Strike(Pins pins){
         this.pins = pins;
@@ -21,7 +21,7 @@ public class Strike extends FinishedState{
 
     @Override
     public String state() {
-        return state;
+        return STATE;
     }
 
     @Override
@@ -52,6 +52,6 @@ public class Strike extends FinishedState{
 
     @Override
     public int hashCode() {
-        return Objects.hash(state);
+        return Objects.hash(STATE);
     }
 }

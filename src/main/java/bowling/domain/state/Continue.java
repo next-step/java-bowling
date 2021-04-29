@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Continue implements State{
-    private static final String state = "CONTINUE";
+    private static final String STATE = "CONTINUE";
     private final Pins pins;
 
     private Continue(Pins pins){
@@ -27,7 +27,7 @@ public class Continue implements State{
 
     @Override
     public String state() {
-        return state;
+        return STATE;
     }
 
     @Override

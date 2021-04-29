@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Spare extends FinishedState {
-    private static final String state = "SPARE";
+    private static final String STATE = "SPARE";
     private final Pins firstPins;
     private final Pins secondPins;
 
@@ -24,7 +24,7 @@ public class Spare extends FinishedState {
 
     @Override
     public String state() {
-        return state;
+        return STATE;
     }
 
     @Override

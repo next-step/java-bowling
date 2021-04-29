@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Ready implements State{
-    private static final String state = "READY";
+    private static final String STATE = "READY";
     private Ready(){}
 
     public static Ready create(){
@@ -22,7 +22,7 @@ public class Ready implements State{
 
     @Override
     public String state() {
-        return state;
+        return STATE;
     }
 
     @Override
@@ -57,6 +57,6 @@ public class Ready implements State{
 
     @Override
     public int hashCode() {
-        return Objects.hash(state);
+        return Objects.hash(STATE);
     }
 }
