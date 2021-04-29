@@ -43,8 +43,8 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("Player는 해당 라운드가 끝났는지 확인할 수 있다.")
-    void isEnded() {
+    @DisplayName("게임을 수행하지 않은 Player의 첫번째 Round의 종료여부는 false 이다.")
+    void isEndedNotPlayed() {
         // given
         final Player player = new Player(playerName);
 
@@ -56,17 +56,32 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("Player는 해당 라운드의 Pin을 쓰러뜨릴 수 있다.")
-    void knockDownPin() {
+    @DisplayName("스트라이크를 친 Player의 Round의 종료여부는 true 이다.")
+    void isEndedPlayed() {
+        // given
+        final Player player = new Player(playerName);
+        final RoundNumber firstRoundNumber = new RoundNumber(1);
+        player.knockDownPin(firstRoundNumber, new Pin());
+
+        // when
+        final boolean ended = player.isEnded(firstRoundNumber);
+
+        // then
+        assertThat(ended).isTrue();
+    }
+
+    @Test
+    @DisplayName("일반적인 공을 던진 Player의 Round의 종료여부는 false 이다.")
+    void notEndedPlayed() {
         // given
         final Player player = new Player(playerName);
         final RoundNumber roundNumber = new RoundNumber(1);
-        final Pin strikePin = new Pin();
+        final Pin strikePin = new Pin(5);
 
         // when
         player.knockDownPin(roundNumber, strikePin);
 
         // then
-        assertThat(player.isEnded(roundNumber)).isTrue();
+        assertThat(player.isEnded(roundNumber)).isFalse();
     }
 }
