@@ -3,8 +3,6 @@ package bowling.domain;
 import bowling.domain.bowlingboard.BowlingBoard;
 import bowling.domain.bowlingboard.ThrowCount;
 import bowling.domain.frame.BowlingFrame;
-import bowling.domain.frame.round.FinalRound;
-import bowling.domain.frame.round.Round;
 import bowling.domain.score.Point;
 
 import java.util.Arrays;
@@ -26,10 +24,6 @@ public enum ThrowsState {
         this.throwBall = throwBall;
     }
 
-    public ThrowCount getThrowCount() {
-        return throwCount;
-    }
-
     public BiFunction<Point, List<BowlingFrame>, BowlingBoard> getThrowBall() {
         return throwBall;
     }
@@ -49,7 +43,7 @@ public enum ThrowsState {
             frames.add(bowlingFrame);
             return BowlingBoard.of(frames, ThrowCount.of(0));
         }
-        if (bowlingFrame.round().equals(FinalRound.of()) && bowlingFrame.isType() == BowlingRole.STRIKE) {
+        if (bowlingFrame.round().isFinalRound() && bowlingFrame.isType() == BowlingRole.STRIKE) {
             return BowlingBoard.of(frames, ThrowCount.of(2));
         }
         return BowlingBoard.of(frames, ThrowCount.of(1));
@@ -57,10 +51,10 @@ public enum ThrowsState {
 
     public static BowlingBoard secondPitching(Point point, List<BowlingFrame> frames) {
         BowlingFrame bowlingFrame = currentFrame(frames).secondPitching(point);
-        if (bowlingFrame.round().equals(FinalRound.of()) && bowlingFrame.isType() == BowlingRole.SPARE) {
+        if (bowlingFrame.round().isFinalRound() && bowlingFrame.isType() == BowlingRole.SPARE) {
             return BowlingBoard.of(frames, ThrowCount.of(2));
         }
-        if (bowlingFrame.round().equals(FinalRound.of()) && bowlingFrame.isType() != BowlingRole.EMPTY) {
+        if (bowlingFrame.round().isFinalRound() && bowlingFrame.isType() != BowlingRole.EMPTY) {
             return BowlingBoard.of(frames, ThrowCount.of(3));
         }
         frames.add(bowlingFrame);
@@ -68,7 +62,7 @@ public enum ThrowsState {
     }
 
     public static BowlingBoard bonusPitching(Point point, List<BowlingFrame> frames) {
-        if (!currentFrame(frames).round().equals(FinalRound.of())) {
+        if (!currentFrame(frames).round().isFinalRound()) {
             throw new IllegalArgumentException("마지막 라운드에서만 보너스 투구가 가능합니다.");
         }
         currentFrame(frames).bonusPitching(point);
@@ -85,14 +79,6 @@ public enum ThrowsState {
 
     private boolean isSame(ThrowCount throwCount) {
         return this.throwCount.equals(throwCount);
-    }
-
-    public ThrowsState next(Round round) {
-        ThrowCount next = this.throwCount.next(round);
-        return Arrays.stream(values()).
-                filter(state -> state.isSame(next))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("던지는 기회는 최소 0번 최대 3번입니다."));
     }
 }
 

@@ -22,8 +22,7 @@ public class PlayerBowlingBoards {
     }
 
     public static PlayerBowlingBoards of(List<String> playerName) {
-        return IntStream.range(0, playerName.size())
-                .mapToObj(index -> PlayerBowlingBoard.of(playerName.get(index)))
+        return playerName.stream().map(PlayerBowlingBoard::of)
                 .collect(collectingAndThen(toList(), PlayerBowlingBoards::new));
     }
 
@@ -51,9 +50,9 @@ public class PlayerBowlingBoards {
                 .collect(Collectors.toList());
     }
 
-    public boolean isEnd() {
+    public boolean isInGame() {
         return playerBowlingBoardList.stream()
-                .allMatch(playerBowlingBoard -> playerBowlingBoard.state().equals(ThrowCount.of(3)));
+                .allMatch(playerBowlingBoard -> playerBowlingBoard.state().isEndThrow());
     }
 
     public Stream<PlayerBowlingBoard> stream() {

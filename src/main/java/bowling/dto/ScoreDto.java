@@ -50,6 +50,10 @@ public class ScoreDto {
         return scoreType;
     }
 
+    public static ScoreDto isEmpty() {
+        return ScoreDto.of(Score.initScore());
+    }
+
     @Override
     public String toString() {
         return "ScoreDto{" +

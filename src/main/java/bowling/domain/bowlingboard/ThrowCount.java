@@ -1,14 +1,12 @@
 package bowling.domain.bowlingboard;
 
-import bowling.domain.frame.round.Round;
-
 import java.util.Objects;
 
 public class ThrowCount {
 
     public static final int MIN_THROW_COUNT = 0;
+    public static final int SECOND_THROW_COUNT = 1;
     public static final int MAX_THROW_COUNT = 3;
-    public static final int FINAL_ROUND = 10;
 
     public final int throwCount;
 
@@ -23,15 +21,8 @@ public class ThrowCount {
         return new ThrowCount(throwCount);
     }
 
-    public static ThrowCount fisrt() {
+    public static ThrowCount first() {
         return new ThrowCount(MIN_THROW_COUNT);
-    }
-
-    public ThrowCount next(Round round) {
-        if (throwCount == 1 && round.round() < FINAL_ROUND) {
-            return new ThrowCount(0);
-        }
-        return new ThrowCount(throwCount + 1);
     }
 
     @Override
@@ -53,4 +44,17 @@ public class ThrowCount {
                 "throwCount=" + throwCount +
                 '}';
     }
+
+    public boolean isEndThrow() {
+        return throwCount == MAX_THROW_COUNT;
+    }
+
+    public boolean isFirstThrow() {
+        return throwCount == MIN_THROW_COUNT;
+    }
+
+    public boolean isSecondThrow() {
+        return throwCount == SECOND_THROW_COUNT;
+    }
+
 }

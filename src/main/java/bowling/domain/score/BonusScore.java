@@ -5,7 +5,6 @@ import bowling.domain.frame.round.Round;
 
 public class BonusScore {
 
-    private static final int FINAL_ROUND = 10;
     private static final int EMPTY_BONUS_POINT = 0;
 
     private final Point bonusPoint;
@@ -28,7 +27,7 @@ public class BonusScore {
             throw new IllegalArgumentException("스트라이크나 스페어를 해야 보너스 투구를 할 수 있습니다.");
         }
 
-        if (!round.equals(Round.of(FINAL_ROUND))) {
+        if (!round.isFinalRound()) {
             throw new IllegalArgumentException("마지막 라운드에서만 보너스 투구를 할 수 있습니다.");
         }
         return new BonusScore(bonusPoint);

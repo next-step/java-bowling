@@ -31,7 +31,7 @@ public class BowlingGame {
         OutputView.printResultView(PlayerBowlingBoardDto.of(playerBowlingBoards));
         PlayerBowlingBoards nextBoard = playerBowlingBoards;
         Round currentRound = Round.first();
-        while (!nextBoard.isEnd()) {
+        while (!nextBoard.isInGame()) {
             Round finalCurrentRound = currentRound;
             nextBoard.stream()
                     .forEach(playerBowlingBoard -> play(nextBoard, finalCurrentRound, playerBowlingBoard));
@@ -42,8 +42,8 @@ public class BowlingGame {
     private void play(PlayerBowlingBoards nextBoard, Round finalCurrentRound, bowling.domain.bowlingboard.PlayerBowlingBoard playerBowlingBoard) {
         if (finalCurrentRound.equals(playerBowlingBoard.round())) {
             int round = finalCurrentRound.round();
-            int point = InputView.inputPoint(playerBowlingBoard.player());
-            playerBowlingBoard.pitching(Point.of(point), finalCurrentRound);
+            Point point = InputView.inputPoint(playerBowlingBoard.player());
+            playerBowlingBoard.pitching(point, finalCurrentRound);
             OutputView.printResultView(round, PlayerBowlingBoardDto.of(nextBoard, playerBowlingBoard.player()));
         }
     }

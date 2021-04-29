@@ -25,7 +25,7 @@ public class BowlingBoard {
     public static BowlingBoard of() {
         List<BowlingFrame> bowlingFrameList = new ArrayList<>();
         bowlingFrameList.add(BowlingNormalFrame.first(Round.first()));
-        return new BowlingBoard(bowlingFrameList, ThrowCount.fisrt());
+        return new BowlingBoard(bowlingFrameList, ThrowCount.first());
     }
 
     public static BowlingBoard of(List<BowlingFrame> bowlingFrameList, ThrowCount throwCount) {
@@ -47,7 +47,7 @@ public class BowlingBoard {
     }
 
     public boolean isEnd() {
-        return throwCount.equals(ThrowCount.of(3));
+        return throwCount.isEndThrow();
     }
 
     public List<FramePoint> framePoint() {

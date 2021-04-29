@@ -56,7 +56,7 @@ public class OutputView {
         String first = bowlingSymbol(scoreDto.getBowlingPoint().get(0));
         String second = bowlingSymbol(scoreDto.getBowlingPoint().get(1));
 
-        if (throwCount.equals(ThrowCount.of(1)) && size == round - 1) {
+        if (throwCount.isSecondThrow() && size == round - 1) {
             return String.format("|  %s   ", first);
         }
         if (scoreDto.getScoreType() == BowlingRole.STRIKE) {
@@ -77,7 +77,7 @@ public class OutputView {
         List<Integer> framePoints = bowlingBoardDto.getFramePoint();
         ThrowCount throwCount = bowlingBoardDto.getThrowCount();
 
-        if (throwCount.equals(ThrowCount.of(0)) && !player.isCurrentPlayer() && framePoints.size() == round) {
+        if (throwCount.isFirstThrow() && !player.isCurrentPlayer() && framePoints.size() == round) {
             round = round - 1;
         }
         List<String> point = IntStream.range(0, round)
@@ -94,13 +94,13 @@ public class OutputView {
     }
 
     private static void makeEmptyScore(int round, List<ScoreDto> scoreDtoList, ThrowCount throwCount, List<String> point) {
-        if (scoreDtoList.get(round - 1).getScoreType() == BowlingRole.STRIKE && !throwCount.equals(ThrowCount.of(3))) {
+        if (scoreDtoList.get(round - 1).getScoreType() == BowlingRole.STRIKE && !throwCount.isEndThrow()) {
             point.set(round - 1, "|      ");
         }
-        if (scoreDtoList.get(round - 1).getScoreType() == BowlingRole.SPARE && !throwCount.equals(ThrowCount.of(1))) {
+        if (scoreDtoList.get(round - 1).getScoreType() == BowlingRole.SPARE && !throwCount.isSecondThrow()) {
             point.set(round - 1, "|      ");
         }
-        if (round != 1 && scoreDtoList.get(round - 2).getScoreType() == BowlingRole.STRIKE && !throwCount.equals(ThrowCount.of(0)) && !throwCount.equals(ThrowCount.of(3))) {
+        if (round != 1 && scoreDtoList.get(round - 2).getScoreType() == BowlingRole.STRIKE && !throwCount.isFirstThrow() && !throwCount.isEndThrow()) {
             point.set(round - 2, "|      ");
             point.set(round - 1, "|      ");
         }

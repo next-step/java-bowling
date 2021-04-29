@@ -10,7 +10,7 @@ class PlayerTest {
     @Test
     void case1() {
         Assertions.assertThatThrownBy(() -> {
-            Player.of("4444", 0);
+            Player.of("4444");
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }

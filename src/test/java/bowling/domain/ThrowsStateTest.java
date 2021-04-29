@@ -41,7 +41,7 @@ class ThrowsStateTest {
         ThrowCount throwCount = ThrowCount.of(0);
 
         BowlingBoard bowlingBoard = ThrowsState.throwBall(point, frameList, throwCount);
-        assertThat(bowlingBoard.round()).isEqualTo(2);
+        assertThat(bowlingBoard.round()).isEqualTo(Round.of(2));
         assertThat(bowlingBoard.state()).isEqualTo(ThrowCount.of(0));
     }
 
@@ -55,7 +55,7 @@ class ThrowsStateTest {
 
         BowlingBoard bowlingBoard = ThrowsState.throwBall(point, frameList, throwCount);
 
-        assertThat(bowlingBoard.round()).isEqualTo(2);
+        assertThat(bowlingBoard.round()).isEqualTo(Round.of(2));
         assertThat(bowlingBoard.state()).isEqualTo(ThrowCount.of(0));
     }
 
