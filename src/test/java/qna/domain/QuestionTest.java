@@ -25,8 +25,7 @@ public class QuestionTest {
 
     @Test
     void 질문글삭제() {
-        List<DeleteHistory> result = new ArrayList<>();
-        Q1.delete(result);
+        List<DeleteHistory> result = Q1.delete();
         assertThat(result).containsAll(predict);
     }
 
@@ -36,9 +35,7 @@ public class QuestionTest {
         Q2.addAnswer(AnswerTest.A2);
         predict2.addAll(AnswersTest.AS1DELETE);
 
-        List<DeleteHistory> result = new ArrayList<>();
-        Q2.delete(result);
-
+        List<DeleteHistory> result = Q2.delete();
         assertThat(result).containsAll(predict2);
     }
 }
