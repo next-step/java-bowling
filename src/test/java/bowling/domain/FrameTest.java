@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.CannotCalculateException;
 import bowling.exception.FrameTryException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -70,5 +71,50 @@ public class FrameTest {
     void frameNotYetTest() {
         Frame frame = NormalFrame.from(Round.firstRound());
         assertThat(frame.isNotYetStart()).isTrue();
+    }
+
+    @DisplayName("일반 프레임의 2 투구의 점수를 계산한다")
+    @Test
+    void normalFrameGetScoreTest() {
+        Frame normalFrame = NormalFrame.from(Round.firstRound());
+        normalFrame.throwBall(5);
+        normalFrame.throwBall(4);
+        assertThat(normalFrame.getScore()).isEqualTo(9);
+    }
+
+    @DisplayName("프레임이 스트라이크 혹은 스페어라면 점수를 계산할 수 없다")
+    @Test
+    void normalFrameGetScoreExceptionTest() {
+        Frame strikeFrame = NormalFrame.from(Round.firstRound());
+        Frame spareFrame = NormalFrame.from(Round.firstRound());
+        strikeFrame.throwBall(10);
+        spareFrame.throwBall(9);
+        spareFrame.throwBall(1);
+        assertThatThrownBy(() -> {
+            strikeFrame.getScore();
+            spareFrame.getScore();
+        }).isInstanceOf(CannotCalculateException.class);
+    }
+
+    @DisplayName("스트라이크 시 뒤의 2 프레임의 점수를 더한 값을 얻는다")
+    @Test
+    void frameGetScoreWhenStrikeTest() {
+        Frames frames = Frames.init();
+        frames.throwBall(10);
+        frames.throwBall(2);
+        frames.throwBall(7);
+        Frame firstFrame = frames.frames().get(0);
+        assertThat(firstFrame.getScore()).isEqualTo(19);
+    }
+
+    @DisplayName("스페어 시 뒤의 1 프레임의 점수를 더한 값을 얻는다")
+    @Test
+    void frameGetScoreWhenSpareTest() {
+        Frames frames = Frames.init();
+        frames.throwBall(10);
+        frames.throwBall(2);
+        frames.throwBall(7);
+        Frame firstFrame = frames.frames().get(0);
+        assertThat(firstFrame.getScore()).isEqualTo(12);
     }
 }

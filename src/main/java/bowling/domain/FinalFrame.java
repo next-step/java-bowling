@@ -15,6 +15,10 @@ public class FinalFrame extends Frame {
         super(round);
     }
 
+    public int getScore() {
+        return 0;
+    }
+
     public static FinalFrame getFrame() {
         return new FinalFrame(Round.finalRound());
     }

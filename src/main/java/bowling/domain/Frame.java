@@ -30,6 +30,8 @@ public abstract class Frame {
         return pins;
     }
 
+    public abstract int getScore();
+
     public abstract boolean roundEnded();
 
     protected abstract void validateTry();

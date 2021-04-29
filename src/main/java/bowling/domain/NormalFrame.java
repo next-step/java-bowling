@@ -13,6 +13,10 @@ public class NormalFrame extends Frame {
         super(round);
     }
 
+    public int getScore() {
+        return 0;
+    }
+
     public static NormalFrame from(Round round) {
         return new NormalFrame(round);
     }
