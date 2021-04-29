@@ -23,7 +23,7 @@ class SpareTest {
     }
 
     @Test
-    @DisplayName("Strike 상태는 더 이상 다른 상태로 바뀔 수 없다.")
+    @DisplayName("Spare 상태는 더 이상 다른 상태로 바뀔 수 없다.")
     void cannotTransit() {
         assertThatThrownBy(() -> spareState.transit(RollResult.of(0)))
             .isInstanceOf(IllegalStateException.class);
