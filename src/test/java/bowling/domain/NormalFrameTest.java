@@ -18,7 +18,7 @@ class NormalFrameTest {
         NormalFrame startFrame = NormalFrame.first();
 
         // when then
-        assertThat(1).isEqualTo(startFrame.number());
+        assertThat(startFrame.number()).isEqualTo(1);
     }
 
     @Test
@@ -133,9 +133,9 @@ class NormalFrameTest {
         Frame nextFrame = startFrame.next();
 
         // then
-        assertThat(2).isEqualTo(nextFrame.number());
-        assertThat(startFrame).isEqualTo(nextFrame.before());
-        assertThat(1).isEqualTo(nextFrame.before().number());
+        assertThat(nextFrame.number()).isEqualTo(2);
+        assertThat(nextFrame.before()).isEqualTo(startFrame);
+        assertThat(nextFrame.before().number()).isEqualTo(1);
     }
 
     @Test
@@ -210,8 +210,8 @@ class NormalFrameTest {
         normalFrame.pitch(new Pitch(10));
 
         // then
-        assertThat(1).isEqualTo(normalFrame.getScoreBoards().size());
-        assertThat(Collections.singletonList("X")).isEqualTo(normalFrame.getScoreBoards());
+        assertThat(normalFrame.getScoreBoards().size()).isEqualTo(1);
+        assertThat(normalFrame.getScoreBoards()).isEqualTo(Collections.singletonList("X"));
     }
 
     @Test
@@ -225,8 +225,8 @@ class NormalFrameTest {
         normalFrame.pitch(new Pitch(3));
 
         // then
-        assertThat(2).isEqualTo(normalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "/")).isEqualTo(normalFrame.getScoreBoards());
+        assertThat(normalFrame.getScoreBoards().size()).isEqualTo(2);
+        assertThat(normalFrame.getScoreBoards()).isEqualTo(Arrays.asList("7", "/"));
     }
 
     @Test
@@ -240,8 +240,8 @@ class NormalFrameTest {
         normalFrame.pitch(new Pitch(2));
 
         // then
-        assertThat(2).isEqualTo(normalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "2")).isEqualTo(normalFrame.getScoreBoards());
+        assertThat(normalFrame.getScoreBoards().size()).isEqualTo(2);
+        assertThat(normalFrame.getScoreBoards()).isEqualTo(Arrays.asList("7", "2"));
     }
 
     @Test
@@ -263,14 +263,14 @@ class NormalFrameTest {
         normalFrame3.pitch(new Pitch(0));
 
         // then
-        assertThat(2).isEqualTo(normalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "-")).isEqualTo(normalFrame.getScoreBoards());
+        assertThat(normalFrame.getScoreBoards().size()).isEqualTo(2);
+        assertThat(normalFrame.getScoreBoards()).isEqualTo(Arrays.asList("7", "-"));
 
-        assertThat(2).isEqualTo(normalFrame2.getScoreBoards().size());
-        assertThat(Arrays.asList("-", "7")).isEqualTo(normalFrame2.getScoreBoards());
+        assertThat(normalFrame2.getScoreBoards().size()).isEqualTo(2);
+        assertThat(normalFrame2.getScoreBoards()).isEqualTo(Arrays.asList("-", "7"));
 
-        assertThat(2).isEqualTo(normalFrame3.getScoreBoards().size());
-        assertThat(Arrays.asList("-", "-")).isEqualTo(normalFrame3.getScoreBoards());
+        assertThat(normalFrame3.getScoreBoards().size()).isEqualTo(2);
+        assertThat(normalFrame3.getScoreBoards()).isEqualTo(Arrays.asList("-", "-"));
     }
 
 }

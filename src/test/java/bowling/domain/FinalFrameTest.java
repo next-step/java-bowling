@@ -92,8 +92,8 @@ class FinalFrameTest {
         finalFrame.pitch(new Pitch(10));
 
         // then
-        assertThat(1).isEqualTo(finalFrame.getScoreBoards().size());
-        assertThat(Collections.singletonList("X")).isEqualTo(finalFrame.getScoreBoards());
+        assertThat(finalFrame.getScoreBoards().size()).isEqualTo(1);
+        assertThat(finalFrame.getScoreBoards()).isEqualTo(Collections.singletonList("X"));
     }
 
     @Test
@@ -104,8 +104,8 @@ class FinalFrameTest {
         finalFrame.pitch(new Pitch(3));
 
         // then
-        assertThat(2).isEqualTo(finalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "/")).isEqualTo(finalFrame.getScoreBoards());
+        assertThat(finalFrame.getScoreBoards().size()).isEqualTo(2);
+        assertThat(finalFrame.getScoreBoards()).isEqualTo(Arrays.asList("7", "/"));
     }
 
     @Test
@@ -116,8 +116,8 @@ class FinalFrameTest {
         finalFrame.pitch(new Pitch(2));
 
         // then
-        assertThat(2).isEqualTo(finalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "2")).isEqualTo(finalFrame.getScoreBoards());
+        assertThat(finalFrame.getScoreBoards().size()).isEqualTo(2);
+        assertThat(finalFrame.getScoreBoards()).isEqualTo(Arrays.asList("7", "2"));
     }
 
     @ParameterizedTest
@@ -129,8 +129,8 @@ class FinalFrameTest {
         finalFrame.pitch(new Pitch(pitchCount2));
 
         // then
-        assertThat(2).isEqualTo(finalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList(score1, score2)).isEqualTo(finalFrame.getScoreBoards());
+        assertThat(finalFrame.getScoreBoards().size()).isEqualTo(2);
+        assertThat(finalFrame.getScoreBoards()).isEqualTo(Arrays.asList(score1, score2));
     }
 
     @ParameterizedTest
@@ -142,8 +142,8 @@ class FinalFrameTest {
         finalFrame.pitch(new Pitch(bonusPitchCount));
 
         // then
-        assertThat(2).isEqualTo(finalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("X", bonusScore)).isEqualTo(finalFrame.getScoreBoards());
+        assertThat(finalFrame.getScoreBoards().size()).isEqualTo(2);
+        assertThat(finalFrame.getScoreBoards()).isEqualTo(Arrays.asList("X", bonusScore));
     }
 
     @ParameterizedTest
@@ -156,8 +156,8 @@ class FinalFrameTest {
         finalFrame.pitch(new Pitch(bonusPitchCount));
 
         // then
-        assertThat(3).isEqualTo(finalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "/", bonusScore)).isEqualTo(finalFrame.getScoreBoards());
+        assertThat(finalFrame.getScoreBoards().size()).isEqualTo(3);
+        assertThat(finalFrame.getScoreBoards()).isEqualTo(Arrays.asList("7", "/", bonusScore));
     }
 
 }

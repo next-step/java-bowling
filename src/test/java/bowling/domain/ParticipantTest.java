@@ -18,8 +18,8 @@ class ParticipantTest {
         Participant lds = new Participant("LDS");
 
         // when then
-        assertThat("LDS").isEqualTo(lds.getName());
-        assertThat(new Participant("LDS")).isEqualTo(lds);
+        assertThat(lds.getName()).isEqualTo("LDS");
+        assertThat(lds).isEqualTo(new Participant("LDS"));
     }
 
     @ParameterizedTest

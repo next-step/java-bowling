@@ -17,7 +17,7 @@ class PitchesTest {
         Pitches pitches = new Pitches();
 
         // when then
-        assertThat(0).isEqualTo(pitches.pinDownCount());
+        assertThat(pitches.pinDownCount()).isEqualTo(0);
     }
 
     @Test
@@ -29,7 +29,7 @@ class PitchesTest {
         pitches.add(new Pitch(9));
 
         // when then
-        assertThat(10).isEqualTo(pitches.pinDownCount());
+        assertThat(pitches.pinDownCount()).isEqualTo(10);
     }
 
     @Test
@@ -44,8 +44,8 @@ class PitchesTest {
         pitches.add(new Pitch(9));
 
         // then
-        assertThat(0).isEqualTo(pitchesNonPitch.count());
-        assertThat(2).isEqualTo(pitches.count());
+        assertThat(pitchesNonPitch.count()).isEqualTo(0);
+        assertThat(pitches.count()).isEqualTo(2);
     }
 
     @Test
@@ -86,7 +86,7 @@ class PitchesTest {
         pitches.add(new Pitch(7));
 
         // then
-        assertThat(3).isEqualTo(pitches.spare());
+        assertThat(pitches.spare()).isEqualTo(3);
     }
 
     @Test
@@ -157,8 +157,8 @@ class PitchesTest {
         pitches.add(new Pitch(10));
 
         // then
-        assertThat(1).isEqualTo(pitches.getScoreBoards().size());
-        assertThat(Collections.singletonList("X")).isEqualTo(pitches.getScoreBoards());
+        assertThat(pitches.getScoreBoards().size()).isEqualTo(1);
+        assertThat(pitches.getScoreBoards()).isEqualTo(Collections.singletonList("X"));
     }
 
     @Test
@@ -172,8 +172,8 @@ class PitchesTest {
         pitches.add(new Pitch(3));
 
         // then
-        assertThat(2).isEqualTo(pitches.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "/")).isEqualTo(pitches.getScoreBoards());
+        assertThat(pitches.getScoreBoards().size()).isEqualTo(2);
+        assertThat(pitches.getScoreBoards()).isEqualTo(Arrays.asList("7", "/"));
     }
 
     @Test
@@ -187,8 +187,8 @@ class PitchesTest {
         pitches.add(new Pitch(2));
 
         // then
-        assertThat(2).isEqualTo(pitches.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "2")).isEqualTo(pitches.getScoreBoards());
+        assertThat(pitches.getScoreBoards().size()).isEqualTo(2);
+        assertThat(pitches.getScoreBoards()).isEqualTo(Arrays.asList("7", "2"));
     }
 
     @Test
@@ -210,13 +210,13 @@ class PitchesTest {
         pitches3.add(new Pitch(0));
 
         // then
-        assertThat(2).isEqualTo(pitches.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "-")).isEqualTo(pitches.getScoreBoards());
+        assertThat(pitches.getScoreBoards().size()).isEqualTo(2);
+        assertThat(pitches.getScoreBoards()).isEqualTo(Arrays.asList("7", "-"));
 
-        assertThat(2).isEqualTo(pitches2.getScoreBoards().size());
-        assertThat(Arrays.asList("-", "7")).isEqualTo(pitches2.getScoreBoards());
+        assertThat(pitches2.getScoreBoards().size()).isEqualTo(2);
+        assertThat(pitches2.getScoreBoards()).isEqualTo(Arrays.asList("-", "7"));
 
-        assertThat(2).isEqualTo(pitches3.getScoreBoards().size());
-        assertThat(Arrays.asList("-", "-")).isEqualTo(pitches3.getScoreBoards());
+        assertThat(pitches3.getScoreBoards().size()).isEqualTo(2);
+        assertThat(pitches3.getScoreBoards()).isEqualTo(Arrays.asList("-", "-"));
     }
 }

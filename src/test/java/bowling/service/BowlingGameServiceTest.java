@@ -46,7 +46,7 @@ class BowlingGameServiceTest {
         Frames frames = service.findFrames(participant);
 
         // then
-        assertThat(1).isEqualTo(frames.lastFrameNumber());
+        assertThat(frames.lastFrameNumber()).isEqualTo(1);
         assertThat(frames.isFinished()).isFalse();
     }
 
@@ -73,7 +73,7 @@ class BowlingGameServiceTest {
         Frames frames = service.findFrames(participant);
 
         // then
-        assertThat(10).isEqualTo(frames.lastFrameNumber());
+        assertThat(frames.lastFrameNumber()).isEqualTo(10);
         assertThat(frames.isFinished()).isTrue();
     }
 

@@ -18,7 +18,7 @@ class PitchTest {
         Pitch pitch = new Pitch(3);
 
         // then
-        assertThat(3).isEqualTo(pitch.value());
+        assertThat(pitch.value()).isEqualTo(3);
     }
 
     @ParameterizedTest
@@ -38,6 +38,6 @@ class PitchTest {
         Pitch pitch = new Pitch(pinDownCount);
 
         // then
-        assertThat(expected).isEqualTo(pitch.toString());
+        assertThat(pitch.toString()).isEqualTo(expected);
     }
 }
