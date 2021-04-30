@@ -15,7 +15,13 @@ public class Pinfall {
         this.pinfall = pinfall;
     }
 
+    public Pinfall add(Pinfall pinfall) {
+        return new Pinfall(this.pinfall + pinfall.pinfall);
+    }
 
+    public boolean isStrike() {
+        return pinfall == MAX_PINFALL;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -28,13 +34,5 @@ public class Pinfall {
     @Override
     public int hashCode() {
         return Objects.hash(pinfall);
-    }
-
-    public Pinfall add(Pinfall pinfall) {
-        return new Pinfall(this.pinfall + pinfall.pinfall);
-    }
-
-    public boolean isStrike() {
-        return pinfall == MAX_PINFALL;
     }
 }
