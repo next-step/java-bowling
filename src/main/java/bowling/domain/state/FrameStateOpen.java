@@ -5,7 +5,7 @@ import bowling.domain.Pinfall;
 public class FrameStateOpen implements FrameState{
     @Override
     public FrameState roll(Pinfall pinfall) {
-        return null;
+        throw new IllegalArgumentException("공을 굴릴 수 없습니다");
     }
 
     @Override
