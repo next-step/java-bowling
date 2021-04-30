@@ -59,6 +59,9 @@ public class NormalFrame extends Frame {
     @Override
     public void pitch(Pitch pitch) {
         pitches().add(pitch);
+        if (pitch.isStrike()) {
+            pitches().decreasePitchAbleCount();
+        }
     }
 
     @Override
