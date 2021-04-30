@@ -43,13 +43,12 @@ class NormalFrameScoreTest {
     @DisplayName("Pin을 쓰러뜨리고, 새로운 FrameScore를 반환한다.")
     void knockDownPin() {
         // given
-        final FrameScore beforeFrameScore = new NormalFrameScore();
-        final FrameScore expectedFrameScore = new NormalFrameScore(Pins.of(TestFixture.STRIKE_PIN));
+        final FrameScore frameScore = new NormalFrameScore();
 
         // when
-        final FrameScore afterFrameScore = beforeFrameScore.knockDownPin(TestFixture.STRIKE_PIN);
+        frameScore.knockDownPin(TestFixture.STRIKE_PIN);
 
         // then
-        assertThat(afterFrameScore).isEqualTo(expectedFrameScore);
+        assertThat(frameScore).isEqualTo(new NormalFrameScore(Pins.of(TestFixture.STRIKE_PIN)));
     }
 }

@@ -13,19 +13,17 @@ public abstract class FrameScore {
     public static final String EMPTY_STRING = "";
 
     protected final Pins pins;
-    protected final FrameStatus frameStatus;
 
-    protected FrameScore(Pins pins, FrameStatus frameStatus) {
+    protected FrameScore(Pins pins) {
         this.pins = pins;
-        this.frameStatus = frameStatus;
     }
 
     public abstract String status();
 
-    public abstract FrameScore knockDownPin(Pin pin);
+    public abstract void knockDownPin(Pin pin);
 
     public boolean isEnded() {
-        return FrameStatus.NOT_ENDED != frameStatus;
+        return FrameStatus.NOT_ENDED != pins.frameStatus();
     }
 
     @Override
@@ -33,11 +31,11 @@ public abstract class FrameScore {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FrameScore that = (FrameScore) o;
-        return Objects.equals(pins, that.pins) && frameStatus == that.frameStatus;
+        return Objects.equals(pins, that.pins);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pins, frameStatus);
+        return Objects.hash(pins);
     }
 }

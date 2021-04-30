@@ -87,12 +87,12 @@ class PinsTest {
     @DisplayName("쓰러진 핀을 전달받으면 새로운 Pins가 반환된다.")
     void knockDownPin() {
         // given
-        final Pins beforePins = Pins.create();
+        final Pins pins = Pins.create();
 
         // when
-        final Pins afterPins = beforePins.knockDownPin(TestFixture.STRIKE_PIN);
+        pins.knockDownPin(TestFixture.STRIKE_PIN);
 
         // then
-        assertThat(afterPins).isEqualTo(Pins.of(TestFixture.STRIKE_PIN));
+        assertThat(pins).isEqualTo(Pins.of(TestFixture.STRIKE_PIN));
     }
 }

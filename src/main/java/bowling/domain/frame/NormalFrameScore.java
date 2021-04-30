@@ -10,15 +10,12 @@ public final class NormalFrameScore extends FrameScore {
     }
 
     public NormalFrameScore(Pins pins) {
-        this(pins, pins.frameStatus());
-    }
-
-    public NormalFrameScore(Pins pins, FrameStatus frameStatus) {
-        super(pins, frameStatus);
+        super(pins);
     }
 
     @Override
     public String status() {
+        final FrameStatus frameStatus = pins.frameStatus();
         if (frameStatus == FrameStatus.STRIKE) {
             return STRIKE_PIN_STATUS;
         }
@@ -32,7 +29,7 @@ public final class NormalFrameScore extends FrameScore {
     }
 
     @Override
-    public FrameScore knockDownPin(Pin pin) {
-        return new NormalFrameScore(pins.knockDownPin(pin));
+    public void knockDownPin(Pin pin) {
+        pins.knockDownPin(pin);
     }
 }

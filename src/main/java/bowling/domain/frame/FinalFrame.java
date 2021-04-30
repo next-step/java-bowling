@@ -25,7 +25,7 @@ public final class FinalFrame extends Frame {
 
     @Override
     public void knockDownPin(Pin pin) {
-        frameScore = frameScore.knockDownPin(pin);
+        frameScore.knockDownPin(pin);
     }
 
     @Override

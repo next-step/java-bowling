@@ -12,22 +12,17 @@ public final class FinalFrameScore extends FrameScore {
     }
 
     public FinalFrameScore(Pins pins) {
-        this(pins, pins.frameStatus());
-    }
-
-    private FinalFrameScore(Pins pins, FrameStatus frameStatus) {
-        super(pins, frameStatus);
+        super(pins);
     }
 
     @Override
     public String status() {
-        if (frameStatus == FrameStatus.NOT_ENDED) {
+        if (pins.frameStatus() == FrameStatus.NOT_ENDED) {
             return EMPTY_STRING;
         }
-        final Pins Pins = pins;
-        final Pin firstPin = Pins.firstPin();
-        final Pin secondPin = Pins.secondPin();
-        final Pin thirdPin = Pins.thirdPin();
+        final Pin firstPin = pins.firstPin();
+        final Pin secondPin = pins.secondPin();
+        final Pin thirdPin = pins.thirdPin();
 
         if (firstPin.pinCount() == MAX_PIN_COUNT) {
             final boolean isSecondPinStrike = secondPin.pinCount() == MAX_PIN_COUNT;
@@ -40,7 +35,7 @@ public final class FinalFrameScore extends FrameScore {
     }
 
     @Override
-    public FrameScore knockDownPin(Pin pin) {
-        return new FinalFrameScore((Pins) pins.knockDownPin(pin));
+    public void knockDownPin(Pin pin) {
+        pins.knockDownPin(pin);
     }
 }

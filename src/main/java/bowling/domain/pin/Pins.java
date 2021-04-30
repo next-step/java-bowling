@@ -71,9 +71,8 @@ public final class Pins {
         return FrameStatus.of(firstPin(), secondPin(), thirdPin());
     }
 
-    public Pins knockDownPin(final Pin pin) {
+    public void knockDownPin(final Pin pin) {
         pins.add(pin);
-        return this;
     }
 
     @Override
