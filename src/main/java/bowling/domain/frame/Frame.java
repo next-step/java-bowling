@@ -25,7 +25,7 @@ public abstract class Frame {
     public abstract boolean isEnded();
 
     public boolean roundNumberEquals(RoundNumber roundNumber) {
-        return false;
+        return this.roundNumber.equals(roundNumber);
     }
 
     @Override
