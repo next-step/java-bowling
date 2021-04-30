@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.NameIncludeOtherLanguagesException;
 import bowling.exception.NameSizeMissMatchException;
 
 public final class Player {
@@ -13,14 +14,25 @@ public final class Player {
     }
 
     private Player(final String name) {
-        validateName(name);
+        validateSize(name);
+        validateAlphabet(name);
         this.name = name.toUpperCase();
     }
 
-    private final void validateName(final String name) {
+    private final void validateSize(final String name) {
         if(name.length() > STANDARD_SIZE) {
             throw new NameSizeMissMatchException(name);
         }
+    }
+
+    private void validateAlphabet(final String name) {
+        if(!replaceSpecialCharacters(name).equals(name)) {
+            throw new NameIncludeOtherLanguagesException(name);
+        }
+    }
+
+    private final String replaceSpecialCharacters(final String name) {
+        return name.replaceAll("[^a-zA-Z]", "");
     }
 
     public final String name() {
