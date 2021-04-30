@@ -49,6 +49,11 @@
 - 한번의 투구를 통해 모든 볼링핀이 쓰려졌을 때의 상태
 
 
+### BowlingSymbol
+- 볼링핀 수에 따른 출력 스트링으로 대체 역할
+- Strike, Spare, Miss, Gutter 변환
+
+
 ### Frame
 - 프레임당 시도 횟수, 상태 관리
 - 인터페이스(NormalFrame, FinalFrame)
