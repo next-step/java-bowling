@@ -12,11 +12,6 @@ public class NormalScore implements ScoreType {
     }
 
     @Override
-    public Pin score() {
-        return pin;
-    }
-
-    @Override
     public String scoreResult() {
         return pin.normalScore();
     }
@@ -29,7 +24,7 @@ public class NormalScore implements ScoreType {
     @Override
     public ScoreType pinResult(Pin fallenPin) {
         if (pin.isSpare(fallenPin)) {
-            return new Spare(pin, fallenPin);
+            return new Spare(pin);
         }
 
         return new Miss(pin, fallenPin);

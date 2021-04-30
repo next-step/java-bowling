@@ -6,16 +6,9 @@ import java.util.Objects;
 
 public class Spare implements ScoreType {
     private final Pin firstPin;
-    private final Pin secondPin;
 
-    public Spare(Pin firstPin, Pin secondPin) {
+    public Spare(Pin firstPin) {
         this.firstPin = firstPin;
-        this.secondPin = secondPin;
-    }
-
-    @Override
-    public Pin score() {
-        return secondPin;
     }
 
     @Override
@@ -31,9 +24,8 @@ public class Spare implements ScoreType {
     @Override
     public ScoreType pinResult(Pin fallenPin) {
         if (fallenPin.isStrike()) {
-            return new Strike(fallenPin);
+            return new Strike();
         }
-
         return new NormalScore(fallenPin);
     }
 
@@ -42,11 +34,11 @@ public class Spare implements ScoreType {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Spare spare = (Spare) o;
-        return Objects.equals(firstPin, spare.firstPin) && Objects.equals(secondPin, spare.secondPin);
+        return Objects.equals(firstPin, spare.firstPin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstPin, secondPin);
+        return Objects.hash(firstPin);
     }
 }

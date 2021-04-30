@@ -15,11 +15,6 @@ public class Miss implements ScoreType {
     }
 
     @Override
-    public Pin score() {
-        return secondPin;
-    }
-
-    @Override
     public String scoreResult() {
         return firstPin.miss(secondPin);
     }
