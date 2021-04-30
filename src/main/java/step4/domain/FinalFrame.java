@@ -1,9 +1,6 @@
 package step4.domain;
 
-import step4.domain.state.Ready;
-import step4.domain.state.Spare;
-import step4.domain.state.State;
-import step4.domain.state.Strike;
+import step4.domain.state.*;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -95,11 +92,18 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score add(Score score) {
-        if ((states.getFirst() instanceof Ready)) {
+        if (states.getFirst() instanceof Ready
+                || (score.leftOpportunity() > states.size() && tryNumber == 1)) {
             return Score.unCountableScore();
         }
 
-        for (int i = 0; i < score.leftOpportunity(); i++) {
+        if (states.getFirst() instanceof Miss
+                || states.getFirst() instanceof Spare) {
+            return states.getFirst().addScore(score);
+        }
+
+        int leftOpportunity = score.leftOpportunity();
+        for (int i = 0; i < leftOpportunity; i++) {
             score = states.get(i).addScore(score);
         }
 

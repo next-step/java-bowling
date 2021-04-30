@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Score {
     public static final int UN_COUNTABLE_SCORE = -1;
-    private static final int NO_CHANCE = 0;
+    public static final int NO_CHANCE = 0;
 
     private final int leftOpportunity;
     private final int score;
