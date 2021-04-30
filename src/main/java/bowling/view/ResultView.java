@@ -1,10 +1,10 @@
 package bowling.view;
 
-import bowling.domain.Frame;
-import bowling.domain.FrameFactory;
-import bowling.domain.Frames;
-import bowling.domain.Player;
+import bowling.domain.*;
+import bowling.domain.status.Status;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -34,7 +34,7 @@ public class ResultView {
         StringBuilder builder = new StringBuilder();
 
         IntStream.rangeClosed(START_FRAME_NO, MAX_FRAME_NO)
-                .forEach(frameNo -> builder.append(framePitches(frameNo, frames)));
+                .forEach(frameNo -> builder.append(framePitches2(frameNo, frames)));
 
         return builder.toString();
     }
@@ -47,6 +47,31 @@ public class ResultView {
             return String.format(" %-3s  " + DELIMITER, frameResult);
         }
         return EMPTY_FRAME;
+    }
+
+    private String framePitches2(int frameNo, Frames frames) {
+        Map<Integer, Frame> frameMap = frames.frames();
+        if (frameMap.containsKey(frameNo)) {
+            String frameResult = frameResult(frameMap.get(frameNo));
+            return String.format(" %-3s  " + DELIMITER, frameResult);
+        }
+        return EMPTY_FRAME;
+    }
+
+    public String frameResult(Frame frame) {
+        Pitches pitches = frame.pitches();
+        return pitchesToString(pitches);
+    }
+
+    private String pitchesToString(Pitches pitches) {
+        List<String> pitchesDisplay = new ArrayList<>();
+        pitches.forEach(pitch -> pitchesDisplay.add(pitchToString(pitch)));
+        return String.join("|", pitchesDisplay);
+    }
+
+    private String pitchToString(Pitch pitch) {
+        Status status = pitch.status();
+        return status.display(pitch.intValue());
     }
 
     private String playerName(String name) {
