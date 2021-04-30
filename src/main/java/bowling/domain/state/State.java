@@ -7,4 +7,8 @@ public interface State {
     boolean isFinish();
 
     State bowl(HitCount hitCount);
+
+//    static State initialize() {
+//        return new Ready();
+//    }
 }
