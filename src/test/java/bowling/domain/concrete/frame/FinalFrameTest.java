@@ -1,6 +1,8 @@
 package bowling.domain.concrete.frame;
 
 import bowling.domain.RollResult;
+import bowling.domain.engine.frame.state.CannotCalculateScoreException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +10,39 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class FinalFrameTest {
+
+    private FinalFrame strikeFrame;
+    private FinalFrame strikeFrame2;
+    private FinalFrame strikeFrame3;
+    private FinalFrame spareFrame;
+    private FinalFrame missedFrame;
+
+    @BeforeEach
+    void setUp() {
+        strikeFrame = FinalFrame.init();
+        strikeFrame.roll(RollResult.of(10));
+        strikeFrame.roll(RollResult.of(10));
+        strikeFrame.roll(RollResult.of(10));
+
+        strikeFrame2 = FinalFrame.init();
+        strikeFrame2.roll(RollResult.of(10));
+        strikeFrame2.roll(RollResult.of(6));
+        strikeFrame2.roll(RollResult.of(4));
+
+        strikeFrame3 = FinalFrame.init();
+        strikeFrame3.roll(RollResult.of(10));
+        strikeFrame3.roll(RollResult.of(6));
+        strikeFrame3.roll(RollResult.of(3));
+
+        spareFrame = FinalFrame.init();
+        spareFrame.roll(RollResult.of(6));
+        spareFrame.roll(RollResult.of(4));
+        spareFrame.roll(RollResult.of(3));
+
+        missedFrame = FinalFrame.init();
+        missedFrame.roll(RollResult.of(7));
+        missedFrame.roll(RollResult.of(2));
+    }
 
     @Test
     @DisplayName("첫 투구가 스트라이크라면 두 번 더 던질 수 있다.")
@@ -90,4 +125,27 @@ class FinalFrameTest {
         );
     }
 
+    @Test
+    @DisplayName("점수를 생성한다.")
+    void createScore() {
+        assertAll(
+            () -> assertThat(strikeFrame.getScore().getValue()).isEqualTo(30),
+            () -> assertThat(strikeFrame2.getScore().getValue()).isEqualTo(20),
+            () -> assertThat(strikeFrame3.getScore().getValue()).isEqualTo(19),
+            () -> assertThat(spareFrame.getScore().getValue()).isEqualTo(13),
+            () -> assertThat(missedFrame.getScore().getValue()).isEqualTo(9)
+        );
+    }
+
+    @Test
+    @DisplayName("점수 계산을 완료할 수 없을 때 점수를 가져오려고 시도하면 예외 처리한다.")
+    void cannotGetScoreThatIfCalculationIsNotCompleted() {
+        FinalFrame finalFrame = FinalFrame.init();
+
+        finalFrame.roll(RollResult.of(10));
+        finalFrame.roll(RollResult.of(10));
+
+        assertThatThrownBy(finalFrame::getScore).isInstanceOf(CannotCalculateScoreException.class);
+    }
+    
 }

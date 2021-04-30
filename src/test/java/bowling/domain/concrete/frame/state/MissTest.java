@@ -1,6 +1,7 @@
 package bowling.domain.concrete.frame.state;
 
 import bowling.domain.RollResult;
+import bowling.domain.engine.frame.Score;
 import bowling.domain.engine.frame.state.State;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class MissTest {
 
@@ -53,6 +55,24 @@ class MissTest {
     void cannotCreateMissIfPinsRemain() {
         assertThatThrownBy(() -> new Miss(firstRoll, RollResult.of(3)))
             .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("점수를 생성한다.")
+    void createScore() {
+        assertThat(missState.createScore().getValue()).isEqualTo(9);
+    }
+
+    @Test
+    @DisplayName("Score 에 추가로 점수를 넣어 준다.")
+    void giveScores() {
+        Score strikeScore = Score.initStrikeScore();
+        Score spareScore = Score.initSpareScore();
+
+        assertAll(
+            () -> assertThat(missState.addScoreTo(strikeScore).getValue()).isEqualTo(19),
+            () -> assertThat(missState.addScoreTo(spareScore).getValue()).isEqualTo(17)
+        );
     }
 
 }

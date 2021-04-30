@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FramesTest {
 
     static Frames allFinishedFrames() {
-        Frames frames = new Frames();
+        Frames frames = Frames.init();
         frames.roll(RollResult.of(10));
 
         for (int i = 0; i < 8; i++){
@@ -25,7 +25,7 @@ class FramesTest {
     @Test
     @DisplayName("다음 프레임의 번호를 가져온다.")
     void getNextFrameNumber() {
-        Frames frames = new Frames();
+        Frames frames = Frames.init();
         assertThat(frames.getNextFrameNumber()).isEqualTo(1);
 
         frames.roll(RollResult.of(10));

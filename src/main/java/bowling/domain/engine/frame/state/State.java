@@ -1,6 +1,7 @@
 package bowling.domain.engine.frame.state;
 
 import bowling.domain.RollResult;
+import bowling.domain.engine.frame.Score;
 
 public interface State {
 
@@ -13,5 +14,9 @@ public interface State {
     default boolean canPromoteToBonusState() {
         return false;
     }
+
+    Score addScoreTo(Score score);
+
+    Score createScore();
 
 }

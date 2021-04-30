@@ -1,6 +1,7 @@
 package bowling.domain.concrete.frame.state;
 
 import bowling.domain.RollResult;
+import bowling.domain.engine.frame.Score;
 import bowling.domain.engine.frame.state.Finished;
 import bowling.dto.RollResultsDto;
 import bowling.dto.StateExporter;
@@ -41,5 +42,21 @@ public class Spare extends Finished {
     @Override
     public String export() {
         return StateExporter.SPARE.export(RollResultsDto.of(firstRollResult, secondRollResult));
+    }
+
+    @Override
+    public Score createScore() {
+        return Score.initSpareScore();
+    }
+
+    @Override
+    public Score addScoreTo(Score score) {
+        Score completedScore = score.add(firstRollResult);
+
+        if (!completedScore.isCalculationCompleted()) {
+            completedScore = completedScore.add(secondRollResult);
+        }
+
+        return completedScore;
     }
 }

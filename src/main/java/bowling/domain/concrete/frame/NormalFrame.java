@@ -2,19 +2,31 @@ package bowling.domain.concrete.frame;
 
 import bowling.domain.RollResult;
 import bowling.domain.engine.frame.Frame;
+import bowling.domain.engine.frame.Score;
 import bowling.domain.engine.frame.state.State;
 import bowling.domain.engine.frame.state.StateFactory;
+
 
 public class NormalFrame implements Frame {
 
     private State state;
+    private Frame nextFrame;
 
     private NormalFrame(State state) {
         this.state = state;
     }
 
+    private NormalFrame(State state, Frame nextFrame) {
+        this.state = state;
+        this.nextFrame = nextFrame;
+    }
+
     public static NormalFrame init() {
         return new NormalFrame(StateFactory.ready());
+    }
+
+    public static NormalFrame init(Frame nextFrame) {
+        return new NormalFrame(StateFactory.ready(), nextFrame);
     }
 
     @Override
@@ -27,12 +39,34 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public Score getScore() {
+        Score score = state.createScore();
+
+        if (!score.isCalculationCompleted()) {
+            score = nextFrame.addScoreTo(score);
+        }
+
+        return score;
+    }
+
+    @Override
+    public Score addScoreTo(Score score) {
+        score = state.addScoreTo(score);
+
+        if (!score.isCalculationCompleted()) {
+            score = nextFrame.addScoreTo(score);
+        }
+
+        return score;
+    }
+
+    @Override
     public boolean isEnded() {
         return state.isFinished();
     }
 
     @Override
-    public String export() {
+    public String exportState() {
         return state.export();
     }
 }

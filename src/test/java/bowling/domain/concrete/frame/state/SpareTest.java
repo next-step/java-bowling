@@ -1,6 +1,7 @@
 package bowling.domain.concrete.frame.state;
 
 import bowling.domain.RollResult;
+import bowling.domain.engine.frame.Score;
 import bowling.domain.engine.frame.state.State;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class SpareTest {
 
@@ -21,7 +23,7 @@ class SpareTest {
     }
 
     @Test
-    @DisplayName("Strike 상태는 더 이상 다른 상태로 바뀔 수 없다.")
+    @DisplayName("Spare 상태는 더 이상 다른 상태로 바뀔 수 없다.")
     void cannotTransit() {
         assertThatThrownBy(() -> spareState.transit(RollResult.of(0)))
             .isInstanceOf(IllegalStateException.class);
@@ -51,6 +53,24 @@ class SpareTest {
     void cannotCreateSpareIfPinsRemain() {
         assertThatThrownBy(() -> new Spare(firstRoll, RollResult.of(2)))
             .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("점수를 생성한다. 생성 직후에는 다른 프레임에서 추가 점수를 가져와야 한다.")
+    void createScore() {
+        assertThat(spareState.createScore().isCalculationCompleted()).isFalse();
+    }
+
+    @Test
+    @DisplayName("Score 에 추가로 점수를 넣어 준다.")
+    void giveScores() {
+        Score strikeScore = Score.initStrikeScore();
+        Score spareScore = Score.initSpareScore();
+
+        assertAll(
+            () -> assertThat(spareState.addScoreTo(strikeScore).getValue()).isEqualTo(20),
+            () -> assertThat(spareState.addScoreTo(spareScore).getValue()).isEqualTo(17)
+        );
     }
     
 }

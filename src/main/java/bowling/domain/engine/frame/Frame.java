@@ -1,14 +1,17 @@
 package bowling.domain.engine.frame;
 
 import bowling.domain.RollResult;
-import bowling.dto.Exportable;
 
-public interface Frame extends Exportable<String> {
+public interface Frame {
 
     void roll(RollResult rollResult);
 
+    Score getScore();
+
+    Score addScoreTo(Score score);
+
     boolean isEnded();
 
-    String export();
+    String exportState();
 
 }
