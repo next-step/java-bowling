@@ -15,6 +15,11 @@ public class NormalFrameTest {
     }
 
     @Test
+    void Initial_FrameNumber_Is_One() {
+        assertThat(new NormalFrame().frameNumber()).isEqualTo(new FrameNumber(1));
+    }
+
+    @Test
     void When_Result_Then_ReturnFrameResult() {
         NormalFrame normalFrame = new NormalFrame();
 
@@ -51,5 +56,34 @@ public class NormalFrameTest {
         NormalFrame normalFrame = new NormalFrame(new Pinfall(10));
 
         assertThat(normalFrame.isDone()).isTrue();
+    }
+
+    @Test
+    void Given_Strike_When_Roll_Then_ResultNewFrame() {
+        NormalFrame currentFrame = new NormalFrame();
+        NormalFrame newFrame = currentFrame.roll(new Pinfall(10));
+
+        assertThat(newFrame).isNotEqualTo(currentFrame);
+    }
+
+    @Test
+    void Given_NewFrame_When_FrameNumber_Then_FrameNumberIsIncreased() {
+        NormalFrame currentFrame = new NormalFrame();
+        NormalFrame newFrame = currentFrame.roll(new Pinfall(10));
+
+        assertThat(newFrame.frameNumber()).isEqualTo(new FrameNumber(2));
+    }
+
+    @Test
+    void Given_Strike_When_Hasnext_Then_True() {
+        NormalFrame currentFrame = new NormalFrame();
+        currentFrame.roll(new Pinfall(10));
+
+        assertThat(currentFrame.hasNext()).isTrue();
+    }
+
+    @Test
+    void When_hasNext_Then_False() {
+        assertThat(new NormalFrame().hasNext()).isFalse();
     }
 }
