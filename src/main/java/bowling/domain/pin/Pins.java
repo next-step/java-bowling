@@ -60,7 +60,8 @@ public final class Pins {
     }
 
     public Pins knockDownPin(final Pin pin) {
-        return null;
+        pins.add(pin);
+        return this;
     }
 
     @Override
