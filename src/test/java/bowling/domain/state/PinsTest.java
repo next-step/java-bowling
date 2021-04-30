@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PinsTest {
@@ -30,6 +31,19 @@ class PinsTest {
                 () -> assertThat(pins.hit(HitCount.valueOf(10))).isNotNull(),
                 () -> assertThat(pins.hit(HitCount.valueOf(0))).isNotNull()
         );
+
+    }
+
+    @DisplayName("Pins 인스턴스가 소유한 값보다 큰수가 들어왔을 경우 예외처리 여부 테스트")
+    @Test
+    void 검증_() {
+        // when
+        Pins pins = Pins.initialize();
+
+        // then
+        assertThatThrownBy(() -> pins.hit(HitCount.valueOf(11)))
+                .isInstanceOf(InputOverHitCountExceotion.class)
+                .hasMessage("( 11 )은, 남은 수 ( 10 ) 보다 큰 값입니다.");
 
     }
 
