@@ -15,8 +15,6 @@ public class ResultView {
     private static final String BOARD_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     protected static final String DELIMITER = "|";
     protected static final String EMPTY_FRAME = "      |";
-    protected static final String SYMBOL_STRIKE = "X";
-    protected static final String SYMBOL_SPARE = "/";
     protected static final String SYMBOL_GUTTER = "-";
     protected static final String ZERO = "0";
 
@@ -61,14 +59,14 @@ public class ResultView {
 
     private String pitchToString(Pitch pitch) {
         Status status = pitch.status();
-        return status.display(pitch.intValue());
+        return convertZeroToHyphen(status.display(pitch.intValue()));
     }
 
     private String playerName(String name) {
         return String.format(DELIMITER + " %4s " + DELIMITER, name);
     }
 
-    protected String convertZeroToHyphen(int fallPins) {
-        return String.valueOf(fallPins).replace(ZERO, SYMBOL_GUTTER);
+    private String convertZeroToHyphen(String target) {
+        return target.replace(ZERO, SYMBOL_GUTTER);
     }
 }
