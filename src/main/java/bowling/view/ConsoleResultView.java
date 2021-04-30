@@ -1,9 +1,6 @@
 package bowling.view;
 
-import bowling.dto.FrameStateDto;
-import bowling.dto.FramesDto;
-import bowling.dto.PlayerDto;
-import bowling.dto.ScoreDto;
+import bowling.dto.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,16 +12,17 @@ public class ConsoleResultView implements ResultView {
     private static final String ZERO_PREFIX = "0";
     private static final int ELEMENT_LENGTH = 6;
     private static final int TOTAL_FRAMES = 10;
+    private static final String NAME_COLUMN_HEADER = "NAME";
 
     @Override
-    public void printStateOfPlayer(PlayerDto playerDto) {
+    public void printPlayers(PlayersDto playersDto) {
         printHeader();
-        printBody(playerDto);
+        playersDto.getPlayerDtoList().forEach(this::printBody);
     }
 
     private void printHeader() {
         StringBuilder stringBuilder = new StringBuilder(DELIMITER);
-        stringBuilder.append(alignCenter("NAME")).append(DELIMITER);
+        stringBuilder.append(alignCenter(NAME_COLUMN_HEADER)).append(DELIMITER);
 
         for (int i = 1; i <= TOTAL_FRAMES; i++){
             stringBuilder.append(alignCenter(frameNumber(i))).append(DELIMITER);

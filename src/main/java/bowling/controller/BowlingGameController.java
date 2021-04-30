@@ -1,18 +1,30 @@
 package bowling.controller;
 
+import bowling.domain.BowlingGame;
 import bowling.domain.Player;
+import bowling.domain.Players;
+import bowling.domain.RollResult;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
+import java.util.stream.Collectors;
 
 public class BowlingGameController {
 
     public void startGame(InputView inputView, ResultView resultView) {
-        Player player = Player.initialize(inputView.receivePlayerName());
-        resultView.printStateOfPlayer(player.exportFrameState());
-        
-        while (player.checkPlaying()) {
-            int numberOfPines = inputView.receiveNumberOfKnockedDownPins(player.getNextFrameNumber());
-            resultView.printStateOfPlayer(player.throwBall(numberOfPines));
+        int numberOfPlayers = inputView.receiveNumberOfPlayers();
+        Players players = inputView.receivePlayerNames(numberOfPlayers).stream().map(Player::initialize)
+                                   .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
+
+        BowlingGame bowlingGame = new BowlingGame(players);
+        resultView.printPlayers(bowlingGame.exportPlayers());
+
+        while (!bowlingGame.isFinished()) {
+            String currentPlayerName = bowlingGame.getNameOfCurrentPlayer();
+            RollResult rollResult = RollResult.of(inputView.receiveNumberOfKnockedDownPins(currentPlayerName));
+            bowlingGame.roll(rollResult);
+
+            resultView.printPlayers(bowlingGame.exportPlayers());
         }
     }
 
