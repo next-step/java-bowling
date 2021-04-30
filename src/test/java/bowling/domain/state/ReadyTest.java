@@ -51,9 +51,8 @@ class ReadyTest {
 
         // then
         assertAll(
-                () -> assertThat(ready.bowl(HitCount.valueOf(10))).isNotNull()
-//                () -> assertThat(ready.bowl(HitCount.valueOf(10))).isNotNull(),
-//                () -> assertThat(ready.bowl(HitCount.valueOf(10))).isInstanceOf(Strike.class)
+                () -> assertThat(ready.bowl(HitCount.valueOf(10))).isNotNull(),
+                () -> assertThat(ready.bowl(HitCount.valueOf(10))).isInstanceOf(Strike.class)
         );
 
     }

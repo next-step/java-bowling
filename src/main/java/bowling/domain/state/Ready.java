@@ -4,8 +4,18 @@ import bowling.domain.HitCount;
 
 public final class Ready extends Running {
 
+    private final Pins pins;
+
+    private Ready() {
+        this.pins = Pins.initialize();
+    }
+
     @Override
     public final State bowl(final HitCount hitCount) {
+        pins.hit(hitCount);
+        if(pins.isEmpty()) {
+            return Strike.newInstance();
+        }
         return FirstBowl.from(hitCount.count());
     }
 
