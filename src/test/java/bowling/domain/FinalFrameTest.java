@@ -32,6 +32,18 @@ public class FinalFrameTest {
     }
 
     @Test
+    @DisplayName("2구째에 스페어가 되고, 스트라이크를 한 경우에도 1번만 가능하다.")
+    void finalFrameBonusGameIfGotStrikeAfterSpareTest() {
+        FinalFrame finalFrame = new FinalFrame();
+
+        assertThat(finalFrame.inputScore("6")).isEqualTo("6");
+        assertThat(finalFrame.inputScore("4")).isEqualTo("/");
+        assertThat(finalFrame.inputScore("10")).isEqualTo("X");
+        assertThatThrownBy(() -> finalFrame.inputScore("10"))
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
     @DisplayName("1구째 스트라이크, 총 3연속 스트라이크")
     void finalFrameBonusGameIfThreeStrikeTest() {
         FinalFrame finalFrame = new FinalFrame();
