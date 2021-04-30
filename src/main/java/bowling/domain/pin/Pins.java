@@ -9,6 +9,10 @@ import java.util.Objects;
 
 public final class Pins {
 
+    private static final int FIRST_PIN_INDEX = 0;
+    private static final int SECOND_PIN_INDEX = 1;
+    private static final int THIRD_PIN_INDEX = 2;
+
     private final List<Pin> pins;
 
     private Pins() {
@@ -36,15 +40,15 @@ public final class Pins {
     }
 
     public Pin firstPin() {
-        return null;
+        return pins.get(FIRST_PIN_INDEX);
     }
 
     public Pin secondPin() {
-        return null;
+        return pins.get(SECOND_PIN_INDEX);
     }
 
     public Pin thirdPin() {
-        return null;
+        return pins.get(THIRD_PIN_INDEX);
     }
 
     public FrameStatus frameStatus() {
