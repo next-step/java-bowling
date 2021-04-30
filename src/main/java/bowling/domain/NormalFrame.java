@@ -104,7 +104,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public int doubleBonusScore() {
-        if (pitches().isEmpty()) {
+        if (!pitches().isEmpty()) {
             return pitches().firstPinDownCount();
         }
         return NON_BONUS;
