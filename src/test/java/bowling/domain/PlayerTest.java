@@ -32,7 +32,7 @@ class PlayerTest {
         // when and then
         assertThatThrownBy(() -> Player.from(name))
                 .isInstanceOf(NameSizeMissMatchException.class)
-                .hasMessage("( pobi )은 영문 3글자 또는 그 이하가 아닙니다.");
+                .hasMessage("( "+name+" )은 영문 3글자 또는 그 이하가 아닙니다.");
     }
 
 }

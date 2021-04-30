@@ -1,14 +1,26 @@
 package bowling.domain;
 
+import bowling.exception.NameSizeMissMatchException;
+
 public final class Player {
 
-    private final String name;
+    private static final int STANDARD_SIZE = 3;
 
-    private Player(final String name) {
-        this.name = name;
-    }
+    private final String name;
 
     public static final Player from(final String name) {
         return new Player(name);
     }
+
+    private Player(final String name) {
+        validateName(name);
+        this.name = name;
+    }
+
+    private final void validateName(final String name) {
+        if(name.length() > STANDARD_SIZE) {
+            throw new NameSizeMissMatchException(name);
+        }
+    }
+
 }
