@@ -7,13 +7,26 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.ArrayList;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PinsTest {
 
     @Test
-    @DisplayName("Pins는 Pin을 두 개 가지고 생성된다.")
+    @DisplayName("create로 Pins를 생성하면 비어있는 Pins가 생성된다.")
+    void createEmptyPins() {
+        // given
+        // when
+        final Pins pins = Pins.create();
+
+        // then
+        assertThat(pins).isEqualTo(Pins.from(new ArrayList<>()));
+    }
+
+    @Test
+    @DisplayName("Pins는 Pin 두 개로 생성할 수 있다.")
     void createOfTwoPin() {
         // given
         final Pin firstPin = TestFixture.STRIKE_PIN;
@@ -31,7 +44,7 @@ class PinsTest {
     }
 
     @Test
-    @DisplayName("Pins는 Pin을 세 개 가지고 생성된다.")
+    @DisplayName("Pins는 Pin 세 개로 생성할 수 있다.")
     void createOfThreePin() {
         // given
         final Pin firstPin = TestFixture.STRIKE_PIN;
