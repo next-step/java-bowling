@@ -4,7 +4,10 @@ import bowling.entity.Pin;
 
 import java.util.Objects;
 
+import static bowling.entity.Pin.*;
+
 public class Spare implements ScoreType {
+    private static final String SPARE_SYMBOL = "/";
     private final Pin firstPin;
 
     public Spare(Pin firstPin) {
@@ -13,7 +16,7 @@ public class Spare implements ScoreType {
 
     @Override
     public String scoreResult() {
-        return firstPin.spare();
+        return firstPin.pin() + SCORE_ASSOCIATION_SYMBOL + SPARE_SYMBOL;
     }
 
     @Override
@@ -23,7 +26,7 @@ public class Spare implements ScoreType {
 
     @Override
     public ScoreType pinResult(Pin fallenPin) {
-        if (fallenPin.isStrike()) {
+        if (fallenPin.pin() == MAX_PIN_COUNT) {
             return new Strike();
         }
         return new NormalScore(fallenPin);

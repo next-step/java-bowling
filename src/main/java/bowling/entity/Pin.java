@@ -3,9 +3,6 @@ package bowling.entity;
 import java.util.Objects;
 
 public class Pin {
-    private static final String SPARE_SYMBOL = "/";
-    private static final String GUTTER_SYMBOL = "-";
-
     public static final int MAX_PIN_COUNT = 10;
     public static final int MIN_PIN_COUNT = 0;
     public static final String SCORE_ASSOCIATION_SYMBOL = "|";
@@ -35,31 +32,8 @@ public class Pin {
         return sumPin;
     }
 
-    public boolean isStrike() {
-        return pin == MAX_PIN_COUNT;
-    }
-
-    public boolean isSpare(Pin fallenPin) {
-        return sumPin(fallenPin) == MAX_PIN_COUNT;
-    }
-
-    public String normalScore() {
-       return pinValue(pin);
-    }
-
-    public String spare() {
-        return pinValue(pin) + SCORE_ASSOCIATION_SYMBOL + SPARE_SYMBOL;
-    }
-
-    public String miss(Pin secondPin) {
-      return pinValue(pin) + SCORE_ASSOCIATION_SYMBOL + pinValue(secondPin.pin);
-    }
-
-    private String pinValue(int pin) {
-        if (pin == 0) {
-            return GUTTER_SYMBOL;
-        }
-        return String.valueOf(pin);
+    public int pin() {
+        return pin;
     }
 
     @Override

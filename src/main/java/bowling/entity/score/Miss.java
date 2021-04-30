@@ -4,6 +4,8 @@ import bowling.entity.Pin;
 
 import java.util.Objects;
 
+import static bowling.entity.Pin.SCORE_ASSOCIATION_SYMBOL;
+
 public class Miss implements ScoreType {
     private final Pin firstPin;
     private final Pin secondPin;
@@ -16,7 +18,7 @@ public class Miss implements ScoreType {
 
     @Override
     public String scoreResult() {
-        return firstPin.miss(secondPin);
+        return firstPin.pin() + SCORE_ASSOCIATION_SYMBOL + secondPin.pin();
     }
 
     @Override

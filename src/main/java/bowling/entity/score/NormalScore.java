@@ -4,6 +4,8 @@ import bowling.entity.Pin;
 
 import java.util.Objects;
 
+import static bowling.entity.Pin.MAX_PIN_COUNT;
+
 public class NormalScore implements ScoreType {
     private final Pin pin;
 
@@ -13,7 +15,7 @@ public class NormalScore implements ScoreType {
 
     @Override
     public String scoreResult() {
-        return pin.normalScore();
+        return String.valueOf(pin.pin());
     }
 
     @Override
@@ -23,7 +25,7 @@ public class NormalScore implements ScoreType {
 
     @Override
     public ScoreType pinResult(Pin fallenPin) {
-        if (pin.isSpare(fallenPin)) {
+        if (pin.sumPin(fallenPin) == MAX_PIN_COUNT) {
             return new Spare(pin);
         }
 

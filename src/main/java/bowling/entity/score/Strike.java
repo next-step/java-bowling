@@ -4,6 +4,8 @@ import bowling.entity.Pin;
 
 import java.util.Objects;
 
+import static bowling.entity.Pin.MAX_PIN_COUNT;
+
 public class Strike implements ScoreType {
     private static final String STRIKE_SYMBOL = "X";
 
@@ -19,7 +21,7 @@ public class Strike implements ScoreType {
 
     @Override
     public ScoreType pinResult(Pin fallenPin) {
-        if (fallenPin.isStrike()) {
+        if (fallenPin.pin() == MAX_PIN_COUNT) {
             return new Strike();
         }
         return new NormalScore(fallenPin);

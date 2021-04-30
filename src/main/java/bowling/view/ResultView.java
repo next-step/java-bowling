@@ -10,7 +10,7 @@ import static bowling.controller.BowlingController.END_FRAME;
 import static bowling.controller.BowlingController.START_FRAME;
 
 public class ResultView {
-
+    private static final Character GUTTER_SYMBOL = '-';
     private static final String PRINT_NAME_FORMAT = "|%6s |";
     private static final String PRINT_FORMAT = "%6s |";
     private static final String FRAME_FORMAT = "%02d";
@@ -46,7 +46,7 @@ public class ResultView {
 
     public static void normalFramePrint(List<FrameResult> bowlingResults) {
         for (FrameResult bowlingResult : bowlingResults) {
-            System.out.printf(PRINT_FORMAT, bowlingResult.bowlingScore());
+            System.out.printf(PRINT_FORMAT, bowlingResult.bowlingScore().replace('0', GUTTER_SYMBOL));
         }
     }
 
