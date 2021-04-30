@@ -35,10 +35,11 @@ public class Frames {
 
     public void proceedRound(int frameNumber, PinNumber pinNumber) {
         frames.get(frameNumber - 1).play(pinNumber);
-
         if (!hasRemainTurn(frameNumber) && frameNumber < LAST_ROUND) {
             frames.add(frames.get(frameNumber - 1).newNextFrame(frameNumber));
         }
+
+        calculateScore(frameNumber);
     }
 
     public boolean hasRemainTurn(int frameNumber) {

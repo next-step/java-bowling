@@ -29,15 +29,15 @@ public class ResultView {
         System.out.println();
     }
 
-    private void printScoreBoard(User user) {
+    private void printScoreBoard(User user, Frames frames) {
         System.out.print("|  " + user.name() + " |");
-        for (FrameStrategy frame : user.getFrameList()) {
+        for (FrameStrategy frame : frames.getFrames()) {
             System.out.print("  ");
             printProceedingRound(frame);
         }
 
-        printRemainingRound(user.getFrameList().size());
-        printScore(user.getFrames());
+        printRemainingRound(frames.frameSize());
+        printScore(frames);
     }
 
     private void printProceedingRound(FrameStrategy frame) {

@@ -23,18 +23,14 @@ public class BowlingController {
         resultView.print(users);
 
         for (int frameNumber = FIRST_ROUND; frameNumber <= LAST_ROUND; frameNumber++) {
-            playPerPerson(frameNumber, users);
+            playRound(frameNumber, users);
         }
     }
 
-    private void playPerPerson(int frameNumber, Users users) {
-        users.getUsers()
-                .forEach(user -> playRound(frameNumber, users, user));
-    }
-
-    private void playRound(int frameNumber, Users users, User user) {
-        while (user.hasRemainTurn(frameNumber)) {
-            user.proceed(frameNumber, new PinNumber(inputView.pinNumber(user.name())));
+    private void playRound(int frameNumber, Users users) {
+        while (users.hasRemainTurn(frameNumber)) {
+            User currentTurnUser = users.currentTurnUser(frameNumber);
+            users.proceed(frameNumber, currentTurnUser, new PinNumber(inputView.pinNumber(currentTurnUser.name())));
             resultView.print(users);
         }
     }

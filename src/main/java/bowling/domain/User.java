@@ -1,35 +1,32 @@
 package bowling.domain;
 
-import java.util.List;
+import java.util.Objects;
 
 public class User {
 
     private final String name;
-    private final Frames frames;
 
     public User(String name) {
+        if (name.length() != 3) {
+            throw new IllegalArgumentException("이름은 세글자 입니다.");
+        }
         this.name = name;
-        this.frames = new Frames();
     }
 
     public String name() {
         return name;
     }
 
-    public List<FrameStrategy> getFrameList() {
-        return frames.getFrames();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(name, user.name);
     }
 
-    public Frames getFrames() {
-        return frames;
-    }
-
-    public void proceed(int frameNumber, PinNumber pinNumber) {
-        frames.proceedRound(frameNumber, pinNumber);
-        frames.calculateScore(frameNumber);
-    }
-
-    public boolean hasRemainTurn(int frameNumber) {
-        return frames.hasRemainTurn(frameNumber);
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
