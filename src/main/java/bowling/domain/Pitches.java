@@ -7,11 +7,12 @@ import java.util.stream.Collectors;
 
 public class Pitches {
 
-    private static final int MAX_PITCH_ABLE_COUNT = 2;
+    private static final int DEFAULT_PITCH_ABLE_COUNT = 2;
     private static final int FIRST_INDEX = 0;
     private static final String SPARE_MARK = "/";
 
     private final List<Pitch> values;
+    private int pitchAbleCount;
 
     public Pitches() {
         this(new ArrayList<>());
@@ -19,6 +20,7 @@ public class Pitches {
 
     public Pitches(List<Pitch> values) {
         this.values = values;
+        this.pitchAbleCount = DEFAULT_PITCH_ABLE_COUNT;
     }
 
     public int pinDownCount() {
@@ -53,23 +55,19 @@ public class Pitches {
     }
 
     public boolean isStrike() {
-        return count() == 1 && first().isStrike();
+        return first().isStrike();
     }
 
     public boolean isSpare() {
-        return isFull() && pinDownCount() == Pitch.STRIKE_COUNT;
+        return !first().isStrike() && pinDownCount() == Pitch.STRIKE_COUNT;
     }
 
     public boolean isMiss() {
-        return isFull() && pinDownCount() < Pitch.STRIKE_COUNT;
+        return isFinished() && pinDownCount() < Pitch.STRIKE_COUNT;
     }
 
     private Pitch first() {
         return values.get(FIRST_INDEX);
-    }
-
-    private boolean isFull() {
-        return count() == MAX_PITCH_ABLE_COUNT;
     }
 
     public int spare() {
@@ -77,11 +75,19 @@ public class Pitches {
     }
 
     public boolean isFinished() {
-        return isStrike() || count() == MAX_PITCH_ABLE_COUNT;
+        return count() == this.pitchAbleCount;
     }
 
     public boolean isEmpty() {
         return values.isEmpty();
+    }
+
+    public void increasePitchAbleCount() {
+        this.pitchAbleCount++;
+    }
+
+    public void decreasePitchAbleCount() {
+        this.pitchAbleCount--;
     }
 
     public List<String> getScoreBoards() {

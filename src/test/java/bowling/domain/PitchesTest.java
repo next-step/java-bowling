@@ -124,6 +124,7 @@ class PitchesTest {
 
         // when
         pitches.add(new Pitch(10));
+        pitches.decreasePitchAbleCount();
 
         // then
         assertThatIllegalStateException()
