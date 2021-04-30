@@ -64,9 +64,9 @@
 * Bowling : 볼링  
 * Player : 사용자
   * String name;
-  * Frames frames
-* Frames frames  
-  * List<Frame> frames;  
+  * Frames normalFrames
+* Frames normalFrames  
+  * List<Frame> normalFrames;  
 * Frame : 프레임 타입의 '구현체'
   * int index;
   * Frame next

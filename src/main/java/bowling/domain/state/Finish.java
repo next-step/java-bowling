@@ -2,16 +2,15 @@ package bowling.domain.state;
 
 import bowling.domain.HitCount;
 
-public abstract class Running implements State {
+public abstract class Finish implements State {
 
     @Override
     public boolean isFinish() {
-        return false;
+        return true;
     }
 
     @Override
-    public int getScore() {
-        return 0;
+    public State bowl(HitCount hitCount) {
+        return null;
     }
-
 }

@@ -1,10 +1,10 @@
 package bowling.domain.state;
 
+import bowling.domain.HitCount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RunningTest {
 
@@ -13,9 +13,14 @@ class RunningTest {
     void 완료_false() {
 
         // when
-        Running running = new Running() {};
+        Running running = new Running() {
+            @Override
+            public State bowl(HitCount hitCount) {
+                return null;
+            }
+        };
 
         // then
-        assertThat(running.isEnd()).isFalse();
+        assertThat(running.isFinish()).isFalse();
     }
 }
