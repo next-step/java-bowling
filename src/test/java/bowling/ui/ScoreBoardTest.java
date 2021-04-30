@@ -1,6 +1,5 @@
-package bowling;
+package bowling.ui;
 
-import bowling.ui.ScoreBoard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
