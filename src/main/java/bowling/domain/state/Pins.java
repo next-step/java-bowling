@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.HitCount;
+import bowling.exception.InputOverHitCountException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,14 @@ public final class Pins {
     }
 
     public final Pins hit(final HitCount hitCount) {
+        validateCount(hitCount);
         return CACHE.get(Math.subtractExact(pinCount, hitCount.count()));
+    }
+
+    private final void validateCount(final HitCount hitCount) {
+        if(hitCount.count() > pinCount) {
+            throw new InputOverHitCountException(hitCount.count(), pinCount);
+        }
     }
 
     public final boolean isEmpty() {

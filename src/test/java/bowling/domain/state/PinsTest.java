@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.HitCount;
+import bowling.exception.InputOverHitCountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,14 +37,14 @@ class PinsTest {
 
     @DisplayName("Pins 인스턴스가 소유한 값보다 큰수가 들어왔을 경우 예외처리 여부 테스트")
     @Test
-    void 검증_() {
+    void 검증_초과된_수() {
         // when
         Pins pins = Pins.initialize();
 
         // then
-        assertThatThrownBy(() -> pins.hit(HitCount.valueOf(11)))
-                .isInstanceOf(InputOverHitCountExceotion.class)
-                .hasMessage("( 11 )은, 남은 수 ( 10 ) 보다 큰 값입니다.");
+        assertThatThrownBy(() -> pins.hit(HitCount.valueOf(1)).hit(HitCount.valueOf(10)))
+                .isInstanceOf(InputOverHitCountException.class)
+                .hasMessage("( 10 )은, 남은 수 ( 9 ) 보다 큰 값입니다.");
 
     }
 
