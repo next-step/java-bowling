@@ -2,6 +2,9 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public final class Frames {
@@ -37,6 +40,19 @@ public final class Frames {
             currentFrame = currentFrame.nextFrame();
         }
         return currentFrame;
+    }
+
+    public List<Frame> value() {
+        List<Frame> frames = new ArrayList<>();
+
+        Frame currentFrame = this.firstFrame;
+        while (!currentFrame.isFinalFrame()) {
+            frames.add(currentFrame);
+            currentFrame = currentFrame.nextFrame();
+        }
+        frames.add(currentFrame);
+
+        return Collections.unmodifiableList(frames);
     }
 
     @Override
