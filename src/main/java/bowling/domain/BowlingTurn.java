@@ -1,45 +1,41 @@
 package bowling.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
 public class BowlingTurn {
-    private static final int LAST_FRAME_NUMBER = 11;
-    private static final int FIRST_FRAME_NUMBER = 1;
+    private static final int TOTAL_FRAME_SIZE = 10;
 
     private final Player player;
     private final Frames frames;
-    private int currentFrameNumber;
 
-    private BowlingTurn(String name, int currentFrameNumber) {
+    private BowlingTurn(String name) {
         this.player = Player.of(name);
         this.frames = Frames.init();
-        this.currentFrameNumber = currentFrameNumber;
     }
 
     public static BowlingTurn of(String name) {
-        return new BowlingTurn(name, FIRST_FRAME_NUMBER);
+        return new BowlingTurn(name);
     }
 
     public void play(int pinCount) {
         frames.bowl(pinCount);
-        if (frames.isDone()) {
-            this.currentFrameNumber += 1;
-        }
     }
 
-    public boolean isLastFrame() {
-        return this.currentFrameNumber == LAST_FRAME_NUMBER;
+    public void next() {
+        frames.next();
     }
 
-    public boolean isEndTurn() {
-        return frames.isDone();
+    public boolean isDone() {
+        return this.currentFrameSize() == TOTAL_FRAME_SIZE
+            && this.frames.isDone();
     }
 
-    public boolean isEndAllTurn() {
-        return frames.isAllDone();
+    public int currentFrameSize() {
+        return frames().size();
     }
 
     public String player() {
@@ -50,7 +46,18 @@ public class BowlingTurn {
         return this.frames.getFrames();
     }
 
-    public int currentFrameNumber() {
-        return this.currentFrameNumber;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        BowlingTurn that = (BowlingTurn)o;
+        return Objects.equals(player, that.player) && Objects.equals(frames, that.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(player, frames);
     }
 }
