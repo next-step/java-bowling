@@ -11,37 +11,47 @@ import bowling.view.OutputView;
 
 public final class BowlingController {
 
-    private BowlingController() {}
+    private final InputView inputView;
+    private final OutputView outputView;
 
-    public static void run() {
+    public BowlingController() {
+        this(new InputView(), new OutputView());
+    }
+
+    public BowlingController(InputView inputView, OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+    }
+
+    public void run() {
         final Player player = new Player(playerName());
-        OutputView.printScoreBoard(player);
+        outputView.printScoreBoard(player);
 
         for (int i = RoundNumber.MIN; i <= RoundNumber.MAX; i++) {
             bowl(player, i);
         }
     }
 
-    private static void bowl(Player player, int i) {
+    private void bowl(Player player, int i) {
         final RoundNumber roundNumber = new RoundNumber(i);
         while (!player.isEnded(roundNumber)) {
             downPin(player, i);
-            OutputView.printScoreBoard(player);
+            outputView.printScoreBoard(player);
         }
     }
 
-    private static PlayerName playerName() {
+    private PlayerName playerName() {
         try {
-            return PlayerName.valueOf(InputView.inputPlayerName());
+            return PlayerName.valueOf(inputView.inputPlayerName());
         } catch (PlayerNameValidationException e) {
             System.err.println(e.getMessage());
             return playerName();
         }
     }
 
-    private static void downPin(final Player player, final int roundNumber) {
+    private void downPin(final Player player, final int roundNumber) {
         try {
-            final Pin pin = new Pin(InputView.inputDownPin(roundNumber));
+            final Pin pin = new Pin(inputView.inputDownPin(roundNumber));
             player.knockDownPin(new RoundNumber(roundNumber), pin);
         } catch (BowlingException e) {
             System.err.println(e.getMessage());

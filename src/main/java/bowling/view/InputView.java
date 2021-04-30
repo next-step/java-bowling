@@ -6,16 +6,22 @@ import java.util.Scanner;
 
 public final class InputView {
 
-    private static final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
 
-    private InputView() {}
+    public InputView() {
+        this(new Scanner(System.in));
+    }
 
-    public static String inputPlayerName() {
+    public InputView(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    public String inputPlayerName() {
         System.out.print("플레이어의 이름을 입력해주세요.(영문 대소문자 3자이내): ");
         return scanner.nextLine();
     }
 
-    public static int inputDownPin(int roundNumber) {
+    public int inputDownPin(int roundNumber) {
         System.out.print(roundNumber + "프레임 투구 : ");
         final String input = scanner.nextLine();
         try {
