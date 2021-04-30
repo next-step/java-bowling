@@ -4,12 +4,12 @@ package bowling.domain.frame;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalFrame extends Frame {
-    public NormalFrame() {
+public class NormalScores extends Scores {
+    public NormalScores() {
         this.scores = new ArrayList<>();
     }
 
-    public NormalFrame(List<Score> scores) {
+    public NormalScores(List<Score> scores) {
         this.scores = scores;
     }
 

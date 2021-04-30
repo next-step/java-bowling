@@ -6,23 +6,23 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public final class Frames {
-    private final List<Frame> frames;
+    private final List<Scores> scores;
     public static final Integer FINAL_FRAME = 9;
 
     public Frames() {
         this(generateFrames());
     }
 
-    public Frames(List<Frame> frames) {
-        this.frames = frames;
+    public Frames(List<Scores> scores) {
+        this.scores = scores;
     }
 
     public Frames addScore(int score) throws Exception {
         if (isFinished()) {
             throw new IndexOutOfBoundsException();
         }
-        this.frames.get(nowFrame()).addScore(score);
-        return new Frames(this.frames);
+        this.scores.get(nowFrame()).addScore(score);
+        return new Frames(this.scores);
     }
 
     public boolean isFinished() {
@@ -34,20 +34,20 @@ public final class Frames {
 
     public int nowFrame() {
         return IntStream.range(0, 10)
-                .filter(i -> !frames.get(i).isFinished())
+                .filter(i -> !scores.get(i).isFinished())
                 .findFirst()
                 .orElse(10);
     }
 
-    public Frame getFrame(int index) {
-        return this.frames.get(index);
+    public Scores getFrame(int index) {
+        return this.scores.get(index);
     }
 
-    private static List<Frame> generateFrames() {
-        List<Frame> result = new LinkedList<>();
+    private static List<Scores> generateFrames() {
+        List<Scores> result = new LinkedList<>();
         IntStream.range(0, FINAL_FRAME)
-                .forEach(i -> result.add(new NormalFrame()));
-        result.add(new FinalFrame());
+                .forEach(i -> result.add(new NormalScores()));
+        result.add(new FinalScores());
         return result;
     }
 
@@ -60,18 +60,18 @@ public final class Frames {
             return false;
         }
         Frames frames1 = (Frames) o;
-        return Objects.equals(frames, frames1.frames);
+        return Objects.equals(scores, frames1.scores);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frames);
+        return Objects.hash(scores);
     }
 
     @Override
     public String toString() {
         return "Frames{" +
-                "frames=" + frames +
+                "frames=" + scores +
                 '}';
     }
 }

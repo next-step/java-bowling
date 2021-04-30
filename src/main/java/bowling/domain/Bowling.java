@@ -1,7 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.frame.Scores;
 
 public final class Bowling {
     private final User player;
@@ -28,7 +28,7 @@ public final class Bowling {
         return this.frames.nowFrame();
     }
 
-    public Frame getFrame(int index) {
+    public Scores getFrame(int index) {
         return frames.getFrame(index);
     }
 

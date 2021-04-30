@@ -3,13 +3,13 @@ package bowling.domain.frame;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FinalFrame extends Frame {
+public class FinalScores extends Scores {
 
-    public FinalFrame() {
+    public FinalScores() {
         this.scores = new ArrayList<>();
     }
 
-    public FinalFrame(List<Score> scores) {
+    public FinalScores(List<Score> scores) {
         this.scores = scores;
     }
 
