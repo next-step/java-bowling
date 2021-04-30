@@ -6,6 +6,7 @@ import bowling.entity.score.None;
 import bowling.entity.score.ScoreType;
 import bowling.entity.score.Spare;
 import bowling.entity.score.Strike;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class LastFrame implements Frame {
     private static final int MAX_BOWL_COUNT = 3;
     private static final int EMPTY = 0;
     private static final String SCORE_ASSOCIATION_SYMBOL = "|";
-    
+
     private ScoreType scoreType;
     private int maxBowlCount;
     private int currentBowlCount;
@@ -64,14 +65,18 @@ public class LastFrame implements Frame {
     }
 
     private String scoreTypesResult() {
-        
+
         String scoreTypesResult = this.scoreTypes.stream()
                 .filter(ScoreType::isFrameEnd)
                 .map(ScoreType::scoreResult)
                 .collect(Collectors.joining(SCORE_ASSOCIATION_SYMBOL));
 
-        if (!scoreType.isFrameEnd()) {
-            scoreTypesResult +=  SCORE_ASSOCIATION_SYMBOL + scoreType.scoreResult();
+        if (!StringUtils.hasLength(scoreTypesResult)) {
+            return scoreType.scoreResult();
+        }
+
+        if (StringUtils.hasLength(scoreTypesResult) && (!scoreType.isFrameEnd())) {
+            return scoreTypesResult + SCORE_ASSOCIATION_SYMBOL + scoreType.scoreResult();
         }
 
         return scoreTypesResult;
