@@ -32,4 +32,19 @@ class PinsTest {
         );
 
     }
+
+    @DisplayName("Pins 인스턴스에 핀이 남아있는지 여부 테스트")
+    @Test
+    void 검증_남은_핀_존재여부() {
+        // when
+        Pins pins = Pins.initialize();
+
+        // then
+        assertAll(
+                () -> assertThat(pins.hit(HitCount.valueOf(10)).isClaer()).isTrue(),
+                () -> assertThat(pins.hit(HitCount.valueOf(0)).isClaer()).isFalse()
+        );
+
+    }
+
 }
