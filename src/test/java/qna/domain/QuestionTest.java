@@ -11,7 +11,7 @@ public class QuestionTest {
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
     @Test
-    @DisplayName(value = "삭제 권한")
+    @DisplayName("삭제 권한")
     void delete_authorized_exception() {
         assertThatExceptionOfType(CannotDeleteException.class)
                 .isThrownBy(() -> {
@@ -21,7 +21,7 @@ public class QuestionTest {
     }
 
     @Test
-    @DisplayName(value = "삭제 성공")
+    @DisplayName("삭제 성공")
     void delete() throws CannotDeleteException {
         Q1.delete(UserTest.JAVAJIGI);
         Q2.delete(UserTest.SANJIGI);
