@@ -20,11 +20,11 @@ class PinsTest {
         final Pin secondPin = new Pin(0);
 
         // when
-        final Pins pins = new Pins(firstPin, secondPin);
+        final Pins pins = Pins.of(firstPin, secondPin);
 
         // then
         assertAll(
-                () -> assertThat(pins).isEqualTo(new Pins(firstPin, secondPin)),
+                () -> assertThat(pins).isEqualTo(Pins.of(firstPin, secondPin)),
                 () -> assertThat(pins.firstPin()).isEqualTo(firstPin),
                 () -> assertThat(pins.secondPin()).isEqualTo(secondPin)
         );
@@ -39,11 +39,11 @@ class PinsTest {
         final Pin thirdPin = TestFixture.STRIKE_PIN;
 
         // when
-        final Pins pins = new Pins(firstPin, secondPin, thirdPin);
+        final Pins pins = Pins.of(firstPin, secondPin, thirdPin);
 
         // then
         assertAll(
-                () -> assertThat(pins).isEqualTo(new Pins(firstPin, secondPin, thirdPin)),
+                () -> assertThat(pins).isEqualTo(Pins.of(firstPin, secondPin, thirdPin)),
                 () -> assertThat(pins.firstPin()).isEqualTo(firstPin),
                 () -> assertThat(pins.secondPin()).isEqualTo(secondPin),
                 () -> assertThat(pins.thirdPin()).isEqualTo(thirdPin)
@@ -57,10 +57,10 @@ class PinsTest {
         // given
         final Pin firstPin = new Pin(firstPinCount);
         final Pin secondPin = new Pin(secondPinCount);
-        final Pins Pins = new Pins(firstPin, secondPin);
+        final Pins pins = Pins.of(firstPin, secondPin);
 
         // when
-        final FrameStatus frameStatus = Pins.frameStatus();
+        final FrameStatus frameStatus = pins.frameStatus();
 
         // then
         assertThat(frameStatus).isEqualTo(expectedFrameStatus);
@@ -74,10 +74,10 @@ class PinsTest {
         final Pin firstPin = new Pin(firstPinCount);
         final Pin secondPin = new Pin(secondPinCount);
         final Pin thirdPin = new Pin(thirdPinCount);
-        final Pins Pins = new Pins(firstPin, secondPin, thirdPin);
+        final Pins pins = Pins.of(firstPin, secondPin, thirdPin);
 
         // when
-        final FrameStatus frameStatus = Pins.frameStatus();
+        final FrameStatus frameStatus = pins.frameStatus();
 
         // then
         assertThat(frameStatus).isEqualTo(expectedFrameStatus);
@@ -87,12 +87,12 @@ class PinsTest {
     @DisplayName("쓰러진 핀을 전달받으면 새로운 Pins가 반환된다.")
     void knockDownPin() {
         // given
-        final Pins beforePins = new Pins();
+        final Pins beforePins = Pins.create();
 
         // when
         final Pins afterPins = beforePins.knockDownPin(TestFixture.STRIKE_PIN);
 
         // then
-        assertThat(afterPins).isEqualTo(new Pins(TestFixture.STRIKE_PIN));
+        assertThat(afterPins).isEqualTo(Pins.of(TestFixture.STRIKE_PIN));
     }
 }

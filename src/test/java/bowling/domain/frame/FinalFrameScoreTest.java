@@ -15,7 +15,7 @@ class FinalFrameScoreTest {
     @DisplayName("Pins를 입력받아 FinalFrameScore를 생성한다.")
     void create() {
         // given
-        final Pins pins = new Pins(TestFixture.STRIKE_PIN, new Pin(0), TestFixture.STRIKE_PIN);
+        final Pins pins = Pins.of(TestFixture.STRIKE_PIN, new Pin(0), TestFixture.STRIKE_PIN);
 
         // when
         final FrameScore frameScore = new FinalFrameScore(pins);
@@ -28,8 +28,8 @@ class FinalFrameScoreTest {
     @DisplayName("해당 Frame이 종료되었는지 반환한다.")
     void isEnded() {
         // given
-        final FrameScore endedFrame = new FinalFrameScore(new Pins(TestFixture.STRIKE_PIN, new Pin(0), TestFixture.STRIKE_PIN));
-        final FrameScore notEndedFrame = new FinalFrameScore(new Pins(null, null, null));
+        final FrameScore endedFrame = new FinalFrameScore(Pins.of(TestFixture.STRIKE_PIN, new Pin(0), TestFixture.STRIKE_PIN));
+        final FrameScore notEndedFrame = new FinalFrameScore(Pins.of(null, null, null));
 
         // when
         // then
@@ -44,7 +44,7 @@ class FinalFrameScoreTest {
     void knockDownPin() {
         // given
         final FrameScore beforeFrameScore = new FinalFrameScore();
-        final FrameScore expectedFrameScore = new FinalFrameScore(new Pins(TestFixture.STRIKE_PIN));
+        final FrameScore expectedFrameScore = new FinalFrameScore(Pins.of(TestFixture.STRIKE_PIN));
 
         // when
         final FrameScore afterFrameScore = beforeFrameScore.knockDownPin(TestFixture.STRIKE_PIN);

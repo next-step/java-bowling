@@ -6,7 +6,7 @@ import bowling.domain.pin.Pins;
 public final class NormalFrameScore extends FrameScore {
 
     public NormalFrameScore() {
-        this(new Pins());
+        this(Pins.create());
     }
 
     public NormalFrameScore(Pins pins) {

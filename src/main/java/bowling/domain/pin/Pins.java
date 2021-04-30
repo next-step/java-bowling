@@ -11,16 +11,28 @@ public final class Pins {
 
     private final List<Pin> pins;
 
-    public Pins() {
+    private Pins() {
         this(new ArrayList<>());
     }
 
-    public Pins(Pin... pins) {
+    private Pins(Pin... pins) {
         this(Arrays.asList(pins));
     }
 
-    public Pins(List<Pin> pins) {
+    private Pins(List<Pin> pins) {
         this.pins = pins;
+    }
+
+    public static Pins create() {
+        return new Pins();
+    }
+
+    public static Pins of(Pin... pins) {
+        return new Pins(pins);
+    }
+
+    public static Pins from(List<Pin> pins) {
+        return new Pins(pins);
     }
 
     public Pin firstPin() {

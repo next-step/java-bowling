@@ -48,7 +48,7 @@ class FinalFrameTest {
         final Pin firstPin = new Pin(firstPinCount);
         final Pin secondPin = new Pin(secondPinCount);
         final Pin thirdPin = new Pin(thirdPinCount);
-        final Pins pins = new Pins(firstPin, secondPin, thirdPin);
+        final Pins pins = Pins.of(firstPin, secondPin, thirdPin);
         final Frame frame = FinalFrame.from(new FinalFrameScore(pins));
 
         // when

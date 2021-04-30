@@ -8,7 +8,7 @@ public final class FinalFrameScore extends FrameScore {
     public static final int MAX_PIN_COUNT = 10;
 
     public FinalFrameScore() {
-        this(new Pins());
+        this(Pins.create());
     }
 
     public FinalFrameScore(Pins pins) {

@@ -96,7 +96,7 @@ class NormalFrameTest {
         // given
         final Pin firstPin = new Pin(firstPinCount);
         final Pin secondPin = new Pin(secondPinCount);
-        final Pins pins = new Pins(firstPin, secondPin);
+        final Pins pins = Pins.of(firstPin, secondPin);
         final Frame frame = NormalFrame.of(RoundNumber.firstRoundNumber(), new NormalFrameScore(pins));
 
         // when
