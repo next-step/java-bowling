@@ -85,6 +85,10 @@ public final class Pins {
         pins.add(pin);
     }
 
+    public int totalPinCount() {
+        return 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

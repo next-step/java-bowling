@@ -32,7 +32,7 @@ class PinsTest {
     void createOfTwoPin() {
         // given
         final Pin firstPin = TestFixture.STRIKE_PIN;
-        final Pin secondPin = new Pin(0);
+        final Pin secondPin = TestFixture.GUTTER_PIN;
 
         // when
         final Pins pins = Pins.of(firstPin, secondPin);
@@ -50,7 +50,7 @@ class PinsTest {
     void createOfThreePin() {
         // given
         final Pin firstPin = TestFixture.STRIKE_PIN;
-        final Pin secondPin = new Pin(0);
+        final Pin secondPin = TestFixture.GUTTER_PIN;
         final Pin thirdPin = TestFixture.STRIKE_PIN;
 
         // when
@@ -70,7 +70,7 @@ class PinsTest {
     void createOfFourPin() {
         // given
         final Pin firstPin = TestFixture.STRIKE_PIN;
-        final Pin secondPin = new Pin(0);
+        final Pin secondPin = TestFixture.GUTTER_PIN;
         final Pin thirdPin = TestFixture.STRIKE_PIN;
         final Pin fourthPin = TestFixture.STRIKE_PIN;
 
@@ -132,7 +132,7 @@ class PinsTest {
     void knockDownMorePinWhenThreePins() {
         // given
         final Pin firstPin = TestFixture.STRIKE_PIN;
-        final Pin secondPin = new Pin(0);
+        final Pin secondPin = TestFixture.GUTTER_PIN;
         final Pin thirdPin = TestFixture.STRIKE_PIN;
         final Pins pins = Pins.of(firstPin, secondPin, thirdPin);
 
@@ -141,5 +141,18 @@ class PinsTest {
         assertThatThrownBy(() -> pins.knockDownPin(TestFixture.STRIKE_PIN))
                 .isInstanceOf(PinsCountExceededException.class)
                 .hasMessage(PinsCountExceededException.PINS_COUNT_EXCEEDED);
+    }
+
+    @Test
+    @DisplayName("전체 핀의 개수를 리턴한다.")
+    void totalPinCount() {
+        // given
+        final Pins pins = Pins.of(TestFixture.STRIKE_PIN, TestFixture.GUTTER_PIN);
+
+        // when
+        final int totalPinCount = pins.totalPinCount();
+
+        // then
+        assertThat(totalPinCount).isEqualTo(10);
     }
 }
