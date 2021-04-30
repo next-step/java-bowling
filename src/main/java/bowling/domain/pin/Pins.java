@@ -12,7 +12,7 @@ public final class Pins {
     private static final int FIRST_PIN_INDEX = 0;
     private static final int SECOND_PIN_INDEX = 1;
     private static final int THIRD_PIN_INDEX = 2;
-    public static final int FINAL_PIN_SIZE = 3;
+    private static final int FINAL_PIN_SIZE = 3;
 
     private final List<Pin> pins;
 
