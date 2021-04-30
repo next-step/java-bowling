@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.Player;
 import bowling.view.InputView;
 
 public final class Bowling {
@@ -10,6 +11,22 @@ public final class Bowling {
     }
 
     public static void main(String[] args) {
+        Player player = getPlayer();
+        // Frames frames.initialize();
 
     }
+
+
+
+
+
+    private static final Player getPlayer() {
+        try {
+            return Player.from(INPUT_VIEW.InputPlayerNameByConsole());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return getPlayer();
+        }
+    }
+
 }
