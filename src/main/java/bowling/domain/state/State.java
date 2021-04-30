@@ -8,7 +8,6 @@ public interface State {
         return Ready.initialize();
     }
 
-
     State bowl(HitCount hitCount);
     boolean isFinish();
 

@@ -6,7 +6,7 @@ public final class Ready extends Running {
 
     @Override
     public State bowl(final HitCount hitCount) {
-        return null;
+        return FirstBowl.from(hitCount.count());
     }
 
     public static State initialize() {
