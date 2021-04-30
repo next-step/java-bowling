@@ -8,26 +8,21 @@ import bowling.entity.score.ScoreType;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    private static final int MAX_NORMAL_FRAME = 9;
-    
-    private final int frameNo;
-    private ScoreType scoreType;
+
+    private final FrameInfo frameInfo;
     private Frame nextFrame;
 
     public NormalFrame(int frameNo) {
-        this.frameNo = frameNo;
-        this.scoreType = new None();
+        this.frameInfo = new FrameInfo(frameNo, new None());
     }
 
     public NormalFrame(int frameNo, ScoreType scoreType) {
-        this.frameNo = frameNo;
-        this.scoreType = scoreType;
+        this.frameInfo = new FrameInfo(frameNo, scoreType);
     }
 
     public Frame pinResult(Pin fallenPin) {
-        scoreType = scoreType.pinResult(fallenPin);
 
-        if (scoreType.isFrameEnd()) {
+        if (frameInfo.pinResult(fallenPin).isFrameEnd()) {
             nextFrame = nextFrame();
             return nextFrame;
         }
@@ -36,10 +31,10 @@ public class NormalFrame implements Frame {
     }
 
     private Frame nextFrame() {
-        if (frameNo == MAX_NORMAL_FRAME) {
+        if (frameInfo.nextFrameIsLastFrame()) {
             return new LastFrame();
         }
-        return new NormalFrame(frameNo + 1);
+        return new NormalFrame(frameInfo.frameNo() + 1);
     }
 
     public BowlingBoard bowlingBoard() {
@@ -55,8 +50,10 @@ public class NormalFrame implements Frame {
 
     public void addFrameResult(BowlingBoard bowlingBoard) {
 
-        if (!(scoreType instanceof None)) {
-            bowlingBoard.addResult(new NormalFrameResult(scoreType.scoreResult()));
+        String scoreResult = frameInfo.scoreResult();
+
+        if (!(scoreResult.equals(""))) {
+            bowlingBoard.addResult(new NormalFrameResult(scoreResult));
         }
 
         if (nextFrame != null) {
@@ -66,7 +63,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public int frameNo() {
-        return frameNo;
+        return frameInfo.frameNo();
     }
 
     @Override
@@ -74,11 +71,11 @@ public class NormalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return frameNo == that.frameNo && Objects.equals(scoreType, that.scoreType);
+        return Objects.equals(frameInfo, that.frameInfo) && Objects.equals(nextFrame, that.nextFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameNo, scoreType);
+        return Objects.hash(frameInfo, nextFrame);
     }
 }
