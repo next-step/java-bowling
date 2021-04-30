@@ -32,12 +32,12 @@ public class ResultView {
         StringBuilder builder = new StringBuilder();
 
         IntStream.rangeClosed(START_FRAME_NO, MAX_FRAME_NO)
-                .forEach(frameNo -> builder.append(framePitches2(frameNo, frames)));
+                .forEach(frameNo -> builder.append(framePitches(frameNo, frames)));
 
         return builder.toString();
     }
 
-    private String framePitches2(int frameNo, Frames frames) {
+    private String framePitches(int frameNo, Frames frames) {
         Map<Integer, Frame> frameMap = frames.frames();
         if (frameMap.containsKey(frameNo)) {
             String frameResult = frameResult(frameMap.get(frameNo));
