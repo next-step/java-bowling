@@ -6,6 +6,9 @@ import bowling.exception.InputOverHitCountException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 public final class Pins {
 
     private static final List<Pins> CACHE;
@@ -42,8 +45,8 @@ public final class Pins {
 
     public final boolean isEmpty() {
         if(pinCount <= MINIMUM_COUNT) {
-            return true;
+            return TRUE;
         }
-        return false;
+        return FALSE;
     }
 }
