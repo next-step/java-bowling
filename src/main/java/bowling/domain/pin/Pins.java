@@ -86,7 +86,9 @@ public final class Pins {
     }
 
     public int totalPinCount() {
-        return 0;
+        return pins.stream()
+                .mapToInt(Pin::pinCount)
+                .sum();
     }
 
     @Override
