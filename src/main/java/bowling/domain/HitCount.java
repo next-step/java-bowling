@@ -25,4 +25,7 @@ public final class HitCount {
     }
 
 
+    public final int count() {
+        return count;
+    }
 }
