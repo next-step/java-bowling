@@ -21,13 +21,19 @@ public class Miss implements ScoreType {
 
     @Override
     public String scoreResult() {
-        int pinValue = secondPin.pin();
+        String firstPinValue = printValue(firstPin.pin());
+        String secondPinValue = printValue(secondPin.pin());
 
-        if (pinValue == 0) {
-            return firstPin + "/-";
+        return firstPinValue + "|" + secondPinValue;
+    }
+
+    private String printValue(int pin) {
+
+        if (pin == 0) {
+            return "-";
         }
 
-        return firstPin + "|" + pinValue;
+        return String.valueOf(pin);
     }
 
     @Override
@@ -36,7 +42,7 @@ public class Miss implements ScoreType {
     }
 
     @Override
-    public ScoreType pinResult(Pin fallenPin){
+    public ScoreType pinResult(Pin fallenPin) {
         return new None();
     }
 

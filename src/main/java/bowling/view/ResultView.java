@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.FrameResult;
+import bowling.entity.BowlingBoard;
 import bowling.entity.frame.Frame;
 import bowling.entity.frame.NormalFrame;
 import bowling.entity.score.ScoreType;
@@ -42,18 +44,10 @@ public class ResultView {
         System.out.printf(PRINT_NAME_FORMAT, userName);
     }
 
-    public static void normalFramePrint(List<Frame> normalFrames) {
-        for (Frame normalFrame : normalFrames) {
-            System.out.printf(PRINT_FORMAT, normalFrame.scoreResult());
+    public static void normalFramePrint(List<FrameResult> bowlingResults) {
+        for (FrameResult bowlingResult : bowlingResults) {
+            System.out.printf(PRINT_FORMAT, bowlingResult.bowlingScore());
         }
-    }
-
-    public static void normalFramePrint(List<Frame> normalFrames, Frame currentFrame) {
-        for (Frame normalFrame : normalFrames) {
-            System.out.printf(PRINT_FORMAT, normalFrame.scoreResult());
-        }
-
-        System.out.printf(PRINT_FORMAT, currentFrame.scoreResult());
     }
 
 

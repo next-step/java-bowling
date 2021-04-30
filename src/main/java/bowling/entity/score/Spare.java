@@ -20,7 +20,7 @@ public class Spare implements ScoreType {
 
     @Override
     public String scoreResult() {
-        return firstPin + "|/";
+        return firstPin.pin() + "|/";
     }
 
     @Override

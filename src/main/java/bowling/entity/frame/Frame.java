@@ -1,5 +1,6 @@
 package bowling.entity.frame;
 
+import bowling.entity.BowlingBoard;
 import bowling.entity.Pin;
 
 public interface Frame {
@@ -7,7 +8,9 @@ public interface Frame {
 
     Frame pinResult(Pin fallenPin);
 
-    boolean isFrameEnd();
+    void addFrameResult(BowlingBoard bowlingBoard);
 
-    String scoreResult();
+    BowlingBoard bowlingBoard();
+
+    boolean bowlingGameEnd();
 }

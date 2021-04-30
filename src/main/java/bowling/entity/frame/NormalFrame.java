@@ -1,5 +1,7 @@
 package bowling.entity.frame;
 
+import bowling.FrameResult;
+import bowling.entity.BowlingBoard;
 import bowling.entity.Pin;
 import bowling.entity.score.None;
 import bowling.entity.score.ScoreType;
@@ -9,6 +11,7 @@ import java.util.Objects;
 public class NormalFrame implements Frame {
     private final int frameNo;
     private ScoreType scoreType;
+    private Frame nextFrame;
 
     public NormalFrame(int frameNo) {
         this.frameNo = frameNo;
@@ -20,23 +23,43 @@ public class NormalFrame implements Frame {
         this.scoreType = scoreType;
     }
 
-    public NormalFrame pinResult(Pin fallenPin) {
+    public Frame pinResult(Pin fallenPin) {
         scoreType = scoreType.pinResult(fallenPin);
 
         if (scoreType.isFrameEnd()) {
-            return new NormalFrame(frameNo + 1);
+            nextFrame = nextFrame();
+            return nextFrame;
         }
+
         return this;
     }
 
-    @Override
-    public boolean isFrameEnd() {
-        return scoreType.isFrameEnd();
+    private Frame nextFrame() {
+        if (frameNo == 9) {
+            return new LastFrame();
+        }
+        return new NormalFrame(frameNo + 1);
+    }
+
+    public BowlingBoard bowlingBoard() {
+        BowlingBoard bowlingBoard = new BowlingBoard();
+        addFrameResult(bowlingBoard);
+        return bowlingBoard;
     }
 
     @Override
-    public String scoreResult() {
-        return scoreType.scoreResult();
+    public boolean bowlingGameEnd() {
+        return false;
+    }
+
+    public void addFrameResult(BowlingBoard bowlingBoard) {
+        if(!(scoreType instanceof None)) {
+            bowlingBoard.addResult(new FrameResult(scoreType.scoreResult()));
+        }
+
+        if (nextFrame != null) {
+            nextFrame.addFrameResult(bowlingBoard);
+        }
     }
 
     @Override
