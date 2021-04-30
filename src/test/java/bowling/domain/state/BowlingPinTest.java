@@ -38,7 +38,7 @@ public class BowlingPinTest {
 
     @Test
     void 볼링핀_출력_테스트() {
-        assertThat(BowlingPin.of(7).score()).isEqualTo("7");
-        assertThat(BowlingPin.of(0).score()).isEqualTo("-");
+        assertThat(BowlingPin.of(7).score()).isEqualTo(7);
+        assertThat(BowlingPin.of(0).score()).isEqualTo(0);
     }
 }
