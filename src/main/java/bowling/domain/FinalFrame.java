@@ -1,9 +1,9 @@
 package bowling.domain;
 
-public class NormalFrame {
-    private final Score score;
+public class FinalFrame {
+    private Score score;
 
-    public NormalFrame() {
+    public FinalFrame() {
         this.score = new Score(10, 2);
     }
 

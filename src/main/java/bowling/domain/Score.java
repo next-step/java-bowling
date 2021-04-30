@@ -15,7 +15,7 @@ public class Score {
     }
 
     private void useAvailability() {
-        if (isAvailable()) {
+        if (isAvailable() && pins > 0) {
             --availability;
             return;
         }
@@ -42,7 +42,6 @@ public class Score {
             return "-";
         }
         if (availability == 1 && pins == 0) {
-            availability = 0;
             return "X";
         }
         if (availability == 0 && pins == 0) {
