@@ -46,4 +46,26 @@ public class BowlingResultTest {
 
         assertThat(bowlingResult.result(new FrameNumber(3))).isEqualTo(new FrameResult());
     }
+
+    @Test
+    void When_Add_Then_FrameResultAdded() {
+        FrameResult frameResult = new FrameResult(new PointSymbols(PointSymbol.STRIKE));
+        BowlingResult bowlingResult = new BowlingResult();
+
+        bowlingResult.add(new FrameNumber(1), frameResult);
+
+        assertThat(bowlingResult.result(new FrameNumber(1))).isEqualTo(frameResult);
+    }
+
+    @Test
+    void Given_NewFrameResult_When_Add_Then_ReplaceFrameResult() {
+        BowlingResult bowlingResult = new BowlingResult();
+
+        FrameResult oldFrameResult = new FrameResult(new PointSymbols(PointSymbol.SPARE));
+        bowlingResult.add(new FrameNumber(1), oldFrameResult);
+
+        FrameResult newFrameResult = new FrameResult(new PointSymbols(PointSymbol.STRIKE));
+        bowlingResult.add(new FrameNumber(1), newFrameResult);
+        assertThat(bowlingResult.result(new FrameNumber(1))).isEqualTo(newFrameResult);
+    }
 }

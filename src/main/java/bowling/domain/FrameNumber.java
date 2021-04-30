@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 public class FrameNumber {
@@ -17,8 +18,12 @@ public class FrameNumber {
         return new FrameNumber(frameNumber + 1);
     }
 
-    public int number() {
+    public Integer number() {
         return frameNumber;
+    }
+
+    public static int compare(FrameNumber first, FrameNumber second) {
+        return Integer.compare(first.number(), second.number());
     }
 
     @Override

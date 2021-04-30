@@ -1,37 +1,57 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class BowlingResult {
-    private final List<FrameResult> frameResults;
+    private final Map<FrameNumber, FrameResult> frameResultsMap;
 
     public BowlingResult() {
-        frameResults = new ArrayList<>();
+        frameResultsMap = new HashMap<>();
     }
 
-    public BowlingResult(List<FrameResult> frameResults) {
-        this.frameResults = frameResults;
+    public BowlingResult(List<FrameResult> frameResultsMap) {
+        this.frameResultsMap = new HashMap<>();
+        FrameNumber frameNumber = new FrameNumber(1);
+        for (FrameResult frameResult : frameResultsMap) {
+            add(frameNumber, frameResult);
+            frameNumber = frameNumber.increase();
+        }
+    }
+
+    public void add(FrameNumber frameNumber, FrameResult result) {
+        frameResultsMap.put(frameNumber, result);
     }
 
     public List<FrameResult> results() {
-        return frameResults;
+        return Collections.unmodifiableList(frameResultsMapToList());
     }
 
     public FrameResult result(FrameNumber frameNumber) {
-        int frameResultsIndex = frameNumberToIndex(frameNumber);
-        if (isOverFrameResultsIndex(frameResultsIndex)) {
+        if (!frameResultsMap.containsKey(frameNumber)) {
             return new FrameResult();
         }
-
-        return frameResults.get(frameResultsIndex);
+        return frameResultsMap.get(frameNumber);
     }
 
-    private boolean isOverFrameResultsIndex(int frameResultsIndex) {
-        return frameResultsIndex >= frameResults.size();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BowlingResult that = (BowlingResult) o;
+        return Objects.equals(frameResultsMap, that.frameResultsMap);
     }
 
-    private int frameNumberToIndex(FrameNumber frameNumber) {
-        return frameNumber.number() - 1;
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameResultsMap);
+    }
+
+    private List<FrameResult> frameResultsMapToList() {
+        return frameResultsMap.entrySet()
+                .stream()
+                .sorted((entry1, entry2) -> (FrameNumber.compare(entry1.getKey(), entry2.getKey())))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
     }
 }
