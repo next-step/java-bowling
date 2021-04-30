@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.HitCount;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,4 +28,7 @@ public final class Pins {
         return CACHE.get(MAXIMUM_COUNT);
     }
 
+    public final Pins hit(final HitCount hitCount) {
+        return CACHE.get(Math.subtractExact(pinCount, hitCount.count()));
+    }
 }
