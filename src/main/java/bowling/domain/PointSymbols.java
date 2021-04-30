@@ -9,8 +9,12 @@ public class PointSymbols {
     private final List<PointSymbol> symbols;
 
     public PointSymbols(PointSymbol symbol) {
-        symbols = new ArrayList<>();
+        this();
         symbols.add(symbol);
+    }
+
+    public PointSymbols() {
+        symbols = new ArrayList<>();
     }
 
     public PointSymbols(List<PointSymbol> symbols) {

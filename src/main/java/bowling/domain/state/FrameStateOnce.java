@@ -1,7 +1,10 @@
 package bowling.domain.state;
 
 import bowling.domain.Pinfall;
+import bowling.domain.PointSymbol;
+import bowling.domain.PointSymbols;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class FrameStateOnce implements FrameState {
@@ -14,14 +17,19 @@ public class FrameStateOnce implements FrameState {
     @Override
     public FrameState roll(Pinfall pinfall) {
         if (isSpare(pinfall)) {
-            return new FrameStateSpare();
+            return new FrameStateSpare(pinfall);
         }
-        return new FrameStateOpen();
+        return new FrameStateOpen(Arrays.asList(firstPinfall, pinfall));
     }
 
     @Override
     public boolean isRollable() {
         return true;
+    }
+
+    @Override
+    public PointSymbols pointSymbols() {
+        return new PointSymbols(PointSymbol.valueOf(firstPinfall));
     }
 
     @Override

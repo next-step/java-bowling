@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pinfall;
+import bowling.domain.PointSymbols;
 
 public class FrameStateReady implements FrameState {
     @Override
@@ -14,5 +15,10 @@ public class FrameStateReady implements FrameState {
     @Override
     public boolean isRollable() {
         return true;
+    }
+
+    @Override
+    public PointSymbols pointSymbols() {
+        return new PointSymbols();
     }
 }

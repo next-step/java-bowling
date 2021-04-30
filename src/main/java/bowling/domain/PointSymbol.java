@@ -14,7 +14,7 @@ public enum PointSymbol {
     SIX('6', 6),
     SEVEN('7', 7),
     EIGHT('8', 8),
-    NIGHT('9', 9),
+    NINE('9', 9),
     EMPTY(' ');
 
     private final char symbol;
@@ -29,14 +29,13 @@ public enum PointSymbol {
         this.number = number;
     }
 
-
     public char symbol() {
         return symbol;
     }
 
-    private static PointSymbol valueOf(int number) {
+    public static PointSymbol valueOf(Pinfall pinfall) {
         return Arrays.stream(values())
-                .filter(pointSymbol -> pointSymbol.isMatch(number))
+                .filter(pointSymbol -> pointSymbol.isMatch(pinfall.number()))
                 .findFirst()
                 .orElse(EMPTY);
     }

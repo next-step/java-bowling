@@ -1,10 +1,13 @@
 package bowling;
 
 import bowling.domain.Pinfall;
+import bowling.domain.PointSymbol;
 import bowling.domain.state.*;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+
 
 public class FrameStateOnceTest {
     @Test
@@ -28,5 +31,11 @@ public class FrameStateOnceTest {
     void When_isRollable_Then_False() {
         FrameState state = new FrameStateOnce(new Pinfall(1));
         assertThat(state.isRollable()).isTrue();
+    }
+
+    @Test
+    void When_Symbol_Then_RightSymbol() {
+        FrameState state = new FrameStateOnce(new Pinfall(1));
+        assertThat(state.pointSymbols().symbols()).contains(PointSymbol.ONE);
     }
 }
