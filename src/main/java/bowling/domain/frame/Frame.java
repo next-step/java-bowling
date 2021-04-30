@@ -27,6 +27,10 @@ public abstract class Frame {
 
     public abstract boolean isFinalFrame();
 
+    public Pins pins() {
+        return pins;
+    }
+
     public boolean isNotStarted() {
         return pins.isEmpty();
     }

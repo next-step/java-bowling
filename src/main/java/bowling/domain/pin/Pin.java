@@ -39,6 +39,10 @@ public final class Pin {
         return pin == MAX_COUNT;
     }
 
+    public String status() {
+        return String.valueOf(pin);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
