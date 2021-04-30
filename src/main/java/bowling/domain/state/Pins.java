@@ -31,4 +31,11 @@ public final class Pins {
     public final Pins hit(final HitCount hitCount) {
         return CACHE.get(Math.subtractExact(pinCount, hitCount.count()));
     }
+
+    public final boolean isEmpty() {
+        if(pinCount <= MINIMUM_COUNT) {
+            return true;
+        }
+        return false;
+    }
 }

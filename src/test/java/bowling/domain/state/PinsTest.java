@@ -41,8 +41,8 @@ class PinsTest {
 
         // then
         assertAll(
-                () -> assertThat(pins.hit(HitCount.valueOf(10)).isClaer()).isTrue(),
-                () -> assertThat(pins.hit(HitCount.valueOf(0)).isClaer()).isFalse()
+                () -> assertThat(pins.hit(HitCount.valueOf(10)).isEmpty()).isTrue(),
+                () -> assertThat(pins.hit(HitCount.valueOf(0)).isEmpty()).isFalse()
         );
 
     }
