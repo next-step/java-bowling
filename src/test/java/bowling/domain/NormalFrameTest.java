@@ -56,4 +56,15 @@ public class NormalFrameTest {
 
         assertThat(normalFrame.inputScore("2")).isEqualTo("/");
     }
+
+    @Test
+    @DisplayName("점수가 10을 넘을 경우, 예외를 발생시킨다.")
+    void inputOverScoreTest() {
+        NormalFrame normalFrame = new NormalFrame();
+
+        normalFrame.inputScore("9");
+
+        assertThatThrownBy(() -> normalFrame.inputScore("2"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
