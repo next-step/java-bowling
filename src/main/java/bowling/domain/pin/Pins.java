@@ -27,12 +27,12 @@ public final class Pins {
     }
 
     private Pins(List<Pin> pins) {
-        validatePinsCount(pins);
+        validatePinsCount(pins.size());
         this.pins = pins;
     }
 
-    private void validatePinsCount(List<Pin> pins) {
-        if (pins.size() > MAX_PIN_COUNT) {
+    private void validatePinsCount(final int count) {
+        if (count > MAX_PIN_COUNT) {
             throw new PinsCountExceededException();
         }
     }
@@ -81,6 +81,7 @@ public final class Pins {
     }
 
     public void knockDownPin(final Pin pin) {
+        validatePinsCount(pins.size() + 1);
         pins.add(pin);
     }
 
