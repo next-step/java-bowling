@@ -2,7 +2,6 @@ package bowling.domain;
 
 import bowling.domain.status.Status;
 import bowling.domain.status.StatusFactory;
-import bowling.domain.status.Symbol;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -34,20 +33,40 @@ public class Pitches {
     }
 
     public Pitches pitch(int point) {
-        pitches.add(new Pitch(point));
+        Pitch lastPitch = lastPitch();
+        pitches.add(lastPitch.pitch(point, pitches.size()));
         return this;
     }
 
-    public boolean isStrike() {
-        return status().keyword() == Symbol.STRIKE;
+    private Pitch lastPitch() {
+        if (pitches.isEmpty()) {
+            return new Pitch(0);
+        }
+        return pitches.get(pitches.size() - 1);
     }
 
-    public Status status() {
-        return StatusFactory.status(this);
+    public boolean isStrike() {
+        return pitches.stream().anyMatch(Pitch::isStrike);
+    }
+
+    public boolean isSpare() {
+        return pitches.stream().anyMatch(Pitch::isSpare);
+    }
+
+    public boolean isOpen() {
+        return pitches.stream().anyMatch(Pitch::isOpen);
+    }
+
+    public boolean isLastPitch(int frameSize) {
+        return pitches.size() == frameSize;
     }
 
     public String display() {
         return status().display(this);
+    }
+
+    private Status status() {
+        return StatusFactory.status(this);
     }
 
     public void forEach(Consumer<? super Pitch> action) {
