@@ -7,8 +7,8 @@ import java.util.Objects;
 public class NormalScore implements ScoreType {
     private final Pin pin;
 
-    public NormalScore(Pin score) {
-        this.pin = score;
+    public NormalScore(Pin pin) {
+        this.pin = pin;
     }
 
     @Override

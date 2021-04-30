@@ -10,11 +10,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ScoreTest {
 
-    Pin halfFallenPin;
-    ScoreType none;
-    ScoreType normalScore;
-    ScoreType strike;
-    ScoreType spare;
+    private Pin halfFallenPin;
+    private ScoreType none;
+    private ScoreType normalScore;
+    private ScoreType strike;
+    private ScoreType spare;
 
     @BeforeEach
     void setup(){
@@ -38,11 +38,9 @@ public class ScoreTest {
     @Test
     @DisplayName("쓰러트린 핀 결과가 일반 점수")
     public void scoreTypeNormalScore(){
-        Pin fallenPin = new Pin(5);
-
-        ScoreType normalScore = none.pinResult(fallenPin);
-        ScoreType normalScoreAfterStrike = strike.pinResult(fallenPin);
-        ScoreType normalScoreAfterSpare = spare.pinResult(fallenPin);
+        ScoreType normalScore = none.pinResult(halfFallenPin);
+        ScoreType normalScoreAfterStrike = strike.pinResult(halfFallenPin);
+        ScoreType normalScoreAfterSpare = spare.pinResult(halfFallenPin);
 
         assertThat(normalScore instanceof NormalScore).isTrue();
         assertThat(normalScoreAfterStrike instanceof NormalScore).isTrue();
@@ -52,9 +50,7 @@ public class ScoreTest {
     @Test
     @DisplayName("쓰러트린 핀 결과가 스페어")
     public void scoreTypeSpare(){
-        Pin fallenPin = new Pin(5);
-
-        ScoreType spare = normalScore.pinResult(fallenPin);
+        ScoreType spare = normalScore.pinResult(halfFallenPin);
 
         assertThat(spare instanceof Spare).isTrue();
     }

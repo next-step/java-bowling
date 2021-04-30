@@ -11,9 +11,10 @@ import static bowling.view.ResultView.*;
 public class BowlingController {
     public static final int START_FRAME = 1;
     public static final int END_FRAME = 10;
-    private static final String userName = userNameInput();
 
     public void start() {
+
+        String userName = userNameInput();
         ResultView.bowlingGameStartPrint(userName);
         Frame bowlingFrame = new NormalFrame(START_FRAME);
         Frame bowlingPrintFrame = bowlingFrame;
