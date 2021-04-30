@@ -11,7 +11,7 @@ public final class Bowling {
     }
 
     public static void main(String[] args) {
-        Player player = getPlayer();
+        final Player player = getPlayer();
         // Frames frames.initialize();
 
     }

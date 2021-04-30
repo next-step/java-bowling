@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.HitCount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +27,20 @@ class ReadyTest {
 
         // then
         assertThat(ready.isFinish()).isFalse();
+    }
+
+    @DisplayName("Ready 인스턴스가 종료 여부를 알맞게 반환하는지 테스트")
+    @Test
+    void 반환_FirstBowl() {
+        // when
+        State ready = State.initialize();
+
+        // then
+        assertAll(
+                () -> assertThat(ready.bowl(HitCount.valueOf(9))).isNotNull(),
+                () -> assertThat(ready.bowl(HitCount.valueOf(9))).isInstanceOf(FirstBowl.class)
+        );
+
     }
 
 }
