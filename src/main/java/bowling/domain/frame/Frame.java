@@ -18,11 +18,13 @@ public abstract class Frame {
 
     public abstract Frame nextFrame();
 
-    public abstract Frame createNextFrame();
+    public abstract void createNextFrame();
 
     public abstract void knockDownPin(Pin pin);
 
     public abstract boolean isEnded();
+
+    public abstract boolean isFinalFrame();
 
     public boolean roundNumberEquals(RoundNumber roundNumber) {
         return this.roundNumber.equals(roundNumber);

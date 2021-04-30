@@ -13,7 +13,14 @@ public final class Frames {
     }
 
     public static Frames initialize() {
-        return new Frames(NormalFrame.createFirstFrame());
+        final Frame firstFrame = NormalFrame.createFirstFrame();
+
+        Frame currentFrame = firstFrame;
+        while (!currentFrame.isFinalFrame()) {
+            currentFrame.createNextFrame();
+            currentFrame = currentFrame.nextFrame();
+        }
+        return new Frames(firstFrame);
     }
 
     public boolean isEnded(RoundNumber roundNumber) {

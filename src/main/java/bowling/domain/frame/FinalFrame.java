@@ -20,7 +20,7 @@ public final class FinalFrame extends Frame {
     }
 
     @Override
-    public Frame createNextFrame() {
+    public void createNextFrame() {
         throw new NoNextFrameException();
     }
 
@@ -32,5 +32,10 @@ public final class FinalFrame extends Frame {
     @Override
     public boolean isEnded() {
         return pins.frameStatus() != FrameStatus.NOT_ENDED;
+    }
+
+    @Override
+    public boolean isFinalFrame() {
+        return true;
     }
 }

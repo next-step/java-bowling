@@ -52,10 +52,10 @@ class NormalFrameTest {
         final Frame frame = NormalFrame.of(roundNumber, Pins.create());
 
         // when
-        final Frame nextFrame = frame.createNextFrame();
+        frame.createNextFrame();
 
         // then
-        assertThat(nextFrame).isEqualTo(NormalFrame.of(nextRoundNumber, Pins.create()));
+        assertThat(frame.nextFrame()).isEqualTo(NormalFrame.of(nextRoundNumber, Pins.create()));
     }
 
     @Test
@@ -74,10 +74,10 @@ class NormalFrameTest {
         final Frame nineFrame = NormalFrame.of(nineRoundNumber, Pins.create());
 
         // when
-        final Frame nextFrame = nineFrame.createNextFrame();
+        nineFrame.createNextFrame();
 
         // then
-        assertThat(nextFrame).isEqualTo(FinalFrame.from(Pins.create()));
+        assertThat(nineFrame.nextFrame()).isEqualTo(FinalFrame.from(Pins.create()));
     }
 
     @Test
