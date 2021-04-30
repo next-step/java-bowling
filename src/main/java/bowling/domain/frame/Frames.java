@@ -3,6 +3,9 @@ package bowling.domain.frame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+
+import bowling.domain.state.BowlingPin;
 
 public class Frames {
     private static final int MAX_NORMAL_FRAME_COUNT = 9;
@@ -20,34 +23,44 @@ public class Frames {
     }
 
     public void bowl(int pinCount) {
-        if (isDone()) {
-            frames.add(nextFrame(currentFrame()));
+        this.currentFrame().bowl(BowlingPin.of(pinCount));
+    }
+
+    public void next() {
+        if (this.currentFrame().isDone()
+            && this.frames.size() <= MAX_NORMAL_FRAME_COUNT) {
+            frames.add(this.nextFrame());
         }
-        currentFrame().bowl(pinCount);
+    }
+
+    public boolean isDone() {
+        return this.currentFrame().isDone();
     }
 
     private Frame currentFrame() {
         return frames.get(frames.size() - 1);
     }
 
-    private Frame nextFrame(Frame frame) {
-        if (frames.size() == MAX_NORMAL_FRAME_COUNT)
-            return FinalFrame.init();
-        return frame.next();
+    private Frame nextFrame() {
+        return this.currentFrame().next(frames.size());
     }
 
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
     }
 
-    // 한 프레임 끝남 여부
-    public boolean isDone() {
-        return frames.get(frames.size() - 1).isDone();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Frames frames1 = (Frames)o;
+        return Objects.equals(frames, frames1.frames);
     }
 
-    // 전체 프레임 끝남 여부
-    public boolean isAllDone() {
-        return frames.size() == MAX_NORMAL_FRAME_COUNT + 1
-            && frames.stream().allMatch(frame -> frame.isDone());
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames);
     }
 }

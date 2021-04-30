@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import bowling.domain.state.BowlingPin;
+
 public class FinalFrameTest {
 
     @Test
@@ -12,8 +14,8 @@ public class FinalFrameTest {
         // given
         Frame finalFrame = FinalFrame.init();
         // when & then
-        assertThat(finalFrame).isEqualTo(FinalFrame.of(0));
-        assertThat(finalFrame).isEqualTo(FinalFrame.init());
+        assertThat(finalFrame).isInstanceOf(FinalFrame.class);
+        assertThatCode(() -> FinalFrame.init()).doesNotThrowAnyException();
     }
 
     @Test
@@ -22,11 +24,10 @@ public class FinalFrameTest {
         Frame frame = FinalFrame.init();
         Frame frame2 = FinalFrame.init();
         // when
-        frame.bowl(3);
-        frame.bowl(5);
+        frame.bowl(BowlingPin.of(3));
+        frame.bowl(BowlingPin.of(5));
 
-        frame2.bowl(3);
-
+        frame2.bowl(BowlingPin.of(3));
         // then
         assertThat(frame.isDone()).isTrue();
         assertThat(frame2.isDone()).isFalse();
@@ -39,14 +40,14 @@ public class FinalFrameTest {
         Frame frame2 = FinalFrame.init();
         Frame frame3 = FinalFrame.init();
         // when
-        frame.bowl(10);
+        frame.bowl(BowlingPin.of(10));
 
-        frame2.bowl(10);
-        frame2.bowl(7);
+        frame2.bowl(BowlingPin.of(10));
+        frame2.bowl(BowlingPin.of(7));
 
-        frame3.bowl(10);
-        frame3.bowl(7);
-        frame3.bowl(10);
+        frame3.bowl(BowlingPin.of(10));
+        frame3.bowl(BowlingPin.of(7));
+        frame3.bowl(BowlingPin.of(2));
         // then
         assertThat(frame.isDone()).isFalse();
         assertThat(frame2.isDone()).isFalse();
@@ -59,12 +60,12 @@ public class FinalFrameTest {
         Frame frame = FinalFrame.init();
         Frame frame2 = FinalFrame.init();
         // when
-        frame.bowl(3);
-        frame.bowl(7);
+        frame.bowl(BowlingPin.of(3));
+        frame.bowl(BowlingPin.of(7));
 
-        frame2.bowl(3);
-        frame2.bowl(7);
-        frame2.bowl(5);
+        frame2.bowl(BowlingPin.of(3));
+        frame2.bowl(BowlingPin.of(7));
+        frame2.bowl(BowlingPin.of(5));
         // then
         assertThat(frame.isDone()).isFalse();
         assertThat(frame2.isDone()).isTrue();
@@ -75,6 +76,42 @@ public class FinalFrameTest {
         // given
         Frame frame = FinalFrame.init();
         // when & then
-        Assertions.assertThrows(IllegalStateException.class, () -> frame.next());
+        Assertions.assertThrows(IllegalStateException.class, () -> frame.next(1));
     }
+
+    @Test
+    void 점수_반환_테스트() {
+        // given
+        Frame normalFrame = FinalFrame.init();
+        // when
+        normalFrame.bowl(BowlingPin.of(3));
+        normalFrame.bowl(BowlingPin.of(5));
+        // then
+        assertThat(normalFrame.frameState()).isEqualTo("3|5");
+    }
+
+    @Test
+    void 점수_반환_테스트_2() {
+        // given
+        Frame normalFrame = FinalFrame.init();
+        // when
+        normalFrame.bowl(BowlingPin.of(10));
+        normalFrame.bowl(BowlingPin.of(3));
+        normalFrame.bowl(BowlingPin.of(3));
+        // then
+        assertThat(normalFrame.frameState()).isEqualTo("X|3|3");
+    }
+
+    @Test
+    void 점수_반환_테스트_3() {
+        // given
+        Frame normalFrame = FinalFrame.init();
+        // when
+        normalFrame.bowl(BowlingPin.of(5));
+        normalFrame.bowl(BowlingPin.of(5));
+        normalFrame.bowl(BowlingPin.of(10));
+        // then
+        assertThat(normalFrame.frameState()).isEqualTo("5|/|X");
+    }
+
 }

@@ -2,60 +2,48 @@ package bowling.domain.frame;
 
 import java.util.Objects;
 
-import bowling.domain.pitch.PitchNumber;
-import bowling.domain.pitch.NormalPitchNumber;
 import bowling.domain.state.BowlingPin;
 import bowling.domain.state.State;
-import bowling.domain.state.Strike;
+import bowling.domain.state.progress.Ready;
 
 public class NormalFrame implements Frame {
-    private State state;
-    private PitchNumber pitchNumber;
+    public static final int NORMAL_FRAME_SIZE = 9;
 
-    private NormalFrame(PitchNumber normalPitchNumber) {
-        this.pitchNumber = normalPitchNumber;
+    private State state;
+
+    private NormalFrame(State state) {
+        this.state = state;
     }
 
     public static Frame init() {
-        return new NormalFrame(NormalPitchNumber.first());
+        return new NormalFrame(new Ready());
     }
 
-    public static Frame of(int tryCount) {
-        return new NormalFrame(NormalPitchNumber.of(tryCount));
+    public static Frame of(State state) {
+        return new NormalFrame(state);
     }
 
     @Override
-    public void bowl(int pinCount) {
-        this.state = this.getState(pinCount);
-        this.pitchNumber = NormalPitchNumber.of(pitchNumber.increase());
+    public void bowl(BowlingPin bowlingPin) {
+        this.state = state.bowl(bowlingPin);
     }
 
-    private State getState(int pinCount) {
-        if (pitchNumber.isFirstPitch()) {
-            return State.newState(BowlingPin.of(pinCount));
+    @Override
+    public Frame next(int size) {
+        if (size == NORMAL_FRAME_SIZE) {
+            return FinalFrame.init();
         }
-        return State.newState(state.firstHit(), BowlingPin.of(pinCount));
-    }
-
-    @Override
-    public Frame next() {
         return NormalFrame.init();
     }
 
     @Override
     public boolean isDone() {
-        if (state instanceof Strike) {
-            return true;
-        }
-        return pitchNumber.isLastPitch();
+        return state.isDone();
     }
 
     @Override
-    public String scoreResult() {
-        if (pitchNumber.isSecondPitch()) {
-            return state.score();
-        }
-        return state.totalScore();
+    public String frameState() {
+        return state.toSymbol();
     }
 
     @Override
@@ -65,11 +53,11 @@ public class NormalFrame implements Frame {
         if (o == null || getClass() != o.getClass())
             return false;
         NormalFrame that = (NormalFrame)o;
-        return Objects.equals(state, that.state) && Objects.equals(pitchNumber, that.pitchNumber);
+        return Objects.equals(state, that.state);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(state, pitchNumber);
+        return Objects.hash(state);
     }
 }

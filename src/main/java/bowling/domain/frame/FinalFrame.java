@@ -1,88 +1,86 @@
 package bowling.domain.frame;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-import bowling.domain.pitch.PitchNumber;
-import bowling.domain.pitch.FinalPitchNumber;
 import bowling.domain.state.BowlingPin;
-import bowling.domain.state.Miss;
-import bowling.domain.state.Spare;
+import bowling.domain.state.BowlingSymbol;
 import bowling.domain.state.State;
-import bowling.domain.state.Strike;
+import bowling.domain.state.progress.Ready;
 
 public class FinalFrame implements Frame {
-    public static final String PARTITION = "|";
-    private final List<State> states;
-    private PitchNumber pitchNumber;
+    private final static int MAX_TRY_COUNT = 3;
 
-    private FinalFrame(PitchNumber pitchNumber) {
-        this.pitchNumber = pitchNumber;
-        this.states = new ArrayList<>();
+    private final List<State> states = new ArrayList<>();
+    private int tryCount = 0;
+
+    private FinalFrame() {
+        states.add(new Ready());
     }
 
     public static Frame init() {
-        return new FinalFrame(FinalPitchNumber.first());
+        return new FinalFrame();
     }
 
-    public static Frame of(int tryCount) {
-        return new FinalFrame(FinalPitchNumber.of(tryCount));
+    private State currentFrame() {
+        return states.get(states.size() - 1);
     }
 
     @Override
-    public void bowl(int pinCount) {
-        State state = this.getState(pinCount);
-        this.pitchNumber = FinalPitchNumber.of(this.pitchNumber.increase());
-        this.remove(state);
+    public void bowl(BowlingPin bowlingPin) {
+        State state = currentFrame().bowl(bowlingPin);
+        updateStates(state);
+        updateTryCount();
+        addFrame();
+    }
+
+    private void updateStates(State state) {
+        this.states.remove(states.size() - 1);
         this.states.add(state);
     }
 
-    private void remove(State state) {
-        if (isDone() && (state instanceof Spare || !bonusFrame())) {
-            states.remove(0);
+    private void updateTryCount() {
+        this.tryCount += 1;
+    }
+
+    private void addFrame() {
+        if (this.isBonus()) {
+            this.states.add(new Ready());
         }
     }
 
-    private State getState(int pinCount) {
-        if (pitchNumber.isFirstPitch() || bonusFrame()) {
-            return State.newState(BowlingPin.of(pinCount));
-        }
-        return State.newState(states.get(states.size() - 1).firstHit(), BowlingPin.of(pinCount));
+    private boolean isBonus() {
+        return this.hasClear()
+            && tryCount < MAX_TRY_COUNT;
     }
 
-    private boolean bonusFrame() {
-        return states.stream().anyMatch(state -> state instanceof Spare || state instanceof Strike);
+    private boolean hasClear() {
+        return this.states.stream()
+            .anyMatch(State::isClear);
     }
 
     @Override
-    public Frame next() {
+    public Frame next(int size) {
         throw new IllegalStateException("종료 되었습니다.");
     }
 
     @Override
     public boolean isDone() {
-        if (bonusFrame()) {
-            return pitchNumber.isBonusPitch();
+        if (hasClear()) {
+            return this.tryCount == MAX_TRY_COUNT;
         }
-        return pitchNumber.isLastPitch();
+        return this.states.stream()
+            .allMatch(State::isDone);
     }
 
     @Override
-    public String scoreResult() {
-        return states.stream().map(state -> {
-            if (pitchNumber.isSecondPitch()
-               || (!pitchNumber.isBonusPitch() && hasStrike())
-               || (pitchNumber.isBonusPitch() && state instanceof Miss)) {
-                return state.score();
-            }
-            return state.totalScore();
-        }).collect(Collectors.joining(PARTITION));
-    }
-
-    private boolean hasStrike() {
-        return states.stream().anyMatch(status -> status instanceof Strike);
+    public String frameState() {
+        return states.stream()
+            .map(State::toSymbol)
+            .collect(joining(BowlingSymbol.DELIMITER));
     }
 
     @Override
@@ -92,11 +90,11 @@ public class FinalFrame implements Frame {
         if (o == null || getClass() != o.getClass())
             return false;
         FinalFrame that = (FinalFrame)o;
-        return Objects.equals(states, that.states) && Objects.equals(pitchNumber, that.pitchNumber);
+        return tryCount == that.tryCount && Objects.equals(states, that.states);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(states, pitchNumber);
+        return Objects.hash(states, tryCount);
     }
 }

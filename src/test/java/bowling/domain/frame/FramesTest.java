@@ -19,26 +19,26 @@ public class FramesTest {
     }
 
     @Test
-    void 다음_프레임_생성_테스트() {
+    void 현재_프레임_종료_다음_프레임_생성_테스트() {
         // given
         Frames frames = Frames.init();
-        Frames frames2 = Frames.init();
-        Frames frames3 = Frames.init();
         // when
         frames.bowl(3);
         frames.bowl(3);
-        frames.bowl(3);
-
-        frames2.bowl(3);
-        frames2.bowl(7);
-        frames2.bowl(3);
-
-        frames3.bowl(10);
-        frames3.bowl(3);
-
+        frames.next();
+        // then
         assertThat(frames.getFrames().size()).isEqualTo(2);
-        assertThat(frames2.getFrames().size()).isEqualTo(2);
-        assertThat(frames3.getFrames().size()).isEqualTo(2);
+    }
+
+    @Test
+    void 현재_프레임_미종료_다음_프레임_미생성_테스트() {
+        // given
+        Frames frames = Frames.init();
+        // when
+        frames.bowl(3);
+        frames.next();
+        // then
+        assertThat(frames.getFrames().size()).isEqualTo(1);
     }
 
     @Test
@@ -46,13 +46,14 @@ public class FramesTest {
         // given
         Frames frames = Frames.init();
         // when
-        IntStream.range(0, 9).forEach(i -> {
+        IntStream.range(0, 8).forEach(i -> {
             frames.bowl(10);
+            frames.next();
         });
         frames.bowl(3);
         frames.bowl(3);
         // then
-        assertThat(frames.isAllDone()).isTrue();
+        assertThat(frames.isDone()).isTrue();
     }
 
     @Test
@@ -62,12 +63,13 @@ public class FramesTest {
         // when
         IntStream.range(0, 9).forEach(i -> {
             frames.bowl(10);
+            frames.next();
         });
         frames.bowl(3);
         frames.bowl(7);
-        frames.bowl(5);
+        frames.bowl(7);
         // then
-        assertThat(frames.isAllDone()).isTrue();
+        assertThat(frames.isDone()).isTrue();
     }
 
     @Test
@@ -75,13 +77,15 @@ public class FramesTest {
         // given
         Frames frames = Frames.init();
         // when
-        IntStream.range(0, 10).forEach(i -> {
+        IntStream.range(0, 9).forEach(i -> {
             frames.bowl(10);
+            frames.next();
         });
-        frames.bowl(3);
+        frames.bowl(10);
         frames.bowl(7);
+        frames.bowl(3);
         // then
-        assertThat(frames.isAllDone()).isTrue();
+        assertThat(frames.isDone()).isTrue();
     }
 
     @Test
@@ -89,11 +93,15 @@ public class FramesTest {
         // given
         Frames frames = Frames.init();
         // when
-        IntStream.range(0, 12).forEach(i -> {
+        IntStream.range(0, 9).forEach(i -> {
             frames.bowl(10);
+            frames.next();
         });
+        frames.bowl(10);
+        frames.bowl(10);
+        frames.bowl(10);
         // then
-        assertThat(frames.isAllDone()).isTrue();
+        assertThat(frames.isDone()).isTrue();
     }
 
 }
