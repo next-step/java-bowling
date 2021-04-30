@@ -46,7 +46,7 @@ class RoundNumberTest {
     }
 
     @Test
-    @DisplayName("다음 라운드 번호를 생성한다.")
+    @DisplayName("첫번째 라운드의 다음 라운드 번호를 생성한다.")
     void nextRoundNumber() {
         // given
         final RoundNumber firstRoundNumber = RoundNumber.firstRoundNumber();

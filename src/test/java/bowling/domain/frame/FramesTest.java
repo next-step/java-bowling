@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.TestFixture;
+import bowling.domain.pin.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,18 +10,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FramesTest {
 
     @Test
-    @DisplayName("Frames를 생성한다.")
-    void create() {
+    @DisplayName("Frames를 initialize 메서드를 사용해 생성한다.")
+    void initialize() {
         // given
+        // when
         final Frames frames = Frames.initialize();
 
-        // when
         // then
         assertThat(frames).isEqualTo(Frames.initialize());
     }
 
     @Test
-    @DisplayName("지정된 Frame이 종료되었는지 확인한다.")
+    @DisplayName("isEnded를 사용하여 지정된 Frame이 종료되었는지 확인할 수 있다.")
     void isEnded() {
         // given
         final Frames frames = Frames.initialize();
@@ -33,7 +34,7 @@ class FramesTest {
     }
 
     @Test
-    @DisplayName("지정된 Frame의 Pin을 쓰러뜨린다.")
+    @DisplayName("knockDownPin을 사용하여 지정된 Frame의 Pin을 쓰러뜨릴 수 있다.")
     void knockDownPin() {
         // given
         final Frames frames = Frames.initialize();
@@ -43,7 +44,22 @@ class FramesTest {
         frames.knockDownPin(roundNumber, TestFixture.STRIKE_PIN);
 
         // then
-        assertThat(frames.isEnded(roundNumber)).isTrue();
+        final Frame expectedFrame = NormalFrame.of(roundNumber, Pins.of(TestFixture.STRIKE_PIN));
+        assertThat(frames.getFrame(roundNumber)).isEqualTo(expectedFrame);
+    }
+
+    @Test
+    @DisplayName("1 라운드는 마지막 프레임이 아니다.")
+    void isFinalFrame() {
+        // given
+        final Frames frames = Frames.initialize();
+        final RoundNumber firstRound = RoundNumber.firstRoundNumber();
+
+        // when
+        final Frame firstFrame = frames.getFrame(firstRound);
+
+        // then
+        assertThat(firstFrame.isFinalFrame()).isFalse();
     }
 
     @Test

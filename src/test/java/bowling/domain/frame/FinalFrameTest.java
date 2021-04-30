@@ -19,6 +19,21 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class FinalFrameTest {
 
+    static Stream<Arguments> endedFinalFrameSource() {
+        return Stream.of(
+                arguments(FinalFrame.from(Pins.create()), false),
+                arguments(FinalFrame.from(Pins.of(STRIKE_PIN)), false),
+                arguments(FinalFrame.from(Pins.of(GUTTER_PIN)), false),
+                arguments(FinalFrame.from(Pins.of(new Pin(5))), false),
+                arguments(FinalFrame.from(Pins.of(new Pin(5), new Pin(5))), false),
+                arguments(FinalFrame.from(Pins.of(new Pin(5), GUTTER_PIN)), true),
+                arguments(FinalFrame.from(Pins.of(GUTTER_PIN, GUTTER_PIN)), true),
+                arguments(FinalFrame.from(Pins.of(STRIKE_PIN, STRIKE_PIN)), false),
+                arguments(FinalFrame.from(Pins.of(new Pin(5), new Pin(5), GUTTER_PIN)), true),
+                arguments(FinalFrame.from(Pins.of(STRIKE_PIN, STRIKE_PIN, STRIKE_PIN)), true)
+        );
+    }
+
     @Test
     @DisplayName("Pins를 받아 마지막 프레임을 생성한다.")
     void create() {
@@ -67,24 +82,10 @@ class FinalFrameTest {
 
         // when
         finalFrame.knockDownPin(pin);
+        finalFrame.knockDownPin(pin);
 
         // then
-        assertThat(finalFrame.isEnded()).isFalse();
-    }
-
-    static Stream<Arguments> endedFinalFrameSource() {
-        return Stream.of(
-                arguments(FinalFrame.from(Pins.create()), false),
-                arguments(FinalFrame.from(Pins.of(STRIKE_PIN)), false),
-                arguments(FinalFrame.from(Pins.of(GUTTER_PIN)), false),
-                arguments(FinalFrame.from(Pins.of(new Pin(5))), false),
-                arguments(FinalFrame.from(Pins.of(new Pin(5), new Pin(5))), false),
-                arguments(FinalFrame.from(Pins.of(new Pin(5), GUTTER_PIN)), true),
-                arguments(FinalFrame.from(Pins.of(GUTTER_PIN, GUTTER_PIN)), true),
-                arguments(FinalFrame.from(Pins.of(STRIKE_PIN, STRIKE_PIN)), false),
-                arguments(FinalFrame.from(Pins.of(new Pin(5), new Pin(5), GUTTER_PIN)), true),
-                arguments(FinalFrame.from(Pins.of(STRIKE_PIN, STRIKE_PIN, STRIKE_PIN)), true)
-        );
+        assertThat(finalFrame.isEnded()).isTrue();
     }
 
     @ParameterizedTest
