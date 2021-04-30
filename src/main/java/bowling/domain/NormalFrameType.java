@@ -25,7 +25,7 @@ public class NormalFrameType implements FrameType {
 
     @Override
     public boolean isContinue() {
-        return !pitches.isStrike() && !(pitches.count() == MAX_PITCHES);
+        return !(pitches.isStrike() || pitches.isSpare() || pitches.isLastPitch(MAX_PITCHES));
     }
 
     @Override
