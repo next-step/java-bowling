@@ -23,4 +23,17 @@ class FirstBowlTest {
         assertThat(firstBowl).isNotNull();
 
     }
+
+    @DisplayName("FirstBowl 인스턴스가 종료 여부를 알맞게 반환하는지 테스트")
+    @Test
+    void 반환_종료_여부() {
+        // given
+        State ready = Ready.initialize();
+
+        // when
+        State firstBowl = ready.bowl(HitCount.valueOf(9));
+
+        // then
+        assertThat(firstBowl.isFinish()).isFalse();
+    }
 }

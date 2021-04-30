@@ -10,12 +10,12 @@ public final class FirstBowl extends Running {
         this.firstCount = firstCount;
     }
 
-    public static State from(final int firstCount) {
+    public static final State from(final int firstCount) {
         return new FirstBowl(firstCount);
     }
 
     @Override
-    public State bowl(HitCount hitCount) {
+    public final State bowl(final HitCount hitCount) {
         return null;
     }
 }
