@@ -42,4 +42,26 @@ public class FinalFrame extends Frame {
         throw new IllegalStateException("마지막 프레임입니다.");
     }
 
+    @Override
+    public int score() {
+        return pitches().pinDownCount() + bonusScore();
+    }
+
+    private int bonusScore() {
+        if (hasBonusPitch()) {
+            return bonusPitch.value();
+        }
+        return NON_BONUS;
+    }
+
+    @Override
+    public int bonusScore(Pitches beforePitches) {
+        return NON_BONUS;
+    }
+
+    @Override
+    public int doubleBonusScore() {
+        return NON_BONUS;
+    }
+
 }
