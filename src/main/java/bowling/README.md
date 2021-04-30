@@ -19,8 +19,20 @@
 
 ### State
 - 각 프레임 당 쓰러진 볼링핀에 의한 상태 표현
-- 인터페이스(Strike, Spare, Miss)
+- 인터페이스
+  - 진행 상태 : Ready, Running
+  - 결과 상태 : Strike, Spare, Miss
 - 볼링핀 갯수 기반 새로운 상태 도출
+
+
+### Ready
+- 프레임의 초기 상태
+- 첫 투구 시, 볼링핀 수의 따라 Strike or Running 상태 반환 
+
+
+### Running
+- 첫 투구 후, 두번째 투구 전 상태
+- 두번째 투구 시, 볼링핀 수의 따라 Miss or Spare 상태 반환 
 
 
 ### Miss
@@ -37,30 +49,13 @@
 - 한번의 투구를 통해 모든 볼링핀이 쓰려졌을 때의 상태
 
 
-### PitchNumber
-- 프레임 당 시도 횟수 관리
-- 인터페이스(NormalPitchNumber, FinalPitchNumber)
-  
-
-### NormalPitchNumber
-- NormalFrame 시도 횟수 관리
-- 최대 2번 투구
-- 마지막 투구 인지 판단
-
-
-### FinalPitchNumber
-- FinalFrame 시도 횟수 관리
-- 최대 3번 투구
-- 마지막 투구 인지 판단  
-- 보너스 투구 인지 판단
-
-
 ### Frame
 - 프레임당 시도 횟수, 상태 관리
 - 인터페이스(NormalFrame, FinalFrame)
 - 볼링 투구 시, 횟수와 상태 변경
 - 다음 프레임 생성
 - 프레임 종료 체크
+- 프레임 클리어(모든 핀 제거) 체크
 
 
 ### NormalFrame
