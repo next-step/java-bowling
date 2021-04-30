@@ -13,6 +13,8 @@ public class ResultView {
 
     private static final String PRINT_NAME_FORMAT = "|%6s |";
     private static final String PRINT_FORMAT = "%6s |";
+    private static final String EMPTY_STRING = "";
+    private static final int NON_START_FRAME = 0;
 
     private ResultView() {
     }
@@ -20,7 +22,7 @@ public class ResultView {
     public static void bowlingGameStartPrint(String userName) {
         ResultView.bowlingFrameListPrint();
         ResultView.userNamePrint(userName);
-        ResultView.userBowlingFrameEmptyListPrint(0);
+        ResultView.userBowlingFrameEmptyListPrint(NON_START_FRAME);
     }
 
     public static void bowlingFrameAndNamePrint(String userName) {
@@ -32,7 +34,7 @@ public class ResultView {
         String name = "NAME";
         userNamePrint(name);
 
-        IntStream.rangeClosed(START_FRAME, END_FRAME).forEach(i -> System.out.printf(PRINT_FORMAT, String.format("%02d", i)));
+        IntStream.rangeClosed(START_FRAME, END_FRAME).forEach(frame -> System.out.printf(PRINT_FORMAT, String.format("%02d", frame)));
 
         System.out.println();
     }
@@ -50,9 +52,8 @@ public class ResultView {
 
     public static void userBowlingFrameEmptyListPrint(int printStartFrame) {
         for (int i = printStartFrame; i <= END_FRAME - 1; i++) {
-            System.out.printf(PRINT_FORMAT, "");
+            System.out.printf(PRINT_FORMAT, EMPTY_STRING);
         }
-
         System.out.println();
     }
 }

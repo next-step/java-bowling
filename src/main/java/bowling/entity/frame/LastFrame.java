@@ -15,8 +15,11 @@ import static bowling.controller.BowlingController.END_FRAME;
 
 public class LastFrame implements Frame {
     private static final int DEFAULT_BOWL_COUNT = 2;
+    private static final int NOT_START_BOWL_COUNT = 0;
     private static final int MAX_BOWL_COUNT = 3;
-
+    private static final int EMPTY = 0;
+    private static final String SCORE_ASSOCIATION_SYMBOL = "|";
+    
     private ScoreType scoreType;
     private int maxBowlCount;
     private int currentBowlCount;
@@ -25,13 +28,8 @@ public class LastFrame implements Frame {
     public LastFrame() {
         this.scoreType = new None();
         this.maxBowlCount = DEFAULT_BOWL_COUNT;
-        this.currentBowlCount = 0;
+        this.currentBowlCount = NOT_START_BOWL_COUNT;
         this.scoreTypes = new ArrayList<>();
-    }
-
-    @Override
-    public int frameNo() {
-        return END_FRAME;
     }
 
     @Override
@@ -49,25 +47,31 @@ public class LastFrame implements Frame {
 
     @Override
     public void addFrameResult(BowlingBoard bowlingBoard) {
+        normalFrameResult(bowlingBoard);
+        lastFrameResult(bowlingBoard);
+    }
 
+    private void normalFrameResult(BowlingBoard bowlingBoard) {
         if ((!(scoreType instanceof None)) && (frameNo() != END_FRAME)) {
             bowlingBoard.addResult(new NormalFrameResult(scoreType.scoreResult()));
         }
+    }
 
-        if (scoreTypes.size() != 0) {
+    private void lastFrameResult(BowlingBoard bowlingBoard) {
+        if (scoreTypes.size() != EMPTY) {
             bowlingBoard.addResult(new LastFrameResult(scoreTypesResult()));
         }
     }
 
     private String scoreTypesResult() {
-
+        
         String scoreTypesResult = this.scoreTypes.stream()
                 .filter(ScoreType::isFrameEnd)
                 .map(ScoreType::scoreResult)
-                .collect(Collectors.joining("|"));
+                .collect(Collectors.joining(SCORE_ASSOCIATION_SYMBOL));
 
         if (!scoreType.isFrameEnd()) {
-            scoreTypesResult +=  "|" + scoreType.scoreResult();
+            scoreTypesResult +=  SCORE_ASSOCIATION_SYMBOL + scoreType.scoreResult();
         }
 
         return scoreTypesResult;
@@ -78,6 +82,11 @@ public class LastFrame implements Frame {
         BowlingBoard bowlingBoard = new BowlingBoard();
         addFrameResult(bowlingBoard);
         return bowlingBoard;
+    }
+
+    @Override
+    public int frameNo() {
+        return END_FRAME;
     }
 
     @Override

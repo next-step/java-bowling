@@ -3,12 +3,7 @@ package bowling.controller;
 import bowling.entity.frame.Frame;
 import bowling.entity.*;
 import bowling.entity.frame.NormalFrame;
-import bowling.entity.score.None;
-import bowling.entity.score.ScoreType;
 import bowling.view.ResultView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static bowling.view.InputView.*;
 import static bowling.view.ResultView.*;
@@ -20,13 +15,13 @@ public class BowlingController {
 
     public void start() {
         ResultView.bowlingGameStartPrint(userName);
-        Frame bowlingFrame = new NormalFrame(1);
+        Frame bowlingFrame = new NormalFrame(START_FRAME);
         Frame bowlingPrintFrame = bowlingFrame;
 
-        while (!gameEndCheck(bowlingFrame)) {
+        while (gameNotEnd(bowlingFrame)) {
+
             int frameNo = bowlingFrame.frameNo();
-            Pin fallenPin = new Pin(framePithInput(frameNo));
-            bowlingFrame = bowlingFrame.pinResult(fallenPin);
+            bowlingFrame = bowlingFrame.pinResult(new Pin(framePithInput(frameNo)));
             BowlingBoard bowlingBoard = bowlingPrintFrame.bowlingBoard();
 
             bowlingFrameAndNamePrint(userName);
@@ -36,8 +31,8 @@ public class BowlingController {
         }
     }
 
-    private boolean gameEndCheck(Frame bowlingFrame) {
-        return bowlingFrame.bowlingGameEnd();
+    private boolean gameNotEnd(Frame bowlingFrame) {
+        return !bowlingFrame.bowlingGameEnd();
     }
 
 }

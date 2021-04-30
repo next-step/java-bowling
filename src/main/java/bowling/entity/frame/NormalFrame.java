@@ -8,6 +8,8 @@ import bowling.entity.score.ScoreType;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
+    private static final int MAX_NORMAL_FRAME = 9;
+    
     private final int frameNo;
     private ScoreType scoreType;
     private Frame nextFrame;
@@ -34,7 +36,7 @@ public class NormalFrame implements Frame {
     }
 
     private Frame nextFrame() {
-        if (frameNo == 9) {
+        if (frameNo == MAX_NORMAL_FRAME) {
             return new LastFrame();
         }
         return new NormalFrame(frameNo + 1);
@@ -52,6 +54,7 @@ public class NormalFrame implements Frame {
     }
 
     public void addFrameResult(BowlingBoard bowlingBoard) {
+
         if (!(scoreType instanceof None)) {
             bowlingBoard.addResult(new NormalFrameResult(scoreType.scoreResult()));
         }
