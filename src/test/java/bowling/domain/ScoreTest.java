@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.score.Point;
+import bowling.domain.score.Score;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

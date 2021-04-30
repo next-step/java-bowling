@@ -1,5 +1,14 @@
 package bowling.domain;
 
+import bowling.domain.bowlingboard.BowlingBoard;
+import bowling.domain.bowlingboard.ThrowCount;
+import bowling.domain.frame.BowlingFinalFrame;
+import bowling.domain.frame.BowlingFrame;
+import bowling.domain.frame.BowlingNormalFrame;
+import bowling.domain.frame.round.FinalRound;
+import bowling.domain.frame.round.Round;
+import bowling.domain.score.Point;
+import bowling.domain.score.Score;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +41,7 @@ class ThrowsStateTest {
         ThrowCount throwCount = ThrowCount.of(0);
 
         BowlingBoard bowlingBoard = ThrowsState.throwBall(point, frameList, throwCount);
-        assertThat(bowlingBoard.round()).isEqualTo(2);
+        assertThat(bowlingBoard.round()).isEqualTo(Round.of(2));
         assertThat(bowlingBoard.state()).isEqualTo(ThrowCount.of(0));
     }
 
@@ -46,7 +55,7 @@ class ThrowsStateTest {
 
         BowlingBoard bowlingBoard = ThrowsState.throwBall(point, frameList, throwCount);
 
-        assertThat(bowlingBoard.round()).isEqualTo(2);
+        assertThat(bowlingBoard.round()).isEqualTo(Round.of(2));
         assertThat(bowlingBoard.state()).isEqualTo(ThrowCount.of(0));
     }
 

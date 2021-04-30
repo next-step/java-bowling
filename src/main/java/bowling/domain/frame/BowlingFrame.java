@@ -1,8 +1,16 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.BowlingRole;
+import bowling.domain.frame.round.FinalRound;
+import bowling.domain.frame.round.Round;
+import bowling.domain.score.FramePoint;
+import bowling.domain.score.Point;
+import bowling.domain.score.Score;
 import bowling.dto.ScoreDto;
 
 public abstract class BowlingFrame {
+
+    private static final int PREV_FINAL_ROUND = 9;
 
     private final Round round;
     private BowlingFrame nextFrame;
@@ -19,14 +27,14 @@ public abstract class BowlingFrame {
         this.framePoint = framePoint;
     }
 
-    abstract BowlingFrame secondPitching(Point point);
+    public abstract BowlingFrame secondPitching(Point point);
 
-    abstract BowlingFrame firstPitching(Point point);
+    public abstract BowlingFrame firstPitching(Point point);
 
-    abstract BowlingFrame bonusPitching(Point point);
+    public abstract BowlingFrame bonusPitching(Point point);
 
     public BowlingFrame nextFrame() {
-        if (round.equals(Round.of(9))) {
+        if (round.equals(Round.of(PREV_FINAL_ROUND))) {
             this.nextFrame = BowlingFinalFrame.first(FinalRound.of(), FramePoint.of(calculateOfScore().toInt()));
             return this.nextFrame;
         }
@@ -42,9 +50,9 @@ public abstract class BowlingFrame {
         return framePoint;
     }
 
-    abstract BowlingRole isType();
+    public abstract BowlingRole isType();
 
-    abstract ScoreDto toDto();
+    public abstract ScoreDto toDto();
 
     public abstract FramePoint calculateOfScore();
 

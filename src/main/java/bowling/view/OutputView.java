@@ -1,8 +1,9 @@
 package bowling.view;
 
 import bowling.domain.BowlingRole;
-import bowling.domain.ThrowCount;
+import bowling.domain.bowlingboard.ThrowCount;
 import bowling.dto.BowlingBoardDto;
+import bowling.dto.PlayerBowlingBoardDto;
 import bowling.dto.PlayerDto;
 import bowling.dto.ScoreDto;
 
@@ -14,17 +15,71 @@ public class OutputView {
     private static final int FINAL_ROUND = 10;
     private static final int FIRST_ROUND = 1;
 
-    public static void printResultView(int round, PlayerDto player, BowlingBoardDto bowlingBoardDto) {
+    public static void printResultView(int round, PlayerBowlingBoardDto playerBowlingBoardDto) {
         printRound();
-        printBoard(round, player.getPlayerName(), bowlingBoardDto);
-        printPoint(round, bowlingBoardDto);
+
+        IntStream.range(0, playerBowlingBoardDto.size())
+                .forEach(i -> printPlayerScore(round, playerBowlingBoardDto.getPlayerDto(i), playerBowlingBoardDto.getBowlingBoardDto(i)));
     }
 
-    private static void printPoint(int round, BowlingBoardDto bowlingBoardDto) {
+    private static void printRound() {
+        String name = "| NAME |";
+        String round = IntStream.range(FIRST_ROUND, FINAL_ROUND).
+                mapToObj(i -> "  0" + i + "  ").collect(Collectors.joining("|"));
+        System.out.println(name + round + "|  10  |");
+    }
+
+    private static void printPlayerScore(int round, PlayerDto player, BowlingBoardDto bowlingBoardDto) {
+        printBoard(round, player.getPlayerName(), bowlingBoardDto);
+        printPoint(round, bowlingBoardDto, player);
+    }
+
+    private static void unusedGames(int round) {
+        for (int i = round; i < FINAL_ROUND; i++) {
+            System.out.print("|      ");
+        }
+        System.out.println("|");
+    }
+
+    private static void printBoard(int round, String playerName, BowlingBoardDto bowlingBoardDto) {
+        List<ScoreDto> scoreDtoList = bowlingBoardDto.getScoreDtoList();
+        String point = IntStream.range(0, scoreDtoList.size())
+                .mapToObj(i -> printScore(scoreDtoList.get(i), bowlingBoardDto.getThrowCount(), round, i))
+                .collect(Collectors.joining());
+
+        System.out.print("|  " + playerName + " ");
+        System.out.print(point);
+        System.out.println("|");
+    }
+
+    private static String printScore(ScoreDto scoreDto, ThrowCount throwCount, int round, int size) {
+        String first = bowlingSymbol(scoreDto.getBowlingPoint().get(0));
+        String second = bowlingSymbol(scoreDto.getBowlingPoint().get(1));
+
+        if (throwCount.isSecondThrow() && size == round - 1) {
+            return String.format("|  %s   ", first);
+        }
+        if (scoreDto.getScoreType() == BowlingRole.STRIKE) {
+            return "|  X   ";
+        }
+        if (scoreDto.getScoreType() == BowlingRole.SPARE) {
+            return String.format("|  %s|/ ", first);
+        }
+        if (scoreDto.getScoreType() == BowlingRole.EMPTY) {
+            return "|      ";
+        }
+
+        return String.format("|  %s|%s ", first, second);
+    }
+
+    private static void printPoint(int round, BowlingBoardDto bowlingBoardDto, PlayerDto player) {
         List<ScoreDto> scoreDtoList = bowlingBoardDto.getScoreDtoList();
         List<Integer> framePoints = bowlingBoardDto.getFramePoint();
         ThrowCount throwCount = bowlingBoardDto.getThrowCount();
 
+        if (throwCount.isFirstThrow() && !player.isCurrentPlayer() && framePoints.size() == round) {
+            round = round - 1;
+        }
         List<String> point = IntStream.range(0, round)
                 .mapToObj(i -> framePoints.get(i) > 10 ? String.format("|  %d  ", framePoints.get(i)) : String.format("|  %d   ", framePoints.get(i)))
                 .collect(Collectors.toList());
@@ -39,50 +94,16 @@ public class OutputView {
     }
 
     private static void makeEmptyScore(int round, List<ScoreDto> scoreDtoList, ThrowCount throwCount, List<String> point) {
-        if (scoreDtoList.get(round - 1).getScoreType() == BowlingRole.STRIKE && !throwCount.equals(ThrowCount.of(3))) {
+        if (scoreDtoList.get(round - 1).getScoreType() == BowlingRole.STRIKE && !throwCount.isEndThrow()) {
             point.set(round - 1, "|      ");
         }
-        if (scoreDtoList.get(round - 1).getScoreType() == BowlingRole.SPARE && !throwCount.equals(ThrowCount.of(3))) {
+        if (scoreDtoList.get(round - 1).getScoreType() == BowlingRole.SPARE && !throwCount.isSecondThrow()) {
             point.set(round - 1, "|      ");
         }
-        if (round != 1 && scoreDtoList.get(round - 2).getScoreType() == BowlingRole.STRIKE && !throwCount.equals(ThrowCount.of(3))) {
+        if (round != 1 && scoreDtoList.get(round - 2).getScoreType() == BowlingRole.STRIKE && !throwCount.isFirstThrow() && !throwCount.isEndThrow()) {
             point.set(round - 2, "|      ");
             point.set(round - 1, "|      ");
         }
-    }
-
-    private static void unusedGames(int round) {
-        for (int i = round; i < FINAL_ROUND; i++) {
-            System.out.print("|      ");
-        }
-        System.out.println("|");
-    }
-
-    private static void printBoard(int round, String playerName, BowlingBoardDto bowlingBoardDto) {
-        List<ScoreDto> scoreDtoList = bowlingBoardDto.getScoreDtoList();
-        String point = IntStream.range(0, round)
-                .mapToObj(i -> printScore(scoreDtoList.get(i), bowlingBoardDto.getThrowCount(), round, i))
-                .collect(Collectors.joining());
-
-        System.out.print("|  " + playerName + " ");
-        System.out.print(point);
-        unusedGames(round);
-    }
-
-    private static String printScore(ScoreDto scoreDto, ThrowCount throwCount, int size, int round) {
-        String first = bowlingSymbol(scoreDto.getBowlingPoint().get(0));
-        String second = bowlingSymbol(scoreDto.getBowlingPoint().get(1));
-        if (throwCount.equals(ThrowCount.of(1)) && size == (round + 1)) {
-            return String.format("|  %s   ", first);
-        }
-        if (scoreDto.getScoreType() == BowlingRole.STRIKE) {
-            return "|  X   ";
-        }
-        if (scoreDto.getScoreType() == BowlingRole.SPARE) {
-            return String.format("|  %s|/ ", first);
-        }
-
-        return String.format("|  %s|%s ", first, second);
     }
 
     private static String bowlingSymbol(int point) {
@@ -92,15 +113,7 @@ public class OutputView {
         return String.format("%d", point);
     }
 
-
-    private static void printRound() {
-        String name = "| NAME |";
-        String round = IntStream.range(FIRST_ROUND, FINAL_ROUND).
-                mapToObj(i -> "  0" + i + "  ").collect(Collectors.joining("|"));
-        System.out.println(name + round + "|  10  |");
-    }
-
-    public static void printResultView(PlayerDto playerDto) {
-        printResultView(0, playerDto, BowlingBoardDto.of());
+    public static void printResultView(PlayerBowlingBoardDto playerBowlingBoardDto) {
+        printResultView(0, playerBowlingBoardDto);
     }
 }

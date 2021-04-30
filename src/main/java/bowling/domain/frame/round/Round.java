@@ -1,10 +1,11 @@
-package bowling.domain;
+package bowling.domain.frame.round;
 
 import java.util.Objects;
 
 public abstract class Round {
 
     private static final int FIRST_ROUND = 1;
+    private static final int PREV_FINAL_ROUND = 9;
     private static final int FINAL_ROUND = 10;
 
     private final int round;
@@ -25,7 +26,7 @@ public abstract class Round {
     }
 
     public Round next() {
-        if (round == 9) {
+        if (round == PREV_FINAL_ROUND) {
             return FinalRound.of(FINAL_ROUND);
         }
         return NormalRound.of(this.round + 1);
@@ -41,6 +42,10 @@ public abstract class Round {
         if (o == null || getClass() != o.getClass()) return false;
         Round round1 = (Round) o;
         return round == round1.round;
+    }
+
+    public boolean isFinalRound() {
+        return round == FINAL_ROUND;
     }
 
     @Override

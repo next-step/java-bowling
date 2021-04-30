@@ -1,5 +1,11 @@
-package bowling.domain;
+package bowling.domain.bowlingboard;
 
+import bowling.domain.ThrowsState;
+import bowling.domain.frame.BowlingFrame;
+import bowling.domain.frame.BowlingNormalFrame;
+import bowling.domain.frame.round.Round;
+import bowling.domain.score.FramePoint;
+import bowling.domain.score.Point;
 import bowling.dto.ScoreDto;
 
 import java.util.ArrayList;
@@ -19,15 +25,15 @@ public class BowlingBoard {
     public static BowlingBoard of() {
         List<BowlingFrame> bowlingFrameList = new ArrayList<>();
         bowlingFrameList.add(BowlingNormalFrame.first(Round.first()));
-        return new BowlingBoard(bowlingFrameList, ThrowCount.fisrt());
+        return new BowlingBoard(bowlingFrameList, ThrowCount.first());
     }
 
     public static BowlingBoard of(List<BowlingFrame> bowlingFrameList, ThrowCount throwCount) {
         return new BowlingBoard(bowlingFrameList, throwCount);
     }
 
-    public int round() {
-        return bowlingFrameList.size();
+    public Round round() {
+        return Round.of(bowlingFrameList.size());
     }
 
     public BowlingBoard pitching(Point point) {
@@ -41,7 +47,7 @@ public class BowlingBoard {
     }
 
     public boolean isEnd() {
-        return throwCount.equals(ThrowCount.of(3));
+        return throwCount.isEndThrow();
     }
 
     public List<FramePoint> framePoint() {

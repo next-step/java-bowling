@@ -1,45 +1,56 @@
 package bowling.contorller;
 
-import bowling.domain.BowlingBoard;
-import bowling.domain.Player;
-import bowling.domain.Point;
-import bowling.domain.ThrowCount;
-import bowling.dto.BowlingBoardDto;
-import bowling.dto.PlayerDto;
+import bowling.domain.bowlingboard.PlayerBowlingBoards;
+import bowling.domain.frame.round.Round;
+import bowling.domain.score.Point;
+import bowling.dto.PlayerBowlingBoardDto;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
+
 public class BowlingGame {
 
-    private final Player player;
-    private final BowlingBoard bowlingBoard;
+    private final PlayerBowlingBoards playerBowlingBoards;
 
-    public BowlingGame(String playerName) {
-        this.player = Player.of(playerName);
-        this.bowlingBoard = BowlingBoard.of();
+    private BowlingGame(List<String> playerName) {
+        this.playerBowlingBoards = PlayerBowlingBoards.of(playerName);
+    }
+
+    public static BowlingGame of(int playerCount) {
+        List<String> PlayerNames = IntStream.rangeClosed(1, playerCount)
+                .mapToObj(InputView::inputPlayer)
+                .collect(toList());
+        return new BowlingGame(PlayerNames);
     }
 
     public void play() {
-        OutputView.printResultView(PlayerDto.of(player));
-        BowlingBoard nextBowling = bowlingBoard;
-        while (!nextBowling.isEnd()) {
-            int point = InputView.inputPoint(nextBowling.round());
-            nextBowling = nextBowling.pitching(Point.of(point));
-            int round = round(nextBowling);
-            OutputView.printResultView(round, PlayerDto.of(player), BowlingBoardDto.of(nextBowling));
+        OutputView.printResultView(PlayerBowlingBoardDto.of(playerBowlingBoards));
+        PlayerBowlingBoards nextBoard = playerBowlingBoards;
+        Round currentRound = Round.first();
+        while (!nextBoard.isInGame()) {
+            Round finalCurrentRound = currentRound;
+            nextBoard.stream()
+                    .forEach(playerBowlingBoard -> play(nextBoard, finalCurrentRound, playerBowlingBoard));
+            currentRound = nextBoard.round(currentRound);
         }
     }
 
-    private int round(BowlingBoard nextBowling) {
-        if (nextBowling.state().equals(ThrowCount.fisrt()) && nextBowling.round() != 1) {
-            return nextBowling.round() - 1;
+    private void play(PlayerBowlingBoards nextBoard, Round finalCurrentRound, bowling.domain.bowlingboard.PlayerBowlingBoard playerBowlingBoard) {
+        if (finalCurrentRound.equals(playerBowlingBoard.round())) {
+            int round = finalCurrentRound.round();
+            Point point = InputView.inputPoint(playerBowlingBoard.player());
+            playerBowlingBoard.pitching(point, finalCurrentRound);
+            OutputView.printResultView(round, PlayerBowlingBoardDto.of(nextBoard, playerBowlingBoard.player()));
         }
-        return nextBowling.round();
     }
 
     public static void main(String[] args) {
-        String playerName = InputView.inputPlayer();
-        BowlingGame gameController = new BowlingGame(playerName);
+        int playerCount = InputView.playerCount();
+        BowlingGame gameController = BowlingGame.of(playerCount);
         gameController.play();
     }
 }

@@ -1,8 +1,8 @@
 package bowling.dto;
 
-import bowling.domain.BonusScore;
 import bowling.domain.BowlingRole;
-import bowling.domain.Score;
+import bowling.domain.score.BonusScore;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,5 +48,17 @@ public class ScoreDto {
 
     public BowlingRole getScoreType() {
         return scoreType;
+    }
+
+    public static ScoreDto isEmpty() {
+        return ScoreDto.of(Score.initScore());
+    }
+
+    @Override
+    public String toString() {
+        return "ScoreDto{" +
+                "bowlingPoint=" + bowlingPoint +
+                ", scoreType=" + scoreType +
+                '}';
     }
 }

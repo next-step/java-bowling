@@ -6,7 +6,6 @@ public class Player {
 
     private final String playerName;
 
-
     public Player(String playerName) {
         this.playerName = playerName;
     }
@@ -19,6 +18,11 @@ public class Player {
     }
 
     public String name() {
+        return playerName;
+    }
+
+    @Override
+    public String toString() {
         return playerName;
     }
 }

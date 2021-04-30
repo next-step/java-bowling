@@ -1,5 +1,10 @@
 package bowling.domain;
 
+import bowling.domain.bowlingboard.BowlingBoard;
+import bowling.domain.bowlingboard.ThrowCount;
+import bowling.domain.frame.BowlingFrame;
+import bowling.domain.score.Point;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -17,10 +22,6 @@ public enum ThrowsState {
     ThrowsState(ThrowCount throwCount, BiFunction<Point, List<BowlingFrame>, BowlingBoard> throwBall) {
         this.throwCount = throwCount;
         this.throwBall = throwBall;
-    }
-
-    public ThrowCount getThrowCount() {
-        return throwCount;
     }
 
     public BiFunction<Point, List<BowlingFrame>, BowlingBoard> getThrowBall() {
@@ -42,7 +43,7 @@ public enum ThrowsState {
             frames.add(bowlingFrame);
             return BowlingBoard.of(frames, ThrowCount.of(0));
         }
-        if (bowlingFrame.round().equals(FinalRound.of()) && bowlingFrame.isType() == BowlingRole.STRIKE) {
+        if (bowlingFrame.round().isFinalRound() && bowlingFrame.isType() == BowlingRole.STRIKE) {
             return BowlingBoard.of(frames, ThrowCount.of(2));
         }
         return BowlingBoard.of(frames, ThrowCount.of(1));
@@ -50,10 +51,10 @@ public enum ThrowsState {
 
     public static BowlingBoard secondPitching(Point point, List<BowlingFrame> frames) {
         BowlingFrame bowlingFrame = currentFrame(frames).secondPitching(point);
-        if (bowlingFrame.round().equals(FinalRound.of()) && bowlingFrame.isType() == BowlingRole.SPARE) {
+        if (bowlingFrame.round().isFinalRound() && bowlingFrame.isType() == BowlingRole.SPARE) {
             return BowlingBoard.of(frames, ThrowCount.of(2));
         }
-        if (bowlingFrame.round().equals(FinalRound.of()) && bowlingFrame.isType() != BowlingRole.EMPTY) {
+        if (bowlingFrame.round().isFinalRound() && bowlingFrame.isType() != BowlingRole.EMPTY) {
             return BowlingBoard.of(frames, ThrowCount.of(3));
         }
         frames.add(bowlingFrame);
@@ -61,7 +62,7 @@ public enum ThrowsState {
     }
 
     public static BowlingBoard bonusPitching(Point point, List<BowlingFrame> frames) {
-        if (currentFrame(frames).round() != FinalRound.of()) {
+        if (!currentFrame(frames).round().isFinalRound()) {
             throw new IllegalArgumentException("마지막 라운드에서만 보너스 투구가 가능합니다.");
         }
         currentFrame(frames).bonusPitching(point);
