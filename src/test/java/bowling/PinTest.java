@@ -1,8 +1,6 @@
 package bowling;
 
 import bowling.entity.Pin;
-import bowling.entity.score.Miss;
-import bowling.entity.score.NormalScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 package bowling.entity;
 
-import bowling.FrameResult;
+import bowling.entity.frame.FrameResult;
 
 import java.util.ArrayList;
 import java.util.Collections;

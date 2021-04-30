@@ -1,10 +1,7 @@
 package bowling.view;
 
-import bowling.FrameResult;
-import bowling.entity.BowlingBoard;
-import bowling.entity.frame.Frame;
-import bowling.entity.frame.NormalFrame;
-import bowling.entity.score.ScoreType;
+import bowling.entity.frame.FrameResult;
+import bowling.entity.frame.NormalFrameResult;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -14,8 +11,8 @@ import static bowling.controller.BowlingController.START_FRAME;
 
 public class ResultView {
 
-    private static final String PRINT_NAME_FORMAT = "|%5s |";
-    private static final String PRINT_FORMAT = "%4s |";
+    private static final String PRINT_NAME_FORMAT = "|%6s |";
+    private static final String PRINT_FORMAT = "%6s |";
 
     private ResultView() {
     }
@@ -23,7 +20,7 @@ public class ResultView {
     public static void bowlingGameStartPrint(String userName) {
         ResultView.bowlingFrameListPrint();
         ResultView.userNamePrint(userName);
-        ResultView.userBowlingFrameEmptyListPrint(START_FRAME);
+        ResultView.userBowlingFrameEmptyListPrint(0);
     }
 
     public static void bowlingFrameAndNamePrint(String userName) {
@@ -52,7 +49,9 @@ public class ResultView {
 
 
     public static void userBowlingFrameEmptyListPrint(int printStartFrame) {
-        IntStream.rangeClosed(printStartFrame, END_FRAME - 1).forEach(i -> System.out.printf(PRINT_FORMAT, ""));
+        for (int i = printStartFrame; i <= END_FRAME - 1; i++) {
+            System.out.printf(PRINT_FORMAT, "");
+        }
 
         System.out.println();
     }

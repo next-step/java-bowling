@@ -1,6 +1,5 @@
 package bowling.entity.frame;
 
-import bowling.FrameResult;
 import bowling.entity.BowlingBoard;
 import bowling.entity.Pin;
 import bowling.entity.score.None;
@@ -53,8 +52,8 @@ public class NormalFrame implements Frame {
     }
 
     public void addFrameResult(BowlingBoard bowlingBoard) {
-        if(!(scoreType instanceof None)) {
-            bowlingBoard.addResult(new FrameResult(scoreType.scoreResult()));
+        if (!(scoreType instanceof None)) {
+            bowlingBoard.addResult(new NormalFrameResult(scoreType.scoreResult()));
         }
 
         if (nextFrame != null) {

@@ -18,12 +18,8 @@ public class Pin {
         }
     }
 
-    public int pin() {
-        return pin;
-    }
-
     public int sumPin(Pin secondPin) {
-        int sumPin = pin + secondPin.pin();
+        int sumPin = pin + secondPin.pin;
 
         if (sumPin > MAX_PIN_COUNT) {
             throw new IllegalArgumentException("프레임 투구의 합은 10을 넘을 수 없습니다.");
@@ -38,6 +34,25 @@ public class Pin {
 
     public boolean isSpare(Pin fallenPin) {
         return sumPin(fallenPin) == MAX_PIN_COUNT;
+    }
+
+    public String normalScore() {
+       return pinValue(pin);
+    }
+
+    public String spare() {
+       return pinValue(pin) + "|/";
+    }
+
+    public String miss(Pin secondPin) {
+      return pinValue(pin) + "|" + pinValue(secondPin.pin);
+    }
+
+    private String pinValue(int pin) {
+        if (pin == 0) {
+            return "-";
+        }
+        return String.valueOf(pin);
     }
 
     @Override

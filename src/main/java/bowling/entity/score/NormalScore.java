@@ -18,13 +18,7 @@ public class NormalScore implements ScoreType {
 
     @Override
     public String scoreResult() {
-        int pinValue = pin.pin();
-
-        if (pinValue == 0) {
-            return "-";
-        }
-
-        return String.valueOf(pinValue);
+        return pin.normalScore();
     }
 
     @Override
