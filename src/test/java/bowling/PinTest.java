@@ -4,6 +4,8 @@ import bowling.entity.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static bowling.entity.Pin.RANGE_OVER_PIN_MESSAGE;
+import static bowling.entity.Pin.SUM_RANGE_OVER_PIN_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -25,7 +27,7 @@ public class PinTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new Pin(fallenPin))
-                .withMessageMatching("쓰러트릴 수 있는 핀의 범위가 아닙니다.");
+                .withMessageMatching(RANGE_OVER_PIN_MESSAGE);
 
     }
 
@@ -36,7 +38,7 @@ public class PinTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new Pin(fallenPin))
-                .withMessageMatching("쓰러트릴 수 있는 핀의 범위가 아닙니다.");
+                .withMessageMatching(RANGE_OVER_PIN_MESSAGE);
 
     }
 
@@ -70,6 +72,6 @@ public class PinTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> fallenPin.sumPin(secondFallenPin))
-                .withMessageMatching("프레임 투구의 합은 10을 넘을 수 없습니다.");
+                .withMessageMatching(SUM_RANGE_OVER_PIN_MESSAGE);
     }
 }

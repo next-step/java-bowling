@@ -7,7 +7,7 @@ import java.util.Objects;
 public class None implements ScoreType {
     @Override
     public String scoreResult() {
-        return "0";
+        return "";
     }
 
     @Override

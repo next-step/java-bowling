@@ -4,6 +4,7 @@ import bowling.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static bowling.entity.User.USER_NAME_ERROR_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -25,6 +26,6 @@ public class UserTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new User(testUserName))
-                .withMessageMatching("플레이어의 이름은 영문 3자로 입력해 주세요.");
+                .withMessageMatching(USER_NAME_ERROR_MESSAGE);
     }
 }

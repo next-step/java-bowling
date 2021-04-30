@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static bowling.controller.BowlingController.END_FRAME;
+import static bowling.entity.Pin.SCORE_ASSOCIATION_SYMBOL;
 
 public class LastFrame implements Frame {
     private static final int DEFAULT_BOWL_COUNT = 2;
     private static final int NOT_START_BOWL_COUNT = 0;
     private static final int MAX_BOWL_COUNT = 3;
     private static final int EMPTY = 0;
-    private static final String SCORE_ASSOCIATION_SYMBOL = "|";
 
     private ScoreType scoreType;
     private int maxBowlCount;

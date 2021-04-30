@@ -5,10 +5,11 @@ import bowling.entity.Pin;
 import java.util.Objects;
 
 public class Strike implements ScoreType {
+    private static final String STRIKE_SYMBOL = "X";
 
     @Override
     public String scoreResult() {
-        return "X";
+        return STRIKE_SYMBOL;
     }
 
     @Override
