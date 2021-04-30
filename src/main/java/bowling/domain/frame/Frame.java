@@ -22,9 +22,14 @@ public abstract class Frame {
 
     public abstract void knockDownPin(Pin pin);
 
+
     public abstract boolean isEnded();
 
     public abstract boolean isFinalFrame();
+
+    public boolean isNotStarted() {
+        return pins.isEmpty();
+    }
 
     public boolean roundNumberEquals(RoundNumber roundNumber) {
         return this.roundNumber.equals(roundNumber);
