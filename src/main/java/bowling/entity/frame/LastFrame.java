@@ -60,10 +60,17 @@ public class LastFrame implements Frame {
     }
 
     private String scoreTypesResult() {
-        return scoreTypes.stream()
-//                .filter(ScoreType::isFrameEnd)
+
+        String scoreTypesResult = this.scoreTypes.stream()
+                .filter(ScoreType::isFrameEnd)
                 .map(ScoreType::scoreResult)
                 .collect(Collectors.joining("|"));
+
+        if (!scoreType.isFrameEnd()) {
+            scoreTypesResult +=  "|" + scoreType.scoreResult();
+        }
+
+        return scoreTypesResult;
     }
 
     @Override
