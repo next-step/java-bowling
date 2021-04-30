@@ -17,6 +17,10 @@ public class FrameNumber {
         return new FrameNumber(frameNumber + 1);
     }
 
+    public int number() {
+        return frameNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
