@@ -2,7 +2,9 @@ package bowling;
 
 import bowling.domain.Pinfall;
 import bowling.domain.PointSymbol;
+import bowling.domain.PointSymbols;
 import bowling.domain.state.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
@@ -19,6 +21,16 @@ public class FrameStateOnceTest {
     void Given_Spare_When_Roll_Then_StateSpare() {
         FrameState state = new FrameStateOnce(new Pinfall(1));
         assertThat(state.roll(new Pinfall(9))).isInstanceOf(FrameStateSpare.class);
+    }
+
+    @Test
+    @DisplayName("스페어 처리가 되었을 때, 스페어 상태의 PointSymbol이 정상인지 테스트")
+    void Given_Spare_When_Roll_Then_StateSpareFirstPointSymbolIsSameAsFirstSymbol() {
+        FrameState stateOnce = new FrameStateOnce(new Pinfall(1));
+        FrameState stateSpare = stateOnce.roll(new Pinfall(9));
+
+        assertThat(stateSpare.pointSymbols()).isEqualTo(new PointSymbols(PointSymbol.ONE, PointSymbol.SPARE));
+
     }
 
     @Test

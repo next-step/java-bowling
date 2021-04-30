@@ -15,11 +15,11 @@ public class FrameStateOnce implements FrameState {
     }
 
     @Override
-    public FrameState roll(Pinfall pinfall) {
-        if (isSpare(pinfall)) {
-            return new FrameStateSpare(pinfall);
+    public FrameState roll(Pinfall secondPinfall) {
+        if (isSpare(secondPinfall)) {
+            return new FrameStateSpare(firstPinfall);
         }
-        return new FrameStateOpen(Arrays.asList(firstPinfall, pinfall));
+        return new FrameStateOpen(Arrays.asList(firstPinfall, secondPinfall));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class FrameStateOnce implements FrameState {
         return Objects.hash(firstPinfall);
     }
 
-    private boolean isSpare(Pinfall pinfall) {
-        return firstPinfall.add(pinfall).equals(new Pinfall(10));
+    private boolean isSpare(Pinfall secondPinfall) {
+        return firstPinfall.add(secondPinfall).equals(new Pinfall(10));
     }
 }
