@@ -25,14 +25,27 @@ class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("FinalFrame의 다음 프레임은 생성되지 않는다.")
+    @DisplayName("마지막 프레임의 다음 프레임을 요청할 경우 예외가 발생한다.")
     void nextFrame() {
         // given
         final FinalFrame finalFrame = FinalFrame.from(Pins.create());
 
         // when
         // then
-        assertThatThrownBy(finalFrame::createNextFrame)
+        assertThatThrownBy(() -> finalFrame.nextFrame())
+                .isInstanceOf(NoNextFrameException.class)
+                .hasMessage(NoNextFrameException.FINAL_FRAME_CANNOT_CREATE_NEXT_FRAME);
+    }
+
+    @Test
+    @DisplayName("FinalFrame의 다음 프레임은 생성되지 않는다.")
+    void createNextFrame() {
+        // given
+        final FinalFrame finalFrame = FinalFrame.from(Pins.create());
+
+        // when
+        // then
+        assertThatThrownBy(() -> finalFrame.createNextFrame())
                 .isInstanceOf(NoNextFrameException.class)
                 .hasMessage(NoNextFrameException.FINAL_FRAME_CANNOT_CREATE_NEXT_FRAME);
     }
