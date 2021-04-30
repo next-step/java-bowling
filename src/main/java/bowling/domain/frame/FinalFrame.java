@@ -6,6 +6,10 @@ import bowling.exception.NoNextFrameException;
 
 public final class FinalFrame extends Frame {
 
+    public static final int THROW_TWICE = 2;
+    public static final int THROW_THREE_TIMES = 3;
+    public static final int BONUS_GAME_THRESHOLD = 10;
+
     private FinalFrame(RoundNumber roundNumber, Pins pins) {
         super(roundNumber, pins);
     }
@@ -31,7 +35,10 @@ public final class FinalFrame extends Frame {
 
     @Override
     public boolean isEnded() {
-        return pins.frameStatus() != FrameStatus.NOT_ENDED;
+        if (pins.size() == THROW_TWICE) {
+            return pins.totalPinCount() < BONUS_GAME_THRESHOLD;
+        }
+        return pins.size() == THROW_THREE_TIMES;
     }
 
     @Override

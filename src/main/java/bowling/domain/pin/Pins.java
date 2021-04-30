@@ -13,7 +13,6 @@ public final class Pins {
     private static final int FIRST_PIN_INDEX = 0;
     private static final int SECOND_PIN_INDEX = 1;
     private static final int THIRD_PIN_INDEX = 2;
-    private static final int FINAL_PIN_SIZE = 3;
     private static final int MAX_PIN_COUNT = 3;
 
     private final List<Pin> pins;
@@ -62,10 +61,7 @@ public final class Pins {
     }
 
     public FrameStatus frameStatus() {
-        if (pins.size() < FINAL_PIN_SIZE) {
-            return FrameStatus.of(firstPin(), secondPin());
-        }
-        return FrameStatus.of(firstPin(), secondPin(), thirdPin());
+        return FrameStatus.of(this);
     }
 
     public void knockDownPin(final Pin pin) {

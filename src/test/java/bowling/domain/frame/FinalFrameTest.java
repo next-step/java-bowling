@@ -63,4 +63,6 @@ class FinalFrameTest {
         // then
         assertThat(finalFrame.isEnded()).isFalse();
     }
+
+    // TODO: 마지막 프레임 종료 테스트
 }

@@ -97,23 +97,6 @@ class PinsTest {
         assertThat(frameStatus).isEqualTo(expectedFrameStatus);
     }
 
-    @ParameterizedTest
-    @CsvSource({"10,0,3,NORMAL", "9,1,3,NORMAL", "3,4,0,NORMAL", "0,0,0,NORMAL"})
-    @DisplayName("각 조건에 해당하는 FrameStatus가 반환된다.")
-    void frameStatus(int firstPinCount, int secondPinCount, int thirdPinCount, FrameStatus expectedFrameStatus) {
-        // given
-        final Pin firstPin = new Pin(firstPinCount);
-        final Pin secondPin = new Pin(secondPinCount);
-        final Pin thirdPin = new Pin(thirdPinCount);
-        final Pins pins = Pins.of(firstPin, secondPin, thirdPin);
-
-        // when
-        final FrameStatus frameStatus = pins.frameStatus();
-
-        // then
-        assertThat(frameStatus).isEqualTo(expectedFrameStatus);
-    }
-
     @Test
     @DisplayName("쓰러진 핀을 전달받으면 Pins의 상태가 변경된다.")
     void knockDownPin() {
