@@ -27,4 +27,5 @@ class ReadyTest {
         // then
         assertThat(ready.isFinish()).isFalse();
     }
+
 }

@@ -2,9 +2,10 @@ package bowling.domain.state;
 
 import bowling.domain.HitCount;
 
-public class Ready extends Running {
+public final class Ready extends Running {
+
     @Override
-    public State bowl(HitCount hitCount) {
+    public State bowl(final HitCount hitCount) {
         return null;
     }
 
