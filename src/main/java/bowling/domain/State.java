@@ -1,11 +1,11 @@
 package bowling.domain;
 
 public enum State {
-    STRIKE(),
-    SPARE(),
-    MISS(),
-    GUTTER(),
-    OTHER();
+    STRIKE,
+    SPARE,
+    MISS,
+    GUTTER,
+    OTHER;
 
     State() {}
 

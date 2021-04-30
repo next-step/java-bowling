@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.OutOfBoundNameSize;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     @Test
-    @DisplayName(value = "유저 생성")
+    @DisplayName("유저 생성")
     void createPlayer(){
         Player player = Player.from("LJH");
 
@@ -18,9 +19,9 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName(value = "유저 생성 이름 길이 예외")
+    @DisplayName("유저 생성 이름 길이 예외")
     void player_exception() {
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(OutOfBoundNameSize.class)
                 .isThrownBy(() -> {
                     Player.from("1234");
                 }).withMessageMatching("참가자의 이름은 3글자로 입력해 주세요.");

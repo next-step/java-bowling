@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.OutOfBoundNameSize;
+
 import java.util.Objects;
 
 public class Player {
@@ -13,7 +15,7 @@ public class Player {
 
     private void validation(final String name) {
         if (name.length() != NAME_LENGTH) {
-            throw new IllegalArgumentException("참가자의 이름은 3글자로 입력해 주세요.");
+            throw new OutOfBoundNameSize();
         }
     }
 

@@ -17,7 +17,7 @@ class AnswersTest {
     }
 
     @Test
-    @DisplayName(value = "삭제 예외")
+    @DisplayName("삭제 예외")
     void delete_throw_exception() {
         answers.add(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1"));
         answers.add(new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2"));
@@ -30,7 +30,7 @@ class AnswersTest {
     }
 
     @Test
-    @DisplayName(value = "삭제 성공")
+    @DisplayName("삭제 성공")
     void delete() throws CannotDeleteException {
         answers.add(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1"));
         answers.add(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents2"));

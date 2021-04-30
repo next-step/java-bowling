@@ -34,8 +34,9 @@ public class DownPins {
         return Collections.unmodifiableList(downPins);
     }
 
-    public DownPin get(int index) {
-        return downPins.get(index);
+    public int count(int index) {
+        return downPins.get(index)
+                .count();
     }
 
     public int previousCount() {

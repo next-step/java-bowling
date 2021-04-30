@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.OutOfPinCount;
+
 import java.util.Objects;
 
 public class DownPin {
@@ -15,7 +17,7 @@ public class DownPin {
 
     private void validation(final int value) {
         if (value < MIN_DOWN_PIN || value > MAX_DOWN_PIN) {
-            throw new IllegalArgumentException("쓰러트린 볼링 핀의 개수는 0과 10사이의 숫자여야 합니다.");
+            throw new OutOfPinCount();
         }
     }
 

@@ -18,7 +18,7 @@ class FramesTest {
     }
 
     @Test
-    @DisplayName(value = "프레임 일급 컬렉션 생성")
+    @DisplayName("프레임 일급 컬렉션 생성")
     void create_frames() {
         assertThat(frames.frames()
                 .size())
@@ -26,7 +26,7 @@ class FramesTest {
     }
 
     @ParameterizedTest
-    @DisplayName(value = "다음 라운드 숫자")
+    @DisplayName("다음 라운드 숫자")
     @CsvSource(value = {"1:0", "10:1"}, delimiter = ':')
     void frames_next_round(int input, int result) {
         frames.rollingBowl(input);

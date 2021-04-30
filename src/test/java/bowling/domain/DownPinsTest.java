@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DownPinsTest {
     @Test
-    @DisplayName(value = "쓰러트린 핀 개수 추가")
+    @DisplayName("쓰러트린 핀 개수 추가")
     void downPins_add() {
         DownPins downPins = new DownPins();
 
@@ -23,7 +23,7 @@ class DownPinsTest {
     }
 
     @ParameterizedTest
-    @DisplayName(value = "쓰러트린 핀 개수 합계")
+    @DisplayName("쓰러트린 핀 개수 합계")
     @CsvSource(value = {"5:10", "2:4"}, delimiter = ':')
     void downPins_sum(int input, int result) {
         DownPins downPins = new DownPins();

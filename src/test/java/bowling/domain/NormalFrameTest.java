@@ -20,7 +20,7 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName(value = "공 굴리기")
+    @DisplayName("공 굴리기")
     void pitching_size() {
         normalFrame.pitching(1);
 
@@ -31,7 +31,7 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName(value = "다음 공 굴리기 가능 유무")
+    @DisplayName("다음 공 굴리기 가능 유무")
     void continue_pitching() {
         normalFrame.pitching(1);
 
@@ -40,7 +40,7 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName(value = "턴 종료")
+    @DisplayName("턴 종료")
     void end_of_frame_turn() {
         normalFrame.pitching(10);
 
@@ -49,14 +49,13 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName(value = "결과 유무")
+    @DisplayName("결과 유무")
     void frame_has_result() {
-        assertThat(normalFrame.hasResult())
-                .isEqualTo(false);
-
         normalFrame.pitching(1);
 
-        assertThat(normalFrame.hasResult())
-                .isEqualTo(true);
+        assertAll(
+                () -> assertFalse(new NormalFrame().hasResult()),
+                () -> assertTrue(normalFrame.hasResult())
+        );
     }
 }

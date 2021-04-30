@@ -12,7 +12,10 @@ public class StringUtils {
     }
 
     public static String generateBlank(int length) {
-        if (length == 0) return "";
+        if (length == 0) {
+            return "";
+        }
+
         return Stream.generate(()-> BLANK)
                 .limit(length - 1)
                 .reduce(BLANK, (a, b) -> a + b);
