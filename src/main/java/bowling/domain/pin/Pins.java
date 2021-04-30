@@ -12,7 +12,7 @@ public final class Pins {
     private static final int FIRST_PIN_INDEX = 0;
     private static final int SECOND_PIN_INDEX = 1;
     private static final int THIRD_PIN_INDEX = 2;
-    public static final int NORMAL_PIN_SIZE = 2;
+    public static final int FINAL_PIN_SIZE = 3;
 
     private final List<Pin> pins;
 
@@ -41,22 +41,31 @@ public final class Pins {
     }
 
     public Pin firstPin() {
-        return pins.get(FIRST_PIN_INDEX);
+        try {
+            return pins.get(FIRST_PIN_INDEX);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Pin secondPin() {
-        return pins.get(SECOND_PIN_INDEX);
+        try {
+            return pins.get(SECOND_PIN_INDEX);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Pin thirdPin() {
-        return pins.get(THIRD_PIN_INDEX);
+        try {
+            return pins.get(THIRD_PIN_INDEX);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public FrameStatus frameStatus() {
-        if (pins.size() < NORMAL_PIN_SIZE) {
-            return FrameStatus.NOT_ENDED;
-        }
-        if (pins.size() == NORMAL_PIN_SIZE) {
+        if (pins.size() < FINAL_PIN_SIZE) {
             return FrameStatus.of(firstPin(), secondPin());
         }
         return FrameStatus.of(firstPin(), secondPin(), thirdPin());

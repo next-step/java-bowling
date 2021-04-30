@@ -120,7 +120,7 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("투구를 한다. 투구를 한 후 상태가 변경된다.")
+    @DisplayName("프레임에서 투구를 한다. 스트라이크 투구를 한 후 프레임이 종료된다.")
     void knockDownPin() {
         // given
         final Frame firstFrame = NormalFrame.createFirstFrame();
