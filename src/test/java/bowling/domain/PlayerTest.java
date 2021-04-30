@@ -35,4 +35,17 @@ class PlayerTest {
                 .hasMessage("( "+name+" )은 영문 3글자 또는 그 이하가 아닙니다.");
     }
 
+    @DisplayName("Player 인스턴스가 소유한 이름 반환 여부 테스트")
+    @Test
+    void 반환() {
+        // given
+        String name = "KWJ";
+
+        // when
+        Player player = Player.from(name);
+
+        // then
+        assertThat(player.name()).isEqualTo(name);
+    }
+
 }
