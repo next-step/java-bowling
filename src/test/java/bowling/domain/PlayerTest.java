@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.NameIncludeOtherLanguagesException;
 import bowling.exception.NameSizeMissMatchException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,7 +44,7 @@ class PlayerTest {
 
         // when and then
         assertThatThrownBy(() -> Player.from(name))
-                .isInstanceOf(NameSizeMissMatchException.class)
+                .isInstanceOf(NameIncludeOtherLanguagesException.class)
                 .hasMessage("( "+name+" )는 영문 글자가 아닌 다른 글자도 포함되어 있습니다.");
     }
 

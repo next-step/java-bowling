@@ -5,6 +5,9 @@ import bowling.exception.NameSizeMissMatchException;
 
 public final class Player {
 
+    private static final String REGEX = "[^a-zA-Z]";
+    private static final String EMPTY = "";
+
     private static final int STANDARD_SIZE = 3;
 
     private final String name;
@@ -25,14 +28,14 @@ public final class Player {
         }
     }
 
-    private void validateAlphabet(final String name) {
+    private final void validateAlphabet(final String name) {
         if(!replaceSpecialCharacters(name).equals(name)) {
             throw new NameIncludeOtherLanguagesException(name);
         }
     }
 
     private final String replaceSpecialCharacters(final String name) {
-        return name.replaceAll("[^a-zA-Z]", "");
+        return name.replaceAll(REGEX, EMPTY);
     }
 
     public final String name() {
