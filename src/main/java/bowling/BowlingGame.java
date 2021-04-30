@@ -9,10 +9,10 @@ public class BowlingGame {
         BowlingTurn bowlingTurn = BowlingTurn.of(InputView.inputPlayerName());
         ResultView.printInitBowlingBoard(bowlingTurn);
 
-        while(!bowlingTurn.isLastFrame()) {
-            int currentFrameNumber = bowlingTurn.currentFrameNumber();
-            bowlingTurn.play(InputView.inputBowlingPin(currentFrameNumber));
+        while(!bowlingTurn.isDone()) {
+            bowlingTurn.play(InputView.inputBowlingPin(bowlingTurn.currentFrameSize()));
             ResultView.printBowlingBoard(bowlingTurn);
+            bowlingTurn.next();
         }
     }
 }
