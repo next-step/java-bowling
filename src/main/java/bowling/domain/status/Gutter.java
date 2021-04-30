@@ -2,7 +2,7 @@ package bowling.domain.status;
 
 import bowling.domain.Pitches;
 
-public class Default extends Continue {
+public class Gutter implements Status {
     @Override
     public boolean condition(Pitches pitches) {
         return false;
@@ -10,16 +10,31 @@ public class Default extends Continue {
 
     @Override
     public boolean conditionOf(int fallenPins, int accumulatedPins, int pitchIndex) {
-        return false;
+        return fallenPins == 0;
     }
 
     @Override
     public String display(Pitches pitches) {
-        return "";
+        return null;
     }
 
     @Override
     public String display(int fallenPins) {
-        return String.valueOf(fallenPins);
+        return "-";
+    }
+
+    @Override
+    public boolean isStrike() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public boolean isOpen() {
+        return false;
     }
 }

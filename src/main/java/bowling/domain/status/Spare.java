@@ -2,15 +2,9 @@ package bowling.domain.status;
 
 import bowling.domain.Pitches;
 
-public class Spare extends Symbol implements Status {
+public class Spare extends Finish {
     private static final int PINS = 10;
     private static final int PITCH_INDEX = 2;
-
-    private final String keyword;
-
-    public Spare(String keyword) {
-        this.keyword = keyword;
-    }
 
     @Override
     public boolean condition(Pitches pitches) {
@@ -18,12 +12,22 @@ public class Spare extends Symbol implements Status {
     }
 
     @Override
-    public String keyword() {
-        return keyword;
+    public boolean conditionOf(int fallenPins, int accumulatedPins, int pitchIndex) {
+        return accumulatedPins == PINS && pitchIndex == PITCH_INDEX;
     }
 
     @Override
     public String display(Pitches pitches) {
-        return pitches.firstPitch() + DELIMITER + SPARE_SYMBOL;
+        return pitches.firstPitch() + "|" + "/";
+    }
+
+    @Override
+    public String display(int fallenPins) {
+        return "/";
+    }
+
+    @Override
+    public boolean isSpare() {
+        return true;
     }
 }

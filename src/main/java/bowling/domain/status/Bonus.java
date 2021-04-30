@@ -6,26 +6,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bonus extends Symbol implements Status {
-    private final String keyword;
-
-    public Bonus(String keyword) {
-        this.keyword = keyword;
-    }
-
     @Override
     public boolean condition(Pitches pitches) {
         return pitches.count() == 3;
     }
 
     @Override
-    public String keyword() {
-        return keyword;
+    public boolean conditionOf(int fallenPins, int accumulatedPins, int pitchIndex) {
+        return pitchIndex == 3;
     }
 
     @Override
     public String display(Pitches pitches) {
         List<String> result = new ArrayList<>();
-        pitches.forEach(pitch -> result.add(String.valueOf(pitch.intValue())));
+
         return String.join(DELIMITER, result);
+    }
+
+    @Override
+    public String display(int fallenPins) {
+        return "";
+    }
+
+    @Override
+    public boolean isStrike() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public boolean isOpen() {
+        return false;
     }
 }
