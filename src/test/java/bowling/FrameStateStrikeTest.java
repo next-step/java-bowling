@@ -1,7 +1,6 @@
 package bowling;
 
 import bowling.domain.Pinfall;
-import bowling.domain.Player;
 import bowling.domain.state.FrameState;
 import bowling.domain.state.FrameStateStrike;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ public class FrameStateStrikeTest {
     }
 
     @Test
-    void When_Rollable_Then_False() {
+    void When_isRollable_Then_False() {
         FrameState strikeState = new FrameStateStrike();
         assertThat(strikeState.isRollable()).isFalse();
     }

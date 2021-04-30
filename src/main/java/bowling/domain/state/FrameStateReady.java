@@ -8,7 +8,7 @@ public class FrameStateReady implements FrameState {
         if (pinfall.isStrike()) {
             return new FrameStateStrike();
         }
-        return new FrameStateOnce();
+        return new FrameStateOnce(pinfall);
     }
 
     @Override
