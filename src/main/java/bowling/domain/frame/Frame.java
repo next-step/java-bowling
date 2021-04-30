@@ -1,4 +1,6 @@
 package bowling.domain.frame;
 
-public class Frame {
+public abstract class Frame {
+    protected Scores scores;
+
 }
