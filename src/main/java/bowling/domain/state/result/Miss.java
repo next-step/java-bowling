@@ -25,6 +25,11 @@ public class Miss implements Result {
     }
 
     @Override
+    public boolean isClear() {
+        return false;
+    }
+
+    @Override
     public String toSymbol() {
         return BowlingSymbol.of(firstPin, secondPin);
     }

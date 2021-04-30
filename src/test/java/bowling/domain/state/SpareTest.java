@@ -49,4 +49,16 @@ public class SpareTest {
         // when & then
         assertThat(state.toSymbol()).isEqualTo("5|/");
     }
+
+    @Test
+    void 모든핀_제거_여부_테스트() {
+        // given
+        State state = new Ready().bowl(BowlingPin.of(5)).bowl(BowlingPin.of(5));
+        State state2 = Running.of(BowlingPin.of(5)).bowl(BowlingPin.of(5));
+        State state3 = Spare.of(BowlingPin.of(5), BowlingPin.of(5));
+        // when & then
+        assertThat(state.isClear()).isTrue();
+        assertThat(state2.isClear()).isTrue();
+        assertThat(state3.isClear()).isTrue();
+    }
 }

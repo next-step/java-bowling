@@ -25,6 +25,11 @@ public class Spare implements Result {
     }
 
     @Override
+    public boolean isClear() {
+        return true;
+    }
+
+    @Override
     public String toSymbol() {
         return BowlingSymbol.of(firstPin, secondPin);
     }

@@ -43,4 +43,12 @@ public class MissTest {
         // when & then
         assertThat(state.toSymbol()).isEqualTo("5|3");
     }
+
+    @Test
+    void 모든핀_제거_여부_테스트() {
+        // given
+        State state = Miss.of(BowlingPin.of(5), BowlingPin.of(3));
+        // when & then
+        assertThat(state.isClear()).isFalse();
+    }
 }
