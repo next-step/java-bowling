@@ -15,6 +15,8 @@ public class Pinfall {
         this.pinfall = pinfall;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -30,5 +32,9 @@ public class Pinfall {
 
     public Pinfall add(Pinfall pinfall) {
         return new Pinfall(this.pinfall + pinfall.pinfall);
+    }
+
+    public boolean isStrike() {
+        return pinfall == MAX_PINFALL;
     }
 }
