@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 
 public class Pitches {
     private final List<Pitch> pitches;
@@ -12,9 +13,9 @@ public class Pitches {
     }
 
     public int sum() {
-        return pitches.stream()
-                .reduce(new Pitch(0), Pitch::sum)
-                .intValue();
+        return IntStream.range(0, pitches.size())
+                .map(index -> pitches.get(index).intValue())
+                .sum();
     }
 
     public Pitches pitch(int point) {
