@@ -75,6 +75,7 @@ class PinsTest {
         final Pin fourthPin = TestFixture.STRIKE_PIN;
 
         // when
+        // then
         assertThatThrownBy(() -> Pins.of(firstPin, secondPin, thirdPin, fourthPin))
                 .isInstanceOf(PinsCountExceededException.class)
                 .hasMessage(PinsCountExceededException.PINS_COUNT_EXCEEDED);
@@ -124,5 +125,21 @@ class PinsTest {
 
         // then
         assertThat(pins).isEqualTo(Pins.of(TestFixture.STRIKE_PIN));
+    }
+
+    @Test
+    @DisplayName("Pins는 3개의 Pin까지만 쓰러뜨릴 수 있다.")
+    void knockDownMorePinWhenThreePins() {
+        // given
+        final Pin firstPin = TestFixture.STRIKE_PIN;
+        final Pin secondPin = new Pin(0);
+        final Pin thirdPin = TestFixture.STRIKE_PIN;
+        final Pins pins = Pins.of(firstPin, secondPin, thirdPin);
+
+        // when
+        // then
+        assertThatThrownBy(() -> pins.knockDownPin(TestFixture.STRIKE_PIN))
+                .isInstanceOf(PinsCountExceededException.class)
+                .hasMessage(PinsCountExceededException.PINS_COUNT_EXCEEDED);
     }
 }
