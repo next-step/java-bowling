@@ -1,5 +1,7 @@
 package bowling.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -11,9 +13,14 @@ public class InputView {
         return Integer.parseInt(scanner.nextLine());
     }
 
-    public String name(int peopleNumber) {
-        System.out.print("플레이어 " + peopleNumber + "의 이름은?(3 english letters): ");
-        return scanner.nextLine();
+    public List<String> name(int peopleNumber) {
+        List<String> userNames = new ArrayList<>();
+        for (int i = 0; i < peopleNumber; i++) {
+            System.out.print("플레이어 " + peopleNumber + "의 이름은?(3 english letters): ");
+            userNames.add(scanner.nextLine());
+        }
+
+        return userNames;
     }
 
     public int pinNumber(String name) {

@@ -1,7 +1,7 @@
 package bowling.domain;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Users {
 
@@ -9,16 +9,19 @@ public class Users {
 
     private final List<User> users;
 
-    public Users() {
-        users = new ArrayList<>();
+    public Users(List<String> userNames) {
+        users = userNames.stream()
+                .map(User::new)
+                .collect(Collectors.toList());
+
+        isValidate();
     }
 
     public List<User> getUsers() {
         return users;
     }
 
-    public void add(User user) {
-        users.add(user);
+    private void isValidate() {
         if (users.size() > MAX_NUMBER) {
             throw new IllegalArgumentException("한 레인의 최대 인원 수는 6인 입니다.");
         }

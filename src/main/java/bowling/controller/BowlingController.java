@@ -4,8 +4,6 @@ import bowling.domain.*;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
-import java.util.stream.IntStream;
-
 public class BowlingController {
 
     private static final int FIRST_ROUND = 1;
@@ -21,12 +19,7 @@ public class BowlingController {
 
     public void run() {
         int peopleNumber = inputView.peopleNumber();
-
-        Users users = new Users();
-        IntStream.range(0, peopleNumber)
-                .mapToObj(i -> new User(inputView.name(i + 1)))
-                .forEach(users::add);
-
+        Users users = new Users(inputView.name(peopleNumber));
         resultView.print(users);
 
         for (int frameNumber = FIRST_ROUND; frameNumber <= LAST_ROUND; frameNumber++) {
