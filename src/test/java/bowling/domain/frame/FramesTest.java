@@ -45,4 +45,18 @@ class FramesTest {
         // then
         assertThat(frames.isEnded(roundNumber)).isTrue();
     }
+
+    @Test
+    @DisplayName("10 라운드는 마지막 프레임이다.")
+    void finalFrame() {
+        // given
+        final Frames frames = Frames.initialize();
+        final RoundNumber finalRound = new RoundNumber(10);
+
+        // when
+        final Frame finalFrame = frames.getFrame(finalRound);
+
+        // then
+        assertThat(finalFrame.isFinalFrame()).isTrue();
+    }
 }

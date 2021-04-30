@@ -31,7 +31,7 @@ public final class Frames {
         getFrame(roundNumber).knockDownPin(pin);
     }
 
-    private Frame getFrame(RoundNumber roundNumber) {
+    public Frame getFrame(RoundNumber roundNumber) {
         Frame currentFrame = firstFrame;
         while (!currentFrame.roundNumberEquals(roundNumber)) {
             currentFrame = currentFrame.nextFrame();
