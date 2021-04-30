@@ -8,14 +8,14 @@ public class FinalFrame extends Frame{
     @Override
     public void pitching(int pinCount) {
         downPins.add(pinCount);
-        int p = getPinCount(pinCount);
+        pinCount = getPinCount(pinCount);
         boolean isFirst = beforeStateStrikeOrSpare();
-        states.add(State.of(p, isFirst));
+        states.add(State.of(pinCount, isFirst));
     }
 
     @Override
     public boolean isContinue() {
-        return downPins().isFirst()|| isStrikeOrSpare();
+        return downPins.size() < FULL_FRAME_COUNT && isStrikeOrSpare();
     }
 
     @Override
@@ -37,22 +37,16 @@ public class FinalFrame extends Frame{
         if (downPins().isFirst()) {
             return false;
         }
-        return isOther();
+        return State.OTHER.equals(states.get(states.size() - BEFORE_INDEX));
     }
 
     private boolean beforeStateStrikeOrSpare() {
-        if (downPins().isFirst()) {
-            return true;
-        }
-        return isStrikeOrSpare();
+        return downPins().isFirst() || isStrikeOrSpare();
     }
 
     private boolean isStrikeOrSpare() {
-        State beforeState = states.get(states.size() - BEFORE_INDEX);
-        return State.STRIKE.equals(beforeState) || State.SPARE.equals(beforeState);
-    }
-
-    private boolean isOther() {
-        return State.OTHER.equals(states.get(states.size() - BEFORE_INDEX));
+        return states.stream()
+                .anyMatch(state -> State.STRIKE.equals(state)
+                        || State.SPARE.equals(state));
     }
 }
