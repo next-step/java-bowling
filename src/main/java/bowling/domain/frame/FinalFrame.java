@@ -21,7 +21,6 @@ public final class FinalFrame extends Frame {
 
     @Override
     public void knockDownPin(Pin pin) {
-        // TODO: validate Pin Count
         pins.knockDownPin(pin);
     }
 
