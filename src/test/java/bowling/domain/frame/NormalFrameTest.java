@@ -1,7 +1,9 @@
 package bowling.domain.frame;
 
 import bowling.domain.TestFixture;
+import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
+import bowling.exception.FramePinCountException;
 import bowling.exception.IllegalNormalFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -102,5 +104,19 @@ class NormalFrameTest {
 
         // then
         assertThat(firstFrame.isEnded()).isTrue();
+    }
+
+    @Test
+    @DisplayName("NormalFrame은 총합이 10개를 넘어가는 Pin이 입력되면 예외가 반환된다.")
+    void validateNormalFrame() {
+        // given
+        final Frame frame = NormalFrame.createFirstFrame();
+        frame.knockDownPin(new Pin(9));
+
+        // when
+        // then
+        assertThatThrownBy(() -> frame.knockDownPin(new Pin(3)))
+                .isInstanceOf(FramePinCountException.class)
+                .hasMessage(FramePinCountException.FRAME_PIN_COUNT_EXCEEDED);
     }
 }
