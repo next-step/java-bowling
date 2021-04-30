@@ -1,6 +1,6 @@
-package bowling.view;
+package step4.view;
 
-import bowling.domain.Name;
+import step4.domain.Name;
 
 import java.util.Scanner;
 

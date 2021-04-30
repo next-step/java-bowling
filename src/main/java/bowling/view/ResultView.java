@@ -1,7 +1,6 @@
 package bowling.view;
 
-import bowling.domain.FrameMark;
-import bowling.domain.Name;
+import bowling.domain.*;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -13,38 +12,48 @@ public class ResultView {
     private static final String BLANK = "";
     private static final int UN_COUNTABLE_SCORE = -1;
 
-    public void printMark(Name name, List<FrameMark> frameMarks) {
+    public void printResult(List<Name> names, List<Marks> marks, List<Scores> scores) {
+        IntStream.range(0, names.size())
+                .forEach(i -> {
+                    printMark(names.get(i), marks.get(i));
+                    printScore(scores.get(i));
+                });
+    }
+
+    private void printMark(Name name, Marks marks) {
         System.out.println(SCORE_HEADER);
         System.out.print(DELIMETER);
 
         System.out.printf(PRINT_FORMAT, name.name());
-        frameMarks.stream()
-                .map(FrameMark::marks)
-                .map(marks -> String.join(DELIMETER, marks))
-                .forEach((mark) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, mark)));
+        marks.marks()
+                .stream()
+                .map(Mark::symbols)
+                .map(symbols -> String.join(DELIMETER, symbols))
+                .forEach((symbols) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, symbols)));
 
         System.out.println(DELIMETER);
     }
 
-    public void printScore(List<Integer> scores) {
+    private void printScore(Scores scores) {
         System.out.print(DELIMETER);
 
         System.out.printf(PRINT_FORMAT, BLANK);
-        IntStream.range(0, scores.size())
+        IntStream.range(0, scores.scores().size())
                 .mapToObj((i) -> changeScoreFormat(i, scores))
                 .forEach((score) -> System.out.print(DELIMETER + String.format(PRINT_FORMAT, score)));
 
         System.out.println(DELIMETER);
     }
 
-    private String changeScoreFormat(int currentIndex, List<Integer> scores) {
-        if (scores.get(currentIndex) == UN_COUNTABLE_SCORE) {
+    private String changeScoreFormat(int currentIndex, Scores scores) {
+        if (scores.scores().get(currentIndex).value() == UN_COUNTABLE_SCORE) {
             return BLANK;
         }
 
-        return String.valueOf(scores.stream()
+        return String.valueOf(scores.scores()
+                .stream()
                 .limit(currentIndex + 1)
-                .mapToInt(Integer::intValue)
+                .mapToInt(Score::value)
                 .sum());
     }
 }

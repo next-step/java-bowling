@@ -44,10 +44,10 @@ class FramesTest {
     @Test()
     @DisplayName("각 프레임 입력에 따른 결과 표식을 반환한다..")
     public void marks() throws Exception {
-        String result = frames.marks()
+        String result = frames.marks().marks()
                 .stream()
-                .map(FrameMark::marks)
-                .map(marks -> String.join(" | ", marks))
+                .map(Mark::symbols)
+                .map(symbols -> String.join(" | ", symbols))
                 .collect(Collectors.joining(" | "));
 
         then(result).isEqualTo("- | - | 1 | - | - | 1 | 1 | / | 9 | / | X | X | X | X | 1 | / | X");
@@ -56,8 +56,11 @@ class FramesTest {
     @Test()
     @DisplayName("각 프레임의 입력에 따른 점수를 반환한다.")
     public void scores() throws Exception {
-        List<Integer> result = frames.scores();
+        Scores frameScores = frames.scores();
+        List<Integer> scores = frameScores.scores().stream()
+                .map(Score::value)
+                .collect(Collectors.toList());
 
-        then(result).isEqualTo(Arrays.asList(0, 1, 1, 19, 20, 30, 30, 21, 20, 20));
+        then(scores).isEqualTo(Arrays.asList(0, 1, 1, 19, 20, 30, 30, 21, 20, 20));
     }
 }

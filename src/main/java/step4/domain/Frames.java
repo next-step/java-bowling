@@ -1,5 +1,6 @@
-package bowling.domain;
+package step4.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -37,8 +38,6 @@ public class Frames {
     public void throwBowl(String pinCount) {
         Frame Frame = get(currentIndex);
         Frame = Frame.throwBowl(pinCount);
-        update(Frame);
-        Frame = Frame.next();
         currentIndex = Frame.index();
     }
 
@@ -51,30 +50,7 @@ public class Frames {
         return frames.get(index);
     }
 
-    public void update(Frame frame) {
-        frames.set(frame.index(), frame);
-    }
-
-    public Marks marks() {
-        return new Marks(frames.stream()
-                .map(Mark::new)
-                .collect(Collectors.toList()));
-    }
-
-    public Scores scores() {
-        return new Scores(frames.stream()
-                .map(this::score)
-                .collect(Collectors.toList()));
-    }
-
-    private Score score(Frame frame) {
-        Score score = frame.score();
-
-        while (score.isOpportunityLeft()) {
-            frame = frames.get(frame.next().index());
-            score = frame.add(score);
-        }
-
-        return score;
+    public List<Frame> frames() {
+        return Collections.unmodifiableList(frames);
     }
 }

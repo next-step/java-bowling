@@ -1,63 +1,64 @@
 package bowling.domain;
 
-public enum Mark {
-    STRIKE("X"),
-    SPARE("/"),
-    GUTTER("-");
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
-    private final String mark;
+public class Mark {
+    private static final int FIRST_PIN_COUNT_INDEX = 0;
+    private static final int SECOND_PIN_COUNT_INDEX = 1;
+    private static final int THIRD_PIN_COUNT_INDEX = 2;
 
-    Mark(String mark) {
-        this.mark = mark;
+    private final Frame frame;
+    private List<String> symbols;
+
+    public Mark(Frame frame) {
+        this.frame = frame;
+        this.symbols = new ArrayList<>();
     }
 
-    public static String firstMark(PinCount pinCount) {
-        if (pinCount.isStrike()) {
-            return STRIKE.mark;
+    public List<String> symbols() {
+        List<PinCount> pinCounts = frame.pinCounts().pinCounts();
+
+        if (pinCounts.size() == 1) {
+            symbols.add(firstSymbol(pinCounts));
         }
 
-        if (pinCount.isGutter()) {
-            return GUTTER.mark;
+        if (pinCounts.size() == 2) {
+            symbols.addAll(Arrays.asList(firstSymbol(pinCounts), secondSymbol(pinCounts)));
         }
 
-        return String.valueOf(pinCount.value());
+        if (pinCounts.size() == 3) {
+            symbols.addAll(Arrays.asList(firstSymbol(pinCounts), secondSymbol(pinCounts), thirdSymbol(pinCounts)));
+        }
+
+        return symbols;
     }
 
-    public static String secondMark(PinCount firstPinCount, PinCount secondPinCount) {
-
-        if (firstPinCount.isStrike() && secondPinCount.isStrike()) {
-            return STRIKE.mark;
-        }
-
-        if (!firstPinCount.isStrike() && secondPinCount.isSpare(firstPinCount)) {
-            return SPARE.mark;
-        }
-
-        if (secondPinCount.isGutter()) {
-            return GUTTER.mark;
-        }
-
-        return String.valueOf(secondPinCount.value());
+    private String firstSymbol(List<PinCount> pinCounts) {
+        return Symbol.ofFirst(pinCounts.get(FIRST_PIN_COUNT_INDEX));
     }
 
-    public static String thirdMark(PinCount firstPinCount, PinCount secondPinCount, PinCount thirdPinCount) {
-
-        if (thirdPinCount.isStrike()) {
-            return STRIKE.mark;
-        }
-
-        if (isThirdSpare(firstPinCount, secondPinCount, thirdPinCount)) {
-            return SPARE.mark;
-        }
-
-        if (thirdPinCount.isGutter()) {
-            return GUTTER.mark;
-        }
-
-        return String.valueOf(thirdPinCount.value());
+    private String secondSymbol(List<PinCount> pinCounts) {
+        return Symbol.ofSecond(pinCounts.get(FIRST_PIN_COUNT_INDEX), pinCounts.get(SECOND_PIN_COUNT_INDEX));
     }
 
-    private static boolean isThirdSpare(PinCount firstPinCount, PinCount secondPinCount, PinCount thirdPinCount) {
-        return firstPinCount.isStrike() && !secondPinCount.isStrike() && thirdPinCount.isSpare(secondPinCount);
+    private String thirdSymbol(List<PinCount> pinCounts) {
+        return Symbol.ofThird(pinCounts.get(FIRST_PIN_COUNT_INDEX), pinCounts.get(SECOND_PIN_COUNT_INDEX), pinCounts.get(THIRD_PIN_COUNT_INDEX));
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Mark that = (Mark) o;
+        return Objects.equals(frame, that.frame);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frame);
     }
 }
