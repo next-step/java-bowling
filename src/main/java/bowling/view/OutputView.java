@@ -6,7 +6,6 @@ import bowling.utils.StringUtils;
 
 public final class OutputView {
 
-
     public static final int FRAME_SIZE = 6;
 
     private final BoardHeaderView boardHeaderView;
