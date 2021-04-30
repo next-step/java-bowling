@@ -9,6 +9,7 @@ public final class Pin {
     public static final int MIN_COUNT = 0;
     public static final int MAX_COUNT = 10;
     private static final int DEFAULT_PIN_COUNT = 10;
+    private static final String GUTTER_SIGN = "-";
 
     private final int pin;
 
@@ -40,6 +41,9 @@ public final class Pin {
     }
 
     public String status() {
+        if (pin == MIN_COUNT) {
+            return GUTTER_SIGN;
+        }
         return String.valueOf(pin);
     }
 

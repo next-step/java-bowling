@@ -9,7 +9,6 @@ public final class FrameStatusView {
     private static final String DELIMITER = "|";
     private static final String STRIKE_SIGN = "X";
     private static final String SPARE_SIGN = "/";
-    private static final String GUTTER_SIGN = "-";
     private static final String EMPTY_STRING = "";
     private static final int THROW_ONCE = 1;
     private static final int THROW_TWICE = 2;
@@ -36,7 +35,7 @@ public final class FrameStatusView {
             return onceStatus(pins);
         }
 
-        return twiceStatus(pins);
+        return normalTwiceStatus(pins);
     }
 
     private String onceStatus(Pins pins) {
@@ -44,14 +43,19 @@ public final class FrameStatusView {
         if (firstPin.isMaximum()) {
             return STRIKE_SIGN;
         }
-        if (firstPin.pinCount() == Pin.MIN_COUNT) {
-            return GUTTER_SIGN;
-        }
         return firstPin.status();
     }
 
-    private String twiceStatus(Pins pins) {
-        return null;
+    private String normalTwiceStatus(Pins pins) {
+        final Pin firstPin = pins.firstPin();
+        final Pin secondPin = pins.secondPin();
+
+        final boolean isSpare = firstPin.sum(secondPin).isMaximum();
+        if (isSpare) {
+            return onceStatus(pins) + DELIMITER + SPARE_SIGN;
+        }
+
+        return onceStatus(pins) + DELIMITER + secondPin.status();
     }
 
     private String finalFrameStatus() {
@@ -60,10 +64,14 @@ public final class FrameStatusView {
             return onceStatus(pins);
         }
         if (pins.size() == THROW_TWICE) {
-            return twiceStatus(pins);
+            return finalTwiceStatus(pins);
         }
 
         return bonusStatus(pins);
+    }
+
+    private String finalTwiceStatus(Pins pins) {
+        return null;
     }
 
     private String bonusStatus(Pins pins) {
