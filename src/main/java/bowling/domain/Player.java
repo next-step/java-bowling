@@ -14,7 +14,7 @@ public class Player {
 
   public void checkValidatedNameLength(String name){
     if(name.isEmpty() || name.length() != MAX_LENGTH){
-      throw new NameInvalidLengthException("");
+      throw new NameInvalidLengthException();
     }
   }
 
