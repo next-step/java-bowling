@@ -6,6 +6,7 @@ import java.util.List;
 
 public class DownPins {
     private final static int FIRST_PITCHING = 1;
+    private final static int PREVIOUS_INDEX_MINUS = 2;
 
     private final List<DownPin> downPins = new ArrayList<>();
 
@@ -35,6 +36,14 @@ public class DownPins {
 
     public DownPin get(int index) {
         return downPins.get(index);
+    }
+
+    public int previousCount() {
+        if (downPins().size() == FIRST_PITCHING) {
+            return sum();
+        }
+        return downPins.get(downPins.size() - PREVIOUS_INDEX_MINUS)
+                .count();
     }
 
     @Override

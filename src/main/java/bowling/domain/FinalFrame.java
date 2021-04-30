@@ -3,26 +3,32 @@ package bowling.domain;
 public class FinalFrame extends Frame{
     private final static int FULL_FRAME_COUNT = 3;
     private final static int BEFORE_INDEX = 1;
+    private final static int READY_COUNT = 0;
 
     @Override
     public void pitching(int pinCount) {
         downPins.add(pinCount);
-        states.add(State.of(getPinCount(pinCount), !beforeStateOther()));
+        int p = getPinCount(pinCount);
+        boolean isFirst = beforeStateStrikeOrSpare();
+        states.add(State.of(p, isFirst));
     }
 
     @Override
     public boolean isContinue() {
-        return states.size() < FULL_FRAME_COUNT;
+        return downPins().isFirst()|| isStrikeOrSpare();
     }
 
     @Override
     public boolean isEndFrame() {
-        return downPins.size() == FULL_FRAME_COUNT;
+        if (downPins.size() == READY_COUNT) {
+            return false;
+        }
+        return downPins.size() == FULL_FRAME_COUNT || !isContinue();
     }
 
     private int getPinCount(int pinCount) {
         if (beforeStateOther()) {
-            return downPins().get(BEFORE_INDEX).count() + pinCount;
+            return downPins().previousCount() + pinCount;
         }
         return pinCount;
     }
@@ -32,6 +38,18 @@ public class FinalFrame extends Frame{
             return false;
         }
         return isOther();
+    }
+
+    private boolean beforeStateStrikeOrSpare() {
+        if (downPins().isFirst()) {
+            return true;
+        }
+        return isStrikeOrSpare();
+    }
+
+    private boolean isStrikeOrSpare() {
+        State beforeState = states.get(states.size() - BEFORE_INDEX);
+        return State.STRIKE.equals(beforeState) || State.SPARE.equals(beforeState);
     }
 
     private boolean isOther() {
