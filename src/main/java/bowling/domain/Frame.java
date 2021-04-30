@@ -6,7 +6,7 @@ public class Frame {
     private final FrameType frameType;
 
     public Frame(int frameNo) {
-        this.frameType = FrameFactory.typeFactory(frameNo, MAX_FRAME_NO);
+        this.frameType = makeType(frameNo);
     }
 
     public Frame pitch(int point) {
@@ -20,5 +20,12 @@ public class Frame {
 
     public Pitches pitches() {
         return frameType.pitches();
+    }
+
+    private FrameType makeType(int frameNo) {
+        if (frameNo == MAX_FRAME_NO) {
+            return new FinalFrameType();
+        }
+        return new NormalFrameType();
     }
 }
