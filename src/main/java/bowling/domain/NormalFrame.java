@@ -6,7 +6,6 @@ public class NormalFrame extends Frame {
 
     public static final int FIRST_NUMBER = 1;
     private static final int LAST_NUMBER = 9;
-    private static final int NON_BONUS = 0;
 
     private Frame next;
 

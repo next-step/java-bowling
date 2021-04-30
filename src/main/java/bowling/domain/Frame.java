@@ -4,6 +4,8 @@ import java.util.List;
 
 public abstract class Frame {
 
+    protected static final int NON_BONUS = 0;
+
     private final int number;
     private final Pitches pitches;
 
