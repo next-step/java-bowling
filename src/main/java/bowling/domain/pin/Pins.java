@@ -53,6 +53,9 @@ public final class Pins {
     }
 
     public FrameStatus frameStatus() {
+        if (pins.size() < NORMAL_PIN_SIZE) {
+            return FrameStatus.NOT_ENDED;
+        }
         if (pins.size() == NORMAL_PIN_SIZE) {
             return FrameStatus.of(firstPin(), secondPin());
         }
