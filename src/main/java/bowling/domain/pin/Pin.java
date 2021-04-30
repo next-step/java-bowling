@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public final class Pin {
 
-    public static final String GUTTER_STATUS = "-";
     public static final int MIN_COUNT = 0;
     public static final int MAX_COUNT = 10;
     private static final int DEFAULT_PIN_COUNT = 10;
@@ -30,13 +29,6 @@ public final class Pin {
 
     public int pinCount() {
         return pin;
-    }
-
-    public String status() {
-        if (pin == MIN_COUNT) {
-            return GUTTER_STATUS;
-        }
-        return String.valueOf(pin);
     }
 
     public Pin sum(Pin other) {
