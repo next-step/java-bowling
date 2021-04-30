@@ -2,11 +2,13 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
+import bowling.exception.FramePinCountException;
 import bowling.exception.IllegalNormalFrameException;
 
 public final class NormalFrame extends Frame {
 
     public static final RoundNumber MAX_NORMAL_FRAME_ROUND_NUMBER = new RoundNumber(RoundNumber.MAX - 1);
+    private static final int MAX_NORMAL_PIN_COUNT = 10;
 
     private NormalFrame(RoundNumber roundNumber, Pins pins) {
         super(roundNumber, pins);
@@ -37,8 +39,14 @@ public final class NormalFrame extends Frame {
 
     @Override
     public void knockDownPin(Pin pin) {
-        // TODO: validate pin count
+        validatePinCount(pin);
         pins.knockDownPin(pin);
+    }
+
+    private void validatePinCount(Pin pin) {
+        if (pins.totalPinCount() + pin.pinCount() > MAX_NORMAL_PIN_COUNT) {
+            throw new FramePinCountException();
+        }
     }
 
     @Override
