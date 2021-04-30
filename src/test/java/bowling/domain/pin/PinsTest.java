@@ -84,7 +84,7 @@ class PinsTest {
     }
 
     @Test
-    @DisplayName("쓰러진 핀을 전달받으면 새로운 Pins가 반환된다.")
+    @DisplayName("쓰러진 핀을 전달받으면 Pins의 상태가 변경된다.")
     void knockDownPin() {
         // given
         final Pins pins = Pins.create();
