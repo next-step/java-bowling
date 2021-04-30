@@ -29,7 +29,7 @@ class ReadyTest {
         assertThat(ready.isFinish()).isFalse();
     }
 
-    @DisplayName("Ready 인스턴스가 종료 여부를 알맞게 반환하는지 테스트")
+    @DisplayName("Ready 인스턴스가 10개 미만의 핀을 맞추면 FirstBowl 반환 여부 테스트")
     @Test
     void 반환_FirstBowl() {
         // when
@@ -39,6 +39,20 @@ class ReadyTest {
         assertAll(
                 () -> assertThat(ready.bowl(HitCount.valueOf(9))).isNotNull(),
                 () -> assertThat(ready.bowl(HitCount.valueOf(9))).isInstanceOf(FirstBowl.class)
+        );
+
+    }
+
+    @DisplayName("Ready 인스턴스가 10개의 핀을 맞추면 Strike 반환 여부 테스트")
+    @Test
+    void 반환_Strike() {
+        // when
+        State ready = State.initialize();
+
+        // then
+        assertAll(
+                () -> assertThat(ready.bowl(HitCount.valueOf(10))).isNotNull(),
+                () -> assertThat(ready.bowl(HitCount.valueOf(10))).isInstanceOf(Strike.class)
         );
 
     }
