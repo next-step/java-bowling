@@ -337,4 +337,64 @@ class NormalFrameTest {
         assertThat(normalFrame.score()).isEqualTo(19);
     }
 
+    @Test
+    @DisplayName("더블 스트라이크 보너스점수")
+    void doubleStrike() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        Frame next = normalFrame.next();
+        next.pitch(new Pitch(10));
+
+        Frame next2 = next.next();
+        next2.pitch(new Pitch(7));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(27);
+    }
+
+    @Test
+    @DisplayName("트리플 스트라이크 보너스점수")
+    void tripleStrike() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        Frame next = normalFrame.next();
+        next.pitch(new Pitch(10));
+
+        Frame next2 = next.next();
+        next2.pitch(new Pitch(10));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(30);
+    }
+    
+    @Test
+    @DisplayName("스트라이크 보너스는 최대 3프레임까지만 적용")
+    void limitStrikeBonus() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        Frame next = normalFrame.next();
+        next.pitch(new Pitch(10));
+
+        Frame next2 = next.next();
+        next2.pitch(new Pitch(10));
+
+        Frame next3 = next2.next();
+        next3.pitch(new Pitch(6));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(30);
+    }
+
 }
