@@ -30,14 +30,29 @@ class HitCountTest {
         int secondCount = -1;
 
         // when
-        assertThatThrownBy(()-> HitCount.valueOf(firstCount))
+        assertThatThrownBy(() -> HitCount.valueOf(firstCount))
                 .isInstanceOf(InputNumberOutOfBoundsException.class)
-                .hasMessage("맞은 갯수 ( "+firstCount+" ) 는 사용할 수 없는 갯수 입니다.");
+                .hasMessage("맞은 갯수 ( " + firstCount + " ) 는 사용할 수 없는 갯수 입니다.");
 
         // when
-        assertThatThrownBy(()-> HitCount.valueOf(secondCount))
+        assertThatThrownBy(() -> HitCount.valueOf(secondCount))
                 .isInstanceOf(InputNumberOutOfBoundsException.class)
-                .hasMessage("맞은 갯수 ( "+secondCount+" ) 는 사용할 수 없는 갯수 입니다.");
+                .hasMessage("맞은 갯수 ( " + secondCount + " ) 는 사용할 수 없는 갯수 입니다.");
+
+    }
+
+    @DisplayName("HitCount 인스턴스가 소유한 값 반환 테스트")
+    @Test
+    void 반환() {
+        // given
+        int expected = 10;
+
+        // when
+        HitCount hitCount = HitCount.valueOf(expected);
+        int actual = hitCount.count();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
 
     }
 }
