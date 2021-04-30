@@ -39,16 +39,6 @@ public class ResultView {
         return builder.toString();
     }
 
-    private String framePitches(int frameNo, Frames frames) {
-        Map<Integer, Frame> frameMap = frames.frames();
-        if (frameMap.containsKey(frameNo)) {
-            ResultViewType viewType = FrameFactory.viewFactory(frameNo, MAX_FRAME_NO);
-            String frameResult = viewType.frameResult(frameMap.get(frameNo));
-            return String.format(" %-3s  " + DELIMITER, frameResult);
-        }
-        return EMPTY_FRAME;
-    }
-
     private String framePitches2(int frameNo, Frames frames) {
         Map<Integer, Frame> frameMap = frames.frames();
         if (frameMap.containsKey(frameNo)) {
