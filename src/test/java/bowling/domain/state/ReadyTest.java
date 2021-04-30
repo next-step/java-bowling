@@ -12,7 +12,7 @@ class ReadyTest {
     @Test
     void 생성() {
         // when
-        Ready ready = State.initialize();
+        State ready = State.initialize();
 
         // then
         assertThat(ready).isNotNull();

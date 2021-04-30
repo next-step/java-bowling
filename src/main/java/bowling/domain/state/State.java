@@ -4,11 +4,12 @@ import bowling.domain.HitCount;
 
 public interface State {
 
-    boolean isFinish();
+    static State initialize() {
+        return Ready.initialize();
+    }
+
 
     State bowl(HitCount hitCount);
+    boolean isFinish();
 
-//    static State initialize() {
-//        return new Ready();
-//    }
 }
