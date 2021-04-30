@@ -4,10 +4,12 @@ import java.util.Objects;
 
 public class User {
 
+    private static final int NAME_LENGTH = 3;
+
     private final String name;
 
     public User(String name) {
-        if (name.length() != 3) {
+        if (name.length() != NAME_LENGTH) {
             throw new IllegalArgumentException("이름은 세글자 입니다.");
         }
         this.name = name;
