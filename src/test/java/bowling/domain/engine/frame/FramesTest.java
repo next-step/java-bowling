@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class FramesTest {
 
@@ -39,4 +40,17 @@ class FramesTest {
         assertThat(allFinishedFrames().isAllFrameEnded()).isTrue();
     }
 
+    @Test
+    @DisplayName("프레임 번호에 해당하는 프레임에서 투구를 완료했는지 확인한다.")
+    void checkIfFinishedFrameThatCorrespondingToTheFrameNumber() {
+        Frames frames = Frames.init();
+        frames.roll(RollResult.of(10));
+
+        assertAll(
+            () -> assertThat(frames.isFinishedFrame(FrameNumber.wrap(1))).isTrue(),
+            () -> assertThat(frames.isFinishedFrame(FrameNumber.wrap(2))).isFalse()
+        );
+        
+    }
+    
 }

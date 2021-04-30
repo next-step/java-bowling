@@ -46,6 +46,11 @@ public class Frames {
         return frames.size() == TOTAL_FRAMES && frames.getLast().isEnded();
     }
 
+    public boolean isFinishedFrame(FrameNumber frameNumber) {
+        Frame frame = frames.get(frameNumber.getNumber() - 1);
+        return frame.isEnded();
+    }
+
     public FramesDto export() {
         return FramesDto.of(this);
     }
