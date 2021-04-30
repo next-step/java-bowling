@@ -23,6 +23,10 @@ public class Pinfall {
         return pinfall == MAX_PINFALL;
     }
 
+    public int number() {
+        return pinfall;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
