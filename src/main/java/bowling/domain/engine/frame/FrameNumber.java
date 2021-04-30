@@ -33,12 +33,20 @@ public class FrameNumber {
         return CACHE[MIN - 1];
     }
 
+    public static FrameNumber finalFrame() {
+        return CACHE[MAX - 1];
+    }
+
     public int getNumber() {
         return value;
     }
 
     public FrameNumber getNextNumber() {
-        return CACHE[value];
+        try {
+            return CACHE[value];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new IllegalStateException("마지막 프레임 번호에 다다랐기 때문에 다음 프레임 번호를 생성할 수 없습니다.");
+        }
     }
 
     @Override
