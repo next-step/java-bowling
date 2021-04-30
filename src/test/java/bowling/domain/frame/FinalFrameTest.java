@@ -5,8 +5,6 @@ import bowling.domain.pin.Pins;
 import bowling.exception.NoNextFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -14,24 +12,23 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class FinalFrameTest {
 
     @Test
-    @DisplayName("FinalFrameScore를 받아 마지막 프레임을 생성한다.")
+    @DisplayName("Pins를 받아 마지막 프레임을 생성한다.")
     void create() {
         // given
-        final FinalFrameScore frameScore = new FinalFrameScore();
+        final Pins pins = Pins.create();
 
         // when
-        final FinalFrame finalFrame = FinalFrame.from(frameScore);
+        final FinalFrame finalFrame = FinalFrame.from(pins);
 
         // then
-        assertThat(finalFrame.isFinalFrame()).isTrue();
+        assertThat(finalFrame).isEqualTo(FinalFrame.from(Pins.create()));
     }
 
     @Test
     @DisplayName("FinalFrame의 다음 프레임은 생성되지 않는다.")
     void nextFrame() {
         // given
-        final FinalFrameScore frameScore = new FinalFrameScore();
-        final FinalFrame finalFrame = FinalFrame.from(frameScore);
+        final FinalFrame finalFrame = FinalFrame.from(Pins.create());
 
         // when
         // then
@@ -40,29 +37,11 @@ class FinalFrameTest {
                 .hasMessage(NoNextFrameException.FINAL_FRAME_CANNOT_CREATE_NEXT_FRAME);
     }
 
-    @ParameterizedTest
-    @CsvSource({"10,10,10,X|X|X", "10,0,10,X|-|/", "0,10,10,-|/|X", "9,1,3,9|/|3", "3,4,0,3|4", "0,0,0,-|-"})
-    @DisplayName("FinalFrame은 조건별로 출력이 다르다.")
-    void status(int firstPinCount, int secondPinCount, int thirdPinCount, String expected) {
-        // given
-        final Pin firstPin = new Pin(firstPinCount);
-        final Pin secondPin = new Pin(secondPinCount);
-        final Pin thirdPin = new Pin(thirdPinCount);
-        final Pins pins = Pins.of(firstPin, secondPin, thirdPin);
-        final Frame frame = FinalFrame.from(new FinalFrameScore(pins));
-
-        // when
-        final String status = frame.status();
-
-        // then
-        assertThat(status).isEqualTo(expected);
-    }
-
     @Test
     @DisplayName("투구를 한다. 투구를 한 후 상태가 변경된다.")
     void knockDownPin() {
         // given
-        final FinalFrame finalFrame = FinalFrame.from(new FinalFrameScore());
+        final FinalFrame finalFrame = FinalFrame.from(Pins.create());
         final Pin pin = new Pin(0);
 
         // when

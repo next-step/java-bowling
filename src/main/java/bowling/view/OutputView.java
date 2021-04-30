@@ -28,7 +28,7 @@ public final class OutputView {
 
         playerResultBuilder.append("|").append(StringUtils.padLeft(playerName, NAME_PADDING_SIZE)).append(" ");
         for (Frame frame : frames.value()) {
-            playerResultBuilder.append("|").append(StringUtils.alignCenter(frame.status(), FRAME_SIZE));
+            playerResultBuilder.append("|").append(StringUtils.alignCenter("FIXME", FRAME_SIZE));
         }
         playerResultBuilder.append("|").append("\n");
 

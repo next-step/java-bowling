@@ -1,21 +1,17 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
+import bowling.domain.pin.Pins;
 import bowling.exception.NoNextFrameException;
 
 public final class FinalFrame extends Frame {
 
-    private FinalFrame(RoundNumber roundNumber, FinalFrameScore frameScore) {
-        super(roundNumber, frameScore);
+    private FinalFrame(RoundNumber roundNumber, Pins pins) {
+        super(roundNumber, pins);
     }
 
-    public static FinalFrame from(FinalFrameScore frameScore) {
-        return new FinalFrame(RoundNumber.MAX_ROUND_NUMBER, frameScore);
-    }
-
-    @Override
-    public boolean isFinalFrame() {
-        return true;
+    public static FinalFrame from(Pins pins) {
+        return new FinalFrame(RoundNumber.MAX_ROUND_NUMBER, pins);
     }
 
     @Override
@@ -25,11 +21,12 @@ public final class FinalFrame extends Frame {
 
     @Override
     public void knockDownPin(Pin pin) {
-        frameScore.knockDownPin(pin);
+        // TODO: validate Pin Count
+        pins.knockDownPin(pin);
     }
 
     @Override
-    public String status() {
-        return frameScore.status();
+    public boolean isEnded() {
+        return pins.frameStatus() != FrameStatus.NOT_ENDED;
     }
 }
