@@ -9,17 +9,24 @@ public abstract class Frame {
 
     protected final RoundNumber roundNumber;
     protected final Pins pins;
+    protected Frame nextFrame;
 
     protected Frame(RoundNumber roundNumber, Pins pins) {
         this.roundNumber = roundNumber;
         this.pins = pins;
     }
 
+    public abstract Frame nextFrame();
+
     public abstract Frame createNextFrame();
 
     public abstract void knockDownPin(Pin pin);
 
     public abstract boolean isEnded();
+
+    public boolean roundNumberEquals(RoundNumber roundNumber) {
+        return false;
+    }
 
     @Override
     public boolean equals(Object o) {

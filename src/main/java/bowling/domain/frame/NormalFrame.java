@@ -14,6 +14,11 @@ public final class NormalFrame extends Frame {
         super(roundNumber, pins);
     }
 
+    @Override
+    public Frame nextFrame() {
+        return null;
+    }
+
     public static Frame of(RoundNumber roundNumber, Pins pins) {
         validateNormalRoundNumber(roundNumber);
         return new NormalFrame(roundNumber, pins);

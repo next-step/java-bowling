@@ -1,6 +1,5 @@
 package bowling.view;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 import bowling.utils.StringUtils;
@@ -27,9 +26,9 @@ public final class OutputView {
         final StringBuilder playerResultBuilder = new StringBuilder();
 
         playerResultBuilder.append("|").append(StringUtils.padLeft(playerName, NAME_PADDING_SIZE)).append(" ");
-        for (Frame frame : frames.value()) {
+//        for (Frame frame : frames.value()) {
             playerResultBuilder.append("|").append(StringUtils.alignCenter("FIXME", FRAME_SIZE));
-        }
+//        }
         playerResultBuilder.append("|").append("\n");
 
         System.out.println(playerResultBuilder);
