@@ -13,10 +13,6 @@ class RunningTest {
     @Test
     void 생성() {
         Running running = new Running() {
-            @Override
-            public boolean isFinish() {
-                return false;
-            }
 
             @Override
             public State bowl(HitCount hitCount) {
