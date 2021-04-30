@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
+import bowling.domain.pin.Pins;
 
 public enum FrameStatus {
     STRIKE,
@@ -11,6 +12,7 @@ public enum FrameStatus {
 
     private static final int MAX_PIN_COUNT = 10;
     private static final int ZERO_PIN_COUNT = 0;
+    public static final int FIRST_PIN_INDEX = 0;
 
     public static FrameStatus of(Pin firstPin, Pin secondPin) {
         if (firstPin != null && firstPin.pinCount() == MAX_PIN_COUNT) {
@@ -39,6 +41,26 @@ public enum FrameStatus {
         }
         if (firstPin.pinCount() + secondPin.pinCount() == MAX_PIN_COUNT && thirdPin == null) {
             return NOT_ENDED;
+        }
+        return NORMAL;
+    }
+
+    public static FrameStatus of(Pins pins) {
+        if (pins.isEmpty()) {
+            return NOT_ENDED;
+        }
+        if (pins.firstPin().isMaximum()) {
+            return STRIKE;
+        }
+        if (pins.size() == 1) {
+            return NOT_ENDED;
+        }
+        final Pin sum = pins.firstPin().sum(pins.secondPin());
+        if (sum.isMaximum()) {
+            return SPARE;
+        }
+        if (sum.pinCount() == 0) {
+            return MISS;
         }
         return NORMAL;
     }

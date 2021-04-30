@@ -50,27 +50,15 @@ public final class Pins {
     }
 
     public Pin firstPin() {
-        try {
-            return pins.get(FIRST_PIN_INDEX);
-        } catch (Exception e) {
-            return null;
-        }
+        return pins.get(FIRST_PIN_INDEX);
     }
 
     public Pin secondPin() {
-        try {
-            return pins.get(SECOND_PIN_INDEX);
-        } catch (Exception e) {
-            return null;
-        }
+        return pins.get(SECOND_PIN_INDEX);
     }
 
     public Pin thirdPin() {
-        try {
-            return pins.get(THIRD_PIN_INDEX);
-        } catch (Exception e) {
-            return null;
-        }
+        return pins.get(THIRD_PIN_INDEX);
     }
 
     public FrameStatus frameStatus() {
@@ -89,6 +77,14 @@ public final class Pins {
         return pins.stream()
                 .mapToInt(Pin::pinCount)
                 .sum();
+    }
+
+    public boolean isEmpty() {
+        return pins.isEmpty();
+    }
+
+    public int size() {
+        return pins.size();
     }
 
     @Override
