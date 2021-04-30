@@ -25,8 +25,7 @@ public final class BowlingController {
     private static void bowl(Player player, int i) {
         final RoundNumber roundNumber = new RoundNumber(i);
         while (!player.isEnded(roundNumber)) {
-            final Pin pin = downPin(i);
-            player.knockDownPin(roundNumber, pin);
+            downPin(player, i);
             OutputView.printScoreBoard(player);
         }
     }
@@ -40,12 +39,13 @@ public final class BowlingController {
         }
     }
 
-    private static Pin downPin(final int roundNumber) {
+    private static void downPin(final Player player, final int roundNumber) {
         try {
-            return new Pin(InputView.inputDownPin(roundNumber));
+            final Pin pin = new Pin(InputView.inputDownPin(roundNumber));
+            player.knockDownPin(new RoundNumber(roundNumber), pin);
         } catch (BowlingException e) {
             System.err.println(e.getMessage());
-            return downPin(roundNumber);
+            downPin(player, roundNumber);
         }
     }
 }
