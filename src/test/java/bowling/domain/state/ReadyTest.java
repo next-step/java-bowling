@@ -12,9 +12,19 @@ class ReadyTest {
     @Test
     void 생성() {
         // when
-        State ready = State.initialize();
+        State ready = Ready.initialize();
 
         // then
         assertThat(ready).isNotNull();
+    }
+
+    @DisplayName("Ready 인스턴스가 종료 여부를 알맞게 반환하는지 테스트")
+    @Test
+    void 반환_종료_여부() {
+        // when
+        State ready = State.initialize();
+
+        // then
+        assertThat(ready.isFinish()).isFalse();
     }
 }
