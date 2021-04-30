@@ -23,4 +23,7 @@ public final class Player {
         }
     }
 
+    public final String name() {
+        return name;
+    }
 }
