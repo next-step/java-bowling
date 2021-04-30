@@ -2,6 +2,7 @@ package bowling.domain.pin;
 
 import bowling.domain.TestFixture;
 import bowling.domain.frame.FrameStatus;
+import bowling.exception.PinsCountExceededException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PinsTest {
@@ -61,6 +63,21 @@ class PinsTest {
                 () -> assertThat(pins.secondPin()).isEqualTo(secondPin),
                 () -> assertThat(pins.thirdPin()).isEqualTo(thirdPin)
         );
+    }
+
+    @Test
+    @DisplayName("Pins는 4개의 Pin으로 생성할 수 없다.")
+    void createOfFourPin() {
+        // given
+        final Pin firstPin = TestFixture.STRIKE_PIN;
+        final Pin secondPin = new Pin(0);
+        final Pin thirdPin = TestFixture.STRIKE_PIN;
+        final Pin fourthPin = TestFixture.STRIKE_PIN;
+
+        // when
+        assertThatThrownBy(() -> Pins.of(firstPin, secondPin, thirdPin, fourthPin))
+                .isInstanceOf(PinsCountExceededException.class)
+                .hasMessage(PinsCountExceededException.PINS_COUNT_EXCEEDED);
     }
 
     @ParameterizedTest
