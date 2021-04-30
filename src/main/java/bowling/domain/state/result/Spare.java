@@ -1,6 +1,7 @@
 package bowling.domain.state.result;
 
 import bowling.domain.state.BowlingPin;
+import bowling.domain.state.BowlingSymbol;
 import bowling.domain.state.Result;
 
 public class Spare implements Result {
@@ -21,5 +22,10 @@ public class Spare implements Result {
 
     public static Spare of(BowlingPin firstPin, BowlingPin secondPin) {
         return new Spare(firstPin, secondPin);
+    }
+
+    @Override
+    public String toSymbol() {
+        return BowlingSymbol.of(firstPin, secondPin);
     }
 }

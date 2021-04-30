@@ -35,4 +35,12 @@ public class MissTest {
         // when & then
         assertThat(state.isDone()).isTrue();
     }
+
+    @Test
+    void 출력_테스트() {
+        // given
+        State state = Miss.of(BowlingPin.of(5), BowlingPin.of(3));
+        // when & then
+        assertThat(state.toSymbol()).isEqualTo("5|3");
+    }
 }

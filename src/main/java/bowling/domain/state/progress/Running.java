@@ -3,6 +3,7 @@ package bowling.domain.state.progress;
 import java.util.Objects;
 
 import bowling.domain.state.BowlingPin;
+import bowling.domain.state.BowlingSymbol;
 import bowling.domain.state.Progress;
 import bowling.domain.state.State;
 import bowling.domain.state.result.Miss;
@@ -33,6 +34,12 @@ public class Running implements Progress {
         }
         return Miss.of(firstPin, bowlingPin);
     }
+
+    @Override
+    public String toSymbol() {
+        return BowlingSymbol.of(firstPin);
+    }
+
 
     @Override
     public boolean equals(Object o) {

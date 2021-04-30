@@ -1,6 +1,7 @@
 package bowling.domain.state.result;
 
 import bowling.domain.state.BowlingPin;
+import bowling.domain.state.BowlingSymbol;
 import bowling.domain.state.Result;
 
 public class Strike implements Result {
@@ -20,4 +21,10 @@ public class Strike implements Result {
     public static Strike of(BowlingPin bowlingPin) {
         return new Strike(bowlingPin);
     }
+
+    @Override
+    public String toSymbol() {
+        return BowlingSymbol.of(bowlingPin);
+    }
+
 }

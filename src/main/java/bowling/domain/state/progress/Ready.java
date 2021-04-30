@@ -7,6 +7,8 @@ import bowling.domain.state.result.Strike;
 
 public class Ready implements Progress {
 
+    private static final String SYMBOL = "";
+
     public Ready(){
     }
 
@@ -16,5 +18,10 @@ public class Ready implements Progress {
             return Strike.of(bowlingPin);
         }
         return Running.of(bowlingPin);
+    }
+
+    @Override
+    public String toSymbol() {
+        return SYMBOL;
     }
 }

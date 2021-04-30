@@ -41,4 +41,12 @@ public class SpareTest {
         assertThat(state2.isDone()).isTrue();
         assertThat(state3.isDone()).isTrue();
     }
+
+    @Test
+    void 출력_테스트() {
+        // given
+        State state = Spare.of(BowlingPin.of(5), BowlingPin.of(5));
+        // when & then
+        assertThat(state.toSymbol()).isEqualTo("5|/");
+    }
 }

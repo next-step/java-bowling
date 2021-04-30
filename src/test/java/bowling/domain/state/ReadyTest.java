@@ -33,4 +33,12 @@ public class ReadyTest {
         // when & then
         assertThat(state.isDone()).isFalse();
     }
+
+    @Test
+    void 출력_테스트() {
+        // given
+        State state = new Ready();
+        // when & then
+        assertThat(state.toSymbol()).isEqualTo("");
+    }
 }

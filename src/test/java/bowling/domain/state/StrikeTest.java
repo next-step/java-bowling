@@ -35,4 +35,12 @@ public class StrikeTest {
         assertThat(state.isDone()).isTrue();
         assertThat(state2.isDone()).isTrue();
     }
+
+    @Test
+    void 출력_테스트() {
+        // given
+        State state = Strike.of(BowlingPin.of(10));
+        // when & then
+        assertThat(state.toSymbol()).isEqualTo("X");
+    }
 }
