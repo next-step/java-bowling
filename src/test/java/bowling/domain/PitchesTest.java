@@ -3,22 +3,32 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PitchesTest {
-    @DisplayName("투구 횟수를 반환한다.")
+    @DisplayName("스트라이크 여부를 반환한다.")
     @Test
-    void count() {
-        Pitches pitches = new Pitches(Arrays.asList(new Pitch(8), new Pitch(2)));
-        assertThat(pitches.count()).isEqualTo(2);
+    void isStrike() {
+        Pitches pitches = new Pitches();
+        pitches.pitch(10);
+        assertThat(pitches.isStrike()).isTrue();
     }
 
-    @DisplayName("투구 합산값을 반환한다.")
+    @DisplayName("스페어 여부를 반환한다.")
     @Test
-    void sum() {
-        Pitches pitches = new Pitches(Arrays.asList(new Pitch(8), new Pitch(2)));
-        assertThat(pitches.sum()).isEqualTo(10);
+    void isSpare() {
+        Pitches pitches = new Pitches();
+        pitches.pitch(8);
+        pitches.pitch(2);
+        assertThat(pitches.isSpare()).isTrue();
+    }
+
+    @DisplayName("오픈 여부를 반환한다.")
+    @Test
+    void isOpen() {
+        Pitches pitches = new Pitches();
+        pitches.pitch(7);
+        pitches.pitch(1);
+        assertThat(pitches.isOpen()).isTrue();
     }
 }

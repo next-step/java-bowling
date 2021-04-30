@@ -1,14 +1,12 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-
 public class NormalFrameType implements FrameType {
     private static final int MAX_PITCHES = 2;
 
     private final Pitches pitches;
 
     public NormalFrameType() {
-        this.pitches = new Pitches(new ArrayList<>());
+        this.pitches = new Pitches();
     }
 
     @Override
