@@ -4,6 +4,8 @@ import bowling.domain.HitCount;
 
 public class Strike extends Finish {
 
+    private Strike() { }
+
     public static State newInstance() {
         return new Strike();
     }
