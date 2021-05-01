@@ -2,7 +2,7 @@ package bowling.domain;
 
 public class Bowling {
     private final BowlingResult bowlingResult;
-    private NormalFrame currentFrame;
+    private Frame currentFrame;
 
     public Bowling() {
         bowlingResult = new BowlingResult();
@@ -10,7 +10,7 @@ public class Bowling {
     }
 
     public void roll(Pinfall pinfall) {
-        NormalFrame newFrame = currentFrame.roll(pinfall);
+        Frame newFrame = currentFrame.roll(pinfall);
         bowlingResult.add(currentFrame.frameNumber(), currentFrame.result());
         if (!currentFrame.equals(newFrame)) {
             currentFrame = newFrame;

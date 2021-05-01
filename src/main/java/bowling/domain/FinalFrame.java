@@ -3,7 +3,7 @@ package bowling.domain;
 import bowling.domain.state.FrameState;
 import bowling.domain.state.FrameStateFinalReady;
 
-public class FinalFrame {
+public class FinalFrame implements Frame {
     private FrameState currentState = new FrameStateFinalReady();
 
     public FinalFrame() {
@@ -26,19 +26,23 @@ public class FinalFrame {
         roll(pinfall);
     }
 
+    @Override
     public FinalFrame roll(Pinfall pinfall) {
         currentState = currentState.roll(pinfall);
         return this;
     }
 
+    @Override
     public FrameResult result() {
         return new FrameResult(currentState.pointSymbols());
     }
 
+    @Override
     public boolean isDone() {
         return !currentState.isRollable();
     }
 
+    @Override
     public FrameNumber frameNumber() {
         return new FrameNumber(10);
     }

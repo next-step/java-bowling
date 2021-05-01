@@ -5,7 +5,7 @@ import bowling.domain.state.FrameStateReady;
 
 import java.util.Objects;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
     private final FrameNumber frameNumber;
     private FrameState currentState = new FrameStateReady();
     private NormalFrame next;
@@ -28,10 +28,12 @@ public class NormalFrame {
         this.frameNumber = frameNumber;
     }
 
+    @Override
     public FrameResult result() {
         return new FrameResult(currentState.pointSymbols());
     }
 
+    @Override
     public NormalFrame roll(Pinfall pinfall) {
         currentState = currentState.roll(pinfall);
         if (isDone()) {
@@ -41,6 +43,7 @@ public class NormalFrame {
         return this;
     }
 
+    @Override
     public boolean isDone() {
         return !currentState.isRollable();
     }
@@ -49,6 +52,7 @@ public class NormalFrame {
         return next != null;
     }
 
+    @Override
     public FrameNumber frameNumber() {
         return frameNumber;
     }
