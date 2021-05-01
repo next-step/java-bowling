@@ -8,7 +8,7 @@ import java.util.Objects;
 public class NormalFrame implements Frame {
     private final FrameNumber frameNumber;
     private FrameState currentState = new FrameStateReady();
-    private NormalFrame next;
+    private Frame next;
 
     public NormalFrame(Pinfall firstPinfall, Pinfall secondPinfall) {
         this(firstPinfall);
@@ -34,13 +34,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public NormalFrame roll(Pinfall pinfall) {
-        currentState = currentState.roll(pinfall);
-        if (isDone()) {
-            next = new NormalFrame(frameNumber.increase());
-            return next;
-        }
-        return this;
+    public Frame roll(Pinfall pinfall) {
+        return roll(pinfall, new NormalFrameFactory());
     }
 
     @Override
@@ -68,5 +63,15 @@ public class NormalFrame implements Frame {
     @Override
     public int hashCode() {
         return Objects.hash(frameNumber);
+    }
+
+    @Override
+    public Frame roll(Pinfall pinfall, FrameFatory frameFatory) {
+        currentState = currentState.roll(pinfall);
+        if (isDone()) {
+            next = frameFatory.frame(frameNumber.increase());
+            return next;
+        }
+        return this;
     }
 }

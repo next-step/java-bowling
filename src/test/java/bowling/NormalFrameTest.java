@@ -61,7 +61,7 @@ public class NormalFrameTest {
     @Test
     void Given_Strike_When_Roll_Then_ResultNewFrame() {
         NormalFrame currentFrame = new NormalFrame();
-        NormalFrame newFrame = currentFrame.roll(new Pinfall(10));
+        Frame newFrame = currentFrame.roll(new Pinfall(10));
 
         assertThat(newFrame).isNotEqualTo(currentFrame);
     }
@@ -69,7 +69,7 @@ public class NormalFrameTest {
     @Test
     void Given_NewFrame_When_FrameNumber_Then_FrameNumberIsIncreased() {
         NormalFrame currentFrame = new NormalFrame();
-        NormalFrame newFrame = currentFrame.roll(new Pinfall(10));
+        Frame newFrame = currentFrame.roll(new Pinfall(10));
 
         assertThat(newFrame.frameNumber()).isEqualTo(new FrameNumber(2));
     }

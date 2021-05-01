@@ -46,4 +46,9 @@ public class FinalFrame implements Frame {
     public FrameNumber frameNumber() {
         return new FrameNumber(10);
     }
+
+    @Override
+    public Frame roll(Pinfall pinfall, FrameFatory frameFatory) {
+        return roll(pinfall);
+    }
 }
