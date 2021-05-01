@@ -27,6 +27,25 @@ public class NormalFrame extends Frame {
 		}
 	}
 
+	protected int additionalScore(int leftPlayCount, int sumScore) {
+		if (playCount==0) return -1;
+
+		if (leftPlayCount == 2 && pinStatus().firstPin()==10) {
+			return nextFrame.additionalScore(leftPlayCount-1, sumScore + pinStatus().firstPin());
+		}
+
+		if (leftPlayCount == 2 && pinStatus().firstPin()!=10 && playCount >=2 ) {
+			return sumScore + pinStatus().firstPin() + pinStatus().secondPin();
+		}
+
+		if (leftPlayCount == 1) {
+			return  sumScore + pinStatus().firstPin();
+		}
+
+		return -1;
+	}
+
+
 	public boolean isEndFrame() {
 		return (playCount > 0 && pinStatus().firstPin() == 10) || playCount == 2;
 	}

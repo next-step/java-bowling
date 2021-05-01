@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import bowling.exception.InvalidFrameNumberException;
+
 public class NormalFrameTest {
 
 	@DisplayName("1~9프레임 정상 생성 테스트")
@@ -23,7 +25,7 @@ public class NormalFrameTest {
 	void invalidNormalFrameMakeTest(int frameNumber) {
 		assertThatThrownBy(() -> {
 			new NormalFrame(frameNumber);
-		}).isInstanceOf(IllegalArgumentException.class).hasMessage("Normal Frame은 1~9 프레임까지만 가능합니다.");
+		}).isInstanceOf(InvalidFrameNumberException.class).hasMessage("Normal Frame은 1~9 프레임까지만 가능합니다.");
 	}
 
 	@Test
