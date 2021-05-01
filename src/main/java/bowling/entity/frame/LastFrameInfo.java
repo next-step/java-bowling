@@ -17,8 +17,8 @@ public class LastFrameInfo implements FrameInfo{
     }
 
     @Override
-    public ScoreType pinResult(Pin fallenPin) {
-        this.scoreType = scoreType.pinResult(fallenPin);
+    public ScoreType bowl(Pin fallenPin) {
+        this.scoreType = scoreType.bowl(fallenPin);
 
         if (scoreType instanceof Strike || scoreType instanceof Spare) {
             lastFrameBowlCount.maxCountThree();

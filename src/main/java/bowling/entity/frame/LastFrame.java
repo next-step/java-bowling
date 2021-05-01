@@ -26,8 +26,8 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public Frame pinResult(Pin fallenPin) {
-        ScoreType scoreType = lastFrameInfo.pinResult(fallenPin);
+    public Frame bowl(Pin fallenPin) {
+        ScoreType scoreType = lastFrameInfo.bowl(fallenPin);
         scoreTypes.add(scoreType);
         return this;
     }

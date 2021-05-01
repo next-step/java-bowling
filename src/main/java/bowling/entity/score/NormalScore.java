@@ -24,7 +24,7 @@ public class NormalScore implements ScoreType {
     }
 
     @Override
-    public ScoreType pinResult(Pin fallenPin) {
+    public ScoreType bowl(Pin fallenPin) {
         if (pin.sumPin(fallenPin) == MAX_PIN_COUNT) {
             return new Spare(pin);
         }

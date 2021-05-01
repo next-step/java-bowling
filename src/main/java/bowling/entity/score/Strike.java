@@ -20,7 +20,7 @@ public class Strike implements ScoreType {
     }
 
     @Override
-    public ScoreType pinResult(Pin fallenPin) {
+    public ScoreType bowl(Pin fallenPin) {
         if (fallenPin.pin() == MAX_PIN_COUNT) {
             return new Strike();
         }

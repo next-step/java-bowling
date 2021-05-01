@@ -12,7 +12,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class PinTest {
     @Test
     @DisplayName("핀 생성")
-    public void createPin(){
+    public void createPin() {
         int fallenPin = 5;
 
         Pin pin = new Pin(fallenPin);
@@ -22,7 +22,7 @@ public class PinTest {
 
     @Test
     @DisplayName("쓰러트릴 수 있는 최대 핀을 벗어나는 핀 생성")
-    public void maxOverFallenPin(){
+    public void maxOverFallenPin() {
         int fallenPin = 11;
 
         assertThatIllegalArgumentException()
@@ -33,7 +33,7 @@ public class PinTest {
 
     @Test
     @DisplayName("쓰러트릴 수 있는 최소 핀을 벗어나는 핀 생성")
-    public void minUnderFallenPin(){
+    public void minUnderFallenPin() {
         int fallenPin = -1;
 
         assertThatIllegalArgumentException()

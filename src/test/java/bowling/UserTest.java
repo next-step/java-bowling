@@ -11,7 +11,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 public class UserTest {
     @Test
     @DisplayName("유저 생성")
-    public void createUser(){
+    public void createUser() {
         String userName = "lee";
 
         User user = new User(userName);
@@ -21,7 +21,7 @@ public class UserTest {
 
     @Test
     @DisplayName("유저 이름 제한")
-    public void validUserName(){
+    public void validUserName() {
         String testUserName = "test";
 
         assertThatIllegalArgumentException()

@@ -11,7 +11,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class NormalFrameTest {
     @Test
     @DisplayName("스트라이크 프레임 생성")
-    public void createStrikeFrame(){
+    public void createStrikeFrame() {
         int frameNo = 1;
         Strike strike = new Strike();
 
@@ -22,7 +22,7 @@ public class NormalFrameTest {
 
     @Test
     @DisplayName("스페어 프레임 생성")
-    public void createSpareFrame(){
+    public void createSpareFrame() {
         int frameNo = 1;
         Spare spare = new Spare(new Pin(5));
 
@@ -33,7 +33,7 @@ public class NormalFrameTest {
 
     @Test
     @DisplayName("미스 프레임 생성")
-    public void createMissFrame(){
+    public void createMissFrame() {
         int frameNo = 1;
         Miss miss = new Miss(new Pin(5), new Pin(4));
 

@@ -8,5 +8,5 @@ public interface ScoreType {
 
     boolean isFrameEnd();
 
-    ScoreType pinResult(Pin fallenPin);
+    ScoreType bowl(Pin fallenPin);
 }

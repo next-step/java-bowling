@@ -15,18 +15,18 @@ public class BowlingTest {
     public void allStrikeBowling() {
         Frame bowlingFrame = new NormalFrame(START_FRAME);
 
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
 
         assertThat(bowlingFrame.bowlingGameEnd()).isTrue();
     }
@@ -36,25 +36,25 @@ public class BowlingTest {
     public void bowling() {
         Frame bowlingFrame = new NormalFrame(START_FRAME);
 
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(5));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(0));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(4));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(4));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(5));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(0));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(1));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(2));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(4));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(6));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(7));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(0));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(9));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(0));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(4));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(6));
-        bowlingFrame = bowlingFrame.pinResult(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(5));
+        bowlingFrame = bowlingFrame.bowl(new Pin(0));
+        bowlingFrame = bowlingFrame.bowl(new Pin(4));
+        bowlingFrame = bowlingFrame.bowl(new Pin(4));
+        bowlingFrame = bowlingFrame.bowl(new Pin(5));
+        bowlingFrame = bowlingFrame.bowl(new Pin(0));
+        bowlingFrame = bowlingFrame.bowl(new Pin(1));
+        bowlingFrame = bowlingFrame.bowl(new Pin(2));
+        bowlingFrame = bowlingFrame.bowl(new Pin(4));
+        bowlingFrame = bowlingFrame.bowl(new Pin(6));
+        bowlingFrame = bowlingFrame.bowl(new Pin(7));
+        bowlingFrame = bowlingFrame.bowl(new Pin(0));
+        bowlingFrame = bowlingFrame.bowl(new Pin(9));
+        bowlingFrame = bowlingFrame.bowl(new Pin(0));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingFrame.bowl(new Pin(4));
+        bowlingFrame = bowlingFrame.bowl(new Pin(6));
+        bowlingFrame = bowlingFrame.bowl(new Pin(10));
 
         assertThat(bowlingFrame.bowlingGameEnd()).isTrue();
     }

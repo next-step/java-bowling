@@ -6,7 +6,7 @@ import bowling.entity.Pin;
 public interface Frame {
     int frameNo();
 
-    Frame pinResult(Pin fallenPin);
+    Frame bowl(Pin fallenPin);
 
     void addFrameResult(BowlingBoard bowlingBoard);
 

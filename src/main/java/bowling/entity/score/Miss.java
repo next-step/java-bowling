@@ -27,7 +27,7 @@ public class Miss implements ScoreType {
     }
 
     @Override
-    public ScoreType pinResult(Pin fallenPin) {
+    public ScoreType bowl(Pin fallenPin) {
         return new None();
     }
 

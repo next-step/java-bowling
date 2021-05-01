@@ -22,7 +22,7 @@ public class BowlingController {
         while (gameNotEnd(bowlingFrame)) {
 
             int frameNo = bowlingFrame.frameNo();
-            bowlingFrame = bowlingFrame.pinResult(new Pin(framePithInput(frameNo)));
+            bowlingFrame = bowlingFrame.bowl(new Pin(framePithInput(frameNo)));
             BowlingBoard bowlingBoard = bowlingPrintFrame.bowlingBoard();
 
             bowlingFrameAndNamePrint(userName);

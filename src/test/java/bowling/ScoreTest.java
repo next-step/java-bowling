@@ -17,7 +17,7 @@ public class ScoreTest {
     private ScoreType spare;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         halfFallenPin = new Pin(5);
         none = new None();
         normalScore = new NormalScore(halfFallenPin);
@@ -27,20 +27,20 @@ public class ScoreTest {
 
     @Test
     @DisplayName("쓰러트린 핀 결과가 스트라이크")
-    public void scoreTypeStrike(){
+    public void scoreTypeStrike() {
         Pin fallenPin = new Pin(10);
 
-        ScoreType strike = none.pinResult(fallenPin);
+        ScoreType strike = none.bowl(fallenPin);
 
         assertThat(strike instanceof Strike).isTrue();
     }
 
     @Test
     @DisplayName("쓰러트린 핀 결과가 일반 점수")
-    public void scoreTypeNormalScore(){
-        ScoreType normalScore = none.pinResult(halfFallenPin);
-        ScoreType normalScoreAfterStrike = strike.pinResult(halfFallenPin);
-        ScoreType normalScoreAfterSpare = spare.pinResult(halfFallenPin);
+    public void scoreTypeNormalScore() {
+        ScoreType normalScore = none.bowl(halfFallenPin);
+        ScoreType normalScoreAfterStrike = strike.bowl(halfFallenPin);
+        ScoreType normalScoreAfterSpare = spare.bowl(halfFallenPin);
 
         assertThat(normalScore instanceof NormalScore).isTrue();
         assertThat(normalScoreAfterStrike instanceof NormalScore).isTrue();
@@ -49,18 +49,18 @@ public class ScoreTest {
 
     @Test
     @DisplayName("쓰러트린 핀 결과가 스페어")
-    public void scoreTypeSpare(){
-        ScoreType spare = normalScore.pinResult(halfFallenPin);
+    public void scoreTypeSpare() {
+        ScoreType spare = normalScore.bowl(halfFallenPin);
 
         assertThat(spare instanceof Spare).isTrue();
     }
 
     @Test
     @DisplayName("쓰러트린 핀 결과가 미스")
-    public void scoreTypeMiss(){
+    public void scoreTypeMiss() {
         Pin fallenPin = new Pin(4);
 
-        ScoreType miss = normalScore.pinResult(fallenPin);
+        ScoreType miss = normalScore.bowl(fallenPin);
 
         assertThat(miss instanceof Miss).isTrue();
     }

@@ -6,7 +6,7 @@ import bowling.entity.score.ScoreType;
 
 import java.util.Objects;
 
-public class NormalFrameInfo implements FrameInfo{
+public class NormalFrameInfo implements FrameInfo {
     private static final int MAX_NORMAL_FRAME = 9;
 
     private final int frameNo;
@@ -23,8 +23,8 @@ public class NormalFrameInfo implements FrameInfo{
     }
 
     @Override
-    public ScoreType pinResult(Pin fallenPin) {
-        this.scoreType = scoreType.pinResult(fallenPin);
+    public ScoreType bowl(Pin fallenPin) {
+        this.scoreType = scoreType.bowl(fallenPin);
         return this.scoreType;
     }
 
@@ -32,7 +32,7 @@ public class NormalFrameInfo implements FrameInfo{
         return frameNo == MAX_NORMAL_FRAME;
     }
 
-    public int frameNo(){
+    public int frameNo() {
         return frameNo;
     }
 

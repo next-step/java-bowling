@@ -9,7 +9,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class LastFrameBowlCountTest {
     @Test
     @DisplayName("마지막 프레임 볼링 카운트 생성")
-    public void createBowlCount(){
+    public void createBowlCount() {
         LastFrameBowlCount lastFrameBowlCount = new LastFrameBowlCount();
 
         assertThat(lastFrameBowlCount.equals(new LastFrameBowlCount())).isTrue();
@@ -17,7 +17,7 @@ public class LastFrameBowlCountTest {
 
     @Test
     @DisplayName("2번 진행 시 종료")
-    public void twoBowlGameEnd(){
+    public void twoBowlGameEnd() {
         LastFrameBowlCount lastFrameBowlCount = new LastFrameBowlCount();
 
         lastFrameBowlCount.bowl();
@@ -28,7 +28,7 @@ public class LastFrameBowlCountTest {
 
     @Test
     @DisplayName("3번 진행 가능할 경우 3번 진행 시 종료")
-    public void threeBowlGameEnd(){
+    public void threeBowlGameEnd() {
         LastFrameBowlCount lastFrameBowlCount = new LastFrameBowlCount();
 
         lastFrameBowlCount.maxCountThree();

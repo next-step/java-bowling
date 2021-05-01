@@ -2,7 +2,6 @@ package bowling.entity.frame;
 
 import bowling.entity.BowlingBoard;
 import bowling.entity.Pin;
-import bowling.entity.score.None;
 import bowling.entity.score.ScoreType;
 
 import java.util.Objects;
@@ -20,9 +19,9 @@ public class NormalFrame implements Frame {
         this.normalFrameInfo = new NormalFrameInfo(frameNo, scoreType);
     }
 
-    public Frame pinResult(Pin fallenPin) {
+    public Frame bowl(Pin fallenPin) {
 
-        if (normalFrameInfo.pinResult(fallenPin).isFrameEnd()) {
+        if (normalFrameInfo.bowl(fallenPin).isFrameEnd()) {
             nextFrame = nextFrame();
             return nextFrame;
         }

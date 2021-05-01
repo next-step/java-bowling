@@ -4,7 +4,7 @@ import bowling.entity.Pin;
 import bowling.entity.score.ScoreType;
 
 public interface FrameInfo {
-    ScoreType pinResult(Pin fallenPin);
+    ScoreType bowl(Pin fallenPin);
 
     String scoreResult();
 }
