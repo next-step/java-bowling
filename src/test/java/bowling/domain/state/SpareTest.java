@@ -13,7 +13,6 @@ public class SpareTest {
 
     @Test
     void 생성_예외_테스트() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> Spare.of(BowlingPin.of(10)));
         Assertions.assertThrows(IllegalArgumentException.class, () -> Spare.of(BowlingPin.of(0)));
     }
 

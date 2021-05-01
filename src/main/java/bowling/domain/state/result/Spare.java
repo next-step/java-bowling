@@ -17,7 +17,7 @@ public class Spare implements Result {
     }
 
     private void validate(BowlingPin bowlingPin) {
-        if (bowlingPin.isMax() || bowlingPin.isMin()) {
+        if (bowlingPin.isMin()) {
             throw new IllegalArgumentException("현재 상태에 맞지 않는 볼링핀 수 입니다.");
         }
     }
