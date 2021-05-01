@@ -38,9 +38,25 @@ class FinalFrameTest {
         assertThat(finalFrame.isFinish()).isTrue();
     }
 
+    @DisplayName("Frame 인스턴스가 bowl()가 추가 투구 없이 로직을 알맞게 수행하는지 테스트")
+    @Test
+    void 검증_bowl_추가_투구_없음() {
+        // given
+        Frame finalFrame = FinalFrame.newInstance();
+
+        // when
+        finalFrame.bowl(HitCount.valueOf(0));
+        finalFrame.bowl(HitCount.valueOf(9));
+
+        // then
+        assertThatThrownBy(() -> finalFrame.bowl(HitCount.valueOf(10)))
+                .isInstanceOf(NoMoreBowlActionsException.class)
+                .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
+    }
+
     @DisplayName("Frame 인스턴스가 bowl 로직을 알맞게 수행하는지 테스트")
     @Test
-    void 검증_bowl() {
+    void 검증_bowl_추가_투구_있음() {
         // given
         Frame finalFrame = FinalFrame.newInstance();
 
