@@ -12,12 +12,11 @@ import static bowling.util.BowlingFixture.FRAME_LAST_INDEX;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-public class FinalFrame implements Frame {
+public final class FinalFrame implements Frame {
 
     private final FinalFrameOpportunity opportunity;
+    private final LinkedList<State> states;
     private final int index;
-
-    private LinkedList<State> states;
 
     public static final Frame newInstance() {
         return new FinalFrame();
@@ -39,7 +38,7 @@ public class FinalFrame implements Frame {
             return this;
         }
         states.removeLast();
-        states.add(state);
+        states.add(state.bowl(hitCount));
         return this;
     }
 
