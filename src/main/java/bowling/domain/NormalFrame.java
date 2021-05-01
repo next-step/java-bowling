@@ -7,7 +7,6 @@ import static bowling.util.BowlingFixture.*;
 
 public class NormalFrame implements Frame {
 
-
     private State state;
     private Frame next;
     private final int index;

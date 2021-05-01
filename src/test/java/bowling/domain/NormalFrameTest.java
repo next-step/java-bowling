@@ -69,12 +69,30 @@ class NormalFrameTest {
 
     }
 
-    @DisplayName("NormalFrame 인스턴스가 완료되었는데도 볼링할 경우 예외처리 테스트")
+
+    @DisplayName("NormalFrame 인스턴스가 종료되었는지 테스트")
     @Test
-    void 기능_bowl_검증() {
+    void 반환_종료_여부() {
+        // given
         Frame normalFrame = NormalFrame.initialize();
+
+        // when
         normalFrame.bowl(HitCount.valueOf(10));
 
+        // then
+        assertThat(normalFrame.isFinish()).isTrue();
+    }
+
+    @DisplayName("NormalFrame 인스턴스가 완료되었는데도 볼링할 경우 예외처리 테스트")
+    @Test
+    void 검증_이미_종료된_상태에서의_bowl() {
+        // given
+        Frame normalFrame = NormalFrame.initialize();
+
+        // when
+        normalFrame.bowl(HitCount.valueOf(10));
+
+        // then
         assertThatThrownBy(()->normalFrame.bowl(HitCount.valueOf(10)))
                 .isInstanceOf(NoMoreBowlActionsException.class)
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
