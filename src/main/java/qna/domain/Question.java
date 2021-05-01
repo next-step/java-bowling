@@ -4,7 +4,6 @@ import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class Question extends AbstractEntity {
       deleted = true;
 
       List<DeleteHistory> deleteHistories = new ArrayList<>();
-      deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+      deleteHistories.add(DeleteHistory.newQuestion(getId(), writer));
       for (Answer answer : answers) {
         deleteHistories.add(answer.delete(loginUser));
       }
