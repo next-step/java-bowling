@@ -1,9 +1,6 @@
 package bowling.controller;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.Player;
-import bowling.domain.Players;
-import bowling.domain.RollResult;
+import bowling.domain.*;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -12,8 +9,10 @@ import java.util.stream.Collectors;
 public class BowlingGameController {
 
     public void startGame(InputView inputView, ResultView resultView) {
-        int numberOfPlayers = inputView.receiveNumberOfPlayers();
-        Players players = inputView.receivePlayerNames(numberOfPlayers).stream().map(Player::initialize)
+        NumberOfPlayers numberOfPlayers = new NumberOfPlayers(inputView.receiveNumberOfPlayers());
+        Players players = inputView.receivePlayerNames(numberOfPlayers.getValue())
+                                   .stream()
+                                   .map(Player::initialize)
                                    .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
 
         BowlingGame bowlingGame = new BowlingGame(players);
