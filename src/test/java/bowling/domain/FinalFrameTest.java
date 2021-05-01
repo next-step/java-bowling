@@ -23,17 +23,20 @@ class FinalFrameTest {
         );
     }
 
-//    @DisplayName("Frame 인스턴스가 종료 여부를 알맞게 반환하는지 테스트")
-//    @Test
-//    void 반환_종료_여부() {
-//        // given
-//        Frame finalFrame = FinalFrame.newInstance();
-//
-//        assertAll(
-//                () -> assertThat(finalFrame).isNotNull(),
-//                () -> assertThat(finalFrame).isInstanceOf(FinalFrame.class)
-//        );
-//    }
+    @DisplayName("Frame 인스턴스가 종료 여부를 알맞게 반환하는지 테스트")
+    @Test
+    void 반환_종료_여부() {
+        // given
+        Frame finalFrame = FinalFrame.newInstance();
+
+        // when
+        finalFrame.bowl(HitCount.valueOf(10));
+        finalFrame.bowl(HitCount.valueOf(10));
+        finalFrame.bowl(HitCount.valueOf(10));
+
+        // then
+        assertThat(finalFrame.isFinish()).isTrue();
+    }
 
     @DisplayName("Frame 인스턴스가 bowl 로직을 알맞게 수행하는지 테스트")
     @Test
