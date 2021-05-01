@@ -2,7 +2,7 @@ package bowling.domain.concrete.frame.state;
 
 import bowling.domain.RollResult;
 import bowling.domain.engine.frame.Score;
-import bowling.domain.engine.frame.state.CannotCalculateScoreException;
+import bowling.domain.engine.frame.UnavailableScore;
 import bowling.domain.engine.frame.state.State;
 import bowling.dto.RollResultsDto;
 import bowling.dto.StateExporter;
@@ -28,13 +28,13 @@ public class Ready implements State {
     }
 
     @Override
-    public Score addScoreTo(Score score) {
-        throw new CannotCalculateScoreException();
+    public Score createScore() {
+        return UnavailableScore.of(0);
     }
 
     @Override
-    public Score createScore() {
-        throw new CannotCalculateScoreException();
+    public Score addScoreTo(Score score) {
+        return UnavailableScore.of(score.getValue());
     }
 
 }

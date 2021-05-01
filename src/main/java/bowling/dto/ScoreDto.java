@@ -11,7 +11,7 @@ public class ScoreDto {
     }
 
     public static ScoreDto of(Score score) {
-        if (!score.isCalculationCompleted()) {
+        if (score.isUnavailable()) {
             return ScoreDto.empty();
         }
         return new ScoreDto(String.valueOf(score.getValue()));

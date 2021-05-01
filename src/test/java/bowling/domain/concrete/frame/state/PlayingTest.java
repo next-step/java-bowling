@@ -2,13 +2,13 @@ package bowling.domain.concrete.frame.state;
 
 import bowling.domain.RollResult;
 import bowling.domain.engine.frame.Score;
-import bowling.domain.engine.frame.state.CannotCalculateScoreException;
 import bowling.domain.engine.frame.state.State;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PlayingTest {
 
@@ -53,9 +53,13 @@ class PlayingTest {
     }
 
     @Test
-    @DisplayName("Playing 상태에서는 점수를 생성할 수 없다.")
-    void cannotCreateScoreInReady() {
-        assertThatThrownBy(() -> playingState.createScore()).isInstanceOf(CannotCalculateScoreException.class);
+    @DisplayName("Playing 상태에서는 첫 번째 투구 결과를 가진 사용할 수 없는 점수를 반환한다.")
+    void returnUnavailableScoreInPlaying() {
+        Score score = playingState.createScore();
+        assertAll(
+            () -> assertThat(score.isUnavailable()).isTrue(),
+            () -> assertThat(score.getValue()).isEqualTo(8)
+        );
     }
 
     @Test
@@ -67,11 +71,15 @@ class PlayingTest {
     }
 
     @Test
-    @DisplayName("Score 를 완성하기 위해 두 번의 추가 점수가 필요하다면 예외 처리한다.")
+    @DisplayName("Score 를 완성하기 위해 두 번의 추가 점수가 필요하다면 하나의 점수만 합한 뒤, 사용할 수 없는 점수로 반환한다.")
     void cannotGiveScoreTwoTimesInPlaying() {
         Score strikeScore = Score.initStrikeScore();
+        Score unavailableScore = playingState.addScoreTo(strikeScore);
 
-        assertThatThrownBy(() -> playingState.addScoreTo(strikeScore)).isInstanceOf(CannotCalculateScoreException.class);
+        assertAll(
+            () -> assertThat(unavailableScore.isUnavailable()).isTrue(),
+            () -> assertThat(unavailableScore.getValue()).isEqualTo(18)
+        );
     }
     
 }

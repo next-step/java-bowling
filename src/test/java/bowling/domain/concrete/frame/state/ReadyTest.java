@@ -2,14 +2,14 @@ package bowling.domain.concrete.frame.state;
 
 import bowling.domain.RollResult;
 import bowling.domain.engine.frame.Score;
-import bowling.domain.engine.frame.state.CannotCalculateScoreException;
+import bowling.domain.engine.frame.UnavailableScore;
 import bowling.domain.engine.frame.state.State;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ReadyTest {
 
@@ -45,16 +45,25 @@ class ReadyTest {
     }
 
     @Test
-    @DisplayName("Ready 상태에서는 점수를 생성할 수 없다.")
-    void cannotCreateScoreInReady() {
-        assertThatThrownBy(() -> readyState.createScore()).isInstanceOf(CannotCalculateScoreException.class);
+    @DisplayName("Ready 상태에서는 사용할 수 없는 점수를 생성한다.")
+    void createUnavailableScoreInReadyWhenCalled() {
+        Score score = readyState.createScore();
+        assertAll(
+            () -> assertThat(score).isInstanceOf(UnavailableScore.class),
+            () -> assertThat(score.getValue()).isZero()
+        );
     }
 
     @Test
-    @DisplayName("Ready 상태에서는 Score 에 추가 점수를 넣어 줄 수 없다.")
+    @DisplayName("Ready 상태에서는 Score 에 추가 점수를 넣어달라는 요청을 받으면 사용할 수 없는 점수로 반환한다.")
     void cannotCompleteScoreInReady() {
         Score score = Score.initStrikeScore();
-        assertThatThrownBy(() -> readyState.addScoreTo(score)).isInstanceOf(CannotCalculateScoreException.class);
+        Score unavailableScore = readyState.addScoreTo(score);
+
+        assertAll(
+            () -> assertThat(unavailableScore).isInstanceOf(UnavailableScore.class),
+            () -> assertThat(unavailableScore.getValue()).isEqualTo(10)
+        );
     }
 
 }

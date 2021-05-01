@@ -28,11 +28,15 @@ public class ScoresDto {
     }
 
     private static Score tryToAddTwoScore(Score score1, Score score2) {
-        try {
-            return Score.initReadyToUseScore(score1.getValue() + score2.getValue());
-        } catch (IllegalStateException e) {
+        if (checkOneOfTheScoreIsUnavailable(score1, score2)) {
             return UnavailableScore.init();
         }
+
+        return Score.initReadyToUseScore(score1.getValue() + score2.getValue());
+    }
+
+    private static boolean checkOneOfTheScoreIsUnavailable(Score score1, Score score2) {
+        return score1.isUnavailable() || score2.isUnavailable();
     }
 
     public List<ScoreDto> getScores() {
