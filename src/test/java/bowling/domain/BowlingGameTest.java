@@ -31,7 +31,7 @@ class BowlingGameTest {
     }
 
     @Test
-    @DisplayName("플레이어가 투구를 마친 후 이름을 조회하면 그 다음 플레이어의 이름을 반환한다.")
+    @DisplayName("플레이어가 투구를 마친 후 이름을 조회하면 그 다음 차례 플레이어의 이름을 반환한다.")
     void getNameOfPlayerAfterCurrentPlayerFinishedCurrentFrame() {
         initiatedGame.roll(RollResult.of(8));
         initiatedGame.roll(RollResult.of(2));
@@ -40,7 +40,7 @@ class BowlingGameTest {
 
     @Test
     @DisplayName("다음 프레임으로 넘어가면 다시 처음 플레이어의 이름을 가져온다.")
-    void returnToFirstPlayer() {
+    void returnNameOfFirstPlayerIfAllPlayersClearLastFrame() {
         initiatedGame.roll(RollResult.of(10));
         initiatedGame.roll(RollResult.of(10));
 
