@@ -99,4 +99,82 @@ class FinalFrameTest {
         // then
         assertThat(ended).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("처음 만들어진 FinalFrame은 점수를 산정할 수 없다.")
+    void noScore() {
+        // given
+        final FinalFrame finalFrame = FinalFrame.from(Pins.create());
+
+        // when
+        final Integer score = finalFrame.score();
+
+        // then
+        assertThat(score).isNull();
+    }
+
+    @Test
+    @DisplayName("한 번 투구한 FinalFrame은 점수를 산정할 수 없다.")
+    void noScoreOneThrow() {
+        // given
+        final FinalFrame finalFrame = FinalFrame.from(Pins.of(new Pin(5)));
+
+        // when
+        final Integer score = finalFrame.score();
+
+        // then
+        assertThat(score).isNull();
+    }
+
+    @Test
+    @DisplayName("첫 투구가 스트라이크인 FinalFrame은 두번째 투구를 던져도 점수를 산정할 수 없다.")
+    void noScoreFirstThrowStrike() {
+        // given
+        final FinalFrame finalFrame = FinalFrame.from(Pins.of(STRIKE_PIN, new Pin(5)));
+
+        // when
+        final Integer score = finalFrame.score();
+
+        // then
+        assertThat(score).isNull();
+    }
+
+    @Test
+    @DisplayName("스페어로 시작하는 FinalFrame은 두번째 투구를 던져도 점수를 산정할 수 없다.")
+    void noScoreSpare() {
+        // given
+        final FinalFrame finalFrame = FinalFrame.from(Pins.of(new Pin(2), new Pin(8)));
+
+        // when
+        final Integer score = finalFrame.score();
+
+        // then
+        assertThat(score).isNull();
+    }
+
+    @Test
+    @DisplayName("일반적인 투구 2회를 던진 FinalFrame은 점수를 산정할 수 있다.")
+    void twoThrowScore() {
+        // given
+        final FinalFrame finalFrame = FinalFrame.from(Pins.of(new Pin(2), new Pin(3)));
+
+        // when
+        final Integer score = finalFrame.score();
+
+        // then
+        assertThat(score).isEqualTo(5);
+    }
+
+    @Test
+    @DisplayName("투구 3회를 던지면 FinalFrame은 점수를 산정할 수 있다.")
+    void threeThrowScore() {
+        // given
+        final FinalFrame finalFrame = FinalFrame.from(Pins.of(STRIKE_PIN, STRIKE_PIN, STRIKE_PIN));
+
+        // when
+        final Integer score = finalFrame.score();
+
+        // then
+        assertThat(score).isEqualTo(30);
+    }
 }

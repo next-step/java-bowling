@@ -45,4 +45,9 @@ public final class FinalFrame extends Frame {
     public boolean isFinalFrame() {
         return true;
     }
+
+    @Override
+    public Integer score() {
+        return 0;
+    }
 }

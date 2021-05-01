@@ -64,4 +64,9 @@ public final class NormalFrame extends Frame {
     public boolean isFinalFrame() {
         return false;
     }
+
+    @Override
+    public Integer score() {
+        return 0;
+    }
 }

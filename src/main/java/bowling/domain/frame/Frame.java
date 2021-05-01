@@ -22,10 +22,11 @@ public abstract class Frame {
 
     public abstract void knockDownPin(Pin pin);
 
-
     public abstract boolean isEnded();
 
     public abstract boolean isFinalFrame();
+
+    public abstract Integer score();
 
     public Pins pins() {
         return pins;
