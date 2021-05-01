@@ -13,7 +13,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = Player.initialize("test");
+        player = Player.initialize("aaa");
     }
 
     @Test
