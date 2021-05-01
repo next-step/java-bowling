@@ -12,10 +12,8 @@ public class ScoreTest {
     @DisplayName("Miss, Gutter의 경우 바로 값을 계산 할 수 있다")
     @Test
     void calculateScoreWhenMissOrGutterTest() {
-        Score missScore = Score.ofMiss(2);
+        Score missScore = Score.ofNone(2);
         assertThat(missScore.calculateScore()).isEqualTo(2);
-        Score gutterScore = Score.ofGutter(5);
-        assertThat(gutterScore.calculateScore()).isEqualTo(5);
     }
 
     @DisplayName("Spare의 경우 다음 투구의 값도 더한다")
