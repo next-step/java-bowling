@@ -57,16 +57,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isEnded() {
-        return finalFrameCount.isFinished();
-    }
-
-    @Override
-    public String exportState() {
-        return FinalFrameExporter.export(states);
-    }
-
-    @Override
     public Score addScoreTo(Score score) {
         Iterator<State> iterator = states.iterator();
 
@@ -76,4 +66,15 @@ public class FinalFrame implements Frame {
 
         return score;
     }
+
+    @Override
+    public boolean isEnded() {
+        return finalFrameCount.isFinished();
+    }
+
+    @Override
+    public String exportState() {
+        return FinalFrameExporter.export(states);
+    }
+
 }

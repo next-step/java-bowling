@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.engine.frame.FrameNumber;
 import bowling.domain.engine.frame.Frames;
 import bowling.dto.PlayerDto;
 
@@ -17,21 +18,19 @@ public class Player {
         return new Player(PlayerName.wrap(name), Frames.init());
     }
 
-    public PlayerDto throwBall(int numberOfPins) {
-        frames.roll(RollResult.of(numberOfPins));
-
-        return exportFrameState();
+    public void roll(RollResult rollResult) {
+        frames.roll(rollResult);
     }
 
-    public boolean checkPlaying() {
-        return !frames.isAllFrameEnded();
+    public boolean isPlayedFrameOf(FrameNumber frameNumber) {
+        return frames.isFinishedFrame(frameNumber);
     }
 
-    public int getNextFrameNumber() {
-        return frames.getNextFrameNumber();
-    }
-
-    public PlayerDto exportFrameState() {
+    public PlayerDto export() {
         return PlayerDto.of(playerName, frames);
+    }
+
+    public String exportPlayerName() {
+        return playerName.export();
     }
 }

@@ -12,19 +12,18 @@ public final class UnavailableScore extends Score {
         return new UnavailableScore(-1, -1);
     }
 
+    public static UnavailableScore of(int value) {
+        return new UnavailableScore(value, -1);
+    }
+
     @Override
     public Score add(RollResult rollResult) {
         throw new IllegalStateException("점수 계산이 허용되지 않습니다.");
     }
 
     @Override
-    public int getValue() {
-        throw new IllegalStateException("점수 산정을 허용하지 않습니다.");
-    }
-
-    @Override
     public boolean isCalculationCompleted() {
-        return false;
+        return true;
     }
 
 }

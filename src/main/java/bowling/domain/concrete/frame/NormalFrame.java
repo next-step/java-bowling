@@ -51,6 +51,10 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score addScoreTo(Score score) {
+        if (score.isUnavailable()) {
+            return score;
+        }
+
         score = state.addScoreTo(score);
 
         if (!score.isCalculationCompleted()) {

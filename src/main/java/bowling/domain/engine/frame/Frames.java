@@ -1,7 +1,6 @@
 package bowling.domain.engine.frame;
 
 import bowling.domain.RollResult;
-import bowling.domain.engine.frame.state.CannotCalculateScoreException;
 import bowling.dto.FrameStateDto;
 import bowling.dto.FramesDto;
 import bowling.dto.ScoresDto;
@@ -46,6 +45,11 @@ public class Frames {
         return frames.size() == TOTAL_FRAMES && frames.getLast().isEnded();
     }
 
+    public boolean isFinishedFrame(FrameNumber frameNumber) {
+        Frame frame = frames.get(frameNumber.getNumber() - 1);
+        return frame.isEnded();
+    }
+
     public FramesDto export() {
         return FramesDto.of(this);
     }
@@ -62,16 +66,8 @@ public class Frames {
 
     public ScoresDto exportScores() {
         return frames.stream()
-                     .map(this::getScoreOf)
+                     .map(Frame::getScore)
                      .collect(collectingAndThen(toList(), ScoresDto::of));
-    }
-
-    private Score getScoreOf(Frame frame) {
-        try {
-            return frame.getScore();
-        } catch (CannotCalculateScoreException e) {
-            return UnavailableScore.init();
-        }
     }
 
 }

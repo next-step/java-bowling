@@ -2,7 +2,7 @@ package bowling.domain.concrete.frame.state;
 
 import bowling.domain.RollResult;
 import bowling.domain.engine.frame.Score;
-import bowling.domain.engine.frame.state.CannotCalculateScoreException;
+import bowling.domain.engine.frame.UnavailableScore;
 import bowling.domain.engine.frame.state.State;
 import bowling.dto.RollResultsDto;
 import bowling.dto.StateExporter;
@@ -46,7 +46,7 @@ public class Playing implements State {
         Score addedScore = score.add(firstRoll);
 
         if (!addedScore.isCalculationCompleted()) {
-            throw new CannotCalculateScoreException();
+            return UnavailableScore.of(addedScore.getValue());
         }
 
         return addedScore;
@@ -54,6 +54,6 @@ public class Playing implements State {
 
     @Override
     public Score createScore() {
-        throw new CannotCalculateScoreException();
+        return UnavailableScore.of(firstRoll.getValue());
     }
 }

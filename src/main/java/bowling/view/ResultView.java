@@ -1,9 +1,9 @@
 package bowling.view;
 
-import bowling.dto.PlayerDto;
+import bowling.dto.PlayersDto;
 
 public interface ResultView {
 
-    void printStateOfPlayer(PlayerDto playerDto);
+    void printPlayers(PlayersDto playersDto);
 
 }

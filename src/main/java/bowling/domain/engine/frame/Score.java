@@ -37,14 +37,15 @@ public class Score {
     }
 
     public int getValue() {
-        if (!isCalculationCompleted()) {
-            throw new IllegalStateException("아직 점수 계산이 완료되지 않았습니다.");
-        }
         return value;
     }
 
     public boolean isCalculationCompleted() {
         return completionCount == 0;
+    }
+
+    public boolean isUnavailable() {
+        return completionCount == -1;
     }
 
 }

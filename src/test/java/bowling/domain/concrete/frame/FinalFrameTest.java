@@ -1,7 +1,7 @@
 package bowling.domain.concrete.frame;
 
 import bowling.domain.RollResult;
-import bowling.domain.engine.frame.state.CannotCalculateScoreException;
+import bowling.domain.engine.frame.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -138,14 +138,19 @@ class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("점수 계산을 완료할 수 없을 때 점수를 가져오려고 시도하면 예외 처리한다.")
+    @DisplayName("점수 계산을 완료할 수 없을 때 점수를 가져오려고 시도하면 사용할 수 없는 점수를 반환한다.")
     void cannotGetScoreThatIfCalculationIsNotCompleted() {
         FinalFrame finalFrame = FinalFrame.init();
 
         finalFrame.roll(RollResult.of(10));
         finalFrame.roll(RollResult.of(10));
 
-        assertThatThrownBy(finalFrame::getScore).isInstanceOf(CannotCalculateScoreException.class);
+        Score unavailableScore = finalFrame.getScore();
+
+        assertAll(
+            () -> assertThat(unavailableScore.isUnavailable()).isTrue(),
+            () -> assertThat(unavailableScore.getValue()).isEqualTo(20)
+        );
     }
     
 }

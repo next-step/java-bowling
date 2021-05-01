@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ScoreTest {
@@ -17,7 +16,7 @@ class ScoreTest {
 
         assertAll(
             () -> assertThat(strikeScore.isCalculationCompleted()).isFalse(),
-            () -> assertThatThrownBy(strikeScore::getValue).isInstanceOf(IllegalStateException.class)
+            () -> assertThat(strikeScore.getValue()).isEqualTo(10)
         );
     }
 
@@ -28,7 +27,7 @@ class ScoreTest {
 
         assertAll(
             () -> assertThat(spareScore.isCalculationCompleted()).isFalse(),
-            () -> assertThatThrownBy(spareScore::getValue).isInstanceOf(IllegalStateException.class)
+            () -> assertThat(spareScore.getValue()).isEqualTo(10)
         );
     }
 
