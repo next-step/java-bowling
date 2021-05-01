@@ -15,9 +15,11 @@ public class Player {
     private static final String NAME_EMPTY_EXCEPTION_MESSAGE = "이름은 1글자 이상 입니다.";
 
     private final String name;
+    private final Scores scores;
 
     private Player(final String name) {
         this.name = name;
+        this.scores = Scores.init();
     }
 
     public static Player from(final String name) {
@@ -43,5 +45,17 @@ public class Player {
 
     public String name() {
         return this.name;
+    }
+
+    public void addScore(Score score) {
+        scores.addScore(score);
+    }
+
+    public Scores scores() {
+        return scores;
+    }
+
+    public int scoreRound() {
+        return scores.size();
     }
 }
