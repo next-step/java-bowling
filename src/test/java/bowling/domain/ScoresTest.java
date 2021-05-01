@@ -20,6 +20,6 @@ public class ScoresTest {
         Scores scores = Scores.init();
         scores.addScore(Score.ofNone(9));
         scores.addScore(Score.ofNone(9));
-        assertThat(scores.nthScore(2)).isEqualTo(18);
+        assertThat(scores.roundScore(2).calculateScore()).isEqualTo(18);
     }
 }
