@@ -19,24 +19,34 @@ public class Answer extends AbstractEntity {
     public Answer() {
     }
 
-    public Answer(User writer, Question question, String contents) {
+    private Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
+    private Answer(Long id, User writer, Question question, String contents) {
         super(id);
-
-        if (writer == null) {
-            throw new UnAuthorizedException();
-        }
-
-        if (question == null) {
-            throw new NotFoundException();
-        }
-
         this.postInfo = new PostInfo(contents, writer);
         this.question = question;
     }
+
+    public static Answer of(User writer, Question question, String contents) {
+        return of(null, writer, question, contents);
+    }
+
+    public static Answer of(Long id, User writer, Question question, String contents) {
+        valid(writer, question);
+        return new Answer(id, writer, question, contents);
+    }
+
+    private static void valid(User writer, Question question) {
+        if (writer == null) {
+            throw new UnAuthorizedException();
+        }
+        if (question == null) {
+            throw new NotFoundException();
+        }
+    }
+
 
     public void delete() {
         postInfo.delete();

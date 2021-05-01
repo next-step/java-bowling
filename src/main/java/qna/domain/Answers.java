@@ -9,6 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -26,7 +27,7 @@ public class Answers {
     }
 
     public void areOwner(User loginUser) throws CannotDeleteException {
-        if(answers.stream()
+        if (answers.stream()
                 .anyMatch(answer -> !answer.isOwner(loginUser))) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
@@ -36,10 +37,10 @@ public class Answers {
         answers.add(answer);
     }
 
-    public void deleteAll(List<DeleteHistory> deletes) {
-        answers.forEach(answer -> {
+    public List<DeleteHistory> deleteAll() {
+        return answers.stream().map(answer -> {
             answer.delete();
-            deletes.add(new DeleteHistory(answer, answer.getWriter()));
-        });
+            return new DeleteHistory(answer, answer.getWriter());
+        }).collect(Collectors.toList());
     }
 }

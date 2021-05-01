@@ -4,7 +4,6 @@ package qna.domain;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,8 +29,7 @@ public class AnswersTest {
 
     @Test
     void 모두삭제() {
-        List<DeleteHistory> result = new ArrayList<>();
-        AS1.deleteAll(result);
+        List<DeleteHistory> result = AS1.deleteAll();
         assertThat(result).containsAll(AS1DELETE);
     }
 }
