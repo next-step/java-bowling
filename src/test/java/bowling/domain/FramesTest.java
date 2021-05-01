@@ -169,4 +169,19 @@ class FramesTest {
         assertThat(frames.lastFrameNumber()).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("퍼펙트게임")
+    void perfectGame() {
+        // given
+        Frames frames = new Frames();
+
+        // when
+        for (int i = 0; i < 12; i++) {
+            frames.pitch(10);
+        }
+
+        // then
+        assertThat(frames.totalScore()).isEqualTo(300);
+    }
+
 }
