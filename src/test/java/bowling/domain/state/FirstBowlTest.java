@@ -36,4 +36,5 @@ class FirstBowlTest {
         // then
         assertThat(firstBowl.isFinish()).isFalse();
     }
+
 }
