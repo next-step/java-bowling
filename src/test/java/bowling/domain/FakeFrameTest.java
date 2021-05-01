@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.exception.NoMoreBowlActionsException;
+import bowling.exception.NoMoreFinishActionsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

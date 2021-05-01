@@ -36,6 +36,11 @@ public class NormalFrame implements Frame {
         return this;
     }
 
+    @Override
+    public boolean isFinish() {
+        return false;
+    }
+
     private void validateFinish() {
         if(state.isFinish()){
             throw new NoMoreBowlActionsException();

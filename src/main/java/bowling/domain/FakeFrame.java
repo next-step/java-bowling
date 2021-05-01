@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.exception.NoMoreBowlActionsException;
+import bowling.exception.NoMoreFinishActionsException;
 
 public final class FakeFrame implements Frame {
 
@@ -14,5 +15,10 @@ public final class FakeFrame implements Frame {
     @Override
     public final Frame bowl(final HitCount hitCOunt) {
         throw new NoMoreBowlActionsException();
+    }
+
+    @Override
+    public final boolean isFinish() {
+        throw new NoMoreFinishActionsException();
     }
 }
