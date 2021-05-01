@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class HitCountTest {
 
@@ -53,6 +54,24 @@ class HitCountTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+
+    }
+
+    @DisplayName("HitCount 인스턴스가 값이 동일할 경우 같은 인스턴스 반환 테스트")
+    @Test
+    void 비교_동일한_값() {
+        // given
+        int count = 10;
+
+        // when
+        HitCount firstHitCount = HitCount.valueOf(count);
+        HitCount secondHitCount = HitCount.valueOf(count);
+
+        // then
+        assertAll(
+                () -> assertThat(firstHitCount).isEqualTo(secondHitCount),
+                () -> assertThat(firstHitCount).isSameAs(secondHitCount)
+        );
 
     }
 }
