@@ -4,6 +4,7 @@ import bowling.entity.Pin;
 
 import java.util.Objects;
 
+import static bowling.entity.Pin.MAX_PIN_COUNT;
 import static bowling.entity.Pin.SCORE_ASSOCIATION_SYMBOL;
 
 public class Miss implements ScoreType {
@@ -28,7 +29,10 @@ public class Miss implements ScoreType {
 
     @Override
     public ScoreType bowl(Pin fallenPin) {
-        return new None();
+        if (fallenPin.pin() == MAX_PIN_COUNT) {
+            return new Strike();
+        }
+        return new NormalScore(fallenPin);
     }
 
     @Override
