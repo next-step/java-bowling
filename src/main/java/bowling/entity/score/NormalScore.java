@@ -6,8 +6,12 @@ import java.util.Objects;
 
 import static bowling.entity.Pin.MAX_PIN_COUNT;
 
-public class NormalScore implements ScoreType {
+public class NormalScore extends OnGoing {
     private final Pin pin;
+
+    public NormalScore(int pinValue) {
+        this.pin = new Pin(pinValue);
+    }
 
     public NormalScore(Pin pin) {
         this.pin = pin;
@@ -19,13 +23,8 @@ public class NormalScore implements ScoreType {
     }
 
     @Override
-    public boolean isFrameEnd() {
-        return false;
-    }
-
-    @Override
     public ScoreType bowl(Pin fallenPin) {
-        if (pin.sumPin(fallenPin) == MAX_PIN_COUNT) {
+        if (pin.sum(fallenPin) == MAX_PIN_COUNT) {
             return new Spare(pin);
         }
 

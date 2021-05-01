@@ -51,13 +51,17 @@ public class NormalFrame implements Frame {
 
         String scoreResult = normalFrameInfo.scoreResult();
 
-        if (!(scoreResult.equals(""))) {
+        if (bowlResultIsNotNone(scoreResult)) {
             bowlingBoard.addResult(new NormalFrameResult(scoreResult));
         }
 
         if (nextFrame != null) {
             nextFrame.addFrameResult(bowlingBoard);
         }
+    }
+
+    private boolean bowlResultIsNotNone(String scoreResult) {
+        return !(scoreResult.equals(""));
     }
 
     @Override

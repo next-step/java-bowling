@@ -71,7 +71,7 @@ public class PinTest {
         Pin secondFallenPin = new Pin(6);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> fallenPin.sumPin(secondFallenPin))
+                .isThrownBy(() -> fallenPin.sum(secondFallenPin))
                 .withMessageMatching(SUM_RANGE_OVER_PIN_MESSAGE);
     }
 }

@@ -6,9 +6,13 @@ import java.util.Objects;
 
 import static bowling.entity.Pin.*;
 
-public class Spare implements ScoreType {
+public class Spare extends Finish {
     private static final String SPARE_SYMBOL = "/";
     private final Pin firstPin;
+
+    public Spare(int firstPinValue) {
+        this.firstPin = new Pin(firstPinValue);
+    }
 
     public Spare(Pin firstPin) {
         this.firstPin = firstPin;
@@ -17,11 +21,6 @@ public class Spare implements ScoreType {
     @Override
     public String scoreResult() {
         return firstPin.pin() + SCORE_ASSOCIATION_SYMBOL + SPARE_SYMBOL;
-    }
-
-    @Override
-    public boolean isFrameEnd() {
-        return true;
     }
 
     @Override

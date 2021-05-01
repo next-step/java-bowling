@@ -7,12 +7,21 @@ import java.util.Objects;
 import static bowling.entity.Pin.MAX_PIN_COUNT;
 import static bowling.entity.Pin.SCORE_ASSOCIATION_SYMBOL;
 
-public class Miss implements ScoreType {
+public class Miss extends Finish {
     private final Pin firstPin;
     private final Pin secondPin;
 
+    public Miss(int firstPinValue, int secondPinValue) {
+        Pin firstPin = new Pin(firstPinValue);
+        Pin secondPin = new Pin(secondPinValue);
+
+        firstPin.sum(secondPin);
+        this.firstPin = firstPin;
+        this.secondPin = secondPin;
+    }
+
     public Miss(Pin firstPin, Pin secondPin) {
-        firstPin.sumPin(secondPin);
+        firstPin.sum(secondPin);
         this.firstPin = firstPin;
         this.secondPin = secondPin;
     }
@@ -20,11 +29,6 @@ public class Miss implements ScoreType {
     @Override
     public String scoreResult() {
         return firstPin.pin() + SCORE_ASSOCIATION_SYMBOL + secondPin.pin();
-    }
-
-    @Override
-    public boolean isFrameEnd() {
-        return true;
     }
 
     @Override

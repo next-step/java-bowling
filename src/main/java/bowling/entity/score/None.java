@@ -6,15 +6,10 @@ import java.util.Objects;
 
 import static bowling.entity.Pin.MAX_PIN_COUNT;
 
-public class None implements ScoreType {
+public class None extends OnGoing {
     @Override
     public String scoreResult() {
         return "";
-    }
-
-    @Override
-    public boolean isFrameEnd() {
-        return false;
     }
 
     @Override

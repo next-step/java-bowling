@@ -12,15 +12,15 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class MissTest {
-    private Pin firstPin;
-    private Pin secondPin;
+    private int firstPin;
+    private int secondPin;
     private ScoreType miss;
     private ScoreType normalScore;
 
     @BeforeEach
     void setup() {
-        firstPin = new Pin(4);
-        secondPin = new Pin(5);
+        firstPin = 4;
+        secondPin = 5;
         miss = new Miss(firstPin, secondPin);
         normalScore = new NormalScore(firstPin);
     }
@@ -28,7 +28,7 @@ public class MissTest {
     @Test
     @DisplayName("미스 생성")
     public void createMiss() {
-        assertThat(miss.equals(normalScore.bowl(secondPin))).isTrue();
+        assertThat(miss.equals(normalScore.bowl(new Pin(secondPin)))).isTrue();
     }
 
     @Test

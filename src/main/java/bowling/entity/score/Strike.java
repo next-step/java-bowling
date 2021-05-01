@@ -6,17 +6,12 @@ import java.util.Objects;
 
 import static bowling.entity.Pin.MAX_PIN_COUNT;
 
-public class Strike implements ScoreType {
+public class Strike extends Finish {
     private static final String STRIKE_SYMBOL = "X";
 
     @Override
     public String scoreResult() {
         return STRIKE_SYMBOL;
-    }
-
-    @Override
-    public boolean isFrameEnd() {
-        return true;
     }
 
     @Override
