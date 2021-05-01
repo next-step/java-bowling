@@ -5,7 +5,7 @@ import bowling.exception.NoMoreBowlActionsException;
 
 import static bowling.util.BowlingFixture.*;
 
-public class NormalFrame implements Frame {
+public final class NormalFrame implements Frame {
 
     private State state;
     private Frame next;
@@ -25,6 +25,18 @@ public class NormalFrame implements Frame {
         return new NormalFrame(index);
     }
 
+    private void validateFinish() {
+        if(state.isFinish()){
+            throw new NoMoreBowlActionsException();
+        }
+    }
+
+    private final Frame nextFrame() {
+        if (index + INCREASE_INDEX_UNIT == FRAME_LAST_INDEX) {
+        }
+        return new NormalFrame(index + INCREASE_INDEX_UNIT);
+    }
+
     @Override
     public final Frame bowl(final HitCount hitCOunt) {
         validateFinish();
@@ -37,20 +49,9 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean isFinish() {
-        return false;
+    public final boolean isFinish() {
+        return state.isFinish();
     }
 
-    private void validateFinish() {
-        if(state.isFinish()){
-            throw new NoMoreBowlActionsException();
-        }
-    }
-
-    private final Frame nextFrame() {
-        if (index + INCREASE_INDEX_UNIT == FRAME_LAST_INDEX) {
-        }
-        return new NormalFrame(index + INCREASE_INDEX_UNIT);
-    }
 
 }

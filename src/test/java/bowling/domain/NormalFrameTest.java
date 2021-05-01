@@ -77,10 +77,14 @@ class NormalFrameTest {
         Frame normalFrame = NormalFrame.initialize();
 
         // when
-        normalFrame.bowl(HitCount.valueOf(10));
+        Frame next = normalFrame.bowl(HitCount.valueOf(10));
 
         // then
-        assertThat(normalFrame.isFinish()).isTrue();
+        assertAll(
+                () -> assertThat(normalFrame.isFinish()).isTrue(),
+                () -> assertThat(next.isFinish()).isFalse()
+        );
+
     }
 
     @DisplayName("NormalFrame 인스턴스가 완료되었는데도 볼링할 경우 예외처리 테스트")
@@ -93,7 +97,7 @@ class NormalFrameTest {
         normalFrame.bowl(HitCount.valueOf(10));
 
         // then
-        assertThatThrownBy(()->normalFrame.bowl(HitCount.valueOf(10)))
+        assertThatThrownBy(() -> normalFrame.bowl(HitCount.valueOf(10)))
                 .isInstanceOf(NoMoreBowlActionsException.class)
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }
