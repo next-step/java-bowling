@@ -16,7 +16,8 @@ class SpareTest {
         State ready = Ready.initialize();
 
         // when
-        State spare = ready.bowl(HitCount.valueOf(9));
+        State firstBowl = ready.bowl(HitCount.valueOf(0));
+        State spare = firstBowl.bowl(HitCount.valueOf(10));
 
         // then
         assertAll(

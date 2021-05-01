@@ -16,6 +16,6 @@ public final class FirstBowl extends Running {
 
     @Override
     public final State bowl(final HitCount hitCount) {
-        return null;
+        return Spare.of(firstCount, hitCount.count());
     }
 }
