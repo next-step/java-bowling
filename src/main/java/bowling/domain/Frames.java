@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,14 +17,23 @@ public class Frames {
 
 	public static Frames init() {
 		List<Frame> frames = normalFrameMake();
-		frames.add(new FinalFrame(10));
+		Frame finalFrame = new FinalFrame(10);
+		frames.get(8).linkNextFrame(finalFrame);
+		frames.add(finalFrame);
 		return new Frames(frames);
 	}
 
 	private static List<Frame> normalFrameMake() {
-		return IntStream.rangeClosed(1, 9)
-			.mapToObj(frameNumber -> new NormalFrame(frameNumber))
-			.collect(Collectors.toList());
+		List<Frame> frames = new ArrayList<>();
+		Frame previousFrame = new NormalFrame(1);
+		frames.add(previousFrame);
+		for (int frameNumber = 2; frameNumber < 10 ; frameNumber++) {
+			Frame nextFrame = new NormalFrame(frameNumber);
+			frames.add(nextFrame);
+			previousFrame.linkNextFrame(nextFrame);
+			previousFrame = nextFrame;
+		}
+		return frames;
 	}
 
 	public int currentFrame() {
@@ -38,6 +48,10 @@ public class Frames {
 		if (frame.isEndFrame() && currentFrame < 10) {
 			currentFrame = currentFrame + 1;
 		}
+	}
+
+	public int getScore(int frameNumber) {
+		return frames.get(frameNumber-1).getScore();
 	}
 
 	public boolean isContinueFrame() {
