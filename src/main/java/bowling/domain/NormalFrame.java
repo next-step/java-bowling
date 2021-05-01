@@ -2,7 +2,9 @@ package bowling.domain;
 
 import bowling.domain.state.State;
 
-public class NormalFrame implements Frame{
+import static bowling.util.BowlingFixture.FRAME_START_INDEX;
+
+public class NormalFrame implements Frame {
 
     private final State state = State.initialize();
     private final int index;
@@ -14,7 +16,7 @@ public class NormalFrame implements Frame{
         this.next = Frame.initialize();
     }
 
-    public static Frame initialize() {
-        return null;
+    public static final Frame initialize() {
+        return new NormalFrame(FRAME_START_INDEX);
     }
 }

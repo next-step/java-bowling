@@ -13,7 +13,8 @@ class BowlingFixtureTest {
     void 상수들() {
         assertAll(
                 () -> assertThat(BowlingFixture.MINIMUM_COUNT).isEqualTo(0),
-                () -> assertThat(BowlingFixture.MAXIMUM_COUNT).isEqualTo(10)
+                () -> assertThat(BowlingFixture.MAXIMUM_COUNT).isEqualTo(10),
+                () -> assertThat(BowlingFixture.FRAME_START_INDEX).isEqualTo(1)
         );
     }
 
