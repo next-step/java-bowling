@@ -17,12 +17,24 @@ public class States {
         states.add(state);
     }
 
+    public List<State> states() {
+        return Collections.unmodifiableList(states);
+    }
+
     public boolean hasNotBonus() {
         return states.stream().noneMatch(Strike.class::isInstance)
             && states.stream().noneMatch(Spare.class::isInstance);
     }
 
+    public State lastState() {
+        return states.get(states.size() - 1);
+    }
+
     public int size() {
         return states.size();
+    }
+
+    public boolean isEmpty() {
+        return states.isEmpty();
     }
 }
