@@ -10,7 +10,7 @@ public class NormalFrame implements Frame {
     private Frame next;
     private final int index;
 
-    public NormalFrame(int index) {
+    public NormalFrame(final int index) {
         this.state = State.initialize();
         this.next = Frame.initialize();
         this.index = index;
@@ -20,8 +20,14 @@ public class NormalFrame implements Frame {
         return new NormalFrame(FRAME_START_INDEX);
     }
 
-    public static final Frame from(int index) {
+    public static final Frame from(final int index) {
         return new NormalFrame(index);
+    }
+
+    @Override
+    public final Frame bowl(final HitCount hitCOunt) {
+        state = state.bowl(hitCOunt);
+        return this;
     }
 
 }
