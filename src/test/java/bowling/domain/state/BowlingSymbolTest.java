@@ -15,25 +15,17 @@ public class BowlingSymbolTest {
     }
 
     @Test
-    void 볼링핀_출력_테스트() {
-        // given
-        String symbol = BowlingSymbol.of(BowlingPin.of(5), BowlingPin.of(3));
-        // when & then
-        assertThat(symbol).isEqualTo("5|3");
-    }
-
-    @Test
     void 거터_출력_테스트() {
         // given
-        String symbol = BowlingSymbol.of(BowlingPin.of(5), BowlingPin.of(0));
+        String symbol = BowlingSymbol.of(BowlingPin.of(0));
         // when & then
-        assertThat(symbol).isEqualTo("5|-");
+        assertThat(symbol).isEqualTo("-");
     }
 
     @Test
     void 스트라이크_출력_테스트() {
         // given
-        String symbol = BowlingSymbol.of(BowlingPin.of(10));
+        String symbol = BowlingSymbol.ofStrike();
         // when & then
         assertThat(symbol).isEqualTo("X");
     }
@@ -41,8 +33,8 @@ public class BowlingSymbolTest {
     @Test
     void 스페어_출력_테스트() {
         // given
-        String symbol = BowlingSymbol.of(BowlingPin.of(3), BowlingPin.of(7));
+        String symbol = BowlingSymbol.ofSpare();
         // when & then
-        assertThat(symbol).isEqualTo("3|/");
+        assertThat(symbol).isEqualTo("/");
     }
 }
