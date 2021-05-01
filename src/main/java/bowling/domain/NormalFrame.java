@@ -53,5 +53,10 @@ public final class NormalFrame implements Frame {
         return state.isFinish();
     }
 
+    @Override
+    public final int index() {
+        return index;
+    }
+
 
 }

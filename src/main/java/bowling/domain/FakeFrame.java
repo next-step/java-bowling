@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.exception.NoMoreBowlActionsException;
 import bowling.exception.NoMoreFinishActionsException;
+import bowling.exception.NoMoreIndexActionsException;
 
 public final class FakeFrame implements Frame {
 
@@ -24,6 +25,6 @@ public final class FakeFrame implements Frame {
 
     @Override
     public final int index() {
-        return 0;
+        throw new NoMoreIndexActionsException();
     }
 }
