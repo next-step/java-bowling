@@ -30,6 +30,10 @@ public abstract class Frame {
         return this instanceof FinalFrame;
     }
 
+    public boolean isSpare() {
+        return pitches.isSpare();
+    }
+
     abstract public Frame next();
     abstract public void pitch(Pitch pitch);
     abstract public boolean isFinished();

@@ -176,6 +176,7 @@ class FinalFrameTest {
 
         // then
         assertThat(finalFrame.score()).isEqualTo(10);
+        assertThat(finalFrame.isSpare()).isTrue();
     }
 
     @Test

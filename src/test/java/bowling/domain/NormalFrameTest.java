@@ -100,6 +100,7 @@ class NormalFrameTest {
         startFrame.pitch(new Pitch(3));
 
         // then
+        assertThat(startFrame.isSpare()).isTrue();
         assertThatIllegalStateException()
                 .isThrownBy(() -> startFrame.pitch(new Pitch(8)))
                 .withMessageMatching("종료된 프레임입니다.");
