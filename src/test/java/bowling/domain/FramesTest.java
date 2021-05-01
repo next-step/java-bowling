@@ -15,4 +15,12 @@ class FramesTest {
 
         assertThat(frames).isNotNull();
     }
+
+    @DisplayName("Frames 인스턴스 인덱스 반환 여부 테스트")
+    @Test
+    void 반환() {
+        Frames frames = Frames.initialize();
+
+        assertThat(frames.index()).isEqualTo(1);
+    }
 }
