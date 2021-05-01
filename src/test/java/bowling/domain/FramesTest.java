@@ -24,5 +24,13 @@ class FramesTest {
         assertThat(frames.index()).isEqualTo(1);
     }
 
+    @DisplayName("Frames 인스턴스 현재 frame 종료 여부 테스트")
+    @Test
+    void 반환_상태() {
+        Frames frames = Frames.initialize();
+
+        assertThat(frames.isFinish()).isEqualTo(false);
+    }
+
 
 }
