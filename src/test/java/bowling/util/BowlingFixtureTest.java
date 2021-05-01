@@ -8,5 +8,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BowlingFixtureTest {
 
+    @DisplayName("BowlingFixture 제공 상수 테스트")
+    @Test
+    void 상수들() {
+        assertAll(
+                ()-> assertThat(BowlingFixture.MINIMUM_COUNT).isEqualTo(0),
+                ()-> assertThat(BowlingFixture.MAXIMUM_COUNT).isEqualTo(10)
+        );
+    }
 
 }
