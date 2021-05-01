@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.HitCount;
+import bowling.exception.InputNegativeNumberException;
 import bowling.exception.InsufficientSpareCountException;
 import bowling.exception.NoMoreBowlActionsException;
 import org.junit.jupiter.api.DisplayName;
