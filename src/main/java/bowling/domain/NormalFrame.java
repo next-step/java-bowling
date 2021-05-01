@@ -6,14 +6,14 @@ import static bowling.util.BowlingFixture.FRAME_START_INDEX;
 
 public class NormalFrame implements Frame {
 
-    private final State state = State.initialize();
+    private State state;
+    private Frame next;
     private final int index;
 
-    private Frame next;
-
     public NormalFrame(int index) {
-        this.index = index;
+        this.state = State.initialize();
         this.next = Frame.initialize();
+        this.index = index;
     }
 
     public static final Frame initialize() {
