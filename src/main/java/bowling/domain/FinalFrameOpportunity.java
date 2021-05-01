@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 public final class FinalFrameOpportunity {
 
     private static final int START = 0;
@@ -15,4 +18,10 @@ public final class FinalFrameOpportunity {
         return new FinalFrameOpportunity(START);
     }
 
+    public final boolean isFinish() {
+        if (opportunity == END) {
+            return TRUE;
+        }
+        return FALSE;
+    }
 }
