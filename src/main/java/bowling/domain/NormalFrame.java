@@ -89,7 +89,7 @@ public class NormalFrame extends Frame {
     @Override
     public int bonusScore(Pitches beforePitches) {
         if (isDoubleStrike(beforePitches)) {
-            return pitches().pinDownCount() + next.doubleBonusScore();
+            return pitches().pinDownCount() + doubleBonusScore();
         }
         if (beforePitches.isStrike()) {
             return pitches().pinDownCount();
@@ -106,8 +106,8 @@ public class NormalFrame extends Frame {
 
     @Override
     public int doubleBonusScore() {
-        if (!pitches().isEmpty()) {
-            return pitches().firstPinDownCount();
+        if (hasNext()) {
+            return next.pitches().firstPinDownCount();
         }
         return NON_BONUS;
     }

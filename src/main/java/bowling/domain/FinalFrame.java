@@ -41,12 +41,18 @@ public class FinalFrame extends Frame {
 
     @Override
     public int bonusScore(Pitches beforePitches) {
+        if (beforePitches.isStrike()) {
+            return pitches().pinDownCount() - 10;
+        }
+        if (beforePitches.isSpare()) {
+            return pitches().firstPinDownCount();
+        }
         return NON_BONUS;
     }
 
     @Override
     public int doubleBonusScore() {
-        return NON_BONUS;
+        return pitches().firstPinDownCount();
     }
 
 }
