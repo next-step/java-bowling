@@ -2,27 +2,19 @@ package bowling.domain;
 
 public class Score {
     private int pins;
-    private int availability;
+    private int scoreTotal;
 
-    public Score(int pins, int availability) {
-        this.pins = pins;
-        this.availability = availability;
+    public Score() {
+        pins = 10;
+        scoreTotal = 0;
     }
 
-    public String updateScore(int score) {
-        useAvailability();
-        return getFormattedScore(updateNumberOfPins(score));
+    public Score(Score score) {
+        pins = 10;
+        scoreTotal += score.scoreTotal;
     }
 
-    private void useAvailability() {
-        if (isAvailable() && pins > 0) {
-            --availability;
-            return;
-        }
-        throw new IllegalStateException("점수를 더 이상 입력할 수 없습니다.");
-    }
-
-    private int updateNumberOfPins(int score) {
+    public int updateScore(int score) {
         if (pins < score) {
             throw new IllegalArgumentException("남아있는 볼링핀 개수보다 입력한 점수가 더 많습니다.");
         }
@@ -30,23 +22,14 @@ public class Score {
         return score;
     }
 
-    public boolean isAvailable() {
-        if (availability <= 0) {
-            return false;
+    public boolean isPinCleared() {
+        if (pins == 0) {
+            return true;
         }
-        return true;
+        return false;
     }
 
-    private String getFormattedScore(int score) {
-        if (score == 0) {
-            return "-";
-        }
-        if (availability == 1 && pins == 0) {
-            return "X";
-        }
-        if (availability == 0 && pins == 0) {
-            return "/";
-        }
-        return String.valueOf(score);
+    public void fillPins() {
+        pins = 10;
     }
 }

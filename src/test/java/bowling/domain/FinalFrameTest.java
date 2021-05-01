@@ -12,10 +12,10 @@ public class FinalFrameTest {
     void finalFrameBonusGameIfGotStrikeTest() {
         FinalFrame finalFrame = new FinalFrame();
 
-        assertThat(finalFrame.inputScore("10")).isEqualTo("X");
-        assertThat(finalFrame.inputScore("10")).isEqualTo("X");
-        assertThat(finalFrame.inputScore("6")).isEqualTo("6");
-        assertThatThrownBy(() -> finalFrame.inputScore("4"))
+        assertThat(finalFrame.inputScore(10)).isEqualTo("X");
+        assertThat(finalFrame.inputScore(10)).isEqualTo("X");
+        assertThat(finalFrame.inputScore(6)).isEqualTo("6");
+        assertThatThrownBy(() -> finalFrame.inputScore(4))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -24,10 +24,10 @@ public class FinalFrameTest {
     void finalFrameBonusGameIfGotSpareTest() {
         FinalFrame finalFrame = new FinalFrame();
 
-        assertThat(finalFrame.inputScore("6")).isEqualTo("6");
-        assertThat(finalFrame.inputScore("4")).isEqualTo("/");
-        assertThat(finalFrame.inputScore("5")).isEqualTo("5");
-        assertThatThrownBy(() -> finalFrame.inputScore("5"))
+        assertThat(finalFrame.inputScore(6)).isEqualTo("6");
+        assertThat(finalFrame.inputScore(4)).isEqualTo("/");
+        assertThat(finalFrame.inputScore(5)).isEqualTo("5");
+        assertThatThrownBy(() -> finalFrame.inputScore(5))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -36,10 +36,10 @@ public class FinalFrameTest {
     void finalFrameBonusGameIfGotStrikeAfterSpareTest() {
         FinalFrame finalFrame = new FinalFrame();
 
-        assertThat(finalFrame.inputScore("6")).isEqualTo("6");
-        assertThat(finalFrame.inputScore("4")).isEqualTo("/");
-        assertThat(finalFrame.inputScore("10")).isEqualTo("X");
-        assertThatThrownBy(() -> finalFrame.inputScore("10"))
+        assertThat(finalFrame.inputScore(6)).isEqualTo("6");
+        assertThat(finalFrame.inputScore(4)).isEqualTo("/");
+        assertThat(finalFrame.inputScore(10)).isEqualTo("X");
+        assertThatThrownBy(() -> finalFrame.inputScore(10))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -48,10 +48,10 @@ public class FinalFrameTest {
     void finalFrameBonusGameIfThreeStrikeTest() {
         FinalFrame finalFrame = new FinalFrame();
 
-        assertThat(finalFrame.inputScore("10")).isEqualTo("X");
-        assertThat(finalFrame.inputScore("10")).isEqualTo("X");
-        assertThat(finalFrame.inputScore("10")).isEqualTo("X");
-        assertThatThrownBy(() -> finalFrame.inputScore("10"))
+        assertThat(finalFrame.inputScore(10)).isEqualTo("X");
+        assertThat(finalFrame.inputScore(10)).isEqualTo("X");
+        assertThat(finalFrame.inputScore(10)).isEqualTo("X");
+        assertThatThrownBy(() -> finalFrame.inputScore(10))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -60,9 +60,9 @@ public class FinalFrameTest {
     void finalFrameNoBonusGameTest() {
         FinalFrame finalFrame = new FinalFrame();
 
-        assertThat(finalFrame.inputScore("6")).isEqualTo("6");
-        assertThat(finalFrame.inputScore("2")).isEqualTo("2");
-        assertThatThrownBy(() -> finalFrame.inputScore("2"))
+        assertThat(finalFrame.inputScore(6)).isEqualTo("6");
+        assertThat(finalFrame.inputScore(2)).isEqualTo("2");
+        assertThatThrownBy(() -> finalFrame.inputScore(2))
                 .isInstanceOf(IllegalStateException.class);
     }
 }

@@ -1,27 +1,55 @@
 package bowling.domain;
 
 public class FinalFrame {
-    private Score score;
+    private final Score score;
+    private int availability;
 
     public FinalFrame() {
-        this.score = new Score(10, 2);
+        score = new Score();
+        availability = 3;
     }
 
-    public String inputScore(String input) {
-        return checkBenefit(score.updateScore(Integer.parseInt(input)));
-    }
-
-    private String checkBenefit(String formattedScore) {
-        if ("X".equals(formattedScore)) {
-            addBonusGame(2);
+    public String inputScore(int inputScore) {
+        if (isAvailable()) {
+            --availability;
+            String formattedScore = getFormattedScore(score.updateScore(inputScore));
+            applyBenefitOption(inputScore);
+            return formattedScore;
         }
-        if ("/".equals(formattedScore)) {
-            addBonusGame(1);
-        }
-        return formattedScore;
+        throw new IllegalStateException("점수를 더 이상 입력할 수 없습니다.");
     }
 
-    private void addBonusGame(int availability) {
-        this.score = new Score(10, availability);
+    public boolean isAvailable() {
+        if (availability > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    private String getFormattedScore(int lastScore) {
+        if (lastScore == 0) {
+            return "-";
+        }
+        if (lastScore == 10) {
+            return "X";
+        }
+        if (score.isPinCleared()) {
+            return "/";
+        }
+        return String.valueOf(lastScore);
+    }
+
+    private void applyBenefitOption(int lastScore) {
+        if (lastScore == 10) {
+            score.fillPins();
+            return;
+        }
+        if (score.isPinCleared()) {
+            score.fillPins();
+            return;
+        }
+        if (availability == 1 && !score.isPinCleared()) {
+            availability = 0;
+        }
     }
 }
