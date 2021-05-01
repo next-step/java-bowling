@@ -8,7 +8,7 @@ import java.util.List;
 
 public class FinalFrame extends Frame{
 
-  public FinalFrame(int round) {
+  protected FinalFrame(int round) {
     super(round);
   }
 
