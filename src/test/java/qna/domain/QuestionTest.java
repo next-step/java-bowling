@@ -14,7 +14,11 @@ public class QuestionTest {
     void enableDelete() {
         Q1.addAnswer(new Answer(UserTest.SANJIGI, new Question("title3", "contents3"), "..."));
         Assertions.assertThatThrownBy(() -> {
-            Q1.enableDelete(UserTest.JAVAJIGI);
+            Q1.otherUserAnswer(UserTest.JAVAJIGI);
+        }).isInstanceOf(CannotDeleteException.class);
+
+        Assertions.assertThatThrownBy(() -> {
+            Q1.authroized(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 }
