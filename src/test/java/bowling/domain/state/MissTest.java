@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
+import bowling.domain.HitCount;
 import bowling.exception.InsufficientMissCountException;
+import bowling.exception.NoMoreBowlActionsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,5 +35,28 @@ class MissTest {
                 .hasMessage("( "+firstCount+" )와 ( "+secondCount+" )의 합인 " +
                         "( "+Math.addExact(firstCount, secondCount)+" )는, 9이하 값을 충족하지 않습니다.");
 
+    }
+
+    @DisplayName("Miss 인스턴스가 알맞은 종료 여부를 반환하는지 테스트")
+    @Test
+    void 반환_종료_여부() {
+        // when
+        State miss = Miss.from(0, 9);
+
+        // then
+        assertThat(miss.isFinish()).isTrue();
+    }
+
+
+    @DisplayName("Miss 인스턴스가 bowl() 호출시, 예외처리 여부 테스트")
+    @Test
+    void 검증_bowl() {
+        // when
+        State miss = Miss.from(0, 9);
+
+        // then
+        assertThatThrownBy(()-> miss.bowl(HitCount.valueOf(10)))
+                .isInstanceOf(NoMoreBowlActionsException.class)
+                .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }
 }
