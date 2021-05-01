@@ -31,19 +31,19 @@ public final class FrameStatusView {
 
     private String normalFrameStatus() {
         final Pins pins = frame.pins();
+        final Pin firstPin = pins.firstPin();
         if (pins.size() == THROW_ONCE) {
-            return onceStatus(pins);
+            return pinStatus(firstPin);
         }
 
         return normalTwiceStatus(pins);
     }
 
-    private String onceStatus(Pins pins) {
-        final Pin firstPin = pins.firstPin();
-        if (firstPin.isMaximum()) {
+    private String pinStatus(Pin pin) {
+        if (pin.isMaximum()) {
             return STRIKE_SIGN;
         }
-        return firstPin.status();
+        return pin.status();
     }
 
     private String normalTwiceStatus(Pins pins) {
@@ -52,16 +52,17 @@ public final class FrameStatusView {
 
         final boolean isSpare = firstPin.sum(secondPin).isMaximum();
         if (isSpare) {
-            return onceStatus(pins) + DELIMITER + SPARE_SIGN;
+            return pinStatus(firstPin) + DELIMITER + SPARE_SIGN;
         }
 
-        return onceStatus(pins) + DELIMITER + secondPin.status();
+        return pinStatus(firstPin) + DELIMITER + secondPin.status();
     }
 
     private String finalFrameStatus() {
         final Pins pins = frame.pins();
+        final Pin firstPin = pins.firstPin();
         if (pins.size() == THROW_ONCE) {
-            return onceStatus(pins);
+            return pinStatus(firstPin);
         }
         if (pins.size() == THROW_TWICE) {
             return finalTwiceStatus(pins);
@@ -71,7 +72,15 @@ public final class FrameStatusView {
     }
 
     private String finalTwiceStatus(Pins pins) {
-        return null;
+        final Pin firstPin = pins.firstPin();
+        final Pin secondPin = pins.secondPin();
+
+        final boolean isSpare = (firstPin.pinCount() + secondPin.pinCount() == Pin.MAX_COUNT);
+        if (isSpare) {
+            return pinStatus(firstPin) + DELIMITER + SPARE_SIGN;
+        }
+
+        return pinStatus(firstPin) + DELIMITER + pinStatus(secondPin);
     }
 
     private String bonusStatus(Pins pins) {
