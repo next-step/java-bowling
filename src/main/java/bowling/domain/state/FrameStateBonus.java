@@ -47,24 +47,35 @@ public class FrameStateBonus implements FrameState {
     }
 
     private void replaceSpareSymbol(List<PointSymbol> pointSymbols) {
-        if (isSpare()) {
+        if (isSecondPinfallSpare()) {
             pointSymbols.set(1, PointSymbol.SPARE);
+            return;
+        }
+
+        if (isThirdPinfallSpare()) {
+            pointSymbols.set(2, PointSymbol.SPARE);
         }
     }
 
-    private boolean isSpare() {
+    private boolean isSecondPinfallSpare() {
         if (pinfalls.size() == 1) {
             return false;
         }
 
-        if (isFirstPinfallStrike()) {
-            return false;
-        }
-
-        return pinfalls.get(0).add(pinfalls.get(1)).equals(new Pinfall(10));
+        return isSpare(pinfalls.get(0), pinfalls.get(1));
     }
 
-    private boolean isFirstPinfallStrike() {
-        return pinfalls.get(0).isStrike();
+    private boolean isThirdPinfallSpare() {
+        if (pinfalls.size() != 3) {
+            return false;
+        }
+        return isSpare(pinfalls.get(1), pinfalls.get(2));
+    }
+
+    private boolean isSpare(Pinfall first, Pinfall second) {
+        if (first.isStrike() || second.isStrike()) {
+            return false;
+        }
+        return first.add(second).equals(new Pinfall(10));
     }
 }
