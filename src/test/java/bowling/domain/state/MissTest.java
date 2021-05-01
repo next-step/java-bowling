@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.exception.InsufficientMissCountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,10 +23,15 @@ class MissTest {
     @DisplayName("Miss 인스턴스에 알맞은 값이 주입되었는지 테스트")
     @Test
     void 검증() {
-        // when
-        assertThatThrownBy(()->Miss.from(0, 10))
-                .isInstanceOf(InsufficientMissException.class);
-                .hasMessage("( %s )와 ( %s )의 합인 ( %s )는, 9이하의 값이 아닙니다.");
+        // given
+        int firstCount = 0;
+        int secondCount = 10;
+
+        // when and then
+        assertThatThrownBy(()->Miss.from(firstCount, secondCount))
+                .isInstanceOf(InsufficientMissCountException.class)
+                .hasMessage("( "+firstCount+" )와 ( "+secondCount+" )의 합인 " +
+                        "( "+Math.addExact(firstCount, secondCount)+" )는, 9이하 값을 충족하지 않습니다.");
 
     }
 }

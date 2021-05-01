@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.HitCount;
-import bowling.exception.InsufficientMaxCountException;
+import bowling.exception.InsufficientSpareCountException;
 import bowling.exception.NoMoreBowlActionsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class SpareTest {
 
         // when and then
         assertThatThrownBy(()-> Spare.of(firstCount, secondCount))
-                .isInstanceOf(InsufficientMaxCountException.class)
+                .isInstanceOf(InsufficientSpareCountException.class)
                 .hasMessage("( 9 )와 ( 0 )의 합인 ( 9 )는, 10을 충족하지 않습니다.");
     }
 

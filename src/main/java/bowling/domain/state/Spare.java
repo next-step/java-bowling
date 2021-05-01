@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import bowling.exception.InsufficientMaxCountException;
+import bowling.exception.InsufficientSpareCountException;
 
 public final class Spare extends Finish {
 
@@ -17,7 +17,7 @@ public final class Spare extends Finish {
 
     private final void validateSum(final int firstCount, final int secondCount) {
         if (Math.addExact(firstCount, secondCount) != MAX_COUNT) {
-            throw new InsufficientMaxCountException(firstCount, secondCount);
+            throw new InsufficientSpareCountException(firstCount, secondCount);
         }
     }
 

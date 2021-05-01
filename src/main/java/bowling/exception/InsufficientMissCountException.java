@@ -1,13 +1,13 @@
 package bowling.exception;
 
-public final class InsufficientMaxCountException extends RuntimeException {
+public final class InsufficientMissCountException extends RuntimeException {
 
-    private final String MESSAGE_FORMAT = "( %s )와 ( %s )의 합인 ( %s )는, 10을 충족하지 않습니다.";
+    private final String MESSAGE_FORMAT = "( %s )와 ( %s )의 합인 ( %s )는, 9이하 값을 충족하지 않습니다.";
 
     private final int firstCount;
     private final int secondCount;
 
-    public InsufficientMaxCountException(int firstCount, int secondCount) {
+    public InsufficientMissCountException(int firstCount, int secondCount) {
         this.firstCount = firstCount;
         this.secondCount = secondCount;
     }
