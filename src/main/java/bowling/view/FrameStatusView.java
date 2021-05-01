@@ -23,20 +23,21 @@ public final class FrameStatusView {
         if (frame.isNotStarted()) {
             return EMPTY_STRING;
         }
+
+        final Pins pins = frame.pins();
         if (frame.isFinalFrame()) {
-            return finalFrameStatus();
+            return finalFrameStatus(pins);
         }
-        return normalFrameStatus();
+        return normalFrameStatus(pins);
     }
 
-    private String normalFrameStatus() {
-        final Pins pins = frame.pins();
+    private String normalFrameStatus(Pins pins) {
         final Pin firstPin = pins.firstPin();
-        final Pin secondPin = pins.secondPin();
 
         if (pins.size() == THROW_ONCE) {
             return pinStatus(firstPin);
         }
+        final Pin secondPin = pins.secondPin();
 
         return twoPinStatus(firstPin, secondPin);
     }
@@ -57,8 +58,7 @@ public final class FrameStatusView {
         return pinStatus(pin) + DELIMITER + otherPin.status();
     }
 
-    private String finalFrameStatus() {
-        final Pins pins = frame.pins();
+    private String finalFrameStatus(Pins pins) {
         final Pin firstPin = pins.firstPin();
 
         if (pins.size() == THROW_ONCE) {
@@ -84,9 +84,9 @@ public final class FrameStatusView {
     }
 
     private String bonusStatus(Pins pins) {
-        final Pin thirdPin = pins.thirdPin();
         final Pin firstPin = pins.firstPin();
         final Pin secondPin = pins.secondPin();
+        final Pin thirdPin = pins.thirdPin();
 
         final boolean isFirstPinStrike = firstPin.isMaximum();
         final boolean isSecondPinStrike = secondPin.isMaximum();
