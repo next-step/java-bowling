@@ -184,4 +184,25 @@ class FramesTest {
         assertThat(frames.totalScore()).isEqualTo(300);
     }
 
+    @Test
+    @DisplayName("마지막 프레임 판별")
+    void isFinalFrame() {
+        // given
+        Frames frames = new Frames();
+
+        // when
+        for (int i = 0; i < 10; i++) {
+            frames.pitch(10);
+        }
+
+        Frame target = null;
+        for (Frame frame : frames) {
+            target = frame;
+        }
+
+        // then
+        assertThat(target).isNotNull();
+        assertThat(target.isFinalFrame()).isTrue();
+    }
+
 }

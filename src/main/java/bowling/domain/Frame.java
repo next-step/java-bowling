@@ -26,6 +26,10 @@ public abstract class Frame {
         return pitches;
     }
 
+    public boolean isFinalFrame() {
+        return this instanceof FinalFrame;
+    }
+
     abstract public Frame next();
     abstract public void pitch(Pitch pitch);
     abstract public boolean isFinished();
