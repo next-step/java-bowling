@@ -58,18 +58,9 @@ class BowlingGameServiceTest {
 
         // when
         service.startGame(participant);
-        service.pitchBall(participant,10);
-        service.pitchBall(participant,10);
-        service.pitchBall(participant,10);
-        service.pitchBall(participant,10);
-        service.pitchBall(participant,10);
-        service.pitchBall(participant,10);
-        service.pitchBall(participant,10);
-        service.pitchBall(participant,10);
-        service.pitchBall(participant,10);
-        service.pitchBall(participant,10);
-        service.pitchBall(participant,10);
-
+        for (int i = 0; i < 12; i++) {
+            service.pitchBall(participant,10);
+        }
         Frames frames = service.findFrames(participant);
 
         // then
