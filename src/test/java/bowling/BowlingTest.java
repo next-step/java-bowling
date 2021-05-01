@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.entity.Pin;
+import bowling.controller.BowlingController;
 import bowling.entity.frame.Frame;
 import bowling.entity.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
@@ -13,20 +13,21 @@ public class BowlingTest {
     @Test
     @DisplayName("전체 Strike 볼링 게임 정상 진행")
     public void allStrikeBowling() {
+        BowlingController bowlingController = new BowlingController();
         Frame bowlingFrame = new NormalFrame(START_FRAME);
 
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
 
         assertThat(bowlingFrame.bowlingGameEnd()).isTrue();
     }
@@ -34,27 +35,28 @@ public class BowlingTest {
     @Test
     @DisplayName("볼링 게임 정상 진행")
     public void bowling() {
+        BowlingController bowlingController = new BowlingController();
         Frame bowlingFrame = new NormalFrame(START_FRAME);
 
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(5));
-        bowlingFrame = bowlingFrame.bowl(new Pin(0));
-        bowlingFrame = bowlingFrame.bowl(new Pin(4));
-        bowlingFrame = bowlingFrame.bowl(new Pin(4));
-        bowlingFrame = bowlingFrame.bowl(new Pin(5));
-        bowlingFrame = bowlingFrame.bowl(new Pin(0));
-        bowlingFrame = bowlingFrame.bowl(new Pin(1));
-        bowlingFrame = bowlingFrame.bowl(new Pin(2));
-        bowlingFrame = bowlingFrame.bowl(new Pin(4));
-        bowlingFrame = bowlingFrame.bowl(new Pin(6));
-        bowlingFrame = bowlingFrame.bowl(new Pin(7));
-        bowlingFrame = bowlingFrame.bowl(new Pin(0));
-        bowlingFrame = bowlingFrame.bowl(new Pin(9));
-        bowlingFrame = bowlingFrame.bowl(new Pin(0));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
-        bowlingFrame = bowlingFrame.bowl(new Pin(4));
-        bowlingFrame = bowlingFrame.bowl(new Pin(6));
-        bowlingFrame = bowlingFrame.bowl(new Pin(10));
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 5);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 0);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 4);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 4);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 5);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 0);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 1);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 2);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 4);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 6);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 7);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 0);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 9);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 0);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 4);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 6);
+        bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
 
         assertThat(bowlingFrame.bowlingGameEnd()).isTrue();
     }
