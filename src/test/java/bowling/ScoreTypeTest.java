@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class ScoreTest {
+public class ScoreTypeTest {
 
     private Pin halfFallenPin;
     private ScoreType none;
