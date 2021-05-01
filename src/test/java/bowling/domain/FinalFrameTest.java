@@ -11,7 +11,7 @@ class FinalFrameTest {
     @DisplayName("Frame 인스턴스 생성 여부 테스트")
     @Test
     void 생성() {
-        Frame finalFrame = FinalFrame.initialize();
+        Frame finalFrame = FinalFrame.newInstance();
 
         assertAll(
                 () -> assertThat(finalFrame).isNotNull(),
