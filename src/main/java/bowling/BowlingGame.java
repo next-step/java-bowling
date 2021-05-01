@@ -1,18 +1,17 @@
 package bowling;
 
-import bowling.domain.BowlingTurn;
+import bowling.domain.player.Player;
 import bowling.ui.InputView;
 import bowling.ui.ResultView;
 
 public class BowlingGame {
     public static void main(String[] args) {
-        BowlingTurn bowlingTurn = BowlingTurn.of(InputView.inputPlayerName());
-        ResultView.printInitBowlingBoard(bowlingTurn);
+        Player player = Player.of(InputView.inputPlayerName());
+        ResultView.printInitBowlingBoard(player);
 
-        while(!bowlingTurn.isDone()) {
-            bowlingTurn.play(InputView.inputBowlingPin(bowlingTurn.currentFrameSize()));
-            ResultView.printBowlingBoard(bowlingTurn);
-            bowlingTurn.next();
+        while(!player.isDone()) {
+            player.bowl(InputView.inputBowlingPin(player.currentFrameNumber()));
+            ResultView.printBowlingBoard(player);
         }
     }
 }
