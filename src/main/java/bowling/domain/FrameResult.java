@@ -4,13 +4,19 @@ import java.util.Objects;
 
 public class FrameResult {
     private final PointSymbols pointSymbols;
+    private final Score score;
 
     public FrameResult() {
-        pointSymbols = new PointSymbols();
+        this(new PointSymbols());
     }
 
     public FrameResult(PointSymbols pointSymbols) {
+        this(pointSymbols, Score.createNotDetermined());
+    }
+
+    public FrameResult(PointSymbols pointSymbols, Score score) {
         this.pointSymbols = pointSymbols;
+        this.score = score;
     }
 
     public PointSymbols pointSymbols() {
@@ -28,5 +34,9 @@ public class FrameResult {
     @Override
     public int hashCode() {
         return Objects.hash(pointSymbols);
+    }
+
+    public Score score() {
+        return score;
     }
 }

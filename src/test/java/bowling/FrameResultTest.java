@@ -3,6 +3,7 @@ package bowling;
 import bowling.domain.FrameResult;
 import bowling.domain.PointSymbol;
 import bowling.domain.PointSymbols;
+import bowling.domain.Score;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,5 +22,10 @@ public class FrameResultTest {
         FrameResult frameResult = new FrameResult(pointSymbols);
 
         assertThat(frameResult.pointSymbols()).isEqualTo(pointSymbols);
+    }
+
+    @Test
+    void Given_Initial_When_Score_Then_Zero() {
+        assertThat(new FrameResult().score()).isEqualTo(Score.createNotDetermined());
     }
 }
