@@ -86,4 +86,30 @@ public class NormalFrameTest {
     void When_hasNext_Then_False() {
         assertThat(new NormalFrame().hasNext()).isFalse();
     }
+
+    @Test
+    void Given_Open_When_Score_Then_Score() {
+        NormalFrame frame = new NormalFrame(new Pinfall(1), new Pinfall(2));
+        assertThat(frame.result().score()).isEqualTo(Score.create(3));
+    }
+
+    @Test
+    void Given_Strike_When_Score_Then_NotDetermined() {
+        NormalFrame frame = new NormalFrame(new Pinfall(10));
+        assertThat(frame.score()).isEqualTo(Score.createNotDetermined());
+    }
+
+    @Test
+    void Given_Spare_When_Score_Then_NotDetermined() {
+        NormalFrame frame = new NormalFrame(new Pinfall(9), new Pinfall(1));
+        assertThat(frame.score()).isEqualTo(Score.createNotDetermined());
+    }
+
+    @Test
+    void Given_SpareAndRollOnce_When_Score_Then_NotDetermined() {
+        Frame firstFrame = new NormalFrame(new FrameNumber(1), new Pinfall(9));
+        Frame secondFrame = firstFrame.roll(new Pinfall(1));
+        secondFrame.roll(new Pinfall(2));
+        assertThat(firstFrame.score()).isEqualTo(Score.create(12));
+    }
 }

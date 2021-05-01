@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.List;
+
 public interface Frame {
     Frame roll(Pinfall pinfall);
 
@@ -10,4 +12,8 @@ public interface Frame {
     boolean isDone();
 
     FrameNumber frameNumber();
+
+    Score score();
+
+    List<Pinfall> bonusPinfalls();
 }

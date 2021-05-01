@@ -3,7 +3,7 @@ package bowling.domain;
 import bowling.domain.state.FrameState;
 import bowling.domain.state.FrameStateReady;
 
-import java.util.Objects;
+import java.util.*;
 
 public class NormalFrame implements Frame {
     private final FrameNumber frameNumber;
@@ -35,7 +35,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public FrameResult result() {
-        return new FrameResult(currentState.pointSymbols());
+        return new FrameResult(currentState.pointSymbols(), score());
     }
 
     @Override
@@ -78,5 +78,32 @@ public class NormalFrame implements Frame {
             return next;
         }
         return this;
+    }
+
+    @Override
+    public Score score() {
+        return currentState.score(nextFrameBonusPinfalls());
+    }
+
+    private List<Pinfall> nextFrameBonusPinfalls() {
+        if (!hasNext()) {
+            return new ArrayList<>();
+        }
+
+        return next.bonusPinfalls();
+    }
+
+    @Override
+    public List<Pinfall> bonusPinfalls() {
+        List<Pinfall> bonusPinfalls = currentState.pinfalls();
+        if (bonusPinfalls.size() == 0) {
+            return new ArrayList<>();
+        }
+
+        if (bonusPinfalls.size() < 2) {
+            bonusPinfalls.addAll(nextFrameBonusPinfalls());
+        }
+
+        return bonusPinfalls;
     }
 }

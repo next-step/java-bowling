@@ -3,6 +3,9 @@ package bowling.domain;
 import bowling.domain.state.FrameState;
 import bowling.domain.state.FrameStateFinalReady;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FinalFrame implements Frame {
     private FrameState currentState = new FrameStateFinalReady();
 
@@ -50,5 +53,15 @@ public class FinalFrame implements Frame {
     @Override
     public Frame roll(Pinfall pinfall, FrameFatory frameFatory) {
         return roll(pinfall);
+    }
+
+    @Override
+    public Score score() {
+        return null;
+    }
+
+    @Override
+    public List<Pinfall> bonusPinfalls() {
+        return new ArrayList<>();
     }
 }
