@@ -10,19 +10,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class FrameTest {
 
-    @DisplayName("해당 프레임이 마지막 라운드인지 판별한다")
-    @Test
-    void frameIsFinalRoundTest() {
-        Frame firstFrame = NormalFrame.from(Round.firstRound());
-        Frame finalFrame = FinalFrame.getFrame();
-        assertThat(finalFrame.isLastRound()).isEqualTo(Boolean.TRUE);
-        assertThat(firstFrame.isLastRound()).isEqualTo(Boolean.FALSE);
-    }
-
     @DisplayName("스트라이크는 한번만 투구하면 종료된다")
     @Test
     void throwBallStrikeTest() {
-        Frame normalFrame = NormalFrame.from(Round.firstRound());
+        Frame normalFrame = NormalFrame.from();
         normalFrame.throwBall(10);
         assertThat(normalFrame.roundEnded()).isTrue();
     }
@@ -30,7 +21,7 @@ public class FrameTest {
     @DisplayName("1~9프레임은 공을 두번 던질 수 있다")
     @Test
     void throwBallNotStrikeTest() {
-        Frame normalFrame = NormalFrame.from(Round.firstRound());
+        Frame normalFrame = NormalFrame.from();
         normalFrame.throwBall(8);
         normalFrame.throwBall(2);
         assertThat(normalFrame.roundEnded()).isTrue();
@@ -39,7 +30,7 @@ public class FrameTest {
     @DisplayName("종료된 프레임에서 공을 던질 수 없다")
     @Test
     void throwBallExceptionTest() {
-        Frame normalFrame = NormalFrame.from(Round.firstRound());
+        Frame normalFrame = NormalFrame.from();
         normalFrame.throwBall(7);
         normalFrame.throwBall(1);
         assertThatThrownBy(() -> normalFrame.throwBall(1))
@@ -69,7 +60,7 @@ public class FrameTest {
     @DisplayName("프레임이 아직 시작 안한지 확인한다")
     @Test
     void frameNotYetTest() {
-        Frame frame = NormalFrame.from(Round.firstRound());
+        Frame frame = NormalFrame.from();
         assertThat(frame.isNotYetStart()).isTrue();
     }
 
