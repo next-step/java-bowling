@@ -38,6 +38,20 @@ class FinalFrameTest {
         assertThat(finalFrame.isFinish()).isTrue();
     }
 
+    @DisplayName("Frame 인스턴스가 인덱스를 알맞게 반환하는지 테스트")
+    @Test
+    void 반환_인덱스() {
+        // given
+        int expected = 10;
+
+        // when
+        Frame finalFrame = FinalFrame.initialize();
+        int actual = finalFrame.index();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
     @DisplayName("Frame 인스턴스가 bowl()가 추가 투구 없이 로직을 알맞게 수행하는지 테스트")
     @Test
     void 검증_bowl_추가_투구_없음() {
