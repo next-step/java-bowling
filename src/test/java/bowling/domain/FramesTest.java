@@ -3,6 +3,8 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,6 +38,17 @@ class FramesTest {
 
         // then
         assertThat(frames.isFinish()).isEqualTo(false);
+    }
+
+    @DisplayName("Frames 인스턴스가 bowl() 호츌시 알맞은 값을 반환하는지 테스트")
+    @Test
+    void 볼링() {
+        // when
+        Frames frames = Frames.initialize();
+        Frame expected = NormalFrame.from(2);
+
+        // then
+        assertThat(frames.bowl(HitCount.valueOf(10))).isEqualTo(expected);
     }
 
 
