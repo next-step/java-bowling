@@ -50,6 +50,14 @@
 <details>
     <summary> 1단계 피드백 </summary>
 
+### 피드백 [링크](https://github.com/next-step/java-bowling/pull/520)
+- 상속 depth는 한 번정도, AbstractEntity에서는 보통 도메인의 공통관심사 정도 구현
+- 생성자 내부 validation 로직보다는 static of에서 접근, static validation로 추출하여 각각 활용
+- parameter에 list를 넘기기보다는 새 리스트 반환이 사이드 이펙트 방지
+- ❗Instanceof는 안티패턴❗ 
+  하위 타입에서 메소드 재정의하는 방식으로 사용 (getContentType처럼)
+- 메소드명은 이름을 내포하게끔 (isOwner? validOwner?)
+
 </details>
 
 
