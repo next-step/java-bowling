@@ -37,6 +37,10 @@ public class AbstractEntity {
         return this;
     }
 
+    public ContentType getContentType() {
+        return ContentType.POST;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -67,4 +71,5 @@ public class AbstractEntity {
                 ", updatedAt=" + updatedAt +
                 '}';
     }
+
 }

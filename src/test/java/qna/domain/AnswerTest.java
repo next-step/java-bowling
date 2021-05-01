@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswerTest {
@@ -22,5 +23,10 @@ public class AnswerTest {
         assertThatThrownBy(() -> {
             Answer.of(UserTest.SANJIGI, null, "내용");
         }).isInstanceOf(NotFoundException.class);
+    }
+
+    @Test
+    void 답변글타입반환() {
+        assertThat(A1.getContentType()).isEqualTo(ContentType.ANSWER);
     }
 }

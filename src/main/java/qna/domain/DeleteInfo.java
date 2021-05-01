@@ -17,7 +17,7 @@ public class DeleteInfo {
     }
 
     public DeleteInfo(AbstractEntity post, User deleteBy) {
-        this(ContentType.check(post), post.getId(), deleteBy);
+        this(post.getContentType(), post.getId(), deleteBy);
     }
 
     public DeleteInfo(ContentType contentType, Long contentId, User deletedBy) {

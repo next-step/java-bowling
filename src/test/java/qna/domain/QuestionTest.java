@@ -38,4 +38,9 @@ public class QuestionTest {
         List<DeleteHistory> result = Q2.delete();
         assertThat(result).containsAll(predict2);
     }
+
+    @Test
+    void 질문글타입반환() {
+        assertThat(Q1.getContentType()).isEqualTo(ContentType.QUESTION);
+    }
 }

@@ -47,6 +47,10 @@ public class Answer extends AbstractEntity {
         }
     }
 
+    @Override
+    public ContentType getContentType() {
+        return ContentType.ANSWER;
+    }
 
     public void delete() {
         postInfo.delete();
@@ -72,4 +76,5 @@ public class Answer extends AbstractEntity {
     public String toString() {
         return "Answer [id=" + getId() + ", postInfo=" + postInfo + "]";
     }
+
 }

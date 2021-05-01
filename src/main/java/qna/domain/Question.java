@@ -57,6 +57,11 @@ public class Question extends AbstractEntity {
     }
 
     @Override
+    public ContentType getContentType() {
+        return ContentType.QUESTION;
+    }
+
+    @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", postInfo=" + postInfo + "]";
     }
@@ -68,4 +73,5 @@ public class Question extends AbstractEntity {
         deleteList.addAll(answers.deleteAll());
         return deleteList;
     }
+
 }
