@@ -88,11 +88,11 @@
 - 투구 시, 다음 프레임 생성 or 기존 프레임 추가 투구 판단
 
 
-### Player
-- 플레이어 역할
+### PlayerName
+- 플레이어 이름
 - 최대 3글자 이름
 
 
-### BowlingTurn
+### Player
 - 한명의 플레이어가 볼링 게임을 하기 위한 집합체
-- Player, Frames 관리
+- PlayerName, Frames 관리
