@@ -5,32 +5,25 @@ import bowling.domain.state.BowlingSymbol;
 import bowling.domain.state.Result;
 
 public class Spare implements Result {
-    private final BowlingPin firstPin;
     private final BowlingPin secondPin;
 
-    private Spare(BowlingPin firstPin, BowlingPin secondPin) {
-        validate(firstPin, secondPin);
-        this.firstPin = firstPin;
+    private Spare(BowlingPin secondPin) {
+        validate(secondPin);
         this.secondPin = secondPin;
     }
 
-    private void validate(BowlingPin firstPin, BowlingPin secondPin) {
-        if (!firstPin.sum(secondPin).isMax()) {
+    public static Spare of(BowlingPin secondPin) {
+        return new Spare(secondPin);
+    }
+
+    private void validate(BowlingPin bowlingPin) {
+        if (bowlingPin.isMax() || bowlingPin.isMin()) {
             throw new IllegalArgumentException("현재 상태에 맞지 않는 볼링핀 수 입니다.");
         }
     }
 
-    public static Spare of(BowlingPin firstPin, BowlingPin secondPin) {
-        return new Spare(firstPin, secondPin);
-    }
-
-    @Override
-    public boolean isClear() {
-        return true;
-    }
-
     @Override
     public String toSymbol() {
-        return BowlingSymbol.of(firstPin, secondPin);
+        return BowlingSymbol.ofSpare();
     }
 }

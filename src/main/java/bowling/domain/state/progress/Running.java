@@ -10,7 +10,7 @@ import bowling.domain.state.result.Miss;
 import bowling.domain.state.result.Spare;
 
 public class Running implements Progress {
-    BowlingPin firstPin;
+    private final BowlingPin firstPin;
 
     private Running(BowlingPin bowlingPin) {
         validate(bowlingPin);
@@ -30,9 +30,9 @@ public class Running implements Progress {
     @Override
     public State bowl(BowlingPin bowlingPin) {
         if (firstPin.sum(bowlingPin).isMax()) {
-            return Spare.of(firstPin, bowlingPin);
+            return Spare.of(bowlingPin);
         }
-        return Miss.of(firstPin, bowlingPin);
+        return Miss.of(bowlingPin);
     }
 
     @Override

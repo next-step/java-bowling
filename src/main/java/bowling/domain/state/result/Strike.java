@@ -23,13 +23,7 @@ public class Strike implements Result {
     }
 
     @Override
-    public boolean isClear() {
-        return true;
-    }
-
-    @Override
     public String toSymbol() {
-        return BowlingSymbol.of(bowlingPin);
+        return BowlingSymbol.ofStrike();
     }
-
 }
