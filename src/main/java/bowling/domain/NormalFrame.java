@@ -19,4 +19,9 @@ public class NormalFrame implements Frame {
     public static final Frame initialize() {
         return new NormalFrame(FRAME_START_INDEX);
     }
+
+    public static final Frame from(int index) {
+        return new NormalFrame(index);
+    }
+
 }
