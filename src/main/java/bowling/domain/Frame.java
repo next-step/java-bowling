@@ -4,21 +4,15 @@ public abstract class Frame {
 
     private static final int NOT_YET_START = 0;
 
-    protected Round round;
     protected Pins pins;
     protected Score score;
 
-    public Frame(Round round) {
-        this.round = round;
+    public Frame() {
         this.pins = new Pins();
     }
 
     public boolean canCalculate() {
         return score.canCalculateScore();
-    }
-
-    public boolean isLastRound() {
-        return round.isFinalRound();
     }
 
     public boolean isNotYetStart() {
@@ -51,5 +45,9 @@ public abstract class Frame {
 
     public void additionalScore(int score) {
         this.score.throwBall(score);
+    }
+
+    public int score() {
+        return score.calculateScore();
     }
 }
