@@ -32,11 +32,13 @@ public final class FrameStatusView {
     private String normalFrameStatus() {
         final Pins pins = frame.pins();
         final Pin firstPin = pins.firstPin();
+        final Pin secondPin = pins.secondPin();
+
         if (pins.size() == THROW_ONCE) {
             return pinStatus(firstPin);
         }
 
-        return normalTwiceStatus(pins);
+        return twoPinStatus(firstPin, secondPin);
     }
 
     private String pinStatus(Pin pin) {
@@ -46,21 +48,19 @@ public final class FrameStatusView {
         return pin.status();
     }
 
-    private String normalTwiceStatus(Pins pins) {
-        final Pin firstPin = pins.firstPin();
-        final Pin secondPin = pins.secondPin();
-
-        final boolean isSpare = firstPin.sum(secondPin).isMaximum();
+    private String twoPinStatus(Pin pin, Pin otherPin) {
+        final boolean isSpare = pin.sum(otherPin).isMaximum();
         if (isSpare) {
-            return pinStatus(firstPin) + DELIMITER + SPARE_SIGN;
+            return pinStatus(pin) + DELIMITER + SPARE_SIGN;
         }
 
-        return pinStatus(firstPin) + DELIMITER + secondPin.status();
+        return pinStatus(pin) + DELIMITER + otherPin.status();
     }
 
     private String finalFrameStatus() {
         final Pins pins = frame.pins();
         final Pin firstPin = pins.firstPin();
+
         if (pins.size() == THROW_ONCE) {
             return pinStatus(firstPin);
         }
@@ -84,6 +84,17 @@ public final class FrameStatusView {
     }
 
     private String bonusStatus(Pins pins) {
-        return null;
+        final Pin thirdPin = pins.thirdPin();
+        final Pin firstPin = pins.firstPin();
+        final Pin secondPin = pins.secondPin();
+
+        final boolean isFirstPinStrike = firstPin.isMaximum();
+        final boolean isSecondPinStrike = secondPin.isMaximum();
+
+        if (isFirstPinStrike && !isSecondPinStrike) {
+            return pinStatus(firstPin) + DELIMITER + twoPinStatus(secondPin, thirdPin);
+        }
+
+        return finalTwiceStatus(pins) + DELIMITER + pinStatus(thirdPin);
     }
 }
