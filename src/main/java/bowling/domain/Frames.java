@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.NoMoreBowlActionsException;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -12,7 +14,7 @@ public class Frames {
     private static final int FIRST_INDEX = 0;
 
     private final List<Frame> frames;
-    private final Frame now;
+    private Frame now;
 
     private Frames(final List<Frame> frames) {
         this.frames = frames;
@@ -39,5 +41,14 @@ public class Frames {
         return now.isFinish();
     }
 
+    public final void bowl(HitCount hitCount) {
+        validateFinish();
+        now = now.bowl(hitCount);
+    }
 
+    private final void validateFinish() {
+        if (isFinish()) {
+            throw new NoMoreBowlActionsException();
+        }
+    }
 }

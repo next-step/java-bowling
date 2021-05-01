@@ -43,12 +43,14 @@ class FramesTest {
     @DisplayName("Frames 인스턴스가 bowl() 호츌시 알맞은 값을 반환하는지 테스트")
     @Test
     void 볼링() {
-        // when
+        // given
         Frames frames = Frames.initialize();
-        Frame expected = NormalFrame.from(2);
+
+        // when
+        frames.bowl(HitCount.valueOf(9));
 
         // then
-        assertThat(frames.bowl(HitCount.valueOf(10))).isEqualTo(expected);
+        assertThat(frames.isFinish()).isFalse();
     }
 
 
