@@ -55,4 +55,22 @@ class FirstBowlTest {
 
     }
 
+    @DisplayName("FirstBowl 인스턴스가 Miss 인스턴스를 반환하는지 테스트")
+    @Test
+    void 반환_Miss() {
+        // given
+        State ready = Ready.initialize();
+
+        // when
+        State firstBowl = ready.bowl(HitCount.valueOf(0));
+        State spare = firstBowl.bowl(HitCount.valueOf(9));
+
+        // then
+        assertAll(
+                () -> assertThat(spare).isNotNull(),
+                () -> assertThat(spare).isInstanceOf(Miss.class)
+        );
+
+    }
+
 }
