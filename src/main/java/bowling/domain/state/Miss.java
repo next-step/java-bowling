@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-public final class Miss {
+public final class Miss extends Finish{
 
     private final int firstCount;
     private final int secondCount;

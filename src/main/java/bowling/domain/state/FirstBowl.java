@@ -4,6 +4,7 @@ import bowling.domain.HitCount;
 
 public final class FirstBowl extends Running {
 
+    private static final int MAX_COUNT = 10;
     private final int firstCount;
 
     private FirstBowl(final int firstCount) {
@@ -16,6 +17,9 @@ public final class FirstBowl extends Running {
 
     @Override
     public final State bowl(final HitCount hitCount) {
-        return Spare.of(firstCount, hitCount.count());
+        if(firstCount+hitCount.count() == MAX_COUNT) {
+            return Spare.of(firstCount, hitCount.count());
+        }
+        return Miss.from(firstCount, hitCount.count());
     }
 }
