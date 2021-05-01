@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ReadyTest {
 
@@ -23,7 +22,7 @@ class ReadyTest {
     @Test
     void 반환_종료_여부() {
         // when
-        State ready = State.initialize();
+        State ready = State.ready();
 
         // then
         assertThat(ready.isFinish()).isFalse();
@@ -33,7 +32,7 @@ class ReadyTest {
     @Test
     void 반환_FirstBowl() {
         // when
-        State ready = State.initialize();
+        State ready = State.ready();
 
         // then
         assertThat(ready.bowl(HitCount.valueOf(9))).isInstanceOf(FirstBowl.class);
@@ -44,7 +43,7 @@ class ReadyTest {
     @Test
     void 반환_Strike() {
         // when
-        State ready = State.initialize();
+        State ready = State.ready();
 
         // then
         assertThat(ready.bowl(HitCount.valueOf(10))).isInstanceOf(Strike.class);
@@ -55,7 +54,7 @@ class ReadyTest {
     @Test
     void 검증_핀_처리_여부() {
         // when
-        State ready = State.initialize();
+        State ready = State.ready();
 
         // then
         assertThat(ready.isAllPinClear()).isFalse();

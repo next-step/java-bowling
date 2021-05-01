@@ -8,7 +8,8 @@ public final class BowlingFixture {
     public static final int FRAME_START_INDEX = 1;
     public static final int FRAME_LAST_INDEX = 10;
 
-    public static final int INCREASE_INDEX_UNIT = 1;
+    public static final int DEFAULT_COUNT = 0;
+    public static final int INDEX_UNIT = 1;
 
 
     private BowlingFixture() {

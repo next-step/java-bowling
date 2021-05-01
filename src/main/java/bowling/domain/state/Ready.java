@@ -14,7 +14,7 @@ public final class Ready extends Running {
     public final State bowl(final HitCount hitCount) {
         pins = pins.hit(hitCount);
         if (pins.isEmpty()) {
-            return Strike.newInstance();
+            return Strike.initialize();
         }
         return FirstBowl.from(hitCount.count());
     }

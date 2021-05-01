@@ -7,7 +7,7 @@ public final class Strike extends Finish {
     private Strike() {
     }
 
-    public static final State newInstance() {
+    public static final State initialize() {
         return new Strike();
     }
 

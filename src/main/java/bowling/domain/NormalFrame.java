@@ -12,7 +12,7 @@ public final class NormalFrame implements Frame {
     private final int index;
 
     public NormalFrame(final int index) {
-        this.state = State.initialize();
+        this.state = State.ready();
         this.next = Frame.initialize();
         this.index = index;
     }
@@ -32,9 +32,9 @@ public final class NormalFrame implements Frame {
     }
 
     private final Frame nextFrame() {
-        if (index + INCREASE_INDEX_UNIT == FRAME_LAST_INDEX) {
+        if (index + INDEX_UNIT == FRAME_LAST_INDEX) {
         }
-        return new NormalFrame(index + INCREASE_INDEX_UNIT);
+        return new NormalFrame(index + INDEX_UNIT);
     }
 
     @Override

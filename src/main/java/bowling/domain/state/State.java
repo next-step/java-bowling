@@ -4,7 +4,7 @@ import bowling.domain.HitCount;
 
 public interface State {
 
-    static State initialize() {
+    static State ready() {
         return Ready.initialize();
     }
 

@@ -15,7 +15,7 @@ class StrikeTest {
     @Test
     void 생성() {
         // when
-        State strike = Strike.newInstance();
+        State strike = Strike.initialize();
 
         // then
         assertAll(
@@ -29,7 +29,7 @@ class StrikeTest {
     @Test
     void 반환_종료_여부() {
         // when
-        State strike = Strike.newInstance();
+        State strike = Strike.initialize();
 
         // then
         assertThat(strike.isFinish()).isTrue();
@@ -40,7 +40,7 @@ class StrikeTest {
     @Test
     void 검증_bowl() {
         // when
-        State strike = Strike.newInstance();
+        State strike = Strike.initialize();
 
         // then
         assertThatThrownBy(() -> strike.bowl(HitCount.valueOf(10)))
@@ -52,7 +52,7 @@ class StrikeTest {
     @Test
     void 검증_핀_처리_여부() {
         // when
-        State strike = Strike.newInstance();
+        State strike = Strike.initialize();
 
         // then
         assertThat(strike.isAllPinClear()).isTrue();
