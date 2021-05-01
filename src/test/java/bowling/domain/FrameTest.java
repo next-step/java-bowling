@@ -76,20 +76,23 @@ public class FrameTest {
     @DisplayName("일반 프레임의 2 투구의 점수를 계산한다")
     @Test
     void normalFrameGetScoreTest() {
-        Frame normalFrame = NormalFrame.from(Round.firstRound());
-        normalFrame.throwBall(5);
-        normalFrame.throwBall(4);
+        Frames frames = Frames.init();
+        frames.throwBall(5);
+        frames.throwBall(4);
+        Frame normalFrame = frames.nFrame(0);
         assertThat(normalFrame.getScore()).isEqualTo(9);
     }
 
     @DisplayName("프레임이 스트라이크 혹은 스페어라면 점수를 계산할 수 없다")
     @Test
     void normalFrameGetScoreExceptionTest() {
-        Frame strikeFrame = NormalFrame.from(Round.firstRound());
-        Frame spareFrame = NormalFrame.from(Round.firstRound());
-        strikeFrame.throwBall(10);
-        spareFrame.throwBall(9);
-        spareFrame.throwBall(1);
+        Frames strikeFrames = Frames.init();
+        strikeFrames.throwBall(10);
+        Frame strikeFrame = strikeFrames.nFrame(0);
+        Frames spareFrames = Frames.init();
+        spareFrames.throwBall(9);
+        spareFrames.throwBall(1);
+        Frame spareFrame = spareFrames.nFrame(0);
         assertThatThrownBy(() -> {
             strikeFrame.getScore();
             spareFrame.getScore();
@@ -103,7 +106,7 @@ public class FrameTest {
         frames.throwBall(10);
         frames.throwBall(2);
         frames.throwBall(7);
-        Frame firstFrame = frames.frames().get(0);
+        Frame firstFrame = frames.nFrame(0);
         assertThat(firstFrame.getScore()).isEqualTo(19);
     }
 
@@ -111,10 +114,10 @@ public class FrameTest {
     @Test
     void frameGetScoreWhenSpareTest() {
         Frames frames = Frames.init();
-        frames.throwBall(10);
-        frames.throwBall(2);
         frames.throwBall(7);
-        Frame firstFrame = frames.frames().get(0);
+        frames.throwBall(3);
+        frames.throwBall(2);
+        Frame firstFrame = frames.nFrame(0);
         assertThat(firstFrame.getScore()).isEqualTo(12);
     }
 }
