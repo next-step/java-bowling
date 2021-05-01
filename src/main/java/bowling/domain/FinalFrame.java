@@ -14,12 +14,10 @@ import static java.lang.Boolean.TRUE;
 
 public class FinalFrame implements Frame {
 
-    private static final int START = 0;
-    private static final int END = 3;
+    private final FinalFrameOpportunity opportunity;
+    private final int index;
 
     private LinkedList<State> states;
-    private final int index;
-    private final int opportunity;
 
     public static final Frame newInstance() {
         return new FinalFrame();
@@ -28,7 +26,7 @@ public class FinalFrame implements Frame {
     private FinalFrame() {
         this.states = new LinkedList<>(Arrays.asList(State.ready()));
         this.index = FRAME_LAST_INDEX;
-        this.opportunity = START;
+        this.opportunity = FinalFrameOpportunity.initialize();
     }
 
     @Override
@@ -56,9 +54,9 @@ public class FinalFrame implements Frame {
 
     @Override
     public final boolean isFinish() {
-        if (opportunity == END) {
-            return TRUE;
-        }
+//        if (opportunity.isFinish()) {
+//            return TRUE;
+//        }
         return FALSE;
     }
 
