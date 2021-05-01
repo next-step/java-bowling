@@ -34,4 +34,8 @@ public class Frames {
     public final int index() {
         return now.index();
     }
+
+    public final boolean isFinish() {
+        return now.isFinish();
+    }
 }
