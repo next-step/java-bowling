@@ -18,11 +18,7 @@ public class Score {
         this.leftOpportunity = leftOpportunity;
     }
 
-    public static Score ofMiss(int score) {
-        return new Score(score, NONE_OPPORTUNITY);
-    }
-
-    public static Score ofGutter(int score) {
+    public static Score ofNone(int score) {
         return new Score(score, NONE_OPPORTUNITY);
     }
 
@@ -41,12 +37,14 @@ public class Score {
         return this.score;
     }
 
-    private boolean canCalculateScore() {
+    public boolean canCalculateScore() {
         return leftOpportunity == NONE_OPPORTUNITY;
     }
 
     public void throwBall(int score) {
-        this.score += score;
-        this.leftOpportunity -= 1;
+        if (this.leftOpportunity > NONE_OPPORTUNITY) {
+            this.score += score;
+            this.leftOpportunity -= 1;
+        }
     }
 }
