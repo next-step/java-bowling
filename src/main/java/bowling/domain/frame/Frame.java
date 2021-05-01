@@ -11,10 +11,13 @@ public abstract class Frame {
   protected static final int MAX_THROWABLE_BALLS = 2;
   protected static final int MAX_FALLEN_PINS = 10;
 
+  protected final int round;
+
   protected final List<BallRelease> ballRelease;
 
-  public Frame(){
+  public Frame(int round){
     ballRelease = new ArrayList<>();
+    this.round = round;
   }
 
   public List<BallRelease> shot(FallenPins fallenPins){

@@ -13,6 +13,7 @@ public class Board {
   }
 
   public void addFrame(Frame frame){
+
     frames.add(frame);
   }
 }

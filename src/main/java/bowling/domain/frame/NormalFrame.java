@@ -8,6 +8,10 @@ import java.util.List;
 
 public class NormalFrame extends Frame {
 
+  public NormalFrame(int round) {
+    super(round);
+  }
+
   @Override
   protected void checkThrowable(FallenPins pins) {
     super.checkThrowable(pins);

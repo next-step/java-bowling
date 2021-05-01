@@ -8,6 +8,10 @@ import java.util.List;
 
 public class FinalFrame extends Frame{
 
+  public FinalFrame(int round) {
+    super(round);
+  }
+
   @Override
   public List<BallRelease> shot(FallenPins fallenPins){
     checkThrowable(fallenPins);
