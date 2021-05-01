@@ -25,12 +25,16 @@ class BowlingGameTest {
     }
 
     @Test
-    @DisplayName("다음에 투구할 플레이어의 이름을 가져온다.")
+    @DisplayName("투구할 플레이어의 이름을 가져온다.")
     void getNameOfPlayerWhoPlaysNext() {
         assertThat(initiatedGame.getNameOfCurrentPlayer()).isEqualTo("aaa");
+    }
 
-        initiatedGame.roll(RollResult.of(10));
-
+    @Test
+    @DisplayName("플레이어가 투구를 마친 후 이름을 조회하면 그 다음 플레이어의 이름을 반환한다.")
+    void getNameOfPlayerAfterCurrentPlayerFinishedCurrentFrame() {
+        initiatedGame.roll(RollResult.of(8));
+        initiatedGame.roll(RollResult.of(2));
         assertThat(initiatedGame.getNameOfCurrentPlayer()).isEqualTo("bbb");
     }
 
