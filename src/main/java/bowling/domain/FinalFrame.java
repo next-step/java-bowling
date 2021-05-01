@@ -22,6 +22,11 @@ public class FinalFrame extends Frame {
         throw new IllegalStateException("점수를 더 이상 입력할 수 없습니다.");
     }
 
+    @Override
+    public Frame createFrame(int frameNumber) {
+        throw new IllegalStateException("마지막 프레임에서는 프레임을 생성할 수 없습니다.");
+    }
+
     private void applyBenefitOption(int lastScore) {
         if (lastScore == 10) {
             score.fillPins();

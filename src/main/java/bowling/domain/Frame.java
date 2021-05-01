@@ -14,6 +14,8 @@ public abstract class Frame {
 
     public abstract String addScore(int inputScore);
 
+    public abstract Frame createFrame(int frameNumber);
+
     public boolean isAvailable() {
         if (availability > 0) {
             return true;

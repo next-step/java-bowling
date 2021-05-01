@@ -19,4 +19,12 @@ public class NormalFrame extends Frame {
         }
         throw new IllegalStateException("점수를 더 이상 입력할 수 없습니다.");
     }
+
+    @Override
+    public Frame createFrame(int frameNumber) {
+        if (frameNumber == 10) {
+            return new FinalFrame(score);
+        }
+        return new NormalFrame(score);
+    }
 }
