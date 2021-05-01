@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 public abstract class Frame {
 
     protected static final int NON_BONUS = 0;
@@ -37,7 +35,6 @@ public abstract class Frame {
     abstract public Frame next();
     abstract public void pitch(Pitch pitch);
     abstract public boolean isFinished();
-    abstract public List<String> getScoreBoards();
     abstract public int score();
     abstract public int bonusScore(Pitches beforePitches);
     abstract public int doubleBonusScore();

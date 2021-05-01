@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 public class NormalFrame extends Frame {
 
     public static final int FIRST_NUMBER = 1;
@@ -67,11 +65,6 @@ public class NormalFrame extends Frame {
     @Override
     public boolean isFinished() {
         return pitches().isFinished();
-    }
-
-    @Override
-    public List<String> getScoreBoards() {
-        return pitches().getScoreBoards();
     }
 
     @Override

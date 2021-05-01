@@ -1,8 +1,10 @@
 package bowling.domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Spliterator;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public class Pitches implements Iterable<Pitch> {
 
@@ -90,15 +92,6 @@ public class Pitches implements Iterable<Pitch> {
 
     public void decreasePitchAbleCount() {
         this.pitchAbleCount--;
-    }
-
-    public List<String> getScoreBoards() {
-        if (isSpare()) {
-            return new ArrayList<>(Arrays.asList(first().toString(), SPARE_MARK));
-        }
-        return values.stream()
-                .map(Pitch::toString)
-                .collect(Collectors.toList());
     }
 
     @Override
