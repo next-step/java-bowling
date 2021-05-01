@@ -18,6 +18,7 @@ public class ConsoleResultView implements ResultView {
     public void printPlayers(PlayersDto playersDto) {
         printHeader();
         playersDto.getPlayerDtoList().forEach(this::printBody);
+        System.out.println();
     }
 
     private void printHeader() {
