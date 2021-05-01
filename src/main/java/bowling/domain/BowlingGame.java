@@ -15,16 +15,16 @@ public class BowlingGame {
     public String getNameOfCurrentPlayer() {
         goToNextFrameIfNecessary();
 
-        return players.getFirstPlayerPlayingIn(currentFrameNumber)
-                      .map(Player::exportPlayerName)
-                      .orElseThrow(() -> new IllegalStateException("모든 플레이어가 경기를 마쳤습니다."));
+        Player player = players.getFirstPlayerPlayingIn(currentFrameNumber);
+
+        return player.exportPlayerName();
     }
 
     public void roll(RollResult rollResult) {
         goToNextFrameIfNecessary();
 
-        players.getFirstPlayerPlayingIn(currentFrameNumber)
-               .ifPresent(player -> player.roll(rollResult));
+        Player player = players.getFirstPlayerPlayingIn(currentFrameNumber);
+        player.roll(rollResult);
     }
 
     private void goToNextFrameIfNecessary() {
@@ -42,7 +42,7 @@ public class BowlingGame {
     }
 
     private boolean isAllPlayersPlayedInCurrentFrame() {
-        return !players.getFirstPlayerPlayingIn(currentFrameNumber).isPresent();
+        return players.isAllPlayersFinishedIn(currentFrameNumber);
     }
 
     public PlayersDto exportPlayers() {

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,18 +27,30 @@ class PlayersTest {
     void getFirstPlayerNotPlayedInSomeFrame() {
         FrameNumber frameNumber = FrameNumber.firstFrame();
 
-        Optional<Player> player = players.getFirstPlayerPlayingIn(frameNumber);
+        Player player = players.getFirstPlayerPlayingIn(frameNumber);
 
-        assertThat(player.get().exportPlayerName()).isEqualTo(firstPlayerName);
-        player.get().roll(RollResult.of(10));
-
-        player = players.getFirstPlayerPlayingIn(frameNumber);
-
-        assertThat(player.get().exportPlayerName()).isEqualTo(secondPlayerName);
-        player.get().roll(RollResult.of(10));
+        assertThat(player.exportPlayerName()).isEqualTo(firstPlayerName);
+        player.roll(RollResult.of(10));
 
         player = players.getFirstPlayerPlayingIn(frameNumber);
-        assertThat(player.isPresent()).isFalse();
+
+        assertThat(player.exportPlayerName()).isEqualTo(secondPlayerName);
+        player.roll(RollResult.of(10));
+
+        assertThat(players.isAllPlayersFinishedIn(frameNumber)).isTrue();
     }
-    
+
+    @Test
+    @DisplayName("특정 프레임에서 플레이어가 모두 투구를 마쳤다면 True 를 반환한다. ")
+    void returnTrueIfAllPlayersFinishedInSpecificFrame() {
+        FrameNumber frameNumber = FrameNumber.firstFrame();
+        Player player = players.getFirstPlayerPlayingIn(frameNumber);
+        player.roll(RollResult.of(10));
+        player = players.getFirstPlayerPlayingIn(frameNumber);
+        player.roll(RollResult.of(6));
+        player.roll(RollResult.of(2));
+
+        assertThat(players.isAllPlayersFinishedIn(frameNumber)).isTrue();
+    }
+
 }

@@ -4,7 +4,6 @@ import bowling.domain.engine.frame.FrameNumber;
 import bowling.dto.PlayersDto;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -25,10 +24,16 @@ public class Players {
         return new Players(players);
     }
 
-    public Optional<Player> getFirstPlayerPlayingIn(FrameNumber frameNumber) {
+    public Player getFirstPlayerPlayingIn(FrameNumber frameNumber) {
         return players.stream()
                       .filter(player -> !player.isPlayedFrameOf(frameNumber))
-                      .findFirst();
+                      .findFirst()
+                      .orElseThrow(() -> new IllegalStateException("모든 플레이어가 해당 프레임에서 투구를 완료했습니다."));
+    }
+
+    public boolean isAllPlayersFinishedIn(FrameNumber frameNumber) {
+        return players.stream()
+                      .allMatch(player -> player.isPlayedFrameOf(frameNumber));
     }
 
     public PlayersDto export() {
