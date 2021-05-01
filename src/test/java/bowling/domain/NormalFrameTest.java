@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NormalFrameTest {
@@ -65,5 +66,16 @@ class NormalFrameTest {
                 () -> assertThat(now).isNotEqualTo(normalFrame)
         );
 
+    }
+
+    @DisplayName("NormalFrame 인스턴스가 완료되었는데도 볼링할 경우 예외처리 테스트")
+    @Test
+    void 기능_bowl_검증() {
+        Frame normalFrame = NormalFrame.initialize();
+        normalFrame.bowl(HitCount.valueOf(10));
+
+        assertThatThrownBy(()->normalFrame.bowl(HitCount.valueOf(10)))
+                .isInstanceOf()
+                .hasMessage();
     }
 }
