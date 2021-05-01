@@ -3,7 +3,15 @@ package qna.domain;
 import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,16 +75,13 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public void delete(User loginUser) throws CannotDeleteException {
       checkDeleteAuthority(loginUser);
       deleted = true;
 
-      List<DeleteHistory> deleteHistories = new ArrayList<>();
-      deleteHistories.add(DeleteHistory.newQuestion(getId(), writer));
       for (Answer answer : answers) {
-        deleteHistories.add(answer.delete(loginUser));
+        answer.delete(loginUser);
       }
-      return deleteHistories;
     }
 
     private void checkDeleteAuthority(User loginUser) throws CannotDeleteException {
