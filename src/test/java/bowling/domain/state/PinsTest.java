@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.HitCount;
+import bowling.exception.InputNumberOutOfBoundsException;
 import bowling.exception.InputOverHitCountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,6 +46,19 @@ class PinsTest {
         assertThatThrownBy(() -> pins.hit(HitCount.valueOf(1)).hit(HitCount.valueOf(10)))
                 .isInstanceOf(InputOverHitCountException.class)
                 .hasMessage("( 10 )은, 남은 수 ( 9 ) 보다 큰 값입니다.");
+
+    }
+
+    @DisplayName("Pins 인스턴스에 범위를 벗어난 수 입력시 예외처리 여부 테스트")
+    @Test
+    void 검증_범위를_벗어난_수() {
+        // when
+        Pins pins = Pins.initialize();
+
+        // then
+        assertThatThrownBy(() -> pins.hit(HitCount.valueOf(-1)))
+                .isInstanceOf(InputNumberOutOfBoundsException.class)
+                .hasMessage("맞은 갯수 ( -1 ) 는 사용할 수 없는 갯수 입니다.");
 
     }
 

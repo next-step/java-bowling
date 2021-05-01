@@ -1,9 +1,11 @@
 package bowling.domain;
 
 import bowling.exception.NoMoreBowlActionsException;
+import bowling.util.BowlingFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static bowling.util.BowlingFixture.FRAME_START_INDEX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,6 +86,21 @@ class NormalFrameTest {
                 () -> assertThat(normalFrame.isFinish()).isTrue(),
                 () -> assertThat(next.isFinish()).isFalse()
         );
+
+    }
+
+
+    @DisplayName("NormalFrame 인스턴스가 현재 인덱스 반환 여부 테스트")
+    @Test
+    void 반환_현재_인덱스() {
+        // given
+        Frame normalFrame = NormalFrame.initialize();
+
+        // when
+        int actual = normalFrame.index();
+
+        // then
+        assertThat(actual).isEqualTo(FRAME_START_INDEX);
 
     }
 
