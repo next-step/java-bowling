@@ -49,17 +49,17 @@ public class Pitches {
         if (isFinished()) {
             throw new IllegalStateException("종료된 프레임입니다.");
         }
-        if (spare() < pitch.value()) {
+        if (!isFinished() && spare() < pitch.value()) {
             throw new IllegalArgumentException("핀 처리횟수가 남은 핀수를 초과합니다. 투구정보를 확인해 주세요.");
         }
     }
 
     public boolean isStrike() {
-        return first().isStrike();
+        return !isEmpty() && first().isStrike();
     }
 
     public boolean isSpare() {
-        return !first().isStrike() && pinDownCount() == Pitch.STRIKE_COUNT;
+        return pinDownCount() == Pitch.STRIKE_COUNT && !first().isStrike();
     }
 
     public boolean isMiss() {
@@ -71,6 +71,9 @@ public class Pitches {
     }
 
     public int spare() {
+        if (isStrike() || isSpare()) {
+            return Pitch.STRIKE_COUNT;
+        }
         return Pitch.STRIKE_COUNT - pinDownCount();
     }
 

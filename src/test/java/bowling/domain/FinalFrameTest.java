@@ -56,7 +56,7 @@ class FinalFrameTest {
         finalFrame.pitch(new Pitch(5));
 
         // then
-        assertThat(finalFrame.isFinished()).isTrue();
+        assertThat(finalFrame.isFinished()).isFalse();
     }
 
     @Test
@@ -146,18 +146,83 @@ class FinalFrameTest {
         assertThat(finalFrame.getScoreBoards()).isEqualTo(Arrays.asList("X", bonusScore));
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"10,X", "9,9", "0,-"})
-    @DisplayName("점수판출력 - 스페어 and 보너스 투구")
-    void scoreBoard_bonusPitch_spare(int bonusPitchCount, String bonusScore) {
+    @Test
+    @DisplayName("마지막프레임 점수계산 - 한 번의 투구")
+    void score_onePitch() {
+        // given when
+        finalFrame.pitch(new Pitch(7));
+
+        // then
+        assertThat(finalFrame.score()).isEqualTo(7);
+    }
+
+    @Test
+    @DisplayName("마지막프레임 점수계산 - 두 번의 투구")
+    void score_twoPitch() {
+        // given when
+        finalFrame.pitch(new Pitch(7));
+        finalFrame.pitch(new Pitch(1));
+
+        // then
+        assertThat(finalFrame.score()).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("점수계산 - 스페어 처리")
+    void score_spare() {
         // given when
         finalFrame.pitch(new Pitch(7));
         finalFrame.pitch(new Pitch(3));
-        finalFrame.pitch(new Pitch(bonusPitchCount));
 
         // then
-        assertThat(finalFrame.getScoreBoards().size()).isEqualTo(3);
-        assertThat(finalFrame.getScoreBoards()).isEqualTo(Arrays.asList("7", "/", bonusScore));
+        assertThat(finalFrame.score()).isEqualTo(10);
+    }
+
+    @Test
+    @DisplayName("점수계산 - 스페어 처리와 보너스 투구")
+    void score_spareAndBonusPitch() {
+        // given when
+        finalFrame.pitch(new Pitch(7));
+        finalFrame.pitch(new Pitch(3));
+        finalFrame.pitch(new Pitch(2));
+
+        // then
+        assertThat(finalFrame.score()).isEqualTo(12);
+    }
+
+    @Test
+    @DisplayName("점수계산 - 스페어 처리와 스트라이크")
+    void score_spareAndStrike() {
+        // given when
+        finalFrame.pitch(new Pitch(7));
+        finalFrame.pitch(new Pitch(3));
+        finalFrame.pitch(new Pitch(10));
+
+        // then
+        assertThat(finalFrame.score()).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("점수계산 - 더블 스트라이크")
+    void score_doubleStrike() {
+        // given when
+        finalFrame.pitch(new Pitch(10));
+        finalFrame.pitch(new Pitch(10));
+
+        // then
+        assertThat(finalFrame.score()).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("점수계산 - 트리플 스트라이크")
+    void score_tripleStrike() {
+        // given when
+        finalFrame.pitch(new Pitch(10));
+        finalFrame.pitch(new Pitch(10));
+        finalFrame.pitch(new Pitch(10));
+
+        // then
+        assertThat(finalFrame.score()).isEqualTo(30);
     }
 
 }

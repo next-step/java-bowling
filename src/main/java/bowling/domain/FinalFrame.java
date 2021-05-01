@@ -4,37 +4,29 @@ import java.util.List;
 
 public class FinalFrame extends Frame {
 
-    private Pitch bonusPitch;
-
     protected FinalFrame(int number) {
         super(number);
     }
 
-    private boolean hasBonusPitch() {
-        return this.bonusPitch != null;
-    }
-
     @Override
     public void pitch(Pitch pitch) {
-        if (pitches().isStrike() || pitches().isSpare()) {
-            this.bonusPitch = pitch;
-            return;
+        if (pitches().isSpare()) {
+            pitches().increasePitchAbleCount();
+        }
+        if (pitches().isEmpty() && pitch.isStrike()) {
+            pitches().increasePitchAbleCount();
         }
         pitches().add(pitch);
     }
 
     @Override
     public boolean isFinished() {
-        return hasBonusPitch() || pitches().isMiss();
+        return pitches().isFinished();
     }
 
     @Override
     public List<String> getScoreBoards() {
-        List<String> scoreBoards = pitches().getScoreBoards();
-        if (hasBonusPitch()) {
-            scoreBoards.add(bonusPitch.toString());
-        }
-        return scoreBoards;
+        return pitches().getScoreBoards();
     }
 
     @Override
@@ -44,14 +36,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public int score() {
-        return pitches().pinDownCount() + bonusScore();
-    }
-
-    private int bonusScore() {
-        if (hasBonusPitch()) {
-            return bonusPitch.value();
-        }
-        return NON_BONUS;
+        return pitches().pinDownCount();
     }
 
     @Override

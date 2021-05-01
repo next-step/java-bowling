@@ -56,6 +56,7 @@ class FramesTest {
         frames.pitch(10);
         frames.pitch(10);
         frames.pitch(10);
+        frames.pitch(10);
 
         // then
         assertThat(frames.isFinished()).isTrue();
@@ -68,6 +69,7 @@ class FramesTest {
         Frames frames = new Frames();
 
         // when
+        frames.pitch(10);
         frames.pitch(10);
         frames.pitch(10);
         frames.pitch(10);
@@ -115,6 +117,7 @@ class FramesTest {
         Frames frames = new Frames();
 
         // when
+        frames.pitch(10);
         frames.pitch(10);
         frames.pitch(10);
         frames.pitch(10);
