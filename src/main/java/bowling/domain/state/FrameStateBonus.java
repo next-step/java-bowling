@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FrameStateBonus implements FrameState {
-    private final int MAX_PINFALLS = 3;
+    private static final int MAX_PINFALLS = 3;
 
     private final List<Pinfall> pinfalls;
 
@@ -19,7 +19,8 @@ public class FrameStateBonus implements FrameState {
     }
 
     public FrameStateBonus(List<Pinfall> pinfalls) {
-        this.pinfalls = pinfalls;
+        this.pinfalls = new ArrayList<>();
+        this.pinfalls.addAll(pinfalls);
     }
 
     @Override

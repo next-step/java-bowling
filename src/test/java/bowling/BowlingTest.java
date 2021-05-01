@@ -67,4 +67,17 @@ public class BowlingTest {
 
         assertThat(bowling.result().result(new FrameNumber(10))).isEqualTo(new FrameResult(new PointSymbols(Arrays.asList(PointSymbol.STRIKE, PointSymbol.STRIKE, PointSymbol.STRIKE))));
     }
+
+    @Test
+    @DisplayName("9번째 프레임이 스트라이크이고, 10번째 프레임에서 9->1->9를 쓰러트렸을 때 Exception 안 남")
+    void Given_9hFrameIsStrike_When_Roll9And1And9_Then_NoException() {
+        Frame frame9th = new NormalFrame(new FrameNumber(9));
+        Bowling bowling = new Bowling(frame9th);
+        bowling.roll(new Pinfall(10));
+
+        bowling.roll(new Pinfall(9));
+        bowling.roll(new Pinfall(1));
+
+        assertDoesNotThrow(() -> bowling.roll(new Pinfall(9)));
+    }
 }
