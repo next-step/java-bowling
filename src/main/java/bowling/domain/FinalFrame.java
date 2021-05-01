@@ -48,4 +48,20 @@ public class FinalFrame extends Frame {
         return pitches().firstPinDownCount();
     }
 
+    @Override
+    public boolean isScoreDecided() {
+        return pitches().isFinished();
+    }
+
+    @Override
+    public boolean isBonusScoreDecided(Pitches beforePitches) {
+        if (beforePitches.isStrike()) {
+            return pitches().isFinished();
+        }
+        if (beforePitches.isSpare()) {
+            return !pitches().isEmpty();
+        }
+        return false;
+    }
+
 }

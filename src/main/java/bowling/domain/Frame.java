@@ -38,4 +38,6 @@ public abstract class Frame {
     abstract public int score();
     abstract public int bonusScore(Pitches beforePitches);
     abstract public int doubleBonusScore();
+    abstract public boolean isScoreDecided();
+    abstract public boolean isBonusScoreDecided(Pitches beforePitches);
 }

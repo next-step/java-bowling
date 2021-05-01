@@ -105,4 +105,33 @@ public class NormalFrame extends Frame {
         return NON_BONUS;
     }
 
+    @Override
+    public boolean isScoreDecided() {
+        if (pitches().isStrike() || pitches().isSpare()) {
+            return isBonusScoreDecided();
+        }
+        return pitches().isFinished();
+    }
+
+    private boolean isBonusScoreDecided() {
+        if (hasNext()) {
+            return next.isBonusScoreDecided(pitches());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isBonusScoreDecided(Pitches beforePitches) {
+        if (isDoubleStrike(beforePitches)) {
+            return hasNext() && !next.pitches().isEmpty();
+        }
+        if (beforePitches.isStrike()) {
+            return pitches().isFinished();
+        }
+        if (beforePitches.isSpare()) {
+            return !pitches().isEmpty();
+        }
+        return false;
+    }
+
 }
