@@ -1,6 +1,7 @@
 package bowling.entity.score;
 
 import bowling.entity.Pin;
+import bowling.entity.Score;
 
 import java.util.Objects;
 
@@ -37,6 +38,11 @@ public class Miss extends Finish {
             return new Strike();
         }
         return new NormalScore(fallenPin);
+    }
+
+    @Override
+    public Score score() {
+        return new Score(firstPin.sum(secondPin));
     }
 
     @Override

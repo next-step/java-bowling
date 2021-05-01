@@ -1,6 +1,7 @@
 package bowling.entity.score;
 
 import bowling.entity.Pin;
+import bowling.entity.Score;
 
 import java.util.Objects;
 

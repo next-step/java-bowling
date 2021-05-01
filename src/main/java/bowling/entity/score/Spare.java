@@ -1,6 +1,7 @@
 package bowling.entity.score;
 
 import bowling.entity.Pin;
+import bowling.entity.Score;
 
 import java.util.Objects;
 
@@ -8,6 +9,8 @@ import static bowling.entity.Pin.*;
 
 public class Spare extends Finish {
     private static final String SPARE_SYMBOL = "/";
+    private static final int SPARE_SCORE_REMAIN = 1;
+
     private final Pin firstPin;
 
     public Spare(int firstPinValue) {
@@ -29,6 +32,11 @@ public class Spare extends Finish {
             return new Strike();
         }
         return new NormalScore(fallenPin);
+    }
+
+    @Override
+    public Score score() {
+        return new Score(MAX_PIN_COUNT, SPARE_SCORE_REMAIN);
     }
 
     @Override
