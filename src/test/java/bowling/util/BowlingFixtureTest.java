@@ -14,8 +14,11 @@ class BowlingFixtureTest {
         assertAll(
                 () -> assertThat(BowlingFixture.MINIMUM_COUNT).isEqualTo(0),
                 () -> assertThat(BowlingFixture.MAXIMUM_COUNT).isEqualTo(10),
-                () -> assertThat(BowlingFixture.FRAME_START_INDEX).isEqualTo(1)
+                () -> assertThat(BowlingFixture.FRAME_START_INDEX).isEqualTo(1),
+                () -> assertThat(BowlingFixture.FRAME_LAST_INDEX).isEqualTo(10),
+                () -> assertThat(BowlingFixture.INCREASE_INDEX_UNIT).isEqualTo(1)
         );
     }
+
 
 }

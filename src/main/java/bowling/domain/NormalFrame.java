@@ -2,9 +2,10 @@ package bowling.domain;
 
 import bowling.domain.state.State;
 
-import static bowling.util.BowlingFixture.FRAME_START_INDEX;
+import static bowling.util.BowlingFixture.*;
 
 public class NormalFrame implements Frame {
+
 
     private State state;
     private Frame next;
@@ -27,7 +28,17 @@ public class NormalFrame implements Frame {
     @Override
     public final Frame bowl(final HitCount hitCOunt) {
         state = state.bowl(hitCOunt);
+        if (state.isFinish()) {
+            next = nextFrame();
+            return next;
+        }
         return this;
+    }
+
+    private final Frame nextFrame() {
+        if (index + INCREASE_INDEX_UNIT == FRAME_LAST_INDEX) {
+        }
+        return new NormalFrame(index + INCREASE_INDEX_UNIT);
     }
 
 }
