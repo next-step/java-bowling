@@ -17,13 +17,13 @@ public class AnswersTest {
     @Test
     void 동일한작성자() throws CannotDeleteException {
         Answers answers = new Answers(Arrays.asList(AnswerTest.A1));
-        answers.areOwner(UserTest.JAVAJIGI);
+        answers.validOwner(UserTest.JAVAJIGI);
     }
 
     @Test
     void 다른작성자가있으면_예외() {
         assertThatThrownBy(() -> {
-            AS1.areOwner(UserTest.JAVAJIGI);
+            AS1.validOwner(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 

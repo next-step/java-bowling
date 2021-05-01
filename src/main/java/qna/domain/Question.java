@@ -49,7 +49,7 @@ public class Question extends AbstractEntity {
         if(!postInfo.isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-        answers.areOwner(loginUser);
+        answers.validOwner(loginUser);
     }
 
     public boolean isDeleted() {

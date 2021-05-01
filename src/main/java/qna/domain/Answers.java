@@ -26,7 +26,7 @@ public class Answers {
         this.answers = answers;
     }
 
-    public void areOwner(User loginUser) throws CannotDeleteException {
+    public void validOwner(User loginUser) throws CannotDeleteException {
         if (answers.stream()
                 .anyMatch(answer -> !answer.isOwner(loginUser))) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
