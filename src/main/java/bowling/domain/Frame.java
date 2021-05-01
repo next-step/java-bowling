@@ -7,4 +7,6 @@ public interface Frame {
     }
 
     Frame bowl(HitCount hitCOunt);
+
+    boolean isFinish();
 }
