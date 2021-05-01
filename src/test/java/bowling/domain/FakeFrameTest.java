@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.exception.NoMoreBowlActionsException;
 import bowling.exception.NoMoreFinishActionsException;
+import bowling.exception.NoMoreIndexActionsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -46,5 +47,17 @@ class FakeFrameTest {
         assertThatThrownBy(() -> assertThat(fakeFrame.isFinish()))
                 .isInstanceOf(NoMoreFinishActionsException.class)
                 .hasMessage("현재 상태에서는 프레임이 완료되었는지 확인 할 수 없습니다.");
+    }
+
+    @DisplayName("FakeFrame 인스턴스가 index 실행시 예외처리 여부 테스트")
+    @Test
+    void 검증_현재_인덱스() {
+        // when
+        Frame fakeFrame = FakeFrame.initialize();
+
+        // then
+        assertThatThrownBy(() -> assertThat(fakeFrame.index()))
+                .isInstanceOf(NoMoreIndexActionsException.class)
+                .hasMessage("현재 상태에서는 인덱스를 확인 할 수 없습니다.");
     }
 }

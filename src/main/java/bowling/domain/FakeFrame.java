@@ -21,4 +21,9 @@ public final class FakeFrame implements Frame {
     public final boolean isFinish() {
         throw new NoMoreFinishActionsException();
     }
+
+    @Override
+    public final int index() {
+        return 0;
+    }
 }
