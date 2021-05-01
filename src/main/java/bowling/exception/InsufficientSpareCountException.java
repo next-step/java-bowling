@@ -11,7 +11,7 @@ public final class InsufficientSpareCountException extends RuntimeException {
     private final int firstCount;
     private final int secondCount;
 
-    public InsufficientSpareCountException(int firstCount, int secondCount) {
+    public InsufficientSpareCountException(final int firstCount, final int secondCount) {
         this.firstCount = firstCount;
         this.secondCount = secondCount;
     }

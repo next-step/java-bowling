@@ -6,7 +6,7 @@ public final class InputNumberOutOfBoundsException extends RuntimeException {
 
     private final int count;
 
-    public InputNumberOutOfBoundsException(int count) {
+    public InputNumberOutOfBoundsException(final int count) {
         this.count = count;
     }
 

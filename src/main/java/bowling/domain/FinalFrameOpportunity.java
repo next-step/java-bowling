@@ -5,6 +5,7 @@ import static java.lang.Boolean.TRUE;
 
 public final class FinalFrameOpportunity {
 
+    private static final int INCREASE_UNIT = 1;
     private static final int START = 0;
     private static final int END = 3;
 
@@ -19,9 +20,13 @@ public final class FinalFrameOpportunity {
     }
 
     public final boolean isFinish() {
-        if (opportunity == END) {
+        if (opportunity >= END) {
             return TRUE;
         }
         return FALSE;
+    }
+
+    public final FinalFrameOpportunity next() {
+        return new FinalFrameOpportunity(Math.addExact(opportunity, INCREASE_UNIT));
     }
 }

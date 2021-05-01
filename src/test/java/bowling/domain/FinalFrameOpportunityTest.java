@@ -35,9 +35,10 @@ class FinalFrameOpportunityTest {
         // given
         FinalFrameOpportunity finalFrameOpportunity = FinalFrameOpportunity.initialize();
 
-        finalFrameOpportunity.next();
-        finalFrameOpportunity.next();
-        finalFrameOpportunity.next();
+        // when
+        finalFrameOpportunity = finalFrameOpportunity.next();
+        finalFrameOpportunity = finalFrameOpportunity.next();
+        finalFrameOpportunity = finalFrameOpportunity.next();
 
         // then
         assertThat(finalFrameOpportunity.isFinish()).isTrue();

@@ -7,7 +7,7 @@ public final class InsufficientMissCountException extends RuntimeException {
     private final int firstCount;
     private final int secondCount;
 
-    public InsufficientMissCountException(int firstCount, int secondCount) {
+    public InsufficientMissCountException(final int firstCount, final int secondCount) {
         this.firstCount = firstCount;
         this.secondCount = secondCount;
     }

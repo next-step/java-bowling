@@ -26,7 +26,7 @@ public final class NormalFrame implements Frame {
     }
 
     private void validateFinish() {
-        if(state.isFinish()){
+        if (state.isFinish()) {
             throw new NoMoreBowlActionsException();
         }
     }

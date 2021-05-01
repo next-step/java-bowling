@@ -54,10 +54,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public final boolean isFinish() {
-//        if (opportunity.isFinish()) {
-//            return TRUE;
-//        }
-        return FALSE;
+        return opportunity.isFinish();
     }
 
     @Override

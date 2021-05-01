@@ -60,5 +60,4 @@ class ReadyTest {
         assertThat(ready.isAllPinClear()).isFalse();
     }
 
-
 }

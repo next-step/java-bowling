@@ -70,12 +70,12 @@ class MissTest {
         // when and then
         assertThatThrownBy(() -> Miss.of(firstCount, secondCount))
                 .isInstanceOf(InputNumberOutOfBoundsException.class)
-                .hasMessage("맞은 갯수 ( "+firstCount+" ) 는 사용할 수 없는 갯수 입니다.");
+                .hasMessage("맞은 갯수 ( " + firstCount + " ) 는 사용할 수 없는 갯수 입니다.");
 
 
-        assertThatThrownBy(() -> Miss.of(firstCount+1, secondCount+1))
+        assertThatThrownBy(() -> Miss.of(firstCount + 1, secondCount + 1))
                 .isInstanceOf(InputNumberOutOfBoundsException.class)
-                .hasMessage("맞은 갯수 ( "+(secondCount+1)+" ) 는 사용할 수 없는 갯수 입니다.");
+                .hasMessage("맞은 갯수 ( " + (secondCount + 1) + " ) 는 사용할 수 없는 갯수 입니다.");
 
     }
 

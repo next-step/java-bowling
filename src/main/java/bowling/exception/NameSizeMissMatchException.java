@@ -4,7 +4,7 @@ public final class NameSizeMissMatchException extends RuntimeException {
 
     private final String MESSAGE_FORMAT = "( %s )은 영문 3글자 또는 그 이하가 아닙니다.";
 
-    public NameSizeMissMatchException(String message) {
+    public NameSizeMissMatchException(final String message) {
         super(message);
     }
 
