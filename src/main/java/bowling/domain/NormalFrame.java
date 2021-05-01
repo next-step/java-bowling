@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.CannotCalculateException;
 import bowling.exception.FrameTryException;
 
 public class NormalFrame extends Frame {
@@ -8,17 +9,21 @@ public class NormalFrame extends Frame {
     private static final int MAX_TRY_COUNT = 2;
     private static final String HIT_COUNT_EXCEPTION_MESSAGE = String.format("핀은 최대 %d개 까지 쓰러트릴 수 있습니다", MAX_PIN_COUNT);
     private static final String TRY_COUNT_EXCEPTION_MESSAGE = String.format("최대 %d번 까지 시도할 수 있습니다", MAX_TRY_COUNT);
+    private static final String CANNOT_CALCULATE_MESSAGE = "앞 투구가 끝나지 않아 계산 할 수 없습니다.";
 
     private NormalFrame(Round round) {
         super(round);
     }
 
-    public int getScore() {
-        return 0;
-    }
-
     public static NormalFrame from(Round round) {
         return new NormalFrame(round);
+    }
+
+    public int getScore() {
+        if (!roundEnded()) {
+            throw new CannotCalculateException(CANNOT_CALCULATE_MESSAGE);
+        }
+        return score.calculateScore();
     }
 
     public boolean roundEnded() {
@@ -35,5 +40,17 @@ public class NormalFrame extends Frame {
         if (pins.totalCount() + hitCount > MAX_PIN_COUNT) {
             throw new IllegalStateException(HIT_COUNT_EXCEPTION_MESSAGE);
         }
+    }
+
+    public void createScore() {
+        if (pins.isStrike() && pins.isFirstTry()) {
+            score = Score.ofStrike();
+            return;
+        }
+        if (pins.totalCount() == MAX_PIN_COUNT) {
+            score = Score.ofSpare();
+            return;
+        }
+        score = Score.ofNone(pins.totalCount());
     }
 }
