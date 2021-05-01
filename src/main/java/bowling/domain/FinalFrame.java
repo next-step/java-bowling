@@ -32,6 +32,7 @@ public class FinalFrame implements Frame {
     @Override
     public final Frame bowl(HitCount hitCount) {
         validateFinish();
+        opportunity.next();
         State state = states.getLast();
         if (state.isAllPinClear()) {
             states.add(getBonusPitch().bowl(hitCount));

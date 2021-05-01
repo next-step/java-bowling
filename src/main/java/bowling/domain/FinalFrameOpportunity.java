@@ -9,7 +9,7 @@ public final class FinalFrameOpportunity {
     private static final int START = 0;
     private static final int END = 3;
 
-    private final int opportunity;
+    private int opportunity;
 
     private FinalFrameOpportunity(final int opportunity) {
         this.opportunity = opportunity;
@@ -26,7 +26,7 @@ public final class FinalFrameOpportunity {
         return FALSE;
     }
 
-    public final FinalFrameOpportunity next() {
-        return new FinalFrameOpportunity(Math.addExact(opportunity, INCREASE_UNIT));
+    public final void next() {
+        opportunity = Math.addExact(opportunity, INCREASE_UNIT);
     }
 }
