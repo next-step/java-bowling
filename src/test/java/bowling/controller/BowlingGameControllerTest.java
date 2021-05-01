@@ -6,8 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BowlingGameControllerTest {
@@ -52,7 +50,6 @@ class BowlingGameControllerTest {
         assertThat(response.getParticipantName()).isEqualTo("LDS");
         assertThat(response.getNextFrameNumber()).isEqualTo(3);
         assertThat(response.isFinished()).isFalse();
-        assertThat(response.getPinDownResults()).isEqualTo(Arrays.asList("X", "9|/"));
     }
 
     @Test
@@ -71,7 +68,7 @@ class BowlingGameControllerTest {
         controller.pitchBall(new BowlingGameRequest("LDS", 3));
         controller.pitchBall(new BowlingGameRequest("LDS", 0));
         controller.pitchBall(new BowlingGameRequest("LDS", 0));
-        for (int i = 3; i < 11; i++) {
+        for (int i = 3; i < 12; i++) {
             response = controller.pitchBall(request10);
         }
 
@@ -79,7 +76,6 @@ class BowlingGameControllerTest {
         assertThat(response.getParticipantName()).isEqualTo("LDS");
         assertThat(response.getNextFrameNumber()).isEqualTo(10);
         assertThat(response.isFinished()).isTrue();
-        assertThat(response.getPinDownResults()).isEqualTo(Arrays.asList("3|-", "7|/", "-|-", "X", "X", "X", "X", "X", "X", "X|X"));
     }
 
 }
