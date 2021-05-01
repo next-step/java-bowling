@@ -34,4 +34,20 @@ class NormalFrameTest {
         );
 
     }
+
+    @DisplayName("NormalFrame 인스턴스가 볼링시 자기 자신을 반환하는지 테스트")
+    @Test
+    void 기능_bowl_동일_인스턴스() {
+        Frame normalFrame = NormalFrame.initialize();
+
+        Frame now = normalFrame.bowl(HitCount.valueOf(5));
+
+        assertAll(
+                () -> assertThat(now).isNotNull(),
+                () -> assertThat(now).isInstanceOf(NormalFrame.class),
+                () -> assertThat(now).isSameAs(normalFrame),
+                () -> assertThat(now).isEqualTo(normalFrame)
+        );
+
+    }
 }
