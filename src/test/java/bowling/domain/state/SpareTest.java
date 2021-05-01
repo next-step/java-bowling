@@ -72,4 +72,18 @@ class SpareTest {
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }
 
+
+    @DisplayName("Spare 인스턴스에 음수 입력시 예외처리 여부 테스트")
+    @Test
+    void 검증_음수() {
+        // given
+        int firstCount = -1;
+        int secondCount = 11;
+
+        // when
+        assertThatThrownBy(() ->Spare.of(firstCount, secondCount))
+                .isInstanceOf(InputNegativeNumberException.class)
+                .hasMessage("( "+firstCount+" ) 는 음수 값이여서 입력 할 수 없습니다.");
+    }
+
 }
