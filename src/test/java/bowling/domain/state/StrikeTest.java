@@ -26,7 +26,6 @@ class StrikeTest {
         State strike = Strike.newInstance();
 
         assertThat(strike.isFinish()).isTrue();
-
     }
 
 }
