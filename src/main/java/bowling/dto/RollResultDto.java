@@ -11,9 +11,6 @@ public class RollResultDto {
     }
 
     public static RollResultDto of(RollResult rollResult) {
-        if (rollResult.getValue() == 0) {
-            return new RollResultDto("-");
-        }
         return new RollResultDto(String.valueOf(rollResult.getValue()));
     }
 
