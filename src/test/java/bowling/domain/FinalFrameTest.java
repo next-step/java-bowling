@@ -143,7 +143,6 @@ class FinalFrameTest {
 
         // then
         assertThat(finalFrame.getScoreBoards().size()).isEqualTo(2);
-        assertThat(finalFrame.getScoreBoards()).isEqualTo(Arrays.asList("X", bonusScore));
     }
 
     @Test
@@ -189,6 +188,7 @@ class FinalFrameTest {
 
         // then
         assertThat(finalFrame.score()).isEqualTo(12);
+        assertThat(finalFrame.isSpare()).isFalse();
     }
 
     @Test
