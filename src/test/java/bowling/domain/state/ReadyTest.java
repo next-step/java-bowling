@@ -36,10 +36,7 @@ class ReadyTest {
         State ready = State.initialize();
 
         // then
-        assertAll(
-                () -> assertThat(ready.bowl(HitCount.valueOf(9))).isNotNull(),
-                () -> assertThat(ready.bowl(HitCount.valueOf(9))).isInstanceOf(FirstBowl.class)
-        );
+        assertThat(ready.bowl(HitCount.valueOf(9))).isInstanceOf(FirstBowl.class);
 
     }
 

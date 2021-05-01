@@ -1,17 +1,11 @@
 package bowling.domain.state;
 
-import bowling.domain.HitCount;
-
-public class Strike extends Finish {
+public final class Strike extends Finish {
 
     private Strike() { }
 
-    public static State newInstance() {
+    public static final State newInstance() {
         return new Strike();
     }
 
-    @Override
-    public State bowl(HitCount hitCount) {
-        return null;
-    }
 }
