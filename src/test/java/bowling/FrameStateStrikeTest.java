@@ -2,9 +2,10 @@ package bowling;
 
 import bowling.domain.Pinfall;
 import bowling.domain.PointSymbol;
+import bowling.domain.Score;
 import bowling.domain.state.FrameState;
-import bowling.domain.state.FrameStateSpare;
 import bowling.domain.state.FrameStateStrike;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.Test;
 
@@ -32,5 +33,15 @@ public class FrameStateStrikeTest {
     void When_Symbol_Then_WithSpareSymbol() {
         FrameState state = new FrameStateStrike();
         AssertionsForInterfaceTypes.assertThat(state.pointSymbols().symbols()).contains(PointSymbol.STRIKE);
+    }
+
+    @Test
+    void When_Score_Then_Score10() {
+        AssertionsForClassTypes.assertThat(new FrameStateStrike().score()).isEqualTo(Score.createNotDetermined());
+    }
+
+    @Test
+    void When_Pinfalls_Then_10() {
+        assertThat(new FrameStateStrike().pinfalls()).isEqualTo(Arrays.asList(new Pinfall(10)));
     }
 }

@@ -2,8 +2,13 @@ package bowling;
 
 import bowling.domain.Pinfall;
 import bowling.domain.PointSymbols;
+import bowling.domain.Score;
 import bowling.domain.state.*;
+import org.assertj.core.api.AssertionsForClassTypes;
+import org.assertj.core.api.AssertionsForInterfaceTypes;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -35,5 +40,15 @@ public class FrameStateFinalReadyTest {
     void When_PointSYmbols_Then_EmptyPointSymbols() {
         FrameState state = new FrameStateFinalReady();
         assertThat(state.pointSymbols()).isEqualTo(new PointSymbols());
+    }
+
+    @Test
+    void When_Score_Then_ScoreNotDetermined() {
+        AssertionsForClassTypes.assertThat(new FrameStateFinalReady().score()).isEqualTo(Score.createNotDetermined());
+    }
+
+    @Test
+    void When_Pinfalls_Then_Empty() {
+        AssertionsForInterfaceTypes.assertThat(new FrameStateFinalReady().pinfalls()).isEqualTo(new ArrayList<>());
     }
 }

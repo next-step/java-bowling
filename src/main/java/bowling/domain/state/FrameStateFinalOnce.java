@@ -3,8 +3,11 @@ package bowling.domain.state;
 import bowling.domain.Pinfall;
 import bowling.domain.PointSymbol;
 import bowling.domain.PointSymbols;
+import bowling.domain.Score;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class FrameStateFinalOnce implements FrameState {
     private final Pinfall firstPinfall;
@@ -29,6 +32,21 @@ public class FrameStateFinalOnce implements FrameState {
     @Override
     public PointSymbols pointSymbols() {
         return new PointSymbols(PointSymbol.valueOf(firstPinfall));
+    }
+
+    @Override
+    public List<Pinfall> pinfalls() {
+        return Arrays.asList(firstPinfall);
+    }
+
+    @Override
+    public Score score() {
+        return score(new ArrayList<>());
+    }
+
+    @Override
+    public Score score(List<Pinfall> bonusPinfalls) {
+        return Score.createNotDetermined();
     }
 
     private boolean isSpare(Pinfall secondPinfall) {

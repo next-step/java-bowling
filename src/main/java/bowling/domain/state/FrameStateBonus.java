@@ -3,6 +3,7 @@ package bowling.domain.state;
 import bowling.domain.Pinfall;
 import bowling.domain.PointSymbol;
 import bowling.domain.PointSymbols;
+import bowling.domain.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,31 @@ public class FrameStateBonus implements FrameState {
                 .collect(Collectors.toList());
         replaceSpareSymbol(pointSymbols);
         return new PointSymbols(pointSymbols);
+    }
+
+    @Override
+    public List<Pinfall> pinfalls() {
+        return pinfalls;
+    }
+
+    @Override
+    public Score score() {
+        return score(new ArrayList<>());
+    }
+
+    @Override
+    public Score score(List<Pinfall> bonusPinfalls) {
+        if (isRollable()) {
+            return Score.createNotDetermined();
+        }
+
+        Score score = pinfalls.stream().reduce(Score.create(0),
+                (subTotalScore, pinfall) -> {
+                    subTotalScore = subTotalScore.add(Score.create(pinfall.number()));
+                    return subTotalScore;
+                }, (a, b) -> a);
+
+        return score;
     }
 
     private void replaceSpareSymbol(List<PointSymbol> pointSymbols) {

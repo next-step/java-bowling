@@ -3,10 +3,13 @@ package bowling;
 import bowling.domain.Pinfall;
 import bowling.domain.PointSymbol;
 import bowling.domain.PointSymbols;
+import bowling.domain.Score;
 import bowling.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -49,5 +52,15 @@ public class FrameStateOnceTest {
     void When_Symbol_Then_RightSymbol() {
         FrameState state = new FrameStateOnce(new Pinfall(1));
         assertThat(state.pointSymbols().symbols()).contains(PointSymbol.ONE);
+    }
+
+    @Test
+    void When_Score_Then_NotDetermined() {
+        assertThat(new FrameStateOnce(new Pinfall(1)).score()).isEqualTo(Score.createNotDetermined());
+    }
+
+    @Test
+    void When_Pinfalls_Then_FirstPinfall() {
+        assertThat(new FrameStateOnce(new Pinfall(1)).pinfalls()).isEqualTo(Arrays.asList(new Pinfall(1)));
     }
 }
