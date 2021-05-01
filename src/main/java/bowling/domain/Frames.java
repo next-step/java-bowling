@@ -25,7 +25,7 @@ public class Frames {
 
     private static List<Frame> generateNormalFrame() {
         return IntStream.range(1, LAST_NORMAL_FRAME_SIZE)
-                .mapToObj(i -> NormalFrame.from(Round.from(i)))
+                .mapToObj(i -> NormalFrame.from())
                 .collect(Collectors.toList());
     }
 
@@ -52,7 +52,7 @@ public class Frames {
         Frame nowFrame = nFrame(round.now());
         nowFrame.throwBall(topplePin);
         beforeFrameAddBonus(topplePin);
-        if (nowFrame.isLastRound() && nowFrame.isLastRound()) {
+        if (round.isFinalRound()) {
             nowFrame.createScore();
         }
         if (nowFrame.roundEnded()) {
@@ -100,5 +100,14 @@ public class Frames {
 
     public int round() {
         return round.round();
+    }
+
+    public Score getScore(int round) {
+        return Score.ofNone(nFrame(round).score());
+    }
+
+    public boolean canCalculateScore(int round) {
+        Frame nowFrame = nFrame(round);
+        return nowFrame.hasScore() && nowFrame.canCalculate();
     }
 }
