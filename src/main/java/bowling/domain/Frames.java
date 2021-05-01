@@ -2,7 +2,6 @@ package bowling.domain;
 
 import bowling.exception.NoMoreBowlActionsException;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -11,7 +10,7 @@ import static bowling.util.BowlingFixture.FRAME_LAST_INDEX;
 import static bowling.util.BowlingFixture.FRAME_START_INDEX;
 import static java.util.Collections.unmodifiableList;
 
-public class Frames {
+public final class Frames {
 
     private static final int FIRST_INDEX = 0;
 

@@ -41,4 +41,5 @@ public final class Spare extends Finish {
     public final boolean isAllPinClear() {
         return TRUE;
     }
+
 }

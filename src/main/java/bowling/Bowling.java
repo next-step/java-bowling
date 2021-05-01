@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.domain.Frames;
+import bowling.domain.HitCount;
 import bowling.domain.Player;
 import bowling.view.InputView;
 
@@ -12,8 +14,11 @@ public final class Bowling {
 
     public static void main(String[] args) {
         final Player player = getPlayer();
-        // Frames frames.initialize();
-
+        Frames frames = Frames.initialize();
+        while (!frames.isFinish()) {
+            HitCount hitCount = HitCount.valueOf(INPUT_VIEW.InputHitCountByConsole(frames.index()));
+            frames.bowl(hitCount);
+        }
     }
 
 

@@ -41,4 +41,5 @@ public final class Miss extends Finish {
     public final boolean isAllPinClear() {
         return FALSE;
     }
+
 }

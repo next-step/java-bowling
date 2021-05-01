@@ -15,4 +15,6 @@ public final class Strike extends Finish {
     public final boolean isAllPinClear() {
         return TRUE;
     }
+
+
 }
