@@ -12,4 +12,5 @@ public interface State {
 
     boolean isFinish();
 
+    boolean isAllPinClear();
 }

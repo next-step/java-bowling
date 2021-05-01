@@ -13,7 +13,7 @@ public class FinalFrame implements Frame {
         return new FinalFrame();
     }
 
-    public FinalFrame() {
+    private FinalFrame() {
         this.state = State.initialize();
         this.index = FRAME_LAST_INDEX;
     }

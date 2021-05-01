@@ -13,7 +13,7 @@ public final class Ready extends Running {
     @Override
     public final State bowl(final HitCount hitCount) {
         pins = pins.hit(hitCount);
-        if(pins.isEmpty()) {
+        if (pins.isEmpty()) {
             return Strike.newInstance();
         }
         return FirstBowl.from(hitCount.count());

@@ -48,4 +48,15 @@ class StrikeTest {
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }
 
+    @DisplayName("Strike 인스턴스가 모든 핀을 쓰러뜨렸는지 확인하는 테스트")
+    @Test
+    void 검증_핀_처리_여부() {
+        // when
+        State strike = Strike.newInstance();
+
+        // then
+        assertThat(strike.isAllPinClear()).isTrue();
+    }
+
+
 }

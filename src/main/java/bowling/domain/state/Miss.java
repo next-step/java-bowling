@@ -4,6 +4,7 @@ import bowling.exception.InputNumberOutOfBoundsException;
 import bowling.exception.InsufficientMissCountException;
 
 import static bowling.util.BowlingFixture.*;
+import static java.lang.Boolean.FALSE;
 
 public final class Miss extends Finish {
 
@@ -32,7 +33,12 @@ public final class Miss extends Finish {
         }
     }
 
-    public static final Miss from(final int firstCount, final int secondCount) {
+    public static final Miss of(final int firstCount, final int secondCount) {
         return new Miss(firstCount, secondCount);
+    }
+
+    @Override
+    public final boolean isAllPinClear() {
+        return FALSE;
     }
 }

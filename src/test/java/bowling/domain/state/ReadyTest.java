@@ -51,4 +51,15 @@ class ReadyTest {
 
     }
 
+    @DisplayName("Ready 인스턴스가 모든 핀을 쓰러뜨렸는지 확인하는 테스트")
+    @Test
+    void 검증_핀_처리_여부() {
+        // when
+        State ready = State.initialize();
+
+        // then
+        assertThat(ready.isAllPinClear()).isFalse();
+    }
+
+
 }

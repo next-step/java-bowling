@@ -16,7 +16,7 @@ class MissTest {
     @Test
     void 생성() {
         // when
-        Miss miss = Miss.from(0, 9);
+        Miss miss = Miss.of(0, 9);
 
         // then
         assertThat(miss).isNotNull();
@@ -30,7 +30,7 @@ class MissTest {
         int secondCount = 10;
 
         // when and then
-        assertThatThrownBy(() -> Miss.from(firstCount, secondCount))
+        assertThatThrownBy(() -> Miss.of(firstCount, secondCount))
                 .isInstanceOf(InsufficientMissCountException.class)
                 .hasMessage("( " + firstCount + " )와 ( " + secondCount + " )의 합인 " +
                         "( " + Math.addExact(firstCount, secondCount) + " )는, 9이하 값을 충족하지 않습니다.");
@@ -41,7 +41,7 @@ class MissTest {
     @Test
     void 반환_종료_여부() {
         // when
-        State miss = Miss.from(0, 9);
+        State miss = Miss.of(0, 9);
 
         // then
         assertThat(miss.isFinish()).isTrue();
@@ -52,7 +52,7 @@ class MissTest {
     @Test
     void 검증_bowl() {
         // when
-        State miss = Miss.from(0, 9);
+        State miss = Miss.of(0, 9);
 
         // then
         assertThatThrownBy(() -> miss.bowl(HitCount.valueOf(10)))
@@ -68,14 +68,29 @@ class MissTest {
         int secondCount = 10;
 
         // when and then
-        assertThatThrownBy(() -> Miss.from(firstCount, secondCount))
+        assertThatThrownBy(() -> Miss.of(firstCount, secondCount))
                 .isInstanceOf(InputNumberOutOfBoundsException.class)
                 .hasMessage("맞은 갯수 ( "+firstCount+" ) 는 사용할 수 없는 갯수 입니다.");
 
 
-        assertThatThrownBy(() -> Miss.from(firstCount+1, secondCount+1))
+        assertThatThrownBy(() -> Miss.of(firstCount+1, secondCount+1))
                 .isInstanceOf(InputNumberOutOfBoundsException.class)
                 .hasMessage("맞은 갯수 ( "+(secondCount+1)+" ) 는 사용할 수 없는 갯수 입니다.");
 
     }
+
+    @DisplayName("Miss 인스턴스가 모든 핀을 쓰러뜨렸는지 확인하는 테스트")
+    @Test
+    void 검증_핀_처리_여부() {
+        // given
+        int firstCount = 0;
+        int secondCount = 9;
+
+        // when
+        State firstBowl = Miss.of(firstCount, secondCount);
+
+        // then
+        assertThat(firstBowl.isAllPinClear()).isFalse();
+    }
+
 }

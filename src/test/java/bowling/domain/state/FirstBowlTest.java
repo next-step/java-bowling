@@ -85,11 +85,24 @@ class FirstBowlTest {
         // when and then
         assertThatThrownBy(() -> FirstBowl.from(firstCount))
                 .isInstanceOf(InputNumberOutOfBoundsException.class)
-                .hasMessage("맞은 갯수 ( "+firstCount+" ) 는 사용할 수 없는 갯수 입니다.");
+                .hasMessage("맞은 갯수 ( " + firstCount + " ) 는 사용할 수 없는 갯수 입니다.");
 
         assertThatThrownBy(() -> FirstBowl.from(secondCount))
                 .isInstanceOf(InputNumberOutOfBoundsException.class)
-                .hasMessage("맞은 갯수 ( "+secondCount+" ) 는 사용할 수 없는 갯수 입니다.");
+                .hasMessage("맞은 갯수 ( " + secondCount + " ) 는 사용할 수 없는 갯수 입니다.");
+    }
+
+    @DisplayName("FirstBowl 인스턴스가 모든 핀을 쓰러뜨렸는지 확인하는 테스트")
+    @Test
+    void 검증_핀_처리_여부() {
+        // given
+        int hitCount = 10;
+
+        // when
+        State firstBowl = FirstBowl.from(hitCount);
+
+        // then
+        assertThat(firstBowl.isAllPinClear()).isFalse();
     }
 
 }

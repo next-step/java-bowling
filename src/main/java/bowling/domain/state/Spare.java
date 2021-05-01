@@ -4,6 +4,7 @@ import bowling.exception.InputNumberOutOfBoundsException;
 import bowling.exception.InsufficientSpareCountException;
 
 import static bowling.util.BowlingFixture.*;
+import static java.lang.Boolean.TRUE;
 
 public final class Spare extends Finish {
 
@@ -34,5 +35,10 @@ public final class Spare extends Finish {
 
     public static final State of(final int firstCount, final int secondCount) {
         return new Spare(firstCount, secondCount);
+    }
+
+    @Override
+    public final boolean isAllPinClear() {
+        return TRUE;
     }
 }

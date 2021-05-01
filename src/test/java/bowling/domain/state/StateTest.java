@@ -20,6 +20,11 @@ class StateTest {
             }
 
             @Override
+            public boolean isAllPinClear() {
+                return false;
+            }
+
+            @Override
             public State bowl(HitCount hitCount) {
                 return null;
             }

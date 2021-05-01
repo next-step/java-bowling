@@ -15,6 +15,10 @@ class FinishTest {
     void 검증() {
         // when
         Finish finish = new Finish() {
+            @Override
+            public boolean isAllPinClear() {
+                return true;
+            }
         };
 
         // then
@@ -27,6 +31,10 @@ class FinishTest {
 
         // when
         Finish finish = new Finish() {
+            @Override
+            public boolean isAllPinClear() {
+                return true;
+            }
         };
 
         // then

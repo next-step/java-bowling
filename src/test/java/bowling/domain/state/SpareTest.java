@@ -91,4 +91,18 @@ class SpareTest {
                 .hasMessage("맞은 갯수 ( "+(secondCount+1)+" ) 는 사용할 수 없는 갯수 입니다.");
     }
 
+    @DisplayName("Spare 인스턴스가 모든 핀을 쓰러뜨렸는지 확인하는 테스트")
+    @Test
+    void 검증_핀_처리_여부() {
+        // given
+        int firstCount = 0;
+        int secondCount = 10;
+
+        // when
+        State firstBowl = Spare.of(firstCount, secondCount);
+
+        // then
+        assertThat(firstBowl.isAllPinClear()).isTrue();
+    }
+
 }
