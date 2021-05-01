@@ -31,4 +31,7 @@ public class Frames {
         return frameList;
     }
 
+    public final int index() {
+        return now.index();
+    }
 }
