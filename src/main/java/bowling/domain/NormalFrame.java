@@ -28,6 +28,11 @@ public class NormalFrame implements Frame {
         this.frameNumber = frameNumber;
     }
 
+    public NormalFrame(FrameNumber frameNumber, Pinfall firstPinfall) {
+        this.frameNumber = frameNumber;
+        roll(firstPinfall);
+    }
+
     @Override
     public FrameResult result() {
         return new FrameResult(currentState.pointSymbols());
