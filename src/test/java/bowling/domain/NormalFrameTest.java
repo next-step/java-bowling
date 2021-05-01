@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 public class NormalFrameTest {
     @Test
     @DisplayName("1 프레임에 점수 입력은 2번만 가능하다.")
-    void inputScoreLimitTest() {
+    void addScoreLimitTest() {
         NormalFrame normalFrame = new NormalFrame();
 
-        normalFrame.inputScore(3);
-        normalFrame.inputScore(4);
+        normalFrame.addScore(3);
+        normalFrame.addScore(4);
 
-        assertThatThrownBy(() -> normalFrame.inputScore(3))
+        assertThatThrownBy(() -> normalFrame.addScore(3))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -24,9 +24,9 @@ public class NormalFrameTest {
     void inputSpareTest() {
         NormalFrame normalFrame = new NormalFrame();
 
-        normalFrame.inputScore(8);
+        normalFrame.addScore(8);
 
-        assertThat(normalFrame.inputScore(2)).isEqualTo("/");
+        assertThat(normalFrame.addScore(2)).isEqualTo("/");
     }
 
     @Test
@@ -34,6 +34,6 @@ public class NormalFrameTest {
     void inputStrikeValueTest() {
         NormalFrame normalFrame = new NormalFrame();
 
-        assertThat(normalFrame.inputScore(0)).isEqualTo("-");
+        assertThat(normalFrame.addScore(0)).isEqualTo("-");
     }
 }
