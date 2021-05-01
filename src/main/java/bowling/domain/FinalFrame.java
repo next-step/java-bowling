@@ -18,7 +18,7 @@ public final class FinalFrame implements Frame {
     private final LinkedList<State> states;
     private final int index;
 
-    public static final Frame newInstance() {
+    public static final Frame initialize() {
         return new FinalFrame();
     }
 

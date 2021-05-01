@@ -14,7 +14,7 @@ class FinalFrameTest {
     @Test
     void 생성() {
         // when
-        Frame finalFrame = FinalFrame.newInstance();
+        Frame finalFrame = FinalFrame.initialize();
 
         // then
         assertAll(
@@ -27,7 +27,7 @@ class FinalFrameTest {
     @Test
     void 반환_종료_여부() {
         // given
-        Frame finalFrame = FinalFrame.newInstance();
+        Frame finalFrame = FinalFrame.initialize();
 
         // when
         finalFrame.bowl(HitCount.valueOf(10));
@@ -42,7 +42,7 @@ class FinalFrameTest {
     @Test
     void 검증_bowl_추가_투구_없음() {
         // given
-        Frame finalFrame = FinalFrame.newInstance();
+        Frame finalFrame = FinalFrame.initialize();
 
         // when
         finalFrame.bowl(HitCount.valueOf(0));
@@ -58,7 +58,7 @@ class FinalFrameTest {
     @Test
     void 검증_bowl_추가_투구_있음() {
         // given
-        Frame finalFrame = FinalFrame.newInstance();
+        Frame finalFrame = FinalFrame.initialize();
 
         // when
         finalFrame.bowl(HitCount.valueOf(0));

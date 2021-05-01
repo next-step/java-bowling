@@ -13,7 +13,7 @@ public final class NormalFrame implements Frame {
 
     public NormalFrame(final int index) {
         this.state = State.ready();
-        this.next = Frame.initialize();
+        this.next = Frame.fakeFrame();
         this.index = index;
     }
 

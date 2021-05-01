@@ -2,7 +2,7 @@ package bowling.domain;
 
 public interface Frame {
 
-    static Frame initialize() {
+    static Frame fakeFrame() {
         return FakeFrame.initialize();
     }
 
