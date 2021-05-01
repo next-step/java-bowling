@@ -70,6 +70,12 @@ public class Frames implements Iterable<Frame> {
         return frames.get(frames.size() - 1);
     }
 
+    public int totalScore() {
+        return frames.stream()
+                .mapToInt(Frame::score)
+                .sum();
+    }
+
     @Override
     public Iterator<Frame> iterator() {
         return frames.iterator();
