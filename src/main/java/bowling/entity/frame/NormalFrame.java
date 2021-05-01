@@ -9,20 +9,20 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
-    private final FrameInfo frameInfo;
+    private final NormalFrameInfo normalFrameInfo;
     private Frame nextFrame;
 
     public NormalFrame(int frameNo) {
-        this.frameInfo = new FrameInfo(frameNo, new None());
+        this.normalFrameInfo = new NormalFrameInfo(frameNo);
     }
 
     public NormalFrame(int frameNo, ScoreType scoreType) {
-        this.frameInfo = new FrameInfo(frameNo, scoreType);
+        this.normalFrameInfo = new NormalFrameInfo(frameNo, scoreType);
     }
 
     public Frame pinResult(Pin fallenPin) {
 
-        if (frameInfo.pinResult(fallenPin).isFrameEnd()) {
+        if (normalFrameInfo.pinResult(fallenPin).isFrameEnd()) {
             nextFrame = nextFrame();
             return nextFrame;
         }
@@ -31,10 +31,10 @@ public class NormalFrame implements Frame {
     }
 
     private Frame nextFrame() {
-        if (frameInfo.nextFrameIsLastFrame()) {
+        if (normalFrameInfo.nextFrameIsLastFrame()) {
             return new LastFrame();
         }
-        return new NormalFrame(frameInfo.frameNo() + 1);
+        return new NormalFrame(normalFrameInfo.frameNo() + 1);
     }
 
     public BowlingBoard bowlingBoard() {
@@ -50,7 +50,7 @@ public class NormalFrame implements Frame {
 
     public void addFrameResult(BowlingBoard bowlingBoard) {
 
-        String scoreResult = frameInfo.scoreResult();
+        String scoreResult = normalFrameInfo.scoreResult();
 
         if (!(scoreResult.equals(""))) {
             bowlingBoard.addResult(new NormalFrameResult(scoreResult));
@@ -63,7 +63,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public int frameNo() {
-        return frameInfo.frameNo();
+        return normalFrameInfo.frameNo();
     }
 
     @Override
@@ -71,11 +71,11 @@ public class NormalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(frameInfo, that.frameInfo) && Objects.equals(nextFrame, that.nextFrame);
+        return Objects.equals(normalFrameInfo, that.normalFrameInfo) && Objects.equals(nextFrame, that.nextFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameInfo, nextFrame);
+        return Objects.hash(normalFrameInfo, nextFrame);
     }
 }

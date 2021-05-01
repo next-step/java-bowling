@@ -4,45 +4,31 @@ import bowling.entity.BowlingBoard;
 import bowling.entity.Pin;
 import bowling.entity.score.None;
 import bowling.entity.score.ScoreType;
-import bowling.entity.score.Spare;
-import bowling.entity.score.Strike;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static bowling.controller.BowlingController.END_FRAME;
 import static bowling.entity.Pin.SCORE_ASSOCIATION_SYMBOL;
 
 public class LastFrame implements Frame {
-    private static final int DEFAULT_BOWL_COUNT = 2;
-    private static final int NOT_START_BOWL_COUNT = 0;
-    private static final int MAX_BOWL_COUNT = 3;
     private static final int EMPTY = 0;
 
-    private ScoreType scoreType;
-    private int maxBowlCount;
-    private int currentBowlCount;
+    private final LastFrameInfo lastFrameInfo;
     private final List<ScoreType> scoreTypes;
 
     public LastFrame() {
-        this.scoreType = new None();
-        this.maxBowlCount = DEFAULT_BOWL_COUNT;
-        this.currentBowlCount = NOT_START_BOWL_COUNT;
+        lastFrameInfo = new LastFrameInfo(new None());
         this.scoreTypes = new ArrayList<>();
     }
 
     @Override
     public Frame pinResult(Pin fallenPin) {
-        scoreType = scoreType.pinResult(fallenPin);
+        ScoreType scoreType = lastFrameInfo.pinResult(fallenPin);
         scoreTypes.add(scoreType);
-
-        if (scoreType instanceof Strike || scoreType instanceof Spare) {
-            maxBowlCount = MAX_BOWL_COUNT;
-        }
-
-        currentBowlCount++;
         return this;
     }
 
@@ -53,8 +39,10 @@ public class LastFrame implements Frame {
     }
 
     private void normalFrameResult(BowlingBoard bowlingBoard) {
-        if ((!(scoreType instanceof None)) && (frameNo() != END_FRAME)) {
-            bowlingBoard.addResult(new NormalFrameResult(scoreType.scoreResult()));
+        String scoreResult = lastFrameInfo.scoreResult();
+
+        if (!(scoreResult.equals("")) && (frameNo() != END_FRAME)) {
+            bowlingBoard.addResult(new NormalFrameResult(scoreResult));
         }
     }
 
@@ -72,11 +60,11 @@ public class LastFrame implements Frame {
                 .collect(Collectors.joining(SCORE_ASSOCIATION_SYMBOL));
 
         if (!StringUtils.hasLength(scoreTypesResult)) {
-            return scoreType.scoreResult();
+            return lastFrameInfo.scoreResult();
         }
 
-        if (StringUtils.hasLength(scoreTypesResult) && (!scoreType.isFrameEnd())) {
-            return scoreTypesResult + SCORE_ASSOCIATION_SYMBOL + scoreType.scoreResult();
+        if (StringUtils.hasLength(scoreTypesResult) && (!lastFrameInfo.isFrameEnd())) {
+            return scoreTypesResult + SCORE_ASSOCIATION_SYMBOL + lastFrameInfo.scoreResult();
         }
 
         return scoreTypesResult;
@@ -96,6 +84,19 @@ public class LastFrame implements Frame {
 
     @Override
     public boolean bowlingGameEnd() {
-        return maxBowlCount == currentBowlCount;
+        return lastFrameInfo.bowlingGameEnd();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LastFrame lastFrame = (LastFrame) o;
+        return Objects.equals(lastFrameInfo, lastFrame.lastFrameInfo) && Objects.equals(scoreTypes, lastFrame.scoreTypes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lastFrameInfo, scoreTypes);
     }
 }
