@@ -31,10 +31,10 @@ class MissTest {
         int secondCount = 10;
 
         // when and then
-        assertThatThrownBy(()->Miss.from(firstCount, secondCount))
+        assertThatThrownBy(() -> Miss.from(firstCount, secondCount))
                 .isInstanceOf(InsufficientMissCountException.class)
-                .hasMessage("( "+firstCount+" )와 ( "+secondCount+" )의 합인 " +
-                        "( "+Math.addExact(firstCount, secondCount)+" )는, 9이하 값을 충족하지 않습니다.");
+                .hasMessage("( " + firstCount + " )와 ( " + secondCount + " )의 합인 " +
+                        "( " + Math.addExact(firstCount, secondCount) + " )는, 9이하 값을 충족하지 않습니다.");
 
     }
 
@@ -56,7 +56,7 @@ class MissTest {
         State miss = Miss.from(0, 9);
 
         // then
-        assertThatThrownBy(()-> miss.bowl(HitCount.valueOf(10)))
+        assertThatThrownBy(() -> miss.bowl(HitCount.valueOf(10)))
                 .isInstanceOf(NoMoreBowlActionsException.class)
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }
@@ -69,8 +69,8 @@ class MissTest {
         int secondCount = 10;
 
         // when
-        assertThatThrownBy(() ->Miss.from(firstCount, secondCount))
+        assertThatThrownBy(() -> Miss.from(firstCount, secondCount))
                 .isInstanceOf(InputNegativeNumberException.class)
-                .hasMessage("( "+firstCount+" ) 는 음수 값이여서 입력 할 수 없습니다.");
+                .hasMessage("( " + firstCount + " ) 는 음수 값이여서 입력 할 수 없습니다.");
     }
 }

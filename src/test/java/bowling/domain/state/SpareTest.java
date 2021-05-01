@@ -38,7 +38,7 @@ class SpareTest {
         int secondCount = 0;
 
         // when and then
-        assertThatThrownBy(()-> Spare.of(firstCount, secondCount))
+        assertThatThrownBy(() -> Spare.of(firstCount, secondCount))
                 .isInstanceOf(InsufficientSpareCountException.class)
                 .hasMessage("( 9 )와 ( 0 )의 합인 ( 9 )는, 10을 충족하지 않습니다.");
     }
@@ -68,7 +68,7 @@ class SpareTest {
         State spare = Spare.of(firstCount, secondCount);
 
         // then
-        assertThatThrownBy(()-> spare.bowl(HitCount.valueOf(10)))
+        assertThatThrownBy(() -> spare.bowl(HitCount.valueOf(10)))
                 .isInstanceOf(NoMoreBowlActionsException.class)
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }
@@ -82,9 +82,9 @@ class SpareTest {
         int secondCount = 11;
 
         // when
-        assertThatThrownBy(() ->Spare.of(firstCount, secondCount))
+        assertThatThrownBy(() -> Spare.of(firstCount, secondCount))
                 .isInstanceOf(InputNegativeNumberException.class)
-                .hasMessage("( "+firstCount+" ) 는 음수 값이여서 입력 할 수 없습니다.");
+                .hasMessage("( " + firstCount + " ) 는 음수 값이여서 입력 할 수 없습니다.");
     }
 
 }

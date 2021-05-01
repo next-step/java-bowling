@@ -2,10 +2,9 @@ package bowling.domain;
 
 import bowling.exception.InputNumberOutOfBoundsException;
 
-public final class HitCount {
+import static bowling.util.BowlingFixture.*;
 
-    private static final int MINIMUM_COUNT = 0;
-    private static final int MAXIMUM_COUNT = 10;
+public final class HitCount {
 
     private final int count;
 
@@ -23,7 +22,6 @@ public final class HitCount {
             throw new InputNumberOutOfBoundsException(count);
         }
     }
-
 
     public final int count() {
         return count;

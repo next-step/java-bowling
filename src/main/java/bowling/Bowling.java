@@ -17,9 +17,6 @@ public final class Bowling {
     }
 
 
-
-
-
     private static final Player getPlayer() {
         try {
             return Player.from(INPUT_VIEW.InputPlayerNameByConsole());

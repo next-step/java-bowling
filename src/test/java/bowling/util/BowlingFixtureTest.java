@@ -12,8 +12,8 @@ class BowlingFixtureTest {
     @Test
     void 상수들() {
         assertAll(
-                ()-> assertThat(BowlingFixture.MINIMUM_COUNT).isEqualTo(0),
-                ()-> assertThat(BowlingFixture.MAXIMUM_COUNT).isEqualTo(10)
+                () -> assertThat(BowlingFixture.MINIMUM_COUNT).isEqualTo(0),
+                () -> assertThat(BowlingFixture.MAXIMUM_COUNT).isEqualTo(10)
         );
     }
 

@@ -3,10 +3,9 @@ package bowling.domain.state;
 import bowling.exception.InputNegativeNumberException;
 import bowling.exception.InsufficientSpareCountException;
 
-public final class Spare extends Finish {
+import static bowling.util.BowlingFixture.*;
 
-    private static final int MAXIMUM_COUNT = 10;
-    private static final int MINIMUM_COUNT = 0;
+public final class Spare extends Finish {
 
     private final int firstCount;
     private final int secondCount;

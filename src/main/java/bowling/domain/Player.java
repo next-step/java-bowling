@@ -5,9 +5,8 @@ import bowling.exception.NameSizeMissMatchException;
 
 public final class Player {
 
-    private static final String REGEX = "[^a-zA-Z]";
     private static final String EMPTY = "";
-
+    private static final String REGEX = "[^a-zA-Z]";
     private static final int STANDARD_SIZE = 3;
 
     private final String name;
@@ -23,13 +22,13 @@ public final class Player {
     }
 
     private final void validateSize(final String name) {
-        if(name.length() > STANDARD_SIZE) {
+        if (name.length() > STANDARD_SIZE) {
             throw new NameSizeMissMatchException(name);
         }
     }
 
     private final void validateAlphabet(final String name) {
-        if(!replaceSpecialCharacters(name).equals(name)) {
+        if (!replaceSpecialCharacters(name).equals(name)) {
             throw new NameIncludeOtherLanguagesException(name);
         }
     }

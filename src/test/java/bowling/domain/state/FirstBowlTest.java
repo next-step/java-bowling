@@ -82,9 +82,9 @@ class FirstBowlTest {
         int firstCount = -1;
 
         // when
-        assertThatThrownBy(() ->FirstBowl.from(firstCount))
+        assertThatThrownBy(() -> FirstBowl.from(firstCount))
                 .isInstanceOf(InputNegativeNumberException.class)
-                .hasMessage("( "+firstCount+" ) 는 음수 값이여서 입력 할 수 없습니다.");
+                .hasMessage("( " + firstCount + " ) 는 음수 값이여서 입력 할 수 없습니다.");
     }
 
 }

@@ -33,7 +33,7 @@ class PlayerTest {
         // when and then
         assertThatThrownBy(() -> Player.from(name))
                 .isInstanceOf(NameSizeMissMatchException.class)
-                .hasMessage("( "+name+" )은 영문 3글자 또는 그 이하가 아닙니다.");
+                .hasMessage("( " + name + " )은 영문 3글자 또는 그 이하가 아닙니다.");
     }
 
     @DisplayName("Player 인스턴스가 다른 언어를 포함한 이름 입력시 예외처리 여부 테스트")
@@ -45,7 +45,7 @@ class PlayerTest {
         // when and then
         assertThatThrownBy(() -> Player.from(name))
                 .isInstanceOf(NameIncludeOtherLanguagesException.class)
-                .hasMessage("( "+name+" )는 영문 글자가 아닌 다른 글자도 포함되어 있습니다.");
+                .hasMessage("( " + name + " )는 영문 글자가 아닌 다른 글자도 포함되어 있습니다.");
     }
 
     @DisplayName("Player 인스턴스가 소유한 이름 반환 여부 테스트")

@@ -15,10 +15,6 @@ class FinishTest {
     void 검증() {
         // when
         Finish finish = new Finish() {
-            @Override
-            public boolean isFinish() {
-                return super.isFinish();
-            }
         };
 
         // then
@@ -31,14 +27,10 @@ class FinishTest {
 
         // when
         Finish finish = new Finish() {
-            @Override
-            public boolean isFinish() {
-                return super.isFinish();
-            }
         };
 
         // then
-        assertThatThrownBy(()-> finish.bowl(HitCount.valueOf(10)))
+        assertThatThrownBy(() -> finish.bowl(HitCount.valueOf(10)))
                 .isInstanceOf(NoMoreBowlActionsException.class)
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }

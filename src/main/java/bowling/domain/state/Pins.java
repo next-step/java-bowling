@@ -9,11 +9,11 @@ import java.util.List;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
+import static bowling.util.BowlingFixture.*;
+
 public final class Pins {
 
     private static final List<Pins> CACHE;
-    private static final int MINIMUM_COUNT = 0;
-    private static final int MAXIMUM_COUNT = 10;
 
     private final int pinCount;
 
@@ -38,13 +38,13 @@ public final class Pins {
     }
 
     private final void validateCount(final HitCount hitCount) {
-        if(hitCount.count() > pinCount) {
+        if (hitCount.count() > pinCount) {
             throw new InputOverHitCountException(hitCount.count(), pinCount);
         }
     }
 
     public final boolean isEmpty() {
-        if(pinCount <= MINIMUM_COUNT) {
+        if (pinCount <= MINIMUM_COUNT) {
             return TRUE;
         }
         return FALSE;

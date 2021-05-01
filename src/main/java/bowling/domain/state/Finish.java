@@ -8,7 +8,7 @@ import static java.lang.Boolean.TRUE;
 public abstract class Finish implements State {
 
     @Override
-    public boolean isFinish() {
+    public final boolean isFinish() {
         return TRUE;
     }
 

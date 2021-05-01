@@ -3,10 +3,9 @@ package bowling.domain.state;
 import bowling.exception.InputNegativeNumberException;
 import bowling.exception.InsufficientMissCountException;
 
-public final class Miss extends Finish{
+import static bowling.util.BowlingFixture.*;
 
-    private static final int MINIMUM_COUNT = 0;
-    private static final int MAXIMUM_COUNT = 10;
+public final class Miss extends Finish {
 
     private final int firstCount;
     private final int secondCount;
@@ -28,7 +27,7 @@ public final class Miss extends Finish{
     }
 
     private final void validateSum(final int firstCount, final int secondCount) {
-        if(Math.addExact(firstCount, secondCount) >= MAXIMUM_COUNT) {
+        if (Math.addExact(firstCount, secondCount) >= MAXIMUM_COUNT) {
             throw new InsufficientMissCountException(firstCount, secondCount);
         }
     }
