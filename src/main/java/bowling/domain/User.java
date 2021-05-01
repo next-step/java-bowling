@@ -1,28 +1,34 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class User {
 
+    private static final int NAME_LENGTH = 3;
+
     private final String name;
-    private final Scores scores;
 
     public User(String name) {
+        if (name.length() != NAME_LENGTH) {
+            throw new IllegalArgumentException("이름은 세글자 입니다.");
+        }
         this.name = name;
-        this.scores = new Scores();
     }
 
     public String name() {
         return name;
     }
 
-    public int getScore(FrameStrategy frame) {
-        return scores.score(frame);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(name, user.name);
     }
 
-    public void recordScore(FrameStrategy frame, FrameStrategy previousFrame) {
-        scores.record(frame, previousFrame);
-    }
-
-    public int scoreSize() {
-        return scores.size();
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

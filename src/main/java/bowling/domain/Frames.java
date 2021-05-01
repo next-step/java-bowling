@@ -7,17 +7,14 @@ public class Frames {
 
     private static final int LAST_ROUND = 10;
 
-    private final User user;
     private final List<FrameStrategy> frames;
+    private final Scores scores;
 
-    public Frames(User user) {
-        this.user = user;
+    public Frames() {
         frames = new ArrayList<>();
         frames.add(new NormalFrame());
-    }
 
-    public User getUser() {
-        return user;
+        this.scores = new Scores();
     }
 
     public List<FrameStrategy> getFrames() {
@@ -28,12 +25,21 @@ public class Frames {
         return frames.get(index);
     }
 
+    public int getScore(FrameStrategy frame) {
+        return scores.score(frame);
+    }
+
+    public int frameSize() {
+        return frames.size();
+    }
+
     public void proceedRound(int frameNumber, PinNumber pinNumber) {
         frames.get(frameNumber - 1).play(pinNumber);
-
         if (!hasRemainTurn(frameNumber) && frameNumber < LAST_ROUND) {
             frames.add(frames.get(frameNumber - 1).newNextFrame(frameNumber));
         }
+
+        calculateScore(frameNumber);
     }
 
     public boolean hasRemainTurn(int frameNumber) {
@@ -41,9 +47,9 @@ public class Frames {
     }
 
     public void calculateScore(int frameNumber) {
-        user.recordScore(frames.get(0), null);
+        scores.record(frames.get(0), null);
         for (int i = 1; i < frameNumber; i++) {
-            user.recordScore(frames.get(i), frames.get(i -1));
+            scores.record(frames.get(i), frames.get(i -1));
         }
     }
 }
