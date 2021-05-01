@@ -47,7 +47,7 @@ class FramesTest {
         Frames frames = Frames.initialize();
 
         // then
-        assertThat(frames.frames()).isInstance(List.class);
+        assertThat(frames.frames()).isInstanceOf(List.class);
     }
 
     @DisplayName("Frames 인스턴스가 bowl() 호츌시 알맞은 값을 반환하는지 테스트")
