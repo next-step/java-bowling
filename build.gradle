@@ -23,7 +23,8 @@ repositories {
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation 'org.jetbrains:annotations:19.0.0'
+  compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.hibernate:hibernate-java8')
     runtime('com.h2database:h2')
     testCompile('org.junit.jupiter:junit-jupiter:5.6.0')
