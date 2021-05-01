@@ -58,7 +58,7 @@ public class Pitches implements Iterable<Pitch> {
     }
 
     public boolean isSpare() {
-        return pinDownCount() == Pitch.STRIKE_COUNT && !first().isStrike();
+        return pinDownCount() == Pitch.STRIKE_COUNT && count() == DEFAULT_PITCH_ABLE_COUNT;
     }
 
     public boolean isMiss() {
