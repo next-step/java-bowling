@@ -19,7 +19,7 @@ public class QuestionTest {
     @Test
     void 작성자가아니면_예외() {
         assertThatThrownBy(() -> {
-            Q1.isOwner(UserTest.SANJIGI);
+            Q1.validOwner(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
