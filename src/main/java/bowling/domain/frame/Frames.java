@@ -1,52 +1,54 @@
 package bowling.domain.frame;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import bowling.domain.state.BowlingPin;
+import bowling.domain.state.States;
 
 public class Frames {
-    private static final int MAX_NORMAL_FRAME_COUNT = 9;
-
     private final List<Frame> frames;
 
-    private Frames(List<Frame> frames) {
-        this.frames = frames;
+    private Frames() {
+        this.frames = new ArrayList<>(Arrays.asList(NormalFrame.init()));
     }
 
     public static Frames init() {
-        List<Frame> frames = new ArrayList<>();
-        frames.add(NormalFrame.init());
-        return new Frames(frames);
+        return new Frames();
     }
 
     public void bowl(int pinCount) {
-        this.currentFrame().bowl(BowlingPin.of(pinCount));
+        Frame nextFrame = currentFrame().bowl(BowlingPin.of(pinCount));
+        if (isNextFrame()) {
+            frames.add(nextFrame);
+        }
     }
 
-    public void next() {
-        if (this.currentFrame().isDone()
-            && this.frames.size() <= MAX_NORMAL_FRAME_COUNT) {
-            frames.add(this.nextFrame());
-        }
+    private boolean isNextFrame() {
+        return currentFrame().isDone()
+            && currentFrame().getNext().isPresent();
     }
 
     public boolean isDone() {
         return this.currentFrame().isDone();
     }
 
-    private Frame currentFrame() {
+    public Frame currentFrame() {
         return frames.get(frames.size() - 1);
     }
 
-    private Frame nextFrame() {
-        return this.currentFrame().next(frames.size());
+    public List<Frame> frames() {
+        return Collections.unmodifiableList(frames);
     }
 
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
+    public List<States> states() {
+        return frames.stream()
+            .map(Frame::states)
+            .collect(Collectors.toList());
     }
 
     @Override

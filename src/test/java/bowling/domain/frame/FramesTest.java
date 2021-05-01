@@ -12,7 +12,7 @@ public class FramesTest {
     void 생성_테스트() {
         // given
         Frames frames = Frames.init();
-        List<Frame> frameList = frames.getFrames();
+        List<Frame> frameList = frames.frames();
         // when & then
         assertThat(frameList.size()).isEqualTo(1);
         assertThat(frameList.get(0)).isInstanceOf(NormalFrame.class);
@@ -25,9 +25,8 @@ public class FramesTest {
         // when
         frames.bowl(3);
         frames.bowl(3);
-        frames.next();
         // then
-        assertThat(frames.getFrames().size()).isEqualTo(2);
+        assertThat(frames.frames().size()).isEqualTo(2);
     }
 
     @Test
@@ -36,9 +35,8 @@ public class FramesTest {
         Frames frames = Frames.init();
         // when
         frames.bowl(3);
-        frames.next();
         // then
-        assertThat(frames.getFrames().size()).isEqualTo(1);
+        assertThat(frames.frames().size()).isEqualTo(1);
     }
 
     @Test
@@ -46,15 +44,15 @@ public class FramesTest {
         // given
         Frames frames = Frames.init();
         // when
-        IntStream.range(0, 8).forEach(i -> {
+        IntStream.range(0, 9).forEach(i -> {
             frames.bowl(10);
-            frames.next();
         });
         frames.bowl(3);
         frames.bowl(3);
         // then
         assertThat(frames.isDone()).isTrue();
     }
+
 
     @Test
     void 보너스_게임_종료_테스트_1() {
@@ -63,7 +61,6 @@ public class FramesTest {
         // when
         IntStream.range(0, 9).forEach(i -> {
             frames.bowl(10);
-            frames.next();
         });
         frames.bowl(3);
         frames.bowl(7);
@@ -79,7 +76,6 @@ public class FramesTest {
         // when
         IntStream.range(0, 9).forEach(i -> {
             frames.bowl(10);
-            frames.next();
         });
         frames.bowl(10);
         frames.bowl(7);
@@ -95,7 +91,6 @@ public class FramesTest {
         // when
         IntStream.range(0, 9).forEach(i -> {
             frames.bowl(10);
-            frames.next();
         });
         frames.bowl(10);
         frames.bowl(10);
@@ -103,5 +98,4 @@ public class FramesTest {
         // then
         assertThat(frames.isDone()).isTrue();
     }
-
 }

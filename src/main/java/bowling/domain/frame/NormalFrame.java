@@ -1,63 +1,54 @@
 package bowling.domain.frame;
 
-import java.util.Objects;
+import java.util.Optional;
 
 import bowling.domain.state.BowlingPin;
-import bowling.domain.state.State;
-import bowling.domain.state.progress.Ready;
 
-public class NormalFrame implements Frame {
-    public static final int NORMAL_FRAME_SIZE = 9;
+public class NormalFrame extends Frame {
+    private static final int FIRST_FRAME_NUMBER = 1;
 
-    private State state;
+    private final Frame nextFrame;
 
-    private NormalFrame(State state) {
-        this.state = state;
+    private NormalFrame(int frameNumber) {
+        super(frameNumber);
+        this.nextFrame = next();
+    }
+
+    public static Frame of(int frameNumber) {
+        return new NormalFrame(frameNumber);
     }
 
     public static Frame init() {
-        return new NormalFrame(new Ready());
+        return new NormalFrame(FIRST_FRAME_NUMBER);
     }
 
-    public static Frame of(State state) {
-        return new NormalFrame(state);
-    }
-
-    @Override
-    public void bowl(BowlingPin bowlingPin) {
-        this.state = state.bowl(bowlingPin);
-    }
-
-    @Override
-    public Frame next(int size) {
-        if (size == NORMAL_FRAME_SIZE) {
-            return FinalFrame.init();
+    private Frame next() {
+        int nextFrameIndex = frameNumber + 1;
+        if (nextFrameIndex == TOTAL_FRAME_SIZE) {
+            return FinalFrame.of(nextFrameIndex);
         }
-        return NormalFrame.init();
+        return NormalFrame.of(nextFrameIndex);
+    }
+
+    @Override
+    public Frame bowl(BowlingPin bowlingPin) {
+        states.add(currentState().bowl(bowlingPin));
+        if (!isDone()) {
+            return this;
+        }
+        return nextFrame;
     }
 
     @Override
     public boolean isDone() {
-        return state.isDone();
-    }
-
-    @Override
-    public String frameState() {
-        return state.toSymbol();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
+        if (states.isEmpty()) {
             return false;
-        NormalFrame that = (NormalFrame)o;
-        return Objects.equals(state, that.state);
+        }
+        return states.lastState().isDone();
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(state);
+    public Optional<Frame> getNext() {
+        return Optional.of(nextFrame);
     }
 }
