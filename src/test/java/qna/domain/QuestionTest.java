@@ -12,6 +12,7 @@ public class QuestionTest {
     @Test
     @DisplayName("삭제가능여부")
     void enableDelete() {
+        Q1.addAnswer(new Answer(UserTest.SANJIGI, new Question("title3", "contents3"), "..."));
         Assertions.assertThatThrownBy(() -> {
             Q1.enableDelete(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
