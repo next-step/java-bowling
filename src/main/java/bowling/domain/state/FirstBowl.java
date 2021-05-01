@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.HitCount;
-import bowling.exception.InputNegativeNumberException;
+import bowling.exception.InputNumberOutOfBoundsException;
 
 import static bowling.util.BowlingFixture.*;
 
@@ -10,13 +10,13 @@ public final class FirstBowl extends Running {
     private final int firstCount;
 
     private FirstBowl(final int firstCount) {
-        validateNegative(firstCount);
+        validateSize(firstCount);
         this.firstCount = firstCount;
     }
 
-    private final void validateNegative(final int firstCount) {
-        if (firstCount < MINIMUM_COUNT) {
-            throw new InputNegativeNumberException(firstCount);
+    private final void validateSize(final int firstCount) {
+        if (firstCount < MINIMUM_COUNT || firstCount > MAXIMUM_COUNT) {
+            throw new InputNumberOutOfBoundsException(firstCount);
         }
     }
 

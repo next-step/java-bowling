@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import bowling.exception.InputNegativeNumberException;
+import bowling.exception.InputNumberOutOfBoundsException;
 import bowling.exception.InsufficientSpareCountException;
 
 import static bowling.util.BowlingFixture.*;
@@ -11,18 +11,18 @@ public final class Spare extends Finish {
     private final int secondCount;
 
     private Spare(final int firstCount, final int secondCount) {
-        validateNegative(firstCount, secondCount);
+        validateSize(firstCount, secondCount);
         validateSum(firstCount, secondCount);
         this.firstCount = firstCount;
         this.secondCount = secondCount;
     }
 
-    private final void validateNegative(final int firstCount, final int secondCount) {
-        if (firstCount < MINIMUM_COUNT) {
-            throw new InputNegativeNumberException(firstCount);
+    private final void validateSize(final int firstCount, final int secondCount) {
+        if (firstCount < MINIMUM_COUNT || firstCount > MAXIMUM_COUNT) {
+            throw new InputNumberOutOfBoundsException(firstCount);
         }
-        if (secondCount < MINIMUM_COUNT) {
-            throw new InputNegativeNumberException(secondCount);
+        if (secondCount < MINIMUM_COUNT || secondCount > MAXIMUM_COUNT) {
+            throw new InputNumberOutOfBoundsException(secondCount);
         }
     }
 

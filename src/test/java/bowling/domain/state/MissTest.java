@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.HitCount;
-import bowling.exception.InputNegativeNumberException;
+import bowling.exception.InputNumberOutOfBoundsException;
 import bowling.exception.InsufficientMissCountException;
 import bowling.exception.NoMoreBowlActionsException;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class MissTest {
 
@@ -61,16 +60,22 @@ class MissTest {
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }
 
-    @DisplayName("Miss 인스턴스에 음수 입력시 예외처리 여부 테스트")
+    @DisplayName("Miss 인스턴스에 알맞지 않은 범위의 수 입력시 예외처리 여부 테스트")
     @Test
-    void 검증_음수() {
+    void 검증_범위의_수() {
         // given
         int firstCount = -1;
         int secondCount = 10;
 
-        // when
+        // when and then
         assertThatThrownBy(() -> Miss.from(firstCount, secondCount))
-                .isInstanceOf(InputNegativeNumberException.class)
-                .hasMessage("( " + firstCount + " ) 는 음수 값이여서 입력 할 수 없습니다.");
+                .isInstanceOf(InputNumberOutOfBoundsException.class)
+                .hasMessage("맞은 갯수 ( "+firstCount+" ) 는 사용할 수 없는 갯수 입니다.");
+
+
+        assertThatThrownBy(() -> Miss.from(firstCount+1, secondCount+1))
+                .isInstanceOf(InputNumberOutOfBoundsException.class)
+                .hasMessage("맞은 갯수 ( "+(secondCount+1)+" ) 는 사용할 수 없는 갯수 입니다.");
+
     }
 }
