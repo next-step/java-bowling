@@ -20,4 +20,13 @@ class StrikeTest {
 
     }
 
+    @DisplayName("Strike 인스턴스가 알맞은 종료 여부를 반환하는지 테스트")
+    @Test
+    void 반환_종료_여부() {
+        State strike = Strike.newInstance();
+
+        assertThat(strike.isFinish()).isTrue();
+
+    }
+
 }
