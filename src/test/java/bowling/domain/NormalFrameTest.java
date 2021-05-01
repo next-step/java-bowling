@@ -50,4 +50,20 @@ class NormalFrameTest {
         );
 
     }
+
+    @DisplayName("NormalFrame 인스턴스가 스트라이크시 자기 자신이 아닌 인스턴스를 반환하는지 테스트")
+    @Test
+    void 기능_bowl_다음_인스턴스() {
+        Frame normalFrame = NormalFrame.initialize();
+
+        Frame now = normalFrame.bowl(HitCount.valueOf(10));
+
+        assertAll(
+                () -> assertThat(now).isNotNull(),
+                () -> assertThat(now).isInstanceOf(NormalFrame.class),
+                () -> assertThat(now).isNotSameAs(normalFrame),
+                () -> assertThat(now).isNotEqualTo(normalFrame)
+        );
+
+    }
 }
