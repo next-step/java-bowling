@@ -44,4 +44,8 @@ public class PointSymbols {
     public int hashCode() {
         return Objects.hash(symbols);
     }
+
+    public int length() {
+        return symbols.size();
+    }
 }
