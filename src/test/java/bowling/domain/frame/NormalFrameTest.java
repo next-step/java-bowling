@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.BowlingPin;
 
 public class NormalFrameTest {
@@ -36,5 +37,27 @@ public class NormalFrameTest {
         normalFrame.bowl(BowlingPin.of(5));
         // then
         assertThat(normalFrame.isDone()).isTrue();
+    }
+
+    @Test
+    void 점수_반환_테스트() {
+        // given
+        Frame normalFrame = NormalFrame.init();
+        // when
+        normalFrame.bowl(BowlingPin.of(5));
+        normalFrame.bowl(BowlingPin.of(3));
+        // then
+        assertThat(normalFrame.score()).isEqualTo(Score.of(8));
+    }
+
+    @Test
+    void 점수_반환_추가_점수_테스트() {
+        // given
+        Frame normalFrame = NormalFrame.init();
+        // when
+        normalFrame.bowl(BowlingPin.of(5));
+        normalFrame.bowl(BowlingPin.of(5));
+        // then
+        assertThat(normalFrame.score()).isEqualTo(Score.ofProgress());
     }
 }

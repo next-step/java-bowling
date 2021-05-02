@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.BowlingPin;
 
 public class FinalFrameTest {
@@ -60,5 +61,33 @@ public class FinalFrameTest {
 
         // then
         assertThat(finalFrame.isDone()).isTrue();
+    }
+
+    @Test
+    void 점수_반환_테스트() {
+        // when
+        finalFrame.bowl(BowlingPin.of(5));
+        finalFrame.bowl(BowlingPin.of(3));
+        // then
+        assertThat(finalFrame.score()).isEqualTo(Score.of(8));
+    }
+
+    @Test
+    void 점수_반환_추가_점수_테스트() {
+        // when
+        finalFrame.bowl(BowlingPin.of(5));
+        finalFrame.bowl(BowlingPin.of(5));
+        // then
+        assertThat(finalFrame.score()).isEqualTo(Score.ofProgress());
+    }
+
+    @Test
+    void 점수_반환_추가_점수_테스트_2() {
+        // when
+        finalFrame.bowl(BowlingPin.of(10));
+        finalFrame.bowl(BowlingPin.of(5));
+        finalFrame.bowl(BowlingPin.of(5));
+        // then
+        assertThat(finalFrame.score()).isEqualTo(Score.of(20, 3));
     }
 }

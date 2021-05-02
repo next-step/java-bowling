@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import java.util.Optional;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.BowlingPin;
 
 public class FinalFrame extends Frame {
@@ -38,5 +39,25 @@ public class FinalFrame extends Frame {
     private boolean isDoneNormalFrames() {
         return states.size() == NORMAL_STATE_SIZE
             && states.hasNotBonus();
+    }
+
+    @Override
+    public Score score() {
+        if (states.isEmpty() || !isDone()) {
+            return Score.ofProgress();
+        }
+        return sumCurrentFrameScore();
+    }
+
+    @Override
+    protected Score additionalCalculate(Score score) {
+        if (isAdditionalScore(score)) {
+            return accumulateBeforeScore(score);
+        }
+        return Score.ofProgress();
+    }
+
+    private boolean isAdditionalScore(Score score) {
+        return states.toList().size() > score.left();
     }
 }

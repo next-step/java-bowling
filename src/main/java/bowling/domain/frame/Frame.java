@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.BowlingPin;
 import bowling.domain.state.State;
 import bowling.domain.state.States;
@@ -35,9 +36,41 @@ public abstract class Frame {
         return frameNumber == TOTAL_FRAME_SIZE;
     }
 
-    abstract Frame bowl(BowlingPin bowlingPin);
+    protected Score sumCurrentFrameScore() {
+        Score total = Score.init();
 
-    abstract Optional<Frame> getNext();
+        for (State state : states.toList()) {
+            total = addStateScore(total, state);
+        }
+        return total;
+    }
+
+    private Score addStateScore(Score total, State state) {
+        if (state.isDone()) {
+            total = total.add(state.score());
+        }
+        return total;
+    }
+
+    protected Score accumulateBeforeScore(Score score) {
+        Score total = score;
+        for (State state : states.toList()) {
+            total = total.accumulate(state.currentBowlingPin());
+
+            if (total.isAccumulateDone()) {
+                return total;
+            }
+        }
+        return total;
+    }
+
+    public abstract Frame bowl(BowlingPin bowlingPin);
+
+    public abstract Optional<Frame> getNext();
 
     public abstract boolean isDone();
+
+    public abstract Score score();
+
+    protected abstract Score additionalCalculate(Score score);
 }
