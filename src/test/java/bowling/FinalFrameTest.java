@@ -42,4 +42,22 @@ public class FinalFrameTest {
                 .isEqualTo(new PointSymbols(PointSymbol.STRIKE, PointSymbol.STRIKE));
     }
 
+    @Test
+    void Given_Strike_When_Score_Then_NotDetermined() {
+        FinalFrame finalFrame = new FinalFrame(new Pinfall(10));
+        assertThat(finalFrame.score()).isEqualTo(Score.createNotDetermined());
+    }
+
+    @Test
+    void Given_Double_When_Score_Then_NotDetermined() {
+        FinalFrame finalFrame = new FinalFrame(new Pinfall(10), new Pinfall(10));
+        assertThat(finalFrame.score()).isEqualTo(Score.createNotDetermined());
+    }
+
+    @Test
+    void Given_Triple_When_Score_Then_Score30() {
+        FinalFrame finalFrame = new FinalFrame(new Pinfall(10), new Pinfall(10));
+        finalFrame.roll(new Pinfall(10));
+        assertThat(finalFrame.score()).isEqualTo(Score.create(30));
+    }
 }

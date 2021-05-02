@@ -6,8 +6,8 @@ import bowling.domain.PointSymbols;
 import bowling.domain.Score;
 import bowling.domain.state.FrameState;
 import bowling.domain.state.FrameStateBonus;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -19,13 +19,15 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FrameStateBonusTest {
+    @DisplayName("보너스 상태에서 쓰러진 핀의 개수에 따라 PontSymbol, 점수, Pinfall이 잘 되는지 테스트")
     @ParameterizedTest
     @MethodSource("providePointSymbolTestSource")
-    void Given_Pinfalls_When_PointSymbols_Then_ReturnRightSymbols(List<Pinfall> pinfalls, PointSymbols expected, Score expectedScore) {
+    void Given_Pinfalls_When_PointSymbols_Then_ReturnRightSymbols(List<Pinfall> pinfalls, PointSymbols expectedPointSymbols, Score expectedScore) {
         FrameState state = new FrameStateBonus(pinfalls);
 
-        assertThat(state.pointSymbols()).isEqualTo(expected);
+        assertThat(state.pointSymbols()).isEqualTo(expectedPointSymbols);
         assertThat(state.score()).isEqualTo(expectedScore);
+        assertThat(state.pinfalls()).isEqualTo(pinfalls);
     }
 
     private static Stream<Arguments> providePointSymbolTestSource() {
@@ -46,11 +48,5 @@ public class FrameStateBonusTest {
                 Arguments.of(Arrays.asList(new Pinfall(1), new Pinfall(9), new Pinfall(10)),
                         new PointSymbols(Arrays.asList(PointSymbol.ONE, PointSymbol.SPARE, PointSymbol.STRIKE)), Score.create(20))
         );
-    }
-
-    @Test
-    @Disabled
-    void When_Pinfalls_Then_10() {
-//        AssertionsForInterfaceTypes.assertThat(new FrameStateStrike().pinfalls()).isEqualTo(Arrays.asList(new Pinfall(10)));
     }
 }
