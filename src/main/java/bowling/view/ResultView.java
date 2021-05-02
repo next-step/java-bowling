@@ -1,7 +1,7 @@
 package bowling.view;
 
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
-import bowling.domain.frame.Scores;
 import bowling.dto.BowlingDto;
 
 import java.util.Map;
@@ -36,7 +36,7 @@ public class ResultView {
         return sb.toString();
     }
 
-    private static String getNormalFrame(Map<Integer, Scores> frames) {
+    private static String getNormalFrame(Map<Integer, Frame> frames) {
         StringBuilder sb = new StringBuilder();
         frames.keySet()
                 .stream()
@@ -46,7 +46,7 @@ public class ResultView {
         return sb.toString();
     }
 
-    private static String getFinalFrame(Map<Integer, Scores> frames) {
+    private static String getFinalFrame(Map<Integer, Frame> frames) {
         StringBuilder sb = new StringBuilder();
         sb.append(finalFrameToPrint(frames.get(Frames.FINAL_FRAME)))
                 .append("|");
@@ -54,12 +54,12 @@ public class ResultView {
     }
 
 
-    private static String normalFrameToPrint(Scores normalScores) {
+    private static String normalFrameToPrint(Frame normalFrame) {
         StringBuilder sb = new StringBuilder();
-        normalScores.getScores()
+        normalFrame.getScores()
                 .forEach(score -> sb.append(score.getExpression()));
 
-        if (normalScores.getScores().size() == 2) {
+        if (normalFrame.getScores().size() == 2) {
             sb.insert(1, "|");
         }
 
@@ -69,15 +69,15 @@ public class ResultView {
         return result;
     }
 
-    private static String finalFrameToPrint(Scores finalScores) {
+    private static String finalFrameToPrint(Frame finalFrame) {
         StringBuilder sb = new StringBuilder();
-        finalScores.getScores()
+        finalFrame.getScores()
                 .forEach(score -> sb.append(score.getExpression()));
 
-        if (finalScores.getScores().size() == 3) {
+        if (finalFrame.getScores().size() == 3) {
             sb.insert(2, "|");
         }
-        if (finalScores.getScores().size() >= 2) {
+        if (finalFrame.getScores().size() >= 2) {
             sb.insert(1, "|");
         }
 

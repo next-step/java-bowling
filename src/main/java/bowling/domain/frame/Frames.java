@@ -1,28 +1,29 @@
 package bowling.domain.frame;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
 public final class Frames {
-    private final List<Scores> scores;
     public static final Integer FINAL_FRAME = 9;
+    private final List<Frame> frames;
+
 
     public Frames() {
         this(generateFrames());
     }
 
-    public Frames(List<Scores> scores) {
-        this.scores = scores;
+    public Frames(List<Frame> frames) {
+        this.frames = frames;
     }
 
     public Frames addScore(int score) throws Exception {
         if (isFinished()) {
             throw new IndexOutOfBoundsException();
         }
-        this.scores.get(nowFrame()).addScore(score);
-        return new Frames(this.scores);
+        this.frames.get(nowFrame()).addScore(score);
+        return new Frames(this.frames);
     }
 
     public boolean isFinished() {
@@ -34,20 +35,24 @@ public final class Frames {
 
     public int nowFrame() {
         return IntStream.range(0, 10)
-                .filter(i -> !scores.get(i).isFinished())
+                .filter(i -> !frames.get(i).isFinished())
                 .findFirst()
                 .orElse(10);
     }
 
-    public Scores getFrame(int index) {
-        return this.scores.get(index);
+    public Frame getFrame(int index) {
+        return this.frames.get(index);
     }
 
-    private static List<Scores> generateFrames() {
-        List<Scores> result = new LinkedList<>();
+    private static List<Frame> generateFrames() {
+        List<Frame> result = new ArrayList<>();
         IntStream.range(0, FINAL_FRAME)
-                .forEach(i -> result.add(new NormalScores()));
-        result.add(new FinalScores());
+                .forEach(i -> result.add(new NormalFrame()));
+        result.add(new FinalFrame());
+        IntStream.range(0, FINAL_FRAME)
+                .forEach(i -> result
+                        .get(i)
+                        .nextFrame(result.get(i + 1)));
         return result;
     }
 
@@ -60,18 +65,18 @@ public final class Frames {
             return false;
         }
         Frames frames1 = (Frames) o;
-        return Objects.equals(scores, frames1.scores);
+        return Objects.equals(frames, frames1.frames);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(scores);
+        return Objects.hash(frames);
     }
 
     @Override
     public String toString() {
         return "Frames{" +
-                "frames=" + scores +
+                "frames=" + frames +
                 '}';
     }
 }

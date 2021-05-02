@@ -17,7 +17,6 @@ public abstract class Scores {
     public boolean equals(Object o) {
         if (this == o) {
             return true;
-            말티푸 실버그레이
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
