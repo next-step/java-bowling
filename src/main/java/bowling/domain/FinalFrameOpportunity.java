@@ -5,9 +5,10 @@ import static java.lang.Boolean.TRUE;
 
 public final class FinalFrameOpportunity {
 
-    private static final int INCREASE_UNIT = 1;
     private static final int START = 0;
-    private static final int END = 3;
+    private static final int INCREASE_UNIT = 1;
+    private static final int ORIGINAL_END = 2;
+    private static final int BONUS_END = 3;
 
     private int opportunity;
 
@@ -19,8 +20,8 @@ public final class FinalFrameOpportunity {
         return new FinalFrameOpportunity(START);
     }
 
-    public final boolean isFinish() {
-        if (opportunity >= END) {
+    public final boolean isFinish(boolean bonusExit) {
+        if (opportunity >= BONUS_END || (!bonusExit && opportunity == ORIGINAL_END)) {
             return TRUE;
         }
         return FALSE;
@@ -30,7 +31,4 @@ public final class FinalFrameOpportunity {
         opportunity = Math.addExact(opportunity, INCREASE_UNIT);
     }
 
-    public boolean isOriginalFinish() {
-        return opportunity == 2;
-    }
 }

@@ -25,23 +25,35 @@ class FinalFrameOpportunityTest {
         FinalFrameOpportunity finalFrameOpportunity = FinalFrameOpportunity.initialize();
 
         // then
-        assertThat(finalFrameOpportunity.isFinish()).isFalse();
+        assertThat(finalFrameOpportunity.isFinish(false)).isFalse();
     }
-
 
     @DisplayName("FinalFrameOpportunity 인스턴스가 내부 값을 증가시키는지 테스트")
     @Test
-    void 증가() {
+    void 증가_보너스_없는_경우() {
         // given
         FinalFrameOpportunity finalFrameOpportunity = FinalFrameOpportunity.initialize();
 
         // when
         finalFrameOpportunity.next();
         finalFrameOpportunity.next();
+
+        // then
+        assertThat(finalFrameOpportunity.isFinish(false)).isTrue();
+    }
+
+    @DisplayName("FinalFrameOpportunity 인스턴스가 내부 값을 증가시키는지 테스트")
+    @Test
+    void 증가_보너스_있는_경우() {
+        // given
+        FinalFrameOpportunity finalFrameOpportunity = FinalFrameOpportunity.initialize();
+
+        // when
+        finalFrameOpportunity.next();
         finalFrameOpportunity.next();
 
         // then
-        assertThat(finalFrameOpportunity.isFinish()).isTrue();
+        assertThat(finalFrameOpportunity.isFinish(true)).isFalse();
     }
 
 }

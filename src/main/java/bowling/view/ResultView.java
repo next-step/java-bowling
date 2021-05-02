@@ -58,7 +58,6 @@ public final class ResultView {
             printTwiceScore(frame);
             return;
         }
-        System.out.println(frame.size());
         System.out.print(String.format("  %-3s ", (frame.firstCount()+"|"+ frame.secondCount()+"|"+ frame.thirdCount()))+"|");
     }
 

@@ -52,7 +52,12 @@ public final class FinalFrame implements Frame {
 
     @Override
     public final boolean isFinish() {
-        return opportunity.isFinish();
+        return opportunity.isFinish(isBonusBowlExit());
+    }
+
+    private final boolean isBonusBowlExit() {
+        return states.stream()
+                .anyMatch(State::isAllPinClear);
     }
 
     @Override
