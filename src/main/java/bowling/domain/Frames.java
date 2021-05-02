@@ -1,25 +1,24 @@
 package bowling.domain;
 
+import bowling.Bowling;
 import bowling.exception.NoMoreBowlActionsException;
+import bowling.util.BowlingFixture;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static bowling.util.BowlingFixture.FRAME_LAST_INDEX;
-import static bowling.util.BowlingFixture.FRAME_START_INDEX;
+import static bowling.util.BowlingFixture.*;
 import static java.util.Collections.unmodifiableList;
 
 public final class Frames {
-
-    private static final int FIRST_INDEX = 0;
 
     private final List<Frame> frames;
     private Frame now;
 
     private Frames(final List<Frame> frames) {
         this.frames = frames;
-        this.now = frames.get(FIRST_INDEX);
+        this.now = frames.get(ZERO);
     }
 
     public static final Frames initialize() {
@@ -45,6 +44,7 @@ public final class Frames {
     public final void bowl(HitCount hitCount) {
         validateFinish();
         now = now.bowl(hitCount);
+        frames.set(index()-1, now);
     }
 
     private final void validateFinish() {

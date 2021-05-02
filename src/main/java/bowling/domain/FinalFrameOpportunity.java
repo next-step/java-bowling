@@ -29,4 +29,8 @@ public final class FinalFrameOpportunity {
     public final void next() {
         opportunity = Math.addExact(opportunity, INCREASE_UNIT);
     }
+
+    public boolean isOriginalFinish() {
+        return opportunity == 2;
+    }
 }

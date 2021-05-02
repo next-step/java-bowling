@@ -4,7 +4,6 @@ import bowling.domain.state.FirstBowl;
 import bowling.domain.state.State;
 import bowling.exception.NoMoreBowlActionsException;
 import bowling.exception.NoMoreCountingActionException;
-import bowling.util.BowlingFixture;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -23,7 +22,7 @@ public final class FinalFrame implements Frame {
 
     private FinalFrame() {
         this.states = new LinkedList<>(Arrays.asList(State.ready()));
-        this.size = TWICE;
+        this.size = ZERO;
         this.opportunity = FinalFrameOpportunity.initialize();
     }
 
@@ -31,9 +30,9 @@ public final class FinalFrame implements Frame {
     public final Frame bowl(HitCount hitCount) {
         validateFinish();
         opportunity.next();
+        size = states.size();
         State state = states.getLast();
         if (state.isAllPinClear()) {
-            size = BowlingFixture.THIRD;
             states.add(getBonusPitch().bowl(hitCount));
             return this;
         }
