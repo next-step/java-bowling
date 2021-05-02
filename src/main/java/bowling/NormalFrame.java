@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.rollresult.RollResult;
+import bowling.rollresult.RollResultType;
 
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ public class NormalFrame implements Frame{
     private static final int MAX_INDEX = 10;
 
     private final Pin pin;
-    private RollResult result;
+    private final RollResult result;
 
     private NormalFrame(Pin pin) {
         this(pin, null);
@@ -31,6 +32,10 @@ public class NormalFrame implements Frame{
         return new NormalFrame(null, result);
     }
 
+    public static NormalFrame of(Pin pin, RollResult result) {
+        return new NormalFrame(pin, result);
+    }
+
     @Override
     public Frame next(int index) {
         if(index == MAX_INDEX) {
@@ -40,9 +45,12 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public boolean roll(HitNumber rollNumber) {
-
-        return false;
+    public Frame roll(HitNumber rollNumber) {
+        if (result == null) {
+            RollResultType type = pin.firstHit(rollNumber);
+            return of(pin, RollResult.of(type));
+        }
+        return of(pin, result.next(pin, rollNumber));
     }
 
     @Override

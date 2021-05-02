@@ -23,6 +23,6 @@ public class HitNumber {
     }
 
     public int hit(int pinNum) {
-        return pinNum - rollNumber > 0 ? pinNum - rollNumber : 0;
+        return pinNum - rollNumber > ROLL_LOWER_BOUND ? pinNum - rollNumber : ROLL_LOWER_BOUND;
     }
 }

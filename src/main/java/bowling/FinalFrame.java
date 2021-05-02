@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class FinalFrame implements Frame {
     private final Pin pin;
-    private RollResult result;
+    private final RollResult result;
 
     private FinalFrame(Pin pin) {
         this(pin, null);
@@ -35,9 +35,10 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean roll(HitNumber rollNumber) {
-        return false;
+    public Frame roll(HitNumber rollNumber) {
+        return null;
     }
+
 
     @Override
     public boolean equals(Object o) {

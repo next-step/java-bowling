@@ -1,5 +1,8 @@
 package bowling.rollresult;
 
+import bowling.HitNumber;
+import bowling.Pin;
+
 import java.util.Objects;
 
 public class RollResult {
@@ -13,6 +16,10 @@ public class RollResult {
 
     public static RollResult of(RollResultType type) {
         return new RollResult(type, type.eval());
+    }
+
+    public RollResult next(Pin pin, HitNumber number) {
+        return of(pin.secondHit(type, number));
     }
 
     @Override
