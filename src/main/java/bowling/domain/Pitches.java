@@ -50,4 +50,8 @@ public class Pitches {
     public void forEach(Consumer<? super Pitch> action) {
         pitches.forEach(action);
     }
+
+    public boolean isEnd() {
+        return pitches.stream().anyMatch(Pitch::isEnd);
+    }
 }

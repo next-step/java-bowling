@@ -1,14 +1,27 @@
 package bowling.domain.status;
 
-public class Strike implements Status {
+import bowling.domain.Pitch;
+
+public class Ready implements Status {
     @Override
     public Status roll(int fallenPins) {
+        Pitch pitch = new Pitch(fallenPins);
+
+        if (pitch.isStrike2()) {
+            return new Strike();
+        }
+
+        return new Default();
+    }
+
+    @Override
+    public String display(int fallenPins) {
         return null;
     }
 
     @Override
     public boolean isStrike() {
-        return true;
+        return false;
     }
 
     @Override
@@ -22,12 +35,7 @@ public class Strike implements Status {
     }
 
     @Override
-    public String display(int fallenPins) {
-        return "X";
-    }
-
-    @Override
     public boolean isEnd() {
-        return true;
+        return false;
     }
 }

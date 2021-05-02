@@ -1,6 +1,8 @@
 package bowling.domain.status;
 
 public interface Status {
+    Status roll(int fallenPins);
+
     String display(int fallenPins);
 
     boolean isStrike();
@@ -8,4 +10,6 @@ public interface Status {
     boolean isSpare();
 
     boolean isOpen();
+
+    boolean isEnd();
 }
