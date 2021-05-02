@@ -1,7 +1,7 @@
 package bowling.domain.score;
 
 import bowling.domain.score.symbol.Digit;
-import bowling.domain.score.symbol.Miss;
+import bowling.domain.score.symbol.Gutter;
 import bowling.domain.score.symbol.Spare;
 import bowling.domain.score.symbol.Strike;
 import java.util.ArrayList;
@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FrameScore {
+    private static final int STRIKE_SCORE = 10;
+    private static final int GUTTER_SCORE = 0;
+
     private List<Score> scoreHistory;
 
     public FrameScore() {
@@ -20,12 +23,12 @@ public class FrameScore {
             scoreHistory.add(new Score(score, new Spare()));
             return;
         }
-        if (score == 10) {
-            scoreHistory.add(new Score(10, new Strike()));
+        if (score == STRIKE_SCORE) {
+            scoreHistory.add(new Score(STRIKE_SCORE, new Strike()));
             return;
         }
-        if (score == 0) {
-            scoreHistory.add(new Score(0, new Miss()));
+        if (score == GUTTER_SCORE) {
+            scoreHistory.add(new Score(GUTTER_SCORE, new Gutter()));
             return;
         }
         scoreHistory.add(new Score(score, new Digit(score)));

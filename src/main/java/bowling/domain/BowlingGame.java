@@ -1,16 +1,12 @@
 package bowling.domain;
 
-import bowling.domain.score.FrameScore;
-import java.util.HashMap;
-import java.util.Map;
-
 public class BowlingGame {
     private Frame frame;
     private int currentFrameNumber;
 
-    public BowlingGame() {
+    public BowlingGame(int startFrameNumber) {
         frame = new NormalFrame();
-        currentFrameNumber = 1;
+        currentFrameNumber = startFrameNumber;
     }
 
     public boolean isAvailable() {

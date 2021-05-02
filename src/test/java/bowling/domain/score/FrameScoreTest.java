@@ -29,7 +29,7 @@ public class FrameScoreTest {
     }
 
     @Test
-    @DisplayName("노멀 프레임, 미스, 스페어 테스트")
+    @DisplayName("노멀 프레임, 거터, 스페어 테스트")
     void missAfterStrikeTest() {
         FrameScore frameScore = new FrameScore();
 
@@ -40,7 +40,7 @@ public class FrameScoreTest {
     }
 
     @Test
-    @DisplayName("노멀 프레임, 미스, 일반 점수 테스트")
+    @DisplayName("노멀 프레임, 거터, 일반 점수 테스트")
     void missNormalScoreTest() {
         FrameScore frameScore = new FrameScore();
 
@@ -62,7 +62,7 @@ public class FrameScoreTest {
     }
 
     @Test
-    @DisplayName("노멀 프레임, 미스 미스 테스트")
+    @DisplayName("노멀 프레임, 거터 거터 테스트")
     void normalMissMissTest() {
         FrameScore frameScore = new FrameScore();
 

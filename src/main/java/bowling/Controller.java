@@ -7,14 +7,14 @@ import bowling.ui.ScoreBoard;
 
 public class Controller {
     public static void main(String[] args) {
+        int frameNumber = 1;
+
         Placeholder placeholder = new Placeholder();
         placeholder.printNamingMessage();
         ScoreBoard scoreBoard = new ScoreBoard(placeholder.inputFromUser());
 
-        BowlingGame bowlingGame = new BowlingGame();
+        BowlingGame bowlingGame = new BowlingGame(frameNumber);
         FrameScores frameScores = new FrameScores();
-
-        int frameNumber = 1;
 
         while(bowlingGame.isAvailable()) {
             placeholder.printInputScoreMessage(frameNumber);

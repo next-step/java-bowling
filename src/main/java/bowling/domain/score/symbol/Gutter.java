@@ -1,8 +1,8 @@
 package bowling.domain.score.symbol;
 
-public class Miss extends ScoreSymbol {
+public class Gutter extends ScoreSymbol {
 
-    public Miss() {
+    public Gutter() {
         super("-");
     }
 }

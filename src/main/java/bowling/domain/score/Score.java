@@ -3,6 +3,8 @@ package bowling.domain.score;
 import bowling.domain.score.symbol.ScoreSymbol;
 
 public class Score {
+    private static final int SPARE_CONDITION_VALUE = 10;
+
     private int score;
     private ScoreSymbol symbol;
 
@@ -12,7 +14,7 @@ public class Score {
     }
 
     public boolean checkIfSpare(int nextScore) {
-        return (this.score + nextScore) == 10;
+        return (this.score + nextScore) == SPARE_CONDITION_VALUE;
     }
 
     @Override
