@@ -29,7 +29,7 @@ public final class OutputView {
     }
 
     private void printBoardHeader() {
-        System.out.println(boardHeaderView.boardHeader());
+        System.out.print(boardHeaderView.row());
     }
 
     private void printPlayerNameAndStatus(Player player, Frames frames) {
