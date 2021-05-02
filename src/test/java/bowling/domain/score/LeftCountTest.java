@@ -1,11 +1,13 @@
 package bowling.domain.score;
 
+import bowling.exception.InvalidLeftCountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LeftCountTest {
 
@@ -47,5 +49,14 @@ class LeftCountTest {
 
         // then
         assertThat(spare).isEqualTo(LeftCount.from(1));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 3})
+    @DisplayName("LeftCount는 0~2 사이의 숫자만 허용된다.")
+    void validate(int invalidLeftCount) {
+        assertThatThrownBy(() -> LeftCount.from(invalidLeftCount))
+                .isInstanceOf(InvalidLeftCountException.class)
+                .hasMessage(InvalidLeftCountException.INVALID_LEFT_COUNT);
     }
 }
