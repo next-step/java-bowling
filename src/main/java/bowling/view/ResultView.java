@@ -59,7 +59,7 @@ public class ResultView {
 
     private String pitchToString(Pitch pitch) {
         Status status = pitch.status();
-        return convertZeroToHyphen(status.display(pitch.intValue()));
+        return convertZeroToHyphen(status.display());
     }
 
     private String playerName(String name) {

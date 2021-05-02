@@ -21,7 +21,7 @@ public class Strike extends Finished {
     }
 
     @Override
-    public String display(int fallenPins) {
+    public String display() {
         return "X";
     }
 }

@@ -20,7 +20,7 @@ public class Ready extends Continue {
     }
 
     @Override
-    public String display(int fallenPins) {
-        return null;
+    public String display() {
+        throw new UnsupportedOperationException();
     }
 }

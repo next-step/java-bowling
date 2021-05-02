@@ -20,7 +20,7 @@ public class Open extends Finished {
     }
 
     @Override
-    public String display(int fallenPins) {
-        return String.valueOf(fallenPins);
+    public String display() {
+        return String.valueOf(current.intValue());
     }
 }

@@ -26,9 +26,9 @@ public class Final implements Status {
     public boolean hasBonusPitch() {
         return false;
     }
-
+    
     @Override
-    public String display(int fallenPins) {
-        return null;
+    public String display() {
+        return String.valueOf(current.intValue());
     }
 }
