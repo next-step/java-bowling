@@ -3,8 +3,8 @@ package bowling.entity;
 import java.util.Objects;
 
 public class Score {
-    private int score;
-    private int remain;
+    private final int score;
+    private final int remain;
 
     public Score(int score) {
         this.score = score;
@@ -14,6 +14,18 @@ public class Score {
     public Score(int score, int remain) {
         this.score = score;
         this.remain = remain;
+    }
+
+    public boolean calculatePossible() {
+        return remain == 0;
+    }
+
+    public Score calculate(int pin) {
+        return new Score(this.score + pin, remain -1);
+    }
+
+    public int score() {
+        return score;
     }
 
     @Override

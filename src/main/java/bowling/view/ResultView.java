@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.entity.frame.FrameResult;
-import bowling.entity.frame.NormalFrameResult;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -44,9 +43,33 @@ public class ResultView {
         System.out.printf(PRINT_NAME_FORMAT, userName);
     }
 
-    public static void normalFramePrint(List<FrameResult> bowlingResults) {
+    public static void framePrint(List<FrameResult> bowlingResults) {
         for (FrameResult bowlingResult : bowlingResults) {
             System.out.printf(PRINT_FORMAT, bowlingResult.bowlingScore().replace('0', GUTTER_SYMBOL));
+        }
+    }
+
+    public static void frameScorePrint(List<FrameResult> bowlingResults) {
+        ResultView.userNamePrint("");
+
+//        int totalCount = 0;
+
+        for (FrameResult bowlingResult : bowlingResults) {
+            int score = bowlingResult.totalScore();
+
+            emptyFramePrint(score);
+
+            if (score != -1) {
+//                totalCount += score;
+                System.out.printf(PRINT_FORMAT, score);
+            }
+
+        }
+    }
+
+    private static void emptyFramePrint(int score) {
+        if (score == -1) {
+            System.out.printf(PRINT_FORMAT, "");
         }
     }
 

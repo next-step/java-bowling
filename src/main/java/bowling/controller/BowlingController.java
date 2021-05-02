@@ -2,6 +2,7 @@ package bowling.controller;
 
 import bowling.entity.BowlingBoard;
 import bowling.entity.Pin;
+import bowling.entity.Score;
 import bowling.entity.frame.Frame;
 import bowling.entity.frame.NormalFrame;
 import bowling.view.ResultView;
@@ -13,7 +14,6 @@ import static bowling.view.ResultView.*;
 public class BowlingController {
     public static final int START_FRAME = 1;
     public static final int END_FRAME = 10;
-
     public void start() {
         String userName = userNameInput();
         ResultView.bowlingGameStartPrint(userName);
@@ -24,10 +24,13 @@ public class BowlingController {
             int frameNo = bowlingFrame.frameNo();
 
             bowlingFrame = bowl(bowlingFrame, frameBowlInput(frameNo));
-
             BowlingBoard bowlingBoard = bowlingPrintFrame.bowlingBoard();
             bowlingFrameAndNamePrint(userName);
-            normalFramePrint(bowlingBoard.boardResult());
+
+            framePrint(bowlingBoard.boardResult());
+            userBowlingFrameEmptyListPrint(frameNo);
+
+            frameScorePrint(bowlingBoard.boardResult());
             userBowlingFrameEmptyListPrint(frameNo);
         }
     }

@@ -1,6 +1,7 @@
 package bowling.entity.frame;
 
 import bowling.entity.Pin;
+import bowling.entity.Score;
 import bowling.entity.score.ScoreType;
 import bowling.entity.score.Spare;
 import bowling.entity.score.Strike;
@@ -35,6 +36,14 @@ public class LastFrameInfo implements FrameInfo{
 
     public boolean isFrameEnd() {
         return scoreType.isFrameEnd();
+    }
+
+    public Score score() {
+        return scoreType.score();
+    }
+
+    public Score calculate(Score score) {
+        return scoreType.calculate(score);
     }
 
     public boolean bowlingGameEnd() {

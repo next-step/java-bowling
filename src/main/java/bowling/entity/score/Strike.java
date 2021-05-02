@@ -28,4 +28,14 @@ public class Strike extends Finish {
     public Score score() {
         return new Score(MAX_PIN_COUNT, STRIKE_SCORE_REMAIN);
     }
+
+    @Override
+    public Score calculate(Score beforeScore) {
+
+        if (beforeScore.calculatePossible()) {
+            return beforeScore;
+        }
+
+        return beforeScore.calculate(MAX_PIN_COUNT);
+    }
 }

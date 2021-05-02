@@ -46,6 +46,18 @@ public class Miss extends Finish {
     }
 
     @Override
+    public Score calculate(Score beforeScore) {
+        beforeScore = firstPin.sumScore(beforeScore);
+
+        if (beforeScore.calculatePossible()) {
+            return beforeScore;
+        }
+
+        beforeScore = secondPin.sumScore(beforeScore);
+        return beforeScore;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

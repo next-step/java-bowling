@@ -30,6 +30,10 @@ public class Pin {
         return sumPin;
     }
 
+    public Score sumScore(Score score) {
+        return score.calculate(this.pin);
+    }
+
     private void validateSum(int sumPin) {
         if (sumPin > MAX_PIN_COUNT) {
             throw new IllegalArgumentException(SUM_RANGE_OVER_PIN_MESSAGE);

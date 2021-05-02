@@ -21,4 +21,9 @@ public class None extends OnGoing {
         return new NormalScore(fallenPin);
     }
 
+    @Override
+    public Score calculate(Score beforeScore) {
+        throw new CalculateImPossibleException();
+    }
+
 }

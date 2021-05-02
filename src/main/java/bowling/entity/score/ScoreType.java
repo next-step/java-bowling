@@ -12,4 +12,6 @@ public interface ScoreType {
     ScoreType bowl(Pin fallenPin);
 
     Score score();
+
+    Score calculate(Score beforeScore);
 }

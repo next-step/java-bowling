@@ -1,6 +1,7 @@
 package bowling.entity.frame;
 
 import bowling.entity.Pin;
+import bowling.entity.Score;
 import bowling.entity.score.None;
 import bowling.entity.score.ScoreType;
 
@@ -28,17 +29,29 @@ public class NormalFrameInfo implements FrameInfo {
         return this.scoreType;
     }
 
+    @Override
+    public String scoreResult() {
+        return scoreType.scoreResult();
+    }
+
+    public boolean isFrameEnd() {
+        return scoreType.isFrameEnd();
+    }
+
+    public Score score() {
+        return scoreType.score();
+    }
+
+    public Score calculate(Score beforeScore) {
+        return scoreType.calculate(beforeScore);
+    }
+
     public boolean nextFrameIsLastFrame() {
         return frameNo == MAX_NORMAL_FRAME;
     }
 
     public int frameNo() {
         return frameNo;
-    }
-
-    @Override
-    public String scoreResult() {
-        return scoreType.scoreResult();
     }
 
     @Override

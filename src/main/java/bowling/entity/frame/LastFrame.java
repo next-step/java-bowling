@@ -2,6 +2,8 @@ package bowling.entity.frame;
 
 import bowling.entity.BowlingBoard;
 import bowling.entity.Pin;
+import bowling.entity.Score;
+import bowling.entity.score.CalculateImPossibleException;
 import bowling.entity.score.None;
 import bowling.entity.score.ScoreType;
 import org.springframework.util.StringUtils;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static bowling.controller.BowlingController.END_FRAME;
 import static bowling.entity.Pin.SCORE_ASSOCIATION_SYMBOL;
+import static bowling.entity.frame.NormalFrame.NOT_CALCULATE_VALUE;
 
 public class LastFrame implements Frame {
     private static final int EMPTY = 0;
@@ -32,23 +35,29 @@ public class LastFrame implements Frame {
         return this;
     }
 
-    @Override
-    public void addFrameResult(BowlingBoard bowlingBoard) {
-        normalFrameResult(bowlingBoard);
-        lastFrameResult(bowlingBoard);
-    }
+    public Score score() {
+        Score score = lastFrameInfo.score();
 
-    private void normalFrameResult(BowlingBoard bowlingBoard) {
-        String scoreResult = lastFrameInfo.scoreResult();
-
-        if (!(scoreResult.equals("")) && (frameNo() != END_FRAME)) {
-            bowlingBoard.addResult(new NormalFrameResult(scoreResult));
+        if (score.calculatePossible()) {
+            return score;
         }
+
+        return calculate(score);
     }
 
-    private void lastFrameResult(BowlingBoard bowlingBoard) {
+    @Override
+    public Score calculate(Score score) {
+        return lastFrameInfo.calculate(score);
+    }
+
+    @Override
+    public void addFrameResult(BowlingBoard bowlingBoard, int totalScore) {
+        lastFrameResult(bowlingBoard, totalScore);
+    }
+
+    private void lastFrameResult(BowlingBoard bowlingBoard, int totalScore) {
         if (scoreTypes.size() != EMPTY) {
-            bowlingBoard.addResult(new LastFrameResult(scoreTypesResult()));
+            bowlingBoard.addResult(new LastFrameResult(scoreTypesResult(), totalScore));
         }
     }
 
@@ -73,7 +82,7 @@ public class LastFrame implements Frame {
     @Override
     public BowlingBoard bowlingBoard() {
         BowlingBoard bowlingBoard = new BowlingBoard();
-        addFrameResult(bowlingBoard);
+        addFrameResult(bowlingBoard, 0);
         return bowlingBoard;
     }
 

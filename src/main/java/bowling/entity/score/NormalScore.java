@@ -33,6 +33,18 @@ public class NormalScore extends OnGoing {
     }
 
     @Override
+    public Score calculate(Score beforeScore) {
+
+        beforeScore = pin.sumScore(beforeScore);
+
+        if (beforeScore.calculatePossible()) {
+            return beforeScore;
+        }
+
+        throw new CalculateImPossibleException();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
