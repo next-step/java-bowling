@@ -13,6 +13,9 @@ public class FinalFrame extends Frame {
 
     @Override
     public int frameScore() {
-        return 0;
+        return scores.transSpareScores()
+                .stream()
+                .mapToInt(score -> score.getScore())
+                .sum();
     }
 }

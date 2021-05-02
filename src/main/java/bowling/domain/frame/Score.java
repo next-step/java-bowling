@@ -44,4 +44,8 @@ public enum Score {
     public String getExpression() {
         return this.expression;
     }
+
+    public int getScore() {
+        return this.score;
+    }
 }

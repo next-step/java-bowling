@@ -11,6 +11,7 @@ public class FinalScores extends Scores {
 
     public FinalScores(List<Score> scores) {
         this.scores = scores;
+
     }
 
     @Override
@@ -51,8 +52,4 @@ public class FinalScores extends Scores {
         return scores;
     }
 
-    private List<Score> add(Score score) {
-        this.scores.add(score);
-        return this.scores;
-    }
 }

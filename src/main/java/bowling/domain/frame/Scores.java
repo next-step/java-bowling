@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +13,15 @@ public abstract class Scores {
     public abstract void addScore(int score) throws Exception;
 
     public abstract List<Score> getScores();
+
+    public List<Score> transSpareScores() {
+        if (scores.contains(Score.SPARE)) {
+            int spareIndex = scores.indexOf(Score.SPARE);
+            scores.set(spareIndex, Score.valueOf(Score.SPARE.getScore() - scores.get(spareIndex - 1).getScore()));
+            return new ArrayList<>(scores);
+        }
+        return this.scores;
+    }
 
     @Override
     public boolean equals(Object o) {
