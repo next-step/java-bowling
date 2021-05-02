@@ -65,4 +65,3 @@ public class View {
         System.out.printf("|  %s |", player.name());
     }
 }
-

@@ -16,11 +16,13 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class FrameStateOnceTest {
     @Test
+    @DisplayName("Class 생성 테스트")
     void When_New_Then_Created() {
         assertThat(new FrameStateOnce(new Pinfall(1))).isEqualTo(new FrameStateOnce(new Pinfall(1)));
     }
 
     @Test
+    @DisplayName("Spare이면 StateSpare로 Transition")
     void Given_Spare_When_Roll_Then_StateSpare() {
         FrameState state = new FrameStateOnce(new Pinfall(1));
         assertThat(state.roll(new Pinfall(9))).isInstanceOf(FrameStateSpare.class);
@@ -37,29 +39,34 @@ public class FrameStateOnceTest {
     }
 
     @Test
+    @DisplayName("Open이면 StateOpen으로 Transition")
     void Given_Open_When_Roll_Then_StateOpen() {
         FrameState state = new FrameStateOnce(new Pinfall(1));
         assertThat(state.roll(new Pinfall(2))).isInstanceOf(FrameStateOpen.class);
     }
 
     @Test
-    void When_isRollable_Then_False() {
+    @DisplayName("항상 굴릴 수 있음 테스트")
+    void When_isRollable_Then_True() {
         FrameState state = new FrameStateOnce(new Pinfall(1));
         assertThat(state.isRollable()).isTrue();
     }
 
     @Test
+    @DisplayName("Pinfall에 해당하는 PointSymbol 반환 테스트")
     void When_Symbol_Then_RightSymbol() {
         FrameState state = new FrameStateOnce(new Pinfall(1));
         assertThat(state.pointSymbols().symbols()).contains(PointSymbol.ONE);
     }
 
     @Test
+    @DisplayName("점수는 항상 NotDetermined 테스트")
     void When_Score_Then_NotDetermined() {
         assertThat(new FrameStateOnce(new Pinfall(1)).score()).isEqualTo(Score.createNotDetermined());
     }
 
     @Test
+    @DisplayName("입력한 Pinfall을 잘 반환하는지 테스트")
     void When_Pinfalls_Then_FirstPinfall() {
         assertThat(new FrameStateOnce(new Pinfall(1)).pinfalls()).isEqualTo(Arrays.asList(new Pinfall(1)));
     }
