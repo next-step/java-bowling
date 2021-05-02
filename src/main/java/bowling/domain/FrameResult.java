@@ -5,6 +5,7 @@ import java.util.Objects;
 public class FrameResult {
     private final PointSymbols pointSymbols;
     private final Score score;
+    private final Score aggregatedScore;
 
     public FrameResult() {
         this(new PointSymbols());
@@ -15,8 +16,13 @@ public class FrameResult {
     }
 
     public FrameResult(PointSymbols pointSymbols, Score score) {
+        this(pointSymbols, score, Score.createNotDetermined());
+    }
+
+    public FrameResult(PointSymbols pointSymbols, Score score, Score aggregatedScore) {
         this.pointSymbols = pointSymbols;
         this.score = score;
+        this.aggregatedScore = aggregatedScore;
     }
 
     public PointSymbols pointSymbols() {
@@ -38,5 +44,9 @@ public class FrameResult {
 
     public Score score() {
         return score;
+    }
+
+    public Score aggregatedScore() {
+        return aggregatedScore;
     }
 }

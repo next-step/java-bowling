@@ -5,16 +5,19 @@ public class Bowling {
     private static final FrameFatory finalFrameFactory = new FinalFrameFactory();
 
     private final BowlingResult bowlingResult;
+    private final Frame firstFrame;
     private Frame currentFrame;
 
     public Bowling(Frame frame) {
         bowlingResult = new BowlingResult();
+        firstFrame = frame;
         currentFrame = frame;
     }
 
     public Bowling() {
         bowlingResult = new BowlingResult();
-        currentFrame = new NormalFrame();
+        firstFrame = new NormalFrame();
+        currentFrame = firstFrame;
     }
 
     public void roll(Pinfall pinfall) {
@@ -23,14 +26,15 @@ public class Bowling {
             frameFatory = finalFrameFactory;
         }
 
-        Frame newFrame = currentFrame.roll(pinfall, frameFatory);
-        bowlingResult.add(currentFrame.frameNumber(), currentFrame.result());
-        if (!currentFrame.equals(newFrame)) {
-            currentFrame = newFrame;
-        }
+        currentFrame = currentFrame.roll(pinfall, frameFatory);
     }
 
     public BowlingResult result() {
+        Frame indexFrame = firstFrame;
+        while (indexFrame != null) {
+            bowlingResult.add(indexFrame.frameNumber(), indexFrame.result());
+            indexFrame = indexFrame.next();
+        }
         return bowlingResult;
     }
 

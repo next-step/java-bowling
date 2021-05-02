@@ -76,19 +76,6 @@ public class NormalFrameTest {
     }
 
     @Test
-    void Given_Strike_When_Hasnext_Then_True() {
-        NormalFrame currentFrame = new NormalFrame();
-        currentFrame.roll(new Pinfall(10));
-
-        assertThat(currentFrame.hasNext()).isTrue();
-    }
-
-    @Test
-    void When_hasNext_Then_False() {
-        assertThat(new NormalFrame().hasNext()).isFalse();
-    }
-
-    @Test
     void Given_Open_When_Score_Then_Score() {
         NormalFrame frame = new NormalFrame(new Pinfall(1), new Pinfall(2));
         assertThat(frame.result().score()).isEqualTo(Score.create(3));

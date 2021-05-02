@@ -16,11 +16,6 @@ public class BowlingTest {
     }
 
     @Test
-    void When_Result_Then_ResultBowlingResult() {
-        assertThat(new Bowling().result()).isEqualTo(new BowlingResult());
-    }
-
-    @Test
     void Initial_FrameNumber_Is_One() {
         assertThat(new Bowling().frameNumber()).isEqualTo(new FrameNumber(1));
     }
@@ -58,7 +53,6 @@ public class BowlingTest {
     void Given_9thFrameRoll_When_Result_Then_ValidResult() {
         Frame frame9th = new NormalFrame(new FrameNumber(9), new Pinfall(1));
         Bowling bowling = new Bowling(frame9th);
-
         bowling.roll(new Pinfall(2));
 
         bowling.roll(new Pinfall(10));
@@ -79,5 +73,50 @@ public class BowlingTest {
         bowling.roll(new Pinfall(1));
 
         assertDoesNotThrow(() -> bowling.roll(new Pinfall(9)));
+    }
+
+    @Test
+    @DisplayName("1번Frame이 끝났을 때 점수 계산 테스트")
+    void Given_EndOfFirstFrame_When_Score_Then_Score() {
+        Bowling bowling = new Bowling();
+        bowling.roll(new Pinfall(1));
+        bowling.roll(new Pinfall(2));
+
+        assertThat(bowling.result().result(new FrameNumber(1)).score()).isEqualTo(Score.create(3));
+    }
+
+    @Test
+    @DisplayName("2번 Frame이 끝났을 때 점수 계산 테스트")
+    void Given_EndOfSecondFrame_When_Score_Then_Score() {
+        Bowling bowling = new Bowling();
+        bowling.roll(new Pinfall(1));
+        bowling.roll(new Pinfall(2));
+
+        bowling.roll(new Pinfall(3));
+        bowling.roll(new Pinfall(4));
+
+        assertThat(bowling.result().result(new FrameNumber(2)).aggregatedScore()).isEqualTo(Score.create(10));
+    }
+
+    @Test
+    void Given_Triple_When_FirstFrameScore_Then_30() {
+        Bowling bowling = new Bowling();
+
+        bowling.roll(new Pinfall(10));
+        bowling.roll(new Pinfall(10));
+        bowling.roll(new Pinfall(10));
+
+        assertThat(bowling.result().result(new FrameNumber(1)).score()).isEqualTo(Score.create(30));
+    }
+
+    @Test
+    void Given_Perfect_When_FirstFrameScore_Then_300() {
+        Bowling bowling = new Bowling();
+
+        for (int i = 0; i < 12; i++) {
+            bowling.roll(new Pinfall(10));
+        }
+
+        assertThat(bowling.result().result(new FrameNumber(10)).aggregatedScore()).isEqualTo(Score.create(300));
     }
 }

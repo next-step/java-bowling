@@ -5,4 +5,5 @@ public class FinalFrameFactory implements FrameFatory {
     public Frame frame(FrameNumber frameNumber) {
         return new FinalFrame();
     }
+
 }

@@ -18,6 +18,10 @@ public class FrameNumber {
         return new FrameNumber(frameNumber + 1);
     }
 
+    public FrameNumber decrease() {
+        return new FrameNumber(frameNumber -1);
+    }
+
     public Integer number() {
         return frameNumber;
     }
