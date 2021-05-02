@@ -11,6 +11,10 @@ public class Scores {
     }
 
     public void accumulate(Score score) {
+        if (score.isProgressState()) {
+            return;
+        }
+
         if (scores.isEmpty()) {
             scores.add(score);
             return;
