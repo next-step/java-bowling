@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 import bowling.domain.state.BowlingPin;
 import bowling.domain.state.States;
 
@@ -49,6 +51,14 @@ public class Frames {
         return frames.stream()
             .map(Frame::states)
             .collect(Collectors.toList());
+    }
+
+    public List<Score> scores() {
+        Scores scores = new Scores();
+        for (Frame frame : frames) {
+            scores.accumulate(frame.score());
+        }
+        return scores.toList();
     }
 
     @Override

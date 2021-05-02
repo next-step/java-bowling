@@ -7,6 +7,8 @@ import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
+import bowling.domain.score.Score;
+
 public class FramesTest {
     @Test
     void 생성_테스트() {
@@ -97,5 +99,38 @@ public class FramesTest {
         frames.bowl(10);
         // then
         assertThat(frames.isDone()).isTrue();
+    }
+
+
+    @Test
+    void 게임_점수_테스트_1() {
+        // given
+        Frames frames = Frames.init();
+        // when
+        IntStream.range(0, 9).forEach(i -> {
+            frames.bowl(10);
+        });
+        frames.bowl(10);
+        frames.bowl(10);
+        frames.bowl(10);
+        // then
+        List<Score> scores = frames.scores();
+        assertThat(scores.get(0).score()).isEqualTo(30);
+        assertThat(scores.get(9).score()).isEqualTo(300);
+    }
+
+    @Test
+    void 게임_점수_테스트_2() {
+        // given
+        Frames frames = Frames.init();
+        // when
+        IntStream.range(0, 10).forEach(i -> {
+            frames.bowl(5);
+            frames.bowl(3);
+        });
+        // then
+        List<Score> scores = frames.scores();
+        assertThat(scores.get(0).score()).isEqualTo(8);
+        assertThat(scores.get(9).score()).isEqualTo(80);
     }
 }
