@@ -6,7 +6,7 @@ import bowling.ui.Placeholder;
 import bowling.ui.ScoreBoard;
 
 public class Controller {
-    public static void main(String[] args) {
+    public void run() {
         int frameNumber = 1;
 
         Placeholder placeholder = new Placeholder();
