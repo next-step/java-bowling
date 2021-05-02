@@ -4,6 +4,10 @@ import java.util.Objects;
 
 public final class LeftCount {
 
+    private static final int NO_LEFT_COUNT = 0;
+    private static final int STRIKE_LEFT_COUNT = 2;
+    private static final int SPARE_LEFT_COUNT = 1;
+
     private final int leftCount;
 
     public LeftCount(int leftCount) {
@@ -15,15 +19,15 @@ public final class LeftCount {
     }
 
     public static LeftCount create() {
-        return null;
+        return new LeftCount(NO_LEFT_COUNT);
     }
 
     public static LeftCount strike() {
-        return null;
+        return new LeftCount(STRIKE_LEFT_COUNT);
     }
 
     public static LeftCount spare() {
-        return null;
+        return new LeftCount(SPARE_LEFT_COUNT);
     }
 
     @Override
