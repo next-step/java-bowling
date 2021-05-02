@@ -1,5 +1,10 @@
 package bowling.domain;
 
+import bowling.domain.dto.FrameInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Frame {
 
     protected static final int NON_BONUS = 0;
@@ -30,6 +35,18 @@ public abstract class Frame {
 
     public boolean isSpare() {
         return pitches.isSpare();
+    }
+
+    public FrameInfo assembleFrameInfo() {
+        return new FrameInfo(assemblePinDownResults(pitches), score(), isFinalFrame(), isSpare(), isScoreDecided());
+    }
+
+    private List<Integer> assemblePinDownResults(Pitches pitches) {
+        List<Integer> pinDownResults = new ArrayList<>();
+        for (Pitch pitch : pitches) {
+            pinDownResults.add(pitch.value());
+        }
+        return pinDownResults;
     }
 
     abstract public Frame next();

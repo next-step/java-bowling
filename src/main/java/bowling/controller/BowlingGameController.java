@@ -36,20 +36,10 @@ public class BowlingGameController {
     private List<FrameInfo> assembleFrameInfos(Frames frames) {
         List<FrameInfo> frameInfos = new ArrayList<>();
         for (Frame frame : frames) {
-            frameInfos.add(assembleFrameInfo(frame));
+            FrameInfo frameInfo = frame.assembleFrameInfo();
+            frameInfos.add(frameInfo);
         }
         return frameInfos;
     }
 
-    private FrameInfo assembleFrameInfo(Frame frame) {
-        return new FrameInfo(assemblePinDownResults(frame.pitches()), frame.score(), frame.isFinalFrame(), frame.isSpare(), frame.isScoreDecided());
-    }
-
-    private List<Integer> assemblePinDownResults(Pitches pitches) {
-        List<Integer> pinDownResults = new ArrayList<>();
-        for (Pitch pitch : pitches) {
-            pinDownResults.add(pitch.value());
-        }
-        return pinDownResults;
-    }
 }
