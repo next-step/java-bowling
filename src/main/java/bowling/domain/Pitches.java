@@ -10,7 +10,6 @@ public class Pitches implements Iterable<Pitch> {
 
     private static final int DEFAULT_PITCH_ABLE_COUNT = 2;
     private static final int FIRST_INDEX = 0;
-    private static final String SPARE_MARK = "/";
 
     private final List<Pitch> values;
     private int pitchAbleCount;

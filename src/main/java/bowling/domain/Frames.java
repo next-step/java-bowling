@@ -8,8 +8,6 @@ import java.util.function.Consumer;
 
 public class Frames implements Iterable<Frame> {
 
-    public static final String SCORE_BOARD_DELIMITER = "|";
-
     private final List<Frame> frames;
 
     public Frames() {
