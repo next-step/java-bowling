@@ -4,11 +4,11 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 import bowling.utils.StringUtils;
+import bowling.view.ui.Row;
 
 public final class OutputView {
 
     private static final int FRAME_SIZE = 6;
-    private static final int NAME_PADDING_SIZE = 5;
     private static final String BORDER = "|";
 
     private final BoardHeaderView boardHeaderView;
@@ -23,10 +23,9 @@ public final class OutputView {
 
     public void printScoreBoard(Player player) {
         printBoardHeader();
-        printPlayerName(player);
 
         final Frames frames = player.frames();
-        printStatus(frames);
+        printPlayerNameAndStatus(player, frames);
         printScore(frames);
     }
 
@@ -34,23 +33,15 @@ public final class OutputView {
         System.out.println(boardHeaderView.boardHeader());
     }
 
-    private void printPlayerName(Player player) {
-        final StringBuilder playerNameBuilder = new StringBuilder();
+    private void printPlayerNameAndStatus(Player player, Frames frames) {
+        final Row playerNameAndStatusRow = new Row();
 
-        playerNameBuilder.append(BORDER).append(StringUtils.padLeft(new PlayerNameView(player).playerName(), NAME_PADDING_SIZE)).append(" ");
-
-        System.out.print(playerNameBuilder);
-    }
-
-    private void printStatus(Frames frames) {
-        final StringBuilder playerResultBuilder = new StringBuilder();
+        playerNameAndStatusRow.addCell(PlayerNameView.from(player).cell());
 
         for (Frame frame : frames.value()) {
-            playerResultBuilder.append(BORDER).append(StringUtils.alignCenter(new FrameStatusView(frame).frameStatus(), FRAME_SIZE));
+            playerNameAndStatusRow.addCell(FrameStatusView.from(frame).cell());
         }
-        playerResultBuilder.append("|").append("\n");
-
-        System.out.print(playerResultBuilder);
+        System.out.print(playerNameAndStatusRow.row());
     }
 
     private void printScore(Frames frames) {

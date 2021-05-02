@@ -60,7 +60,7 @@ class FrameStatusViewTest {
     @DisplayName("Frame의 상태를 의도한 대로 출력해주는지 확인한다.")
     void testName(Frame frame, String expectedOutput) {
         // given
-        final FrameStatusView frameStatusView = new FrameStatusView(frame);
+        final FrameStatusView frameStatusView = FrameStatusView.from(frame);
 
         // when
         final String frameStatus = frameStatusView.frameStatus();

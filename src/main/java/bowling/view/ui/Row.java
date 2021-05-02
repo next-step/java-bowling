@@ -2,6 +2,7 @@ package bowling.view.ui;
 
 import bowling.utils.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Row {
@@ -12,6 +13,10 @@ public final class Row {
     private static final int RIGHT_ALIGN_SIZE = FRAME_SIZE - 1;
 
     private final List<Cell> cells;
+
+    public Row() {
+        this(new ArrayList<>());
+    }
 
     public Row(List<Cell> cells) {
         this.cells = cells;

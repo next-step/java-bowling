@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.frame.Frame;
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
+import bowling.view.ui.Cell;
 
 public final class FrameStatusView {
 
@@ -16,8 +17,16 @@ public final class FrameStatusView {
 
     private final Frame frame;
 
-    public FrameStatusView(Frame frame) {
+    private FrameStatusView(Frame frame) {
         this.frame = frame;
+    }
+
+    public static FrameStatusView from(Frame frame) {
+        return new FrameStatusView(frame);
+    }
+
+    public Cell cell() {
+        return Cell.center(frameStatus());
     }
 
     public String frameStatus() {

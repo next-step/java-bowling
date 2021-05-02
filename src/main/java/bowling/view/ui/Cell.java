@@ -12,6 +12,14 @@ public final class Cell {
         this.align = align;
     }
 
+    public static Cell right(String data) {
+        return new Cell(data, Align.RIGHT);
+    }
+
+    public static Cell center(String data) {
+        return new Cell(data, Align.CENTER);
+    }
+
     public String data() {
         if (data == null) {
             return EMPTY_STRING;
