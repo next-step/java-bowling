@@ -46,7 +46,7 @@ class ScoreTest {
 
         // then
         assertAll(
-                () -> assertThat(spare).isEqualTo(Score.strike()),
+                () -> assertThat(spare).isEqualTo(Score.spare()),
                 () -> assertThat(spare.canCalculate()).isFalse()
         );
     }

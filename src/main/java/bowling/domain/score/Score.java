@@ -7,7 +7,8 @@ import java.util.Objects;
 public final class Score {
 
     private static final int CALCULABLE_COUNT = 0;
-    private static final int STRIKE_LEFT_COUNT = 3;
+    private static final int STRIKE_LEFT_COUNT = 2;
+    private static final int SPARE_LEFT_COUNT = 1;
 
     private final int score;
     private final int leftCount;
@@ -22,11 +23,11 @@ public final class Score {
     }
 
     public static Score strike() {
-        return of(Pin.MAX_COUNT, STRIKE_LEFT_COUNT);
+        return new Score(Pin.MAX_COUNT, STRIKE_LEFT_COUNT);
     }
 
     public static Score spare() {
-        return null;
+        return new Score(Pin.MAX_COUNT, SPARE_LEFT_COUNT);
     }
 
     public boolean canCalculate() {
