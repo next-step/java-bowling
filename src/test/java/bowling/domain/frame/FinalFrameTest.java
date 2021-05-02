@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.FinalPins;
 import bowling.domain.pin.Pin;
+import bowling.domain.score.Score;
 import bowling.exception.NoNextFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -107,7 +108,7 @@ class FinalFrameTest {
         final FinalFrame finalFrame = FinalFrame.from(FinalPins.create());
 
         // when
-        final Integer score = finalFrame.score();
+        final Score score = finalFrame.score();
 
         // then
         assertThat(score).isNull();
@@ -120,7 +121,7 @@ class FinalFrameTest {
         final FinalFrame finalFrame = FinalFrame.from(FinalPins.of(new Pin(5)));
 
         // when
-        final Integer score = finalFrame.score();
+        final Score score = finalFrame.score();
 
         // then
         assertThat(score).isNull();
@@ -133,7 +134,7 @@ class FinalFrameTest {
         final FinalFrame finalFrame = FinalFrame.from(FinalPins.of(STRIKE_PIN, new Pin(5)));
 
         // when
-        final Integer score = finalFrame.score();
+        final Score score = finalFrame.score();
 
         // then
         assertThat(score).isNull();
@@ -146,7 +147,7 @@ class FinalFrameTest {
         final FinalFrame finalFrame = FinalFrame.from(FinalPins.of(new Pin(2), new Pin(8)));
 
         // when
-        final Integer score = finalFrame.score();
+        final Score score = finalFrame.score();
 
         // then
         assertThat(score).isNull();
@@ -160,10 +161,10 @@ class FinalFrameTest {
         final FinalFrame finalFrame = FinalFrame.from(FinalPins.of(new Pin(2), new Pin(3)));
 
         // when
-        final Integer score = finalFrame.score();
+        final Score score = finalFrame.score();
 
         // then
-        assertThat(score).isEqualTo(5);
+        assertThat(score.calculate()).isEqualTo(5);
     }
 
     // TODO: Parameterized Test로 개선
@@ -174,9 +175,9 @@ class FinalFrameTest {
         final FinalFrame finalFrame = FinalFrame.from(FinalPins.of(STRIKE_PIN, STRIKE_PIN, STRIKE_PIN));
 
         // when
-        final Integer score = finalFrame.score();
+        final Score score = finalFrame.score();
 
         // then
-        assertThat(score).isEqualTo(30);
+        assertThat(score.calculate()).isEqualTo(30);
     }
 }

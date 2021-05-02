@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ public abstract class Frame {
 
     public abstract boolean isFinalFrame();
 
-    public abstract Integer score();
+    public abstract Score score();
 
     public Pins pins() {
         return pins;

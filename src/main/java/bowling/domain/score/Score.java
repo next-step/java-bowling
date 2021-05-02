@@ -23,6 +23,10 @@ public final class Score {
         return new Score(score, leftCount);
     }
 
+    public static Score normal(int score) {
+        return new Score(score, LeftCount.create());
+    }
+
     public static Score strike() {
         return new Score(Pin.MAX_COUNT, LeftCount.strike());
     }

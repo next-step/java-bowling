@@ -11,11 +11,22 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class ScoreTest {
 
     @Test
-    @DisplayName("score를 생성한다. 일반 score는 점수 계산이 가능하다.")
+    @DisplayName("score를 생성한다.")
     void create() {
         // given
         // when
         final Score score = Score.of(9, 0);
+
+        // then
+        assertThat(score).isEqualTo(Score.of(9, 0));
+    }
+
+    @Test
+    @DisplayName("normal score를 생성한다. 일반 score는 점수 계산이 가능하다.")
+    void normal() {
+        // given
+        // when
+        final Score score = Score.normal(9);
 
         // then
         assertAll(

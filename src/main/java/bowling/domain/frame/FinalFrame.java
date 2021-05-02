@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.FinalPins;
 import bowling.domain.pin.Pin;
+import bowling.domain.score.Score;
 import bowling.exception.NoNextFrameException;
 
 public final class FinalFrame extends Frame {
@@ -48,7 +49,10 @@ public final class FinalFrame extends Frame {
     }
 
     @Override
-    public Integer score() {
-        return 0;
+    public Score score() {
+        if (!isEnded()) {
+            return null;
+        }
+        return Score.normal(pins.totalPinCount());
     }
 }

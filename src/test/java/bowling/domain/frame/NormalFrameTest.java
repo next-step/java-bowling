@@ -4,6 +4,7 @@ import bowling.domain.TestFixture;
 import bowling.domain.pin.FinalPins;
 import bowling.domain.pin.NormalPins;
 import bowling.domain.pin.Pin;
+import bowling.domain.score.Score;
 import bowling.exception.FramePinCountException;
 import bowling.exception.IllegalNormalFrameException;
 import org.junit.jupiter.api.DisplayName;
@@ -128,7 +129,7 @@ class NormalFrameTest {
         final Frame frame = NormalFrame.createFirstFrame();
 
         // when
-        final Integer score = frame.score();
+        final Score score = frame.score();
 
         // then
         assertThat(score).isNull();
@@ -142,7 +143,7 @@ class NormalFrameTest {
         frame.knockDownPin(new Pin(5));
 
         // when
-        final Integer score = frame.score();
+        final Score score = frame.score();
 
         // then
         assertThat(score).isNull();
@@ -157,10 +158,10 @@ class NormalFrameTest {
         frame.knockDownPin(new Pin(2));
 
         // when
-        final Integer score = frame.score();
+        final Score score = frame.score();
 
         // then
-        assertThat(score).isEqualTo(7);
+        assertThat(score.calculate()).isEqualTo(7);
     }
 
     @Test
@@ -171,7 +172,7 @@ class NormalFrameTest {
         firstFrame.knockDownPin(TestFixture.STRIKE_PIN);
 
         // when
-        final Integer score = firstFrame.score();
+        final Score score = firstFrame.score();
 
         // then
         assertThat(score).isNull();
@@ -190,10 +191,10 @@ class NormalFrameTest {
         secondFrame.knockDownPin(new Pin(2));
 
         // when
-        final Integer score = firstFrame.score();
+        final Score score = firstFrame.score();
 
         // then
-        assertThat(score).isEqualTo(17);
+        assertThat(score.calculate()).isEqualTo(17);
     }
 
     @Test
@@ -211,10 +212,10 @@ class NormalFrameTest {
         thirdFrame.knockDownPin(TestFixture.STRIKE_PIN);
 
         // when
-        final Integer score = firstFrame.score();
+        final Score score = firstFrame.score();
 
         // then
-        assertThat(score).isEqualTo(30);
+        assertThat(score.calculate()).isEqualTo(30);
     }
 
     @Test
@@ -226,7 +227,7 @@ class NormalFrameTest {
         firstFrame.knockDownPin(new Pin(2));
 
         // when
-        final Integer score = firstFrame.score();
+        final Score score = firstFrame.score();
 
         // then
         assertThat(score).isNull();
@@ -245,9 +246,9 @@ class NormalFrameTest {
         secondFrame.knockDownPin(new Pin(5));
 
         // when
-        final Integer score = firstFrame.score();
+        final Score score = firstFrame.score();
 
         // then
-        assertThat(score).isEqualTo(15);
+        assertThat(score.calculate()).isEqualTo(15);
     }
 }
