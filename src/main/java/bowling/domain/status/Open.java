@@ -2,7 +2,7 @@ package bowling.domain.status;
 
 import bowling.domain.Pitch;
 
-public class Open implements Status {
+public class Open extends Finished {
     private final Pitch current;
 
     public Open(Pitch current) {
@@ -11,12 +11,7 @@ public class Open implements Status {
 
     @Override
     public Status roll(int fallenPins) {
-        return null;
-    }
-
-    @Override
-    public boolean isEnd() {
-        return true;
+        throw new UnsupportedOperationException();
     }
 
     @Override

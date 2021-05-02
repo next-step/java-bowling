@@ -2,7 +2,7 @@ package bowling.domain.status;
 
 import bowling.domain.Pitch;
 
-public class Spare implements Status {
+public class Spare extends Finished {
     private final Pitch current;
 
     public Spare(Pitch current) {
@@ -14,11 +14,6 @@ public class Spare implements Status {
         Pitch pitch = new Pitch(fallenPins);
 
         return new Final(pitch, 0);
-    }
-
-    @Override
-    public boolean isEnd() {
-        return true;
     }
 
     @Override

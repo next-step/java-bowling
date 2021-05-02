@@ -2,7 +2,7 @@ package bowling.domain.status;
 
 import bowling.domain.Pitch;
 
-public class Ready implements Status {
+public class Ready extends Continue {
     @Override
     public Status roll(int fallenPins) {
         Pitch pitch = new Pitch(fallenPins);
@@ -11,12 +11,7 @@ public class Ready implements Status {
             return new Strike(pitch);
         }
 
-        return new Default(pitch);
-    }
-
-    @Override
-    public boolean isEnd() {
-        return false;
+        return new Hold(pitch);
     }
 
     @Override

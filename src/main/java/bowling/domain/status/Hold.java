@@ -2,11 +2,11 @@ package bowling.domain.status;
 
 import bowling.domain.Pitch;
 
-public class Default implements Status {
+public class Hold extends Continue {
 
     private Pitch current;
 
-    public Default(Pitch current) {
+    public Hold(Pitch current) {
         this.current = current;
     }
 
@@ -19,11 +19,6 @@ public class Default implements Status {
         }
 
         return new Open(pitch);
-    }
-
-    @Override
-    public boolean isEnd() {
-        return false;
     }
 
     @Override

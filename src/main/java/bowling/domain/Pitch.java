@@ -20,7 +20,7 @@ public class Pitch {
         this.status = status;
     }
 
-    public Pitch pitch(int fallenPins, int pitchIndex) {
+    public Pitch pitch(int fallenPins) {
         return new Pitch(fallenPins, status.roll(fallenPins));
     }
 

@@ -11,15 +11,10 @@ public class Pitches {
         this.pitches = new ArrayList<>();
     }
 
-    public int sum() {
-        return pitches.stream()
-                .mapToInt(Pitch::intValue)
-                .sum();
-    }
-
     public Pitches pitch(int point) {
         Pitch lastPitch = lastPitch();
-        pitches.add(lastPitch.pitch(point, pitches.size()));
+        pitches.add(lastPitch.pitch(point));
+        
         return this;
     }
 
@@ -39,10 +34,17 @@ public class Pitches {
         return lastPitch().hasBonusPitch();
     }
 
+    public int sum() {
+        return pitches.stream()
+                .mapToInt(Pitch::intValue)
+                .sum();
+    }
+
     private Pitch lastPitch() {
         if (pitches.isEmpty()) {
             return new Pitch(0);
         }
+
         return pitches.get(pitches.size() - 1);
     }
 }
