@@ -3,6 +3,8 @@ package bowling.domain.status;
 import bowling.domain.Pitch;
 
 public class Strike extends Finished {
+    private static final int BONUS_PITCH_COUNT = 2;
+
     private final Pitch current;
 
     public Strike(Pitch current) {
@@ -12,7 +14,10 @@ public class Strike extends Finished {
     @Override
     public Status roll(int fallenPins) {
         Pitch pitch = new Pitch(fallenPins);
-        return new Final(pitch, 1);
+        if (pitch.isStrike()) {
+            return new Bonus(pitch, BONUS_PITCH_COUNT, new Strike(pitch));
+        }
+        return new Bonus(pitch, BONUS_PITCH_COUNT, new Hold(pitch));
     }
 
     @Override
