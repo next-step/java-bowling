@@ -1,10 +1,13 @@
 package bowling.domain.score;
 
+import bowling.domain.pin.Pin;
+
 import java.util.Objects;
 
 public final class Score {
 
     private static final int CALCULABLE_COUNT = 0;
+    private static final int STRIKE_LEFT_COUNT = 3;
 
     private final int score;
     private final int leftCount;
@@ -19,7 +22,7 @@ public final class Score {
     }
 
     public static Score strike() {
-        return null;
+        return of(Pin.MAX_COUNT, STRIKE_LEFT_COUNT);
     }
 
     public static Score spare() {
