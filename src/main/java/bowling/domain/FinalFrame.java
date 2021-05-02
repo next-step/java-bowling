@@ -14,14 +14,14 @@ public class FinalFrame extends Frame {
     @Override
     protected void updateCondition(int inputScore) {
         if (inputScore == 10) {
-            score.fillPins();
+            bowlingPin.fillPins();
             return;
         }
-        if (score.isPinCleared()) {
-            score.fillPins();
+        if (bowlingPin.isPinCleared()) {
+            bowlingPin.fillPins();
             return;
         }
-        if (availability == 1 && !score.isPinCleared()) {
+        if (availability == 1 && !bowlingPin.isPinCleared()) {
             availability = 0;
         }
     }

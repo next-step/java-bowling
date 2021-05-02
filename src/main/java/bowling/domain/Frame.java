@@ -1,17 +1,17 @@
 package bowling.domain;
 
 public abstract class Frame {
-    protected final Score score;
+    protected final BowlingPin bowlingPin;
     protected int availability;
 
     protected Frame() {
-        score = new Score();
+        bowlingPin = new BowlingPin();
     }
 
     public int addScore(int inputScore) {
         if (isAvailable()) {
             --availability;
-            score.updateScore(inputScore);
+            bowlingPin.update(inputScore);
             updateCondition(inputScore);
             return inputScore;
         }
