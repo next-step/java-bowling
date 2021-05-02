@@ -43,6 +43,10 @@ public class Pin {
         return new Pin(tryNum + 1, rollNumber.hit(pinNum));
     }
 
+    public RollResult checkResult() {
+        return RollResult.of();
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -56,5 +60,4 @@ public class Pin {
     public int hashCode() {
         return Objects.hash(tryNum, pinNum);
     }
-
 }

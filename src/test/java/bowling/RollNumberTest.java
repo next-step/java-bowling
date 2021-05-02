@@ -30,5 +30,4 @@ public class RollNumberTest {
         assertThat(rollNumber.hit(1)).isEqualTo(0);
     }
 
-
 }

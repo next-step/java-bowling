@@ -33,7 +33,29 @@ public class PinTest {
     }
 
     @Test
-    void 핀에따른_투구결과를확인() {
+    void strike핀의_결과확인() {
+        Pin after = pin.fallen(RollNumber.of(10));
+        assertThat(after.checkResult()).isEqualTo(RollResult.of());
+    }
 
+    @Test
+    void spare핀의_결과확인() {
+        Pin after = pin.fallen(RollNumber.of(7));
+        after = after.fallen(RollNumber.of(3));
+        assertThat(after.checkResult()).isEqualTo(RollResult.of());
+    }
+
+    @Test
+    void miss핀의_결과확인() {
+        Pin after = pin.fallen(RollNumber.of(0));
+        after = after.fallen(RollNumber.of(0));
+        assertThat(after.checkResult()).isEqualTo(RollResult.of());
+    }
+
+    @Test
+    void gutter핀의_결과확인() {
+        Pin after = pin.fallen(RollNumber.of(7));
+        after = after.fallen(RollNumber.of(1));
+        assertThat(after.checkResult()).isEqualTo(RollResult.of());
     }
 }
