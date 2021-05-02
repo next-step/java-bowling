@@ -5,16 +5,13 @@ import java.util.stream.Collectors;
 
 public class BowlingResult {
     private final Map<FrameNumber, FrameResult> frameResultsMap;
-    private final Map<FrameNumber, Score> aggregatedScoreMap;
 
     public BowlingResult() {
         frameResultsMap = new HashMap<>();
-        aggregatedScoreMap = new HashMap<>();
     }
 
     public BowlingResult(List<FrameResult> frameResultsMap) {
         this.frameResultsMap = new HashMap<>();
-        this.aggregatedScoreMap = new HashMap<>();
 
         FrameNumber frameNumber = new FrameNumber(1);
         for (FrameResult frameResult : frameResultsMap) {
@@ -57,12 +54,12 @@ public class BowlingResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BowlingResult that = (BowlingResult) o;
-        return Objects.equals(frameResultsMap, that.frameResultsMap) && Objects.equals(aggregatedScoreMap, that.aggregatedScoreMap);
+        return Objects.equals(frameResultsMap, that.frameResultsMap);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameResultsMap, aggregatedScoreMap);
+        return Objects.hash(frameResultsMap);
     }
 
     private List<FrameResult> frameResultsMapToList() {
