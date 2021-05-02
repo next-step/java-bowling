@@ -180,10 +180,20 @@
 
 ## 리뷰 내용 정리
 
-- [x] `Frames#initialize`와 `Frames#value`의 중복 코드 제거(Frame을 미리 만들지 않는 식으로 개선해보면 어떨까?)
-- [ ] `FrameStatusViewTest`를 DCI 패턴으로 구조화 해보자.
-    - [x] X/8/ 처럼 나머지가 일반구로 처리되어야 하는 경우에 대한 테스트를 추가하자.
-- [x] `pins#knockDownPin`에서 `validate`를 수행하는 것이 더 OOP에 맞다. (결국 객체를 분리해야 한다.)
-    - [x] 추상클래스로 추출해서, `validate` 부분을 Override하는 식으로 개발하면 되겠다.
-- [x] `Pin`에 `isGutter` 메서드 추가하기
-    - [x] `Pin`에 `status()` 부분은 `isGutter`를 추가하면서 View쪽으로 옮긴다.
+- step2
+    - [x] `Frames#initialize`와 `Frames#value`의 중복 코드 제거(Frame을 미리 만들지 않는 식으로 개선해보면 어떨까?)
+    - [ ] `FrameStatusViewTest`를 DCI 패턴으로 구조화 해보자.
+        - [x] X/8/ 처럼 나머지가 일반구로 처리되어야 하는 경우에 대한 테스트를 추가하자.
+    - [x] `pins#knockDownPin`에서 `validate`를 수행하는 것이 더 OOP에 맞다. (결국 객체를 분리해야 한다.)
+        - [x] 추상클래스로 추출해서, `validate` 부분을 Override하는 식으로 개발하면 되겠다.
+    - [x] `Pin`에 `isGutter` 메서드 추가하기
+        - [x] `Pin`에 `status()` 부분은 `isGutter`를 추가하면서 View쪽으로 옮긴다.
+- step3
+    - [ ] `Pins`에서 `Validator` 객체를 주입받아 `validate`를 위임하도록 수정
+    - [ ] `View` 개선
+        - [ ] `PlayerNameView`가 더 많은 부분을 출력하도록 변경
+        - [ ] `Cell`: 한 칸을 표현하는 클래스 선언
+        - [ ] `Table`: Cell의 모음으로 표 형태를 출력(`List<Cell>`?)
+    - [ ] `Score`: `notCalculable` 객체 개선(0~3)으로 관리하도록
+    - [ ] `Frames`: Throw 하기 전 Frame은 생성되지 않도록 Frame의 개수를 관리
+    - [ ] `StringUtils`: 테스트 추가
