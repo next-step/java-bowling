@@ -70,4 +70,17 @@ class LeftCountTest {
                 .isInstanceOf(InvalidLeftCountException.class)
                 .hasMessage(InvalidLeftCountException.INVALID_LEFT_COUNT);
     }
+
+    @Test
+    @DisplayName("decrease를 사용하면 1회 줄어든다.")
+    void decrease() {
+        // given
+        final LeftCount leftCount = LeftCount.from(1);
+
+        // when
+        final LeftCount decreaseCount = leftCount.decrease();
+
+        // then
+        assertThat(decreaseCount).isEqualTo(LeftCount.from(0));
+    }
 }

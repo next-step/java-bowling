@@ -87,4 +87,17 @@ class ScoreTest {
                 .isInstanceOf(CannotCalculateException.class)
                 .hasMessage(CannotCalculateException.CANNOT_CALCULATE);
     }
+
+    @Test
+    @DisplayName("add를 하면 count는 합쳐지고, 잔여횟수는 1회 줄어든다.")
+    void add() {
+        // given
+        final Score spare = Score.spare();
+
+        // when
+        final Score addedScore = spare.add(Score.normal(5));
+
+        // then
+        assertThat(addedScore).isEqualTo(Score.of(15, 0));
+    }
 }

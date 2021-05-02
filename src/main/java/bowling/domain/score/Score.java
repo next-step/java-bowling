@@ -54,6 +54,10 @@ public final class Score {
         return score;
     }
 
+    public Score add(Score toAdd) {
+        return new Score(score + toAdd.score, leftCount.decrease());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

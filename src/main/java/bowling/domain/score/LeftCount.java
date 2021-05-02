@@ -45,6 +45,10 @@ public final class LeftCount {
         return leftCount > NO_LEFT_COUNT;
     }
 
+    public LeftCount decrease() {
+        return LeftCount.from(leftCount - 1);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
