@@ -67,6 +67,9 @@ public final class NormalFrame extends Frame {
 
     @Override
     public Score score() {
+        if (!isEnded()) {
+            return Score.notCalculable();
+        }
         return null;
     }
 }

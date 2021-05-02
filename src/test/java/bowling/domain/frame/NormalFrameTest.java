@@ -132,7 +132,7 @@ class NormalFrameTest {
         final Score score = frame.score();
 
         // then
-        assertThat(score).isNull();
+        assertThat(score.canCalculate()).isFalse();
     }
 
     @Test
@@ -146,7 +146,7 @@ class NormalFrameTest {
         final Score score = frame.score();
 
         // then
-        assertThat(score).isNull();
+        assertThat(score.canCalculate()).isFalse();
     }
 
     @Test
@@ -175,7 +175,7 @@ class NormalFrameTest {
         final Score score = firstFrame.score();
 
         // then
-        assertThat(score).isNull();
+        assertThat(score.canCalculate()).isFalse();
     }
 
     @Test
@@ -230,7 +230,7 @@ class NormalFrameTest {
         final Score score = firstFrame.score();
 
         // then
-        assertThat(score).isNull();
+        assertThat(score.canCalculate()).isFalse();
     }
 
     @Test
