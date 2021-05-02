@@ -12,7 +12,7 @@ public final class StringUtils {
 
     public static String alignCenter(String padString, int size) {
         if (padString == null) {
-            return alignCenter(String.valueOf(padString), size);
+            return alignCenter(BLANK_STRING, size);
         }
 
         if (size <= padString.length()) {

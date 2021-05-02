@@ -194,4 +194,4 @@
         - [ ] `Table`: Cell의 모음으로 표 형태를 출력(`List<Cell>`?)
     - [ ] `Frames`: Throw 하기 전 Frame은 생성되지 않도록 Frame의 개수를 관리
         - 잠정적으로 보류(NPE를 억제할 우아한 방법을 찾지 못했다.)
-    - [ ] `StringUtils`: 테스트 추가
+    - [x] `StringUtils`: 테스트 추가
