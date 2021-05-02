@@ -10,13 +10,13 @@ public class FinalFrame extends Frame {
 
     @Override
     public void pitch(Pitch pitch) {
-        if (pitches().isSpare()) {
-            pitches().increasePitchAbleCount();
-        }
         if (pitches().isEmpty() && pitch.isStrike()) {
             pitches().increasePitchAbleCount();
         }
         pitches().add(pitch);
+        if (pitches().isSpare()) {
+            pitches().increasePitchAbleCount();
+        }
     }
 
     @Override
