@@ -1,16 +1,15 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.FinalPins;
+import bowling.domain.pin.NormalPins;
 import bowling.domain.pin.Pin;
-import bowling.domain.pin.Pins;
-import bowling.exception.FramePinCountException;
 import bowling.exception.IllegalNormalFrameException;
 
 public final class NormalFrame extends Frame {
 
     public static final RoundNumber MAX_NORMAL_FRAME_ROUND_NUMBER = new RoundNumber(RoundNumber.MAX - 1);
-    private static final int MAX_NORMAL_PIN_COUNT = 10;
 
-    private NormalFrame(RoundNumber roundNumber, Pins pins) {
+    private NormalFrame(RoundNumber roundNumber, NormalPins pins) {
         super(roundNumber, pins);
     }
 
@@ -22,7 +21,7 @@ public final class NormalFrame extends Frame {
         return nextFrame;
     }
 
-    public static Frame of(RoundNumber roundNumber, Pins pins) {
+    public static Frame of(RoundNumber roundNumber, NormalPins pins) {
         validateNormalRoundNumber(roundNumber);
         return new NormalFrame(roundNumber, pins);
     }
@@ -34,28 +33,25 @@ public final class NormalFrame extends Frame {
     }
 
     public static Frame createFirstFrame() {
-        return NormalFrame.of(RoundNumber.firstRoundNumber(), Pins.create());
+        return NormalFrame.of(RoundNumber.firstRoundNumber(), NormalPins.create());
     }
 
     @Override
     public void createNextFrame() {
+        this.nextFrame = generateNextFrame();
+    }
+
+    private Frame generateNextFrame() {
         if (MAX_NORMAL_FRAME_ROUND_NUMBER.equals(roundNumber)) {
-            this.nextFrame = FinalFrame.from(Pins.create());
-            return;
+            return FinalFrame.from(FinalPins.create());
         }
-        this.nextFrame = NormalFrame.of(roundNumber.nextRoundNumber(), Pins.create());
+        return NormalFrame.of(roundNumber.nextRoundNumber(), NormalPins.create());
     }
 
     @Override
     public void knockDownPin(Pin pin) {
-        validatePinCount(pin);
+        pins.validatePinCount(pin);
         pins.knockDownPin(pin);
-    }
-
-    private void validatePinCount(Pin pin) {
-        if (pins.totalPinCount() + pin.pinCount() > MAX_NORMAL_PIN_COUNT) {
-            throw new FramePinCountException();
-        }
     }
 
     @Override

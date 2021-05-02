@@ -1,8 +1,9 @@
 package bowling.domain.frame;
 
 import bowling.domain.TestFixture;
+import bowling.domain.pin.FinalPins;
+import bowling.domain.pin.NormalPins;
 import bowling.domain.pin.Pin;
-import bowling.domain.pin.Pins;
 import bowling.exception.FramePinCountException;
 import bowling.exception.IllegalNormalFrameException;
 import org.junit.jupiter.api.DisplayName;
@@ -16,16 +17,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class NormalFrameTest {
 
     @Test
-    @DisplayName("NormalFrame은 RoundNumber와 Pins를 가지고 생성한다.")
+    @DisplayName("NormalFrame은 RoundNumber와 NormalPins를 가지고 생성한다.")
     void create() {
         // given
         final RoundNumber roundNumber = new RoundNumber(1);
 
         // when
-        final Frame frame = NormalFrame.of(roundNumber, Pins.create());
+        final Frame frame = NormalFrame.of(roundNumber, NormalPins.create());
 
         // then
-        assertThat(frame).isEqualTo(NormalFrame.of(roundNumber, Pins.create()));
+        assertThat(frame).isEqualTo(NormalFrame.of(roundNumber, NormalPins.create()));
     }
 
     @Test
@@ -39,7 +40,7 @@ class NormalFrameTest {
         final Frame frame = NormalFrame.createFirstFrame();
 
         // then
-        assertThat(frame).isEqualTo(NormalFrame.of(roundNumber, Pins.create()));
+        assertThat(frame).isEqualTo(NormalFrame.of(roundNumber, NormalPins.create()));
     }
 
     @ParameterizedTest
@@ -49,13 +50,13 @@ class NormalFrameTest {
         // given
         final RoundNumber roundNumber = new RoundNumber(roundNumberSource);
         final RoundNumber nextRoundNumber = new RoundNumber(roundNumberSource + 1);
-        final Frame frame = NormalFrame.of(roundNumber, Pins.create());
+        final Frame frame = NormalFrame.of(roundNumber, NormalPins.create());
 
         // when
         frame.createNextFrame();
 
         // then
-        assertThat(frame.nextFrame()).isEqualTo(NormalFrame.of(nextRoundNumber, Pins.create()));
+        assertThat(frame.nextFrame()).isEqualTo(NormalFrame.of(nextRoundNumber, NormalPins.create()));
     }
 
     @Test
@@ -63,19 +64,19 @@ class NormalFrameTest {
     void NineFrameNextFrame() {
         // given
         final RoundNumber nineRoundNumber = new RoundNumber(9);
-        final Frame nineFrame = NormalFrame.of(nineRoundNumber, Pins.create());
+        final Frame nineFrame = NormalFrame.of(nineRoundNumber, NormalPins.create());
 
         // when
         nineFrame.createNextFrame();
 
         // then
-        assertThat(nineFrame.nextFrame()).isEqualTo(FinalFrame.from(Pins.create()));
+        assertThat(nineFrame.nextFrame()).isEqualTo(FinalFrame.from(FinalPins.create()));
     }
 
     @Test
     @DisplayName("Normal Frame은 10라운드가 될 수 없다.")
     void NormalFrameCannotBeTenRound() {
-        assertThatThrownBy(() -> NormalFrame.of(new RoundNumber(10), Pins.create()))
+        assertThatThrownBy(() -> NormalFrame.of(new RoundNumber(10), NormalPins.create()))
                 .isInstanceOf(IllegalNormalFrameException.class)
                 .hasMessage(IllegalNormalFrameException.ILLEGAL_NORMAL_FRAME_ROUND);
     }

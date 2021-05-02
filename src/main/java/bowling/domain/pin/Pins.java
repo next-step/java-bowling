@@ -3,29 +3,19 @@ package bowling.domain.pin;
 import bowling.domain.frame.FrameStatus;
 import bowling.exception.PinsCountExceededException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public final class Pins {
+public abstract class Pins {
 
     private static final int FIRST_PIN_INDEX = 0;
     private static final int SECOND_PIN_INDEX = 1;
     private static final int THIRD_PIN_INDEX = 2;
     private static final int MAX_PIN_COUNT = 3;
 
-    private final List<Pin> pins;
+    protected final List<Pin> pins;
 
-    private Pins() {
-        this(new ArrayList<>());
-    }
-
-    private Pins(Pin... pins) {
-        this(Arrays.asList(pins));
-    }
-
-    private Pins(List<Pin> pins) {
+    protected Pins(List<Pin> pins) {
         validatePinsCount(pins.size());
         this.pins = pins;
     }
@@ -36,17 +26,7 @@ public final class Pins {
         }
     }
 
-    public static Pins create() {
-        return new Pins();
-    }
-
-    public static Pins of(Pin... pins) {
-        return new Pins(pins);
-    }
-
-    public static Pins from(List<Pin> pins) {
-        return new Pins(pins);
-    }
+    public abstract void validatePinCount(Pin pin);
 
     public Pin firstPin() {
         return pins.get(FIRST_PIN_INDEX);
