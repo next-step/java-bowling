@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pins;
 import bowling.dto.FrameDTO;
 import bowling.dto.FramesDTO;
 
@@ -41,7 +42,7 @@ public class Frames {
         return frameList.get(frameNo);
     }
 
-    public void bowl(int pitch, int index) {
+    public void bowl(Pins pitch, int index) {
         nthFrame(index).bowl(pitch);
     }
 

@@ -1,10 +1,11 @@
 package bowling.domain.state;
 
+import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
 
 public abstract class FinishedState implements State {
     @Override
-    public State stateAfterPitch(int pitch) {
+    public State stateAfterPitch(Pins pitch) {
         throw new CannotBowlException();
     }
 

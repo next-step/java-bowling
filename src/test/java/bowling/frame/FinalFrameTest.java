@@ -1,5 +1,6 @@
 package bowling.frame;
 
+import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
 import bowling.domain.exception.NoRemainingFrameException;
 import bowling.domain.frame.FinalFrame;
@@ -22,58 +23,58 @@ public class FinalFrameTest {
     @Test
     @DisplayName("Miss 발생시 종료 확인 테스트")
     void isFinishedWhenMissTest() {
-        finalFrame.bowl(3);
-        finalFrame.bowl(5);
+        finalFrame.bowl(Pins.of(3));
+        finalFrame.bowl(Pins.of(5));
         assertThat(finalFrame.isFinished()).isTrue();
     }
 
     @Test
     @DisplayName("Spare 발생시 종료 확인 테스트")
     void isFinishedWhenSpareTest() {
-        finalFrame.bowl(6);
-        finalFrame.bowl(4);
+        finalFrame.bowl(Pins.of(6));
+        finalFrame.bowl(Pins.of(4));
         assertThat(finalFrame.isFinished()).isFalse();
     }
 
     @Test
     @DisplayName("Spare-Continue 발생시 종료 확인 테스트")
     void isFinishedWhenSpareContinueTest() {
-        finalFrame.bowl(6);
-        finalFrame.bowl(4);
-        finalFrame.bowl(5);
+        finalFrame.bowl(Pins.of(6));
+        finalFrame.bowl(Pins.of(4));
+        finalFrame.bowl(Pins.of(5));
         assertThat(finalFrame.isFinished()).isTrue();
     }
 
     @Test
     @DisplayName("Strike 발생시 종료 확인 테스트")
     void isFinishedWhenStrikeTest() {
-        finalFrame.bowl(10);
+        finalFrame.bowl(Pins.of(10));
         assertThat(finalFrame.isFinished()).isFalse();
     }
 
     @Test
     @DisplayName("Double 발생시 종료 확인 테스트")
     void isFinishedWhenDoubleTest() {
-        finalFrame.bowl(10);
-        finalFrame.bowl(10);
+        finalFrame.bowl(Pins.of(10));
+        finalFrame.bowl(Pins.of(10));
         assertThat(finalFrame.isFinished()).isFalse();
     }
 
     @Test
     @DisplayName("Turkey 발생시 종료 확인 테스트")
     void isFinishedWhenTurkeyTest() {
-        finalFrame.bowl(10);
-        finalFrame.bowl(10);
-        finalFrame.bowl(10);
+        finalFrame.bowl(Pins.of(10));
+        finalFrame.bowl(Pins.of(10));
+        finalFrame.bowl(Pins.of(10));
         assertThat(finalFrame.isFinished()).isTrue();
     }
 
     @Test
     @DisplayName("bowl 예외 테스트")
     void cannotBowlExceptionTest() {
-        finalFrame.bowl(3);
-        finalFrame.bowl(5);
-        assertThatThrownBy(() -> finalFrame.bowl(3))
+        finalFrame.bowl(Pins.of(3));
+        finalFrame.bowl(Pins.of(5));
+        assertThatThrownBy(() -> finalFrame.bowl(Pins.of(3)))
                 .isInstanceOf(CannotBowlException.class)
                 .hasMessage("더 이상 투구할 수 없습니다.");
     }

@@ -16,7 +16,7 @@ public class StrikeTest {
 
     @BeforeEach
     void setUp() {
-        Pins pins = Pins.ofFirstPitch(10);
+        Pins pins = Pins.of(10);
         strike = Strike.of(pins);
     }
 
@@ -29,7 +29,7 @@ public class StrikeTest {
     @Test
     @DisplayName("bowl 예외 테스트")
     void cannotBowlExceptionTest() {
-        assertThatThrownBy(() -> strike.stateAfterPitch(3))
+        assertThatThrownBy(() -> strike.stateAfterPitch(Pins.of(3)))
                 .isInstanceOf(CannotBowlException.class)
                 .hasMessage("더 이상 투구할 수 없습니다.");
     }

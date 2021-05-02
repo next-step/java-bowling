@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.FrameScore;
+import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
@@ -32,7 +33,7 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public void bowl(int pitch) {
+    public void bowl(Pins pitch) {
         if(state.isFinished()) {
             throw new CannotBowlException();
         }

@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.FrameScore;
+import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
 import bowling.domain.exception.NoRemainingFrameException;
 import bowling.domain.state.*;
@@ -43,7 +44,7 @@ public class FinalFrame implements Frame{
     }
 
     @Override
-    public void bowl(int pitch) {
+    public void bowl(Pins pitch) {
         if(isFinished()) {
             throw new CannotBowlException();
         }

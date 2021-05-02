@@ -1,6 +1,7 @@
 package bowling.controller;
 
 import bowling.domain.NumberOfPlayer;
+import bowling.domain.Pins;
 import bowling.domain.Player;
 import bowling.dto.PlayerDTO;
 import bowling.view.InputView;
@@ -44,7 +45,8 @@ public class BowlingController {
 
     private void playBowling(Player player, int frameNo) {
         while(!player.isNthFrameFinished(frameNo)){
-            player.bowl(InputView.requestFallingPins(player.name()), frameNo);
+            Pins pitch = Pins.of(InputView.requestFallingPins(player.name()));
+            player.bowl(pitch, frameNo);
             ResultView.printBoard(playerDTOList());
         }
     }

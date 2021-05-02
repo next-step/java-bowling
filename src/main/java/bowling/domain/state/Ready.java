@@ -26,12 +26,11 @@ public class Ready implements State{
     }
 
     @Override
-    public State stateAfterPitch(int pitch) {
-        Pins pins = Pins.ofFirstPitch(pitch);
-        if(pins.isStrike()){
-            return Strike.of(pins);
+    public State stateAfterPitch(Pins pitch) {
+        if(pitch.isStrike()){
+            return Strike.of(pitch);
         }
-        return Continue.of(pins);
+        return Continue.of(pitch);
     }
 
     @Override

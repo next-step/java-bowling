@@ -16,8 +16,8 @@ public class SpareTest {
 
     @BeforeEach
     void setUp() {
-        Pins firstPins = Pins.ofFirstPitch(7);
-        Pins secondPins = Pins.ofFirstPitch(3);
+        Pins firstPins = Pins.of(7);
+        Pins secondPins = Pins.of(3);
         spare = (Spare.of(firstPins, secondPins));
     }
 
@@ -30,7 +30,7 @@ public class SpareTest {
     @Test
     @DisplayName("bowl 예외 테스트")
     void cannotBowlExceptionTest() {
-        assertThatThrownBy(() -> spare.stateAfterPitch(3))
+        assertThatThrownBy(() -> spare.stateAfterPitch(Pins.of(3)))
                 .isInstanceOf(CannotBowlException.class)
                 .hasMessage("더 이상 투구할 수 없습니다.");
     }

@@ -31,12 +31,12 @@ public class Continue implements State{
     }
 
     @Override
-    public State stateAfterPitch(int pitch) {
-        Pins secondPins = this.pins.ofSecondPitch(pitch);
-        if(pins.isSpare(secondPins)){
-            return Spare.of(pins, secondPins);
+    public State stateAfterPitch(Pins pitch) {
+        pins.isSecondPitchable(pitch);
+        if(pins.isSpare(pitch)){
+            return Spare.of(pins, pitch);
         }
-        return Miss.of(pins, secondPins);
+        return Miss.of(pins, pitch);
     }
 
     @Override

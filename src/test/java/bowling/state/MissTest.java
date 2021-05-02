@@ -16,8 +16,8 @@ public class MissTest {
 
     @BeforeEach
     void setUp() {
-        Pins firstPins = Pins.ofFirstPitch(7);
-        Pins secondPins = Pins.ofFirstPitch(2);
+        Pins firstPins = Pins.of(7);
+        Pins secondPins = Pins.of(2);
         miss = (Miss.of(firstPins, secondPins));
     }
 
@@ -30,7 +30,7 @@ public class MissTest {
     @Test
     @DisplayName("bowl 예외 테스트")
     void cannotBowlExceptionTest() {
-        assertThatThrownBy(() -> miss.stateAfterPitch(3))
+        assertThatThrownBy(() -> miss.stateAfterPitch(Pins.of(3)))
                 .isInstanceOf(CannotBowlException.class)
                 .hasMessage("더 이상 투구할 수 없습니다.");
     }

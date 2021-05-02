@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.Pins;
 import bowling.domain.Player;
 import bowling.domain.exception.NameLengthException;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,14 +23,14 @@ public class PlayerTest {
     @Test
     @DisplayName("첫구 결과가 Strike일 때 종료 확인 테스트")
     void bowlToStrikeTest() {
-        player.bowl(10,1);
+        player.bowl(Pins.of(10),1);
         assertThat(player.isNthFrameFinished(1)).isTrue();
     }
 
     @Test
     @DisplayName("첫구 결과가 Continue일 때 종료 확인 테스트")
     void bowlToContinueTest() {
-        player.bowl(5,1);
+        player.bowl(Pins.of(5),1);
         assertThat(player.isNthFrameFinished(1)).isFalse();
     }
 

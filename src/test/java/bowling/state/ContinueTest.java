@@ -20,7 +20,7 @@ public class ContinueTest {
 
     @BeforeEach
     void setUp() {
-        Pins pins = Pins.ofFirstPitch(7);
+        Pins pins = Pins.of(7);
         continueState = Continue.of(pins);
     }
 
@@ -33,23 +33,23 @@ public class ContinueTest {
     @Test
     @DisplayName("Miss 상태로 변경 확인 테스트")
     void bowlToMissTest() {
-        Pins firstPins = Pins.ofFirstPitch(7);
-        Pins secondPins = Pins.ofFirstPitch(2);
-        assertThat(continueState.stateAfterPitch(2)).isEqualTo(Miss.of(firstPins, secondPins));
+        Pins firstPins = Pins.of(7);
+        Pins secondPins = Pins.of(2);
+        assertThat(continueState.stateAfterPitch(Pins.of(2))).isEqualTo(Miss.of(firstPins, secondPins));
     }
 
     @Test
     @DisplayName("Spare 상태로 변경 확인 테스트")
     void bowlToSpareTest() {
-        Pins firstPins = Pins.ofFirstPitch(7);
-        Pins secondPins = Pins.ofFirstPitch(3);
-        assertThat(continueState.stateAfterPitch(3)).isEqualTo(Spare.of(firstPins, secondPins));
+        Pins firstPins = Pins.of(7);
+        Pins secondPins = Pins.of(3);
+        assertThat(continueState.stateAfterPitch(Pins.of(3))).isEqualTo(Spare.of(firstPins, secondPins));
     }
 
     @ParameterizedTest(name = "넘어뜨린 핀 개수 예외 테스트")
     @ValueSource(ints = {5,7,-1,11})
     void pinsCountExceptionTest(int secondPitch) {
-        assertThatThrownBy(() -> continueState.stateAfterPitch(secondPitch))
+        assertThatThrownBy(() -> continueState.stateAfterPitch(Pins.of(secondPitch)))
                 .isInstanceOf(PinsCountException.class)
                 .hasMessage("넘어뜨린 핀수는 0에서 10 사이의 정수여야 합니다.");
     }
