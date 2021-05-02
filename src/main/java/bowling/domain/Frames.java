@@ -41,15 +41,15 @@ public class Frames {
         return Collections.unmodifiableList(frames);
     }
 
-    public Frame nFrame(int n) {
-        if (n >= 0) {
-            return frames.get(n);
+    public Frame roundFrame(int round) {
+        if (round >= 0) {
+            return frames.get(round);
         }
-        return nFrame(0);
+        return roundFrame(0);
     }
 
     public void throwBall(int topplePin) {
-        Frame nowFrame = nFrame(round.now());
+        Frame nowFrame = roundFrame(round.now());
         nowFrame.throwBall(topplePin);
         beforeFrameAddBonus(topplePin);
         if (round.isFinalRound()) {
@@ -71,17 +71,17 @@ public class Frames {
     }
 
     private void leftFrameAddBonus(int score) {
-        Frame leftFrame = nFrame(round.before());
+        Frame leftFrame = roundFrame(round.before());
         leftFrame.additionalScore(score);
     }
 
     private void leftSecondFrameAddBonus(int score) {
-        Frame leftSecondFrame = nFrame(round.beforeSecond());
+        Frame leftSecondFrame = roundFrame(round.beforeSecond());
         leftSecondFrame.additionalScore(score);
     }
 
     private boolean leftSecondFrameCanCalculate() {
-        Frame leftSecondFrame = nFrame(round.beforeSecond());
+        Frame leftSecondFrame = roundFrame(round.beforeSecond());
         return leftSecondFrame.canCalculate();
     }
 
@@ -90,7 +90,7 @@ public class Frames {
     }
 
     private boolean leftFrameCanCalculate() {
-        Frame leftFrame = nFrame(round.before());
+        Frame leftFrame = roundFrame(round.before());
         return leftFrame.canCalculate();
     }
 
@@ -103,11 +103,11 @@ public class Frames {
     }
 
     public Score getScore(int round) {
-        return Score.ofNone(nFrame(round).score());
+        return Score.ofNone(roundFrame(round).score());
     }
 
     public boolean canCalculateScore(int round) {
-        Frame nowFrame = nFrame(round);
+        Frame nowFrame = roundFrame(round);
         return nowFrame.hasScore() && nowFrame.canCalculate();
     }
 }
