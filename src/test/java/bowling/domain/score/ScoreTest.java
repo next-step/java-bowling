@@ -1,9 +1,11 @@
 package bowling.domain.score;
 
+import bowling.exception.CannotCalculateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ScoreTest {
@@ -49,5 +51,18 @@ class ScoreTest {
                 () -> assertThat(spare).isEqualTo(Score.spare()),
                 () -> assertThat(spare.canCalculate()).isFalse()
         );
+    }
+
+    @Test
+    @DisplayName("점수계산이 불가능한 경우 calculate를 호출하면, 예외를 반환한다.")
+    void cannotCalculate() {
+        // given
+        final Score score = Score.spare();
+
+        // when
+        // then
+        assertThatThrownBy(() -> score.calculate())
+                .isInstanceOf(CannotCalculateException.class)
+                .hasMessage(CannotCalculateException.CANNOT_CALCULATE);
     }
 }
