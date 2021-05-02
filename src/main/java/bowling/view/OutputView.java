@@ -49,7 +49,7 @@ public class OutputView {
 
     private void printFrame(FrameInfo frameInfo) {
         if (frameInfo.isFinalFrame()) {
-            printFinalFrame(frameInfo.getPinDownResults());
+            printFinalFrame(frameInfo);
             return;
         }
         if (frameInfo.isSpare()) {
@@ -59,18 +59,30 @@ public class OutputView {
         printFrame(frameInfo.getPinDownResults());
     }
 
-    private void printFinalFrame(List<Integer> pinDownResults) {
-        if (pinDownResults.size() == MAX_FINAL_FRAME_SIZE && pinDownResults.get(FIRST_PITCH) + pinDownResults.get(SECOND_PITCH) == SCORE_STRIKE) {
-            printSpare(pinDownResults.stream().limit(FINAL_BONUS_PITCH).collect(Collectors.toList()));
-            String content = BOARD_DELIMITER + parseSign(pinDownResults.get(FINAL_BONUS_PITCH));
+    private void printFinalFrame(FrameInfo frameInfo) {
+        if (frameInfo.isSpare()) {
+            String content = parseSpareContent(frameInfo.getPinDownResults());
+            content += parseFinalBonusPitch(frameInfo.getPinDownResults());
             System.out.print(makeBoard(content));
+            return;
         }
-        printFrame(pinDownResults);
+        printFrame(frameInfo.getPinDownResults());
+    }
+
+    private String parseFinalBonusPitch(List<Integer> pinDownResults) {
+        if (pinDownResults.size() > FINAL_BONUS_PITCH) {
+            return BOARD_DELIMITER + parseSign(pinDownResults.get(FINAL_BONUS_PITCH));
+        }
+        return BLANK;
     }
 
     private void printSpare(List<Integer> pinDownResults) {
-        String content = parseSign(pinDownResults.get(FIRST_PITCH)) + BOARD_DELIMITER + SCORE_SIGN_SPARE;
+        String content = parseSpareContent(pinDownResults);
         System.out.print(makeBoard(content));
+    }
+
+    private String parseSpareContent(List<Integer> pinDownResults) {
+        return parseSign(pinDownResults.get(FIRST_PITCH)) + BOARD_DELIMITER + SCORE_SIGN_SPARE;
     }
 
     private void printFrame(List<Integer> pinDownResults) {
