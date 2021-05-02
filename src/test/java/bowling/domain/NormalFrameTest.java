@@ -322,4 +322,127 @@ class NormalFrameTest {
         assertThat(normalFrame.score()).isEqualTo(30);
     }
 
+    @Test
+    @DisplayName("점수계산 완료여부 - 미완료")
+    void score_nonDecided() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(3));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isFalse();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 오픈에 의한 완료")
+    void score_open() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(3));
+        normalFrame.pitch(new Pitch(5));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 스페어 미완료")
+    void score_spare_nonDecided() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(3));
+        normalFrame.pitch(new Pitch(7));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isFalse();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 스페어는 다음 프레임의 초구가 필요")
+    void score_spare_decided() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(3));
+        normalFrame.pitch(new Pitch(7));
+
+        Frame nextFrame = normalFrame.next();
+        nextFrame.pitch(new Pitch(2));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 스트라이크는 다음 프레임의 종료가 필요")
+    void score_strike_nonDecided() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isFalse();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 스트라이크")
+    void score_strike() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+        Frame nextFrame = normalFrame.next();
+
+        nextFrame.pitch(new Pitch(5));
+        nextFrame.pitch(new Pitch(3));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 더블 스트라이크 미종료")
+    void score_doubleStrike_nonDecided() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        Frame nextFrame = normalFrame.next();
+        nextFrame.pitch(new Pitch(10));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isFalse();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 더블 스트라이크")
+    void score_doubleStrike() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        Frame nextFrame = normalFrame.next();
+        nextFrame.pitch(new Pitch(10));
+
+        Frame nextFrame2 = nextFrame.next();
+        nextFrame2.pitch(new Pitch(10));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isTrue();
+    }
+
 }
