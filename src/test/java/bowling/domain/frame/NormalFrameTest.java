@@ -179,6 +179,24 @@ class NormalFrameTest {
     }
 
     @Test
+    @DisplayName("Strike인 NormalFrame이 주어지면 1회 투구하더라도 투구 2회를 실행하기 전까지 점수를 산정할 수 없다.")
+    void strikeNoScoreOneThrow() {
+        // given
+        final Frame firstFrame = NormalFrame.createFirstFrame();
+        firstFrame.createNextFrame();
+        final Frame secondFrame = firstFrame.nextFrame();
+
+        firstFrame.knockDownPin(TestFixture.STRIKE_PIN);
+        secondFrame.knockDownPin(new Pin(0));
+
+        // when
+        final Score score = firstFrame.score();
+
+        // then
+        assertThat(score.canCalculate()).isFalse();
+    }
+
+    @Test
     @DisplayName("Strike인 NormalFrame이 주어지고, 해당 투구와 다음 두 투구의 합이 점수가 된다.")
     void strikeScore() {
         // given
