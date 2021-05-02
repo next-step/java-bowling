@@ -61,21 +61,22 @@ public class OutputView {
         if (frame.isNotYetStart()) {
             return centeredText(BLANK);
         }
-        return centeredText(convertToScoreMarks(frame.pins()));
+        return centeredText(convertToScoreMarks(frame));
     }
 
-    private static String convertToScoreMarks(Pins pins) {
-        return scoreMarks(pins);
+    private static String convertToScoreMarks(Frame frame) {
+        return scoreMarks(frame);
     }
 
-    private static String scoreMarks(Pins pins) {
+    private static String scoreMarks(Frame frame) {
         List<String> marks = new ArrayList<>();
+        Pins pins = frame.pins();
         marks.add(findMark(pins.firstPin()));
-        if (pins.isFirstTry()) {
+        if (frame.isFirstTry()) {
             return String.join(BOARD_SEPARATOR, marks);
         }
         marks.add(secondMark(pins));
-        if (pins.isBonusTry()) {
+        if (frame.isBonusTry()) {
             marks.add(findMark(pins.bonusPin()));
         }
         return String.join(BOARD_SEPARATOR, marks);

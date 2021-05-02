@@ -3,7 +3,6 @@ package bowling.domain;
 import bowling.exception.PinsSizeException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Pins {
@@ -16,7 +15,7 @@ public class Pins {
     private static final int CONVERT_CORRECTION = 1;
     private static final String PIN_SIZE_EXCEPTION_MESSAGE = String.format("최대 %d회의 시도만 가능합니다", PIN_SIZE_BOUND);
 
-    private List<Pin> pins;
+    private final List<Pin> pins;
 
     public Pins() {
         this.pins = new ArrayList<>();
@@ -60,10 +59,6 @@ public class Pins {
 
     public int tryCount() {
         return pins.size();
-    }
-
-    public List<Pin> pins() {
-        return Collections.unmodifiableList(pins);
     }
 
     public Pin firstPin() {

@@ -11,6 +11,7 @@ public class NormalFrame extends Frame {
     private static final String TRY_COUNT_EXCEPTION_MESSAGE = String.format("최대 %d번 까지 시도할 수 있습니다", MAX_TRY_COUNT);
     private static final String CANNOT_CALCULATE_MESSAGE = "앞 투구가 끝나지 않아 계산 할 수 없습니다.";
 
+
     private NormalFrame() {
         super();
     }
@@ -48,7 +49,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public void createScore() {
-        if (pins.isStrike() && pins.isFirstTry()) {
+        if (pins.isStrike() && isFirstTry()) {
             score = Score.ofStrike();
             return;
         }

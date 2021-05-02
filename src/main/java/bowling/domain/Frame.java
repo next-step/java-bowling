@@ -3,6 +3,8 @@ package bowling.domain;
 public abstract class Frame {
 
     private static final int NOT_YET_START = 0;
+    private static final int FIRST_TRY = 1;
+    private static final int BONUS_TRY = 3;
 
     protected Pins pins;
     protected Score score;
@@ -11,8 +13,21 @@ public abstract class Frame {
         this.pins = new Pins();
     }
 
+
+    public void additionalScore(int score) {
+        this.score.addAdditionalScore(score);
+    }
+
     public boolean canCalculate() {
         return score.canCalculateScore();
+    }
+
+    public boolean isBonusTry() {
+        return pins.tryCount() == BONUS_TRY;
+    }
+
+    public boolean isFirstTry() {
+        return pins.tryCount() == FIRST_TRY;
     }
 
     public boolean isNotYetStart() {
@@ -23,14 +38,18 @@ public abstract class Frame {
         return score != null;
     }
 
+    public Pins pins() {
+        return pins;
+    }
+
     public void throwBall(int hitCount) {
         validateTry();
         validateHitCount(hitCount);
         pins.add(new Pin(hitCount));
     }
 
-    public Pins pins() {
-        return pins;
+    public int score() {
+        return score.calculateScore();
     }
 
     public abstract void createScore();
@@ -43,11 +62,4 @@ public abstract class Frame {
 
     protected abstract void validateHitCount(int hitCount);
 
-    public void additionalScore(int score) {
-        this.score.addAdditionalScore(score);
-    }
-
-    public int score() {
-        return score.calculateScore();
-    }
 }
