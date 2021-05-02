@@ -72,12 +72,12 @@ public final class FinalFrame implements Frame {
 
     @Override
     public final int firstCount() {
-        return states.get(ONCE).firstCount();
+        return states.get(ONE).firstCount();
     }
 
     @Override
     public final int secondCount() {
-        return states.get(TWICE).secondCount();
+        return states.get(TWO).secondCount();
     }
 
     @Override
@@ -93,7 +93,7 @@ public final class FinalFrame implements Frame {
     }
 
     private final boolean isSizeThird() {
-        return size == THIRD;
+        return size == THREE;
     }
 
 }

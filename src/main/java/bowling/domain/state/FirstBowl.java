@@ -35,7 +35,7 @@ public final class FirstBowl extends Running {
 
     @Override
     public final int size() {
-        return ONCE;
+        return ONE;
     }
 
     @Override

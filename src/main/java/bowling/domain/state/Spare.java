@@ -44,7 +44,7 @@ public final class Spare extends Finish {
 
     @Override
     public int size() {
-        return TWICE;
+        return TWO;
     }
 
     @Override

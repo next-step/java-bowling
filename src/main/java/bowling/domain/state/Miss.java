@@ -44,7 +44,7 @@ public final class Miss extends Finish {
 
     @Override
     public final int size() {
-        return TWICE;
+        return TWO;
     }
 
     @Override
