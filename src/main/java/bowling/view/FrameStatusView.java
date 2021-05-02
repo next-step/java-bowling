@@ -9,6 +9,7 @@ public final class FrameStatusView {
     private static final String DELIMITER = "|";
     private static final String STRIKE_SIGN = "X";
     private static final String SPARE_SIGN = "/";
+    private static final String GUTTER_SIGN = "-";
     private static final String EMPTY_STRING = "";
     private static final int THROW_ONCE = 1;
     private static final int THROW_TWICE = 2;
@@ -46,7 +47,10 @@ public final class FrameStatusView {
         if (pin.isMaximum()) {
             return STRIKE_SIGN;
         }
-        return pin.status();
+        if (pin.isGutter()) {
+            return GUTTER_SIGN;
+        }
+        return String.valueOf(pin.pinCount());
     }
 
     private String twoPinStatus(Pin pin, Pin otherPin) {

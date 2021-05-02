@@ -175,5 +175,5 @@
     - [ ] X/8/ 처럼 나머지가 일반구로 처리되어야 하는 경우에 대한 테스트를 추가하자.
 - [x] `pins#knockDownPin`에서 `validate`를 수행하는 것이 더 OOP에 맞다. (결국 객체를 분리해야 한다.)
     - [x] 추상클래스로 추출해서, `validate` 부분을 Override하는 식으로 개발하면 되겠다.
-- [ ] `Pin`에 `isGutter` 메서드 추가하기
-    - [ ] `Pin`에 `status()` 부분은 `isGutter`를 추가하면서 View쪽으로 옮긴다.
+- [x] `Pin`에 `isGutter` 메서드 추가하기
+    - [x] `Pin`에 `status()` 부분은 `isGutter`를 추가하면서 View쪽으로 옮긴다.
