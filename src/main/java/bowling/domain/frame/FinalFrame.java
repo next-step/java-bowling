@@ -51,7 +51,7 @@ public final class FinalFrame extends Frame {
     @Override
     public Score score() {
         if (!isEnded()) {
-            return null;
+            return Score.notCalculable();
         }
         return Score.normal(pins.totalPinCount());
     }

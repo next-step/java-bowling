@@ -111,7 +111,7 @@ class FinalFrameTest {
         final Score score = finalFrame.score();
 
         // then
-        assertThat(score).isNull();
+        assertThat(score.canCalculate()).isFalse();
     }
 
     @Test
@@ -124,7 +124,7 @@ class FinalFrameTest {
         final Score score = finalFrame.score();
 
         // then
-        assertThat(score).isNull();
+        assertThat(score.canCalculate()).isFalse();
     }
 
     @Test
@@ -137,7 +137,7 @@ class FinalFrameTest {
         final Score score = finalFrame.score();
 
         // then
-        assertThat(score).isNull();
+        assertThat(score.canCalculate()).isFalse();
     }
 
     @Test
@@ -150,7 +150,7 @@ class FinalFrameTest {
         final Score score = finalFrame.score();
 
         // then
-        assertThat(score).isNull();
+        assertThat(score.canCalculate()).isFalse();
     }
 
     // TODO: Parameterized Test로 개선

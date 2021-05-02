@@ -10,6 +10,10 @@ public final class Score {
     private final int score;
     private final LeftCount leftCount;
 
+    private Score() {
+        this(0, null);
+    }
+
     private Score(int score, int leftCount) {
         this(score, LeftCount.from(leftCount));
     }
@@ -21,6 +25,10 @@ public final class Score {
 
     public static Score of(int score, int leftCount) {
         return new Score(score, leftCount);
+    }
+
+    public static Score notCalculable() {
+        return new Score();
     }
 
     public static Score normal(int score) {
@@ -36,7 +44,7 @@ public final class Score {
     }
 
     public boolean canCalculate() {
-        return !leftCount.hasLeftCount();
+        return leftCount != null && !leftCount.hasLeftCount();
     }
 
     public int calculate() {
