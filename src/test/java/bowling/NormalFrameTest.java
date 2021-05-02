@@ -91,7 +91,7 @@ public class NormalFrameTest {
         return Stream.of(
                 arguments(new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.GUTTER, Score.GUTTER)), 10),
                 arguments(new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.FIVE, Score.SPARE)), 20),
-                arguments(new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.THREE, Score.ONE)), 13)
+                arguments(new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.THREE, Score.ONE)), 14)
 
         );
     }

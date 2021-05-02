@@ -16,12 +16,14 @@ public abstract class Scores {
 
     public List<Score> transSpareScores() {
         if (scores.contains(Score.SPARE)) {
-            int spareIndex = scores.indexOf(Score.SPARE);
-            scores.set(spareIndex, Score.valueOf(Score.SPARE.getScore() - scores.get(spareIndex - 1).getScore()));
-            return new ArrayList<>(scores);
+            List<Score> result = new ArrayList<>(scores);
+            int spareIndex = result.indexOf(Score.SPARE);
+            result.set(spareIndex, Score.valueOf(Score.SPARE.getScore() - result.get(spareIndex - 1).getScore()));
+            return result;
         }
         return this.scores;
     }
+
 
     @Override
     public boolean equals(Object o) {
