@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.WrongFrameNumberException;
 import bowling.domain.state.FrameState;
 import bowling.domain.state.FrameStateFinalReady;
 
@@ -12,7 +13,7 @@ public class FinalFrame implements Frame {
 
     public FinalFrame(FrameNumber frameNumber) {
         if (!frameNumber.equals(new FrameNumber(10))) {
-            throw new IllegalArgumentException("프레임번호가 잘못되었습니다");
+            throw new WrongFrameNumberException("프레임번호가 잘못되었습니다");
         }
         this.aggregatedScore = Score.create(0);
     }

@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.IllegalRollingSequenceException;
 import bowling.domain.Pinfall;
 import bowling.domain.PointSymbol;
 import bowling.domain.PointSymbols;
@@ -22,7 +23,7 @@ public class FrameStateOpen implements FrameState {
 
     @Override
     public FrameState roll(Pinfall pinfall) {
-        throw new IllegalArgumentException("공을 굴릴 수 없습니다");
+        throw new IllegalRollingSequenceException("공을 굴릴 수 없습니다");
     }
 
     @Override

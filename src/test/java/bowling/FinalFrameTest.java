@@ -19,7 +19,7 @@ public class FinalFrameTest {
     @Test
     @DisplayName("마지막 프레임의 프레임 번호가 10이 아닐 때 Exception")
     void Given_FrameNumber1_When_New_Then_Exception() {
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(WrongFrameNumberException.class)
                 .isThrownBy(() -> new FinalFrame(new FrameNumber(1)))
                 .withMessage("프레임번호가 잘못되었습니다");
     }

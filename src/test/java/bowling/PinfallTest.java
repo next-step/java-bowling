@@ -17,7 +17,7 @@ public class PinfallTest {
     @Test
     @DisplayName("넘어진 핀의 개수가 10이상이면 Exception")
     void Given_11Pinfall_When_New_Then_Exception() {
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(IllegalPinFallException.class)
                 .isThrownBy(() -> new Pinfall(11))
                 .withMessage("넘어진 핀의 개수가 잘못되었습니다");
     }

@@ -20,7 +20,7 @@ public class FrameStateStrikeTest {
     @DisplayName("공을 굴리면 Exception 발생 테스트")
     void When_Roll_Then_Exception() {
         FrameState strikeState = new FrameStateStrike();
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(IllegalRollingSequenceException.class)
                 .isThrownBy(() -> strikeState.roll(new Pinfall(9)))
                 .withMessage("공을 굴릴 수 없습니다");
     }

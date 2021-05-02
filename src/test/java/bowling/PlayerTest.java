@@ -20,7 +20,7 @@ public class PlayerTest {
     @DisplayName("4글자 이상이면 Exception")
     void Given_4CharName_When_New_Then_Exception() {
         String name = "ABCD";
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(IllegalPlayerNameException.class)
                 .isThrownBy(() -> new Player(name))
                 .withMessage("이름의 길이가 잘못되었습니다");
     }
@@ -29,7 +29,7 @@ public class PlayerTest {
     @DisplayName("2글자 이하이면 Exception")
     void Given_2CharName_When_New_Then_Exception() {
         String name = "AB";
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(IllegalPlayerNameException.class)
                 .isThrownBy(() -> new Player(name))
                 .withMessage("이름의 길이가 잘못되었습니다");
     }

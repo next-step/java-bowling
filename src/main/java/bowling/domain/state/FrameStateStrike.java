@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.IllegalRollingSequenceException;
 import bowling.domain.*;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 public class FrameStateStrike implements FrameState {
     @Override
     public FrameState roll(Pinfall pinfall) {
-        throw new IllegalArgumentException("공을 굴릴 수 없습니다");
+        throw new IllegalRollingSequenceException("공을 굴릴 수 없습니다");
     }
 
     @Override

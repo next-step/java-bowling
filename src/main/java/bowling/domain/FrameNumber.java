@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.WrongFrameNumberException;
+
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -45,11 +47,11 @@ public class FrameNumber {
 
     private void verifyFrameNumber(int frameNumber) {
         if (frameNumber > LAST_FRAME_NUMBER) {
-            throw new IllegalArgumentException("잘못된 프레임 번호");
+            throw new WrongFrameNumberException("잘못된 프레임 번호");
         }
 
         if (frameNumber < FIRST_FRAME_NUMBER) {
-            throw new IllegalArgumentException("잘못된 프레임 번호");
+            throw new WrongFrameNumberException("잘못된 프레임 번호");
         }
     }
 }

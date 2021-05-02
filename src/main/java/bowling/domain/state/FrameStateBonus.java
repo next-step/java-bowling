@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.IllegalRollingSequenceException;
 import bowling.domain.Pinfall;
 import bowling.domain.PointSymbol;
 import bowling.domain.PointSymbols;
@@ -27,7 +28,7 @@ public class FrameStateBonus implements FrameState {
     @Override
     public FrameState roll(Pinfall pinfall) {
         if (!isRollable()) {
-            throw new IllegalArgumentException("공을 던질 수 없습니다");
+            throw new IllegalRollingSequenceException("공을 던질 수 없습니다");
         }
 
         pinfalls.add(pinfall);
