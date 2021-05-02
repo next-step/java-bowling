@@ -1,6 +1,7 @@
 package bowling.domain.score;
 
 import bowling.domain.pin.Pin;
+import bowling.exception.CannotCalculateException;
 
 import java.util.Objects;
 
@@ -35,6 +36,9 @@ public final class Score {
     }
 
     public int calculate() {
+        if (!canCalculate()) {
+            throw new CannotCalculateException();
+        }
         return score;
     }
 
