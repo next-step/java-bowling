@@ -1,18 +1,20 @@
 package bowling.domain;
 
+import bowling.WrongFrameNumberException;
 import bowling.domain.state.FrameState;
 import bowling.domain.state.FrameStateFinalReady;
 
-public class FinalFrame implements Frame {
-    private FrameState currentState = new FrameStateFinalReady();
+import java.util.List;
 
-    public FinalFrame() {
-    }
+public class FinalFrame implements Frame {
+    private final Score aggregatedScore;
+    private FrameState currentState = new FrameStateFinalReady();
 
     public FinalFrame(FrameNumber frameNumber) {
         if (!frameNumber.equals(new FrameNumber(10))) {
-            throw new IllegalArgumentException("프레임번호가 잘못되었습니다");
+            throw new WrongFrameNumberException("프레임번호가 잘못되었습니다");
         }
+        this.aggregatedScore = Score.create(0);
     }
 
     public FinalFrame(Pinfall firstPinfall, Pinfall secondPinfall) {
@@ -26,6 +28,14 @@ public class FinalFrame implements Frame {
         roll(pinfall);
     }
 
+    public FinalFrame() {
+        this(Score.create(0));
+    }
+
+    public FinalFrame(Score aggregatedScore) {
+        this.aggregatedScore = aggregatedScore;
+    }
+
     @Override
     public FinalFrame roll(Pinfall pinfall) {
         currentState = currentState.roll(pinfall);
@@ -34,7 +44,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public FrameResult result() {
-        return new FrameResult(currentState.pointSymbols());
+        return new FrameResult(currentState.pointSymbols(), score());
     }
 
     @Override
@@ -50,5 +60,20 @@ public class FinalFrame implements Frame {
     @Override
     public Frame roll(Pinfall pinfall, FrameFatory frameFatory) {
         return roll(pinfall);
+    }
+
+    @Override
+    public Score score() {
+        return currentState.score();
+    }
+
+    @Override
+    public List<Pinfall> bonusPinfalls(int bonusPinfallCount) {
+        return currentState.pinfalls();
+    }
+
+    @Override
+    public Frame next() {
+        return null;
     }
 }

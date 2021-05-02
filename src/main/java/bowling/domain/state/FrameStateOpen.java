@@ -1,8 +1,10 @@
 package bowling.domain.state;
 
+import bowling.IllegalRollingSequenceException;
 import bowling.domain.Pinfall;
 import bowling.domain.PointSymbol;
 import bowling.domain.PointSymbols;
+import bowling.domain.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class FrameStateOpen implements FrameState {
 
     @Override
     public FrameState roll(Pinfall pinfall) {
-        throw new IllegalArgumentException("공을 굴릴 수 없습니다");
+        throw new IllegalRollingSequenceException("공을 굴릴 수 없습니다");
     }
 
     @Override
@@ -34,5 +36,23 @@ public class FrameStateOpen implements FrameState {
         return new PointSymbols(pinfalls.stream()
                 .map(PointSymbol::valueOf)
                 .collect(Collectors.toList()));
+    }
+
+    @Override
+    public List<Pinfall> pinfalls() {
+        return pinfalls;
+    }
+
+    @Override
+    public Score score() {
+        return score(new ArrayList<>());
+    }
+
+    @Override
+    public Score score(List<Pinfall> bonusPinfalls) {
+        return pinfalls.stream()
+                .map(pinfall -> Score.create(pinfall.number()))
+                .reduce(Score::add)
+                .orElse(Score.createNotDetermined());
     }
 }

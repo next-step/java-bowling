@@ -12,16 +12,19 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class BowlingResultTest {
     @Test
+    @DisplayName("구조체 생성 테스트")
     void When_New_Then_Created() {
         assertDoesNotThrow(() -> new BowlingResult());
     }
 
     @Test
+    @DisplayName("N개의 프레임 결과를 받아서 생성 테스트")
     void Given_FrameResult_When_New_Then_Created() {
         assertDoesNotThrow(() -> new BowlingResult(Arrays.asList(new FrameResult(), new FrameResult())));
     }
 
     @Test
+    @DisplayName("Result를 호출했을 때 입력한 Result가 반환되는지 테스트")
     void When_frameResults_Then_ReturnsFrameResults() {
         List<FrameResult> frameResults = Arrays.asList(new FrameResult(), new FrameResult(new PointSymbols(PointSymbol.STRIKE)));
 
@@ -31,6 +34,7 @@ public class BowlingResultTest {
     }
 
     @Test
+    @DisplayName("특정 Frame의 결과 반환 테스트")
     void Given_frameNumber_When_result_Then_SingleFrameResult() {
         List<FrameResult> frameResults = Arrays.asList(new FrameResult(), new FrameResult(new PointSymbols(PointSymbol.STRIKE)));
         BowlingResult bowlingResult = new BowlingResult(frameResults);
@@ -48,6 +52,7 @@ public class BowlingResultTest {
     }
 
     @Test
+    @DisplayName("FrameResult를 추가했을 때, 추가 되는지 테스트")
     void When_Add_Then_FrameResultAdded() {
         FrameResult frameResult = new FrameResult(new PointSymbols(PointSymbol.STRIKE));
         BowlingResult bowlingResult = new BowlingResult();
@@ -58,6 +63,7 @@ public class BowlingResultTest {
     }
 
     @Test
+    @DisplayName("기존에 있던 Frame의 FrameResult를 추가했을 때, 변경되는지 테스트")
     void Given_NewFrameResult_When_Add_Then_ReplaceFrameResult() {
         BowlingResult bowlingResult = new BowlingResult();
 

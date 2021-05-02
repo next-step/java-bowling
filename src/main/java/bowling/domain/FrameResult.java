@@ -4,13 +4,25 @@ import java.util.Objects;
 
 public class FrameResult {
     private final PointSymbols pointSymbols;
+    private final Score score;
+    private final Score aggregatedScore;
 
     public FrameResult() {
-        pointSymbols = new PointSymbols();
+        this(new PointSymbols());
     }
 
     public FrameResult(PointSymbols pointSymbols) {
+        this(pointSymbols, Score.createNotDetermined());
+    }
+
+    public FrameResult(PointSymbols pointSymbols, Score score) {
+        this(pointSymbols, score, Score.createNotDetermined());
+    }
+
+    public FrameResult(PointSymbols pointSymbols, Score score, Score aggregatedScore) {
         this.pointSymbols = pointSymbols;
+        this.score = score;
+        this.aggregatedScore = aggregatedScore;
     }
 
     public PointSymbols pointSymbols() {
@@ -28,5 +40,13 @@ public class FrameResult {
     @Override
     public int hashCode() {
         return Objects.hash(pointSymbols);
+    }
+
+    public Score score() {
+        return score;
+    }
+
+    public Score aggregatedScore() {
+        return aggregatedScore;
     }
 }

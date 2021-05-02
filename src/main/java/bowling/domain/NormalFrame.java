@@ -3,16 +3,22 @@ package bowling.domain;
 import bowling.domain.state.FrameState;
 import bowling.domain.state.FrameStateReady;
 
-import java.util.Objects;
+import java.util.*;
 
 public class NormalFrame implements Frame {
     private final FrameNumber frameNumber;
+
     private FrameState currentState = new FrameStateReady();
     private Frame next;
 
     public NormalFrame(Pinfall firstPinfall, Pinfall secondPinfall) {
         this(firstPinfall);
         roll(secondPinfall);
+    }
+
+    public NormalFrame(FrameNumber frameNumber, Pinfall firstPinfall) {
+        this(frameNumber);
+        roll(firstPinfall);
     }
 
     public NormalFrame(Pinfall pinfall) {
@@ -28,14 +34,9 @@ public class NormalFrame implements Frame {
         this.frameNumber = frameNumber;
     }
 
-    public NormalFrame(FrameNumber frameNumber, Pinfall firstPinfall) {
-        this.frameNumber = frameNumber;
-        roll(firstPinfall);
-    }
-
     @Override
     public FrameResult result() {
-        return new FrameResult(currentState.pointSymbols());
+        return new FrameResult(currentState.pointSymbols(), score());
     }
 
     @Override
@@ -46,10 +47,6 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isDone() {
         return !currentState.isRollable();
-    }
-
-    public boolean hasNext() {
-        return next != null;
     }
 
     @Override
@@ -78,5 +75,42 @@ public class NormalFrame implements Frame {
             return next;
         }
         return this;
+    }
+
+    @Override
+    public Score score() {
+        return currentState.score(nextFrameBonusPinfalls(2));
+    }
+
+    private boolean hasNext() {
+        return next != null;
+    }
+
+    @Override
+    public Frame next() {
+        return next;
+    }
+
+    private List<Pinfall> nextFrameBonusPinfalls(int bonusPinfallCount) {
+        if (!hasNext()) {
+            return new ArrayList<>();
+        }
+
+        return next.bonusPinfalls(bonusPinfallCount);
+    }
+
+    @Override
+    public List<Pinfall> bonusPinfalls(int bonusPinfallCount) {
+        List<Pinfall> bonusPinfalls = currentState.pinfalls();
+        if (bonusPinfalls.size() == 0) {
+            return new ArrayList<>();
+        }
+
+        if (bonusPinfalls.size() < bonusPinfallCount) {
+            List<Pinfall> nextBonus = nextFrameBonusPinfalls(bonusPinfallCount - bonusPinfalls.size());
+            bonusPinfalls.addAll(nextBonus);
+        }
+
+        return bonusPinfalls;
     }
 }

@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.IllegalPinFallException;
 
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ public class Pinfall {
 
     public Pinfall(int pinfall) {
         if (pinfall > MAX_PINFALL) {
-            throw new IllegalArgumentException("넘어진 핀의 개수가 잘못되었습니다");
+            throw new IllegalPinFallException("넘어진 핀의 개수가 잘못되었습니다");
         }
         this.pinfall = pinfall;
     }

@@ -12,6 +12,7 @@ public class BowlingResult {
 
     public BowlingResult(List<FrameResult> frameResultsMap) {
         this.frameResultsMap = new HashMap<>();
+
         FrameNumber frameNumber = new FrameNumber(1);
         for (FrameResult frameResult : frameResultsMap) {
             add(frameNumber, frameResult);
@@ -20,7 +21,21 @@ public class BowlingResult {
     }
 
     public void add(FrameNumber frameNumber, FrameResult result) {
+        Score aggregatedScore = prevAggregatedScore(frameNumber);
+        result = new FrameResult(result.pointSymbols(), result.score(), aggregatedScore.add(result.score()));
         frameResultsMap.put(frameNumber, result);
+    }
+
+    private Score prevAggregatedScore(FrameNumber frameNumber) {
+        if (frameNumber.equals(new FrameNumber(1))) {
+            return Score.create(0);
+        }
+
+        FrameResult prevFrameResult = frameResultsMap.get(frameNumber.decrease());
+        if (prevFrameResult == null) {
+            return Score.create(0);
+        }
+        return prevFrameResult.aggregatedScore();
     }
 
     public List<FrameResult> results() {
