@@ -1,26 +1,67 @@
 package bowling.ui;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringJoiner;
 
 public class FrameScore {
-    private final StringJoiner stringJoiner;
-    private boolean opened;
+    private final Queue<Integer> frameScore;
 
     public FrameScore() {
-        stringJoiner = new StringJoiner("|");
-        opened = true;
+        frameScore = new LinkedList<>();
     }
 
-    public void addScore(String score) {
-        if (opened) {
-            stringJoiner.add(score);
+    public void addScore(int score) {
+        frameScore.add(score);
+    }
+
+    @Override
+    public String toString() {
+        Queue<Integer> frameScore = new LinkedList<>(this.frameScore);
+        StringJoiner stringJoiner = new StringJoiner("|");
+        if (frameScore.isEmpty()) {
+            return "";
+        }
+
+        while (!frameScore.isEmpty()) {
+            z(frameScore, stringJoiner);
+        }
+        return stringJoiner.toString();
+    }
+
+    private void z(Queue<Integer> frameScore, StringJoiner stringJoiner) {
+        if (frameScore.peek() == 10) {
+            stringJoiner.add("X");
+            frameScore.poll();
             return;
         }
-        throw new IllegalStateException("스코어가 확정되어 스코어를 추가할 수 없습니다.");
-    }
+        if (frameScore.peek() == 0) {
+            stringJoiner.add("-");
+            frameScore.poll();
+            return;
+        }
+        if (frameScore.size() == 1) {
+            stringJoiner.add(String.valueOf(frameScore.poll()));
+            return;
+        }
+        int score = 10;
+        int v1 = frameScore.poll();
 
-    public String scoreConfirm() {
-        opened = false;
-        return stringJoiner.toString();
+        score = score - v1;
+        stringJoiner.add(String.valueOf(v1));
+
+        int v2 = frameScore.poll();
+
+        score = score - v2;
+
+        if (score == 0) {
+            stringJoiner.add("/");
+            return;
+        }
+        if (v2 == 0) {
+            stringJoiner.add("-");
+            return;
+        }
+        stringJoiner.add(String.valueOf(v2));
     }
 }

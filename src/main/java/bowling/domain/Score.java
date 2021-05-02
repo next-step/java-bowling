@@ -2,16 +2,9 @@ package bowling.domain;
 
 public class Score {
     private int pins;
-    private int scoreTotal;
 
     public Score() {
         pins = 10;
-        scoreTotal = 0;
-    }
-
-    public Score(Score score) {
-        pins = 10;
-        scoreTotal += score.scoreTotal;
     }
 
     public int updateScore(int score) {

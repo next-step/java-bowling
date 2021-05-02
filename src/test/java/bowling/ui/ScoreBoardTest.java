@@ -9,11 +9,15 @@ public class ScoreBoardTest {
     void printScoreBoardTest() {
         ScoreBoard scoreBoard = new ScoreBoard("PDJ");
 
-        scoreBoard.addData(1, "X");
-        scoreBoard.addData(2, "8");
-        scoreBoard.addData(3, "8|/");
-        scoreBoard.addData(4, "7|-");
-        scoreBoard.addData(10, "2|-|8");
+        scoreBoard.addData(1, 10);
+        scoreBoard.addData(2, 8);
+        scoreBoard.addData(3, 8);
+        scoreBoard.addData(3, 2);
+        scoreBoard.addData(4, 7);
+        scoreBoard.addData(4, 0);
+        scoreBoard.addData(10, 2);
+        scoreBoard.addData(10, 0);
+        scoreBoard.addData(10, 8);
 
         scoreBoard.printScoreBoard();
     }
