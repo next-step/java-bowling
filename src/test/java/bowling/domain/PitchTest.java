@@ -22,29 +22,16 @@ public class PitchTest {
     @DisplayName("스트라이크 투구")
     @Test
     void strike() {
-        Pitch initPitch = new Pitch(0);
-        Pitch firstPitch = initPitch.pitch(10, 0);
+        Pitch initPitch = new Pitch(10);
 
-        assertThat(firstPitch.isStrike()).isTrue();
+        assertThat(initPitch.isStrike()).isTrue();
     }
 
     @DisplayName("스페어 투구")
     @Test
     void spare() {
-        Pitch initPitch = new Pitch(0);
-        Pitch firstPitch = initPitch.pitch(8, 0);
-        Pitch secondPitch = firstPitch.pitch(2, 1);
+        Pitch initPitch = new Pitch(8);
 
-        assertThat(secondPitch.isSpare()).isTrue();
-    }
-
-    @DisplayName("오픈 투구")
-    @Test
-    void open() {
-        Pitch initPitch = new Pitch(0);
-        Pitch firstPitch = initPitch.pitch(0, 0);
-        Pitch secondPitch = firstPitch.pitch(0, 1);
-
-        assertThat(secondPitch.isOpen()).isTrue();
+        assertThat(initPitch.isSpare(2)).isTrue();
     }
 }
