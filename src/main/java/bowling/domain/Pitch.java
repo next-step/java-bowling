@@ -78,4 +78,8 @@ public class Pitch {
     public boolean isEnd() {
         return status.isEnd();
     }
+
+    public boolean hasBonusPitch() {
+        return status.hasBonusPitch();
+    }
 }

@@ -1,31 +1,14 @@
 package bowling.domain.status;
 
-import bowling.domain.Pitch;
-
-public class Default implements Status {
-
-    private Pitch current;
-
-    public Default() {
-
-    }
-
-    public Default(Pitch current) {
-        this.current = current;
-    }
-
+public class Final implements Status {
     @Override
     public Status roll(int fallenPins) {
-        if (current.isSpare2(fallenPins)) {
-            return new Spare();
-        }
-
-        return new Open();
+        throw new UnsupportedOperationException("");
     }
 
     @Override
     public String display(int fallenPins) {
-        return String.valueOf(fallenPins);
+        return null;
     }
 
     @Override
@@ -45,7 +28,7 @@ public class Default implements Status {
 
     @Override
     public boolean isEnd() {
-        return false;
+        return true;
     }
 
     @Override

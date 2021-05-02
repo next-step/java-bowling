@@ -3,7 +3,7 @@ package bowling.domain.status;
 public class Strike implements Status {
     @Override
     public Status roll(int fallenPins) {
-        return null;
+        return new Final();
     }
 
     @Override
@@ -28,6 +28,11 @@ public class Strike implements Status {
 
     @Override
     public boolean isEnd() {
+        return true;
+    }
+
+    @Override
+    public boolean hasBonusPitch() {
         return true;
     }
 }

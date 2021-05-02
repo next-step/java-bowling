@@ -30,4 +30,9 @@ public class Open implements Status {
     public boolean isEnd() {
         return true;
     }
+
+    @Override
+    public boolean hasBonusPitch() {
+        return false;
+    }
 }

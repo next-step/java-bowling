@@ -12,4 +12,6 @@ public interface Status {
     boolean isOpen();
 
     boolean isEnd();
+
+    boolean hasBonusPitch();
 }

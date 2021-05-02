@@ -11,7 +11,7 @@ public class Ready implements Status {
             return new Strike();
         }
 
-        return new Default();
+        return new Default(pitch);
     }
 
     @Override
@@ -36,6 +36,11 @@ public class Ready implements Status {
 
     @Override
     public boolean isEnd() {
+        return false;
+    }
+
+    @Override
+    public boolean hasBonusPitch() {
         return false;
     }
 }

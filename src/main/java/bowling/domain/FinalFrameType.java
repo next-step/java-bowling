@@ -23,7 +23,7 @@ public class FinalFrameType implements FrameType {
 
     @Override
     public boolean isContinue() {
-        return !(pitches.isOpen() || pitches.isLastPitch(MAX_PITCHES));
+        return !pitches.isEnd() || (pitches.isEnd() && pitches.hasBonusPitch());
     }
 
     @Override

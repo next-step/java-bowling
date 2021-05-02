@@ -52,6 +52,14 @@ public class Pitches {
     }
 
     public boolean isEnd() {
-        return pitches.stream().anyMatch(Pitch::isEnd);
+        return last().isEnd();
+    }
+
+    public boolean hasBonusPitch() {
+        return last().hasBonusPitch();
+    }
+
+    private Pitch last() {
+        return pitches.get(pitches.size() - 1);
     }
 }
