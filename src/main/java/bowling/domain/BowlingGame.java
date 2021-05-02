@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.dto.ResultDto;
-
 public class BowlingGame {
     private Frame frame;
     private int currentFrameNumber;
@@ -15,17 +13,18 @@ public class BowlingGame {
         return frame.isAvailable();
     }
 
-    public ResultDto bowling(String inputScore) {
-        return new ResultDto(currentFrameNumber, frame.addScore(Integer.parseInt(inputScore)));
+    public int bowling(String inputScore) {
+        return frame.addScore(Integer.parseInt(inputScore));
     }
 
-    public void nextFrameIfAvailable() {
+    public int nextFrameIfAvailable() {
         if (!frame.isAvailable() && !(frame instanceof FinalFrame)) {
             startNewFrame();
         }
+        return currentFrameNumber;
     }
 
-    public void startNewFrame() {
+    private void startNewFrame() {
         frame = frame.createFrame(++currentFrameNumber);
     }
 }

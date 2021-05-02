@@ -15,11 +15,6 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isFinalFrame() {
-        return false;
-    }
-
-    @Override
     protected void updateCondition(int inputScore) {
         if (inputScore == 10) {
             availability = 0;

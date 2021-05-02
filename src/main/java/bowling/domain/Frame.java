@@ -22,8 +22,6 @@ public abstract class Frame {
 
     public abstract Frame createFrame(int frameNumber);
 
-    public abstract boolean isFinalFrame();
-
     public boolean isAvailable() {
         if (availability > 0) {
             return true;

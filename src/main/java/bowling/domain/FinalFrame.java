@@ -12,11 +12,6 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isFinalFrame() {
-        return true;
-    }
-
-    @Override
     protected void updateCondition(int inputScore) {
         if (inputScore == 10) {
             score.fillPins();
