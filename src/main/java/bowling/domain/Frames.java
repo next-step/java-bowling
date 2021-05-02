@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.dto.FrameBoard;
+import bowling.domain.dto.FrameInfo;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -70,6 +73,19 @@ public class Frames implements Iterable<Frame> {
         return frames.stream()
                 .mapToInt(Frame::score)
                 .sum();
+    }
+
+    public FrameBoard assembleFrameBoard(Participant participant) {
+        return new FrameBoard(participant.getName(), nextTurnNumber(), assembleFrameInfos(), isFinished());
+    }
+
+    private List<FrameInfo> assembleFrameInfos() {
+        List<FrameInfo> frameInfos = new ArrayList<>();
+        for (Frame frame : frames) {
+            FrameInfo frameInfo = frame.assembleFrameInfo();
+            frameInfos.add(frameInfo);
+        }
+        return frameInfos;
     }
 
     @Override
