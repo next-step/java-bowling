@@ -20,7 +20,7 @@ public class ScoreTest {
     @Test
     void calculateScoreWhenSpareTest() {
         Score spareScore = Score.ofSpare();
-        spareScore.throwBall(9);
+        spareScore.addAdditionalScore(9);
         assertThat(spareScore.calculateScore()).isEqualTo(19);
     }
 
@@ -28,8 +28,8 @@ public class ScoreTest {
     @Test
     void calculateScoreWhenStrikeTest() {
         Score strikeScore = Score.ofStrike();
-        strikeScore.throwBall(4);
-        strikeScore.throwBall(5);
+        strikeScore.addAdditionalScore(4);
+        strikeScore.addAdditionalScore(5);
         assertThat(strikeScore.calculateScore()).isEqualTo(19);
     }
 

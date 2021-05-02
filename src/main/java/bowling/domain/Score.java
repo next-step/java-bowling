@@ -41,7 +41,7 @@ public class Score {
         return leftOpportunity == NONE_OPPORTUNITY;
     }
 
-    public void throwBall(int score) {
+    public void addAdditionalScore(int score) {
         if (this.leftOpportunity > NONE_OPPORTUNITY) {
             this.score += score;
             this.leftOpportunity -= 1;

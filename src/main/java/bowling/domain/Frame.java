@@ -44,7 +44,7 @@ public abstract class Frame {
     protected abstract void validateHitCount(int hitCount);
 
     public void additionalScore(int score) {
-        this.score.throwBall(score);
+        this.score.addAdditionalScore(score);
     }
 
     public int score() {
