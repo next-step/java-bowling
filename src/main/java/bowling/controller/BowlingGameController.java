@@ -2,9 +2,8 @@ package bowling.controller;
 
 import bowling.controller.dto.BowlingGameRequest;
 import bowling.controller.dto.BowlingGameResponse;
-import bowling.domain.Frame;
-import bowling.domain.Frames;
-import bowling.domain.Participant;
+import bowling.controller.dto.FrameInfo;
+import bowling.domain.*;
 import bowling.service.BowlingGameService;
 
 import java.util.ArrayList;
@@ -31,18 +30,26 @@ public class BowlingGameController {
     }
 
     private BowlingGameResponse assembleGameResponse(Participant participant, Frames frames) {
-        return new BowlingGameResponse(participant.getName(), frames.nextTurnNumber(), frames.isFinished(), assemblePinDownResults(frames));
+        return new BowlingGameResponse(participant.getName(), frames.nextTurnNumber(), assembleFrameInfos(frames), frames.isFinished());
     }
 
-    private List<String> assemblePinDownResults(Frames frames) {
-        List<String> pinDownResults = new ArrayList<>();
+    private List<FrameInfo> assembleFrameInfos(Frames frames) {
+        List<FrameInfo> frameInfos = new ArrayList<>();
         for (Frame frame : frames) {
-            pinDownResults.add(assemblePinDownResult(frame.getScoreBoards()));
+            frameInfos.add(assembleFrameInfo(frame));
+        }
+        return frameInfos;
+    }
+
+    private FrameInfo assembleFrameInfo(Frame frame) {
+        return new FrameInfo(assemblePinDownResults(frame.pitches()), frame.score(), frame.isFinalFrame(), frame.isSpare(), frame.isScoreDecided());
+    }
+
+    private List<Integer> assemblePinDownResults(Pitches pitches) {
+        List<Integer> pinDownResults = new ArrayList<>();
+        for (Pitch pitch : pitches) {
+            pinDownResults.add(pitch.value());
         }
         return pinDownResults;
-    }
-
-    private String assemblePinDownResult(List<String> scoreBoards) {
-        return String.join(Frames.SCORE_BOARD_DELIMITER, scoreBoards);
     }
 }

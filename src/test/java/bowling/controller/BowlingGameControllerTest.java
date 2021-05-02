@@ -6,8 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BowlingGameControllerTest {
@@ -29,8 +27,8 @@ class BowlingGameControllerTest {
         BowlingGameResponse bowlingGameResponse = controller.startGame(request);
 
         // then
-        assertThat("LDS").isEqualTo(bowlingGameResponse.getParticipantName());
-        assertThat(1).isEqualTo(bowlingGameResponse.getNextFrameNumber());
+        assertThat(bowlingGameResponse.getParticipantName()).isEqualTo("LDS");
+        assertThat(bowlingGameResponse.getNextFrameNumber()).isEqualTo(1);
     }
 
     @Test
@@ -49,10 +47,9 @@ class BowlingGameControllerTest {
         BowlingGameResponse response = controller.pitchBall(request1);
 
         // then
-        assertThat("LDS").isEqualTo(response.getParticipantName());
-        assertThat(3).isEqualTo(response.getNextFrameNumber());
+        assertThat(response.getParticipantName()).isEqualTo("LDS");
+        assertThat(response.getNextFrameNumber()).isEqualTo(3);
         assertThat(response.isFinished()).isFalse();
-        assertThat(Arrays.asList("X", "9|/")).isEqualTo(response.getPinDownResults());
     }
 
     @Test
@@ -71,15 +68,14 @@ class BowlingGameControllerTest {
         controller.pitchBall(new BowlingGameRequest("LDS", 3));
         controller.pitchBall(new BowlingGameRequest("LDS", 0));
         controller.pitchBall(new BowlingGameRequest("LDS", 0));
-        for (int i = 3; i < 11; i++) {
+        for (int i = 3; i < 12; i++) {
             response = controller.pitchBall(request10);
         }
 
         // then
-        assertThat("LDS").isEqualTo(response.getParticipantName());
-        assertThat(10).isEqualTo(response.getNextFrameNumber());
+        assertThat(response.getParticipantName()).isEqualTo("LDS");
+        assertThat(response.getNextFrameNumber()).isEqualTo(10);
         assertThat(response.isFinished()).isTrue();
-        assertThat(Arrays.asList("3|-", "7|/", "-|-", "X", "X", "X", "X", "X", "X", "X|X")).isEqualTo(response.getPinDownResults());
     }
 
 }

@@ -3,11 +3,6 @@ package bowling.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
@@ -56,7 +51,7 @@ class FinalFrameTest {
         finalFrame.pitch(new Pitch(5));
 
         // then
-        assertThat(finalFrame.isFinished()).isTrue();
+        assertThat(finalFrame.isFinished()).isFalse();
     }
 
     @Test
@@ -86,78 +81,84 @@ class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("스트라이크 점수판 출력")
-    void scoreBoards_strike() {
+    @DisplayName("마지막프레임 점수계산 - 한 번의 투구")
+    void score_onePitch() {
         // given when
-        finalFrame.pitch(new Pitch(10));
+        finalFrame.pitch(new Pitch(7));
 
         // then
-        assertThat(1).isEqualTo(finalFrame.getScoreBoards().size());
-        assertThat(Collections.singletonList("X")).isEqualTo(finalFrame.getScoreBoards());
+        assertThat(finalFrame.score()).isEqualTo(7);
     }
 
     @Test
-    @DisplayName("스페어 점수판 출력")
-    void scoreBoards_spare() {
+    @DisplayName("마지막프레임 점수계산 - 두 번의 투구")
+    void score_twoPitch() {
+        // given when
+        finalFrame.pitch(new Pitch(7));
+        finalFrame.pitch(new Pitch(1));
+
+        // then
+        assertThat(finalFrame.score()).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("점수계산 - 스페어 처리")
+    void score_spare() {
         // given when
         finalFrame.pitch(new Pitch(7));
         finalFrame.pitch(new Pitch(3));
 
         // then
-        assertThat(2).isEqualTo(finalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "/")).isEqualTo(finalFrame.getScoreBoards());
+        assertThat(finalFrame.score()).isEqualTo(10);
+        assertThat(finalFrame.isSpare()).isTrue();
     }
 
     @Test
-    @DisplayName("미스 점수판 출력")
-    void scoreBoards_miss() {
+    @DisplayName("점수계산 - 스페어 처리와 보너스 투구")
+    void score_spareAndBonusPitch() {
         // given when
         finalFrame.pitch(new Pitch(7));
+        finalFrame.pitch(new Pitch(3));
         finalFrame.pitch(new Pitch(2));
 
         // then
-        assertThat(2).isEqualTo(finalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "2")).isEqualTo(finalFrame.getScoreBoards());
+        assertThat(finalFrame.score()).isEqualTo(12);
+        assertThat(finalFrame.isSpare()).isTrue();
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"7,0,7,-", "0,7,-,7", "0,0,-,-"})
-    @DisplayName("거터 점수판 출력")
-    void scoreBoards_gutter(int pitchCount1, int pitchCount2, String score1, String score2) {
-        // given when
-        finalFrame.pitch(new Pitch(pitchCount1));
-        finalFrame.pitch(new Pitch(pitchCount2));
-
-        // then
-        assertThat(2).isEqualTo(finalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList(score1, score2)).isEqualTo(finalFrame.getScoreBoards());
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"10,X", "9,9", "0,-"})
-    @DisplayName("점수판출력 - 스트라이크 and 보너스 투구")
-    void scoreBoard_bonusPitch_strike(int bonusPitchCount, String bonusScore) {
-        // given when
-        finalFrame.pitch(new Pitch(10));
-        finalFrame.pitch(new Pitch(bonusPitchCount));
-
-        // then
-        assertThat(2).isEqualTo(finalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("X", bonusScore)).isEqualTo(finalFrame.getScoreBoards());
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"10,X", "9,9", "0,-"})
-    @DisplayName("점수판출력 - 스페어 and 보너스 투구")
-    void scoreBoard_bonusPitch_spare(int bonusPitchCount, String bonusScore) {
+    @Test
+    @DisplayName("점수계산 - 스페어 처리와 스트라이크")
+    void score_spareAndStrike() {
         // given when
         finalFrame.pitch(new Pitch(7));
         finalFrame.pitch(new Pitch(3));
-        finalFrame.pitch(new Pitch(bonusPitchCount));
+        finalFrame.pitch(new Pitch(10));
 
         // then
-        assertThat(3).isEqualTo(finalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "/", bonusScore)).isEqualTo(finalFrame.getScoreBoards());
+        assertThat(finalFrame.score()).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("점수계산 - 더블 스트라이크")
+    void score_doubleStrike() {
+        // given when
+        finalFrame.pitch(new Pitch(10));
+        finalFrame.pitch(new Pitch(10));
+
+        // then
+        assertThat(finalFrame.score()).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("점수계산 - 트리플 스트라이크")
+    void score_tripleStrike() {
+        // given when
+        finalFrame.pitch(new Pitch(10));
+        finalFrame.pitch(new Pitch(10));
+        finalFrame.pitch(new Pitch(10));
+
+        // then
+        assertThat(finalFrame.score()).isEqualTo(30);
     }
 
 }

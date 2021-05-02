@@ -1,40 +1,27 @@
 package bowling.domain;
 
-import java.util.List;
-
 public class FinalFrame extends Frame {
 
-    private Pitch bonusPitch;
+    private static final int BONUS_LIMIT = 2;
 
-    protected FinalFrame(int number, Frame before) {
-        super(number, before);
-    }
-
-    private boolean hasBonusPitch() {
-        return this.bonusPitch != null;
+    protected FinalFrame(int number) {
+        super(number);
     }
 
     @Override
     public void pitch(Pitch pitch) {
-        if (pitches().isStrike() || pitches().isSpare()) {
-            this.bonusPitch = pitch;
-            return;
+        if (pitches().isEmpty() && pitch.isStrike()) {
+            pitches().increasePitchAbleCount();
         }
         pitches().add(pitch);
+        if (pitches().isSpare()) {
+            pitches().increasePitchAbleCount();
+        }
     }
 
     @Override
     public boolean isFinished() {
-        return hasBonusPitch() || pitches().isMiss();
-    }
-
-    @Override
-    public List<String> getScoreBoards() {
-        List<String> scoreBoards = pitches().getScoreBoards();
-        if (hasBonusPitch()) {
-            scoreBoards.add(bonusPitch.toString());
-        }
-        return scoreBoards;
+        return pitches().isFinished();
     }
 
     @Override
@@ -42,4 +29,45 @@ public class FinalFrame extends Frame {
         throw new IllegalStateException("마지막 프레임입니다.");
     }
 
+    @Override
+    public int score() {
+        return pitches().pinDownCount();
+    }
+
+    @Override
+    public int bonusScore(Pitches beforePitches) {
+        if (beforePitches.isStrike()) {
+            return pitches().pinDownCount(BONUS_LIMIT);
+        }
+        if (beforePitches.isSpare()) {
+            return pitches().firstPinDownCount();
+        }
+        return NON_BONUS;
+    }
+
+    @Override
+    public int doubleBonusScore() {
+        return pitches().firstPinDownCount();
+    }
+
+    @Override
+    public boolean isScoreDecided() {
+        return pitches().isFinished();
+    }
+
+    @Override
+    public boolean isBonusScoreDecided(Pitches beforePitches) {
+        if (beforePitches.isStrike()) {
+            return pitches().isFinished();
+        }
+        if (beforePitches.isSpare()) {
+            return !pitches().isEmpty();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return pitches().count() >= BONUS_LIMIT && pitches().pinDownCount(BONUS_LIMIT) == Pitch.STRIKE_COUNT;
+    }
 }

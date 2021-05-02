@@ -3,7 +3,6 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +17,7 @@ class PitchTest {
         Pitch pitch = new Pitch(3);
 
         // then
-        assertThat(3).isEqualTo(pitch.value());
+        assertThat(pitch.value()).isEqualTo(3);
     }
 
     @ParameterizedTest
@@ -31,13 +30,4 @@ class PitchTest {
                 .withMessageMatching("핀 처리 갯수는 0 이상 10 이하의 수 여야 합니다.");
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"1,1", "0,-", "10,X"})
-    void valueToString(int pinDownCount, String expected) {
-        // given when
-        Pitch pitch = new Pitch(pinDownCount);
-
-        // then
-        assertThat(expected).isEqualTo(pitch.toString());
-    }
 }

@@ -8,8 +8,6 @@ import java.util.function.Consumer;
 
 public class Frames implements Iterable<Frame> {
 
-    public static final String SCORE_BOARD_DELIMITER = "|";
-
     private final List<Frame> frames;
 
     public Frames() {
@@ -51,11 +49,11 @@ public class Frames implements Iterable<Frame> {
     }
 
     public boolean isFinished() {
-        return !isEmpty() && lastFrame() instanceof FinalFrame && lastFrame().isFinished();
+        return !isEmpty() && lastFrame().isFinalFrame() && lastFrame().isFinished();
     }
 
     private boolean isEmpty() {
-        return frames.size() == 0;
+        return frames.isEmpty();
     }
 
     private void start() {
@@ -68,6 +66,12 @@ public class Frames implements Iterable<Frame> {
 
     private Frame lastFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    public int totalScore() {
+        return frames.stream()
+                .mapToInt(Frame::score)
+                .sum();
     }
 
     @Override

@@ -18,7 +18,7 @@ class FramesTest {
         frames.pitch(5);
 
         // then
-        assertThat(1).isEqualTo(frames.lastFrameNumber());
+        assertThat(frames.lastFrameNumber()).isEqualTo(1);
     }
 
     @Test
@@ -35,7 +35,7 @@ class FramesTest {
         frames.pitch(7);
 
         // then
-        assertThat(3).isEqualTo(frames.lastFrameNumber());
+        assertThat(frames.lastFrameNumber()).isEqualTo(3);
     }
 
     @Test
@@ -45,6 +45,7 @@ class FramesTest {
         Frames frames = new Frames();
 
         // when
+        frames.pitch(10);
         frames.pitch(10);
         frames.pitch(10);
         frames.pitch(10);
@@ -68,6 +69,7 @@ class FramesTest {
         Frames frames = new Frames();
 
         // when
+        frames.pitch(10);
         frames.pitch(10);
         frames.pitch(10);
         frames.pitch(10);
@@ -105,7 +107,7 @@ class FramesTest {
         Frames frames = new Frames();
 
         // when then
-        assertThat(1).isEqualTo(frames.nextTurnNumber());
+        assertThat(frames.nextTurnNumber()).isEqualTo(1);
     }
 
     @Test
@@ -126,10 +128,11 @@ class FramesTest {
         frames.pitch(10);
         frames.pitch(10);
         frames.pitch(10);
+        frames.pitch(10);
 
         // when then
         assertThat(frames.isFinished()).isTrue();
-        assertThat(10).isEqualTo(frames.nextTurnNumber());
+        assertThat(frames.nextTurnNumber()).isEqualTo(10);
     }
 
     @Test
@@ -145,7 +148,7 @@ class FramesTest {
         // then
         assertThat(frames.isFinished()).isFalse();
         assertThat(frames.lastFrameNumber()).isEqualTo(frames.nextTurnNumber());
-        assertThat(2).isEqualTo(frames.nextTurnNumber());
+        assertThat(frames.nextTurnNumber()).isEqualTo(2);
     }
 
     @Test
@@ -162,8 +165,44 @@ class FramesTest {
         // then
         assertThat(frames.isFinished()).isFalse();
         assertThat(frames.lastFrameNumber()).isNotEqualTo(frames.nextTurnNumber());
-        assertThat(3).isEqualTo(frames.nextTurnNumber());
-        assertThat(2).isEqualTo(frames.lastFrameNumber());
+        assertThat(frames.nextTurnNumber()).isEqualTo(3);
+        assertThat(frames.lastFrameNumber()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("퍼펙트게임")
+    void perfectGame() {
+        // given
+        Frames frames = new Frames();
+
+        // when
+        for (int i = 0; i < 12; i++) {
+            frames.pitch(10);
+        }
+
+        // then
+        assertThat(frames.totalScore()).isEqualTo(300);
+    }
+
+    @Test
+    @DisplayName("마지막 프레임 판별")
+    void isFinalFrame() {
+        // given
+        Frames frames = new Frames();
+
+        // when
+        for (int i = 0; i < 10; i++) {
+            frames.pitch(10);
+        }
+
+        Frame target = null;
+        for (Frame frame : frames) {
+            target = frame;
+        }
+
+        // then
+        assertThat(target).isNotNull();
+        assertThat(target.isFinalFrame()).isTrue();
     }
 
 }

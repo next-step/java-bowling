@@ -4,8 +4,6 @@ public class Pitch {
 
     public static final int STRIKE_COUNT = 10;
     private static final int GUTTER_COUNT = 0;
-    private static final String STRIKE_MARK = "X";
-    private static final String GUTTER_MARK = "-";
 
     private final int value;
 
@@ -28,18 +26,4 @@ public class Pitch {
         return this.value == STRIKE_COUNT;
     }
 
-    public boolean isGutter() {
-        return this.value == GUTTER_COUNT;
-    }
-
-    @Override
-    public String toString() {
-        if (isStrike()) {
-            return STRIKE_MARK;
-        }
-        if (isGutter()) {
-            return GUTTER_MARK;
-        }
-        return String.valueOf(value);
-    }
 }

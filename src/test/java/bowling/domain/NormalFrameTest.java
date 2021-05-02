@@ -3,9 +3,6 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -18,7 +15,7 @@ class NormalFrameTest {
         NormalFrame startFrame = NormalFrame.first();
 
         // when then
-        assertThat(1).isEqualTo(startFrame.number());
+        assertThat(startFrame.number()).isEqualTo(1);
     }
 
     @Test
@@ -100,6 +97,7 @@ class NormalFrameTest {
         startFrame.pitch(new Pitch(3));
 
         // then
+        assertThat(startFrame.isSpare()).isTrue();
         assertThatIllegalStateException()
                 .isThrownBy(() -> startFrame.pitch(new Pitch(8)))
                 .withMessageMatching("종료된 프레임입니다.");
@@ -133,9 +131,7 @@ class NormalFrameTest {
         Frame nextFrame = startFrame.next();
 
         // then
-        assertThat(2).isEqualTo(nextFrame.number());
-        assertThat(startFrame).isEqualTo(nextFrame.before());
-        assertThat(1).isEqualTo(nextFrame.before().number());
+        assertThat(nextFrame.number()).isEqualTo(2);
     }
 
     @Test
@@ -174,64 +170,21 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("이전 프레임 조회")
-    void before() {
-        // given
-        NormalFrame first = NormalFrame.first();
-
-        // when
-        first.pitch(new Pitch(10));
-        Frame next = first.next();
-        Frame before = next.before();
-
-        // then
-        assertThat(first).isEqualTo(before);
-    }
-
-    @Test
-    @DisplayName("첫 번째 프레임은 이전 프레임을 가질 수 없음")
-    void before_firstFrame() {
-        // given
-        NormalFrame first = NormalFrame.first();
-
-        // when then
-        assertThatIllegalStateException()
-                .isThrownBy(first::before)
-                .withMessageMatching("이전 프레임이 존재하지 않습니다.");
-    }
-
-    @Test
-    @DisplayName("스트라이크 점수판 출력")
-    void scoreBoards_strike() {
-        // given
-        NormalFrame normalFrame = NormalFrame.first();
-
-        // when
-        normalFrame.pitch(new Pitch(10));
-
-        // then
-        assertThat(1).isEqualTo(normalFrame.getScoreBoards().size());
-        assertThat(Collections.singletonList("X")).isEqualTo(normalFrame.getScoreBoards());
-    }
-
-    @Test
-    @DisplayName("스페어 점수판 출력")
-    void scoreBoards_spare() {
+    @DisplayName("점수계산 - 프레임 미종료")
+    void score_notFinished() {
         // given
         NormalFrame normalFrame = NormalFrame.first();
 
         // when
         normalFrame.pitch(new Pitch(7));
-        normalFrame.pitch(new Pitch(3));
 
         // then
-        assertThat(2).isEqualTo(normalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "/")).isEqualTo(normalFrame.getScoreBoards());
+        assertThat(normalFrame.score()).isEqualTo(7);
     }
 
     @Test
-    @DisplayName("미스 점수판 출력")
-    void scoreBoards_miss() {
+    @DisplayName("점수계산 - 프레임 종료 및 다음 프레임 미시작")
+    void score_finishedAndHasNotNext() {
         // given
         NormalFrame normalFrame = NormalFrame.first();
 
@@ -240,37 +193,256 @@ class NormalFrameTest {
         normalFrame.pitch(new Pitch(2));
 
         // then
-        assertThat(2).isEqualTo(normalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "2")).isEqualTo(normalFrame.getScoreBoards());
+        assertThat(normalFrame.score()).isEqualTo(9);
     }
 
     @Test
-    @DisplayName("거터 점수판 출력")
-    void scoreBoards_gutter() {
+    @DisplayName("점수계산 - 프레임 종료 및 다음 프레임 시작")
+    void score_finishedAndHasNext() {
         // given
         NormalFrame normalFrame = NormalFrame.first();
-        NormalFrame normalFrame2 = NormalFrame.first();
-        NormalFrame normalFrame3 = NormalFrame.first();
 
         // when
         normalFrame.pitch(new Pitch(7));
-        normalFrame.pitch(new Pitch(0));
-
-        normalFrame2.pitch(new Pitch(0));
-        normalFrame2.pitch(new Pitch(7));
-
-        normalFrame3.pitch(new Pitch(0));
-        normalFrame3.pitch(new Pitch(0));
+        normalFrame.pitch(new Pitch(2));
+        normalFrame.next();
 
         // then
-        assertThat(2).isEqualTo(normalFrame.getScoreBoards().size());
-        assertThat(Arrays.asList("7", "-")).isEqualTo(normalFrame.getScoreBoards());
+        assertThat(normalFrame.score()).isEqualTo(9);
+    }
 
-        assertThat(2).isEqualTo(normalFrame2.getScoreBoards().size());
-        assertThat(Arrays.asList("-", "7")).isEqualTo(normalFrame2.getScoreBoards());
+    @Test
+    @DisplayName("점수계산 - 프레임 종료 및 다음 프레임 투구")
+    void score_finishedAndNextFramePitch() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
 
-        assertThat(2).isEqualTo(normalFrame3.getScoreBoards().size());
-        assertThat(Arrays.asList("-", "-")).isEqualTo(normalFrame3.getScoreBoards());
+        // when
+        normalFrame.pitch(new Pitch(7));
+        normalFrame.pitch(new Pitch(2));
+
+        Frame next = normalFrame.next();
+        next.pitch(new Pitch(5));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(9);
+    }
+    
+    @Test
+    @DisplayName("점수계산 - 스페어에 의한 보너스점수")
+    void score_spareBonus() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(7));
+        normalFrame.pitch(new Pitch(3));
+
+        Frame next = normalFrame.next();
+        next.pitch(new Pitch(4));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(14);
+    }
+    
+    @Test
+    @DisplayName("점수계산 - 스트라이크에 의한 보너스점수")
+    void score_strikeBonus() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        Frame next = normalFrame.next();
+        next.pitch(new Pitch(2));
+        next.pitch(new Pitch(7));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(19);
+    }
+
+    @Test
+    @DisplayName("더블 스트라이크 보너스점수")
+    void doubleStrike() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        Frame next = normalFrame.next();
+        next.pitch(new Pitch(10));
+
+        Frame next2 = next.next();
+        next2.pitch(new Pitch(7));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(27);
+    }
+
+    @Test
+    @DisplayName("트리플 스트라이크 보너스점수")
+    void tripleStrike() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        Frame next = normalFrame.next();
+        next.pitch(new Pitch(10));
+
+        Frame next2 = next.next();
+        next2.pitch(new Pitch(10));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(30);
+    }
+    
+    @Test
+    @DisplayName("스트라이크 보너스는 최대 3프레임까지만 적용")
+    void limitStrikeBonus() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        Frame next = normalFrame.next();
+        next.pitch(new Pitch(10));
+
+        Frame next2 = next.next();
+        next2.pitch(new Pitch(10));
+
+        Frame next3 = next2.next();
+        next3.pitch(new Pitch(6));
+
+        // then
+        assertThat(normalFrame.score()).isEqualTo(30);
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 미완료")
+    void score_nonDecided() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(3));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isFalse();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 오픈에 의한 완료")
+    void score_open() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(3));
+        normalFrame.pitch(new Pitch(5));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 스페어 미완료")
+    void score_spare_nonDecided() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(3));
+        normalFrame.pitch(new Pitch(7));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isFalse();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 스페어는 다음 프레임의 초구가 필요")
+    void score_spare_decided() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(3));
+        normalFrame.pitch(new Pitch(7));
+
+        Frame nextFrame = normalFrame.next();
+        nextFrame.pitch(new Pitch(2));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 스트라이크는 다음 프레임의 종료가 필요")
+    void score_strike_nonDecided() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isFalse();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 스트라이크")
+    void score_strike() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+        Frame nextFrame = normalFrame.next();
+
+        nextFrame.pitch(new Pitch(5));
+        nextFrame.pitch(new Pitch(3));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 더블 스트라이크 미종료")
+    void score_doubleStrike_nonDecided() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        Frame nextFrame = normalFrame.next();
+        nextFrame.pitch(new Pitch(10));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isFalse();
+    }
+
+    @Test
+    @DisplayName("점수계산 완료여부 - 더블 스트라이크")
+    void score_doubleStrike() {
+        // given
+        NormalFrame normalFrame = NormalFrame.first();
+
+        // when
+        normalFrame.pitch(new Pitch(10));
+
+        Frame nextFrame = normalFrame.next();
+        nextFrame.pitch(new Pitch(10));
+
+        Frame nextFrame2 = nextFrame.next();
+        nextFrame2.pitch(new Pitch(10));
+
+        // then
+        assertThat(normalFrame.isScoreDecided()).isTrue();
     }
 
 }

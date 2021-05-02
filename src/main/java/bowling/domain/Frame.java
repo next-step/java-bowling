@@ -1,16 +1,14 @@
 package bowling.domain;
 
-import java.util.List;
-
 public abstract class Frame {
+
+    protected static final int NON_BONUS = 0;
 
     private final int number;
     private final Pitches pitches;
-    private Frame before;
 
-    protected Frame(int number, Frame before) {
+    protected Frame(int number) {
         this(number, new Pitches());
-        this.before = before;
     }
 
     protected Frame(int number, Pitches pitches) {
@@ -26,19 +24,20 @@ public abstract class Frame {
         return pitches;
     }
 
-    public Frame before() {
-        if (!hasBefore()) {
-            throw new IllegalStateException("이전 프레임이 존재하지 않습니다.");
-        }
-        return this.before;
+    public boolean isFinalFrame() {
+        return this instanceof FinalFrame;
     }
 
-    private boolean hasBefore() {
-        return this.before != null;
+    public boolean isSpare() {
+        return pitches.isSpare();
     }
 
     abstract public Frame next();
     abstract public void pitch(Pitch pitch);
     abstract public boolean isFinished();
-    abstract public List<String> getScoreBoards();
+    abstract public int score();
+    abstract public int bonusScore(Pitches beforePitches);
+    abstract public int doubleBonusScore();
+    abstract public boolean isScoreDecided();
+    abstract public boolean isBonusScoreDecided(Pitches beforePitches);
 }

@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 public class NormalFrame extends Frame {
 
     public static final int FIRST_NUMBER = 1;
@@ -9,8 +7,8 @@ public class NormalFrame extends Frame {
 
     private Frame next;
 
-    private NormalFrame(int number, NormalFrame before) {
-        super(number, before);
+    private NormalFrame(int number) {
+        super(number);
     }
 
     private NormalFrame(int number, Pitches pitches) {
@@ -32,7 +30,7 @@ public class NormalFrame extends Frame {
 
     private void validateCreateNextFrame() {
         if (!isFinished()) {
-           throw new IllegalStateException("종료되지 않은 프레임입니다. 다음 프레임을 시작할 수 없습니다.");
+            throw new IllegalStateException("종료되지 않은 프레임입니다. 다음 프레임을 시작할 수 없습니다.");
         }
     }
 
@@ -43,9 +41,9 @@ public class NormalFrame extends Frame {
 
     private Frame createNextFrame(boolean isLast) {
         if (isLast) {
-            return new FinalFrame(number() + 1, this);
+            return new FinalFrame(number() + 1);
         }
-        return new NormalFrame(number() + 1, this);
+        return new NormalFrame(number() + 1);
     }
 
     private boolean isLast() {
@@ -59,6 +57,9 @@ public class NormalFrame extends Frame {
     @Override
     public void pitch(Pitch pitch) {
         pitches().add(pitch);
+        if (pitch.isStrike()) {
+            pitches().decreasePitchAbleCount();
+        }
     }
 
     @Override
@@ -67,8 +68,71 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public List<String> getScoreBoards() {
-        return pitches().getScoreBoards();
+    public int score() {
+        return pitches().pinDownCount() + bonusScore();
+    }
+
+    private int bonusScore() {
+        if (hasNext()) {
+            return next.bonusScore(pitches());
+        }
+        return NON_BONUS;
+    }
+
+    @Override
+    public int bonusScore(Pitches beforePitches) {
+        if (isDoubleStrike(beforePitches)) {
+            return pitches().pinDownCount() + doubleBonusScore();
+        }
+        if (beforePitches.isStrike()) {
+            return pitches().pinDownCount();
+        }
+        if (beforePitches.isSpare()) {
+            return pitches().firstPinDownCount();
+        }
+        return NON_BONUS;
+    }
+
+    private boolean isDoubleStrike(Pitches beforePitches) {
+        return beforePitches.isStrike() && pitches().isStrike();
+    }
+
+    @Override
+    public int doubleBonusScore() {
+        if (hasNext()) {
+            Pitches nextFramePitches = next.pitches();
+            return nextFramePitches.firstPinDownCount();
+        }
+        return NON_BONUS;
+    }
+
+    @Override
+    public boolean isScoreDecided() {
+        if (pitches().isStrike() || pitches().isSpare()) {
+            return isBonusScoreDecided();
+        }
+        return pitches().isFinished();
+    }
+
+    private boolean isBonusScoreDecided() {
+        if (hasNext()) {
+            return next.isBonusScoreDecided(pitches());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isBonusScoreDecided(Pitches beforePitches) {
+        if (isDoubleStrike(beforePitches)) {
+            return hasNext();
+        }
+        if (beforePitches.isStrike()) {
+            return pitches().isFinished();
+        }
+        if (beforePitches.isSpare()) {
+            return !pitches().isEmpty();
+        }
+        return false;
     }
 
 }
