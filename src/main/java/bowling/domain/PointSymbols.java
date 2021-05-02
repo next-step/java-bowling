@@ -13,12 +13,12 @@ public class PointSymbols {
         this();
         symbols.add(symbol);
     }
+
     public PointSymbols(PointSymbol first, PointSymbol second) {
         this();
         symbols.add(first);
         symbols.add(second);
     }
-
 
     public PointSymbols() {
         symbols = new ArrayList<>();
