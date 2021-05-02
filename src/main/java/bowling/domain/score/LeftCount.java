@@ -14,6 +14,18 @@ public final class LeftCount {
         return new LeftCount(leftCount);
     }
 
+    public static LeftCount create() {
+        return null;
+    }
+
+    public static LeftCount strike() {
+        return null;
+    }
+
+    public static LeftCount spare() {
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
