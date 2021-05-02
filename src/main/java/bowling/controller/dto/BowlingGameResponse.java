@@ -6,14 +6,12 @@ public class BowlingGameResponse {
 
     private final String participantName;
     private final int nextFrameNumber;
-    private final boolean isFinished;
-    private final List<String> pinDownResults;
+    private final List<FrameInfo> frameInfos;
 
-    public BowlingGameResponse(String participantName, int nextFrameNumber, boolean isFinished, List<String> pinDownResults) {
+    public BowlingGameResponse(String participantName, int nextFrameNumber, List<FrameInfo> frameInfos) {
         this.participantName = participantName;
         this.nextFrameNumber = nextFrameNumber;
-        this.isFinished = isFinished;
-        this.pinDownResults = pinDownResults;
+        this.frameInfos = frameInfos;
     }
 
     public String getParticipantName() {
@@ -24,11 +22,7 @@ public class BowlingGameResponse {
         return nextFrameNumber;
     }
 
-    public boolean isFinished() {
-        return isFinished;
-    }
-
-    public List<String> getPinDownResults() {
-        return pinDownResults;
+    public List<FrameInfo> getFrameInfos() {
+        return frameInfos;
     }
 }
