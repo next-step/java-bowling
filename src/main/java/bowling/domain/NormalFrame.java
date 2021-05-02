@@ -100,7 +100,8 @@ public class NormalFrame extends Frame {
     @Override
     public int doubleBonusScore() {
         if (hasNext()) {
-            return next.pitches().firstPinDownCount();
+            Pitches nextFramePitches = next.pitches();
+            return nextFramePitches.firstPinDownCount();
         }
         return NON_BONUS;
     }
@@ -123,7 +124,7 @@ public class NormalFrame extends Frame {
     @Override
     public boolean isBonusScoreDecided(Pitches beforePitches) {
         if (isDoubleStrike(beforePitches)) {
-            return hasNext() && !next.pitches().isEmpty();
+            return hasNext();
         }
         if (beforePitches.isStrike()) {
             return pitches().isFinished();
