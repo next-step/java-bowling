@@ -42,7 +42,7 @@ public final class LeftCount {
     }
 
     public boolean hasLeftCount() {
-        return false;
+        return leftCount > NO_LEFT_COUNT;
     }
 
     @Override
