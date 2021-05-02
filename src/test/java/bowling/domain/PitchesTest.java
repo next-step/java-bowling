@@ -59,21 +59,6 @@ class PitchesTest {
     }
 
     @Test
-    @DisplayName("Miss")
-    void miss() {
-        // given
-        Pitches pitches = new Pitches();
-
-        // when
-        pitches.add(new Pitch(3));
-        pitches.add(new Pitch(2));
-
-        // then
-        assertThat(pitches.isFinished()).isTrue();
-        assertThat(pitches.isMiss()).isTrue();
-    }
-
-    @Test
     @DisplayName("스페어 갯수")
     void spare() {
         // given
