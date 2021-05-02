@@ -1,9 +1,6 @@
 package bowling.domain;
 
-import bowling.exception.NoMoreBowlActionsException;
-import bowling.exception.NoMoreCountingActionException;
-import bowling.exception.NoMoreFinishActionsException;
-import bowling.exception.NoMoreIndexActionsException;
+import bowling.exception.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,13 +25,13 @@ class FakeFrameTest {
 
     @DisplayName("FakeFrame 인스턴스가 사이즈 반환시 예외처리 여부 테스트")
     @Test
-    void 반환_크기() {
+    void 검증_크기() {
         // when
         Frame fakeFrame = FakeFrame.initialize();
 
         // then
         assertThatThrownBy(() -> assertThat(fakeFrame.size()))
-                .isInstanceOf(NoMoreSizeActionsException.class)
+                .isInstanceOf(NoMoreGetSizeActionsException.class)
                 .hasMessage("현재 상태에서는 사이즈 값을 알 수 없습니다.");
     }
 

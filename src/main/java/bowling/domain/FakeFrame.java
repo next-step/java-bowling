@@ -1,9 +1,6 @@
 package bowling.domain;
 
-import bowling.exception.NoMoreBowlActionsException;
-import bowling.exception.NoMoreCountingActionException;
-import bowling.exception.NoMoreFinishActionsException;
-import bowling.exception.NoMoreIndexActionsException;
+import bowling.exception.*;
 import bowling.util.BowlingFixture;
 
 public final class FakeFrame implements Frame {
@@ -32,7 +29,7 @@ public final class FakeFrame implements Frame {
 
     @Override
     public final int size() {
-        return BowlingFixture.ZERO;
+        throw new NoMoreGetSizeActionsException();
     }
 
     @Override

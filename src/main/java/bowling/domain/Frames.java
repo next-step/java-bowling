@@ -1,8 +1,6 @@
 package bowling.domain;
 
-import bowling.Bowling;
 import bowling.exception.NoMoreBowlActionsException;
-import bowling.util.BowlingFixture;
 
 import java.util.List;
 import java.util.stream.Collectors;
