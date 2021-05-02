@@ -17,7 +17,6 @@ public class RollResult {
         return new RollResult(type, type.eval());
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
