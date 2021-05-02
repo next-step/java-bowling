@@ -1,6 +1,6 @@
 package bowling.controller;
 
-import bowling.BowlingGame;
+import bowling.domain.BowlingGame;
 import bowling.domain.NumberOfPlayer;
 import bowling.domain.Pins;
 import bowling.domain.Player;

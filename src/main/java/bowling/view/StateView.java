@@ -43,7 +43,7 @@ public enum StateView {
     private static final int MIN_PINS = 0;
     private static final String GUTTER = "-";
     public static final String DELIMITER = "|";
-    
+
     private String symbol;
 
     StateView(String symbol) {

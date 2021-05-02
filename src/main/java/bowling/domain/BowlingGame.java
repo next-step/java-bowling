@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 import bowling.domain.Pins;
 import bowling.domain.Player;
