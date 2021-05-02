@@ -1,17 +1,19 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.FinalPins;
-import bowling.domain.pin.NormalPins;
 import bowling.domain.pin.Pin;
+import bowling.domain.pin.PinCountValidator;
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
+import bowling.exception.FramePinCountException;
 import bowling.exception.IllegalNormalFrameException;
 
 public final class NormalFrame extends Frame {
 
     public static final RoundNumber MAX_NORMAL_FRAME_ROUND_NUMBER = new RoundNumber(RoundNumber.MAX - 1);
     private static final int SECOND_PIN_EXIST_SIZE = 2;
+    private static final int MAX_NORMAL_PIN_COUNT = 10;
 
-    private NormalFrame(RoundNumber roundNumber, NormalPins pins) {
+    private NormalFrame(RoundNumber roundNumber, Pins pins) {
         super(roundNumber, pins);
     }
 
@@ -23,7 +25,7 @@ public final class NormalFrame extends Frame {
         return nextFrame;
     }
 
-    public static Frame of(RoundNumber roundNumber, NormalPins pins) {
+    public static Frame of(RoundNumber roundNumber, Pins pins) {
         validateNormalRoundNumber(roundNumber);
         return new NormalFrame(roundNumber, pins);
     }
@@ -35,7 +37,7 @@ public final class NormalFrame extends Frame {
     }
 
     public static Frame createFirstFrame() {
-        return NormalFrame.of(RoundNumber.firstRoundNumber(), NormalPins.create());
+        return NormalFrame.of(RoundNumber.firstRoundNumber(), Pins.create());
     }
 
     @Override
@@ -45,14 +47,19 @@ public final class NormalFrame extends Frame {
 
     private Frame generateNextFrame() {
         if (MAX_NORMAL_FRAME_ROUND_NUMBER.equals(roundNumber)) {
-            return FinalFrame.from(FinalPins.create());
+            return FinalFrame.from(Pins.create());
         }
-        return NormalFrame.of(roundNumber.nextRoundNumber(), NormalPins.create());
+        return NormalFrame.of(roundNumber.nextRoundNumber(), Pins.create());
     }
 
     @Override
     public void knockDownPin(Pin pin) {
-        pins.validatePinCount(pin);
+        final PinCountValidator pinCountValidator = (pinsParameter, pinParameter) -> {
+            if (pinsParameter.totalPinCount() + pinParameter.pinCount() > MAX_NORMAL_PIN_COUNT) {
+                throw new FramePinCountException();
+            }
+        };
+        pins.validatePinCount(pin, pinCountValidator);
         pins.knockDownPin(pin);
     }
 

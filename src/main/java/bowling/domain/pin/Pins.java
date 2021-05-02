@@ -3,21 +3,44 @@ package bowling.domain.pin;
 import bowling.domain.frame.FrameStatus;
 import bowling.exception.PinsCountExceededException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Pins {
+public final class Pins {
 
     private static final int FIRST_PIN_INDEX = 0;
     private static final int SECOND_PIN_INDEX = 1;
     private static final int THIRD_PIN_INDEX = 2;
     private static final int MAX_PIN_COUNT = 3;
+    private static final int NORMAL_PINS_SIZE = 2;
 
-    protected final List<Pin> pins;
+    private final List<Pin> pins;
 
-    protected Pins(List<Pin> pins) {
+    private Pins(List<Pin> pins) {
         validatePinsCount(pins.size());
         this.pins = pins;
+    }
+
+    private Pins() {
+        this(new ArrayList<>());
+    }
+
+    private Pins(Pin... pins) {
+        this(Arrays.asList(pins));
+    }
+
+    public static Pins create() {
+        return new Pins();
+    }
+
+    public static Pins of(Pin... pins) {
+        return new Pins(pins);
+    }
+
+    public static Pins from(List<Pin> pins) {
+        return new Pins(pins);
     }
 
     private void validatePinsCount(final int count) {
@@ -26,7 +49,9 @@ public abstract class Pins {
         }
     }
 
-    public abstract void validatePinCount(Pin pin);
+    public void validatePinCount(Pin pin, PinCountValidator validator) {
+        validator.validate(this, pin);
+    }
 
     public Pin firstPin() {
         return pins.get(FIRST_PIN_INDEX);
@@ -81,6 +106,14 @@ public abstract class Pins {
 
     public int size() {
         return pins.size();
+    }
+
+    public boolean isLastGameSpare() {
+        return isThirdThrow() && firstPin().isMaximum() && !secondPin().isMaximum();
+    }
+
+    private boolean isThirdThrow() {
+        return pins.size() == NORMAL_PINS_SIZE;
     }
 
     @Override

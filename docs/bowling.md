@@ -87,8 +87,6 @@
         - [x] 마지막 프레임인지 확인
     - [x] `NormalFrame`에 첫번째 프레임을 생성하는 기능을 추가한다.
 - [x] `Pin`의 목록을 관리하는 클래스를 정의한다.
-    - [x] 기본적으로 두 개의 Pin을 관리하는 `NormalPins`
-    - [x] 마지막 Frame에서 사용되는 `FinalPins` 가 있다.
 - [x] `Pins`를 이용해 FrameScore를 개선한다.
     - [x] FrameScore는 `Pins` 와 `FrameStatus`를 가진다.
     - [x] FrameScore는 해당 프레임이 종료되었는지 확인하는 메서드를 가져야한다.
@@ -189,7 +187,7 @@
     - [x] `Pin`에 `isGutter` 메서드 추가하기
         - [x] `Pin`에 `status()` 부분은 `isGutter`를 추가하면서 View쪽으로 옮긴다.
 - step3
-    - [ ] `Pins`에서 `Validator` 객체를 주입받아 `validate`를 위임하도록 수정
+    - [x] `Pins`에서 `Validator` 객체를 주입받아 `validate`를 위임하도록 수정
     - [ ] `View` 개선
         - [ ] `PlayerNameView`가 더 많은 부분을 출력하도록 변경
         - [ ] `Cell`: 한 칸을 표현하는 클래스 선언

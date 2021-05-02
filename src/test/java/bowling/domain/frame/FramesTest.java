@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.TestFixture;
-import bowling.domain.pin.NormalPins;
+import bowling.domain.pin.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +44,7 @@ class FramesTest {
         frames.knockDownPin(roundNumber, TestFixture.STRIKE_PIN);
 
         // then
-        final Frame expectedFrame = NormalFrame.of(roundNumber, NormalPins.of(TestFixture.STRIKE_PIN));
+        final Frame expectedFrame = NormalFrame.of(roundNumber, Pins.of(TestFixture.STRIKE_PIN));
         assertThat(frames.getFrame(roundNumber)).isEqualTo(expectedFrame);
     }
 

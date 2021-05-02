@@ -21,10 +21,10 @@ class PinsTest {
     void createEmptyPins() {
         // given
         // when
-        final Pins normalPins = NormalPins.create();
+        final Pins pins = Pins.create();
 
         // then
-        assertThat(normalPins).isEqualTo(NormalPins.from(new ArrayList<>()));
+        assertThat(pins).isEqualTo(Pins.from(new ArrayList<>()));
     }
 
     @Test
@@ -35,18 +35,18 @@ class PinsTest {
         final Pin secondPin = TestFixture.GUTTER_PIN;
 
         // when
-        final Pins pins = NormalPins.of(firstPin, secondPin);
+        final Pins pins = Pins.of(firstPin, secondPin);
 
         // then
         assertAll(
-                () -> assertThat(pins).isEqualTo(NormalPins.of(firstPin, secondPin)),
+                () -> assertThat(pins).isEqualTo(Pins.of(firstPin, secondPin)),
                 () -> assertThat(pins.firstPin()).isEqualTo(firstPin),
                 () -> assertThat(pins.secondPin()).isEqualTo(secondPin)
         );
     }
 
     @Test
-    @DisplayName("FinalPins는 Pin 세 개로 생성할 수 있다.")
+    @DisplayName("Pins는 Pin 세 개로 생성할 수 있다.")
     void createOfThreePin() {
         // given
         final Pin firstPin = TestFixture.STRIKE_PIN;
@@ -54,11 +54,11 @@ class PinsTest {
         final Pin thirdPin = TestFixture.STRIKE_PIN;
 
         // when
-        final Pins pins = FinalPins.of(firstPin, secondPin, thirdPin);
+        final Pins pins = Pins.of(firstPin, secondPin, thirdPin);
 
         // then
         assertAll(
-                () -> assertThat(pins).isEqualTo(FinalPins.of(firstPin, secondPin, thirdPin)),
+                () -> assertThat(pins).isEqualTo(Pins.of(firstPin, secondPin, thirdPin)),
                 () -> assertThat(pins.firstPin()).isEqualTo(firstPin),
                 () -> assertThat(pins.secondPin()).isEqualTo(secondPin),
                 () -> assertThat(pins.thirdPin()).isEqualTo(thirdPin)
@@ -66,7 +66,7 @@ class PinsTest {
     }
 
     @Test
-    @DisplayName("FinalPins는 4개의 Pin으로 생성할 수 없다.")
+    @DisplayName("Pins는 4개의 Pin으로 생성할 수 없다.")
     void createOfFourPin() {
         // given
         final Pin firstPin = TestFixture.STRIKE_PIN;
@@ -76,7 +76,7 @@ class PinsTest {
 
         // when
         // then
-        assertThatThrownBy(() -> FinalPins.of(firstPin, secondPin, thirdPin, fourthPin))
+        assertThatThrownBy(() -> Pins.of(firstPin, secondPin, thirdPin, fourthPin))
                 .isInstanceOf(PinsCountExceededException.class)
                 .hasMessage(PinsCountExceededException.PINS_COUNT_EXCEEDED);
     }
@@ -88,7 +88,7 @@ class PinsTest {
         // given
         final Pin firstPin = new Pin(firstPinCount);
         final Pin secondPin = new Pin(secondPinCount);
-        final Pins pins = NormalPins.of(firstPin, secondPin);
+        final Pins pins = Pins.of(firstPin, secondPin);
 
         // when
         final FrameStatus frameStatus = pins.frameStatus();
@@ -101,13 +101,13 @@ class PinsTest {
     @DisplayName("쓰러진 핀을 전달받으면 Pins의 상태가 변경된다.")
     void knockDownPin() {
         // given
-        final Pins pins = NormalPins.create();
+        final Pins pins = Pins.create();
 
         // when
         pins.knockDownPin(TestFixture.STRIKE_PIN);
 
         // then
-        assertThat(pins).isEqualTo(NormalPins.of(TestFixture.STRIKE_PIN));
+        assertThat(pins).isEqualTo(Pins.of(TestFixture.STRIKE_PIN));
     }
 
     @Test
@@ -117,7 +117,7 @@ class PinsTest {
         final Pin firstPin = TestFixture.STRIKE_PIN;
         final Pin secondPin = TestFixture.GUTTER_PIN;
         final Pin thirdPin = TestFixture.STRIKE_PIN;
-        final Pins pins = FinalPins.of(firstPin, secondPin, thirdPin);
+        final Pins pins = Pins.of(firstPin, secondPin, thirdPin);
 
         // when
         // then
@@ -130,7 +130,7 @@ class PinsTest {
     @DisplayName("전체 핀의 개수를 리턴한다.")
     void totalPinCount() {
         // given
-        final Pins pins = NormalPins.of(TestFixture.STRIKE_PIN, TestFixture.GUTTER_PIN);
+        final Pins pins = Pins.of(TestFixture.STRIKE_PIN, TestFixture.GUTTER_PIN);
 
         // when
         final int totalPinCount = pins.totalPinCount();

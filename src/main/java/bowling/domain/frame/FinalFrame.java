@@ -1,7 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.FinalPins;
 import bowling.domain.pin.Pin;
+import bowling.domain.pin.PinCountValidator;
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.NoNextFrameException;
 
@@ -12,11 +13,11 @@ public final class FinalFrame extends Frame {
     public static final int BONUS_GAME_THRESHOLD = 10;
     private static final int SECOND_PIN_EXIST_SIZE = 2;
 
-    private FinalFrame(RoundNumber roundNumber, FinalPins pins) {
+    private FinalFrame(RoundNumber roundNumber, Pins pins) {
         super(roundNumber, pins);
     }
 
-    public static FinalFrame from(FinalPins pins) {
+    public static FinalFrame from(Pins pins) {
         return new FinalFrame(RoundNumber.MAX_ROUND_NUMBER, pins);
     }
 
@@ -32,7 +33,12 @@ public final class FinalFrame extends Frame {
 
     @Override
     public void knockDownPin(Pin pin) {
-        pins.validatePinCount(pin);
+        final PinCountValidator pinCountValidator = (pinsParameter, pinParameter) -> {
+            if (pinsParameter.isLastGameSpare()) {
+                pinsParameter.secondPin().sum(pinParameter);
+            }
+        };
+        pins.validatePinCount(pin, pinCountValidator);
         pins.knockDownPin(pin);
     }
 
