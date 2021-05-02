@@ -1,5 +1,6 @@
 package bowling.ui;
 
+import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,15 +10,10 @@ public class ScoreBoardTest {
     void printScoreBoardTest() {
         ScoreBoard scoreBoard = new ScoreBoard("PDJ");
 
-        scoreBoard.addData(1, 10);
-        scoreBoard.addData(2, 8);
-        scoreBoard.addData(3, 8);
-        scoreBoard.addData(3, 2);
-        scoreBoard.addData(4, 7);
-        scoreBoard.addData(4, 0);
-        scoreBoard.addData(10, 2);
-        scoreBoard.addData(10, 0);
-        scoreBoard.addData(10, 8);
+        scoreBoard.addData(1, Arrays.asList("X"));
+        scoreBoard.addData(2, Arrays.asList("8", "/"));
+        scoreBoard.addData(3, Arrays.asList("7", "-"));
+        scoreBoard.addData(10, Arrays.asList("3", "/", "X"));
 
         scoreBoard.printScoreBoard();
     }

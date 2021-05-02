@@ -2,28 +2,30 @@ package bowling.ui;
 
 import bowling.ui.util.StringPadder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
 public class ScoreBoard {
-    private final Map<Integer, FrameScore> dataMap;
+    private final Map<Integer, String> dataMap;
     private final String name;
 
     public ScoreBoard(String name) {
         dataMap = new HashMap<>();
-        for (int i = 0; i < 10; i++) {
-            dataMap.put(i + 1, new FrameScore());
-        }
         this.name = name;
     }
 
     private String getData(int key) {
-        return dataMap.get(key).toString();
+        return dataMap.getOrDefault(key, "");
     }
 
-    public void addData(int key, int value) {
-        FrameScore frameScore = dataMap.get(key);
-        frameScore.addScore(value);
+    public void addData(int key, List<String> formattedScores) {
+        StringJoiner stringJoiner = new StringJoiner("|");
+
+        for (String score : formattedScores) {
+            stringJoiner.add(score);
+        }
+        dataMap.put(key, stringJoiner.toString());
     }
 
     public void printScoreBoard() {

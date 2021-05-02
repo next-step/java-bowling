@@ -1,5 +1,9 @@
 package bowling.domain;
 
+import bowling.domain.score.FrameScore;
+import java.util.HashMap;
+import java.util.Map;
+
 public class BowlingGame {
     private Frame frame;
     private int currentFrameNumber;

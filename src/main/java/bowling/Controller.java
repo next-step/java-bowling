@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.score.FrameScores;
 import bowling.ui.Placeholder;
 import bowling.ui.ScoreBoard;
 
@@ -8,9 +9,10 @@ public class Controller {
     public static void main(String[] args) {
         Placeholder placeholder = new Placeholder();
         placeholder.printNamingMessage();
-
         ScoreBoard scoreBoard = new ScoreBoard(placeholder.inputFromUser());
+
         BowlingGame bowlingGame = new BowlingGame();
+        FrameScores frameScores = new FrameScores();
 
         int frameNumber = 1;
 
@@ -18,10 +20,11 @@ public class Controller {
             placeholder.printInputScoreMessage(frameNumber);
 
             int score = bowlingGame.bowling(placeholder.inputFromUser());
-            scoreBoard.addData(frameNumber, score);
+            frameScores.addScore(frameNumber, score);
+            scoreBoard.addData(frameNumber, frameScores.getFrameScore(frameNumber));
+            scoreBoard.printScoreBoard();
 
             frameNumber = bowlingGame.nextFrameIfAvailable();
-            scoreBoard.printScoreBoard();
         }
     }
 }
