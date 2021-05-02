@@ -17,14 +17,14 @@ public class OneRollResult implements RollResultType{
     }
 
     @Override
-    public RollResultType next(int nextScore) {
-        if (score + nextScore == DEFAULT_MAX_SCORE) {
-            return Spare.of(score, nextScore);
+    public RollResultType next(int nextHit) {
+        if (nextHit == DEFAULT_MAX_SCORE) {
+            return Spare.of(score);
         }
-        if (score == 0 && nextScore == 0) {
+        if (score == 0 && nextHit == 0) {
             return Miss.of();
         }
-        return Gutter.of(score, nextScore);
+        return Gutter.of(score, nextHit - score);
     }
 
     @Override

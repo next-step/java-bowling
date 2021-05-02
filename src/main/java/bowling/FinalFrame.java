@@ -7,7 +7,12 @@ public class FinalFrame implements Frame {
     private RollResult result;
 
     private FinalFrame(Pin pin) {
+        this(pin, null);
+    }
+
+    private FinalFrame(Pin pin, RollResult result) {
         this.pin = pin;
+        this.result = result;
     }
 
     public static FinalFrame of() {
@@ -18,9 +23,18 @@ public class FinalFrame implements Frame {
         return new FinalFrame(pin);
     }
 
+    public static FinalFrame of(RollResult result) {
+        return new FinalFrame(null, result);
+    }
+
     @Override
     public Frame next(int index) {
         return this;
+    }
+
+    @Override
+    public boolean roll(RollNumber rollNumber) {
+        return false;
     }
 
     @Override

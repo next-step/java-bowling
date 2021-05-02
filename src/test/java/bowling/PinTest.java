@@ -1,16 +1,24 @@
 package bowling;
 
+import bowling.rollresult.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PinTest {
-    public static final Pin pin = Pin.of();
+    public static final Pin PIN = Pin.of();
+    public Pin pin;
+
+    @BeforeEach
+    void setUp() {
+        pin = Pin.of();
+    }
 
     @Test
     void 핀을생성() {
-        assertThat(pin).isEqualTo(Pin.of(0, 10));
+        assertThat(PIN).isEqualTo(Pin.of(0, 10));
     }
 
     @Test
@@ -29,33 +37,30 @@ public class PinTest {
 
     @Test
     void 핀이넘어지다() {
-        assertThat(pin.fallen(RollNumber.of(1))).isEqualTo(Pin.of(1, 9));
+        pin.fallen(RollNumber.of(1));
+        assertThat(pin).isEqualTo(Pin.of(1, 9));
     }
 
-//    @Test
-//    void strike핀의_결과확인() {
-//        Pin after = pin.fallen(RollNumber.of(10));
-//        assertThat(after.checkResult()).isEqualTo(RollResult.of());
-//    }
-//
-//    @Test
-//    void spare핀의_결과확인() {
-//        Pin after = pin.fallen(RollNumber.of(7));
-//        after = after.fallen(RollNumber.of(3));
-//        assertThat(after.checkResult()).isEqualTo(RollResult.of());
-//    }
-//
-//    @Test
-//    void miss핀의_결과확인() {
-//        Pin after = pin.fallen(RollNumber.of(0));
-//        after = after.fallen(RollNumber.of(0));
-//        assertThat(after.checkResult()).isEqualTo(RollResult.of());
-//    }
-//
-//    @Test
-//    void gutter핀의_결과확인() {
-//        Pin after = pin.fallen(RollNumber.of(7));
-//        after = after.fallen(RollNumber.of(1));
-//        assertThat(after.checkResult()).isEqualTo(RollResult.of());
-//    }
+    @Test
+    void strike핀의_결과확인() {
+        assertThat(pin.firstHit(RollNumber.of(10))).isEqualTo(Strike.of());
+    }
+
+    @Test
+    void spare핀의_결과확인() {
+        RollResultType type = pin.firstHit(RollNumber.of(7));
+        assertThat(pin.secondHit(type, RollNumber.of(3))).isEqualTo(Spare.of(7, 3));
+    }
+
+    @Test
+    void miss핀의_결과확인() {
+        RollResultType type = pin.firstHit(RollNumber.of(0));
+        assertThat(pin.secondHit(type, RollNumber.of(0))).isEqualTo(Miss.of());
+    }
+
+    @Test
+    void gutter핀의_결과확인() {
+        RollResultType type = pin.firstHit(RollNumber.of(7));
+        assertThat(pin.secondHit(type, RollNumber.of(1))).isEqualTo(Gutter.of(7, 1));
+    }
 }

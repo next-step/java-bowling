@@ -8,4 +8,5 @@ public interface RollResultType {
     boolean hasNext();
     int eval();
     RollResultType next(int nextScore);
+
 }

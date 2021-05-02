@@ -1,5 +1,8 @@
 package bowling;
 
+import bowling.rollresult.OneRollResult;
+import bowling.rollresult.RollResultType;
+
 import java.util.Objects;
 
 public class Pin {
@@ -13,12 +16,13 @@ public class Pin {
     private int tryNum = 0;
     private int pinNum = 10;
 
-    private Pin() {
-    }
-
     private Pin(int tryNum, int pinNum) {
         this.tryNum = tryNum;
         this.pinNum = pinNum;
+    }
+
+    public Pin() {
+
     }
 
     public static Pin of() {
@@ -39,14 +43,21 @@ public class Pin {
         }
     }
 
-    public Pin fallen(RollNumber rollNumber) {
-        return new Pin(tryNum + 1, rollNumber.hit(pinNum));
+    public void fallen(RollNumber rollNumber) {
+        tryNum++;
+        pinNum = rollNumber.hit(pinNum);
     }
 
-    public RollResult checkResult() {
-        return null;
+    public RollResultType firstHit(RollNumber rollNumber) {
+        fallen(rollNumber);
+        return OneRollResult.of(PIN_NUM_UPPER_BOUND - pinNum);
     }
 
+    public RollResultType secondHit(RollResultType type, RollNumber rollNumber) {
+        valid(tryNum, pinNum);
+        fallen(rollNumber);
+        return type.next(PIN_NUM_UPPER_BOUND - pinNum);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -60,4 +71,6 @@ public class Pin {
     public int hashCode() {
         return Objects.hash(tryNum, pinNum);
     }
+
+
 }

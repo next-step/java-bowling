@@ -17,4 +17,6 @@ public class FinalFrameTest {
         assertThat(FRAME.next(5)).isEqualTo(FRAME);
         assertThat(FRAME.next(10)).isEqualTo(FRAME);
     }
+
+
 }

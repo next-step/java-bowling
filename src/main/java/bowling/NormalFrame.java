@@ -9,7 +9,12 @@ public class NormalFrame implements Frame{
     private RollResult result;
 
     private NormalFrame(Pin pin) {
+        this(pin, null);
+    }
+
+    public NormalFrame(Pin pin, RollResult result) {
         this.pin = pin;
+        this.result = result;
     }
 
     public static NormalFrame of() {
@@ -20,12 +25,22 @@ public class NormalFrame implements Frame{
         return new NormalFrame(pin);
     }
 
+    public static NormalFrame of(RollResult result) {
+        return new NormalFrame(null, result);
+    }
+
     @Override
     public Frame next(int index) {
         if(index == MAX_INDEX) {
             return FinalFrame.of();
         }
         return of();
+    }
+
+    @Override
+    public boolean roll(RollNumber rollNumber) {
+
+        return false;
     }
 
     @Override
