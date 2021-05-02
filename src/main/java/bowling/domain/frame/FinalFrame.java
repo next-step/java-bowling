@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.turn.BallRelease;
 import bowling.domain.turn.FallenPins;
-import bowling.error.CannotThrowBallException;
 
 import java.util.List;
 
@@ -15,13 +14,13 @@ public class FinalFrame extends Frame{
   @Override
   public List<BallRelease> shot(FallenPins fallenPins){
     checkThrowable(fallenPins);
-    ballRelease.add(new BallRelease(fallenPins));
-    return ballRelease;
+    ballReleases.add(new BallRelease(fallenPins));
+    return ballReleases;
   }
 
   @Override
   protected void checkThrowable(FallenPins pins){
-    if(ballRelease.size() <= MAX_THROWABLE_BALLS && fallenPinsStatus()==MAX_FALLEN_PINS){
+    if(ballReleases.size() <= MAX_THROWABLE_BALLS && fallenPinsStatus()==MAX_FALLEN_PINS){
       return;
     }
     super.checkThrowable(pins);
@@ -29,11 +28,11 @@ public class FinalFrame extends Frame{
 
   @Override
   public boolean checkFinished(){
-    if(ballRelease.size() <= MAX_THROWABLE_BALLS && fallenPinsStatus()==MAX_FALLEN_PINS){
+    if(super.isStrike() || super.isSpare()){
       return false;
     }
 
-    if(ballRelease.size() < MAX_THROWABLE_BALLS && fallenPinsStatus() < MAX_FALLEN_PINS){
+    if(ballReleases.size() < MAX_THROWABLE_BALLS && fallenPinsStatus() < MAX_FALLEN_PINS){
       return false;
     }
 

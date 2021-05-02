@@ -1,10 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.turn.BallRelease;
 import bowling.domain.turn.FallenPins;
-import bowling.error.CannotThrowBallException;
-
-import java.util.List;
 
 public class NormalFrame extends Frame {
 
@@ -19,7 +15,7 @@ public class NormalFrame extends Frame {
 
   @Override
   public boolean checkFinished() {
-    if(ballRelease.size() < MAX_THROWABLE_BALLS && fallenPinsStatus() < MAX_FALLEN_PINS){
+    if(ballReleases.size() < MAX_THROWABLE_BALLS && fallenPinsStatus() < MAX_FALLEN_PINS){
       return false;
     }
 

@@ -1,70 +1,61 @@
 package bowling.domain;
 
 import bowling.domain.frame.Frame;
-import bowling.domain.turn.FallenPins;
+import bowling.domain.frame.Round;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
   private static final int FIRST_ROUND = 1;
-  private static final int FINAL_ROUND = 10;
+  private static final int ROUND_ADDING_NUMBER = 1;
 
-  private final List<Frame> frames;
-  private final List<Player> players;
+  private final List<Round> rounds;
+  private int roundNumber;
 
   public Board() {
-    frames = new ArrayList<>();
-    players = new ArrayList<>();
+    rounds = new ArrayList<>();
+    roundNumber = FIRST_ROUND;
   }
 
-  public void makeFirstFrame() {
-    frames.add(Frame.of(FIRST_ROUND));
-  }
-
-  public List<Frame> frames() {
-    return frames;
+  public void makeFirstFrame(Round round) {
+    round.add(Frame.of(roundNumber));
   }
 
   public void addingFrame() {
-    frames.add(tail().makeNextRound());
-  }
-
-  private Frame tail() {
-    return frames.get(frames.size() - 1);
+    roundNumber += ROUND_ADDING_NUMBER;
+    rounds.stream().forEach(round -> round.add(round.tail().makeNextRound()));
   }
 
   public int size() {
-    return frames.size();
+    return rounds.size();
   }
 
-  public boolean checkFinished() {
-    if (size() == FINAL_ROUND && tail().checkFinished()) {
-      return true;
-    }
-    return false;
+  public List<Round> rounds(){
+    return rounds;
   }
 
   public int runningFrame() {
-    Frame tail = tail();
-
-    if (tail.checkFinished()) {
-      frames.add(tail.makeNextRound());
-    }
-
-    return size();
+    return roundNumber;
   }
 
-  public void addPlayer(Player player){
-    players.add(player);
+  public void addRound(Player player){
+    Round round = new Round(player);
+    makeFirstFrame(round);
+    rounds.add(round);
   }
 
-  public void addAllPlayers(List<Player> allPlayers){
-    players.addAll(allPlayers);
+  public boolean checkCurrentFrameDone(){
+    long frameFinishedRounds = rounds.stream().filter(round -> round.checkCurrentRoundFinished()).count();
+    long roundsSize = size();
+    return frameFinishedRounds == roundsSize;
   }
 
-  public void addNewBall(FallenPins pins){
-    Frame frame = tail();
-    frame.shot(pins);
+  public boolean checkFinished(){
+    long finishedCount = rounds.stream()
+      .filter(round -> round.checkFinished())
+      .count();
+    long fullSize = rounds.size();
+    return finishedCount == fullSize;
   }
 }

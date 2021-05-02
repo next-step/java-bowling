@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.Round;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,20 +14,10 @@ class BoardTest {
   @DisplayName("생성, 1라운드 테스트")
   void createTest(){
     Board board = new Board();
-    board.makeFirstFrame();
+    board.addRound(new Player("STS"));
 
-    Assertions.assertThat(board.frames().size()).isEqualTo(1);
+    Assertions.assertThat(board.size()).isEqualTo(1);
   }
 
-
-
-  @Test
-  @DisplayName("사용자를 추가할 수 있다.")
-  void addPlayerTest(){
-    Player player = new Player("PLS");
-    Board board = new Board();
-
-    board.addPlayer(player);
-  }
 
 }

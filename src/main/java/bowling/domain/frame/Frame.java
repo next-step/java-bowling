@@ -10,33 +10,34 @@ import java.util.List;
 
 public abstract class Frame {
   protected static final int MAX_THROWABLE_BALLS = 2;
+  protected static final int STRIKE_SIZE = 1;
   protected static final int MAX_FALLEN_PINS = 10;
   private static final int LAST_FRAME = 10;
 
   protected final int round;
 
-  protected final List<BallRelease> ballRelease;
+  protected final List<BallRelease> ballReleases;
 
   protected Frame(int round){
-    ballRelease = new ArrayList<>();
+    ballReleases = new ArrayList<>();
     this.round = round;
   }
 
   public List<BallRelease> shot(FallenPins fallenPins){
     checkThrowable(fallenPins);
-    ballRelease.add(new BallRelease(fallenPins));
-    return ballRelease;
+    ballReleases.add(new BallRelease(fallenPins));
+    return ballReleases;
   }
 
   protected int fallenPinsStatus(){
-    return ballRelease.stream()
+    return ballReleases.stream()
       .map(ball -> ball.fallenPins())
       .mapToInt(fallenPins -> fallenPins.pins())
       .sum();
   }
 
   protected void checkThrowable(FallenPins pins) {
-    if(ballRelease.size() >= MAX_THROWABLE_BALLS){
+    if(ballReleases.size() >= MAX_THROWABLE_BALLS){
       throw new CannotThrowBallException();
     }
 
@@ -59,6 +60,18 @@ public abstract class Frame {
 
   public Frame makeNextRound(){
     return of(round+1);
+  }
+
+  public List<BallRelease> ballReleases(){
+    return ballReleases;
+  }
+
+  public boolean isStrike() {
+    return ballReleases.size()==STRIKE_SIZE && fallenPinsStatus() == MAX_FALLEN_PINS;
+  }
+
+  public boolean isSpare(){
+    return ballReleases.size()==MAX_THROWABLE_BALLS && fallenPinsStatus() == MAX_FALLEN_PINS;
   }
 
   public abstract boolean checkFinished();

@@ -22,4 +22,5 @@ class PlayerTest {
 
     Assertions.assertThatThrownBy(() -> new Player(name)).isInstanceOf(NameInvalidLengthException.class);
   }
+
 }
