@@ -4,6 +4,7 @@ import bowling.domain.*;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class View {
     private static final Scanner scanner = new Scanner(System.in);
@@ -13,32 +14,45 @@ public class View {
         return scanner.nextLine();
     }
 
-    public static int pinfall(FrameNumber frameNumber) {
-        System.out.printf("%d프레임 투구 : ", frameNumber.number());
+    public static int pinfall(int frameNumber) {
+        System.out.printf("%d프레임 투구 : ", frameNumber);
         int fallenPin = scanner.nextInt();
         scanner.nextLine();
         return fallenPin;
     }
 
     public static void printBowlingResult(BowlingResult bowlingResult) {
-        for (FrameResult frameResult : bowlingResult.results()) {
-            printFrameResult(frameResult);
-        }
-        System.out.println();
-
-        System.out.print("|      |");
-        for (FrameResult frameResult : bowlingResult.results()) {
-            printFrameScore(frameResult);
-        }
-        System.out.println();
+        printFramePinfalls(bowlingResult);
+        printFrameScore(bowlingResult);
     }
 
-    private static void printFrameScore(FrameResult frameResult) {
-        System.out.printf("  %-3s |", frameResult.aggregatedScore().toString());
+    private static void printFrameScore(BowlingResult bowlingResult) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("|      |");
+        for (FrameResult frameResult : bowlingResult.results()) {
+            stringBuilder.append(printFrameScore(frameResult));
+        }
+        System.out.println(stringBuilder);
     }
 
-    private static void printFrameResult(FrameResult frameResult) {
-        System.out.printf("  %-3s |", pointSymbolsString(frameResult.pointSymbols()));
+    private static void printFramePinfalls(BowlingResult bowlingResult) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (FrameResult frameResult : bowlingResult.results()) {
+            stringBuilder.append(printFrameResult(frameResult));
+        }
+        System.out.println(stringBuilder);
+    }
+
+    private static StringBuilder printFrameScore(FrameResult frameResult) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(String.format("  %-3s |", frameResult.aggregatedScore().toString()));
+        return stringBuilder;
+    }
+
+    private static StringBuilder printFrameResult(FrameResult frameResult) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(String.format("  %-3s |", pointSymbolsString(frameResult.pointSymbols())));
+        return stringBuilder;
     }
 
     private static String pointSymbolsString(PointSymbols pointSymbols) {
@@ -54,11 +68,13 @@ public class View {
     }
 
     public static void printScoreBoardHeader() {
-        System.out.print("| NAME |");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("| NAME |");
+
         for (int i = 1; i <= 10; i++) {
-            System.out.printf("  %02d  |", i);
+            stringBuilder.append(String.format("  %02d  |", i));
         }
-        System.out.println();
+        System.out.println(stringBuilder);
     }
 
     public static void printPlayer(Player player) {

@@ -15,7 +15,7 @@ public class BowlingControl {
             View.printScoreBoardHeader();
             View.printPlayer(player);
             View.printBowlingResult(bowling.result());
-            Pinfall pinfall = new Pinfall(View.pinfall(bowling.frameNumber()));
+            Pinfall pinfall = new Pinfall(View.pinfall(bowling.frameNumber().number()));
             bowling.roll(pinfall);
         }
 
