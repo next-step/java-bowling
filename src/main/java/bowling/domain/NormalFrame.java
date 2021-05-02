@@ -40,9 +40,9 @@ public final class NormalFrame implements Frame {
     }
 
     @Override
-    public final Frame bowl(final HitCount hitCOunt) {
+    public final Frame bowl(final HitCount hitCount) {
         validateFinish();
-        state = state.bowl(hitCOunt);
+        state = state.bowl(hitCount);
         if (state.isFinish()) {
             next = nextFrame();
             return next;

@@ -6,7 +6,7 @@ public interface Frame {
         return FakeFrame.initialize();
     }
 
-    Frame bowl(HitCount hitCOunt);
+    Frame bowl(HitCount hitCount);
 
     boolean isFinish();
 

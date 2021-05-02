@@ -13,7 +13,7 @@ public final class FakeFrame implements Frame {
     }
 
     @Override
-    public final Frame bowl(final HitCount hitCOunt) {
+    public final Frame bowl(final HitCount hitCount) {
         throw new NoMoreBowlActionsException();
     }
 
