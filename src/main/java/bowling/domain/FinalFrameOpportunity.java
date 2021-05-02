@@ -20,8 +20,8 @@ public final class FinalFrameOpportunity {
         return new FinalFrameOpportunity(START);
     }
 
-    public final boolean isFinish(boolean bonusExit) {
-        if (opportunity >= BONUS_END || (!bonusExit && opportunity == ORIGINAL_END)) {
+    public final boolean isFinish(final boolean bonus) {
+        if (opportunity >= BONUS_END || (!bonus && opportunity == ORIGINAL_END)) {
             return TRUE;
         }
         return FALSE;

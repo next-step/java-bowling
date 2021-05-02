@@ -3,7 +3,7 @@ package bowling.domain.state;
 import bowling.exception.NoMoreCountingActionException;
 
 import static bowling.util.BowlingFixture.ONCE;
-import static bowling.util.BowlingFixture.PIN_CLEAR;
+import static bowling.util.BowlingFixture.ALL_PIN_CLEAR;
 import static java.lang.Boolean.TRUE;
 
 public final class Strike extends Finish {
@@ -27,7 +27,7 @@ public final class Strike extends Finish {
 
     @Override
     public int firstCount() {
-        return PIN_CLEAR;
+        return ALL_PIN_CLEAR;
     }
 
     @Override

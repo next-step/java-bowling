@@ -27,7 +27,7 @@ public final class FinalFrame implements Frame {
     }
 
     @Override
-    public final Frame bowl(HitCount hitCount) {
+    public final Frame bowl(final HitCount hitCount) {
         validateFinish();
         opportunity.next();
         size = states.size();
@@ -52,10 +52,10 @@ public final class FinalFrame implements Frame {
 
     @Override
     public final boolean isFinish() {
-        return opportunity.isFinish(isBonusBowlExit());
+        return opportunity.isFinish(hasBonus());
     }
 
-    private final boolean isBonusBowlExit() {
+    public final boolean hasBonus() {
         return states.stream()
                 .anyMatch(State::isAllPinClear);
     }
