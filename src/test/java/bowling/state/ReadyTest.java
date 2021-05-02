@@ -1,5 +1,6 @@
 package bowling.state;
 
+import bowling.domain.FrameScore;
 import bowling.domain.Pins;
 import bowling.domain.exception.PinsCountException;
 import bowling.domain.state.*;
@@ -38,6 +39,20 @@ public class ReadyTest {
     void bowlToStrikeTest() {
         Pins pins = Pins.of(10);
         assertThat(ready.stateAfterPitch(pins)).isEqualTo(Strike.of(pins));
+    }
+
+    @Test
+    @DisplayName("추가 점수가 1개 일 때 보너스 점수 테스트")
+    void OneBonusFrameScoreTest() {
+        FrameScore prevFrameScore = FrameScore.of(10,1);
+        assertThat(ready.frameScoreWithBonus(prevFrameScore)).isEqualTo(FrameScore.of(10,-1));
+    }
+
+    @Test
+    @DisplayName("추가 점수가 2개 일 때 보너스 점수 테스트")
+    void TwoBonusFrameScoreTest() {
+        FrameScore prevFrameScore = FrameScore.of(10,2);
+        assertThat(ready.frameScoreWithBonus(prevFrameScore)).isEqualTo(FrameScore.of(10,-1));
     }
 
     @ParameterizedTest(name = "넘어뜨린 핀 개수 예외 테스트")
