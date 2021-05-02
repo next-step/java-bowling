@@ -9,7 +9,7 @@ class PlayerTest {
 
   @Test
   @DisplayName("이름 생성 테스트")
-  void createNameTest(){
+  void createNameTest() {
     String name = "nan";
 
     Assertions.assertThat(new Player(name).name()).isEqualTo(name);
@@ -17,7 +17,7 @@ class PlayerTest {
 
   @Test
   @DisplayName("이름은 무조건 3글자여야 한다.")
-  void invalidCreateNameTest(){
+  void invalidCreateNameTest() {
     String name = "nani";
 
     Assertions.assertThatThrownBy(() -> new Player(name)).isInstanceOf(NameInvalidLengthException.class);

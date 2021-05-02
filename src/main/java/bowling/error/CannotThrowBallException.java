@@ -1,9 +1,9 @@
 package bowling.error;
 
-public class CannotThrowBallException extends RuntimeException{
+public class CannotThrowBallException extends RuntimeException {
   private static final String DEFAULT_MESSAGE = "더 이상 공을 던질 수 없습니다.";
 
-  public CannotThrowBallException(){
+  public CannotThrowBallException() {
     this(DEFAULT_MESSAGE);
   }
 

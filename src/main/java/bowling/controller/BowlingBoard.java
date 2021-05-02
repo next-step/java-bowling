@@ -16,7 +16,7 @@ public class BowlingBoard {
   private final Board board;
 
 
-  public BowlingBoard(){
+  public BowlingBoard() {
     inputView = new InputView();
     resultView = new ResultView();
     board = new Board();
@@ -28,30 +28,30 @@ public class BowlingBoard {
     playGame();
   }
 
-  private void playGame(){
-    while(!board.checkFinished()){
+  private void playGame() {
+    while (!board.checkFinished()) {
       playRound(board);
     }
   }
 
-  private void playRound(Board board){
+  private void playRound(Board board) {
     checkAndAddingFrame();
-    for(Round round: board.rounds()){
+    for (Round round : board.rounds()) {
       playFrame(round);
     }
   }
 
-  private void playFrame(Round round){
+  private void playFrame(Round round) {
     Frame tailFrame = round.tail();
-    if(!tailFrame.checkFinished()){
+    if (!tailFrame.checkFinished()) {
       int fallenPins = inputView.setupPins(board.runningFrame());
       round.addNewBall(new FallenPins(fallenPins));
       resultView.printBoard(round);
     }
   }
 
-  private void checkAndAddingFrame(){
-    if(board.checkCurrentFrameDone()){
+  private void checkAndAddingFrame() {
+    if (board.checkCurrentFrameDone()) {
       board.addingFrame();
     }
   }

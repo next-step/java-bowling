@@ -24,30 +24,41 @@ public class ResultView {
   private static final int STRIKE_SHOT = 10;
   private static final int MAX_SHOT_PER_FRAME = 2;
 
-  public void printBoard(Round round){
+  private static String getShotResult(int pinCount) {
+    if (pinCount == STRIKE_SHOT) {
+      return STRIKE;
+    }
+
+    if (pinCount == ZERO) {
+      return GUTTER;
+    }
+    return String.valueOf(pinCount);
+  }
+
+  public void printBoard(Round round) {
     System.out.println();
     System.out.println(SCORE_TITLE);
 
     printName(round.playerName());
 
     int remainRounds = 10;
-    for(Frame frame: round.frames()) {
+    for (Frame frame : round.frames()) {
       printFrame(frame);
       remainRounds--;
     }
-    while(remainRounds-->0){
+    while (remainRounds-- > 0) {
       System.out.print(EMPTY_ROUND);
       System.out.print(WALL);
     }
     System.out.println();
   }
 
-  private void printName(String name){
+  private void printName(String name) {
     System.out.print(String.format(NAME_FORMAT, name));
     System.out.print(BLANK + WALL);
   }
 
-  private void printFrame(Frame frame){
+  private void printFrame(Frame frame) {
     String frameScore = "";
 
     frameScore = frameToString(frame);
@@ -56,7 +67,7 @@ public class ResultView {
     System.out.print(WALL);
   }
 
-  private String frameToString(Frame frame){
+  private String frameToString(Frame frame) {
     StringBuilder stringBuilder = new StringBuilder();
     String result;
 
@@ -67,7 +78,7 @@ public class ResultView {
 
     List<BallRelease> balls = frame.ballReleases();
 
-    if(frame.isSpare()){
+    if (frame.isSpare()) {
       result = spareToString(balls);
     }
 
@@ -75,24 +86,13 @@ public class ResultView {
     return stringBuilder.toString();
   }
 
-  private static String getShotResult(int pinCount) {
-    if(pinCount == STRIKE_SHOT){
-      return STRIKE;
-    }
-
-    if (pinCount == ZERO) {
-      return GUTTER;
-    }
-    return String.valueOf(pinCount);
-  }
-
-  private String spareToString(List<BallRelease> ballReleases){
+  private String spareToString(List<BallRelease> ballReleases) {
     StringBuilder stringBuilder = new StringBuilder();
     FallenPins firstShot = ballReleases.get(ZERO).fallenPins();
 
     stringBuilder.append(firstShot.pins()).append(WALL).append(SPARE);
-    if(ballReleases.size()>MAX_SHOT_PER_FRAME){
-      FallenPins lastPins = ballReleases.get(ballReleases.size()-1).fallenPins();
+    if (ballReleases.size() > MAX_SHOT_PER_FRAME) {
+      FallenPins lastPins = ballReleases.get(ballReleases.size() - 1).fallenPins();
       stringBuilder.append(WALL).append(lastPins.pins());
     }
 

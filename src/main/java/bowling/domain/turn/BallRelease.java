@@ -5,15 +5,15 @@ import java.util.Objects;
 public class BallRelease {
   private final FallenPins fallenPins;
 
-  public BallRelease(FallenPins fallenPins){
+  public BallRelease(FallenPins fallenPins) {
     this.fallenPins = fallenPins;
   }
 
-  public boolean checkAddable(FallenPins fallenPins){
+  public boolean checkAddable(FallenPins fallenPins) {
     return this.fallenPins.checkAddable(fallenPins);
   }
 
-  public FallenPins fallenPins(){
+  public FallenPins fallenPins() {
     return fallenPins;
   }
 
@@ -30,7 +30,7 @@ public class BallRelease {
     return Objects.hash(fallenPins);
   }
 
-  public boolean isStrike(){
+  public boolean isStrike() {
     return fallenPins.isStrike();
   }
 }

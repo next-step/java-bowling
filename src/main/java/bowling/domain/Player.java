@@ -7,13 +7,13 @@ public class Player {
 
   private final String name;
 
-  public Player(String name){
+  public Player(String name) {
     checkValidatedNameLength(name);
     this.name = name;
   }
 
-  public void checkValidatedNameLength(String name){
-    if(name.isEmpty() || name.length() != MAX_LENGTH){
+  public void checkValidatedNameLength(String name) {
+    if (name.isEmpty() || name.length() != MAX_LENGTH) {
       throw new NameInvalidLengthException();
     }
   }

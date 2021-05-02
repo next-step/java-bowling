@@ -31,7 +31,7 @@ public class Board {
     return rounds.size();
   }
 
-  public List<Round> rounds(){
+  public List<Round> rounds() {
     return rounds;
   }
 
@@ -39,19 +39,19 @@ public class Board {
     return roundNumber;
   }
 
-  public void addRound(Player player){
+  public void addRound(Player player) {
     Round round = new Round(player);
     makeFirstFrame(round);
     rounds.add(round);
   }
 
-  public boolean checkCurrentFrameDone(){
+  public boolean checkCurrentFrameDone() {
     long frameFinishedRounds = rounds.stream().filter(round -> round.checkCurrentRoundFinished()).count();
     long roundsSize = size();
     return frameFinishedRounds == roundsSize;
   }
 
-  public boolean checkFinished(){
+  public boolean checkFinished() {
     long finishedCount = rounds.stream()
       .filter(round -> round.checkFinished())
       .count();

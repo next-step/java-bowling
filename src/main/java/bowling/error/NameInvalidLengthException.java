@@ -1,9 +1,9 @@
 package bowling.error;
 
-public class NameInvalidLengthException extends RuntimeException{
+public class NameInvalidLengthException extends RuntimeException {
   private static final String DEFAULT_MESSAGE = "";
 
-  public NameInvalidLengthException(){
+  public NameInvalidLengthException() {
     this(DEFAULT_MESSAGE);
   }
 

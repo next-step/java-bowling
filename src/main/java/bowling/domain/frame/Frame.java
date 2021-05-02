@@ -18,22 +18,34 @@ public abstract class Frame {
 
   protected final List<BallRelease> ballReleases;
 
-  protected Frame(int round){
+  protected Frame(int round) {
     ballReleases = new ArrayList<>();
     this.round = round;
   }
 
-  public BallRelease head(){
+  public static Frame of(int round) {
+    if (round < 1 || round > LAST_FRAME) {
+      throw new CannotMakeFrameException();
+    }
+
+    if (round == LAST_FRAME) {
+      return new FinalFrame(round);
+    }
+
+    return new NormalFrame(round);
+  }
+
+  public BallRelease head() {
     return ballReleases.stream().findFirst().orElse(null);
   }
 
-  public List<BallRelease> shot(FallenPins fallenPins){
+  public List<BallRelease> shot(FallenPins fallenPins) {
     checkThrowable(fallenPins);
     ballReleases.add(new BallRelease(fallenPins));
     return ballReleases;
   }
 
-  protected int fallenPinsStatus(){
+  protected int fallenPinsStatus() {
     return ballReleases.stream()
       .map(ball -> ball.fallenPins())
       .mapToInt(fallenPins -> fallenPins.pins())
@@ -41,49 +53,37 @@ public abstract class Frame {
   }
 
   protected void checkThrowable(FallenPins pins) {
-    if(ballReleases.size() >= MAX_THROWABLE_BALLS){
+    if (ballReleases.size() >= MAX_THROWABLE_BALLS) {
       throw new CannotThrowBallException();
     }
 
-    if(fallenPinsStatus() + pins.pins() > MAX_FALLEN_PINS){
+    if (fallenPinsStatus() + pins.pins() > MAX_FALLEN_PINS) {
       throw new CannotThrowBallException();
     }
   }
 
-  public static Frame of(int round){
-    if(round < 1|| round > LAST_FRAME){
-      throw new CannotMakeFrameException();
-    }
-
-    if(round == LAST_FRAME){
-      return new FinalFrame(round);
-    }
-
-    return new NormalFrame(round);
+  public Frame makeNextRound() {
+    return of(round + 1);
   }
 
-  public Frame makeNextRound(){
-    return of(round+1);
-  }
-
-  public List<BallRelease> ballReleases(){
+  public List<BallRelease> ballReleases() {
     return ballReleases;
   }
 
   public boolean isStrike() {
-    if(ballReleases.size()!=STRIKE_SIZE){
+    if (ballReleases.size() != STRIKE_SIZE) {
       return false;
     }
     return head().isStrike();
   }
 
-  public boolean isSpare(){
-    return ballReleases.size()==MAX_THROWABLE_BALLS && fallenPinsStatus() == MAX_FALLEN_PINS;
+  public boolean isSpare() {
+    return ballReleases.size() == MAX_THROWABLE_BALLS && fallenPinsStatus() == MAX_FALLEN_PINS;
   }
 
   public abstract boolean checkFinished();
 
-  public int round(){
+  public int round() {
     return round;
   }
 }

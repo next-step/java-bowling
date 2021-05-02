@@ -13,7 +13,7 @@ public class Round {
   private final List<Frame> frames;
   private final Player player;
 
-  public Round(Player player){
+  public Round(Player player) {
     frames = new ArrayList<>();
     this.player = player;
   }
@@ -22,7 +22,7 @@ public class Round {
     return frames;
   }
 
-  public void add(Frame frame){
+  public void add(Frame frame) {
     frames.add(frame);
   }
 
@@ -30,31 +30,28 @@ public class Round {
     return frames.get(frames.size() - 1);
   }
 
-  public int size(){
+  public int size() {
     return frames.size();
   }
 
   public boolean isEmpty() {
-    return frames.size()==ZERO;
+    return frames.size() == ZERO;
   }
 
-  public boolean checkCurrentRoundFinished(){
+  public boolean checkCurrentRoundFinished() {
     return tail().checkFinished();
   }
 
   public boolean checkFinished() {
-    if (size() == FINAL_ROUND && tail().checkFinished()) {
-      return true;
-    }
-    return false;
+    return size() == FINAL_ROUND && tail().checkFinished();
   }
 
-  public void addNewBall(FallenPins pins){
+  public void addNewBall(FallenPins pins) {
     Frame frame = tail();
     frame.shot(pins);
   }
 
-  public String playerName(){
+  public String playerName() {
     return player.name();
   }
 }

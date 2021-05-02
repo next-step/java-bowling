@@ -10,30 +10,30 @@ public class FallenPins {
 
   private final int pins;
 
-  public FallenPins(int pins){
+  public FallenPins(int pins) {
     checkPins(pins);
     this.pins = pins;
   }
 
-  public boolean checkPins(int pins){
-    if(pins< MIN_PINS || pins > MAX_PINS){
+  public boolean checkPins(int pins) {
+    if (pins < MIN_PINS || pins > MAX_PINS) {
       throw new InvalidFallenPinsException();
     }
     return true;
   }
 
-  public int pins(){
+  public int pins() {
     return pins;
   }
 
-  public boolean checkAddable(FallenPins fallenPins){
+  public boolean checkAddable(FallenPins fallenPins) {
     int totalFallenPins = this.pins + fallenPins.pins;
 
     checkPins(totalFallenPins);
     return true;
   }
 
-  public boolean isStrike(){
+  public boolean isStrike() {
     return pins == MAX_PINS;
   }
 
