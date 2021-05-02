@@ -16,6 +16,10 @@ public class BowlingGameService {
     }
 
     public void startGame(Participant participant) {
+        Optional<Frames> frames = repository.findByParticipant(participant);
+        if (frames.isPresent()) {
+            throw new IllegalArgumentException("이미 등록한 참가자입니다.");
+        }
         repository.save(participant, new Frames());
     }
 
