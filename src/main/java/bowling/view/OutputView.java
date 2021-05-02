@@ -23,19 +23,28 @@ public final class OutputView {
 
     public void printScoreBoard(Player player) {
         printBoardHeader();
-        printPlayerNameAndStatus(player);
-        printScore(player.frames());
+        printPlayerName(player);
+
+        final Frames frames = player.frames();
+        printStatus(frames);
+        printScore(frames);
     }
 
     private void printBoardHeader() {
         System.out.println(boardHeaderView.boardHeader());
     }
 
-    private void printPlayerNameAndStatus(Player player) {
-        final Frames frames = player.frames();
+    private void printPlayerName(Player player) {
+        final StringBuilder playerNameBuilder = new StringBuilder();
+
+        playerNameBuilder.append(BORDER).append(StringUtils.padLeft(new PlayerNameView(player).playerName(), NAME_PADDING_SIZE)).append(" ");
+
+        System.out.print(playerNameBuilder);
+    }
+
+    private void printStatus(Frames frames) {
         final StringBuilder playerResultBuilder = new StringBuilder();
 
-        playerResultBuilder.append(BORDER).append(StringUtils.padLeft(new PlayerNameView(player).playerName(), NAME_PADDING_SIZE)).append(" ");
         for (Frame frame : frames.value()) {
             playerResultBuilder.append(BORDER).append(StringUtils.alignCenter(new FrameStatusView(frame).frameStatus(), FRAME_SIZE));
         }
