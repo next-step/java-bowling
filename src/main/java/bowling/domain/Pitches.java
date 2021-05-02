@@ -108,4 +108,11 @@ public class Pitches implements Iterable<Pitch> {
     public Spliterator<Pitch> spliterator() {
         return Iterable.super.spliterator();
     }
+
+    public int pinDownCount(int limit) {
+        return values.stream()
+                .limit(limit)
+                .mapToInt(Pitch::value)
+                .sum();
+    }
 }

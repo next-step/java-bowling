@@ -2,6 +2,8 @@ package bowling.domain;
 
 public class FinalFrame extends Frame {
 
+    private static final int BONUS_LIMIT = 2;
+
     protected FinalFrame(int number) {
         super(number);
     }
@@ -35,7 +37,7 @@ public class FinalFrame extends Frame {
     @Override
     public int bonusScore(Pitches beforePitches) {
         if (beforePitches.isStrike()) {
-            return pitches().pinDownCount() - 10;
+            return pitches().pinDownCount(BONUS_LIMIT);
         }
         if (beforePitches.isSpare()) {
             return pitches().firstPinDownCount();
