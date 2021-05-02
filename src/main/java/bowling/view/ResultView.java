@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.*;
-import bowling.domain.status.Status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,8 +57,7 @@ public class ResultView {
     }
 
     private String pitchToString(Pitch pitch) {
-        Status status = pitch.status();
-        return convertZeroToHyphen(status.display());
+        return convertZeroToHyphen(pitch.display());
     }
 
     private String playerName(String name) {

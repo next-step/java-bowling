@@ -44,8 +44,8 @@ public class Pitch {
         return fallenPins;
     }
 
-    public Status status() {
-        return status;
+    public String display() {
+        return status.display();
     }
 
     public void validateFallenPins(int fallenPins) {
