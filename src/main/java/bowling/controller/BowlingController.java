@@ -9,7 +9,6 @@ import bowling.view.ResultView;
 
 import java.util.LinkedList;
 
-
 public class BowlingController {
     private NumberOfPlayer numberOfPlayer;
     private LinkedList<Player> playerList = new LinkedList<>();

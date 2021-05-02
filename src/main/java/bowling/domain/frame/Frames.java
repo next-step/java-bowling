@@ -23,14 +23,13 @@ public class Frames {
         return new Frames(frames);
     }
 
-    private static Frame initFrames(List<Frame> frames) {
+    private static void initFrames(List<Frame> frames) {
         Frame frame = NormalFrame.init();
         frames.add(frame);
         for (int i = FIRST_FRAME_NO; i < LAST_FRAME_NO; i++) {
             frame = frame.next();
             frames.add(frame);
         }
-        return frame;
     }
 
     public void bowl(Pins pitch, int index) {

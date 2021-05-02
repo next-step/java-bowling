@@ -57,7 +57,7 @@ public class Continue implements State{
     @Override
     public StateDTO exportStateDTO() {
         List<Integer> pins = new ArrayList<>();
-        pins.add(Integer.valueOf(this.pins.fallingPins()));
+        pins.add(this.pins.fallingPins());
         return new StateDTO(state(),pins);
     }
 

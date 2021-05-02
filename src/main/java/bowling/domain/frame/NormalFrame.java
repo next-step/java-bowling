@@ -14,7 +14,7 @@ import java.util.List;
 
 public class NormalFrame implements Frame{
     private State state;
-    private Frame nextFrame;
+    private final Frame nextFrame;
 
     private NormalFrame(int frameNo) {
         this.state = Ready.create();

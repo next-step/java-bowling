@@ -44,8 +44,8 @@ public class Miss extends FinishedState{
     @Override
     public StateDTO exportStateDTO() {
         List<Integer> pins = new ArrayList<>();
-        pins.add(Integer.valueOf(firstPins.fallingPins()));
-        pins.add(Integer.valueOf(secondPins.fallingPins()));
+        pins.add(firstPins.fallingPins());
+        pins.add(secondPins.fallingPins());
         return new StateDTO(state(),pins);
     }
 

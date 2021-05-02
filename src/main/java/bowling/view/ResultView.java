@@ -14,7 +14,6 @@ public class ResultView {
     private static final String FRAME_FORMAT = "  %-4s";
     private static final String THREE_PITCH_FORMAT = " %-5s";
     private static final String EMPTY = "      ";
-    private static final int UNSCORED_SCORE = -1;
     private static final int THREE_PITCH_STATE_LENGTH = 5;
 
     private ResultView() {}
