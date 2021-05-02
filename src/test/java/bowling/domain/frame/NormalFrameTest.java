@@ -134,6 +134,20 @@ class NormalFrameTest {
     }
 
     @Test
+    @DisplayName("일반 구를 1회 투구한 NormalFrame의 점수는 산정할 수 없다.")
+    void noScoreOneThrow() {
+        // given
+        final Frame frame = NormalFrame.createFirstFrame();
+        frame.knockDownPin(new Pin(5));
+
+        // when
+        final Integer score = frame.score();
+
+        // then
+        assertThat(score).isNull();
+    }
+
+    @Test
     @DisplayName("첫 투구와 두번째 투구의 합이 점수가 된다.")
     void scoreOfFrame() {
         // given

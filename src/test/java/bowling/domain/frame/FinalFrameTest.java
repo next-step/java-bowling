@@ -152,6 +152,7 @@ class FinalFrameTest {
         assertThat(score).isNull();
     }
 
+    // TODO: Parameterized Test로 개선
     @Test
     @DisplayName("일반적인 투구 2회를 던진 FinalFrame은 점수를 산정할 수 있다.")
     void twoThrowScore() {
@@ -165,6 +166,7 @@ class FinalFrameTest {
         assertThat(score).isEqualTo(5);
     }
 
+    // TODO: Parameterized Test로 개선
     @Test
     @DisplayName("투구 3회를 던지면 FinalFrame은 점수를 산정할 수 있다.")
     void threeThrowScore() {
