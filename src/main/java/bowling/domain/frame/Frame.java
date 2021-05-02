@@ -12,7 +12,7 @@ public abstract class Frame {
   protected static final int MAX_THROWABLE_BALLS = 2;
   protected static final int STRIKE_SIZE = 1;
   protected static final int MAX_FALLEN_PINS = 10;
-  private static final int LAST_FRAME = 10;
+  protected static final int LAST_FRAME = 10;
 
   protected final int round;
 
@@ -21,6 +21,10 @@ public abstract class Frame {
   protected Frame(int round){
     ballReleases = new ArrayList<>();
     this.round = round;
+  }
+
+  public BallRelease head(){
+    return ballReleases.stream().findFirst().orElse(null);
   }
 
   public List<BallRelease> shot(FallenPins fallenPins){
@@ -67,7 +71,10 @@ public abstract class Frame {
   }
 
   public boolean isStrike() {
-    return ballReleases.size()==STRIKE_SIZE && fallenPinsStatus() == MAX_FALLEN_PINS;
+    if(ballReleases.size()!=STRIKE_SIZE){
+      return false;
+    }
+    return head().isStrike();
   }
 
   public boolean isSpare(){
@@ -75,4 +82,8 @@ public abstract class Frame {
   }
 
   public abstract boolean checkFinished();
+
+  public int round(){
+    return round;
+  }
 }

@@ -30,5 +30,7 @@ public class BallRelease {
     return Objects.hash(fallenPins);
   }
 
-
+  public boolean isStrike(){
+    return fallenPins.isStrike();
+  }
 }

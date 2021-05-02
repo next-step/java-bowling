@@ -33,6 +33,10 @@ public class FallenPins {
     return true;
   }
 
+  public boolean isStrike(){
+    return pins == MAX_PINS;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

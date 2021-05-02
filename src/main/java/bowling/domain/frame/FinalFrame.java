@@ -38,4 +38,24 @@ public class FinalFrame extends Frame{
 
     return true;
   }
+
+  @Override
+  public boolean isStrike() {
+    if(ballReleases.size()>=STRIKE_SIZE){
+      return head().isStrike();
+    }
+    return false;
+  }
+
+  @Override
+  public boolean isSpare() {
+    if(ballReleases.size()>=MAX_THROWABLE_BALLS){
+      return calculateFirstAndSecondShot(ballReleases)==MAX_FALLEN_PINS;
+    }
+    return super.isSpare();
+  }
+
+  private int calculateFirstAndSecondShot(List<BallRelease> ballReleases){
+    return ballReleases.get(0).fallenPins().pins() + ballReleases.get(1).fallenPins().pins();
+  }
 }
