@@ -1,6 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.status.*;
+import bowling.domain.status.Ready;
+import bowling.domain.status.Status;
 
 public class Pitch {
     private static final int MIN_PIN_COUNT = 0;
@@ -19,35 +20,24 @@ public class Pitch {
         this.status = status;
     }
 
-    public Pitch pitch2(int fallenPins, int pitchIndex) {
-        if ((fallenPins == MAX_PIN_COUNT && pitchIndex == 0)
-                || (this.fallenPins + fallenPins == 20)
-                || (fallenPins == MAX_PIN_COUNT && pitchIndex == 2)) {
-            return new Pitch(fallenPins, new Strike());
-        }
-        if (this.fallenPins + fallenPins == MAX_PIN_COUNT) {
-            return new Pitch(fallenPins, new Spare());
-        }
-        if (this.fallenPins + fallenPins < MAX_PIN_COUNT && pitchIndex == 1) {
-            return new Pitch(fallenPins, new Open());
-        }
-        return new Pitch(fallenPins, new Default());
-    }
-
     public Pitch pitch(int fallenPins, int pitchIndex) {
         return new Pitch(fallenPins, status.roll(fallenPins));
     }
 
     public boolean isStrike() {
-        return status.isStrike();
+        return fallenPins == MAX_PIN_COUNT;
     }
 
-    public boolean isSpare() {
-        return status.isSpare();
+    public boolean isSpare(int fallenPins) {
+        return this.fallenPins + fallenPins == MAX_PIN_COUNT;
     }
 
-    public boolean isOpen() {
-        return status.isOpen();
+    public boolean isEnd() {
+        return status.isEnd();
+    }
+
+    public boolean hasBonusPitch() {
+        return status.hasBonusPitch();
     }
 
     public int intValue() {
@@ -65,21 +55,5 @@ public class Pitch {
         if (fallenPins > MAX_PIN_COUNT) {
             throw new IllegalArgumentException(String.format("%d개 이상의 핀을 쓰러트릴 수는 없습니다.", MAX_PIN_COUNT));
         }
-    }
-
-    public boolean isStrike2() {
-        return fallenPins == MAX_PIN_COUNT;
-    }
-
-    public boolean isSpare2(int fallenPins) {
-        return this.fallenPins + fallenPins == MAX_PIN_COUNT;
-    }
-
-    public boolean isEnd() {
-        return status.isEnd();
-    }
-
-    public boolean hasBonusPitch() {
-        return status.hasBonusPitch();
     }
 }

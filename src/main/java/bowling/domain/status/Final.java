@@ -7,26 +7,6 @@ public class Final implements Status {
     }
 
     @Override
-    public String display(int fallenPins) {
-        return null;
-    }
-
-    @Override
-    public boolean isStrike() {
-        return false;
-    }
-
-    @Override
-    public boolean isSpare() {
-        return false;
-    }
-
-    @Override
-    public boolean isOpen() {
-        return false;
-    }
-
-    @Override
     public boolean isEnd() {
         return true;
     }
@@ -34,5 +14,10 @@ public class Final implements Status {
     @Override
     public boolean hasBonusPitch() {
         return false;
+    }
+
+    @Override
+    public String display(int fallenPins) {
+        return null;
     }
 }

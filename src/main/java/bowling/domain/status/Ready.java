@@ -7,31 +7,11 @@ public class Ready implements Status {
     public Status roll(int fallenPins) {
         Pitch pitch = new Pitch(fallenPins);
 
-        if (pitch.isStrike2()) {
+        if (pitch.isStrike()) {
             return new Strike();
         }
 
         return new Default(pitch);
-    }
-
-    @Override
-    public String display(int fallenPins) {
-        return null;
-    }
-
-    @Override
-    public boolean isStrike() {
-        return false;
-    }
-
-    @Override
-    public boolean isSpare() {
-        return false;
-    }
-
-    @Override
-    public boolean isOpen() {
-        return false;
     }
 
     @Override
@@ -42,5 +22,10 @@ public class Ready implements Status {
     @Override
     public boolean hasBonusPitch() {
         return false;
+    }
+
+    @Override
+    public String display(int fallenPins) {
+        return null;
     }
 }
