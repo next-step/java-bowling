@@ -30,7 +30,7 @@ public class BowlingGameController {
     }
 
     private BowlingGameResponse assembleGameResponse(Participant participant, Frames frames) {
-        return new BowlingGameResponse(participant.getName(), frames.nextTurnNumber(), assembleFrameInfos(frames));
+        return new BowlingGameResponse(participant.getName(), frames.nextTurnNumber(), assembleFrameInfos(frames), frames.isFinished());
     }
 
     private List<FrameInfo> assembleFrameInfos(Frames frames) {
