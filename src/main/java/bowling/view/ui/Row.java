@@ -14,12 +14,16 @@ public final class Row {
 
     private final List<Cell> cells;
 
-    public Row() {
+    private Row() {
         this(new ArrayList<>());
     }
 
-    public Row(List<Cell> cells) {
+    private Row(List<Cell> cells) {
         this.cells = cells;
+    }
+
+    public static Row create() {
+        return new Row();
     }
 
     public void addCell(Cell cell) {
@@ -47,6 +51,8 @@ public final class Row {
     }
 
     private void buildTrail(StringBuilder rowBuilder) {
-        rowBuilder.append(BORDER).append(System.lineSeparator());
+        if (!cells.isEmpty()) {
+            rowBuilder.append(BORDER).append(System.lineSeparator());
+        }
     }
 }

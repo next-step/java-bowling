@@ -33,7 +33,7 @@ public final class OutputView {
     }
 
     private void printPlayerNameAndStatus(Player player, Frames frames) {
-        final Row playerNameAndStatusRow = new Row();
+        final Row playerNameAndStatusRow = Row.create();
 
         playerNameAndStatusRow.addCell(PlayerNameView.from(player).cell());
 
@@ -44,7 +44,7 @@ public final class OutputView {
     }
 
     private void printScore(Frames frames) {
-        final Row scoreRow = new Row();
+        final Row scoreRow = Row.create();
         scoreRow.addCell(Cell.center(EMPTY));
 
         int totalCount = 0;
