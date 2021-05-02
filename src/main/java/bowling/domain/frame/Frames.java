@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 
 public final class Frames {
     public static final Integer FINAL_FRAME = 9;
+
     private final List<Frame> frames;
 
 
