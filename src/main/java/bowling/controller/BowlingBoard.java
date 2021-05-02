@@ -31,6 +31,4 @@ public class BowlingBoard {
       board.addNewBall(new FallenPins(fallenPins));
     }
   }
-
-
 }
