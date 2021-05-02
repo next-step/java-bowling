@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.*;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -100,16 +101,41 @@ public class NormalFrameTest {
     }
 
     @Test
+    void Given_RollWithStrikeTwice_When_Score_Then_NotDetermined() {
+        Frame firstFrame = new NormalFrame();
+        Frame secondFrame = firstFrame.roll(new Pinfall(10));
+        secondFrame.roll(new Pinfall(10));
+
+        AssertionsForClassTypes.assertThat(firstFrame.score()).isEqualTo(Score.createNotDetermined());
+    }
+
+    @Test
+    void Given_RollWithStrikeThrice_When_Score_Then_Score30() {
+        Frame firstFrame = new NormalFrame();
+        Frame secondFrame = firstFrame.roll(new Pinfall(10));
+        Frame thirdFrame = secondFrame.roll(new Pinfall(10));
+        thirdFrame.roll(new Pinfall(10));
+
+        AssertionsForClassTypes.assertThat(firstFrame.score()).isEqualTo(Score.create(30));
+    }
+
+    @Test
     void Given_Spare_When_Score_Then_NotDetermined() {
         NormalFrame frame = new NormalFrame(new Pinfall(9), new Pinfall(1));
         assertThat(frame.score()).isEqualTo(Score.createNotDetermined());
     }
 
     @Test
-    void Given_SpareAndRollOnce_When_Score_Then_NotDetermined() {
+    void Given_SpareAndRollOnce_When_Score_Then_Score12() {
         Frame firstFrame = new NormalFrame(new FrameNumber(1), new Pinfall(9));
         Frame secondFrame = firstFrame.roll(new Pinfall(1));
         secondFrame.roll(new Pinfall(2));
         assertThat(firstFrame.score()).isEqualTo(Score.create(12));
+    }
+
+    @Test
+    void Given_RollOnce_When_Score_Then_ScoreNotDetermined() {
+        Frame frame = new NormalFrame(new FrameNumber(1));
+        assertThat(frame.score()).isEqualTo(Score.createNotDetermined());
     }
 }

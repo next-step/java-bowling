@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.state.FrameState;
 import bowling.domain.state.FrameStateReady;
+import org.springframework.aop.AfterReturningAdvice;
 
 import java.util.*;
 
@@ -82,26 +83,27 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score score() {
-        return currentState.score(nextFrameBonusPinfalls());
+        return currentState.score(nextFrameBonusPinfalls(2));
     }
 
-    private List<Pinfall> nextFrameBonusPinfalls() {
+    private List<Pinfall> nextFrameBonusPinfalls(int bonusPinfallCount) {
         if (!hasNext()) {
             return new ArrayList<>();
         }
 
-        return next.bonusPinfalls();
+        return next.bonusPinfalls(bonusPinfallCount);
     }
 
     @Override
-    public List<Pinfall> bonusPinfalls() {
+    public List<Pinfall> bonusPinfalls(int bonusPinfallCount) {
         List<Pinfall> bonusPinfalls = currentState.pinfalls();
         if (bonusPinfalls.size() == 0) {
             return new ArrayList<>();
         }
 
-        if (bonusPinfalls.size() < 2) {
-            bonusPinfalls.addAll(nextFrameBonusPinfalls());
+        if (bonusPinfalls.size() < bonusPinfallCount) {
+            List<Pinfall> nextBonus = nextFrameBonusPinfalls(bonusPinfallCount - bonusPinfalls.size());
+            bonusPinfalls.addAll(nextBonus);
         }
 
         return bonusPinfalls;

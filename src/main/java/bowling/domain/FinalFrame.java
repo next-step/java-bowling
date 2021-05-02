@@ -61,7 +61,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<Pinfall> bonusPinfalls() {
+    public List<Pinfall> bonusPinfalls(int bonusPinfallCount) {
         return new ArrayList<>();
     }
 }

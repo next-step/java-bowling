@@ -36,7 +36,7 @@ public class FrameStateFinalOnce implements FrameState {
 
     @Override
     public List<Pinfall> pinfalls() {
-        return Arrays.asList(firstPinfall);
+        return new ArrayList<>(Arrays.asList(firstPinfall));
     }
 
     @Override

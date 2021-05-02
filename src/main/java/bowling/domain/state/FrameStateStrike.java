@@ -25,7 +25,7 @@ public class FrameStateStrike implements FrameState {
 
     @Override
     public List<Pinfall> pinfalls() {
-        return Collections.singletonList(new Pinfall(10));
+        return new ArrayList<>(Arrays.asList(new Pinfall(10)));
     }
 
     @Override
@@ -39,7 +39,7 @@ public class FrameStateStrike implements FrameState {
             return Score.createNotDetermined();
         }
 
-        Score bonusScore = Score.create(bonusPinfalls.get(0).number() + bonusPinfalls.get(10).number());
+        Score bonusScore = Score.create(bonusPinfalls.get(0).number() + bonusPinfalls.get(1).number());
 
         return Score.create(10).add(bonusScore);
     }

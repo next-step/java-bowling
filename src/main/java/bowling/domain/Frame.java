@@ -15,5 +15,5 @@ public interface Frame {
 
     Score score();
 
-    List<Pinfall> bonusPinfalls();
+    List<Pinfall> bonusPinfalls(int bonusPinfallCount);
 }

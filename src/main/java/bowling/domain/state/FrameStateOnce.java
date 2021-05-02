@@ -37,9 +37,7 @@ public class FrameStateOnce implements FrameState {
 
     @Override
     public List<Pinfall> pinfalls() {
-        List<Pinfall> pinfalls = new ArrayList<>();
-        pinfalls.add(firstPinfall);
-        return pinfalls;
+        return new ArrayList<>(Arrays.asList(firstPinfall));
     }
 
     @Override
