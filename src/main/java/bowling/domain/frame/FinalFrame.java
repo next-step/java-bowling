@@ -55,4 +55,18 @@ public final class FinalFrame extends Frame {
         }
         return Score.normal(pins.totalPinCount());
     }
+
+    @Override
+    protected Score addScore(Score previousScore) {
+        if (pins.isEmpty()) {
+            return Score.notCalculable();
+        }
+
+        final Score addedScore = previousScore.add(Score.normal(pins.firstPinCount()));
+        if (!addedScore.canCalculate()) {
+            return addedScore.add(Score.normal(pins.secondPinCount()));
+        }
+
+        return addedScore;
+    }
 }

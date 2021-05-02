@@ -32,8 +32,16 @@ public abstract class Pins {
         return pins.get(FIRST_PIN_INDEX);
     }
 
+    public int firstPinCount() {
+        return firstPin().pinCount();
+    }
+
     public Pin secondPin() {
         return pins.get(SECOND_PIN_INDEX);
+    }
+
+    public int secondPinCount() {
+        return secondPin().pinCount();
     }
 
     public Pin thirdPin() {
@@ -42,6 +50,18 @@ public abstract class Pins {
 
     public FrameStatus frameStatus() {
         return FrameStatus.of(this);
+    }
+
+    public boolean isStrike() {
+        return frameStatus() == FrameStatus.STRIKE;
+    }
+
+    public boolean isSpare() {
+        return frameStatus() == FrameStatus.SPARE;
+    }
+
+    public boolean isEnded() {
+        return frameStatus() != FrameStatus.NOT_ENDED;
     }
 
     public void knockDownPin(final Pin pin) {

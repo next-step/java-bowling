@@ -57,7 +57,7 @@ public final class NormalFrame extends Frame {
 
     @Override
     public boolean isEnded() {
-        return pins.frameStatus() != FrameStatus.NOT_ENDED;
+        return pins.isEnded();
     }
 
     @Override
@@ -70,6 +70,33 @@ public final class NormalFrame extends Frame {
         if (!isEnded()) {
             return Score.notCalculable();
         }
-        return null;
+        if (pins.frameStatus() == FrameStatus.STRIKE) {
+            return nextFrame().addScore(Score.strike());
+        }
+        if (pins.frameStatus() == FrameStatus.SPARE) {
+            return nextFrame().addScore(Score.spare());
+        }
+        return Score.normal(pins.totalPinCount());
+    }
+
+    @Override
+    protected Score addScore(Score previousScore) {
+        if (pins.isEmpty()) {
+            return Score.notCalculable();
+        }
+
+        final Score addedScore = previousScore.add(Score.normal(pins.firstPinCount()));
+        if (!addedScore.canCalculate()) {
+            return additionalScore(addedScore);
+        }
+
+        return addedScore;
+    }
+
+    private Score additionalScore(Score addedScore) {
+        if (pins.isStrike()) {
+            return nextFrame().addScore(addedScore);
+        }
+        return addedScore.add(Score.normal(pins.secondPinCount()));
     }
 }

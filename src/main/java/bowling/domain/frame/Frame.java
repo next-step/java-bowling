@@ -29,6 +29,8 @@ public abstract class Frame {
 
     public abstract Score score();
 
+    protected abstract Score addScore(Score previousScore);
+
     public Pins pins() {
         return pins;
     }
