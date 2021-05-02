@@ -194,6 +194,5 @@
         - [ ] `PlayerNameView`가 더 많은 부분을 출력하도록 변경
         - [ ] `Cell`: 한 칸을 표현하는 클래스 선언
         - [ ] `Table`: Cell의 모음으로 표 형태를 출력(`List<Cell>`?)
-    - [ ] `Score`: `notCalculable` 객체 개선(0~3)으로 관리하도록
     - [ ] `Frames`: Throw 하기 전 Frame은 생성되지 않도록 Frame의 개수를 관리
     - [ ] `StringUtils`: 테스트 추가
