@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.rollresult.RollResult;
+import bowling.rollresult.RollResultType;
 
 import java.util.Objects;
 
@@ -29,6 +30,10 @@ public class FinalFrame implements Frame {
         return new FinalFrame(null, result);
     }
 
+    public static FinalFrame of(Pin pin, RollResult result) {
+        return new FinalFrame(pin, result);
+    }
+
     @Override
     public Frame next(int index) {
         return this;
@@ -36,7 +41,21 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame roll(HitNumber rollNumber) {
-        return null;
+        if (result == null) {
+            return firstRoll(rollNumber, this.pin);
+        }
+        if (result.isFinished()) {
+            return firstRoll(rollNumber, Pin.of());
+        }
+        if (!result.hasNext()) {
+            throw new IllegalStateException();
+        }
+        return of(pin, result.next(pin, rollNumber));
+    }
+
+    private Frame firstRoll(HitNumber rollNumber, Pin pin) {
+        RollResultType type = pin.firstHit(rollNumber);
+        return of(pin, RollResult.of(type));
     }
 
 

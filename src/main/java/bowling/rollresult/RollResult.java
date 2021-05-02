@@ -22,6 +22,14 @@ public class RollResult {
         return of(pin.secondHit(type, number));
     }
 
+    public boolean isFinished() {
+        return type.isStrike() || type.isSpare();
+    }
+
+    public boolean hasNext() {
+        return type.hasNext();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,4 +42,5 @@ public class RollResult {
     public int hashCode() {
         return Objects.hash(type, total);
     }
+
 }

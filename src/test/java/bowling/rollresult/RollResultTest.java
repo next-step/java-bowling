@@ -19,4 +19,12 @@ public class RollResultTest {
         assertThat(result.next(Pin.of(1, 7), HitNumber.of(3))).isEqualTo(RollResult.of(Gutter.of(3, 3)));
     }
 
+    @Test
+    void 마무리하였는지확인() {
+        assertThat(RollResult.of(Strike.of()).isFinished()).isTrue();
+        assertThat(RollResult.of(Spare.of(3)).isFinished()).isTrue();
+        assertThat(RollResult.of(Gutter.of(3, 3)).isFinished()).isFalse();
+        assertThat(RollResult.of(Miss.of()).isFinished()).isFalse();
+    }
+
 }
