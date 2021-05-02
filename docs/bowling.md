@@ -188,10 +188,10 @@
         - [x] `Pin`에 `status()` 부분은 `isGutter`를 추가하면서 View쪽으로 옮긴다.
 - step3
     - [x] `Pins`에서 `Validator` 객체를 주입받아 `validate`를 위임하도록 수정
-    - [ ] `View` 개선
-        - [ ] `PlayerNameView`가 더 많은 부분을 출력하도록 변경
-        - [ ] `Cell`: 한 칸을 표현하는 클래스 선언
-        - [ ] `Row`: Cell의 모음으로 한 행을 출력(`List<Cell>`?)
+    - [x] `View` 개선
+        - [x] `PlayerNameView`가 더 많은 부분을 출력하도록 변경
+        - [x] `Cell`: 한 칸을 표현하는 클래스 선언
+        - [x] `Row`: Cell의 모음으로 한 행을 출력(`List<Cell>`?)
     - [ ] `Frames`: Throw 하기 전 Frame은 생성되지 않도록 Frame의 개수를 관리
         - 잠정적으로 보류(NPE를 억제할 우아한 방법을 찾지 못했다.)
     - [x] `StringUtils`: 테스트 추가
