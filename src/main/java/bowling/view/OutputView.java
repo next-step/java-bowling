@@ -3,13 +3,12 @@ package bowling.view;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
-import bowling.utils.StringUtils;
+import bowling.view.ui.Cell;
 import bowling.view.ui.Row;
 
 public final class OutputView {
 
-    private static final int FRAME_SIZE = 6;
-    private static final String BORDER = "|";
+    private static final String EMPTY = "";
 
     private final BoardHeaderView boardHeaderView;
 
@@ -45,17 +44,15 @@ public final class OutputView {
     }
 
     private void printScore(Frames frames) {
-        final StringBuilder scoreBuilder = new StringBuilder();
+        final Row scoreRow = new Row();
+        scoreRow.addCell(Cell.center(EMPTY));
 
-        scoreBuilder.append(BORDER).append("      ");
         int totalCount = 0;
         for (Frame frame : frames.value()) {
             final ScoreView scoreView = new ScoreView(frame.score(), totalCount);
             totalCount = scoreView.totalCount();
-            scoreBuilder.append(BORDER).append(StringUtils.alignCenter(scoreView.totalScore(), FRAME_SIZE));
+            scoreRow.addCell(scoreView.cell());
         }
-        scoreBuilder.append(BORDER).append("\n");
-
-        System.out.println(scoreBuilder);
+        System.out.println(scoreRow.row());
     }
 }

@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.score.Score;
+import bowling.view.ui.Cell;
 
 public final class ScoreView {
 
@@ -21,7 +22,11 @@ public final class ScoreView {
         return totalCount;
     }
 
-    public String totalScore() {
+    public Cell cell() {
+        return Cell.center(totalScore());
+    }
+
+    private String totalScore() {
         if (score.canCalculate()) {
             return String.valueOf(totalCount);
         }
