@@ -1,6 +1,4 @@
-package bowling;
-
-import bowling.rollresult.RollResultType;
+package bowling.rollresult;
 
 import java.util.Objects;
 

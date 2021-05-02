@@ -2,10 +2,10 @@ package bowling.rollresult;
 
 import java.util.Objects;
 
-public class OneRollResult implements RollResultType{
+public class OneRollResultType implements RollResultType{
     private final int score;
 
-    private OneRollResult(int score) {
+    private OneRollResultType(int score) {
         this.score = score;
     }
 
@@ -13,7 +13,7 @@ public class OneRollResult implements RollResultType{
         if (score == DEFAULT_MAX_SCORE) {
             return Strike.of();
         }
-        return new OneRollResult(score);
+        return new OneRollResultType(score);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class OneRollResult implements RollResultType{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OneRollResult that = (OneRollResult) o;
+        OneRollResultType that = (OneRollResultType) o;
         return score == that.score;
     }
 

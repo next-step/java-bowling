@@ -1,19 +1,19 @@
 package bowling;
 
-public class RollNumber {
+public class HitNumber {
     private static final int ROLL_LOWER_BOUND = 0;
     private static final int ROLL_UPPER_BOUND = 10;
     private static final String INVALID_ROLL_NUMBER = "투구횟수는 0~10 사이어야합니다.";
 
     private final int rollNumber;
 
-    public RollNumber(int rollNumber) {
+    public HitNumber(int rollNumber) {
         this.rollNumber = rollNumber;
     }
 
-    public static RollNumber of(int rollNumber) {
+    public static HitNumber of(int rollNumber) {
         valid(rollNumber);
-        return new RollNumber(rollNumber);
+        return new HitNumber(rollNumber);
     }
 
     private static void valid(int rollNumber) {

@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.rollresult.RollResult;
+
 import java.util.Objects;
 
 public class NormalFrame implements Frame{
@@ -38,7 +40,7 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public boolean roll(RollNumber rollNumber) {
+    public boolean roll(HitNumber rollNumber) {
 
         return false;
     }

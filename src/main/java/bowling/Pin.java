@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.rollresult.OneRollResult;
+import bowling.rollresult.OneRollResultType;
 import bowling.rollresult.RollResultType;
 
 import java.util.Objects;
@@ -43,17 +43,17 @@ public class Pin {
         }
     }
 
-    public void fallen(RollNumber rollNumber) {
+    private void fallen(HitNumber rollNumber) {
         tryNum++;
         pinNum = rollNumber.hit(pinNum);
     }
 
-    public RollResultType firstHit(RollNumber rollNumber) {
+    public RollResultType firstHit(HitNumber rollNumber) {
         fallen(rollNumber);
-        return OneRollResult.of(PIN_NUM_UPPER_BOUND - pinNum);
+        return OneRollResultType.of(PIN_NUM_UPPER_BOUND - pinNum);
     }
 
-    public RollResultType secondHit(RollResultType type, RollNumber rollNumber) {
+    public RollResultType secondHit(RollResultType type, HitNumber rollNumber) {
         valid(tryNum, pinNum);
         fallen(rollNumber);
         return type.next(PIN_NUM_UPPER_BOUND - pinNum);
