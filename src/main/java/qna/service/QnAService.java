@@ -42,14 +42,17 @@ public class QnAService {
         question.isHasAnswersIsNotOwner(loginUser);
 
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        DeleteHistorys deleteHistories = new DeleteHistorys();
         question.setDeleted(true);
 
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, new DeleteHistoryDTO(questionId, question.getWriter(), LocalDateTime.now())));
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, new DeleteHistoryDTO(answer.getId(), answer.getWriter(), LocalDateTime.now())));
-        }
+        List<Answer> answers = question.getAnswers();
+        deleteHistories.addTypeQuestion(new DeleteHistoryDTO(questionId, question.getWriter(), LocalDateTime.now()));
+        deleteHistories.addTypeAnswer(answers);
+//        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, new DeleteHistoryDTO(questionId, question.getWriter(), LocalDateTime.now())));
+//        for (Answer answer : answers) {
+//            answer.setDeleted(true);
+//            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, new DeleteHistoryDTO(answer.getId(), answer.getWriter(), LocalDateTime.now())));
+//        }
         deleteHistoryService.saveAll(deleteHistories);
     }
 }
