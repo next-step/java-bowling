@@ -87,13 +87,13 @@ public final class NormalFrame extends Frame {
 
         final Score addedScore = previousScore.add(Score.normal(pins.firstPinCount()));
         if (!addedScore.canCalculate()) {
-            return additionalScore(addedScore);
+            return previousStrikeScore(addedScore);
         }
 
         return addedScore;
     }
 
-    private Score additionalScore(Score addedScore) {
+    private Score previousStrikeScore(Score addedScore) {
         if (pins.isStrike()) {
             return nextFrame().addScore(addedScore);
         }

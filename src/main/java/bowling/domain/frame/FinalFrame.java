@@ -64,9 +64,16 @@ public final class FinalFrame extends Frame {
 
         final Score addedScore = previousScore.add(Score.normal(pins.firstPinCount()));
         if (!addedScore.canCalculate()) {
-            return addedScore.add(Score.normal(pins.secondPinCount()));
+            return previousStrikeScore(addedScore);
         }
 
         return addedScore;
+    }
+
+    private Score previousStrikeScore(Score addedScore) {
+        if (pins.size() < THROW_TWICE) {
+            return Score.notCalculable();
+        }
+        return addedScore.add(Score.normal(pins.secondPinCount()));
     }
 }

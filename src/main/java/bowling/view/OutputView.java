@@ -9,6 +9,7 @@ public final class OutputView {
 
     private static final int FRAME_SIZE = 6;
     private static final int NAME_PADDING_SIZE = 5;
+    private static final String BORDER = "|";
 
     private final BoardHeaderView boardHeaderView;
 
@@ -23,6 +24,7 @@ public final class OutputView {
     public void printScoreBoard(Player player) {
         printBoardHeader();
         printPlayerNameAndStatus(player);
+        printScore(player.frames());
     }
 
     private void printBoardHeader() {
@@ -33,12 +35,27 @@ public final class OutputView {
         final Frames frames = player.frames();
         final StringBuilder playerResultBuilder = new StringBuilder();
 
-        playerResultBuilder.append("|").append(StringUtils.padLeft(new PlayerNameView(player).playerName(), NAME_PADDING_SIZE)).append(" ");
+        playerResultBuilder.append(BORDER).append(StringUtils.padLeft(new PlayerNameView(player).playerName(), NAME_PADDING_SIZE)).append(" ");
         for (Frame frame : frames.value()) {
-            playerResultBuilder.append("|").append(StringUtils.alignCenter(new FrameStatusView(frame).frameStatus(), FRAME_SIZE));
+            playerResultBuilder.append(BORDER).append(StringUtils.alignCenter(new FrameStatusView(frame).frameStatus(), FRAME_SIZE));
         }
         playerResultBuilder.append("|").append("\n");
 
-        System.out.println(playerResultBuilder);
+        System.out.print(playerResultBuilder);
+    }
+
+    private void printScore(Frames frames) {
+        final StringBuilder scoreBuilder = new StringBuilder();
+
+        scoreBuilder.append(BORDER).append("      ");
+        int totalCount = 0;
+        for (Frame frame : frames.value()) {
+            final ScoreView scoreView = new ScoreView(frame.score(), totalCount);
+            totalCount = scoreView.totalCount();
+            scoreBuilder.append(BORDER).append(StringUtils.alignCenter(scoreView.totalScore(), FRAME_SIZE));
+        }
+        scoreBuilder.append(BORDER).append("\n");
+
+        System.out.println(scoreBuilder);
     }
 }
