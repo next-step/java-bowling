@@ -3,8 +3,6 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 public class Pitches implements Iterable<Pitch> {
 
@@ -101,13 +99,4 @@ public class Pitches implements Iterable<Pitch> {
         return values.iterator();
     }
 
-    @Override
-    public void forEach(Consumer<? super Pitch> action) {
-        Iterable.super.forEach(action);
-    }
-
-    @Override
-    public Spliterator<Pitch> spliterator() {
-        return Iterable.super.spliterator();
-    }
 }
