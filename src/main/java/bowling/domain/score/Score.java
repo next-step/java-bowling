@@ -48,6 +48,22 @@ public class Score {
         return new Score(this.score + score, left - 1);
     }
 
+    public boolean isAccumulateDone() {
+        return this.left == MIN_LEFT_COUNT;
+    }
+
+    public boolean isProgressState() {
+        return this.equals(ofProgress());
+    }
+
+    public int left() {
+        return left;
+    }
+
+    public int score() {
+        return score;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
