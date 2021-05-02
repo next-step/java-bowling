@@ -1,5 +1,6 @@
 package bowling.service;
 
+import bowling.domain.BowlingGame;
 import bowling.domain.Frames;
 import bowling.domain.Participant;
 import bowling.repository.BowlingGameRepository;
@@ -31,5 +32,9 @@ public class BowlingGameService {
     public Frames findFrames(Participant participant) {
         Optional<Frames> frames = repository.findByParticipant(participant);
         return frames.orElseThrow(() -> new NoSuchElementException("존재하지 않는 참가자입니다."));
+    }
+
+    public BowlingGame findBowlingGame() {
+        return new BowlingGame(repository.findAllFrames());
     }
 }
