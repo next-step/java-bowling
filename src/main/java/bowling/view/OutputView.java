@@ -9,6 +9,20 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private final static int BOARD_WIDTH = 6;
+    private final static int FRAME_COUNT = 10;
+    private final static String BOARD_DELIMITER = "|";
+    private final static String BLANK = " ";
+
+    private final static String SCORE_SIGN_STRIKE = "X";
+    private final static String SCORE_SIGN_SPARE = "/";
+    private final static String SCORE_SIGN_GUTTER = "-";
+    private final static int SCORE_STRIKE = 10;
+    private final static int SCORE_GUTTER = 0;
+
+    private final static int FIRST_PITCH = 0;
+    private final static int SECOND_PITCH = 1;
+    private final static int FINAL_BONUS_PITCH = 2;
+    private final static int MAX_FINAL_FRAME_SIZE = 3;
 
     public void printFrame(BowlingGameResponse response) {
         printBoardHeader();
@@ -30,7 +44,7 @@ public class OutputView {
             printFrame(frameInfo);
         }
         printBlankBoard(response.getFrameInfos().size());
-        System.out.println("|");
+        System.out.println(BOARD_DELIMITER);
     }
 
     private void printFrame(FrameInfo frameInfo) {
@@ -46,33 +60,33 @@ public class OutputView {
     }
 
     private void printFinalFrame(List<Integer> pinDownResults) {
-        if (pinDownResults.size() == 3 && pinDownResults.get(0) + pinDownResults.get(1) == 10) {
-            printSpare(pinDownResults.stream().limit(2).collect(Collectors.toList()));
-            String content = "|" + parseSign(pinDownResults.get(2));
+        if (pinDownResults.size() == MAX_FINAL_FRAME_SIZE && pinDownResults.get(FIRST_PITCH) + pinDownResults.get(SECOND_PITCH) == SCORE_STRIKE) {
+            printSpare(pinDownResults.stream().limit(FINAL_BONUS_PITCH).collect(Collectors.toList()));
+            String content = BOARD_DELIMITER + parseSign(pinDownResults.get(FINAL_BONUS_PITCH));
             System.out.print(makeBoard(content));
         }
         printFrame(pinDownResults);
     }
 
     private void printSpare(List<Integer> pinDownResults) {
-        String content = parseSign(pinDownResults.get(0)) + "|/";
+        String content = parseSign(pinDownResults.get(FIRST_PITCH)) + BOARD_DELIMITER + SCORE_SIGN_SPARE;
         System.out.print(makeBoard(content));
     }
 
     private void printFrame(List<Integer> pinDownResults) {
         String content = pinDownResults.stream()
                 .map(this::parseSign)
-                .collect(Collectors.joining("|"));
+                .collect(Collectors.joining(BOARD_DELIMITER));
         System.out.print(makeBoard(content));
     }
 
     private void printScoreBoard(List<FrameInfo> frameInfos) {
-        System.out.print(makeBoard(""));
+        System.out.print(makeBoard(BLANK));
         for (int i = 0; i < frameInfos.size(); i++) {
             printScore(frameInfos, i);
         }
         printBlankBoard(frameInfos.size());
-        System.out.print("|");
+        System.out.print(BOARD_DELIMITER);
     }
 
     private void printScore(List<FrameInfo> frameInfos, int frameIndex) {
@@ -89,23 +103,23 @@ public class OutputView {
     }
 
     private String parseSign(int score) {
-        if (score == 10) {
-            return "X";
+        if (score == SCORE_STRIKE) {
+            return SCORE_SIGN_STRIKE;
         }
-        if (score == 0) {
-            return "-";
+        if (score == SCORE_GUTTER) {
+            return SCORE_SIGN_GUTTER;
         }
         return String.valueOf(score);
     }
 
     private void printBlankBoard(int count) {
-        for (int i = 0; i < 10 - count; i++) {
-            System.out.print(makeBoard(""));
+        for (int i = 0; i < FRAME_COUNT - count; i++) {
+            System.out.print(makeBoard(BLANK));
         }
     }
 
     private String makeBoard(String content) {
-        return "|" + alignCenter(content);
+        return BOARD_DELIMITER + alignCenter(content);
     }
 
     private String alignCenter(String content) {
@@ -117,7 +131,7 @@ public class OutputView {
     private String makeBlank(int count) {
         StringBuilder blank = new StringBuilder();
         for (int i = 0; i < count; i++) {
-            blank.append(" ");
+            blank.append(BLANK);
         }
         return blank.toString();
     }
