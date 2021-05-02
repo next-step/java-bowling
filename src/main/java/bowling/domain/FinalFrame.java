@@ -66,4 +66,8 @@ public class FinalFrame extends Frame {
         return false;
     }
 
+    @Override
+    public boolean isSpare() {
+        return pitches().count() >= BONUS_LIMIT && pitches().pinDownCount(BONUS_LIMIT) == Pitch.STRIKE_COUNT;
+    }
 }

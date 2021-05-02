@@ -123,7 +123,7 @@ class FinalFrameTest {
 
         // then
         assertThat(finalFrame.score()).isEqualTo(12);
-        assertThat(finalFrame.isSpare()).isFalse();
+        assertThat(finalFrame.isSpare()).isTrue();
     }
 
     @Test
