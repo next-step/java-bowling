@@ -22,7 +22,7 @@ public class Bonus implements Status {
         }
 
         if (current.isSpare(fallenPins)) {
-            return new Bonus(pitch, BONUS_PITCH_COUNT, new Spare(pitch));
+            return new Bonus(pitch, BONUS_PITCH_COUNT, new Spare());
         }
 
         return new Bonus(pitch, BONUS_PITCH_COUNT, new Hold(pitch));

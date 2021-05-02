@@ -15,7 +15,7 @@ public class Hold extends Continue {
         Pitch pitch = new Pitch(fallenPins);
 
         if (current.isSpare(fallenPins)) {
-            return new Spare(pitch);
+            return new Spare();
         }
 
         return new Miss(pitch);
