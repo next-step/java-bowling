@@ -2,7 +2,6 @@ package bowling.domain;
 
 import bowling.domain.state.FrameState;
 import bowling.domain.state.FrameStateReady;
-import org.springframework.aop.AfterReturningAdvice;
 
 import java.util.*;
 

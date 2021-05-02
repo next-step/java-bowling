@@ -4,7 +4,6 @@ import bowling.WrongFrameNumberException;
 import bowling.domain.state.FrameState;
 import bowling.domain.state.FrameStateFinalReady;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FinalFrame implements Frame {

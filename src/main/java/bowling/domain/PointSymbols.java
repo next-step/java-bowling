@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.Pinfall;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

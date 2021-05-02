@@ -1,6 +1,5 @@
 package bowling.domain;
 
-
 import bowling.IllegalPinFallException;
 
 import java.util.Objects;
