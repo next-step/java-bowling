@@ -49,7 +49,7 @@ public class Frames implements Iterable<Frame> {
     }
 
     public boolean isFinished() {
-        return !isEmpty() && lastFrame() instanceof FinalFrame && lastFrame().isFinished();
+        return !isEmpty() && lastFrame().isFinalFrame() && lastFrame().isFinished();
     }
 
     private boolean isEmpty() {
