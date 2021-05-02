@@ -15,12 +15,6 @@ public class FinalFrame implements FrameType {
         return pitches.pitch(point);
     }
 
-    private void validatePitch(int point) {
-        if (pitches.sum() + point > 30) {
-            throw new IllegalArgumentException("30개 이상의 핀을 쓰러트릴 수 없습니다.");
-        }
-    }
-
     @Override
     public boolean isContinue() {
         return !pitches.isEnd() || (pitches.isEnd() && pitches.hasBonusPitch());
@@ -29,5 +23,16 @@ public class FinalFrame implements FrameType {
     @Override
     public Pitches pitches() {
         return pitches;
+    }
+
+    @Override
+    public Score score() {
+        return new Score(pitches.sum());
+    }
+
+    private void validatePitch(int point) {
+        if (pitches.sum() + point > 30) {
+            throw new IllegalArgumentException("30개 이상의 핀을 쓰러트릴 수 없습니다.");
+        }
     }
 }

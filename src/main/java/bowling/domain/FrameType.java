@@ -6,4 +6,6 @@ public interface FrameType {
     boolean isContinue();
 
     Pitches pitches();
+
+    Score score();
 }
