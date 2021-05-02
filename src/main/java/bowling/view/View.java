@@ -56,15 +56,10 @@ public class View {
     }
 
     private static String pointSymbolsString(PointSymbols pointSymbols) {
-        int index = 0;
-        StringBuilder stringBuilder = new StringBuilder();
-        for (PointSymbol pointSymbol : pointSymbols.symbols()) {
-            stringBuilder.append(pointSymbol.symbol());
-            if (++index != pointSymbols.length()) {
-                stringBuilder.append('|');
-            }
-        }
-        return stringBuilder.toString();
+        return pointSymbols.symbols().stream()
+                .map(PointSymbol::symbol)
+                .map(Object::toString)
+                .collect(Collectors.joining("|"));
     }
 
     public static void printScoreBoardHeader() {
