@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
@@ -153,31 +154,33 @@ class FinalFrameTest {
         assertThat(score.canCalculate()).isFalse();
     }
 
-    // TODO: Parameterized Test로 개선
-    @Test
+    @ParameterizedTest
+    @CsvSource({"2,3,5", "3,6,9", "1,8,9"})
     @DisplayName("일반적인 투구 2회를 던진 FinalFrame은 점수를 산정할 수 있다.")
-    void twoThrowScore() {
+    void twoThrowScore(int firstPinCount, int secondPinCount, int expected) {
         // given
-        final FinalFrame finalFrame = FinalFrame.from(FinalPins.of(new Pin(2), new Pin(3)));
+        final FinalPins finalPins = FinalPins.of(new Pin(firstPinCount), new Pin(secondPinCount));
+        final FinalFrame finalFrame = FinalFrame.from(finalPins);
 
         // when
         final Score score = finalFrame.score();
 
         // then
-        assertThat(score.calculate()).isEqualTo(5);
+        assertThat(score.calculate()).isEqualTo(expected);
     }
 
-    // TODO: Parameterized Test로 개선
-    @Test
+    @ParameterizedTest
+    @CsvSource({"10,10,10,30", "1,9,10,20", "10,10,5,25", "10,5,5,20"})
     @DisplayName("투구 3회를 던지면 FinalFrame은 점수를 산정할 수 있다.")
-    void threeThrowScore() {
+    void threeThrowScore(int firstPinCount, int secondPinCount, int thirdPinCount, int expected) {
         // given
-        final FinalFrame finalFrame = FinalFrame.from(FinalPins.of(STRIKE_PIN, STRIKE_PIN, STRIKE_PIN));
+        final FinalPins finalPins = FinalPins.of(new Pin(firstPinCount), new Pin(secondPinCount), new Pin(thirdPinCount));
+        final FinalFrame finalFrame = FinalFrame.from(finalPins);
 
         // when
         final Score score = finalFrame.score();
 
         // then
-        assertThat(score.calculate()).isEqualTo(30);
+        assertThat(score.calculate()).isEqualTo(expected);
     }
 }
