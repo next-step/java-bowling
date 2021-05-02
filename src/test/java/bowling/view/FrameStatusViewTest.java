@@ -46,6 +46,7 @@ class FrameStatusViewTest {
                 arguments(FinalFrame.from(FinalPins.of(STRIKE_PIN, STRIKE_PIN, new Pin(9))), "X|X|9"),
                 arguments(FinalFrame.from(FinalPins.of(STRIKE_PIN, STRIKE_PIN, GUTTER_PIN)), "X|X|-"),
                 arguments(FinalFrame.from(FinalPins.of(STRIKE_PIN, GUTTER_PIN, STRIKE_PIN)), "X|-|/"),
+                arguments(FinalFrame.from(FinalPins.of(STRIKE_PIN, new Pin(2), new Pin(8))), "X|2|/"),
                 arguments(FinalFrame.from(FinalPins.of(STRIKE_PIN, GUTTER_PIN, GUTTER_PIN)), "X|-|-"),
                 arguments(FinalFrame.from(FinalPins.of(STRIKE_PIN, new Pin(2), new Pin(8))), "X|2|/"),
                 arguments(FinalFrame.from(FinalPins.of(STRIKE_PIN, new Pin(3), new Pin(4))), "X|3|4"),

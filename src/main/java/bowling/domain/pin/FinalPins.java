@@ -1,10 +1,15 @@
 package bowling.domain.pin;
 
+import bowling.exception.PinsCountExceededException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public final class FinalPins extends Pins {
+
+    private static final int MAIN_GAME_COUNT = 2;
+    private static final int THIRD_THROW_THRESHOLD = 10;
 
     private FinalPins() {
         this(new ArrayList<>());
@@ -32,6 +37,23 @@ public final class FinalPins extends Pins {
 
     @Override
     public void validatePinCount(Pin pin) {
-        // TODO: Implement it
+        if (isThirdThrow() && sumOfTwoPinsCount() < THIRD_THROW_THRESHOLD) {
+            throw new PinsCountExceededException();
+        }
+        if (isThirdThrow() && isLastGameSpare()) {
+            secondPin().sum(pin);
+        }
+    }
+
+    private boolean isThirdThrow() {
+        return pins.size() == MAIN_GAME_COUNT;
+    }
+
+    private int sumOfTwoPinsCount() {
+        return firstPin().pinCount() + secondPin().pinCount();
+    }
+
+    private boolean isLastGameSpare() {
+        return firstPin().isMaximum() && !secondPin().isMaximum();
     }
 }
