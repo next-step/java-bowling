@@ -94,6 +94,13 @@ public class Pitches implements Iterable<Pitch> {
         this.pitchAbleCount--;
     }
 
+    public int pinDownCount(int limit) {
+        return values.stream()
+                .limit(limit)
+                .mapToInt(Pitch::value)
+                .sum();
+    }
+
     @Override
     public Iterator<Pitch> iterator() {
         return values.iterator();
@@ -107,12 +114,5 @@ public class Pitches implements Iterable<Pitch> {
     @Override
     public Spliterator<Pitch> spliterator() {
         return Iterable.super.spliterator();
-    }
-
-    public int pinDownCount(int limit) {
-        return values.stream()
-                .limit(limit)
-                .mapToInt(Pitch::value)
-                .sum();
     }
 }
