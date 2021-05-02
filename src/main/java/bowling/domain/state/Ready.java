@@ -9,20 +9,11 @@ import java.util.Objects;
 
 public class Ready implements State{
     private static final String STATE = "READY";
+
     private Ready(){}
 
     public static Ready create(){
         return new Ready();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public String state() {
-        return STATE;
     }
 
     @Override
@@ -41,6 +32,16 @@ public class Ready implements State{
     @Override
     public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
         return FrameScore.of(prevFrameScore.score(), FrameScore.UNSCORED_SCORE);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public String state() {
+        return STATE;
     }
 
     @Override

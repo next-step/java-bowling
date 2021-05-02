@@ -21,15 +21,15 @@ public class NormalFrame implements Frame{
         this.nextFrame = nextFrame(frameNo + 1);
     }
 
-    public static NormalFrame init() {
-        return new NormalFrame(FIRST_FRAME_NO);
-    }
-
     private Frame nextFrame(int frameNo) {
         if(frameNo == LAST_FRAME_NO) {
             return FinalFrame.of();
         }
         return new NormalFrame(frameNo);
+    }
+
+    public static NormalFrame init() {
+        return new NormalFrame(FIRST_FRAME_NO);
     }
 
     @Override
@@ -38,16 +38,6 @@ public class NormalFrame implements Frame{
             throw new CannotBowlException();
         }
         state = state.stateAfterPitch(pitch);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return state.isFinished();
-    }
-
-    @Override
-    public Frame next() {
-        return nextFrame;
     }
 
     @Override
@@ -66,6 +56,16 @@ public class NormalFrame implements Frame{
             return frameScore;
         }
         return nextFrame.frameScoreWithBonus(frameScore);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    @Override
+    public Frame next() {
+        return nextFrame;
     }
 
     public FrameDTO exportFrameDTO() {

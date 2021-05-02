@@ -19,6 +19,10 @@ public class NumberOfPlayer {
         this(checkNumeric(number));
     }
 
+    public int number() {
+        return number;
+    }
+
     private static int checkNumeric(String number) {
         number = number.trim();
         if (!PATTERN_NUMERIC.matcher(number).matches()) {
@@ -31,9 +35,5 @@ public class NumberOfPlayer {
         if (number <= ZERO) {
             throw new IllegalArgumentException(MESSAGE_CHECK_RANGE);
         }
-    }
-
-    public int number() {
-        return number;
     }
 }

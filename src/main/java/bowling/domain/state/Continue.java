@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class Continue implements State{
     private static final String STATE = "CONTINUE";
+
     private final Pins pins;
 
     private Continue(Pins pins){
@@ -18,16 +19,6 @@ public class Continue implements State{
 
     public static Continue of(Pins pins) {
         return new Continue(pins);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public String state() {
-        return STATE;
     }
 
     @Override
@@ -51,6 +42,16 @@ public class Continue implements State{
             return addedFrameScore;
         }
         return FrameScore.of(addedFrameScore.score(), FrameScore.UNSCORED_SCORE);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public String state() {
+        return STATE;
     }
 
     @Override

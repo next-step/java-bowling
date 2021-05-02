@@ -29,12 +29,12 @@ public class Pins {
         return CACHE[firstPitch];
     }
 
-    public void isSecondPitchable(Pins secondPitch) {
-        validatePitch(fallingPins + secondPitch.fallingPins);
-    }
-
     public int fallingPins() {
         return this.fallingPins;
+    }
+
+    public void isSecondPitchable(Pins secondPitch) {
+        validatePitch(fallingPins + secondPitch.fallingPins);
     }
 
     public boolean isStrike() {

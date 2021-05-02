@@ -8,9 +8,9 @@ public interface Frame {
     int FIRST_FRAME_NO = 1;
     int LAST_FRAME_NO = 10;
     void bowl(Pins pitch);
-    boolean isFinished();
-    Frame next();
     FrameScore frameScore();
     FrameScore frameScoreWithBonus(FrameScore prevFrameScore);
+    boolean isFinished();
+    Frame next();
     FrameDTO exportFrameDTO();
 }

@@ -20,6 +20,9 @@ public class FrameScore {
         return new FrameScore(score, triesLeft);
     }
 
+    public int score() {
+        return score;
+    }
 
     public FrameScore frameScoreWithBonus(int score, int triesLeft) {
         return new FrameScore(this.score + score, triesLeft);
@@ -35,10 +38,6 @@ public class FrameScore {
 
     public boolean hasTwoTriesLeft() {
         return triesLeft == TWO_TRIES;
-    }
-
-    public int score() {
-        return score;
     }
 
     public boolean isUnscoredScore() {

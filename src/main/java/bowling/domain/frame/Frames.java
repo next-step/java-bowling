@@ -24,7 +24,8 @@ public class Frames {
     }
 
     private static Frame initFrames(List<Frame> frames) {
-        Frame frame = initFirstFrame(frames);
+        Frame frame = NormalFrame.init();
+        frames.add(frame);
         for (int i = FIRST_FRAME_NO; i < LAST_FRAME_NO; i++) {
             frame = frame.next();
             frames.add(frame);
@@ -32,18 +33,12 @@ public class Frames {
         return frame;
     }
 
-    private static Frame initFirstFrame(List<Frame> frames) {
-        Frame frame = NormalFrame.init();
-        frames.add(frame);
-        return frame;
+    public void bowl(Pins pitch, int index) {
+        nthFrame(index).bowl(pitch);
     }
 
     public Frame nthFrame(int frameNo) {
         return frameList.get(frameNo);
-    }
-
-    public void bowl(Pins pitch, int index) {
-        nthFrame(index).bowl(pitch);
     }
 
     public FramesDTO exportFramesDTO() {

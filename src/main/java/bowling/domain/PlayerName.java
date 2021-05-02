@@ -14,13 +14,13 @@ public class PlayerName {
         this.name = name;
     }
 
+    public String name(){
+        return name;
+    }
+
     private void validateName(String name) {
         if (!PATTERN_NAME.matcher(name).matches()) {
             throw new NameLengthException();
         }
-    }
-
-    public String name(){
-        return name;
     }
 }

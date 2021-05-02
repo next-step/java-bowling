@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class Miss extends FinishedState{
     private static final String STATE = "MISS";
+
     private final Pins firstPins;
     private final Pins secondPins;
 
@@ -23,11 +24,6 @@ public class Miss extends FinishedState{
     }
 
     @Override
-    public String state() {
-        return STATE;
-    }
-
-    @Override
     public FrameScore frameScore() {
         return FrameScore.of(firstPins.fallingPins() + secondPins.fallingPins(), FrameScore.NO_TRY);
     }
@@ -38,6 +34,11 @@ public class Miss extends FinishedState{
             return prevFrameScore.frameScoreWithBonus(firstPins.fallingPins(), FrameScore.NO_TRY);
         }
         return prevFrameScore.frameScoreWithBonus(firstPins.fallingPins() + secondPins.fallingPins(), FrameScore.NO_TRY);
+    }
+
+    @Override
+    public String state() {
+        return STATE;
     }
 
     @Override

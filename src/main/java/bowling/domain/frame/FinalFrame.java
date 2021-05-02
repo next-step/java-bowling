@@ -18,6 +18,7 @@ public class FinalFrame implements Frame{
     private static final String SPARE = "SPARE";
     private static final String MISS = "MISS";
     private static final int secondStateIndex = 1;
+
     private int pitchCount = 0;
     private LinkedList<State> states = new LinkedList<>();
 
@@ -27,20 +28,6 @@ public class FinalFrame implements Frame{
 
     public static FinalFrame of(){
         return new FinalFrame();
-    }
-
-    private boolean threePitchFinished(State state) {
-        return isClear(state) && pitchCount == 3;
-    }
-
-    private boolean isClear(State state) {
-        return (state.state().equals(STRIKE) || state.state().equals(SPARE));
-    }
-
-    private void addBonusState() {
-        if(isClear(states.getLast())){
-            states.add(Ready.create());
-        }
     }
 
     @Override
@@ -54,15 +41,14 @@ public class FinalFrame implements Frame{
         pitchCount++;
     }
 
-    @Override
-    public boolean isFinished() {
-        State state = states.getFirst();
-        return threePitchFinished(state) || state.state().equals(MISS);
+    private void addBonusState() {
+        if(isClear(states.getLast())){
+            states.add(Ready.create());
+        }
     }
 
-    @Override
-    public Frame next() {
-        throw new NoRemainingFrameException();
+    private boolean isClear(State state) {
+        return (state.state().equals(STRIKE) || state.state().equals(SPARE));
     }
 
     @Override
@@ -91,6 +77,21 @@ public class FinalFrame implements Frame{
             return states.get(secondStateIndex).frameScoreWithBonus(frameScore);
         }
         return FrameScore.of(frameScore.score(),FrameScore.UNSCORED_SCORE);
+    }
+
+    @Override
+    public boolean isFinished() {
+        State state = states.getFirst();
+        return threePitchFinished(state) || state.state().equals(MISS);
+    }
+
+    private boolean threePitchFinished(State state) {
+        return isClear(state) && pitchCount == 3;
+    }
+
+    @Override
+    public Frame next() {
+        throw new NoRemainingFrameException();
     }
 
     @Override
