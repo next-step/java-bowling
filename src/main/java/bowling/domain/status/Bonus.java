@@ -4,6 +4,8 @@ import bowling.domain.BonusPitch;
 import bowling.domain.Pitch;
 
 public class Bonus implements Status {
+    private static final int BONUS_PITCH_COUNT = 1;
+
     private final Pitch current;
     private final BonusPitch bonusPitch;
 
@@ -16,12 +18,14 @@ public class Bonus implements Status {
     public Status roll(int fallenPins) {
         Pitch pitch = new Pitch(fallenPins);
         if (pitch.isStrike()) {
-            return new Bonus(pitch, 1, new Strike(pitch));
+            return new Bonus(pitch, BONUS_PITCH_COUNT, new Strike(pitch));
         }
+
         if (current.isSpare(fallenPins)) {
-            return new Bonus(pitch, 1, new Spare(pitch));
+            return new Bonus(pitch, BONUS_PITCH_COUNT, new Spare(pitch));
         }
-        return new Bonus(pitch, 1, new Hold(pitch));
+
+        return new Bonus(pitch, BONUS_PITCH_COUNT, new Hold(pitch));
     }
 
     @Override

@@ -4,7 +4,7 @@ import bowling.domain.Pitch;
 
 public class Hold extends Continue {
 
-    private Pitch current;
+    private final Pitch current;
 
     public Hold(Pitch current) {
         this.current = current;
