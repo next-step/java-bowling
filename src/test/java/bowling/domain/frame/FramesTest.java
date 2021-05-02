@@ -101,7 +101,6 @@ public class FramesTest {
         assertThat(frames.isDone()).isTrue();
     }
 
-
     @Test
     void 게임_점수_테스트_1() {
         // given
@@ -121,6 +120,25 @@ public class FramesTest {
 
     @Test
     void 게임_점수_테스트_2() {
+        // given
+        Frames frames = Frames.init();
+        // when
+        IntStream.range(0, 9).forEach(i -> {
+            frames.bowl(10);
+        });
+        frames.bowl(5);
+        frames.bowl(2);
+        // then
+        List<Score> scores = frames.scores();
+        assertThat(scores.get(0).score()).isEqualTo(30);
+        assertThat(scores.get(6).score()).isEqualTo(210);
+        assertThat(scores.get(7).score()).isEqualTo(235);
+        assertThat(scores.get(8).score()).isEqualTo(252);
+        assertThat(scores.get(9).score()).isEqualTo(259);
+    }
+
+    @Test
+    void 게임_점수_테스트_3() {
         // given
         Frames frames = Frames.init();
         // when

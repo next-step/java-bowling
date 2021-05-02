@@ -58,6 +58,6 @@ public class FinalFrame extends Frame {
     }
 
     private boolean isAdditionalScore(Score score) {
-        return states.toList().size() > score.left();
+        return states.toList().size() >= score.left();
     }
 }
