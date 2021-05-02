@@ -20,17 +20,21 @@ public class View {
         return fallenPin;
     }
 
-    private static void printSymbols(List<Character> symbols) {
-        for (Character symbol : symbols) {
-            System.out.print(symbol);
-        }
-    }
-
     public static void printBowlingResult(BowlingResult bowlingResult) {
         for (FrameResult frameResult : bowlingResult.results()) {
             printFrameResult(frameResult);
         }
         System.out.println();
+
+        System.out.print("|      |");
+        for (FrameResult frameResult : bowlingResult.results()) {
+            printFrameScore(frameResult);
+        }
+        System.out.println();
+    }
+
+    private static void printFrameScore(FrameResult frameResult) {
+        System.out.printf("  %-3s |", frameResult.aggregatedScore().toString());
     }
 
     private static void printFrameResult(FrameResult frameResult) {

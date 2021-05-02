@@ -38,6 +38,15 @@ public class Score {
     }
 
     @Override
+    public String toString() {
+        if (score == -1) {
+            return "";
+        }
+
+        return "" + score;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
