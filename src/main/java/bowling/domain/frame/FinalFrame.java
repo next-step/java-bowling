@@ -10,6 +10,7 @@ public final class FinalFrame extends Frame {
     public static final int THROW_TWICE = 2;
     public static final int THROW_THREE_TIMES = 3;
     public static final int BONUS_GAME_THRESHOLD = 10;
+    private static final int SECOND_PIN_EXIST_SIZE = 2;
 
     private FinalFrame(RoundNumber roundNumber, FinalPins pins) {
         super(roundNumber, pins);
@@ -71,7 +72,7 @@ public final class FinalFrame extends Frame {
     }
 
     private Score previousStrikeScore(Score addedScore) {
-        if (pins.size() < THROW_TWICE) {
+        if (pins.size() < SECOND_PIN_EXIST_SIZE) {
             return Score.notCalculable();
         }
         return addedScore.add(Score.normal(pins.secondPinCount()));

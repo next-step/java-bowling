@@ -9,6 +9,7 @@ import bowling.exception.IllegalNormalFrameException;
 public final class NormalFrame extends Frame {
 
     public static final RoundNumber MAX_NORMAL_FRAME_ROUND_NUMBER = new RoundNumber(RoundNumber.MAX - 1);
+    private static final int SECOND_PIN_EXIST_SIZE = 2;
 
     private NormalFrame(RoundNumber roundNumber, NormalPins pins) {
         super(roundNumber, pins);
@@ -96,6 +97,9 @@ public final class NormalFrame extends Frame {
     private Score previousStrikeScore(Score addedScore) {
         if (pins.isStrike()) {
             return nextFrame().addScore(addedScore);
+        }
+        if (pins.size() < SECOND_PIN_EXIST_SIZE) {
+            return Score.notCalculable();
         }
         return addedScore.add(Score.normal(pins.secondPinCount()));
     }
