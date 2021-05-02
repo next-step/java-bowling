@@ -2,10 +2,10 @@ package bowling.domain.status;
 
 import bowling.domain.Pitch;
 
-public class Open extends Finished {
+public class Miss extends Finished {
     private final Pitch current;
 
-    public Open(Pitch current) {
+    public Miss(Pitch current) {
         this.current = current;
     }
 

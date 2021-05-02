@@ -18,7 +18,7 @@ public class Hold extends Continue {
             return new Spare(pitch);
         }
 
-        return new Open(pitch);
+        return new Miss(pitch);
     }
 
     @Override
