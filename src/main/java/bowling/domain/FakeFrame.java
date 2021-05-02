@@ -1,8 +1,10 @@
 package bowling.domain;
 
 import bowling.exception.NoMoreBowlActionsException;
+import bowling.exception.NoMoreCountingActionException;
 import bowling.exception.NoMoreFinishActionsException;
 import bowling.exception.NoMoreIndexActionsException;
+import bowling.util.BowlingFixture;
 
 public final class FakeFrame implements Frame {
 
@@ -26,5 +28,25 @@ public final class FakeFrame implements Frame {
     @Override
     public final int index() {
         throw new NoMoreIndexActionsException();
+    }
+
+    @Override
+    public final int size() {
+        return BowlingFixture.ZERO;
+    }
+
+    @Override
+    public final int firstCount() {
+        throw new NoMoreCountingActionException();
+    }
+
+    @Override
+    public final int secondCount() {
+        throw new NoMoreCountingActionException();
+    }
+
+    @Override
+    public final int thirdCount() {
+        throw new NoMoreCountingActionException();
     }
 }

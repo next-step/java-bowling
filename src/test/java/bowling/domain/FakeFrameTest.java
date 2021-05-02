@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.exception.NoMoreBowlActionsException;
+import bowling.exception.NoMoreCountingActionException;
 import bowling.exception.NoMoreFinishActionsException;
 import bowling.exception.NoMoreIndexActionsException;
 import org.junit.jupiter.api.DisplayName;
@@ -60,4 +61,43 @@ class FakeFrameTest {
                 .isInstanceOf(NoMoreIndexActionsException.class)
                 .hasMessage("현재 상태에서는 인덱스를 확인 할 수 없습니다.");
     }
+
+
+    @DisplayName("FakeFrame 인스턴스가 첫번째 투구 값을 반환시 예외처리 여부 테스트")
+    @Test
+    void 검증_첫번째_투구_값() {
+        // when
+        Frame fakeFrame = FakeFrame.initialize();
+
+        // then
+        assertThatThrownBy(() -> fakeFrame.firstCount())
+                .isInstanceOf(NoMoreCountingActionException.class)
+                .hasMessage("현재 상태에서는 떨어진 핀의 횟수를 확인 할 수 없습니다.");
+    }
+
+    @DisplayName("FakeFrame 인스턴스가 두번째 투구 값을 반환시 예외처리 여부 테스트")
+    @Test
+    void 검증_두번째_투구_값() {
+        // when
+        Frame fakeFrame = FakeFrame.initialize();
+
+        // then
+        assertThatThrownBy(() -> fakeFrame.secondCount())
+                .isInstanceOf(NoMoreCountingActionException.class)
+                .hasMessage("현재 상태에서는 떨어진 핀의 횟수를 확인 할 수 없습니다.");
+    }
+
+    @DisplayName("FakeFrame 인스턴스가 세번째 투구 값을 반환시 예외처리 여부 테스트")
+    @Test
+    void 검증_세번째_투구_값() {
+        // when
+        Frame fakeFrame = FakeFrame.initialize();
+
+        // then
+        assertThatThrownBy(() -> fakeFrame.thirdCount())
+                .isInstanceOf(NoMoreCountingActionException.class)
+                .hasMessage("현재 상태에서는 떨어진 핀의 횟수를 확인 할 수 없습니다.");
+    }
+
+
 }

@@ -11,8 +11,9 @@ public final class BowlingFixture {
     public static final int ZERO = 0;
     public static final int ONCE = 1;
     public static final int TWICE = 2;
+    public static final int THIRD = 3;
 
-    public static final int STRIKE = 10;
+    public static final int PIN_CLEAR = 10;
 
 
     private BowlingFixture() {

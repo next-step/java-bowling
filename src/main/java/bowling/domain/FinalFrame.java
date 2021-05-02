@@ -3,18 +3,19 @@ package bowling.domain;
 import bowling.domain.state.FirstBowl;
 import bowling.domain.state.State;
 import bowling.exception.NoMoreBowlActionsException;
+import bowling.exception.NoMoreCountingActionException;
+import bowling.util.BowlingFixture;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import static bowling.util.BowlingFixture.ZERO;
-import static bowling.util.BowlingFixture.FRAME_LAST_INDEX;
+import static bowling.util.BowlingFixture.*;
 
 public final class FinalFrame implements Frame {
 
     private final FinalFrameOpportunity opportunity;
     private final LinkedList<State> states;
-    private final int index;
+    private int size;
 
     public static final Frame initialize() {
         return new FinalFrame();
@@ -22,7 +23,7 @@ public final class FinalFrame implements Frame {
 
     private FinalFrame() {
         this.states = new LinkedList<>(Arrays.asList(State.ready()));
-        this.index = FRAME_LAST_INDEX;
+        this.size = TWICE;
         this.opportunity = FinalFrameOpportunity.initialize();
     }
 
@@ -32,10 +33,10 @@ public final class FinalFrame implements Frame {
         opportunity.next();
         State state = states.getLast();
         if (state.isAllPinClear()) {
+            size = BowlingFixture.THIRD;
             states.add(getBonusPitch().bowl(hitCount));
             return this;
         }
-        states.removeLast();
         states.add(state.bowl(hitCount));
         return this;
     }
@@ -57,7 +58,38 @@ public final class FinalFrame implements Frame {
 
     @Override
     public final int index() {
-        return index;
+        return FRAME_LAST_INDEX;
+    }
+
+    @Override
+    public final int size() {
+        return size;
+    }
+
+    @Override
+    public final int firstCount() {
+        return states.get(ONCE).firstCount();
+    }
+
+    @Override
+    public final int secondCount() {
+        return states.get(TWICE).secondCount();
+    }
+
+    @Override
+    public final int thirdCount() {
+        validateSize();
+        return states.getLast().secondCount();
+    }
+
+    private final void validateSize() {
+        if (!isSizeThird()) {
+            throw new NoMoreCountingActionException();
+        }
+    }
+
+    private final boolean isSizeThird() {
+        return size == THIRD;
     }
 
 }

@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.state.State;
 import bowling.exception.NoMoreBowlActionsException;
+import bowling.exception.NoMoreCountingActionException;
 
 import static bowling.util.BowlingFixture.*;
 
@@ -57,6 +58,26 @@ public final class NormalFrame implements Frame {
     @Override
     public final int index() {
         return index;
+    }
+
+    @Override
+    public final int size() {
+        return state.size();
+    }
+
+    @Override
+    public final int firstCount() {
+        return state.firstCount();
+    }
+
+    @Override
+    public final int secondCount() {
+        return state.secondCount();
+    }
+
+    @Override
+    public final int thirdCount() {
+        throw new NoMoreCountingActionException();
     }
 
 }

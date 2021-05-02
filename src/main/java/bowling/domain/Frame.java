@@ -11,4 +11,13 @@ public interface Frame {
     boolean isFinish();
 
     int index();
+
+    int size();
+
+    int firstCount();
+
+    int secondCount();
+
+    int thirdCount();
+
 }
