@@ -2,7 +2,7 @@ package bowling.controller;
 
 import bowling.controller.dto.BowlingGameRequest;
 import bowling.controller.dto.BowlingGameResponse;
-import bowling.controller.dto.FrameInfo;
+import bowling.domain.dto.FrameInfo;
 import bowling.domain.*;
 import bowling.service.BowlingGameService;
 

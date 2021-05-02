@@ -1,5 +1,7 @@
 package bowling.controller.dto;
 
+import bowling.domain.dto.FrameInfo;
+
 import java.util.List;
 
 public class BowlingGameResponse {

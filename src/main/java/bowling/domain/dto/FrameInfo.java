@@ -1,4 +1,4 @@
-package bowling.controller.dto;
+package bowling.domain.dto;
 
 import java.util.List;
 

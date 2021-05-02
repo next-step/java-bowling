@@ -1,7 +1,7 @@
 package bowling.view;
 
 import bowling.controller.dto.BowlingGameResponse;
-import bowling.controller.dto.FrameInfo;
+import bowling.domain.dto.FrameInfo;
 
 import java.util.List;
 import java.util.stream.Collectors;
