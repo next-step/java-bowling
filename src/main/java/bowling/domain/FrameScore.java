@@ -7,8 +7,8 @@ public class FrameScore {
         this.frame = frame;
     }
 
-    public int score() {
-        return 0;
+    public Score score() {
+        return new Score(0);
     }
 
     public boolean isExistsAddCount() {

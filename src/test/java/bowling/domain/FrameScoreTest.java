@@ -14,7 +14,7 @@ public class FrameScoreTest {
         frame.pitch(2);
 
         FrameScore frameScore = new FrameScore(frame);
-        assertThat(frameScore.score()).isEqualTo(10);
+        assertThat(frameScore.score()).isEqualTo(new Score(10));
     }
 
     @DisplayName("스페어 처리의 경우, 투구 합산 가능여부는 True 를 반환한다.")
