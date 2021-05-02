@@ -40,6 +40,10 @@ public final class Pin {
         return pin == MAX_COUNT;
     }
 
+    public boolean isGutter() {
+        return pin == MIN_COUNT;
+    }
+
     public String status() {
         if (pin == MIN_COUNT) {
             return GUTTER_SIGN;
