@@ -16,7 +16,7 @@ public class Spare extends Finished {
         Pitch pitch = new Pitch(fallenPins);
 
         if (pitch.isStrike()) {
-            return new Bonus(pitch, BONUS_PITCH_COUNT, new Strike(pitch));
+            return new Bonus(pitch, BONUS_PITCH_COUNT, new Strike());
         }
 
         return new Bonus(pitch, BONUS_PITCH_COUNT, new Hold(pitch));

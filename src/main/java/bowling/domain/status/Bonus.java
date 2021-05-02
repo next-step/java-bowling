@@ -18,7 +18,7 @@ public class Bonus implements Status {
     public Status roll(int fallenPins) {
         Pitch pitch = new Pitch(fallenPins);
         if (pitch.isStrike()) {
-            return new Bonus(pitch, BONUS_PITCH_COUNT, new Strike(pitch));
+            return new Bonus(pitch, BONUS_PITCH_COUNT, new Strike());
         }
 
         if (current.isSpare(fallenPins)) {

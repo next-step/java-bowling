@@ -8,7 +8,7 @@ public class Ready extends Continue {
         Pitch pitch = new Pitch(fallenPins);
 
         if (pitch.isStrike()) {
-            return new Strike(pitch);
+            return new Strike();
         }
 
         return new Hold(pitch);
