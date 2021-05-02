@@ -13,13 +13,8 @@ class RunningTest {
     @Test
     void 생성() {
         // when
-        Running running = new Running() {
+        Running running = new TestRunning();
 
-            @Override
-            public State bowl(HitCount hitCount) {
-                return null;
-            }
-        };
         // then
         assertThat(running).isNotNull();
     }
@@ -28,13 +23,8 @@ class RunningTest {
     @Test
     void 반환_종료_여부() {
         // when
-        Running running = new Running() {
+        Running running = new TestRunning();
 
-            @Override
-            public State bowl(HitCount hitCount) {
-                return null;
-            }
-        };
         // then
         assertThat(running.isFinish()).isFalse();
     }

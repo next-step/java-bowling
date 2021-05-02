@@ -42,4 +42,19 @@ public final class Spare extends Finish {
         return TRUE;
     }
 
+    @Override
+    public int size() {
+        return TWICE;
+    }
+
+    @Override
+    public int firstCount() {
+        return firstCount;
+    }
+
+    @Override
+    public int secondCount() {
+        return secondCount;
+    }
+
 }

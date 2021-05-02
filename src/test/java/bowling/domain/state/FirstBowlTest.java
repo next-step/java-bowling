@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.HitCount;
 import bowling.exception.InputNumberOutOfBoundsException;
+import bowling.exception.NoMoreCountingActionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -96,13 +97,54 @@ class FirstBowlTest {
     @Test
     void 검증_핀_처리_여부() {
         // given
-        int hitCount = 10;
+        int hitCount = 9;
 
         // when
         State firstBowl = FirstBowl.from(hitCount);
 
         // then
         assertThat(firstBowl.isAllPinClear()).isFalse();
+    }
+
+    @DisplayName("FirstBowl 인스턴스가 투구 횟수를 반환하는지 테스트")
+    @Test
+    void 반환_사이즈() {
+        // given
+        int hitCount = 9;
+
+        // when
+        State firstBowl = FirstBowl.from(hitCount);
+
+        // then
+        assertThat(firstBowl.size()).isEqualTo(1);
+    }
+
+    @DisplayName("FirstBowl 인스턴스가 첫번째 투구 값을 반환하는지 테스트")
+    @Test
+    void 반환_첫번째_투구_값() {
+        // given
+        int hitCount = 9;
+
+        // when
+        State firstBowl = FirstBowl.from(hitCount);
+
+        // then
+        assertThat(firstBowl.firstCount()).isEqualTo(9);
+    }
+
+    @DisplayName("FirstBowl 인스턴스가 두번째 투구 값을 반환시 예외처리 여부 테스트")
+    @Test
+    void 검증_두번째_투구_값() {
+        // given
+        int hitCount = 9;
+
+        // when
+        State firstBowl = FirstBowl.from(hitCount);
+
+        // then
+        assertThatThrownBy(() -> firstBowl.secondCount())
+                .isInstanceOf(NoMoreCountingActionException.class)
+                .hasMessage("현재 상태에서는 떨어진 핀의 횟수를 확인 할 수 없습니다.");
     }
 
 }

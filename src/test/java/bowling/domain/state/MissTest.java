@@ -87,10 +87,53 @@ class MissTest {
         int secondCount = 9;
 
         // when
-        State firstBowl = Miss.of(firstCount, secondCount);
+        State miss = Miss.of(firstCount, secondCount);
 
         // then
-        assertThat(firstBowl.isAllPinClear()).isFalse();
+        assertThat(miss.isAllPinClear()).isFalse();
+    }
+
+    @DisplayName("Miss 인스턴스가 투구 횟수를 반환하는지 테스트")
+    @Test
+    void 반환_사이즈() {
+        // given
+        int firstCount = 0;
+        int secondCount = 9;
+
+        // when
+        State miss = Miss.of(firstCount, secondCount);
+
+        // then
+        assertThat(miss.size()).isEqualTo(2);
+    }
+
+    @DisplayName("Miss 인스턴스가 첫번째 투구 값을 반환하는지 테스트")
+    @Test
+    void 반환_첫번째_투구_값() {
+        // given
+        int firstCount = 0;
+        int secondCount = 9;
+
+        // when
+        State miss = Miss.of(firstCount, secondCount);
+
+        // then
+        assertThat(miss.firstCount()).isEqualTo(0);
+    }
+
+    @DisplayName("Miss 인스턴스가 두번째 투구 값을 반환하는지 테스트")
+    @Test
+    void 반환_두번째_투구_값() {
+        // given
+        int firstCount = 0;
+        int secondCount = 9;
+
+        // when
+        State miss = Miss.of(firstCount, secondCount);
+
+        // then
+        assertThat(miss.secondCount()).isEqualTo(9);
+
     }
 
 }

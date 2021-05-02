@@ -32,10 +32,10 @@ public final class NormalFrame implements Frame {
     }
 
     private final Frame nextFrame() {
-        if (index + INDEX_UNIT == FRAME_LAST_INDEX) {
+        if (index + ONCE == FRAME_LAST_INDEX) {
             return FinalFrame.initialize();
         }
-        return new NormalFrame(index + INDEX_UNIT);
+        return new NormalFrame(index + ONCE);
     }
 
     @Override

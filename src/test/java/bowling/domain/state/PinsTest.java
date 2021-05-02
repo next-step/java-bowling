@@ -60,6 +60,11 @@ class PinsTest {
                 .isInstanceOf(InputNumberOutOfBoundsException.class)
                 .hasMessage("맞은 갯수 ( -1 ) 는 사용할 수 없는 갯수 입니다.");
 
+        // then
+        assertThatThrownBy(() -> pins.hit(HitCount.valueOf(11)))
+                .isInstanceOf(InputNumberOutOfBoundsException.class)
+                .hasMessage("맞은 갯수 ( 11 ) 는 사용할 수 없는 갯수 입니다.");
+
     }
 
     @DisplayName("Pins 인스턴스에 핀이 남아있는지 여부 테스트")

@@ -42,4 +42,19 @@ public final class Miss extends Finish {
         return FALSE;
     }
 
+    @Override
+    public final int size() {
+        return TWICE;
+    }
+
+    @Override
+    public final int firstCount() {
+        return firstCount;
+    }
+
+    @Override
+    public final int secondCount() {
+        return secondCount;
+    }
+
 }

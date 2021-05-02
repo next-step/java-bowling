@@ -7,10 +7,8 @@ import bowling.exception.NoMoreBowlActionsException;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import static bowling.util.BowlingFixture.DEFAULT_COUNT;
+import static bowling.util.BowlingFixture.ZERO;
 import static bowling.util.BowlingFixture.FRAME_LAST_INDEX;
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 
 public final class FinalFrame implements Frame {
 
@@ -43,7 +41,7 @@ public final class FinalFrame implements Frame {
     }
 
     private final State getBonusPitch() {
-        return FirstBowl.from(DEFAULT_COUNT);
+        return FirstBowl.from(ZERO);
     }
 
     private final void validateFinish() {

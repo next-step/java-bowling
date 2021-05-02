@@ -19,6 +19,21 @@ class FinishTest {
             public boolean isAllPinClear() {
                 return true;
             }
+
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @Override
+            public int firstCount() {
+                return 0;
+            }
+
+            @Override
+            public int secondCount() {
+                return 0;
+            }
         };
 
         // then
@@ -30,12 +45,7 @@ class FinishTest {
     void 검증_bowl() {
 
         // when
-        Finish finish = new Finish() {
-            @Override
-            public boolean isAllPinClear() {
-                return true;
-            }
-        };
+        Finish finish = new TestFinish();
 
         // then
         assertThatThrownBy(() -> finish.bowl(HitCount.valueOf(10)))

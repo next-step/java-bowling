@@ -13,4 +13,10 @@ public interface State {
     boolean isFinish();
 
     boolean isAllPinClear();
+
+    int size();
+
+    int firstCount();
+
+    int secondCount();
 }

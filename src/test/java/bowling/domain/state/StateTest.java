@@ -13,22 +13,7 @@ class StateTest {
     @Test
     void 생성() {
         // when
-        State state = new State() {
-            @Override
-            public boolean isFinish() {
-                return true;
-            }
-
-            @Override
-            public boolean isAllPinClear() {
-                return false;
-            }
-
-            @Override
-            public State bowl(HitCount hitCount) {
-                return null;
-            }
-        };
+        State state = new TestState();
 
         // then
         assertThat(state).isNotNull();

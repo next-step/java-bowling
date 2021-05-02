@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.HitCount;
 import bowling.exception.InputNumberOutOfBoundsException;
+import bowling.exception.NoMoreCountingActionException;
 
 import static bowling.util.BowlingFixture.*;
 
@@ -31,4 +32,20 @@ public final class FirstBowl extends Running {
         }
         return Miss.of(firstCount, hitCount.count());
     }
+
+    @Override
+    public final int size() {
+        return ONCE;
+    }
+
+    @Override
+    public final int firstCount() {
+        return firstCount;
+    }
+
+    @Override
+    public final int secondCount() {
+        throw new NoMoreCountingActionException();
+    }
+
 }

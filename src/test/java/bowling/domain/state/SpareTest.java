@@ -105,4 +105,47 @@ class SpareTest {
         assertThat(firstBowl.isAllPinClear()).isTrue();
     }
 
+    @DisplayName("Spare 인스턴스가 투구 횟수를 반환하는지 테스트")
+    @Test
+    void 반환_사이즈() {
+        // given
+        int firstCount = 9;
+        int secondCount = 1;
+
+        // when
+        State spare = Spare.of(firstCount, secondCount);
+
+        // then
+        assertThat(spare.size()).isEqualTo(2);
+    }
+
+    @DisplayName("Spare 인스턴스가 첫번째 투구 값을 반환하는지 테스트")
+    @Test
+    void 반환_첫번째_투구_값() {
+        // given
+        int firstCount = 9;
+        int secondCount = 1;
+
+        // when
+        State spare = Spare.of(firstCount, secondCount);
+
+        // then
+        assertThat(spare.firstCount()).isEqualTo(9);
+    }
+
+    @DisplayName("Spare 인스턴스가 두번째 투구 값을 반환하는지 테스트")
+    @Test
+    void 반환_두번째_투구_값() {
+        // given
+        int firstCount = 9;
+        int secondCount = 1;
+
+        // when
+        State spare = Spare.of(firstCount, secondCount);
+
+        // then
+        assertThat(spare.secondCount()).isEqualTo(1);
+
+    }
+
 }
