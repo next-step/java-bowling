@@ -62,10 +62,6 @@ public class Pitches implements Iterable<Pitch> {
         return pinDownCount() == Pitch.STRIKE_COUNT && count() == DEFAULT_PITCH_ABLE_COUNT;
     }
 
-    public boolean isMiss() {
-        return isFinished() && pinDownCount() < Pitch.STRIKE_COUNT;
-    }
-
     private Pitch first() {
         return values.get(FIRST_INDEX);
     }
