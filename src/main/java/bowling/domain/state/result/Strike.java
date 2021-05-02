@@ -1,5 +1,6 @@
 package bowling.domain.state.result;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.BowlingPin;
 import bowling.domain.state.BowlingSymbol;
 import bowling.domain.state.Result;
@@ -25,5 +26,15 @@ public class Strike implements Result {
     @Override
     public String toSymbol() {
         return BowlingSymbol.ofStrike();
+    }
+
+    @Override
+    public Score score() {
+        return Score.ofStrike();
+    }
+
+    @Override
+    public int currentBowlingPin() {
+        return bowlingPin.score();
     }
 }

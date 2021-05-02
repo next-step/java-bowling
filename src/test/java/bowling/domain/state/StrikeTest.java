@@ -5,7 +5,9 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.progress.Ready;
+import bowling.domain.state.progress.Running;
 import bowling.domain.state.result.Strike;
 
 public class StrikeTest {
@@ -34,5 +36,22 @@ public class StrikeTest {
         // when & then
         assertThat(state.isDone()).isTrue();
         assertThat(state2.isDone()).isTrue();
+    }
+
+
+    @Test
+    void 점수_반환_테스트() {
+        // given
+        State state = new Ready().bowl(BowlingPin.of(10));
+        // when & then
+        assertThat(state.score()).isEqualTo(Score.ofStrike());
+    }
+
+    @Test
+    void 현재_투구_쓰러뜨린_핀_반환_테스트() {
+        // given
+        State state = new Ready().bowl(BowlingPin.of(10));
+        // when & then
+        assertThat(state.currentBowlingPin()).isEqualTo(10);
     }
 }

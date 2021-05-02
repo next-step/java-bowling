@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import bowling.domain.exception.CannotCalculateException;
 import bowling.domain.state.progress.Ready;
 import bowling.domain.state.progress.Running;
 import bowling.domain.state.result.Miss;
@@ -45,5 +46,21 @@ public class RunningTest {
         // when & then
         assertThat(state.isDone()).isFalse();
         assertThat(state2.isDone()).isFalse();
+    }
+
+    @Test
+    void 점수_반환_테스트() {
+        // given
+        State state = new Ready().bowl(BowlingPin.of(5));
+        // when & then
+        Assertions.assertThrows(CannotCalculateException.class, () -> state.score());
+    }
+
+    @Test
+    void 현재_투구_쓰러뜨린_핀_반환_테스트() {
+        // given
+        State state = new Ready().bowl(BowlingPin.of(5));
+        // when & then
+        assertThat(state.currentBowlingPin()).isEqualTo(5);
     }
 }

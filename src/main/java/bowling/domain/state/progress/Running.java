@@ -30,9 +30,9 @@ public class Running implements Progress {
     @Override
     public State bowl(BowlingPin bowlingPin) {
         if (firstPin.sum(bowlingPin).isMax()) {
-            return Spare.of(bowlingPin);
+            return Spare.of(firstPin, bowlingPin);
         }
-        return Miss.of(bowlingPin);
+        return Miss.of(firstPin, bowlingPin);
     }
 
     @Override
@@ -40,6 +40,10 @@ public class Running implements Progress {
         return BowlingSymbol.of(firstPin);
     }
 
+    @Override
+    public int currentBowlingPin() {
+        return firstPin.score();
+    }
 
     @Override
     public boolean equals(Object o) {

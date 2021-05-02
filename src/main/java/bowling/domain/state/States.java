@@ -17,7 +17,7 @@ public class States {
         states.add(state);
     }
 
-    public List<State> states() {
+    public List<State> toList() {
         return Collections.unmodifiableList(states);
     }
 
