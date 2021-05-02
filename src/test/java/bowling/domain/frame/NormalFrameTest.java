@@ -73,4 +73,31 @@ class NormalFrameTest {
       .isInstanceOf(CannotThrowBallException.class);
   }
 
+  @Test
+  @DisplayName("진행 확인")
+  void runningTest(){
+    Frame frame = Frame.of(1);
+    frame.shot(new FallenPins(1));
+
+    Assertions.assertThat(frame.checkFinished()).isFalse();
+  }
+
+  @Test
+  @DisplayName("종료 확인")
+  void finishedTest(){
+    Frame frame = Frame.of(1);
+    frame.shot(new FallenPins(10));
+
+    Assertions.assertThat(frame.checkFinished()).isTrue();
+  }
+
+  @Test
+  @DisplayName("종료 확인2")
+  void finishedRoundTest(){
+    Frame frame = Frame.of(1);
+    frame.shot(new FallenPins(5));
+    frame.shot(new FallenPins(1));
+
+    Assertions.assertThat(frame.checkFinished()).isTrue();
+  }
 }

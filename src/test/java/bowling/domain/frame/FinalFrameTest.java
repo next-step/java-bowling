@@ -56,5 +56,51 @@ class FinalFrameTest {
     Assertions.assertThat(frame.fallenPinsStatus()).isEqualTo(11);
   }
 
+  @Test
+  @DisplayName("진행 확인")
+  void runningTest(){
+    Frame frame = Frame.of(10);
+    frame.shot(new FallenPins(1));
 
+    Assertions.assertThat(frame.checkFinished()).isFalse();
+  }
+
+  @Test
+  @DisplayName("진행 확인2")
+  void runningWithStrikeTest(){
+    Frame frame = Frame.of(10);
+    frame.shot(new FallenPins(10));
+
+    Assertions.assertThat(frame.checkFinished()).isFalse();
+  }
+
+  @Test
+  @DisplayName("진행 확인3")
+  void runningWithSpareTest(){
+    Frame frame = Frame.of(10);
+    frame.shot(new FallenPins(5));
+    frame.shot(new FallenPins(5));
+
+    Assertions.assertThat(frame.checkFinished()).isFalse();
+  }
+
+  @Test
+  @DisplayName("종료 확인1")
+  void finishedRoundTest(){
+    Frame frame = Frame.of(10);
+    frame.shot(new FallenPins(5));
+    frame.shot(new FallenPins(1));
+
+    Assertions.assertThat(frame.checkFinished()).isTrue();
+  }
+
+  @Test
+  @DisplayName("종료 확인2")
+  void finishedWithStrikeTest(){
+    Frame frame = Frame.of(10);
+    frame.shot(new FallenPins(10));
+    frame.shot(new FallenPins(5));
+
+    Assertions.assertThat(frame.checkFinished()).isTrue();
+  }
 }

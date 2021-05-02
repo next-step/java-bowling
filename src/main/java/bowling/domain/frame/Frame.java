@@ -61,4 +61,5 @@ public abstract class Frame {
     return of(round+1);
   }
 
+  public abstract boolean checkFinished();
 }

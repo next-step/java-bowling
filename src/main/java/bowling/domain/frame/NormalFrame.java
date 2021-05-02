@@ -17,4 +17,13 @@ public class NormalFrame extends Frame {
     super.checkThrowable(pins);
   }
 
+  @Override
+  public boolean checkFinished() {
+    if(ballRelease.size() < MAX_THROWABLE_BALLS && fallenPinsStatus() < MAX_FALLEN_PINS){
+      return false;
+    }
+
+    return true;
+  }
+
 }
