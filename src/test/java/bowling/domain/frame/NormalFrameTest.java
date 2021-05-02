@@ -270,4 +270,58 @@ class NormalFrameTest {
         // then
         assertThat(score.calculate()).isEqualTo(17);
     }
+
+    @Test
+    @DisplayName("9번 프레임이 Spare인 경우 해당 투구와 다음 투구의 합이 점수가 된다.")
+    void nineFrameSpare() {
+        // given
+        final Frame nineFrame = NormalFrame.of(new RoundNumber(9), NormalPins.create());
+        nineFrame.createNextFrame();
+        final Frame lastFrame = nineFrame.nextFrame();
+
+        nineFrame.knockDownPin(new Pin(8));
+        nineFrame.knockDownPin(new Pin(2));
+        lastFrame.knockDownPin(new Pin(5));
+
+        // when
+        final Score score = nineFrame.score();
+
+        // then
+        assertThat(score.calculate()).isEqualTo(15);
+    }
+
+    @Test
+    @DisplayName("9번 프레임이 Strike인 경우 다음 두 투구를 던지지 않으면 점수를 산정할 수 없다.")
+    void nineFrameStrikeCanNotCalculable() {
+        // given
+        final Frame nineFrame = NormalFrame.of(new RoundNumber(9), NormalPins.create());
+        nineFrame.createNextFrame();
+        final Frame lastFrame = nineFrame.nextFrame();
+
+        nineFrame.knockDownPin(TestFixture.STRIKE_PIN);
+        lastFrame.knockDownPin(new Pin(2));
+
+        // when
+        final Score score = nineFrame.score();
+
+        // then
+        assertThat(score.canCalculate()).isFalse();
+    }
+
+    @Test
+    @DisplayName("9번 프레임이 Spare인 경우 다음 투구를 던지지 않으면 점수를 산정할 수 없다.")
+    void nineFrameSpareCanNotCalculable() {
+        // given
+        final Frame nineFrame = NormalFrame.of(new RoundNumber(9), NormalPins.create());
+        nineFrame.createNextFrame();
+
+        nineFrame.knockDownPin(new Pin(8));
+        nineFrame.knockDownPin(new Pin(2));
+
+        // when
+        final Score score = nineFrame.score();
+
+        // then
+        assertThat(score.canCalculate()).isFalse();
+    }
 }
