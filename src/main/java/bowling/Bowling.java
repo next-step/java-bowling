@@ -7,18 +7,20 @@ import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public final class Bowling {
+
+    private static final String RETRY_MESSAGE = " 다시 입력해주세요";
+
     private final static InputView INPUT_VIEW;
     private final static ResultView RESULT_VIEW;
-    public static final String RETRY_MESSAGE = " 다시 입력해주세요";
 
     static {
         INPUT_VIEW = InputView.getInstance();
         RESULT_VIEW = ResultView.getInstance();
     }
 
-    public static void main(String[] args) {
+    public static final void main(String[] args) {
         final Player player = getPlayer();
-        Frames frames = Frames.initialize();
+        final Frames frames = Frames.initialize();
         RESULT_VIEW.printScoreBoard(player, frames);
         while (!frames.isFinish()) {
             bowl(frames);
@@ -26,7 +28,7 @@ public final class Bowling {
         }
     }
 
-    private static void bowl(Frames frames) {
+    private static final void bowl(final Frames frames) {
         try {
             HitCount hitCount = HitCount.valueOf(INPUT_VIEW.InputHitCountByConsole(frames.index()));
             frames.bowl(hitCount);
