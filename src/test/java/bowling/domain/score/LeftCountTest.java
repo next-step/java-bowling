@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class LeftCountTest {
 
@@ -26,7 +27,11 @@ class LeftCountTest {
         final LeftCount leftCount = LeftCount.create();
 
         // then
-        assertThat(leftCount).isEqualTo(LeftCount.from(0));
+        assertAll(
+                () -> assertThat(leftCount).isEqualTo(LeftCount.from(0)),
+                () -> assertThat(leftCount.hasLeftCount()).isFalse()
+        );
+
     }
 
     @Test
@@ -37,7 +42,10 @@ class LeftCountTest {
         final LeftCount strike = LeftCount.strike();
 
         // then
-        assertThat(strike).isEqualTo(LeftCount.from(2));
+        assertAll(
+                () -> assertThat(strike).isEqualTo(LeftCount.from(2)),
+                () -> assertThat(strike.hasLeftCount()).isTrue()
+        );
     }
 
     @Test
@@ -48,7 +56,10 @@ class LeftCountTest {
         final LeftCount spare = LeftCount.spare();
 
         // then
-        assertThat(spare).isEqualTo(LeftCount.from(1));
+        assertAll(
+                () -> assertThat(spare).isEqualTo(LeftCount.from(1)),
+                () -> assertThat(spare.hasLeftCount()).isTrue()
+        );
     }
 
     @ParameterizedTest

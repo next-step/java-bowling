@@ -41,6 +41,10 @@ public final class LeftCount {
         return new LeftCount(SPARE_LEFT_COUNT);
     }
 
+    public boolean hasLeftCount() {
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
