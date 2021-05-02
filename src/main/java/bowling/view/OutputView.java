@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.controller.dto.BowlingGameResponse;
+import bowling.domain.dto.FrameBoard;
 import bowling.domain.dto.FrameInfo;
 
 import java.util.List;
@@ -20,30 +21,30 @@ public class OutputView {
     private final static int SCORE_GUTTER = 0;
 
     private final static int FIRST_PITCH = 0;
-    private final static int SECOND_PITCH = 1;
     private final static int FINAL_BONUS_PITCH = 2;
-    private final static int MAX_FINAL_FRAME_SIZE = 3;
 
     public void printFrame(BowlingGameResponse response) {
         printBoardHeader();
-        printBoardBody(response);
+        for (FrameBoard frameBoard : response.getFrameBoards()) {
+            printBoardBody(frameBoard);
+        }
     }
 
     private void printBoardHeader() {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
     }
 
-    private void printBoardBody(BowlingGameResponse response) {
-        printFrameBoard(response);
-        printScoreBoard(response.getFrameInfos());
+    private void printBoardBody(FrameBoard frameBoard) {
+        printFrameBoard(frameBoard);
+        printScoreBoard(frameBoard.getFrameInfos());
     }
 
-    private void printFrameBoard(BowlingGameResponse response) {
-        System.out.print(makeBoard(response.getParticipantName()));
-        for (FrameInfo frameInfo : response.getFrameInfos()) {
+    private void printFrameBoard(FrameBoard frameBoard) {
+        System.out.print(makeBoard(frameBoard.getParticipantName()));
+        for (FrameInfo frameInfo : frameBoard.getFrameInfos()) {
             printFrame(frameInfo);
         }
-        printBlankBoard(response.getFrameInfos().size());
+        printBlankBoard(frameBoard.getFrameInfos().size());
         System.out.println(BOARD_DELIMITER);
     }
 
@@ -98,7 +99,7 @@ public class OutputView {
             printScore(frameInfos, i);
         }
         printBlankBoard(frameInfos.size());
-        System.out.print(BOARD_DELIMITER);
+        System.out.println(BOARD_DELIMITER);
     }
 
     private void printScore(List<FrameInfo> frameInfos, int frameIndex) {
