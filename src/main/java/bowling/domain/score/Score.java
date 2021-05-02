@@ -7,14 +7,14 @@ import java.util.Objects;
 
 public final class Score {
 
-    private static final int CALCULABLE_COUNT = 0;
-    private static final int STRIKE_LEFT_COUNT = 2;
-    private static final int SPARE_LEFT_COUNT = 1;
-
     private final int score;
-    private final int leftCount;
+    private final LeftCount leftCount;
 
-    public Score(int score, int leftCount) {
+    private Score(int score, int leftCount) {
+        this(score, LeftCount.from(leftCount));
+    }
+
+    private Score(int score, LeftCount leftCount) {
         this.score = score;
         this.leftCount = leftCount;
     }
@@ -24,15 +24,15 @@ public final class Score {
     }
 
     public static Score strike() {
-        return new Score(Pin.MAX_COUNT, STRIKE_LEFT_COUNT);
+        return new Score(Pin.MAX_COUNT, LeftCount.strike());
     }
 
     public static Score spare() {
-        return new Score(Pin.MAX_COUNT, SPARE_LEFT_COUNT);
+        return new Score(Pin.MAX_COUNT, LeftCount.spare());
     }
 
     public boolean canCalculate() {
-        return leftCount == CALCULABLE_COUNT;
+        return !leftCount.hasLeftCount();
     }
 
     public int calculate() {
@@ -47,7 +47,7 @@ public final class Score {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Score score1 = (Score) o;
-        return score == score1.score && leftCount == score1.leftCount;
+        return score == score1.score && Objects.equals(leftCount, score1.leftCount);
     }
 
     @Override
