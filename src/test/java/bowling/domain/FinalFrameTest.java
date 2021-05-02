@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class FinalFrameTypeTest {
+public class FinalFrameTest {
     @DisplayName("쓰러트린 핀의 합계가 30개 이상일 경우 예외를 반환한다.")
     @Test
     void overThirtyPin() {
-        FrameType frameType = new FinalFrameType();
+        FrameType frameType = new FinalFrame();
 
         assertThatThrownBy(() -> {
             frameType.pitch(10);
@@ -22,7 +22,7 @@ public class FinalFrameTypeTest {
     @DisplayName("스트라이크의 경우 프레임을 진행한다.")
     @Test
     void isContinue_strike() {
-        FrameType frameType = new FinalFrameType();
+        FrameType frameType = new FinalFrame();
         frameType.pitch(10);
 
         assertThat(frameType.isContinue()).isTrue();
@@ -31,7 +31,7 @@ public class FinalFrameTypeTest {
     @DisplayName("스페어의 경우 프레임을 진행한다.")
     @Test
     void isContinue_spare() {
-        FrameType frameType = new FinalFrameType();
+        FrameType frameType = new FinalFrame();
         frameType.pitch(8);
         frameType.pitch(2);
 
@@ -41,7 +41,7 @@ public class FinalFrameTypeTest {
     @DisplayName("세번째 투구까지 완료한 경우 프레임을 종료한다.")
     @Test
     void isContinue_last() {
-        FrameType frameType = new FinalFrameType();
+        FrameType frameType = new FinalFrame();
         frameType.pitch(7);
         frameType.pitch(3);
         frameType.pitch(10);
@@ -52,7 +52,7 @@ public class FinalFrameTypeTest {
     @DisplayName("첫번째 투구한 경우 프레임을 진행한다.")
     @Test
     void isContinue_firstPitch() {
-        FrameType frameType = new FinalFrameType();
+        FrameType frameType = new FinalFrame();
         frameType.pitch(8);
 
         assertThat(frameType.isContinue()).isTrue();
@@ -61,7 +61,7 @@ public class FinalFrameTypeTest {
     @DisplayName("두번째 투구가 오픈의 경우 프레임을 종료한다.")
     @Test
     void isContinue_open() {
-        FrameType frameType = new FinalFrameType();
+        FrameType frameType = new FinalFrame();
         frameType.pitch(1);
         frameType.pitch(3);
 

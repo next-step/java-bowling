@@ -24,8 +24,8 @@ public class Frame {
 
     private FrameType makeType(int frameNo) {
         if (frameNo == MAX_FRAME_NO) {
-            return new FinalFrameType();
+            return new FinalFrame();
         }
-        return new NormalFrameType();
+        return new NormalFrame();
     }
 }
