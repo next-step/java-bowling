@@ -12,7 +12,7 @@ public final class Player {
     private final Frames frames;
 
     public Player(PlayerName playerName) {
-        this(playerName, Frames.initialize());
+        this(playerName, Frames.create());
     }
 
     public Player(PlayerName playerName, Frames frames) {

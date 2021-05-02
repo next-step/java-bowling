@@ -15,15 +15,8 @@ public final class Frames {
         this.firstFrame = firstFrame;
     }
 
-    public static Frames initialize() {
-        final Frame firstFrame = NormalFrame.createFirstFrame();
-
-        Frame currentFrame = firstFrame;
-        while (!currentFrame.isFinalFrame()) {
-            currentFrame.createNextFrame();
-            currentFrame = currentFrame.nextFrame();
-        }
-        return new Frames(firstFrame);
+    public static Frames create() {
+        return new Frames(NormalFrame.createFirstFrame());
     }
 
     public boolean isEnded(RoundNumber roundNumber) {
@@ -45,7 +38,7 @@ public final class Frames {
     public List<Frame> value() {
         List<Frame> frames = new ArrayList<>();
 
-        Frame currentFrame = this.firstFrame;
+        Frame currentFrame = firstFrame;
         while (!currentFrame.isFinalFrame()) {
             frames.add(currentFrame);
             currentFrame = currentFrame.nextFrame();

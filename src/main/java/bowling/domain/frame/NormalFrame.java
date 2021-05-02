@@ -16,6 +16,9 @@ public final class NormalFrame extends Frame {
 
     @Override
     public Frame nextFrame() {
+        if (nextFrame == null) {
+            createNextFrame();
+        }
         return nextFrame;
     }
 

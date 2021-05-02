@@ -170,7 +170,7 @@
 
 ## 리뷰 내용 정리
 
-- [ ] `Frame#initialize`와 `Frame#value`의 중복 코드 제거(Frame을 미리 만들지 않는 식으로 개선해보면 어떨까?)
+- [x] `Frames#initialize`와 `Frames#value`의 중복 코드 제거(Frame을 미리 만들지 않는 식으로 개선해보면 어떨까?)
 - [ ] `FrameStatusViewTest`를 DCI 패턴으로 구조화 해보자.
     - [ ] X/8/ 처럼 나머지가 일반구로 처리되어야 하는 경우에 대한 테스트를 추가하자.
 - [ ] `pins#knockDownPin`에서 `validate`를 수행하는 것이 더 OOP에 맞다. (결국 객체를 분리해야 한다.)
