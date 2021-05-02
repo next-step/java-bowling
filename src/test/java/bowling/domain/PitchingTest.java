@@ -1,39 +1,68 @@
 package bowling.domain;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PitchingTest {
 
   @Test
-  void getResult_MISS() {
-    Pitching pitching = Pitching.firstPitching(1);
-    assertEquals(pitching.getResult(), Result.MISS);
-
-    Pitching secondPitching = pitching.secondPitching(1);
-    assertEquals(secondPitching.getResult(), Result.MISS);
+  void init() {
+    Pitching pitching = new Pitching();
+    assertAll(
+        () -> assertEquals(pitching.leftPins(), new Pins(10))
+    );
   }
 
   @Test
-  void getResult_STRIKE() {
-    Pitching pitching = Pitching.firstPitching(10);
-    assertEquals(pitching.getResult(), Result.STRIKE);
+  @DisplayName("hit 하면, 차수가 올라가고 남은 핀정보를 가진 Pitching 객체를 리턴한다.")
+  void hit() {
+    Pitching initPitching = new Pitching();
+    Pitching firstPitching = initPitching.play(4);
+    assertEquals(firstPitching.leftPins(), new Pins(6));
   }
 
   @Test
-  void getResult_SPARE() {
-    Pitching pitching = Pitching.firstPitching(1);
-    Pitching secondPitching = pitching.secondPitching(9);
-    assertEquals(secondPitching.getResult(), Result.SPARE);
+  void strike() {
+    Pitching pitching = new Pitching();
+    Pitching firstPitching = pitching.play(10);
+    assertEquals(firstPitching.result(), Result.STRIKE);
   }
 
   @Test
-  void getResult_GUTTER() {
-    Pitching pitching = Pitching.firstPitching(0);
-    assertEquals(pitching.getResult(), Result.GUTTER);
+  void spare() {
+    Pitching pitching = new Pitching();
+    Pitching first = pitching.play(5);
+    Pitching second = first.play(5);
+    assertEquals(second.result(), Result.SPARE);
+  }
 
-    Pitching secondPitching = pitching.secondPitching(0);
-    assertEquals(secondPitching.getResult(), Result.GUTTER);
+  @Test
+  void miss() {
+    Pitching pitching = new Pitching();
+    assertEquals(pitching.result(), Result.MISS);
+    assertEquals(pitching.play(4).result(), Result.MISS);
+    assertEquals(pitching.play(4).play(4).result(), Result.MISS);
+  }
+
+  @Test
+  void isEnd_strike() {
+    Pitching pitching = new Pitching();
+    Pitching first = pitching.play(10);
+    pitching.play(4);
+    assertTrue(first.isEnd());
+  }
+
+  @Test
+  void isEnd_max_count() {
+    Pitching pitching = new Pitching();
+    Pitching first = pitching.play(5);
+    assertFalse(first.isEnd());
+    Pitching second = first.play(4);
+    assertTrue(second.isEnd());
   }
 }

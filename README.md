@@ -9,6 +9,9 @@
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
 
 ## 기능구현 목록
+* 핀정보 생성
+  * hit 시 남은 핀 리턴
+* 투구 정보 생성
 * 프레임 생성
   * 1구 플레이까지 쓰러뜨린 핀 수 계산
   * 2구 플레이까지 쓰러뜨린 핀 수 계산

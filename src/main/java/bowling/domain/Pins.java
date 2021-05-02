@@ -1,39 +1,50 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class Pins {
 
   private static final int MIN = 0;
-  public static final int MAX = 10;
+  private static final int MAX = 10;
 
-  private int totalPins;
-  private int hitPins;
+  private final int count;
 
-  public Pins(int totalPins, int hitPins) {
-    this.totalPins = totalPins;
-    this.hitPins = hitPins;
-    if (hitPins < MIN || hitPins > totalPins) {
-      throw new IllegalArgumentException("쓰러진핀의 갯수는 0이상 남은 핀이하 여야한다.");
+  public Pins(int count) {
+    if (count < MIN) {
+      throw new IllegalArgumentException("핀의 갯수는 0보다 커야한다.");
     }
+    if (count > MAX) {
+      throw new IllegalArgumentException("핀의 갯수는 10을 넘을 수 없다.");
+    }
+    this.count = count;
   }
 
-  public int getLeftCount() {
-    return totalPins - hitPins;
+  public Pins() {
+    this(10);
   }
 
-  public boolean isClear() {
-    return getLeftCount() == 0;
+  public Pins hit(int hitCount) {
+    return new Pins(count - hitCount);
   }
 
-  public Pins(int hitPins) {
-    this(MAX, hitPins);
+  public int count() {
+    return count;
   }
 
-  public int getHitPins() {
-    return hitPins;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Pins pins = (Pins) o;
+    return count == pins.count;
   }
 
-  public boolean isGutter() {
-    return hitPins == 0;
+  @Override
+  public int hashCode() {
+    return Objects.hash(count);
   }
-
 }

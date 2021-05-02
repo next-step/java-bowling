@@ -2,40 +2,45 @@ package bowling.domain;
 
 public class Pitching {
 
-  private Pins pins;
-  private int tryCount;
+  private static final int MAX_TRY = 2;
 
-  private Pitching(Pins pins, int tryCount) {
+  private Pins pins;
+  private int tryCount = 0;
+
+  public Pitching(Pins pins, int tryCount) {
     this.pins = pins;
     this.tryCount = tryCount;
   }
 
-  public static Pitching firstPitching(int hitCount) {
-    return new Pitching(new Pins(hitCount), 1);
+  public Pitching() {
+    this.pins = new Pins();
   }
 
-  public Pitching secondPitching(int hitCount) {
-    int leftPins = pins.getLeftCount();
-    return new Pitching(new Pins(leftPins, hitCount), 2);
+  public Pitching play(int hitCount) {
+    Pins hitPins = pins.hit(hitCount);
+    return new Pitching(hitPins, tryCount + 1);
   }
 
-  public int getHitPins() {
-    return pins.getHitPins();
+  public int leftPins() {
+    return pins.count();
   }
 
-  public Result getResult() {
-    if (pins.isGutter()) {
-      return Result.GUTTER;
+  public Result result() {
+    if (tryCount == 1 && isClear()) {
+      return Result.STRIKE;
     }
-
-    if (pins.isClear()) {
-      if (tryCount == 1) {
-        return Result.STRIKE;
-      }
+    if (tryCount == 2 && isClear()) {
       return Result.SPARE;
     }
-
     return Result.MISS;
+  }
+
+  public boolean isClear() {
+    return pins.count() == 0;
+  }
+
+  public boolean isEnd() {
+    return result().isStrike() || tryCount == MAX_TRY;
   }
 
 }

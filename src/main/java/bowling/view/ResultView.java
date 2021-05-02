@@ -1,52 +1,41 @@
 package bowling.view;
 
 import bowling.domain.Bowling;
-import bowling.domain.Frame;
-import bowling.domain.Result;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 
 public class ResultView {
 
   private static final String DELIMITER = "|";
-  private static final String SCORE_FORMAT = "|  %s |%s| %s";
+  private static final String SCORE_FORMAT = "|  %s |%s  | %n";
   private static final String BOARD_FORMAT
-      = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+      = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |   10   |";
   private static final String BLANK = "      ";
+  private static final String FRAME_FORMAT = "  %-4s";
+  private static final String FINAL_FRAME_FORMAT = " %-5s";
 
-  public static void printScoreBoard(Bowling bowling) {
+  public void printScoreBoard(Bowling bowling) {
     System.out.println(BOARD_FORMAT);
-    String scoreBoard = drawScoreBoard(bowling);
-    System.out.printf(SCORE_FORMAT, bowling.getPlayer(), scoreBoard, System.lineSeparator());
-
+    String scoreBoard = drawScoreBoard(bowling.getScores());
+    System.out.printf(SCORE_FORMAT, bowling.getPlayerName(), scoreBoard);
   }
 
-  private static String drawScoreBoard(Bowling bowling) {
-    return bowling.getFrames().stream()
-        .map(ResultView::getScoreBoard)
-        .reduce((a, b) -> String.join(DELIMITER, a, b))
-        .get();
+  private static String drawScoreBoard(List<String> results) {
+    List<String> scores = results.stream()
+        .map(result -> getScore(result))
+        .collect(Collectors.toList());
+    return StringUtils.join(scores, DELIMITER);
   }
 
-  private static  String getScoreBoard(Frame frame) {
-    if (frame.getFirst() == null) {
+  private static String getScore(String result) {
+    if (StringUtils.isBlank(result)) {
       return BLANK;
     }
-
-    String firstScoreString = getFirstScoreString(frame);
-    if (frame.getSecond() == null) {
-      return String.format("  %s   ", firstScoreString);
+    if (result.length() > 4) {
+      return String.format(FINAL_FRAME_FORMAT, result);
     }
-
-    String secondScoreString = getSecondScoreString(frame);
-    return String.format("  %s|%s ", firstScoreString, secondScoreString);
+    return String.format(FRAME_FORMAT, result);
   }
 
-  private static String getFirstScoreString(Frame frame) {
-    Result result = frame.getFirst().getResult();
-    return result.isNotMiss() ? result.getMark() : String.valueOf(frame.getFirstHit());
-  }
-
-  private static String getSecondScoreString(Frame frame) {
-    Result result = frame.getSecond().getResult();
-    return result.isNotMiss() ? result.getMark() : String.valueOf(frame.getSecondHit());
-  }
 }

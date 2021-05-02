@@ -1,31 +1,27 @@
 package bowling;
 
 import bowling.domain.Bowling;
+import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingGame {
 
-  private Bowling bowling;
+  private static final InputView INPUT_VIEW = new InputView();
+  private static final ResultView RESULT_VIEW = new ResultView();
 
-  public BowlingGame(Bowling bowling) {
-    this.bowling = bowling;
+  public BowlingGame() {
   }
 
-  public static BowlingGame start() {
-    String name = InputView.getName();
-    Bowling bowling = new Bowling(name);
-    ResultView.printScoreBoard(bowling);
-    return new BowlingGame(bowling);
-  }
+  public void run() {
+    Player player = new Player(INPUT_VIEW.getName());
+    Bowling bowling = new Bowling(player);
+    RESULT_VIEW.printScoreBoard(bowling);
 
-  public void play() {
     while (!bowling.isEnd()) {
-      int hitCount = InputView.getHitPinsCount(bowling.getCurrentFrameNumber());
-      bowling.play(hitCount);
-      ResultView.printScoreBoard(bowling);
+      int hitPinsCount = INPUT_VIEW.getHitPinsCount(bowling.getCurrent());
+      bowling.play(hitPinsCount);
+      RESULT_VIEW.printScoreBoard(bowling);
     }
-
   }
-
 }

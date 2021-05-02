@@ -1,68 +1,66 @@
 package bowling.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import org.apache.commons.lang3.StringUtils;
+
 public class Frame {
 
-  private Pitching first;
-  private Pitching second;
+  public static final String DELIMITER = "|";
+  protected List<Pitching> pitchingList;
+  protected int number;
 
-  public Frame() {}
-
-  public void play(int hitCount) {
-    if (first != null && !first.getResult().isStrike()) {
-      playSecondBall(hitCount);
-    }
-    if (first == null) {
-      playFirst(hitCount);
-    }
+  public Frame() {
+    this.pitchingList = new ArrayList<>();
+    pitchingList.add(new Pitching());
   }
 
-  private void playFirst(int hitCount) {
-    this.first = Pitching.firstPitching(hitCount);
-  }
-
-  private void playSecondBall(int hitCount) {
-    this.second = first.secondPitching(hitCount);
-  }
-
-  public int getFirstHit() {
-    return first.getHitPins();
-  }
-
-  public int getSecondHit() {
-    return second.getHitPins();
-  }
-
-  public Result getResult() {
-    if (first == null) {
-      return Result.NONE;
-    }
-    Result firstResult = first.getResult();
-    if (firstResult.isStrike() || second == null) {
-      return firstResult;
-    }
-    return second.getResult();
+  public String play(int hitCount) {
+    Pitching pitching = lastPitching();
+    Pitching play = pitching.play(hitCount);
+    pitchingList.add(play);
+    return result();
   }
 
   public boolean isEnd() {
-    if (getResult().isNotMiss()) {
-      return true;
+    return lastPitching().isEnd();
+  }
+
+  public int number() {
+    return number;
+  }
+
+  public Pitching lastPitching() {
+    return pitchingList.get(lastPitchingIndex());
+  }
+
+  private int lastPitchingIndex() {
+    return pitchingList.size() - 1;
+  }
+
+  public String result() {
+    List<String> scoreResult = IntStream.rangeClosed(1, lastPitchingIndex())
+        .mapToObj(i -> getScore(i))
+        .filter(score -> !StringUtils.isBlank(score))
+        .collect(Collectors.toList());
+    return StringUtils.join(scoreResult, DELIMITER);
+  }
+
+  private String getScore(int i) {
+    if (pitchingList.get(i).leftPins() == 10) {
+      return "";
     }
-    return first != null && second != null;
+    Result result = pitchingList.get(i).result();
+    if (result.isNotMiss()) {
+      return result.getMark();
+    }
+    return String.valueOf(getHitScore(i));
   }
 
-  public boolean hasBonus() {
-    return getResult().isNotMiss();
+  private int getHitScore(int i) {
+    return pitchingList.get(i - 1).leftPins() - pitchingList.get(i).leftPins();
   }
 
-  public boolean isStrike() {
-    return getResult().isStrike();
-  }
-
-  public Pitching getFirst() {
-    return first;
-  }
-
-  public Pitching getSecond() {
-    return second;
-  }
 }
