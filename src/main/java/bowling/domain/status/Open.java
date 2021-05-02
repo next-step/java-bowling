@@ -1,6 +1,14 @@
 package bowling.domain.status;
 
+import bowling.domain.Pitch;
+
 public class Open implements Status {
+    private final Pitch current;
+
+    public Open(Pitch current) {
+        this.current = current;
+    }
+
     @Override
     public Status roll(int fallenPins) {
         return null;

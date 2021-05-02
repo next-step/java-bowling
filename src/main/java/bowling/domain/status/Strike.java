@@ -1,9 +1,18 @@
 package bowling.domain.status;
 
+import bowling.domain.Pitch;
+
 public class Strike implements Status {
+    private final Pitch current;
+
+    public Strike(Pitch current) {
+        this.current = current;
+    }
+
     @Override
     public Status roll(int fallenPins) {
-        return new Final();
+        Pitch pitch = new Pitch(fallenPins);
+        return new Final(pitch, 1);
     }
 
     @Override

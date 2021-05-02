@@ -12,11 +12,13 @@ public class Default implements Status {
 
     @Override
     public Status roll(int fallenPins) {
+        Pitch pitch = new Pitch(fallenPins);
+
         if (current.isSpare(fallenPins)) {
-            return new Spare();
+            return new Spare(pitch);
         }
 
-        return new Open();
+        return new Open(pitch);
     }
 
     @Override

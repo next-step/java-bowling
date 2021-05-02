@@ -8,7 +8,7 @@ public class Ready implements Status {
         Pitch pitch = new Pitch(fallenPins);
 
         if (pitch.isStrike()) {
-            return new Strike();
+            return new Strike(pitch);
         }
 
         return new Default(pitch);

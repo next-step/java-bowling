@@ -1,14 +1,25 @@
 package bowling.domain.status;
 
+import bowling.domain.Pitch;
+
 public class Final implements Status {
+    private final Pitch current;
+    private final int remainBonusCount;
+
+    public Final(Pitch current, int remainBonusCount) {
+        this.current = current;
+        this.remainBonusCount = remainBonusCount;
+    }
+
     @Override
     public Status roll(int fallenPins) {
-        throw new UnsupportedOperationException("");
+        Pitch pitch = new Pitch(fallenPins);
+        return new Final(pitch, remainBonusCount - 1);
     }
 
     @Override
     public boolean isEnd() {
-        return true;
+        return remainBonusCount == 0;
     }
 
     @Override
