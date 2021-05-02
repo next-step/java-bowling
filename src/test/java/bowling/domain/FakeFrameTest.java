@@ -26,6 +26,18 @@ class FakeFrameTest {
         );
     }
 
+    @DisplayName("FakeFrame 인스턴스가 사이즈 반환시 예외처리 여부 테스트")
+    @Test
+    void 반환_크기() {
+        // when
+        Frame fakeFrame = FakeFrame.initialize();
+
+        // then
+        assertThatThrownBy(() -> assertThat(fakeFrame.size()))
+                .isInstanceOf(NoMoreSizeActionsException.class)
+                .hasMessage("현재 상태에서는 사이즈 값을 알 수 없습니다.");
+    }
+
     @DisplayName("FakeFrame 인스턴스가 볼링 메서드 실행시 예외처리 여부 테스트")
     @Test
     void 검증_bowl() {
