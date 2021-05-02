@@ -11,5 +11,6 @@ public class SpareTest {
     void 스페어생성() {
         assertThat(SP1.isSpare()).isTrue();
         assertThat(SP1.isStrike()).isFalse();
+        assertThat(SP1.eval()).isEqualTo(10);
     }
 }

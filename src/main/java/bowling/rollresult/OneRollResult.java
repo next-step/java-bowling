@@ -1,5 +1,7 @@
 package bowling.rollresult;
 
+import java.util.Objects;
+
 public class OneRollResult implements RollResultType{
     private final int score;
 
@@ -14,6 +16,7 @@ public class OneRollResult implements RollResultType{
         return new OneRollResult(score);
     }
 
+    @Override
     public RollResultType next(int nextScore) {
         if (score + nextScore == DEFAULT_MAX_SCORE) {
             return Spare.of(score, nextScore);
@@ -37,5 +40,23 @@ public class OneRollResult implements RollResultType{
     @Override
     public boolean hasNext() {
         return true;
+    }
+
+    @Override
+    public int eval() {
+        return score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OneRollResult that = (OneRollResult) o;
+        return score == that.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }

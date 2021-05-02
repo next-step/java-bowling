@@ -1,5 +1,7 @@
 package bowling.rollresult;
 
+import java.util.Objects;
+
 public class Gutter implements RollResultType {
     private static final String INVALID_SCORE = "해당 값은 거터가 아닙니다. (spare 혹은 strike)";
     private final int firstScore;
@@ -37,7 +39,25 @@ public class Gutter implements RollResultType {
     }
 
     @Override
+    public int eval() {
+        return firstScore + secondScore;
+    }
+
+    @Override
     public RollResultType next(int nextScore) {
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Gutter gutter = (Gutter) o;
+        return firstScore == gutter.firstScore && secondScore == gutter.secondScore;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstScore, secondScore);
     }
 }

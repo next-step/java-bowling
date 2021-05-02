@@ -1,5 +1,7 @@
 package bowling.rollresult;
 
+import java.util.Objects;
+
 public class Spare implements RollResultType {
     private static final String INVALID_FIRST_SCORE = "스페어의 첫번째 값은 10보다 작아야합니다.";
     private static final String INVALID_SECOND_SCORE = "스페어의 두번째 값은 10-첫번째값보다 커야합니다.";
@@ -56,7 +58,25 @@ public class Spare implements RollResultType {
     }
 
     @Override
+    public int eval() {
+        return firstScore + secondScore;
+    }
+
+    @Override
     public RollResultType next(int nextScore) {
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Spare spare = (Spare) o;
+        return firstScore == spare.firstScore && secondScore == spare.secondScore;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstScore, secondScore);
     }
 }

@@ -11,5 +11,6 @@ public class StrikeTest {
     void 스트라이크생성() {
         assertThat(ST1.isStrike()).isTrue();
         assertThat(ST1.isSpare()).isFalse();
+        assertThat(ST1.eval()).isEqualTo(10);
     }
 }

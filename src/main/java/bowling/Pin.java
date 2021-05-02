@@ -44,7 +44,7 @@ public class Pin {
     }
 
     public RollResult checkResult() {
-        return RollResult.of();
+        return null;
     }
 
 

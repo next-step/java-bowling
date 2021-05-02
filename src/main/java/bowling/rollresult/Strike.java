@@ -1,5 +1,7 @@
 package bowling.rollresult;
 
+import java.util.Objects;
+
 public class Strike implements RollResultType {
     private static final String INVALID_SCORE = "스트라이크의 값은 10 이상이어야합니다.";
     private final int score;
@@ -43,7 +45,25 @@ public class Strike implements RollResultType {
     }
 
     @Override
+    public int eval() {
+        return score;
+    }
+
+    @Override
     public RollResultType next(int nextScore) {
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Strike strike = (Strike) o;
+        return score == strike.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }
