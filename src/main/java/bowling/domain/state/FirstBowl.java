@@ -27,7 +27,7 @@ public final class FirstBowl extends Running {
 
     @Override
     public final State bowl(final HitCount hitCount) {
-        if (firstCount + hitCount.count() == MAXIMUM_COUNT) {
+        if (firstCount + hitCount.count() >= MAXIMUM_COUNT) {
             return Spare.of(firstCount, hitCount.count());
         }
         return Miss.of(firstCount, hitCount.count());

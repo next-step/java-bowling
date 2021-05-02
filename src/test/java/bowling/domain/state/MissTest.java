@@ -32,8 +32,7 @@ class MissTest {
         // when and then
         assertThatThrownBy(() -> Miss.of(firstCount, secondCount))
                 .isInstanceOf(InsufficientMissCountException.class)
-                .hasMessage("( " + firstCount + " )와 ( " + secondCount + " )의 합인 " +
-                        "( " + Math.addExact(firstCount, secondCount) + " )는, 9이하 값을 충족하지 않습니다.");
+                .hasMessage("( 0 )와 ( 10 )의 합이 9보다 작지 않습니다.");
 
     }
 

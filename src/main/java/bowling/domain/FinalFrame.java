@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.state.FirstBowl;
+import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 import bowling.exception.NoMoreBowlActionsException;
 import bowling.exception.NoMoreCountingActionException;
@@ -32,7 +33,7 @@ public final class FinalFrame implements Frame {
         opportunity.next();
         size = states.size();
         State state = states.getLast();
-        if (state.isAllPinClear()) {
+        if (hasBonus()) {
             states.add(getBonusPitch().bowl(hitCount));
             return this;
         }
@@ -57,7 +58,7 @@ public final class FinalFrame implements Frame {
 
     public final boolean hasBonus() {
         return states.stream()
-                .anyMatch(State::isAllPinClear);
+                .anyMatch(state-> state.isAllPinClear());
     }
 
     @Override
@@ -83,7 +84,7 @@ public final class FinalFrame implements Frame {
     @Override
     public final int thirdCount() {
         validateSize();
-        return states.getLast().secondCount();
+        return states.get(THREE).secondCount();
     }
 
     private final void validateSize() {
