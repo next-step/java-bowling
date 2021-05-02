@@ -251,4 +251,23 @@ class NormalFrameTest {
         // then
         assertThat(score.calculate()).isEqualTo(15);
     }
+
+    @Test
+    @DisplayName("9번 프레임이 Strike인 경우 해당 투구와 다음 두 투구의 합이 점수가 된다.")
+    void nineFrameStrike() {
+        // given
+        final Frame nineFrame = NormalFrame.of(new RoundNumber(9), NormalPins.create());
+        nineFrame.createNextFrame();
+        final Frame lastFrame = nineFrame.nextFrame();
+
+        nineFrame.knockDownPin(TestFixture.STRIKE_PIN);
+        lastFrame.knockDownPin(new Pin(2));
+        lastFrame.knockDownPin(new Pin(5));
+
+        // when
+        final Score score = nineFrame.score();
+
+        // then
+        assertThat(score.calculate()).isEqualTo(17);
+    }
 }
