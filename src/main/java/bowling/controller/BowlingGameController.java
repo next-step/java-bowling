@@ -2,12 +2,9 @@ package bowling.controller;
 
 import bowling.controller.dto.BowlingGameRequest;
 import bowling.controller.dto.BowlingGameResponse;
-import bowling.domain.dto.FrameInfo;
-import bowling.domain.*;
+import bowling.domain.BowlingGame;
+import bowling.domain.Participant;
 import bowling.service.BowlingGameService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BowlingGameController {
 
@@ -20,26 +17,17 @@ public class BowlingGameController {
     public BowlingGameResponse startGame(BowlingGameRequest request) {
         Participant participant = new Participant(request.getParticipantName());
         service.startGame(participant);
-        return assembleGameResponse(participant, service.findFrames(participant));
+        return assembleGameResponse(service.findBowlingGame());
     }
 
     public BowlingGameResponse pitchBall(BowlingGameRequest request) {
         Participant participant = new Participant(request.getParticipantName());
         service.pitchBall(participant, request.getPitchCount());
-        return assembleGameResponse(participant, service.findFrames(participant));
+        return assembleGameResponse(service.findBowlingGame());
     }
 
-    private BowlingGameResponse assembleGameResponse(Participant participant, Frames frames) {
-        return new BowlingGameResponse(participant.getName(), frames.nextTurnNumber(), assembleFrameInfos(frames), frames.isFinished());
-    }
-
-    private List<FrameInfo> assembleFrameInfos(Frames frames) {
-        List<FrameInfo> frameInfos = new ArrayList<>();
-        for (Frame frame : frames) {
-            FrameInfo frameInfo = frame.assembleFrameInfo();
-            frameInfos.add(frameInfo);
-        }
-        return frameInfos;
+    private BowlingGameResponse assembleGameResponse(BowlingGame bowlingGame) {
+        return new BowlingGameResponse(bowlingGame.isEnd(), bowlingGame.nextTurnParticipantName(), bowlingGame.frameBoards());
     }
 
 }

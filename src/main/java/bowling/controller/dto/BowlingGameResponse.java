@@ -1,36 +1,30 @@
 package bowling.controller.dto;
 
-import bowling.domain.dto.FrameInfo;
+import bowling.domain.dto.FrameBoard;
 
 import java.util.List;
 
 public class BowlingGameResponse {
 
-    private final String participantName;
-    private final int nextFrameNumber;
-    private final List<FrameInfo> frameInfos;
-    private final boolean isFinished;
+    private final boolean isGameEnd;
+    private final String nextTurnParticipant;
+    private final List<FrameBoard> frameBoards;
 
-    public BowlingGameResponse(String participantName, int nextFrameNumber, List<FrameInfo> frameInfos, boolean isFinished) {
-        this.participantName = participantName;
-        this.nextFrameNumber = nextFrameNumber;
-        this.frameInfos = frameInfos;
-        this.isFinished = isFinished;
+    public BowlingGameResponse(boolean isGameEnd, String nextTurnParticipant, List<FrameBoard> frameBoards) {
+        this.isGameEnd = isGameEnd;
+        this.nextTurnParticipant = nextTurnParticipant;
+        this.frameBoards = frameBoards;
     }
 
-    public String getParticipantName() {
-        return participantName;
+    public boolean isGameEnd() {
+        return isGameEnd;
     }
 
-    public int getNextFrameNumber() {
-        return nextFrameNumber;
+    public String getNextTurnParticipant() {
+        return nextTurnParticipant;
     }
 
-    public List<FrameInfo> getFrameInfos() {
-        return frameInfos;
-    }
-
-    public boolean isFinished() {
-        return isFinished;
+    public List<FrameBoard> getFrameBoards() {
+        return frameBoards;
     }
 }
