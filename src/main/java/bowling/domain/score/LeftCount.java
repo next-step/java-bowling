@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import bowling.exception.InvalidLeftCountException;
+
 import java.util.Objects;
 
 public final class LeftCount {
@@ -7,11 +9,20 @@ public final class LeftCount {
     private static final int NO_LEFT_COUNT = 0;
     private static final int STRIKE_LEFT_COUNT = 2;
     private static final int SPARE_LEFT_COUNT = 1;
+    private static final int MIN = 0;
+    private static final int MAX = 2;
 
     private final int leftCount;
 
     public LeftCount(int leftCount) {
+        validate(leftCount);
         this.leftCount = leftCount;
+    }
+
+    private void validate(int leftCount) {
+        if (leftCount < MIN || leftCount > MAX) {
+            throw new InvalidLeftCountException();
+        }
     }
 
     public static LeftCount from(int leftCount) {
