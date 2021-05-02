@@ -4,6 +4,7 @@ import java.util.List;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.score.Score;
 import bowling.domain.state.States;
 
 public class Player {
@@ -29,6 +30,10 @@ public class Player {
 
     public List<States> states() {
         return frames.states();
+    }
+
+    public List<Score> scores() {
+        return frames.scores();
     }
 
     public boolean isDone() {
