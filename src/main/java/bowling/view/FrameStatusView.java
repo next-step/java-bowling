@@ -59,7 +59,7 @@ public final class FrameStatusView {
             return pinStatus(pin) + DELIMITER + SPARE_SIGN;
         }
 
-        return pinStatus(pin) + DELIMITER + otherPin.status();
+        return pinStatus(pin) + DELIMITER + pinStatus(otherPin);
     }
 
     private String finalFrameStatus(Pins pins) {
