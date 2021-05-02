@@ -1,9 +1,10 @@
 package bowling.domain.frame;
 
 import java.util.List;
+import java.util.Optional;
 
 public class NormalFrame extends Frame {
-    
+
     public NormalFrame(List<Score> scores) {
         this.scores = new NormalScores(scores);
     }
@@ -13,7 +14,9 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public int frameScore() {
-        return 0;
+    public Optional<Integer> frameScore() {
+        return null;
     }
+
+
 }

@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import java.util.List;
+import java.util.Optional;
 
 public abstract class Frame {
     protected Scores scores;
@@ -22,6 +23,6 @@ public abstract class Frame {
         this.nextFrame = nextFrame;
     }
 
-    public abstract int frameScore();
+    public abstract Optional<Integer> frameScore();
 
 }

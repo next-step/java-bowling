@@ -2,10 +2,12 @@ package bowling;
 
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,10 +32,10 @@ public class FinalFrameTest {
         frame.addScore(score1);
 
         // when
-        int resultScore = frame.frameScore();
+        Optional<Integer> resultScore = frame.frameScore();
 
         // then
-        assertThat(resultScore).isEqualTo(expectScore);
+        assertThat(resultScore.get()).isEqualTo(expectScore);
     }
 
     private static Stream<Arguments> getFrameScore_2() {
@@ -57,10 +59,10 @@ public class FinalFrameTest {
         frame.addScore(score2);
 
         // when
-        int resultScore = frame.frameScore();
+        Optional<Integer> resultScore = frame.frameScore();
 
         // then
-        assertThat(resultScore).isEqualTo(expectScore);
+        assertThat(resultScore.get()).isEqualTo(expectScore);
     }
 
     private static Stream<Arguments> getFrameScore_3() {
@@ -84,11 +86,22 @@ public class FinalFrameTest {
         frame.addScore(score3);
 
         // when
-        int resultScore = frame.frameScore();
+        Optional<Integer> resultScore = frame.frameScore();
 
         // then
-        assertThat(resultScore).isEqualTo(expectScore);
+        assertThat(resultScore.get()).isEqualTo(expectScore);
     }
 
+    @Test
+    public void getFrameScore_0개() {
+        //given
+        Frame frame = new FinalFrame();
+
+        //when
+        Optional<Integer> resultScore = frame.frameScore();
+
+        //then
+        assertThat(resultScore).isNull();
+    }
 
 }

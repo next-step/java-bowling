@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import java.util.List;
+import java.util.Optional;
 
 public class FinalFrame extends Frame {
     public FinalFrame(List<Score> scores) {
@@ -12,10 +13,13 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public int frameScore() {
-        return scores.transSpareScores()
+    public Optional<Integer> frameScore() {
+        if (scores.getScores().isEmpty()) {
+            return null;
+        }
+        return Optional.of(scores.transSpareScores()
                 .stream()
                 .mapToInt(score -> score.getScore())
-                .sum();
+                .sum());
     }
 }

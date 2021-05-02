@@ -3,11 +3,13 @@ package bowling;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.Score;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,10 +34,10 @@ public class NormalFrameTest {
 
 
         // when
-        int resultScore = frame.frameScore();
+        Optional<Integer> resultScore = frame.frameScore();
 
         // then
-        assertThat(resultScore).isEqualTo(expectScore);
+        assertThat(resultScore.get()).isEqualTo(expectScore);
     }
 
     private static Stream<Arguments> getFrameScore_spare() {
@@ -55,10 +57,10 @@ public class NormalFrameTest {
         frame.nextFrame(nextFrame);
 
         // when
-        int resultScore = frame.frameScore();
+        Optional<Integer> resultScore = frame.frameScore();
 
         // then
-        assertThat(resultScore).isEqualTo(expectScore);
+        assertThat(resultScore.get()).isEqualTo(expectScore);
 
     }
 
@@ -79,11 +81,10 @@ public class NormalFrameTest {
         nextFrame1.nextFrame(nextFrame2);
 
         // when
-        int resultScore = frame.frameScore();
+        Optional<Integer> resultScore = frame.frameScore();
 
         // then
-        assertThat(resultScore).isEqualTo(expectScore);
-
+        assertThat(resultScore.get()).isEqualTo(expectScore);
     }
 
     private static Stream<Arguments> getFrameScore_strike_1개() {
@@ -97,15 +98,26 @@ public class NormalFrameTest {
 
     @ParameterizedTest
     @MethodSource("getFrameScore_strike_1개")
-    public void getFrameScore_스트라이크() {
+    public void getFrameScore_스트라이크(Frame frame, Frame nextFrame1, int expectScore) {
         // given
-
+        frame.nextFrame(nextFrame1);
 
         // when
-
+        Optional<Integer> resultScore = frame.frameScore();
 
         // then
+        assertThat(resultScore.get()).isEqualTo(expectScore);
+    }
 
+    @Test
+    public void getFrameScore_void() {
+        // given
+        Frame frame = new NormalFrame();
 
+        // when
+        Optional<Integer> resultScore = frame.frameScore();
+
+        // then
+        assertThat(resultScore).isNull();
     }
 }
