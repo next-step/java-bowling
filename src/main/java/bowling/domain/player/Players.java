@@ -28,6 +28,10 @@ public final class Players {
         players.add(player);
     }
 
+    public List<Player> value() {
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
