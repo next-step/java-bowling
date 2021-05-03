@@ -33,12 +33,7 @@ public final class FinalFrame extends Frame {
 
     @Override
     public void knockDownPin(Pin pin) {
-        final PinCountValidator pinCountValidator = (pinsParameter, pinParameter) -> {
-            if (pinsParameter.isLastGameSpare()) {
-                pinsParameter.secondPin().sum(pinParameter);
-            }
-        };
-        pins.validatePinCount(pin, pinCountValidator);
+        pins.validatePinCount(pin, PinCountValidator.FINAL);
         pins.knockDownPin(pin);
     }
 
