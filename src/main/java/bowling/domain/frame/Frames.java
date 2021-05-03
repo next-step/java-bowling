@@ -37,10 +37,6 @@ public class Frames {
         return frames.size();
     }
 
-    public boolean isContinue() {
-        return !(round.isFinalRound() && frames.get(round.now()).roundEnded());
-    }
-
     public List<Frame> frames() {
         return Collections.unmodifiableList(frames);
     }
@@ -100,10 +96,6 @@ public class Frames {
 
     private boolean hasLeftFrame() {
         return round.hasBefore();
-    }
-
-    public int round() {
-        return round.round();
     }
 
     public Score getScore(int round) {

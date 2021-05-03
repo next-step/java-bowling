@@ -38,4 +38,20 @@ public class Players {
     public int howManyPlayers() {
         return players.size();
     }
+
+    public Player nthPlayer(int n) {
+        return players.get(n);
+    }
+
+    public Frames playerFrames(int n) {
+        return framesList.get(n);
+    }
+
+    public boolean nthPlayerFrameEnd(int n, int round) {
+        return playerFrames(n).roundFrame(round).roundEnded();
+    }
+
+    public void nthPlayerThrowBall(int n, int topplePin) {
+        playerFrames(n).throwBall(topplePin);
+    }
 }
