@@ -16,4 +16,11 @@ public class FrameScore {
     public boolean isExistsAddCount() {
         return bonusPitch.addedBonusCount() > 0;
     }
+
+    public FrameScore sumScore(int point) {
+        score = score.sum(point);
+        bonusPitch.useOneBonusPitch();
+
+        return this;
+    }
 }

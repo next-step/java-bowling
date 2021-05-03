@@ -3,7 +3,9 @@ package bowling.domain;
 import bowling.domain.status.Status;
 
 public class BonusPitch {
-    private final int addedBonusCount;
+    private static final int USE_ONE_BONUS = 1;
+
+    private int addedBonusCount;
     private final Status status;
 
     public BonusPitch(Status status) {
@@ -18,6 +20,10 @@ public class BonusPitch {
 
     public int addedBonusCount() {
         return addedBonusCount;
+    }
+
+    public void useOneBonusPitch() {
+        addedBonusCount -= USE_ONE_BONUS;
     }
 
     public String display() {
