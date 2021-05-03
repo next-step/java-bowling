@@ -25,13 +25,22 @@ public final class BowlingController {
     }
 
     public void run() {
+        final Players players = players();
+        outputView.printScoreBoard(players);
+
+        playGame(players);
+    }
+
+    private Players players() {
         final int playerCount = inputView.inputPlayerCount();
         final Players players = Players.create();
         for (int i = 1; i <= playerCount; i++) {
             players.add(Player.from(playerName(i)));
         }
-        outputView.printScoreBoard(players);
+        return players;
+    }
 
+    private void playGame(Players players) {
         for (int i = RoundNumber.MIN; i <= RoundNumber.MAX; i++) {
             bowlAll(players, i);
         }
