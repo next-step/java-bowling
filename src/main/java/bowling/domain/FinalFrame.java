@@ -31,7 +31,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public void createScore() {
-        score = Score.ofNone(pins.totalCount());
+        score = Score.of(pins.totalCount(), ScoreState.ofNone());
     }
 
     @Override

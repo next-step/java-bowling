@@ -18,8 +18,8 @@ public class ScoresTest {
     @Test
     void scoresAddTest() {
         Scores scores = Scores.init();
-        scores.addScore(Score.ofNone(9));
-        scores.addScore(Score.ofNone(9));
+        scores.addScore(Score.of(9, ScoreState.ofNone()));
+        scores.addScore(Score.of(9, ScoreState.ofNone()));
         assertThat(scores.roundScore(2).calculateScore()).isEqualTo(18);
     }
 }

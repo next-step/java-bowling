@@ -4,47 +4,35 @@ import bowling.exception.CannotCalculateException;
 
 public class Score {
 
-    private static final int NONE_OPPORTUNITY = 0;
-    private static final int MAX_SCORE = 10;
-    private static final int SPARE_OPPORTUNITY = 1;
-    private static final int STRIKE_OPPORTUNITY = 2;
     private static final String CANNOT_CALCULATE_MESSAGE = "앞 투구가 끝나지 않아 계산 할 수 없습니다.";
 
     private int score;
-    private int leftOpportunity;
+    private ScoreState scoreState;
 
-    private Score(int score, int leftOpportunity) {
+    private Score(int score, ScoreState scoreState) {
         this.score = score;
-        this.leftOpportunity = leftOpportunity;
+        this.scoreState = scoreState;
     }
 
-    public static Score ofNone(int score) {
-        return new Score(score, NONE_OPPORTUNITY);
-    }
-
-    public static Score ofSpare() {
-        return new Score(MAX_SCORE, SPARE_OPPORTUNITY);
-    }
-
-    public static Score ofStrike() {
-        return new Score(MAX_SCORE, STRIKE_OPPORTUNITY);
+    public static Score of(int score, ScoreState scoreState) {
+        return new Score(score, scoreState);
     }
 
     public int calculateScore() {
-        if (!canCalculateScore()) {
+        if (!scoreState.canCalculate()) {
             throw new CannotCalculateException(CANNOT_CALCULATE_MESSAGE);
         }
         return this.score;
     }
 
     public boolean canCalculateScore() {
-        return leftOpportunity == NONE_OPPORTUNITY;
+        return scoreState.canCalculate();
     }
 
     public void addAdditionalScore(int score) {
-        if (this.leftOpportunity > NONE_OPPORTUNITY) {
+        if (!scoreState.canCalculate()) {
             this.score += score;
-            this.leftOpportunity -= 1;
+            this.scoreState = this.scoreState.changeState();
         }
     }
 }

@@ -103,7 +103,7 @@ public class Frames {
     }
 
     public Score getScore(int round) {
-        return Score.ofNone(roundFrame(round).score());
+        return Score.of(roundFrame(round).score(), ScoreState.ofNone());
     }
 
     public boolean canCalculateScore(int round) {

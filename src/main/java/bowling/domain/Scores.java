@@ -22,7 +22,7 @@ public class Scores {
     public void addScore(Score score) {
         if (!isEmpty()) {
             Score lastScore = roundScore(size());
-            scores.add(Score.ofNone(lastScore.calculateScore() + score.calculateScore()));
+            scores.add(Score.of(lastScore.calculateScore() + score.calculateScore(), ScoreState.ofNone()));
             return;
         }
         scores.add(score);
@@ -34,7 +34,7 @@ public class Scores {
 
     public Score roundScore(int roundCount) {
         if (size() < roundCount) {
-            return Score.ofNone(-1);
+            return Score.of(-1, ScoreState.ofNone());
         }
         return scores.get(roundCount - 1);
     }

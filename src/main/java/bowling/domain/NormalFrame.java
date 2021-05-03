@@ -50,13 +50,13 @@ public class NormalFrame extends Frame {
     @Override
     public void createScore() {
         if (pins.isStrike() && isFirstTry()) {
-            score = Score.ofStrike();
+            score = Score.of(MAX_PIN_COUNT, ScoreState.ofStrike());
             return;
         }
         if (pins.totalCount() == MAX_PIN_COUNT) {
-            score = Score.ofSpare();
+            score = Score.of(MAX_PIN_COUNT, ScoreState.ofSpare());
             return;
         }
-        score = Score.ofNone(pins.totalCount());
+        score = Score.of(pins.totalCount(), ScoreState.ofNone());
     }
 }
