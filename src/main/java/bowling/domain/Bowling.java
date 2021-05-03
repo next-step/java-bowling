@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class Bowling {
     private final Frame firstFrame;
     private Frame currentFrame;
@@ -24,7 +26,11 @@ public class Bowling {
     }
 
     public BowlingResult result() {
-        BowlingResult bowlingResult = new BowlingResult();
+        return result(Player.noname());
+    }
+
+    public BowlingResult result(Player player) {
+        BowlingResult bowlingResult = new BowlingResult(player);
         Frame indexFrame = firstFrame;
         bowlingResult.add(indexFrame.frameNumber(), indexFrame.pointSymbols(), indexFrame.score());
 
@@ -47,4 +53,19 @@ public class Bowling {
     private boolean isLastFrame() {
         return currentFrame.frameNumber().equals(new FrameNumber(10));
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bowling bowling = (Bowling) o;
+        return Objects.equals(firstFrame, bowling.firstFrame) && Objects.equals(currentFrame, bowling.currentFrame);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstFrame, currentFrame);
+    }
+
+
 }

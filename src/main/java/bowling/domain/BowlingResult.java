@@ -5,19 +5,29 @@ import java.util.stream.Collectors;
 
 public class BowlingResult {
     private final Map<FrameNumber, FrameResult> frameResultsMap;
-
-    public BowlingResult() {
-        frameResultsMap = new HashMap<>();
-    }
+    private final Player player;
 
     public BowlingResult(List<FrameResult> frameResults) {
-        this.frameResultsMap = new HashMap<>();
+        this(Player.noname(), frameResults);
+    }
+
+    public BowlingResult(Player player, List<FrameResult> frameResults) {
+        this(player);
 
         FrameNumber frameNumber = new FrameNumber(1);
         for (FrameResult frameResult : frameResults) {
             frameResultsMap.put(frameNumber, frameResult);
             frameNumber = frameNumber.increase();
         }
+    }
+
+    public BowlingResult() {
+        this(Player.noname());
+    }
+
+    public BowlingResult(Player player) {
+        frameResultsMap = new HashMap<>();
+        this.player = player;
     }
 
     public void add(FrameNumber frameNumber, PointSymbols pointSymbols, Score score) {
@@ -43,6 +53,10 @@ public class BowlingResult {
             return new FrameResult();
         }
         return frameResultsMap.get(frameNumber);
+    }
+
+    public Player player() {
+        return player;
     }
 
     @Override

@@ -68,4 +68,14 @@ public class BowlingResultTest {
         bowlingResult.add(new FrameNumber(1), new PointSymbols(PointSymbol.TWO), Score.create(2));
         assertThat(bowlingResult.result(new FrameNumber(1))).isEqualTo(new FrameResult(new PointSymbols(PointSymbol.TWO), Score.create(2)));
     }
+
+    @Test
+    @DisplayName("Player 이름이 설정되었을 때 이름을 잘 가지고 오는지 테스트")
+    void Given_Player_When_Player_Then_ReturnGivenPlayerName() {
+        Player player = new Player("abc");
+
+        BowlingResult bowlingResult = new BowlingResult(player);
+
+        assertThat(bowlingResult.player()).isEqualTo(player);
+    }
 }
