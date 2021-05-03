@@ -22,8 +22,9 @@ public class BonusPitch {
         return addedBonusCount;
     }
 
-    public void useOneBonusPitch() {
+    public BonusPitch useOneBonusPitch() {
         addedBonusCount -= USE_ONE_BONUS;
+        return this;
     }
 
     public String display() {

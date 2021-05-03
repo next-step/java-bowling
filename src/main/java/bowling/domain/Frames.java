@@ -1,9 +1,7 @@
 package bowling.domain;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Frames {
     private final Map<Integer, Frame> frames;
@@ -15,7 +13,7 @@ public class Frames {
     }
 
     public void pitch(int frameNo, int point) {
-        sumPitchScore(point);
+        accumulatePitchScore(point);
 
         Frame frame = Optional.ofNullable(frames.get(frameNo))
                 .orElse(new Frame(frameNo));
@@ -24,10 +22,12 @@ public class Frames {
         frameScores.put(frameNo, frame.frameScore());
     }
 
-    private void sumPitchScore(int point) {
-        frameScores.values().stream()
-                .filter(frameScore -> frameScore.isExistsAddCount())
-                .forEach(frameScore -> frameScore.sumScore(point));
+    private List<FrameScore> accumulatePitchScore(int point) {
+        return frameScores.values()
+                .stream()
+                .map(frameScore -> frameScore.sumScore(point))
+                .collect(Collectors.toList())
+                ;
     }
 
     public boolean contains(int frameNo) {

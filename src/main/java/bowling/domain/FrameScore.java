@@ -2,7 +2,7 @@ package bowling.domain;
 
 public class FrameScore {
     private Score score;
-    private BonusPitch bonusPitch;
+    private final BonusPitch bonusPitch;
 
     public FrameScore(Score score, BonusPitch bonusPitch) {
         this.score = score;
@@ -13,14 +13,14 @@ public class FrameScore {
         return score;
     }
 
-    public boolean isExistsAddCount() {
-        return bonusPitch.addedBonusCount() > 0;
+    public FrameScore sumScore(int point) {
+        if (!isExistsAddCount()) {
+            return this;
+        }
+        return new FrameScore(score.sum(point), bonusPitch.useOneBonusPitch());
     }
 
-    public FrameScore sumScore(int point) {
-        score = score.sum(point);
-        bonusPitch.useOneBonusPitch();
-
-        return this;
+    public boolean isExistsAddCount() {
+        return bonusPitch.addedBonusCount() > 0;
     }
 }
