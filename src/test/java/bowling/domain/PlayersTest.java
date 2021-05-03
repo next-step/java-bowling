@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.DuplicatePlayerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +21,6 @@ public class PlayersTest {
     @DisplayName("동일한 이름의 플레이어는 생성할 수 없다")
     @Test
     void initExceptionTest() {
-        assertThatThrownBy(()->Players.from(Arrays.asList(Player.from("jdh"), Player.from("jdh")))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->Players.from(Arrays.asList(Player.from("jdh"), Player.from("jdh")))).isInstanceOf(DuplicatePlayerException.class);
     }
 }
