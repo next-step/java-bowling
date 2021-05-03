@@ -1,5 +1,6 @@
 package bowling.domain.player;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -10,10 +11,11 @@ public class Players {
     }
 
     public List<Player> toList() {
-        return players;
+        return Collections.unmodifiableList(players);
     }
 
     public boolean isAllDone() {
-        return false;
+        return players.stream()
+            .allMatch(Player::isDone);
     }
 }

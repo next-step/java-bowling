@@ -36,4 +36,25 @@ public class PlayersTest {
         // then
         assertThat(players.isAllDone()).isTrue();
     }
+
+    @Test
+    void 모든_플레이어_미종료_테스트() {
+        // given
+        Player player = Player.of("ldh");
+        Player player2 = Player.of("kkk");
+
+        // when
+        IntStream.range(0, 10).forEach(i -> {
+            player.bowl(3);
+            player.bowl(3);
+        });
+        IntStream.range(0, 9).forEach(i -> {
+            player.bowl(3);
+            player.bowl(3);
+        });
+
+        Players players = new Players(Arrays.asList(player, player2));
+        // then
+        assertThat(players.isAllDone()).isFalse();
+    }
 }
