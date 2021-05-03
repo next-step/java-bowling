@@ -41,7 +41,16 @@ public class Player {
         return current.isFinalFrame() && current.isDone();
     }
 
+    public boolean isTurnDone() {
+        Frame current = frames.currentFrame();
+        return current.isDone();
+    }
+
     public int currentFrameNumber() {
         return frames.frames().size();
+    }
+
+    public void changeNextFrame() {
+        frames.changePointer();
     }
 }

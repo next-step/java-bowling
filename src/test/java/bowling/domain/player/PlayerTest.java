@@ -25,6 +25,7 @@ public class PlayerTest {
         IntStream.range(0, 10).forEach(i -> {
             player.bowl(3);
             player.bowl(3);
+            player.changeNextFrame();
         });
         assertThat(player.isDone()).isTrue();
     }

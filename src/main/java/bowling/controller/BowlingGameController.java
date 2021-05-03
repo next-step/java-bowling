@@ -39,7 +39,7 @@ public class BowlingGameController {
     }
 
     private void turn(Players players, Player player) {
-        while(!player.isDone()) {
+        while(!player.isTurnDone()) {
             player.bowl(InputView.inputBowlingPin(player.name()));
             ResultView.printBowlingBoard(players);
         }

@@ -27,9 +27,11 @@ public class PlayersTest {
         IntStream.range(0, 10).forEach(i -> {
             player.bowl(3);
             player.bowl(3);
+            player.changeNextFrame();
 
             player2.bowl(3);
             player2.bowl(3);
+            player2.changeNextFrame();
         });
 
         Players players = new Players(Arrays.asList(player, player2));
@@ -47,10 +49,12 @@ public class PlayersTest {
         IntStream.range(0, 10).forEach(i -> {
             player.bowl(3);
             player.bowl(3);
+            player.changeNextFrame();
         });
         IntStream.range(0, 9).forEach(i -> {
             player.bowl(3);
             player.bowl(3);
+            player.changeNextFrame();
         });
 
         Players players = new Players(Arrays.asList(player, player2));
