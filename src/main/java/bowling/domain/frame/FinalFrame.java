@@ -14,8 +14,8 @@ public class FinalFrame extends Frame {
 
     @Override
     public Optional<Integer> frameScore() {
-        if (scores.getScores().isEmpty()) {
-            return null;
+        if (scores.getScores().isEmpty() || !isFinished()) {
+            return Optional.empty();
         }
         return Optional.of(scores.transSpareScores()
                 .stream()

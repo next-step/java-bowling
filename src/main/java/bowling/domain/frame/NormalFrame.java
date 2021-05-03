@@ -15,9 +15,10 @@ public class NormalFrame extends Frame {
 
     @Override
     public Optional<Integer> frameScore() {
-        if (scores.getScores().isEmpty()) {
-            return null;
+        if (scores.getScores().isEmpty() || !isFinished()) {
+            return Optional.empty();
         }
+
         int frameScore = scores.transSpareScores()
                 .stream()
                 .mapToInt(score -> score.getScore())

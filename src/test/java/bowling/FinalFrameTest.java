@@ -101,7 +101,7 @@ public class FinalFrameTest {
         Optional<Integer> resultScore = frame.frameScore();
 
         //then
-        assertThat(resultScore).isNull();
+        assertThat(resultScore).isEqualTo(Optional.empty());
     }
 
 }

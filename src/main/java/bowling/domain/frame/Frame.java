@@ -29,14 +29,14 @@ public abstract class Frame {
             result.add(nextFrame.scores.getScores().get(0));
             return Optional.of(result);
         }
-        return null;
+        return Optional.empty();
     }
 
     public Optional<Score> getOneScore() {
         if (!this.scores.getScores().isEmpty()) {
             return Optional.of(this.scores.getScores().get(0));
         }
-        return null;
+        return Optional.empty();
     }
 
     public void nextFrame(Frame nextFrame) {
