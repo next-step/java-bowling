@@ -1,7 +1,5 @@
 package bowling;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.score.FrameScores;
 import bowling.ui.Placeholder;
 import bowling.ui.ScoreBoard;
 
@@ -13,18 +11,18 @@ public class Controller {
         placeholder.printNamingMessage();
         ScoreBoard scoreBoard = new ScoreBoard(placeholder.inputFromUser());
 
-        BowlingGame bowlingGame = new BowlingGame();
-        FrameScores frameScores = new FrameScores();
+        //BowlingGame bowlingGame = new BowlingGame();
+        //FrameScores frameScores = new FrameScores();
 
-        while(bowlingGame.isAvailable()) {
+        //while(bowlingGame.isAvailable()) {
             placeholder.printInputScoreMessage(frameNumber);
 
-            int score = bowlingGame.bowling(placeholder.inputFromUser());
-            frameScores.addScore(frameNumber, score);
-            scoreBoard.addData(frameNumber, frameScores.getFrameScore(frameNumber));
+            //int score = bowlingGame.bowling(placeholder.inputFromUser());
+            //frameScores.addScore(frameNumber, score);
+            //scoreBoard.addData(frameNumber, frameScores.getFrameScore(frameNumber));
             scoreBoard.printScoreBoard();
 
-            frameNumber = bowlingGame.nextFrameIfAvailable();
-        }
+            //frameNumber = bowlingGame.nextFrameIfAvailable();
+        //}
     }
 }
