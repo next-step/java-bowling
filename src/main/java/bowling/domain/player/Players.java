@@ -24,6 +24,10 @@ public final class Players {
         return new Players(players);
     }
 
+    public void add(Player player) {
+        players.add(player);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -35,9 +39,5 @@ public final class Players {
     @Override
     public int hashCode() {
         return Objects.hash(players);
-    }
-
-    public void add(Player player) {
-
     }
 }
