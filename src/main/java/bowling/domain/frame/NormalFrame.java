@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
-import bowling.domain.pin.PinCountValidator;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.IllegalNormalFrameException;
@@ -57,7 +56,6 @@ public final class NormalFrame extends Frame {
 
     @Override
     public void knockDownPin(Pin pin) {
-        pins.validatePinCount(pin, PinCountValidator.NORMAL);
         pins.knockDownPin(pin);
     }
 

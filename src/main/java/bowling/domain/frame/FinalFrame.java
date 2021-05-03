@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
-import bowling.domain.pin.PinCountValidator;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.NoNextFrameException;
@@ -18,7 +17,7 @@ public final class FinalFrame extends Frame {
     }
 
     public static FinalFrame create() {
-        return new FinalFrame(RoundNumber.MAX_ROUND_NUMBER, Pins.create());
+        return new FinalFrame(RoundNumber.MAX_ROUND_NUMBER, Pins.ofFinal());
     }
 
     public static FinalFrame from(Pins pins) {
@@ -37,7 +36,6 @@ public final class FinalFrame extends Frame {
 
     @Override
     public void knockDownPin(Pin pin) {
-        pins.validatePinCount(pin, PinCountValidator.FINAL);
         pins.knockDownPin(pin);
     }
 

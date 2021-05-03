@@ -58,7 +58,7 @@ class PinsTest {
 
         // then
         assertAll(
-                () -> assertThat(pins).isEqualTo(Pins.of(firstPin, secondPin, thirdPin)),
+                () -> assertThat(pins).isEqualTo(Pins.ofFinal(firstPin, secondPin, thirdPin)),
                 () -> assertThat(pins.firstPin()).isEqualTo(firstPin),
                 () -> assertThat(pins.secondPin()).isEqualTo(secondPin),
                 () -> assertThat(pins.thirdPin()).isEqualTo(thirdPin)
@@ -76,7 +76,7 @@ class PinsTest {
 
         // when
         // then
-        assertThatThrownBy(() -> Pins.of(firstPin, secondPin, thirdPin, fourthPin))
+        assertThatThrownBy(() -> Pins.ofFinal(firstPin, secondPin, thirdPin, fourthPin))
                 .isInstanceOf(PinsCountExceededException.class)
                 .hasMessage(PinsCountExceededException.PINS_COUNT_EXCEEDED);
     }
@@ -117,7 +117,7 @@ class PinsTest {
         final Pin firstPin = TestFixture.STRIKE_PIN;
         final Pin secondPin = TestFixture.GUTTER_PIN;
         final Pin thirdPin = TestFixture.STRIKE_PIN;
-        final Pins pins = Pins.of(firstPin, secondPin, thirdPin);
+        final Pins pins = Pins.ofFinal(firstPin, secondPin, thirdPin);
 
         // when
         // then

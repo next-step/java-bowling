@@ -16,12 +16,8 @@ public final class Pins {
     private static final int MAX_PIN_COUNT = 3;
     private static final int NORMAL_PINS_SIZE = 2;
 
+    private final PinCountValidator pinCountValidator;
     private final List<Pin> pins;
-
-    private Pins(List<Pin> pins) {
-        validatePinsCount(pins.size());
-        this.pins = pins;
-    }
 
     private Pins() {
         this(new ArrayList<>());
@@ -31,8 +27,34 @@ public final class Pins {
         this(Arrays.asList(pins));
     }
 
+    private Pins(List<Pin> pins) {
+        this(PinCountValidator.NORMAL, pins);
+    }
+
+    private Pins(PinCountValidator pinCountValidator, Pin... pins) {
+        this(pinCountValidator, Arrays.asList(pins));
+    }
+
+    private Pins(PinCountValidator pinCountValidator) {
+        this(pinCountValidator, new ArrayList<>());
+    }
+
+    private Pins(PinCountValidator pinCountValidator, List<Pin> pins) {
+        validatePinsCount(pins.size());
+        this.pins = pins;
+        this.pinCountValidator = pinCountValidator;
+    }
+
     public static Pins create() {
         return new Pins();
+    }
+
+    public static Pins ofFinal() {
+        return new Pins(PinCountValidator.FINAL);
+    }
+
+    public static Pins ofFinal(Pin... pins) {
+        return new Pins(PinCountValidator.FINAL, pins);
     }
 
     public static Pins of(Pin... pins) {
@@ -41,16 +63,6 @@ public final class Pins {
 
     public static Pins from(List<Pin> pins) {
         return new Pins(pins);
-    }
-
-    private void validatePinsCount(final int count) {
-        if (count > MAX_PIN_COUNT) {
-            throw new PinsCountExceededException();
-        }
-    }
-
-    public void validatePinCount(Pin pin, PinCountValidator validator) {
-        validator.validate(this, pin);
     }
 
     public Pin firstPin() {
@@ -90,8 +102,19 @@ public final class Pins {
     }
 
     public void knockDownPin(final Pin pin) {
+        validatePinCount(pin);
         validatePinsCount(pins.size() + 1);
         pins.add(pin);
+    }
+
+    private void validatePinCount(Pin pin) {
+        pinCountValidator.validate(this, pin);
+    }
+
+    private void validatePinsCount(final int count) {
+        if (count > MAX_PIN_COUNT) {
+            throw new PinsCountExceededException();
+        }
     }
 
     public int totalPinCount() {
