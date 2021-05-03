@@ -2,10 +2,10 @@ package bowling.domain.rollresult;
 
 import java.util.Objects;
 
-public class OneRollResultType implements RollResultType{
+public class OneHit implements RollResultType{
     private final int score;
 
-    private OneRollResultType(int score) {
+    private OneHit(int score) {
         this.score = score;
     }
 
@@ -13,18 +13,29 @@ public class OneRollResultType implements RollResultType{
         if (score == DEFAULT_MAX_SCORE) {
             return Strike.of();
         }
-        return new OneRollResultType(score);
+        if (score == DEFAULT_MIN_SCORE) {
+            return Gutter.of();
+        }
+        return new OneHit(score);
+    }
+
+    public static OneHit ofOne(int score) {
+        return new OneHit(score);
+    }
+
+    public OneHit add(int nextScore) {
+        return new OneHit(score + nextScore);
     }
 
     @Override
     public RollResultType next(int nextHit) {
         if (nextHit == DEFAULT_MAX_SCORE) {
-            return Spare.of(score);
+            return Spare.of(this, new OneHit(nextHit - score));
         }
         if (score == 0 && nextHit == 0) {
-            return Miss.of();
+            return Gutter.of();
         }
-        return Gutter.of(score, nextHit - score);
+        return Miss.of(this, OneHit.of(nextHit - score));
     }
 
     @Override
@@ -51,7 +62,7 @@ public class OneRollResultType implements RollResultType{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OneRollResultType that = (OneRollResultType) o;
+        OneHit that = (OneHit) o;
         return score == that.score;
     }
 

@@ -10,21 +10,20 @@ public class RollResultTest {
 
     @Test
     void 결과생성() {
-        assertThat(RollResult.of(Gutter.of(3, 5))).isEqualTo(RollResult.of(Gutter.of(3, 5)));
+        assertThat(RollResults.of(Miss.of(3, 5))).isEqualTo(RollResults.of(Miss.of(3, 5)));
     }
 
     @Test
     void 다음결과확인() {
-        RollResult result = RollResult.of(OneRollResultType.of(3));
-        assertThat(result.next(Pin.of(1, 7), HitNumber.of(3))).isEqualTo(RollResult.of(Gutter.of(3, 3)));
+        RollResults result = RollResults.of(OneHit.of(3));
+        assertThat(result.next(Pin.of(1, 7), HitNumber.of(3))).isEqualTo(RollResults.of(Miss.of(3, 3)));
     }
 
     @Test
     void 마무리하였는지확인() {
-        assertThat(RollResult.of(Strike.of()).isCleared()).isTrue();
-        assertThat(RollResult.of(Spare.of(3)).isCleared()).isTrue();
-        assertThat(RollResult.of(Gutter.of(3, 3)).isCleared()).isFalse();
-        assertThat(RollResult.of(Miss.of()).isCleared()).isFalse();
+        assertThat(RollResults.of(Strike.of()).isCleared()).isTrue();
+        assertThat(RollResults.of(Spare.of(3)).isCleared()).isTrue();
+        assertThat(RollResults.of(Miss.of(3, 3)).isCleared()).isFalse();
+        assertThat(RollResults.of(Gutter.of()).isCleared()).isFalse();
     }
-
 }

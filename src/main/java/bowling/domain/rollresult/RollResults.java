@@ -5,24 +5,24 @@ import bowling.domain.Pin;
 
 import java.util.Objects;
 
-public class RollResult {
+public class RollResults {
     private final RollResultType type;
     private final int total;
 
-    private RollResult(RollResultType type, int total) {
+    private RollResults(RollResultType type, int total) {
         this.type = type;
         this.total = total;
     }
 
-    public static RollResult of(RollResultType type) {
-        return new RollResult(type, type.eval());
+    public static RollResults of(RollResultType type) {
+        return new RollResults(type, type.eval());
     }
 
-    public static RollResult of(RollResultType type, int total) {
-        return new RollResult(type, total);
+    public static RollResults of(RollResultType type, int total) {
+        return new RollResults(type, total);
     }
 
-    public RollResult next(Pin pin, HitNumber number) {
+    public RollResults next(Pin pin, HitNumber number) {
         return of(pin.nextHit(type, number));
     }
 
@@ -38,7 +38,7 @@ public class RollResult {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RollResult that = (RollResult) o;
+        RollResults that = (RollResults) o;
         return total == that.total && Objects.equals(type, that.type);
     }
 

@@ -4,14 +4,18 @@ import java.util.Objects;
 
 public class Strike implements RollResultType {
     private static final String INVALID_SCORE = "스트라이크의 값은 10 이상이어야합니다.";
-    private final int score;
+    private final OneHit firstHit;
 
     private Strike() {
-        score = DEFAULT_MAX_SCORE;
+        firstHit = OneHit.ofOne(DEFAULT_MAX_SCORE);
     }
 
     private Strike(int score) {
-        this.score = score;
+        firstHit = OneHit.ofOne(score);
+    }
+
+    private Strike(OneHit firstHit) {
+        this.firstHit = firstHit;
     }
 
     public static Strike of() {
@@ -21,6 +25,11 @@ public class Strike implements RollResultType {
     public static Strike of(int score) {
         valid(score);
         return new Strike(score);
+    }
+
+    public static Strike of(OneHit firstHit) {
+        valid(firstHit.eval());
+        return new Strike(firstHit);
     }
 
     private static void valid(int score) {
@@ -46,12 +55,12 @@ public class Strike implements RollResultType {
 
     @Override
     public int eval() {
-        return score;
+        return firstHit.eval();
     }
 
     @Override
     public RollResultType next(int nextScore) {
-        return of(score + nextScore);
+        return of(firstHit.add(nextScore));
     }
 
     @Override
@@ -59,12 +68,12 @@ public class Strike implements RollResultType {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Strike strike = (Strike) o;
-        return score == strike.score;
+        return Objects.equals(firstHit, strike.firstHit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score);
+        return Objects.hash(firstHit);
     }
 
     @Override

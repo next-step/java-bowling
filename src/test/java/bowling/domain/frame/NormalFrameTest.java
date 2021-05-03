@@ -10,11 +10,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalFrameTest {
     public static final NormalFrame FRAME = NormalFrame.of();
-    public static final NormalFrame STRIKE_FRAME = NormalFrame.of(Pin.of(1, 0), RollResult.of(Strike.of()));
-    public static final NormalFrame SPARE_FRAME = NormalFrame.of(Pin.of(2, 0), RollResult.of(Spare.of(3, 7)));
-    public static final NormalFrame MISS_FRAME = NormalFrame.of(Pin.of(2, 10), RollResult.of(Miss.of()));
-    public static final NormalFrame GUTTER_FRAME = NormalFrame.of(Pin.of(2, 3), RollResult.of(Gutter.of(3, 4)));
-    public static final NormalFrame ONE_ROLL_FRAME = NormalFrame.of(Pin.of(1, 7), RollResult.of(OneRollResultType.of(3)));
+    public static final NormalFrame STRIKE_FRAME = NormalFrame.of(Pin.of(1, 0), RollResults.of(Strike.of()));
+    public static final NormalFrame SPARE_FRAME = NormalFrame.of(Pin.of(2, 0), RollResults.of(Spare.of(3)));
+    public static final NormalFrame MISS_FRAME = NormalFrame.of(Pin.of(2, 10), RollResults.of(Miss.of()));
+    public static final NormalFrame GUTTER_FRAME = NormalFrame.of(Pin.of(1, 10), RollResults.of(Gutter.of()));
+    public static final NormalFrame ONE_ROLL_FRAME = NormalFrame.of(Pin.of(1, 7), RollResults.of(OneHit.of(3)));
     public NormalFrame frame;
 
     @BeforeEach
@@ -46,6 +46,13 @@ public class NormalFrameTest {
     }
 
     @Test
+    void 거터프레임() {
+        Frame resultFrame = frame.roll(HitNumber.of(0));
+        assertThat(resultFrame).isEqualTo(GUTTER_FRAME);
+        System.out.println(resultFrame);
+    }
+
+    @Test
     void 스페어프레임() {
         Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(7));
         assertThat(resultFrame).isEqualTo(SPARE_FRAME);
@@ -59,10 +66,4 @@ public class NormalFrameTest {
         System.out.println(resultFrame);
     }
 
-    @Test
-    void 거터프레임() {
-        Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(4));
-        assertThat(resultFrame).isEqualTo(GUTTER_FRAME);
-        System.out.println(resultFrame);
-    }
 }

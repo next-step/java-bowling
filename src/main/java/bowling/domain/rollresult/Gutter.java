@@ -3,24 +3,14 @@ package bowling.domain.rollresult;
 import java.util.Objects;
 
 public class Gutter implements RollResultType {
-    private static final String INVALID_SCORE = "해당 값은 거터가 아닙니다. (spare 혹은 strike)";
-    private final int firstScore;
-    private final int secondScore;
 
-    private Gutter(int firstScore, int secondScore) {
-        this.firstScore = firstScore;
-        this.secondScore = secondScore;
+    private final int score = DEFAULT_MIN_SCORE;
+
+    private Gutter() {
     }
 
-    public static Gutter of(int firstScore, int secondScore) {
-        valid(firstScore, secondScore);
-        return new Gutter(firstScore, secondScore);
-    }
-
-    private static void valid(int firstScore, int secondScore) {
-        if (firstScore + secondScore >= DEFAULT_MAX_SCORE) {
-            throw new IllegalArgumentException(INVALID_SCORE);
-        }
+    public static Gutter of() {
+        return new Gutter();
     }
 
     @Override
@@ -35,17 +25,20 @@ public class Gutter implements RollResultType {
 
     @Override
     public boolean hasNext() {
-        return false;
+        return true;
     }
 
     @Override
     public int eval() {
-        return firstScore + secondScore;
+        return DEFAULT_MIN_SCORE;
     }
 
     @Override
-    public RollResultType next(int nextScore) {
-        return this;
+    public RollResultType next(int nextHit) {
+        if (nextHit == DEFAULT_MAX_SCORE) {
+            return Spare.of(this, OneHit.ofOne(nextHit));
+        }
+        return Miss.of(this, OneHit.of(nextHit));
     }
 
     @Override
@@ -53,16 +46,16 @@ public class Gutter implements RollResultType {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Gutter gutter = (Gutter) o;
-        return firstScore == gutter.firstScore && secondScore == gutter.secondScore;
+        return score == gutter.score;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstScore, secondScore);
+        return Objects.hash(score);
     }
 
     @Override
     public String toString() {
-        return "" + firstScore + "|" + "-";
+        return "-";
     }
 }

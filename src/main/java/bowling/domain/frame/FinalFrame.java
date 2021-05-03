@@ -2,20 +2,20 @@ package bowling.domain.frame;
 
 import bowling.domain.HitNumber;
 import bowling.domain.Pin;
-import bowling.domain.rollresult.RollResult;
+import bowling.domain.rollresult.RollResults;
 import bowling.domain.rollresult.RollResultType;
 
 import java.util.Objects;
 
 public class FinalFrame implements Frame {
     private final Pin pin;
-    private final RollResult result;
+    private final RollResults result;
 
     private FinalFrame(Pin pin) {
         this(pin, null);
     }
 
-    private FinalFrame(Pin pin, RollResult result) {
+    private FinalFrame(Pin pin, RollResults result) {
         this.pin = pin;
         this.result = result;
     }
@@ -28,11 +28,11 @@ public class FinalFrame implements Frame {
         return new FinalFrame(pin);
     }
 
-    public static FinalFrame of(RollResult result) {
+    public static FinalFrame of(RollResults result) {
         return new FinalFrame(null, result);
     }
 
-    public static FinalFrame of(Pin pin, RollResult result) {
+    public static FinalFrame of(Pin pin, RollResults result) {
         return new FinalFrame(pin, result);
     }
 
@@ -57,7 +57,7 @@ public class FinalFrame implements Frame {
 
     private Frame firstRoll(HitNumber hitNumber, Pin pin) {
         RollResultType type = pin.firstHit(hitNumber);
-        return of(pin, RollResult.of(type));
+        return of(pin, RollResults.of(type));
     }
 
     private Frame nextRoll(HitNumber hitNumber, Pin pin) {

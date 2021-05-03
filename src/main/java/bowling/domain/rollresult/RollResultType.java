@@ -7,6 +7,6 @@ public interface RollResultType {
     boolean isSpare();
     boolean hasNext();
     int eval();
-    RollResultType next(int nextScore);
+    RollResultType next(int nextHit);
 
 }

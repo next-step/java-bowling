@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.rollresult.OneRollResultType;
+import bowling.domain.rollresult.OneHit;
 import bowling.domain.rollresult.RollResultType;
 
 import java.util.Objects;
@@ -62,7 +62,7 @@ public class Pin {
 
     public RollResultType firstHit(HitNumber rollNumber) {
         fallen(rollNumber);
-        return OneRollResultType.of(PIN_NUM_UPPER_BOUND - pinNum);
+        return OneHit.of(PIN_NUM_UPPER_BOUND - pinNum);
     }
 
     public RollResultType nextHit(RollResultType type, HitNumber rollNumber) {

@@ -32,5 +32,4 @@ public class FramesTest {
         frames.play(HitNumber.of(3));
         assertThat(frames.getLastIndex()).isEqualTo(0);
     }
-
 }
