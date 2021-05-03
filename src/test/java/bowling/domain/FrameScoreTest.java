@@ -15,31 +15,43 @@ public class FrameScoreTest {
     void score() {
         int score = 10;
         FrameScore frameScore = new FrameScore(new Score(score), new BonusPitch(new Hold(new Pitch(score))));
-        
+
         assertThat(frameScore.score()).isEqualTo(new Score(score));
     }
 
-    @DisplayName("스페어 처리의 경우, 투구 합산 가능여부는 True 를 반환한다.")
+    @DisplayName("스페어 처리한 후 첫번째 투구를 마치면 보너스투구 존재 여부는 거짓을 반환한다.")
     @Test
-    void isExistsAddCount_spare() {
+    void sumScore_spare() {
         int score = 10;
         FrameScore frameScore = new FrameScore(new Score(score), new BonusPitch(new Spare()));
 
         assertThat(frameScore.isExistsAddCount()).isTrue();
+
+        FrameScore afterFirstPitch = frameScore.sumScore(8);
+
+        assertThat(afterFirstPitch.isExistsAddCount()).isFalse();
     }
 
-    @DisplayName("스페어 처리의 경우, 투구 합산 가능여부는 True 를 반환한다.")
+    @DisplayName("스트라이크 처리한 후 두번째 투구를 마치면 보너스투구 존재 여부는 거짓을 반환한다.")
     @Test
-    void isExistsAddCount_strike() {
+    void sumScore_strike() {
         int score = 10;
         FrameScore frameScore = new FrameScore(new Score(score), new BonusPitch(new Strike()));
 
         assertThat(frameScore.isExistsAddCount()).isTrue();
+
+        FrameScore afterFirstPitch = frameScore.sumScore(8);
+
+        assertThat(afterFirstPitch.isExistsAddCount()).isTrue();
+
+        FrameScore afterSecondPitch = frameScore.sumScore(2);
+
+        assertThat(afterSecondPitch.isExistsAddCount()).isFalse();
     }
 
-    @DisplayName("미스의 경우, 투구 합산 가능여부는 False 를 반환한다.")
+    @DisplayName("미스의 경우, 보너스투구 존재 여부는 거짓을 반환한다.")
     @Test
-    void isExistsAddCount_open() {
+    void sumScore_miss() {
         int score = 8;
         FrameScore frameScore = new FrameScore(new Score(score), new BonusPitch(new Miss(new Pitch(score))));
 
