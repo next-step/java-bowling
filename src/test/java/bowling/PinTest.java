@@ -22,7 +22,7 @@ public class PinTest {
     }
 
     @Test
-    void 시도횟수는_0과2사이() {
+    void 시도횟수는_0과3사이() {
         assertThatThrownBy(() -> {
             Pin.of(4, 10);
         }).isInstanceOf(IllegalArgumentException.class);

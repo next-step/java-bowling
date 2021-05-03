@@ -44,11 +44,11 @@ public class FinalFrame implements Frame {
         if (result == null) {
             return firstRoll(hitNumber, this.pin);
         }
-        if (!result.isFinished() && !result.hasNext()) {
+        if (!result.isCleared() && !result.hasNext()) {
             throw new IllegalStateException();
         }
-        if (result.isFinished()) {
-            return nextRoll(hitNumber, Pin.of());
+        if (result.isCleared()) {
+            return nextRoll(hitNumber, Pin.last());
         }
         return nextRoll(hitNumber, pin);
     }
@@ -64,7 +64,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        return !result.hasNext();
+        return pin.isLast() || (!result.isCleared() && !result.hasNext());
     }
 
     @Override

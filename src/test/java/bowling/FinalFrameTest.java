@@ -14,8 +14,8 @@ public class FinalFrameTest {
     public static final FinalFrame MISS_FRAME = FinalFrame.of(Pin.of(2, 10), RollResult.of(Miss.of()));
     public static final FinalFrame GUTTER_FRAME = FinalFrame.of(Pin.of(2, 3), RollResult.of(Gutter.of(3, 4)));
     public static final FinalFrame ONE_ROLL_FRAME = FinalFrame.of(Pin.of(1, 7), RollResult.of(OneRollResultType.of(3)));
-    public static final FinalFrame SPARE_NEXT_FRAME = FinalFrame.of(Pin.of(1, 7), RollResult.of(Spare.of(3, 10)));
-    public static final FinalFrame STRIKE_NEXT_FRAME = FinalFrame.of(Pin.of(1, 7), RollResult.of(Strike.of(23)));
+    public static final FinalFrame SPARE_NEXT_FRAME = FinalFrame.of(Pin.of(3, 7), RollResult.of(Spare.of(3, 10)));
+    public static final FinalFrame STRIKE_NEXT_FRAME = FinalFrame.of(Pin.of(3, 7), RollResult.of(Strike.of(23)));
     public FinalFrame frame;
 
     @BeforeEach
@@ -38,37 +38,49 @@ public class FinalFrameTest {
     void 스트라이크프레임() {
         Frame resultFrame = frame.roll(HitNumber.of(10));
         assertThat(resultFrame).isEqualTo(STRIKE_FRAME);
+        assertThat(resultFrame.isFinished()).isFalse();
     }
 
     @Test
     void 스트라이크아닌한번친프레임() {
-        assertThat(frame.roll(HitNumber.of(3))).isEqualTo(ONE_ROLL_FRAME);
+        Frame resultFrame = frame.roll(HitNumber.of(3));
+        assertThat(resultFrame).isEqualTo(ONE_ROLL_FRAME);
+        assertThat(resultFrame.isFinished()).isFalse();
     }
 
     @Test
     void 스페어프레임() {
-        assertThat(frame.roll(HitNumber.of(3)).roll(HitNumber.of(7))).isEqualTo(SPARE_FRAME);
+        Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(7));
+        assertThat(resultFrame).isEqualTo(SPARE_FRAME);
+        assertThat(resultFrame.isFinished()).isFalse();
     }
 
     @Test
     void 미스프레임() {
-        assertThat(frame.roll(HitNumber.of(0)).roll(HitNumber.of(0))).isEqualTo(MISS_FRAME);
+        Frame resultFrame = frame.roll(HitNumber.of(0)).roll(HitNumber.of(0));
+        assertThat(resultFrame).isEqualTo(MISS_FRAME);
+        assertThat(resultFrame.isFinished()).isTrue();
     }
 
     @Test
     void 거터프레임() {
-        assertThat(frame.roll(HitNumber.of(3)).roll(HitNumber.of(4))).isEqualTo(GUTTER_FRAME);
+        Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(4));
+        assertThat(resultFrame).isEqualTo(GUTTER_FRAME);
+        assertThat(resultFrame.isFinished()).isTrue();
     }
 
     @Test
     void 스트라이크후_재투구() {
-        Frame test = frame.roll(HitNumber.of(10)).roll(HitNumber.of(10)).roll(HitNumber.of(3));
-        assertThat(test).isEqualTo(STRIKE_NEXT_FRAME);
+        Frame resultFrame = frame.roll(HitNumber.of(10)).roll(HitNumber.of(10)).roll(HitNumber.of(3));
+        assertThat(resultFrame).isEqualTo(STRIKE_NEXT_FRAME);
+        assertThat(resultFrame.isFinished()).isTrue();
     }
 
     @Test
     void 스페어후_재투구() {
-        assertThat(frame.roll(HitNumber.of(3)).roll(HitNumber.of(7)).roll(HitNumber.of(3))).isEqualTo(SPARE_NEXT_FRAME);
+        Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(7)).roll(HitNumber.of(3));
+        assertThat(resultFrame).isEqualTo(SPARE_NEXT_FRAME);
+        assertThat(resultFrame.isFinished()).isTrue();
     }
 
     @Test

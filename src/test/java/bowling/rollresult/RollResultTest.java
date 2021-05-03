@@ -21,10 +21,10 @@ public class RollResultTest {
 
     @Test
     void 마무리하였는지확인() {
-        assertThat(RollResult.of(Strike.of()).isFinished()).isTrue();
-        assertThat(RollResult.of(Spare.of(3)).isFinished()).isTrue();
-        assertThat(RollResult.of(Gutter.of(3, 3)).isFinished()).isFalse();
-        assertThat(RollResult.of(Miss.of()).isFinished()).isFalse();
+        assertThat(RollResult.of(Strike.of()).isCleared()).isTrue();
+        assertThat(RollResult.of(Spare.of(3)).isCleared()).isTrue();
+        assertThat(RollResult.of(Gutter.of(3, 3)).isCleared()).isFalse();
+        assertThat(RollResult.of(Miss.of()).isCleared()).isFalse();
     }
 
 }

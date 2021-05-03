@@ -26,7 +26,7 @@ public class RollResult {
         return of(pin.nextHit(type, number));
     }
 
-    public boolean isFinished() {
+    public boolean isCleared() {
         return type.isStrike() || type.isSpare();
     }
 
