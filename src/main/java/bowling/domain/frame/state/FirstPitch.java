@@ -4,6 +4,7 @@ import bowling.domain.Score;
 
 public class FirstPitch implements State {
     private int remainPins;
+    private int killedPins;
 
     public FirstPitch() {
         remainPins = 10;
@@ -27,12 +28,13 @@ public class FirstPitch implements State {
         if (remainPins < killedPins) {
             throw new IllegalArgumentException("쓰러뜨릴려는 핀 개수가 남아 있는 핀 개수보다 큽니다.");
         }
+        this.killedPins = killedPins;
         remainPins = remainPins - killedPins;
     }
 
     @Override
     public Score calculateScore() {
-        return new Score(10 - remainPins, 0);
+        return new Score(killedPins, 0);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class Score {
     }
 
     public void sum(Score score) {
-        if(canCalculate()) {
+        if(sumAvailability > 0) {
             --sumAvailability;
             scoreTotal += score.scoreTotal;
         }
