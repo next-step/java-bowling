@@ -7,11 +7,11 @@ public interface Frame {
 
     Frame roll(Pinfall pinfall, FrameFatory frameFatory);
 
-    SingleFrameResult result();
-
     boolean isDone();
 
     FrameNumber frameNumber();
+
+    PointSymbols pointSymbols();
 
     Score score();
 
@@ -20,4 +20,5 @@ public interface Frame {
     boolean hasNext();
 
     Frame next() ;
+
 }

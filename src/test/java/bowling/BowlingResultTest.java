@@ -20,21 +20,21 @@ public class BowlingResultTest {
     @Test
     @DisplayName("N개의 프레임 결과를 받아서 생성 테스트")
     void Given_FrameResult_When_New_Then_Created() {
-        assertDoesNotThrow(() -> new BowlingResult(Arrays.asList(new SingleFrameResult(), new SingleFrameResult())));
+        assertDoesNotThrow(() -> new BowlingResult(Arrays.asList(new FrameResult(), new FrameResult())));
     }
 
     @Test
     @DisplayName("OpenFrame이면 AggregatedScore는 OpenFrame의 점수와 같다")
     void Given_OneScoreSingleFrameResult_When_New_Then_ValidFrameResult() {
-        SingleFrameResult openFrameResult = new SingleFrameResult(Score.create(1));
+        FrameResult openFrameResult = new FrameResult(Score.create(1));
         BowlingResult bowlingResult = new BowlingResult(Arrays.asList(openFrameResult));
-        assertThat(bowlingResult.result(new FrameNumber(1)).aggregatedScore()).isEqualTo(openFrameResult.score());
+        assertThat(bowlingResult.result(new FrameNumber(1)).aggregatedScore()).isEqualTo(openFrameResult.aggregatedScore());
     }
 
     @Test
     @DisplayName("특정 Frame의 결과 반환 테스트")
     void Given_frameNumber_When_result_Then_SingleFrameResult() {
-        List<SingleFrameResult> singleFrameResults = Arrays.asList(new SingleFrameResult(), new SingleFrameResult(new PointSymbols(PointSymbol.STRIKE)));
+        List<FrameResult> singleFrameResults = Arrays.asList(new FrameResult(), new FrameResult(new PointSymbols(PointSymbol.STRIKE)));
         BowlingResult bowlingResult = new BowlingResult(singleFrameResults);
 
         assertThat(bowlingResult.result(new FrameNumber(2)).pointSymbols()).isEqualTo(new PointSymbols(PointSymbol.STRIKE));
@@ -43,7 +43,7 @@ public class BowlingResultTest {
     @Test
     @DisplayName("FrameResults가 없는 Frame의 결과를 요청하면 빈 FrameResult를 반환")
     void Given_WrongFrameNumber_When_Result_Then_EmptyFrameResult() {
-        List<SingleFrameResult> singleFrameResults = Arrays.asList(new SingleFrameResult(), new SingleFrameResult(new PointSymbols(PointSymbol.STRIKE)));
+        List<FrameResult> singleFrameResults = Arrays.asList(new FrameResult(), new FrameResult(new PointSymbols(PointSymbol.STRIKE)));
         BowlingResult bowlingResult = new BowlingResult(singleFrameResults);
 
         assertThat(bowlingResult.result(new FrameNumber(3))).isEqualTo(new FrameResult());
@@ -54,7 +54,7 @@ public class BowlingResultTest {
     void When_Add_Then_FrameResultAdded() {
         BowlingResult bowlingResult = new BowlingResult();
 
-        bowlingResult.add(new FrameNumber(1), new SingleFrameResult(new PointSymbols(PointSymbol.NINE), Score.create(9)));
+        bowlingResult.add(new FrameNumber(1), new PointSymbols(PointSymbol.NINE), Score.create(9));
 
         assertThat(bowlingResult.result(new FrameNumber(1))).isEqualTo(new FrameResult(new PointSymbols(PointSymbol.NINE), Score.create(9)));
     }
@@ -64,11 +64,8 @@ public class BowlingResultTest {
     void Given_NewFrameResult_When_Add_Then_ReplaceFrameResult() {
         BowlingResult bowlingResult = new BowlingResult();
 
-        SingleFrameResult oldSingleFrameResult = new SingleFrameResult(Score.create(1));
-        bowlingResult.add(new FrameNumber(1), oldSingleFrameResult);
-
-        SingleFrameResult newSingleFrameResult = new SingleFrameResult(new PointSymbols(PointSymbol.TWO), Score.create(2));
-        bowlingResult.add(new FrameNumber(1), newSingleFrameResult);
+        bowlingResult.add(new FrameNumber(1), new PointSymbols(PointSymbol.ONE), Score.create(1));
+        bowlingResult.add(new FrameNumber(1), new PointSymbols(PointSymbol.TWO), Score.create(2));
         assertThat(bowlingResult.result(new FrameNumber(1))).isEqualTo(new FrameResult(new PointSymbols(PointSymbol.TWO), Score.create(2)));
     }
 }

@@ -37,11 +37,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public SingleFrameResult result() {
-        return new SingleFrameResult(currentState.pointSymbols(), score());
-    }
-
-    @Override
     public boolean isDone() {
         return !currentState.isRollable();
     }
@@ -49,6 +44,11 @@ public class FinalFrame implements Frame {
     @Override
     public FrameNumber frameNumber() {
         return new FrameNumber(10);
+    }
+
+    @Override
+    public PointSymbols pointSymbols() {
+        return currentState.pointSymbols();
     }
 
     @Override

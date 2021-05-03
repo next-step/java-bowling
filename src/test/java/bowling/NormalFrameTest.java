@@ -22,21 +22,11 @@ public class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("result를 호출했을 때 FrameResult를 반환하는지 테스트")
-    void When_Result_Then_ReturnFrameResult() {
-        NormalFrame normalFrame = new NormalFrame();
-
-        assertThat(normalFrame.result())
-                .isEqualTo(new SingleFrameResult());
-    }
-
-    @Test
     @DisplayName("Strike일 때 FrameResult에 X 심볼 있는지 테스트")
     void Given_Strike_When_Result_Then_ResultWithStrikeSymbol() {
         NormalFrame normalFrame = new NormalFrame(new Pinfall(10));
 
-        assertThat(normalFrame.result().pointSymbols())
-                .isEqualTo(new PointSymbols(PointSymbol.STRIKE));
+        assertThat(normalFrame.pointSymbols()).isEqualTo(new PointSymbols(PointSymbol.STRIKE));
     }
 
     @Test
@@ -44,8 +34,7 @@ public class NormalFrameTest {
     void Given_Spare_When_Result_Then_ResultWithSpareSymbol() {
         NormalFrame normalFrame = new NormalFrame(new Pinfall(9), new Pinfall(1));
 
-        assertThat(normalFrame.result().pointSymbols())
-                .isEqualTo(new PointSymbols(PointSymbol.NINE, PointSymbol.SPARE));
+        assertThat(normalFrame.pointSymbols()).isEqualTo(new PointSymbols(PointSymbol.NINE, PointSymbol.SPARE));
     }
 
     @Test
@@ -53,8 +42,7 @@ public class NormalFrameTest {
     void Given_Open_When_Result_Then_ResultWithNumericSymbol() {
         NormalFrame normalFrame = new NormalFrame(new Pinfall(8), new Pinfall(1));
 
-        assertThat(normalFrame.result().pointSymbols())
-                .isEqualTo(new PointSymbols(PointSymbol.EIGHT, PointSymbol.ONE));
+        assertThat(normalFrame.pointSymbols()).isEqualTo(new PointSymbols(PointSymbol.EIGHT, PointSymbol.ONE));
     }
 
     @Test
@@ -87,7 +75,7 @@ public class NormalFrameTest {
     @DisplayName("Open일 때 점수는 넘어진 핀의 개수의 합")
     void Given_Open_When_Score_Then_Score() {
         NormalFrame frame = new NormalFrame(new Pinfall(1), new Pinfall(2));
-        assertThat(frame.result().score()).isEqualTo(Score.create(3));
+        assertThat(frame.score()).isEqualTo(Score.create(3));
     }
 
     @Test

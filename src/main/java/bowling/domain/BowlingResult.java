@@ -10,19 +10,19 @@ public class BowlingResult {
         frameResultsMap = new HashMap<>();
     }
 
-    public BowlingResult(List<SingleFrameResult> singleFrameResultsMap) {
+    public BowlingResult(List<FrameResult> frameResults) {
         this.frameResultsMap = new HashMap<>();
 
         FrameNumber frameNumber = new FrameNumber(1);
-        for (SingleFrameResult singleFrameResult : singleFrameResultsMap) {
-            add(frameNumber, singleFrameResult);
+        for (FrameResult frameResult : frameResults) {
+            frameResultsMap.put(frameNumber, frameResult);
             frameNumber = frameNumber.increase();
         }
     }
 
-    public void add(FrameNumber frameNumber, SingleFrameResult result) {
+    public void add(FrameNumber frameNumber, PointSymbols pointSymbols, Score score) {
         Score aggregatedScore = prevAggregatedScore(frameNumber);
-        FrameResult frameResult = new FrameResult(result.pointSymbols(), aggregatedScore.add(result.score()));
+        FrameResult frameResult = new FrameResult(pointSymbols, aggregatedScore.add(score));
         frameResultsMap.put(frameNumber, frameResult);
     }
 

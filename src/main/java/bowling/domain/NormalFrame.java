@@ -35,11 +35,6 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public SingleFrameResult result() {
-        return new SingleFrameResult(currentState.pointSymbols(), score());
-    }
-
-    @Override
     public Frame roll(Pinfall pinfall) {
         return roll(pinfall, new NormalFrameFactory());
     }
@@ -52,6 +47,11 @@ public class NormalFrame implements Frame {
     @Override
     public FrameNumber frameNumber() {
         return frameNumber;
+    }
+
+    @Override
+    public PointSymbols pointSymbols() {
+        return currentState.pointSymbols();
     }
 
     @Override

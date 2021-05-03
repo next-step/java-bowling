@@ -31,11 +31,11 @@ public class Bowling {
 
     public BowlingResult result() {
         Frame indexFrame = firstFrame;
-        bowlingResult.add(indexFrame.frameNumber(), indexFrame.result());
+        bowlingResult.add(indexFrame.frameNumber(), indexFrame.pointSymbols(), indexFrame.score());
 
         while (indexFrame.hasNext()) {
             indexFrame = indexFrame.next();
-            bowlingResult.add(indexFrame.frameNumber(), indexFrame.result());
+            bowlingResult.add(indexFrame.frameNumber(), indexFrame.pointSymbols(), indexFrame.score());
         }
 
         return bowlingResult;

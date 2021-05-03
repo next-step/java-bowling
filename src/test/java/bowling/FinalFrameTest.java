@@ -24,18 +24,11 @@ public class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("result를 호출했을 때 FrameResult를 반환하는지 테스트")
-    void When_Result_Then_FrameResult() {
-        assertThat(new FinalFrame().result()).isEqualTo(new SingleFrameResult());
-    }
-
-    @Test
     @DisplayName("Strike일 때 FrameResult에 X 심볼 있는지 테스트")
     void Given_Strike_When_Result_Then_WithStrikeSymbol() {
         FinalFrame finalFrame = new FinalFrame();
         finalFrame.roll(new Pinfall(10));
-        assertThat(finalFrame.result().pointSymbols())
-                .isEqualTo(new PointSymbols(PointSymbol.STRIKE));
+        assertThat(finalFrame.pointSymbols()).isEqualTo(new PointSymbols(PointSymbol.STRIKE));
     }
 
     @Test
@@ -43,8 +36,7 @@ public class FinalFrameTest {
     void Given_Double_When_Result_Then_WithTwoStrikeSymbol() {
         FinalFrame finalFrame = new FinalFrame(new Pinfall(10), new Pinfall(10));
 
-        assertThat(finalFrame.result().pointSymbols())
-                .isEqualTo(new PointSymbols(PointSymbol.STRIKE, PointSymbol.STRIKE));
+        assertThat(finalFrame.pointSymbols()).isEqualTo(new PointSymbols(PointSymbol.STRIKE, PointSymbol.STRIKE));
     }
 
     @Test
