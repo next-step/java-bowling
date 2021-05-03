@@ -3,12 +3,9 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import org.apache.commons.lang3.StringUtils;
 
 public class Frame {
 
-  public static final String DELIMITER = "|";
   protected List<Pitching> pitchingList;
   protected int number;
 
@@ -17,7 +14,7 @@ public class Frame {
     pitchingList.add(new Pitching());
   }
 
-  public String play(int hitCount) {
+  public List<String> play(int hitCount) {
     Pitching pitching = lastPitching();
     Pitching play = pitching.play(hitCount);
     pitchingList.add(play);
@@ -40,27 +37,34 @@ public class Frame {
     return pitchingList.size() - 1;
   }
 
-  public String result() {
-    List<String> scoreResult = IntStream.rangeClosed(1, lastPitchingIndex())
-        .mapToObj(index -> getScore(index))
-        .filter(score -> !StringUtils.isBlank(score))
+  public List<String> result() {
+    List<Integer> hitCounts = getHitCounts();
+    return pitchingList.stream()
+        .filter(pitching -> pitching.result().isNotNone())
+        .map(pitching -> getScore(hitCounts, pitching))
         .collect(Collectors.toList());
-    return StringUtils.join(scoreResult, DELIMITER);
   }
 
-  private String getScore(int index) {
-    if (pitchingList.get(index).leftPins() == 10) {
-      return "";
-    }
-    Result result = pitchingList.get(index).result();
-    if (result.isNotMiss()) {
-      return result.getMark();
-    }
-    return String.valueOf(getHitScore(index));
+  private List<Integer> getHitCounts() {
+    List<Integer> pinsInfo = pitchingList.stream()
+        .filter(pitching -> pitching.result().isNotNone())
+        .map(Pitching::leftPins)
+        .collect(Collectors.toList());
+
+    List<Integer> hitCounts = new ArrayList<>();
+    pinsInfo.stream().reduce(Pins.MAX, (a, b) -> {
+      int hitCount = a - b;
+      hitCounts.add(hitCount);
+      return b;
+    });
+    return hitCounts;
   }
 
-  private int getHitScore(int index) {
-    return pitchingList.get(index - 1).leftPins() - pitchingList.get(index).leftPins();
+  private String getScore(List<Integer> hitCounts, Pitching pitching) {
+    if (pitching.result().isNotMiss()) {
+      return pitching.result().getMark();
+    }
+    return String.valueOf(hitCounts.get(pitching.getTryCount() - 1));
   }
 
 }

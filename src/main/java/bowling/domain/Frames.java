@@ -32,16 +32,17 @@ public class Frames {
     return frames.size();
   }
 
-  public List<String> play(int hitCount) {
+  public List<FrameScore> play(int hitCount) {
     frames.stream().filter(frame -> !frame.isEnd())
         .findFirst().map(frame -> frame.play(hitCount))
         .orElseThrow(() -> new IllegalArgumentException("game is over."));
     return result();
   }
 
-
-  public List<String> result() {
-    return frames.stream().map(Frame::result).collect(Collectors.toList());
+  public List<FrameScore> result() {
+    return frames.stream().map(Frame::result)
+        .map(FrameScore::new)
+        .collect(Collectors.toList());
   }
 
   public Integer getCurrent() {

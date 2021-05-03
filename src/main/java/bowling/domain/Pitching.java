@@ -26,6 +26,9 @@ public class Pitching {
   }
 
   public Result result() {
+    if (tryCount == 0) {
+      return Result.NONE;
+    }
     if (tryCount == 1 && isClear()) {
       return Result.STRIKE;
     }
@@ -43,4 +46,7 @@ public class Pitching {
     return result().isStrike() || tryCount == MAX_TRY;
   }
 
+  public int getTryCount() {
+    return tryCount;
+  }
 }

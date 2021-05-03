@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.Bowling;
+import bowling.domain.FrameScore;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
@@ -21,21 +22,22 @@ public class ResultView {
     System.out.printf(SCORE_FORMAT, bowling.getPlayerName(), scoreBoard);
   }
 
-  private static String drawScoreBoard(List<String> results) {
-    List<String> scores = results.stream()
-        .map(result -> getScore(result))
+  private static String drawScoreBoard(List<FrameScore> frameScores) {
+    List<String> scores = frameScores.stream()
+        .map(FrameScore::getScore)
+        .map(ResultView::drawScore)
         .collect(Collectors.toList());
     return StringUtils.join(scores, DELIMITER);
   }
 
-  private static String getScore(String result) {
-    if (StringUtils.isBlank(result)) {
+  private static String drawScore(String score) {
+    if (StringUtils.isBlank(score)) {
       return BLANK;
     }
-    if (result.length() > 4) {
-      return String.format(FINAL_FRAME_FORMAT, result);
+    if (score.length() > 4) {
+      return String.format(FINAL_FRAME_FORMAT, score);
     }
-    return String.format(FRAME_FORMAT, result);
+    return String.format(FRAME_FORMAT, score);
   }
 
 }

@@ -1,19 +1,22 @@
 package bowling.domain;
 
+import java.util.List;
+
 public class FinalFrame extends Frame{
 
   private static final int MAX = 3;
+  private static final int FINAL_FRAME_NUMBER = 10;
 
   private int pitchingCount;
 
   public FinalFrame() {
     super();
-    this.number = 10;
+    this.number = FINAL_FRAME_NUMBER;
     this.pitchingCount = 0;
   }
 
   @Override
-  public String play(int hitCount) {
+  public List<String> play(int hitCount) {
     pitchingCount++;
     return super.play(hitCount);
   }

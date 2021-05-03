@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -29,20 +30,20 @@ class NormalFrameTest {
   @Test
   void strike() {
     NormalFrame normalFrame = new NormalFrame();
-    assertEquals(normalFrame.play(10), Result.STRIKE.getMark());
+    assertThat(normalFrame.play(10)).containsExactly("X");
   }
 
   @Test
   void spare() {
     NormalFrame normalFrame = new NormalFrame();
     normalFrame.play(5);
-    assertEquals(normalFrame.play(5), String.format("%s|%s", 5, Result.SPARE.getMark()));
+    assertThat(normalFrame.play(5)).containsExactly("5", "/");
   }
 
   @Test
   void miss() {
     NormalFrame normalFrame = new NormalFrame();
-    assertEquals(normalFrame.play(5), "5");
-    assertEquals(normalFrame.play(4), "5|4");
+    assertThat(normalFrame.play(5)).containsExactly("5");
+    assertThat(normalFrame.play(4)).containsExactly("5", "4");
   }
 }

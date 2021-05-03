@@ -12,7 +12,7 @@ public class Bowling {
     this.frames = new Frames();
   }
 
-  public List<String> play(int hitCount) {
+  public List<FrameScore> play(int hitCount) {
     return frames.play(hitCount);
   }
 
@@ -20,7 +20,7 @@ public class Bowling {
     return player.getName();
   }
 
-  public List<String> getScores() {
+  public List<FrameScore> getScores() {
     return frames.result();
   }
 

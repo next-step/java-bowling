@@ -44,7 +44,7 @@ class PitchingTest {
   @Test
   void miss() {
     Pitching pitching = new Pitching();
-    assertEquals(pitching.result(), Result.MISS);
+    assertEquals(pitching.result(), Result.NONE);
     assertEquals(pitching.play(4).result(), Result.MISS);
     assertEquals(pitching.play(4).play(4).result(), Result.MISS);
   }

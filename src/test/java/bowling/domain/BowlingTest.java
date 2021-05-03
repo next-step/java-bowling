@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -14,9 +14,9 @@ class BowlingTest {
   @Test
   void play() {
     Bowling bowling = new Bowling(new Player("cyr"));
-    assertThat(bowling.play(4).get(0)).contains("4");
-    assertThat(bowling.play(6).get(0)).contains("4|/");
-    assertThat(bowling.play(10).get(1)).contains("X");
+    assertEquals(bowling.play(4).get(0).getScore(),"4");
+    assertEquals(bowling.play(6).get(0).getScore(),"4|/");
+    assertEquals(bowling.play(10).get(1).getScore(),"X");
   }
 
   @Test
