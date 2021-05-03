@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.Score;
@@ -68,16 +69,18 @@ public class NormalFrameTest {
 
     private static Stream<Arguments> getFrameScore_spare() {
         return Stream.of(
-                arguments(new NormalFrame(Arrays.asList(Score.TWO, Score.SPARE)), new NormalFrame(Arrays.asList(Score.TWO, Score.SPARE)), 12),
-                arguments(new NormalFrame(Arrays.asList(Score.FIVE, Score.SPARE)), new NormalFrame(Arrays.asList(Score.STRIKE)), 20),
-                arguments(new NormalFrame(Arrays.asList(Score.SIX, Score.SPARE)), new NormalFrame(Arrays.asList(Score.GUTTER, Score.GUTTER)), 10),
-                arguments(new NormalFrame(Arrays.asList(Score.NINE, Score.SPARE)), new NormalFrame(Arrays.asList(Score.GUTTER, Score.FIVE)), 10)
+                arguments(new NormalFrame(Arrays.asList(Score.TWO, Score.SPARE)), new NormalFrame(Arrays.asList(Score.TWO, Score.SPARE)), Optional.of(12)),
+                arguments(new NormalFrame(Arrays.asList(Score.FIVE, Score.SPARE)), new NormalFrame(Arrays.asList(Score.STRIKE)), Optional.of(20)),
+                arguments(new NormalFrame(Arrays.asList(Score.SIX, Score.SPARE)), new NormalFrame(Arrays.asList(Score.GUTTER, Score.GUTTER)), Optional.of(10)),
+                arguments(new NormalFrame(Arrays.asList(Score.NINE, Score.SPARE)), new NormalFrame(Arrays.asList(Score.GUTTER, Score.FIVE)), Optional.of(10)),
+                arguments(new NormalFrame(Arrays.asList(Score.STRIKE)), new FinalFrame(Arrays.asList(Score.STRIKE, Score.STRIKE)), Optional.of(30)),
+                arguments(new NormalFrame(Arrays.asList(Score.STRIKE)), new FinalFrame(Arrays.asList(Score.STRIKE)), Optional.empty())
         );
     }
 
     @ParameterizedTest
     @MethodSource("getFrameScore_spare")
-    public void getFrameScore_스페어(Frame frame, Frame nextFrame, int expectScore) {
+    public void getFrameScore_스페어(Frame frame, Frame nextFrame, Optional<Integer> expectScore) {
         // given
         frame.nextFrame(nextFrame);
 
@@ -85,7 +88,7 @@ public class NormalFrameTest {
         Optional<Integer> resultScore = frame.frameScore();
 
         // then
-        assertThat(resultScore.get()).isEqualTo(expectScore);
+        assertThat(resultScore).isEqualTo(expectScore);
 
     }
 
@@ -93,8 +96,8 @@ public class NormalFrameTest {
         return Stream.of(
                 arguments(new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.GUTTER, Score.FIVE)), 20),
                 arguments(new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.STRIKE)), 30),
-                arguments(new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.FIVE)), 25)
-
+                arguments(new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.FIVE)), 25),
+                arguments(new NormalFrame(Arrays.asList(Score.STRIKE)), new NormalFrame(Arrays.asList(Score.STRIKE)), new FinalFrame(Arrays.asList(Score.STRIKE)), 30)
         );
     }
 
