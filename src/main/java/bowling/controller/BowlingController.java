@@ -24,7 +24,7 @@ public final class BowlingController {
     }
 
     public void run() {
-        final Player player = new Player(playerName());
+        final Player player = Player.from(playerName());
         outputView.printScoreBoard(player);
 
         for (int i = RoundNumber.MIN; i <= RoundNumber.MAX; i++) {

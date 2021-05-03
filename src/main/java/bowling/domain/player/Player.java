@@ -11,7 +11,7 @@ public final class Player {
     private final PlayerName playerName;
     private final Frames frames;
 
-    public Player(PlayerName playerName) {
+    private Player(PlayerName playerName) {
         this(playerName, Frames.create());
     }
 
