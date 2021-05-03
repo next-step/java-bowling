@@ -6,10 +6,10 @@ import java.util.Comparator;
 import java.util.Objects;
 
 public class FrameNumber {
-    private final int frameNumber;
-
     private static final int FIRST_FRAME_NUMBER = 1;
     private static final int LAST_FRAME_NUMBER = 10;
+
+    private final int frameNumber;
 
     public FrameNumber(int frameNumber) {
         verifyFrameNumber(frameNumber);

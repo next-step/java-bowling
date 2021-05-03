@@ -5,8 +5,9 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Score {
-    private final int score;
     private static final Map<Integer, Score> scoreCache;
+
+    private final int score;
 
     static {
         scoreCache = new HashMap<>();
