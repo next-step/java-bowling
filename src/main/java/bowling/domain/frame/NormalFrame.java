@@ -9,7 +9,7 @@ public final class NormalFrame extends Frame {
 
     public static final RoundNumber MAX_NORMAL_FRAME_ROUND_NUMBER = new RoundNumber(RoundNumber.MAX - 1);
     public static final int MAX_NORMAL_PIN_COUNT = 10;
-    private static final int SECOND_PIN_EXIST_SIZE = 2;
+    private static final int THROW_TWICE = 2;
 
     private NormalFrame(RoundNumber roundNumber, Pins pins) {
         super(roundNumber, pins);
@@ -85,7 +85,7 @@ public final class NormalFrame extends Frame {
 
     @Override
     protected Score addScore(Score previousScore) {
-        if (pins.isEmpty()) {
+        if (pins.isFirstThrow()) {
             return Score.notCalculable();
         }
 
@@ -101,7 +101,7 @@ public final class NormalFrame extends Frame {
         if (pins.isStrike()) {
             return nextFrame().addScore(addedScore);
         }
-        if (pins.size() < SECOND_PIN_EXIST_SIZE) {
+        if (pins.throwCount() < THROW_TWICE) {
             return Score.notCalculable();
         }
         return addedScore.add(Score.normal(pins.secondPinCount()));

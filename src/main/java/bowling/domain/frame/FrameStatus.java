@@ -11,13 +11,13 @@ public enum FrameStatus {
     NOT_ENDED;
 
     public static FrameStatus of(Pins pins) {
-        if (pins.isEmpty()) {
+        if (pins.isFirstThrow()) {
             return NOT_ENDED;
         }
         if (pins.firstPin().isMaximum()) {
             return STRIKE;
         }
-        if (pins.size() == 1) {
+        if (pins.isSecondThrow()) {
             return NOT_ENDED;
         }
         final Pin sum = pins.firstPin().sum(pins.secondPin());

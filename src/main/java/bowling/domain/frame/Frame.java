@@ -36,7 +36,7 @@ public abstract class Frame {
     }
 
     public boolean isNotStarted() {
-        return pins.isEmpty();
+        return pins.isFirstThrow();
     }
 
     public boolean roundNumberEquals(RoundNumber roundNumber) {

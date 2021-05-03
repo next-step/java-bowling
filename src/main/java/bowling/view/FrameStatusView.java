@@ -44,7 +44,7 @@ public final class FrameStatusView {
     private String normalFrameStatus(Pins pins) {
         final Pin firstPin = pins.firstPin();
 
-        if (pins.size() == THROW_ONCE) {
+        if (pins.throwCount() == THROW_ONCE) {
             return pinStatus(firstPin);
         }
         final Pin secondPin = pins.secondPin();
@@ -74,10 +74,10 @@ public final class FrameStatusView {
     private String finalFrameStatus(Pins pins) {
         final Pin firstPin = pins.firstPin();
 
-        if (pins.size() == THROW_ONCE) {
+        if (pins.throwCount() == THROW_ONCE) {
             return pinStatus(firstPin);
         }
-        if (pins.size() == THROW_TWICE) {
+        if (pins.throwCount() == THROW_TWICE) {
             return finalTwiceStatus(pins);
         }
 

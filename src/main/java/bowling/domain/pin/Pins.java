@@ -15,6 +15,7 @@ public final class Pins {
     private static final int THIRD_PIN_INDEX = 2;
     private static final int MAX_PIN_COUNT = 3;
     private static final int NORMAL_PINS_SIZE = 2;
+    private static final int SECOND_THROW_SIZE = 1;
 
     private final PinCountValidator pinCountValidator;
     private final List<Pin> pins;
@@ -119,11 +120,15 @@ public final class Pins {
                 .sum();
     }
 
-    public boolean isEmpty() {
+    public boolean isFirstThrow() {
         return pins.isEmpty();
     }
 
-    public int size() {
+    public boolean isSecondThrow() {
+        return pins.size() == SECOND_THROW_SIZE;
+    }
+
+    public int throwCount() {
         return pins.size();
     }
 

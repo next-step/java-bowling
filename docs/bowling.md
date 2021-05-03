@@ -211,5 +211,5 @@
     - [x] Production 코드에서 `FinalFrame`, `NormalFrame`을 생성하는 코드에 굳이 인자로 `Pins.create`를 받지않도록 리팩토링
     - [x] 객체 내부에서 validation 하도록 수정`Pins`
     - [x] `Pins`가 자체적으로 `PinCountValidator`를 소유하고 있도록 수정
-  - [ ] `Pins`에서 `size()`를 호출하지 않고, `throwCount()`라는 도메인 친화적인 네이밍으로 수정, `isEmpty()` 도 `isFistThrow`로 수정
-  - [x] `Row` 개선, 출력시 builder를 인자로 받아서 처리하기보다는 결과만 리턴하도록 수정(Stream 이용)
+    - [x] `Pins`에서 `size()`를 호출하지 않고, `throwCount()`라는 도메인 친화적인 네이밍으로 수정, `isEmpty()` 도 `isFistThrow`로 수정
+    - [x] `Row` 개선, 출력시 builder를 인자로 받아서 처리하기보다는 결과만 리턴하도록 수정(Stream 이용)
