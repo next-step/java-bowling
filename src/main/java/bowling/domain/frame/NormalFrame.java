@@ -19,24 +19,40 @@ public class NormalFrame extends Frame {
             return Optional.empty();
         }
 
-        int frameScore = scores.transSpareScores()
+        Optional<Integer> frameScore = Optional.of(scores.transSpareScores()
                 .stream()
                 .mapToInt(score -> score.getScore())
-                .sum();
+                .sum());
 
-        if (scores.getScores().contains(Score.SPARE) && nextFrame.getOneScore().isPresent()) {
-            frameScore += nextFrame.getOneScore()
+        if (scores.getScores().contains(Score.SPARE)) {
+            frameScore = getBonusScoreSpare(frameScore);
+        }
+        if (scores.getScores().contains(Score.STRIKE)) {
+            frameScore = getBonusScoreStrike(frameScore);
+        }
+        return frameScore;
+    }
+
+    public Optional<Integer> getBonusScoreSpare(Optional<Integer> frameScore) {
+        if (nextFrame.getOneScore().isPresent()) {
+            int bonusScore = nextFrame.getOneScore()
                     .get()
                     .getScore();
+            return Optional.of(frameScore.get() + bonusScore);
         }
-        if (scores.getScores().contains(Score.STRIKE) && nextFrame.getTwoScores().isPresent()) {
-            frameScore += nextFrame.getTwoScores()
+        return Optional.empty();
+    }
+
+    public Optional<Integer> getBonusScoreStrike(Optional<Integer> frameScore) {
+        if (nextFrame.getTwoScores().isPresent()) {
+            int bonusScore = nextFrame.getTwoScores()
                     .get()
                     .stream()
                     .mapToInt(score -> score.getScore())
                     .sum();
+            return Optional.of(frameScore.get() + bonusScore);
         }
-        return Optional.of(frameScore);
+        return Optional.empty();
     }
 
 

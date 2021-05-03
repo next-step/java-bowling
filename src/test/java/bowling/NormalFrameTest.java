@@ -40,9 +40,34 @@ public class NormalFrameTest {
         assertThat(resultScore.get()).isEqualTo(expectScore);
     }
 
+    private static Stream<Arguments> getFrameScore_계산_안된_상태() {
+        return Stream.of(
+                arguments(new NormalFrame(Arrays.asList(Score.STRIKE)), Optional.empty()),
+                arguments(new NormalFrame(Arrays.asList(Score.GUTTER, Score.SPARE)), Optional.empty()),
+                arguments(new NormalFrame(Arrays.asList(Score.THREE, Score.SPARE)), Optional.empty()),
+                arguments(new NormalFrame(Arrays.asList(Score.FOUR, Score.SPARE)), Optional.empty())
+
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("getFrameScore_계산_안된_상태")
+    public void getFrameScore_계산_안된_상태(Frame frame, Optional<Integer> expectScore) {
+        // given
+        Frame nextFrame = new NormalFrame();
+        nextFrame.nextFrame(new NormalFrame());
+        frame.nextFrame(nextFrame);
+
+
+        // when
+        Optional<Integer> resultScore = frame.frameScore();
+
+        // then
+        assertThat(resultScore).isEqualTo(expectScore);
+    }
+
     private static Stream<Arguments> getFrameScore_spare() {
         return Stream.of(
-
                 arguments(new NormalFrame(Arrays.asList(Score.TWO, Score.SPARE)), new NormalFrame(Arrays.asList(Score.TWO, Score.SPARE)), 12),
                 arguments(new NormalFrame(Arrays.asList(Score.FIVE, Score.SPARE)), new NormalFrame(Arrays.asList(Score.STRIKE)), 20),
                 arguments(new NormalFrame(Arrays.asList(Score.SIX, Score.SPARE)), new NormalFrame(Arrays.asList(Score.GUTTER, Score.GUTTER)), 10),

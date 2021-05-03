@@ -24,7 +24,7 @@ public abstract class Frame {
         if (this.scores.getScores().size() == 2) {
             return Optional.of(this.scores.transSpareScores());
         }
-        if (this.scores.getScores().get(0).equals(Score.STRIKE) && nextFrame.getScores().size() >= 1) {
+        if (this.scores.getScores().contains(Score.STRIKE) && nextFrame.getScores().size() >= 1) {
             List<Score> result = new ArrayList<>(scores.transSpareScores());
             result.add(nextFrame.scores.getScores().get(0));
             return Optional.of(result);
