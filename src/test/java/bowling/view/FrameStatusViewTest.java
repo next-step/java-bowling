@@ -45,6 +45,7 @@ class FrameStatusViewTest {
                 arguments(FinalFrame.from(Pins.of(STRIKE_PIN, STRIKE_PIN, new Pin(9))), "X|X|9"),
                 arguments(FinalFrame.from(Pins.of(STRIKE_PIN, STRIKE_PIN, GUTTER_PIN)), "X|X|-"),
                 arguments(FinalFrame.from(Pins.of(STRIKE_PIN, GUTTER_PIN, STRIKE_PIN)), "X|-|/"),
+                arguments(FinalFrame.from(Pins.of(STRIKE_PIN, new Pin(2), new Pin(8))), "X|2|/"),
                 arguments(FinalFrame.from(Pins.of(STRIKE_PIN, GUTTER_PIN, GUTTER_PIN)), "X|-|-"),
                 arguments(FinalFrame.from(Pins.of(STRIKE_PIN, new Pin(2), new Pin(8))), "X|2|/"),
                 arguments(FinalFrame.from(Pins.of(STRIKE_PIN, new Pin(3), new Pin(4))), "X|3|4"),
@@ -59,7 +60,7 @@ class FrameStatusViewTest {
     @DisplayName("Frame의 상태를 의도한 대로 출력해주는지 확인한다.")
     void testName(Frame frame, String expectedOutput) {
         // given
-        final FrameStatusView frameStatusView = new FrameStatusView(frame);
+        final FrameStatusView frameStatusView = FrameStatusView.from(frame);
 
         // when
         final String frameStatus = frameStatusView.frameStatus();

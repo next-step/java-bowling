@@ -10,9 +10,13 @@ public final class StringUtils {
         return String.format("%" + size + "s", padString);
     }
 
+    public static String padZero(int number, int size) {
+        return String.format("%0" + size + "d", number);
+    }
+
     public static String alignCenter(String padString, int size) {
         if (padString == null) {
-            return alignCenter(String.valueOf(padString), size);
+            return alignCenter(BLANK_STRING, size);
         }
 
         if (size <= padString.length()) {

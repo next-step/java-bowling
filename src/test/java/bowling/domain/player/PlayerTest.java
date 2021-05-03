@@ -23,7 +23,7 @@ class PlayerTest {
     @DisplayName("Player는 이름과 Frame 목록을 가지고 생성된다.")
     void create() {
         // given
-        final Frames frames = Frames.initialize();
+        final Frames frames = Frames.create();
 
         // when
         final Player player = new Player(playerName, frames);
@@ -40,7 +40,7 @@ class PlayerTest {
         final Player player = new Player(playerName);
 
         // then
-        assertThat(player).isEqualTo(new Player(playerName, Frames.initialize()));
+        assertThat(player).isEqualTo(new Player(playerName, Frames.create()));
     }
 
     @Test

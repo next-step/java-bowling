@@ -14,17 +14,17 @@ class FramesTest {
     void initialize() {
         // given
         // when
-        final Frames frames = Frames.initialize();
+        final Frames frames = Frames.create();
 
         // then
-        assertThat(frames).isEqualTo(Frames.initialize());
+        assertThat(frames).isEqualTo(Frames.create());
     }
 
     @Test
     @DisplayName("isEnded를 사용하여 지정된 Frame이 종료되었는지 확인할 수 있다.")
     void isEnded() {
         // given
-        final Frames frames = Frames.initialize();
+        final Frames frames = Frames.create();
 
         // when
         final boolean ended = frames.isEnded(new RoundNumber(1));
@@ -37,7 +37,7 @@ class FramesTest {
     @DisplayName("knockDownPin을 사용하여 지정된 Frame의 Pin을 쓰러뜨릴 수 있다.")
     void knockDownPin() {
         // given
-        final Frames frames = Frames.initialize();
+        final Frames frames = Frames.create();
         final RoundNumber roundNumber = new RoundNumber(1);
 
         // when
@@ -52,7 +52,7 @@ class FramesTest {
     @DisplayName("1 라운드는 마지막 프레임이 아니다.")
     void isFinalFrame() {
         // given
-        final Frames frames = Frames.initialize();
+        final Frames frames = Frames.create();
         final RoundNumber firstRound = RoundNumber.firstRoundNumber();
 
         // when
@@ -66,7 +66,7 @@ class FramesTest {
     @DisplayName("10 라운드는 마지막 프레임이다.")
     void finalFrame() {
         // given
-        final Frames frames = Frames.initialize();
+        final Frames frames = Frames.create();
         final RoundNumber finalRound = new RoundNumber(10);
 
         // when

@@ -77,4 +77,19 @@ class PinTest {
                 () -> assertThat(nonMaximumPin.isMaximum()).isFalse()
         );
     }
+
+    @Test
+    @DisplayName("Pin이 Gutter인지 확인한다.")
+    void isGutter() {
+        // given
+        final Pin gutterPin = TestFixture.GUTTER_PIN;
+        final Pin nonGutterPin = new Pin(3);
+
+        // when
+        // then
+        assertAll(
+                () -> assertThat(gutterPin.isGutter()).isTrue(),
+                () -> assertThat(nonGutterPin.isGutter()).isFalse()
+        );
+    }
 }

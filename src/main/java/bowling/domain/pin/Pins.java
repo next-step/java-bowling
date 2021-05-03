@@ -14,8 +14,14 @@ public final class Pins {
     private static final int SECOND_PIN_INDEX = 1;
     private static final int THIRD_PIN_INDEX = 2;
     private static final int MAX_PIN_COUNT = 3;
+    private static final int NORMAL_PINS_SIZE = 2;
 
     private final List<Pin> pins;
+
+    private Pins(List<Pin> pins) {
+        validatePinsCount(pins.size());
+        this.pins = pins;
+    }
 
     private Pins() {
         this(new ArrayList<>());
@@ -23,17 +29,6 @@ public final class Pins {
 
     private Pins(Pin... pins) {
         this(Arrays.asList(pins));
-    }
-
-    private Pins(List<Pin> pins) {
-        validatePinsCount(pins.size());
-        this.pins = pins;
-    }
-
-    private void validatePinsCount(final int count) {
-        if (count > MAX_PIN_COUNT) {
-            throw new PinsCountExceededException();
-        }
     }
 
     public static Pins create() {
@@ -48,12 +43,30 @@ public final class Pins {
         return new Pins(pins);
     }
 
+    private void validatePinsCount(final int count) {
+        if (count > MAX_PIN_COUNT) {
+            throw new PinsCountExceededException();
+        }
+    }
+
+    public void validatePinCount(Pin pin, PinCountValidator validator) {
+        validator.validate(this, pin);
+    }
+
     public Pin firstPin() {
         return pins.get(FIRST_PIN_INDEX);
     }
 
+    public int firstPinCount() {
+        return firstPin().pinCount();
+    }
+
     public Pin secondPin() {
         return pins.get(SECOND_PIN_INDEX);
+    }
+
+    public int secondPinCount() {
+        return secondPin().pinCount();
     }
 
     public Pin thirdPin() {
@@ -62,6 +75,18 @@ public final class Pins {
 
     public FrameStatus frameStatus() {
         return FrameStatus.of(this);
+    }
+
+    public boolean isStrike() {
+        return frameStatus() == FrameStatus.STRIKE;
+    }
+
+    public boolean isSpare() {
+        return frameStatus() == FrameStatus.SPARE;
+    }
+
+    public boolean isEnded() {
+        return frameStatus() != FrameStatus.NOT_ENDED;
     }
 
     public void knockDownPin(final Pin pin) {
@@ -81,6 +106,14 @@ public final class Pins {
 
     public int size() {
         return pins.size();
+    }
+
+    public boolean isLastGameSpare() {
+        return isThirdThrow() && firstPin().isMaximum() && !secondPin().isMaximum();
+    }
+
+    private boolean isThirdThrow() {
+        return pins.size() == NORMAL_PINS_SIZE;
     }
 
     @Override
