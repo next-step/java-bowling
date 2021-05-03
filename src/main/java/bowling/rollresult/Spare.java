@@ -64,7 +64,7 @@ public class Spare implements RollResultType {
 
     @Override
     public RollResultType next(int nextScore) {
-        return this;
+        return of(firstScore, secondScore + nextScore);
     }
 
     @Override

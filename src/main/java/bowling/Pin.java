@@ -53,11 +53,12 @@ public class Pin {
         return OneRollResultType.of(PIN_NUM_UPPER_BOUND - pinNum);
     }
 
-    public RollResultType secondHit(RollResultType type, HitNumber rollNumber) {
+    public RollResultType nextHit(RollResultType type, HitNumber rollNumber) {
         valid(tryNum, pinNum);
         fallen(rollNumber);
         return type.next(PIN_NUM_UPPER_BOUND - pinNum);
     }
+
 
     @Override
     public boolean equals(Object o) {

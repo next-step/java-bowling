@@ -40,24 +40,32 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame roll(HitNumber rollNumber) {
+    public Frame roll(HitNumber hitNumber) {
         if (result == null) {
-            return firstRoll(rollNumber, this.pin);
+            return firstRoll(hitNumber, this.pin);
         }
-        if (result.isFinished()) {
-            return firstRoll(rollNumber, Pin.of());
-        }
-        if (!result.hasNext()) {
+        if (!result.isFinished() && !result.hasNext()) {
             throw new IllegalStateException();
         }
-        return of(pin, result.next(pin, rollNumber));
+        if (result.isFinished()) {
+            return nextRoll(hitNumber, Pin.of());
+        }
+        return nextRoll(hitNumber, pin);
     }
 
-    private Frame firstRoll(HitNumber rollNumber, Pin pin) {
-        RollResultType type = pin.firstHit(rollNumber);
+    private Frame firstRoll(HitNumber hitNumber, Pin pin) {
+        RollResultType type = pin.firstHit(hitNumber);
         return of(pin, RollResult.of(type));
     }
 
+    private Frame nextRoll(HitNumber hitNumber, Pin pin) {
+        return of(pin, result.next(pin, hitNumber));
+    }
+
+    @Override
+    public boolean isFinished() {
+        return !result.hasNext();
+    }
 
     @Override
     public boolean equals(Object o) {

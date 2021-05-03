@@ -43,18 +43,18 @@ public class PinTest {
     @Test
     void spare핀의_결과확인() {
         RollResultType type = pin.firstHit(HitNumber.of(7));
-        assertThat(pin.secondHit(type, HitNumber.of(3))).isEqualTo(Spare.of(7, 3));
+        assertThat(pin.nextHit(type, HitNumber.of(3))).isEqualTo(Spare.of(7, 3));
     }
 
     @Test
     void miss핀의_결과확인() {
         RollResultType type = pin.firstHit(HitNumber.of(0));
-        assertThat(pin.secondHit(type, HitNumber.of(0))).isEqualTo(Miss.of());
+        assertThat(pin.nextHit(type, HitNumber.of(0))).isEqualTo(Miss.of());
     }
 
     @Test
     void gutter핀의_결과확인() {
         RollResultType type = pin.firstHit(HitNumber.of(7));
-        assertThat(pin.secondHit(type, HitNumber.of(1))).isEqualTo(Gutter.of(7, 1));
+        assertThat(pin.nextHit(type, HitNumber.of(1))).isEqualTo(Gutter.of(7, 1));
     }
 }

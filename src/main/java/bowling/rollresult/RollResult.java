@@ -9,7 +9,7 @@ public class RollResult {
     private final RollResultType type;
     private final int total;
 
-    public RollResult(RollResultType type, int total) {
+    private RollResult(RollResultType type, int total) {
         this.type = type;
         this.total = total;
     }
@@ -18,8 +18,12 @@ public class RollResult {
         return new RollResult(type, type.eval());
     }
 
+    public static RollResult of(RollResultType type, int total) {
+        return new RollResult(type, total);
+    }
+
     public RollResult next(Pin pin, HitNumber number) {
-        return of(pin.secondHit(type, number));
+        return of(pin.nextHit(type, number));
     }
 
     public boolean isFinished() {

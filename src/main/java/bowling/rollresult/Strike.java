@@ -51,7 +51,7 @@ public class Strike implements RollResultType {
 
     @Override
     public RollResultType next(int nextScore) {
-        return this;
+        return of(score + nextScore);
     }
 
     @Override

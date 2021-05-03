@@ -15,7 +15,7 @@ public class NormalFrame implements Frame{
         this(pin, null);
     }
 
-    public NormalFrame(Pin pin, RollResult result) {
+    private NormalFrame(Pin pin, RollResult result) {
         this.pin = pin;
         this.result = result;
     }
@@ -51,6 +51,11 @@ public class NormalFrame implements Frame{
             return of(pin, RollResult.of(type));
         }
         return of(pin, result.next(pin, rollNumber));
+    }
+
+    @Override
+    public boolean isFinished() {
+        return !result.hasNext();
     }
 
     @Override

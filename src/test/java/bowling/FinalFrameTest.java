@@ -14,6 +14,8 @@ public class FinalFrameTest {
     public static final FinalFrame MISS_FRAME = FinalFrame.of(Pin.of(2, 10), RollResult.of(Miss.of()));
     public static final FinalFrame GUTTER_FRAME = FinalFrame.of(Pin.of(2, 3), RollResult.of(Gutter.of(3, 4)));
     public static final FinalFrame ONE_ROLL_FRAME = FinalFrame.of(Pin.of(1, 7), RollResult.of(OneRollResultType.of(3)));
+    public static final FinalFrame SPARE_NEXT_FRAME = FinalFrame.of(Pin.of(1, 7), RollResult.of(Spare.of(3, 10)));
+    public static final FinalFrame STRIKE_NEXT_FRAME = FinalFrame.of(Pin.of(1, 7), RollResult.of(Strike.of(23)));
     public FinalFrame frame;
 
     @BeforeEach
@@ -60,12 +62,13 @@ public class FinalFrameTest {
 
     @Test
     void 스트라이크후_재투구() {
-        assertThat(frame.roll(HitNumber.of(10)).roll(HitNumber.of(10)).roll(HitNumber.of(3))).isEqualTo(ONE_ROLL_FRAME);
+        Frame test = frame.roll(HitNumber.of(10)).roll(HitNumber.of(10)).roll(HitNumber.of(3));
+        assertThat(test).isEqualTo(STRIKE_NEXT_FRAME);
     }
 
     @Test
     void 스페어후_재투구() {
-        assertThat(frame.roll(HitNumber.of(3)).roll(HitNumber.of(7)).roll(HitNumber.of(3))).isEqualTo(ONE_ROLL_FRAME);
+        assertThat(frame.roll(HitNumber.of(3)).roll(HitNumber.of(7)).roll(HitNumber.of(3))).isEqualTo(SPARE_NEXT_FRAME);
     }
 
     @Test

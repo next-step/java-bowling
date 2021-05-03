@@ -7,7 +7,7 @@ public class HitNumber {
 
     private final int rollNumber;
 
-    public HitNumber(int rollNumber) {
+    private HitNumber(int rollNumber) {
         this.rollNumber = rollNumber;
     }
 
