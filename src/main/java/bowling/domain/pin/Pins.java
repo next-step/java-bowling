@@ -93,10 +93,6 @@ public final class Pins {
         return frameStatus() == FrameStatus.STRIKE;
     }
 
-    public boolean isSpare() {
-        return frameStatus() == FrameStatus.SPARE;
-    }
-
     public boolean isEnded() {
         return frameStatus() != FrameStatus.NOT_ENDED;
     }
