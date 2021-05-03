@@ -24,7 +24,7 @@ public class QnAService {
     private DeleteHistoryService deleteHistoryService;
 
     @Transactional(readOnly = true)
-    public Question findQuestionById(Long id) {
+    public Question findQuestionById(long id) {
         return questionRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(NotFoundException::new);
     }
@@ -32,16 +32,6 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, Long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
-
-        question.checkAuthority(loginUser);
-        question.isHasAnswersIsNotOwner(loginUser);
-
-        DeleteHistories deleteHistories = new DeleteHistories();
-        question.setDeleted(true);
-
-        deleteHistories.add(question);
-        deleteHistories.add(question.getAnswers());
-
-        deleteHistoryService.saveAll(deleteHistories);
+        deleteHistoryService.saveAll(question.delete(loginUser));
     }
 }

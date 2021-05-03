@@ -80,6 +80,19 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+        checkAuthority(loginUser);
+        isHasAnswersIsNotOwner(loginUser);
+
+        setDeleted(true);
+
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.add(this);
+        deleteHistories.add(this.getAnswers());
+
+        return deleteHistories;
+    }
+
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
