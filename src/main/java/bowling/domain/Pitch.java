@@ -48,6 +48,10 @@ public class Pitch {
         return status.display();
     }
 
+    public BonusPitch bonusPitch() {
+        return new BonusPitch(status);
+    }
+
     public void validateFallenPins(int fallenPins) {
         if (fallenPins < MIN_PIN_COUNT) {
             throw new IllegalArgumentException(String.format("%d개 이하의 핀을 쓰러트릴 수는 없습니다.", MIN_PIN_COUNT));

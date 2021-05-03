@@ -7,5 +7,5 @@ public interface FrameType {
 
     Pitches pitches();
 
-    Score score();
+    FrameScore frameScore();
 }

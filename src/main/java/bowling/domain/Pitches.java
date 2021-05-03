@@ -14,7 +14,7 @@ public class Pitches {
     public Pitches pitch(int point) {
         Pitch lastPitch = lastPitch();
         pitches.add(lastPitch.pitch(point));
-        
+
         return this;
     }
 
@@ -38,6 +38,10 @@ public class Pitches {
         return pitches.stream()
                 .mapToInt(Pitch::intValue)
                 .sum();
+    }
+
+    public BonusPitch bonusPitch() {
+        return lastPitch().bonusPitch();
     }
 
     private Pitch lastPitch() {

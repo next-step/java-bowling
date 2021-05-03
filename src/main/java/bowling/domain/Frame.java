@@ -28,8 +28,4 @@ public class Frame {
         }
         return new NormalFrame();
     }
-
-    public Score score() {
-        return frameType.score();
-    }
 }

@@ -26,8 +26,8 @@ public class NormalFrame implements FrameType {
     }
 
     @Override
-    public Score score() {
-        return new Score(pitches.sum());
+    public FrameScore frameScore() {
+        return new FrameScore(new Score(pitches.sum()), pitches.bonusPitch());
     }
 
     private void validatePitch(int point) {
