@@ -17,4 +17,16 @@ public class ScoreStateTest {
         assertThat(spareState.canCalculate()).isFalse();
         assertThat(strikeState.canCalculate()).isFalse();
     }
+
+    @DisplayName("점수의 상태를 변경한다")
+    @Test
+    void changeTest() {
+        ScoreState spareState = ScoreState.ofSpare();
+        ScoreState strikeState = ScoreState.ofStrike();
+        spareState = spareState.changeState();
+        strikeState = strikeState.changeState();
+        strikeState = strikeState.changeState();
+        assertThat(spareState.canCalculate()).isTrue();
+        assertThat(strikeState.canCalculate()).isTrue();
+    }
 }

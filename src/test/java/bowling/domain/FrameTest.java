@@ -70,7 +70,7 @@ public class FrameTest {
         Frames frames = Frames.init();
         frames.throwBall(5);
         frames.throwBall(4);
-        Frame normalFrame = frames.nFrame(0);
+        Frame normalFrame = frames.roundFrame(0);
         assertThat(normalFrame.getScore()).isEqualTo(9);
     }
 
@@ -79,11 +79,11 @@ public class FrameTest {
     void normalFrameGetScoreExceptionTest() {
         Frames strikeFrames = Frames.init();
         strikeFrames.throwBall(10);
-        Frame strikeFrame = strikeFrames.nFrame(0);
+        Frame strikeFrame = strikeFrames.roundFrame(0);
         Frames spareFrames = Frames.init();
         spareFrames.throwBall(9);
         spareFrames.throwBall(1);
-        Frame spareFrame = spareFrames.nFrame(0);
+        Frame spareFrame = spareFrames.roundFrame(0);
         assertThatThrownBy(() -> {
             strikeFrame.getScore();
             spareFrame.getScore();
@@ -97,7 +97,7 @@ public class FrameTest {
         frames.throwBall(10);
         frames.throwBall(2);
         frames.throwBall(7);
-        Frame firstFrame = frames.nFrame(0);
+        Frame firstFrame = frames.roundFrame(0);
         assertThat(firstFrame.getScore()).isEqualTo(19);
     }
 
@@ -108,7 +108,7 @@ public class FrameTest {
         frames.throwBall(7);
         frames.throwBall(3);
         frames.throwBall(2);
-        Frame firstFrame = frames.nFrame(0);
+        Frame firstFrame = frames.roundFrame(0);
         assertThat(firstFrame.getScore()).isEqualTo(12);
     }
 }
