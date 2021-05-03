@@ -27,7 +27,7 @@ public class NormalFrameTest {
         NormalFrame normalFrame = new NormalFrame();
 
         assertThat(normalFrame.result())
-                .isEqualTo(new FrameResult());
+                .isEqualTo(new SingleFrameResult());
     }
 
     @Test

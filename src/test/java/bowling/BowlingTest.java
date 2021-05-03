@@ -35,14 +35,14 @@ public class BowlingTest {
     void Given_Roll_When_Result_Then_FrameResultUpdated() {
         Bowling bowling = new Bowling();
         bowling.roll(new Pinfall(9));
-        assertThat(bowling.result().result(new FrameNumber(1))).isEqualTo(new FrameResult(new PointSymbols(PointSymbol.NINE)));
+        assertThat(bowling.result().result(new FrameNumber(1))).isEqualTo(new SingleFrameResult(new PointSymbols(PointSymbol.NINE)));
 
         bowling.roll(new Pinfall(1));
-        assertThat(bowling.result().result(new FrameNumber(1))).isEqualTo(new FrameResult(new PointSymbols(PointSymbol.NINE, PointSymbol.SPARE)));
+        assertThat(bowling.result().result(new FrameNumber(1))).isEqualTo(new SingleFrameResult(new PointSymbols(PointSymbol.NINE, PointSymbol.SPARE)));
 
         bowling.roll(new Pinfall(10));
-        assertThat(bowling.result().result(new FrameNumber(1))).isEqualTo(new FrameResult(new PointSymbols(PointSymbol.NINE, PointSymbol.SPARE)));
-        assertThat(bowling.result().result(new FrameNumber(2))).isEqualTo(new FrameResult(new PointSymbols(PointSymbol.STRIKE)));
+        assertThat(bowling.result().result(new FrameNumber(1))).isEqualTo(new SingleFrameResult(new PointSymbols(PointSymbol.NINE, PointSymbol.SPARE)));
+        assertThat(bowling.result().result(new FrameNumber(2))).isEqualTo(new SingleFrameResult(new PointSymbols(PointSymbol.STRIKE)));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class BowlingTest {
         bowling.roll(new Pinfall(10));
         bowling.roll(new Pinfall(10));
 
-        assertThat(bowling.result().result(new FrameNumber(10))).isEqualTo(new FrameResult(new PointSymbols(Arrays.asList(PointSymbol.STRIKE, PointSymbol.STRIKE, PointSymbol.STRIKE))));
+        assertThat(bowling.result().result(new FrameNumber(10))).isEqualTo(new SingleFrameResult(new PointSymbols(Arrays.asList(PointSymbol.STRIKE, PointSymbol.STRIKE, PointSymbol.STRIKE))));
     }
 
     @Test

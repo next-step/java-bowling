@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.domain.*;
 
-import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -29,29 +28,29 @@ public class View {
     private static void printFrameScore(BowlingResult bowlingResult) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("|      |");
-        for (FrameResult frameResult : bowlingResult.results()) {
-            stringBuilder.append(printFrameScore(frameResult));
+        for (SingleFrameResult singleFrameResult : bowlingResult.results()) {
+            stringBuilder.append(printFrameScore(singleFrameResult));
         }
         System.out.println(stringBuilder);
     }
 
     private static void printFramePinfalls(BowlingResult bowlingResult) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (FrameResult frameResult : bowlingResult.results()) {
-            stringBuilder.append(printFrameResult(frameResult));
+        for (SingleFrameResult singleFrameResult : bowlingResult.results()) {
+            stringBuilder.append(printFrameResult(singleFrameResult));
         }
         System.out.println(stringBuilder);
     }
 
-    private static StringBuilder printFrameScore(FrameResult frameResult) {
+    private static StringBuilder printFrameScore(SingleFrameResult singleFrameResult) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("  %-3s |", frameResult.aggregatedScore().toString()));
+        stringBuilder.append(String.format("  %-3s |", singleFrameResult.aggregatedScore().toString()));
         return stringBuilder;
     }
 
-    private static StringBuilder printFrameResult(FrameResult frameResult) {
+    private static StringBuilder printFrameResult(SingleFrameResult singleFrameResult) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("  %-3s |", pointSymbolsString(frameResult.pointSymbols())));
+        stringBuilder.append(String.format("  %-3s |", pointSymbolsString(singleFrameResult.pointSymbols())));
         return stringBuilder;
     }
 

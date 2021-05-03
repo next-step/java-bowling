@@ -4,25 +4,25 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class BowlingResult {
-    private final Map<FrameNumber, FrameResult> frameResultsMap;
+    private final Map<FrameNumber, SingleFrameResult> frameResultsMap;
 
     public BowlingResult() {
         frameResultsMap = new HashMap<>();
     }
 
-    public BowlingResult(List<FrameResult> frameResultsMap) {
+    public BowlingResult(List<SingleFrameResult> singleFrameResultsMap) {
         this.frameResultsMap = new HashMap<>();
 
         FrameNumber frameNumber = new FrameNumber(1);
-        for (FrameResult frameResult : frameResultsMap) {
-            add(frameNumber, frameResult);
+        for (SingleFrameResult singleFrameResult : singleFrameResultsMap) {
+            add(frameNumber, singleFrameResult);
             frameNumber = frameNumber.increase();
         }
     }
 
-    public void add(FrameNumber frameNumber, FrameResult result) {
+    public void add(FrameNumber frameNumber, SingleFrameResult result) {
         Score aggregatedScore = prevAggregatedScore(frameNumber);
-        result = new FrameResult(result.pointSymbols(), result.score(), aggregatedScore.add(result.score()));
+        result = new SingleFrameResult(result.pointSymbols(), result.score(), aggregatedScore.add(result.score()));
         frameResultsMap.put(frameNumber, result);
     }
 
@@ -31,20 +31,20 @@ public class BowlingResult {
             return Score.create(0);
         }
 
-        FrameResult prevFrameResult = frameResultsMap.get(frameNumber.decrease());
-        if (prevFrameResult == null) {
+        SingleFrameResult prevSingleFrameResult = frameResultsMap.get(frameNumber.decrease());
+        if (prevSingleFrameResult == null) {
             return Score.create(0);
         }
-        return prevFrameResult.aggregatedScore();
+        return prevSingleFrameResult.aggregatedScore();
     }
 
-    public List<FrameResult> results() {
+    public List<SingleFrameResult> results() {
         return Collections.unmodifiableList(frameResultsMapToList());
     }
 
-    public FrameResult result(FrameNumber frameNumber) {
+    public SingleFrameResult result(FrameNumber frameNumber) {
         if (!frameResultsMap.containsKey(frameNumber)) {
-            return new FrameResult();
+            return new SingleFrameResult();
         }
         return frameResultsMap.get(frameNumber);
     }
@@ -62,7 +62,7 @@ public class BowlingResult {
         return Objects.hash(frameResultsMap);
     }
 
-    private List<FrameResult> frameResultsMapToList() {
+    private List<SingleFrameResult> frameResultsMapToList() {
         return frameResultsMap.entrySet()
                 .stream()
                 .sorted((entry1, entry2) -> (FrameNumber.compare(entry1.getKey(), entry2.getKey())))

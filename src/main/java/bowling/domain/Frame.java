@@ -7,7 +7,7 @@ public interface Frame {
 
     Frame roll(Pinfall pinfall, FrameFatory frameFatory);
 
-    FrameResult result();
+    SingleFrameResult result();
 
     boolean isDone();
 

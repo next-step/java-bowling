@@ -26,7 +26,7 @@ public class FinalFrameTest {
     @Test
     @DisplayName("result를 호출했을 때 FrameResult를 반환하는지 테스트")
     void When_Result_Then_FrameResult() {
-        assertThat(new FinalFrame().result()).isEqualTo(new FrameResult());
+        assertThat(new FinalFrame().result()).isEqualTo(new SingleFrameResult());
     }
 
     @Test

@@ -2,24 +2,24 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class FrameResult {
+public class SingleFrameResult {
     private final PointSymbols pointSymbols;
     private final Score score;
     private final Score aggregatedScore;
 
-    public FrameResult() {
+    public SingleFrameResult() {
         this(new PointSymbols());
     }
 
-    public FrameResult(PointSymbols pointSymbols) {
+    public SingleFrameResult(PointSymbols pointSymbols) {
         this(pointSymbols, Score.createNotDetermined());
     }
 
-    public FrameResult(PointSymbols pointSymbols, Score score) {
+    public SingleFrameResult(PointSymbols pointSymbols, Score score) {
         this(pointSymbols, score, Score.createNotDetermined());
     }
 
-    public FrameResult(PointSymbols pointSymbols, Score score, Score aggregatedScore) {
+    public SingleFrameResult(PointSymbols pointSymbols, Score score, Score aggregatedScore) {
         this.pointSymbols = pointSymbols;
         this.score = score;
         this.aggregatedScore = aggregatedScore;
@@ -33,7 +33,7 @@ public class FrameResult {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FrameResult that = (FrameResult) o;
+        SingleFrameResult that = (SingleFrameResult) o;
         return Objects.equals(pointSymbols, that.pointSymbols);
     }
 

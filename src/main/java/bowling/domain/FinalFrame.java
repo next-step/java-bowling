@@ -43,8 +43,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public FrameResult result() {
-        return new FrameResult(currentState.pointSymbols(), score());
+    public SingleFrameResult result() {
+        return new SingleFrameResult(currentState.pointSymbols(), score());
     }
 
     @Override
