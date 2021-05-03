@@ -6,26 +6,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FramesTest {
     @Test
-    void calculating() {
-        Frames frames = new Frames();
-        frames.pitch(1, 10);
-        frames.pitch(2, 9);
-
-        assertThat(frames.frameScores().get(1).score()).isEqualTo(new Score(-1));
-    }
-
-    @Test
     void score() {
         Frames frames = new Frames();
         frames.pitch(1, 10);
         frames.pitch(2, 9);
         frames.pitch(2, 1);
-        //frames.pitch(3, 7);
-        //frames.pitch(3, 2);
+        frames.pitch(3, 7);
+        frames.pitch(3, 2);
 
         assertThat(frames.frameScores().get(1).score()).isEqualTo(new Score(20));
-        //assertThat(frames.frameScores().get(2).score()).isEqualTo(new Score(17));
-        //assertThat(frames.frameScores().get(3).score()).isEqualTo(new Score(9));
+        assertThat(frames.frameScores().get(2).score()).isEqualTo(new Score(17));
+        assertThat(frames.frameScores().get(3).score()).isEqualTo(new Score(9));
     }
 
     @Test
