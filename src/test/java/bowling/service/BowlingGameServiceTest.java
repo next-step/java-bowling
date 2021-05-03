@@ -2,6 +2,7 @@ package bowling.service;
 
 import bowling.domain.Frames;
 import bowling.domain.Participant;
+import bowling.infra.BowlingGameDatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ class BowlingGameServiceTest {
 
     @BeforeEach
     void setUp () {
+        BowlingGameDatabase.bowlingGameData.clear();
         service = new BowlingGameService();
     }
 
