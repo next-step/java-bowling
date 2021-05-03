@@ -1,17 +1,19 @@
 package bowling.domain;
 
 public class FrameScore {
-    private final Frame frame;
+    private Score score;
+    private BonusPitch bonusPitch;
 
-    public FrameScore(Frame frame) {
-        this.frame = frame;
+    public FrameScore(Score score, BonusPitch bonusPitch) {
+        this.score = score;
+        this.bonusPitch = bonusPitch;
     }
 
     public Score score() {
-        return frame.score();
+        return score;
     }
 
     public boolean isExistsAddCount() {
-        return false;
+        return bonusPitch.addedBonusCount() > 0;
     }
 }
