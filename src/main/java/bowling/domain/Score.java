@@ -21,11 +21,8 @@ public class Score {
     }
 
     public static Score create(int score) {
-        Score scoreClass = scoreCache.get(score);
-        if (scoreClass == null) {
-            scoreClass = new Score(score);
-            scoreCache.put(score, scoreClass);
-        }
+        Score scoreClass = scoreCache.getOrDefault(score, new Score(score));
+        scoreCacheAdd(score, scoreClass);
         return scoreClass;
     }
 
@@ -61,5 +58,11 @@ public class Score {
 
     private static boolean isNotDetermined(Score score) {
         return score.score == -1;
+    }
+
+    private static void scoreCacheAdd(int score, Score scoreClass) {
+        if (!scoreCache.containsKey(score)) {
+            scoreCache.put(score, scoreClass);
+        }
     }
 }
