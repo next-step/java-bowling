@@ -5,7 +5,6 @@ import java.util.Objects;
 public class SingleFrameResult {
     private final PointSymbols pointSymbols;
     private final Score score;
-    private final Score aggregatedScore;
 
     public SingleFrameResult() {
         this(new PointSymbols());
@@ -15,22 +14,21 @@ public class SingleFrameResult {
         this(pointSymbols, Score.createNotDetermined());
     }
 
-    public SingleFrameResult(PointSymbols pointSymbols, Score score) {
-        this(pointSymbols, score, Score.createNotDetermined());
-    }
-
     public SingleFrameResult(Score score) {
         this(new PointSymbols(), score);
     }
 
-    public SingleFrameResult(PointSymbols pointSymbols, Score score, Score aggregatedScore) {
+    public SingleFrameResult(PointSymbols pointSymbols, Score score) {
         this.pointSymbols = pointSymbols;
         this.score = score;
-        this.aggregatedScore = aggregatedScore;
     }
 
     public PointSymbols pointSymbols() {
         return pointSymbols;
+    }
+
+    public Score score() {
+        return score;
     }
 
     @Override
@@ -46,11 +44,4 @@ public class SingleFrameResult {
         return Objects.hash(pointSymbols);
     }
 
-    public Score score() {
-        return score;
-    }
-
-    public Score aggregatedScore() {
-        return aggregatedScore;
-    }
 }
