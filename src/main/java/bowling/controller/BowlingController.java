@@ -4,6 +4,7 @@ import bowling.domain.frame.RoundNumber;
 import bowling.domain.pin.Pin;
 import bowling.domain.player.Player;
 import bowling.domain.player.PlayerName;
+import bowling.domain.player.Players;
 import bowling.exception.BowlingException;
 import bowling.exception.PlayerNameValidationException;
 import bowling.view.InputView;
@@ -24,35 +25,45 @@ public final class BowlingController {
     }
 
     public void run() {
-        final Player player = Player.from(playerName());
-        outputView.printScoreBoard(player);
+        final int playerCount = inputView.inputPlayerCount();
+        final Players players = Players.create();
+        for (int i = 1; i <= playerCount; i++) {
+            players.add(Player.from(playerName(i)));
+        }
+        outputView.printScoreBoard(players);
 
         for (int i = RoundNumber.MIN; i <= RoundNumber.MAX; i++) {
-            bowl(player, i);
+            bowlAll(players, i);
         }
     }
 
-    private void bowl(Player player, int i) {
+    private void bowlAll(Players players, int i) {
+        for (Player player : players.value()) {
+            bowl(players, player, i);
+        }
+    }
+
+    private void bowl(Players players, Player player, int i) {
         final RoundNumber roundNumber = new RoundNumber(i);
         while (!player.isEnded(roundNumber)) {
-            downPin(player, i);
-            outputView.printScoreBoard(player);
+            downPin(player, roundNumber);
+            outputView.printScoreBoard(players);
         }
     }
 
-    private PlayerName playerName() {
+    private PlayerName playerName(int playerCount) {
         try {
-            return PlayerName.valueOf(inputView.inputPlayerName());
+            return PlayerName.valueOf(inputView.inputPlayerName(playerCount));
         } catch (PlayerNameValidationException e) {
             System.err.println(e.getMessage());
-            return playerName();
+            return playerName(playerCount);
         }
     }
 
-    private void downPin(final Player player, final int roundNumber) {
+    private void downPin(final Player player, final RoundNumber roundNumber) {
         try {
-            final Pin pin = new Pin(inputView.inputDownPin(roundNumber));
-            player.knockDownPin(new RoundNumber(roundNumber), pin);
+            final Pin pin = new Pin(inputView.inputDownPin(player));
+            player.knockDownPin(roundNumber, pin);
         } catch (BowlingException e) {
             System.err.println(e.getMessage());
             downPin(player, roundNumber);

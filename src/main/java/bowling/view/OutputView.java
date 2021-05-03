@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
+import bowling.domain.player.Players;
 import bowling.view.ui.Cell;
 import bowling.view.ui.Row;
 
@@ -20,9 +21,16 @@ public final class OutputView {
         this.boardHeaderView = boardHeaderView;
     }
 
-    public void printScoreBoard(Player player) {
+    public void printScoreBoard(Players players) {
         printBoardHeader();
 
+        for (Player player : players.value()) {
+            printPlayerStatus(player);
+        }
+        System.out.println();
+    }
+
+    private void printPlayerStatus(Player player) {
         final Frames frames = player.frames();
         printPlayerNameAndStatus(player, frames);
         printScore(frames);
@@ -53,6 +61,6 @@ public final class OutputView {
             totalCount = scoreView.totalCount();
             scoreRow.addCell(scoreView.cell());
         }
-        System.out.println(scoreRow.row());
+        System.out.print(scoreRow.row());
     }
 }

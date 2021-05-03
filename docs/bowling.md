@@ -178,16 +178,16 @@
 
 ## 4단계 요구사항 정리
 
-- [ ] 1명 이상의 사용자가 사용할 수 있도록 변경
+- [x] 1명 이상의 사용자가 사용할 수 있도록 변경
 
 - [x] `Player`의 목록을 관리하는 `Players` 생성
     - [x] `Player`의 목록을 반환하는 `value()` 선언
     - [x] `Players`에 `Player`를 추가하는 `add(Player)` 선언
         - [x] `Player`에 `from(PlayerName)` 선언
-- [ ] `InputView`: 게임에 참여할 `Player`의 수를 입력받는 기능 구현
-    - [ ] 사용자의 이름을 입력받는 기능 일부 변경
-- [ ] `OutputView`: `printScoreBoard(Player)` -> `printScoreBoard(Players)`로 변경
-    - [ ] `Players` `value()`를 이용한 개선
+- [x] `InputView`: 게임에 참여할 `Player`의 수를 입력받는 기능 구현
+    - [x] 사용자의 이름을 입력받는 기능 일부 변경
+- [x] `OutputView`: `printScoreBoard(Player)` -> `printScoreBoard(Players)`로 변경
+    - [x] `Players` `value()`를 이용한 개선
 
 ## 리뷰 내용 정리
 
