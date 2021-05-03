@@ -23,7 +23,7 @@ class NormalFrameTest {
   void play() {
     NormalFrame normalFrame = new NormalFrame();
     normalFrame.play(4);
-    assertEquals(normalFrame.lastPitching().leftPins(), new Pins(6));
+    assertEquals(normalFrame.lastPitching().leftPins(), 6);
   }
 
   @Test

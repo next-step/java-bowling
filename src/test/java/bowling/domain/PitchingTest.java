@@ -14,7 +14,7 @@ class PitchingTest {
   void init() {
     Pitching pitching = new Pitching();
     assertAll(
-        () -> assertEquals(pitching.leftPins(), new Pins(10))
+        () -> assertEquals(pitching.leftPins(), 10)
     );
   }
 
@@ -23,7 +23,7 @@ class PitchingTest {
   void hit() {
     Pitching initPitching = new Pitching();
     Pitching firstPitching = initPitching.play(4);
-    assertEquals(firstPitching.leftPins(), new Pins(6));
+    assertEquals(firstPitching.leftPins(), 6);
   }
 
   @Test
