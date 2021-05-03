@@ -17,5 +17,7 @@ public interface Frame {
 
     List<Pinfall> bonusPinfalls(int bonusPinfallCount);
 
+    boolean hasNext();
+
     Frame next() ;
 }

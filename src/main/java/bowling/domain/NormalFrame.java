@@ -82,7 +82,8 @@ public class NormalFrame implements Frame {
         return currentState.score(nextFrameBonusPinfalls(2));
     }
 
-    private boolean hasNext() {
+    @Override
+    public boolean hasNext() {
         return next != null;
     }
 

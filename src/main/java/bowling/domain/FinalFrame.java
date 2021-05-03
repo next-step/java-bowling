@@ -73,6 +73,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public boolean hasNext() {
+        return false;
+    }
+
+    @Override
     public Frame next() {
         return null;
     }
