@@ -1,26 +1,35 @@
 package bowling;
 
-import bowling.domain.Bowling;
-import bowling.domain.Pinfall;
-import bowling.domain.Player;
+import bowling.domain.*;
 import bowling.view.View;
+
+import java.util.List;
 
 public class BowlingControl {
     public void play() {
-        String playerName = View.playerName();
-        Player player = new Player(playerName);
+        int numberOfPlayer = View.numberOfPlayers();
+        Players players = new Players();
 
-        Bowling bowling = new Bowling();
-        while (!bowling.isDone()) {
-            View.printScoreBoardHeader();
-            View.printPlayer(player);
-            View.printBowlingResult(bowling.result());
-            Pinfall pinfall = new Pinfall(View.pinfall(bowling.frameNumber().number()));
-            bowling.roll(pinfall);
+        for (int i = 0; i < numberOfPlayer; i++) {
+            players.add(new Player(View.playerName()));
         }
 
+        BowlingGames bowlingGames = new BowlingGames(players);
+        while (!bowlingGames.isDone()) {
+            List<BowlingResult> bowlingResults = bowlingGames.results();
+            View.printScoreBoardHeader();
+            for (BowlingResult bowlingResult : bowlingResults) {
+                View.printPlayer(bowlingResult.player());
+                View.printBowlingResult(bowlingResult);
+            }
+            Pinfall pinfall = new Pinfall(View.pinfall(bowlingGames.currentFrameNumber().number()));
+            bowlingGames.roll(pinfall);
+        }
+        List<BowlingResult> bowlingResults = bowlingGames.results();
         View.printScoreBoardHeader();
-        View.printPlayer(player);
-        View.printBowlingResult(bowling.result());
+        for (BowlingResult bowlingResult : bowlingResults) {
+            View.printPlayer(bowlingResult.player());
+            View.printBowlingResult(bowlingResult);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,16 @@ public class BowlingGames {
 
     public Player currentPlayer() {
         return currentBowlingGame().player();
+    }
+
+    public FrameNumber currentFrameNumber() {
+        return currentBowlingGame().frameNumber();
+    }
+
+    public List<BowlingResult> results() {
+        return bowlingGames.stream()
+                .map(BowlingGame::result)
+                .collect(Collectors.toList());
     }
 
     private BowlingGame currentBowlingGame() {

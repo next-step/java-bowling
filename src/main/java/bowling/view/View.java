@@ -8,8 +8,15 @@ import java.util.stream.Collectors;
 public class View {
     private static final Scanner scanner = new Scanner(System.in);
 
+    public static int numberOfPlayers() {
+        System.out.print("How many people?");
+        int numberOfPlayers = scanner.nextInt();
+        scanner.nextLine();
+        return numberOfPlayers;
+    }
+
     public static String playerName() {
-        System.out.print("플레이어 이름은(3 english letters)?:");
+        System.out.print("플레이어 이름은(3 english letters)?");
         return scanner.nextLine();
     }
 
