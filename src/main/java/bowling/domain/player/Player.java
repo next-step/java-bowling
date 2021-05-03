@@ -20,6 +20,10 @@ public final class Player {
         this.frames = frames;
     }
 
+    public static Player from(PlayerName playerName) {
+        return new Player(playerName);
+    }
+
     public String playerName() {
         return playerName.value();
     }

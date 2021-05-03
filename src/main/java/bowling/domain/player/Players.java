@@ -8,16 +8,20 @@ public final class Players {
 
     private final List<Player> players;
 
-    public Players() {
+    private Players() {
         this(new ArrayList<>());
     }
 
-    public Players(List<Player> players) {
+    private Players(List<Player> players) {
         this.players = players;
     }
 
     public static Players create() {
         return new Players();
+    }
+
+    public static Players from(List<Player> players) {
+        return new Players(players);
     }
 
     @Override
@@ -31,5 +35,9 @@ public final class Players {
     @Override
     public int hashCode() {
         return Objects.hash(players);
+    }
+
+    public void add(Player player) {
+
     }
 }
