@@ -1,21 +1,11 @@
 package bowling.domain.state;
 
+import bowling.domain.score.Score;
+
 public interface State {
-    static State newState(BowlingPin bowlingPin) {
-        if (bowlingPin.isMax()) {
-            return Strike.of(bowlingPin);
-        }
-        return Miss.of(bowlingPin);
-    }
-
-    static State newState(BowlingPin firstPin, BowlingPin secondPin) {
-        if (firstPin.sum(secondPin).isMax()) {
-            return Spare.of(firstPin, secondPin);
-        }
-        return Miss.of(firstPin, secondPin);
-    }
-
-    BowlingPin firstHit();
-    String score();
-    String totalScore();
+    State bowl(BowlingPin bowlingPin);
+    boolean isDone();
+    String toSymbol();
+    Score score();
+    int currentBowlingPin();
 }

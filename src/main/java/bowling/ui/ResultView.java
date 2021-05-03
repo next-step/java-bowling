@@ -1,50 +1,88 @@
 package bowling.ui;
 
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import bowling.domain.BowlingTurn;
+import bowling.domain.player.Player;
+import bowling.domain.score.Score;
+import bowling.domain.state.State;
+import bowling.domain.state.States;
 
 public class ResultView {
     private static final int LAST_FRAME = 10;
-    private static final int FIRST_FRAME = 1;
     private static final String PARTITION = "|";
+    private static final String FRAME_TITLE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+    private static final String EMPTY_STRING = "";
 
-    public static void printInitBowlingBoard(BowlingTurn bowlingTurn) {
+
+    public static void printInitBowlingBoard(Player player) {
         printTitleFrames();
-        System.out.print(PARTITION + formatting(bowlingTurn.player()));
-        printEmptyFrames(0);
+
+        System.out.print(PARTITION + formatting(player.name()));
+        printEmptyFrames(player.currentFrameNumber() - 1);
+
+        System.out.print(PARTITION + formatting(EMPTY_STRING));
+        printEmptyFrames(player.currentFrameNumber() - 1);
     }
 
-    public static void printBowlingBoard(BowlingTurn bowlingTurn) {
+    public static void printBowlingBoard(Player player) {
         printTitleFrames();
-        printScoreFrames(bowlingTurn);
-        printEmptyFrames(bowlingTurn.frames().size());
-    }
 
-    private static void printScoreFrames(BowlingTurn bowlingTurn) {
-        System.out.print(PARTITION + formatting(bowlingTurn.player()));
-        bowlingTurn.frames().stream()
-            .map(frame -> formatting(frame.scoreResult()))
-            .forEach(System.out::print);
+        printFrameStates(player);
+        printEmptyFrames(player.currentFrameNumber());
+
+        printFrameScore(player);
+        printEmptyFrames(player.scores().size());
     }
 
     private static void printTitleFrames() {
-        String name = "| NAME |";
-        String frames = IntStream.range(FIRST_FRAME, LAST_FRAME).
-            mapToObj(i -> "  0" + i + "  ").collect(Collectors.joining(PARTITION));
-        System.out.println(name + frames + "|  10  |");
+        System.out.println(FRAME_TITLE);
     }
 
     private static void printEmptyFrames(int size) {
-        Stream.generate(() -> formatting(""))
+        Stream.generate(() -> formatting(EMPTY_STRING))
             .limit(LAST_FRAME - size)
             .forEach(System.out::print);
-        System.out.println("\n");
+        System.out.println("");
+    }
+
+    private static void printFrameStates(Player player) {
+        System.out.print(PARTITION + formatting(player.name()));
+
+        player.states().stream()
+            .map(ResultView::printStates)
+            .forEach(System.out::print);
+    }
+
+    private static String printStates(States states) {
+        String expression = states.toList()
+            .stream()
+            .map(ResultView::replaceNull)
+            .collect(Collectors.joining(PARTITION));
+        return formatting(expression);
+    }
+
+    private static String replaceNull(final State state) {
+        if (state == null) {
+            return EMPTY_STRING;
+        }
+        return state.toSymbol();
+    }
+
+    private static void printFrameScore(Player player) {
+        System.out.print(PARTITION + formatting(EMPTY_STRING));
+
+        player.scores().stream()
+            .map(Score::score)
+            .map(ResultView::formattingScore)
+            .forEach(System.out::print);
     }
 
     private static String formatting(String input) {
         return String.format("  %-3s " + PARTITION, input);
+    }
+
+    private static String formattingScore(int score) {
+        return String.format("  %-3s "+ PARTITION, score < 0 ? "" : score);
     }
 }

@@ -2,79 +2,92 @@ package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import bowling.domain.score.Score;
+import bowling.domain.state.BowlingPin;
 
 public class FinalFrameTest {
 
-    @Test
-    void 생성_테스트() {
-        // given
-        Frame finalFrame = FinalFrame.init();
-        // when & then
-        assertThat(finalFrame).isEqualTo(FinalFrame.of(0));
-        assertThat(finalFrame).isEqualTo(FinalFrame.init());
+    private Frame finalFrame;
+
+    @BeforeEach
+    void init() {
+        finalFrame = FinalFrame.of(10);
     }
 
     @Test
-    void 투구_2회_테스트() {
-        // given
-        Frame frame = FinalFrame.init();
-        Frame frame2 = FinalFrame.init();
+    void 생성_테스트() {
+        // when & then
+        assertThat(finalFrame).isInstanceOf(FinalFrame.class);
+        assertThatCode(() -> FinalFrame.of(10)).doesNotThrowAnyException();
+    }
+
+    @Test
+    void 투구_테스트() {
         // when
-        frame.bowl(3);
-        frame.bowl(5);
-
-        frame2.bowl(3);
-
+        finalFrame.bowl(BowlingPin.of(3));
         // then
-        assertThat(frame.isDone()).isTrue();
-        assertThat(frame2.isDone()).isFalse();
+        assertThat(finalFrame.isDone()).isFalse();
+    }
+
+    @Test
+    void 투구_테스트_2() {
+        // when
+        finalFrame.bowl(BowlingPin.of(3));
+        finalFrame.bowl(BowlingPin.of(5));
+        // then
+        assertThat(finalFrame.isDone()).isTrue();
     }
 
     @Test
     void 보너스_투구_스트라이크_테스트() {
-        // given
-        Frame frame = FinalFrame.init();
-        Frame frame2 = FinalFrame.init();
-        Frame frame3 = FinalFrame.init();
         // when
-        frame.bowl(10);
+        finalFrame.bowl(BowlingPin.of(10));
+        finalFrame.bowl(BowlingPin.of(7));
+        finalFrame.bowl(BowlingPin.of(2));
 
-        frame2.bowl(10);
-        frame2.bowl(7);
-
-        frame3.bowl(10);
-        frame3.bowl(7);
-        frame3.bowl(10);
         // then
-        assertThat(frame.isDone()).isFalse();
-        assertThat(frame2.isDone()).isFalse();
-        assertThat(frame3.isDone()).isTrue();
+        assertThat(finalFrame.isDone()).isTrue();
     }
 
     @Test
     void 보너스_투구_스페어_테스트() {
-        // given
-        Frame frame = FinalFrame.init();
-        Frame frame2 = FinalFrame.init();
         // when
-        frame.bowl(3);
-        frame.bowl(7);
+        finalFrame.bowl(BowlingPin.of(3));
+        finalFrame.bowl(BowlingPin.of(7));
+        finalFrame.bowl(BowlingPin.of(2));
 
-        frame2.bowl(3);
-        frame2.bowl(7);
-        frame2.bowl(5);
         // then
-        assertThat(frame.isDone()).isFalse();
-        assertThat(frame2.isDone()).isTrue();
+        assertThat(finalFrame.isDone()).isTrue();
     }
 
     @Test
-    void 프레임_생성_테스트() {
-        // given
-        Frame frame = FinalFrame.init();
-        // when & then
-        Assertions.assertThrows(IllegalStateException.class, () -> frame.next());
+    void 점수_반환_테스트() {
+        // when
+        finalFrame.bowl(BowlingPin.of(5));
+        finalFrame.bowl(BowlingPin.of(3));
+        // then
+        assertThat(finalFrame.score()).isEqualTo(Score.of(8));
+    }
+
+    @Test
+    void 점수_반환_추가_점수_테스트() {
+        // when
+        finalFrame.bowl(BowlingPin.of(5));
+        finalFrame.bowl(BowlingPin.of(5));
+        // then
+        assertThat(finalFrame.score()).isEqualTo(Score.ofProgress());
+    }
+
+    @Test
+    void 점수_반환_추가_점수_테스트_2() {
+        // when
+        finalFrame.bowl(BowlingPin.of(10));
+        finalFrame.bowl(BowlingPin.of(5));
+        finalFrame.bowl(BowlingPin.of(5));
+        // then
+        assertThat(finalFrame.score()).isEqualTo(Score.of(20, 3));
     }
 }

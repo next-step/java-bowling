@@ -7,38 +7,38 @@ import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
+import bowling.domain.score.Score;
+
 public class FramesTest {
     @Test
     void 생성_테스트() {
         // given
         Frames frames = Frames.init();
-        List<Frame> frameList = frames.getFrames();
+        List<Frame> frameList = frames.frames();
         // when & then
         assertThat(frameList.size()).isEqualTo(1);
         assertThat(frameList.get(0)).isInstanceOf(NormalFrame.class);
     }
 
     @Test
-    void 다음_프레임_생성_테스트() {
+    void 현재_프레임_종료_다음_프레임_생성_테스트() {
         // given
         Frames frames = Frames.init();
-        Frames frames2 = Frames.init();
-        Frames frames3 = Frames.init();
         // when
         frames.bowl(3);
         frames.bowl(3);
+        // then
+        assertThat(frames.frames().size()).isEqualTo(2);
+    }
+
+    @Test
+    void 현재_프레임_미종료_다음_프레임_미생성_테스트() {
+        // given
+        Frames frames = Frames.init();
+        // when
         frames.bowl(3);
-
-        frames2.bowl(3);
-        frames2.bowl(7);
-        frames2.bowl(3);
-
-        frames3.bowl(10);
-        frames3.bowl(3);
-
-        assertThat(frames.getFrames().size()).isEqualTo(2);
-        assertThat(frames2.getFrames().size()).isEqualTo(2);
-        assertThat(frames3.getFrames().size()).isEqualTo(2);
+        // then
+        assertThat(frames.frames().size()).isEqualTo(1);
     }
 
     @Test
@@ -52,8 +52,9 @@ public class FramesTest {
         frames.bowl(3);
         frames.bowl(3);
         // then
-        assertThat(frames.isAllDone()).isTrue();
+        assertThat(frames.isDone()).isTrue();
     }
+
 
     @Test
     void 보너스_게임_종료_테스트_1() {
@@ -65,9 +66,9 @@ public class FramesTest {
         });
         frames.bowl(3);
         frames.bowl(7);
-        frames.bowl(5);
+        frames.bowl(7);
         // then
-        assertThat(frames.isAllDone()).isTrue();
+        assertThat(frames.isDone()).isTrue();
     }
 
     @Test
@@ -75,13 +76,14 @@ public class FramesTest {
         // given
         Frames frames = Frames.init();
         // when
-        IntStream.range(0, 10).forEach(i -> {
+        IntStream.range(0, 9).forEach(i -> {
             frames.bowl(10);
         });
-        frames.bowl(3);
+        frames.bowl(10);
         frames.bowl(7);
+        frames.bowl(3);
         // then
-        assertThat(frames.isAllDone()).isTrue();
+        assertThat(frames.isDone()).isTrue();
     }
 
     @Test
@@ -89,11 +91,64 @@ public class FramesTest {
         // given
         Frames frames = Frames.init();
         // when
-        IntStream.range(0, 12).forEach(i -> {
+        IntStream.range(0, 9).forEach(i -> {
             frames.bowl(10);
         });
+        frames.bowl(10);
+        frames.bowl(10);
+        frames.bowl(10);
         // then
-        assertThat(frames.isAllDone()).isTrue();
+        assertThat(frames.isDone()).isTrue();
     }
 
+    @Test
+    void 게임_점수_테스트_1() {
+        // given
+        Frames frames = Frames.init();
+        // when
+        IntStream.range(0, 9).forEach(i -> {
+            frames.bowl(10);
+        });
+        frames.bowl(10);
+        frames.bowl(10);
+        frames.bowl(10);
+        // then
+        List<Score> scores = frames.scores();
+        assertThat(scores.get(0).score()).isEqualTo(30);
+        assertThat(scores.get(9).score()).isEqualTo(300);
+    }
+
+    @Test
+    void 게임_점수_테스트_2() {
+        // given
+        Frames frames = Frames.init();
+        // when
+        IntStream.range(0, 9).forEach(i -> {
+            frames.bowl(10);
+        });
+        frames.bowl(5);
+        frames.bowl(2);
+        // then
+        List<Score> scores = frames.scores();
+        assertThat(scores.get(0).score()).isEqualTo(30);
+        assertThat(scores.get(6).score()).isEqualTo(210);
+        assertThat(scores.get(7).score()).isEqualTo(235);
+        assertThat(scores.get(8).score()).isEqualTo(252);
+        assertThat(scores.get(9).score()).isEqualTo(259);
+    }
+
+    @Test
+    void 게임_점수_테스트_3() {
+        // given
+        Frames frames = Frames.init();
+        // when
+        IntStream.range(0, 10).forEach(i -> {
+            frames.bowl(5);
+            frames.bowl(3);
+        });
+        // then
+        List<Score> scores = frames.scores();
+        assertThat(scores.get(0).score()).isEqualTo(8);
+        assertThat(scores.get(9).score()).isEqualTo(80);
+    }
 }

@@ -5,38 +5,38 @@ import java.util.Objects;
 public class BowlingPin {
     private static final int MAX_PIN_COUNT = 10;
     private static final int MIN_PIN_COUNT = 0;
-    private static final String GUTTER_SYMBOL = "-";
 
-    private final int pin;
+    private final int bowlingPin;
 
-    private BowlingPin(int pin) {
-        validate(pin);
-        this.pin = pin;
+    private BowlingPin(int bowlingPin) {
+        validate(bowlingPin);
+        this.bowlingPin = bowlingPin;
     }
 
-    public static BowlingPin of(int pin) {
-        return new BowlingPin(pin);
+    public static BowlingPin of(int bowlingPin) {
+        return new BowlingPin(bowlingPin);
     }
 
-    private void validate(int pin) {
-        if (pin < MIN_PIN_COUNT || pin > MAX_PIN_COUNT) {
+    private void validate(int bowlingPin) {
+        if (bowlingPin < MIN_PIN_COUNT || bowlingPin > MAX_PIN_COUNT) {
             throw new IllegalArgumentException("유효하지 않은 볼링핀 입니다.");
         }
     }
 
     public boolean isMax() {
-        return this.pin == MAX_PIN_COUNT;
+        return this.bowlingPin == MAX_PIN_COUNT;
+    }
+
+    public boolean isMin() {
+        return this.bowlingPin == MIN_PIN_COUNT;
     }
 
     public BowlingPin sum(BowlingPin bowlingPin) {
-        return of(this.pin + bowlingPin.pin);
+        return of(this.bowlingPin + bowlingPin.bowlingPin);
     }
 
-    public String score() {
-        if (this.pin == MIN_PIN_COUNT) {
-            return GUTTER_SYMBOL;
-        }
-        return String.valueOf(pin);
+    public int score() {
+        return bowlingPin;
     }
 
     @Override
@@ -46,16 +46,16 @@ public class BowlingPin {
         if (o == null || getClass() != o.getClass())
             return false;
         BowlingPin that = (BowlingPin)o;
-        return pin == that.pin;
+        return bowlingPin == that.bowlingPin;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pin);
+        return Objects.hash(bowlingPin);
     }
 
     @Override
     public String toString() {
-        return Integer.toString(pin);
+        return Integer.toString(bowlingPin);
     }
 }
