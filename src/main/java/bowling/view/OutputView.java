@@ -1,6 +1,8 @@
 package bowling.view;
 
 import bowling.domain.*;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 
 import java.util.ArrayList;
 import java.util.List;

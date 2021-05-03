@@ -1,24 +1,25 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Score;
+import bowling.domain.ScoreState;
 import bowling.exception.CannotCalculateException;
 import bowling.exception.FrameTryException;
 
-public class FinalFrame extends Frame {
+public class NormalFrame extends Frame {
 
-    private static final int MAX_PIN_COUNT = 30;
-    private static final int MAX_TRY_COUNT = 3;
-    private static final int NOT_BONUS_MAX_COUNT = 10;
-    private static final int SECOND_TRY = 2;
+    private static final int MAX_PIN_COUNT = 10;
+    private static final int MAX_TRY_COUNT = 2;
     private static final String HIT_COUNT_EXCEPTION_MESSAGE = String.format("핀은 최대 %d개 까지 쓰러트릴 수 있습니다", MAX_PIN_COUNT);
-    private static final String TRY_COUNT_EXCEPTION_MESSAGE = String.format("스트라이크 일 때 최대 %d번, 아닐 시 최대 %d번 까지 시도할 수 있습니다", MAX_TRY_COUNT, SECOND_TRY);
+    private static final String TRY_COUNT_EXCEPTION_MESSAGE = String.format("최대 %d번 까지 시도할 수 있습니다", MAX_TRY_COUNT);
     private static final String CANNOT_CALCULATE_MESSAGE = "앞 투구가 끝나지 않아 계산 할 수 없습니다.";
 
-    private FinalFrame() {
+
+    private NormalFrame() {
         super();
     }
 
-    public static FinalFrame getFrame() {
-        return new FinalFrame();
+    public static NormalFrame from() {
+        return new NormalFrame();
     }
 
     @Override
@@ -30,16 +31,8 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public void createScore() {
-        score = Score.of(pins.totalCount(), ScoreState.ofNone());
-    }
-
-    @Override
     public boolean roundEnded() {
-        if (pins.tryCount() == SECOND_TRY) {
-            return hasNoBonusTry();
-        }
-        return pins.tryCount() >= MAX_TRY_COUNT;
+        return pins.tryCount() == MAX_TRY_COUNT || pins.isStrike();
     }
 
     @Override
@@ -56,7 +49,16 @@ public class FinalFrame extends Frame {
         }
     }
 
-    private boolean hasNoBonusTry() {
-        return pins.totalCount() < NOT_BONUS_MAX_COUNT;
+    @Override
+    public void createScore() {
+        if (pins.isStrike() && isFirstTry()) {
+            score = Score.of(MAX_PIN_COUNT, ScoreState.ofStrike());
+            return;
+        }
+        if (pins.totalCount() == MAX_PIN_COUNT) {
+            score = Score.of(MAX_PIN_COUNT, ScoreState.ofSpare());
+            return;
+        }
+        score = Score.of(pins.totalCount(), ScoreState.ofNone());
     }
 }
