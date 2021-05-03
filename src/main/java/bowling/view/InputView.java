@@ -6,14 +6,14 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    private InputView() {}
+    public InputView() {}
 
-    public static String userNameInput(){
+    public String userNameInput(){
         System.out.print("플레이어 이름은(3 english letters)?: ");
         return scanner.nextLine();
     }
 
-    public static int frameBowlInput(int frame){
+    public int frameBowlInput(int frame){
         System.out.print(frame + "프레임 투구 : ");
         return scanner.nextInt();
     }
