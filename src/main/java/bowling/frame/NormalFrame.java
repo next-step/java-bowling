@@ -1,5 +1,7 @@
-package bowling;
+package bowling.frame;
 
+import bowling.HitNumber;
+import bowling.Pin;
 import bowling.rollresult.RollResult;
 import bowling.rollresult.RollResultType;
 
