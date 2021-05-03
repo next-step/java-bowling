@@ -30,7 +30,7 @@ public class Spare implements RollResultType {
     }
 
     private static void validFirst(int firstScore) {
-        if(firstScore >= DEFAULT_MAX_SCORE) {
+        if (firstScore >= DEFAULT_MAX_SCORE) {
             throw new IllegalArgumentException(INVALID_FIRST_SCORE);
         }
     }
@@ -78,5 +78,10 @@ public class Spare implements RollResultType {
     @Override
     public int hashCode() {
         return Objects.hash(firstScore, secondScore);
+    }
+
+    @Override
+    public String toString() {
+        return "" + firstScore + "|" + "/";
     }
 }

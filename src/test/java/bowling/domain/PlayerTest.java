@@ -17,4 +17,9 @@ public class PlayerTest {
             Player.of("1");
         }).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void toString테스트() {
+        System.out.println(Player.of("이름은"));
+    }
 }

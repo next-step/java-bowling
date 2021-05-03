@@ -18,7 +18,7 @@ public class Gutter implements RollResultType {
     }
 
     private static void valid(int firstScore, int secondScore) {
-        if(firstScore + secondScore >= DEFAULT_MAX_SCORE) {
+        if (firstScore + secondScore >= DEFAULT_MAX_SCORE) {
             throw new IllegalArgumentException(INVALID_SCORE);
         }
     }
@@ -59,5 +59,10 @@ public class Gutter implements RollResultType {
     @Override
     public int hashCode() {
         return Objects.hash(firstScore, secondScore);
+    }
+
+    @Override
+    public String toString() {
+        return "" + firstScore + "|" + "-";
     }
 }

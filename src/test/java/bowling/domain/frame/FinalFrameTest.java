@@ -41,6 +41,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(10));
         assertThat(resultFrame).isEqualTo(STRIKE_FRAME);
         assertThat(resultFrame.isFinished()).isFalse();
+        System.out.println(resultFrame);
     }
 
     @Test
@@ -48,6 +49,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(3));
         assertThat(resultFrame).isEqualTo(ONE_ROLL_FRAME);
         assertThat(resultFrame.isFinished()).isFalse();
+        System.out.println(resultFrame);
     }
 
     @Test
@@ -55,6 +57,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(7));
         assertThat(resultFrame).isEqualTo(SPARE_FRAME);
         assertThat(resultFrame.isFinished()).isFalse();
+        System.out.println(resultFrame);
     }
 
     @Test
@@ -62,6 +65,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(0)).roll(HitNumber.of(0));
         assertThat(resultFrame).isEqualTo(MISS_FRAME);
         assertThat(resultFrame.isFinished()).isTrue();
+        System.out.println(resultFrame);
     }
 
     @Test
@@ -69,6 +73,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(4));
         assertThat(resultFrame).isEqualTo(GUTTER_FRAME);
         assertThat(resultFrame.isFinished()).isTrue();
+        System.out.println(resultFrame);
     }
 
     @Test
@@ -76,6 +81,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(10)).roll(HitNumber.of(10)).roll(HitNumber.of(3));
         assertThat(resultFrame).isEqualTo(STRIKE_NEXT_FRAME);
         assertThat(resultFrame.isFinished()).isTrue();
+        System.out.println(resultFrame);
     }
 
     @Test
@@ -83,6 +89,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(7)).roll(HitNumber.of(3));
         assertThat(resultFrame).isEqualTo(SPARE_NEXT_FRAME);
         assertThat(resultFrame.isFinished()).isTrue();
+        System.out.println(resultFrame);
     }
 
     @Test

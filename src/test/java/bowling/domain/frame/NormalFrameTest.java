@@ -37,6 +37,7 @@ public class NormalFrameTest {
     void 스트라이크프레임() {
         Frame resultFrame = frame.roll(HitNumber.of(10));
         assertThat(resultFrame).isEqualTo(STRIKE_FRAME);
+        System.out.println(resultFrame);
     }
 
     @Test
@@ -46,16 +47,22 @@ public class NormalFrameTest {
 
     @Test
     void 스페어프레임() {
-        assertThat(frame.roll(HitNumber.of(3)).roll(HitNumber.of(7))).isEqualTo(SPARE_FRAME);
+        Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(7));
+        assertThat(resultFrame).isEqualTo(SPARE_FRAME);
+        System.out.println(resultFrame);
     }
 
     @Test
     void 미스프레임() {
-        assertThat(frame.roll(HitNumber.of(0)).roll(HitNumber.of(0))).isEqualTo(MISS_FRAME);
+        Frame resultFrame = frame.roll(HitNumber.of(0)).roll(HitNumber.of(0));
+        assertThat(resultFrame).isEqualTo(MISS_FRAME);
+        System.out.println(resultFrame);
     }
 
     @Test
     void 거터프레임() {
-        assertThat(frame.roll(HitNumber.of(3)).roll(HitNumber.of(4))).isEqualTo(GUTTER_FRAME);
+        Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(4));
+        assertThat(resultFrame).isEqualTo(GUTTER_FRAME);
+        System.out.println(resultFrame);
     }
 }

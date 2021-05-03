@@ -72,4 +72,9 @@ public class NormalFrame implements Frame{
     public int hashCode() {
         return Objects.hash(pin, result);
     }
+
+    @Override
+    public String toString() {
+        return "" + result + "";
+    }
 }

@@ -47,4 +47,8 @@ public class RollResult {
         return Objects.hash(type, total);
     }
 
+    @Override
+    public String toString() {
+        return "" + type + "";
+    }
 }
