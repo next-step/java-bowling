@@ -13,7 +13,7 @@ public class Controller {
         placeholder.printNamingMessage();
         ScoreBoard scoreBoard = new ScoreBoard(placeholder.inputFromUser());
 
-        BowlingGame bowlingGame = new BowlingGame(frameNumber);
+        BowlingGame bowlingGame = new BowlingGame();
         FrameScores frameScores = new FrameScores();
 
         while(bowlingGame.isAvailable()) {

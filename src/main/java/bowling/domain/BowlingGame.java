@@ -1,30 +1,36 @@
 package bowling.domain;
 
-public class BowlingGame {
-    private Frame frame;
-    private int currentFrameNumber;
+import java.util.ArrayList;
+import java.util.List;
 
-    public BowlingGame(int startFrameNumber) {
-        frame = new NormalFrame();
-        currentFrameNumber = startFrameNumber;
+public class BowlingGame {
+    private List<Frame> frames;
+
+    public BowlingGame() {
+        frames = new ArrayList<>();
+        frames.add(new NormalFrame());
     }
 
     public boolean isAvailable() {
-        return frame.isAvailable();
+        return getCurrentFrame().isAvailable();
     }
 
     public int bowling(String inputScore) {
-        return frame.addScore(Integer.parseInt(inputScore));
+        return getCurrentFrame().addScore(Integer.parseInt(inputScore));
     }
 
     public int nextFrameIfAvailable() {
-        if (!frame.isAvailable() && !(frame instanceof FinalFrame)) {
+        if (!getCurrentFrame().isAvailable() && !(getCurrentFrame() instanceof FinalFrame)) {
             startNewFrame();
         }
-        return currentFrameNumber;
+        return frames.size();
     }
 
     private void startNewFrame() {
-        frame = frame.createFrame(++currentFrameNumber);
+        frames.add(getCurrentFrame().createFrame(frames.size() + 1));
+    }
+
+    private Frame getCurrentFrame() {
+        return frames.get(frames.size() - 1);
     }
 }
