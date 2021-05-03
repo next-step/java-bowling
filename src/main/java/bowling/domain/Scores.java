@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Scores {
@@ -31,10 +30,6 @@ public class Scores {
 
     private boolean isEmpty() {
         return scores.isEmpty();
-    }
-
-    public List<Score> scores() {
-        return Collections.unmodifiableList(scores);
     }
 
     public Score roundScore(int roundCount) {
