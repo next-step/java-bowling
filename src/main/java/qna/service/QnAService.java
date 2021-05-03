@@ -7,10 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.domain.*;
-import qna.dto.DeleteHistoryDTO;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 
 @Service("qnaService")
 public class QnAService {
