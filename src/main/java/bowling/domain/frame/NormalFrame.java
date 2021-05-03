@@ -39,7 +39,7 @@ public class NormalFrame implements Frame{
 
     @Override
     public Frame next(int index) {
-        if(index == MAX_INDEX) {
+        if(index + 1 == MAX_INDEX) {
             return FinalFrame.of();
         }
         return of();

@@ -62,6 +62,6 @@ public class RollResults {
 
     @Override
     public String toString() {
-        return String.join("|", results.toString());
+        return "" + results + "";
     }
 }

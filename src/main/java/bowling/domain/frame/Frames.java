@@ -34,7 +34,7 @@ public class Frames {
     }
 
     private void addNext() {
-        frames.add(getLast().next(getLastIndex()));
+        frames.add(getLast().next(getLastIndex() + 1));
     }
 
     public boolean isFinished() {
@@ -66,5 +66,8 @@ public class Frames {
         return Objects.hash(frames);
     }
 
-
+    @Override
+    public String toString() {
+        return "" + frames + "";
+    }
 }

@@ -21,4 +21,8 @@ public class InputView {
         System.out.print(String.format(ASK_INPUT_HIT, index));
         return parseInt(sc.nextLine().trim());
     }
+
+    public static void close() {
+        sc.close();
+    }
 }
