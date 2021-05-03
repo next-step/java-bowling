@@ -23,8 +23,6 @@ public class Question extends AbstractEntity {
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
     private Answers answers = new Answers();
-//    private List<Answer> answers = new ArrayList<>();
-
 
     private boolean deleted = false;
 
