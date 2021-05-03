@@ -16,14 +16,6 @@ public final class NormalFrame extends Frame {
         super(roundNumber, pins);
     }
 
-    @Override
-    public Frame nextFrame() {
-        if (nextFrame == null) {
-            createNextFrame();
-        }
-        return nextFrame;
-    }
-
     public static Frame of(RoundNumber roundNumber, Pins pins) {
         validateNormalRoundNumber(roundNumber);
         return new NormalFrame(roundNumber, pins);
@@ -37,6 +29,14 @@ public final class NormalFrame extends Frame {
 
     public static Frame createFirstFrame() {
         return NormalFrame.of(RoundNumber.firstRoundNumber(), Pins.create());
+    }
+
+    @Override
+    public Frame nextFrame() {
+        if (nextFrame == null) {
+            createNextFrame();
+        }
+        return nextFrame;
     }
 
     @Override
