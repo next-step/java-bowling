@@ -27,6 +27,10 @@ public class BonusPitch {
         return this;
     }
 
+    public boolean isEnd() {
+        return status.isEnd();
+    }
+
     public String display() {
         return status.display();
     }

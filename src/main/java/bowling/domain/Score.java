@@ -13,6 +13,10 @@ public class Score {
         return new Score(score + point);
     }
 
+    public int intValue() {
+        return score;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

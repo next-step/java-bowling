@@ -34,7 +34,7 @@ public class Bonus implements Status {
 
     @Override
     public boolean isEnd() {
-        return !(bonusPitch.addedBonusCount() - ALREADY_USED_PITCH_COUNT > 0);
+        return bonusPitch.addedBonusCount() - ALREADY_USED_PITCH_COUNT <= 0;
     }
 
     @Override

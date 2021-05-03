@@ -15,7 +15,7 @@ public class Frames {
     }
 
     public void pitch(int frameNo, int point) {
-        accumulatePitchScore(point);
+        sumPitchScore(point);
 
         Frame frame = Optional.ofNullable(frames.get(frameNo))
                 .orElse(new Frame(frameNo));
@@ -24,10 +24,10 @@ public class Frames {
         frameScores.put(frameNo, frame.frameScore());
     }
 
-    private void accumulatePitchScore(int point) {
+    private void sumPitchScore(int point) {
         frameScores.values()
                 .stream()
-                .filter(frameScore -> frameScore.isExistsAddCount())
+                .filter(FrameScore::isExistsAddCount)
                 .forEach(frameScore -> frameScore.sumScore(point));
     }
 
