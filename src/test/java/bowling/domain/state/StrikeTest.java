@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import bowling.domain.score.Score;
 import bowling.domain.state.progress.Ready;
 import bowling.domain.state.progress.Running;
+import bowling.domain.state.result.Spare;
 import bowling.domain.state.result.Strike;
 
 public class StrikeTest {
@@ -53,5 +54,15 @@ public class StrikeTest {
         State state = new Ready().bowl(BowlingPin.of(10));
         // when & then
         assertThat(state.currentBowlingPin()).isEqualTo(10);
+    }
+
+    @Test
+    void 모든핀_제거_여부_테스트() {
+        // given
+        State state = new Ready().bowl(BowlingPin.of(10));
+        State state2 = Strike.of(BowlingPin.of(10));
+        // when & then
+        assertThat(state.isClear()).isTrue();
+        assertThat(state2.isClear()).isTrue();
     }
 }

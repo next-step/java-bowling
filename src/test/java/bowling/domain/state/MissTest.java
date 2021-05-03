@@ -53,4 +53,17 @@ public class MissTest {
         // when & then
         assertThat(state.currentBowlingPin()).isEqualTo(3);
     }
+
+    @Test
+    void 모든핀_제거_여부_테스트() {
+        // given
+        State state = new Ready().bowl(BowlingPin.of(5)).bowl(BowlingPin.of(3));
+        State state2 = Running.of(BowlingPin.of(5)).bowl(BowlingPin.of(5));
+        State state3 = Miss.of(BowlingPin.of(5), BowlingPin.of(3));
+
+        // when & then
+        assertThat(state.isClear()).isFalse();
+        assertThat(state2.isClear()).isTrue();
+        assertThat(state3.isClear()).isFalse();
+    }
 }
