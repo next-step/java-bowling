@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
-import bowling.domain.ScoreState;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreState;
 import bowling.exception.CannotCalculateException;
 import bowling.exception.FrameTryException;
 

@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.Pin;
 import bowling.domain.Pins;
-import bowling.domain.Score;
+import bowling.domain.score.Score;
 
 public abstract class Frame {
 

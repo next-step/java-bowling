@@ -3,6 +3,9 @@ package bowling.view;
 import bowling.domain.*;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreMark;
+import bowling.domain.score.Scores;
 
 import java.util.ArrayList;
 import java.util.List;
