@@ -4,7 +4,11 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.dto.BowlingDto;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 public class ResultView {
     private static final String UPPER_FRAME = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10    |";
@@ -12,18 +16,92 @@ public class ResultView {
     public static void printBowling(BowlingDto bowlingDto) {
         StringBuilder sb = new StringBuilder();
         sb.append(UPPER_FRAME)
-                .append(System.lineSeparator());
-        sb.append(getBowling(bowlingDto));
-        sb.append(System.lineSeparator());
+                .append(System.lineSeparator())
+                .append(getScores(bowlingDto))
+                .append(getFrameScore(bowlingDto));
         System.out.println(sb);
     }
 
-    private static String getBowling(BowlingDto bowlingDto) {
+    private static String getFrameScore(BowlingDto bowlingDto) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("|")
+                .append(getWhiteSpace())
+                .append(getFrameScoreAccumulate(bowlingDto))
+                .append(System.lineSeparator());
+        return sb.toString();
+    }
+
+    private static String getWhiteSpace() {
+        StringBuilder sb = new StringBuilder();
+        String result = String.format("%-4s", "");
+        result = String.format("%6s", result);
+        sb.append(result)
+                .append("|");
+        return sb.toString();
+    }
+
+    private static String getFrameScoreAccumulate(BowlingDto bowlingDto) {
+        StringBuilder sb = new StringBuilder();
+        List<String> accumulateFrameScores = new ArrayList<>(getAccumulateFrameScores(bowlingDto.getFrames()));
+        IntStream.range(0, Frames.FINAL_FRAME)
+                .forEach(index -> sb.append(normalFrameAccumulateScoreToPrint(accumulateFrameScores.get(index))));
+        sb.append(finalFrameAccumulateScoreToPrint(accumulateFrameScores.get(Frames.FINAL_FRAME)));
+        return sb.toString();
+    }
+
+    private static String normalFrameAccumulateScoreToPrint(String frameScore) {
+        StringBuilder sb = new StringBuilder();
+        String result = String.format("%-4s", frameScore);
+        result = String.format("%6s", result);
+        sb.append(result)
+                .append("|");
+        return sb.toString();
+    }
+
+    private static String finalFrameAccumulateScoreToPrint(String frameScore) {
+        StringBuilder sb = new StringBuilder();
+        String result = String.format("%-6s", frameScore);
+        result = String.format("%8s", result);
+        sb.append(result)
+                .append("|");
+        return sb.toString();
+    }
+
+
+    private static List<String> getAccumulateFrameScores(Map<Integer, Frame> frames) {
+        Optional<Integer> accumulateScore = Optional.of(0);
+        List<String> accumulateFrameScores = new ArrayList<>();
+        for (Frame frame : frames.values()) {
+            accumulateScore = addAccumulateScore(accumulateScore, frame.frameScore());
+            accumulateFrameScores.add(frameScoreToString(accumulateScore));
+        }
+        return accumulateFrameScores;
+    }
+
+    private static Optional<Integer> addAccumulateScore(Optional<Integer> accumulateScore, Optional<Integer> frameScore) {
+        if (!accumulateScore.isPresent() || !frameScore.isPresent()) {
+            return Optional.empty();
+        }
+        return Optional.of(accumulateScore.get() + frameScore.get());
+
+    }
+
+
+    private static String frameScoreToString(Optional<Integer> frameScore) {
+        if (frameScore.isPresent()) {
+            return frameScore.get().toString();
+        }
+        return "";
+    }
+
+
+    private static String getScores(BowlingDto bowlingDto) {
         StringBuilder sb = new StringBuilder();
         sb.append("|")
                 .append(getUser(bowlingDto.getPlayer()))
-                .append(getNormalFrame(bowlingDto.getFrames()))
-                .append(getFinalFrame(bowlingDto.getFrames()));
+                .append(getNormalFrameScore(bowlingDto.getFrames()))
+                .append(getFinalFrameScore(bowlingDto.getFrames()))
+                .append(System.lineSeparator());
         return sb.toString();
     }
 
@@ -36,25 +114,25 @@ public class ResultView {
         return sb.toString();
     }
 
-    private static String getNormalFrame(Map<Integer, Frame> frames) {
+    private static String getNormalFrameScore(Map<Integer, Frame> frames) {
         StringBuilder sb = new StringBuilder();
         frames.keySet()
                 .stream()
                 .filter(k -> k < Frames.FINAL_FRAME)
-                .forEach(k -> sb.append(normalFrameToPrint(frames.get(k)))
+                .forEach(k -> sb.append(normalFrameScoreToPrint(frames.get(k)))
                         .append("|"));
         return sb.toString();
     }
 
-    private static String getFinalFrame(Map<Integer, Frame> frames) {
+    private static String getFinalFrameScore(Map<Integer, Frame> frames) {
         StringBuilder sb = new StringBuilder();
-        sb.append(finalFrameToPrint(frames.get(Frames.FINAL_FRAME)))
+        sb.append(finalFrameScoreToPrint(frames.get(Frames.FINAL_FRAME)))
                 .append("|");
         return sb.toString();
     }
 
 
-    private static String normalFrameToPrint(Frame normalFrame) {
+    private static String normalFrameScoreToPrint(Frame normalFrame) {
         StringBuilder sb = new StringBuilder();
         normalFrame.getScores()
                 .forEach(score -> sb.append(score.getExpression()));
@@ -69,7 +147,7 @@ public class ResultView {
         return result;
     }
 
-    private static String finalFrameToPrint(Frame finalFrame) {
+    private static String finalFrameScoreToPrint(Frame finalFrame) {
         StringBuilder sb = new StringBuilder();
         finalFrame.getScores()
                 .forEach(score -> sb.append(score.getExpression()));

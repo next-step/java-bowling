@@ -1,50 +1,73 @@
 package bowling.domain.frame;
 
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class NormalFrame extends Frame {
-    public NormalFrame() {
-        this.scores = new ArrayList<>();
-    }
 
     public NormalFrame(List<Score> scores) {
-        this.scores = scores;
+        this.scores = new NormalScores(scores);
+    }
+
+    public NormalFrame() {
+        this.scores = new NormalScores();
     }
 
     @Override
-    public boolean isFinished() {
-        if (scores.isEmpty()) {
-            return false;
+    public Optional<Integer> frameScore() {
+        if (scores.getScores().isEmpty() || !isFinished()) {
+            return Optional.empty();
         }
-        if (scores.size() == 2) {
-            return true;
+
+        Optional<Integer> frameScore = Optional.of(scores.transSpareScores()
+                .stream()
+                .mapToInt(score -> score.getScore())
+                .sum());
+
+        if (scores.getScores().contains(Score.SPARE)) {
+            frameScore = getBonusScoreSpare(frameScore);
         }
-        if (scores.get(0).equals(Score.STRIKE)) {
-            return true;
+        if (scores.getScores().contains(Score.STRIKE)) {
+            frameScore = getBonusScoreStrike(frameScore);
         }
-        return false;
+        return frameScore;
     }
 
     @Override
-    public void addScore(int score) throws Exception {
-        if (isFinished()) {
-            throw new Exception("종료된 프레임입니다.");
+    public Optional<List<Score>> getTwoScores() {
+        if (this.scores.getScores().size() == 2) {
+            return Optional.of(this.scores.transSpareScores());
         }
-        if (scores.size() == 0) {
-            this.scores.add(Score.valueOf(score));
-            return;
+        if (this.scores.getScores().contains(Score.STRIKE) && nextFrame.getScores().size() >= 1) {
+            List<Score> result = new ArrayList<>(scores.transSpareScores());
+            result.add(nextFrame.scores.getScores().get(0));
+            return Optional.of(result);
         }
-        if (scores.size() == 1) {
-            this.scores.add(Score.valueOf(scores.get(0), score));
-            return;
-        }
+        return Optional.empty();
     }
 
-    @Override
-    public List<Score> getScores() {
-        return scores;
+    public Optional<Integer> getBonusScoreSpare(Optional<Integer> frameScore) {
+        if (nextFrame.getOneScore().isPresent()) {
+            int bonusScore = nextFrame.getOneScore()
+                    .get()
+                    .getScore();
+            return Optional.of(frameScore.get() + bonusScore);
+        }
+        return Optional.empty();
     }
+
+    public Optional<Integer> getBonusScoreStrike(Optional<Integer> frameScore) {
+        if (nextFrame.getTwoScores().isPresent()) {
+            int bonusScore = nextFrame.getTwoScores()
+                    .get()
+                    .stream()
+                    .mapToInt(score -> score.getScore())
+                    .sum();
+            return Optional.of(frameScore.get() + bonusScore);
+        }
+        return Optional.empty();
+    }
+
 
 }

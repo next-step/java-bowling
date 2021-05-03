@@ -1,13 +1,15 @@
 package bowling.domain.frame;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
 public final class Frames {
-    private final List<Frame> frames;
     public static final Integer FINAL_FRAME = 9;
+
+    private final List<Frame> frames;
+
 
     public Frames() {
         this(generateFrames());
@@ -44,10 +46,14 @@ public final class Frames {
     }
 
     private static List<Frame> generateFrames() {
-        List<Frame> result = new LinkedList<>();
+        List<Frame> result = new ArrayList<>();
         IntStream.range(0, FINAL_FRAME)
                 .forEach(i -> result.add(new NormalFrame()));
         result.add(new FinalFrame());
+        IntStream.range(0, FINAL_FRAME)
+                .forEach(i -> result
+                        .get(i)
+                        .nextFrame(result.get(i + 1)));
         return result;
     }
 
