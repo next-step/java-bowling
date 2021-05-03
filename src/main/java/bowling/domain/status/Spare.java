@@ -22,6 +22,11 @@ public class Spare extends Finished {
     }
 
     @Override
+    public int bonusPitchCount() {
+        return BONUS_PITCH_COUNT;
+    }
+
+    @Override
     public String display() {
         return "/";
     }

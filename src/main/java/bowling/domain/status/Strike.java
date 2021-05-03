@@ -20,6 +20,11 @@ public class Strike extends Finished {
     }
 
     @Override
+    public int bonusPitchCount() {
+        return BONUS_PITCH_COUNT;
+    }
+
+    @Override
     public String display() {
         return "X";
     }

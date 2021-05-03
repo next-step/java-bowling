@@ -6,13 +6,18 @@ public class BonusPitch {
     private final int addedBonusCount;
     private final Status status;
 
+    public BonusPitch(Status status) {
+        this.addedBonusCount = status.bonusPitchCount();
+        this.status = status;
+    }
+
     public BonusPitch(int addedBonusCount, Status status) {
         this.addedBonusCount = addedBonusCount;
         this.status = status;
     }
 
-    public boolean isAbleToPitch() {
-        return addedBonusCount - 1 > 0;
+    public int addedBonusCount() {
+        return addedBonusCount;
     }
 
     public String display() {

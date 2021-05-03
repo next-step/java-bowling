@@ -7,5 +7,7 @@ public interface Status {
 
     boolean hasBonusPitch();
 
+    int bonusPitchCount();
+
     String display();
 }
