@@ -1,6 +1,7 @@
 package bowling.domain.player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +30,7 @@ public final class Players {
     }
 
     public List<Player> value() {
-        return null;
+        return Collections.unmodifiableList(players);
     }
 
     @Override

@@ -181,7 +181,7 @@
 - [ ] 1명 이상의 사용자가 사용할 수 있도록 변경
 
 - [x] `Player`의 목록을 관리하는 `Players` 생성
-    - [ ] `Player`의 목록을 반환하는 `value()` 선언
+    - [x] `Player`의 목록을 반환하는 `value()` 선언
     - [x] `Players`에 `Player`를 추가하는 `add(Player)` 선언
         - [x] `Player`에 `from(PlayerName)` 선언
 - [ ] `InputView`: 게임에 참여할 `Player`의 수를 입력받는 기능 구현
