@@ -21,7 +21,16 @@ public class StatesTest {
     void 보너스_존재_테스트() {
         States states = new States(new ArrayList<>());
         states.add(new Ready().bowl(BowlingPin.of(5)));
+        states.add(new Ready().bowl(BowlingPin.of(5)).bowl(BowlingPin.of(5)));
+
+        assertThat(states.hasNotBonus()).isFalse();
+    }
+
+    @Test
+    void 보너스_존재_테스트_2() {
+        States states = new States(new ArrayList<>());
         states.add(new Ready().bowl(BowlingPin.of(5)));
+        states.add(new Ready().bowl(BowlingPin.of(5)).bowl(BowlingPin.of(3)));
 
         assertThat(states.hasNotBonus()).isTrue();
     }

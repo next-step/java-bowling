@@ -24,7 +24,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isDone() {
-        return isDoneBonusGame() || isDoneNormalFrames();
+        return isDoneBonusGame() || states.hasNotBonus();
     }
 
     @Override
@@ -34,11 +34,6 @@ public class FinalFrame extends Frame {
 
     private boolean isDoneBonusGame() {
         return states.size() == BONUS_STATE_SIZE;
-    }
-
-    private boolean isDoneNormalFrames() {
-        return states.size() == NORMAL_STATE_SIZE
-            && states.hasNotBonus();
     }
 
     @Override
