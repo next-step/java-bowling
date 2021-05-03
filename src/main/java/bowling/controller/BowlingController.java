@@ -14,7 +14,14 @@ public class BowlingController {
         while (frames.isContinue()) {
             int topplePin = InputView.getTopplePin(frames.round());
             frames.throwBall(topplePin);
+            addScore(player, frames);
             OutputView.showScoreBoard(frames, player);
+        }
+    }
+
+    private void addScore(Player player, Frames frames) {
+        if (frames.canCalculateScore(player.scoreRound())) {
+            player.addScore(frames.getScore(player.scoreRound()));
         }
     }
 }

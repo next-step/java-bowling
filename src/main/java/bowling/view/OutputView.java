@@ -15,10 +15,8 @@ public class OutputView {
     private static final String BLANK = " ";
     private static final String BOARD_SEPARATOR = "|";
     private static final int SQUARE_LENGTH = 6;
-    private static final int START_ROUND = 1;
-    private static final int FINAL_ROUND = 10;
-    private static final int FIRST_TRY = 0;
-    private static final int BONUS_TRY = 2;
+    private static final int FINAL_ROUND_DOUBLE = 20;
+    private static final int CAN_NOT_CALCULATE = -1;
 
     private OutputView() {
     }
@@ -26,12 +24,31 @@ public class OutputView {
     public static void showScoreBoard(Frames frames, Player player) {
         showRoundTable();
         showScoreMarkTable(frames, player);
+        showScoreTable(player);
+    }
+
+    private static void showScoreTable(Player player) {
+        System.out.print(BOARD_SEPARATOR + centeredText(BLANK) + BOARD_SEPARATOR);
+        System.out.println(eachFrameScore(player.scores()) + BOARD_SEPARATOR);
+    }
+
+    private static String eachFrameScore(Scores scores) {
+        return IntStream.rangeClosed(Round.firstRound().round(), Round.finalRound().round())
+                .mapToObj(scores::roundScore)
+                .map(OutputView::convertScore)
+                .collect(Collectors.joining(BOARD_SEPARATOR));
+    }
+
+    private static String convertScore(Score score) {
+        if (score.calculateScore() == CAN_NOT_CALCULATE) {
+            return centeredText(BLANK);
+        }
+        return centeredText(String.valueOf(score.calculateScore()));
     }
 
     private static void showScoreMarkTable(Frames frames, Player player) {
         System.out.print(BOARD_SEPARATOR + centeredText(player.name()) + BOARD_SEPARATOR);
         System.out.println(eachFrameResult(frames.frames()) + BOARD_SEPARATOR);
-        System.out.println();
     }
 
     private static String eachFrameResult(List<Frame> frames) {
@@ -44,21 +61,22 @@ public class OutputView {
         if (frame.isNotYetStart()) {
             return centeredText(BLANK);
         }
-        return centeredText(convertToScoreMarks(frame.pins()));
+        return centeredText(convertToScoreMarks(frame));
     }
 
-    private static String convertToScoreMarks(Pins pins) {
-        return scoreMarks(pins);
+    private static String convertToScoreMarks(Frame frame) {
+        return scoreMarks(frame);
     }
 
-    private static String scoreMarks(Pins pins) {
+    private static String scoreMarks(Frame frame) {
         List<String> marks = new ArrayList<>();
+        Pins pins = frame.pins();
         marks.add(findMark(pins.firstPin()));
-        if (pins.tryCount() == FIRST_TRY + 1) {
+        if (frame.isFirstTry()) {
             return String.join(BOARD_SEPARATOR, marks);
         }
         marks.add(secondMark(pins));
-        if (pins.tryCount() == BONUS_TRY + 1) {
+        if (frame.isBonusTry()) {
             marks.add(findMark(pins.bonusPin()));
         }
         return String.join(BOARD_SEPARATOR, marks);
@@ -73,6 +91,9 @@ public class OutputView {
     }
 
     private static String secondMark(Pins pins) {
+        if (pins.toSecondCount() == FINAL_ROUND_DOUBLE) {
+            return ScoreMark.STRIKE.mark();
+        }
         ScoreMark scoreMark = ScoreMark.of(pins.toSecondCount(), FALSE);
         if (scoreMark == ScoreMark.SPARE) {
             return scoreMark.mark();
@@ -82,7 +103,7 @@ public class OutputView {
 
     private static void showRoundTable() {
         System.out.print(BOARD_SEPARATOR + centeredText("NAME") + BOARD_SEPARATOR);
-        IntStream.rangeClosed(START_ROUND, FINAL_ROUND)
+        IntStream.rangeClosed(Round.firstRound().round(), Round.finalRound().round())
                 .mapToObj(OutputView::convertRound)
                 .forEach(System.out::print);
         System.out.println();

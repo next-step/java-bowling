@@ -2,19 +2,44 @@ package bowling.domain;
 
 public abstract class Frame {
 
-    private static final String TRY_COUNT_EXCEPTION_MESSAGE = "최대 2번까지 시도할 수 있습니다";
     private static final int NOT_YET_START = 0;
+    private static final int FIRST_TRY = 1;
+    private static final int BONUS_TRY = 3;
 
-    protected Round round;
     protected Pins pins;
+    protected Score score;
 
-    public Frame(Round round) {
-        this.round = round;
+    public Frame() {
         this.pins = new Pins();
     }
 
-    public boolean isLastRound() {
-        return round.isFinalRound();
+
+    public void additionalScore(int score) {
+        this.score.addAdditionalScore(score);
+    }
+
+    public boolean canCalculate() {
+        return score.canCalculateScore();
+    }
+
+    public boolean isBonusTry() {
+        return pins.tryCount() == BONUS_TRY;
+    }
+
+    public boolean isFirstTry() {
+        return pins.tryCount() == FIRST_TRY;
+    }
+
+    public boolean isNotYetStart() {
+        return pins.tryCount() == NOT_YET_START;
+    }
+
+    public boolean hasScore() {
+        return score != null;
+    }
+
+    public Pins pins() {
+        return pins;
     }
 
     public void throwBall(int hitCount) {
@@ -23,23 +48,18 @@ public abstract class Frame {
         pins.add(new Pin(hitCount));
     }
 
-    protected void validateTry() {
-        if (roundEnded()) {
-            throw new IllegalStateException(TRY_COUNT_EXCEPTION_MESSAGE);
-        }
+    public int score() {
+        return score.calculateScore();
     }
 
-    public boolean isNotYetStart() {
-        return pins.tryCount() == NOT_YET_START;
-    }
+    public abstract void createScore();
 
-    public Pins pins() {
-        return pins;
-    }
-
-    protected abstract void validateHitCount(int hitCount);
+    public abstract int getScore();
 
     public abstract boolean roundEnded();
 
-    protected abstract boolean isStrike();
+    protected abstract void validateTry();
+
+    protected abstract void validateHitCount(int hitCount);
+
 }
