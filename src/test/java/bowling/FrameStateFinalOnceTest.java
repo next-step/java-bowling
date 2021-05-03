@@ -16,7 +16,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class FrameStateFinalOnceTest {
-    Pinfall pinfall = new Pinfall(1);
+    Pinfall pinfall = Pinfall.create(1);
 
     @Test
     @DisplayName("Class 생성 테스트")
@@ -28,14 +28,14 @@ public class FrameStateFinalOnceTest {
     @DisplayName("스페어가 되면 BonusState로 Transition")
     void When_Spare_Then_BonusState() {
         FrameState state = new FrameStateFinalOnce(pinfall);
-        assertThat(state.roll(new Pinfall(9))).isInstanceOf(FrameStateBonus.class);
+        assertThat(state.roll(Pinfall.create(9))).isInstanceOf(FrameStateBonus.class);
     }
 
     @Test
     @DisplayName("Open이면 OpenState로 Transition")
     void When_Open_Then_OpenState() {
         FrameState state = new FrameStateFinalOnce(pinfall);
-        assertThat(state.roll(new Pinfall(2))).isInstanceOf(FrameStateOpen.class);
+        assertThat(state.roll(Pinfall.create(2))).isInstanceOf(FrameStateOpen.class);
     }
 
     @Test

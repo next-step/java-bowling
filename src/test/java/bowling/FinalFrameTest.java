@@ -27,14 +27,14 @@ public class FinalFrameTest {
     @DisplayName("Strike일 때 FrameResult에 X 심볼 있는지 테스트")
     void Given_Strike_When_Result_Then_WithStrikeSymbol() {
         FinalFrame finalFrame = new FinalFrame();
-        finalFrame.roll(new Pinfall(10));
+        finalFrame.roll(Pinfall.createStrike());
         assertThat(finalFrame.pointSymbols()).isEqualTo(new PointSymbols(PointSymbol.STRIKE));
     }
 
     @Test
     @DisplayName("Double 일 때 FrameResult에 XX 심볼 있는지 테스트")
     void Given_Double_When_Result_Then_WithTwoStrikeSymbol() {
-        FinalFrame finalFrame = new FinalFrame(new Pinfall(10), new Pinfall(10));
+        FinalFrame finalFrame = new FinalFrame(Pinfall.createStrike(), Pinfall.createStrike());
 
         assertThat(finalFrame.pointSymbols()).isEqualTo(new PointSymbols(PointSymbol.STRIKE, PointSymbol.STRIKE));
     }
@@ -42,22 +42,22 @@ public class FinalFrameTest {
     @Test
     @DisplayName("Strike를 한 번 쳤을 때 점수는 미확정")
     void Given_Strike_When_Score_Then_NotDetermined() {
-        FinalFrame finalFrame = new FinalFrame(new Pinfall(10));
+        FinalFrame finalFrame = new FinalFrame(Pinfall.createStrike());
         assertThat(finalFrame.score()).isEqualTo(Score.createNotDetermined());
     }
 
     @Test
     @DisplayName("Strike를 두 번 쳤을 때 점수는 미확정")
     void Given_Double_When_Score_Then_NotDetermined() {
-        FinalFrame finalFrame = new FinalFrame(new Pinfall(10), new Pinfall(10));
+        FinalFrame finalFrame = new FinalFrame(Pinfall.createStrike(), Pinfall.createStrike());
         assertThat(finalFrame.score()).isEqualTo(Score.createNotDetermined());
     }
 
     @Test
     @DisplayName("Strike를 세 번 쳤을 때 점수는 30점")
     void Given_Triple_When_Score_Then_Score30() {
-        FinalFrame finalFrame = new FinalFrame(new Pinfall(10), new Pinfall(10));
-        finalFrame.roll(new Pinfall(10));
+        FinalFrame finalFrame = new FinalFrame(Pinfall.createStrike(), Pinfall.createStrike());
+        finalFrame.roll(Pinfall.createStrike());
         assertThat(finalFrame.score()).isEqualTo(Score.create(30));
     }
 }

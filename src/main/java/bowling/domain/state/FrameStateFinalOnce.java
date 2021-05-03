@@ -10,8 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FrameStateFinalOnce implements FrameState {
-    private static final int SPARE_PINFALLS = 10;
-
     private final Pinfall firstPinfall;
 
     public FrameStateFinalOnce(Pinfall pinfall) {
@@ -52,6 +50,6 @@ public class FrameStateFinalOnce implements FrameState {
     }
 
     private boolean isSpare(Pinfall secondPinfall) {
-        return firstPinfall.add(secondPinfall).equals(new Pinfall(SPARE_PINFALLS));
+        return firstPinfall.add(secondPinfall).equals(Pinfall.createSpare());
     }
 }

@@ -18,7 +18,7 @@ public class BowlingControl {
         BowlingGames bowlingGames = new BowlingGames(players);
         while (!bowlingGames.isDone()) {
             printBowlingGamesResult(bowlingGames.results());
-            Pinfall pinfall = new Pinfall(View.pinfall(bowlingGames.currentPlayer().name()));
+            Pinfall pinfall = Pinfall.create(View.pinfall(bowlingGames.currentPlayer().name()));
             bowlingGames.roll(pinfall);
         }
         printBowlingGamesResult(bowlingGames.results());

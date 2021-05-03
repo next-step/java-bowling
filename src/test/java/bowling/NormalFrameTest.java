@@ -24,7 +24,7 @@ public class NormalFrameTest {
     @Test
     @DisplayName("Strike일 때 FrameResult에 X 심볼 있는지 테스트")
     void Given_Strike_When_Result_Then_ResultWithStrikeSymbol() {
-        NormalFrame normalFrame = new NormalFrame(new Pinfall(10));
+        NormalFrame normalFrame = new NormalFrame(Pinfall.createStrike());
 
         assertThat(normalFrame.pointSymbols()).isEqualTo(new PointSymbols(PointSymbol.STRIKE));
     }
@@ -32,7 +32,7 @@ public class NormalFrameTest {
     @Test
     @DisplayName("Spare 때 FrameResult에 / 심볼 있는지 테스트")
     void Given_Spare_When_Result_Then_ResultWithSpareSymbol() {
-        NormalFrame normalFrame = new NormalFrame(new Pinfall(9), new Pinfall(1));
+        NormalFrame normalFrame = new NormalFrame(Pinfall.create(9), Pinfall.create(1));
 
         assertThat(normalFrame.pointSymbols()).isEqualTo(new PointSymbols(PointSymbol.NINE, PointSymbol.SPARE));
     }
@@ -40,7 +40,7 @@ public class NormalFrameTest {
     @Test
     @DisplayName("Open 때 FrameResult에 숫자 심볼 있는지 테스트")
     void Given_Open_When_Result_Then_ResultWithNumericSymbol() {
-        NormalFrame normalFrame = new NormalFrame(new Pinfall(8), new Pinfall(1));
+        NormalFrame normalFrame = new NormalFrame(Pinfall.create(8), Pinfall.create(1));
 
         assertThat(normalFrame.pointSymbols()).isEqualTo(new PointSymbols(PointSymbol.EIGHT, PointSymbol.ONE));
     }
@@ -48,7 +48,7 @@ public class NormalFrameTest {
     @Test
     @DisplayName("Strike일 때 해당 프레임은 끝났음 테스트")
     void Given_Strike_When_isDone_Then_True() {
-        NormalFrame normalFrame = new NormalFrame(new Pinfall(10));
+        NormalFrame normalFrame = new NormalFrame(Pinfall.createStrike());
 
         assertThat(normalFrame.isDone()).isTrue();
     }
@@ -57,7 +57,7 @@ public class NormalFrameTest {
     @DisplayName("Strike일 때 roll의 결과는 새로운 Frame 테스트")
     void Given_Strike_When_Roll_Then_ResultNewFrame() {
         NormalFrame currentFrame = new NormalFrame();
-        Frame newFrame = currentFrame.roll(new Pinfall(10));
+        Frame newFrame = currentFrame.roll(Pinfall.createStrike());
 
         assertThat(newFrame).isNotEqualTo(currentFrame);
     }
@@ -66,7 +66,7 @@ public class NormalFrameTest {
     @DisplayName("새로운 프레임의 번호는 현재 Frame번호 +1")
     void Given_NewFrame_When_FrameNumber_Then_FrameNumberIsIncreased() {
         NormalFrame currentFrame = new NormalFrame();
-        Frame newFrame = currentFrame.roll(new Pinfall(10));
+        Frame newFrame = currentFrame.roll(Pinfall.createStrike());
 
         assertThat(newFrame.frameNumber()).isEqualTo(new FrameNumber(2));
     }
@@ -74,14 +74,14 @@ public class NormalFrameTest {
     @Test
     @DisplayName("Open일 때 점수는 넘어진 핀의 개수의 합")
     void Given_Open_When_Score_Then_Score() {
-        NormalFrame frame = new NormalFrame(new Pinfall(1), new Pinfall(2));
+        NormalFrame frame = new NormalFrame(Pinfall.create(1), Pinfall.create(2));
         assertThat(frame.score()).isEqualTo(Score.create(3));
     }
 
     @Test
     @DisplayName("Strike 일 때 점수는 미확정")
     void Given_Strike_When_Score_Then_NotDetermined() {
-        NormalFrame frame = new NormalFrame(new Pinfall(10));
+        NormalFrame frame = new NormalFrame(Pinfall.createStrike());
         assertThat(frame.score()).isEqualTo(Score.createNotDetermined());
     }
 
@@ -89,8 +89,8 @@ public class NormalFrameTest {
     @DisplayName("Double 일 때 첫 번째 Frame의 점수는 미확정")
     void Given_RollWithStrikeTwice_When_Score_Then_NotDetermined() {
         Frame firstFrame = new NormalFrame();
-        Frame secondFrame = firstFrame.roll(new Pinfall(10));
-        secondFrame.roll(new Pinfall(10));
+        Frame secondFrame = firstFrame.roll(Pinfall.createStrike());
+        secondFrame.roll(Pinfall.createStrike());
 
         AssertionsForClassTypes.assertThat(firstFrame.score()).isEqualTo(Score.createNotDetermined());
     }
@@ -99,9 +99,9 @@ public class NormalFrameTest {
     @DisplayName("Triple 일 때 첫 번째 Frame의 점수는 30")
     void Given_RollWithStrikeThrice_When_Score_Then_Score30() {
         Frame firstFrame = new NormalFrame();
-        Frame secondFrame = firstFrame.roll(new Pinfall(10));
-        Frame thirdFrame = secondFrame.roll(new Pinfall(10));
-        thirdFrame.roll(new Pinfall(10));
+        Frame secondFrame = firstFrame.roll(Pinfall.createStrike());
+        Frame thirdFrame = secondFrame.roll(Pinfall.createStrike());
+        thirdFrame.roll(Pinfall.createStrike());
 
         AssertionsForClassTypes.assertThat(firstFrame.score()).isEqualTo(Score.create(30));
     }
@@ -109,16 +109,16 @@ public class NormalFrameTest {
     @Test
     @DisplayName("Spare 일 때 첫 번째 Frame의 미확정")
     void Given_Spare_When_Score_Then_NotDetermined() {
-        NormalFrame frame = new NormalFrame(new Pinfall(9), new Pinfall(1));
+        NormalFrame frame = new NormalFrame(Pinfall.create(9), Pinfall.create(1));
         assertThat(frame.score()).isEqualTo(Score.createNotDetermined());
     }
 
     @Test
     @DisplayName("Spare이고, 다음 Frame의 공을 한 번 던졌을 때 첫 번째 Frame의 점수는 넘어진 핀 개수 + 보너스 점수")
     void Given_SpareAndRollOnce_When_Score_Then_Score12() {
-        Frame firstFrame = new NormalFrame(new FrameNumber(1), new Pinfall(9));
-        Frame secondFrame = firstFrame.roll(new Pinfall(1));
-        secondFrame.roll(new Pinfall(2));
+        Frame firstFrame = new NormalFrame(new FrameNumber(1), Pinfall.create(9));
+        Frame secondFrame = firstFrame.roll(Pinfall.create(1));
+        secondFrame.roll(Pinfall.create(2));
         assertThat(firstFrame.score()).isEqualTo(Score.create(12));
     }
 

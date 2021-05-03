@@ -2,19 +2,46 @@ package bowling.domain;
 
 import bowling.IllegalPinFallException;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Pinfall {
     private static final int MAX_PINFALL = 10;
+    private static final int MIN_PINFALL = 0;
 
+    private static final Map<Integer, Pinfall> pinfallCache;
     private final int pinfall;
 
-    public Pinfall(int pinfall) {
+    static {
+        pinfallCache = new HashMap<>();
+    }
+
+    private Pinfall(int pinfall) {
         if (pinfall > MAX_PINFALL) {
             throw new IllegalPinFallException("넘어진 핀의 개수가 잘못되었습니다");
         }
         this.pinfall = pinfall;
     }
+
+    public static Pinfall createStrike() {
+        return create(MAX_PINFALL);
+    }
+
+    public static Pinfall createSpare() {
+        return create(MAX_PINFALL);
+    }
+
+    public static Pinfall createGutter() {
+        return create(MIN_PINFALL);
+    }
+
+    public static Pinfall create(int pinfall) {
+        Pinfall pinfallClass = pinfallCache.getOrDefault(pinfall, new Pinfall(pinfall));
+        pinfallCacheAdd(pinfall, pinfallClass);
+        return pinfallClass;
+    }
+
 
     public Pinfall add(Pinfall pinfall) {
         return new Pinfall(this.pinfall + pinfall.pinfall);
@@ -39,5 +66,11 @@ public class Pinfall {
     @Override
     public int hashCode() {
         return Objects.hash(pinfall);
+    }
+
+    private static void pinfallCacheAdd(int pinfall, Pinfall pinfallClass) {
+        if (!pinfallCache.containsKey(pinfall)) {
+            pinfallCache.put(pinfall, pinfallClass);
+        }
     }
 }
