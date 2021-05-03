@@ -57,7 +57,7 @@ public class NormalFrame implements Frame{
 
     @Override
     public boolean isFinished() {
-        return !result.hasNext();
+        return result != null && !result.hasNext();
     }
 
     @Override
