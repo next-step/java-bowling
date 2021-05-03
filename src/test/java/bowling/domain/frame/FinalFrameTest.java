@@ -6,6 +6,8 @@ import bowling.domain.rollresult.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -16,8 +18,8 @@ public class FinalFrameTest {
     public static final FinalFrame MISS_FRAME = FinalFrame.of(Pin.of(2, 10), RollResults.of(Miss.of()));
     public static final FinalFrame GUTTER_FRAME = FinalFrame.of(Pin.of(1, 10), RollResults.of(Gutter.of()));
     public static final FinalFrame ONE_ROLL_FRAME = FinalFrame.of(Pin.of(1, 7), RollResults.of(OneHit.of(3)));
-    public static final FinalFrame SPARE_NEXT_FRAME = FinalFrame.of(Pin.of(3, 7), RollResults.of(Spare.of(3).next(3)));
-    public static final FinalFrame STRIKE_NEXT_FRAME = FinalFrame.of(Pin.of(3, 7), RollResults.of(Strike.of(23)));
+    public static final FinalFrame SPARE_NEXT_FRAME = FinalFrame.of(Pin.of(3, 7), RollResults.of(Arrays.asList(Spare.of(3), OneHit.of(3))));
+    public static final FinalFrame STRIKE_NEXT_FRAME = FinalFrame.of(Pin.of(3, 7), RollResults.of(Arrays.asList(Strike.of(), Strike.of(), OneHit.of(3))));
     public FinalFrame frame;
 
     @BeforeEach

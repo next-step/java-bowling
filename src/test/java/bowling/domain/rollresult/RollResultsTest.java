@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RollResultTest {
+public class RollResultsTest {
 
     @Test
     void 결과생성() {

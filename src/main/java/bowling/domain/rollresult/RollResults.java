@@ -3,35 +3,48 @@ package bowling.domain.rollresult;
 import bowling.domain.HitNumber;
 import bowling.domain.Pin;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class RollResults {
-    private final RollResultType type;
-    private final int total;
+    private final List<RollResultType> results;
 
-    private RollResults(RollResultType type, int total) {
-        this.type = type;
-        this.total = total;
+    private RollResults(RollResultType result) {
+        results = new ArrayList<>();
+        results.add(result);
     }
 
-    public static RollResults of(RollResultType type) {
-        return new RollResults(type, type.eval());
+    public RollResults(List<RollResultType> results) {
+        this.results = results;
     }
 
-    public static RollResults of(RollResultType type, int total) {
-        return new RollResults(type, total);
+    public static RollResults of(RollResultType result) {
+        return new RollResults(result);
+    }
+
+    public static RollResults of(List<RollResultType> results) {
+        return new RollResults(results);
     }
 
     public RollResults next(Pin pin, HitNumber number) {
-        return of(pin.nextHit(type, number));
+        if (!hasNext() && isCleared()) {
+            results.add(pin.firstHit(number));
+            return of(results);
+        }
+        return of(pin.nextHit(getLast(), number));
     }
 
     public boolean isCleared() {
-        return type.isStrike() || type.isSpare();
+        return getLast().isStrike() || getLast().isSpare();
     }
 
     public boolean hasNext() {
-        return type.hasNext();
+        return getLast().hasNext();
+    }
+
+    private RollResultType getLast() {
+        return results.get(results.size() - 1);
     }
 
     @Override
@@ -39,16 +52,16 @@ public class RollResults {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RollResults that = (RollResults) o;
-        return total == that.total && Objects.equals(type, that.type);
+        return Objects.equals(results, that.results);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, total);
+        return Objects.hash(results);
     }
 
     @Override
     public String toString() {
-        return "" + type + "";
+        return String.join("|", results.toString());
     }
 }

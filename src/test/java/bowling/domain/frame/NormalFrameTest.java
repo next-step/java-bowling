@@ -10,11 +10,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalFrameTest {
     public static final NormalFrame FRAME = NormalFrame.of();
-    public static final NormalFrame STRIKE_FRAME = NormalFrame.of(Pin.of(1, 0), RollResults.of(Strike.of()));
-    public static final NormalFrame SPARE_FRAME = NormalFrame.of(Pin.of(2, 0), RollResults.of(Spare.of(3)));
-    public static final NormalFrame MISS_FRAME = NormalFrame.of(Pin.of(2, 10), RollResults.of(Miss.of()));
-    public static final NormalFrame GUTTER_FRAME = NormalFrame.of(Pin.of(1, 10), RollResults.of(Gutter.of()));
-    public static final NormalFrame ONE_ROLL_FRAME = NormalFrame.of(Pin.of(1, 7), RollResults.of(OneHit.of(3)));
+    public static final NormalFrame STRIKE_FRAME = NormalFrame.of(Pin.of(1, 0), Strike.of());
+    public static final NormalFrame SPARE_FRAME = NormalFrame.of(Pin.of(2, 0), Spare.of(3));
+    public static final NormalFrame MISS_FRAME = NormalFrame.of(Pin.of(2, 10), Miss.of());
+    public static final NormalFrame GUTTER_FRAME = NormalFrame.of(Pin.of(1, 10), Gutter.of());
+    public static final NormalFrame ONE_ROLL_FRAME = NormalFrame.of(Pin.of(1, 7), OneHit.of(3));
     public NormalFrame frame;
 
     @BeforeEach

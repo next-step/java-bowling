@@ -9,15 +9,15 @@ import java.util.Objects;
 
 public class FinalFrame implements Frame {
     private final Pin pin;
-    private final RollResults result;
+    private final RollResults results;
 
     private FinalFrame(Pin pin) {
         this(pin, null);
     }
 
-    private FinalFrame(Pin pin, RollResults result) {
+    private FinalFrame(Pin pin, RollResults results) {
         this.pin = pin;
-        this.result = result;
+        this.results = results;
     }
 
     public static FinalFrame of() {
@@ -28,12 +28,12 @@ public class FinalFrame implements Frame {
         return new FinalFrame(pin);
     }
 
-    public static FinalFrame of(RollResults result) {
-        return new FinalFrame(null, result);
+    public static FinalFrame of(RollResults results) {
+        return new FinalFrame(null, results);
     }
 
-    public static FinalFrame of(Pin pin, RollResults result) {
-        return new FinalFrame(pin, result);
+    public static FinalFrame of(Pin pin, RollResults results) {
+        return new FinalFrame(pin, results);
     }
 
     @Override
@@ -43,13 +43,13 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame roll(HitNumber hitNumber) {
-        if (result == null) {
+        if (results == null) {
             return firstRoll(hitNumber, this.pin);
         }
-        if (!result.isCleared() && !result.hasNext()) {
+        if (!results.isCleared() && !results.hasNext()) {
             throw new IllegalStateException();
         }
-        if (result.isCleared()) {
+        if (results.isCleared()) {
             return nextRoll(hitNumber, Pin.last());
         }
         return nextRoll(hitNumber, pin);
@@ -61,12 +61,12 @@ public class FinalFrame implements Frame {
     }
 
     private Frame nextRoll(HitNumber hitNumber, Pin pin) {
-        return of(pin, result.next(pin, hitNumber));
+        return of(pin, results.next(pin, hitNumber));
     }
 
     @Override
     public boolean isFinished() {
-        return pin.isLast() || (!result.isCleared() && !result.hasNext());
+        return pin.isLast() || (!results.isCleared() && !results.hasNext());
     }
 
     @Override
@@ -74,16 +74,16 @@ public class FinalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FinalFrame that = (FinalFrame) o;
-        return Objects.equals(pin, that.pin) && Objects.equals(result, that.result);
+        return Objects.equals(pin, that.pin) && Objects.equals(results, that.results);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pin, result);
+        return Objects.hash(pin, results);
     }
 
     @Override
     public String toString() {
-        return "" + result + "";
+        return "" + results + "";
     }
 }

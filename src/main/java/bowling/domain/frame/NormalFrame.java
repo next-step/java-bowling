@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.HitNumber;
 import bowling.domain.Pin;
-import bowling.domain.rollresult.RollResults;
 import bowling.domain.rollresult.RollResultType;
 
 import java.util.Objects;
@@ -11,13 +10,13 @@ public class NormalFrame implements Frame{
     private static final int MAX_INDEX = 10;
 
     private final Pin pin;
-    private final RollResults result;
+    private final RollResultType result;
 
     private NormalFrame(Pin pin) {
         this(pin, null);
     }
 
-    private NormalFrame(Pin pin, RollResults result) {
+    public NormalFrame(Pin pin, RollResultType result) {
         this.pin = pin;
         this.result = result;
     }
@@ -30,11 +29,11 @@ public class NormalFrame implements Frame{
         return new NormalFrame(pin);
     }
 
-    public static NormalFrame of(RollResults result) {
+    public static NormalFrame of(RollResultType result) {
         return new NormalFrame(null, result);
     }
 
-    public static NormalFrame of(Pin pin, RollResults result) {
+    public static NormalFrame of(Pin pin, RollResultType result) {
         return new NormalFrame(pin, result);
     }
 
@@ -49,10 +48,9 @@ public class NormalFrame implements Frame{
     @Override
     public Frame roll(HitNumber rollNumber) {
         if (result == null) {
-            RollResultType type = pin.firstHit(rollNumber);
-            return of(pin, RollResults.of(type));
+            return of(pin, pin.firstHit(rollNumber));
         }
-        return of(pin, result.next(pin, rollNumber));
+        return of(pin, pin.nextHit(result, rollNumber));
     }
 
     @Override
