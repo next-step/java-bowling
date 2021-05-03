@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class BowlingGamesTest {
     @Test
@@ -23,7 +24,7 @@ public class BowlingGamesTest {
         finalFrame.roll(new Pinfall(10));
 
         BowlingGame finishedBowlingGame = new BowlingGame(new Player("111"), finalFrame);
-        BowlingGames bowlingGames = new BowlingGames(Arrays.asList(finishedBowlingGame, finishedBowlingGame));
+        BowlingGames bowlingGames = new BowlingGames(new FrameNumber(10), Arrays.asList(finishedBowlingGame, finishedBowlingGame));
 
         assertThat(bowlingGames.isDone()).isTrue();
     }
@@ -54,5 +55,18 @@ public class BowlingGamesTest {
         bowlingGames.roll(new Pinfall(1));
 
         assertThat(bowlingGames.currentPlayer()).isEqualTo(new Player("111"));
+    }
+
+    @Test
+    @DisplayName("10번 프레임일 때 마지막 플레이어까지 공을 던져야 한다 ")
+    void Given_10thFrame_When_Roll_NoException() {
+        FinalFrame finalFrame = new FinalFrame(new Pinfall(10), new Pinfall(10));
+        FinalFrame finalFrame1 = new FinalFrame();
+        BowlingGame bowlingGame = new BowlingGame(new Player("111"), finalFrame);
+        BowlingGame bowlingGame2 = new BowlingGame(new Player("222"), finalFrame1);
+        BowlingGames bowlingGames = new BowlingGames(new FrameNumber(10), Arrays.asList(bowlingGame, bowlingGame2));
+
+        bowlingGames.roll(new Pinfall(0));
+        assertDoesNotThrow(() -> bowlingGames.roll(new Pinfall(0)));
     }
 }

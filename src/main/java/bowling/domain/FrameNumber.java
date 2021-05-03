@@ -28,6 +28,10 @@ public class FrameNumber {
         return frameNumber;
     }
 
+    public boolean isLast() {
+        return frameNumber == LAST_FRAME_NUMBER;
+    }
+
     public static int compare(FrameNumber first, FrameNumber second) {
         return Integer.compare(first.number(), second.number());
     }

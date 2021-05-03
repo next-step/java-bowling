@@ -1,18 +1,19 @@
 package bowling.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class BowlingGames {
     private final List<BowlingGame> bowlingGames;
-    private FrameNumber currentFrame = new FrameNumber(1);
+    private FrameNumber currentFrame;
 
-    public BowlingGames(List<BowlingGame> bowlingGames) {
+    public BowlingGames(FrameNumber currentFrame, List<BowlingGame> bowlingGames) {
+        this.currentFrame = currentFrame;
         this.bowlingGames = bowlingGames;
     }
 
     public BowlingGames(Players players) {
+        currentFrame = new FrameNumber(1);
         bowlingGames = players.players()
                 .stream()
                 .map(player -> new BowlingGame(player))
@@ -45,12 +46,28 @@ public class BowlingGames {
     }
 
     private BowlingGame currentBowlingGame() {
+        if (currentFrame.isLast()) {
+            return notFinishedBowlingGame();
+        }
+
+        return currentFrameBowlingGame();
+    }
+
+    private BowlingGame currentFrameBowlingGame() {
         BowlingGame curremtBowlingGame = bowlingGames.stream()
                 .filter(bowlingGame -> bowlingGame.frameNumber().equals(currentFrame))
                 .findFirst()
                 .orElse(firstGame());
+
         currentFrame = curremtBowlingGame.frameNumber();
         return curremtBowlingGame;
+    }
+
+    private BowlingGame notFinishedBowlingGame() {
+        return bowlingGames.stream()
+                .filter(bowlingGame -> !bowlingGame.isDone())
+                .findFirst()
+                .orElse(firstGame());
     }
 
     private BowlingGame firstGame() {
