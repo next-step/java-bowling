@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,19 @@ public class NormalFrame extends Frame {
             frameScore = getBonusScoreStrike(frameScore);
         }
         return frameScore;
+    }
+
+    @Override
+    public Optional<List<Score>> getTwoScores() {
+        if (this.scores.getScores().size() == 2) {
+            return Optional.of(this.scores.transSpareScores());
+        }
+        if (this.scores.getScores().contains(Score.STRIKE) && nextFrame.getScores().size() >= 1) {
+            List<Score> result = new ArrayList<>(scores.transSpareScores());
+            result.add(nextFrame.scores.getScores().get(0));
+            return Optional.of(result);
+        }
+        return Optional.empty();
     }
 
     public Optional<Integer> getBonusScoreSpare(Optional<Integer> frameScore) {

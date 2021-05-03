@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,20 +19,8 @@ public abstract class Frame {
         return this.scores.getScores();
     }
 
-    public Optional<List<Score>> getTwoScores() {
-        if (this.scores.getScores().size() == 2) {
-            return Optional.of(this.scores.transSpareScores());
-        }
-        if (this.scores.getScores().contains(Score.STRIKE)) {
-            
-        }
-        if (this.scores.getScores().contains(Score.STRIKE) && nextFrame.getScores().size() >= 1) {
-            List<Score> result = new ArrayList<>(scores.transSpareScores());
-            result.add(nextFrame.scores.getScores().get(0));
-            return Optional.of(result);
-        }
-        return Optional.empty();
-    }
+    public abstract Optional<List<Score>> getTwoScores();
+
 
     public Optional<Score> getOneScore() {
         if (!this.scores.getScores().isEmpty()) {

@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,5 +22,16 @@ public class FinalFrame extends Frame {
                 .stream()
                 .mapToInt(score -> score.getScore())
                 .sum());
+    }
+
+    @Override
+    public Optional<List<Score>> getTwoScores() {
+        if (this.scores.getScores().size() >= 2) {
+            List<Score> result = new ArrayList<>();
+            result.add(this.scores.transSpareScores().get(0));
+            result.add(this.scores.transSpareScores().get(1));
+            return Optional.of(result);
+        }
+        return Optional.empty();
     }
 }
