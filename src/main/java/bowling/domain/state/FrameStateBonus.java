@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 public class FrameStateBonus implements FrameState {
     private static final int MAX_PINFALLS = 3;
+    private static final int SPARE_PINFALLS = 10;
 
     private final List<Pinfall> pinfalls;
 
@@ -90,20 +91,32 @@ public class FrameStateBonus implements FrameState {
             return false;
         }
 
-        return isSpare(pinfalls.get(0), pinfalls.get(1));
+        return isSpare(firstPinfall(), secondPinfall());
     }
 
     private boolean isThirdPinfallSpare() {
-        if (pinfalls.size() != 3) {
+        if (pinfalls.size() != MAX_PINFALLS) {
             return false;
         }
-        return isSpare(pinfalls.get(1), pinfalls.get(2));
+        return isSpare(secondPinfall(), thridPinfall());
+    }
+
+    private Pinfall thridPinfall() {
+        return pinfalls.get(2);
+    }
+
+    private Pinfall firstPinfall() {
+        return pinfalls.get(0);
+    }
+
+    private Pinfall secondPinfall() {
+        return pinfalls.get(1);
     }
 
     private boolean isSpare(Pinfall first, Pinfall second) {
         if (first.isStrike() || second.isStrike()) {
             return false;
         }
-        return first.add(second).equals(new Pinfall(10));
+        return first.add(second).equals(new Pinfall(SPARE_PINFALLS));
     }
 }

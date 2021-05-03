@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FrameStateStrike implements FrameState {
+    private static final int STRIKE_PINFALLS = 10;
+
     @Override
     public FrameState roll(Pinfall pinfall) {
         throw new IllegalRollingSequenceException("공을 굴릴 수 없습니다");
@@ -25,7 +27,7 @@ public class FrameStateStrike implements FrameState {
 
     @Override
     public List<Pinfall> pinfalls() {
-        return new ArrayList<>(Arrays.asList(new Pinfall(10)));
+        return new ArrayList<>(Arrays.asList(new Pinfall(STRIKE_PINFALLS)));
     }
 
     @Override
