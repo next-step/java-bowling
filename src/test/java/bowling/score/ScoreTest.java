@@ -1,4 +1,4 @@
-package bowling;
+package bowling.score;
 
 import bowling.entity.Score;
 import org.junit.jupiter.api.DisplayName;

@@ -1,4 +1,4 @@
-package bowling;
+package bowling.frame;
 
 import bowling.entity.frame.LastFrameBowlCount;
 import org.junit.jupiter.api.DisplayName;

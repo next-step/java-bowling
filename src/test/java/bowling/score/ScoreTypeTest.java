@@ -1,4 +1,4 @@
-package bowling;
+package bowling.score;
 
 import bowling.entity.Pin;
 import bowling.entity.score.*;

@@ -1,4 +1,4 @@
-package bowling;
+package bowling.frame;
 
 import bowling.entity.*;
 import bowling.entity.frame.NormalFrame;

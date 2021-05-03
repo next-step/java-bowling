@@ -52,15 +52,12 @@ public class ResultView {
     public static void frameScorePrint(List<FrameResult> bowlingResults) {
         ResultView.userNamePrint("");
 
-//        int totalCount = 0;
-
         for (FrameResult bowlingResult : bowlingResults) {
             int score = bowlingResult.totalScore();
 
             emptyFramePrint(score);
 
             if (score != -1) {
-//                totalCount += score;
                 System.out.printf(PRINT_FORMAT, score);
             }
 

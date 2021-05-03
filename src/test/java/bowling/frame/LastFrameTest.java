@@ -1,4 +1,4 @@
-package bowling;
+package bowling.frame;
 
 import bowling.entity.Pin;
 import bowling.entity.frame.LastFrame;
