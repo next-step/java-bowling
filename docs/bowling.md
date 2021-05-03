@@ -195,3 +195,8 @@
     - [ ] `Frames`: Throw 하기 전 Frame은 생성되지 않도록 Frame의 개수를 관리
         - 잠정적으로 보류(NPE를 억제할 우아한 방법을 찾지 못했다.)
     - [x] `StringUtils`: 테스트 추가
+    - [ ] Production 코드에서 `FinalFrame`, `NormalFrame`을 생성하는 코드에 굳이 인자로 `Pins.create`를 받지않도록 리팩토링
+    - [ ] 객체 내부에서 validation 하도록 수정`Pins`
+    - [ ] `Pins`가 자체적으로 `PinCountValidator`를 소유하고 있도록 수정
+    - [ ] `Pins`에서 `size()`를 호출하지 않고, `throwCount()`라는 도메인 친화적인 네이밍으로 수정, `isEmpty()` 도 `isFistThrow`로 수정
+    - [ ] `Row` 개선, 출력시 builder를 인자로 받아서 처리하기보다는 결과만 리턴하도록 수정(Stream 이용)
