@@ -18,7 +18,7 @@ public class FrameResultTest {
     void Given_AggregatedScore_When_aggregatedScore_Then_GivenScore() {
         Score aggregatedScore = Score.create(10);
 
-        FrameResult frameResult = new FrameResult(aggregatedScore, new PointSymbols());
+        FrameResult frameResult = new FrameResult(new PointSymbols(), aggregatedScore);
         assertThat(frameResult.aggregatedScore()).isEqualTo(aggregatedScore);
     }
 
@@ -26,7 +26,7 @@ public class FrameResultTest {
     void Given_PointSymbols_When_PointSymbols_Then_GivenPointSymbols() {
         PointSymbols pointSymbols = new PointSymbols(PointSymbol.ONE, PointSymbol.TWO);
 
-        FrameResult frameResult = new FrameResult(Score.create(3), pointSymbols);
+        FrameResult frameResult = new FrameResult(pointSymbols, Score.create(3));
         assertThat(frameResult.pointSymbols()).isEqualTo(pointSymbols);
     }
 }

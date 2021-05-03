@@ -7,12 +7,11 @@ public class FrameResult {
     private final PointSymbols pointSymbols;
 
     public FrameResult() {
-        this(Score.createNotDetermined(), new PointSymbols());
+        this(new PointSymbols(), Score.createNotDetermined());
     }
 
-    public FrameResult(Score aggregatedScore, PointSymbols pointSymbols) {
-        this.aggregatedScore = aggregatedScore;
-        this.pointSymbols = pointSymbols;
+    public FrameResult(Score aggregatedScore) {
+        this(new PointSymbols(), aggregatedScore);
     }
 
     public FrameResult(PointSymbols pointSymbols, Score aggregatedScore) {
