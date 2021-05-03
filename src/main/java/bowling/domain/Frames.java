@@ -7,16 +7,19 @@ import java.util.stream.IntStream;
 
 public class Frames {
 
+  public static final int SECOND_FRAME_INDEX = 1;
+  public static final int FINAL_FRAME_INDEX = 9;
   private List<Frame> frames = new ArrayList<>();
 
   public Frames() {
-    frames.add(new NormalFrame());
-    IntStream.range(1, 9).forEach(i -> addNormalFrame(i));
+    NormalFrame FirstFrame = new NormalFrame();
+    frames.add(FirstFrame);
+    IntStream.range(SECOND_FRAME_INDEX, FINAL_FRAME_INDEX).forEach(index -> addNormalFrame(index));
     addFinalFrame();
   }
 
-  private void addNormalFrame(int i) {
-    NormalFrame before = (NormalFrame) frames.get(i - 1);
+  private void addNormalFrame(int index) {
+    NormalFrame before = (NormalFrame) frames.get(index - 1);
     frames.add(before.next());
   }
 

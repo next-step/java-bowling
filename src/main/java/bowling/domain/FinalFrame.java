@@ -8,6 +8,7 @@ public class FinalFrame extends Frame{
 
   public FinalFrame() {
     super();
+    this.number = 10;
     this.pitchingCount = 0;
   }
 

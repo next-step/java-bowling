@@ -42,25 +42,25 @@ public class Frame {
 
   public String result() {
     List<String> scoreResult = IntStream.rangeClosed(1, lastPitchingIndex())
-        .mapToObj(i -> getScore(i))
+        .mapToObj(index -> getScore(index))
         .filter(score -> !StringUtils.isBlank(score))
         .collect(Collectors.toList());
     return StringUtils.join(scoreResult, DELIMITER);
   }
 
-  private String getScore(int i) {
-    if (pitchingList.get(i).leftPins() == 10) {
+  private String getScore(int index) {
+    if (pitchingList.get(index).leftPins() == 10) {
       return "";
     }
-    Result result = pitchingList.get(i).result();
+    Result result = pitchingList.get(index).result();
     if (result.isNotMiss()) {
       return result.getMark();
     }
-    return String.valueOf(getHitScore(i));
+    return String.valueOf(getHitScore(index));
   }
 
-  private int getHitScore(int i) {
-    return pitchingList.get(i - 1).leftPins() - pitchingList.get(i).leftPins();
+  private int getHitScore(int index) {
+    return pitchingList.get(index - 1).leftPins() - pitchingList.get(index).leftPins();
   }
 
 }
