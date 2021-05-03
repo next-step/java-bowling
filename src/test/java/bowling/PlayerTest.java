@@ -33,4 +33,10 @@ public class PlayerTest {
                 .isThrownBy(() -> new Player(name))
                 .withMessage("이름의 길이가 잘못되었습니다");
     }
+
+    @Test
+    @DisplayName("nonamePlayer의 이름은 \"---\"")
+    void Given_Noname_When_Name_Then_DashDashDash() {
+        assertThat(Player.noname().name()).isEqualTo("---");
+    }
 }
