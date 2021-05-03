@@ -13,7 +13,7 @@ public class Score {
         scoreCache = new HashMap<>();
     }
 
-    public Score(int score) {
+    private Score(int score) {
         this.score = score;
     }
 
@@ -21,11 +21,20 @@ public class Score {
         return create(-1);
     }
 
+    public static Score createStrike() {
+        return create(10);
+    }
+
+    public static Score createSpare() {
+        return create(10);
+    }
+
     public static Score create(int score) {
         Score scoreClass = scoreCache.getOrDefault(score, new Score(score));
         scoreCacheAdd(score, scoreClass);
         return scoreClass;
     }
+
 
     public Score add(Score score) {
         if (isNotDetermined(this) || isNotDetermined(score)) {

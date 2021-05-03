@@ -43,6 +43,6 @@ public class FrameStateStrike implements FrameState {
 
         Score bonusScore = Score.create(bonusPinfalls.get(0).number() + bonusPinfalls.get(1).number());
 
-        return Score.create(10).add(bonusScore);
+        return Score.createStrike().add(bonusScore);
     }
 }

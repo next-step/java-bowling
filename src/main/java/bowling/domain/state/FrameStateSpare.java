@@ -53,7 +53,7 @@ public class FrameStateSpare implements FrameState {
         }
 
         Score bonusScore = Score.create(firstPinfall(bonusPinfalls).number());
-        return Score.create(10).add(bonusScore);
+        return Score.createSpare().add(bonusScore);
     }
 
     private Pinfall firstPinfall(List<Pinfall> bonusPinfalls) {
