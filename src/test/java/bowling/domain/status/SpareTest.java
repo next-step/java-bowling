@@ -26,4 +26,11 @@ public class SpareTest {
         Status spare = new Spare();
         assertThat(spare.hasBonusPitch()).isTrue();
     }
+
+    @DisplayName("스페어의 보너스 투구는 1을 반환.")
+    @Test
+    void bonusPitchCount_spare() {
+        Spare spare = new Spare();
+        assertThat(spare.bonusPitchCount()).isEqualTo(1);
+    }
 }

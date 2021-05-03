@@ -26,4 +26,11 @@ public class StrikeTest {
         Status strike = new Strike();
         assertThat(strike.hasBonusPitch()).isTrue();
     }
+
+    @DisplayName("스트라이크의 보너스 투구는 2를 반환.")
+    @Test
+    void bonusPitchCount_strike() {
+        Status strike = new Strike();
+        assertThat(strike.bonusPitchCount()).isEqualTo(2);
+    }
 }

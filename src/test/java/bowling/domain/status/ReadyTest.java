@@ -26,4 +26,11 @@ public class ReadyTest {
         Ready ready = new Ready();
         assertThat(ready.hasBonusPitch()).isFalse();
     }
+
+    @DisplayName("보너스 투구는 0을 반환.")
+    @Test
+    void bonusPitchCount() {
+        Ready ready = new Ready();
+        assertThat(ready.bonusPitchCount()).isEqualTo(0);
+    }
 }

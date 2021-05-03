@@ -27,4 +27,11 @@ public class HoldTest {
         Status hold = new Hold(new Pitch(3));
         assertThat(hold.hasBonusPitch()).isFalse();
     }
+
+    @DisplayName("보너스 투구는 0을 반환.")
+    @Test
+    void bonusPitchCount() {
+        Status hold = new Hold(new Pitch(3));
+        assertThat(hold.bonusPitchCount()).isEqualTo(0);
+    }
 }

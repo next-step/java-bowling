@@ -21,4 +21,11 @@ public class MissTest {
         Status miss = new Miss(new Pitch(6));
         assertThat(miss.hasBonusPitch()).isFalse();
     }
+
+    @DisplayName("보너스 투구는 0을 반환.")
+    @Test
+    void bonusPitchCount() {
+        Miss miss = new Miss(new Pitch(6));
+        assertThat(miss.bonusPitchCount()).isEqualTo(0);
+    }
 }
