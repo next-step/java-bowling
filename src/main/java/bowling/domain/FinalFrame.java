@@ -16,7 +16,7 @@ public class FinalFrame extends Frame{
   }
 
   @Override
-  public List<String> play(int hitCount) {
+  public List<Integer> play(int hitCount) {
     pitchingCount++;
     return super.play(hitCount);
   }

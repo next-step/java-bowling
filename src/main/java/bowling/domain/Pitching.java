@@ -46,7 +46,4 @@ public class Pitching {
     return result().isStrike() || tryCount == MAX_TRY;
   }
 
-  public int getTryCount() {
-    return tryCount;
-  }
 }

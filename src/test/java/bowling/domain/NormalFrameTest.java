@@ -30,20 +30,20 @@ class NormalFrameTest {
   @Test
   void strike() {
     NormalFrame normalFrame = new NormalFrame();
-    assertThat(normalFrame.play(10)).containsExactly("X");
+    assertThat(normalFrame.play(10)).containsExactly(10);
   }
 
   @Test
   void spare() {
     NormalFrame normalFrame = new NormalFrame();
     normalFrame.play(5);
-    assertThat(normalFrame.play(5)).containsExactly("5", "/");
+    assertThat(normalFrame.play(5)).containsExactly(5, 5);
   }
 
   @Test
   void miss() {
     NormalFrame normalFrame = new NormalFrame();
-    assertThat(normalFrame.play(5)).containsExactly("5");
-    assertThat(normalFrame.play(4)).containsExactly("5", "4");
+    assertThat(normalFrame.play(5)).containsExactly(5);
+    assertThat(normalFrame.play(4)).containsExactly(5, 4);
   }
 }

@@ -2,7 +2,6 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Frame {
 
@@ -14,7 +13,7 @@ public class Frame {
     pitchingList.add(new Pitching());
   }
 
-  public List<String> play(int hitCount) {
+  public List<Integer> play(int hitCount) {
     Pitching pitching = lastPitching();
     Pitching play = pitching.play(hitCount);
     pitchingList.add(play);
@@ -37,34 +36,29 @@ public class Frame {
     return pitchingList.size() - 1;
   }
 
-  public List<String> result() {
+  public List<Integer> result() {
     List<Integer> hitCounts = getHitCounts();
-    return pitchingList.stream()
-        .filter(pitching -> pitching.result().isNotNone())
-        .map(pitching -> getScore(hitCounts, pitching))
-        .collect(Collectors.toList());
-  }
-
-  private List<Integer> getHitCounts() {
-    List<Integer> pinsInfo = pitchingList.stream()
-        .filter(pitching -> pitching.result().isNotNone())
-        .map(Pitching::leftPins)
-        .collect(Collectors.toList());
-
-    List<Integer> hitCounts = new ArrayList<>();
-    pinsInfo.stream().reduce(Pins.MAX, (a, b) -> {
-      int hitCount = a - b;
-      hitCounts.add(hitCount);
-      return b;
-    });
     return hitCounts;
   }
 
-  private String getScore(List<Integer> hitCounts, Pitching pitching) {
-    if (pitching.result().isNotMiss()) {
-      return pitching.result().getMark();
+  private List<Integer> getHitCounts() {
+    List<Integer> hitCounts = new ArrayList<>();
+    pitchingList.stream().filter(pitching -> pitching.result().isNotNone())
+        .map(Pitching::leftPins)
+        .reduce(Pins.MAX, (first, second) -> {
+          first = initialize(first);
+          int count = first - second;
+          hitCounts.add(count);
+          return second;
+        });
+    return hitCounts;
+  }
+
+  private int initialize(int leftPinsCount) {
+    if (leftPinsCount == Pins.MIN) {
+      leftPinsCount = Pins.MAX;
     }
-    return String.valueOf(hitCounts.get(pitching.getTryCount() - 1));
+    return leftPinsCount;
   }
 
 }

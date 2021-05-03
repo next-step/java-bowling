@@ -1,18 +1,7 @@
 package bowling.domain;
 
 public enum Result {
-  STRIKE("X"),
-  SPARE("/"),
-  GUTTER("-"),
-  MISS(""),
-  NONE("")
-  ;
-
-  private String mark;
-
-  Result(String mark) {
-    this.mark = mark;
-  }
+  STRIKE,SPARE,MISS,NONE;
 
   public boolean isNotMiss() {
     return isStrike() || isSpare();
@@ -23,10 +12,6 @@ public enum Result {
 
   private boolean isSpare() {
     return this.equals(SPARE);
-  }
-
-  public String getMark() {
-    return mark;
   }
 
   public boolean isNotNone() {

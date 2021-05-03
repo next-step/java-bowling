@@ -15,7 +15,8 @@ class FramesTest {
   @Test
   void play() {
     Frames frames = new Frames();
-    assertEquals(frames.play(4).get(0).getScore(), "4");
+    String score = frames.play(4).get(0).getScore();
+    assertEquals(score, "4");
     assertEquals(frames.play(6).get(0).getScore(), "4|/");
     assertEquals(frames.play(10).get(1).getScore(), "X");
   }
