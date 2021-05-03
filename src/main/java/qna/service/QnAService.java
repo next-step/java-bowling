@@ -11,8 +11,6 @@ import qna.dto.DeleteHistoryDTO;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
@@ -34,25 +32,18 @@ public class QnAService {
     }
 
     @Transactional
-    public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
-
+    public void deleteQuestion(User loginUser, Long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
 
         question.checkAuthority(loginUser);
         question.isHasAnswersIsNotOwner(loginUser);
 
-
-        DeleteHistorys deleteHistories = new DeleteHistorys();
+        DeleteHistories deleteHistories = new DeleteHistories();
         question.setDeleted(true);
 
-        List<Answer> answers = question.getAnswers();
-        deleteHistories.addTypeQuestion(new DeleteHistoryDTO(questionId, question.getWriter(), LocalDateTime.now()));
-        deleteHistories.addTypeAnswer(answers);
-//        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, new DeleteHistoryDTO(questionId, question.getWriter(), LocalDateTime.now())));
-//        for (Answer answer : answers) {
-//            answer.setDeleted(true);
-//            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, new DeleteHistoryDTO(answer.getId(), answer.getWriter(), LocalDateTime.now())));
-//        }
+        deleteHistories.add(question);
+        deleteHistories.add(question.getAnswers());
+
         deleteHistoryService.saveAll(deleteHistories);
     }
 }

@@ -22,9 +22,9 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-
     private Answers answers = new Answers();
 //    private List<Answer> answers = new ArrayList<>();
+
 
     private boolean deleted = false;
 
@@ -49,6 +49,10 @@ public class Question extends AbstractEntity {
     public Question setTitle(String title) {
         this.title = title;
         return this;
+    }
+
+    public Answers getAnswers() {
+        return answers;
     }
 
     public String getContents() {

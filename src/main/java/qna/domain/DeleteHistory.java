@@ -23,15 +23,12 @@ public class DeleteHistory {
 
     private LocalDateTime createDate = LocalDateTime.now();
 
-    public DeleteHistory() {
+    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy) {
+        this.contentType = contentType;
+        this.contentId = contentId;
+        this.deletedBy = deletedBy;
     }
 
-    public DeleteHistory(ContentType contentType, DeleteHistoryDTO deleteHistoryDTO) {
-        this.contentType = contentType;
-        this.contentId = deleteHistoryDTO.getQuestionId();
-        this.deletedBy = deleteHistoryDTO.getWriter();
-        this.createDate = deleteHistoryDTO.getDateTime();
-    }
 
     @Override
     public boolean equals(Object o) {
