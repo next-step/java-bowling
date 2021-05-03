@@ -55,7 +55,7 @@ class FinalFrameTest {
     @DisplayName("마지막 프레임의 다음 프레임을 요청할 경우 예외가 발생한다.")
     void nextFrame() {
         // given
-        final FinalFrame finalFrame = FinalFrame.from(Pins.create());
+        final FinalFrame finalFrame = FinalFrame.create();
 
         // when
         // then
@@ -68,7 +68,7 @@ class FinalFrameTest {
     @DisplayName("FinalFrame의 다음 프레임은 생성되지 않는다.")
     void createNextFrame() {
         // given
-        final FinalFrame finalFrame = FinalFrame.from(Pins.create());
+        final FinalFrame finalFrame = FinalFrame.create();
 
         // when
         // then
@@ -81,7 +81,7 @@ class FinalFrameTest {
     @DisplayName("투구를 한다. 투구를 한 후 상태가 변경된다.")
     void knockDownPin() {
         // given
-        final FinalFrame finalFrame = FinalFrame.from(Pins.create());
+        final FinalFrame finalFrame = FinalFrame.create();
         final Pin pin = new Pin(0);
 
         // when
@@ -108,7 +108,7 @@ class FinalFrameTest {
     @DisplayName("처음 만들어진 FinalFrame은 점수를 산정할 수 없다.")
     void noScore() {
         // given
-        final FinalFrame finalFrame = FinalFrame.from(Pins.create());
+        final FinalFrame finalFrame = FinalFrame.create();
 
         // when
         final Score score = finalFrame.score();

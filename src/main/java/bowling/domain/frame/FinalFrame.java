@@ -17,6 +17,10 @@ public final class FinalFrame extends Frame {
         super(roundNumber, pins);
     }
 
+    public static FinalFrame create() {
+        return new FinalFrame(RoundNumber.MAX_ROUND_NUMBER, Pins.create());
+    }
+
     public static FinalFrame from(Pins pins) {
         return new FinalFrame(RoundNumber.MAX_ROUND_NUMBER, pins);
     }

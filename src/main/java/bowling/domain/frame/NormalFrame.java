@@ -16,6 +16,10 @@ public final class NormalFrame extends Frame {
         super(roundNumber, pins);
     }
 
+    public static Frame from(RoundNumber roundNumber) {
+        return NormalFrame.of(roundNumber, Pins.create());
+    }
+
     public static Frame of(RoundNumber roundNumber, Pins pins) {
         validateNormalRoundNumber(roundNumber);
         return new NormalFrame(roundNumber, pins);
@@ -46,9 +50,9 @@ public final class NormalFrame extends Frame {
 
     private Frame generateNextFrame() {
         if (MAX_NORMAL_FRAME_ROUND_NUMBER.equals(roundNumber)) {
-            return FinalFrame.from(Pins.create());
+            return FinalFrame.create();
         }
-        return NormalFrame.of(roundNumber.nextRoundNumber(), Pins.create());
+        return NormalFrame.from(roundNumber.nextRoundNumber());
     }
 
     @Override
