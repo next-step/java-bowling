@@ -1,8 +1,6 @@
 package bowling.domain;
 
 public class FinalFrame implements FrameType {
-    private static final int MAX_PITCHES = 3;
-
     private final Pitches pitches;
 
     public FinalFrame() {
@@ -15,12 +13,6 @@ public class FinalFrame implements FrameType {
         return pitches.pitch(point);
     }
 
-    private void validatePitch(int point) {
-        if (pitches.sum() + point > 30) {
-            throw new IllegalArgumentException("30개 이상의 핀을 쓰러트릴 수 없습니다.");
-        }
-    }
-
     @Override
     public boolean isContinue() {
         return !pitches.isEnd() || (pitches.isEnd() && pitches.hasBonusPitch());
@@ -29,5 +21,16 @@ public class FinalFrame implements FrameType {
     @Override
     public Pitches pitches() {
         return pitches;
+    }
+
+    @Override
+    public FrameScore frameScore() {
+        return new FrameScore(new Score(pitches.sum()), pitches.bonusPitch());
+    }
+
+    private void validatePitch(int point) {
+        if (pitches.sum() + point > 30) {
+            throw new IllegalArgumentException("30개 이상의 핀을 쓰러트릴 수 없습니다.");
+        }
     }
 }

@@ -44,8 +44,12 @@ public class Pitch {
         return fallenPins;
     }
 
-    public Status status() {
-        return status;
+    public String display() {
+        return status.display();
+    }
+
+    public AddedPitch bonusPitch() {
+        return new AddedPitch(status);
     }
 
     public void validateFallenPins(int fallenPins) {
