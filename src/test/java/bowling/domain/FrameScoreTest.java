@@ -14,7 +14,7 @@ public class FrameScoreTest {
     @Test
     void score() {
         int score = 10;
-        FrameScore frameScore = new FrameScore(new Score(score), new BonusPitch(new Hold(new Pitch(score))));
+        FrameScore frameScore = new FrameScore(new Score(score), new AddedPitch(new Hold(new Pitch(score))));
 
         assertThat(frameScore.score()).isEqualTo(new Score(score));
     }
@@ -23,7 +23,7 @@ public class FrameScoreTest {
     @Test
     void sumScore_spare() {
         int score = 10;
-        FrameScore frameScore = new FrameScore(new Score(score), new BonusPitch(new Spare()));
+        FrameScore frameScore = new FrameScore(new Score(score), new AddedPitch(new Spare()));
 
         assertThat(frameScore.isExistsAddCount()).isTrue();
 
@@ -36,7 +36,7 @@ public class FrameScoreTest {
     @Test
     void sumScore_strike() {
         int score = 10;
-        FrameScore frameScore = new FrameScore(new Score(score), new BonusPitch(new Strike()));
+        FrameScore frameScore = new FrameScore(new Score(score), new AddedPitch(new Strike()));
 
         assertThat(frameScore.isExistsAddCount()).isTrue();
 
@@ -53,7 +53,7 @@ public class FrameScoreTest {
     @Test
     void sumScore_miss() {
         int score = 8;
-        FrameScore frameScore = new FrameScore(new Score(score), new BonusPitch(new Miss(new Pitch(score))));
+        FrameScore frameScore = new FrameScore(new Score(score), new AddedPitch(new Miss(new Pitch(score))));
 
         assertThat(frameScore.isExistsAddCount()).isFalse();
     }

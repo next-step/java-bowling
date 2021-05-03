@@ -2,18 +2,18 @@ package bowling.domain;
 
 import bowling.domain.status.Status;
 
-public class BonusPitch {
+public class AddedPitch {
     private static final int USE_ONE_BONUS = 1;
 
     private int addedBonusCount;
     private final Status status;
 
-    public BonusPitch(Status status) {
+    public AddedPitch(Status status) {
         this.addedBonusCount = status.bonusPitchCount();
         this.status = status;
     }
 
-    public BonusPitch(int addedBonusCount, Status status) {
+    public AddedPitch(int addedBonusCount, Status status) {
         this.addedBonusCount = addedBonusCount;
         this.status = status;
     }

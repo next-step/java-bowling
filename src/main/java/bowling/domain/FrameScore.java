@@ -2,11 +2,11 @@ package bowling.domain;
 
 public class FrameScore {
     private Score score;
-    private final BonusPitch bonusPitch;
+    private final AddedPitch addedPitch;
 
-    public FrameScore(Score score, BonusPitch bonusPitch) {
+    public FrameScore(Score score, AddedPitch addedPitch) {
         this.score = score;
-        this.bonusPitch = bonusPitch;
+        this.addedPitch = addedPitch;
     }
 
     public Score score() {
@@ -15,16 +15,16 @@ public class FrameScore {
 
     public FrameScore sumScore(int point) {
         score = score.sum(point);
-        bonusPitch.useOneBonusPitch();
+        addedPitch.useOneBonusPitch();
 
         return this;
     }
 
     public boolean isExistsAddCount() {
-        return bonusPitch.addedBonusCount() > 0;
+        return addedPitch.addedBonusCount() > 0;
     }
 
     public boolean isCalculating() {
-        return isExistsAddCount() || !bonusPitch.isEnd();
+        return isExistsAddCount() || !addedPitch.isEnd();
     }
 }

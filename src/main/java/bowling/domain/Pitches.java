@@ -40,7 +40,7 @@ public class Pitches {
                 .sum();
     }
 
-    public BonusPitch bonusPitch() {
+    public AddedPitch bonusPitch() {
         return lastPitch().bonusPitch();
     }
 

@@ -48,8 +48,8 @@ public class Pitch {
         return status.display();
     }
 
-    public BonusPitch bonusPitch() {
-        return new BonusPitch(status);
+    public AddedPitch bonusPitch() {
+        return new AddedPitch(status);
     }
 
     public void validateFallenPins(int fallenPins) {
