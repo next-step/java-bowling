@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class Continue implements State{
     private static final String STATE = "CONTINUE";
+
     private final Pins pins;
 
     private Continue(Pins pins){
@@ -18,6 +19,29 @@ public class Continue implements State{
 
     public static Continue of(Pins pins) {
         return new Continue(pins);
+    }
+
+    @Override
+    public State stateAfterPitch(Pins pitch) {
+        pins.isSecondPitchable(pitch);
+        if(pins.isSpare(pitch)){
+            return Spare.of(pins, pitch);
+        }
+        return Miss.of(pins, pitch);
+    }
+
+    @Override
+    public FrameScore frameScore() {
+        return FrameScore.of(pins.fallingPins(), FrameScore.UNSCORED_SCORE);
+    }
+
+    @Override
+    public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
+        FrameScore addedFrameScore = prevFrameScore.frameScoreWithBonus(pins.fallingPins(), FrameScore.NO_TRY);
+        if(prevFrameScore.hasOneTryLeft()) {
+            return addedFrameScore;
+        }
+        return FrameScore.of(addedFrameScore.score(), FrameScore.UNSCORED_SCORE);
     }
 
     @Override
@@ -31,31 +55,9 @@ public class Continue implements State{
     }
 
     @Override
-    public State stateAfterPitch(int pitch) {
-        Pins secondPins = this.pins.ofSecondPitch(pitch);
-        if(pins.isSpare(secondPins)){
-            return Spare.of(pins, secondPins);
-        }
-        return Miss.of(pins, secondPins);
-    }
-
-    @Override
-    public FrameScore frameScore() {
-        return FrameScore.UNSCORED_SCORE;
-    }
-
-    @Override
-    public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
-        if(prevFrameScore.hasOneTryLeft()) {
-            return prevFrameScore.frameScoreWithBonus(pins.fallingPins(), FrameScore.NO_TRY);
-        }
-        return FrameScore.UNSCORED_SCORE;
-    }
-
-    @Override
     public StateDTO exportStateDTO() {
         List<Integer> pins = new ArrayList<>();
-        pins.add(Integer.valueOf(this.pins.fallingPins()));
+        pins.add(this.pins.fallingPins());
         return new StateDTO(state(),pins);
     }
 

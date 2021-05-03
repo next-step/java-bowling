@@ -24,19 +24,17 @@ public class Pins {
         }
     }
 
-    public static Pins ofFirstPitch(int firstPitch) {
+    public static Pins of(int firstPitch) {
         validatePitch(firstPitch);
         return CACHE[firstPitch];
     }
 
-    public Pins ofSecondPitch(int secondPitch) {
-        validatePitch(this.fallingPins + secondPitch);
-        validatePitch(secondPitch);
-        return CACHE[secondPitch];
-    }
-
     public int fallingPins() {
         return this.fallingPins;
+    }
+
+    public void isSecondPitchable(Pins secondPitch) {
+        validatePitch(fallingPins + secondPitch.fallingPins);
     }
 
     public boolean isStrike() {

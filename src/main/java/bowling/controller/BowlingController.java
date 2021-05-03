@@ -1,27 +1,33 @@
 package bowling.controller;
 
+import bowling.domain.BowlingGame;
+import bowling.domain.NumberOfPlayer;
+import bowling.domain.Pins;
 import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
-import static bowling.domain.frame.NormalFrame.FIRST_FRAME_NO;
-import static bowling.domain.frame.NormalFrame.LAST_FRAME_NO;
+import java.util.LinkedList;
 
 public class BowlingController {
-    private Player player;
+    private NumberOfPlayer numberOfPlayer;
+    private LinkedList<Player> playerList = new LinkedList<>();
+    private BowlingGame bowlingGame;
 
     public void run() {
-        player = new Player(InputView.requestPlayerName());
-        ResultView.printBoard(player.exportPlayerDTO());
-        for (int i = FIRST_FRAME_NO; i <= LAST_FRAME_NO; i++) {
-            playBowling(i);
-        }
-    }
+        numberOfPlayer = new NumberOfPlayer(InputView.requestNumberOfPeople());
 
-    private void playBowling(int frameNo) {
-        while(!player.isNthFrameFinished(frameNo)){
-            player.bowl(InputView.requestFallingPins(frameNo), frameNo);
-            ResultView.printBoard(player.exportPlayerDTO());
+        for(int i = 1; i <= numberOfPlayer.number(); i++) {
+            playerList.add(new Player(InputView.requestPlayerName(i)));
+        }
+
+        bowlingGame = new BowlingGame(playerList);
+        ResultView.printBoard(bowlingGame.exportPlayerDTOList());
+
+        while(!bowlingGame.isFinished()) {
+            Pins pitch = Pins.of(InputView.requestFallingPins(bowlingGame.currentPlayer().name()));
+            bowlingGame.bowl(pitch);
+            ResultView.printBoard(bowlingGame.exportPlayerDTOList());
         }
     }
 }

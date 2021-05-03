@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class Strike extends FinishedState{
     private static final String STATE = "STRIKE";
+
     private final Pins pins;
     private Strike(Pins pins){
         this.pins = pins;
@@ -17,11 +18,6 @@ public class Strike extends FinishedState{
 
     public static Strike of(Pins pins) {
         return new Strike(pins);
-    }
-
-    @Override
-    public String state() {
-        return STATE;
     }
 
     @Override
@@ -35,6 +31,11 @@ public class Strike extends FinishedState{
             return prevFrameScore.frameScoreWithBonus(Pins.MAX_PINS, FrameScore.NO_TRY);
         }
         return prevFrameScore.frameScoreWithBonus(Pins.MAX_PINS, FrameScore.ONE_TRY);
+    }
+
+    @Override
+    public String state() {
+        return STATE;
     }
 
     @Override

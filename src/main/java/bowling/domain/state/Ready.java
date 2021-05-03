@@ -9,10 +9,29 @@ import java.util.Objects;
 
 public class Ready implements State{
     private static final String STATE = "READY";
+
     private Ready(){}
 
     public static Ready create(){
         return new Ready();
+    }
+
+    @Override
+    public State stateAfterPitch(Pins pitch) {
+        if(pitch.isStrike()){
+            return Strike.of(pitch);
+        }
+        return Continue.of(pitch);
+    }
+
+    @Override
+    public FrameScore frameScore() {
+        return FrameScore.of(Pins.MIN_PINS, FrameScore.UNSCORED_SCORE);
+    }
+
+    @Override
+    public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
+        return FrameScore.of(prevFrameScore.score(), FrameScore.UNSCORED_SCORE);
     }
 
     @Override
@@ -23,25 +42,6 @@ public class Ready implements State{
     @Override
     public String state() {
         return STATE;
-    }
-
-    @Override
-    public State stateAfterPitch(int pitch) {
-        Pins pins = Pins.ofFirstPitch(pitch);
-        if(pins.isStrike()){
-            return Strike.of(pins);
-        }
-        return Continue.of(pins);
-    }
-
-    @Override
-    public FrameScore frameScore() {
-        return FrameScore.UNSCORED_SCORE;
-    }
-
-    @Override
-    public FrameScore frameScoreWithBonus(FrameScore prevFrameScore) {
-        return FrameScore.UNSCORED_SCORE;
     }
 
     @Override

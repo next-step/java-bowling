@@ -1,10 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.FrameScore;
+import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
 import bowling.domain.exception.NoRemainingFrameException;
 import bowling.domain.state.*;
 import bowling.dto.FrameDTO;
+import bowling.dto.ScoreDTO;
 import bowling.dto.StateDTO;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class FinalFrame implements Frame{
     private static final String SPARE = "SPARE";
     private static final String MISS = "MISS";
     private static final int secondStateIndex = 1;
+
     private int pitchCount = 0;
     private LinkedList<State> states = new LinkedList<>();
 
@@ -27,22 +30,8 @@ public class FinalFrame implements Frame{
         return new FinalFrame();
     }
 
-    private boolean threePitchFinished(State state) {
-        return isClear(state) && pitchCount == 3;
-    }
-
-    private boolean isClear(State state) {
-        return (state.state().equals(STRIKE) || state.state().equals(SPARE));
-    }
-
-    private void addBonusState() {
-        if(isClear(states.getLast())){
-            states.add(Ready.create());
-        }
-    }
-
     @Override
-    public void bowl(int pitch) {
+    public void bowl(Pins pitch) {
         if(isFinished()) {
             throw new CannotBowlException();
         }
@@ -52,25 +41,24 @@ public class FinalFrame implements Frame{
         pitchCount++;
     }
 
-    @Override
-    public boolean isFinished() {
-        State state = states.getFirst();
-        return threePitchFinished(state) || state.state().equals(MISS);
+    private void addBonusState() {
+        if(isClear(states.getLast())){
+            states.add(Ready.create());
+        }
     }
 
-    @Override
-    public Frame next() {
-        throw new NoRemainingFrameException();
+    private boolean isClear(State state) {
+        return (state.state().equals(STRIKE) || state.state().equals(SPARE));
     }
 
     @Override
     public FrameScore frameScore() {
-        if(!isFinished()){
-            return FrameScore.UNSCORED_SCORE;
-        }
         FrameScore frameScore = states.getFirst().frameScore();
         for (int i = 1; i < states.size(); i++) {
             frameScore = frameScore.addedFrameScore(states.get(i).frameScore());
+        }
+        if(!isFinished()){
+            return FrameScore.of(frameScore.score(),FrameScore.UNSCORED_SCORE);
         }
         return frameScore;
     }
@@ -88,7 +76,22 @@ public class FinalFrame implements Frame{
         if(states.size() > secondStateIndex){
             return states.get(secondStateIndex).frameScoreWithBonus(frameScore);
         }
-        return FrameScore.UNSCORED_SCORE;
+        return FrameScore.of(frameScore.score(),FrameScore.UNSCORED_SCORE);
+    }
+
+    @Override
+    public boolean isFinished() {
+        State state = states.getFirst();
+        return threePitchFinished(state) || state.state().equals(MISS);
+    }
+
+    private boolean threePitchFinished(State state) {
+        return isClear(state) && pitchCount == 3;
+    }
+
+    @Override
+    public Frame next() {
+        throw new NoRemainingFrameException();
     }
 
     @Override
@@ -97,6 +100,8 @@ public class FinalFrame implements Frame{
         for(State state : states) {
             stateDTOList.add(state.exportStateDTO());
         }
-        return new FrameDTO(stateDTOList, frameScore().score());
+        FrameScore frameScore = frameScore();
+        ScoreDTO scoreDTO = new ScoreDTO(frameScore.score(), frameScore.isUnscoredScore());
+        return new FrameDTO(stateDTOList, scoreDTO);
     }
 }

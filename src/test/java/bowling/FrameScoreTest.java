@@ -40,4 +40,12 @@ public class FrameScoreTest {
         FrameScore frameScore = FrameScore.of(7, 0);
         assertThat(frameScore.score()).isEqualTo(7);
     }
+
+    @Test
+    @DisplayName("보너스 점수 테스트")
+    void bonusScoreTest() {
+        FrameScore frameScore = FrameScore.of(7, 1);
+        FrameScore bonusFrameScore = frameScore.frameScoreWithBonus(5,1);
+        assertThat(bonusFrameScore).isEqualTo(FrameScore.of(12,1));
+    }
 }

@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class Miss extends FinishedState{
     private static final String STATE = "MISS";
+
     private final Pins firstPins;
     private final Pins secondPins;
 
@@ -20,11 +21,6 @@ public class Miss extends FinishedState{
 
     public static Miss of(Pins firstPins, Pins secondPins) {
         return new Miss(firstPins, secondPins);
-    }
-
-    @Override
-    public String state() {
-        return STATE;
     }
 
     @Override
@@ -41,10 +37,15 @@ public class Miss extends FinishedState{
     }
 
     @Override
+    public String state() {
+        return STATE;
+    }
+
+    @Override
     public StateDTO exportStateDTO() {
         List<Integer> pins = new ArrayList<>();
-        pins.add(Integer.valueOf(firstPins.fallingPins()));
-        pins.add(Integer.valueOf(secondPins.fallingPins()));
+        pins.add(firstPins.fallingPins());
+        pins.add(secondPins.fallingPins());
         return new StateDTO(state(),pins);
     }
 

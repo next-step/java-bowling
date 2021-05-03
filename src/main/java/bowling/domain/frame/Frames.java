@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pins;
 import bowling.dto.FrameDTO;
 import bowling.dto.FramesDTO;
 
@@ -22,27 +23,21 @@ public class Frames {
         return new Frames(frames);
     }
 
-    private static Frame initFrames(List<Frame> frames) {
-        Frame frame = initFirstFrame(frames);
+    private static void initFrames(List<Frame> frames) {
+        Frame frame = NormalFrame.init();
+        frames.add(frame);
         for (int i = FIRST_FRAME_NO; i < LAST_FRAME_NO; i++) {
             frame = frame.next();
             frames.add(frame);
         }
-        return frame;
     }
 
-    private static Frame initFirstFrame(List<Frame> frames) {
-        Frame frame = NormalFrame.init();
-        frames.add(frame);
-        return frame;
+    public void bowl(Pins pitch, int index) {
+        nthFrame(index).bowl(pitch);
     }
 
     public Frame nthFrame(int frameNo) {
         return frameList.get(frameNo);
-    }
-
-    public void bowl(int pitch, int index) {
-        nthFrame(index).bowl(pitch);
     }
 
     public FramesDTO exportFramesDTO() {

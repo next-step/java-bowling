@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class Spare extends FinishedState {
     private static final String STATE = "SPARE";
+
     private final Pins firstPins;
     private final Pins secondPins;
 
@@ -20,11 +21,6 @@ public class Spare extends FinishedState {
 
     public static Spare of(Pins firstPins, Pins secondPins) {
         return new Spare(firstPins, secondPins);
-    }
-
-    @Override
-    public String state() {
-        return STATE;
     }
 
     @Override
@@ -41,16 +37,20 @@ public class Spare extends FinishedState {
     }
 
     @Override
+    public String state() {
+        return STATE;
+    }
+
+    @Override
     public StateDTO exportStateDTO() {
         List<Integer> pins = new ArrayList<>();
-        pins.add(Integer.valueOf(firstPins.fallingPins()));
-        pins.add(Integer.valueOf(secondPins.fallingPins()));
+        pins.add(firstPins.fallingPins());
+        pins.add(secondPins.fallingPins());
         return new StateDTO(state(),pins);
     }
 
     @Override
     public boolean equals(Object o) {
-        System.out.println("@@@@@@@@@@@@");
         if (this == o) return true;
         if (!(o instanceof Spare)) return false;
         Spare spare = (Spare) o;

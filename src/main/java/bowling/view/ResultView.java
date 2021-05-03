@@ -1,9 +1,6 @@
 package bowling.view;
 
-import bowling.dto.FrameDTO;
-import bowling.dto.FramesDTO;
-import bowling.dto.PlayerDTO;
-import bowling.dto.StateDTO;
+import bowling.dto.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +14,16 @@ public class ResultView {
     private static final String FRAME_FORMAT = "  %-4s";
     private static final String THREE_PITCH_FORMAT = " %-5s";
     private static final String EMPTY = "      ";
-    private static final int UNSCORED_SCORE = -1;
     private static final int THREE_PITCH_STATE_LENGTH = 5;
 
     private ResultView() {}
 
-    public static void printBoard(PlayerDTO playerDTO) {
+    public static void printBoard(List<PlayerDTO> playerDTOList) {
         System.out.println(FRAME_HEADER);
-        printPitch(playerDTO.name(), playerDTO.framesDTO());
-        printScore(playerDTO.framesDTO());
+        for(PlayerDTO playerDTO : playerDTOList) {
+            printPitch(playerDTO.name(), playerDTO.framesDTO());
+            printScore(playerDTO.framesDTO());
+        }
         System.out.println();
     }
 
@@ -68,14 +66,15 @@ public class ResultView {
         scores.add(EMPTY);
         int cumulativeScore = 0;
         for (FrameDTO frameDTO : framesDTO.frames()) {
-            cumulativeScore += frameDTO.score();
-            scores.add(formatScore(frameDTO.score(), cumulativeScore));
+            ScoreDTO scoreDTO = frameDTO.scoreDTO();
+            cumulativeScore += scoreDTO.score();
+            scores.add(formatScore(scoreDTO.isUnscoredScore(), cumulativeScore));
         }
         System.out.println(joinFrames(scores));
     }
 
-    private static String formatScore(int score, int cumulativeScore) {
-        if(score == UNSCORED_SCORE) {
+    private static String formatScore(boolean isUnscoredScore, int cumulativeScore) {
+        if(isUnscoredScore) {
             return EMPTY;
         }
         return String.format(FRAME_FORMAT, cumulativeScore);

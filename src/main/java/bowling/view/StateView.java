@@ -43,11 +43,14 @@ public enum StateView {
     private static final int MIN_PINS = 0;
     private static final String GUTTER = "-";
     public static final String DELIMITER = "|";
+
     private String symbol;
 
     StateView(String symbol) {
         this.symbol = symbol;
     }
+
+    public abstract String stateView(StateDTO stateDTO);
 
     private static String printPins(int pins) {
         String result = String.valueOf(pins);
@@ -56,6 +59,4 @@ public enum StateView {
         }
         return result;
     }
-
-    public abstract String stateView(StateDTO stateDTO);
 }

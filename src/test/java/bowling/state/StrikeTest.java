@@ -1,5 +1,6 @@
 package bowling.state;
 
+import bowling.domain.FrameScore;
 import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
 import bowling.domain.state.State;
@@ -16,7 +17,7 @@ public class StrikeTest {
 
     @BeforeEach
     void setUp() {
-        Pins pins = Pins.ofFirstPitch(10);
+        Pins pins = Pins.of(10);
         strike = Strike.of(pins);
     }
 
@@ -27,9 +28,23 @@ public class StrikeTest {
     }
 
     @Test
+    @DisplayName("추가 점수가 1개 일 때 보너스 점수 테스트")
+    void OneBonusFrameScoreTest() {
+        FrameScore prevFrameScore = FrameScore.of(10,1);
+        assertThat(strike.frameScoreWithBonus(prevFrameScore)).isEqualTo(FrameScore.of(20,0));
+    }
+
+    @Test
+    @DisplayName("추가 점수가 2개 일 때 보너스 점수 테스트")
+    void TwoBonusFrameScoreTest() {
+        FrameScore prevFrameScore = FrameScore.of(10,2);
+        assertThat(strike.frameScoreWithBonus(prevFrameScore)).isEqualTo(FrameScore.of(20,1));
+    }
+
+    @Test
     @DisplayName("bowl 예외 테스트")
     void cannotBowlExceptionTest() {
-        assertThatThrownBy(() -> strike.stateAfterPitch(3))
+        assertThatThrownBy(() -> strike.stateAfterPitch(Pins.of(3)))
                 .isInstanceOf(CannotBowlException.class)
                 .hasMessage("더 이상 투구할 수 없습니다.");
     }

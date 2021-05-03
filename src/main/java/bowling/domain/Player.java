@@ -13,8 +13,8 @@ public class Player {
         this.frames = Frames.init();
     }
 
-    public void bowl(int value, int frameNo) {
-        frames.bowl(value, frameNo - 1);
+    public void bowl(Pins pitch, int frameNo) {
+        frames.bowl(pitch, frameNo - 1);
     }
 
     public String name() {

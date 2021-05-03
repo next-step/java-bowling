@@ -1,10 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.FrameScore;
+import bowling.domain.Pins;
 import bowling.domain.exception.CannotBowlException;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 import bowling.dto.FrameDTO;
+import bowling.dto.ScoreDTO;
 import bowling.dto.StateDTO;
 
 import java.util.ArrayList;
@@ -12,15 +14,11 @@ import java.util.List;
 
 public class NormalFrame implements Frame{
     private State state;
-    private Frame nextFrame;
+    private final Frame nextFrame;
 
     private NormalFrame(int frameNo) {
         this.state = Ready.create();
         this.nextFrame = nextFrame(frameNo + 1);
-    }
-
-    public static NormalFrame init() {
-        return new NormalFrame(FIRST_FRAME_NO);
     }
 
     private Frame nextFrame(int frameNo) {
@@ -30,22 +28,16 @@ public class NormalFrame implements Frame{
         return new NormalFrame(frameNo);
     }
 
+    public static NormalFrame init() {
+        return new NormalFrame(FIRST_FRAME_NO);
+    }
+
     @Override
-    public void bowl(int pitch) {
+    public void bowl(Pins pitch) {
         if(state.isFinished()) {
             throw new CannotBowlException();
         }
         state = state.stateAfterPitch(pitch);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return state.isFinished();
-    }
-
-    @Override
-    public Frame next() {
-        return nextFrame;
     }
 
     @Override
@@ -66,9 +58,21 @@ public class NormalFrame implements Frame{
         return nextFrame.frameScoreWithBonus(frameScore);
     }
 
+    @Override
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    @Override
+    public Frame next() {
+        return nextFrame;
+    }
+
     public FrameDTO exportFrameDTO() {
         List<StateDTO> stateDTOList = new ArrayList<>();
         stateDTOList.add(state.exportStateDTO());
-        return new FrameDTO(stateDTOList, frameScore().score());
+        FrameScore frameScore = frameScore();
+        ScoreDTO scoreDTO = new ScoreDTO(frameScore.score(), frameScore.isUnscoredScore());
+        return new FrameDTO(stateDTOList, scoreDTO);
     }
 }
