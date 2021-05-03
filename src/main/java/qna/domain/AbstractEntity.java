@@ -54,7 +54,7 @@ public class AbstractEntity {
     if (getClass() != obj.getClass())
       return false;
     AbstractEntity other = (AbstractEntity) obj;
-      return id == other.id;
+    return id == other.id;
   }
 
   @Override
