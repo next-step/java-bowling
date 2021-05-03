@@ -180,7 +180,7 @@
 
 - [ ] 1명 이상의 사용자가 사용할 수 있도록 변경
 
-- [ ] `Player`의 목록을 관리하는 `Players` 생성
+- [x] `Player`의 목록을 관리하는 `Players` 생성
     - [ ] `Player`의 목록을 반환하는 `value()` 선언
     - [ ] `Players`에 `Player`를 추가하는 `add(Player)` 선언
         - [ ] `Player`에 `from(PlayerName)` 선언
