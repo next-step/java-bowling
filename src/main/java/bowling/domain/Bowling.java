@@ -1,35 +1,30 @@
 package bowling.domain;
 
 public class Bowling {
-    private static final FrameFatory normalFrameFactory = new NormalFrameFactory();
-    private static final FrameFatory finalFrameFactory = new FinalFrameFactory();
-
-    private final BowlingResult bowlingResult;
     private final Frame firstFrame;
     private Frame currentFrame;
 
     public Bowling(Frame frame) {
-        bowlingResult = new BowlingResult();
         firstFrame = frame;
         currentFrame = frame;
     }
 
     public Bowling() {
-        bowlingResult = new BowlingResult();
         firstFrame = new NormalFrame();
         currentFrame = firstFrame;
     }
 
     public void roll(Pinfall pinfall) {
-        FrameFatory frameFatory = normalFrameFactory;
+        FrameFatory frameFatory = new NormalFrameFactory();
         if (currentFrame.frameNumber().equals(new FrameNumber(9))) {
-            frameFatory = finalFrameFactory;
+            frameFatory = new FinalFrameFactory();
         }
 
         currentFrame = currentFrame.roll(pinfall, frameFatory);
     }
 
     public BowlingResult result() {
+        BowlingResult bowlingResult = new BowlingResult();
         Frame indexFrame = firstFrame;
         bowlingResult.add(indexFrame.frameNumber(), indexFrame.pointSymbols(), indexFrame.score());
 
