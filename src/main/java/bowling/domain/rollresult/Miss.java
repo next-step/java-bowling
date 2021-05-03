@@ -72,6 +72,6 @@ public class Miss implements RollResultType{
 
     @Override
     public String toString() {
-        return oneHit.toString() + "|" + secondHit.toString();
+        return oneHit.toString() + "|-";
     }
 }

@@ -17,7 +17,7 @@ public class Player {
     }
 
     private static void validName(String name) {
-        if(name.length() !=NAME_LENGTH) {
+        if (name.length() != NAME_LENGTH) {
             throw new IllegalArgumentException(INVALID_NAME);
         }
     }

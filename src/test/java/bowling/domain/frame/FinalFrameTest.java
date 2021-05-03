@@ -14,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class FinalFrameTest {
     public static final FinalFrame FRAME = FinalFrame.of();
     public static final FinalFrame STRIKE_FRAME = FinalFrame.of(Pin.of(1, 0), RollResults.of(Strike.of()));
+    public static final FinalFrame DOUBLE_STRIKE_FRAME = FinalFrame.of(Pin.of(2, 0), RollResults.of(Arrays.asList(Strike.of(),Strike.of())));
     public static final FinalFrame SPARE_FRAME = FinalFrame.of(Pin.of(2, 0), RollResults.of(Spare.of(3)));
     public static final FinalFrame MISS_FRAME = FinalFrame.of(Pin.of(2, 10), RollResults.of(Miss.of()));
     public static final FinalFrame GUTTER_FRAME = FinalFrame.of(Pin.of(1, 10), RollResults.of(Gutter.of()));
@@ -39,9 +40,9 @@ public class FinalFrameTest {
     }
 
     @Test
-    void 스트라이크프레임() {
-        Frame resultFrame = frame.roll(HitNumber.of(10));
-        assertThat(resultFrame).isEqualTo(STRIKE_FRAME);
+    void 더블스트라이크() {
+        Frame resultFrame = frame.roll(HitNumber.of(10)).roll(HitNumber.of(10));
+        assertThat(resultFrame).isEqualTo(DOUBLE_STRIKE_FRAME);
         assertThat(resultFrame.isFinished()).isFalse();
         System.out.println(resultFrame);
     }

@@ -33,8 +33,9 @@ public class Pin {
         return new Pin();
     }
 
-    public static Pin last() {
-        return new Pin(PIN_TRY_UPPER_BOUND - 1);
+    public static Pin reload(Pin pin) {
+        validTry(pin.tryNum);
+        return new Pin(pin.tryNum);
     }
 
     public static Pin of(int tryNum, int pinNum) {
@@ -76,7 +77,6 @@ public class Pin {
         return tryNum == PIN_TRY_UPPER_BOUND;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,6 +89,5 @@ public class Pin {
     public int hashCode() {
         return Objects.hash(tryNum, pinNum);
     }
-
 
 }

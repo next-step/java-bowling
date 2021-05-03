@@ -34,7 +34,7 @@ public class Frames {
     }
 
     private void addNext() {
-        frames.add(getLast().next(getLastIndex() + 1));
+        frames.add(getLast().next(getLastIndex()));
     }
 
     public boolean isFinished() {
@@ -50,7 +50,7 @@ public class Frames {
     }
 
     public int getLastIndex() {
-        return frames.size() - 1;
+        return frames.size();
     }
 
     @Override

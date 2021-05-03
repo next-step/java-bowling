@@ -50,7 +50,7 @@ public class FinalFrame implements Frame {
             throw new IllegalStateException();
         }
         if (results.isCleared()) {
-            return nextRoll(hitNumber, Pin.last());
+            return nextRoll(hitNumber, Pin.reload(pin));
         }
         return nextRoll(hitNumber, pin);
     }
@@ -66,7 +66,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        return pin.isLast() || (!results.isCleared() && !results.hasNext());
+        return pin.isLast() || (results != null && !results.isCleared() && !results.hasNext());
     }
 
     @Override

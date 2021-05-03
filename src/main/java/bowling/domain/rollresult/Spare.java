@@ -86,6 +86,6 @@ public class Spare implements RollResultType {
 
     @Override
     public String toString() {
-        return firstHit.toString() + "|" + secondHit.toString();
+        return firstHit.toString() + "|/";
     }
 }
