@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class BowlingResult {
-    private final Map<FrameNumber, SingleFrameResult> frameResultsMap;
+    private final Map<FrameNumber, FrameResult> frameResultsMap;
 
     public BowlingResult() {
         frameResultsMap = new HashMap<>();
@@ -22,8 +22,8 @@ public class BowlingResult {
 
     public void add(FrameNumber frameNumber, SingleFrameResult result) {
         Score aggregatedScore = prevAggregatedScore(frameNumber);
-        result = new SingleFrameResult(result.pointSymbols(), result.score(), aggregatedScore.add(result.score()));
-        frameResultsMap.put(frameNumber, result);
+        FrameResult frameResult = new FrameResult(result.pointSymbols(), aggregatedScore.add(result.score()));
+        frameResultsMap.put(frameNumber, frameResult);
     }
 
     private Score prevAggregatedScore(FrameNumber frameNumber) {
@@ -31,20 +31,20 @@ public class BowlingResult {
             return Score.create(0);
         }
 
-        SingleFrameResult prevSingleFrameResult = frameResultsMap.get(frameNumber.decrease());
-        if (prevSingleFrameResult == null) {
+        FrameResult frameResult = frameResultsMap.get(frameNumber.decrease());
+        if (frameResult == null) {
             return Score.create(0);
         }
-        return prevSingleFrameResult.aggregatedScore();
+        return frameResult.aggregatedScore();
     }
 
-    public List<SingleFrameResult> results() {
+    public List<FrameResult> results() {
         return Collections.unmodifiableList(frameResultsMapToList());
     }
 
-    public SingleFrameResult result(FrameNumber frameNumber) {
+    public FrameResult result(FrameNumber frameNumber) {
         if (!frameResultsMap.containsKey(frameNumber)) {
-            return new SingleFrameResult();
+            return new FrameResult();
         }
         return frameResultsMap.get(frameNumber);
     }
@@ -62,7 +62,7 @@ public class BowlingResult {
         return Objects.hash(frameResultsMap);
     }
 
-    private List<SingleFrameResult> frameResultsMapToList() {
+    private List<FrameResult> frameResultsMapToList() {
         return frameResultsMap.entrySet()
                 .stream()
                 .sorted((entry1, entry2) -> (FrameNumber.compare(entry1.getKey(), entry2.getKey())))

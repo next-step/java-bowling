@@ -28,29 +28,29 @@ public class View {
     private static void printFrameScore(BowlingResult bowlingResult) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("|      |");
-        for (SingleFrameResult singleFrameResult : bowlingResult.results()) {
-            stringBuilder.append(printFrameScore(singleFrameResult));
+        for (FrameResult frameResult : bowlingResult.results()) {
+            stringBuilder.append(printFrameScore(frameResult));
         }
         System.out.println(stringBuilder);
     }
 
     private static void printFramePinfalls(BowlingResult bowlingResult) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (SingleFrameResult singleFrameResult : bowlingResult.results()) {
-            stringBuilder.append(printFrameResult(singleFrameResult));
+        for (FrameResult frameResult : bowlingResult.results()) {
+            stringBuilder.append(printFrameResult(frameResult));
         }
         System.out.println(stringBuilder);
     }
 
-    private static StringBuilder printFrameScore(SingleFrameResult singleFrameResult) {
+    private static StringBuilder printFrameScore(FrameResult frameResult) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("  %-3s |", singleFrameResult.aggregatedScore().toString()));
+        stringBuilder.append(String.format("  %-3s |", frameResult.aggregatedScore().toString()));
         return stringBuilder;
     }
 
-    private static StringBuilder printFrameResult(SingleFrameResult singleFrameResult) {
+    private static StringBuilder printFrameResult(FrameResult frameResult) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("  %-3s |", pointSymbolsString(singleFrameResult.pointSymbols())));
+        stringBuilder.append(String.format("  %-3s |", pointSymbolsString(frameResult.pointSymbols())));
         return stringBuilder;
     }
 

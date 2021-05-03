@@ -19,6 +19,10 @@ public class SingleFrameResult {
         this(pointSymbols, score, Score.createNotDetermined());
     }
 
+    public SingleFrameResult(Score score) {
+        this(new PointSymbols(), score);
+    }
+
     public SingleFrameResult(PointSymbols pointSymbols, Score score, Score aggregatedScore) {
         this.pointSymbols = pointSymbols;
         this.score = score;
