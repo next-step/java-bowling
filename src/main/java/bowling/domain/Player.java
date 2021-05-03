@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 import bowling.exception.NameEmptyException;
 import bowling.exception.NameFormatException;
 import bowling.exception.NameLengthException;
