@@ -15,6 +15,6 @@ public class LastFrameResult implements FrameResult {
 
     @Override
     public int totalScore() {
-        return 0;
+        return totalScore;
     }
 }

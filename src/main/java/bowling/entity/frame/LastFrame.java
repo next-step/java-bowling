@@ -47,18 +47,46 @@ public class LastFrame implements Frame {
 
     @Override
     public Score calculate(Score score) {
-        return lastFrameInfo.calculate(score);
+
+        Score calculateScore = lastFrameInfo.calculate(score);
+
+//        if (calculateScore.calculatePossible()) {
+//            return calculateScore;
+//        }
+
+        return calculateScore;
     }
 
     @Override
     public void addFrameResult(BowlingBoard bowlingBoard, int totalScore) {
-        lastFrameResult(bowlingBoard, totalScore);
+        if (scoreTypes.size() != EMPTY) {
+            LastFrameResult lastFrameResult = lastFrameResult(totalScore);
+            bowlingBoard.addResult(lastFrameResult);
+        }
     }
 
-    private void lastFrameResult(BowlingBoard bowlingBoard, int totalScore) {
-        if (scoreTypes.size() != EMPTY) {
-            bowlingBoard.addResult(new LastFrameResult(scoreTypesResult(), totalScore));
+    private LastFrameResult lastFrameResult(int totalScore) {
+
+        if (!lastFrameInfo.bowlingGameEnd()) {
+            return new LastFrameResult(scoreTypesResult(), NOT_CALCULATE_VALUE);
         }
+
+        try {
+            totalScore = totalScoreSum(totalScore);
+            return new LastFrameResult(scoreTypesResult(), totalScore);
+        } catch (CalculateImPossibleException e) {
+            return new LastFrameResult(scoreTypesResult(), NOT_CALCULATE_VALUE);
+        }
+    }
+
+    private int totalScoreSum(int totalScore) {
+
+        totalScore += scoreTypes.stream()
+                .filter(ScoreType::isFrameEnd)
+                .mapToInt(scoreType -> scoreType.score().score())
+                .sum();
+
+        return totalScore;
     }
 
     private String scoreTypesResult() {

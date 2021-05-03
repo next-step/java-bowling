@@ -10,6 +10,6 @@ public abstract class OnGoing implements ScoreType {
 
     @Override
     public Score score() {
-        throw new RuntimeException();
+        throw new CalculateImPossibleException();
     }
 }
