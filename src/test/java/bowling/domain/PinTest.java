@@ -1,6 +1,6 @@
-package bowling;
+package bowling.domain;
 
-import bowling.rollresult.*;
+import bowling.domain.rollresult.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

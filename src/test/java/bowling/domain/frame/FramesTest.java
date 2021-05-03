@@ -1,6 +1,6 @@
-package bowling.frame;
+package bowling.domain.frame;
 
-import bowling.HitNumber;
+import bowling.domain.HitNumber;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

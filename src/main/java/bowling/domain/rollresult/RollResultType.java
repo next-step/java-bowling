@@ -1,4 +1,4 @@
-package bowling.rollresult;
+package bowling.domain.rollresult;
 
 public interface RollResultType {
     int DEFAULT_MAX_SCORE = 10;

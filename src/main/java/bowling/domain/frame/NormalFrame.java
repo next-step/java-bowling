@@ -1,9 +1,9 @@
-package bowling.frame;
+package bowling.domain.frame;
 
-import bowling.HitNumber;
-import bowling.Pin;
-import bowling.rollresult.RollResult;
-import bowling.rollresult.RollResultType;
+import bowling.domain.HitNumber;
+import bowling.domain.Pin;
+import bowling.domain.rollresult.RollResult;
+import bowling.domain.rollresult.RollResultType;
 
 import java.util.Objects;
 

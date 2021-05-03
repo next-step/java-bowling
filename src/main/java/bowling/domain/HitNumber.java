@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public class HitNumber {
     private static final int ROLL_LOWER_BOUND = 0;

@@ -1,8 +1,8 @@
-package bowling.frame;
+package bowling.domain.frame;
 
-import bowling.HitNumber;
-import bowling.Pin;
-import bowling.rollresult.*;
+import bowling.domain.HitNumber;
+import bowling.domain.Pin;
+import bowling.domain.rollresult.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

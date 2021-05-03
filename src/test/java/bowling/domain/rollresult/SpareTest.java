@@ -1,4 +1,4 @@
-package bowling.rollresult;
+package bowling.domain.rollresult;
 
 import org.junit.jupiter.api.Test;
 

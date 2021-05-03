@@ -1,7 +1,7 @@
-package bowling;
+package bowling.domain;
 
-import bowling.rollresult.OneRollResultType;
-import bowling.rollresult.RollResultType;
+import bowling.domain.rollresult.OneRollResultType;
+import bowling.domain.rollresult.RollResultType;
 
 import java.util.Objects;
 

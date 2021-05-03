@@ -1,7 +1,7 @@
-package bowling.rollresult;
+package bowling.domain.rollresult;
 
-import bowling.HitNumber;
-import bowling.Pin;
+import bowling.domain.HitNumber;
+import bowling.domain.Pin;
 
 import java.util.Objects;
 

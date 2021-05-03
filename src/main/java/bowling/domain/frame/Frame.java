@@ -1,6 +1,6 @@
-package bowling.frame;
+package bowling.domain.frame;
 
-import bowling.HitNumber;
+import bowling.domain.HitNumber;
 
 public interface Frame {
     Frame next(int index);
