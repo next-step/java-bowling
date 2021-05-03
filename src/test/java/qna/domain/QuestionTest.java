@@ -21,7 +21,7 @@ public class QuestionTest {
     @Test
     void delete_실패_답변_없음() {
         assertThatThrownBy(() -> {
-            Q1.isHasAnswersIsNotOwner(Q1.getWriter());
+            Q2.isHasAnswersIsNotOwner(Q2.getWriter());
         }).isInstanceOf(CannotDeleteException.class);
     }
 
@@ -33,6 +33,5 @@ public class QuestionTest {
             Q1.isHasAnswersIsNotOwner(Q2.getWriter());
         }).isInstanceOf(CannotDeleteException.class);
     }
-
 
 }
