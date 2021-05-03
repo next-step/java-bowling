@@ -1,8 +1,6 @@
 package bowling.domain;
 
 public class FinalFrame implements FrameType {
-    private static final int MAX_PITCHES = 3;
-
     private final Pitches pitches;
 
     public FinalFrame() {
