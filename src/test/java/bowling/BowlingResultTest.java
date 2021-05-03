@@ -28,7 +28,7 @@ public class BowlingResultTest {
     void Given_OneScoreSingleFrameResult_When_New_Then_ValidFrameResult() {
         FrameResult openFrameResult = new FrameResult(Score.create(1));
         BowlingResult bowlingResult = new BowlingResult(Arrays.asList(openFrameResult));
-        assertThat(bowlingResult.result(new FrameNumber(1)).aggregatedScore()).isEqualTo(openFrameResult.aggregatedScore());
+        assertThat(bowlingResult.result(new FrameNumber(1)).score()).isEqualTo(openFrameResult.score());
     }
 
     @Test

@@ -44,7 +44,7 @@ public class View {
 
     private static StringBuilder printFrameScore(FrameResult frameResult) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("  %-3s |", frameResult.aggregatedScore().toString()));
+        stringBuilder.append(String.format("  %-3s |", frameResult.score().toString()));
         return stringBuilder;
     }
 

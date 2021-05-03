@@ -87,7 +87,7 @@ public class BowlingTest {
         bowling.roll(new Pinfall(1));
         bowling.roll(new Pinfall(2));
 
-        assertThat(bowling.result().result(new FrameNumber(1)).aggregatedScore()).isEqualTo(Score.create(3));
+        assertThat(bowling.result().result(new FrameNumber(1)).score()).isEqualTo(Score.create(3));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class BowlingTest {
         bowling.roll(new Pinfall(3));
         bowling.roll(new Pinfall(4));
 
-        assertThat(bowling.result().result(new FrameNumber(2)).aggregatedScore()).isEqualTo(Score.create(10));
+        assertThat(bowling.result().result(new FrameNumber(2)).score()).isEqualTo(Score.create(10));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class BowlingTest {
         bowling.roll(new Pinfall(10));
         bowling.roll(new Pinfall(10));
 
-        assertThat(bowling.result().result(new FrameNumber(1)).aggregatedScore()).isEqualTo(Score.create(30));
+        assertThat(bowling.result().result(new FrameNumber(1)).score()).isEqualTo(Score.create(30));
     }
 
     @Test
@@ -124,6 +124,6 @@ public class BowlingTest {
             bowling.roll(new Pinfall(10));
         }
 
-        assertThat(bowling.result().result(new FrameNumber(10)).aggregatedScore()).isEqualTo(Score.create(300));
+        assertThat(bowling.result().result(new FrameNumber(10)).score()).isEqualTo(Score.create(300));
     }
 }

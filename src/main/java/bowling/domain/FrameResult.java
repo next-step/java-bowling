@@ -3,28 +3,28 @@ package bowling.domain;
 import java.util.Objects;
 
 public class FrameResult {
-    private final Score aggregatedScore;
+    private final Score score;
     private final PointSymbols pointSymbols;
 
     public FrameResult() {
         this(new PointSymbols(), Score.createNotDetermined());
     }
 
-    public FrameResult(Score aggregatedScore) {
-        this(new PointSymbols(), aggregatedScore);
+    public FrameResult(Score score) {
+        this(new PointSymbols(), score);
     }
 
     public FrameResult(PointSymbols pointSymbols) {
         this(pointSymbols, Score.createNotDetermined());
     }
 
-    public FrameResult(PointSymbols pointSymbols, Score aggregatedScore) {
-        this.aggregatedScore = aggregatedScore;
+    public FrameResult(PointSymbols pointSymbols, Score score) {
+        this.score = score;
         this.pointSymbols = pointSymbols;
     }
 
-    public Score aggregatedScore() {
-        return aggregatedScore;
+    public Score score() {
+        return score;
     }
 
     public PointSymbols pointSymbols() {
@@ -36,11 +36,11 @@ public class FrameResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FrameResult that = (FrameResult) o;
-        return Objects.equals(aggregatedScore, that.aggregatedScore) && Objects.equals(pointSymbols, that.pointSymbols);
+        return Objects.equals(score, that.score) && Objects.equals(pointSymbols, that.pointSymbols);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(aggregatedScore, pointSymbols);
+        return Objects.hash(score, pointSymbols);
     }
 }

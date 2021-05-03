@@ -19,7 +19,7 @@ public class FrameResultTest {
         Score aggregatedScore = Score.create(10);
 
         FrameResult frameResult = new FrameResult(new PointSymbols(), aggregatedScore);
-        assertThat(frameResult.aggregatedScore()).isEqualTo(aggregatedScore);
+        assertThat(frameResult.score()).isEqualTo(aggregatedScore);
     }
 
     @Test

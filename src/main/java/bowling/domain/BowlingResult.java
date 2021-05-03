@@ -31,7 +31,7 @@ public class BowlingResult {
             return Score.create(0);
         }
 
-        return frameResultsMap.getOrDefault(frameNumber.decrease(), new FrameResult(Score.create(0))).aggregatedScore();
+        return frameResultsMap.getOrDefault(frameNumber.decrease(), new FrameResult(Score.create(0))).score();
     }
 
     public List<FrameResult> results() {
