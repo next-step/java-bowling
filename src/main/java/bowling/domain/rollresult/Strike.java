@@ -2,7 +2,7 @@ package bowling.domain.rollresult;
 
 import java.util.Objects;
 
-public class Strike implements RollResultType {
+public class Strike extends RollResultType {
     private static final String INVALID_SCORE = "스트라이크의 값은 10 이상이어야합니다.";
     private final OneHit firstHit;
 

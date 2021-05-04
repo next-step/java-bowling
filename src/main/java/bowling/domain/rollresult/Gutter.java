@@ -2,7 +2,7 @@ package bowling.domain.rollresult;
 
 import java.util.Objects;
 
-public class Gutter implements RollResultType {
+public class Gutter extends RollResultType {
 
     private final int score = DEFAULT_MIN_SCORE;
 

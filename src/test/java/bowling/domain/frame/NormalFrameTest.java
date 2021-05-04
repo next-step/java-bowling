@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalFrameTest {
+    private static final int MAX_INDEX = 10;
     public static final NormalFrame FRAME = NormalFrame.of();
     public static final NormalFrame STRIKE_FRAME = NormalFrame.of(Pin.of(1, 0), Strike.of());
     public static final NormalFrame SPARE_FRAME = NormalFrame.of(Pin.of(2, 0), Spare.of(3));
@@ -30,7 +31,7 @@ public class NormalFrameTest {
     @Test
     void 다음프레임확인() {
         assertThat(FRAME.next(5)).isInstanceOf(NormalFrame.class);
-        assertThat(FRAME.next(10)).isInstanceOf(FinalFrame.class);
+        assertThat(FRAME.next(MAX_INDEX - 1)).isInstanceOf(FinalFrame.class);
     }
 
     @Test

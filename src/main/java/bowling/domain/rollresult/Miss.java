@@ -2,7 +2,7 @@ package bowling.domain.rollresult;
 
 import java.util.Objects;
 
-public class Miss implements RollResultType{
+public class Miss extends RollResultType{
     private static final String INVALID_MISS = "miss는 두 점수의 합이 10 미만이어야합니다.";
     private final RollResultType oneHit;
     private final RollResultType secondHit;

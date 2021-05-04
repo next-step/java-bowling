@@ -2,7 +2,7 @@ package bowling.domain.rollresult;
 
 import java.util.Objects;
 
-public class OneHit implements RollResultType{
+public class OneHit extends RollResultType{
     private final int score;
 
     private OneHit(int score) {
