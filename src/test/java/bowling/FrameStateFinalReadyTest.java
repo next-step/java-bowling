@@ -25,7 +25,7 @@ public class FrameStateFinalReadyTest {
     @DisplayName("Stike를 치면 BonusState로 Transition")
     void Given_Strike_When_Roll_Then_FrameStateBonus() {
         FrameState state = new FrameStateFinalReady();
-        assertThat(state.roll(new Pinfall(10))).isInstanceOf(FrameStateBonus.class);
+        assertThat(state.roll(Pinfall.createStrike())).isInstanceOf(FrameStateBonus.class);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class FrameStateFinalReadyTest {
     @DisplayName("Strike가 아니면 StateFinalOnce로 Transition")
     void When_Roll_Then_FrameState_FrameStateFinalOnce() {
         FrameState state = new FrameStateFinalReady();
-        assertThat(state.roll(new Pinfall(1))).isInstanceOf(FrameStateFinalOnce.class);
+        assertThat(state.roll(Pinfall.create(1))).isInstanceOf(FrameStateFinalOnce.class);
     }
 
     @Test

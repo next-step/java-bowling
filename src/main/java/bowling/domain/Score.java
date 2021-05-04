@@ -5,14 +5,15 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Score {
-    private final int score;
     private static final Map<Integer, Score> scoreCache;
+
+    private final int score;
 
     static {
         scoreCache = new HashMap<>();
     }
 
-    public Score(int score) {
+    private Score(int score) {
         this.score = score;
     }
 
@@ -20,14 +21,24 @@ public class Score {
         return create(-1);
     }
 
+    public static Score createStrike() {
+        return create(10);
+    }
+
+    public static Score createSpare() {
+        return create(10);
+    }
+
+    public static Score createGutter() {
+        return create(0);
+    }
+
     public static Score create(int score) {
-        Score scoreClass = scoreCache.get(score);
-        if (scoreClass == null) {
-            scoreClass = new Score(score);
-            scoreCache.put(score, scoreClass);
-        }
+        Score scoreClass = scoreCache.getOrDefault(score, new Score(score));
+        addScoreCache(score, scoreClass);
         return scoreClass;
     }
+
 
     public Score add(Score score) {
         if (isNotDetermined(this) || isNotDetermined(score)) {
@@ -61,5 +72,11 @@ public class Score {
 
     private static boolean isNotDetermined(Score score) {
         return score.score == -1;
+    }
+
+    private static void addScoreCache(int score, Score scoreClass) {
+        if (!scoreCache.containsKey(score)) {
+            scoreCache.put(score, scoreClass);
+        }
     }
 }

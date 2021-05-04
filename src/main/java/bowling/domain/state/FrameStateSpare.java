@@ -33,7 +33,7 @@ public class FrameStateSpare implements FrameState {
 
     @Override
     public PointSymbols pointSymbols() {
-        return new PointSymbols(Arrays.asList(PointSymbol.valueOf(pinfalls.get(0)), PointSymbol.SPARE));
+        return new PointSymbols(Arrays.asList(PointSymbol.valueOf(firstPinfall(pinfalls)), PointSymbol.SPARE));
     }
 
     @Override
@@ -52,7 +52,11 @@ public class FrameStateSpare implements FrameState {
             return Score.createNotDetermined();
         }
 
-        Score bonusScore = Score.create(bonusPinfalls.get(0).number());
-        return Score.create(10).add(bonusScore);
+        Score bonusScore = Score.create(firstPinfall(bonusPinfalls).number());
+        return Score.createSpare().add(bonusScore);
+    }
+
+    private Pinfall firstPinfall(List<Pinfall> bonusPinfalls) {
+        return bonusPinfalls.get(0);
     }
 }

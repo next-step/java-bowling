@@ -1,16 +1,23 @@
 package bowling.view;
 
-import bowling.domain.*;
-
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class View {
+    private static final int MIN_FRAME_NUMBER = 1;
+    private static final int MAX_FRAME_NUMBER = 10;
+
     private static final Scanner scanner = new Scanner(System.in);
 
+    public static int numberOfPlayers() {
+        System.out.print("How many people?");
+        int numberOfPlayers = scanner.nextInt();
+        scanner.nextLine();
+        return numberOfPlayers;
+    }
+
     public static String playerName() {
-        System.out.print("플레이어 이름은(3 english letters)?:");
+        System.out.print("플레이어 이름은(3 english letters)?");
         return scanner.nextLine();
     }
 
@@ -21,58 +28,53 @@ public class View {
         return fallenPin;
     }
 
-    public static void printBowlingResult(BowlingResult bowlingResult) {
-        printFramePinfalls(bowlingResult);
-        printFrameScore(bowlingResult);
-    }
-
-    private static void printFrameScore(BowlingResult bowlingResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("|      |");
-        for (FrameResult frameResult : bowlingResult.results()) {
-            stringBuilder.append(printFrameScore(frameResult));
-        }
-        System.out.println(stringBuilder);
-    }
-
-    private static void printFramePinfalls(BowlingResult bowlingResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (FrameResult frameResult : bowlingResult.results()) {
-            stringBuilder.append(printFrameResult(frameResult));
-        }
-        System.out.println(stringBuilder);
-    }
-
-    private static StringBuilder printFrameScore(FrameResult frameResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("  %-3s |", frameResult.aggregatedScore().toString()));
-        return stringBuilder;
-    }
-
-    private static StringBuilder printFrameResult(FrameResult frameResult) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("  %-3s |", pointSymbolsString(frameResult.pointSymbols())));
-        return stringBuilder;
-    }
-
-    private static String pointSymbolsString(PointSymbols pointSymbols) {
-        return pointSymbols.symbols().stream()
-                .map(PointSymbol::symbol)
-                .map(Object::toString)
-                .collect(Collectors.joining("|"));
+    public static int pinfall(String playerName) {
+        System.out.printf("%s's turn : ", playerName);
+        int fallenPin = scanner.nextInt();
+        scanner.nextLine();
+        return fallenPin;
     }
 
     public static void printScoreBoardHeader() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("| NAME |");
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = MIN_FRAME_NUMBER; i <= MAX_FRAME_NUMBER; i++) {
             stringBuilder.append(String.format("  %02d  |", i));
         }
         System.out.println(stringBuilder);
     }
 
-    public static void printPlayer(Player player) {
-        System.out.printf("|  %s |", player.name());
+    public static void printBowlingResult(ViewFrameResult viewFrameResult) {
+        printFramePinfalls(viewFrameResult);
+        printFrameScore(viewFrameResult);
+    }
+
+    private static String printPlayerName(String name) {
+        return String.format("|  %s |", name);
+    }
+
+    private static void printFramePinfalls(ViewFrameResult viewFrameResult) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(printPlayerName(viewFrameResult.playerName()));
+        for (int frameNumber = MIN_FRAME_NUMBER; frameNumber <= MAX_FRAME_NUMBER; frameNumber++) {
+            List<String> pinfallSymbols = viewFrameResult.symbols(frameNumber);
+            stringBuilder.append(String.format("  %-3s |", stringSymbols(pinfallSymbols)));
+        }
+        System.out.println(stringBuilder);
+    }
+
+    private static void printFrameScore(ViewFrameResult viewFrameResult) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("|      |");
+        for (int frameNumber = MIN_FRAME_NUMBER; frameNumber <= MAX_FRAME_NUMBER; frameNumber++) {
+            String score = viewFrameResult.score(frameNumber);
+            stringBuilder.append(String.format("  %-3s |", score));
+        }
+        System.out.println(stringBuilder);
+    }
+
+    private static String stringSymbols(List<String> symbols) {
+        return String.join("|", symbols);
     }
 }

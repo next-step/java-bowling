@@ -5,9 +5,14 @@ import bowling.IllegalPlayerNameException;
 import java.util.Objects;
 
 public class Player {
-    private static int NAME_LENGTH = 3;
+    private final static int NAME_LENGTH = 3;
+    private final static String NONAME_PLAYER = "---";
 
     private final String name;
+
+    public static Player noname() {
+        return new Player(NONAME_PLAYER);
+    }
 
     public Player(String name) {
         if (name.length() != NAME_LENGTH) {

@@ -32,20 +32,20 @@ public class FrameStateBonusTest {
 
     private static Stream<Arguments> providePointSymbolTestSource() {
         return Stream.of(
-                Arguments.of(Arrays.asList(new Pinfall(10)), new PointSymbols(PointSymbol.STRIKE), Score.createNotDetermined()),
-                Arguments.of(Arrays.asList(new Pinfall(10), new Pinfall(10)),
+                Arguments.of(Arrays.asList(Pinfall.createStrike()), new PointSymbols(PointSymbol.STRIKE), Score.createNotDetermined()),
+                Arguments.of(Arrays.asList(Pinfall.createStrike(), Pinfall.createStrike()),
                         new PointSymbols(Arrays.asList(PointSymbol.STRIKE, PointSymbol.STRIKE)), Score.createNotDetermined()),
-                Arguments.of(Arrays.asList(new Pinfall(10), new Pinfall(10), new Pinfall(10)),
+                Arguments.of(Arrays.asList(Pinfall.createStrike(), Pinfall.createStrike(), Pinfall.createStrike()),
                         new PointSymbols(Arrays.asList(PointSymbol.STRIKE, PointSymbol.STRIKE, PointSymbol.STRIKE)), Score.create(30)),
-                Arguments.of(Arrays.asList(new Pinfall(1), new Pinfall(9)),
+                Arguments.of(Arrays.asList(Pinfall.create(1), Pinfall.create(9)),
                         new PointSymbols(Arrays.asList(PointSymbol.ONE, PointSymbol.SPARE)), Score.createNotDetermined()),
-                Arguments.of(Arrays.asList(new Pinfall(1), new Pinfall(9), new Pinfall(2)),
+                Arguments.of(Arrays.asList(Pinfall.create(1), Pinfall.create(9), Pinfall.create(2)),
                         new PointSymbols(Arrays.asList(PointSymbol.ONE, PointSymbol.SPARE, PointSymbol.TWO)), Score.create(12)),
-                Arguments.of(Arrays.asList(new Pinfall(10), new Pinfall(9), new Pinfall(1)),
+                Arguments.of(Arrays.asList(Pinfall.createStrike(), Pinfall.create(9), Pinfall.create(1)),
                         new PointSymbols(Arrays.asList(PointSymbol.STRIKE, PointSymbol.NINE, PointSymbol.SPARE)), Score.create(20)),
-                Arguments.of(Arrays.asList(new Pinfall(10), new Pinfall(2), new Pinfall(1)),
+                Arguments.of(Arrays.asList(Pinfall.createStrike(), Pinfall.create(2), Pinfall.create(1)),
                         new PointSymbols(Arrays.asList(PointSymbol.STRIKE, PointSymbol.TWO, PointSymbol.ONE)), Score.create(13)),
-                Arguments.of(Arrays.asList(new Pinfall(1), new Pinfall(9), new Pinfall(10)),
+                Arguments.of(Arrays.asList(Pinfall.create(1), Pinfall.create(9), Pinfall.createStrike()),
                         new PointSymbols(Arrays.asList(PointSymbol.ONE, PointSymbol.SPARE, PointSymbol.STRIKE)), Score.create(20))
         );
     }

@@ -21,7 +21,7 @@ public class FrameStateStrikeTest {
     void When_Roll_Then_Exception() {
         FrameState strikeState = new FrameStateStrike();
         assertThatExceptionOfType(IllegalRollingSequenceException.class)
-                .isThrownBy(() -> strikeState.roll(new Pinfall(9)))
+                .isThrownBy(() -> strikeState.roll(Pinfall.create(9)))
                 .withMessage("공을 굴릴 수 없습니다");
     }
 
@@ -48,6 +48,6 @@ public class FrameStateStrikeTest {
     @Test
     @DisplayName("Strike의 넘어진 핀은 10개")
     void When_Pinfalls_Then_10() {
-        assertThat(new FrameStateStrike().pinfalls()).isEqualTo(Arrays.asList(new Pinfall(10)));
+        assertThat(new FrameStateStrike().pinfalls()).isEqualTo(Arrays.asList(Pinfall.createStrike()));
     }
 }

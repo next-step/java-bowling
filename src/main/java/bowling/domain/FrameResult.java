@@ -3,12 +3,15 @@ package bowling.domain;
 import java.util.Objects;
 
 public class FrameResult {
-    private final PointSymbols pointSymbols;
     private final Score score;
-    private final Score aggregatedScore;
+    private final PointSymbols pointSymbols;
 
     public FrameResult() {
-        this(new PointSymbols());
+        this(new PointSymbols(), Score.createNotDetermined());
+    }
+
+    public FrameResult(Score score) {
+        this(new PointSymbols(), score);
     }
 
     public FrameResult(PointSymbols pointSymbols) {
@@ -16,13 +19,12 @@ public class FrameResult {
     }
 
     public FrameResult(PointSymbols pointSymbols, Score score) {
-        this(pointSymbols, score, Score.createNotDetermined());
+        this.score = score;
+        this.pointSymbols = pointSymbols;
     }
 
-    public FrameResult(PointSymbols pointSymbols, Score score, Score aggregatedScore) {
-        this.pointSymbols = pointSymbols;
-        this.score = score;
-        this.aggregatedScore = aggregatedScore;
+    public Score score() {
+        return score;
     }
 
     public PointSymbols pointSymbols() {
@@ -34,19 +36,11 @@ public class FrameResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FrameResult that = (FrameResult) o;
-        return Objects.equals(pointSymbols, that.pointSymbols);
+        return Objects.equals(score, that.score) && Objects.equals(pointSymbols, that.pointSymbols);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pointSymbols);
-    }
-
-    public Score score() {
-        return score;
-    }
-
-    public Score aggregatedScore() {
-        return aggregatedScore;
+        return Objects.hash(score, pointSymbols);
     }
 }

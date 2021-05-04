@@ -5,37 +5,43 @@ import java.util.stream.Collectors;
 
 public class BowlingResult {
     private final Map<FrameNumber, FrameResult> frameResultsMap;
+    private final Player player;
 
-    public BowlingResult() {
-        frameResultsMap = new HashMap<>();
+    public BowlingResult(List<FrameResult> frameResults) {
+        this(Player.noname(), frameResults);
     }
 
-    public BowlingResult(List<FrameResult> frameResultsMap) {
-        this.frameResultsMap = new HashMap<>();
+    public BowlingResult(Player player, List<FrameResult> frameResults) {
+        this(player);
 
         FrameNumber frameNumber = new FrameNumber(1);
-        for (FrameResult frameResult : frameResultsMap) {
-            add(frameNumber, frameResult);
+        for (FrameResult frameResult : frameResults) {
+            frameResultsMap.put(frameNumber, frameResult);
             frameNumber = frameNumber.increase();
         }
     }
 
-    public void add(FrameNumber frameNumber, FrameResult result) {
+    public BowlingResult() {
+        this(Player.noname());
+    }
+
+    public BowlingResult(Player player) {
+        frameResultsMap = new HashMap<>();
+        this.player = player;
+    }
+
+    public void add(FrameNumber frameNumber, PointSymbols pointSymbols, Score score) {
         Score aggregatedScore = prevAggregatedScore(frameNumber);
-        result = new FrameResult(result.pointSymbols(), result.score(), aggregatedScore.add(result.score()));
-        frameResultsMap.put(frameNumber, result);
+        FrameResult frameResult = new FrameResult(pointSymbols, aggregatedScore.add(score));
+        frameResultsMap.put(frameNumber, frameResult);
     }
 
     private Score prevAggregatedScore(FrameNumber frameNumber) {
         if (frameNumber.equals(new FrameNumber(1))) {
-            return Score.create(0);
+            return Score.createGutter();
         }
 
-        FrameResult prevFrameResult = frameResultsMap.get(frameNumber.decrease());
-        if (prevFrameResult == null) {
-            return Score.create(0);
-        }
-        return prevFrameResult.aggregatedScore();
+        return frameResultsMap.getOrDefault(frameNumber.decrease(), new FrameResult(Score.create(0))).score();
     }
 
     public List<FrameResult> results() {
@@ -47,6 +53,10 @@ public class BowlingResult {
             return new FrameResult();
         }
         return frameResultsMap.get(frameNumber);
+    }
+
+    public Player player() {
+        return player;
     }
 
     @Override

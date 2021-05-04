@@ -7,15 +7,18 @@ public interface Frame {
 
     Frame roll(Pinfall pinfall, FrameFatory frameFatory);
 
-    FrameResult result();
-
     boolean isDone();
 
     FrameNumber frameNumber();
+
+    PointSymbols pointSymbols();
 
     Score score();
 
     List<Pinfall> bonusPinfalls(int bonusPinfallCount);
 
+    boolean hasNext();
+
     Frame next() ;
+
 }

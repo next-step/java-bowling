@@ -64,6 +64,6 @@ public class FrameStateOnce implements FrameState {
     }
 
     private boolean isSpare(Pinfall secondPinfall) {
-        return firstPinfall.add(secondPinfall).equals(new Pinfall(10));
+        return firstPinfall.add(secondPinfall).equals(Pinfall.createSpare());
     }
 }

@@ -25,14 +25,14 @@ public class FrameStateReadyTest {
     @DisplayName("Strike가 아니면 StateFinalOnce로 Transition")
     void When_Roll_Then_OnceState() {
         FrameState state = new FrameStateReady();
-        assertThat(state.roll(new Pinfall(1))).isInstanceOf(FrameStateOnce.class);
+        assertThat(state.roll(Pinfall.create(1))).isInstanceOf(FrameStateOnce.class);
     }
 
     @Test
     @DisplayName("Strike이면 StateStrike로 Transition")
     void Given_Strike_When_Roll_Then_FrameStateStrike() {
         FrameState stateReady = new FrameStateReady();
-        assertThat(stateReady.roll(new Pinfall(10))).isInstanceOf(FrameStateStrike.class);
+        assertThat(stateReady.roll(Pinfall.createStrike())).isInstanceOf(FrameStateStrike.class);
     }
 
     @Test

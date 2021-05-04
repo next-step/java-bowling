@@ -16,14 +16,14 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 public class FrameStateSpareTest {
-    private List<Pinfall> sparePinfalls = Arrays.asList(new Pinfall(9), new Pinfall(1));
+    private List<Pinfall> sparePinfalls = Arrays.asList(Pinfall.create(9), Pinfall.create(1));
 
     @Test
     @DisplayName("공을 굴리면 Exception 발생 테스트")
     void When_Roll_Then_Exception() {
         FrameState state = new FrameStateSpare();
         assertThatExceptionOfType(IllegalRollingSequenceException.class)
-                .isThrownBy(() -> state.roll(new Pinfall(9)))
+                .isThrownBy(() -> state.roll(Pinfall.create(9)))
                 .withMessage("공을 굴릴 수 없습니다");
     }
 
