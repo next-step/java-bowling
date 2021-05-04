@@ -1,7 +1,10 @@
 package bowling.util;
 
 import bowling.domain.Player;
+import bowling.domain.Score;
 import bowling.domain.frame.Frames;
+
+import java.util.List;
 
 
 public class StringUtils {
@@ -12,7 +15,8 @@ public class StringUtils {
     private static final String DELIMITER = ",";
     private static final String NAME_FORMAT = "|  %s |";
     private static final String LAST_FORMAT = "|%s";
-    private static final String FRAME_FORMAT = "      |";
+    private static final String SCORE_FORMAT = " %3s  |";
+    private static final String BLANK_FORMAT = "      |";
     private static final String SLASH = "|";
 
     public static String convertName(Player player) {
@@ -26,7 +30,16 @@ public class StringUtils {
             stringBuilder.append(appendFrame(frameStr[i]));
         }
         for (int i = 0; i < MAX_INDEX - frameStr.length; i++) {
-            stringBuilder.append(FRAME_FORMAT);
+            stringBuilder.append(BLANK_FORMAT);
+        }
+        return stringBuilder.toString();
+    }
+
+    public static String convertScores(List<Score> scores) {
+        StringBuilder stringBuilder = new StringBuilder(SLASH+BLANK_FORMAT);
+        scores.forEach(score -> stringBuilder.append(String.format(SCORE_FORMAT, score.toString())));
+        for (int i = 0; i < MAX_INDEX - scores.size(); i++) {
+            stringBuilder.append(BLANK_FORMAT);
         }
         return stringBuilder.toString();
     }
@@ -55,6 +68,6 @@ public class StringUtils {
     }
 
     private static String replaceNull(String str) {
-        return str.contains("null") ? FRAME_FORMAT : str;
+        return str.contains("null") ? BLANK_FORMAT : str;
     }
 }

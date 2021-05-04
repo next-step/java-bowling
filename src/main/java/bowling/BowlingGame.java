@@ -5,8 +5,7 @@ import bowling.domain.Player;
 import bowling.domain.frame.Frames;
 
 import static bowling.view.InputView.*;
-import static bowling.view.ResultView.printEnd;
-import static bowling.view.ResultView.showFrames;
+import static bowling.view.ResultView.*;
 
 public class BowlingGame {
     public static void main(String[] args) {
@@ -16,6 +15,7 @@ public class BowlingGame {
             HitNumber hit = HitNumber.of(inputHitNumber(frames.getLastIndex()));
             frames.play(hit);
             showFrames(player, frames);
+            showScores(frames.totalScores());
         }
         printEnd();
         close();
