@@ -4,11 +4,12 @@ import bowling.domain.frame.RoundNumber;
 import bowling.domain.pin.Pin;
 import bowling.domain.player.Player;
 import bowling.domain.player.PlayerName;
-import bowling.domain.player.Players;
 import bowling.exception.BowlingException;
-import bowling.exception.PlayerNameValidationException;
+import bowling.view.BowlingGame;
 import bowling.view.InputView;
 import bowling.view.OutputView;
+
+import java.util.List;
 
 public final class BowlingController {
 
@@ -25,47 +26,28 @@ public final class BowlingController {
     }
 
     public void run() {
-        final Players players = players();
-        outputView.printScoreBoard(players);
-
-        playGame(players);
-    }
-
-    private Players players() {
         final int playerCount = inputView.inputPlayerCount();
-        final Players players = Players.create();
-        for (int i = 1; i <= playerCount; i++) {
-            players.add(Player.from(playerName(i)));
-        }
-        return players;
-    }
+        final List<PlayerName> playerNames = inputView.inputPlayerNames(playerCount);
 
-    private void playGame(Players players) {
+        final BowlingGame bowlingGame = new BowlingGame(playerNames);
+        outputView.printScoreBoard(bowlingGame.scoreBoard());
+
         for (int i = RoundNumber.MIN; i <= RoundNumber.MAX; i++) {
-            bowlAll(players, i);
+            bowlAll(bowlingGame, i);
         }
     }
 
-    private void bowlAll(Players players, int roundNumber) {
-        for (Player player : players.value()) {
-            bowl(players, player, roundNumber);
+    private void bowlAll(BowlingGame bowlingGame, int roundNumber) {
+        for (Player player : bowlingGame.players()) {
+            bowl(bowlingGame, roundNumber, player);
         }
     }
 
-    private void bowl(Players players, Player player, int roundNumberSource) {
+    private void bowl(BowlingGame bowlingGame, int roundNumberSource, Player player) {
         final RoundNumber roundNumber = new RoundNumber(roundNumberSource);
         while (!player.isEnded(roundNumber)) {
             downPin(player, roundNumber);
-            outputView.printScoreBoard(players);
-        }
-    }
-
-    private PlayerName playerName(int playerCount) {
-        try {
-            return PlayerName.valueOf(inputView.inputPlayerName(playerCount));
-        } catch (PlayerNameValidationException e) {
-            System.err.println(e.getMessage());
-            return playerName(playerCount);
+            outputView.printScoreBoard(bowlingGame.scoreBoard());
         }
     }
 
