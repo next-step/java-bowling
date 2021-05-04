@@ -45,19 +45,28 @@ public final class BowlingController {
 
     private void bowl(BowlingGame bowlingGame, int roundNumberSource, Player player) {
         final RoundNumber roundNumber = new RoundNumber(roundNumberSource);
+        final BowlingTemplate bowlingTemplate =
+                new BowlingTemplate(this::pin, () -> outputView.printScoreBoard(bowlingGame.scoreBoard()));
         while (!player.isEnded(roundNumber)) {
-            downPin(player, roundNumber);
-            outputView.printScoreBoard(bowlingGame.scoreBoard());
+            downPin(player, roundNumber, bowlingTemplate);
         }
     }
 
-    private void downPin(final Player player, final RoundNumber roundNumber) {
+    private void downPin(final Player player, final RoundNumber roundNumber, final BowlingTemplate bowlingTemplate) {
         try {
-            final Pin pin = new Pin(inputView.inputDownPin(player));
-            player.knockDownPin(roundNumber, pin);
+            bowlingTemplate.execute(player, pin -> player.knockDownPin(roundNumber, pin));
         } catch (BowlingException e) {
             System.err.println(e.getMessage());
-            downPin(player, roundNumber);
+            downPin(player, roundNumber, bowlingTemplate);
+        }
+    }
+
+    private Pin pin(Player player) {
+        try {
+            return new Pin(inputView.inputDownPin(player));
+        } catch (BowlingException e) {
+            System.err.println(e.getMessage());
+            return pin(player);
         }
     }
 }
