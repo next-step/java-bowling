@@ -32,6 +32,10 @@ public class Player {
         return name;
     }
 
+    public Frames frames() {
+        return frames;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

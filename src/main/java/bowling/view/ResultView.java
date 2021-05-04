@@ -20,15 +20,14 @@ public class ResultView {
     protected static final String SCORE_INDENT = "|      |";
     protected static final String EMPTY = "";
 
-    public void initBoard(Player player) {
-        printBoard(player, new Frames());
-    }
-
-    public void printBoard(Player player, Frames frames) {
+    public void printBoard(Players players) {
         System.out.println(BOARD_HEADER);
-        System.out.print(playerName(player.name()));
-        System.out.println(frameResult(frames));
-        System.out.println(scoreResult(frames));
+
+        players.forEach(player -> {
+            System.out.print(playerName(player.name()));
+            System.out.println(frameResult(player.frames()));
+            System.out.println(scoreResult(player.frames()));
+        });
     }
 
     private String scoreResult(Frames frames) {
@@ -97,7 +96,7 @@ public class ResultView {
     private String pitchesToString(Pitches pitches) {
         List<String> pitchesDisplay = new ArrayList<>();
         pitches.forEach(pitch -> pitchesDisplay.add(pitchToString(pitch)));
-        
+
         return String.join("|", pitchesDisplay);
     }
 
