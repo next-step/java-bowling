@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class InputView {
     private final static String GET_PLAYER_NAME = "플레이어 의 이름은(3 english letters)? : ";
-    private final static String GET_FRAME_SCORE = "프레임 투구 : ";
+    private final static String GET_FRAME_SCORE = "'s turn : ";
     private final static String HOW_MANY_PEOPLE = "How many people? : ";
 
     private final static Scanner scanner = new Scanner(System.in);
@@ -41,4 +41,14 @@ public class InputView {
         System.out.print(sb);
         return Integer.parseInt(scanner.nextLine());
     }
+
+
+    public static int getScore(String player) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(player)
+                .append(GET_FRAME_SCORE);
+        System.out.print(sb);
+        return Integer.parseInt(scanner.nextLine());
+    }
+
 }

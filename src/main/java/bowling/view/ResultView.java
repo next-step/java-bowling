@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.dto.BowlingDto;
+import bowling.dto.BowlingGameDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,17 @@ import java.util.stream.IntStream;
 
 public class ResultView {
     private static final String UPPER_FRAME = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10    |";
+
+    public static void printBowlingGame(BowlingGameDto bowlingGameDto) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(UPPER_FRAME)
+                .append(System.lineSeparator());
+        bowlingGameDto.getBowlingDto()
+                .forEach(bowlingDto -> sb.append(getScores(bowlingDto))
+                        .append(getFrameScore(bowlingDto)));
+        System.out.println(sb);
+    }
+
 
     public static void printBowling(BowlingDto bowlingDto) {
         StringBuilder sb = new StringBuilder();

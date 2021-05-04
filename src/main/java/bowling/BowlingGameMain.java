@@ -16,7 +16,6 @@ public class BowlingGameMain {
         BowlingGame bowlingGame = BowlingGame.valueOf(users);
         BowlingGameDto bowlingGameDto = BowlingGameDto.valueOf(bowlingGame);
         ResultView.printBowlingGame(bowlingGameDto);
-
         runBowlingGame(bowlingGame);
     }
 
@@ -33,7 +32,7 @@ public class BowlingGameMain {
     }
 
     public static void runOneFramePlayer(int nowFrame, BowlingGame bowlingGame, int player) throws Exception {
-        while (nowFrame < bowlingGame.getBowling(player).nowFrame()) {
+        while (nowFrame == bowlingGame.getBowling(player).nowFrame()) {
             int score = InputView.getScore(bowlingGame.getBowling(player).getPlayer().getUser());
             bowlingGame = bowlingGame.addScore(score, player);
             BowlingGameDto bowlingGameDto = BowlingGameDto.valueOf(bowlingGame);
