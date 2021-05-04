@@ -4,32 +4,44 @@ import bowling.domain.Score;
 import bowling.domain.frame.state.State;
 
 public class NormalFrame extends Frame {
-    private Frame nextFrame;
+    protected Frame nextFrame;
 
     @Override
-    public void bowl(int inputScore) {
-        State currentState = stateHistory.getLatestState();
-        currentState.bowl(inputScore);
-        stateHistory.addState(currentState.nextState());
+    public boolean isAvailable() {
+        return stateHistory.getLatestState().hasNext();
     }
 
     @Override
-    public int getScore() {
+    public State bowl(int inputScore) {
+        State currentState = stateHistory.getLatestState();
+        currentState.bowl(inputScore);
+
+        State nextState = currentState.nextState();
+        stateHistory.addState(nextState);
+
+        if (nextState.hasNext()) {
+            return currentState;
+        }
+        return nextState;
+    }
+
+    @Override
+    public Score getScore() {
         State latestState = stateHistory.getLatestState();
         Score score = latestState.calculateScore();
 
-        if (score.canCalculate()) {
-            return score.getScoreTotal();
+        if (score.canCalculate() || nextFrame == null) {
+            return score;
         }
         return nextFrame.additionalScore(score);
     }
 
     @Override
-    protected int additionalScore(Score score) {
+    protected Score additionalScore(Score score) {
         stateHistory.calculateScore(score);
 
-        if (score.canCalculate()) {
-            return score.getScoreTotal();
+        if (score.canCalculate() || nextFrame == null) {
+            return score;
         }
         return nextFrame.additionalScore(score);
     }
@@ -37,8 +49,8 @@ public class NormalFrame extends Frame {
     @Override
     public Frame createFrame(boolean isFinalFrame) {
         if (isFinalFrame) {
-            nextFrame = null;
-            return null;
+            nextFrame = new FinalFrame();
+            return nextFrame;
         }
         nextFrame = new NormalFrame();
         return nextFrame;

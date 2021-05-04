@@ -7,25 +7,25 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 public class ScoreBoard {
-    private final Map<Integer, String> dataMap;
+    private final Map<Integer, StringJoiner> dataMap;
     private final String name;
 
     public ScoreBoard(String name) {
         dataMap = new HashMap<>();
+        for (int i = 1; i <= 10; i++) {
+            dataMap.put(i, new StringJoiner("|"));
+        }
         this.name = name;
     }
 
     private String getData(int key) {
-        return dataMap.getOrDefault(key, "");
+        return dataMap.get(key).toString();
     }
 
-    public void addData(int key, List<String> formattedScores) {
-        StringJoiner stringJoiner = new StringJoiner("|");
+    public void addData(int key, String formattedScores) {
+        StringJoiner stringJoiner = dataMap.get(key);
 
-        for (String score : formattedScores) {
-            stringJoiner.add(score);
-        }
-        dataMap.put(key, stringJoiner.toString());
+        stringJoiner.add(formattedScores);
     }
 
     public void printScoreBoard() {

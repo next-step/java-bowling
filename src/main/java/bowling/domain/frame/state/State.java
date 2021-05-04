@@ -7,9 +7,13 @@ public interface State {
 
     boolean hasNext();
 
-    void bowl(int killedPins);
+    void bowl(int fellPins);
 
     Score calculateScore();
 
     boolean isCalculable();
+
+    int getStateValue();
+
+    int countToCalculate();
 }

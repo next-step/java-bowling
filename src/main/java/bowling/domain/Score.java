@@ -24,6 +24,9 @@ public class Score {
     }
 
     public int getScoreTotal() {
-        return scoreTotal;
+        if (canCalculate()) {
+            return scoreTotal;
+        }
+        return -1;
     }
 }

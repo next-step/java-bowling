@@ -13,6 +13,10 @@ public class Placeholder {
         return scanner.nextLine();
     }
 
+    public int inputIntegerFromUser() {
+        return Integer.parseInt(scanner.nextLine());
+    }
+
     public void printNamingMessage() {
         System.out.print("플레이어 이름은(3 english letters)?: ");
     }

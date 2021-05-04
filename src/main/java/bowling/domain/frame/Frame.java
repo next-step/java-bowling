@@ -11,15 +11,13 @@ public abstract class Frame {
         stateHistory = new StateHistory();
     }
 
-    public boolean isAvailable() {
-        return stateHistory.getLatestState().hasNext();
-    }
+    public abstract boolean isAvailable();
 
-    public abstract void bowl(int inputScore);
+    public abstract State bowl(int inputScore);
 
-    public abstract int getScore();
+    public abstract Score getScore();
 
-    protected abstract int additionalScore(Score score);
+    protected abstract Score additionalScore(Score score);
 
     public abstract Frame createFrame(boolean isFinalFrame);
 

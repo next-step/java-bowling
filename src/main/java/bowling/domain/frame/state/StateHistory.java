@@ -17,10 +17,6 @@ public class StateHistory {
         return states.get(states.size() - 1);
     }
 
-    public State getFirstState() {
-        return states.get(0);
-    }
-
     public void addState(State state) {
         states.add(state);
     }
