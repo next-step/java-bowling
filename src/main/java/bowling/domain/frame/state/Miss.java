@@ -3,12 +3,12 @@ package bowling.domain.frame.state;
 import bowling.domain.Score;
 
 public class Miss implements State {
-    private int remainPins;
-    private int falledPins;
+    private final int remainPins;
+    private final int fellPins;
 
     public Miss(int remainPins, int falledPins) {
         this.remainPins = remainPins;
-        this.falledPins = falledPins;
+        this.fellPins = falledPins;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Miss implements State {
 
     @Override
     public int getStateValue() {
-        return falledPins;
+        return fellPins;
     }
 
     @Override
