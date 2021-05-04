@@ -1,15 +1,19 @@
 package bowling;
 
-import bowling.domain.Bowling;
+import bowling.domain.BowlingGame;
 import bowling.domain.User;
 import bowling.dto.BowlingDto;
 import bowling.view.InputView;
-import bowling.view.ResultView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BowlingGameMain {
     public static void main(String[] args) throws Exception {
-        User user = new User(InputView.getPlayerName());
-        Bowling bowling = new Bowling(user);
+
+        List<User> users = InputView.getPlayerNames(InputView.getHowMany());
+        BowlingGame bowlingGame = BowlingGame.valueOf(users);
+        List<BowlingDto> bowlingDtos = new ArrayList<>();
         BowlingDto bowlingDto = BowlingDto.valueOf(bowling);
         ResultView.printBowling(bowlingDto);
 
