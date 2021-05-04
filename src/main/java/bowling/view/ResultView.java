@@ -21,6 +21,7 @@ public class ResultView {
     protected static final String EMPTY = "";
 
     public void printBoard(Players players) {
+        
         System.out.println(BOARD_HEADER);
 
         players.forEach(player -> {
