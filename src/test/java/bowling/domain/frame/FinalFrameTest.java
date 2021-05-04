@@ -44,6 +44,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(10)).roll(HitNumber.of(10));
         assertThat(resultFrame).isEqualTo(DOUBLE_STRIKE_FRAME);
         assertThat(resultFrame.isFinished()).isFalse();
+        assertThat(resultFrame.totalScore().compareTo(20)).isEqualTo(0);
         System.out.println(resultFrame);
     }
 
@@ -52,6 +53,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(3));
         assertThat(resultFrame).isEqualTo(ONE_ROLL_FRAME);
         assertThat(resultFrame.isFinished()).isFalse();
+        assertThat(resultFrame.totalScore().compareTo(3)).isEqualTo(0);
         System.out.println(resultFrame);
     }
 
@@ -60,6 +62,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(7));
         assertThat(resultFrame).isEqualTo(SPARE_FRAME);
         assertThat(resultFrame.isFinished()).isFalse();
+        assertThat(resultFrame.totalScore().compareTo(10)).isEqualTo(0);
         System.out.println(resultFrame);
     }
 
@@ -68,6 +71,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(0));
         assertThat(resultFrame).isEqualTo(GUTTER_FRAME);
         assertThat(resultFrame.isFinished()).isFalse();
+        assertThat(resultFrame.totalScore().compareTo(0)).isEqualTo(0);
         System.out.println(resultFrame);
     }
 
@@ -76,6 +80,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(0)).roll(HitNumber.of(0));
         assertThat(resultFrame).isEqualTo(MISS_FRAME);
         assertThat(resultFrame.isFinished()).isTrue();
+        assertThat(resultFrame.totalScore().compareTo(0)).isEqualTo(0);
         System.out.println(resultFrame);
     }
 
@@ -84,6 +89,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(10)).roll(HitNumber.of(10)).roll(HitNumber.of(3));
         assertThat(resultFrame).isEqualTo(STRIKE_NEXT_FRAME);
         assertThat(resultFrame.isFinished()).isTrue();
+        assertThat(resultFrame.totalScore().compareTo(23)).isEqualTo(0);
         System.out.println(resultFrame);
     }
 
@@ -92,6 +98,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(7)).roll(HitNumber.of(3));
         assertThat(resultFrame).isEqualTo(SPARE_NEXT_FRAME);
         assertThat(resultFrame.isFinished()).isTrue();
+        assertThat(resultFrame.totalScore().compareTo(13)).isEqualTo(0);
         System.out.println(resultFrame);
     }
 

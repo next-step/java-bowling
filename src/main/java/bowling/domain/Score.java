@@ -31,6 +31,10 @@ public class Score {
         this.addNum = addNum;
     }
 
+    public static Score of() {
+        return new Score();
+    }
+
     public static Score of(int score){
         validScore(score);
         return new Score(score);
@@ -44,20 +48,20 @@ public class Score {
 
     public Score add(RollResultType result, int nextScore) {
         if(result.isSpare() && addNum < SPARE_BOUND) {
-            return add(nextScore);
+            return addNext(nextScore);
         }
         if(result.isStrike() && addNum < STRIKE_BOUND) {
-            return add(nextScore);
+            return addNext(nextScore);
         }
         return this;
     }
 
     public Score add(Score score) {
-        return of(this.score + score.score, this.addNum + 1);
+        return of(this.score + score.score, this.addNum);
     }
 
     public Score add(int score) {
-        return of(this.score + score, this.addNum + 1);
+        return of(this.score + score, this.addNum);
     }
 
     public Score diff(int score) {
@@ -78,6 +82,10 @@ public class Score {
         if (score < INIT_NUM) {
             throw new IllegalArgumentException(INVALID_SCORE);
         }
+    }
+
+    private Score addNext(int score) {
+        return of(this.score + score, this.addNum + 1);
     }
 
     @Override

@@ -77,7 +77,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score totalScore() {
-        return null;
+        return results.eval();
     }
 
     @Override

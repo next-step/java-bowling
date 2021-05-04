@@ -14,7 +14,7 @@ public class ScoreTest {
     @Test
     void 추가점수합산() {
         Score score = Score.of(5).add(6);
-        assertThat(score).isEqualTo(Score.of(11, 1));
+        assertThat(score).isEqualTo(Score.of(11, 0));
     }
 
     @Test

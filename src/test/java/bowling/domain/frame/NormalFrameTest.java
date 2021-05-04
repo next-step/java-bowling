@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.HitNumber;
 import bowling.domain.Pin;
+import bowling.domain.Score;
 import bowling.domain.rollresult.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,7 +70,19 @@ public class NormalFrameTest {
 
     @Test
     void 스트라이크의추가점수() {
-//        assertThat(STRIKE_FRAME.addScore(3).);
+        Score score = STRIKE_FRAME.addScore(3).totalScore();
+        assertThat(score.compareTo(13)).isEqualTo(0);
     }
 
+    @Test
+    void 스페어의추가점수() {
+        Score score = SPARE_FRAME.addScore(5).totalScore();
+        assertThat(score.compareTo(15)).isEqualTo(0);
+    }
+
+    @Test
+    void 미스의추가점수는그대로(){
+        Score score = MISS_FRAME.addScore(5).totalScore();
+        assertThat(score.compareTo(0)).isEqualTo(0);
+    }
 }

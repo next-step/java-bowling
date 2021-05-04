@@ -56,7 +56,10 @@ public class NormalFrame implements Frame{
 
     @Override
     public Frame addScore(int score) {
-        return null;
+        if(result.isStrike() || result.isSpare()) {
+            return of(pin, result.next(score));
+        }
+        return this;
     }
 
     @Override

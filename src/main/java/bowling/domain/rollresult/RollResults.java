@@ -2,6 +2,7 @@ package bowling.domain.rollresult;
 
 import bowling.domain.HitNumber;
 import bowling.domain.Pin;
+import bowling.domain.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,14 @@ public class RollResults {
         return getLast().hasNext();
     }
 
+    public Score eval() {
+        Score score = Score.of();
+        for (RollResultType result : results) {
+            score = score.add(result.eval());
+        }
+        return score;
+    }
+
     private RollResultType getLast() {
         return results.get(results.size() - 1);
     }
@@ -64,4 +73,5 @@ public class RollResults {
     public String toString() {
         return "" + results + "";
     }
+
 }
