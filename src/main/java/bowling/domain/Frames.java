@@ -1,10 +1,11 @@
 package bowling.domain;
 
+import bowling.domain.dto.FrameBoard;
+import bowling.domain.dto.FrameInfo;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 public class Frames implements Iterable<Frame> {
 
@@ -74,18 +75,22 @@ public class Frames implements Iterable<Frame> {
                 .sum();
     }
 
+    public FrameBoard assembleFrameBoard(Participant participant) {
+        return new FrameBoard(participant.getName(), nextTurnNumber(), assembleFrameInfos(), isFinished());
+    }
+
+    private List<FrameInfo> assembleFrameInfos() {
+        List<FrameInfo> frameInfos = new ArrayList<>();
+        for (Frame frame : frames) {
+            FrameInfo frameInfo = frame.assembleFrameInfo();
+            frameInfos.add(frameInfo);
+        }
+        return frameInfos;
+    }
+
     @Override
     public Iterator<Frame> iterator() {
         return frames.iterator();
     }
 
-    @Override
-    public void forEach(Consumer<? super Frame> action) {
-        Iterable.super.forEach(action);
-    }
-
-    @Override
-    public Spliterator<Frame> spliterator() {
-        return Iterable.super.spliterator();
-    }
 }

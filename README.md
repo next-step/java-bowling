@@ -16,13 +16,15 @@
 ### [Presentation Layer]
 * BowlingGameController : 볼링게임 실행 및 결과를 FrontEnd 에 제공하기 위한 API 진입소스
 * BowlingGameRequest : 유저의 투구정보를 Backend 로 전달하기 위한 input dto
-* BowlingGameResponse : 유저의 투구 후 게임 실행현황을 Frontend 로 전달하기 위한 output dto
-* FrameInfo : 회차별 게임정보를 저장하고 있는 output dto. 회차번호와 투구결과를 문자열 형태로 갖는다.
+* BowlingGameResponse : 유저별 투구 후 게임 실행현황을 Frontend 로 전달하기 위한 output dto
 ### [Service Layer]
 * BowlingGameService : 볼링게임 투구정보를 입력받아 도메인객체를 리턴해주는 도메인 서비스
 ### [Persistence Layer]
 * BowlingGameRepository : 참가자별 볼링정보를 조회하고 저장하기 위한 리포지토리 클래스
 ### [Domain Object]
+* FrameInfo : 회차별 게임정보를 저장하고 있는 dto 클래스. 회차번호와 투구결과를 문자열 형태로 갖는다.
+* FrameBoard : 프레임 실행결과와 다음 턴 프레임번호 등 유저별 게임 진행현황을 저장하고 있는 dto 클래스
+* BowlingGame : 게임 참가자와 프레임 실행정보 간의 매핑정보를 표현하기 위한 일급컬렉션 도메인 클래스
 * Participant : 볼링게임 참가자를 표현하는 도메인 클래스
 * Frames : Frame 정보를 List 형태로 갖는 일급컬렉션 도메인 클래스
 * Frame : 볼링 한 회차 정보를 표현하는 도메인 추상 클래스

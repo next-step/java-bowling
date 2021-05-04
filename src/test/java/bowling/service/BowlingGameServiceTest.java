@@ -2,6 +2,7 @@ package bowling.service;
 
 import bowling.domain.Frames;
 import bowling.domain.Participant;
+import bowling.infra.BowlingGameDatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BowlingGameServiceTest {
@@ -17,6 +19,7 @@ class BowlingGameServiceTest {
 
     @BeforeEach
     void setUp () {
+        BowlingGameDatabase.bowlingGameData.clear();
         service = new BowlingGameService();
     }
 
@@ -79,5 +82,20 @@ class BowlingGameServiceTest {
 
         // then
         assertThrows(NoSuchElementException.class, () -> service.findFrames(new Participant("ABC")), "존재하지 않는 참가자입니다.");
+    }
+
+    @Test
+    @DisplayName("이미 등록한 참가자")
+    void participantAlreadyExists() {
+        // given
+        Participant participant = new Participant("LDS");
+
+        // when
+        service.startGame(participant);
+
+        // then
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> service.startGame(participant))
+                .withMessageMatching("이미 등록한 참가자입니다.");
     }
 }

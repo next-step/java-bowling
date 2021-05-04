@@ -1,5 +1,6 @@
 package bowling.service;
 
+import bowling.domain.BowlingGame;
 import bowling.domain.Frames;
 import bowling.domain.Participant;
 import bowling.repository.BowlingGameRepository;
@@ -16,6 +17,10 @@ public class BowlingGameService {
     }
 
     public void startGame(Participant participant) {
+        Optional<Frames> frames = repository.findByParticipant(participant);
+        if (frames.isPresent()) {
+            throw new IllegalArgumentException("이미 등록한 참가자입니다.");
+        }
         repository.save(participant, new Frames());
     }
 
@@ -27,5 +32,9 @@ public class BowlingGameService {
     public Frames findFrames(Participant participant) {
         Optional<Frames> frames = repository.findByParticipant(participant);
         return frames.orElseThrow(() -> new NoSuchElementException("존재하지 않는 참가자입니다."));
+    }
+
+    public BowlingGame findBowlingGame() {
+        return new BowlingGame(repository.findAllFrames());
     }
 }
