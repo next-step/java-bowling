@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.state.PinCount;
 import bowling.domain.state.State;
 import bowling.exception.NoMoreBowlActionsException;
 import bowling.exception.NoMoreCountingActionException;
@@ -26,7 +27,7 @@ public final class NormalFrame implements Frame {
         return new NormalFrame(index);
     }
 
-    private void validateFinish() {
+    private final void validateFinish() {
         if (state.isFinish()) {
             throw new NoMoreBowlActionsException();
         }
@@ -40,7 +41,7 @@ public final class NormalFrame implements Frame {
     }
 
     @Override
-    public final Frame bowl(final HitCount hitCount) {
+    public final Frame bowl(final PinCount hitCount) {
         validateFinish();
         state = state.bowl(hitCount);
         if (state.isFinish()) {

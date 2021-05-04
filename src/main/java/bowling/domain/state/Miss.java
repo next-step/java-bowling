@@ -1,45 +1,33 @@
 package bowling.domain.state;
 
-import bowling.exception.InputNumberOutOfBoundsException;
 import bowling.exception.InsufficientMissCountException;
 
 import static bowling.util.BowlingFixture.*;
-import static java.lang.Boolean.FALSE;
 
 public final class Miss extends Finish {
 
-    private final int firstCount;
-    private final int secondCount;
+    private final PinCount firstCount;
+    private final PinCount secondCount;
 
-    private Miss(final int firstCount, final int secondCount) {
-        validateSize(firstCount, secondCount);
-        validateSum(firstCount, secondCount);
+    private Miss(final PinCount firstCount, final PinCount secondCount) {
+        validateMiss(firstCount, secondCount);
         this.firstCount = firstCount;
         this.secondCount = secondCount;
     }
 
-    private final void validateSize(final int firstCount, final int secondCount) {
-        if (firstCount < MINIMUM_COUNT || firstCount > MAXIMUM_COUNT) {
-            throw new InputNumberOutOfBoundsException(firstCount);
-        }
-        if (secondCount < MINIMUM_COUNT || secondCount > MAXIMUM_COUNT) {
-            throw new InputNumberOutOfBoundsException(secondCount);
+    private final void validateMiss(final PinCount firstCount, final PinCount secondCount) {
+        if (!firstCount.isMiss(secondCount)) {
+            throw new InsufficientMissCountException(firstCount.count(), secondCount.count());
         }
     }
 
-    private final void validateSum(final int firstCount, final int secondCount) {
-        if (Math.addExact(firstCount, secondCount) >= MAXIMUM_COUNT) {
-            throw new InsufficientMissCountException(firstCount, secondCount);
-        }
-    }
-
-    public static final Miss of(final int firstCount, final int secondCount) {
+    public static final State of(final PinCount firstCount, final PinCount secondCount) {
         return new Miss(firstCount, secondCount);
     }
 
     @Override
     public final boolean isAllPinClear() {
-        return FALSE;
+        return false;
     }
 
     @Override
@@ -49,12 +37,12 @@ public final class Miss extends Finish {
 
     @Override
     public final int firstCount() {
-        return firstCount;
+        return firstCount.count();
     }
 
     @Override
     public final int secondCount() {
-        return secondCount;
+        return secondCount.count();
     }
 
 }

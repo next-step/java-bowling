@@ -1,36 +1,27 @@
 package bowling.domain.state;
 
-import bowling.domain.HitCount;
-import bowling.exception.InputNumberOutOfBoundsException;
 import bowling.exception.NoMoreCountingActionException;
 
 import static bowling.util.BowlingFixture.*;
 
 public final class FirstBowl extends Running {
 
-    private final int firstCount;
+    private final PinCount firstCount;
 
-    private FirstBowl(final int firstCount) {
-        validateSize(firstCount);
+    private FirstBowl(final PinCount firstCount) {
         this.firstCount = firstCount;
     }
 
-    private final void validateSize(final int firstCount) {
-        if (firstCount < MINIMUM_COUNT || firstCount > MAXIMUM_COUNT) {
-            throw new InputNumberOutOfBoundsException(firstCount);
-        }
-    }
-
-    public static final State from(final int firstCount) {
+    public static final State from(final PinCount firstCount) {
         return new FirstBowl(firstCount);
     }
 
     @Override
-    public final State bowl(final HitCount hitCount) {
-        if (firstCount + hitCount.count() >= MAXIMUM_COUNT) {
-            return Spare.of(firstCount, hitCount.count());
+    public final State bowl(final PinCount hitCount) {
+        if (firstCount.isSpare(hitCount)) {
+            return Spare.of(firstCount, hitCount);
         }
-        return Miss.of(firstCount, hitCount.count());
+        return Miss.of(firstCount, hitCount);
     }
 
     @Override
@@ -40,7 +31,7 @@ public final class FirstBowl extends Running {
 
     @Override
     public final int firstCount() {
-        return firstCount;
+        return firstCount.count();
     }
 
     @Override

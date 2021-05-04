@@ -1,12 +1,14 @@
 package bowling.domain;
 
+import bowling.domain.state.PinCount;
+
 public interface Frame {
 
     static Frame fakeFrame() {
         return FakeFrame.initialize();
     }
 
-    Frame bowl(HitCount hitCount);
+    Frame bowl(PinCount hitCount);
 
     boolean isFinish();
 

@@ -1,7 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.state.PinCount;
 import bowling.exception.*;
-import bowling.util.BowlingFixture;
 
 public final class FakeFrame implements Frame {
 
@@ -13,7 +13,7 @@ public final class FakeFrame implements Frame {
     }
 
     @Override
-    public final Frame bowl(final HitCount hitCount) {
+    public final Frame bowl(final PinCount hitCount) {
         throw new NoMoreBowlActionsException();
     }
 

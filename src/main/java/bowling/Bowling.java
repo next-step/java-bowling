@@ -1,8 +1,8 @@
 package bowling;
 
 import bowling.domain.Frames;
-import bowling.domain.HitCount;
 import bowling.domain.Player;
+import bowling.domain.state.PinCount;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -30,7 +30,7 @@ public final class Bowling {
 
     private static final void bowl(final Frames frames) {
         try {
-            HitCount hitCount = HitCount.valueOf(INPUT_VIEW.InputHitCountByConsole(frames.index()));
+            PinCount hitCount = PinCount.valueOf(INPUT_VIEW.InputHitCountByConsole(frames.index()));
             frames.bowl(hitCount);
         } catch (Exception e) {
             System.out.println(e.getMessage() + RETRY_MESSAGE);

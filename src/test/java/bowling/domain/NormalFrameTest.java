@@ -1,10 +1,8 @@
 package bowling.domain;
 
-import bowling.domain.state.Spare;
-import bowling.domain.state.State;
+import bowling.domain.state.PinCount;
 import bowling.exception.NoMoreBowlActionsException;
 import bowling.exception.NoMoreCountingActionException;
-import bowling.util.BowlingFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +45,7 @@ class NormalFrameTest {
     void 기능_bowl_동일_인스턴스() {
         Frame normalFrame = NormalFrame.initialize();
 
-        Frame now = normalFrame.bowl(HitCount.valueOf(5));
+        Frame now = normalFrame.bowl(PinCount.valueOf(5));
 
         assertAll(
                 () -> assertThat(now).isNotNull(),
@@ -63,7 +61,7 @@ class NormalFrameTest {
     void 기능_bowl_다음_인스턴스() {
         Frame normalFrame = NormalFrame.initialize();
 
-        Frame now = normalFrame.bowl(HitCount.valueOf(10));
+        Frame now = normalFrame.bowl(PinCount.valueOf(10));
 
         assertAll(
                 () -> assertThat(now).isNotNull(),
@@ -82,7 +80,7 @@ class NormalFrameTest {
         Frame normalFrame = NormalFrame.initialize();
 
         // when
-        Frame next = normalFrame.bowl(HitCount.valueOf(10));
+        Frame next = normalFrame.bowl(PinCount.valueOf(10));
 
         // then
         assertAll(
@@ -114,10 +112,10 @@ class NormalFrameTest {
         Frame normalFrame = NormalFrame.initialize();
 
         // when
-        normalFrame.bowl(HitCount.valueOf(10));
+        normalFrame.bowl(PinCount.valueOf(10));
 
         // then
-        assertThatThrownBy(() -> normalFrame.bowl(HitCount.valueOf(10)))
+        assertThatThrownBy(() -> normalFrame.bowl(PinCount.valueOf(10)))
                 .isInstanceOf(NoMoreBowlActionsException.class)
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }
@@ -129,8 +127,8 @@ class NormalFrameTest {
         Frame normalFrame = NormalFrame.initialize();
 
         // when
-        normalFrame.bowl(HitCount.valueOf(1));
-        normalFrame.bowl(HitCount.valueOf(9));
+        normalFrame.bowl(PinCount.valueOf(1));
+        normalFrame.bowl(PinCount.valueOf(9));
 
         // then
         assertThat(normalFrame.size()).isEqualTo(2);
@@ -143,8 +141,8 @@ class NormalFrameTest {
         Frame normalFrame = NormalFrame.initialize();
 
         // when
-        normalFrame.bowl(HitCount.valueOf(9));
-        normalFrame.bowl(HitCount.valueOf(1));
+        normalFrame.bowl(PinCount.valueOf(9));
+        normalFrame.bowl(PinCount.valueOf(1));
 
         // then
         assertThat(normalFrame.firstCount()).isEqualTo(9);
@@ -157,8 +155,8 @@ class NormalFrameTest {
         Frame normalFrame = NormalFrame.initialize();
 
         // when
-        normalFrame.bowl(HitCount.valueOf(9));
-        normalFrame.bowl(HitCount.valueOf(1));
+        normalFrame.bowl(PinCount.valueOf(9));
+        normalFrame.bowl(PinCount.valueOf(1));
 
         // then
         assertThat(normalFrame.secondCount()).isEqualTo(1);
@@ -172,8 +170,8 @@ class NormalFrameTest {
         Frame normalFrame = NormalFrame.initialize();
 
         // when
-        normalFrame.bowl(HitCount.valueOf(9));
-        normalFrame.bowl(HitCount.valueOf(1));
+        normalFrame.bowl(PinCount.valueOf(9));
+        normalFrame.bowl(PinCount.valueOf(1));
 
         // then
         assertThatThrownBy(() -> normalFrame.thirdCount())

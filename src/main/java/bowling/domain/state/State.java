@@ -1,14 +1,12 @@
 package bowling.domain.state;
 
-import bowling.domain.HitCount;
-
 public interface State {
 
     static State ready() {
         return Ready.initialize();
     }
 
-    State bowl(final HitCount hitCount);
+    State bowl(final PinCount hitCount);
 
     boolean isFinish();
 

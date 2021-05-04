@@ -1,15 +1,15 @@
 package bowling.domain.state;
 
-import bowling.domain.HitCount;
 import bowling.exception.NoMoreCountingActionException;
-import bowling.util.BowlingFixture;
+
+import static bowling.util.BowlingFixture.ZERO;
 
 public final class Ready extends Running {
 
-    private Pins pins;
+    private PinCount pinCount;
 
     private Ready() {
-        this.pins = Pins.initialize();
+        this.pinCount = PinCount.initialize();
     }
 
     public static final State initialize() {
@@ -17,26 +17,26 @@ public final class Ready extends Running {
     }
 
     @Override
-    public final State bowl(final HitCount hitCount) {
-        pins = pins.hit(hitCount);
-        if (pins.isEmpty()) {
+    public final State bowl(final PinCount hitCount) {
+        pinCount = pinCount.hit(hitCount);
+        if (pinCount.isEmpty()) {
             return Strike.initialize();
         }
-        return FirstBowl.from(hitCount.count());
+        return FirstBowl.from(hitCount);
     }
 
     @Override
-    public int size() {
-        return BowlingFixture.ZERO;
+    public final int size() {
+        return ZERO;
     }
 
     @Override
-    public int firstCount() {
+    public final int firstCount() {
         throw new NoMoreCountingActionException();
     }
 
     @Override
-    public int secondCount() {
+    public final int secondCount() {
         throw new NoMoreCountingActionException();
     }
 

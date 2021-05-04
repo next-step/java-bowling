@@ -4,7 +4,6 @@ import bowling.exception.NoMoreCountingActionException;
 
 import static bowling.util.BowlingFixture.ONE;
 import static bowling.util.BowlingFixture.ALL_PIN_CLEAR;
-import static java.lang.Boolean.TRUE;
 
 public final class Strike extends Finish {
 
@@ -17,7 +16,7 @@ public final class Strike extends Finish {
 
     @Override
     public final boolean isAllPinClear() {
-        return TRUE;
+        return true;
     }
 
     @Override

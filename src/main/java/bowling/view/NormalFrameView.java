@@ -3,7 +3,6 @@ package bowling.view;
 import bowling.domain.Frame;
 
 import static bowling.util.BowlingFixture.*;
-import static java.lang.Boolean.FALSE;
 
 public final class NormalFrameView extends FrameView {
 
@@ -22,8 +21,8 @@ public final class NormalFrameView extends FrameView {
 
     @Override
     protected final String twiceScore(final Frame frame) {
-        final String first = mapToSign(ZERO, frame.firstCount(), FALSE);
-        final String second = mapToSign(frame.firstCount(), frame.secondCount(), FALSE);
+        final String first = mapToSign(ZERO, frame.firstCount(), false);
+        final String second = mapToSign(frame.firstCount(), frame.secondCount(), false);
         return first + DELIMITER + second;
     }
 

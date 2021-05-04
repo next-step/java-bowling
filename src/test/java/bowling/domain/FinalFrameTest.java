@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.state.PinCount;
 import bowling.exception.NoMoreBowlActionsException;
 import bowling.exception.NoMoreCountingActionException;
 import org.junit.jupiter.api.DisplayName;
@@ -31,9 +32,9 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.initialize();
 
         // when
-        finalFrame.bowl(HitCount.valueOf(10));
-        finalFrame.bowl(HitCount.valueOf(10));
-        finalFrame.bowl(HitCount.valueOf(9));
+        finalFrame.bowl(PinCount.valueOf(10));
+        finalFrame.bowl(PinCount.valueOf(10));
+        finalFrame.bowl(PinCount.valueOf(9));
 
         // then
         assertThat(finalFrame.isFinish()).isTrue();
@@ -60,11 +61,11 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.initialize();
 
         // when
-        finalFrame.bowl(HitCount.valueOf(0));
-        finalFrame.bowl(HitCount.valueOf(9));
+        finalFrame.bowl(PinCount.valueOf(0));
+        finalFrame.bowl(PinCount.valueOf(9));
 
         // then
-        assertThatThrownBy(() -> finalFrame.bowl(HitCount.valueOf(9)))
+        assertThatThrownBy(() -> finalFrame.bowl(PinCount.valueOf(9)))
                 .isInstanceOf(NoMoreBowlActionsException.class)
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }
@@ -76,12 +77,12 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.initialize();
 
         // when
-        finalFrame.bowl(HitCount.valueOf(0));
-        finalFrame.bowl(HitCount.valueOf(10));
-        finalFrame.bowl(HitCount.valueOf(9));
+        finalFrame.bowl(PinCount.valueOf(0));
+        finalFrame.bowl(PinCount.valueOf(10));
+        finalFrame.bowl(PinCount.valueOf(9));
 
         // then
-        assertThatThrownBy(() -> finalFrame.bowl(HitCount.valueOf(9)))
+        assertThatThrownBy(() -> finalFrame.bowl(PinCount.valueOf(9)))
                 .isInstanceOf(NoMoreBowlActionsException.class)
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }
@@ -93,8 +94,8 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.initialize();
 
         // when
-        finalFrame.bowl(HitCount.valueOf(0));
-        finalFrame.bowl(HitCount.valueOf(9));
+        finalFrame.bowl(PinCount.valueOf(0));
+        finalFrame.bowl(PinCount.valueOf(9));
 
         // then
         assertThat(finalFrame.size()).isEqualTo(2);
@@ -107,9 +108,9 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.initialize();
 
         // when
-        finalFrame.bowl(HitCount.valueOf(0));
-        finalFrame.bowl(HitCount.valueOf(10));
-        finalFrame.bowl(HitCount.valueOf(9));
+        finalFrame.bowl(PinCount.valueOf(0));
+        finalFrame.bowl(PinCount.valueOf(10));
+        finalFrame.bowl(PinCount.valueOf(9));
 
         // then
         assertThat(finalFrame.size()).isEqualTo(3);
@@ -122,9 +123,9 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.initialize();
 
         // when
-        finalFrame.bowl(HitCount.valueOf(0));
-        finalFrame.bowl(HitCount.valueOf(10));
-        finalFrame.bowl(HitCount.valueOf(9));
+        finalFrame.bowl(PinCount.valueOf(0));
+        finalFrame.bowl(PinCount.valueOf(10));
+        finalFrame.bowl(PinCount.valueOf(9));
 
         // then
         assertThat(finalFrame.firstCount()).isEqualTo(0);
@@ -137,9 +138,9 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.initialize();
 
         // when
-        finalFrame.bowl(HitCount.valueOf(0));
-        finalFrame.bowl(HitCount.valueOf(10));
-        finalFrame.bowl(HitCount.valueOf(9));
+        finalFrame.bowl(PinCount.valueOf(0));
+        finalFrame.bowl(PinCount.valueOf(10));
+        finalFrame.bowl(PinCount.valueOf(9));
 
         // then
         assertThat(finalFrame.secondCount()).isEqualTo(10);
@@ -152,9 +153,9 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.initialize();
 
         // when
-        finalFrame.bowl(HitCount.valueOf(0));
-        finalFrame.bowl(HitCount.valueOf(10));
-        finalFrame.bowl(HitCount.valueOf(9));
+        finalFrame.bowl(PinCount.valueOf(0));
+        finalFrame.bowl(PinCount.valueOf(10));
+        finalFrame.bowl(PinCount.valueOf(9));
 
         // then
         assertThat(finalFrame.thirdCount()).isEqualTo(9);
@@ -167,8 +168,8 @@ class FinalFrameTest {
         Frame finalFrame = FinalFrame.initialize();
 
         // when
-        finalFrame.bowl(HitCount.valueOf(0));
-        finalFrame.bowl(HitCount.valueOf(9));
+        finalFrame.bowl(PinCount.valueOf(0));
+        finalFrame.bowl(PinCount.valueOf(9));
 
         // then
         assertThatThrownBy(() -> finalFrame.thirdCount())

@@ -1,6 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.HitCount;
 import bowling.exception.NoMoreCountingActionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +36,7 @@ class ReadyTest {
         State ready = State.ready();
 
         // then
-        assertThat(ready.bowl(HitCount.valueOf(9))).isInstanceOf(FirstBowl.class);
+        assertThat(ready.bowl(PinCount.valueOf(9))).isInstanceOf(FirstBowl.class);
 
     }
 
@@ -48,7 +47,7 @@ class ReadyTest {
         State ready = State.ready();
 
         // then
-        assertThat(ready.bowl(HitCount.valueOf(10))).isInstanceOf(Strike.class);
+        assertThat(ready.bowl(PinCount.valueOf(10))).isInstanceOf(Strike.class);
 
     }
 

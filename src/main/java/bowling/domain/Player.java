@@ -7,7 +7,7 @@ public final class Player {
 
     private static final String EMPTY = "";
     private static final String REGEX = "[^a-zA-Z]";
-    private static final int STANDARD_SIZE = 3;
+    private static final int NAME_MAXIMUM_SIZE = 3;
 
     private final String name;
 
@@ -18,11 +18,11 @@ public final class Player {
     private Player(final String name) {
         validateSize(name);
         validateAlphabet(name);
-        this.name = name.toUpperCase();
+        this.name = name;
     }
 
     private final void validateSize(final String name) {
-        if (name.length() > STANDARD_SIZE) {
+        if (name.length() > NAME_MAXIMUM_SIZE || name.isEmpty()) {
             throw new NameSizeMissMatchException(name);
         }
     }

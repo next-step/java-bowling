@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.state.PinCount;
 import bowling.exception.InputNumberOutOfBoundsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ class HitCountTest {
         int count = 10;
 
         // when
-        HitCount hitCount = HitCount.valueOf(count);
+        PinCount hitCount = PinCount.valueOf(count);
 
         // then
         assertThat(hitCount).isNotNull();
@@ -31,12 +32,12 @@ class HitCountTest {
         int secondCount = -1;
 
         // when
-        assertThatThrownBy(() -> HitCount.valueOf(firstCount))
+        assertThatThrownBy(() -> PinCount.valueOf(firstCount))
                 .isInstanceOf(InputNumberOutOfBoundsException.class)
                 .hasMessage("맞은 갯수 ( " + firstCount + " ) 는 사용할 수 없는 갯수 입니다.");
 
         // when
-        assertThatThrownBy(() -> HitCount.valueOf(secondCount))
+        assertThatThrownBy(() -> PinCount.valueOf(secondCount))
                 .isInstanceOf(InputNumberOutOfBoundsException.class)
                 .hasMessage("맞은 갯수 ( " + secondCount + " ) 는 사용할 수 없는 갯수 입니다.");
 
@@ -49,7 +50,7 @@ class HitCountTest {
         int expected = 10;
 
         // when
-        HitCount hitCount = HitCount.valueOf(expected);
+        PinCount hitCount = PinCount.valueOf(expected);
         int actual = hitCount.count();
 
         // then
@@ -64,8 +65,8 @@ class HitCountTest {
         int count = 10;
 
         // when
-        HitCount firstHitCount = HitCount.valueOf(count);
-        HitCount secondHitCount = HitCount.valueOf(count);
+        PinCount firstHitCount = PinCount.valueOf(count);
+        PinCount secondHitCount = PinCount.valueOf(count);
 
         // then
         assertAll(

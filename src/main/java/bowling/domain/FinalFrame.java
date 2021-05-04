@@ -1,7 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.state.FirstBowl;
-import bowling.domain.state.Ready;
+import bowling.domain.state.PinCount;
 import bowling.domain.state.State;
 import bowling.exception.NoMoreBowlActionsException;
 import bowling.exception.NoMoreCountingActionException;
@@ -28,7 +28,7 @@ public final class FinalFrame implements Frame {
     }
 
     @Override
-    public final Frame bowl(final HitCount hitCount) {
+    public final Frame bowl(final PinCount hitCount) {
         validateFinish();
         opportunity.next();
         size = states.size();
@@ -42,7 +42,7 @@ public final class FinalFrame implements Frame {
     }
 
     private final State getBonusPitch() {
-        return FirstBowl.from(ZERO);
+        return FirstBowl.from(PinCount.empty());
     }
 
     private final void validateFinish() {

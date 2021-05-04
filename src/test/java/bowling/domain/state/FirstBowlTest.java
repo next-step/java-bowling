@@ -1,7 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.HitCount;
-import bowling.exception.InputNumberOutOfBoundsException;
 import bowling.exception.NoMoreCountingActionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +17,7 @@ class FirstBowlTest {
         State ready = Ready.initialize();
 
         // when
-        State firstBowl = ready.bowl(HitCount.valueOf(9));
+        State firstBowl = ready.bowl(PinCount.valueOf(9));
 
         // then
         assertThat(firstBowl).isInstanceOf(FirstBowl.class);
@@ -34,7 +32,7 @@ class FirstBowlTest {
         State ready = Ready.initialize();
 
         // when
-        State firstBowl = ready.bowl(HitCount.valueOf(9));
+        State firstBowl = ready.bowl(PinCount.valueOf(9));
 
         // then
         assertThat(firstBowl.isFinish()).isFalse();
@@ -47,8 +45,8 @@ class FirstBowlTest {
         State ready = Ready.initialize();
 
         // when
-        State firstBowl = ready.bowl(HitCount.valueOf(0));
-        State spare = firstBowl.bowl(HitCount.valueOf(10));
+        State firstBowl = ready.bowl(PinCount.valueOf(0));
+        State spare = firstBowl.bowl(PinCount.valueOf(10));
 
         // then
         assertAll(
@@ -65,8 +63,8 @@ class FirstBowlTest {
         State ready = Ready.initialize();
 
         // when
-        State firstBowl = ready.bowl(HitCount.valueOf(0));
-        State spare = firstBowl.bowl(HitCount.valueOf(9));
+        State firstBowl = ready.bowl(PinCount.valueOf(0));
+        State spare = firstBowl.bowl(PinCount.valueOf(9));
 
         // then
         assertAll(
@@ -76,28 +74,11 @@ class FirstBowlTest {
 
     }
 
-    @DisplayName("FirstBowl 인스턴스에 알맞지 않은 범위의 수 입력시 예외처리 여부 테스트")
-    @Test
-    void 검증_범위의_수() {
-        // given
-        int firstCount = -1;
-        int secondCount = 11;
-
-        // when and then
-        assertThatThrownBy(() -> FirstBowl.from(firstCount))
-                .isInstanceOf(InputNumberOutOfBoundsException.class)
-                .hasMessage("맞은 갯수 ( " + firstCount + " ) 는 사용할 수 없는 갯수 입니다.");
-
-        assertThatThrownBy(() -> FirstBowl.from(secondCount))
-                .isInstanceOf(InputNumberOutOfBoundsException.class)
-                .hasMessage("맞은 갯수 ( " + secondCount + " ) 는 사용할 수 없는 갯수 입니다.");
-    }
-
     @DisplayName("FirstBowl 인스턴스가 모든 핀을 쓰러뜨렸는지 확인하는 테스트")
     @Test
     void 검증_핀_처리_여부() {
         // given
-        int hitCount = 9;
+        PinCount hitCount = PinCount.valueOf(9);
 
         // when
         State firstBowl = FirstBowl.from(hitCount);
@@ -110,7 +91,7 @@ class FirstBowlTest {
     @Test
     void 반환_사이즈() {
         // given
-        int hitCount = 9;
+        PinCount hitCount = PinCount.valueOf(9);
 
         // when
         State firstBowl = FirstBowl.from(hitCount);
@@ -123,7 +104,7 @@ class FirstBowlTest {
     @Test
     void 반환_첫번째_투구_값() {
         // given
-        int hitCount = 9;
+        PinCount hitCount = PinCount.valueOf(9);
 
         // when
         State firstBowl = FirstBowl.from(hitCount);
@@ -136,7 +117,7 @@ class FirstBowlTest {
     @Test
     void 검증_두번째_투구_값() {
         // given
-        int hitCount = 9;
+        PinCount hitCount = PinCount.valueOf(9);
 
         // when
         State firstBowl = FirstBowl.from(hitCount);

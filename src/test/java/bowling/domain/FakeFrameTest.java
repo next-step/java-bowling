@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.state.PinCount;
 import bowling.exception.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,7 +43,7 @@ class FakeFrameTest {
         Frame fakeFrame = FakeFrame.initialize();
 
         // then
-        assertThatThrownBy(() -> assertThat(fakeFrame.bowl(HitCount.valueOf(10))))
+        assertThatThrownBy(() -> assertThat(fakeFrame.bowl(PinCount.valueOf(10))))
                 .isInstanceOf(NoMoreBowlActionsException.class)
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }

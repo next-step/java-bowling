@@ -1,6 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.HitCount;
 import bowling.exception.NoMoreBowlActionsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,7 +47,7 @@ class FinishTest {
         Finish finish = new TestFinish();
 
         // then
-        assertThatThrownBy(() -> finish.bowl(HitCount.valueOf(10)))
+        assertThatThrownBy(() -> finish.bowl(PinCount.valueOf(10)))
                 .isInstanceOf(NoMoreBowlActionsException.class)
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }

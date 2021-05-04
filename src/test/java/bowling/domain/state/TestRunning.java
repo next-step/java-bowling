@@ -1,10 +1,9 @@
 package bowling.domain.state;
 
-import bowling.domain.HitCount;
-
 public final class TestRunning extends Running {
+
     @Override
-    public State bowl(HitCount hitCount) {
+    public State bowl(PinCount hitCount) {
         return null;
     }
 

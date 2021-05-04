@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.state.PinCount;
 import bowling.exception.InputNumberOutOfBoundsException;
 import bowling.exception.NoMoreBowlActionsException;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +10,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class FramesTest {
 
@@ -60,7 +60,7 @@ class FramesTest {
         Frames frames = Frames.initialize();
 
         // when
-        frames.bowl(HitCount.valueOf(9));
+        frames.bowl(PinCount.valueOf(9));
 
         // then
         assertThat(frames.isFinish()).isFalse();
@@ -73,11 +73,11 @@ class FramesTest {
         Frames frames = Frames.initialize();
 
         while (!frames.isFinish()) {
-            frames.bowl(HitCount.valueOf(10));
+            frames.bowl(PinCount.valueOf(10));
         }
 
         // when
-        assertThatThrownBy(() ->frames.bowl(HitCount.valueOf(1)))
+        assertThatThrownBy(() ->frames.bowl(PinCount.valueOf(1)))
                 .isInstanceOf(NoMoreBowlActionsException.class)
                 .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
     }
