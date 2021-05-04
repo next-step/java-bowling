@@ -1,30 +1,38 @@
 package bowling.domain.frame;
 
-
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 public abstract class Frame {
-    protected List<Score> scores;
+    protected Scores scores;
+    protected Frame nextFrame;
 
-    public abstract boolean isFinished();
-
-    public abstract Frame addScore(int score);
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Frame frame = (Frame) o;
-        return Objects.equals(scores, frame.scores);
+    public boolean isFinished() {
+        return this.scores.isFinished();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(scores);
+    public void addScore(int score) throws Exception {
+        this.scores.addScore(score);
     }
+
+    public List<Score> getScores() {
+        return this.scores.getScores();
+    }
+
+    public abstract Optional<List<Score>> getTwoScores();
+
+
+    public Optional<Score> getOneScore() {
+        if (!this.scores.getScores().isEmpty()) {
+            return Optional.of(this.scores.getScores().get(0));
+        }
+        return Optional.empty();
+    }
+
+    public void nextFrame(Frame nextFrame) {
+        this.nextFrame = nextFrame;
+    }
+
+    public abstract Optional<Integer> frameScore();
+
 }

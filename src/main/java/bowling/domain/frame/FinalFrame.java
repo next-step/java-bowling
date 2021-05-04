@@ -1,42 +1,37 @@
 package bowling.domain.frame;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class FinalFrame extends Frame {
-
     public FinalFrame(List<Score> scores) {
-        this.scores = scores;
+        this.scores = new FinalScores(scores);
     }
 
-    public static FinalFrame valueOf(int score) {
-        return new FinalFrame(Arrays.asList(Score.valueOf(score)));
-    }
-
-    public static FinalFrame valueOf(List<Integer> scores) {
-        return new FinalFrame(generateScores(scores));
+    public FinalFrame() {
+        this.scores = new FinalScores();
     }
 
     @Override
-    public boolean isFinished() {
-        if (scores.size() == 3) {
-            return true;
+    public Optional<Integer> frameScore() {
+        if (scores.getScores().isEmpty() || !isFinished()) {
+            return Optional.empty();
         }
-        if (scores.size() == 2 && (scores.get(0) != Score.STRIKE && scores.get(1) == Score.SPARE)) {
-            return true;
-        }
-        return false;
+        return Optional.of(scores.transSpareScores()
+                .stream()
+                .mapToInt(score -> score.getScore())
+                .sum());
     }
 
     @Override
-    public Frame addScore(int score) {
-        return FinalFrame.valueOf(3);
-    }
-
-    private static List<Score> generateScores(List<Integer> scores) {
-        return scores.stream()
-                .map(score -> Score.valueOf(score))
-                .collect(Collectors.toList());
+    public Optional<List<Score>> getTwoScores() {
+        if (this.scores.getScores().size() >= 2) {
+            List<Score> result = new ArrayList<>();
+            result.add(this.scores.transSpareScores().get(0));
+            result.add(this.scores.transSpareScores().get(1));
+            return Optional.of(result);
+        }
+        return Optional.empty();
     }
 }

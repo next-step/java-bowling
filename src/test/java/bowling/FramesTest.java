@@ -1,86 +1,66 @@
 package bowling;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
-import bowling.domain.frame.NormalFrame;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class FramesTest {
 
-    @Test
-    public void nextFrame_10번째_프레임() {
+    private static Stream<Arguments> nowFrameArguments() {
+        return Stream.of(
+                arguments(Arrays.asList(1, 5, 3, 4, 2, 3), 3),
+                arguments(Arrays.asList(1, 9, 10, 10, 10, 10), 5),
+                arguments(Arrays.asList(1, 5, 3, 4, 2, 3, 10, 10, 10, 10, 10, 10, 10, 1), 9),
+                arguments(Arrays.asList(), 0)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("nowFrameArguments")
+    public void nowFrame(List<Integer> scores, int expectNowFrame) throws Exception {
         // given
-        Frame normalFrame = NormalFrame.valueOf(Arrays.asList(3, 4));
-        List<Frame> frameList = new ArrayList<>();
-        IntStream.range(0, 9)
-                .forEach(i -> frameList.add(normalFrame));
-        Frames frames = new Frames(frameList);
-        int expectNextFrame = 10;
+        Frames frames = new Frames();
+        for (int score : scores) {
+            frames = frames.addScore(score);
+        }
+
         // when
 
         // then
-        Assertions.assertThat(frames.nextFrame()).isEqualTo(expectNextFrame);
+        assertThat(frames.nowFrame()).isEqualTo(expectNowFrame);
     }
 
-    @Test
-    public void nextFrame_6번째_프레임() {
+    private static Stream<Arguments> isFinished() {
+        return Stream.of(
+                arguments(Arrays.asList(1, 5, 3, 4, 2, 3), false),
+                arguments(Arrays.asList(1, 9, 10, 10, 10, 10), false),
+                arguments(Arrays.asList(1, 5, 3, 4, 2, 3, 10, 10, 10, 10, 10, 10, 10, 1, 9), true),
+                arguments(Arrays.asList(1, 5, 3, 4, 2, 3, 10, 10, 10, 10, 10, 10, 10, 10, 10), true),
+                arguments(Arrays.asList(1, 5, 3, 4, 2, 3, 10, 10, 10, 10, 10, 10, 1, 3), true),
+                arguments(Arrays.asList(), false)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("isFinished")
+    public void isFinished(List<Integer> scores, boolean expectIsFinished) throws Exception {
         // given
-        Frame normalFrame = NormalFrame.valueOf(Arrays.asList(3, 4));
-        List<Frame> frameList = new ArrayList<>();
-        IntStream.range(0, 5)
-                .forEach(i -> frameList.add(normalFrame));
-        frameList.add(NormalFrame.valueOf(3));
-        Frames frames = new Frames(frameList);
-        int expectNextFrame = 6;
+        Frames frames = new Frames();
+        for (int score : scores) {
+            frames = frames.addScore(score);
+        }
+
         // when
 
         // then
-        Assertions.assertThat(frames.nextFrame()).isEqualTo(expectNextFrame);
+        assertThat(frames.isFinished()).isEqualTo(expectIsFinished);
     }
-
-    @Test
-    public void addFrame_10번째_프레임() {
-        // given
-        int ADD_SCORE = 3;
-        Frame normalFrame = NormalFrame.valueOf(Arrays.asList(3, 4));
-        List<Frame> frameList = new ArrayList<>();
-        IntStream.range(0, 9)
-                .forEach(i -> frameList.add(normalFrame));
-        Frames frames = new Frames(frameList);
-        frameList.add(FinalFrame.valueOf(ADD_SCORE));
-        Frames expectFrames = new Frames(frameList);
-        // when
-        Frames resultFrames = frames.addScore(ADD_SCORE);
-
-        // then
-        Assertions.assertThat(resultFrames).isEqualTo(expectFrames);
-    }
-
-    @Test
-    public void addFrame_6번째_프레임() {
-        // given
-        int ADD_SCORE = 3;
-        Frame normalFrame = NormalFrame.valueOf(Arrays.asList(3, 4));
-        List<Frame> frameList = new ArrayList<>();
-        IntStream.range(0, 5)
-                .forEach(i -> frameList.add(normalFrame));
-        frameList.add(NormalFrame.valueOf(3));
-        Frames frames = new Frames(frameList);
-        frameList.get(5).addScore(ADD_SCORE);
-        Frames expectFrames = new Frames(frameList);
-
-        // when
-        Frames resultFrames = frames.addScore(ADD_SCORE);
-
-        // then
-        Assertions.assertThat(resultFrames).isEqualTo(expectFrames);
-    }
-
 }
