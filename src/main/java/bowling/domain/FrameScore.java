@@ -1,9 +1,9 @@
 package bowling.domain;
 
+import bowling.utils.StringUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.apache.commons.lang3.StringUtils;
 
 public class FrameScore {
 

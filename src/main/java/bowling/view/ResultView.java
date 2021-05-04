@@ -2,9 +2,9 @@ package bowling.view;
 
 import bowling.domain.Bowling;
 import bowling.domain.FrameScore;
+import bowling.utils.StringUtils;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
 
 public class ResultView {
 
@@ -31,7 +31,7 @@ public class ResultView {
   }
 
   private static String drawScore(String score) {
-    if (StringUtils.isBlank(score)) {
+    if (score.isEmpty()) {
       return BLANK;
     }
     if (score.length() > 4) {
