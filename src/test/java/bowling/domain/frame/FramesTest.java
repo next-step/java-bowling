@@ -1,8 +1,11 @@
 package bowling.domain.frame;
 
 import bowling.domain.HitNumber;
+import bowling.domain.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,6 +40,7 @@ public class FramesTest {
     @Test
     void 마지막프레임까지_올스트라이크() {
         assertThat(lastFrames().isFinished()).isTrue();
+        List<Score> lists = lastFrames().totalScores();
         System.out.println(frames);
     }
 
