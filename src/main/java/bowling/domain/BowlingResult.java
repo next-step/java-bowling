@@ -38,7 +38,7 @@ public class BowlingResult {
 
     private Score prevAggregatedScore(FrameNumber frameNumber) {
         if (frameNumber.equals(new FrameNumber(1))) {
-            return Score.create(0);
+            return Score.createGutter();
         }
 
         return frameResultsMap.getOrDefault(frameNumber.decrease(), new FrameResult(Score.create(0))).score();

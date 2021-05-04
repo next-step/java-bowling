@@ -65,7 +65,7 @@ public class FrameStateBonus implements FrameState {
             return Score.createNotDetermined();
         }
 
-        Score score = pinfalls.stream().reduce(Score.create(0),
+        Score score = pinfalls.stream().reduce(Score.createGutter(),
                 (subTotalScore, pinfall) -> {
                     subTotalScore = subTotalScore.add(Score.create(pinfall.number()));
                     return subTotalScore;

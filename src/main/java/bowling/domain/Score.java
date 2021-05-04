@@ -29,6 +29,10 @@ public class Score {
         return create(10);
     }
 
+    public static Score createGutter() {
+        return create(0);
+    }
+
     public static Score create(int score) {
         Score scoreClass = scoreCache.getOrDefault(score, new Score(score));
         scoreCacheAdd(score, scoreClass);
