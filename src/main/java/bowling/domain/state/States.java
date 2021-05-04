@@ -19,9 +19,6 @@ public class States {
     }
 
     public boolean hasBonus() {
-        if (states.size() == 0 || states.size() == 1) {
-            return false;
-        }
         return states.stream().noneMatch(state -> state.isClear());
     }
 
