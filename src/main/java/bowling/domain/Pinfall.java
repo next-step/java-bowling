@@ -38,7 +38,7 @@ public class Pinfall {
 
     public static Pinfall create(int pinfall) {
         Pinfall pinfallClass = pinfallCache.getOrDefault(pinfall, new Pinfall(pinfall));
-        pinfallCacheAdd(pinfall, pinfallClass);
+        addPinfallCache(pinfall, pinfallClass);
         return pinfallClass;
     }
 
@@ -68,7 +68,7 @@ public class Pinfall {
         return Objects.hash(pinfall);
     }
 
-    private static void pinfallCacheAdd(int pinfall, Pinfall pinfallClass) {
+    private static void addPinfallCache(int pinfall, Pinfall pinfallClass) {
         if (!pinfallCache.containsKey(pinfall)) {
             pinfallCache.put(pinfall, pinfallClass);
         }

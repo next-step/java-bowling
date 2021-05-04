@@ -35,7 +35,7 @@ public class Score {
 
     public static Score create(int score) {
         Score scoreClass = scoreCache.getOrDefault(score, new Score(score));
-        scoreCacheAdd(score, scoreClass);
+        addScoreCache(score, scoreClass);
         return scoreClass;
     }
 
@@ -74,7 +74,7 @@ public class Score {
         return score.score == -1;
     }
 
-    private static void scoreCacheAdd(int score, Score scoreClass) {
+    private static void addScoreCache(int score, Score scoreClass) {
         if (!scoreCache.containsKey(score)) {
             scoreCache.put(score, scoreClass);
         }
