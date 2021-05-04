@@ -72,16 +72,4 @@ public class Pins {
     public boolean isStrike() {
         return totalCount() == STRIKE_COUNT;
     }
-
-    public boolean isFirstTry() {
-        return this.tryCount() == tryToCount(FIRST_TRY);
-    }
-
-    public boolean isBonusTry() {
-        return this.tryCount() == tryToCount(BONUS_TRY);
-    }
-
-    private int tryToCount(int tryCount) {
-        return tryCount + CONVERT_CORRECTION;
-    }
 }

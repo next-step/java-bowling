@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreState;
 import bowling.exception.CannotCalculateException;
 import bowling.exception.FrameTryException;
 
@@ -31,7 +33,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public void createScore() {
-        score = Score.ofNone(pins.totalCount());
+        score = Score.of(pins.totalCount(), ScoreState.ofNone());
     }
 
     @Override

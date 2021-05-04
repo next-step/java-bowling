@@ -1,5 +1,8 @@
-package bowling.domain;
+package bowling.domain.score;
 
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreState;
+import bowling.domain.score.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +21,8 @@ public class ScoresTest {
     @Test
     void scoresAddTest() {
         Scores scores = Scores.init();
-        scores.addScore(Score.ofNone(9));
-        scores.addScore(Score.ofNone(9));
+        scores.addScore(Score.of(9, ScoreState.ofNone()));
+        scores.addScore(Score.of(9, ScoreState.ofNone()));
         assertThat(scores.roundScore(2).calculateScore()).isEqualTo(18);
     }
 }

@@ -1,6 +1,11 @@
 package bowling.view;
 
 import bowling.domain.*;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreMark;
+import bowling.domain.score.Scores;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +26,13 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void showScoreBoard(Frames frames, Player player) {
+    public static void showScoreBoard(Players players) {
         showRoundTable();
+        IntStream.range(0, players.howManyPlayers())
+                .forEach(n->showTable(players.playerFrames(n), players.nthPlayer(n)));
+    }
+
+    public static void showTable(Frames frames, Player player) {
         showScoreMarkTable(frames, player);
         showScoreTable(player);
     }
@@ -102,6 +112,7 @@ public class OutputView {
     }
 
     private static void showRoundTable() {
+        System.out.println();
         System.out.print(BOARD_SEPARATOR + centeredText("NAME") + BOARD_SEPARATOR);
         IntStream.rangeClosed(Round.firstRound().round(), Round.finalRound().round())
                 .mapToObj(OutputView::convertRound)

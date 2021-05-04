@@ -1,4 +1,8 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.Round;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreState;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,10 +35,6 @@ public class Frames {
 
     public int size() {
         return frames.size();
-    }
-
-    public boolean isContinue() {
-        return !(round.isFinalRound() && frames.get(round.now()).roundEnded());
     }
 
     public List<Frame> frames() {
@@ -98,12 +98,8 @@ public class Frames {
         return round.hasBefore();
     }
 
-    public int round() {
-        return round.round();
-    }
-
     public Score getScore(int round) {
-        return Score.ofNone(roundFrame(round).score());
+        return Score.of(roundFrame(round).score(), ScoreState.ofNone());
     }
 
     public boolean canCalculateScore(int round) {
