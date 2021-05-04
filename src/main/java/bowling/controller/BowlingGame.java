@@ -1,10 +1,16 @@
-package bowling.view;
+package bowling.controller;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.frame.RoundNumber;
 import bowling.domain.player.Player;
 import bowling.domain.player.PlayerName;
 import bowling.domain.player.Players;
+import bowling.exception.BowlingException;
+import bowling.view.BoardHeaderView;
+import bowling.view.FrameStatusView;
+import bowling.view.PlayerNameView;
+import bowling.view.ScoreView;
 import bowling.view.ui.Cell;
 import bowling.view.ui.Row;
 
@@ -17,6 +23,7 @@ public final class BowlingGame {
     private static final String EMPTY = "";
 
     private final Players players;
+    private BowlingTemplate bowlingTemplate;
 
     public BowlingGame(List<PlayerName> playerNames) {
         this.players = playerNames.stream()
@@ -67,7 +74,33 @@ public final class BowlingGame {
         return scoreRow;
     }
 
-    public List<Player> players() {
-        return players.value();
+    public void playGame(BowlingTemplate bowlingTemplate) {
+        this.bowlingTemplate = bowlingTemplate;
+
+        for (int i = RoundNumber.MIN; i <= RoundNumber.MAX; i++) {
+            bowlAll(i);
+        }
+    }
+
+    private void bowlAll(int roundNumber) {
+        for (Player player : players.value()) {
+            bowl(roundNumber, player);
+        }
+    }
+
+    private void bowl(int roundNumberSource, Player player) {
+        final RoundNumber roundNumber = new RoundNumber(roundNumberSource);
+        while (!player.isEnded(roundNumber)) {
+            downPin(player, roundNumber);
+        }
+    }
+
+    private void downPin(final Player player, final RoundNumber roundNumber) {
+        try {
+            bowlingTemplate.execute(player, pin -> player.knockDownPin(roundNumber, pin));
+        } catch (BowlingException e) {
+            System.err.println(e.getMessage());
+            downPin(player, roundNumber);
+        }
     }
 }
