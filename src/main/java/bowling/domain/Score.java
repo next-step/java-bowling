@@ -1,10 +1,14 @@
 package bowling.domain;
 
+import bowling.domain.rollresult.RollResultType;
+
 import java.util.Objects;
 
 public class Score {
     private static final int INIT_NUM = 0;
     private static final int ADD_NUM_UPPER_BOUND = 2;
+    private static final int SPARE_BOUND = 1;
+    private static final int STRIKE_BOUND = 2;
     private static final String INVALID_SCORE = "점수는 0 이상이어야합니다.";
     private static final String INVALID_ADD_NUM = "점수 추가합산은 최대 2회까지 가능합니다.";
     private final int score;
@@ -34,6 +38,16 @@ public class Score {
         validScore(score);
         validAddNum(addNum);
         return new Score(score, addNum);
+    }
+
+    public Score add(RollResultType result, int nextScore) {
+        if(result.isSpare() && addNum < SPARE_BOUND) {
+            return add(nextScore);
+        }
+        if(result.isStrike() && addNum < STRIKE_BOUND) {
+            return add(nextScore);
+        }
+        return this;
     }
 
     public Score add(int score) {
@@ -72,4 +86,5 @@ public class Score {
     public int hashCode() {
         return Objects.hash(score, addNum);
     }
+
 }

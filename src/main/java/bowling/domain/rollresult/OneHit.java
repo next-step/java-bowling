@@ -33,8 +33,8 @@ public class OneHit extends RollResultType{
         return new OneHit(score);
     }
 
-    public OneHit add(int nextScore) {
-        return OneHit.ofOne(score.add(nextScore));
+    public OneHit add(RollResultType result, int nextScore) {
+        return OneHit.ofOne(score.add(result, nextScore));
     }
 
     @Override

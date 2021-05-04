@@ -55,7 +55,7 @@ public class Spare extends RollResultType {
 
     @Override
     public RollResultType next(int nextScore) {
-        return of(firstHit, secondHit.add(nextScore));
+        return of(firstHit, secondHit.add(this, nextScore));
     }
 
     private static void valid(int firstScore, int secondScore) {

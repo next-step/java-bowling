@@ -54,7 +54,7 @@ public class Strike extends RollResultType {
 
     @Override
     public RollResultType next(int nextScore) {
-        return of(firstHit.add(nextScore));
+        return of(firstHit.add(this, nextScore));
     }
 
     private static void valid(int score) {
