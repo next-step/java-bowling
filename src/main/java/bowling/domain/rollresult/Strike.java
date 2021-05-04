@@ -1,5 +1,7 @@
 package bowling.domain.rollresult;
 
+import bowling.domain.Score;
+
 import java.util.Objects;
 
 public class Strike extends RollResultType {
@@ -48,7 +50,7 @@ public class Strike extends RollResultType {
     }
 
     @Override
-    public int eval() {
+    public Score eval() {
         return firstHit.eval();
     }
 
@@ -59,6 +61,12 @@ public class Strike extends RollResultType {
 
     private static void valid(int score) {
         if (score < DEFAULT_MAX_SCORE) {
+            throw new IllegalArgumentException(INVALID_SCORE);
+        }
+    }
+
+    private static void valid(Score score) {
+        if (score.compareTo(DEFAULT_MAX_SCORE) < 0) {
             throw new IllegalArgumentException(INVALID_SCORE);
         }
     }

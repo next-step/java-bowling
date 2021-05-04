@@ -1,5 +1,7 @@
 package bowling.domain.rollresult;
 
+import bowling.domain.Score;
+
 import java.util.Objects;
 
 public class Miss extends RollResultType{
@@ -42,13 +44,19 @@ public class Miss extends RollResultType{
     }
 
     @Override
-    public int eval() {
-        return DEFAULT_MIN_SCORE;
+    public Score eval() {
+        return oneHit.eval().add(secondHit.eval());
     }
 
     @Override
     public RollResultType next(int nextScore) {
         return this;
+    }
+
+    private static void valid(Score firstScore, Score secondScore) {
+        if (firstScore.add(secondScore).compareTo(DEFAULT_MAX_SCORE) > -1) {
+            throw new IllegalArgumentException(INVALID_MISS);
+        }
     }
 
     private static void valid(int firstScore, int secondScore) {

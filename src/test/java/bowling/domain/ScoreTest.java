@@ -9,12 +9,18 @@ public class ScoreTest {
     void 점수를생성() {
         Score score = Score.of(5);
         assertThat(score).isEqualTo(Score.of(5));
-        assertThat(score.eval()).isEqualTo(5);
     }
 
     @Test
     void 추가점수합산() {
         Score score = Score.of(5).add(6);
         assertThat(score).isEqualTo(Score.of(11, 1));
+    }
+
+    @Test
+    void 값비교(){
+        assertThat(Score.of(5).compareTo(5)).isEqualTo(0);
+        assertThat(Score.of(6).compareTo(5)).isEqualTo(1);
+        assertThat(Score.of(4).compareTo(5)).isEqualTo(-1);
     }
 }

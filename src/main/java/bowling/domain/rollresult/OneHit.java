@@ -24,10 +24,10 @@ public class OneHit extends RollResultType{
     }
 
     public static RollResultType of(Score score) {
-        if (score.isEqual(DEFAULT_MAX_SCORE)) {
+        if (score.compareTo(DEFAULT_MAX_SCORE) == 0) {
             return Strike.of();
         }
-        if (score.isEqual(DEFAULT_MIN_SCORE)) {
+        if (score.compareTo(DEFAULT_MIN_SCORE) == 0) {
             return Gutter.of();
         }
         return new OneHit(score);
@@ -39,10 +39,10 @@ public class OneHit extends RollResultType{
 
     @Override
     public RollResultType next(int nextHit) {
-        if (score.isEqual(DEFAULT_MAX_SCORE - nextHit)) {
+        if (score.compareTo(DEFAULT_MAX_SCORE - nextHit) == 0) {
             return Spare.of(this, OneHit.ofOne(Score.of(nextHit)));
         }
-        if (score.isEqual(0) && nextHit == 0) {
+        if (score.compareTo(0) == 0 && nextHit == 0) {
             return Gutter.of();
         }
         return Miss.of(this, OneHit.of(nextHit));
@@ -64,8 +64,8 @@ public class OneHit extends RollResultType{
     }
 
     @Override
-    public int eval() {
-        return score.eval();
+    public Score eval() {
+        return score;
     }
 
     @Override

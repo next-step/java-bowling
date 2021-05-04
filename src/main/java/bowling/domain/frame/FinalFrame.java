@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.HitNumber;
 import bowling.domain.Pin;
+import bowling.domain.Score;
 import bowling.domain.rollresult.RollResults;
 import bowling.domain.rollresult.RollResultType;
 
@@ -55,6 +56,11 @@ public class FinalFrame implements Frame {
         return nextRoll(hitNumber, pin);
     }
 
+    @Override
+    public Frame addScore(int score) {
+        return this;
+    }
+
     private Frame firstRoll(HitNumber hitNumber, Pin pin) {
         RollResultType type = pin.firstHit(hitNumber);
         return of(pin, RollResults.of(type));
@@ -67,6 +73,11 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isFinished() {
         return pin.isLast() || (results != null && !results.isCleared() && !results.hasNext());
+    }
+
+    @Override
+    public Score totalScore() {
+        return null;
     }
 
     @Override

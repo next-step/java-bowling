@@ -1,9 +1,11 @@
 package bowling.domain.rollresult;
 
+import bowling.domain.Score;
+
 import java.util.Objects;
 
 public class Gutter extends RollResultType {
-    private final int score = DEFAULT_MIN_SCORE;
+    private final Score score = Score.of(DEFAULT_MIN_SCORE);
 
     private Gutter() {
     }
@@ -28,8 +30,8 @@ public class Gutter extends RollResultType {
     }
 
     @Override
-    public int eval() {
-        return DEFAULT_MIN_SCORE;
+    public Score eval() {
+        return score;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class Gutter extends RollResultType {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Gutter gutter = (Gutter) o;
-        return score == gutter.score;
+        return Objects.equals(score, gutter.score);
     }
 
     @Override

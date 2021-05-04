@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.HitNumber;
 import bowling.domain.Pin;
+import bowling.domain.Score;
 import bowling.domain.rollresult.RollResultType;
 
 import java.util.Objects;
@@ -54,8 +55,18 @@ public class NormalFrame implements Frame{
     }
 
     @Override
+    public Frame addScore(int score) {
+        return null;
+    }
+
+    @Override
     public boolean isFinished() {
         return result != null && !result.hasNext();
+    }
+
+    @Override
+    public Score totalScore() {
+        return result.eval();
     }
 
     @Override

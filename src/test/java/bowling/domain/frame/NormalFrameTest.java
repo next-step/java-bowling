@@ -67,4 +67,9 @@ public class NormalFrameTest {
         System.out.println(resultFrame);
     }
 
+    @Test
+    void 스트라이크의추가점수() {
+//        assertThat(STRIKE_FRAME.addScore(3).);
+    }
+
 }

@@ -1,5 +1,7 @@
 package bowling.domain.rollresult;
 
+import bowling.domain.Score;
+
 import java.util.Objects;
 
 public class Spare extends RollResultType {
@@ -10,7 +12,7 @@ public class Spare extends RollResultType {
     private OneHit secondHit;
 
     private Spare(RollResultType firstHit) {
-        this(firstHit, OneHit.ofOne(DEFAULT_MAX_SCORE - firstHit.eval()));
+        this(firstHit, OneHit.ofOne(firstHit.eval().diff(DEFAULT_MAX_SCORE)));
     }
 
     private Spare(RollResultType firstHit, OneHit secondHit) {
@@ -49,8 +51,8 @@ public class Spare extends RollResultType {
     }
 
     @Override
-    public int eval() {
-        return firstHit.eval() + secondHit.eval();
+    public Score eval() {
+        return firstHit.eval().add(secondHit.eval());
     }
 
     @Override
@@ -58,10 +60,16 @@ public class Spare extends RollResultType {
         return of(firstHit, secondHit.add(this, nextScore));
     }
 
-    private static void valid(int firstScore, int secondScore) {
+    private static void valid(Score firstScore, Score secondScore) {
         validFirst(firstScore);
-        if(secondScore < DEFAULT_MAX_SCORE - firstScore) {
+        if(firstScore.add(secondScore).compareTo(DEFAULT_MAX_SCORE) < 0) {
             throw new IllegalArgumentException(INVALID_SECOND_SCORE);
+        }
+    }
+
+    private static void validFirst(Score firstScore) {
+        if(firstScore.compareTo(DEFAULT_MAX_SCORE) >= 0) {
+            throw new IllegalArgumentException(INVALID_FIRST_SCORE);
         }
     }
 

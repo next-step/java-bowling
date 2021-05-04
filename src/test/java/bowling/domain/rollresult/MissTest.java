@@ -10,6 +10,6 @@ public class MissTest {
     void 미스생성() {
         assertThat(MISS1.isSpare()).isFalse();
         assertThat(MISS1.isStrike()).isFalse();
-        assertThat(MISS1.eval()).isEqualTo(0);
+        assertThat(MISS1.eval().compareTo(0)).isEqualTo(0);
     }
 }

@@ -4,6 +4,8 @@ import bowling.domain.rollresult.RollResultType;
 
 import java.util.Objects;
 
+import static java.lang.Math.abs;
+
 public class Score {
     private static final int INIT_NUM = 0;
     private static final int ADD_NUM_UPPER_BOUND = 2;
@@ -50,16 +52,20 @@ public class Score {
         return this;
     }
 
+    public Score add(Score score) {
+        return of(this.score + score.score, this.addNum + 1);
+    }
+
     public Score add(int score) {
-        return Score.of(this.score + score, this.addNum + 1);
+        return of(this.score + score, this.addNum + 1);
     }
 
-    public boolean isEqual(int score) {
-        return this.score == score;
+    public Score diff(int score) {
+        return of(abs(this.score - score), this.addNum);
     }
 
-    public int eval() {
-        return score;
+    public int compareTo(int score) {
+        return this.score - score;
     }
 
     private static void validAddNum(int addNum) {
@@ -87,4 +93,8 @@ public class Score {
         return Objects.hash(score, addNum);
     }
 
+    @Override
+    public String toString() {
+        return "" + score + "";
+    }
 }
