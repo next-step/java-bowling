@@ -24,7 +24,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isDone() {
-        return isDoneBonusGame() || states.hasNotBonus();
+        return isDoneBonusGame() || states.hasBonus();
     }
 
     @Override

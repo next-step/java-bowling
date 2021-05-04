@@ -18,7 +18,7 @@ public class States {
         return Collections.unmodifiableList(states);
     }
 
-    public boolean hasNotBonus() {
+    public boolean hasBonus() {
         if (states.size() == 0 || states.size() == 1) {
             return false;
         }
