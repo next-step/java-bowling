@@ -1,7 +1,21 @@
 package bowling.domain;
 
 public enum Result {
-  STRIKE,SPARE,MISS,NONE;
+  STRIKE("X"),
+  SPARE("/"),
+  MISS(""),
+  NONE(""),
+  GUTTER("-");
+
+  private String mark;
+
+  Result(String mark) {
+    this.mark = mark;
+  }
+
+  public String mark() {
+    return mark;
+  }
 
   public boolean isNotMiss() {
     return isStrike() || isSpare();

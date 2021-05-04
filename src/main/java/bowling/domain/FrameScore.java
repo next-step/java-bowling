@@ -8,9 +8,6 @@ import java.util.stream.IntStream;
 public class FrameScore {
 
   public static final String SCORE_SEPARATOR = "|";
-  public static final String STRIKE = "X";
-  public static final String GUTTER = "-";
-  public static final String SPARE = "/";
 
   private List<Integer> scores;
 
@@ -28,13 +25,13 @@ public class FrameScore {
   public String getScoreString(int index) {
     Integer score = scores.get(index);
     if (score == Pins.MAX) {
-      return STRIKE;
+      return Result.STRIKE.mark();
     }
     if (score == Pins.MIN) {
-      return GUTTER;
+      return Result.GUTTER.mark();
     }
     if (scores.size() > 1 && isClear(index)) {
-      return SPARE;
+      return Result.SPARE.mark();
     }
     return String.valueOf(score);
   }
