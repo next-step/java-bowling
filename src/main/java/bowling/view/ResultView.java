@@ -23,16 +23,7 @@ public class ResultView {
                         .append(getFrameScore(bowlingDto)));
         System.out.println(sb);
     }
-
-
-    public static void printBowling(BowlingDto bowlingDto) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(UPPER_FRAME)
-                .append(System.lineSeparator())
-                .append(getScores(bowlingDto))
-                .append(getFrameScore(bowlingDto));
-        System.out.println(sb);
-    }
+    
 
     private static String getFrameScore(BowlingDto bowlingDto) {
         StringBuilder sb = new StringBuilder();

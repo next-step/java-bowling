@@ -13,11 +13,6 @@ public class InputView {
 
     private final static Scanner scanner = new Scanner(System.in);
 
-    public static String getPlayerName() {
-        System.out.print(GET_PLAYER_NAME);
-        return scanner.nextLine();
-    }
-
     public static Integer getHowMany() {
         System.out.print(HOW_MANY_PEOPLE);
         return Integer.parseInt(scanner.nextLine());
@@ -33,15 +28,6 @@ public class InputView {
         }
         return users;
     }
-
-    public static int getScore(int nowFrame) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(nowFrame)
-                .append(GET_FRAME_SCORE);
-        System.out.print(sb);
-        return Integer.parseInt(scanner.nextLine());
-    }
-
 
     public static int getScore(String player) {
         StringBuilder sb = new StringBuilder();
