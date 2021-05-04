@@ -16,10 +16,6 @@ public class BowlingGame {
         return new BowlingGame(bowlingGame);
     }
 
-    public int nowFrame(int index) {
-        return this.bowlingGame.get(index).nowFrame();
-    }
-
     public BowlingGame addScore(int score, int index) throws Exception {
         List<Bowling> result = new ArrayList<>(this.bowlingGame);
         result.set(index, result.get(index).addScore(score));
@@ -30,4 +26,11 @@ public class BowlingGame {
         return this.bowlingGame;
     }
 
+    public Bowling getBowling(int index) {
+        return this.bowlingGame.get(index);
+    }
+
+    public int howManyPlayer() {
+        return this.bowlingGame.size();
+    }
 }
