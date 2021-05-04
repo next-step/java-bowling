@@ -39,4 +39,9 @@ public class Miss implements Result {
     public int currentBowlingPin() {
         return currentPin.score();
     }
+
+    @Override
+    public boolean isClear() {
+        return false;
+    }
 }

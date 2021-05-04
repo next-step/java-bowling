@@ -24,21 +24,19 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isDone() {
-        return isDoneBonusGame() || isDoneNormalFrames();
+        if (states.size() < NORMAL_STATE_SIZE) {
+            return false;
+        }
+        return isDoneBonusGame();
+    }
+
+    private boolean isDoneBonusGame() {
+        return states.size() == BONUS_STATE_SIZE || states.hasBonus();
     }
 
     @Override
     public Optional<Frame> getNext() {
         return Optional.empty();
-    }
-
-    private boolean isDoneBonusGame() {
-        return states.size() == BONUS_STATE_SIZE;
-    }
-
-    private boolean isDoneNormalFrames() {
-        return states.size() == NORMAL_STATE_SIZE
-            && states.hasNotBonus();
     }
 
     @Override

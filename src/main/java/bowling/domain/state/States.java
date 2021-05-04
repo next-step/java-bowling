@@ -3,9 +3,6 @@ package bowling.domain.state;
 import java.util.Collections;
 import java.util.List;
 
-import bowling.domain.state.result.Spare;
-import bowling.domain.state.result.Strike;
-
 public class States {
     private final List<State> states;
 
@@ -21,9 +18,8 @@ public class States {
         return Collections.unmodifiableList(states);
     }
 
-    public boolean hasNotBonus() {
-        return states.stream().noneMatch(Strike.class::isInstance)
-            && states.stream().noneMatch(Spare.class::isInstance);
+    public boolean hasBonus() {
+        return states.stream().noneMatch(state -> state.isClear());
     }
 
     public State lastState() {

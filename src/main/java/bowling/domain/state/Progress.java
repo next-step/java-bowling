@@ -9,6 +9,10 @@ public interface Progress extends State {
         return false;
     }
 
+    default boolean isClear() {
+        return false;
+    }
+
     default Score score() {
         throw new CannotCalculateException("점수를 계산할 수 없는 상태입니다.");
     }

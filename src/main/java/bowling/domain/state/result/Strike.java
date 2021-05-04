@@ -37,4 +37,9 @@ public class Strike implements Result {
     public int currentBowlingPin() {
         return bowlingPin.score();
     }
+
+    @Override
+    public boolean isClear() {
+        return true;
+    }
 }

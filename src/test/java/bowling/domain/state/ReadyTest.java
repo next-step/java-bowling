@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import bowling.domain.exception.CannotCalculateException;
 import bowling.domain.state.progress.Ready;
 import bowling.domain.state.progress.Running;
+import bowling.domain.state.result.Miss;
 import bowling.domain.state.result.Strike;
 
 public class ReadyTest {
@@ -50,5 +51,13 @@ public class ReadyTest {
         State state = new Ready();
         // when & then
         Assertions.assertThrows(CannotCalculateException.class, () -> state.currentBowlingPin());
+    }
+
+    @Test
+    void 모든핀_제거_여부_테스트() {
+        // given
+        State state = new Ready();
+        // when & then
+        assertThat(state.isClear()).isFalse();
     }
 }

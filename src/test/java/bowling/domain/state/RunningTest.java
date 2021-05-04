@@ -63,4 +63,14 @@ public class RunningTest {
         // when & then
         assertThat(state.currentBowlingPin()).isEqualTo(5);
     }
+
+    @Test
+    void 모든핀_제거_여부_테스트() {
+        // given
+        State state = new Ready().bowl(BowlingPin.of(5));
+        State state2 = Running.of(BowlingPin.of(5));
+        // when & then
+        assertThat(state.isClear()).isFalse();
+        assertThat(state2.isClear()).isFalse();
+    }
 }

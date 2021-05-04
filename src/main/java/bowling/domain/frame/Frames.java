@@ -14,9 +14,11 @@ import bowling.domain.state.States;
 
 public class Frames {
     private final List<Frame> frames;
+    private Frame pointer;
 
     private Frames() {
         this.frames = new ArrayList<>(Arrays.asList(NormalFrame.init()));
+        this.pointer = lastFrame();
     }
 
     public static Frames init() {
@@ -24,23 +26,31 @@ public class Frames {
     }
 
     public void bowl(int pinCount) {
-        Frame nextFrame = currentFrame().bowl(BowlingPin.of(pinCount));
+        Frame nextFrame = lastFrame().bowl(BowlingPin.of(pinCount));
         if (isNextFrame()) {
             frames.add(nextFrame);
         }
     }
 
     private boolean isNextFrame() {
-        return currentFrame().isDone()
-            && currentFrame().getNext().isPresent();
+        return lastFrame().isDone()
+            && lastFrame().getNext().isPresent();
     }
 
     public boolean isDone() {
-        return this.currentFrame().isDone();
+        return this.lastFrame().isDone();
+    }
+
+    public Frame lastFrame() {
+        return frames.get(frames.size() - 1);
     }
 
     public Frame currentFrame() {
-        return frames.get(frames.size() - 1);
+        return pointer;
+    }
+
+    public void changePointer() {
+        this.pointer = lastFrame();
     }
 
     public List<Frame> frames() {
