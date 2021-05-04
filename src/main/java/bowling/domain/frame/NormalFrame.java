@@ -48,7 +48,7 @@ public class NormalFrame implements Frame{
 
     @Override
     public Frame roll(HitNumber rollNumber) {
-        if (!isStarted()) {
+        if (result == null) {
             return of(pin, pin.firstHit(rollNumber));
         }
         return of(pin, pin.nextHit(result, rollNumber));
@@ -64,12 +64,12 @@ public class NormalFrame implements Frame{
 
     @Override
     public boolean isFinished() {
-        return isStarted() && !result.hasNext();
+        return result != null && !result.hasNext();
     }
 
     @Override
-    public boolean isStarted() {
-        return result != null;
+    public boolean isCalculated() {
+        return result != null && result.isCalculated();
     }
 
     @Override

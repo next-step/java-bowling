@@ -50,6 +50,11 @@ public class Strike extends RollResultType {
     }
 
     @Override
+    public boolean isCalculated() {
+        return firstHit.isCalculated(this);
+    }
+
+    @Override
     public Score eval() {
         return firstHit.eval();
     }

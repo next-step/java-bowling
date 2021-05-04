@@ -27,7 +27,8 @@ public class StringUtils {
         StringBuilder stringBuilder = new StringBuilder();
         String[] frameStr = removeLast(frames.toString()).split(DELIMITER);
         for (int i = 0; i < frameStr.length; i++) {
-            stringBuilder.append(appendFrame(frameStr[i]));
+            stringBuilder.append(
+                    replaceNull(String.format(" %3s  |", frameStr[i].trim())));
         }
         for (int i = 0; i < MAX_INDEX - frameStr.length; i++) {
             stringBuilder.append(BLANK_FORMAT);
@@ -36,7 +37,7 @@ public class StringUtils {
     }
 
     public static String convertScores(List<Score> scores) {
-        StringBuilder stringBuilder = new StringBuilder(SLASH+BLANK_FORMAT);
+        StringBuilder stringBuilder = new StringBuilder(SLASH + BLANK_FORMAT);
         scores.forEach(score -> stringBuilder.append(String.format(SCORE_FORMAT, score.toString())));
         for (int i = 0; i < MAX_INDEX - scores.size(); i++) {
             stringBuilder.append(BLANK_FORMAT);
@@ -55,16 +56,6 @@ public class StringUtils {
             last[0] += String.format(LAST_FORMAT, last[i].trim());
         }
         return splitStr[0] + last[0];
-    }
-
-    private static String appendFrame(String str) {
-        for (int i = str.length(); i < MIN_WIDTH; i++) {
-            str = " " + str;
-        }
-        for (int i = str.length(); i < MAX_WIDTH; i++) {
-            str += " ";
-        }
-        return replaceNull(str + SLASH);
     }
 
     private static String replaceNull(String str) {

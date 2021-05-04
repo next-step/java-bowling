@@ -51,6 +51,11 @@ public class Spare extends RollResultType {
     }
 
     @Override
+    public boolean isCalculated() {
+        return secondHit.isCalculated(this);
+    }
+
+    @Override
     public Score eval() {
         return firstHit.eval().add(secondHit.eval());
     }

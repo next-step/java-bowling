@@ -29,10 +29,14 @@ public class Frames {
     }
 
     public List<Score> totalScores() {
-        return frames.stream()
-                .filter(frame -> frame.isStarted())
+        List<Score> eachScore = frames.stream()
+                .filter(frame -> frame.isCalculated())
                 .map(frame -> frame.totalScore())
                 .collect(Collectors.toList());
+        for (int i = 1; i < eachScore.size(); i++) {
+            eachScore.set(i, eachScore.get(i - 1).add(eachScore.get(i)));
+        }
+        return eachScore;
     }
 
     public boolean isFinished() {

@@ -64,6 +64,15 @@ public class OneHit extends RollResultType{
     }
 
     @Override
+    public boolean isCalculated() {
+        return false;
+    }
+
+    public boolean isCalculated(RollResultType result) {
+        return score.isFinished(result);
+    }
+
+    @Override
     public Score eval() {
         return score;
     }

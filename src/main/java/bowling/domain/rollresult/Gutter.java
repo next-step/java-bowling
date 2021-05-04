@@ -30,6 +30,11 @@ public class Gutter extends RollResultType {
     }
 
     @Override
+    public boolean isCalculated() {
+        return false;
+    }
+
+    @Override
     public Score eval() {
         return score;
     }

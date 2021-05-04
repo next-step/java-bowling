@@ -44,6 +44,11 @@ public class Miss extends RollResultType{
     }
 
     @Override
+    public boolean isCalculated() {
+        return true;
+    }
+
+    @Override
     public Score eval() {
         return oneHit.eval().add(secondHit.eval());
     }

@@ -35,25 +35,29 @@ public class Score {
         return new Score();
     }
 
-    public static Score of(int score){
+    public static Score of(int score) {
         validScore(score);
         return new Score(score);
     }
 
-    public static Score of(int score, int addNum){
+    public static Score of(int score, int addNum) {
         validScore(score);
         validAddNum(addNum);
         return new Score(score, addNum);
     }
 
     public Score add(RollResultType result, int nextScore) {
-        if(result.isSpare() && addNum < SPARE_BOUND) {
-            return addNext(nextScore);
-        }
-        if(result.isStrike() && addNum < STRIKE_BOUND) {
+        if ((result.isSpare() && addNum < SPARE_BOUND)
+                || (result.isStrike() && addNum < STRIKE_BOUND)) {
             return addNext(nextScore);
         }
         return this;
+    }
+
+    public boolean isFinished(RollResultType result) {
+        return (!result.isStrike() && !result.isSpare())
+                || (result.isSpare() && addNum == SPARE_BOUND)
+                || (result.isStrike() && addNum == STRIKE_BOUND);
     }
 
     public Score add(Score score) {

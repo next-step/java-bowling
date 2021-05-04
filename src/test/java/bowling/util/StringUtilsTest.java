@@ -23,6 +23,5 @@ public class StringUtilsTest {
     void 길이확인() {
         System.out.println(String.format(" %3s  |", "1"));
         System.out.println(String.format("  %s  |", "20"));
-
     }
 }

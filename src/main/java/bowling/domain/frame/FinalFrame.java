@@ -44,7 +44,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame roll(HitNumber hitNumber) {
-        if (!isStarted()) {
+        if (results == null) {
             return firstRoll(hitNumber, this.pin);
         }
         if (!results.isCleared() && !results.hasNext()) {
@@ -76,8 +76,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isStarted() {
-        return results != null;
+    public boolean isCalculated() {
+        return isFinished();
     }
 
     @Override
