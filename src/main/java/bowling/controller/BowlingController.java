@@ -46,14 +46,14 @@ public final class BowlingController {
         }
     }
 
-    private void bowlAll(Players players, int i) {
+    private void bowlAll(Players players, int roundNumber) {
         for (Player player : players.value()) {
-            bowl(players, player, i);
+            bowl(players, player, roundNumber);
         }
     }
 
-    private void bowl(Players players, Player player, int i) {
-        final RoundNumber roundNumber = new RoundNumber(i);
+    private void bowl(Players players, Player player, int roundNumberSource) {
+        final RoundNumber roundNumber = new RoundNumber(roundNumberSource);
         while (!player.isEnded(roundNumber)) {
             downPin(player, roundNumber);
             outputView.printScoreBoard(players);
