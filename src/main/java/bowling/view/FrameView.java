@@ -3,7 +3,6 @@ package bowling.view;
 import bowling.domain.Frame;
 
 import static bowling.util.BowlingFixture.*;
-import static java.lang.Boolean.TRUE;
 
 public abstract class FrameView {
 
@@ -38,9 +37,9 @@ public abstract class FrameView {
     }
 
     protected final String thirdScore(final Frame frame) {
-        final String first = mapToSign(ZERO, frame.firstCount(), TRUE);
-        final String second = mapToSign(frame.firstCount(), frame.secondCount(), TRUE);
-        final String third = mapToSign(ZERO, frame.thirdCount(), TRUE);
+        final String first = mapToSign(ZERO, frame.firstCount(), true);
+        final String second = mapToSign(frame.firstCount(), frame.secondCount(), true);
+        final String third = mapToSign(ZERO, frame.thirdCount(), true);
         return first + DELIMITER + second + DELIMITER + third;
     }
 
@@ -62,7 +61,7 @@ public abstract class FrameView {
     }
 
     protected final String oneScore(final Frame frame) {
-        return mapToSign(ZERO, frame.firstCount(), TRUE);
+        return mapToSign(ZERO, frame.firstCount(), true);
     }
 
 }
