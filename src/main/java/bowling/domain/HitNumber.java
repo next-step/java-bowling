@@ -17,6 +17,11 @@ public class HitNumber {
         return new HitNumber(rollNumber);
     }
 
+    public int hit(int pinNum) {
+        validTotalHit(pinNum);
+        return pinNum - rollNumber;
+    }
+
     private static void validHit(int rollNumber) {
         if (rollNumber < ROLL_LOWER_BOUND || rollNumber > ROLL_UPPER_BOUND) {
             throw new IllegalArgumentException(INVALID_ROLL_NUMBER);
@@ -27,10 +32,5 @@ public class HitNumber {
         if(pinNum - rollNumber < ROLL_LOWER_BOUND) {
             throw new IllegalArgumentException(INVALID_HIT_TOTAL);
         }
-    }
-
-    public int hit(int pinNum) {
-        validTotalHit(pinNum);
-        return pinNum - rollNumber;
     }
 }

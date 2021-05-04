@@ -33,19 +33,6 @@ public class Spare implements RollResultType {
         return new Spare(firstHit, secondHit);
     }
 
-    private static void valid(int firstScore, int secondScore) {
-        validFirst(firstScore);
-        if(secondScore < DEFAULT_MAX_SCORE - firstScore) {
-            throw new IllegalArgumentException(INVALID_SECOND_SCORE);
-        }
-    }
-
-    private static void validFirst(int firstScore) {
-        if(firstScore >= DEFAULT_MAX_SCORE) {
-            throw new IllegalArgumentException(INVALID_FIRST_SCORE);
-        }
-    }
-
     @Override
     public boolean isStrike() {
         return false;
@@ -69,6 +56,19 @@ public class Spare implements RollResultType {
     @Override
     public RollResultType next(int nextScore) {
         return of(firstHit, secondHit.add(nextScore));
+    }
+
+    private static void valid(int firstScore, int secondScore) {
+        validFirst(firstScore);
+        if(secondScore < DEFAULT_MAX_SCORE - firstScore) {
+            throw new IllegalArgumentException(INVALID_SECOND_SCORE);
+        }
+    }
+
+    private static void validFirst(int firstScore) {
+        if(firstScore >= DEFAULT_MAX_SCORE) {
+            throw new IllegalArgumentException(INVALID_FIRST_SCORE);
+        }
     }
 
     @Override

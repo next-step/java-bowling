@@ -25,6 +25,14 @@ public class Frames {
         }
     }
 
+    public boolean isFinished() {
+        return frames.size() == MAX_INDEX && getLast().isFinished();
+    }
+
+    public int getLastIndex() {
+        return frames.size();
+    }
+
     private void rollOne(HitNumber hitNumber) {
         setLast(getLast().roll(hitNumber));
     }
@@ -36,21 +44,13 @@ public class Frames {
     private void addNext() {
         frames.add(getLast().next(getLastIndex()));
     }
-
-    public boolean isFinished() {
-        return frames.size() == MAX_INDEX && getLast().isFinished();
-    }
-
+    
     private Frame getLast() {
         return frames.get(frames.size() - 1);
     }
 
     private void setLast(Frame frame) {
         frames.set(frames.size() - 1, frame);
-    }
-
-    public int getLastIndex() {
-        return frames.size();
     }
 
     @Override

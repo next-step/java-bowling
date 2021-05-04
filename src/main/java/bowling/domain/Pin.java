@@ -44,6 +44,22 @@ public class Pin {
         return new Pin(tryNum, pinNum);
     }
 
+    public RollResultType firstHit(HitNumber rollNumber) {
+        fallen(rollNumber);
+        return OneHit.of(PIN_NUM_UPPER_BOUND - pinNum);
+    }
+
+    public RollResultType nextHit(RollResultType type, HitNumber rollNumber) {
+        validTry(tryNum);
+        validPinNum(pinNum);
+        fallen(rollNumber);
+        return type.next(PIN_NUM_UPPER_BOUND - pinNum);
+    }
+
+    public boolean isLast() {
+        return tryNum == PIN_TRY_UPPER_BOUND;
+    }
+
     private static void validTry(int tryNum) {
         if (tryNum < PIN_TRY_LOWER_BOUND || tryNum > PIN_TRY_UPPER_BOUND) {
             throw new IllegalArgumentException(INVALID_PIN_TRY);
@@ -59,22 +75,6 @@ public class Pin {
     private void fallen(HitNumber rollNumber) {
         tryNum++;
         pinNum = rollNumber.hit(pinNum);
-    }
-
-    public RollResultType firstHit(HitNumber rollNumber) {
-        fallen(rollNumber);
-        return OneHit.of(PIN_NUM_UPPER_BOUND - pinNum);
-    }
-
-    public RollResultType nextHit(RollResultType type, HitNumber rollNumber) {
-        validTry(tryNum);
-        validPinNum(pinNum);
-        fallen(rollNumber);
-        return type.next(PIN_NUM_UPPER_BOUND - pinNum);
-    }
-
-    public boolean isLast() {
-        return tryNum == PIN_TRY_UPPER_BOUND;
     }
 
     @Override

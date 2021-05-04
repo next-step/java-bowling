@@ -32,12 +32,6 @@ public class Strike implements RollResultType {
         return new Strike(firstHit);
     }
 
-    private static void valid(int score) {
-        if (score < DEFAULT_MAX_SCORE) {
-            throw new IllegalArgumentException(INVALID_SCORE);
-        }
-    }
-
     @Override
     public boolean isStrike() {
         return true;
@@ -61,6 +55,12 @@ public class Strike implements RollResultType {
     @Override
     public RollResultType next(int nextScore) {
         return of(firstHit.add(nextScore));
+    }
+
+    private static void valid(int score) {
+        if (score < DEFAULT_MAX_SCORE) {
+            throw new IllegalArgumentException(INVALID_SCORE);
+        }
     }
 
     @Override

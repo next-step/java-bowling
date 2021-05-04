@@ -26,12 +26,6 @@ public class Miss implements RollResultType{
         return new Miss(oneHit, secondHit);
     }
 
-    private static void valid(int firstScore, int secondScore) {
-        if (firstScore + secondScore >= DEFAULT_MAX_SCORE) {
-            throw new IllegalArgumentException(INVALID_MISS);
-        }
-    }
-
     @Override
     public boolean isStrike() {
         return false;
@@ -55,6 +49,12 @@ public class Miss implements RollResultType{
     @Override
     public RollResultType next(int nextScore) {
         return this;
+    }
+
+    private static void valid(int firstScore, int secondScore) {
+        if (firstScore + secondScore >= DEFAULT_MAX_SCORE) {
+            throw new IllegalArgumentException(INVALID_MISS);
+        }
     }
 
     @Override
