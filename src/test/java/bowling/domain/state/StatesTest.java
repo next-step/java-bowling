@@ -23,7 +23,7 @@ public class StatesTest {
         states.add(new Ready().bowl(BowlingPin.of(5)));
         states.add(new Ready().bowl(BowlingPin.of(5)).bowl(BowlingPin.of(5)));
 
-        assertThat(states.hasNotBonus()).isFalse();
+        assertThat(states.hasBonus()).isFalse();
     }
 
     @Test
@@ -32,6 +32,6 @@ public class StatesTest {
         states.add(new Ready().bowl(BowlingPin.of(5)));
         states.add(new Ready().bowl(BowlingPin.of(5)).bowl(BowlingPin.of(3)));
 
-        assertThat(states.hasNotBonus()).isTrue();
+        assertThat(states.hasBonus()).isTrue();
     }
 }
