@@ -55,9 +55,6 @@ public class StringUtils {
     }
 
     private static String replaceNull(String str) {
-        if (str.contains("null")) {
-            return FRAME_FORMAT;
-        }
-        return str;
+        return str.contains("null") ? FRAME_FORMAT : str;
     }
 }
