@@ -21,7 +21,7 @@ public class OneHitTest {
 
     @Test
     void 두번째에스페어() {
-        RollResultType result = OneHit.of(7).next(10);
+        RollResultType result = OneHit.of(3).next(7);
         assertThat(result.isStrike()).isFalse();
         assertThat(result.isSpare()).isTrue();
     }

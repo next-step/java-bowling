@@ -45,15 +45,17 @@ public class Pin {
     }
 
     public RollResultType firstHit(HitNumber rollNumber) {
+        int before = pinNum;
         fallen(rollNumber);
-        return OneHit.of(PIN_NUM_UPPER_BOUND - pinNum);
+        return OneHit.of(before - pinNum);
     }
 
     public RollResultType nextHit(RollResultType type, HitNumber rollNumber) {
         validTry(tryNum);
         validPinNum(pinNum);
+        int before = pinNum;
         fallen(rollNumber);
-        return type.next(PIN_NUM_UPPER_BOUND - pinNum);
+        return type.next(before - pinNum);
     }
 
     public boolean isLast() {
