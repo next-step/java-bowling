@@ -18,7 +18,7 @@ public class BowlingGameController {
         ResultView.printBowlingBoard(players);
 
         while (!players.isAllDone()) {
-            play(players);
+            players.play();
         }
     }
 
@@ -29,19 +29,5 @@ public class BowlingGameController {
             players.add(Player.of(InputView.inputPlayerName(i)));
         }
         return new Players(players);
-    }
-
-    private void play(Players players) {
-        for (Player player : players.toList()) {
-            turn(players, player);
-            player.changeNextFrame();
-        }
-    }
-
-    private void turn(Players players, Player player) {
-        while(!player.isTurnDone()) {
-            player.bowl(InputView.inputBowlingPin(player.name()));
-            ResultView.printBowlingBoard(players);
-        }
     }
 }
