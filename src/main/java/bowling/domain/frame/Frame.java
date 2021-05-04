@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.BallThrows;
 import bowling.domain.pin.Pin;
-import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 
 import java.util.Objects;
@@ -9,12 +9,12 @@ import java.util.Objects;
 public abstract class Frame {
 
     protected final RoundNumber roundNumber;
-    protected final Pins pins;
+    protected final BallThrows ballThrows;
     protected Frame nextFrame;
 
-    protected Frame(RoundNumber roundNumber, Pins pins) {
+    protected Frame(RoundNumber roundNumber, BallThrows ballThrows) {
         this.roundNumber = roundNumber;
-        this.pins = pins;
+        this.ballThrows = ballThrows;
     }
 
     public abstract Frame nextFrame();
@@ -31,12 +31,12 @@ public abstract class Frame {
 
     protected abstract Score addScore(Score previousScore);
 
-    public Pins pins() {
-        return pins;
+    public BallThrows pins() {
+        return ballThrows;
     }
 
     public boolean isNotStarted() {
-        return pins.isFirstThrow();
+        return ballThrows.isFirstThrow();
     }
 
     public boolean roundNumberEquals(RoundNumber roundNumber) {
@@ -48,11 +48,11 @@ public abstract class Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return Objects.equals(roundNumber, frame.roundNumber) && Objects.equals(pins, frame.pins);
+        return Objects.equals(roundNumber, frame.roundNumber) && Objects.equals(ballThrows, frame.ballThrows);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(roundNumber, pins);
+        return Objects.hash(roundNumber, ballThrows);
     }
 }

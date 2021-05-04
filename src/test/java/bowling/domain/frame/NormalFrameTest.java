@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.TestFixture;
+import bowling.domain.pin.BallThrows;
 import bowling.domain.pin.Pin;
-import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.FramePinCountException;
 import bowling.exception.IllegalNormalFrameException;
@@ -23,7 +23,7 @@ class NormalFrameTest {
         final RoundNumber roundNumber = new RoundNumber(1);
 
         // when
-        final Frame frame = NormalFrame.of(roundNumber, Pins.create());
+        final Frame frame = NormalFrame.of(roundNumber, BallThrows.create());
 
         // then
         assertThat(frame).isEqualTo(NormalFrame.from(roundNumber));

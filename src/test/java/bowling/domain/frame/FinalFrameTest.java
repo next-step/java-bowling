@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.TestFixture;
+import bowling.domain.pin.BallThrows;
 import bowling.domain.pin.Pin;
-import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.InvalidPinCountException;
 import bowling.exception.NoNextFrameException;
@@ -25,16 +25,16 @@ class FinalFrameTest {
 
     static Stream<Arguments> endedFinalFrameSource() {
         return Stream.of(
-                arguments(FinalFrame.from(Pins.ofFinal()), false),
-                arguments(FinalFrame.from(Pins.ofFinal(STRIKE_PIN)), false),
-                arguments(FinalFrame.from(Pins.ofFinal(GUTTER_PIN)), false),
-                arguments(FinalFrame.from(Pins.ofFinal(new Pin(5))), false),
-                arguments(FinalFrame.from(Pins.ofFinal(new Pin(5), new Pin(5))), false),
-                arguments(FinalFrame.from(Pins.ofFinal(new Pin(5), GUTTER_PIN)), true),
-                arguments(FinalFrame.from(Pins.ofFinal(GUTTER_PIN, GUTTER_PIN)), true),
-                arguments(FinalFrame.from(Pins.ofFinal(STRIKE_PIN, STRIKE_PIN)), false),
-                arguments(FinalFrame.from(Pins.ofFinal(new Pin(5), new Pin(5), GUTTER_PIN)), true),
-                arguments(FinalFrame.from(Pins.ofFinal(STRIKE_PIN, STRIKE_PIN, STRIKE_PIN)), true)
+                arguments(FinalFrame.from(BallThrows.ofFinal()), false),
+                arguments(FinalFrame.from(BallThrows.ofFinal(STRIKE_PIN)), false),
+                arguments(FinalFrame.from(BallThrows.ofFinal(GUTTER_PIN)), false),
+                arguments(FinalFrame.from(BallThrows.ofFinal(new Pin(5))), false),
+                arguments(FinalFrame.from(BallThrows.ofFinal(new Pin(5), new Pin(5))), false),
+                arguments(FinalFrame.from(BallThrows.ofFinal(new Pin(5), GUTTER_PIN)), true),
+                arguments(FinalFrame.from(BallThrows.ofFinal(GUTTER_PIN, GUTTER_PIN)), true),
+                arguments(FinalFrame.from(BallThrows.ofFinal(STRIKE_PIN, STRIKE_PIN)), false),
+                arguments(FinalFrame.from(BallThrows.ofFinal(new Pin(5), new Pin(5), GUTTER_PIN)), true),
+                arguments(FinalFrame.from(BallThrows.ofFinal(STRIKE_PIN, STRIKE_PIN, STRIKE_PIN)), true)
         );
     }
 
@@ -42,13 +42,13 @@ class FinalFrameTest {
     @DisplayName("Pins를 받아 마지막 프레임을 생성한다.")
     void create() {
         // given
-        final Pins pins = Pins.ofFinal();
+        final BallThrows ballThrows = BallThrows.ofFinal();
 
         // when
-        final FinalFrame finalFrame = FinalFrame.from(pins);
+        final FinalFrame finalFrame = FinalFrame.from(ballThrows);
 
         // then
-        assertThat(finalFrame).isEqualTo(FinalFrame.from(Pins.ofFinal()));
+        assertThat(finalFrame).isEqualTo(FinalFrame.from(BallThrows.ofFinal()));
     }
 
     @Test
@@ -121,7 +121,7 @@ class FinalFrameTest {
     @DisplayName("한 번 투구한 FinalFrame은 점수를 산정할 수 없다.")
     void noScoreOneThrow() {
         // given
-        final FinalFrame finalFrame = FinalFrame.from(Pins.ofFinal(new Pin(5)));
+        final FinalFrame finalFrame = FinalFrame.from(BallThrows.ofFinal(new Pin(5)));
 
         // when
         final Score score = finalFrame.score();
@@ -134,7 +134,7 @@ class FinalFrameTest {
     @DisplayName("첫 투구가 스트라이크인 FinalFrame은 두번째 투구를 던져도 점수를 산정할 수 없다.")
     void noScoreFirstThrowStrike() {
         // given
-        final FinalFrame finalFrame = FinalFrame.from(Pins.ofFinal(STRIKE_PIN, new Pin(5)));
+        final FinalFrame finalFrame = FinalFrame.from(BallThrows.ofFinal(STRIKE_PIN, new Pin(5)));
 
         // when
         final Score score = finalFrame.score();
@@ -147,7 +147,7 @@ class FinalFrameTest {
     @DisplayName("스페어로 시작하는 FinalFrame은 두번째 투구를 던져도 점수를 산정할 수 없다.")
     void noScoreSpare() {
         // given
-        final FinalFrame finalFrame = FinalFrame.from(Pins.ofFinal(new Pin(2), new Pin(8)));
+        final FinalFrame finalFrame = FinalFrame.from(BallThrows.ofFinal(new Pin(2), new Pin(8)));
 
         // when
         final Score score = finalFrame.score();
@@ -161,8 +161,8 @@ class FinalFrameTest {
     @DisplayName("일반적인 투구 2회를 던진 FinalFrame은 점수를 산정할 수 있다.")
     void twoThrowScore(int firstPinCount, int secondPinCount, int expected) {
         // given
-        final Pins pins = Pins.ofFinal(new Pin(firstPinCount), new Pin(secondPinCount));
-        final FinalFrame finalFrame = FinalFrame.from(pins);
+        final BallThrows ballThrows = BallThrows.ofFinal(new Pin(firstPinCount), new Pin(secondPinCount));
+        final FinalFrame finalFrame = FinalFrame.from(ballThrows);
 
         // when
         final Score score = finalFrame.score();
@@ -176,8 +176,8 @@ class FinalFrameTest {
     @DisplayName("투구 3회를 던지면 FinalFrame은 점수를 산정할 수 있다.")
     void threeThrowScore(int firstPinCount, int secondPinCount, int thirdPinCount, int expected) {
         // given
-        final Pins pins = Pins.ofFinal(new Pin(firstPinCount), new Pin(secondPinCount), new Pin(thirdPinCount));
-        final FinalFrame finalFrame = FinalFrame.from(pins);
+        final BallThrows ballThrows = BallThrows.ofFinal(new Pin(firstPinCount), new Pin(secondPinCount), new Pin(thirdPinCount));
+        final FinalFrame finalFrame = FinalFrame.from(ballThrows);
 
         // when
         final Score score = finalFrame.score();
@@ -190,8 +190,8 @@ class FinalFrameTest {
     @DisplayName("첫 투구가 스트라이크이고, 다음 투구가 일반 투구라면, 마지막 투구는 스페어까지만 허용된다.")
     void strikeAndSpareGame() {
         // given
-        final Pins pins = Pins.ofFinal(TestFixture.STRIKE_PIN, new Pin(5));
-        final FinalFrame finalFrame = FinalFrame.from(pins);
+        final BallThrows ballThrows = BallThrows.ofFinal(TestFixture.STRIKE_PIN, new Pin(5));
+        final FinalFrame finalFrame = FinalFrame.from(ballThrows);
 
         // when
         // then

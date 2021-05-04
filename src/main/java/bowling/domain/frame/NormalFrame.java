@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.BallThrows;
 import bowling.domain.pin.Pin;
-import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.IllegalNormalFrameException;
 
@@ -11,17 +11,17 @@ public final class NormalFrame extends Frame {
     public static final int MAX_NORMAL_PIN_COUNT = 10;
     private static final int THROW_TWICE = 2;
 
-    private NormalFrame(RoundNumber roundNumber, Pins pins) {
-        super(roundNumber, pins);
+    private NormalFrame(RoundNumber roundNumber, BallThrows ballThrows) {
+        super(roundNumber, ballThrows);
     }
 
     public static Frame from(RoundNumber roundNumber) {
-        return NormalFrame.of(roundNumber, Pins.create());
+        return NormalFrame.of(roundNumber, BallThrows.create());
     }
 
-    public static Frame of(RoundNumber roundNumber, Pins pins) {
+    public static Frame of(RoundNumber roundNumber, BallThrows ballThrows) {
         validateNormalRoundNumber(roundNumber);
-        return new NormalFrame(roundNumber, pins);
+        return new NormalFrame(roundNumber, ballThrows);
     }
 
     private static void validateNormalRoundNumber(RoundNumber roundNumber) {
@@ -31,7 +31,7 @@ public final class NormalFrame extends Frame {
     }
 
     public static Frame createFirstFrame() {
-        return NormalFrame.of(RoundNumber.firstRoundNumber(), Pins.create());
+        return NormalFrame.of(RoundNumber.firstRoundNumber(), BallThrows.create());
     }
 
     @Override
@@ -56,12 +56,12 @@ public final class NormalFrame extends Frame {
 
     @Override
     public void knockDownPin(Pin pin) {
-        pins.knockDownPin(pin);
+        ballThrows.knockDownPin(pin);
     }
 
     @Override
     public boolean isEnded() {
-        return pins.isEnded();
+        return ballThrows.isEnded();
     }
 
     @Override
@@ -74,22 +74,22 @@ public final class NormalFrame extends Frame {
         if (!isEnded()) {
             return Score.notCalculable();
         }
-        if (pins.frameStatus() == FrameStatus.STRIKE) {
+        if (ballThrows.frameStatus() == FrameStatus.STRIKE) {
             return nextFrame().addScore(Score.strike());
         }
-        if (pins.frameStatus() == FrameStatus.SPARE) {
+        if (ballThrows.frameStatus() == FrameStatus.SPARE) {
             return nextFrame().addScore(Score.spare());
         }
-        return Score.normal(pins.totalPinCount());
+        return Score.normal(ballThrows.totalPinCount());
     }
 
     @Override
     protected Score addScore(Score previousScore) {
-        if (pins.isFirstThrow()) {
+        if (ballThrows.isFirstThrow()) {
             return Score.notCalculable();
         }
 
-        final Score addedScore = previousScore.add(Score.normal(pins.firstPinCount()));
+        final Score addedScore = previousScore.add(Score.normal(ballThrows.firstPinCount()));
         if (!addedScore.canCalculate()) {
             return previousStrikeScore(addedScore);
         }
@@ -98,12 +98,12 @@ public final class NormalFrame extends Frame {
     }
 
     private Score previousStrikeScore(Score addedScore) {
-        if (pins.isStrike()) {
+        if (ballThrows.isStrike()) {
             return nextFrame().addScore(addedScore);
         }
-        if (pins.throwCount() < THROW_TWICE) {
+        if (ballThrows.throwCount() < THROW_TWICE) {
             return Score.notCalculable();
         }
-        return addedScore.add(Score.normal(pins.secondPinCount()));
+        return addedScore.add(Score.normal(ballThrows.secondPinCount()));
     }
 }

@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public final class Pins {
+public final class BallThrows {
 
     private static final int FIRST_PIN_INDEX = 0;
     private static final int SECOND_PIN_INDEX = 1;
@@ -20,50 +20,50 @@ public final class Pins {
     private final PinCountValidator pinCountValidator;
     private final List<Pin> pins;
 
-    private Pins() {
+    private BallThrows() {
         this(new ArrayList<>());
     }
 
-    private Pins(Pin... pins) {
+    private BallThrows(Pin... pins) {
         this(Arrays.asList(pins));
     }
 
-    private Pins(List<Pin> pins) {
+    private BallThrows(List<Pin> pins) {
         this(PinCountValidator.NORMAL, pins);
     }
 
-    private Pins(PinCountValidator pinCountValidator, Pin... pins) {
+    private BallThrows(PinCountValidator pinCountValidator, Pin... pins) {
         this(pinCountValidator, Arrays.asList(pins));
     }
 
-    private Pins(PinCountValidator pinCountValidator) {
+    private BallThrows(PinCountValidator pinCountValidator) {
         this(pinCountValidator, new ArrayList<>());
     }
 
-    private Pins(PinCountValidator pinCountValidator, List<Pin> pins) {
+    private BallThrows(PinCountValidator pinCountValidator, List<Pin> pins) {
         validatePinsCount(pins.size());
         this.pins = pins;
         this.pinCountValidator = pinCountValidator;
     }
 
-    public static Pins create() {
-        return new Pins();
+    public static BallThrows create() {
+        return new BallThrows();
     }
 
-    public static Pins ofFinal() {
-        return new Pins(PinCountValidator.FINAL);
+    public static BallThrows ofFinal() {
+        return new BallThrows(PinCountValidator.FINAL);
     }
 
-    public static Pins ofFinal(Pin... pins) {
-        return new Pins(PinCountValidator.FINAL, pins);
+    public static BallThrows ofFinal(Pin... pins) {
+        return new BallThrows(PinCountValidator.FINAL, pins);
     }
 
-    public static Pins of(Pin... pins) {
-        return new Pins(pins);
+    public static BallThrows of(Pin... pins) {
+        return new BallThrows(pins);
     }
 
-    public static Pins from(List<Pin> pins) {
-        return new Pins(pins);
+    public static BallThrows from(List<Pin> pins) {
+        return new BallThrows(pins);
     }
 
     public Pin firstPin() {
@@ -144,8 +144,8 @@ public final class Pins {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pins pins1 = (Pins) o;
-        return Objects.equals(pins, pins1.pins);
+        BallThrows ballThrows1 = (BallThrows) o;
+        return Objects.equals(pins, ballThrows1.pins);
     }
 
     @Override
