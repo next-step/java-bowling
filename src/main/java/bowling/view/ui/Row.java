@@ -4,11 +4,13 @@ import bowling.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class Row {
 
     private static final String BORDER = "|";
     private static final String BLANK_STRING = " ";
+    private static final String EMPTY_STRING = "";
     private static final int FRAME_SIZE = 6;
     private static final int RIGHT_ALIGN_SIZE = FRAME_SIZE - 1;
 
@@ -31,28 +33,29 @@ public final class Row {
     }
 
     public String row() {
-        final StringBuilder rowBuilder = new StringBuilder();
-
-        for (Cell cell : cells) {
-            buildRow(rowBuilder, cell);
-        }
-        buildTrail(rowBuilder);
-
-        return rowBuilder.toString();
+        return cells.stream()
+                .map(this::cell)
+                .collect(Collectors.joining(BORDER, head(), trail()));
     }
 
-    private void buildRow(StringBuilder rowBuilder, Cell cell) {
+    private String cell(Cell cell) {
         if (cell.getAlign() == Align.RIGHT) {
-            rowBuilder.append(BORDER).append(StringUtils.padLeft(cell.data(), RIGHT_ALIGN_SIZE)).append(BLANK_STRING);
+            return StringUtils.padLeft(cell.data(), RIGHT_ALIGN_SIZE) + BLANK_STRING;
         }
-        if (cell.getAlign() == Align.CENTER) {
-            rowBuilder.append(BORDER).append(StringUtils.alignCenter(cell.data(), FRAME_SIZE));
-        }
+        return StringUtils.alignCenter(cell.data(), FRAME_SIZE);
     }
 
-    private void buildTrail(StringBuilder rowBuilder) {
+    private String head() {
         if (!cells.isEmpty()) {
-            rowBuilder.append(BORDER).append(System.lineSeparator());
+            return BORDER;
         }
+        return EMPTY_STRING;
+    }
+
+    private String trail() {
+        if (!cells.isEmpty()) {
+            return BORDER + System.lineSeparator();
+        }
+        return EMPTY_STRING;
     }
 }

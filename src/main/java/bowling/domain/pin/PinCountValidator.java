@@ -25,5 +25,5 @@ public interface PinCountValidator {
         };
     }
 
-    void validate(Pins pins, Pin pin);
+    void validate(BallThrows ballThrows, Pin pin);
 }

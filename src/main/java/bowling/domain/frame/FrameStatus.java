@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.BallThrows;
 import bowling.domain.pin.Pin;
-import bowling.domain.pin.Pins;
 
 public enum FrameStatus {
     STRIKE,
@@ -10,17 +10,17 @@ public enum FrameStatus {
     NORMAL,
     NOT_ENDED;
 
-    public static FrameStatus of(Pins pins) {
-        if (pins.isEmpty()) {
+    public static FrameStatus of(BallThrows ballThrows) {
+        if (ballThrows.isFirstThrow()) {
             return NOT_ENDED;
         }
-        if (pins.firstPin().isMaximum()) {
+        if (ballThrows.firstPin().isMaximum()) {
             return STRIKE;
         }
-        if (pins.size() == 1) {
+        if (ballThrows.isSecondThrow()) {
             return NOT_ENDED;
         }
-        final Pin sum = pins.firstPin().sum(pins.secondPin());
+        final Pin sum = ballThrows.firstPin().sum(ballThrows.secondPin());
         if (sum.isMaximum()) {
             return SPARE;
         }

@@ -14,17 +14,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class PinsTest {
+class BallThrowsTest {
 
     @Test
     @DisplayName("create로 Pins를 생성하면 비어있는 Pins가 생성된다.")
     void createEmptyPins() {
         // given
         // when
-        final Pins pins = Pins.create();
+        final BallThrows ballThrows = BallThrows.create();
 
         // then
-        assertThat(pins).isEqualTo(Pins.from(new ArrayList<>()));
+        assertThat(ballThrows).isEqualTo(BallThrows.from(new ArrayList<>()));
     }
 
     @Test
@@ -35,13 +35,13 @@ class PinsTest {
         final Pin secondPin = TestFixture.GUTTER_PIN;
 
         // when
-        final Pins pins = Pins.of(firstPin, secondPin);
+        final BallThrows ballThrows = BallThrows.of(firstPin, secondPin);
 
         // then
         assertAll(
-                () -> assertThat(pins).isEqualTo(Pins.of(firstPin, secondPin)),
-                () -> assertThat(pins.firstPin()).isEqualTo(firstPin),
-                () -> assertThat(pins.secondPin()).isEqualTo(secondPin)
+                () -> assertThat(ballThrows).isEqualTo(BallThrows.of(firstPin, secondPin)),
+                () -> assertThat(ballThrows.firstPin()).isEqualTo(firstPin),
+                () -> assertThat(ballThrows.secondPin()).isEqualTo(secondPin)
         );
     }
 
@@ -54,14 +54,14 @@ class PinsTest {
         final Pin thirdPin = TestFixture.STRIKE_PIN;
 
         // when
-        final Pins pins = Pins.of(firstPin, secondPin, thirdPin);
+        final BallThrows ballThrows = BallThrows.of(firstPin, secondPin, thirdPin);
 
         // then
         assertAll(
-                () -> assertThat(pins).isEqualTo(Pins.of(firstPin, secondPin, thirdPin)),
-                () -> assertThat(pins.firstPin()).isEqualTo(firstPin),
-                () -> assertThat(pins.secondPin()).isEqualTo(secondPin),
-                () -> assertThat(pins.thirdPin()).isEqualTo(thirdPin)
+                () -> assertThat(ballThrows).isEqualTo(BallThrows.ofFinal(firstPin, secondPin, thirdPin)),
+                () -> assertThat(ballThrows.firstPin()).isEqualTo(firstPin),
+                () -> assertThat(ballThrows.secondPin()).isEqualTo(secondPin),
+                () -> assertThat(ballThrows.thirdPin()).isEqualTo(thirdPin)
         );
     }
 
@@ -76,7 +76,7 @@ class PinsTest {
 
         // when
         // then
-        assertThatThrownBy(() -> Pins.of(firstPin, secondPin, thirdPin, fourthPin))
+        assertThatThrownBy(() -> BallThrows.ofFinal(firstPin, secondPin, thirdPin, fourthPin))
                 .isInstanceOf(PinsCountExceededException.class)
                 .hasMessage(PinsCountExceededException.PINS_COUNT_EXCEEDED);
     }
@@ -88,10 +88,10 @@ class PinsTest {
         // given
         final Pin firstPin = new Pin(firstPinCount);
         final Pin secondPin = new Pin(secondPinCount);
-        final Pins pins = Pins.of(firstPin, secondPin);
+        final BallThrows ballThrows = BallThrows.of(firstPin, secondPin);
 
         // when
-        final FrameStatus frameStatus = pins.frameStatus();
+        final FrameStatus frameStatus = ballThrows.frameStatus();
 
         // then
         assertThat(frameStatus).isEqualTo(expectedFrameStatus);
@@ -101,13 +101,13 @@ class PinsTest {
     @DisplayName("쓰러진 핀을 전달받으면 Pins의 상태가 변경된다.")
     void knockDownPin() {
         // given
-        final Pins pins = Pins.create();
+        final BallThrows ballThrows = BallThrows.create();
 
         // when
-        pins.knockDownPin(TestFixture.STRIKE_PIN);
+        ballThrows.knockDownPin(TestFixture.STRIKE_PIN);
 
         // then
-        assertThat(pins).isEqualTo(Pins.of(TestFixture.STRIKE_PIN));
+        assertThat(ballThrows).isEqualTo(BallThrows.of(TestFixture.STRIKE_PIN));
     }
 
     @Test
@@ -117,11 +117,11 @@ class PinsTest {
         final Pin firstPin = TestFixture.STRIKE_PIN;
         final Pin secondPin = TestFixture.GUTTER_PIN;
         final Pin thirdPin = TestFixture.STRIKE_PIN;
-        final Pins pins = Pins.of(firstPin, secondPin, thirdPin);
+        final BallThrows ballThrows = BallThrows.ofFinal(firstPin, secondPin, thirdPin);
 
         // when
         // then
-        assertThatThrownBy(() -> pins.knockDownPin(TestFixture.STRIKE_PIN))
+        assertThatThrownBy(() -> ballThrows.knockDownPin(TestFixture.STRIKE_PIN))
                 .isInstanceOf(PinsCountExceededException.class)
                 .hasMessage(PinsCountExceededException.PINS_COUNT_EXCEEDED);
     }
@@ -130,10 +130,10 @@ class PinsTest {
     @DisplayName("전체 핀의 개수를 리턴한다.")
     void totalPinCount() {
         // given
-        final Pins pins = Pins.of(TestFixture.STRIKE_PIN, TestFixture.GUTTER_PIN);
+        final BallThrows ballThrows = BallThrows.of(TestFixture.STRIKE_PIN, TestFixture.GUTTER_PIN);
 
         // when
-        final int totalPinCount = pins.totalPinCount();
+        final int totalPinCount = ballThrows.totalPinCount();
 
         // then
         assertThat(totalPinCount).isEqualTo(10);

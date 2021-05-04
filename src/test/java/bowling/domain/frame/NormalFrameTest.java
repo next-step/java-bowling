@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.TestFixture;
+import bowling.domain.pin.BallThrows;
 import bowling.domain.pin.Pin;
-import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.FramePinCountException;
 import bowling.exception.IllegalNormalFrameException;
@@ -23,10 +23,10 @@ class NormalFrameTest {
         final RoundNumber roundNumber = new RoundNumber(1);
 
         // when
-        final Frame frame = NormalFrame.of(roundNumber, Pins.create());
+        final Frame frame = NormalFrame.of(roundNumber, BallThrows.create());
 
         // then
-        assertThat(frame).isEqualTo(NormalFrame.of(roundNumber, Pins.create()));
+        assertThat(frame).isEqualTo(NormalFrame.from(roundNumber));
     }
 
     @Test
@@ -40,7 +40,7 @@ class NormalFrameTest {
         final Frame frame = NormalFrame.createFirstFrame();
 
         // then
-        assertThat(frame).isEqualTo(NormalFrame.of(roundNumber, Pins.create()));
+        assertThat(frame).isEqualTo(NormalFrame.from(roundNumber));
     }
 
     @ParameterizedTest
@@ -50,13 +50,13 @@ class NormalFrameTest {
         // given
         final RoundNumber roundNumber = new RoundNumber(roundNumberSource);
         final RoundNumber nextRoundNumber = new RoundNumber(roundNumberSource + 1);
-        final Frame frame = NormalFrame.of(roundNumber, Pins.create());
+        final Frame frame = NormalFrame.from(roundNumber);
 
         // when
         frame.createNextFrame();
 
         // then
-        assertThat(frame.nextFrame()).isEqualTo(NormalFrame.of(nextRoundNumber, Pins.create()));
+        assertThat(frame.nextFrame()).isEqualTo(NormalFrame.from(nextRoundNumber));
     }
 
     @Test
@@ -64,19 +64,19 @@ class NormalFrameTest {
     void NineFrameNextFrame() {
         // given
         final RoundNumber nineRoundNumber = new RoundNumber(9);
-        final Frame nineFrame = NormalFrame.of(nineRoundNumber, Pins.create());
+        final Frame nineFrame = NormalFrame.from(nineRoundNumber);
 
         // when
         nineFrame.createNextFrame();
 
         // then
-        assertThat(nineFrame.nextFrame()).isEqualTo(FinalFrame.from(Pins.create()));
+        assertThat(nineFrame.nextFrame()).isEqualTo(FinalFrame.create());
     }
 
     @Test
     @DisplayName("Normal Frame은 10라운드가 될 수 없다.")
     void NormalFrameCannotBeTenRound() {
-        assertThatThrownBy(() -> NormalFrame.of(new RoundNumber(10), Pins.create()))
+        assertThatThrownBy(() -> NormalFrame.from(new RoundNumber(10)))
                 .isInstanceOf(IllegalNormalFrameException.class)
                 .hasMessage(IllegalNormalFrameException.ILLEGAL_NORMAL_FRAME_ROUND);
     }
@@ -273,7 +273,7 @@ class NormalFrameTest {
     @DisplayName("9번 프레임이 Strike인 경우 해당 투구와 다음 두 투구의 합이 점수가 된다.")
     void nineFrameStrike() {
         // given
-        final Frame nineFrame = NormalFrame.of(new RoundNumber(9), Pins.create());
+        final Frame nineFrame = NormalFrame.from(new RoundNumber(9));
         nineFrame.createNextFrame();
         final Frame lastFrame = nineFrame.nextFrame();
 
@@ -292,7 +292,7 @@ class NormalFrameTest {
     @DisplayName("9번 프레임이 Spare인 경우 해당 투구와 다음 투구의 합이 점수가 된다.")
     void nineFrameSpare() {
         // given
-        final Frame nineFrame = NormalFrame.of(new RoundNumber(9), Pins.create());
+        final Frame nineFrame = NormalFrame.from(new RoundNumber(9));
         nineFrame.createNextFrame();
         final Frame lastFrame = nineFrame.nextFrame();
 
@@ -311,7 +311,7 @@ class NormalFrameTest {
     @DisplayName("9번 프레임이 Strike인 경우 다음 두 투구를 던지지 않으면 점수를 산정할 수 없다.")
     void nineFrameStrikeCanNotCalculable() {
         // given
-        final Frame nineFrame = NormalFrame.of(new RoundNumber(9), Pins.create());
+        final Frame nineFrame = NormalFrame.from(new RoundNumber(9));
         nineFrame.createNextFrame();
         final Frame lastFrame = nineFrame.nextFrame();
 
@@ -329,7 +329,7 @@ class NormalFrameTest {
     @DisplayName("9번 프레임이 Spare인 경우 다음 투구를 던지지 않으면 점수를 산정할 수 없다.")
     void nineFrameSpareCanNotCalculable() {
         // given
-        final Frame nineFrame = NormalFrame.of(new RoundNumber(9), Pins.create());
+        final Frame nineFrame = NormalFrame.from(new RoundNumber(9));
         nineFrame.createNextFrame();
 
         nineFrame.knockDownPin(new Pin(8));

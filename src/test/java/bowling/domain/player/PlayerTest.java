@@ -37,7 +37,7 @@ class PlayerTest {
     void createWithPlayerName() {
         // given
         // when
-        final Player player = new Player(playerName);
+        final Player player = Player.from(playerName);
 
         // then
         assertThat(player).isEqualTo(new Player(playerName, Frames.create()));
@@ -47,7 +47,7 @@ class PlayerTest {
     @DisplayName("게임을 수행하지 않은 Player의 Normal Round의 종료여부는 false 이다.")
     void isEndedNotPlayed() {
         // given
-        final Player player = new Player(playerName);
+        final Player player = Player.from(playerName);
 
         // when
         final boolean ended = player.isEnded(new RoundNumber(1));
@@ -60,7 +60,7 @@ class PlayerTest {
     @DisplayName("스트라이크를 친 Player의 Normal Round의 종료여부는 true 이다.")
     void isEndedPlayed() {
         // given
-        final Player player = new Player(playerName);
+        final Player player = Player.from(playerName);
         final RoundNumber firstRoundNumber = new RoundNumber(1);
         player.knockDownPin(firstRoundNumber, TestFixture.STRIKE_PIN);
 
@@ -75,7 +75,7 @@ class PlayerTest {
     @DisplayName("일반적인 공을 던진 Player의 Normal Round의 종료여부는 false 이다.")
     void notEndedPlayed() {
         // given
-        final Player player = new Player(playerName);
+        final Player player = Player.from(playerName);
         final RoundNumber roundNumber = new RoundNumber(1);
         player.knockDownPin(roundNumber, new Pin(5));
 
@@ -90,7 +90,7 @@ class PlayerTest {
     @DisplayName("거터를 한 번 던진 Player의 Normal Round의 종료여부는 false 이다.")
     void notEndedGutterOnce() {
         // given
-        final Player player = new Player(playerName);
+        final Player player = Player.from(playerName);
         final RoundNumber roundNumber = new RoundNumber(1);
         player.knockDownPin(roundNumber, TestFixture.GUTTER_PIN);
 
@@ -105,7 +105,7 @@ class PlayerTest {
     @DisplayName("거터를 두 번 던진 Player의 Normal Round의 종료여부는 true 이다.")
     void notEndedGutterTwice() {
         // given
-        final Player player = new Player(playerName);
+        final Player player = Player.from(playerName);
         final RoundNumber roundNumber = new RoundNumber(1);
         player.knockDownPin(roundNumber, TestFixture.GUTTER_PIN);
         player.knockDownPin(roundNumber, TestFixture.GUTTER_PIN);

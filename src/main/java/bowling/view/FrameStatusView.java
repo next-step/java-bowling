@@ -1,8 +1,8 @@
 package bowling.view;
 
 import bowling.domain.frame.Frame;
+import bowling.domain.pin.BallThrows;
 import bowling.domain.pin.Pin;
-import bowling.domain.pin.Pins;
 import bowling.view.ui.Cell;
 
 public final class FrameStatusView {
@@ -34,20 +34,20 @@ public final class FrameStatusView {
             return EMPTY_STRING;
         }
 
-        final Pins pins = frame.pins();
+        final BallThrows ballThrows = frame.pins();
         if (frame.isFinalFrame()) {
-            return finalFrameStatus(pins);
+            return finalFrameStatus(ballThrows);
         }
-        return normalFrameStatus(pins);
+        return normalFrameStatus(ballThrows);
     }
 
-    private String normalFrameStatus(Pins pins) {
-        final Pin firstPin = pins.firstPin();
+    private String normalFrameStatus(BallThrows ballThrows) {
+        final Pin firstPin = ballThrows.firstPin();
 
-        if (pins.size() == THROW_ONCE) {
+        if (ballThrows.throwCount() == THROW_ONCE) {
             return pinStatus(firstPin);
         }
-        final Pin secondPin = pins.secondPin();
+        final Pin secondPin = ballThrows.secondPin();
 
         return twoPinStatus(firstPin, secondPin);
     }
@@ -71,22 +71,22 @@ public final class FrameStatusView {
         return pinStatus(pin) + DELIMITER + pinStatus(otherPin);
     }
 
-    private String finalFrameStatus(Pins pins) {
-        final Pin firstPin = pins.firstPin();
+    private String finalFrameStatus(BallThrows ballThrows) {
+        final Pin firstPin = ballThrows.firstPin();
 
-        if (pins.size() == THROW_ONCE) {
+        if (ballThrows.throwCount() == THROW_ONCE) {
             return pinStatus(firstPin);
         }
-        if (pins.size() == THROW_TWICE) {
-            return finalTwiceStatus(pins);
+        if (ballThrows.throwCount() == THROW_TWICE) {
+            return finalTwiceStatus(ballThrows);
         }
 
-        return bonusStatus(pins);
+        return bonusStatus(ballThrows);
     }
 
-    private String finalTwiceStatus(Pins pins) {
-        final Pin firstPin = pins.firstPin();
-        final Pin secondPin = pins.secondPin();
+    private String finalTwiceStatus(BallThrows ballThrows) {
+        final Pin firstPin = ballThrows.firstPin();
+        final Pin secondPin = ballThrows.secondPin();
 
         final boolean isSpare = (firstPin.pinCount() + secondPin.pinCount() == Pin.MAX_COUNT);
         if (isSpare) {
@@ -96,10 +96,10 @@ public final class FrameStatusView {
         return pinStatus(firstPin) + DELIMITER + pinStatus(secondPin);
     }
 
-    private String bonusStatus(Pins pins) {
-        final Pin firstPin = pins.firstPin();
-        final Pin secondPin = pins.secondPin();
-        final Pin thirdPin = pins.thirdPin();
+    private String bonusStatus(BallThrows ballThrows) {
+        final Pin firstPin = ballThrows.firstPin();
+        final Pin secondPin = ballThrows.secondPin();
+        final Pin thirdPin = ballThrows.thirdPin();
 
         final boolean isFirstPinStrike = firstPin.isMaximum();
         final boolean isSecondPinStrike = secondPin.isMaximum();
@@ -108,6 +108,6 @@ public final class FrameStatusView {
             return pinStatus(firstPin) + DELIMITER + twoPinStatus(secondPin, thirdPin);
         }
 
-        return finalTwiceStatus(pins) + DELIMITER + pinStatus(thirdPin);
+        return finalTwiceStatus(ballThrows) + DELIMITER + pinStatus(thirdPin);
     }
 }

@@ -176,6 +176,19 @@
     - [x] `LeftCount`는 음수가 될 수 없고, 2회까지만 생성가능하다.
     - [x] 각 시도횟수에 대한 정적 팩토리 메서드를 생성한다.
 
+## 4단계 요구사항 정리
+
+- [x] 1명 이상의 사용자가 사용할 수 있도록 변경
+
+- [x] `Player`의 목록을 관리하는 `Players` 생성
+    - [x] `Player`의 목록을 반환하는 `value()` 선언
+    - [x] `Players`에 `Player`를 추가하는 `add(Player)` 선언
+        - [x] `Player`에 `from(PlayerName)` 선언
+- [x] `InputView`: 게임에 참여할 `Player`의 수를 입력받는 기능 구현
+    - [x] 사용자의 이름을 입력받는 기능 일부 변경
+- [x] `OutputView`: `printScoreBoard(Player)` -> `printScoreBoard(Players)`로 변경
+    - [x] `Players` `value()`를 이용한 개선
+
 ## 리뷰 내용 정리
 
 - step2
@@ -195,3 +208,12 @@
     - [ ] `Frames`: Throw 하기 전 Frame은 생성되지 않도록 Frame의 개수를 관리
         - 잠정적으로 보류(NPE를 억제할 우아한 방법을 찾지 못했다.)
     - [x] `StringUtils`: 테스트 추가
+    - [x] Production 코드에서 `FinalFrame`, `NormalFrame`을 생성하는 코드에 굳이 인자로 `Pins.create`를 받지않도록 리팩토링
+    - [x] `Pins` 객체 내부에서 validation 하도록 수정
+    - [x] `Pins`가 자체적으로 `PinCountValidator`를 소유하고 있도록 수정
+    - [x] `Pins`에서 `size()`를 호출하지 않고, `throwCount()`라는 도메인 친화적인 네이밍으로 수정, `isEmpty()` 도 `isFistThrow`로 수정
+    - [x] `Row` 개선, 출력시 builder를 인자로 받아서 처리하기보다는 결과만 리턴하도록 수정(Stream 이용)
+- step4
+    - [x] for문에서 i로 파라미터를 받는 부분 수정
+    - [x] `Pins`의 이름을 `BallThrows`로 변경
+    - [ ] 컨트롤러에서 게임을 진행하는 부분을 분리해보기
