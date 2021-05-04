@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -46,6 +47,10 @@ public class Question extends AbstractEntity {
     public Question setTitle(String title) {
         this.title = title;
         return this;
+    }
+
+    public Answers getAnswers() {
+        return answers;
     }
 
     public String getContents() {
@@ -75,6 +80,19 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+        checkAuthority(loginUser);
+        isHasAnswersIsNotOwner(loginUser);
+
+        setDeleted(true);
+
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.add(this);
+        deleteHistories.add(this.getAnswers());
+
+        return deleteHistories;
+    }
+
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
@@ -84,8 +102,14 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public void isHasAnswersIsNotOwner(User loginUser) throws CannotDeleteException {
+        answers.isHasAnswersIsNotOwner(loginUser);
+    }
+
+    public void checkAuthority(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
     }
 
     @Override
