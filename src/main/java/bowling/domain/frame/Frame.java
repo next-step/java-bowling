@@ -34,6 +34,7 @@ public abstract class Frame {
     return new NormalFrame(round);
   }
 
+
   public abstract boolean checkFinished();
   public abstract String show();
 
@@ -41,10 +42,10 @@ public abstract class Frame {
     return fallenPins.stream().findFirst().orElse(null);
   }
 
-  public List<FallenPins> shot(FallenPins fallenPins) {
+  public Frame bowl(FallenPins fallenPins) {
     checkThrowable(fallenPins);
     this.fallenPins.add(fallenPins);
-    return this.fallenPins;
+    return this;
   }
 
   protected int fallenPinsStatus() {

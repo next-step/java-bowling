@@ -11,10 +11,10 @@ public class FinalFrame extends Frame {
   }
 
   @Override
-  public List<FallenPins> shot(FallenPins fallenPins) {
+  public Frame bowl(FallenPins fallenPins) {
     checkThrowable(fallenPins);
     this.fallenPins.add(fallenPins);
-    return this.fallenPins;
+    return this;
   }
 
   @Override

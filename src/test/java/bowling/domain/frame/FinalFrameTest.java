@@ -39,8 +39,8 @@ class FinalFrameTest {
   @DisplayName("1번 쳤을 때 스트라이크면 추가 가능")
   void validAddingWhenStrikeFrame() {
     Frame frame = Frame.of(10);
-    frame.shot(new FallenPins(10));
-    frame.shot(new FallenPins(1));
+    frame.bowl(new FallenPins(10));
+    frame.bowl(new FallenPins(1));
     Assertions.assertThat(frame.fallenPinsStatus()).isEqualTo(11);
   }
 
@@ -48,9 +48,9 @@ class FinalFrameTest {
   @DisplayName("2번 쳤을 때 합이 10이면 추가 가능")
   void validAddingOptionalFrame() {
     Frame frame = Frame.of(10);
-    frame.shot(new FallenPins(9));
-    frame.shot(new FallenPins(1));
-    frame.shot(new FallenPins(1));
+    frame.bowl(new FallenPins(9));
+    frame.bowl(new FallenPins(1));
+    frame.bowl(new FallenPins(1));
     Assertions.assertThat(frame.fallenPinsStatus()).isEqualTo(11);
   }
 
@@ -58,7 +58,7 @@ class FinalFrameTest {
   @DisplayName("진행 확인")
   void runningTest() {
     Frame frame = Frame.of(10);
-    frame.shot(new FallenPins(1));
+    frame.bowl(new FallenPins(1));
 
     Assertions.assertThat(frame.checkFinished()).isFalse();
   }
@@ -67,7 +67,7 @@ class FinalFrameTest {
   @DisplayName("진행 확인2")
   void runningWithStrikeTest() {
     Frame frame = Frame.of(10);
-    frame.shot(new FallenPins(10));
+    frame.bowl(new FallenPins(10));
 
     Assertions.assertThat(frame.checkFinished()).isFalse();
   }
@@ -76,8 +76,8 @@ class FinalFrameTest {
   @DisplayName("진행 확인3")
   void runningWithSpareTest() {
     Frame frame = Frame.of(10);
-    frame.shot(new FallenPins(5));
-    frame.shot(new FallenPins(5));
+    frame.bowl(new FallenPins(5));
+    frame.bowl(new FallenPins(5));
 
     Assertions.assertThat(frame.checkFinished()).isFalse();
   }
@@ -86,8 +86,8 @@ class FinalFrameTest {
   @DisplayName("종료 확인1")
   void finishedRoundTest() {
     Frame frame = Frame.of(10);
-    frame.shot(new FallenPins(5));
-    frame.shot(new FallenPins(1));
+    frame.bowl(new FallenPins(5));
+    frame.bowl(new FallenPins(1));
 
     Assertions.assertThat(frame.checkFinished()).isTrue();
   }
@@ -96,8 +96,8 @@ class FinalFrameTest {
   @DisplayName("종료 확인2")
   void finishedWithStrikeTest() {
     Frame frame = Frame.of(10);
-    frame.shot(new FallenPins(10));
-    frame.shot(new FallenPins(5));
+    frame.bowl(new FallenPins(10));
+    frame.bowl(new FallenPins(5));
 
     Assertions.assertThat(frame.checkFinished()).isTrue();
   }

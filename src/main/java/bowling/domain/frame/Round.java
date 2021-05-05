@@ -48,7 +48,7 @@ public class Round {
 
   public void addNewBall(FallenPins pins) {
     Frame frame = tail();
-    frame.shot(pins);
+    frame.bowl(pins);
   }
 
   public String playerName() {
