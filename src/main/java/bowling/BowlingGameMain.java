@@ -1,23 +1,25 @@
 package bowling;
 
-import bowling.domain.Bowling;
+import bowling.domain.BowlingGame;
 import bowling.domain.User;
-import bowling.dto.BowlingDto;
+import bowling.dto.BowlingGameDto;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
+import java.util.List;
+
 public class BowlingGameMain {
     public static void main(String[] args) throws Exception {
-        User user = new User(InputView.getPlayerName());
-        Bowling bowling = new Bowling(user);
-        BowlingDto bowlingDto = BowlingDto.valueOf(bowling);
-        ResultView.printBowling(bowlingDto);
 
-        while (!bowling.isFinished()) {
-            int score = InputView.getScore(bowling.nowFrame() + 1);
-            bowling = bowling.addScore(score);
-            bowlingDto = BowlingDto.valueOf(bowling);
-            ResultView.printBowling(bowlingDto);
+        List<User> users = InputView.getPlayerNames(InputView.getHowMany());
+        BowlingGame bowlingGame = BowlingGame.valueOf(users);
+        BowlingGameDto bowlingGameDto = BowlingGameDto.valueOf(bowlingGame);
+        ResultView.printBowlingGame(bowlingGameDto);
+        while (!bowlingGame.isFinished()) {
+            int score = InputView.getScore(bowlingGame.nowPlayer().getUser());
+            bowlingGame = bowlingGame.addScore(score);
+            bowlingGameDto = BowlingGameDto.valueOf(bowlingGame);
+            ResultView.printBowlingGame(bowlingGameDto);
         }
     }
 }
