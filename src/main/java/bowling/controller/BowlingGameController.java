@@ -1,7 +1,7 @@
 package bowling.controller;
 
-import bowling.domain.Frames;
 import bowling.domain.Player;
+import bowling.domain.Players;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -20,16 +20,18 @@ public class BowlingGameController {
     }
 
     public void run() {
-        Player player = new Player(inputView.player());
-        resultView.initBoard(player);
+        Players players = inputView.players();
+
+        resultView.printBoard(players);
+
         IntStream.rangeClosed(START_FRAME_NO, MAX_FRAME_NO)
-                .forEach(frameNo -> frame(frameNo, player));
+                .forEach(frameNo -> players.forEach(player -> frame(frameNo, player, players)));
     }
 
-    private void frame(int frameNo, Player player) {
+    private void frame(int frameNo, Player player, Players players) {
         while (player.isFrameContinue(frameNo)) {
-            Frames frames = player.pitch(frameNo, inputView.pitch(frameNo));
-            resultView.printBoard(player, frames);
+            player.pitch(frameNo, inputView.pitch(player, frameNo));
+            resultView.printBoard(players);
         }
     }
 }
