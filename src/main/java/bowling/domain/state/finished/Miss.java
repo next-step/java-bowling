@@ -27,4 +27,9 @@ public class Miss implements State {
   public State bowl(FallenPins pins) {
     throw new CannotThrowBallException();
   }
+
+  @Override
+  public String show() {
+    return firstShot.show(secondShot);
+  }
 }

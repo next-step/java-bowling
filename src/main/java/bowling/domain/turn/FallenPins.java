@@ -8,6 +8,7 @@ public class FallenPins {
   private static final String WALL_SYMBOL = "|";
   private static final String SPARE_SYMBOL = "/";
   private static final String GUTTER_SYMBOL = "-";
+  private static final String STRIKE_SYMBOL = "X";
 
   private static final int MIN_PINS = 0;
   private static final int MAX_PINS = 10;
@@ -57,7 +58,11 @@ public class FallenPins {
     return Objects.hash(pins);
   }
 
-  private String show(){
+  public String show(){
+    if(pins == MAX_PINS){
+      return STRIKE_SYMBOL;
+    }
+
     if(pins == MIN_PINS){
       return GUTTER_SYMBOL;
     }

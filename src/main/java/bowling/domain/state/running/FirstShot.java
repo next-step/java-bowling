@@ -30,4 +30,9 @@ public class FirstShot implements State {
 
     return Miss.of(firstShot, pins);
   }
+
+  @Override
+  public String show() {
+    return firstShot.show();
+  }
 }

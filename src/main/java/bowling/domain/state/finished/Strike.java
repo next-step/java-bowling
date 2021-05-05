@@ -6,12 +6,14 @@ import bowling.error.CannotThrowBallException;
 
 public class Strike implements State {
 
-  private Strike(){
+  private final FallenPins pins;
 
+  private Strike(FallenPins fallenPins){
+    this.pins = fallenPins;
   }
 
-  public static State of() {
-    return new Strike();
+  public static State of(FallenPins fallenPins) {
+    return new Strike(fallenPins);
   }
 
   @Override
@@ -22,5 +24,10 @@ public class Strike implements State {
   @Override
   public State bowl(FallenPins pins) {
     throw new CannotThrowBallException();
+  }
+
+  @Override
+  public String show() {
+    return pins.show();
   }
 }
