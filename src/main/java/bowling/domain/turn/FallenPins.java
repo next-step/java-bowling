@@ -19,11 +19,10 @@ public class FallenPins {
     this.pins = pins;
   }
 
-  public boolean checkPins(int pins) {
+  public void checkPins(int pins) {
     if (pins < MIN_PINS || pins > MAX_PINS) {
       throw new InvalidFallenPinsException();
     }
-    return true;
   }
 
   public int pins() {
