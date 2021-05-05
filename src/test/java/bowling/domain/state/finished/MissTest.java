@@ -7,13 +7,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class StrikeTest {
 
+class MissTest {
   State state;
 
   @BeforeEach
   void setup(){
-    state = Strike.of(new FallenPins(10));
+    state = Miss.of(new FallenPins(8), new FallenPins(1));
   }
 
   @Test
@@ -21,4 +21,11 @@ class StrikeTest {
   void finishedTest(){
     Assertions.assertThat(state.isFinished()).isTrue();
   }
+
+  @Test
+  @DisplayName("출력 확인")
+  void showTest(){
+    Assertions.assertThat(state.show()).isEqualTo("8|1");
+  }
+
 }

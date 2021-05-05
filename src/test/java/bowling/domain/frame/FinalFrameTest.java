@@ -41,7 +41,7 @@ class FinalFrameTest {
     Frame frame = Frame.of(10);
     frame.bowl(new FallenPins(10));
     frame.bowl(new FallenPins(1));
-    Assertions.assertThat(frame.fallenPinsStatus()).isEqualTo(11);
+    Assertions.assertThat(frame.show()).isEqualTo("X|1");
   }
 
   @Test
@@ -51,7 +51,7 @@ class FinalFrameTest {
     frame.bowl(new FallenPins(9));
     frame.bowl(new FallenPins(1));
     frame.bowl(new FallenPins(1));
-    Assertions.assertThat(frame.fallenPinsStatus()).isEqualTo(11);
+    Assertions.assertThat(frame.show()).isEqualTo("9|/|1");
   }
 
   @Test

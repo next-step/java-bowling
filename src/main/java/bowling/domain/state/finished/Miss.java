@@ -15,6 +15,7 @@ public class Miss implements State {
   }
 
   public static State of(FallenPins firstShot, FallenPins secondShot) {
+    firstShot.checkAddable(secondShot);
     return new Miss(firstShot, secondShot);
   }
 

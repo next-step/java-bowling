@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotMakeFrameException;
 import bowling.error.CannotThrowBallException;
+import bowling.error.InvalidFallenPinsException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,8 +45,6 @@ class NormalFrameTest {
     Frame frame = Frame.of(1);
     frame.bowl(new FallenPins(firstShot));
     frame.bowl(new FallenPins(secondShot));
-
-    Assertions.assertThat(frame.fallenPinsStatus()).isEqualTo(firstShot + secondShot);
   }
 
   @ParameterizedTest
@@ -56,7 +55,7 @@ class NormalFrameTest {
     frame.bowl(new FallenPins(firstShot));
 
     Assertions.assertThatThrownBy(() -> frame.bowl(new FallenPins(secondShot)))
-      .isInstanceOf(CannotThrowBallException.class);
+      .isInstanceOf(InvalidFallenPinsException.class);
   }
 
   @ParameterizedTest

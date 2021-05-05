@@ -29,6 +29,6 @@ public class Spare implements State {
 
   @Override
   public String show() {
-    return null;
+    return firstShot.show(secondShot);
   }
 }

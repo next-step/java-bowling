@@ -30,11 +30,10 @@ public class FallenPins {
     return pins;
   }
 
-  public boolean checkAddable(FallenPins fallenPins) {
+  public void checkAddable(FallenPins fallenPins) {
     int totalFallenPins = this.pins + fallenPins.pins;
 
     checkPins(totalFallenPins);
-    return true;
   }
 
   public boolean isStrike() {

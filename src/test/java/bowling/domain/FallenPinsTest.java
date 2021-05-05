@@ -45,6 +45,7 @@ class FallenPinsTest {
     FallenPins firstShot = new FallenPins(firstShotPins);
     FallenPins secondShot = new FallenPins(secondShotPins);
 
-    Assertions.assertThat(firstShot.checkAddable(secondShot)).isTrue();
+    firstShot.checkAddable(secondShot);
+
   }
 }

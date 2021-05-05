@@ -10,12 +10,13 @@ public class PlayerBoard {
   private static final int ZERO = 0;
   private static final int FIRST_ROUND = 1;
   private static final int FINAL_ROUND = 10;
-
+  private final Frame firstFrame;
   private Frame currentFrame;
   private final Player player;
 
   public PlayerBoard(Player player) {
-    currentFrame = Frame.of(FIRST_ROUND);
+    firstFrame = Frame.of(FIRST_ROUND);
+    currentFrame = firstFrame;
     this.player = player;
   }
 
@@ -37,5 +38,9 @@ public class PlayerBoard {
 
   public String playerName() {
     return player.name();
+  }
+
+  public Frame firstFrame() {
+    return firstFrame;
   }
 }
