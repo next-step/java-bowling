@@ -1,7 +1,7 @@
 package bowling.view;
 
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.Round;
+import bowling.domain.frame.PlayerBoard;
 import bowling.domain.turn.FallenPins;
 
 import java.util.List;
@@ -34,14 +34,14 @@ public class ResultView {
     return String.valueOf(pinCount);
   }
 
-  public void printBoard(Round round) {
+  public void printBoard(PlayerBoard playerBoard) {
     System.out.println();
     System.out.println(SCORE_TITLE);
 
-    printName(round.playerName());
+    printName(playerBoard.playerName());
 
     int remainRounds = 10;
-    for (Frame frame : round.frames()) {
+    for (Frame frame : playerBoard.frames()) {
       printFrame(frame);
       remainRounds--;
     }

@@ -2,6 +2,7 @@ package bowling.domain.state.finished;
 
 import bowling.domain.state.State;
 import bowling.domain.turn.FallenPins;
+import bowling.error.CannotThrowBallException;
 
 public class Spare implements State {
   private final FallenPins firstShot;
@@ -19,5 +20,10 @@ public class Spare implements State {
   @Override
   public boolean isFinished() {
     return true;
+  }
+
+  @Override
+  public State bowl(FallenPins pins) {
+    throw new CannotThrowBallException();
   }
 }

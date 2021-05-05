@@ -12,7 +12,7 @@ class StrikeTest {
 
   @BeforeEach
   void setup(){
-    state = new Strike();
+    state = Strike.of();
   }
 
   @Test
