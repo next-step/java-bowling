@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Round;
-import bowling.domain.turn.BallRelease;
 import bowling.domain.turn.FallenPins;
 
 import java.util.List;
@@ -71,31 +70,24 @@ public class ResultView {
     StringBuilder stringBuilder = new StringBuilder();
     String result;
 
-    result = frame.ballReleases().stream()
-      .map(ballRelease -> ballRelease.fallenPins().pins())
+    result = frame.fallenPins().stream()
+      .map(pins -> pins.pins())
       .map(ResultView::getShotResult)
       .collect(Collectors.joining(WALL));
 
-    List<BallRelease> balls = frame.ballReleases();
+    List<FallenPins> balls = frame.fallenPins();
+    FallenPins firstShot = balls.get(ZERO);
+    FallenPins secondShot = balls.get(1);
 
     if (frame.isSpare()) {
-      result = spareToString(balls);
+      result = spareToString(firstShot, secondShot);
     }
 
     stringBuilder.append(String.format(NUMBER_FORMAT, result));
     return stringBuilder.toString();
   }
 
-  private String spareToString(List<BallRelease> ballReleases) {
-    StringBuilder stringBuilder = new StringBuilder();
-    FallenPins firstShot = ballReleases.get(ZERO).fallenPins();
-
-    stringBuilder.append(firstShot.pins()).append(WALL).append(SPARE);
-    if (ballReleases.size() > MAX_SHOT_PER_FRAME) {
-      FallenPins lastPins = ballReleases.get(ballReleases.size() - 1).fallenPins();
-      stringBuilder.append(WALL).append(lastPins.pins());
-    }
-
-    return stringBuilder.toString();
+  private String spareToString(FallenPins firstShot, FallenPins secondShot) {
+    return firstShot.show(secondShot);
   }
 }

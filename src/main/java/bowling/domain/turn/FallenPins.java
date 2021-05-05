@@ -5,6 +5,10 @@ import bowling.error.InvalidFallenPinsException;
 import java.util.Objects;
 
 public class FallenPins {
+  private static final String WALL_SYMBOL = "|";
+  private static final String SPARE_SYMBOL = "/";
+  private static final String GUTTER_SYMBOL = "-";
+
   private static final int MIN_PINS = 0;
   private static final int MAX_PINS = 10;
 
@@ -37,6 +41,10 @@ public class FallenPins {
     return pins == MAX_PINS;
   }
 
+  public boolean isSpare(FallenPins secondPins){
+    return pins + secondPins.pins == MAX_PINS;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -50,10 +58,26 @@ public class FallenPins {
     return Objects.hash(pins);
   }
 
-  @Override
-  public String toString() {
-    return "FallenPins{" +
-      "pins=" + pins +
-      '}';
+  private String show(){
+    if(pins == MIN_PINS){
+      return GUTTER_SYMBOL;
+    }
+    return String.valueOf(pins);
+  }
+
+  public String show(FallenPins secondPins) {
+    StringBuilder stringBuilder = new StringBuilder();
+
+    stringBuilder
+      .append(show())
+      .append(WALL_SYMBOL);
+
+    if (isSpare(secondPins)) {
+      stringBuilder
+        .append(SPARE_SYMBOL);
+      return stringBuilder.toString();
+    }
+    stringBuilder.append(secondPins.show());
+    return stringBuilder.toString();
   }
 }

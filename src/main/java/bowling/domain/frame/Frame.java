@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.turn.BallRelease;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotMakeFrameException;
 import bowling.error.CannotThrowBallException;
@@ -16,10 +15,10 @@ public abstract class Frame {
 
   protected final int round;
 
-  protected final List<BallRelease> ballReleases;
+  protected final List<FallenPins> fallenPins;
 
   protected Frame(int round) {
-    ballReleases = new ArrayList<>();
+    fallenPins = new ArrayList<>();
     this.round = round;
   }
 
@@ -35,25 +34,24 @@ public abstract class Frame {
     return new NormalFrame(round);
   }
 
-  public BallRelease head() {
-    return ballReleases.stream().findFirst().orElse(null);
+  public FallenPins head() {
+    return fallenPins.stream().findFirst().orElse(null);
   }
 
-  public List<BallRelease> shot(FallenPins fallenPins) {
+  public List<FallenPins> shot(FallenPins fallenPins) {
     checkThrowable(fallenPins);
-    ballReleases.add(new BallRelease(fallenPins));
-    return ballReleases;
+    this.fallenPins.add(fallenPins);
+    return this.fallenPins;
   }
 
   protected int fallenPinsStatus() {
-    return ballReleases.stream()
-      .map(ball -> ball.fallenPins())
+    return fallenPins.stream()
       .mapToInt(fallenPins -> fallenPins.pins())
       .sum();
   }
 
   protected void checkThrowable(FallenPins pins) {
-    if (ballReleases.size() >= MAX_THROWABLE_BALLS) {
+    if (fallenPins.size() >= MAX_THROWABLE_BALLS) {
       throw new CannotThrowBallException();
     }
 
@@ -66,24 +64,23 @@ public abstract class Frame {
     return of(round + 1);
   }
 
-  public List<BallRelease> ballReleases() {
-    return ballReleases;
+  public List<FallenPins> fallenPins() {
+    return fallenPins;
   }
 
   public boolean isStrike() {
-    if (ballReleases.size() != STRIKE_SIZE) {
+    if (fallenPins.size() != STRIKE_SIZE) {
       return false;
     }
     return head().isStrike();
   }
 
   public boolean isSpare() {
-    return ballReleases.size() == MAX_THROWABLE_BALLS && fallenPinsStatus() == MAX_FALLEN_PINS;
+    return fallenPins.size() == MAX_THROWABLE_BALLS && fallenPinsStatus() == MAX_FALLEN_PINS;
   }
 
   public abstract boolean checkFinished();
 
-  public int round() {
-    return round;
-  }
+  public abstract int round();
+  public abstract String show();
 }

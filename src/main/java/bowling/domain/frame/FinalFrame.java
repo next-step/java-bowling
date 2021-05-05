@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.turn.BallRelease;
 import bowling.domain.turn.FallenPins;
 
 import java.util.List;
@@ -12,15 +11,15 @@ public class FinalFrame extends Frame {
   }
 
   @Override
-  public List<BallRelease> shot(FallenPins fallenPins) {
+  public List<FallenPins> shot(FallenPins fallenPins) {
     checkThrowable(fallenPins);
-    ballReleases.add(new BallRelease(fallenPins));
-    return ballReleases;
+    this.fallenPins.add(fallenPins);
+    return this.fallenPins;
   }
 
   @Override
   protected void checkThrowable(FallenPins pins) {
-    if (ballReleases.size() <= MAX_THROWABLE_BALLS && fallenPinsStatus() == MAX_FALLEN_PINS) {
+    if (fallenPins.size() <= MAX_THROWABLE_BALLS && fallenPinsStatus() == MAX_FALLEN_PINS) {
       return;
     }
     super.checkThrowable(pins);
@@ -32,12 +31,22 @@ public class FinalFrame extends Frame {
       return false;
     }
 
-    return ballReleases.size() >= MAX_THROWABLE_BALLS || fallenPinsStatus() >= MAX_FALLEN_PINS;
+    return fallenPins.size() >= MAX_THROWABLE_BALLS || fallenPinsStatus() >= MAX_FALLEN_PINS;
+  }
+
+  @Override
+  public int round() {
+    return 10;
+  }
+
+  @Override
+  public String show() {
+    return "";
   }
 
   @Override
   public boolean isStrike() {
-    if (ballReleases.size() >= STRIKE_SIZE) {
+    if (fallenPins.size() >= STRIKE_SIZE) {
       return head().isStrike();
     }
     return false;
@@ -45,13 +54,13 @@ public class FinalFrame extends Frame {
 
   @Override
   public boolean isSpare() {
-    if (ballReleases.size() >= MAX_THROWABLE_BALLS) {
-      return calculateFirstAndSecondShot(ballReleases) == MAX_FALLEN_PINS;
+    if (fallenPins.size() >= MAX_THROWABLE_BALLS) {
+      return calculateFirstAndSecondShot(fallenPins) == MAX_FALLEN_PINS;
     }
     return super.isSpare();
   }
 
-  private int calculateFirstAndSecondShot(List<BallRelease> ballReleases) {
-    return ballReleases.get(0).fallenPins().pins() + ballReleases.get(1).fallenPins().pins();
+  private int calculateFirstAndSecondShot(List<FallenPins> fallenPins) {
+    return fallenPins.get(0).pins() + fallenPins.get(1).pins();
   }
 }
