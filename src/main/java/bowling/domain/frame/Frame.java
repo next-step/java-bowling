@@ -34,6 +34,9 @@ public abstract class Frame {
     return new NormalFrame(round);
   }
 
+  public abstract boolean checkFinished();
+  public abstract String show();
+
   public FallenPins head() {
     return fallenPins.stream().findFirst().orElse(null);
   }
@@ -79,8 +82,10 @@ public abstract class Frame {
     return fallenPins.size() == MAX_THROWABLE_BALLS && fallenPinsStatus() == MAX_FALLEN_PINS;
   }
 
-  public abstract boolean checkFinished();
 
-  public abstract int round();
-  public abstract String show();
+
+  public int round() {
+    return round;
+  }
+
 }

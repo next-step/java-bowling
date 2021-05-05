@@ -35,7 +35,6 @@ public class BowlingBoard {
   }
 
   private void playRound(Board board) {
-    checkAndAddingFrame();
     for (Round round : board.rounds()) {
       playFrame(round);
     }
@@ -50,9 +49,4 @@ public class BowlingBoard {
     }
   }
 
-  private void checkAndAddingFrame() {
-    if (board.checkCurrentFrameDone()) {
-      board.addingFrame();
-    }
-  }
 }
