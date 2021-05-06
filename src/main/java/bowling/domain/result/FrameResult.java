@@ -1,7 +1,5 @@
 package bowling.domain.result;
 
-import bowling.domain.frame.Frame;
-
 public class FrameResult {
   private static final String EMPTY = "";
 
@@ -15,18 +13,22 @@ public class FrameResult {
     this.scoreVisible = scoreVisible;
   }
 
-  public String frameView(){
+  public String frameView() {
     return frameView;
   }
 
-  public String score(){
-    if(scoreVisible){
+  public String score() {
+    if (scoreVisible) {
       return String.valueOf(score);
     }
     return EMPTY;
   }
 
-  public FrameResult addScore(int additionalScore, boolean scoreVisible){
-    return new FrameResult(frameView,score+additionalScore, scoreVisible);
+  public boolean isScoreVisible(){
+    return scoreVisible;
+  }
+
+  public FrameResult addScore(int additionalScore, boolean scoreVisible) {
+    return new FrameResult(frameView, score + additionalScore, scoreVisible);
   }
 }
