@@ -9,9 +9,8 @@ public class Score {
   private static final int SPARE_LEFT = 1;
   private static final int MISS_LEFT = 0;
 
-
-  private int score;
-  private int left;
+  private final int score;
+  private final int left;
 
   public Score(int score, int left) {
     this.score = score;
@@ -31,7 +30,7 @@ public class Score {
   }
 
   public Score bowl(int countOfPins) {
-    return new Score(score += countOfPins, left - 1);
+    return new Score(score + countOfPins, left - 1);
   }
 
   public int getScore() {

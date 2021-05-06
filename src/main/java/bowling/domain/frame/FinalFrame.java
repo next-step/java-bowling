@@ -1,6 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.Result;
+import bowling.domain.Score;
+import bowling.domain.result.FrameResult;
+import bowling.domain.result.TotalResult;
 import bowling.domain.state.State;
 import bowling.domain.state.finished.Spare;
 import bowling.domain.state.finished.Strike;
@@ -42,13 +44,27 @@ public class FinalFrame extends Frame {
   }
 
   @Override
-  public Result showFullResult() {
+  public TotalResult showFullResult() {
     throw new RuntimeException();
   }
 
   @Override
-  public void addResult(Result result) {
-    result.add(show());
+  public void addResult(TotalResult totalResult) {
+    boolean scoreVisible = states.getFirst().isFinished();
+
+    totalResult.add(new FrameResult(show(), score().getScore(), scoreVisible));
+  }
+
+  @Override
+  // TODO
+  public Score score() {
+    return null;
+  }
+
+  @Override
+  // TODO
+  protected Score calculateAdditionalScore(Score score) {
+    return null;
   }
 
   @Override

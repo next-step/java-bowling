@@ -1,9 +1,11 @@
 package bowling.domain.state.running;
 
+import bowling.domain.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.finished.Miss;
 import bowling.domain.state.finished.Spare;
 import bowling.domain.turn.FallenPins;
+import bowling.error.CannotCalculateException;
 
 public class FirstShot implements State {
 
@@ -34,5 +36,10 @@ public class FirstShot implements State {
   @Override
   public String show() {
     return firstShot.show();
+  }
+
+  @Override
+  public Score calculateScore() {
+    throw new CannotCalculateException();
   }
 }

@@ -1,12 +1,11 @@
 package bowling.domain.frame;
 
-import bowling.domain.Result;
+import bowling.domain.Score;
+import bowling.domain.result.FrameResult;
+import bowling.domain.result.TotalResult;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 import bowling.domain.turn.FallenPins;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class NormalFrame extends Frame {
   private static final int NEXT_FRAME_COUNT = 1;
@@ -30,20 +29,40 @@ public class NormalFrame extends Frame {
   }
 
   @Override
-  public Result showFullResult() {
-    Result result = new Result();
+  public TotalResult showFullResult() {
+    TotalResult totalResult = new TotalResult();
 
-    addResult(result);
-    return result;
+    addResult(totalResult);
+    return totalResult;
   }
 
-  public void addResult(Result result){
-    result.add(state.show());
+  public void addResult(TotalResult totalResult){
+    boolean scoreVisible = state.isFinished();
+    FrameResult frameResult = new FrameResult(show(), score().getScore(), scoreVisible);
+
+    totalResult.add(frameResult);
 
     if(nextFrame != null){
-      nextFrame.addResult(result);
+      nextFrame.addResult(totalResult);
     }
 
+  }
+
+  @Override
+  // TODO
+  public Score score() {
+    Score score = state.calculateScore();
+
+    if(score.canCalculateScore()){
+      return nextFrame.calculateAdditionalScore(score);
+    }
+    return state.calculateScore();
+  }
+
+  @Override
+  // TODO
+  protected Score calculateAdditionalScore(Score score) {
+    return null;
   }
 
   @Override

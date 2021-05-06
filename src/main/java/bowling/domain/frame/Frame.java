@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.Result;
+import bowling.domain.Score;
+import bowling.domain.result.TotalResult;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotMakeFrameException;
 
@@ -31,6 +32,8 @@ public abstract class Frame {
   public abstract boolean checkFinished();
   public abstract String show();
   public abstract Frame bowl(FallenPins fallenPins);
-  public abstract Result showFullResult();
-  public abstract void addResult(Result result);
+  public abstract TotalResult showFullResult();
+  public abstract void addResult(TotalResult totalResult);
+  public abstract Score score();
+  protected abstract Score calculateAdditionalScore(Score score);
 }

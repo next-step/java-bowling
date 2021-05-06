@@ -1,5 +1,6 @@
 package bowling.domain.state.finished;
 
+import bowling.domain.Score;
 import bowling.domain.state.State;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotThrowBallException;
@@ -29,5 +30,10 @@ public class Strike implements State {
   @Override
   public String show() {
     return pins.show();
+  }
+
+  @Override
+  public Score calculateScore() {
+    return Score.ofStrike();
   }
 }

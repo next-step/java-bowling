@@ -36,6 +36,12 @@ public class FallenPins {
     checkPins(totalFallenPins);
   }
 
+  public FallenPins addShot(FallenPins secondShot){
+    checkAddable(secondShot);
+
+    return new FallenPins(pins + secondShot.pins);
+  }
+
   public boolean isStrike() {
     return pins == MAX_PINS;
   }
