@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
 import bowling.utils.StringUtils;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,34 +10,34 @@ public class FrameScore {
 
   public static final String SCORE_SEPARATOR = "|";
 
-  private List<Integer> scores;
+  private List<State> states;
 
   public FrameScore(List<Integer> scores) {
-    this.scores = scores;
+    this.states = IntStream.range(0, scores.size())
+        .mapToObj(index -> parseScoreToState(scores, index))
+        .collect(Collectors.toList());
+  }
+
+  public State parseScoreToState(List<Integer> scores, int index) {
+    Integer score = scores.get(index);
+    if (score == Pins.MIN) {
+      return State.gutter();
+    }
+    if (index > 0 && isClear(scores, index)) {
+      return State.spare(score);
+    }
+    if (score == Pins.MAX) {
+      return State.strike();
+    }
+    return State.miss(score);
   }
 
   public String getScore() {
-    List<String> scoreStrings = IntStream.range(0, scores.size())
-        .mapToObj(index -> getScoreString(index))
-        .collect(Collectors.toList());
-    return StringUtils.join(scoreStrings, SCORE_SEPARATOR);
+    List<String> scores = states.stream().map(State::getScore).collect(Collectors.toList());
+    return StringUtils.join(scores, SCORE_SEPARATOR);
   }
 
-  public String getScoreString(int index) {
-    Integer score = scores.get(index);
-    if (score == Pins.MAX) {
-      return Result.STRIKE.mark();
-    }
-    if (score == Pins.MIN) {
-      return Result.GUTTER.mark();
-    }
-    if (scores.size() > 1 && isClear(index)) {
-      return Result.SPARE.mark();
-    }
-    return String.valueOf(score);
-  }
-
-  private boolean isClear(int index) {
+  private boolean isClear(List<Integer> scores, int index) {
     if (index > 0) {
       return scores.get(index) + scores.get(index - 1) == Pins.MAX;
     }
