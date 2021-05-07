@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
   private static final String WALL = "|";
-  private static final int SHOT_LIMIT = 1;
+  private static final int SPARE_SHOT_LIMIT = 1;
+  private static final int STRIKE_SHOT_LIMIT = 2;
 
   private LinkedList<State> states;
 
@@ -105,9 +106,14 @@ public class FinalFrame extends Frame {
 
   private boolean checkAddable(){
     State head = states.getFirst();
-    if(states.size()==SHOT_LIMIT && (head instanceof Spare || head instanceof Strike)){
+    if(states.size()== SPARE_SHOT_LIMIT && head instanceof Spare){
       return true;
     }
+
+    if(states.size() == STRIKE_SHOT_LIMIT && head instanceof Strike){
+      return true;
+    }
+
     return false;
   }
 
