@@ -25,6 +25,9 @@ class FrameTest {
     TotalResult totalResult = frame.showFullResult();
 
     System.out.print("|");
-    totalResult.frameResults().stream().map(frameResult -> String.format("%4s", frameResult) + "|").forEach(System.out::print);
+    totalResult.frameResults().stream().map(frameResult -> String.format("%5s", frameResult.frameView()) + "|").forEach(System.out::print);
+    System.out.println();
+    System.out.print("|");
+    totalResult.frameResults().stream().map(frameResult -> String.format("%5s", frameResult.score()) + "|").forEach(System.out::print);
   }
 }
