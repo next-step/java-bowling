@@ -40,4 +40,9 @@ public class Ready implements State {
   public Score calculateScore() {
     throw new CannotCalculateException();
   }
+
+  @Override
+  public Score addScore(Score score) {
+    throw new CannotCalculateException();
+  }
 }

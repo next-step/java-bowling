@@ -36,4 +36,13 @@ public class Strike implements State {
   public Score calculateScore() {
     return Score.ofStrike();
   }
+
+  @Override
+  public Score addScore(Score score) {
+    if(score.canCalculateScore()){
+      return score;
+    }
+
+    return score.bowl(pins.pins());
+  }
 }

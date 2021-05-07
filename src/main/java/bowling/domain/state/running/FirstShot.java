@@ -42,4 +42,19 @@ public class FirstShot implements State {
   public Score calculateScore() {
     throw new CannotCalculateException();
   }
+
+  @Override
+  public Score addScore(Score score) {
+    if(score.canCalculateScore()){
+      return score;
+    }
+
+    score = score.bowl(firstShot.pins());
+
+    if(score.canCalculateScore()){
+      return score;
+    }
+
+    throw new CannotCalculateException();
+  }
 }

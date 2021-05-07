@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TotalResult {
-  private List<FrameResult> frameResults;
+  private final List<FrameResult> frameResults;
 
   public TotalResult(){
     this.frameResults = new ArrayList<>();

@@ -49,20 +49,22 @@ public class NormalFrame extends Frame {
   }
 
   @Override
-  // TODO
   public Score score() {
     Score score = state.calculateScore();
-
-    if(score.canCalculateScore()){
-      return nextFrame.calculateAdditionalScore(score);
-    }
-    return state.calculateScore();
+    return nextFrame.calculateAdditionalScore(score);
   }
 
   @Override
-  // TODO
   protected Score calculateAdditionalScore(Score score) {
-    return null;
+    if(state.isFinished()) {
+      score = state.addScore(score);
+    }
+
+    if(nextFrame == null) {
+      return score;
+    }
+
+    return nextFrame.calculateAdditionalScore(score);
   }
 
   @Override

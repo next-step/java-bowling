@@ -12,7 +12,7 @@ public class Score {
   private final int score;
   private final int left;
 
-  public Score(int score, int left) {
+  private Score(int score, int left) {
     this.score = score;
     this.left = left;
   }

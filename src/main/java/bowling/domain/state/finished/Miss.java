@@ -39,4 +39,19 @@ public class Miss implements State {
   public Score calculateScore() {
     return Score.ofMiss(firstShot.addShot(secondShot));
   }
+
+  @Override
+  public Score addScore(Score score) {
+    if(score.canCalculateScore()){
+      return score;
+    }
+
+    score = score.bowl(firstShot.pins());
+    if(score.canCalculateScore()){
+      return score;
+    }
+
+    score = score.bowl(secondShot.pins());
+    return score;
+  }
 }

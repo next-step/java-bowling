@@ -56,15 +56,27 @@ public class FinalFrame extends Frame {
   }
 
   @Override
-  // TODO
   public Score score() {
-    return null;
+    Score score = states.getFirst().calculateScore();
+
+    if(score.canCalculateScore()){
+      return score;
+    }
+
+    return states.getLast().addScore(score);
   }
 
   @Override
-  // TODO
   protected Score calculateAdditionalScore(Score score) {
-    return null;
+    if(score.canCalculateScore()){
+      return score;
+    }
+
+    for(State state: states){
+      score = state.addScore(score);
+    }
+
+    return score;
   }
 
   @Override

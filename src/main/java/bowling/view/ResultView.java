@@ -24,10 +24,13 @@ public class ResultView {
       printFrameResult(frame.frameView());
       remainRounds--;
     }
-    while (remainRounds-- > 0) {
-      System.out.print(EMPTY_ROUND);
-      System.out.print(WALL);
+    printEmptyFields(remainRounds);
+
+    for (FrameResult frame : playerTotalResult.frameResults()){
+      printFrameResult(frame.score());
     }
+
+    printEmptyFields(remainRounds);
     System.out.println();
   }
 
@@ -40,6 +43,14 @@ public class ResultView {
 
     System.out.print(String.format(NUMBER_FORMAT, frameResult));
     System.out.print(WALL);
+  }
+
+  private void printEmptyFields(int remainFields){
+    while (remainFields-- > 0) {
+      System.out.print(EMPTY_ROUND);
+      System.out.print(WALL);
+    }
+    System.out.println();
   }
 
 }

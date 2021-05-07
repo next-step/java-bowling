@@ -8,4 +8,5 @@ public interface State {
   State bowl(FallenPins pins);
   String show();
   Score calculateScore();
+  Score addScore(Score score);
 }
