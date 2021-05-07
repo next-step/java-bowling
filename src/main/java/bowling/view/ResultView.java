@@ -26,6 +26,7 @@ public class ResultView {
     }
     printEmptyFields(remainRounds);
 
+    printName(EMPTY_ROUND);
     for (FrameResult frame : playerTotalResult.frameResults()){
       printFrameResult(frame.score());
     }

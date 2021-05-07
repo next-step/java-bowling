@@ -4,6 +4,8 @@ import bowling.domain.Score;
 import bowling.domain.result.FrameResult;
 import bowling.domain.result.TotalResult;
 import bowling.domain.state.State;
+import bowling.domain.state.finished.Spare;
+import bowling.domain.state.finished.Strike;
 import bowling.domain.state.running.Ready;
 import bowling.domain.turn.FallenPins;
 
@@ -37,8 +39,13 @@ public class NormalFrame extends Frame {
   }
 
   public void addResult(TotalResult totalResult){
-    boolean scoreVisible = state.isFinished();
-    FrameResult frameResult = new FrameResult(show(), score().getScore(), scoreVisible);
+    boolean scoreVisible = isFinishedScore(state);
+
+    FrameResult frameResult = new FrameResult(show(), -1, scoreVisible);
+
+    if(scoreVisible) {
+      frameResult = new FrameResult(show(), score().getScore(), scoreVisible);
+    }
 
     totalResult.add(frameResult);
 
@@ -48,9 +55,24 @@ public class NormalFrame extends Frame {
 
   }
 
+  private boolean isFinishedScore(State state){
+    if(!state.isFinished()){
+      return false;
+    }
+
+    if(state instanceof Strike || state instanceof Spare){
+      return false;
+    }
+
+    return true;
+  }
+
   @Override
   public Score score() {
     Score score = state.calculateScore();
+    if(score.canCalculateScore()){
+      return score;
+    }
     return nextFrame.calculateAdditionalScore(score);
   }
 

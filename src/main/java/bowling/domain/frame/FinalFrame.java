@@ -8,6 +8,7 @@ import bowling.domain.state.finished.Spare;
 import bowling.domain.state.finished.Strike;
 import bowling.domain.state.running.Ready;
 import bowling.domain.turn.FallenPins;
+import bowling.error.CannotCalculateException;
 
 import java.util.LinkedList;
 import java.util.stream.Collectors;
@@ -52,7 +53,15 @@ public class FinalFrame extends Frame {
   public void addResult(TotalResult totalResult) {
     boolean scoreVisible = states.getFirst().isFinished();
 
-    totalResult.add(new FrameResult(show(), score().getScore(), scoreVisible));
+    FrameResult frameResult;
+
+    try {
+      frameResult = new FrameResult(show(), score().getScore(), scoreVisible);
+    } catch(CannotCalculateException cannotCalculateException){
+      frameResult = new FrameResult(show(), -1, false);
+    }
+
+    totalResult.add(frameResult);
   }
 
   @Override
