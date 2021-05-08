@@ -4,10 +4,7 @@ import bowling.domain.Score;
 import bowling.domain.result.FrameResult;
 import bowling.domain.result.TotalResult;
 import bowling.domain.state.State;
-import bowling.domain.state.finished.Spare;
 import bowling.domain.state.finished.SpecialShot;
-import bowling.domain.state.finished.Strike;
-import bowling.domain.state.running.FirstShot;
 import bowling.domain.state.running.Ready;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotCalculateException;
@@ -20,7 +17,7 @@ public class FinalFrame extends Frame {
   private static final int SPARE_SHOT_LIMIT = 1;
   private static final int STRIKE_SHOT_LIMIT = 2;
 
-  private LinkedList<State> states;
+  private final LinkedList<State> states;
 
   protected FinalFrame(int round) {
     super(round);
@@ -32,13 +29,13 @@ public class FinalFrame extends Frame {
   public Frame bowl(FallenPins fallenPins) {
     State state = states.getLast();
 
-    if(!state.isFinished()){
+    if (!state.isFinished()) {
       states.removeLast();
       states.add(state.bowl(fallenPins));
       return this;
     }
 
-    if(!checkFinished()){
+    if (!checkFinished()) {
       state = SpecialShot.of(fallenPins);
       states.add(state);
     }
@@ -59,7 +56,7 @@ public class FinalFrame extends Frame {
 
     try {
       frameResult = new FrameResult(show(), score().getScore(), scoreVisible);
-    } catch(CannotCalculateException cannotCalculateException){
+    } catch (CannotCalculateException cannotCalculateException) {
       frameResult = new FrameResult(show(), -1, false);
     }
 
@@ -70,11 +67,11 @@ public class FinalFrame extends Frame {
   public Score score() {
     Score score = states.getFirst().calculateScore();
 
-    if(score.canCalculateScore()){
+    if (score.canCalculateScore()) {
       return score;
     }
 
-    for(int i=1; i<states.size(); i++){
+    for (int i = 1; i < states.size(); i++) {
       score = states.get(i).addScore(score);
     }
     return score;
@@ -82,11 +79,11 @@ public class FinalFrame extends Frame {
 
   @Override
   protected Score calculateAdditionalScore(Score score) {
-    if(score.canCalculateScore()){
+    if (score.canCalculateScore()) {
       return score;
     }
     Score addingScore = score;
-    for(State state: states){
+    for (State state : states) {
       addingScore = state.addScore(addingScore);
     }
 
@@ -98,7 +95,7 @@ public class FinalFrame extends Frame {
     Score score;
     try {
       score = score();
-    } catch(CannotCalculateException cannotCalculateException){
+    } catch (CannotCalculateException cannotCalculateException) {
       return false;
     }
     return score().canCalculateScore();

@@ -9,12 +9,12 @@ public class Spare implements State {
   private final FallenPins firstShot;
   private final FallenPins secondShot;
 
-  private Spare(FallenPins firstShot, FallenPins secondShot){
+  private Spare(FallenPins firstShot, FallenPins secondShot) {
     this.firstShot = firstShot;
     this.secondShot = secondShot;
   }
 
-  public static Spare of(FallenPins firstShot, FallenPins secondShot){
+  public static Spare of(FallenPins firstShot, FallenPins secondShot) {
     return new Spare(firstShot, secondShot);
   }
 
@@ -40,12 +40,12 @@ public class Spare implements State {
 
   @Override
   public Score addScore(Score score) {
-    if(score.canCalculateScore()){
+    if (score.canCalculateScore()) {
       return score;
     }
 
     score = score.bowl(firstShot.pins());
-    if(score.canCalculateScore()){
+    if (score.canCalculateScore()) {
       return score;
     }
 

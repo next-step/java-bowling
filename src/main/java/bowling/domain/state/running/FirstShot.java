@@ -11,7 +11,7 @@ public class FirstShot implements State {
 
   private final FallenPins firstShot;
 
-  private FirstShot(FallenPins pins){
+  private FirstShot(FallenPins pins) {
     this.firstShot = pins;
   }
 
@@ -26,7 +26,7 @@ public class FirstShot implements State {
 
   @Override
   public State bowl(FallenPins pins) {
-    if(firstShot.isSpare(pins)){
+    if (firstShot.isSpare(pins)) {
       return Spare.of(firstShot, pins);
     }
 
@@ -45,13 +45,13 @@ public class FirstShot implements State {
 
   @Override
   public Score addScore(Score score) {
-    if(score.canCalculateScore()){
+    if (score.canCalculateScore()) {
       return score;
     }
 
     score = score.bowl(firstShot.pins());
 
-    if(score.canCalculateScore()){
+    if (score.canCalculateScore()) {
       return score;
     }
 

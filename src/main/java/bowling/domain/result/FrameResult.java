@@ -24,7 +24,7 @@ public class FrameResult {
     return EMPTY;
   }
 
-  public boolean isScoreVisible(){
+  public boolean isScoreVisible() {
     return scoreVisible;
   }
 

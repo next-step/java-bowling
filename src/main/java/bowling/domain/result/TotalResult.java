@@ -6,15 +6,15 @@ import java.util.List;
 public class TotalResult {
   private final List<FrameResult> frameResults;
 
-  public TotalResult(){
+  public TotalResult() {
     this.frameResults = new ArrayList<>();
   }
 
-  public void add(FrameResult frameResult){
+  public void add(FrameResult frameResult) {
     frameResults.add(frameResult);
   }
 
-  public List<FrameResult> frameResults(){
+  public List<FrameResult> frameResults() {
     return frameResults;
   }
 }

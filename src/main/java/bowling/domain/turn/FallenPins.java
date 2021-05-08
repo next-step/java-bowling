@@ -36,7 +36,7 @@ public class FallenPins {
     checkPins(totalFallenPins);
   }
 
-  public FallenPins addShot(FallenPins secondShot){
+  public FallenPins addShot(FallenPins secondShot) {
     checkAddable(secondShot);
 
     return new FallenPins(pins + secondShot.pins);
@@ -46,7 +46,7 @@ public class FallenPins {
     return pins == MAX_PINS;
   }
 
-  public boolean isSpare(FallenPins secondPins){
+  public boolean isSpare(FallenPins secondPins) {
     return pins + secondPins.pins == MAX_PINS;
   }
 
@@ -63,12 +63,12 @@ public class FallenPins {
     return Objects.hash(pins);
   }
 
-  public String show(){
-    if(pins == MAX_PINS){
+  public String show() {
+    if (pins == MAX_PINS) {
       return STRIKE_SYMBOL;
     }
 
-    if(pins == MIN_PINS){
+    if (pins == MIN_PINS) {
       return GUTTER_SYMBOL;
     }
     return String.valueOf(pins);

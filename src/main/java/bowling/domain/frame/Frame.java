@@ -25,15 +25,22 @@ public abstract class Frame {
 
     return new NormalFrame(round);
   }
+
   public int round() {
     return round;
   }
 
   public abstract boolean checkFinished();
+
   public abstract String show();
+
   public abstract Frame bowl(FallenPins fallenPins);
+
   public abstract TotalResult showFullResult();
+
   public abstract void addResult(TotalResult totalResult);
+
   public abstract Score score();
+
   protected abstract Score calculateAdditionalScore(Score score);
 }

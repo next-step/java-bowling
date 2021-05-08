@@ -9,22 +9,22 @@ import bowling.error.CannotCalculateException;
 public class Ready implements State {
   private static final String EMPTY = "";
 
+  private Ready() {
+
+  }
+
+  public static Ready of() {
+    return new Ready();
+  }
+
   @Override
   public boolean isFinished() {
     return false;
   }
 
-  private Ready(){
-
-  }
-
-  public static Ready of(){
-    return new Ready();
-  }
-
   @Override
   public State bowl(FallenPins pins) {
-    if(pins.isStrike()){
+    if (pins.isStrike()) {
       return Strike.of(pins);
     }
 

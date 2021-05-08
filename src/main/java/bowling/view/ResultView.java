@@ -1,8 +1,8 @@
 package bowling.view;
 
+import bowling.domain.frame.PlayerBoard;
 import bowling.domain.result.FrameResult;
 import bowling.domain.result.TotalResult;
-import bowling.domain.frame.PlayerBoard;
 
 public class ResultView {
   private static final String SCORE_TITLE = "| NAME | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 |";
@@ -27,7 +27,7 @@ public class ResultView {
     printEmptyFields(remainRounds);
 
     printName(EMPTY_ROUND);
-    for (FrameResult frame : playerTotalResult.frameResults()){
+    for (FrameResult frame : playerTotalResult.frameResults()) {
       printFrameResult(frame.score());
     }
 
@@ -46,7 +46,7 @@ public class ResultView {
     System.out.print(WALL);
   }
 
-  private void printEmptyFields(int remainFields){
+  private void printEmptyFields(int remainFields) {
     while (remainFields-- > 0) {
       System.out.print(EMPTY_ROUND);
       System.out.print(WALL);

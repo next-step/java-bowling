@@ -9,7 +9,7 @@ public class Board {
   private static final int FIRST_ROUND = 1;
 
   private final List<PlayerBoard> playerBoards;
-  private int roundNumber;
+  private final int roundNumber;
 
   public Board() {
     playerBoards = new ArrayList<>();

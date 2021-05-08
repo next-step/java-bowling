@@ -9,7 +9,7 @@ public class Strike implements State {
 
   private final FallenPins pins;
 
-  private Strike(FallenPins fallenPins){
+  private Strike(FallenPins fallenPins) {
     this.pins = fallenPins;
   }
 
@@ -39,7 +39,7 @@ public class Strike implements State {
 
   @Override
   public Score addScore(Score score) {
-    if(score.canCalculateScore()){
+    if (score.canCalculateScore()) {
       return score;
     }
 

@@ -4,8 +4,6 @@ import bowling.domain.Score;
 import bowling.domain.result.FrameResult;
 import bowling.domain.result.TotalResult;
 import bowling.domain.state.State;
-import bowling.domain.state.finished.Spare;
-import bowling.domain.state.finished.Strike;
 import bowling.domain.state.running.Ready;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotCalculateException;
@@ -24,8 +22,8 @@ public class NormalFrame extends Frame {
   @Override
   public Frame bowl(FallenPins fallenPins) {
     state = state.bowl(fallenPins);
-    if(state.isFinished()) {
-      nextFrame = Frame.of(round+NEXT_FRAME_COUNT);
+    if (state.isFinished()) {
+      nextFrame = Frame.of(round + NEXT_FRAME_COUNT);
       return nextFrame;
     }
     return this;
@@ -40,18 +38,18 @@ public class NormalFrame extends Frame {
   }
 
   @Override
-  public void addResult(TotalResult totalResult){
+  public void addResult(TotalResult totalResult) {
     FrameResult frameResult;
 
-    try{
+    try {
       frameResult = new FrameResult(show(), score().getScore(), true);
-    } catch (CannotCalculateException cannotCalculateException){
+    } catch (CannotCalculateException cannotCalculateException) {
       frameResult = new FrameResult(show(), -1, false);
     }
 
     totalResult.add(frameResult);
 
-    if(nextFrame != null){
+    if (nextFrame != null) {
       nextFrame.addResult(totalResult);
     }
 
@@ -60,7 +58,7 @@ public class NormalFrame extends Frame {
   @Override
   public Score score() {
     Score score = state.calculateScore();
-    if(score.canCalculateScore()){
+    if (score.canCalculateScore()) {
       return score;
     }
     return nextFrame.calculateAdditionalScore(score);
@@ -68,11 +66,11 @@ public class NormalFrame extends Frame {
 
   @Override
   protected Score calculateAdditionalScore(Score score) {
-    if(state.isFinished()) {
+    if (state.isFinished()) {
       score = state.addScore(score);
     }
 
-    if(nextFrame == null) {
+    if (nextFrame == null) {
       return score;
     }
 

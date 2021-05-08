@@ -9,11 +9,11 @@ public class SpecialShot implements State {
 
   private final FallenPins fallenPins;
 
-  private SpecialShot(FallenPins pins){
+  private SpecialShot(FallenPins pins) {
     this.fallenPins = pins;
   }
 
-  public static SpecialShot of(FallenPins pins){
+  public static SpecialShot of(FallenPins pins) {
     return new SpecialShot(pins);
   }
 
@@ -39,7 +39,7 @@ public class SpecialShot implements State {
 
   @Override
   public Score addScore(Score score) {
-    if(score.canCalculateScore()){
+    if (score.canCalculateScore()) {
       return score;
     }
 

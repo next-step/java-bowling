@@ -13,19 +13,19 @@ public class SpecialShotTest {
   State state;
 
   @BeforeEach
-  void setup(){
+  void setup() {
     state = SpecialShot.of(new FallenPins(10));
   }
 
   @Test
   @DisplayName("종료 확인")
-  void finishedTest(){
+  void finishedTest() {
     Assertions.assertThat(state.isFinished()).isTrue();
   }
 
   @Test
   @DisplayName("추가로 던지려 하면 무조건 에러")
-  void invalidBowlTest(){
+  void invalidBowlTest() {
     Assertions.assertThatThrownBy(() -> state.bowl(new FallenPins(10))).isInstanceOf(CannotThrowBallException.class);
   }
 }

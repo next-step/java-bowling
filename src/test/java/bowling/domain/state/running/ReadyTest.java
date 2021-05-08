@@ -12,31 +12,31 @@ class ReadyTest {
   State state;
 
   @BeforeEach
-  void setup(){
+  void setup() {
     state = Ready.of();
   }
 
   @Test
   @DisplayName("종료 확인")
-  void finishedTest(){
+  void finishedTest() {
     Assertions.assertThat(state.isFinished()).isFalse();
   }
 
   @Test
   @DisplayName("출력 확인")
-  void showTest(){
+  void showTest() {
     Assertions.assertThat(state.show()).isEqualTo("");
   }
 
   @Test
   @DisplayName("스트라이크로의 변환 확인")
-  void changeToSpareTest(){
+  void changeToSpareTest() {
     Assertions.assertThat(state.bowl(new FallenPins(10))).isInstanceOf(Strike.class);
   }
 
   @Test
   @DisplayName("첫 샷 진행으로의 변환 확인")
-  void changeToFirstShotTest(){
+  void changeToFirstShotTest() {
     Assertions.assertThat(state.bowl(new FallenPins(5))).isInstanceOf(FirstShot.class);
   }
 }

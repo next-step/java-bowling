@@ -9,7 +9,7 @@ class FrameTest {
 
   @Test
   @DisplayName("전체 진행 테스트")
-  void fullGameTest(){
+  void fullGameTest() {
     Frame frame = Frame.of(1);
     frame.bowl(new FallenPins(10))
       .bowl(new FallenPins(10))

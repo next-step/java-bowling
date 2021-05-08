@@ -17,28 +17,28 @@ public class Score {
     this.left = left;
   }
 
+  public static Score ofStrike() {
+    return new Score(FULL_SCORE, STRIKE_LEFT);
+  }
+
+  public static Score ofSpare() {
+    return new Score(FULL_SCORE, SPARE_LEFT);
+  }
+
+  public static Score ofMiss(FallenPins totalPins) {
+    return new Score(totalPins.pins(), MISS_LEFT);
+  }
+
+  public static Score ofSpecialShot(FallenPins pins) {
+    return new Score(pins.pins(), MISS_LEFT);
+  }
+
   @Override
   public String toString() {
     return "Score{" +
       "score=" + score +
       ", left=" + left +
       '}';
-  }
-
-  public static Score ofStrike() {
-    return new Score(FULL_SCORE,STRIKE_LEFT);
-  }
-
-  public static Score ofSpare() {
-    return new Score(FULL_SCORE,SPARE_LEFT);
-  }
-
-  public static Score ofMiss(FallenPins totalPins){
-    return new Score(totalPins.pins(), MISS_LEFT);
-  }
-
-  public static Score ofSpecialShot(FallenPins pins){
-    return new Score(pins.pins(), MISS_LEFT);
   }
 
   public Score bowl(int countOfPins) {
