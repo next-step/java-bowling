@@ -3,7 +3,15 @@ package qna.domain;
 import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -94,19 +102,6 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void checkDeleteQuestionPermission(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-
-        answers.checkAnswerInNotOwner(loginUser);
-    }
-
-    public DeleteHistory info() {
-        setDeleted(true);
-        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
-    }
-
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         checkDeleteQuestionPermission(loginUser);
 
@@ -115,5 +110,18 @@ public class Question extends AbstractEntity {
         deleteHistories.add(getAnswers());
 
         return deleteHistories.info();
+    }
+
+    public void checkDeleteQuestionPermission(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        answers.isPossibleToDelete(loginUser);
+    }
+
+    public DeleteHistory delete() {
+        this.deleted = true;
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 }

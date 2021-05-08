@@ -14,7 +14,7 @@ public class DeleteHistories {
     }
 
     public void add(Question question) {
-        deleteHistories.add(question.info());
+        deleteHistories.add(question.delete());
     }
 
     public void add(Answers answers) {
@@ -22,7 +22,7 @@ public class DeleteHistories {
     }
 
     public void add(Answer answer) {
-        deleteHistories.add(answer.info());
+        deleteHistories.add(answer.delete());
     }
 
     public List<DeleteHistory> info() {
