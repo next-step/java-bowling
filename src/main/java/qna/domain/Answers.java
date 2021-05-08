@@ -19,11 +19,9 @@ public class Answers {
         answers.add(answer);
     }
 
-    public void checkAnswerInNotOwner(User loginUser) throws CannotDeleteException {
+    public void isPossibleToDelete(User loginUser) throws CannotDeleteException {
         for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
+            answer.isPossibleToDelete(loginUser);
         }
     }
 
