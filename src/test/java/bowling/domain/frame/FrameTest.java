@@ -20,7 +20,7 @@ class FrameTest {
       .bowl(new FallenPins(7)).bowl(new FallenPins(2))
       .bowl(new FallenPins(7)).bowl(new FallenPins(1))
       .bowl(new FallenPins(6)).bowl(new FallenPins(0))
-      .bowl(new FallenPins(10)).bowl(new FallenPins(1));
+      .bowl(new FallenPins(10)).bowl(new FallenPins(1)).bowl(new FallenPins(5));
 
     TotalResult totalResult = frame.showFullResult();
 

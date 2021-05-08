@@ -5,7 +5,9 @@ import bowling.domain.result.FrameResult;
 import bowling.domain.result.TotalResult;
 import bowling.domain.state.State;
 import bowling.domain.state.finished.Spare;
+import bowling.domain.state.finished.SpecialShot;
 import bowling.domain.state.finished.Strike;
+import bowling.domain.state.running.FirstShot;
 import bowling.domain.state.running.Ready;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotCalculateException;
@@ -36,9 +38,8 @@ public class FinalFrame extends Frame {
       return this;
     }
 
-    if(checkAddable()){
-      state = Ready.of();
-      state = state.bowl(fallenPins);
+    if(!checkFinished()){
+      state = SpecialShot.of(fallenPins);
       states.add(state);
     }
 
@@ -73,7 +74,10 @@ public class FinalFrame extends Frame {
       return score;
     }
 
-    return states.getLast().addScore(score);
+    for(int i=1; i<states.size(); i++){
+      score = states.get(i).addScore(score);
+    }
+    return score;
   }
 
   @Override
@@ -81,40 +85,23 @@ public class FinalFrame extends Frame {
     if(score.canCalculateScore()){
       return score;
     }
-
+    Score addingScore = score;
     for(State state: states){
-      score = state.addScore(score);
+      addingScore = state.addScore(addingScore);
     }
 
-    return score;
+    return addingScore;
   }
 
   @Override
   public boolean checkFinished() {
-    State head = states.getFirst();
-
-    if(!head.isFinished()){
+    Score score;
+    try {
+      score = score();
+    } catch(CannotCalculateException cannotCalculateException){
       return false;
     }
-
-    if(head.isFinished()){
-      return !checkAddable();
-    }
-
-    return true;
-  }
-
-  private boolean checkAddable(){
-    State head = states.getFirst();
-    if(states.size()== SPARE_SHOT_LIMIT && head instanceof Spare){
-      return true;
-    }
-
-    if(states.size() == STRIKE_SHOT_LIMIT && head instanceof Strike){
-      return true;
-    }
-
-    return false;
+    return score().canCalculateScore();
   }
 
   @Override

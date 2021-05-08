@@ -36,12 +36,13 @@ class FinalFrameTest {
   }
 
   @Test
-  @DisplayName("1번 쳤을 때 스트라이크면 추가 가능")
+  @DisplayName("1번 쳤을 때 스트라이크면  2번 추가 가능")
   void validAddingWhenStrikeFrame() {
     Frame frame = Frame.of(10);
     frame.bowl(new FallenPins(10));
     frame.bowl(new FallenPins(1));
-    Assertions.assertThat(frame.show()).isEqualTo("X|1");
+    frame.bowl(new FallenPins(5));
+    Assertions.assertThat(frame.show()).isEqualTo("X|1|5");
   }
 
   @Test
@@ -98,6 +99,7 @@ class FinalFrameTest {
     Frame frame = Frame.of(10);
     frame.bowl(new FallenPins(10));
     frame.bowl(new FallenPins(5));
+    frame.bowl(new FallenPins(9));
 
     Assertions.assertThat(frame.checkFinished()).isTrue();
   }

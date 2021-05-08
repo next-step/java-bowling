@@ -8,13 +8,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class StrikeTest {
+public class SpecialShotTest {
 
   State state;
 
   @BeforeEach
   void setup(){
-    state = Strike.of(new FallenPins(10));
+    state = SpecialShot.of(new FallenPins(10));
   }
 
   @Test
