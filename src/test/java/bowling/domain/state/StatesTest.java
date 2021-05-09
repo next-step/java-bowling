@@ -99,6 +99,29 @@ class StatesTest {
 
     }
 
+    @DisplayName("spare 일때, States 인스턴스가 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_score_spare() {
+        // given
+        State first = Ready.initialize().bowl(Pins.valueOf(9));
+        State second = first.bowl(Pins.valueOf(1));
+
+        // when
+        // 시나리오대로 작성 -> spare 이므로 마지막 삭제 안하고 2번째 넣음
+        States states = States.initialize();
+        states.remove();
+        states.add(first);
+        states.add(second);
+        states.add(Ready.initialize().bowl(Pins.valueOf(10)));
+
+        // then
+        assertAll(
+                () -> assertThat(states.score()).isNotNull(),
+                () -> assertThat(states.score()).isInstanceOf(Score.class),
+                () -> assertThat(states.score().score()).isEqualTo(20)
+        );
+
+    }
 
 
 }
