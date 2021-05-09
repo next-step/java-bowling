@@ -14,25 +14,13 @@ public class NormalFrame implements Frame{
     private final Pin pin;
     private final State result;
 
-    private NormalFrame(Pin pin) {
-        this(pin, Ready.of());
-    }
-
     public NormalFrame(Pin pin, State result) {
         this.pin = pin;
         this.result = result;
     }
 
     public static NormalFrame of() {
-        return new NormalFrame(Pin.of());
-    }
-
-    public static NormalFrame of(Pin pin) {
-        return new NormalFrame(pin);
-    }
-
-    public static NormalFrame of(State result) {
-        return new NormalFrame(null, result);
+        return of(Pin.of(), Ready.of());
     }
 
     public static NormalFrame of(Pin pin, State result) {
@@ -49,12 +37,12 @@ public class NormalFrame implements Frame{
 
     @Override
     public Frame roll(HitNumber rollNumber) {
-        return of(pin, pin.nextHit(result, rollNumber));
+        return of(pin, pin.hit(result, rollNumber));
     }
 
     @Override
     public Frame accumulate(int score) {
-        if(result.isStrike() || result.isSpare()) {
+        if(result.canAccumulate()) {
             return of(pin, result.next(score));
         }
         return this;

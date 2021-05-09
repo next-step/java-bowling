@@ -67,10 +67,6 @@ public class Score {
         return left == INIT_NUM;
     }
 
-    public int compareTo(int score) {
-        return this.score - score;
-    }
-
     public Score calculate(Score score) {
         return of(this.score + score.score, this.left);
     }

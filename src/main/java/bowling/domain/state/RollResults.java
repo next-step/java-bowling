@@ -36,10 +36,10 @@ public class RollResults {
     public RollResults next(Pin pin, HitNumber number) {
         if (!hasNext()) {
             List<State> next = new ArrayList<>(results);
-            next.add(pin.nextHit(Ready.of(), number));
+            next.add(pin.hit(Ready.of(), number));
             return of(next);
         }
-        State newState = pin.nextHit(getLast(), number);
+        State newState = pin.hit(getLast(), number);
         if (results.size() == 1) {
             return of(newState);
         }

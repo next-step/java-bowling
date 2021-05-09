@@ -4,6 +4,7 @@ import bowling.domain.state.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static bowling.domain.state.ReadyTest.READY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -44,25 +45,25 @@ public class PinTest {
 
     @Test
     void gutter핀의_결과확인() {
-        State type = pin.firstHit(HitNumber.of(0));
+        State type = pin.hit(READY, HitNumber.of(0));
         assertThat(type).isEqualTo(Gutter.of());
     }
 
     @Test
     void strike핀의_결과확인() {
-        assertThat(pin.firstHit(HitNumber.of(10))).isEqualTo(Strike.of());
+        assertThat(pin.hit(READY, HitNumber.of(10))).isEqualTo(Strike.of());
     }
 
     @Test
     void spare핀의_결과확인() {
-        State type = pin.firstHit(HitNumber.of(7));
-        assertThat(pin.nextHit(type, HitNumber.of(3))).isEqualTo(Spare.of(7));
+        State type = pin.hit(READY, HitNumber.of(7));
+        assertThat(pin.hit(type, HitNumber.of(3))).isEqualTo(Spare.of(7));
     }
 
     @Test
     void miss핀의_결과확인() {
-        State type = pin.firstHit(HitNumber.of(0));
-        State next = pin.nextHit(type, HitNumber.of(3));
+        State type = pin.hit(READY, HitNumber.of(0));
+        State next = pin.hit(type, HitNumber.of(3));
         assertThat(next).isEqualTo(Miss.of(0, 3));
     }
 }

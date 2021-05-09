@@ -11,28 +11,18 @@ public class Spare extends State {
     private final State firstHit;
     private final State secondHit;
 
-    private Spare(State firstHit) {
-        this(firstHit, OneHit.ofOne(Score.ofSpare(firstHit.eval())));
-    }
-
-    private Spare(State firstHit, OneHit secondHit) {
-        this.firstHit = firstHit;
-        this.secondHit = secondHit;
-    }
-
     private Spare(State firstHit, State secondHit) {
         this.firstHit = firstHit;
         this.secondHit = secondHit;
     }
 
     public static Spare of(int firstScore) {
-        validFirst(firstScore);
-        return new Spare(OneHit.of(firstScore));
+        return of(OneHit.of(firstScore));
     }
 
     public static Spare of(State firstHit) {
         validFirst(firstHit.eval());
-        return new Spare(firstHit);
+        return new Spare(firstHit, OneHit.of(Score.ofSpare(firstHit.eval())));
     }
 
     public static Spare of(State firstHit, State secondHit) {
@@ -86,10 +76,6 @@ public class Spare extends State {
         if(firstScore.isStrike()) {
             throw new IllegalArgumentException(INVALID_FIRST_SCORE);
         }
-    }
-
-    private static void validFirst(int firstScore) {
-        validFirst(Score.of(firstScore));
     }
 
     @Override

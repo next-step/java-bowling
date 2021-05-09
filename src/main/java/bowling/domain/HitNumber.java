@@ -24,6 +24,10 @@ public class HitNumber {
         return pinNum - hitNumber;
     }
 
+    public Frame addScore(Frame frame) {
+        return frame.accumulate(hitNumber);
+    }
+
     private static void validHit(int hitNumber) {
         if (hitNumber < ROLL_LOWER_BOUND || hitNumber > ROLL_UPPER_BOUND) {
             throw new IllegalArgumentException(INVALID_ROLL_NUMBER);
@@ -34,9 +38,5 @@ public class HitNumber {
         if(pinNum - hitNumber < ROLL_LOWER_BOUND) {
             throw new IllegalArgumentException(INVALID_HIT_TOTAL);
         }
-    }
-
-    public Frame addScore(Frame frame) {
-        return frame.accumulate(hitNumber);
     }
 }

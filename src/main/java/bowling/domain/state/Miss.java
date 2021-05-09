@@ -15,12 +15,11 @@ public class Miss extends State {
     }
 
     public static Miss of() {
-        return new Miss(Gutter.of(), Gutter.of());
+        return of(Gutter.of(), Gutter.of());
     }
 
     public static Miss of(int firstScore, int secondScore) {
-        valid(firstScore, secondScore);
-        return new Miss(OneHit.of(firstScore), OneHit.of(secondScore));
+        return of(OneHit.of(firstScore), OneHit.of(secondScore));
     }
 
     public static Miss of(State oneHit, State secondHit) {
@@ -67,10 +66,6 @@ public class Miss extends State {
         if (firstScore.calculate(secondScore).isClear()) {
             throw new IllegalArgumentException(INVALID_MISS);
         }
-    }
-
-    private static void valid(int firstScore, int secondScore) {
-        valid(Score.of(firstScore), Score.of(secondScore));
     }
 
     @Override
