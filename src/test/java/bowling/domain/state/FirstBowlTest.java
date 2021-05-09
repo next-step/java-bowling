@@ -19,8 +19,8 @@ class FirstBowlTest {
 
         // then
         assertAll(
-                () -> assertThat(pins).isNotNull(),
-                () -> assertThat(pins).isInstanceOf(FirstBowl.class),
+                () -> assertThat(firstBowl).isNotNull(),
+                () -> assertThat(firstBowl).isInstanceOf(FirstBowl.class)
         );
     }
 

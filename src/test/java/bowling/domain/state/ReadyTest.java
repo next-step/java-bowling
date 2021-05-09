@@ -19,14 +19,5 @@ class ReadyTest {
         );
     }
 
-    @DisplayName("Ready 인스턴스 생성 여부 테스트")
-    @Test
-    void 생성() {
-        State ready = Ready.initialize();
 
-        assertAll(
-                () -> assertThat(ready).isNotNull(),
-                () -> assertThat(ready).isInstanceOf(Ready.class)
-        );
-    }
 }
