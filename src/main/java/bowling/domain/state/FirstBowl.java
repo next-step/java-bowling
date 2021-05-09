@@ -10,32 +10,35 @@ public final class FirstBowl extends Running {
 
     private static final int EMPTY_VALUE = 0;
 
-    private final Pins firstBowl;
+    private final Pins fallPins;
 
-    public static final State from(Pins firstBowl) {
-        return new FirstBowl(firstBowl);
+    public static final State from(Pins fallPins) {
+        return new FirstBowl(fallPins);
     }
 
-    private FirstBowl(final Pins firstBowl) {
-        validateNull(firstBowl);
-        validateSize(firstBowl);
-        this.firstBowl = firstBowl;
+    private FirstBowl(final Pins fallPins) {
+        validateNull(fallPins);
+        validateSize(fallPins);
+        this.fallPins = fallPins;
     }
 
-    private final void validateNull(final Pins firstBowl) {
-        if (Objects.isNull(firstBowl)) {
+    private final void validateNull(final Pins fallPins) {
+        if (Objects.isNull(fallPins)) {
             throw new PinsNullPointerException();
         }
     }
 
-    private final void validateSize(final Pins firstBowl) {
-        if (!firstBowl.isMiss(EMPTY_VALUE)) {
+    private final void validateSize(final Pins fallPins) {
+        if (!fallPins.isMiss(EMPTY_VALUE)) {
             throw new InvalidFirstBowlSizeException();
         }
     }
 
     @Override
-    public State bowl(Pins pins) {
+    public final State bowl(final Pins additionalFallPins) {
+        if(fallPins.isSpare(additionalFallPins.count())){
+            return Spare.of(fallPins, additionalFallPins);
+        }
         return null;
     }
 
