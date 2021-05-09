@@ -39,8 +39,10 @@ public class FramesTest {
 
     @Test
     void 마지막프레임까지_올스트라이크() {
-        assertThat(lastFrames().isFinished()).isTrue();
-        List<Score> lists = lastFrames().totalScores();
+        Frames lastFrames = lastFrames();
+        assertThat(lastFrames.isFinished()).isTrue();
+        List<Score> scores = lastFrames.totalScores();
+        assertThat(scores.get(scores.size() - 1)).isEqualTo(Score.of(300));
         System.out.println(frames);
     }
 

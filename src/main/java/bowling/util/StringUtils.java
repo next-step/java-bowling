@@ -28,7 +28,7 @@ public class StringUtils {
         String[] frameStr = removeLast(frames.toString()).split(DELIMITER);
         for (int i = 0; i < frameStr.length; i++) {
             stringBuilder.append(
-                    replaceNull(String.format(" %3s  |", frameStr[i].trim())));
+                    replaceNull(String.format(" %-5s|", frameStr[i].trim())));
         }
         for (int i = 0; i < MAX_INDEX - frameStr.length; i++) {
             stringBuilder.append(BLANK_FORMAT);
