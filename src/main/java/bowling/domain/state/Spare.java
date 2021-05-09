@@ -36,7 +36,7 @@ public class Spare extends Finish {
 
     @Override
     public Score score() {
-        return null;
+        return Score.spare();
     }
 
     @Override
