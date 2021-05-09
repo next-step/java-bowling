@@ -9,6 +9,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PinTest {
     public static final Pin PIN = Pin.of();
+    public static final Pin STRIKE_PIN = Pin.of(1, 0);
+    public static final Pin SPARE_PIN = Pin.of(2, 0);
+    public static final Pin MISS_PIN = Pin.of(2, 10);
+    public static final Pin GUTTER_PIN = Pin.of(1, 10);
+    public static final Pin THREE_HIT_PIN = Pin.of(1, 7);
+    public static final Pin THIRD_THREE_HIT_PIN = Pin.of(3, 7);
+
     public Pin pin;
 
     @BeforeEach

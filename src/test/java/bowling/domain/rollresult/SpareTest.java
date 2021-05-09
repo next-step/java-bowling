@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SpareTest {
     public static final Spare SP1 = Spare.of(1);
+    public static final Spare SPARE_3 = Spare.of(3);
 
     @Test
     void 스페어생성() {

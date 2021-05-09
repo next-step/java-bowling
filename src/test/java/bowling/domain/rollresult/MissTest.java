@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MissTest {
-    public static final Miss MISS1 = Miss.of();
+    public static final Miss MISS = Miss.of();
     @Test
     void 미스생성() {
-        assertThat(MISS1.isSpare()).isFalse();
-        assertThat(MISS1.isStrike()).isFalse();
-        assertThat(MISS1.eval().compareTo(0)).isEqualTo(0);
+        assertThat(MISS.isSpare()).isFalse();
+        assertThat(MISS.isStrike()).isFalse();
+        assertThat(MISS.eval().compareTo(0)).isEqualTo(0);
     }
 }

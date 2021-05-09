@@ -1,26 +1,24 @@
 package bowling.domain.frame;
 
 import bowling.domain.HitNumber;
-import bowling.domain.Pin;
-import bowling.domain.rollresult.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
+import static bowling.domain.PinTest.*;
+import static bowling.domain.rollresult.RollResultsTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class FinalFrameTest {
     public static final FinalFrame FRAME = FinalFrame.of();
-    public static final FinalFrame STRIKE_FRAME = FinalFrame.of(Pin.of(1, 0), RollResults.of(Strike.of()));
-    public static final FinalFrame DOUBLE_STRIKE_FRAME = FinalFrame.of(Pin.of(2, 0), RollResults.of(Arrays.asList(Strike.of(),Strike.of())));
-    public static final FinalFrame SPARE_FRAME = FinalFrame.of(Pin.of(2, 0), RollResults.of(Spare.of(3)));
-    public static final FinalFrame MISS_FRAME = FinalFrame.of(Pin.of(2, 10), RollResults.of(Miss.of()));
-    public static final FinalFrame GUTTER_FRAME = FinalFrame.of(Pin.of(1, 10), RollResults.of(Gutter.of()));
-    public static final FinalFrame ONE_ROLL_FRAME = FinalFrame.of(Pin.of(1, 7), RollResults.of(OneHit.of(3)));
-    public static final FinalFrame SPARE_NEXT_FRAME = FinalFrame.of(Pin.of(3, 7), RollResults.of(Arrays.asList(Spare.of(3), OneHit.of(3))));
-    public static final FinalFrame STRIKE_NEXT_FRAME = FinalFrame.of(Pin.of(3, 7), RollResults.of(Arrays.asList(Strike.of(), Strike.of(), OneHit.of(3))));
+    public static final FinalFrame STRIKE_FRAME = FinalFrame.of(STRIKE_PIN, ONE_STRIKE_RESULTS);
+    public static final FinalFrame DOUBLE_STRIKE_FRAME = FinalFrame.of(SPARE_PIN, DOUBLE_STRIKE_RESULTS);
+    public static final FinalFrame SPARE_FRAME = FinalFrame.of(SPARE_PIN, ONE_SPARE_RESULTS);
+    public static final FinalFrame MISS_FRAME = FinalFrame.of(MISS_PIN, MISS_RESULTS);
+    public static final FinalFrame GUTTER_FRAME = FinalFrame.of(GUTTER_PIN, GUTTER_RESULTS);
+    public static final FinalFrame ONE_ROLL_FRAME = FinalFrame.of(THREE_HIT_PIN, THREE_HIT_RESULTS);
+    public static final FinalFrame SPARE_NEXT_FRAME = FinalFrame.of(THIRD_THREE_HIT_PIN, SPARE_THIRD_THREE_HIT);
+    public static final FinalFrame STRIKE_NEXT_FRAME = FinalFrame.of(THIRD_THREE_HIT_PIN, STRIKE_THIRD_THREE_HIT);
     public FinalFrame frame;
 
     @BeforeEach

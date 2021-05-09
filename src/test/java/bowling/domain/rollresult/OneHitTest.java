@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OneHitTest {
+    public static final OneHit ONE_HIT_3 = OneHit.ofOne(3);
+
     @Test
     void 첫투구결과를생성() {
         RollResultType result = OneHit.of(3);

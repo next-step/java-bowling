@@ -1,22 +1,26 @@
 package bowling.domain.frame;
 
 import bowling.domain.HitNumber;
-import bowling.domain.Pin;
 import bowling.domain.Score;
-import bowling.domain.rollresult.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static bowling.domain.PinTest.*;
+import static bowling.domain.rollresult.GutterTest.GUTTER;
+import static bowling.domain.rollresult.MissTest.MISS;
+import static bowling.domain.rollresult.OneHitTest.ONE_HIT_3;
+import static bowling.domain.rollresult.SpareTest.SPARE_3;
+import static bowling.domain.rollresult.StrikeTest.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalFrameTest {
     private static final int MAX_INDEX = 10;
     public static final NormalFrame FRAME = NormalFrame.of();
-    public static final NormalFrame STRIKE_FRAME = NormalFrame.of(Pin.of(1, 0), Strike.of());
-    public static final NormalFrame SPARE_FRAME = NormalFrame.of(Pin.of(2, 0), Spare.of(3));
-    public static final NormalFrame MISS_FRAME = NormalFrame.of(Pin.of(2, 10), Miss.of());
-    public static final NormalFrame GUTTER_FRAME = NormalFrame.of(Pin.of(1, 10), Gutter.of());
-    public static final NormalFrame ONE_ROLL_FRAME = NormalFrame.of(Pin.of(1, 7), OneHit.of(3));
+    public static final NormalFrame STRIKE_FRAME = NormalFrame.of(STRIKE_PIN, STRIKE);
+    public static final NormalFrame SPARE_FRAME = NormalFrame.of(SPARE_PIN, SPARE_3);
+    public static final NormalFrame MISS_FRAME = NormalFrame.of(MISS_PIN, MISS);
+    public static final NormalFrame GUTTER_FRAME = NormalFrame.of(GUTTER_PIN, GUTTER);
+    public static final NormalFrame ONE_ROLL_FRAME = NormalFrame.of(THREE_HIT_PIN, ONE_HIT_3);
     public NormalFrame frame;
 
     @BeforeEach
