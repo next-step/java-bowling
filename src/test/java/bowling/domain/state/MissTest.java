@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.exception.InvalidFirstBowlSizeException;
+import bowling.exception.InvalidMissSizeException;
 import bowling.exception.PinsNullPointerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

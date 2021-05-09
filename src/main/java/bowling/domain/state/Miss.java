@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Score;
+import bowling.exception.InvalidMissSizeException;
 import bowling.exception.PinsNullPointerException;
 
 import java.util.Objects;
@@ -16,6 +17,7 @@ public final class Miss extends Finish {
 
     private Miss(final Pins firstPins, final Pins secondPins) {
         validateNull(firstPins, secondPins);
+        validateSize(firstPins, secondPins);
         this.firstPins = firstPins;
         this.secondPins = secondPins;
     }
@@ -23,6 +25,12 @@ public final class Miss extends Finish {
     private final void validateNull(final Pins firstPins, final Pins secondPins) {
         if (Objects.isNull(firstPins) || Objects.isNull(secondPins)) {
             throw new PinsNullPointerException();
+        }
+    }
+
+    private final void validateSize(final Pins firstPins, final Pins secondPins) {
+        if (!firstPins.isMiss(secondPins.count())) {
+            throw new InvalidMissSizeException();
         }
     }
 
