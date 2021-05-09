@@ -75,28 +75,30 @@ class StatesTest {
 
     }
 
-//    @DisplayName("States 인스턴스가 알맞는 Score 반환 기능 테스트")
-//    @Test
-//    void 반환_score() {
-//        // given
-//        State first = Ready.initialize().bowl(Pins.valueOf(9));
-//        State second = first.bowl(Pins.valueOf(0));
-//
-//        // when
-//        // 시나리오대로 작성 -> miss 이므로 마지막 삭제후 2번째 넣음
-//        States states = States.initialize();
-//        states.remove();
-//        states.add(first);
-//        states.remove();
-//        states.add(second);
-//
-//        // then
-//        assertAll(
-//                () -> assertThat(states.score()).isNotNull(),
-//                () -> assertThat(states.score()).isInstanceOf(Score.class),
-//                () -> assertThat(states.score().score()).isEqualTo(9)
-//        );
-//
-//    }
+    @DisplayName("miss일때, States 인스턴스가 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_score_miss() {
+        // given
+        State first = Ready.initialize().bowl(Pins.valueOf(9));
+        State second = first.bowl(Pins.valueOf(0));
+
+        // when
+        // 시나리오대로 작성 -> miss 이므로 마지막 삭제후 2번째 넣음
+        States states = States.initialize();
+        states.remove();
+        states.add(first);
+        states.remove();
+        states.add(second);
+
+        // then
+        assertAll(
+                () -> assertThat(states.score()).isNotNull(),
+                () -> assertThat(states.score()).isInstanceOf(Score.class),
+                () -> assertThat(states.score().score()).isEqualTo(9)
+        );
+
+    }
+
+
 
 }
