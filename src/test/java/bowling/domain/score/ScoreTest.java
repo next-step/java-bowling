@@ -125,7 +125,7 @@ class ScoreTest {
         assertThat(noneBonusScore.isFinish()).isTrue();
     }
 
-    @DisplayName("Score 인스턴스가 보너스 점수를 더하는 기능")
+    @DisplayName("Score 인스턴스가 보너스 점수를 더하는 기능 테스트")
     @Test
     void 반환_addBonusScore() {
         // given

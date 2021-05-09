@@ -5,6 +5,8 @@ import bowling.exception.InvalidScoreSizeException;
 
 import java.util.Objects;
 
+import static java.lang.Math.addExact;
+
 public final class Score {
 
     private static final int UN_AVAILABLE_SCORE = -1;
@@ -54,7 +56,13 @@ public final class Score {
         }
     }
 
+    public final Score addBonusScore(final int bonusScore) {
+        return new Score(addExact(this.score, bonusScore), bonusCount.decrease());
+    }
+
     public final boolean isFinish() {
         return bonusCount.isFinish();
     }
+
+
 }
