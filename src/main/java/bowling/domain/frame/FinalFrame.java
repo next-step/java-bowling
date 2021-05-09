@@ -4,17 +4,13 @@ import bowling.domain.HitNumber;
 import bowling.domain.Pin;
 import bowling.domain.Score;
 import bowling.domain.state.RollResults;
-import bowling.domain.state.State;
 
 import java.util.Objects;
 
 public class FinalFrame implements Frame {
+    private static final String INVALID_ROLL = "더이상 투구할 수 없습니다.";
     private final Pin pin;
     private final RollResults results;
-
-    private FinalFrame(Pin pin) {
-        this(pin, null);
-    }
 
     private FinalFrame(Pin pin, RollResults results) {
         this.pin = pin;
@@ -22,15 +18,7 @@ public class FinalFrame implements Frame {
     }
 
     public static FinalFrame of() {
-        return new FinalFrame(Pin.of());
-    }
-
-    public static FinalFrame of(Pin pin) {
-        return new FinalFrame(pin);
-    }
-
-    public static FinalFrame of(RollResults results) {
-        return new FinalFrame(null, results);
+        return of(Pin.of(), RollResults.of());
     }
 
     public static FinalFrame of(Pin pin, RollResults results) {
@@ -44,8 +32,8 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame roll(HitNumber hitNumber) {
-        if (results == null) {
-            return firstRoll(hitNumber, this.pin);
+        if(isFinished()) {
+            throw new IllegalStateException(INVALID_ROLL);
         }
         if (results.isCleared()) {
             return nextRoll(hitNumber, pin.reload());
@@ -58,18 +46,13 @@ public class FinalFrame implements Frame {
         return this;
     }
 
-    private Frame firstRoll(HitNumber hitNumber, Pin pin) {
-        State type = pin.firstHit(hitNumber);
-        return of(pin, RollResults.of(type));
-    }
-
     private Frame nextRoll(HitNumber hitNumber, Pin pin) {
         return of(pin, results.next(pin, hitNumber));
     }
 
     @Override
     public boolean isFinished() {
-        return pin.isLast() || (results != null && !results.isCleared());
+        return pin.isLast() || (!results.hasNext() &&!results.isCleared());
     }
 
     @Override

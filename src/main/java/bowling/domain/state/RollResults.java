@@ -21,6 +21,10 @@ public class RollResults {
         this.results = results;
     }
 
+    public static RollResults of() {
+        return of(Ready.of());
+    }
+
     public static RollResults of(State result) {
         return new RollResults(result);
     }

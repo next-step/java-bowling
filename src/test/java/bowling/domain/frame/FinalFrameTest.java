@@ -1,6 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.HitNumber;
+import bowling.domain.Pin;
+import bowling.domain.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,12 +40,11 @@ public class FinalFrameTest {
     }
 
     @Test
-    void 더블스트라이크() {
-        Frame resultFrame = frame.roll(HitNumber.of(10)).roll(HitNumber.of(10));
-        assertThat(resultFrame).isEqualTo(DOUBLE_STRIKE_FRAME);
+    void 스트라이크프레임() {
+        Frame resultFrame = frame.roll(HitNumber.of(10));
+        assertThat(resultFrame).isEqualTo(STRIKE_FRAME);
         assertThat(resultFrame.isFinished()).isFalse();
-        assertThat(resultFrame.totalScore().compareTo(20)).isEqualTo(0);
-        System.out.println(resultFrame);
+        assertThat(resultFrame.totalScore()).isEqualTo(Score.of(10, 0));
     }
 
     @Test
@@ -51,8 +52,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(3));
         assertThat(resultFrame).isEqualTo(ONE_ROLL_FRAME);
         assertThat(resultFrame.isFinished()).isFalse();
-        assertThat(resultFrame.totalScore().compareTo(3)).isEqualTo(0);
-        System.out.println(resultFrame);
+        assertThat(resultFrame.totalScore()).isEqualTo(Score.of(3));
     }
 
     @Test
@@ -60,8 +60,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(7));
         assertThat(resultFrame).isEqualTo(SPARE_FRAME);
         assertThat(resultFrame.isFinished()).isFalse();
-        assertThat(resultFrame.totalScore().compareTo(10)).isEqualTo(0);
-        System.out.println(resultFrame);
+        assertThat(resultFrame.totalScore()).isEqualTo(Score.of(10, 0));
     }
 
     @Test
@@ -69,8 +68,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(0));
         assertThat(resultFrame).isEqualTo(GUTTER_FRAME);
         assertThat(resultFrame.isFinished()).isFalse();
-        assertThat(resultFrame.totalScore().compareTo(0)).isEqualTo(0);
-        System.out.println(resultFrame);
+        assertThat(resultFrame.totalScore()).isEqualTo(Score.of());
     }
 
     @Test
@@ -78,8 +76,15 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(0)).roll(HitNumber.of(0));
         assertThat(resultFrame).isEqualTo(MISS_FRAME);
         assertThat(resultFrame.isFinished()).isTrue();
-        assertThat(resultFrame.totalScore().compareTo(0)).isEqualTo(0);
-        System.out.println(resultFrame);
+        assertThat(resultFrame.totalScore()).isEqualTo(Score.of());
+    }
+
+    @Test
+    void 더블스트라이크() {
+        Frame resultFrame = frame.roll(HitNumber.of(10)).roll(HitNumber.of(10));
+        assertThat(resultFrame).isEqualTo(DOUBLE_STRIKE_FRAME);
+        assertThat(resultFrame.isFinished()).isFalse();
+        assertThat(resultFrame.totalScore()).isEqualTo(Score.of(20));
     }
 
     @Test
@@ -87,8 +92,7 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(10)).roll(HitNumber.of(10)).roll(HitNumber.of(3));
         assertThat(resultFrame).isEqualTo(STRIKE_NEXT_FRAME);
         assertThat(resultFrame.isFinished()).isTrue();
-        assertThat(resultFrame.totalScore().compareTo(23)).isEqualTo(0);
-        System.out.println(resultFrame);
+        assertThat(resultFrame.totalScore()).isEqualTo(Score.of(23));
     }
 
     @Test
@@ -96,8 +100,16 @@ public class FinalFrameTest {
         Frame resultFrame = frame.roll(HitNumber.of(3)).roll(HitNumber.of(7)).roll(HitNumber.of(3));
         assertThat(resultFrame).isEqualTo(SPARE_NEXT_FRAME);
         assertThat(resultFrame.isFinished()).isTrue();
-        assertThat(resultFrame.totalScore().compareTo(13)).isEqualTo(0);
+        assertThat(resultFrame.totalScore()).isEqualTo(Score.of(13));
         System.out.println(resultFrame);
+    }
+
+    @Test
+    void 트리플스트라이크() {
+        Frame resultFrame = frame.roll(HitNumber.of(10)).roll(HitNumber.of(10)).roll(HitNumber.of(10));
+        assertThat(resultFrame).isEqualTo(FinalFrame.of(Pin.of(3, 0), TRIPLE_STRIKE_RESULTS));
+        assertThat(resultFrame.isFinished()).isTrue();
+        assertThat(resultFrame.totalScore()).isEqualTo(Score.of(30));
     }
 
     @Test
