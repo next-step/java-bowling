@@ -99,6 +99,20 @@ class BonusCountTest {
 
     }
 
+    @DisplayName("BonusCount 인스턴스가 보너스가 두개 있는 인스턴스를 반환하는지에 대한 테스트")
+    @Test
+    void 반환_보너스_둘() {
+        // when
+        BonusCount bonusCount = BonusCount.strike();
+
+        // then
+        assertAll(
+                () -> assertThat(bonusCount.isFinish()).isFalse(),
+                () -> assertThat(bonusCount.decrease().isFinish()).isFalse(),
+                () -> assertThat(bonusCount.decrease().decrease().isFinish()).isTrue()
+        );
+
+    }
 
 
 }
