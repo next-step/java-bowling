@@ -136,7 +136,7 @@ class FirstBowlTest {
 
         // then
         assertAll(
-                () -> assertThat(actual.isFinish()).isTrue(),
+                () -> assertThat(actual.isFinish()).isFalse(),
                 () -> assertThat(actual.score()).isEqualTo(beforeScore.score() + pins.count())
         );
     }

@@ -11,44 +11,47 @@ public final class FirstBowl extends Running {
 
     private static final int EMPTY_VALUE = 0;
 
-    private final Pins fisrtBowl;
+    private final Pins firstBowl;
 
-    public static final State from(Pins fallPins) {
-        return new FirstBowl(fallPins);
+    public static final State from(Pins firstBowl) {
+        return new FirstBowl(firstBowl);
     }
 
-    private FirstBowl(final Pins fisrtBowl) {
-        validateNull(fisrtBowl);
-        validateSize(fisrtBowl);
-        this.fisrtBowl = fisrtBowl;
+    private FirstBowl(final Pins firstBowl) {
+        validateNull(firstBowl);
+        validateSize(firstBowl);
+        this.firstBowl = firstBowl;
     }
 
-    private final void validateNull(final Pins fallPins) {
-        if (Objects.isNull(fallPins)) {
+    private final void validateNull(final Pins firstBowl) {
+        if (Objects.isNull(firstBowl)) {
             throw new PinsNullPointerException();
         }
     }
 
-    private final void validateSize(final Pins fallPins) {
-        if (!fallPins.isMiss(EMPTY_VALUE)) {
+    private final void validateSize(final Pins firstBowl) {
+        if (!firstBowl.isMiss(EMPTY_VALUE)) {
             throw new InvalidFirstBowlSizeException();
         }
     }
 
     @Override
     public final State bowl(final Pins secondBowl) {
-        if(fisrtBowl.isSpare(secondBowl.count())){
-            return Spare.of(fisrtBowl, secondBowl);
+        if(firstBowl.isSpare(secondBowl.count())){
+            return Spare.of(firstBowl, secondBowl);
         }
-        if(fisrtBowl.isMiss(secondBowl.count())) {
-            return Miss.of(fisrtBowl, secondBowl);
+        if(firstBowl.isMiss(secondBowl.count())) {
+            return Miss.of(firstBowl, secondBowl);
         }
         throw new InvalidPinsSizeException();
     }
 
     @Override
-    public Score calculateAdditionalScore(Score beforeScore) {
-        return null;
+    public final Score calculateAdditionalScore(Score beforeScore) {
+        if(beforeScore.isFinish()){
+            return beforeScore;
+        }
+        return beforeScore.addBonusScore(firstBowl.count());
     }
 
     @Override
