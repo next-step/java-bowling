@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.StringNullPointerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,6 +33,7 @@ class NameTest {
         assertThatThrownBy(() -> Name.valueOf(stringName))
                 .isInstanceOf(StringNullPointerException.class)
                 .hasMessage("String 인스턴스가 null 입니다.");
-
     }
+
+
 }
