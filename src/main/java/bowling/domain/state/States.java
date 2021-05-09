@@ -19,5 +19,7 @@ public final class States {
         return new States();
     }
 
-
+    public final State last() {
+        return states.getLast();
+    }
 }
