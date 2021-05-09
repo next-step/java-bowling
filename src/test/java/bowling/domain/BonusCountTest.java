@@ -74,4 +74,14 @@ class BonusCountTest {
         assertThat(decreasedCount.isFinish()).isTrue();
 
     }
+
+    @DisplayName("BonusCount 인스턴스가 보너스 없는 인스턴스를 반환하지에 대한 테스트")
+    @Test
+    void 반환_보너스_없음() {
+        // when
+        BonusCount bonusCount = BonusCount.none();
+
+        // then
+        assertThat(bonusCount.isFinish()).isTrue();
+    }
 }
