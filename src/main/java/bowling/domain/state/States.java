@@ -22,4 +22,8 @@ public final class States {
     public final State last() {
         return states.getLast();
     }
+
+    public void add(final State addition) {
+        states.addLast(addition);
+    }
 }
