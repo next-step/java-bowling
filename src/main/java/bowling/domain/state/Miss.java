@@ -7,7 +7,7 @@ public final class Miss extends Finish {
     private final Pins firstPins;
     private final Pins secondPins;
 
-    public static final State from(final Pins firstPins, final Pins secondPins) {
+    public static final State of(final Pins firstPins, final Pins secondPins) {
         return new Miss(firstPins, secondPins);
     }
 
