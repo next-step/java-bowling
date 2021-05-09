@@ -8,14 +8,19 @@ public class Spare extends RollResultType {
     private static final String INVALID_FIRST_SCORE = "스페어의 첫번째 값은 10보다 작아야합니다.";
     private static final String INVALID_SECOND_SCORE = "스페어의 두번째 값은 10-첫번째값보다 커야합니다.";
 
-    private RollResultType firstHit;
-    private OneHit secondHit;
+    private final RollResultType firstHit;
+    private final RollResultType secondHit;
 
     private Spare(RollResultType firstHit) {
-        this(firstHit, OneHit.ofOne(firstHit.eval().diff(10)));
+        this(firstHit, OneHit.ofOne(Score.ofSpare(firstHit.eval())));
     }
 
     private Spare(RollResultType firstHit, OneHit secondHit) {
+        this.firstHit = firstHit;
+        this.secondHit = secondHit;
+    }
+
+    private Spare(RollResultType firstHit, RollResultType secondHit) {
         this.firstHit = firstHit;
         this.secondHit = secondHit;
     }
@@ -31,6 +36,11 @@ public class Spare extends RollResultType {
     }
 
     public static Spare of(RollResultType firstHit, OneHit secondHit) {
+        valid(firstHit.eval(), secondHit.eval());
+        return new Spare(firstHit, secondHit);
+    }
+
+    public static Spare of(RollResultType firstHit, RollResultType secondHit) {
         valid(firstHit.eval(), secondHit.eval());
         return new Spare(firstHit, secondHit);
     }
@@ -52,7 +62,7 @@ public class Spare extends RollResultType {
 
     @Override
     public boolean isCalculated() {
-        return secondHit.isCalculated(this);
+        return secondHit.eval().isFinished();
     }
 
     @Override
@@ -62,7 +72,7 @@ public class Spare extends RollResultType {
 
     @Override
     public RollResultType next(int nextScore) {
-        return of(firstHit, secondHit.add(this, nextScore));
+        return of(firstHit, OneHit.of(secondHit.eval().add(nextScore)));
     }
 
     private static void valid(Score firstScore, Score secondScore) {

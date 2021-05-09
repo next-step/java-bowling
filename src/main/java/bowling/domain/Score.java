@@ -38,6 +38,9 @@ public class Score {
 
     public static Score of(int score) {
         validScore(score);
+        if(score == DEFAULT_MAX_SCORE) {
+            return ofStrike();
+        }
         return new Score(score);
     }
 
@@ -51,12 +54,12 @@ public class Score {
         return new Score(DEFAULT_MAX_SCORE, STRIKE_BOUND);
     }
 
-    public static Score ofSpare() {
-        return new Score(DEFAULT_MAX_SCORE, SPARE_BOUND);
+    public static Score ofSpare(int score) {
+        return new Score(score, SPARE_BOUND);
     }
 
-    public static Score ofGutter() {
-        return new Score(INIT_NUM);
+    public static Score ofSpare(Score before) {
+        return ofSpare(DEFAULT_MAX_SCORE - before.score);
     }
 
     public Score add(RollResultType result, int nextScore) {
@@ -98,10 +101,6 @@ public class Score {
 
     public boolean isStrike() {
         return score == DEFAULT_MAX_SCORE && left == STRIKE_BOUND;
-    }
-
-    public boolean isSpare() {
-        return score == DEFAULT_MAX_SCORE && left == SPARE_BOUND;
     }
 
     public boolean isGutter() {

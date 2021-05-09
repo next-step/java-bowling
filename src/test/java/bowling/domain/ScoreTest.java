@@ -7,8 +7,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ScoreTest {
     public static final Score STRIKE = Score.ofStrike();
-    public static final Score SPARE = Score.ofSpare();
-    public static final Score GUTTER = Score.ofGutter();
+    public static final Score SPARE = Score.ofSpare(3);
+    public static final Score GUTTER = Score.of();
 
     @Test
     void 점수를생성() {
@@ -25,7 +25,7 @@ public class ScoreTest {
     @Test
     void 스트라이크점수생성() {
         assertThat(STRIKE.isStrike()).isTrue();
-        assertThat(STRIKE.isSpare()).isFalse();
+        assertThat(STRIKE.isClear()).isTrue();
         assertThat(STRIKE.isGutter()).isFalse();
     }
 
@@ -47,7 +47,6 @@ public class ScoreTest {
     @Test
     void 스페어점수생성() {
         assertThat(SPARE.isStrike()).isFalse();
-        assertThat(SPARE.isSpare()).isTrue();
         assertThat(SPARE.isGutter()).isFalse();
     }
 
@@ -63,7 +62,7 @@ public class ScoreTest {
     @Test
     void 거터점수생성() {
         assertThat(GUTTER.isStrike()).isFalse();
-        assertThat(GUTTER.isSpare()).isFalse();
+        assertThat(GUTTER.isClear()).isFalse();
         assertThat(GUTTER.isGutter()).isTrue();
     }
 
