@@ -6,16 +6,13 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class StatesTest {
+class FinalRoundTest {
 
-    @DisplayName("States 인스턴스 생성 여부 테스트")
+    @DisplayName("FinalRound 인스턴스 생성 여부 테스트")
     @Test
     void 생성() {
-        // when
-        States states = States.initialize();
+        FinalRound finalRound = FinalRound.initialize();
 
-        // then
-        assertThat(states).isNotNull();
+        assertThat(finalRound).isNotNull();
     }
-
 }

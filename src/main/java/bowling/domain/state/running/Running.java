@@ -1,6 +1,7 @@
-package bowling.domain.state;
+package bowling.domain.state.running;
 
 import bowling.domain.score.Score;
+import bowling.domain.state.State;
 
 public abstract class Running implements State {
 

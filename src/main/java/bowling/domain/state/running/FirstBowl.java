@@ -1,6 +1,10 @@
-package bowling.domain.state;
+package bowling.domain.state.running;
 
 import bowling.domain.score.Score;
+import bowling.domain.state.Pins;
+import bowling.domain.state.State;
+import bowling.domain.state.finish.Miss;
+import bowling.domain.state.finish.Spare;
 import bowling.exception.InvalidFirstBowlSizeException;
 import bowling.exception.InvalidPinsSizeException;
 import bowling.exception.PinsNullPointerException;

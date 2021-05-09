@@ -1,6 +1,7 @@
-package bowling.domain.state;
+package bowling.domain.state.finish;
 
 import bowling.domain.score.Score;
+import bowling.domain.state.State;
 
 public final class Strike extends Finish {
 

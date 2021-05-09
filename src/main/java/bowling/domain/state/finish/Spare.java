@@ -1,6 +1,8 @@
-package bowling.domain.state;
+package bowling.domain.state.finish;
 
 import bowling.domain.score.Score;
+import bowling.domain.state.Pins;
+import bowling.domain.state.State;
 import bowling.exception.InvalidSpareSizeException;
 import bowling.exception.PinsNullPointerException;
 

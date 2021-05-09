@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.state.running.Ready;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 

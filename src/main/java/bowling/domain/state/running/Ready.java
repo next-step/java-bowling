@@ -1,6 +1,8 @@
-package bowling.domain.state;
+package bowling.domain.state.running;
 
 import bowling.domain.score.Score;
+import bowling.domain.state.Pins;
+import bowling.domain.state.State;
 
 public class Ready extends Running {
 

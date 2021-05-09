@@ -1,5 +1,7 @@
-package bowling.domain.state;
+package bowling.domain.state.finish;
 
+import bowling.domain.state.Pins;
+import bowling.domain.state.State;
 import bowling.exception.NoActionBowlException;
 
 public abstract class Finish implements State {
