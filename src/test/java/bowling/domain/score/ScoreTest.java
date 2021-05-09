@@ -1,7 +1,5 @@
 package bowling.domain.score;
 
-import bowling.exception.BonusCountNullPointerException;
-import bowling.exception.InvalidScoreSizeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

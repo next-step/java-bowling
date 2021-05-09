@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.player;
 
 import bowling.exception.InvalidNameSizeException;
 import bowling.exception.NameIncludeVariableLanguage;

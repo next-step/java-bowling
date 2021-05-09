@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.player;
 
+import bowling.domain.player.Name;
 import bowling.exception.InvalidNameSizeException;
 import bowling.exception.NameIncludeVariableLanguage;
 import bowling.exception.StringNullPointerException;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class NameTest {
 
