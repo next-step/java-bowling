@@ -5,16 +5,15 @@ import bowling.domain.result.FrameResult;
 import bowling.domain.result.TotalResult;
 
 public class ResultView {
-  private static final String SCORE_TITLE = "| NAME | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 |";
+  private static final String SCORE_TITLE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
   private static final String WALL = "|";
   private static final String BLANK = " ";
 
-  private static final String EMPTY_ROUND = "    ";
+  private static final String EMPTY_ROUND = "     ";
   private static final String NAME_FORMAT = "%5s";
-  private static final String NUMBER_FORMAT = "%4s";
+  private static final String NUMBER_FORMAT = "%6s";
 
   public void printBoard(PlayerBoard playerBoard) {
-    System.out.println();
     System.out.println(SCORE_TITLE);
 
     printName(playerBoard.playerName());
@@ -32,7 +31,6 @@ public class ResultView {
     }
 
     printEmptyFields(remainRounds);
-    System.out.println();
   }
 
   private void printName(String name) {
@@ -48,7 +46,7 @@ public class ResultView {
 
   private void printEmptyFields(int remainFields) {
     while (remainFields-- > 0) {
-      System.out.print(EMPTY_ROUND);
+      System.out.print(String.format(NUMBER_FORMAT, EMPTY_ROUND));
       System.out.print(WALL);
     }
     System.out.println();
