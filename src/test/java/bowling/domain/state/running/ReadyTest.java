@@ -26,7 +26,7 @@ class ReadyTest {
 
     @DisplayName("Ready 인스턴스가 bowl() 시, 10이 들어오면 Strike 인스턴스를 반환하는지 테스트")
     @Test
-    void 반환_bowl() {
+    void 반환_bowl_strike() {
         //given
         Pins pins = Pins.valueOf(10);
 
@@ -37,6 +37,22 @@ class ReadyTest {
         assertAll(
                 () -> assertThat(actual).isNotNull(),
                 () -> assertThat(actual).isInstanceOf(Strike.class)
+        );
+    }
+
+    @DisplayName("Ready 인스턴스가 bowl() 시, 10미만 값이 들어오면 FirstBowl 인스턴스를 반환하는지 테스트")
+    @Test
+    void 반환_bowl_firstBowl() {
+        //given
+        Pins pins = Pins.valueOf(9);
+
+        // when
+        State ready = Ready.initialize();
+        State actual = ready.bowl(pins);
+
+        assertAll(
+                () -> assertThat(actual).isNotNull(),
+                () -> assertThat(actual).isInstanceOf(FirstBowl.class)
         );
     }
 
