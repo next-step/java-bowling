@@ -115,4 +115,32 @@ class ScoreTest {
 
     }
 
+    @DisplayName("Score 인스턴스가 보너스 점수를 다 더했는지를 반환하는 테스트")
+    @Test
+    void 반환_finish() {
+        // when
+        Score noneBonusScore = Score.of(10, BonusCount.none());
+
+        // then
+        assertThat(noneBonusScore.isFinish()).isTrue();
+    }
+
+    @DisplayName("Score 인스턴스가 보너스 점수를 더하는 기능")
+    @Test
+    void 반환_addBonusScore() {
+        // given
+        int bonusScore = 10;
+        Score target = Score.spare();
+
+        // when
+        Score score = target.addBonusScore(10);
+
+        // then
+        assertAll(
+                () -> assertThat(score).isNotNull(),
+                () -> assertThat(score.isFinish()).isTrue()
+        );
+
+    }
+
 }
