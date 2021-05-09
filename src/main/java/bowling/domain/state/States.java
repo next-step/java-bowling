@@ -7,9 +7,11 @@ import java.util.LinkedList;
 
 public final class States {
 
+    private final FinalRound finalRound;
     private final LinkedList<State> states;
 
     private States() {
+        this.finalRound = FinalRound.initialize();
         this.states = new LinkedList<>(Arrays.asList(Ready.initialize()));
     }
 
