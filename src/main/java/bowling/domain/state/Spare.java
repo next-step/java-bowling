@@ -41,7 +41,14 @@ public class Spare extends Finish {
 
     @Override
     public Score calculateAdditionalScore(Score beforeScore) {
-        return null;
+        if (beforeScore.isFinish()) {
+            return beforeScore;
+        }
+        beforeScore = beforeScore.addBonusScore(firstPins.count());
+        if (beforeScore.isFinish()) {
+            return beforeScore;
+        }
+        return beforeScore.addBonusScore(secondPins.count());
     }
 
     @Override
