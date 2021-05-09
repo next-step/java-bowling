@@ -1,6 +1,9 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Score;
+import bowling.exception.PinsNullPointerException;
+
+import java.util.Objects;
 
 public final class Miss extends Finish {
 
@@ -12,8 +15,15 @@ public final class Miss extends Finish {
     }
 
     private Miss(final Pins firstPins, final Pins secondPins) {
+        validateNull(firstPins, secondPins);
         this.firstPins = firstPins;
         this.secondPins = secondPins;
+    }
+
+    private final void validateNull(final Pins firstPins, final Pins secondPins) {
+        if (Objects.isNull(firstPins) || Objects.isNull(secondPins)) {
+            throw new PinsNullPointerException();
+        }
     }
 
     @Override
