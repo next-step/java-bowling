@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Score;
-import bowling.exception.InvalidPinsSizeException;
 import bowling.exception.InvalidSpareSizeException;
 import bowling.exception.PinsNullPointerException;
 import org.junit.jupiter.api.DisplayName;
@@ -71,6 +70,25 @@ class SpareTest {
                 () -> assertThat(spare.score()).isNotNull(),
                 () -> assertThat(spare.score()).isInstanceOf(Score.class),
                 () -> assertThat(spare.score().score()).isEqualTo(10)
+        );
+    }
+
+    @DisplayName("Spare 인스턴스가 calculateAdditionalScore 의 결과로 알맞는 Score 인스턴스를 반한하는지 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_spare_일_경우() {
+        // given
+        Pins firstPins = Pins.valueOf(1);
+        Pins secondPins = Pins.valueOf(9);
+
+        // when
+        State spare = Spare.of(firstPins, secondPins);
+        Score beforeScore = Score.spare();
+        Score actual = spare.calculateAdditionalScore(beforeScore);
+
+        // then
+        assertAll(
+                () -> assertThat(actual.isFinish()).isTrue(),
+                () -> assertThat(actual.score()).isEqualTo(beforeScore.score() + firstPins.count())
         );
     }
 }

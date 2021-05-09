@@ -18,7 +18,7 @@ public class Strike extends Finish {
     }
 
     @Override
-    public Score calculateAdditionalScore(Score score) {
+    public Score calculateAdditionalScore(Score beforeScore) {
         return null;
     }
 
