@@ -61,11 +61,12 @@ class ScoreTest {
     @Test
     void 반환_사용불가능한_값() {
         // given
-        int firstCount = 0;
-        int secondCount = 9;
+        int missCount = 9;
 
-        Score score = Score.miss(firstCount, secondCount);
+        // when
+        Score score = Score.miss(missCount);
 
+        // then
         assertThat(score).isNotNull();
     }
 
