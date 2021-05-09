@@ -24,4 +24,21 @@ class SpareTest {
                 () -> assertThat(spare).isInstanceOf(Spare.class)
         );
     }
+
+    @DisplayName("Spare 인스턴스 생성 여부 테스트")
+    @Test
+    void 생성() {
+        // given
+        Pins firstPins = Pins.valueOf(0);
+        Pins secondPins = Pins.valueOf(10);
+
+        // when
+        State spare = Spare.of(firstPins, secondPins);
+
+        // then
+        assertAll(
+                () -> assertThat(spare).isNotNull(),
+                () -> assertThat(spare).isInstanceOf(Spare.class)
+        );
+    }
 }
