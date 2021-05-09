@@ -5,6 +5,13 @@ import bowling.domain.score.Score;
 
 public class Ready extends Running {
 
+    public static State initialize() {
+        return new Ready();
+    }
+
+    private Ready() {
+    }
+
     @Override
     public Frame bowl(Pins pins) {
         return null;
