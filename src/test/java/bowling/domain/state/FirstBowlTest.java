@@ -68,20 +68,20 @@ class FirstBowlTest {
         );
     }
 
-    @DisplayName("FirstBowl 인스턴스가 Miss 를 반환하는지 테스트")
-    @Test
-    void 반환_bowl_Miss() {
-        // given
-        Pins pins = Pins.valueOf(9);
-
-        // when
-        State firstBowl = FirstBowl.from(pins);
-        State actual = firstBowl.bowl(Pins.valueOf(0));
-
-        assertAll(
-                () -> assertThat(actual).isNotNull(),
-                () -> assertThat(actual).isInstanceOf(Miss.class)
-        );
-    }
+//    @DisplayName("FirstBowl 인스턴스가 Miss 를 반환하는지 테스트")
+//    @Test
+//    void 반환_bowl_Miss() {
+//        // given
+//        Pins pins = Pins.valueOf(9);
+//
+//        // when
+//        State firstBowl = FirstBowl.from(pins);
+//        State actual = firstBowl.bowl(Pins.valueOf(0));
+//
+//        assertAll(
+//                () -> assertThat(actual).isNotNull(),
+//                () -> assertThat(actual).isInstanceOf(Miss.class)
+//        );
+//    }
 
 }
