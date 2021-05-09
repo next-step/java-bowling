@@ -39,6 +39,11 @@ public class Miss extends State {
     }
 
     @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
     public boolean hasNext() {
         return false;
     }

@@ -32,6 +32,11 @@ public class Strike extends State {
     }
 
     @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
     public boolean hasNext() {
         return false;
     }

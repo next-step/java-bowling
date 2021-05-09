@@ -17,8 +17,8 @@ public class FinalFrameTest {
     public static final FinalFrame MISS_FRAME = FinalFrame.of(MISS_PIN, MISS_RESULTS);
     public static final FinalFrame GUTTER_FRAME = FinalFrame.of(GUTTER_PIN, GUTTER_RESULTS);
     public static final FinalFrame ONE_ROLL_FRAME = FinalFrame.of(THREE_HIT_PIN, THREE_HIT_RESULTS);
-    public static final FinalFrame SPARE_NEXT_FRAME = FinalFrame.of(THIRD_THREE_HIT_PIN, SPARE_THIRD_THREE_HIT);
-    public static final FinalFrame STRIKE_NEXT_FRAME = FinalFrame.of(THIRD_THREE_HIT_PIN, STRIKE_THIRD_THREE_HIT);
+    public static final FinalFrame SPARE_NEXT_FRAME = FinalFrame.of(THIRD_THREE_HIT_PIN, SPARE_THIRD_THREE_RESULTS);
+    public static final FinalFrame STRIKE_NEXT_FRAME = FinalFrame.of(THIRD_THREE_HIT_PIN, STRIKE_THIRD_THREE_RESULTS);
     public FinalFrame frame;
 
     @BeforeEach

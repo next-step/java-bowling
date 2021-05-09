@@ -56,6 +56,11 @@ public class Spare extends State {
     }
 
     @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
     public boolean hasNext() {
         return false;
     }

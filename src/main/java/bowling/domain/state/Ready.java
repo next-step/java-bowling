@@ -4,14 +4,11 @@ import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Gutter extends State {
+public class Ready extends State {
     private final Score score = Score.of();
 
-    private Gutter() {
-    }
-
-    public static Gutter of() {
-        return new Gutter();
+    public static Ready of() {
+        return new Ready();
     }
 
     @Override
@@ -26,7 +23,7 @@ public class Gutter extends State {
 
     @Override
     public boolean isReady() {
-        return false;
+        return true;
     }
 
     @Override
@@ -46,27 +43,19 @@ public class Gutter extends State {
 
     @Override
     public State next(int nextHit) {
-        if (Score.of(nextHit).isStrike()) {
-            return Spare.of(this, OneHit.ofOne(nextHit));
-        }
-        return Miss.of(this, OneHit.of(nextHit));
+        return OneHit.of(nextHit);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Gutter gutter = (Gutter) o;
-        return Objects.equals(score, gutter.score);
+        Ready ready = (Ready) o;
+        return Objects.equals(score, ready.score);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(score);
-    }
-
-    @Override
-    public String toString() {
-        return "-";
     }
 }

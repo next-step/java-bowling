@@ -5,6 +5,7 @@ import bowling.domain.Score;
 public abstract class State {
     public abstract boolean isStrike();
     public abstract boolean isSpare();
+    public abstract boolean isReady();
     public abstract boolean hasNext();
     public abstract boolean canAccumulate();
     public abstract Score eval();

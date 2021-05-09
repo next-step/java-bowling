@@ -51,7 +51,7 @@ public class FinalFrame implements Frame {
             throw new IllegalStateException();
         }
         if (results.isCleared()) {
-            return nextRoll(hitNumber, Pin.reload(pin));
+            return nextRoll(hitNumber, pin.reload());
         }
         return nextRoll(hitNumber, pin);
     }

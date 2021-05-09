@@ -33,9 +33,9 @@ public class Pin {
         return new Pin();
     }
 
-    public static Pin reload(Pin pin) {
-        validTry(pin.tryNum);
-        return new Pin(pin.tryNum);
+    public Pin reload() {
+        validTry(this.tryNum);
+        return new Pin(this.tryNum);
     }
 
     public static Pin of(int tryNum, int pinNum) {
