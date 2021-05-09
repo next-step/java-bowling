@@ -10,11 +10,9 @@ public final class States {
 
     private static final int SEARCH_START_INDEX = 1;
 
-    private final FinalRound finalRound;
     private final LinkedList<State> states;
 
     private States() {
-        this.finalRound = FinalRound.initialize();
         this.states = new LinkedList<>(Arrays.asList(Ready.initialize()));
     }
 
@@ -22,7 +20,7 @@ public final class States {
         return new States();
     }
 
-    public final State last() {
+    public final State current() {
         return states.getLast();
     }
 

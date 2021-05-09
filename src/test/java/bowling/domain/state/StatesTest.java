@@ -29,8 +29,8 @@ class StatesTest {
 
         // then
         assertAll(
-                () -> assertThat(states.last()).isNotNull(),
-                () -> assertThat(states.last()).isInstanceOf(State.class)
+                () -> assertThat(states.current()).isNotNull(),
+                () -> assertThat(states.current()).isInstanceOf(State.class)
         );
 
     }
@@ -44,7 +44,7 @@ class StatesTest {
         // when
         States states = States.initialize();
         states.add(expected);
-        State actual = states.last();
+        State actual = states.current();
 
         // then
         assertAll(
@@ -66,7 +66,7 @@ class StatesTest {
         states.add(expected);
         states.add(removed);
         states.remove();
-        State actual = states.last();
+        State actual = states.current();
 
         // then
         assertAll(
