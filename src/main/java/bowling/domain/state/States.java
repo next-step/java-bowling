@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.running.Ready;
 
 import java.util.Arrays;
@@ -29,5 +30,9 @@ public final class States {
 
     public final void remove() {
         states.removeLast();
+    }
+
+    public final Score score() {
+        return states.getLast().score();
     }
 }
