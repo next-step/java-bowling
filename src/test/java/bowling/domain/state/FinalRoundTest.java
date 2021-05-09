@@ -31,7 +31,7 @@ class FinalRoundTest {
         assertThat(finalRound.isFinish(bonus)).isTrue();
     }
 
-    @DisplayName("FinalRound 인스턴스의 보너스 았을 때 종료 기능 테스트")
+    @DisplayName("FinalRound 인스턴스의 보너스 있을 때 종료 기능 테스트")
     @Test
     void 종료_보너스_있을때() {
         // given
