@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.InvalidBonusCountSizeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +16,7 @@ class BonusCountTest {
     @ValueSource(ints = {0, 1, 2})
     void 생성(int remain) {
         // when
-        BonusCount bonusCount = BonusCount.from(remain);
+        BonusCount bonusCount = BonusCount.valueOf(remain);
 
         // then
         assertThat(bonusCount).isNotNull();
@@ -28,13 +29,27 @@ class BonusCountTest {
         int negativeValue = -1;
         int overSizeValue = 3;
 
-        assertThatThrownBy(() -> BonusCount.from(negativeValue))
+        // when and then
+        assertThatThrownBy(() -> BonusCount.valueOf(negativeValue))
                 .isInstanceOf(InvalidBonusCountSizeException.class)
                 .hasMessage("알맞는 보너스 횟수에 대한 크기가 아닙니다.");
 
 
-        assertThatThrownBy(() -> BonusCount.from(overSizeValue))
+        assertThatThrownBy(() -> BonusCount.valueOf(overSizeValue))
                 .isInstanceOf(InvalidBonusCountSizeException.class)
                 .hasMessage("알맞는 보너스 횟수에 대한 크기가 아닙니다.");
+    }
+
+    @DisplayName("BonusCount 인스턴스가 종료되었지에 대한 테스트")
+    @Test
+    void 종료() {
+        // given
+        int remain = 0;
+
+        // when
+        BonusCount bonusCount = BonusCount.valueOf(remain);
+
+        // then
+        assertThat(bonusCount.isFinish()).isTrue();
     }
 }

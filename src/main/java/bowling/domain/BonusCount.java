@@ -1,14 +1,26 @@
 package bowling.domain;
 
+import bowling.exception.InvalidBonusCountSizeException;
+
 public final class BonusCount {
+
+    private static final int MINIMUM_BONUS_COUNT = 0;
+    private static final int MAXIMUM_BONUS_COUNT = 2;
 
     private final int remain;
 
     private BonusCount(final int remain) {
+        validateSize(remain);
         this.remain = remain;
     }
 
-    public static BonusCount from(final int remain) {
+    private void validateSize(final int remain) {
+        if (remain < MINIMUM_BONUS_COUNT || remain > MAXIMUM_BONUS_COUNT) {
+            throw new InvalidBonusCountSizeException();
+        }
+    }
+
+    public static BonusCount valueOf(final int remain) {
         return new BonusCount(remain);
     }
 
