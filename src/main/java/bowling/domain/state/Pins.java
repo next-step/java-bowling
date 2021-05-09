@@ -7,7 +7,7 @@ import java.util.List;
 
 import static java.lang.Math.*;
 
-public class Pins {
+public final class Pins {
 
     private static final int EMPTY = 0;
     private static final int FULL = 10;
@@ -51,6 +51,10 @@ public class Pins {
         if (fallCount > count) {
             throw new InvalidPinsSizeException();
         }
+    }
+
+    public final boolean isMiss(final int fallCount) {
+        return addExact(count, fallCount) < FULL;
     }
 
     public final boolean isSpare(final int fallCount) {

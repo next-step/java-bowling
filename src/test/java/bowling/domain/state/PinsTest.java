@@ -158,7 +158,6 @@ class PinsTest {
                 () -> assertThat(firstActual).isTrue(),
                 () -> assertThat(secondActual).isFalse()
         );
-
     }
 
 }
