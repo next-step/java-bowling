@@ -22,5 +22,22 @@ class FinalFrameTest {
         );
     }
 
+    @DisplayName("FinalFrame 인스턴스가 bowl 실행 및 종료 여부 테스트")
+    @Test
+    void 투구_보너스_없을때() {
+        // given
+        Pins firstPins = Pins.valueOf(9);
+        Pins secondPins = Pins.valueOf(0);
+
+        // when
+        Frame finalFrame = FinalFrame.initialize();
+        finalFrame = finalFrame.bowl(firstPins);
+        finalFrame = finalFrame.bowl(secondPins);
+
+
+        // then
+        assertThat(finalFrame.isFinish()).isTrue();
+    }
+
 
 }
