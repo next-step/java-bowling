@@ -59,4 +59,19 @@ class BonusCountTest {
         );
 
     }
+
+    @DisplayName("BonusCount 인스턴스가 감소 되는지에 대한 테스트")
+    @Test
+    void 감소() {
+        // given
+        int remain = 1;
+
+        // when
+        BonusCount bonusCount = BonusCount.valueOf(remain);
+        BonusCount decreasedCount = bonusCount.decrease();
+
+        // then
+        assertThat(decreasedCount.isFinish()).isTrue();
+
+    }
 }
