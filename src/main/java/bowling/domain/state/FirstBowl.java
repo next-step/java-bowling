@@ -1,6 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.score.Score;
 import bowling.exception.InvalidFirstBowlSizeException;
 import bowling.exception.PinsNullPointerException;
@@ -35,9 +34,8 @@ public final class FirstBowl extends Running {
         }
     }
 
-
     @Override
-    public Frame bowl(Pins pins) {
+    public State bowl(Pins pins) {
         return null;
     }
 

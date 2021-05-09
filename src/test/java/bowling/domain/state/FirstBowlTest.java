@@ -52,4 +52,20 @@ class FirstBowlTest {
                 .hasMessage("FirstBowl 에 대해 알맞지 않은 크기가 입력 되었습니다.");
     }
 
+    @DisplayName("FirstBowl 인스턴스가 Spare 를 반환하는지 테스트")
+    @Test
+    void 반환_bowl_Spare() {
+        // given
+        Pins pins = Pins.valueOf(9);
+
+        // when
+        State firstBowl = FirstBowl.from(pins);
+        State actual = firstBowl.bowl(Pins.valueOf(1));
+
+        assertAll(
+                () -> assertThat(actual).isNotNull(),
+                () -> assertThat(actual).isInstanceOf(Spare.class)
+        );
+    }
+
 }

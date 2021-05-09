@@ -1,6 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.score.Score;
 
 public class Ready extends Running {
@@ -13,7 +12,7 @@ public class Ready extends Running {
     }
 
     @Override
-    public Frame bowl(Pins pins) {
+    public State bowl(Pins pins) {
         return null;
     }
 

@@ -1,12 +1,11 @@
 package bowling.domain.state;
 
-import bowling.domain.frame.Frame;
 import bowling.exception.NoActionBowlException;
 
 public abstract class Finish implements State {
 
     @Override
-    public Frame bowl(Pins pins) {
+    public State bowl(Pins pins) {
         throw new NoActionBowlException();
     }
 

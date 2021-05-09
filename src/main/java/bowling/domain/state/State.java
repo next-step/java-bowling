@@ -1,10 +1,9 @@
 package bowling.domain.state;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.score.Score;
 
 public interface State {
-    Frame bowl(Pins pins);
+    State bowl(Pins pins);
 
     boolean isFinish();
 
