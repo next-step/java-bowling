@@ -105,7 +105,7 @@ class PinsTest {
 
     @DisplayName("Pins 인스턴스에 핀이 남았는지 테스트")
     @Test
-    void 반환_empty() {
+    void 반환_isEmpty() {
         // given
         int fallCount = 10;
 
@@ -118,5 +118,26 @@ class PinsTest {
                 () -> assertThat(pins.isEmpty()).isFalse(),
                 () -> assertThat(remain.isEmpty()).isTrue()
         );
+    }
+
+
+    @DisplayName("Pins 인스턴스가 맞은 값이 스페어인지 테스트")
+    @Test
+    void 반환_isSpare() {
+        // given
+        int firstCount = 10;
+        int secondCount = 0;
+
+        // when
+        Pins firstBowl = Pins.valueOf(0);
+        boolean firstActual = firstBowl.isSpare(firstCount);
+        boolean secondActual = firstBowl.isSpare(secondCount);
+
+        // then
+        assertAll(
+                () -> assertThat(firstActual).isTrue(),
+                () -> assertThat(secondActual).isFalse()
+        );
+
     }
 }

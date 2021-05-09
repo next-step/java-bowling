@@ -58,4 +58,7 @@ public class Pins {
     }
 
 
+    public final boolean isEmpty() {
+        return count == EMPTY;
+    }
 }
