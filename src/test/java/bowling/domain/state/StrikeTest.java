@@ -31,4 +31,5 @@ class StrikeTest {
                 () -> assertThat(strike.score().score()).isEqualTo(10)
         );
     }
+
 }
