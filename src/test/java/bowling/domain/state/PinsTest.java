@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PinsTest {
 
@@ -66,5 +67,23 @@ class PinsTest {
 
         // then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("Pins 인스턴스에 프레임이 떨어진 핀의 갯수 입력시 남은 핀이 알맞게 존재하는지 테스트")
+    @Test
+    void 반환_남은_핀() {
+        // given
+        int fallCount = 10;
+
+        // when
+        Pins pins = Pins.fullSetting();
+
+
+        assertAll(
+                () -> assertThat(pins.hit(fallCount)).isNotNull(),
+                () -> assertThat(pins.hit(fallCount)).isInstanceOf(Pins.class),
+                () -> assertThat(pins.hit(fallCount)).isEqualTo(0)
+        );
+
     }
 }
