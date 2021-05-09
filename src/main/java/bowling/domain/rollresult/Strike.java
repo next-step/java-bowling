@@ -6,32 +6,19 @@ import java.util.Objects;
 
 public class Strike extends RollResultType {
     private static final String INVALID_SCORE = "스트라이크의 값은 10 이상이어야합니다.";
-    private final OneHit firstHit;
+    private final RollResultType hit;
 
-    private Strike() {
-        firstHit = OneHit.ofOne(10);
-    }
-
-    private Strike(int score) {
-        firstHit = OneHit.ofOne(score);
-    }
-
-    private Strike(OneHit firstHit) {
-        this.firstHit = firstHit;
+    private Strike(RollResultType hit) {
+        this.hit = hit;
     }
 
     public static Strike of() {
-        return new Strike();
+        return new Strike(OneHit.ofOne(Score.ofStrike()));
     }
 
-    public static Strike of(int score) {
-        valid(score);
-        return new Strike(score);
-    }
-
-    public static Strike of(OneHit firstHit) {
-        valid(firstHit.eval());
-        return new Strike(firstHit);
+    public static Strike of(RollResultType hit) {
+        valid(hit.eval());
+        return new Strike(hit);
     }
 
     @Override
@@ -51,21 +38,17 @@ public class Strike extends RollResultType {
 
     @Override
     public boolean canAccumulate() {
-        return !firstHit.isCalculated(this);
+        return !hit.eval().isFinished();
     }
 
     @Override
     public Score eval() {
-        return firstHit.eval();
+        return hit.eval();
     }
 
     @Override
     public RollResultType next(int nextScore) {
-        return of(firstHit.add(this, nextScore));
-    }
-
-    private static void valid(int score) {
-        valid(Score.of(score));
+        return of(OneHit.of(hit.eval().add(nextScore)));
     }
 
     private static void valid(Score score) {
@@ -79,12 +62,12 @@ public class Strike extends RollResultType {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Strike strike = (Strike) o;
-        return Objects.equals(firstHit, strike.firstHit);
+        return Objects.equals(hit, strike.hit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstHit);
+        return Objects.hash(hit);
     }
 
     @Override

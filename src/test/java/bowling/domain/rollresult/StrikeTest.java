@@ -1,8 +1,10 @@
 package bowling.domain.rollresult;
 
+import bowling.domain.Score;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class StrikeTest {
     public static final Strike STRIKE = Strike.of();
@@ -18,15 +20,19 @@ public class StrikeTest {
 
     @Test
     void 스트라이크는_한번의추가점수가_가능하다() {
-        RollResultType strike = Strike.of().next(3);
-
-        assertThat(strike.canAccumulate()).isFalse();
+        RollResultType oneAdd = Strike.of().next(3);
+        assertThat(oneAdd.eval()).isEqualTo(Score.of(13, 1));
+        assertThat(oneAdd.canAccumulate()).isTrue();
     }
 
     @Test
     void 스트라이크의_점수추가는_두번까지가능하다() {
-        RollResultType strike = Strike.of().next(3).next(5);
-        assertThat(strike.eval().compareTo(18)).isEqualTo(0);
-        assertThat(strike.next(10).eval().compareTo(18)).isEqualTo(0);
+        RollResultType twoAdd = Strike.of().next(3).next(5);
+        assertThat(twoAdd.eval()).isEqualTo(Score.of(18, 0));
+        assertThat(twoAdd.canAccumulate()).isFalse();
+
+        assertThatThrownBy(() -> {
+            twoAdd.next(3);
+        }).isInstanceOf(IllegalStateException.class);
     }
 }
