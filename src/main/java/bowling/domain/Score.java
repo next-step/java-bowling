@@ -8,13 +8,12 @@ import static java.lang.Math.abs;
 
 public class Score {
     private static final int INIT_NUM = 0;
-    private static final int ADD_NUM_UPPER_BOUND = 2;
     private static final int SPARE_BOUND = 1;
     private static final int STRIKE_BOUND = 2;
     private static final int DEFAULT_MAX_SCORE = 10;
     private static final int DEFAULT_MIN_SCORE = 0;
     private static final String INVALID_SCORE = "점수는 0 이상이어야합니다.";
-    private static final String INVALID_ADD_NUM = "점수 추가합산은 최대 2회까지 가능합니다.";
+    private static final String INVALID_LEFT = "점수 추가합산이 불가능합니다.";
     private final int score;
     private final int left;
 
@@ -28,9 +27,9 @@ public class Score {
         this.left = INIT_NUM;
     }
 
-    private Score(int score, int addNum) {
+    private Score(int score, int left) {
         this.score = score;
-        this.left = addNum;
+        this.left = left;
     }
 
     public static Score of() {
@@ -42,10 +41,22 @@ public class Score {
         return new Score(score);
     }
 
-    public static Score of(int score, int addNum) {
+    public static Score of(int score, int left) {
         validScore(score);
-        validAddNum(addNum);
-        return new Score(score, addNum);
+        validLeft(left);
+        return new Score(score, left);
+    }
+
+    public static Score ofStrike() {
+        return new Score(DEFAULT_MAX_SCORE, STRIKE_BOUND);
+    }
+
+    public static Score ofSpare() {
+        return new Score(DEFAULT_MAX_SCORE, SPARE_BOUND);
+    }
+
+    public static Score ofGutter() {
+        return new Score(INIT_NUM);
     }
 
     public Score add(RollResultType result, int nextScore) {
@@ -56,18 +67,17 @@ public class Score {
         return this;
     }
 
+    public Score add(int nextScore) {
+        validLeft(this.left);
+        return of(this.score + nextScore, this.left - 1);
+    }
+
     public boolean isFinished(RollResultType result) {
-        return (!result.isStrike() && !result.isSpare())
-                || (result.isSpare() && left == SPARE_BOUND)
-                || (result.isStrike() && left == STRIKE_BOUND);
+        return left == INIT_NUM;
     }
 
-    public Score add(Score score) {
-        return of(this.score + score.score, this.left);
-    }
-
-    public Score add(int score) {
-        return of(this.score + score, this.left);
+    public boolean isFinished() {
+        return left == INIT_NUM;
     }
 
     public Score diff(int score) {
@@ -78,8 +88,20 @@ public class Score {
         return this.score - score;
     }
 
+    public Score calculate(Score score) {
+        return of(this.score + score.score, this.left);
+    }
+
+    public Score calculate(int score) {
+        return calculate(Score.of(score));
+    }
+
     public boolean isStrike() {
-        return score == DEFAULT_MAX_SCORE;
+        return score == DEFAULT_MAX_SCORE && left == STRIKE_BOUND;
+    }
+
+    public boolean isSpare() {
+        return score == DEFAULT_MAX_SCORE && left == SPARE_BOUND;
     }
 
     public boolean isGutter() {
@@ -90,9 +112,9 @@ public class Score {
         return score >= DEFAULT_MAX_SCORE;
     }
 
-    private static void validAddNum(int addNum) {
-        if (addNum > ADD_NUM_UPPER_BOUND) {
-            throw new IllegalStateException(INVALID_ADD_NUM);
+    private static void validLeft(int left) {
+        if (left < INIT_NUM) {
+            throw new IllegalStateException(INVALID_LEFT);
         }
     }
 

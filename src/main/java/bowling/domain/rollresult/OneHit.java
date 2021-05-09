@@ -39,10 +39,10 @@ public class OneHit extends RollResultType{
 
     @Override
     public RollResultType next(int nextHit) {
-        if (score.add(nextHit).isStrike()) {
+        if (score.calculate(nextHit).isSpare()) {
             return Spare.of(this, OneHit.ofOne(Score.of(nextHit)));
         }
-        if (score.add(nextHit).isGutter()) {
+        if (score.calculate(nextHit).isGutter()) {
             return Miss.of(Gutter.of(), Gutter.of());
         }
         return Miss.of(this, OneHit.of(nextHit));

@@ -3,8 +3,13 @@ package bowling.domain;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ScoreTest {
+    public static final Score STRIKE = Score.ofStrike();
+    public static final Score SPARE = Score.ofSpare();
+    public static final Score GUTTER = Score.ofGutter();
+
     @Test
     void 점수를생성() {
         Score score = Score.of(5);
@@ -13,26 +18,61 @@ public class ScoreTest {
 
     @Test
     void 추가점수합산() {
-        Score score = Score.of(5).add(6);
+        Score score = Score.of(5).calculate(6);
         assertThat(score).isEqualTo(Score.of(11, 0));
     }
 
     @Test
-    void 값비교(){
-        assertThat(Score.of(5).compareTo(5)).isEqualTo(0);
-        assertThat(Score.of(6).compareTo(5)).isEqualTo(1);
-        assertThat(Score.of(4).compareTo(5)).isEqualTo(-1);
+    void 스트라이크점수생성() {
+        assertThat(STRIKE.isStrike()).isTrue();
+        assertThat(STRIKE.isSpare()).isFalse();
+        assertThat(STRIKE.isGutter()).isFalse();
     }
 
     @Test
-    void 스트라이크인지확인() {
-        assertThat(Score.of(10).isStrike()).isTrue();
-        assertThat(Score.of(9).isStrike()).isFalse();
+    void 스트라이크점수는_한번합산가능() {
+        Score oneAdd = STRIKE.add(5);
+        assertThat(oneAdd.isFinished()).isFalse();
     }
 
     @Test
-    void 거터확인() {
-        assertThat(Score.of(0).isGutter()).isTrue();
-        assertThat(Score.of(1).isGutter()).isFalse();
+    void 스트라이크점수는_두번까지합산가능() {
+        Score twoAdd = STRIKE.add(4).add(3);
+        assertThat(twoAdd.isFinished()).isTrue();
+        assertThatThrownBy(() -> {
+            twoAdd.add(5);
+        }).isInstanceOf(IllegalStateException.class);
     }
+
+    @Test
+    void 스페어점수생성() {
+        assertThat(SPARE.isStrike()).isFalse();
+        assertThat(SPARE.isSpare()).isTrue();
+        assertThat(SPARE.isGutter()).isFalse();
+    }
+
+    @Test
+    void 스페어점수는_한번합산가능() {
+        Score oneAdd = SPARE.add(5);
+        assertThat(oneAdd.isFinished()).isTrue();
+        assertThatThrownBy(() -> {
+            oneAdd.add(3);
+        }).isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void 거터점수생성() {
+        assertThat(GUTTER.isStrike()).isFalse();
+        assertThat(GUTTER.isSpare()).isFalse();
+        assertThat(GUTTER.isGutter()).isTrue();
+    }
+
+    @Test
+    void 거터점수는_합산불가능() {
+        assertThat(GUTTER.isFinished()).isTrue();
+        assertThatThrownBy(() -> {
+            GUTTER.add(4);
+        }).isInstanceOf(IllegalStateException.class);
+    }
+
 }

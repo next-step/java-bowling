@@ -47,7 +47,7 @@ public class RollResults {
     public Score eval() {
         Score score = Score.of();
         for (RollResultType result : results) {
-            score = score.add(result.eval());
+            score = score.calculate(result.eval());
         }
         return score;
     }

@@ -57,7 +57,7 @@ public class Spare extends RollResultType {
 
     @Override
     public Score eval() {
-        return firstHit.eval().add(secondHit.eval());
+        return firstHit.eval().calculate(secondHit.eval());
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Spare extends RollResultType {
 
     private static void valid(Score firstScore, Score secondScore) {
         validFirst(firstScore);
-        if(!firstScore.add(secondScore).isClear()) {
+        if(!firstScore.calculate(secondScore).isClear()) {
             throw new IllegalArgumentException(INVALID_SECOND_SCORE);
         }
     }

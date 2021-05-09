@@ -50,7 +50,7 @@ public class Miss extends RollResultType{
 
     @Override
     public Score eval() {
-        return oneHit.eval().add(secondHit.eval());
+        return oneHit.eval().calculate(secondHit.eval());
     }
 
     @Override
@@ -59,7 +59,7 @@ public class Miss extends RollResultType{
     }
 
     private static void valid(Score firstScore, Score secondScore) {
-        if (firstScore.add(secondScore).isStrike()) {
+        if (firstScore.calculate(secondScore).isClear()) {
             throw new IllegalArgumentException(INVALID_MISS);
         }
     }
