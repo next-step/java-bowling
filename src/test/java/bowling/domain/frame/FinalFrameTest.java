@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.state.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,4 +21,6 @@ class FinalFrameTest {
                 () -> assertThat(finalFrame).isInstanceOf(FinalFrame.class)
         );
     }
+
+
 }
