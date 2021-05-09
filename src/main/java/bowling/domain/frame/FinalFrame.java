@@ -20,12 +20,12 @@ public final class FinalFrame extends Frame {
     }
 
     @Override
-    public Frame bowl(final Pins fallPins) {
+    public final Frame bowl(final Pins fallPins) {
         validateRound();
         finalRound = finalRound.next();
         final State current = states.current();
         if (current.isFinish()) {
-            states.add(ready().bowl(fallPins));
+            states.add(generateReady().bowl(fallPins));
             return this;
         }
         states.remove();
@@ -33,7 +33,7 @@ public final class FinalFrame extends Frame {
         return this;
     }
 
-    private final State ready() {
+    private final State generateReady() {
         return Ready.initialize();
     }
 
