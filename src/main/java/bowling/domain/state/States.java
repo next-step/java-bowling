@@ -8,6 +8,8 @@ import java.util.LinkedList;
 
 public final class States {
 
+    private static final int SEARCH_START_INDEX = 1;
+
     private final FinalRound finalRound;
     private final LinkedList<State> states;
 
@@ -33,6 +35,11 @@ public final class States {
     }
 
     public final Score score() {
-        return states.getLast().score();
+        Score score = states.getFirst().score();
+        for (int index = SEARCH_START_INDEX; index < states.size(); index++) {
+            State state = states.get(index);
+            score = state.calculateAdditionalScore(score);
+        }
+        return score;
     }
 }

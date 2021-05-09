@@ -83,7 +83,7 @@ class StatesTest {
         State second = first.bowl(Pins.valueOf(0));
 
         // when
-        // 시나리오대로 작성 -> miss 이므로 마지막 삭제후 2번째 넣음
+        // 시나리오대로 작성 -> FirstBowl 이므로 마지막 삭제 안함
         States states = States.initialize();
         states.remove();
         states.add(first);
@@ -107,10 +107,11 @@ class StatesTest {
         State second = first.bowl(Pins.valueOf(1));
 
         // when
-        // 시나리오대로 작성 -> spare 이므로 마지막 삭제 안하고 2번째 넣음
+        // 시나리오대로 작성 -> FirstBowl 이므로 마지막 삭제 안함
         States states = States.initialize();
         states.remove();
         states.add(first);
+        states.remove();
         states.add(second);
         states.add(Ready.initialize().bowl(Pins.valueOf(10)));
 
