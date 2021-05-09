@@ -20,6 +20,10 @@ public class Pins {
         }
     }
 
+    public static Pins fullSetting() {
+        return new Pins(FULL);
+    }
+
     public static final Pins valueOf(final int count) {
         validateSize(count);
         return CACHE.get(count);

@@ -1,6 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.state.Pins;
 import bowling.exception.InvalidPinsSizeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,7 +61,7 @@ class PinsTest {
         int expected = 10;
 
         // when
-        Pins pins = Pins.initialize();
+        Pins pins = Pins.fullSetting();
         int actual = pins.count();
 
         // then
