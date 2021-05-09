@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PinsTest {
@@ -19,5 +20,23 @@ class PinsTest {
 
         // then
         assertThat(pins).isNotNull();
+    }
+
+    @DisplayName("Pins 인스턴스에 범위를 벗어난 값 주입시 예외처리 테스트")
+    @Test
+    void 검증() {
+        // given
+        int negativeCount = -1;
+        int overCount = 11;
+
+        // when and then
+        assertThatThrownBy(() -> Pins.valueOf(negativeCount))
+                .isInstanceOf(InvalidPinsCountException.class)
+                .hasMessage("Pins 의 범위를 벗어난 값이 입력되었습니다.");
+
+        // when and then
+        assertThatThrownBy(() -> Pins.valueOf(overCount))
+                .isInstanceOf(InvalidPinsCountException.class)
+                .hasMessage("Pins 의 범위를 벗어난 값이 입력되었습니다.");
     }
 }
