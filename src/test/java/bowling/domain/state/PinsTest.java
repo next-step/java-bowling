@@ -141,4 +141,24 @@ class PinsTest {
 
     }
 
+    @DisplayName("Pins 인스턴스가 맞은 값이 Miss인지 테스트")
+    @Test
+    void 반환_isMiss() {
+        // given
+        int firstCount = 9;
+        int secondCount = 10;
+
+        // when
+        Pins firstBowl = Pins.valueOf(0);
+        boolean firstActual = firstBowl.isMiss(firstCount);
+        boolean secondActual = firstBowl.isMiss(secondCount);
+
+        // then
+        assertAll(
+                () -> assertThat(firstActual).isTrue(),
+                () -> assertThat(secondActual).isFalse()
+        );
+
+    }
+
 }
