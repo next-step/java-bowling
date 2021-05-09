@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.domain.state.Pins;
 import bowling.exception.BonusCountNullPointerException;
 import bowling.exception.InvalidScoreSizeException;
 
@@ -21,8 +22,8 @@ public final class Score {
         return new Score(UN_AVAILABLE_SCORE, BonusCount.none());
     }
 
-    public static final Score miss(final int missScore) {
-        return new Score(missScore, BonusCount.none());
+    public static final Score miss(final Pins pins) {
+        return new Score(pins.count(), BonusCount.none());
     }
 
     public static final Score spare() {

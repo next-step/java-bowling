@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.domain.state.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,10 +14,10 @@ class ScoreTest {
     @Test
     void 생성_miss() {
         // given
-        int missCount = 9;
+        Pins pins = Pins.valueOf(9);
 
         // when
-        Score score = Score.miss(missCount);
+        Score score = Score.miss(pins);
 
         // then
         assertAll(
@@ -69,8 +70,11 @@ class ScoreTest {
     @DisplayName("Score 인스턴스가 보너스 점수를 다 더했는지를 반환하는 테스트")
     @Test
     void 반환_finish() {
+        // given
+        Pins pins = Pins.valueOf(9);
+
         // when
-        Score noneBonusScore = Score.miss(9);
+        Score noneBonusScore = Score.miss(pins);
 
         // then
         assertThat(noneBonusScore.isFinish()).isTrue();
@@ -98,17 +102,17 @@ class ScoreTest {
     @Test
     void 반환_score() {
         // given
-        int missScore = 9;
+        Pins pins = Pins.valueOf(9);
         int allClear = 10;
 
         // when
-        Score miss = Score.miss(missScore);
+        Score miss = Score.miss(pins);
         Score spare = Score.spare();
         Score strike = Score.strike();
 
         // then
         assertAll(
-                () -> assertThat(miss.score()).isEqualTo(missScore),
+                () -> assertThat(miss.score()).isEqualTo(pins.count()),
                 () -> assertThat(spare.score()).isEqualTo(allClear),
                 () -> assertThat(strike.score()).isEqualTo(allClear)
         );
