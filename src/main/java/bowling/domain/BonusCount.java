@@ -2,10 +2,13 @@ package bowling.domain;
 
 import bowling.exception.InvalidBonusCountSizeException;
 
+import static java.lang.Math.subtractExact;
+
 public final class BonusCount {
 
     private static final int MINIMUM_BONUS_COUNT = 0;
     private static final int MAXIMUM_BONUS_COUNT = 2;
+    private static final int OPERATION_UNIT = 1;
 
     private final int remain;
 
@@ -26,5 +29,9 @@ public final class BonusCount {
 
     public final boolean isFinish() {
         return remain == MINIMUM_BONUS_COUNT;
+    }
+
+    public final BonusCount decrease() {
+        return new BonusCount(subtractExact(remain, OPERATION_UNIT));
     }
 }
