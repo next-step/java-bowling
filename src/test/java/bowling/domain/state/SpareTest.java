@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.exception.InvalidPinsSizeException;
+import bowling.exception.InvalidSpareSizeException;
 import bowling.exception.PinsNullPointerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

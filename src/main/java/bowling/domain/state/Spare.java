@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Score;
+import bowling.exception.InvalidSpareSizeException;
 import bowling.exception.PinsNullPointerException;
 
 import java.util.Objects;
@@ -16,13 +17,20 @@ public class Spare extends Finish {
 
     private Spare(final Pins firstPins, final Pins secondPins) {
         validateNull(firstPins, secondPins);
+        validateSize(firstPins, secondPins);
         this.firstPins = firstPins;
         this.secondPins = secondPins;
     }
 
-    private final void validateNull(Pins firstPins, Pins secondPins) {
+    private final void validateNull(final Pins firstPins, final Pins secondPins) {
         if (Objects.isNull(firstPins) || Objects.isNull(secondPins)) {
             throw new PinsNullPointerException();
+        }
+    }
+
+    private final void validateSize(final Pins firstPins, final Pins secondPins) {
+        if (!firstPins.isSpare(secondPins.count())) {
+            throw new InvalidSpareSizeException();
         }
     }
 
