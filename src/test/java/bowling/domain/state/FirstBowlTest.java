@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.exception.InvalidPinsSizeException;
 import bowling.exception.PinsNullPointerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,18 @@ class FirstBowlTest {
         assertThatThrownBy(() -> FirstBowl.from(pins))
                 .isInstanceOf(PinsNullPointerException.class)
                 .hasMessage("Pins 인스턴스가 null 입니다.");
+    }
+
+    @DisplayName("FirstBowl 인스턴스에 10의 값을 가진 Pins 입력시 예외처리 테스트")
+    @Test
+    void 검증_10값을_가진_Pins() {
+        // given
+        Pins pins = Pins.valueOf(10);
+
+        // when and then
+        assertThatThrownBy(() -> FirstBowl.from(pins))
+                .isInstanceOf(InvalidFirstBowlSizeException.class)
+                .hasMessage("FirstBowl 에 맞지 않는 값이 입력되었습니다.");
     }
 
 }
