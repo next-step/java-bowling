@@ -33,10 +33,6 @@ public final class Score {
         return new Score(ALL_PIN_COUNT, BonusCount.strike());
     }
 
-    public static final Score of(final int score, final BonusCount bonusCount) {
-        return new Score(score, bonusCount);
-    }
-
     private Score(final int score, final BonusCount bonusCount) {
         validateNull(bonusCount);
         validateSize(score);
@@ -56,6 +52,10 @@ public final class Score {
         }
     }
 
+    public final int score() {
+        return score;
+    }
+
     public final Score addBonusScore(final int bonusScore) {
         return new Score(addExact(this.score, bonusScore), bonusCount.decrease());
     }
@@ -63,6 +63,5 @@ public final class Score {
     public final boolean isFinish() {
         return bonusCount.isFinish();
     }
-
 
 }
