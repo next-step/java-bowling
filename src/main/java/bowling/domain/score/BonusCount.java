@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.score;
 
 import bowling.exception.InvalidBonusCountSizeException;
 
@@ -32,7 +32,7 @@ public final class BonusCount {
         return CACHE.get(ONE);
     }
 
-    public static BonusCount strike() {
+    public static final BonusCount strike() {
         return CACHE.get(MAXIMUM_BONUS_COUNT);
     }
 
