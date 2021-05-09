@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.state;
 
+import bowling.domain.state.Pins;
 import bowling.exception.InvalidPinsSizeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,6 +49,20 @@ class PinsTest {
 
         // when
         Pins pins = Pins.valueOf(expected);
+        int actual = pins.count();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("Pins 인스턴스가 프레임 시작시마다 초기 셋팅된 값을 반환하는지 테스트")
+    @Test
+    void 생성_초기값() {
+        // given
+        int expected = 10;
+
+        // when
+        Pins pins = Pins.initialize();
         int actual = pins.count();
 
         // then
