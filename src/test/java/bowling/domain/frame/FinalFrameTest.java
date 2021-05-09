@@ -97,7 +97,7 @@ class FinalFrameTest {
     void bowl_보너스_있을때_예외처리() {
         // given
         Pins firstPins = Pins.valueOf(9);
-        Pins secondPins = Pins.valueOf(0);
+        Pins secondPins = Pins.valueOf(1);
         Pins thirdPins = Pins.valueOf(10);
         Pins fourthPins = Pins.valueOf(10);
 

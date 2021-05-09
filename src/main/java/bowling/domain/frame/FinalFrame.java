@@ -4,6 +4,7 @@ import bowling.domain.state.Pins;
 import bowling.domain.state.State;
 import bowling.domain.state.States;
 import bowling.domain.state.running.Ready;
+import bowling.exception.NoActionBowlException;
 
 public final class FinalFrame extends Frame {
 
@@ -39,7 +40,7 @@ public final class FinalFrame extends Frame {
 
     private final void validateRound() {
         if (isFinish()) {
-            throw new IllegalArgumentException();
+            throw new NoActionBowlException();
         }
     }
 
