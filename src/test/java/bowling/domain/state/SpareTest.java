@@ -69,6 +69,7 @@ class SpareTest {
         assertAll(
                 () -> assertThat(spare.score()).isNotNull(),
                 () -> assertThat(spare.score()).isInstanceOf(Score.class),
+                () -> assertThat(spare.score().isFinish()).isFalse(),
                 () -> assertThat(spare.score().score()).isEqualTo(10)
         );
     }

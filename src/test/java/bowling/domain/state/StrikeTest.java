@@ -28,6 +28,7 @@ class StrikeTest {
         assertAll(
                 () -> assertThat(strike.score()).isNotNull(),
                 () -> assertThat(strike.score()).isInstanceOf(Score.class),
+                () -> assertThat(strike.score().isFinish()).isFalse(),
                 () -> assertThat(strike.score().score()).isEqualTo(10)
         );
     }

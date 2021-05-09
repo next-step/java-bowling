@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import bowling.exception.InvalidFirstBowlSizeException;
+import bowling.domain.score.Score;
 import bowling.exception.InvalidMissSizeException;
 import bowling.exception.PinsNullPointerException;
 import org.junit.jupiter.api.DisplayName;
@@ -52,4 +52,25 @@ class MissTest {
                 .isInstanceOf(InvalidMissSizeException.class)
                 .hasMessage("Miss 에 대해 알맞지 않은 크기가 입력 되었습니다.");
     }
+
+    @DisplayName("Miss 인스턴스가 알맞은 Score 반환하는지 테스트")
+    @Test
+    void 반환_score() {
+        // given
+        Pins firstPins = Pins.valueOf(9);
+        Pins secondPins = Pins.valueOf(0);
+
+        // when
+        State miss = Miss.of(firstPins, secondPins);
+
+        // then
+        assertAll(
+                () -> assertThat(miss.score()).isNotNull(),
+                () -> assertThat(miss.score()).isInstanceOf(Score.class),
+                () -> assertThat(miss.score().isFinish()).isTrue(),
+                () -> assertThat(miss.score().score()).isEqualTo(9)
+        );
+
+    }
+
 }
