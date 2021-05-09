@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.exception.InvalidFirstBowlSizeException;
 import bowling.exception.InvalidPinsSizeException;
 import bowling.exception.PinsNullPointerException;
 import org.junit.jupiter.api.DisplayName;
@@ -48,7 +49,7 @@ class FirstBowlTest {
         // when and then
         assertThatThrownBy(() -> FirstBowl.from(pins))
                 .isInstanceOf(InvalidFirstBowlSizeException.class)
-                .hasMessage("FirstBowl 에 맞지 않는 값이 입력되었습니다.");
+                .hasMessage("FirstBowl 에 대해 알맞지 않은 크기가 입력 되었습니다.");
     }
 
 }
