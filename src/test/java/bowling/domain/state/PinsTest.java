@@ -62,7 +62,7 @@ class PinsTest {
         int expected = 10;
 
         // when
-        Pins pins = Pins.fullSetting();
+        Pins pins = Pins.full();
         int actual = pins.count();
 
         // then
@@ -76,7 +76,7 @@ class PinsTest {
         int fallCount = 10;
 
         // when
-        Pins pins = Pins.fullSetting();
+        Pins pins = Pins.full();
 
         // then
         assertAll(
@@ -87,19 +87,36 @@ class PinsTest {
 
     }
 
-    @DisplayName("Pins 인스턴스에 프레임이 남은 핀보다 큰 핀의  갯수 입력시 예외처리 테스트")
+    @DisplayName("Pins 인스턴스에 남은 핀보다 큰 핀의  갯수 입력시 예외처리 테스트")
     @Test
     void 검증_남은_핀보다_큰핀_입력() {
         // given
         int fallCount = 10;
 
         // when
-        Pins pins = Pins.fullSetting();
+        Pins pins = Pins.full();
         Pins remain = pins.hit(fallCount);
 
         // then
         assertThatThrownBy(() -> remain.hit(fallCount))
                 .isInstanceOf(InvalidPinsSizeException.class)
                 .hasMessage("Pins 의 범위를 벗어난 값이 입력되었습니다.");
+    }
+
+    @DisplayName("Pins 인스턴스에 핀이 남았는지 테스트")
+    @Test
+    void 반환_empty() {
+        // given
+        int fallCount = 10;
+
+        // when
+        Pins pins = Pins.full();
+        Pins remain = pins.hit(fallCount);
+
+        // then
+        assertAll(
+                () -> assertThat(pins.isEmpty()).isFalse(),
+                () -> assertThat(remain.isEmpty()).isTrue()
+        );
     }
 }
