@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.score.Score;
 import bowling.exception.InvalidFirstBowlSizeException;
+import bowling.exception.InvalidPinsSizeException;
 import bowling.exception.PinsNullPointerException;
 
 import java.util.Objects;
@@ -10,16 +11,16 @@ public final class FirstBowl extends Running {
 
     private static final int EMPTY_VALUE = 0;
 
-    private final Pins fallPins;
+    private final Pins fisrtBowl;
 
     public static final State from(Pins fallPins) {
         return new FirstBowl(fallPins);
     }
 
-    private FirstBowl(final Pins fallPins) {
-        validateNull(fallPins);
-        validateSize(fallPins);
-        this.fallPins = fallPins;
+    private FirstBowl(final Pins fisrtBowl) {
+        validateNull(fisrtBowl);
+        validateSize(fisrtBowl);
+        this.fisrtBowl = fisrtBowl;
     }
 
     private final void validateNull(final Pins fallPins) {
@@ -35,11 +36,14 @@ public final class FirstBowl extends Running {
     }
 
     @Override
-    public final State bowl(final Pins additionalFallPins) {
-        if(fallPins.isSpare(additionalFallPins.count())){
-            return Spare.of(fallPins, additionalFallPins);
+    public final State bowl(final Pins secondBowl) {
+        if(fisrtBowl.isSpare(secondBowl.count())){
+            return Spare.of(fisrtBowl, secondBowl);
         }
-        return null;
+        if(fisrtBowl.isMiss(secondBowl.count())) {
+            return Miss.of(fisrtBowl, secondBowl);
+        }
+        throw new InvalidPinsSizeException();
     }
 
     @Override
