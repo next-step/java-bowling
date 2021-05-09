@@ -68,7 +68,7 @@ class MissTest {
                 () -> assertThat(miss.score()).isNotNull(),
                 () -> assertThat(miss.score()).isInstanceOf(Score.class),
                 () -> assertThat(miss.score().isFinish()).isTrue(),
-                () -> assertThat(miss.score().score()).isEqualTo(9)
+                () -> assertThat(miss.score().score()).isEqualTo(firstPins.count() + secondPins.count())
         );
 
     }

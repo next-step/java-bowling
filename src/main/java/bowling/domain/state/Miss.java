@@ -6,6 +6,8 @@ import bowling.exception.PinsNullPointerException;
 
 import java.util.Objects;
 
+import static java.lang.Math.addExact;
+
 public final class Miss extends Finish {
 
     private final Pins firstPins;
@@ -35,8 +37,12 @@ public final class Miss extends Finish {
     }
 
     @Override
-    public Score score() {
-        return null;
+    public final Score score() {
+        return Score.miss(Pins.valueOf(sum()));
+    }
+
+    private final int sum() {
+        return addExact(firstPins.count(), secondPins.count());
     }
 
     @Override
