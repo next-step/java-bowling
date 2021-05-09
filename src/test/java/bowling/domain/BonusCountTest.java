@@ -85,5 +85,18 @@ class BonusCountTest {
         assertThat(bonusCount.isFinish()).isTrue();
     }
 
+    @DisplayName("BonusCount 인스턴스가 보너스가 하나 있는 인스턴스를 반환하지에 대한 테스트")
+    @Test
+    void 반환_보너스_하나() {
+        // when
+        BonusCount bonusCount = BonusCount.spare();
+
+        // then
+        assertAll(
+                () -> assertThat(bonusCount.isFinish()).isFalse(),
+                () -> assertThat(bonusCount.decrease().isFinish()).isTrue()
+        );
+
+    }
 
 }
