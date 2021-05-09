@@ -46,8 +46,15 @@ public final class Miss extends Finish {
     }
 
     @Override
-    public Score calculateAdditionalScore(Score beforeScore) {
-        return null;
+    public final Score calculateAdditionalScore(Score beforeScore) {
+        if (beforeScore.isFinish()) {
+            return beforeScore;
+        }
+        beforeScore = beforeScore.addBonusScore(firstPins.count());
+        if (beforeScore.isFinish()) {
+            return beforeScore;
+        }
+        return beforeScore.addBonusScore(secondPins.count());
     }
 
     @Override
