@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.state.Pins;
 import bowling.domain.state.States;
 
 public final class FinalFrame extends Frame {
@@ -14,6 +15,20 @@ public final class FinalFrame extends Frame {
 
     public static final Frame initialize() {
         return new FinalFrame();
+    }
+
+    @Override
+    public Frame bowl(Pins fallPins) {
+        return this;
+    }
+
+    @Override
+    public boolean isFinish() {
+        return finalRound.isFinish(hasFinish());
+    }
+
+    private final boolean hasFinish() {
+        return states.hasFinish();
     }
 
 }

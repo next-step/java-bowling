@@ -21,9 +21,9 @@ class StatesTest {
         assertThat(states).isNotNull();
     }
 
-    @DisplayName("States 인스턴스의 마지막 값 반환 테스트")
+    @DisplayName("States 인스턴스의 현재 값 반환 테스트")
     @Test
-    void 반환_last() {
+    void 반환_current() {
         // when
         States states = States.initialize();
 
@@ -33,6 +33,21 @@ class StatesTest {
                 () -> assertThat(states.current()).isInstanceOf(State.class)
         );
 
+    }
+
+    @DisplayName("States 인스턴스가 보너스 라운드를 얻었는지에 대한 테스트")
+    @Test
+    void 반환_보너스_여부_없을때() {
+        // given
+        State first = Ready.initialize().bowl(Pins.valueOf(9));
+        State second = first.bowl(Pins.valueOf(0));
+
+        // when
+        States states = States.initialize();
+        boolean actual = states.HasBonusRound();
+
+        // then
+        assertThat(actual).isFalse();
     }
 
     @DisplayName("States 인스턴스에 인스턴스 추가 기능 테스트")
@@ -75,6 +90,9 @@ class StatesTest {
         );
 
     }
+
+
+
 
     @DisplayName("miss 일 때, States 인스턴스가 알맞는 Score 반환 기능 테스트")
     @Test
