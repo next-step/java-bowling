@@ -1,10 +1,10 @@
-package bowling.domain.rollresult;
+package bowling.domain.state;
 
 import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class OneHit extends RollResultType{
+public class OneHit extends State {
     private final Score score;
 
     public OneHit(Score score) {
@@ -19,11 +19,11 @@ public class OneHit extends RollResultType{
         return new OneHit(score);
     }
 
-    public static RollResultType of(int score) {
+    public static State of(int score) {
         return of(Score.of(score));
     }
 
-    public static RollResultType of(Score score) {
+    public static State of(Score score) {
         if (score.isStrike()) {
             return Strike.of();
         }
@@ -33,19 +33,12 @@ public class OneHit extends RollResultType{
         return new OneHit(score);
     }
 
-    public OneHit add(RollResultType result, int nextScore) {
-        return OneHit.ofOne(score.add(result, nextScore));
-    }
-
     @Override
-    public RollResultType next(int nextHit) {
+    public State next(int nextHit) {
         if (score.calculate(nextHit).isClear()) {
-            return Spare.of(this, OneHit.ofOne(Score.ofSpare(nextHit)));
+            return Spare.of(this, ofOne(Score.ofSpare(nextHit)));
         }
-        if (score.calculate(nextHit).isGutter()) {
-            return Miss.of(Gutter.of(), Gutter.of());
-        }
-        return Miss.of(this, OneHit.of(nextHit));
+        return Miss.of(this, of(nextHit));
     }
 
     @Override
@@ -66,10 +59,6 @@ public class OneHit extends RollResultType{
     @Override
     public boolean canAccumulate() {
         return false;
-    }
-
-    public boolean isCalculated(RollResultType result) {
-        return score.isFinished(result);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package bowling.domain.rollresult;
+package bowling.domain.state;
 
 import bowling.domain.Score;
 import org.junit.jupiter.api.Test;
@@ -21,14 +21,14 @@ public class SpareTest {
 
     @Test
     void 스페어는_추가점수계산이가능하다() {
-        RollResultType next = SPARE_1.next(3);
+        State next = SPARE_1.next(3);
         assertThat(next.eval()).isEqualTo(Score.of(13, 0));
         assertThat(next.canAccumulate()).isFalse();
     }
 
     @Test
     void 스페어에_추가점수는_한번만가능하다() {
-        RollResultType spare = SPARE_1.next(5);
+        State spare = SPARE_1.next(5);
         assertThat(spare.eval()).isEqualTo(Score.of(15, 0));
         assertThatThrownBy(() -> {
             spare.next(10);

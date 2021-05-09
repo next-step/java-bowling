@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static bowling.domain.PinTest.*;
-import static bowling.domain.rollresult.RollResultsTest.*;
+import static bowling.domain.state.RollResultsTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

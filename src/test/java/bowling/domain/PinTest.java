@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.rollresult.*;
+import bowling.domain.state.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +44,7 @@ public class PinTest {
 
     @Test
     void gutter핀의_결과확인() {
-        RollResultType type = pin.firstHit(HitNumber.of(0));
+        State type = pin.firstHit(HitNumber.of(0));
         assertThat(type).isEqualTo(Gutter.of());
     }
 
@@ -55,14 +55,14 @@ public class PinTest {
 
     @Test
     void spare핀의_결과확인() {
-        RollResultType type = pin.firstHit(HitNumber.of(7));
+        State type = pin.firstHit(HitNumber.of(7));
         assertThat(pin.nextHit(type, HitNumber.of(3))).isEqualTo(Spare.of(7));
     }
 
     @Test
     void miss핀의_결과확인() {
-        RollResultType type = pin.firstHit(HitNumber.of(0));
-        RollResultType next = pin.nextHit(type, HitNumber.of(3));
+        State type = pin.firstHit(HitNumber.of(0));
+        State next = pin.nextHit(type, HitNumber.of(3));
         assertThat(next).isEqualTo(Miss.of(0, 3));
     }
 }

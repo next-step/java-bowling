@@ -1,14 +1,14 @@
-package bowling.domain.rollresult;
+package bowling.domain.state;
 
 import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Strike extends RollResultType {
+public class Strike extends State {
     private static final String INVALID_SCORE = "스트라이크의 값은 10 이상이어야합니다.";
-    private final RollResultType hit;
+    private final State hit;
 
-    private Strike(RollResultType hit) {
+    private Strike(State hit) {
         this.hit = hit;
     }
 
@@ -16,7 +16,7 @@ public class Strike extends RollResultType {
         return new Strike(OneHit.ofOne(Score.ofStrike()));
     }
 
-    public static Strike of(RollResultType hit) {
+    public static Strike of(State hit) {
         valid(hit.eval());
         return new Strike(hit);
     }
@@ -47,7 +47,7 @@ public class Strike extends RollResultType {
     }
 
     @Override
-    public RollResultType next(int nextScore) {
+    public State next(int nextScore) {
         return of(OneHit.of(hit.eval().add(nextScore)));
     }
 

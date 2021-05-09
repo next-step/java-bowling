@@ -3,8 +3,8 @@ package bowling.domain.frame;
 import bowling.domain.HitNumber;
 import bowling.domain.Pin;
 import bowling.domain.Score;
-import bowling.domain.rollresult.RollResults;
-import bowling.domain.rollresult.RollResultType;
+import bowling.domain.state.RollResults;
+import bowling.domain.state.State;
 
 import java.util.Objects;
 
@@ -62,7 +62,7 @@ public class FinalFrame implements Frame {
     }
 
     private Frame firstRoll(HitNumber hitNumber, Pin pin) {
-        RollResultType type = pin.firstHit(hitNumber);
+        State type = pin.firstHit(hitNumber);
         return of(pin, RollResults.of(type));
     }
 

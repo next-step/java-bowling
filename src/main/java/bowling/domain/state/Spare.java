@@ -1,26 +1,26 @@
-package bowling.domain.rollresult;
+package bowling.domain.state;
 
 import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Spare extends RollResultType {
+public class Spare extends State {
     private static final String INVALID_FIRST_SCORE = "스페어의 첫번째 값은 10보다 작아야합니다.";
     private static final String INVALID_SECOND_SCORE = "스페어의 두번째 값은 10-첫번째값보다 커야합니다.";
 
-    private final RollResultType firstHit;
-    private final RollResultType secondHit;
+    private final State firstHit;
+    private final State secondHit;
 
-    private Spare(RollResultType firstHit) {
+    private Spare(State firstHit) {
         this(firstHit, OneHit.ofOne(Score.ofSpare(firstHit.eval())));
     }
 
-    private Spare(RollResultType firstHit, OneHit secondHit) {
+    private Spare(State firstHit, OneHit secondHit) {
         this.firstHit = firstHit;
         this.secondHit = secondHit;
     }
 
-    private Spare(RollResultType firstHit, RollResultType secondHit) {
+    private Spare(State firstHit, State secondHit) {
         this.firstHit = firstHit;
         this.secondHit = secondHit;
     }
@@ -30,17 +30,17 @@ public class Spare extends RollResultType {
         return new Spare(OneHit.of(firstScore));
     }
 
-    public static Spare of(RollResultType firstHit) {
+    public static Spare of(State firstHit) {
         validFirst(firstHit.eval());
         return new Spare(firstHit);
     }
 
-    public static Spare of(RollResultType firstHit, OneHit secondHit) {
+    public static Spare of(State firstHit, OneHit secondHit) {
         valid(firstHit.eval(), secondHit.eval());
         return new Spare(firstHit, secondHit);
     }
 
-    public static Spare of(RollResultType firstHit, RollResultType secondHit) {
+    public static Spare of(State firstHit, State secondHit) {
         valid(firstHit.eval(), secondHit.eval());
         return new Spare(firstHit, secondHit);
     }
@@ -71,7 +71,7 @@ public class Spare extends RollResultType {
     }
 
     @Override
-    public RollResultType next(int nextScore) {
+    public State next(int nextScore) {
         return of(firstHit, OneHit.of(secondHit.eval().add(nextScore)));
     }
 

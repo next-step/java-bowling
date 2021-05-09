@@ -1,15 +1,15 @@
-package bowling.domain.rollresult;
+package bowling.domain.state;
 
 import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Miss extends RollResultType{
+public class Miss extends State {
     private static final String INVALID_MISS = "miss는 두 점수의 합이 10 미만이어야합니다.";
-    private final RollResultType oneHit;
-    private final RollResultType secondHit;
+    private final State oneHit;
+    private final State secondHit;
 
-    private Miss(RollResultType oneHit, RollResultType secondHit) {
+    private Miss(State oneHit, State secondHit) {
         this.oneHit = oneHit;
         this.secondHit = secondHit;
     }
@@ -23,7 +23,7 @@ public class Miss extends RollResultType{
         return new Miss(OneHit.of(firstScore), OneHit.of(secondScore));
     }
 
-    public static Miss of(RollResultType oneHit, RollResultType secondHit) {
+    public static Miss of(State oneHit, State secondHit) {
         valid(oneHit.eval(), secondHit.eval());
         return new Miss(oneHit, secondHit);
     }
@@ -54,7 +54,7 @@ public class Miss extends RollResultType{
     }
 
     @Override
-    public RollResultType next(int nextScore) {
+    public State next(int nextScore) {
         return this;
     }
 

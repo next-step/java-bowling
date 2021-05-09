@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.rollresult.RollResultType;
+import bowling.domain.state.State;
 
 import java.util.Objects;
 
@@ -60,7 +60,7 @@ public class Score {
         return ofSpare(DEFAULT_MAX_SCORE - before.score);
     }
 
-    public Score add(RollResultType result, int nextScore) {
+    public Score add(State result, int nextScore) {
         if ((result.isSpare() && left < SPARE_BOUND)
                 || (result.isStrike() && left < STRIKE_BOUND)) {
             return addNext(nextScore);
@@ -73,7 +73,7 @@ public class Score {
         return of(this.score + nextScore, this.left - 1);
     }
 
-    public boolean isFinished(RollResultType result) {
+    public boolean isFinished(State result) {
         return left == INIT_NUM;
     }
 

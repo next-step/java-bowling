@@ -1,4 +1,4 @@
-package bowling.domain.rollresult;
+package bowling.domain.state;
 
 import bowling.domain.HitNumber;
 import bowling.domain.Pin;
@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static bowling.domain.rollresult.GutterTest.GUTTER;
-import static bowling.domain.rollresult.MissTest.MISS;
-import static bowling.domain.rollresult.OneHitTest.ONE_HIT_3;
-import static bowling.domain.rollresult.SpareTest.SPARE_3;
-import static bowling.domain.rollresult.StrikeTest.STRIKE;
+import static bowling.domain.state.GutterTest.GUTTER;
+import static bowling.domain.state.MissTest.MISS;
+import static bowling.domain.state.OneHitTest.ONE_HIT_3;
+import static bowling.domain.state.SpareTest.SPARE_3;
+import static bowling.domain.state.StrikeTest.STRIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RollResultsTest {

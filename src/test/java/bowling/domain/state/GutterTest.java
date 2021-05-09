@@ -1,4 +1,4 @@
-package bowling.domain.rollresult;
+package bowling.domain.state;
 
 import bowling.domain.Score;
 import org.junit.jupiter.api.Test;
@@ -20,14 +20,14 @@ public class GutterTest {
 
     @Test
     void 거터다음_10개치면_스페어() {
-        RollResultType spare = GUTTER.next(10);
+        State spare = GUTTER.next(10);
         assertThat(spare.isSpare()).isTrue();
         assertThat(spare.eval().isClear()).isTrue();
     }
 
     @Test
     void 거터다음_10개미만은_Miss() {
-        RollResultType miss = GUTTER.next(5);
+        State miss = GUTTER.next(5);
         assertThat(miss.isSpare()).isFalse();
         assertThat(miss.eval()).isEqualTo(Score.of(5));
     }

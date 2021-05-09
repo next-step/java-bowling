@@ -1,10 +1,10 @@
-package bowling.domain.rollresult;
+package bowling.domain.state;
 
 import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Gutter extends RollResultType {
+public class Gutter extends State {
     private final Score score = Score.of();
 
     private Gutter() {
@@ -40,7 +40,7 @@ public class Gutter extends RollResultType {
     }
 
     @Override
-    public RollResultType next(int nextHit) {
+    public State next(int nextHit) {
         if (Score.of(nextHit).isStrike()) {
             return Spare.of(this, OneHit.ofOne(nextHit));
         }

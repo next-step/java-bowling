@@ -1,7 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.rollresult.OneHit;
-import bowling.domain.rollresult.RollResultType;
+import bowling.domain.state.OneHit;
+import bowling.domain.state.State;
 
 import java.util.Objects;
 
@@ -44,13 +44,13 @@ public class Pin {
         return new Pin(tryNum, pinNum);
     }
 
-    public RollResultType firstHit(HitNumber rollNumber) {
+    public State firstHit(HitNumber rollNumber) {
         int before = pinNum;
         fallen(rollNumber);
         return OneHit.of(before - pinNum);
     }
 
-    public RollResultType nextHit(RollResultType type, HitNumber rollNumber) {
+    public State nextHit(State type, HitNumber rollNumber) {
         validTry(tryNum);
         validPinNum(pinNum);
         int before = pinNum;

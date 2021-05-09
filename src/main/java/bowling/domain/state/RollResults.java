@@ -1,4 +1,4 @@
-package bowling.domain.rollresult;
+package bowling.domain.state;
 
 import bowling.domain.HitNumber;
 import bowling.domain.Pin;
@@ -9,22 +9,22 @@ import java.util.List;
 import java.util.Objects;
 
 public class RollResults {
-    private final List<RollResultType> results;
+    private final List<State> results;
 
-    private RollResults(RollResultType result) {
+    private RollResults(State result) {
         results = new ArrayList<>();
         results.add(result);
     }
 
-    public RollResults(List<RollResultType> results) {
+    public RollResults(List<State> results) {
         this.results = results;
     }
 
-    public static RollResults of(RollResultType result) {
+    public static RollResults of(State result) {
         return new RollResults(result);
     }
 
-    public static RollResults of(List<RollResultType> results) {
+    public static RollResults of(List<State> results) {
         return new RollResults(results);
     }
 
@@ -46,13 +46,13 @@ public class RollResults {
 
     public Score eval() {
         Score score = Score.of();
-        for (RollResultType result : results) {
+        for (State result : results) {
             score = score.calculate(result.eval());
         }
         return score;
     }
 
-    private RollResultType getLast() {
+    private State getLast() {
         return results.get(results.size() - 1);
     }
 
