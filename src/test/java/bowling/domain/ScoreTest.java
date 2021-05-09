@@ -23,4 +23,16 @@ public class ScoreTest {
         assertThat(Score.of(6).compareTo(5)).isEqualTo(1);
         assertThat(Score.of(4).compareTo(5)).isEqualTo(-1);
     }
+
+    @Test
+    void 스트라이크인지확인() {
+        assertThat(Score.of(10).isStrike()).isTrue();
+        assertThat(Score.of(9).isStrike()).isFalse();
+    }
+
+    @Test
+    void 거터확인() {
+        assertThat(Score.of(0).isGutter()).isTrue();
+        assertThat(Score.of(1).isGutter()).isFalse();
+    }
 }

@@ -5,7 +5,7 @@ import bowling.domain.Score;
 import java.util.Objects;
 
 public class Gutter extends RollResultType {
-    private final Score score = Score.of(DEFAULT_MIN_SCORE);
+    private final Score score = Score.of();
 
     private Gutter() {
     }
@@ -41,7 +41,7 @@ public class Gutter extends RollResultType {
 
     @Override
     public RollResultType next(int nextHit) {
-        if (nextHit == DEFAULT_MAX_SCORE) {
+        if (Score.of(nextHit).isStrike()) {
             return Spare.of(this, OneHit.ofOne(nextHit));
         }
         return Miss.of(this, OneHit.of(nextHit));

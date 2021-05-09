@@ -59,15 +59,13 @@ public class Miss extends RollResultType{
     }
 
     private static void valid(Score firstScore, Score secondScore) {
-        if (firstScore.add(secondScore).compareTo(DEFAULT_MAX_SCORE) > -1) {
+        if (firstScore.add(secondScore).isStrike()) {
             throw new IllegalArgumentException(INVALID_MISS);
         }
     }
 
     private static void valid(int firstScore, int secondScore) {
-        if (firstScore + secondScore >= DEFAULT_MAX_SCORE) {
-            throw new IllegalArgumentException(INVALID_MISS);
-        }
+        valid(Score.of(firstScore), Score.of(secondScore));
     }
 
     @Override

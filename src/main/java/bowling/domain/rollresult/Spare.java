@@ -12,7 +12,7 @@ public class Spare extends RollResultType {
     private OneHit secondHit;
 
     private Spare(RollResultType firstHit) {
-        this(firstHit, OneHit.ofOne(firstHit.eval().diff(DEFAULT_MAX_SCORE)));
+        this(firstHit, OneHit.ofOne(firstHit.eval().diff(10)));
     }
 
     private Spare(RollResultType firstHit, OneHit secondHit) {
@@ -67,21 +67,19 @@ public class Spare extends RollResultType {
 
     private static void valid(Score firstScore, Score secondScore) {
         validFirst(firstScore);
-        if(firstScore.add(secondScore).compareTo(DEFAULT_MAX_SCORE) < 0) {
+        if(!firstScore.add(secondScore).isClear()) {
             throw new IllegalArgumentException(INVALID_SECOND_SCORE);
         }
     }
 
     private static void validFirst(Score firstScore) {
-        if(firstScore.compareTo(DEFAULT_MAX_SCORE) >= 0) {
+        if(firstScore.isStrike()) {
             throw new IllegalArgumentException(INVALID_FIRST_SCORE);
         }
     }
 
     private static void validFirst(int firstScore) {
-        if(firstScore >= DEFAULT_MAX_SCORE) {
-            throw new IllegalArgumentException(INVALID_FIRST_SCORE);
-        }
+        validFirst(Score.of(firstScore));
     }
 
     @Override

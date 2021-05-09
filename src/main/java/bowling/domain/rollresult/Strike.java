@@ -9,7 +9,7 @@ public class Strike extends RollResultType {
     private final OneHit firstHit;
 
     private Strike() {
-        firstHit = OneHit.ofOne(DEFAULT_MAX_SCORE);
+        firstHit = OneHit.ofOne(10);
     }
 
     private Strike(int score) {
@@ -65,13 +65,11 @@ public class Strike extends RollResultType {
     }
 
     private static void valid(int score) {
-        if (score < DEFAULT_MAX_SCORE) {
-            throw new IllegalArgumentException(INVALID_SCORE);
-        }
+        valid(Score.of(score));
     }
 
     private static void valid(Score score) {
-        if (score.compareTo(DEFAULT_MAX_SCORE) < 0) {
+        if (!score.isClear()) {
             throw new IllegalArgumentException(INVALID_SCORE);
         }
     }
