@@ -24,7 +24,7 @@ class NameTest {
         assertThat(name).isNotNull();
     }
 
-    @DisplayName("Name 인스턴스가 null 인 경우, 예외 처리 구현 테스트")
+    @DisplayName("Name 인스턴스 생성시 들어오는 값이 null 인 경우, 예외 처리 구현 테스트")
     @Test
     void 검증_null() {
         // given
@@ -36,7 +36,7 @@ class NameTest {
                 .hasMessage("String 인스턴스가 null 입니다.");
     }
 
-    @DisplayName("Name 인스턴스가 다른 언어를 사용하는 경우 예외처리 테스트")
+    @DisplayName("Name 인스턴스 생성시 들어오는 값이 다른 언어를 사용하는 경우 예외처리 테스트")
     @Test
     void 검증_영어_외_다른_언어_사용() {
         // given
@@ -46,6 +46,23 @@ class NameTest {
         assertThatThrownBy(() -> Name.valueOf(stringName))
                 .isInstanceOf(NameIncludeVariableLanguage.class)
                 .hasMessage("이름에 영어 이외에 다른 언어들이 섞여있습니다.");
+    }
+
+    @DisplayName("Name 인스턴스 생성시 들어오는 값이 빈 값이거나 3자리를 초과하는 경우 예외처리 테스트")
+    @Test
+    void 검증_크기() {
+        // given
+        String emptyName = "";
+        String overSizeName = "wooji";
+
+        // when and then
+        assertThatThrownBy(() -> Name.valueOf(emptyName))
+                .isInstanceOf(InvalidNameSizeException.class)
+                .hasMessage("알맞는 이름의 크기가 아닙니다.");
+
+        assertThatThrownBy(() -> Name.valueOf(overSizeName))
+                .isInstanceOf(InvalidNameSizeException.class)
+                .hasMessage("알맞는 이름의 크기가 아닙니다.");
     }
 
 }
