@@ -34,7 +34,6 @@ class FinalFrameTest {
         finalFrame = finalFrame.bowl(firstPins);
         finalFrame = finalFrame.bowl(secondPins);
 
-
         // then
         assertThat(finalFrame.isFinish()).isTrue();
     }

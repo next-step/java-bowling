@@ -1,12 +1,14 @@
 package bowling.domain.frame;
 
 import bowling.domain.state.Pins;
+import bowling.domain.state.State;
 import bowling.domain.state.States;
+import bowling.domain.state.running.Ready;
 
 public final class FinalFrame extends Frame {
 
     private final States states;
-    private final FinalRound finalRound;
+    private FinalRound finalRound;
 
     private FinalFrame() {
         this.states = States.initialize();
@@ -18,12 +20,31 @@ public final class FinalFrame extends Frame {
     }
 
     @Override
-    public Frame bowl(Pins fallPins) {
+    public Frame bowl(final Pins fallPins) {
+        validateRound();
+        finalRound = finalRound.next();
+        final State current = states.current();
+        if (current.isFinish()) {
+            states.add(ready().bowl(fallPins));
+            return this;
+        }
+        states.remove();
+        states.add(current.bowl(fallPins));
         return this;
     }
 
+    private final State ready() {
+        return Ready.initialize();
+    }
+
+    private final void validateRound() {
+        if (isFinish()) {
+            throw new IllegalArgumentException();
+        }
+    }
+
     @Override
-    public boolean isFinish() {
+    public final boolean isFinish() {
         return finalRound.isFinish(hasBonusRound());
     }
 
