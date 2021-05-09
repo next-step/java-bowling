@@ -86,4 +86,20 @@ class PinsTest {
         );
 
     }
+
+    @DisplayName("Pins 인스턴스에 프레임이 남은 핀보다 큰 핀의  갯수 입력시 예외처리 테스트")
+    @Test
+    void 검증_남은_핀보다_큰핀_입력() {
+        // given
+        int fallCount = 10;
+
+        // when
+        Pins pins = Pins.fullSetting();
+        Pins remain = pins.hit(fallCount);
+
+        // then
+        assertThatThrownBy(() -> remain.hit(fallCount))
+                .isInstanceOf(InvalidPinsSizeException.class)
+                .hasMessage("Pins 의 범위를 벗어난 값이 입력되었습니다.");
+    }
 }

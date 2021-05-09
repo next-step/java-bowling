@@ -42,12 +42,20 @@ public class Pins {
         }
     }
 
+    public final Pins hit(final int fallCount) {
+        validateFallCount(fallCount);
+        return CACHE.get(subtractExact(count, fallCount));
+    }
+
+    private final void validateFallCount(final int fallCount) {
+        if (fallCount > count) {
+            throw new InvalidPinsSizeException();
+        }
+    }
+
     public final int count() {
         return count;
     }
 
-    public final Pins hit(final int fallCount) {
-        validateSize(fallCount);
-        return CACHE.get(subtractExact(count, fallCount));
-    }
+
 }
