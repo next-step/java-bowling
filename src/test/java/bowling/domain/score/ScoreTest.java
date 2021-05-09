@@ -70,4 +70,14 @@ class ScoreTest {
         assertThat(score).isNotNull();
     }
 
+    @DisplayName("Score 인스턴스가 pair를 나타내는 인스턴스를 반환하는지 테스트")
+    @Test
+    void 반환_사용불가능한_값() {
+        // when
+        Score score = Score.pair();
+
+        // then
+        assertThat(score).isNotNull();
+    }
+
 }
