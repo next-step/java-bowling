@@ -2,24 +2,28 @@ package bowling.domain.state;
 
 import bowling.domain.score.Score;
 
-public class Strike extends Finish {
+public final class Strike extends Finish {
 
     private static final int FULL = 10;
 
-    public static State initialize() {
+    public static final State initialize() {
         return new Strike();
     }
 
-    private Strike() { }
+    private Strike() {
+    }
 
     @Override
-    public Score score() {
+    public final Score score() {
         return Score.strike();
     }
 
     @Override
-    public Score calculateAdditionalScore(Score beforeScore) {
-        return null;
+    public final Score calculateAdditionalScore(Score beforeScore) {
+        if (beforeScore.isFinish()) {
+            return beforeScore;
+        }
+        return beforeScore.addBonusScore(FULL);
     }
 
     @Override
