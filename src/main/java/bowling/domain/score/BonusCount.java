@@ -36,17 +36,12 @@ public final class BonusCount {
         return CACHE.get(MAXIMUM_BONUS_COUNT);
     }
 
-    public static final BonusCount valueOf(final int remain) {
-        validateSize(remain);
-        return CACHE.get(remain);
-    }
-
     private BonusCount(final int remain) {
         validateSize(remain);
         this.remain = remain;
     }
 
-    private static final void validateSize(final int remain) {
+    private final void validateSize(final int remain) {
         if (remain < MINIMUM_BONUS_COUNT || remain > MAXIMUM_BONUS_COUNT) {
             throw new InvalidBonusCountSizeException();
         }

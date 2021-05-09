@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ScoreTest {
 
@@ -67,7 +68,10 @@ class ScoreTest {
         Score score = Score.miss(missCount);
 
         // then
-        assertThat(score).isNotNull();
+        assertAll(
+                () -> assertThat(score).isNotNull(),
+                () -> assertThat(score.isFinish()).isTrue()
+        );
     }
 
     @DisplayName("Score 인스턴스가 spare 를 나타내는 인스턴스를 반환하는지 테스트")
@@ -77,7 +81,10 @@ class ScoreTest {
         Score score = Score.spare();
 
         // then
-        assertThat(score).isNotNull();
+        assertAll(
+                () -> assertThat(score).isNotNull(),
+                () -> assertThat(score.isFinish()).isFalse()
+        );
     }
 
 
@@ -88,17 +95,24 @@ class ScoreTest {
         Score score = Score.strike();
 
         // then
-        assertThat(score).isNotNull();
+        assertAll(
+                () -> assertThat(score).isNotNull(),
+                () -> assertThat(score.isFinish()).isFalse()
+        );
     }
 
     @DisplayName("Score 인스턴스가 unavailable 를 나타내는 인스턴스를 반환하는지 테스트")
     @Test
-    void 반환_strike() {
+    void 반환_unavailable() {
         // when
         Score score = Score.unavailable();
 
         // then
-        assertThat(score).isNotNull();
+        assertAll(
+                () -> assertThat(score).isNotNull(),
+                () -> assertThat(score.isFinish()).isTrue()
+        );
+
     }
 
 }

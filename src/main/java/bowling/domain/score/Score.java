@@ -15,6 +15,10 @@ public final class Score {
     private final int score;
     private final BonusCount bonusCount;
 
+    public static final Score unavailable() {
+        return new Score(UN_AVAILABLE_SCORE, BonusCount.none());
+    }
+
     public static final Score miss(final int missScore) {
         return new Score(missScore, BonusCount.none());
     }
@@ -50,4 +54,7 @@ public final class Score {
         }
     }
 
+    public final boolean isFinish() {
+        return bonusCount.isFinish();
+    }
 }
