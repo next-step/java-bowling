@@ -1,10 +1,14 @@
 package bowling.domain;
 
+import bowling.exception.NameIncludeVariableLanguage;
 import bowling.exception.StringNullPointerException;
+import org.apache.logging.log4j.util.Strings;
 
 import java.util.Objects;
 
 public final class Name {
+
+    private static final String REGEX = "[^a-zA-Z]";
 
     private final String name;
 
@@ -14,6 +18,7 @@ public final class Name {
 
     private Name(final String name) {
         validateNull(name);
+        validateAlphabet(name);
         this.name = name;
     }
 
@@ -22,6 +27,17 @@ public final class Name {
             throw new StringNullPointerException();
         }
     }
+
+    private final void validateAlphabet(final String name) {
+        if (!replaceSpecialCharacters(name).equals(name)) {
+            throw new NameIncludeVariableLanguage();
+        }
+    }
+
+    private final String replaceSpecialCharacters(final String name) {
+        return name.replaceAll(REGEX, Strings.EMPTY);
+    }
+
 
 
 }

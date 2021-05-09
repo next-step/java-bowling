@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.NameIncludeVariableLanguage;
 import bowling.exception.StringNullPointerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,7 @@ class NameTest {
         // when and then
         assertThatThrownBy(() -> Name.valueOf(stringName))
                 .isInstanceOf(NameIncludeVariableLanguage.class)
-                .hasMessage("이름에 영어 외 다른 언어들이 섞여있습니다.");
+                .hasMessage("이름에 영어 이외에 다른 언어들이 섞여있습니다.");
     }
 
 }
