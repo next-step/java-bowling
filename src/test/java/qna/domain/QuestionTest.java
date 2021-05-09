@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
@@ -16,34 +15,24 @@ public class QuestionTest {
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
     @Test
-    @DisplayName("로그인사용자와 질문한 사람이 같으면 삭제가능")
-    void checkPermissionEqualUser() {
-        assertDoesNotThrow(() -> Q1.checkPermission(UserTest.JAVAJIGI));
-    }
-
-    @Test
-    @DisplayName("로그인사용자와 질문한 사람이 다르면 삭제불가")
-    void checkPermissionNotEqualUser() {
-        assertThrows(CannotDeleteException.class, () -> Q1.checkPermission(UserTest.SANJIGI));
-    }
-
-    @Test
-    @DisplayName("다른 사람이 쓴 답변이 있으면 삭제불가")
-    void checkOwnerAnswers() {
-        assertThrows(CannotDeleteException.class, () -> Q1.checkOwnerAnswers(UserTest.SANJIGI));
-    }
-
-    @Test
-    void deleted() {
-        Q1.delete();
-
+    void 로그인사용자와_질문한_사람이_다르면_삭제가능() {
+        List<DeleteHistory> deleteHistories = assertDoesNotThrow(
+            () -> Q1.delete(UserTest.JAVAJIGI));
         assertTrue(Q1.isDeleted());
+        assertEquals(1, deleteHistories.size());
     }
 
     @Test
-    void writeHistory() {
-        List<DeleteHistory> deleteHistories = Q1.writeHistory();
+    void 로그인사용자와_질문한_사람이_다르면_삭제불가() {
+        assertThrows(CannotDeleteException.class, () -> Q1.delete(UserTest.SANJIGI));
+    }
 
-        assertEquals(Q1.getId(), deleteHistories.get(0).getContentId());
+    @Test
+    void 답변자_질문자같으면_삭제가능() {
+        Q1.addAnswer(AnswerTest.A1);
+        List<DeleteHistory> deleteHistories = assertDoesNotThrow(
+            () -> Q1.delete(UserTest.JAVAJIGI));
+        assertTrue(Q1.isDeleted());
+        assertEquals(2, deleteHistories.size());
     }
 }

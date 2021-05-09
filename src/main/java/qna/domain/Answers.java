@@ -7,6 +7,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 @Embeddable
 public class Answers {
@@ -28,16 +29,19 @@ public class Answers {
         list.add(answer);
     }
 
-    public List<DeleteHistory> delete() {
+    public List<DeleteHistory> delete() throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        list.forEach(answer -> {
-            answer.delete();
-            deleteHistories.add(answer.writeHistory());
-        });
+        for (Answer answer : list) {
+            deleteHistories.add(answer.delete());
+        }
         return deleteHistories;
     }
 
     public List<Answer> value() {
         return this.list;
+    }
+
+    public boolean isEmpty() {
+        return this.list.isEmpty();
     }
 }
