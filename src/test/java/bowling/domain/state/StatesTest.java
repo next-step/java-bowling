@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.finish.Strike;
 import bowling.domain.state.running.Ready;
 import org.junit.jupiter.api.DisplayName;
@@ -74,25 +75,29 @@ class StatesTest {
 
     }
 
-//    @DisplayName("States 인스턴스가 알맞는 Score 반환 기능 테스트")
-//    @Test
-//    void 반환_score() {
-//        // given
-//        State first = Ready.initialize().bowl(Pins.valueOf(9));
-//        State second = first.bowl(Pins.valueOf(0));
-//
-//        // when
-//        States states = States.initialize();
-//        states.add(first);
-//        states.add(second);
-//        State actual = states.last();
-//
-//        // then
-//        assertAll(
-//                () -> assertThat(actual).isSameAs(expected),
-//                () -> assertThat(actual).isEqualTo(expected)
-//        );
-//
-//    }
+    @DisplayName("States 인스턴스가 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_score() {
+        // given
+        State first = Ready.initialize().bowl(Pins.valueOf(9));
+        State second = first.bowl(Pins.valueOf(0));
+
+        // when
+        // 시나리오대로 작성 -> miss 이므로 마지막 삭제후 2번째 넣음
+        States states = States.initialize();
+        states.remove();
+        states.add(first);
+        states.remove();
+        states.add(second);
+
+
+        // then
+        assertAll(
+                () -> assertThat(states.score()).isNotNull(),
+                () -> assertThat(states.score()).isInstanceOf(Score.class),
+                () -> assertThat(states.score().score()).isInstanceOf(9)
+        );
+
+    }
 
 }
