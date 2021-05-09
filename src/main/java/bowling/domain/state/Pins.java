@@ -53,12 +53,17 @@ public class Pins {
         }
     }
 
+    public final boolean isSpare(final int fallCount) {
+        return addExact(count, fallCount) == FULL;
+    }
+
+    public final boolean isEmpty() {
+        return count == EMPTY;
+    }
+
     public final int count() {
         return count;
     }
 
 
-    public final boolean isEmpty() {
-        return count == EMPTY;
-    }
 }
