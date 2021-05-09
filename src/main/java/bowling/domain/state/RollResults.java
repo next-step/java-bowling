@@ -5,6 +5,7 @@ import bowling.domain.Pin;
 import bowling.domain.Score;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,11 +30,16 @@ public class RollResults {
     }
 
     public RollResults next(Pin pin, HitNumber number) {
-        if (!hasNext() && isCleared()) {
-            results.add(pin.firstHit(number));
-            return of(results);
+        if (!hasNext()) {
+            List<State> next = new ArrayList<>(results);
+            next.add(pin.firstHit(number));
+            return of(next);
         }
-        return of(pin.nextHit(getLast(), number));
+        State newState = pin.nextHit(getLast(), number);
+        if (results.size() == 1) {
+            return of(newState);
+        }
+        return of(Arrays.asList(results.get(0), newState));
     }
 
     public boolean isCleared() {
