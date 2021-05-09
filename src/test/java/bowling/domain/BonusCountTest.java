@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class BonusCountTest {
 
@@ -44,12 +45,18 @@ class BonusCountTest {
     @Test
     void 종료() {
         // given
-        int remain = 0;
+        int firstRemain = 1;
+        int secondRemain = 0;
 
         // when
-        BonusCount bonusCount = BonusCount.valueOf(remain);
+        BonusCount firstCount = BonusCount.valueOf(firstRemain);
+        BonusCount secondCount = BonusCount.valueOf(secondRemain);
 
         // then
-        assertThat(bonusCount.isFinish()).isTrue();
+        assertAll(
+                () -> assertThat(firstCount.isFinish()).isFalse(),
+                () -> assertThat(secondCount.isFinish()).isTrue()
+        );
+
     }
 }

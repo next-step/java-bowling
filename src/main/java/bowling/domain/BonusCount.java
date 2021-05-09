@@ -9,6 +9,10 @@ public final class BonusCount {
 
     private final int remain;
 
+    public static final BonusCount valueOf(final int remain) {
+        return new BonusCount(remain);
+    }
+
     private BonusCount(final int remain) {
         validateSize(remain);
         this.remain = remain;
@@ -20,8 +24,7 @@ public final class BonusCount {
         }
     }
 
-    public static BonusCount valueOf(final int remain) {
-        return new BonusCount(remain);
+    public final boolean isFinish() {
+        return remain == MINIMUM_BONUS_COUNT;
     }
-
 }
