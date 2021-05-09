@@ -57,8 +57,8 @@ class MissTest {
     @Test
     void 반환_score() {
         // given
-        Pins firstPins = Pins.valueOf(9);
-        Pins secondPins = Pins.valueOf(0);
+        Pins firstPins = Pins.valueOf(1);
+        Pins secondPins = Pins.valueOf(8);
 
         // when
         State miss = Miss.of(firstPins, secondPins);
@@ -71,6 +71,63 @@ class MissTest {
                 () -> assertThat(miss.score().score()).isEqualTo(firstPins.count() + secondPins.count())
         );
 
+    }
+
+    @DisplayName("이전이 Miss 일 때, calculateAdditionalScore 의 결과로 알맞는 Score 인스턴스를 반한하는지 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_Miss_일_경우() {
+        // given
+        Pins firstPins = Pins.valueOf(1);
+        Pins secondPins = Pins.valueOf(8);
+
+        // when
+        State miss = Miss.of(firstPins, secondPins);
+        Score beforeScore = Score.miss(Pins.valueOf(0));
+        Score actual = miss.calculateAdditionalScore(beforeScore);
+
+        // then
+        assertAll(
+                () -> assertThat(actual.isFinish()).isTrue(),
+                () -> assertThat(actual.score()).isEqualTo(beforeScore.score())
+        );
+    }
+
+    @DisplayName("이전이 Spare 일 때, calculateAdditionalScore 의 결과로 알맞는 Score 인스턴스를 반한하는지 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_Spare_일_경우() {
+        // given
+        Pins firstPins = Pins.valueOf(1);
+        Pins secondPins = Pins.valueOf(8);
+
+        // when
+        State miss = Miss.of(firstPins, secondPins);
+        Score beforeScore = Score.spare();
+        Score actual = miss.calculateAdditionalScore(beforeScore);
+
+        // then
+        assertAll(
+                () -> assertThat(actual.isFinish()).isTrue(),
+                () -> assertThat(actual.score()).isEqualTo(beforeScore.score() + firstPins.count())
+        );
+    }
+
+    @DisplayName("이전이 Strike 일 때, calculateAdditionalScore 의 결과로 알맞는 Score 인스턴스를 반한하는지 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_Strike_일_경우() {
+        // given
+        Pins firstPins = Pins.valueOf(1);
+        Pins secondPins = Pins.valueOf(8);
+
+        // when
+        State miss = Miss.of(firstPins, secondPins);
+        Score beforeScore = Score.strike();
+        Score actual = miss.calculateAdditionalScore(beforeScore);
+
+        // then
+        assertAll(
+                () -> assertThat(actual.isFinish()).isTrue(),
+                () -> assertThat(actual.score()).isEqualTo(beforeScore.score() + miss.score().score())
+        );
     }
 
 }
