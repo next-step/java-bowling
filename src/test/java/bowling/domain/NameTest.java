@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.InvalidNameSizeException;
 import bowling.exception.NameIncludeVariableLanguage;
 import bowling.exception.StringNullPointerException;
 import org.junit.jupiter.api.DisplayName;
