@@ -15,6 +15,11 @@ public final class Strike extends Finish {
     }
 
     @Override
+    public final boolean isAllPinClear() {
+        return true;
+    }
+
+    @Override
     public final Score score() {
         return Score.strike();
     }

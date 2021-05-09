@@ -35,7 +35,7 @@ class StatesTest {
 
     }
 
-    @DisplayName("States 인스턴스가 보너스 라운드를 얻었는지에 대한 테스트")
+    @DisplayName("States 인스턴스가 보너스 라운드를 못 얻었는지에 대한 테스트")
     @Test
     void 반환_보너스_여부_없을때() {
         // given
@@ -44,10 +44,33 @@ class StatesTest {
 
         // when
         States states = States.initialize();
-        boolean actual = states.HasBonusRound();
+        states.remove();
+        states.add(first);
+        states.remove();
+        states.add(second);
+        boolean actual = states.hasBonusRound();
 
         // then
         assertThat(actual).isFalse();
+    }
+
+    @DisplayName("States 인스턴스가 보너스 라운드를 얻었는지에 대한 테스트")
+    @Test
+    void 반환_보너스_여부_있을때() {
+        // given
+        State first = Ready.initialize().bowl(Pins.valueOf(0));
+        State second = first.bowl(Pins.valueOf(10));
+
+        // when
+        States states = States.initialize();
+        states.remove();
+        states.add(first);
+        states.remove();
+        states.add(second);
+        boolean actual = states.hasBonusRound();
+
+        // then
+        assertThat(actual).isTrue();
     }
 
     @DisplayName("States 인스턴스에 인스턴스 추가 기능 테스트")

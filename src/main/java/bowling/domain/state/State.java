@@ -7,6 +7,8 @@ public interface State {
 
     boolean isFinish();
 
+    boolean isAllPinClear();
+
     Score score();
 
     Score calculateAdditionalScore(Score beforeScore);

@@ -37,6 +37,11 @@ public class Spare extends Finish {
     }
 
     @Override
+    public final boolean isAllPinClear() {
+        return true;
+    }
+
+    @Override
     public Score score() {
         return Score.spare();
     }

@@ -14,4 +14,9 @@ public abstract class Running implements State {
     public final Score score() {
         return Score.unavailable();
     }
+
+    @Override
+    public final boolean isAllPinClear() {
+        return false;
+    }
 }

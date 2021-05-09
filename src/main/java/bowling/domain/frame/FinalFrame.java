@@ -24,11 +24,11 @@ public final class FinalFrame extends Frame {
 
     @Override
     public boolean isFinish() {
-        return finalRound.isFinish(hasFinish());
+        return finalRound.isFinish(hasBonusRound());
     }
 
-    private final boolean hasFinish() {
-        return states.hasFinish();
+    private final boolean hasBonusRound() {
+        return states.hasBonusRound();
     }
 
 }

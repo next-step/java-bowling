@@ -39,6 +39,11 @@ public final class Miss extends Finish {
     }
 
     @Override
+    public final boolean isAllPinClear() {
+        return false;
+    }
+
+    @Override
     public final Score score() {
         return Score.miss(Pins.valueOf(sum()));
     }

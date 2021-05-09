@@ -40,4 +40,9 @@ public final class States {
         }
         return score;
     }
+
+    public final boolean hasBonusRound() {
+        return states.stream().anyMatch(State::isAllPinClear);
+    }
+
 }
