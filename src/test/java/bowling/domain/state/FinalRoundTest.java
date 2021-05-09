@@ -22,10 +22,12 @@ class FinalRoundTest {
         // given
         boolean bonus = false;
 
+        // when
         FinalRound finalRound = FinalRound.initialize();
-        finalRound = finalRound.increase();
-        finalRound = finalRound.increase();
+        finalRound = finalRound.next();
+        finalRound = finalRound.next();
 
-        assertThat(finalRound.isFinish()).isTrue();
+        // then
+        assertThat(finalRound.isFinish(bonus)).isTrue();
     }
 }
