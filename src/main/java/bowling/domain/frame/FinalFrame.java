@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.domain.state.State;
 import bowling.domain.state.States;
@@ -47,6 +48,11 @@ public final class FinalFrame extends Frame {
     @Override
     public final boolean isFinish() {
         return finalRound.isFinish(hasBonusRound());
+    }
+
+    @Override
+    public final Score score() {
+        return states.score();
     }
 
     private final boolean hasBonusRound() {
