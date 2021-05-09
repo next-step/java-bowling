@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.HitNumber;
 import bowling.domain.Pin;
 import bowling.domain.Score;
+import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
 import java.util.Objects;
@@ -14,7 +15,7 @@ public class NormalFrame implements Frame{
     private final State result;
 
     private NormalFrame(Pin pin) {
-        this(pin, null);
+        this(pin, Ready.of());
     }
 
     public NormalFrame(Pin pin, State result) {
@@ -48,14 +49,11 @@ public class NormalFrame implements Frame{
 
     @Override
     public Frame roll(HitNumber rollNumber) {
-        if (result == null) {
-            return of(pin, pin.firstHit(rollNumber));
-        }
         return of(pin, pin.nextHit(result, rollNumber));
     }
 
     @Override
-    public Frame addScore(int score) {
+    public Frame accumulate(int score) {
         if(result.isStrike() || result.isSpare()) {
             return of(pin, result.next(score));
         }
@@ -64,12 +62,12 @@ public class NormalFrame implements Frame{
 
     @Override
     public boolean isFinished() {
-        return result != null && !result.hasNext();
+        return !result.hasNext();
     }
 
     @Override
     public boolean canAccumulate() {
-        return result != null && result.canAccumulate();
+        return result.canAccumulate();
     }
 
     @Override

@@ -54,7 +54,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame addScore(int score) {
+    public Frame accumulate(int score) {
         return this;
     }
 

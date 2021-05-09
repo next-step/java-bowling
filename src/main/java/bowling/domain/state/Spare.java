@@ -35,11 +35,6 @@ public class Spare extends State {
         return new Spare(firstHit);
     }
 
-    public static Spare of(State firstHit, OneHit secondHit) {
-        valid(firstHit.eval(), secondHit.eval());
-        return new Spare(firstHit, secondHit);
-    }
-
     public static Spare of(State firstHit, State secondHit) {
         valid(firstHit.eval(), secondHit.eval());
         return new Spare(firstHit, secondHit);
@@ -72,7 +67,7 @@ public class Spare extends State {
 
     @Override
     public Score eval() {
-        return firstHit.eval().calculate(secondHit.eval());
+        return secondHit.eval().calculate(firstHit.eval());
     }
 
     @Override

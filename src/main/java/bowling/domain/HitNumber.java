@@ -37,6 +37,6 @@ public class HitNumber {
     }
 
     public Frame addScore(Frame frame) {
-        return frame.addScore(hitNumber);
+        return frame.accumulate(hitNumber);
     }
 }

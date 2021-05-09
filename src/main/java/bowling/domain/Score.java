@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.state.State;
-
 import java.util.Objects;
 
 public class Score {
@@ -60,21 +58,9 @@ public class Score {
         return ofSpare(DEFAULT_MAX_SCORE - before.score);
     }
 
-    public Score add(State result, int nextScore) {
-        if ((result.isSpare() && left < SPARE_BOUND)
-                || (result.isStrike() && left < STRIKE_BOUND)) {
-            return addNext(nextScore);
-        }
-        return this;
-    }
-
     public Score add(int nextScore) {
         validLeft(this.left);
         return of(this.score + nextScore, this.left - 1);
-    }
-
-    public boolean isFinished(State result) {
-        return left == INIT_NUM;
     }
 
     public boolean isFinished() {
@@ -115,10 +101,6 @@ public class Score {
         if (score < INIT_NUM) {
             throw new IllegalArgumentException(INVALID_SCORE);
         }
-    }
-
-    private Score addNext(int score) {
-        return of(this.score + score, this.left + 1);
     }
 
     @Override
