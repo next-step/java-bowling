@@ -1,11 +1,11 @@
 package bowling.domain;
 
+import bowling.exception.InvalidPinsSizeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PinsTest {
 
@@ -31,12 +31,12 @@ class PinsTest {
 
         // when and then
         assertThatThrownBy(() -> Pins.valueOf(negativeCount))
-                .isInstanceOf(InvalidPinsCountException.class)
+                .isInstanceOf(InvalidPinsSizeException.class)
                 .hasMessage("Pins 의 범위를 벗어난 값이 입력되었습니다.");
 
         // when and then
         assertThatThrownBy(() -> Pins.valueOf(overCount))
-                .isInstanceOf(InvalidPinsCountException.class)
+                .isInstanceOf(InvalidPinsSizeException.class)
                 .hasMessage("Pins 의 범위를 벗어난 값이 입력되었습니다.");
     }
 }

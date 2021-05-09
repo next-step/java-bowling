@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.InvalidPinsSizeException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +20,21 @@ public class Pins {
         }
     }
 
+    public static final Pins valueOf(final int pinCount) {
+        validateSize(pinCount);
+        return CACHE.get(pinCount);
+    }
+
     public Pins(final int pinCount) {
+        validateSize(pinCount);
         this.pinCount = pinCount;
     }
 
-    public static Pins valueOf(final int pinCount) {
-        return CACHE.get(pinCount);
+    private static final void validateSize(final int pinCount) {
+        if (pinCount < EMPTY || pinCount > FULL) {
+            throw new InvalidPinsSizeException();
+        }
     }
+
+
 }
