@@ -39,4 +39,18 @@ class PinsTest {
                 .isInstanceOf(InvalidPinsSizeException.class)
                 .hasMessage("Pins 의 범위를 벗어난 값이 입력되었습니다.");
     }
+
+    @DisplayName("Pins 인스턴스가 소유한 값을 반환하는지 테스트")
+    @Test
+    void 반환() {
+        // given
+        int expected = 10;
+
+        // when
+        Pins pins = Pins.valueOf(expected);
+        int actual = pins.count();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
 }
