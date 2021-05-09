@@ -15,4 +15,17 @@ class FinalRoundTest {
 
         assertThat(finalRound).isNotNull();
     }
+
+    @DisplayName("FinalRound 인스턴스의 보너스 없을 때 종료 기능 테스트")
+    @Test
+    void 종료_보너스_없을때() {
+        // given
+        boolean bonus = false;
+
+        FinalRound finalRound = FinalRound.initialize();
+        finalRound = finalRound.increase();
+        finalRound = finalRound.increase();
+
+        assertThat(finalRound.isFinish()).isTrue();
+    }
 }
