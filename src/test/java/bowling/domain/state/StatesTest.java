@@ -32,18 +32,23 @@ class StatesTest {
 
     }
 
-//    @DisplayName("States 인스턴스에 인스턴스 추가 기능 테스트")
-//    @Test
-//    void 추가() {
-//        // given
-//        State strike = Strike.initialize();
-//
-//        // when
-//        States states = States.initialize();
-//        states.add(strike);
-//
-//        // then
-//        assertThat(states).isNotNull();
-//    }
+    @DisplayName("States 인스턴스에 인스턴스 추가 기능 테스트")
+    @Test
+    void 추가() {
+        // given
+        State expected = Strike.initialize();
+
+        // when
+        States states = States.initialize();
+        states.add(expected);
+        State actual = states.last();
+
+        // then
+        assertAll(
+                () -> assertThat(actual).isSameAs(expected),
+                () -> assertThat(actual).isEqualTo(expected)
+        );
+
+    }
 
 }
