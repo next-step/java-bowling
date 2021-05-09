@@ -1,5 +1,16 @@
 package bowling.domain.state;
 
-public interface State {
+import bowling.domain.frame.Frame;
+import bowling.domain.score.Score;
 
+public interface State {
+    Frame bowl(Pins pins);
+
+    boolean isFinish();
+
+    Score score();
+
+    Score calculateAdditionalScore(Score score);
+
+    String description();
 }
