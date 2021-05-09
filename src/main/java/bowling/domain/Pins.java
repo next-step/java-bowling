@@ -11,7 +11,7 @@ public class Pins {
     private static final int FULL = 10;
     private static final List<Pins> CACHE;
 
-    private final int pinCount;
+    private final int count;
 
     static {
         CACHE = new ArrayList<>();
@@ -20,21 +20,23 @@ public class Pins {
         }
     }
 
-    public static final Pins valueOf(final int pinCount) {
-        validateSize(pinCount);
-        return CACHE.get(pinCount);
+    public static final Pins valueOf(final int count) {
+        validateSize(count);
+        return CACHE.get(count);
     }
 
-    public Pins(final int pinCount) {
-        validateSize(pinCount);
-        this.pinCount = pinCount;
+    public Pins(final int count) {
+        validateSize(count);
+        this.count = count;
     }
 
-    private static final void validateSize(final int pinCount) {
-        if (pinCount < EMPTY || pinCount > FULL) {
+    private static final void validateSize(final int count) {
+        if (count < EMPTY || count > FULL) {
             throw new InvalidPinsSizeException();
         }
     }
 
-
+    public final int count() {
+        return count;
+    }
 }
