@@ -64,7 +64,7 @@ public class OneHit extends RollResultType{
     }
 
     @Override
-    public boolean isCalculated() {
+    public boolean canAccumulate() {
         return false;
     }
 

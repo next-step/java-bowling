@@ -4,8 +4,6 @@ import bowling.domain.rollresult.RollResultType;
 
 import java.util.Objects;
 
-import static java.lang.Math.abs;
-
 public class Score {
     private static final int INIT_NUM = 0;
     private static final int SPARE_BOUND = 1;
@@ -81,10 +79,6 @@ public class Score {
 
     public boolean isFinished() {
         return left == INIT_NUM;
-    }
-
-    public Score diff(int score) {
-        return of(abs(this.score - score), this.left);
     }
 
     public int compareTo(int score) {

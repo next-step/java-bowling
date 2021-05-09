@@ -30,7 +30,7 @@ public class Gutter extends RollResultType {
     }
 
     @Override
-    public boolean isCalculated() {
+    public boolean canAccumulate() {
         return false;
     }
 

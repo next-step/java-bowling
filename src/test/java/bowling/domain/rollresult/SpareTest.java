@@ -16,14 +16,14 @@ public class SpareTest {
         assertThat(SPARE_1.isStrike()).isFalse();
         assertThat(SPARE_1.hasNext()).isFalse();
         assertThat(SPARE_1.eval().isClear()).isTrue();
-        assertThat(SPARE_1.isCalculated()).isFalse();
+        assertThat(SPARE_1.canAccumulate()).isTrue();
     }
 
     @Test
     void 스페어는_추가점수계산이가능하다() {
         RollResultType next = SPARE_1.next(3);
         assertThat(next.eval()).isEqualTo(Score.of(13, 0));
-        assertThat(next.isCalculated()).isTrue();
+        assertThat(next.canAccumulate()).isFalse();
     }
 
     @Test

@@ -44,8 +44,8 @@ public class Miss extends RollResultType{
     }
 
     @Override
-    public boolean isCalculated() {
-        return true;
+    public boolean canAccumulate() {
+        return false;
     }
 
     @Override

@@ -76,8 +76,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isCalculated() {
-        return isFinished();
+    public boolean canAccumulate() {
+        return !isFinished();
     }
 
     @Override

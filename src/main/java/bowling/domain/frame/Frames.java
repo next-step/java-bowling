@@ -30,7 +30,7 @@ public class Frames {
 
     public List<Score> totalScores() {
         List<Score> eachScore = frames.stream()
-                .filter(frame -> frame.isCalculated())
+                .filter(frame -> !frame.canAccumulate())
                 .map(frame -> frame.totalScore())
                 .collect(Collectors.toList());
         for (int i = 1; i < eachScore.size(); i++) {

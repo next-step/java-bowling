@@ -61,8 +61,8 @@ public class Spare extends RollResultType {
     }
 
     @Override
-    public boolean isCalculated() {
-        return secondHit.eval().isFinished();
+    public boolean canAccumulate() {
+        return !secondHit.eval().isFinished();
     }
 
     @Override

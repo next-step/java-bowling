@@ -68,8 +68,8 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public boolean isCalculated() {
-        return result != null && result.isCalculated();
+    public boolean canAccumulate() {
+        return result != null && result.canAccumulate();
     }
 
     @Override

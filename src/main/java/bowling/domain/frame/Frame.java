@@ -8,6 +8,6 @@ public interface Frame {
     Frame roll(HitNumber rollNumber);
     Frame addScore(int score);
     boolean isFinished();
-    boolean isCalculated();
+    boolean canAccumulate();
     Score totalScore();
 }

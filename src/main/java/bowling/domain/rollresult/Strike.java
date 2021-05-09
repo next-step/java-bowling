@@ -50,8 +50,8 @@ public class Strike extends RollResultType {
     }
 
     @Override
-    public boolean isCalculated() {
-        return firstHit.isCalculated(this);
+    public boolean canAccumulate() {
+        return !firstHit.isCalculated(this);
     }
 
     @Override

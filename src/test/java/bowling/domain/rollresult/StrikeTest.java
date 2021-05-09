@@ -11,7 +11,16 @@ public class StrikeTest {
     void 스트라이크생성() {
         assertThat(STRIKE.isStrike()).isTrue();
         assertThat(STRIKE.isSpare()).isFalse();
-        assertThat(STRIKE.eval().compareTo(10)).isEqualTo(0);
+        assertThat(STRIKE.hasNext()).isFalse();
+        assertThat(STRIKE.eval().isStrike()).isTrue();
+        assertThat(STRIKE.canAccumulate()).isTrue();
+    }
+
+    @Test
+    void 스트라이크는_한번의추가점수가_가능하다() {
+        RollResultType strike = Strike.of().next(3);
+
+        assertThat(strike.canAccumulate()).isFalse();
     }
 
     @Test
