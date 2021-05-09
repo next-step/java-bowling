@@ -26,4 +26,8 @@ public final class States {
     public void add(final State addition) {
         states.addLast(addition);
     }
+
+    public final void remove() {
+        states.removeLast();
+    }
 }
