@@ -10,19 +10,22 @@ public final class Score {
     private static final int UN_AVAILABLE_SCORE = -1;
     private static final int MAXIMUM_SCORE = 30;
 
-    private static final int ALL_PIN = 10;
+    private static final int ALL_PIN_COUNT = 10;
 
     private final int score;
     private final BonusCount bonusCount;
 
-    public static Score miss(final int missScore) {
+    public static final Score miss(final int missScore) {
         return new Score(missScore, BonusCount.none());
     }
 
-    public static Score spare() {
-        return new Score(ALL_PIN, BonusCount.spare());
+    public static final Score spare() {
+        return new Score(ALL_PIN_COUNT, BonusCount.spare());
     }
 
+    public static final Score strike() {
+        return new Score(ALL_PIN_COUNT, BonusCount.strike());
+    }
 
     public static final Score of(final int score, final BonusCount bonusCount) {
         return new Score(score, bonusCount);
