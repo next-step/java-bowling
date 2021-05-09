@@ -56,4 +56,17 @@ class ScoreTest {
                 .isInstanceOf(InvalidScoreSizeException.class)
                 .hasMessage("Score 범위를 벗어난 값이 입력 되었습니다.");
     }
+
+    @DisplayName("Score 인스턴스가 miss 를 나타내는 인스턴스를 반환하는지 테스트")
+    @Test
+    void 반환_사용불가능한_값() {
+        // given
+        int firstCount = 0;
+        int secondCount = 9;
+
+        Score score = Score.miss(firstCount, secondCount);
+
+        assertThat(score).isNotNull();
+    }
+
 }

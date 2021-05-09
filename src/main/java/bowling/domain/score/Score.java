@@ -13,6 +13,10 @@ public final class Score {
     private final int score;
     private final BonusCount bonusCount;
 
+    public static final Score of(final int score, final BonusCount bonusCount) {
+        return new Score(score, bonusCount);
+    }
+
     private Score(final int score, final BonusCount bonusCount) {
         validateNull(bonusCount);
         validateSize(score);
@@ -32,7 +36,4 @@ public final class Score {
         }
     }
 
-    public static Score of(final int score, final BonusCount bonusCount) {
-        return new Score(score, bonusCount);
-    }
 }
