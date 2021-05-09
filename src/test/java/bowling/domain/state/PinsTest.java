@@ -78,11 +78,11 @@ class PinsTest {
         // when
         Pins pins = Pins.fullSetting();
 
-
+        // then
         assertAll(
                 () -> assertThat(pins.hit(fallCount)).isNotNull(),
                 () -> assertThat(pins.hit(fallCount)).isInstanceOf(Pins.class),
-                () -> assertThat(pins.hit(fallCount)).isEqualTo(0)
+                () -> assertThat(pins.hit(fallCount).count()).isEqualTo(0)
         );
 
     }

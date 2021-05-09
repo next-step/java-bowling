@@ -5,6 +5,8 @@ import bowling.exception.InvalidPinsSizeException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.*;
+
 public class Pins {
 
     private static final int EMPTY = 0;
@@ -42,5 +44,10 @@ public class Pins {
 
     public final int count() {
         return count;
+    }
+
+    public final Pins hit(final int fallCount) {
+        validateSize(fallCount);
+        return CACHE.get(subtractExact(count, fallCount));
     }
 }
