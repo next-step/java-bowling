@@ -143,4 +143,25 @@ class ScoreTest {
 
     }
 
+    @DisplayName("Score 인스턴스가 점수를 반환하는 기능 테스트")
+    @Test
+    void 반환_score() {
+        // given
+        int missScore = 9;
+        int allClear = 10;
+
+        // when
+        Score miss = Score.miss(missScore);
+        Score spare = Score.spare();
+        Score strike = Score.strike();
+
+        // then
+        assertAll(
+                () -> assertThat(miss.score()).isEqualTo(missScore),
+                () -> assertThat(spare.score()).isEqualTo(allClear),
+                () -> assertThat(strike.score()).isEqualTo(allClear)
+        );
+
+    }
+
 }
