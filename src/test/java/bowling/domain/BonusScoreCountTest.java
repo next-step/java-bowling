@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BonusScoreCountTest {
 
     @DisplayName("BonusScoreCount 인스턴스 생성 여부 테스트")
-    @ParameterizedTest(name = "{index}, {argument}")
+    @ParameterizedTest
     @ValueSource(ints = {0, 1, 2})
     void 생성(int remain) {
 
