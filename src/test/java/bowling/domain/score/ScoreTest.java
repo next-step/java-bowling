@@ -91,5 +91,14 @@ class ScoreTest {
         assertThat(score).isNotNull();
     }
 
+    @DisplayName("Score 인스턴스가 unavailable 를 나타내는 인스턴스를 반환하는지 테스트")
+    @Test
+    void 반환_strike() {
+        // when
+        Score score = Score.unavailable();
+
+        // then
+        assertThat(score).isNotNull();
+    }
 
 }
