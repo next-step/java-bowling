@@ -84,4 +84,6 @@ class BonusCountTest {
         // then
         assertThat(bonusCount.isFinish()).isTrue();
     }
+
+
 }
