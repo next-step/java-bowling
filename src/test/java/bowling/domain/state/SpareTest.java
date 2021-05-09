@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.score.Score;
 import bowling.exception.InvalidPinsSizeException;
 import bowling.exception.InvalidSpareSizeException;
 import bowling.exception.PinsNullPointerException;
@@ -53,5 +54,23 @@ class SpareTest {
         assertThatThrownBy(() -> Spare.of(firstPins, secondPins))
                 .isInstanceOf(InvalidSpareSizeException.class)
                 .hasMessage("Spare 에 대해 알맞지 않은 크기가 입력 되었습니다.");
+    }
+
+    @DisplayName("Spare 인스턴스가 알맞는 Score 인스턴스를 반한하는지 테스트")
+    @Test
+    void 반환_score() {
+        // given
+        Pins firstPins = Pins.valueOf(0);
+        Pins secondPins = Pins.valueOf(10);
+
+        // when
+        State spare = Spare.of(firstPins, secondPins);
+
+        // then
+        assertAll(
+                () -> assertThat(spare.score()).isNotNull(),
+                () -> assertThat(spare.score()).isInstanceOf(Score.class),
+                () -> assertThat(spare.score().score()).isEqualTo(10)
+        );
     }
 }
