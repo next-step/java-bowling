@@ -75,7 +75,7 @@ class BonusCountTest {
 
     }
 
-    @DisplayName("BonusCount 인스턴스가 보너스 없는 인스턴스를 반환하지에 대한 테스트")
+    @DisplayName("BonusCount 인스턴스가 보너스 없는 인스턴스를 반환하는지에 대한 테스트")
     @Test
     void 반환_보너스_없음() {
         // when
@@ -85,7 +85,7 @@ class BonusCountTest {
         assertThat(bonusCount.isFinish()).isTrue();
     }
 
-    @DisplayName("BonusCount 인스턴스가 보너스가 하나 있는 인스턴스를 반환하지에 대한 테스트")
+    @DisplayName("BonusCount 인스턴스가 보너스가 하나 있는 인스턴스를 반환하는지에 대한 테스트")
     @Test
     void 반환_보너스_하나() {
         // when
@@ -98,5 +98,7 @@ class BonusCountTest {
         );
 
     }
+
+
 
 }

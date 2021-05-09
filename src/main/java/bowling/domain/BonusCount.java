@@ -11,7 +11,7 @@ public final class BonusCount {
 
     private static final int MINIMUM_BONUS_COUNT = 0;
     private static final int MAXIMUM_BONUS_COUNT = 2;
-    private static final int OPERATION_UNIT = 1;
+    private static final int ONE = 1;
 
     private static final List<BonusCount> CACHE;
 
@@ -27,6 +27,11 @@ public final class BonusCount {
     public static final BonusCount none() {
         return CACHE.get(MINIMUM_BONUS_COUNT);
     }
+
+    public static final BonusCount spare() {
+        return CACHE.get(ONE);
+    }
+
 
     public static final BonusCount valueOf(final int remain) {
         validateSize(remain);
@@ -44,11 +49,12 @@ public final class BonusCount {
         }
     }
 
+
     public final boolean isFinish() {
         return remain == MINIMUM_BONUS_COUNT;
     }
 
     public final BonusCount decrease() {
-        return CACHE.get(subtractExact(remain, OPERATION_UNIT));
+        return CACHE.get(subtractExact(remain, ONE));
     }
 }
