@@ -1,10 +1,11 @@
-package bowling.domain.rollresult;
+package bowling.domain.state;
+
+import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Gutter implements RollResultType {
-
-    private final int score = DEFAULT_MIN_SCORE;
+public class Gutter extends Running {
+    private final Score score = Score.of();
 
     private Gutter() {
     }
@@ -14,28 +15,13 @@ public class Gutter implements RollResultType {
     }
 
     @Override
-    public boolean isStrike() {
-        return false;
+    public Score eval() {
+        return score;
     }
 
     @Override
-    public boolean isSpare() {
-        return false;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return true;
-    }
-
-    @Override
-    public int eval() {
-        return DEFAULT_MIN_SCORE;
-    }
-
-    @Override
-    public RollResultType next(int nextHit) {
-        if (nextHit == DEFAULT_MAX_SCORE) {
+    public State next(int nextHit) {
+        if (Score.of(nextHit).isStrike()) {
             return Spare.of(this, OneHit.ofOne(nextHit));
         }
         return Miss.of(this, OneHit.of(nextHit));
@@ -46,7 +32,7 @@ public class Gutter implements RollResultType {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Gutter gutter = (Gutter) o;
-        return score == gutter.score;
+        return Objects.equals(score, gutter.score);
     }
 
     @Override

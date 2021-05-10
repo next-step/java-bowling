@@ -1,60 +1,51 @@
-package bowling.domain.rollresult;
+package bowling.domain.state;
+
+import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Miss implements RollResultType{
+public class Miss extends Finished {
     private static final String INVALID_MISS = "miss는 두 점수의 합이 10 미만이어야합니다.";
-    private final RollResultType oneHit;
-    private final RollResultType secondHit;
+    private final State oneHit;
+    private final State secondHit;
 
-    private Miss(RollResultType oneHit, RollResultType secondHit) {
+    private Miss(State oneHit, State secondHit) {
         this.oneHit = oneHit;
         this.secondHit = secondHit;
     }
 
     public static Miss of() {
-        return new Miss(Gutter.of(), Gutter.of());
+        return of(Gutter.of(), Gutter.of());
     }
 
     public static Miss of(int firstScore, int secondScore) {
-        valid(firstScore, secondScore);
-        return new Miss(OneHit.of(firstScore), OneHit.of(secondScore));
+        return of(OneHit.of(firstScore), OneHit.of(secondScore));
     }
 
-    public static Miss of(RollResultType oneHit, RollResultType secondHit) {
+    public static Miss of(State oneHit, State secondHit) {
         valid(oneHit.eval(), secondHit.eval());
         return new Miss(oneHit, secondHit);
     }
 
-    private static void valid(int firstScore, int secondScore) {
-        if (firstScore + secondScore >= DEFAULT_MAX_SCORE) {
+    @Override
+    public boolean canAccumulate() {
+        return false;
+    }
+
+    @Override
+    public Score eval() {
+        return oneHit.eval().calculate(secondHit.eval());
+    }
+
+    @Override
+    public State next(int nextScore) {
+        return this;
+    }
+
+    private static void valid(Score firstScore, Score secondScore) {
+        if (firstScore.calculate(secondScore).isClear()) {
             throw new IllegalArgumentException(INVALID_MISS);
         }
-    }
-
-    @Override
-    public boolean isStrike() {
-        return false;
-    }
-
-    @Override
-    public boolean isSpare() {
-        return false;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return false;
-    }
-
-    @Override
-    public int eval() {
-        return DEFAULT_MIN_SCORE;
-    }
-
-    @Override
-    public RollResultType next(int nextScore) {
-        return this;
     }
 
     @Override

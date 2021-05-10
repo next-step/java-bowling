@@ -1,10 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.HitNumber;
+import bowling.domain.Score;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Frames {
     private static final int MAX_INDEX = 10;
@@ -20,13 +22,39 @@ public class Frames {
 
     public void play(HitNumber hitNumber) {
         rollOne(hitNumber);
-        if(isNeededToNext()) {
+        addHitScore(hitNumber);
+        if (isNeededToNext()) {
             addNext();
         }
     }
 
+    public List<Score> totalScores() {
+        List<Score> eachScore = frames.stream()
+                .filter(frame -> frame.isFinished() && !frame.canAccumulate())
+                .map(frame -> frame.totalScore())
+                .collect(Collectors.toList());
+        for (int i = 1; i < eachScore.size(); i++) {
+            eachScore.set(i, eachScore.get(i - 1).calculate(eachScore.get(i)));
+        }
+        return eachScore;
+    }
+
+    public boolean isFinished() {
+        return frames.size() == MAX_INDEX && getLast().isFinished();
+    }
+
+    public int getLastIndex() {
+        return frames.size();
+    }
+
     private void rollOne(HitNumber hitNumber) {
         setLast(getLast().roll(hitNumber));
+    }
+
+    private void addHitScore(HitNumber hitNumber) {
+        for (int i = 0; i < frames.size() - 1; i++) {
+            frames.set(i, hitNumber.addScore(frames.get(i)));
+        }
     }
 
     private boolean isNeededToNext() {
@@ -37,20 +65,12 @@ public class Frames {
         frames.add(getLast().next(getLastIndex()));
     }
 
-    public boolean isFinished() {
-        return frames.size() == MAX_INDEX && getLast().isFinished();
-    }
-
     private Frame getLast() {
         return frames.get(frames.size() - 1);
     }
 
     private void setLast(Frame frame) {
         frames.set(frames.size() - 1, frame);
-    }
-
-    public int getLastIndex() {
-        return frames.size();
     }
 
     @Override

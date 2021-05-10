@@ -1,7 +1,10 @@
 package bowling.util;
 
 import bowling.domain.Player;
+import bowling.domain.Score;
 import bowling.domain.frame.Frames;
+
+import java.util.List;
 
 
 public class StringUtils {
@@ -12,7 +15,8 @@ public class StringUtils {
     private static final String DELIMITER = ",";
     private static final String NAME_FORMAT = "|  %s |";
     private static final String LAST_FORMAT = "|%s";
-    private static final String FRAME_FORMAT = "      |";
+    private static final String SCORE_FORMAT = " %3s  |";
+    private static final String BLANK_FORMAT = "      |";
     private static final String SLASH = "|";
 
     public static String convertName(Player player) {
@@ -23,10 +27,20 @@ public class StringUtils {
         StringBuilder stringBuilder = new StringBuilder();
         String[] frameStr = removeLast(frames.toString()).split(DELIMITER);
         for (int i = 0; i < frameStr.length; i++) {
-            stringBuilder.append(appendFrame(frameStr[i]));
+            stringBuilder.append(
+                    replaceNull(String.format(" %-5s|", frameStr[i].trim())));
         }
         for (int i = 0; i < MAX_INDEX - frameStr.length; i++) {
-            stringBuilder.append(FRAME_FORMAT);
+            stringBuilder.append(BLANK_FORMAT);
+        }
+        return stringBuilder.toString();
+    }
+
+    public static String convertScores(List<Score> scores) {
+        StringBuilder stringBuilder = new StringBuilder(SLASH + BLANK_FORMAT);
+        scores.forEach(score -> stringBuilder.append(String.format(SCORE_FORMAT, score.toString())));
+        for (int i = 0; i < MAX_INDEX - scores.size(); i++) {
+            stringBuilder.append(BLANK_FORMAT);
         }
         return stringBuilder.toString();
     }
@@ -44,20 +58,7 @@ public class StringUtils {
         return splitStr[0] + last[0];
     }
 
-    private static String appendFrame(String str) {
-        for (int i = str.length(); i < MIN_WIDTH; i++) {
-            str = " " + str;
-        }
-        for (int i = str.length(); i < MAX_WIDTH; i++) {
-            str += " ";
-        }
-        return replaceNull(str + SLASH);
-    }
-
     private static String replaceNull(String str) {
-        if (str.contains("null")) {
-            return FRAME_FORMAT;
-        }
-        return str;
+        return str.contains("null") ? BLANK_FORMAT : str;
     }
 }

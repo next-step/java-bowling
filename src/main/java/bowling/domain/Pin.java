@@ -1,7 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.rollresult.OneHit;
-import bowling.domain.rollresult.RollResultType;
+import bowling.domain.state.State;
 
 import java.util.Objects;
 
@@ -33,15 +32,27 @@ public class Pin {
         return new Pin();
     }
 
-    public static Pin reload(Pin pin) {
-        validTry(pin.tryNum);
-        return new Pin(pin.tryNum);
+    public Pin reload() {
+        validTry(this.tryNum);
+        return new Pin(this.tryNum);
     }
 
     public static Pin of(int tryNum, int pinNum) {
         validTry(tryNum);
         validPinNum(pinNum);
         return new Pin(tryNum, pinNum);
+    }
+
+    public State hit(State type, HitNumber rollNumber) {
+        validTry(tryNum);
+        validPinNum(pinNum);
+        int before = pinNum;
+        fallen(rollNumber);
+        return type.next(before - pinNum);
+    }
+
+    public boolean isLast() {
+        return tryNum == PIN_TRY_UPPER_BOUND;
     }
 
     private static void validTry(int tryNum) {
@@ -59,22 +70,6 @@ public class Pin {
     private void fallen(HitNumber rollNumber) {
         tryNum++;
         pinNum = rollNumber.hit(pinNum);
-    }
-
-    public RollResultType firstHit(HitNumber rollNumber) {
-        fallen(rollNumber);
-        return OneHit.of(PIN_NUM_UPPER_BOUND - pinNum);
-    }
-
-    public RollResultType nextHit(RollResultType type, HitNumber rollNumber) {
-        validTry(tryNum);
-        validPinNum(pinNum);
-        fallen(rollNumber);
-        return type.next(PIN_NUM_UPPER_BOUND - pinNum);
-    }
-
-    public boolean isLast() {
-        return tryNum == PIN_TRY_UPPER_BOUND;
     }
 
     @Override

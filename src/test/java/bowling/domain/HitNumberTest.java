@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.HitNumber;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +27,9 @@ public class HitNumberTest {
     @Test
     void 치고난횟수는_음수가아니다() {
         HitNumber rollNumber = HitNumber.of(3);
-        assertThat(rollNumber.hit(1)).isEqualTo(0);
+        assertThatThrownBy(() -> {
+            rollNumber.hit(1);
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
 }

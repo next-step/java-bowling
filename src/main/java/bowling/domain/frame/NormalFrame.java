@@ -2,7 +2,9 @@ package bowling.domain.frame;
 
 import bowling.domain.HitNumber;
 import bowling.domain.Pin;
-import bowling.domain.rollresult.RollResultType;
+import bowling.domain.Score;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
 
 import java.util.Objects;
 
@@ -10,30 +12,18 @@ public class NormalFrame implements Frame{
     private static final int MAX_INDEX = 10;
 
     private final Pin pin;
-    private final RollResultType result;
+    private final State result;
 
-    private NormalFrame(Pin pin) {
-        this(pin, null);
-    }
-
-    public NormalFrame(Pin pin, RollResultType result) {
+    public NormalFrame(Pin pin, State result) {
         this.pin = pin;
         this.result = result;
     }
 
     public static NormalFrame of() {
-        return new NormalFrame(Pin.of());
+        return of(Pin.of(), Ready.of());
     }
 
-    public static NormalFrame of(Pin pin) {
-        return new NormalFrame(pin);
-    }
-
-    public static NormalFrame of(RollResultType result) {
-        return new NormalFrame(null, result);
-    }
-
-    public static NormalFrame of(Pin pin, RollResultType result) {
+    public static NormalFrame of(Pin pin, State result) {
         return new NormalFrame(pin, result);
     }
 
@@ -47,15 +37,30 @@ public class NormalFrame implements Frame{
 
     @Override
     public Frame roll(HitNumber rollNumber) {
-        if (result == null) {
-            return of(pin, pin.firstHit(rollNumber));
+        return of(pin, pin.hit(result, rollNumber));
+    }
+
+    @Override
+    public Frame accumulate(int score) {
+        if(result.canAccumulate()) {
+            return of(pin, result.next(score));
         }
-        return of(pin, pin.nextHit(result, rollNumber));
+        return this;
     }
 
     @Override
     public boolean isFinished() {
-        return result != null && !result.hasNext();
+        return !result.hasNext();
+    }
+
+    @Override
+    public boolean canAccumulate() {
+        return result.canAccumulate();
+    }
+
+    @Override
+    public Score totalScore() {
+        return result.eval();
     }
 
     @Override
