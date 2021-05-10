@@ -1,9 +1,7 @@
 package bowling.domain.state.finished;
 
 import bowling.domain.Score;
-import bowling.domain.state.State;
 import bowling.domain.turn.FallenPins;
-import bowling.error.CannotThrowBallException;
 
 public class Spare extends Finished {
   private final FallenPins firstShot;
