@@ -4,12 +4,14 @@ import bowling.domain.turn.FallenPins;
 import bowling.error.CannotMakeFrameException;
 import bowling.error.CannotThrowBallException;
 import bowling.error.InvalidFallenPinsException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalFrameTest {
 
@@ -19,7 +21,7 @@ class NormalFrameTest {
   void createTest(int round) {
     Frame frame = Frame.of(round);
 
-    Assertions.assertThat(frame).isInstanceOf(NormalFrame.class);
+    assertThat(frame).isInstanceOf(NormalFrame.class);
   }
 
   @ParameterizedTest
@@ -28,14 +30,14 @@ class NormalFrameTest {
   void invalidCreateToNormalFrameTest(int round) {
     Frame frame = Frame.of(round);
 
-    Assertions.assertThat(frame).isNotInstanceOf(NormalFrame.class);
+    assertThat(frame).isNotInstanceOf(NormalFrame.class);
   }
 
   @ParameterizedTest
   @ValueSource(ints = {0, 11})
   @DisplayName("생성 불가능")
   void invalidCreateTest(int round) {
-    Assertions.assertThatThrownBy(() -> Frame.of(round)).isInstanceOf(CannotMakeFrameException.class);
+    assertThatThrownBy(() -> Frame.of(round)).isInstanceOf(CannotMakeFrameException.class);
   }
 
   @ParameterizedTest
@@ -54,7 +56,7 @@ class NormalFrameTest {
     Frame frame = Frame.of(1);
     frame.bowl(new FallenPins(firstShot));
 
-    Assertions.assertThatThrownBy(() -> frame.bowl(new FallenPins(secondShot)))
+    assertThatThrownBy(() -> frame.bowl(new FallenPins(secondShot)))
       .isInstanceOf(InvalidFallenPinsException.class);
   }
 
@@ -66,7 +68,7 @@ class NormalFrameTest {
     frame.bowl(new FallenPins(firstShot));
     frame.bowl(new FallenPins(secondShot));
 
-    Assertions.assertThatThrownBy(() -> frame.bowl(new FallenPins(thirdShot)))
+    assertThatThrownBy(() -> frame.bowl(new FallenPins(thirdShot)))
       .isInstanceOf(CannotThrowBallException.class);
   }
 
@@ -76,7 +78,7 @@ class NormalFrameTest {
     Frame frame = Frame.of(1);
     frame.bowl(new FallenPins(1));
 
-    Assertions.assertThat(frame.checkFinished()).isFalse();
+    assertThat(frame.checkFinished()).isFalse();
   }
 
   @Test
@@ -85,7 +87,7 @@ class NormalFrameTest {
     Frame frame = Frame.of(1);
     frame.bowl(new FallenPins(10));
 
-    Assertions.assertThat(frame.checkFinished()).isTrue();
+    assertThat(frame.checkFinished()).isTrue();
   }
 
   @Test
@@ -95,6 +97,6 @@ class NormalFrameTest {
     frame.bowl(new FallenPins(5));
     frame.bowl(new FallenPins(1));
 
-    Assertions.assertThat(frame.checkFinished()).isTrue();
+    assertThat(frame.checkFinished()).isTrue();
   }
 }

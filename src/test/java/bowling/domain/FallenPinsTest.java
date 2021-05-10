@@ -2,12 +2,13 @@ package bowling.domain;
 
 import bowling.domain.turn.FallenPins;
 import bowling.error.InvalidFallenPinsException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FallenPinsTest {
   public static final FallenPins existingPin = new FallenPins(8);
@@ -18,14 +19,14 @@ class FallenPinsTest {
   void createTest(int pins) {
     FallenPins score = new FallenPins(pins);
 
-    Assertions.assertThat(score.pins()).isEqualTo(pins);
+    assertThat(score.pins()).isEqualTo(pins);
   }
 
   @ParameterizedTest
   @ValueSource(ints = {-1, 11})
   @DisplayName("그 이외에는 추가되면 안된다")
   void invalidCreateTest(int pins) {
-    Assertions.assertThatThrownBy(() -> new FallenPins(pins)).isInstanceOf(InvalidFallenPinsException.class);
+    assertThatThrownBy(() -> new FallenPins(pins)).isInstanceOf(InvalidFallenPinsException.class);
   }
 
   @ParameterizedTest
@@ -35,7 +36,7 @@ class FallenPinsTest {
     FallenPins firstShot = new FallenPins(firstShotPins);
     FallenPins secondShot = new FallenPins(secondShotPins);
 
-    Assertions.assertThatThrownBy(() -> firstShot.checkAddable(secondShot)).isInstanceOf(InvalidFallenPinsException.class);
+    assertThatThrownBy(() -> firstShot.checkAddable(secondShot)).isInstanceOf(InvalidFallenPinsException.class);
   }
 
   @ParameterizedTest

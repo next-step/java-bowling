@@ -3,12 +3,12 @@ package bowling.domain.state.finished;
 import bowling.domain.state.State;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotThrowBallException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class SpecialShotTest {
 

@@ -2,11 +2,13 @@ package bowling.domain.frame;
 
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotMakeFrameException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FinalFrameTest {
 
@@ -16,7 +18,7 @@ class FinalFrameTest {
   void createTest(int round) {
     Frame frame = Frame.of(round);
 
-    Assertions.assertThat(frame).isInstanceOf(FinalFrame.class);
+    assertThat(frame).isInstanceOf(FinalFrame.class);
   }
 
   @ParameterizedTest
@@ -25,14 +27,14 @@ class FinalFrameTest {
   void invalidCreateToFinalFrameTest(int round) {
     Frame frame = Frame.of(round);
 
-    Assertions.assertThat(frame).isNotInstanceOf(FinalFrame.class);
+    assertThat(frame).isNotInstanceOf(FinalFrame.class);
   }
 
   @ParameterizedTest
   @ValueSource(ints = {0, 11})
   @DisplayName("생성 불가능")
   void invalidCreateTest(int round) {
-    Assertions.assertThatThrownBy(() -> Frame.of(round)).isInstanceOf(CannotMakeFrameException.class);
+    assertThatThrownBy(() -> Frame.of(round)).isInstanceOf(CannotMakeFrameException.class);
   }
 
   @Test
@@ -42,7 +44,7 @@ class FinalFrameTest {
     frame.bowl(new FallenPins(10));
     frame.bowl(new FallenPins(1));
     frame.bowl(new FallenPins(5));
-    Assertions.assertThat(frame.show()).isEqualTo("X|1|5");
+    assertThat(frame.show()).isEqualTo("X|1|5");
   }
 
   @Test
@@ -52,7 +54,7 @@ class FinalFrameTest {
     frame.bowl(new FallenPins(9));
     frame.bowl(new FallenPins(1));
     frame.bowl(new FallenPins(1));
-    Assertions.assertThat(frame.show()).isEqualTo("9|/|1");
+    assertThat(frame.show()).isEqualTo("9|/|1");
   }
 
   @Test
@@ -61,7 +63,7 @@ class FinalFrameTest {
     Frame frame = Frame.of(10);
     frame.bowl(new FallenPins(1));
 
-    Assertions.assertThat(frame.checkFinished()).isFalse();
+    assertThat(frame.checkFinished()).isFalse();
   }
 
   @Test
@@ -70,7 +72,7 @@ class FinalFrameTest {
     Frame frame = Frame.of(10);
     frame.bowl(new FallenPins(10));
 
-    Assertions.assertThat(frame.checkFinished()).isFalse();
+    assertThat(frame.checkFinished()).isFalse();
   }
 
   @Test
@@ -80,7 +82,7 @@ class FinalFrameTest {
     frame.bowl(new FallenPins(5));
     frame.bowl(new FallenPins(5));
 
-    Assertions.assertThat(frame.checkFinished()).isFalse();
+    assertThat(frame.checkFinished()).isFalse();
   }
 
   @Test
@@ -90,7 +92,7 @@ class FinalFrameTest {
     frame.bowl(new FallenPins(5));
     frame.bowl(new FallenPins(1));
 
-    Assertions.assertThat(frame.checkFinished()).isTrue();
+    assertThat(frame.checkFinished()).isTrue();
   }
 
   @Test
@@ -101,6 +103,6 @@ class FinalFrameTest {
     frame.bowl(new FallenPins(5));
     frame.bowl(new FallenPins(9));
 
-    Assertions.assertThat(frame.checkFinished()).isTrue();
+    assertThat(frame.checkFinished()).isTrue();
   }
 }

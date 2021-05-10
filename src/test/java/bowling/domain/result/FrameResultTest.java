@@ -1,8 +1,10 @@
 package bowling.domain.result;
 
-import org.assertj.core.api.Assertions;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class FrameResultTest {
   @Test
@@ -10,7 +12,7 @@ class FrameResultTest {
   void normalTest() {
     FrameResult frameResult = new FrameResult("8|1", 9, true);
 
-    Assertions.assertThat(frameResult.score()).isEqualTo("9");
+    assertThat(frameResult.score()).isEqualTo("9");
   }
 
   @Test
@@ -18,6 +20,6 @@ class FrameResultTest {
   void test() {
     FrameResult frameResult = new FrameResult("X", 10, false);
 
-    Assertions.assertThat(frameResult.score()).isEqualTo("");
+    assertThat(frameResult.score()).isEqualTo("");
   }
 }

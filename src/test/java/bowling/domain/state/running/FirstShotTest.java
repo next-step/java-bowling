@@ -4,12 +4,11 @@ import bowling.domain.state.State;
 import bowling.domain.state.finished.Miss;
 import bowling.domain.state.finished.Spare;
 import bowling.domain.turn.FallenPins;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class FirstShotTest {
   State state;
