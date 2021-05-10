@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.state.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,12 +13,30 @@ class NormalFrameTest {
     @Test
     void 생성() {
         // when
-        Frame normalFrame = NormalFrame.initialize();
+        Frame normalFrame = NormalFrame.from(1);
 
         // then
         assertAll(
                 () -> assertThat(normalFrame).isNotNull(),
                 () -> assertThat(normalFrame).isInstanceOf(NormalFrame.class)
+        );
+    }
+
+    @DisplayName("NormalFrame 인스턴스가 bowl 실행(다음으로 이동) 테스트")
+    @Test
+    void 투구_bowl_다음으로_이동() {
+        // given
+        Pins pins = Pins.full();
+
+        // when
+        Frame normalFrame = NormalFrame.from(1);
+        Frame nextFrame = normalFrame.bowl(pins);
+
+        // then
+        assertAll(
+                () -> assertThat(normalFrame.isFinish()).isTrue(),
+                () -> assertThat(nextFrame).isNotSameAs(normalFrame),
+                () -> assertThat(nextFrame).isNotEqualTo(normalFrame)
         );
 
     }

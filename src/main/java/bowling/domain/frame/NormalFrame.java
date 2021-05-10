@@ -5,28 +5,44 @@ import bowling.domain.state.Pins;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 
+import static java.lang.Math.addExact;
+
 public class NormalFrame extends Frame {
 
-    private State state;
-    private Frame next;
+    private static final int INCREASE_UNIT = 1;
 
-    private NormalFrame() {
+    private State state;
+    private final int sequence;
+
+    private NormalFrame(final int sequence) {
         this.state = Ready.initialize();
-        this.next = null;
+        this.sequence = sequence;
     }
 
-    public static Frame initialize() {
-        return new NormalFrame();
+    public static Frame from(final int sequence) {
+        return new NormalFrame(sequence);
     }
 
     @Override
-    public Frame bowl(Pins fallPins) {
-        return null;
+    public Frame bowl(final Pins fallPins) {
+        state = state.bowl(fallPins);
+        if (state.isFinish()) {
+            return generateNextFrame();
+        }
+        return this;
+    }
+
+    private final Frame generateNextFrame() {
+        final int nextSequence = addExact(sequence, INCREASE_UNIT);
+        if (nextSequence == LAST_SEQUENCE) {
+            return FinalFrame.initialize();
+        }
+        return new NormalFrame(nextSequence);
     }
 
     @Override
     public boolean isFinish() {
-        return false;
+        return state.isFinish();
     }
 
     @Override
