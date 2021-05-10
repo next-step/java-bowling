@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.state.Pins;
+import bowling.exception.NoActionBowlException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,8 +43,15 @@ public final class Frames {
     }
 
     public final void bowl(final Pins pins) {
+        validateFinish();
         current = current.bowl(pins);
         frames.set(sequenceToIndex(current), current);
+    }
+
+    private final void validateFinish() {
+        if (isFinish()) {
+            throw new NoActionBowlException();
+        }
     }
 
     private final int sequenceToIndex(final Frame frame) {
