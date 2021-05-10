@@ -5,10 +5,10 @@ import bowling.domain.state.State;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotThrowBallException;
 
-public class Miss implements State {
+public class Miss extends Finished {
 
-  FallenPins firstShot;
-  FallenPins secondShot;
+  private final FallenPins firstShot;
+  private final FallenPins secondShot;
 
   private Miss(FallenPins firstShot, FallenPins secondShot) {
     this.firstShot = firstShot;
@@ -18,16 +18,6 @@ public class Miss implements State {
   public static State of(FallenPins firstShot, FallenPins secondShot) {
     firstShot.checkAddable(secondShot);
     return new Miss(firstShot, secondShot);
-  }
-
-  @Override
-  public boolean isFinished() {
-    return true;
-  }
-
-  @Override
-  public State bowl(FallenPins pins) {
-    throw new CannotThrowBallException();
   }
 
   @Override

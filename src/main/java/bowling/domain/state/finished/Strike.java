@@ -5,7 +5,7 @@ import bowling.domain.state.State;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotThrowBallException;
 
-public class Strike implements State {
+public class Strike extends Finished {
 
   private final FallenPins pins;
 
@@ -15,16 +15,6 @@ public class Strike implements State {
 
   public static State of(FallenPins fallenPins) {
     return new Strike(fallenPins);
-  }
-
-  @Override
-  public boolean isFinished() {
-    return true;
-  }
-
-  @Override
-  public State bowl(FallenPins pins) {
-    throw new CannotThrowBallException();
   }
 
   @Override

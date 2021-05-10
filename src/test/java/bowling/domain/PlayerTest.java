@@ -1,9 +1,11 @@
 package bowling.domain;
 
 import bowling.error.NameInvalidLengthException;
-import org.assertj.core.api.Assertions;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
 
 class PlayerTest {
 
@@ -12,7 +14,7 @@ class PlayerTest {
   void createNameTest() {
     String name = "nan";
 
-    Assertions.assertThat(new Player(name).name()).isEqualTo(name);
+    assertThat(new Player(name).name()).isEqualTo(name);
   }
 
   @Test
@@ -20,7 +22,7 @@ class PlayerTest {
   void invalidCreateNameTest() {
     String name = "nani";
 
-    Assertions.assertThatThrownBy(() -> new Player(name)).isInstanceOf(NameInvalidLengthException.class);
+    assertThatThrownBy(() -> new Player(name)).isInstanceOf(NameInvalidLengthException.class);
   }
 
 }

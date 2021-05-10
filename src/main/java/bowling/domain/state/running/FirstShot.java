@@ -7,7 +7,7 @@ import bowling.domain.state.finished.Spare;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotCalculateException;
 
-public class FirstShot implements State {
+public class FirstShot extends Running {
 
   private final FallenPins firstShot;
 
@@ -17,11 +17,6 @@ public class FirstShot implements State {
 
   public static State of(FallenPins pins) {
     return new FirstShot(pins);
-  }
-
-  @Override
-  public boolean isFinished() {
-    return false;
   }
 
   @Override
@@ -36,11 +31,6 @@ public class FirstShot implements State {
   @Override
   public String show() {
     return firstShot.show();
-  }
-
-  @Override
-  public Score calculateScore() {
-    throw new CannotCalculateException();
   }
 
   @Override

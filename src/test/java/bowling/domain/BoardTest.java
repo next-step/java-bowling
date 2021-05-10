@@ -1,8 +1,9 @@
 package bowling.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
 
 class BoardTest {
 
@@ -12,7 +13,7 @@ class BoardTest {
     Board board = new Board();
     board.addRound(new Player("STS"));
 
-    Assertions.assertThat(board.size()).isEqualTo(1);
+    assertThat(board.size()).isEqualTo(1);
   }
 
 

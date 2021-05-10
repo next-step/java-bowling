@@ -6,7 +6,7 @@ import bowling.domain.state.finished.Strike;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotCalculateException;
 
-public class Ready implements State {
+public class Ready extends Running {
   private static final String EMPTY = "";
 
   private Ready() {
@@ -17,10 +17,6 @@ public class Ready implements State {
     return new Ready();
   }
 
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
 
   @Override
   public State bowl(FallenPins pins) {
@@ -34,11 +30,6 @@ public class Ready implements State {
   @Override
   public String show() {
     return EMPTY;
-  }
-
-  @Override
-  public Score calculateScore() {
-    throw new CannotCalculateException();
   }
 
   @Override

@@ -1,11 +1,9 @@
 package bowling.domain.state.finished;
 
 import bowling.domain.Score;
-import bowling.domain.state.State;
 import bowling.domain.turn.FallenPins;
-import bowling.error.CannotThrowBallException;
 
-public class SpecialShot implements State {
+public class SpecialShot extends Finished {
 
   private final FallenPins fallenPins;
 
@@ -15,16 +13,6 @@ public class SpecialShot implements State {
 
   public static SpecialShot of(FallenPins pins) {
     return new SpecialShot(pins);
-  }
-
-  @Override
-  public boolean isFinished() {
-    return true;
-  }
-
-  @Override
-  public State bowl(FallenPins pins) {
-    throw new CannotThrowBallException();
   }
 
   @Override

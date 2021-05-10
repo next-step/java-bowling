@@ -33,14 +33,6 @@ public class Score {
     return new Score(pins.pins(), MISS_LEFT);
   }
 
-  @Override
-  public String toString() {
-    return "Score{" +
-      "score=" + score +
-      ", left=" + left +
-      '}';
-  }
-
   public Score bowl(int countOfPins) {
     return new Score(score + countOfPins, left - 1);
   }
@@ -54,6 +46,14 @@ public class Score {
 
   public boolean canCalculateScore() {
     return left == 0;
+  }
+
+  @Override
+  public String toString() {
+    return "Score{" +
+      "score=" + score +
+      ", left=" + left +
+      '}';
   }
 
 }

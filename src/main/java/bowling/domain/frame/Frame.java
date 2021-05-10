@@ -6,9 +6,9 @@ import bowling.domain.turn.FallenPins;
 import bowling.error.CannotMakeFrameException;
 
 public abstract class Frame {
-  protected static final int LAST_FRAME = 10;
+  private static final int LAST_FRAME = 10;
 
-  protected final int round;
+  private final int round;
 
   protected Frame(int round) {
     this.round = round;

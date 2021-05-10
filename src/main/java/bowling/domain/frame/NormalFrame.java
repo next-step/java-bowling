@@ -23,7 +23,7 @@ public class NormalFrame extends Frame {
   public Frame bowl(FallenPins fallenPins) {
     state = state.bowl(fallenPins);
     if (state.isFinished()) {
-      nextFrame = Frame.of(round + NEXT_FRAME_COUNT);
+      nextFrame = Frame.of(round() + NEXT_FRAME_COUNT);
       return nextFrame;
     }
     return this;
