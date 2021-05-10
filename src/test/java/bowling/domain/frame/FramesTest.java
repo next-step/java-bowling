@@ -28,4 +28,14 @@ class FramesTest {
     }
 
 
+    @DisplayName("Frames 인스턴스 현재 frame 종료 여부 테스트")
+    @Test
+    void 종료() {
+        // when
+        Frames frames = Frames.initialize();
+
+        // then
+        assertThat(frames.isFinish()).isFalse();
+    }
+
 }
