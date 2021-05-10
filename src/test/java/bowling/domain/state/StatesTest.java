@@ -490,7 +490,7 @@ class StatesTest {
         State second = Ready.initialize().bowl(Pins.valueOf(1));
         State third = second.bowl(Pins.valueOf(9));
 
-        Score strike = Score.spare();
+        Score spare = Score.spare();
 
         // when
         // 시나리오대로 작성
@@ -503,9 +503,9 @@ class StatesTest {
 
         // then
         assertAll(
-                () -> assertThat(states.calculateAdditionalScore(strike)).isNotNull(),
-                () -> assertThat(states.calculateAdditionalScore(strike)).isInstanceOf(Score.class),
-                () -> assertThat(states.calculateAdditionalScore(strike).score()).isEqualTo(20)
+                () -> assertThat(states.calculateAdditionalScore(spare)).isNotNull(),
+                () -> assertThat(states.calculateAdditionalScore(spare)).isInstanceOf(Score.class),
+                () -> assertThat(states.calculateAdditionalScore(spare).score()).isEqualTo(20)
         );
 
     }

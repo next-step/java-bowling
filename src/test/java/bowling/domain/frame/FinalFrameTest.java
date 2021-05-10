@@ -2,6 +2,9 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
+import bowling.domain.state.State;
+import bowling.domain.state.States;
+import bowling.domain.state.running.Ready;
 import bowling.exception.NoActionBowlException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -285,4 +288,242 @@ class FinalFrameTest {
         );
 
     }
+
+    @DisplayName("beforeScore 가 miss 이고 FinalFrame 인스턴스가 miss일 경우 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_before_miss_finalFrame_miss() {
+        // given
+        Pins first = Pins.valueOf(9);
+        Pins second = Pins.valueOf(0);
+        Score miss = Score.miss(Pins.valueOf(9));
+
+        // when
+        Frame finalFrame = FinalFrame.initialize();
+        finalFrame.bowl(first);
+        finalFrame.bowl(second);
+
+        // then
+        assertAll(
+                () -> assertThat(finalFrame.calculateAdditionalScore(miss)).isNotNull(),
+                () -> assertThat(finalFrame.calculateAdditionalScore(miss)).isInstanceOf(Score.class),
+                () -> assertThat(finalFrame.calculateAdditionalScore(miss).score()).isEqualTo(9)
+        );
+
+    }
+
+    @DisplayName("beforeScore 가 spare 이고 FinalFrame 인스턴스가 miss일 경우 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_before_spare_finalFrame_miss() {
+        // given
+        Pins first = Pins.valueOf(9);
+        Pins second = Pins.valueOf(0);
+        Score spare = Score.spare();
+
+        // when
+        Frame finalFrame = FinalFrame.initialize();
+        finalFrame.bowl(first);
+        finalFrame.bowl(second);
+
+        // then
+        assertAll(
+                () -> assertThat(finalFrame.calculateAdditionalScore(spare)).isNotNull(),
+                () -> assertThat(finalFrame.calculateAdditionalScore(spare)).isInstanceOf(Score.class),
+                () -> assertThat(finalFrame.calculateAdditionalScore(spare).score()).isEqualTo(19)
+        );
+
+    }
+
+    @DisplayName("beforeScore 가 strike 이고 FinalFrame 인스턴스가 miss일 경우 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_before_strike_finalFrame_miss() {
+        // given
+        Pins first = Pins.valueOf(9);
+        Pins second = Pins.valueOf(0);
+        Score strike = Score.strike();
+
+        // when
+        Frame finalFrame = FinalFrame.initialize();
+        finalFrame.bowl(first);
+        finalFrame.bowl(second);
+
+        // then
+        assertAll(
+                () -> assertThat(finalFrame.calculateAdditionalScore(strike)).isNotNull(),
+                () -> assertThat(finalFrame.calculateAdditionalScore(strike)).isInstanceOf(Score.class),
+                () -> assertThat(finalFrame.calculateAdditionalScore(strike).score()).isEqualTo(19)
+        );
+
+    }
+
+    @DisplayName("beforeScore 가 miss 이고 States 인스턴스가 spare일 경우 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_before_miss_finalFrame_spare() {
+        // given
+        Pins first = Pins.valueOf(9);
+        Pins second = Pins.valueOf(1);
+        Pins third = Pins.valueOf(10);
+        Score miss = Score.miss(Pins.valueOf(9));
+
+        // when
+        Frame finalFrame = FinalFrame.initialize();
+        finalFrame.bowl(first);
+        finalFrame.bowl(second);
+        finalFrame.bowl(third);
+
+        // then
+        assertAll(
+                () -> assertThat(finalFrame.calculateAdditionalScore(miss)).isNotNull(),
+                () -> assertThat(finalFrame.calculateAdditionalScore(miss)).isInstanceOf(Score.class),
+                () -> assertThat(finalFrame.calculateAdditionalScore(miss).score()).isEqualTo(9)
+        );
+
+    }
+
+    @DisplayName("beforeScore 가 spare 이고 FinalFrame 인스턴스가 spare일 경우 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_before_spare_finalFrame_spare() {
+        // given
+        Pins first = Pins.valueOf(9);
+        Pins second = Pins.valueOf(1);
+        Pins third = Pins.valueOf(10);
+        Score spare = Score.spare();
+
+        // when
+        Frame finalFrame = FinalFrame.initialize();
+        finalFrame.bowl(first);
+        finalFrame.bowl(second);
+        finalFrame.bowl(third);
+
+        // then
+        assertAll(
+                () -> assertThat(finalFrame.calculateAdditionalScore(spare)).isNotNull(),
+                () -> assertThat(finalFrame.calculateAdditionalScore(spare)).isInstanceOf(Score.class),
+                () -> assertThat(finalFrame.calculateAdditionalScore(spare).score()).isEqualTo(20)
+        );
+
+    }
+
+
+    @DisplayName("beforeScore 가 strike 이고 FinalFrame 인스턴스가 spare일 경우 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_before_strike_finalFrame_spare() {
+        // given
+        Pins first = Pins.valueOf(9);
+        Pins second = Pins.valueOf(1);
+        Pins third = Pins.valueOf(10);
+        Score strike = Score.strike();
+
+        // when
+        Frame finalFrame = FinalFrame.initialize();
+        finalFrame.bowl(first);
+        finalFrame.bowl(second);
+        finalFrame.bowl(third);
+
+        // then
+        assertAll(
+                () -> assertThat(finalFrame.calculateAdditionalScore(strike)).isNotNull(),
+                () -> assertThat(finalFrame.calculateAdditionalScore(strike)).isInstanceOf(Score.class),
+                () -> assertThat(finalFrame.calculateAdditionalScore(strike).score()).isEqualTo(20)
+        );
+
+    }
+
+
+    @DisplayName("beforeScore 가 miss 이고 FinalFrame 인스턴스가 strike일 경우 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_before_miss_finalFrame_strike() {
+        // given
+        Pins first = Pins.valueOf(10);
+        Pins second = Pins.valueOf(1);
+        Pins third = Pins.valueOf(9);
+        Score miss = Score.miss(Pins.valueOf(9));
+
+        // when
+        Frame finalFrame = FinalFrame.initialize();
+        finalFrame.bowl(first);
+        finalFrame.bowl(second);
+        finalFrame.bowl(third);
+
+        // then
+        assertAll(
+                () -> assertThat(finalFrame.calculateAdditionalScore(miss)).isNotNull(),
+                () -> assertThat(finalFrame.calculateAdditionalScore(miss)).isInstanceOf(Score.class),
+                () -> assertThat(finalFrame.calculateAdditionalScore(miss).score()).isEqualTo(9)
+        );
+
+
+    }
+
+    @DisplayName("beforeScore 가 spare 이고 States 인스턴스가 strike일 경우 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_before_spare_states_strike() {
+        // given
+        Pins first = Pins.valueOf(10);
+        Pins second = Pins.valueOf(1);
+        Pins third = Pins.valueOf(9);
+        Score spare = Score.spare();
+
+        // when
+        Frame finalFrame = FinalFrame.initialize();
+        finalFrame.bowl(first);
+        finalFrame.bowl(second);
+        finalFrame.bowl(third);
+
+        // then
+        assertAll(
+                () -> assertThat(finalFrame.calculateAdditionalScore(spare)).isNotNull(),
+                () -> assertThat(finalFrame.calculateAdditionalScore(spare)).isInstanceOf(Score.class),
+                () -> assertThat(finalFrame.calculateAdditionalScore(spare).score()).isEqualTo(20)
+        );
+
+    }
+
+    @DisplayName("beforeScore 가 strike 이고 States 인스턴스가 strike일 경우 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_before_strike_states_strike() {
+        // given
+        Pins first = Pins.valueOf(10);
+        Pins second = Pins.valueOf(1);
+        Pins third = Pins.valueOf(9);
+        Score strike = Score.strike();
+
+        // when
+        Frame finalFrame = FinalFrame.initialize();
+        finalFrame.bowl(first);
+        finalFrame.bowl(second);
+        finalFrame.bowl(third);
+
+        // then
+        assertAll(
+                () -> assertThat(finalFrame.calculateAdditionalScore(strike)).isNotNull(),
+                () -> assertThat(finalFrame.calculateAdditionalScore(strike)).isInstanceOf(Score.class),
+                () -> assertThat(finalFrame.calculateAdditionalScore(strike).score()).isEqualTo(21)
+        );
+
+    }
+
+    @DisplayName("모두 strike인 경우 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_strike_strike_strike() {
+        // given
+        Pins first = Pins.valueOf(10);
+        Pins second = Pins.valueOf(10);
+        Pins third = Pins.valueOf(10);
+        Score strike = Score.strike();
+
+        // when
+        Frame finalFrame = FinalFrame.initialize();
+        finalFrame.bowl(first);
+        finalFrame.bowl(second);
+        finalFrame.bowl(third);
+
+        // then
+        assertAll(
+                () -> assertThat(finalFrame.calculateAdditionalScore(strike)).isNotNull(),
+                () -> assertThat(finalFrame.calculateAdditionalScore(strike)).isInstanceOf(Score.class),
+                () -> assertThat(finalFrame.calculateAdditionalScore(strike).score()).isEqualTo(30)
+        );
+
+    }
+
 }
