@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.state.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +37,24 @@ class FramesTest {
 
         // then
         assertThat(frames.isFinish()).isFalse();
+    }
+
+    @DisplayName("Frames 인스턴스가 모든 bowl() 호츌시 종료 여부 반환하는지 테스트")
+    @Test
+    void 투구_bowl() {
+        // given
+        Frames frames = Frames.initialize();
+
+        // when
+        for (int i = 0; i < 12; i++) {
+            frames.bowl(Pins.valueOf(10));
+        }
+
+        // then
+        assertAll(
+                () -> assertThat(frames.isFinish()).isTrue(),
+                () -> assertThat(frames.sequence()).isEqualTo(10)
+        );
     }
 
 
