@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.exception.NoActionBowlException;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +15,10 @@ class FramesTest {
     @DisplayName("Frames 인스턴스 생성 여부 테스트")
     @Test
     void 생성() {
+        // when
         Frames frames = Frames.initialize();
 
+        // then
         assertThat(frames).isNotNull();
     }
 
@@ -65,14 +68,32 @@ class FramesTest {
         // given
         Frames frames = Frames.initialize();
 
+        // when
         while (!frames.isFinish()) {
             frames.bowl(Pins.valueOf(10));
         }
 
-        // when
+        // then
         assertThatThrownBy(() -> frames.bowl(Pins.valueOf(1)))
                 .isInstanceOf(NoActionBowlException.class)
                 .hasMessage("현재 상태에서는 더 이상 볼을 던질 수 없습니다.");
+    }
+
+    @DisplayName("Frames 인스턴스가 현재까지의 프레임별 점수를 반환하는지 테스트")
+    @Test
+    void 반환_scores() {
+        // given
+        Frames frames = Frames.initialize();
+
+        while (!frames.isFinish()) {
+            frames.bowl(Pins.valueOf(10));
+        }
+        // when
+        assertAll(
+                () -> assertThat(frames.scores()).isNotNull(),
+                () -> assertThat(frames.scores().stream().mapToInt(Score::score).sum()).isEqualTo(300)
+        );
+
     }
 
 }
