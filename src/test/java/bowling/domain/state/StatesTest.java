@@ -295,5 +295,30 @@ class StatesTest {
 
     }
 
+    @DisplayName("beforeScore 가 strike 이고 States 인스턴스가 miss일 경우 알맞는 Score 반환 기능 테스트")
+    @Test
+    void 반환_calculateAdditionalScore_before_strike_states_miss() {
+        // given
+        State first = Ready.initialize().bowl(Pins.valueOf(9));
+        State second = first.bowl(Pins.valueOf(0));
+        Score beforeScoreAsStrike = Strike.initialize().score();
+
+        // when
+        // 시나리오대로 작성
+        States states = States.initialize();
+        states.remove();
+        states.add(first);
+        states.remove();
+        states.add(second);
+
+        // then
+        assertAll(
+                () -> assertThat(states.calculateAdditionalScore(beforeScoreAsStrike)).isNotNull(),
+                () -> assertThat(states.calculateAdditionalScore(beforeScoreAsStrike)).isInstanceOf(Score.class),
+                () -> assertThat(states.calculateAdditionalScore(beforeScoreAsStrike).score()).isEqualTo(20)
+        );
+
+    }
+
 
 }
