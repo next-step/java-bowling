@@ -9,24 +9,11 @@ public class DeleteHistories {
     public DeleteHistories() {
     }
 
-    public DeleteHistories(List<DeleteHistory> deleteHistories) {
-        this.deleteHistories = deleteHistories;
-    }
-
-    public void add(Question question) {
-        deleteHistories.add(question.delete());
-    }
-
-    public void add(Answers answers) {
-        answers.addDeleteHistory(this);
-    }
-
-    public void add(Answer answer) {
-        deleteHistories.add(answer.delete());
-    }
-
     public List<DeleteHistory> info() {
         return deleteHistories;
     }
 
+    public void add(DeleteHistory deleteHistory) {
+        deleteHistories.add(deleteHistory);
+    }
 }

@@ -25,9 +25,9 @@ public class Answers {
         }
     }
 
-    public void addDeleteHistory(DeleteHistories deleteHistories) {
+    public void allDelete(DeleteHistories deleteHistories) {
         for (Answer answer : answers) {
-            deleteHistories.add(answer);
+            deleteHistories.add(answer.delete());
         }
     }
 }

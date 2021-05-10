@@ -3,15 +3,7 @@ package qna.domain;
 import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -93,21 +85,13 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public Answers getAnswers() {
-        return answers;
-    }
-
-    @Override
-    public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
-
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         checkDeleteQuestionPermission(loginUser);
 
         DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories.add(this);
-        deleteHistories.add(getAnswers());
+
+        deleteHistories.add(this.delete());
+        answers.allDelete(deleteHistories);
 
         return deleteHistories.info();
     }
@@ -123,5 +107,10 @@ public class Question extends AbstractEntity {
     public DeleteHistory delete() {
         this.deleted = true;
         return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+    }
+
+    @Override
+    public String toString() {
+        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 }
