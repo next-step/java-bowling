@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,25 @@ class NormalFrameTest {
         assertAll(
                 () -> assertThat(normalFrame.isFinish()).isTrue(),
                 () -> assertThat(nextFrame).isNotSameAs(normalFrame)
+        );
+    }
+
+    @DisplayName("NormalFrame 인스턴스가 알맞은 Score를 반환하는지 테스트")
+    @Test
+    void 반환_score() {
+        // given
+        Pins pins = Pins.full();
+
+        // when
+        Frame normalFrame = NormalFrame.from(1);
+        normalFrame.bowl(pins);
+
+        // then
+        assertAll(
+                () -> assertThat(normalFrame.score()).isNotNull(),
+                () -> assertThat(normalFrame.score()).isInstanceOf(Score.class),
+                () -> assertThat(normalFrame.score().score()).isEqualTo(10),
+                () -> assertThat(normalFrame.score().isFinish()).isTrue()
         );
     }
 }
