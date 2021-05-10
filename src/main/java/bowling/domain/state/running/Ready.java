@@ -30,7 +30,7 @@ public class Ready extends Running {
 
     @Override
     public Score calculateAdditionalScore(Score beforeScore) {
-        return null;
+        return Score.unavailable();
     }
 
     @Override
