@@ -79,9 +79,9 @@ class FramesTest {
                 .hasMessage("현재 상태에서는 더 이상 볼을 던질 수 없습니다.");
     }
 
-    @DisplayName("Frames 인스턴스가 현재까지의 프레임별 점수를 반환하는지 테스트")
+    @DisplayName("전부 Strike 일 때, Frames 인스턴스가 현재까지의 프레임별 점수를 반환하는지 테스트")
     @Test
-    void 반환_scores() {
+    void 반환_scores_전부_strike() {
         // given
         Frames frames = Frames.initialize();
 
@@ -96,4 +96,37 @@ class FramesTest {
 
     }
 
+    @DisplayName("전부 Spare 일 때, Frames 인스턴스가 현재까지의 프레임별 점수를 반환하는지 테스트")
+    @Test
+    void 반환_scores_전부_spare() {
+        // given
+        Frames frames = Frames.initialize();
+
+        while (!frames.isFinish()) {
+            frames.bowl(Pins.valueOf(5));
+        }
+        // when
+        assertAll(
+                () -> assertThat(frames.scores()).isNotNull(),
+                () -> assertThat(frames.scores().stream().mapToInt(Score::score).sum()).isEqualTo(150)
+        );
+
+    }
+
+    @DisplayName("전부 Miss 일 때, Frames 인스턴스가 현재까지의 프레임별 점수를 반환하는지 테스트")
+    @Test
+    void 반환_scores_전부_miss() {
+        // given
+        Frames frames = Frames.initialize();
+
+        while (!frames.isFinish()) {
+            frames.bowl(Pins.valueOf(1));
+        }
+        // when
+        assertAll(
+                () -> assertThat(frames.scores()).isNotNull(),
+                () -> assertThat(frames.scores().stream().mapToInt(Score::score).sum()).isEqualTo(20)
+        );
+
+    }
 }
