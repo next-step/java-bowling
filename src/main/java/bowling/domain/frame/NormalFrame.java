@@ -7,7 +7,7 @@ import bowling.domain.state.running.Ready;
 
 import static java.lang.Math.addExact;
 
-public class NormalFrame extends Frame {
+public final class NormalFrame extends Frame {
 
     private static final int INCREASE_UNIT = 1;
 
@@ -19,12 +19,12 @@ public class NormalFrame extends Frame {
         this.sequence = sequence;
     }
 
-    public static Frame from(final int sequence) {
+    public static final Frame from(final int sequence) {
         return new NormalFrame(sequence);
     }
 
     @Override
-    public Frame bowl(final Pins fallPins) {
+    public final Frame bowl(final Pins fallPins) {
         state = state.bowl(fallPins);
         if (state.isFinish()) {
             return generateNextFrame();
@@ -41,12 +41,12 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isFinish() {
+    public final boolean isFinish() {
         return state.isFinish();
     }
 
     @Override
-    public Score score() {
-        return null;
+    public final Score score() {
+        return state.score();
     }
 }

@@ -70,8 +70,7 @@ class NormalFrameTest {
         assertAll(
                 () -> assertThat(normalFrame.score()).isNotNull(),
                 () -> assertThat(normalFrame.score()).isInstanceOf(Score.class),
-                () -> assertThat(normalFrame.score().score()).isEqualTo(10),
-                () -> assertThat(normalFrame.score().isFinish()).isTrue()
+                () -> assertThat(normalFrame.score().score()).isEqualTo(10)
         );
     }
 }
