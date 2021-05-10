@@ -1,10 +1,10 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
+import java.time.LocalDateTime;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -18,10 +18,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -84,8 +82,34 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException{
+        this.checkPermission(loginUser);
+        this.checkOwnerAnswers(loginUser);
+
+        this.deleted = true;
+
+        return writeHistory();
+    }
+
+    private List<DeleteHistory> writeHistory() throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, super.getId(), this.writer, LocalDateTime.now()));
+        deleteHistories.addAll(answers.delete());
+        return deleteHistories;
+    }
+
+    private void checkPermission(User loginUser) throws CannotDeleteException {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private void checkOwnerAnswers(User loginUser) throws CannotDeleteException {
+        if(this.answers.isEmpty()) return;
+        this.answers.value().stream()
+            .filter(answer -> answer.isOwner(loginUser))
+            .findAny()
+            .orElseThrow(() -> new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다."));
     }
 
     @Override
