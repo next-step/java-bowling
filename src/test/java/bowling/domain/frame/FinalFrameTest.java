@@ -2,9 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
-import bowling.domain.state.State;
-import bowling.domain.state.States;
-import bowling.domain.state.running.Ready;
 import bowling.exception.NoActionBowlException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
