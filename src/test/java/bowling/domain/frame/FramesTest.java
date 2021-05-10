@@ -26,4 +26,6 @@ class FramesTest {
         // then
         assertThat(frames.sequence()).isEqualTo(1);
     }
+
+
 }

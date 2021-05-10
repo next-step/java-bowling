@@ -27,4 +27,8 @@ public final class Frames {
     public static Frames initialize() {
         return new Frames();
     }
+
+    public final int sequence() {
+        return current.sequence();
+    }
 }
