@@ -22,6 +22,22 @@ class NormalFrameTest {
         );
     }
 
+    @DisplayName("NormalFrame 인스턴스가 bowl 실행(제자리) 테스트")
+    @Test
+    void 투구_bowl_제자리() {
+        // given
+        Pins pins = Pins.valueOf(9);
+
+        // when
+        Frame normalFrame = NormalFrame.from(1);
+        Frame returnedFrame = normalFrame.bowl(pins);
+        // then
+        assertAll(
+                () -> assertThat(normalFrame.isFinish()).isFalse(),
+                () -> assertThat(returnedFrame).isSameAs(normalFrame)
+        );
+    }
+
     @DisplayName("NormalFrame 인스턴스가 bowl 실행(다음으로 이동) 테스트")
     @Test
     void 투구_bowl_다음으로_이동() {
@@ -35,8 +51,7 @@ class NormalFrameTest {
         // then
         assertAll(
                 () -> assertThat(normalFrame.isFinish()).isTrue(),
-                () -> assertThat(nextFrame).isNotSameAs(normalFrame),
-                () -> assertThat(nextFrame).isNotEqualTo(normalFrame)
+                () -> assertThat(nextFrame).isNotSameAs(normalFrame)
         );
     }
 }
