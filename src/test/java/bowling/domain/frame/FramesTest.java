@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FramesTest {
@@ -57,5 +58,38 @@ class FramesTest {
         );
     }
 
+    @DisplayName("Frames 인스턴스가 모든 bowl() 호츌시 종료 여부 반환하는지 테스트")
+    @Test
+    void 투구_bowl() {
+        // given
+        Frames frames = Frames.initialize();
+
+        // when
+        for (int i = 0; i < 12; i++) {
+            frames.bowl(Pins.valueOf(10));
+        }
+
+        // then
+        assertAll(
+                () -> assertThat(frames.isFinish()).isTrue(),
+                () -> assertThat(frames.sequence()).isEqualTo(10)
+        );
+    }
+
+    @DisplayName("Frames 인스턴스가 투구를 전부 했음에도 bowl() 호츌시 예외처리 여부 테스트")
+    @Test
+    void 검증_bowl() {
+        // given
+        Frames frames = Frames.initialize();
+
+        while (!frames.isFinish()) {
+            frames.bowl(Pins.valueOf(10));
+        }
+
+        // when
+        assertThatThrownBy(() -> frames.bowl(Pins.valueOf(1)))
+                .isInstanceOf(NoMoreBowlActionsException.class)
+                .hasMessage("현재 상태에서는 더 이상 투구를 할 수 없습니다.");
+    }
 
 }
