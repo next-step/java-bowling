@@ -38,6 +38,5 @@ class NormalFrameTest {
                 () -> assertThat(nextFrame).isNotSameAs(normalFrame),
                 () -> assertThat(nextFrame).isNotEqualTo(normalFrame)
         );
-
     }
 }
