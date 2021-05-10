@@ -42,24 +42,24 @@ public class Spare extends Finish {
     }
 
     @Override
-    public Score score() {
+    public final Score score() {
         return Score.spare();
     }
 
     @Override
-    public Score calculateAdditionalScore(Score beforeScore) {
+    public final Score calculateAdditionalScore(final Score beforeScore) {
         if (beforeScore.isFinish()) {
             return beforeScore;
         }
-        beforeScore = beforeScore.addBonusScore(firstPins.count());
-        if (beforeScore.isFinish()) {
-            return beforeScore;
+        Score addedScore = beforeScore.addBonusScore(firstPins.count());
+        if (addedScore.isFinish()) {
+            return addedScore;
         }
-        return beforeScore.addBonusScore(secondPins.count());
+        return addedScore.addBonusScore(secondPins.count());
     }
 
     @Override
-    public String description() {
+    public final String description() {
         return null;
     }
 }

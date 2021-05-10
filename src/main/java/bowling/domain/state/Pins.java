@@ -22,7 +22,7 @@ public final class Pins {
         }
     }
 
-    public static Pins full() {
+    public static final Pins full() {
         return new Pins(FULL);
     }
 

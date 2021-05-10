@@ -56,7 +56,7 @@ public final class NormalFrame extends Frame {
     }
 
     @Override
-    public Score calculateAdditionalScore(final Score beforeScore) {
+    public final Score calculateAdditionalScore(final Score beforeScore) {
         if(beforeScore.isFinish()) {
             return beforeScore;
         }

@@ -14,7 +14,7 @@ public final class Name {
 
     private final String name;
 
-    public static Name valueOf(final String name) {
+    public static final Name valueOf(final String name) {
         return new Name(name);
     }
 
@@ -31,7 +31,7 @@ public final class Name {
         }
     }
 
-    private void validateSize(final String name) {
+    private final void validateSize(final String name) {
         if (name.isEmpty() || name.length() > MAXIMUM_NAME_SIZE) {
             throw new InvalidNameSizeException();
         }

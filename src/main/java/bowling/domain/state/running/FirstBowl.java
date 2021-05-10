@@ -59,7 +59,7 @@ public final class FirstBowl extends Running {
     }
 
     @Override
-    public String description() {
+    public final String description() {
         return null;
     }
 }

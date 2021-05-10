@@ -5,11 +5,11 @@ import bowling.domain.state.Pins;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Strike;
 
-public class Ready extends Running {
+public final class Ready extends Running {
 
     private Pins readyPins = Pins.full();
 
-    public static State initialize() {
+    public static final State initialize() {
         return new Ready();
     }
 
@@ -17,7 +17,7 @@ public class Ready extends Running {
     }
 
     @Override
-    public State bowl(final Pins firstPins) {
+    public final State bowl(final Pins firstPins) {
         if (crush(firstPins).isEmpty()) {
             return Strike.initialize();
         }
@@ -29,12 +29,12 @@ public class Ready extends Running {
     }
 
     @Override
-    public Score calculateAdditionalScore(Score beforeScore) {
+    public final Score calculateAdditionalScore(Score beforeScore) {
         return Score.unavailable();
     }
 
     @Override
-    public String description() {
+    public final String description() {
         return null;
     }
 }

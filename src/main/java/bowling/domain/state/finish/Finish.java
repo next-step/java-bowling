@@ -7,7 +7,7 @@ import bowling.exception.NoActionBowlException;
 public abstract class Finish implements State {
 
     @Override
-    public State bowl(Pins pins) {
+    public final State bowl(final Pins pins) {
         throw new NoActionBowlException();
     }
 

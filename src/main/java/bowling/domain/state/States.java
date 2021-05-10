@@ -24,7 +24,7 @@ public final class States {
         return states.getLast();
     }
 
-    public void add(final State addition) {
+    public final void add(final State addition) {
         states.addLast(addition);
     }
 
@@ -45,7 +45,7 @@ public final class States {
         return states.stream().anyMatch(State::isAllPinClear);
     }
 
-    public final Score calculateAdditionalScore(Score beforeScore) {
+    public final Score calculateAdditionalScore(final Score beforeScore) {
         Score score = beforeScore;
         for (State state : states) {
             score = state.calculateAdditionalScore(score);

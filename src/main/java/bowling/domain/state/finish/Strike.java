@@ -25,7 +25,7 @@ public final class Strike extends Finish {
     }
 
     @Override
-    public final Score calculateAdditionalScore(Score beforeScore) {
+    public final Score calculateAdditionalScore(final Score beforeScore) {
         if (beforeScore.isFinish()) {
             return beforeScore;
         }
@@ -33,7 +33,7 @@ public final class Strike extends Finish {
     }
 
     @Override
-    public String description() {
+    public final String description() {
         return null;
     }
 }
