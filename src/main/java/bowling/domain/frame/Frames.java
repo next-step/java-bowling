@@ -31,4 +31,8 @@ public final class Frames {
     public final int sequence() {
         return current.sequence();
     }
+
+    public final boolean isFinish() {
+        return current.isFinish();
+    }
 }
