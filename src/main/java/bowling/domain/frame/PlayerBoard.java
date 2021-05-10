@@ -12,7 +12,7 @@ public class PlayerBoard {
   private Frame currentFrame;
 
   public PlayerBoard(Player player) {
-    firstFrame = Frame.of(FIRST_ROUND);
+    firstFrame = new NormalFrame(FIRST_ROUND);
     currentFrame = firstFrame;
     this.player = player;
   }

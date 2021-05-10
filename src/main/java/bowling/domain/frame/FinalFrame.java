@@ -12,15 +12,12 @@ import bowling.error.CannotCalculateException;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
-public class FinalFrame extends Frame {
+public class FinalFrame implements Frame {
   private static final String WALL = "|";
-  private static final int SPARE_SHOT_LIMIT = 1;
-  private static final int STRIKE_SHOT_LIMIT = 2;
 
   private final LinkedList<State> states;
 
-  protected FinalFrame(int round) {
-    super(round);
+  protected FinalFrame() {
     states = new LinkedList<>();
     states.add(Ready.of());
   }
@@ -78,7 +75,7 @@ public class FinalFrame extends Frame {
   }
 
   @Override
-  protected Score calculateAdditionalScore(Score score) {
+  public Score calculateAdditionalScore(Score score) {
     if (score.canCalculateScore()) {
       return score;
     }
@@ -98,7 +95,7 @@ public class FinalFrame extends Frame {
     } catch (CannotCalculateException cannotCalculateException) {
       return false;
     }
-    return score().canCalculateScore();
+    return score.canCalculateScore();
   }
 
   @Override

@@ -3,44 +3,22 @@ package bowling.domain.frame;
 import bowling.domain.Score;
 import bowling.domain.result.TotalResult;
 import bowling.domain.turn.FallenPins;
-import bowling.error.CannotMakeFrameException;
 
-public abstract class Frame {
-  private static final int LAST_FRAME = 10;
+public interface Frame {
 
-  private final int round;
+  boolean checkFinished();
 
-  protected Frame(int round) {
-    this.round = round;
-  }
+  String show();
 
-  public static Frame of(int round) {
-    if (round < 1 || round > LAST_FRAME) {
-      throw new CannotMakeFrameException();
-    }
+  Frame bowl(FallenPins fallenPins);
 
-    if (round == LAST_FRAME) {
-      return new FinalFrame(round);
-    }
+  TotalResult showFullResult();
 
-    return new NormalFrame(round);
-  }
+  void addResult(TotalResult totalResult);
 
-  public int round() {
-    return round;
-  }
+  Score score();
 
-  public abstract boolean checkFinished();
+  Score calculateAdditionalScore(Score score);
 
-  public abstract String show();
-
-  public abstract Frame bowl(FallenPins fallenPins);
-
-  public abstract TotalResult showFullResult();
-
-  public abstract void addResult(TotalResult totalResult);
-
-  public abstract Score score();
-
-  protected abstract Score calculateAdditionalScore(Score score);
+  int round();
 }

@@ -19,7 +19,7 @@ class NormalFrameTest {
   @ValueSource(ints = {1, 9})
   @DisplayName("생성 가능")
   void createTest(int round) {
-    Frame frame = Frame.of(round);
+    Frame frame = FrameFactory.of(round);
 
     assertThat(frame).isInstanceOf(NormalFrame.class);
   }
@@ -28,7 +28,7 @@ class NormalFrameTest {
   @ValueSource(ints = 10)
   @DisplayName("생성 가능")
   void invalidCreateToNormalFrameTest(int round) {
-    Frame frame = Frame.of(round);
+    Frame frame = FrameFactory.of(round);
 
     assertThat(frame).isNotInstanceOf(NormalFrame.class);
   }
@@ -37,14 +37,14 @@ class NormalFrameTest {
   @ValueSource(ints = {0, 11})
   @DisplayName("생성 불가능")
   void invalidCreateTest(int round) {
-    assertThatThrownBy(() -> Frame.of(round)).isInstanceOf(CannotMakeFrameException.class);
+    assertThatThrownBy(() -> FrameFactory.of(round)).isInstanceOf(CannotMakeFrameException.class);
   }
 
   @ParameterizedTest
   @CsvSource(value = {"1,9", "2,8"})
   @DisplayName("2번 합해서 10 이내는 무조건 성공")
   void validTest(int firstShot, int secondShot) {
-    Frame frame = Frame.of(1);
+    Frame frame = FrameFactory.of(1);
     frame.bowl(new FallenPins(firstShot));
     frame.bowl(new FallenPins(secondShot));
   }
@@ -53,7 +53,7 @@ class NormalFrameTest {
   @CsvSource(value = {"1,10", "2,9"})
   @DisplayName("2번 합해서 10 초과는 무조건 실패")
   void invalidPinsTest(int firstShot, int secondShot) {
-    Frame frame = Frame.of(1);
+    Frame frame = FrameFactory.of(1);
     frame.bowl(new FallenPins(firstShot));
 
     assertThatThrownBy(() -> frame.bowl(new FallenPins(secondShot)))
@@ -64,7 +64,7 @@ class NormalFrameTest {
   @CsvSource(value = {"1,2,3", "4,3,2"})
   @DisplayName("3번은 무조건 실패")
   void invalidBallsTest(int firstShot, int secondShot, int thirdShot) {
-    Frame frame = Frame.of(1);
+    Frame frame = FrameFactory.of(1);
     frame.bowl(new FallenPins(firstShot));
     frame.bowl(new FallenPins(secondShot));
 
@@ -75,7 +75,7 @@ class NormalFrameTest {
   @Test
   @DisplayName("진행 확인")
   void runningTest() {
-    Frame frame = Frame.of(1);
+    Frame frame = FrameFactory.of(1);
     frame.bowl(new FallenPins(1));
 
     assertThat(frame.checkFinished()).isFalse();
@@ -84,7 +84,7 @@ class NormalFrameTest {
   @Test
   @DisplayName("종료 확인")
   void finishedTest() {
-    Frame frame = Frame.of(1);
+    Frame frame = FrameFactory.of(1);
     frame.bowl(new FallenPins(10));
 
     assertThat(frame.checkFinished()).isTrue();
@@ -93,7 +93,7 @@ class NormalFrameTest {
   @Test
   @DisplayName("종료 확인2")
   void finishedRoundTest() {
-    Frame frame = Frame.of(1);
+    Frame frame = FrameFactory.of(1);
     frame.bowl(new FallenPins(5));
     frame.bowl(new FallenPins(1));
 

@@ -8,14 +8,15 @@ import bowling.domain.state.running.Ready;
 import bowling.domain.turn.FallenPins;
 import bowling.error.CannotCalculateException;
 
-public class NormalFrame extends Frame {
+public class NormalFrame implements Frame {
   private static final int NEXT_FRAME_COUNT = 1;
 
+  private final int round;
   private Frame nextFrame;
   private State state;
 
   protected NormalFrame(int round) {
-    super(round);
+    this.round = round;
     this.state = Ready.of();
   }
 
@@ -23,7 +24,7 @@ public class NormalFrame extends Frame {
   public Frame bowl(FallenPins fallenPins) {
     state = state.bowl(fallenPins);
     if (state.isFinished()) {
-      nextFrame = Frame.of(round() + NEXT_FRAME_COUNT);
+      nextFrame = FrameFactory.of(round + NEXT_FRAME_COUNT);
       return nextFrame;
     }
     return this;
@@ -65,7 +66,7 @@ public class NormalFrame extends Frame {
   }
 
   @Override
-  protected Score calculateAdditionalScore(Score score) {
+  public Score calculateAdditionalScore(Score score) {
     if (state.isFinished()) {
       score = state.addScore(score);
     }
@@ -75,6 +76,10 @@ public class NormalFrame extends Frame {
     }
 
     return nextFrame.calculateAdditionalScore(score);
+  }
+
+  public int round() {
+    return round;
   }
 
   @Override
