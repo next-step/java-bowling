@@ -77,7 +77,7 @@ public class Answer extends AbstractEntity {
 
     public DeleteHistory delete() {
         this.deleted = true;
-        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
+        return DeleteHistory.createByAnswer(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }
 
     public void isPossibleToDelete(User loginUser) throws CannotDeleteException {
