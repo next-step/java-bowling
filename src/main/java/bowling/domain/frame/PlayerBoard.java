@@ -4,7 +4,6 @@ import bowling.domain.Player;
 import bowling.domain.turn.FallenPins;
 
 public class PlayerBoard {
-  private static final int ZERO = 0;
   private static final int FIRST_ROUND = 1;
   private static final int FINAL_ROUND = 10;
   private final Frame firstFrame;
@@ -12,7 +11,7 @@ public class PlayerBoard {
   private Frame currentFrame;
 
   public PlayerBoard(Player player) {
-    firstFrame = new NormalFrame(FIRST_ROUND);
+    firstFrame = FrameFactory.of(FIRST_ROUND);
     currentFrame = firstFrame;
     this.player = player;
   }

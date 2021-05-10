@@ -6,7 +6,7 @@ public class FrameFactory {
   private static final int FIRST_FRAME = 1;
   private static final int LAST_FRAME = 10;
 
-  private FrameFactory(){
+  private FrameFactory() {
 
   }
 
