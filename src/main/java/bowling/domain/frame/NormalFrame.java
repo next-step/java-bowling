@@ -54,4 +54,12 @@ public final class NormalFrame extends Frame {
     public final int sequence() {
         return sequence;
     }
+
+    @Override
+    public Score calculateAdditionalScore(final Score beforeScore) {
+        if(beforeScore.isFinish()) {
+            return beforeScore;
+        }
+        return state.calculateAdditionalScore(beforeScore);
+    }
 }

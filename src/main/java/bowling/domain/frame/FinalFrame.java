@@ -60,6 +60,14 @@ public final class FinalFrame extends Frame {
         return Frame.LAST_SEQUENCE;
     }
 
+    @Override
+    public Score calculateAdditionalScore(final Score beforeScore) {
+        if (beforeScore.isFinish()) {
+            return beforeScore;
+        }
+        return states.calculateAdditionalScore(beforeScore);
+    }
+
     private final boolean hasBonusRound() {
         return states.hasBonusRound();
     }

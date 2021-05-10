@@ -15,4 +15,6 @@ public abstract class Frame {
     public abstract Score score();
 
     public abstract int sequence();
+
+    public abstract Score calculateAdditionalScore(Score beforeScore);
 }

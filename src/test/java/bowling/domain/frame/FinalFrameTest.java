@@ -2,9 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
-import bowling.domain.state.State;
-import bowling.domain.state.States;
-import bowling.domain.state.running.Ready;
 import bowling.exception.NoActionBowlException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -355,7 +352,7 @@ class FinalFrameTest {
 
     }
 
-    @DisplayName("beforeScore 가 miss 이고 States 인스턴스가 spare일 경우 알맞는 Score 반환 기능 테스트")
+    @DisplayName("beforeScore 가 miss 이고 FinalFrame 인스턴스가 spare일 경우 알맞는 Score 반환 기능 테스트")
     @Test
     void 반환_calculateAdditionalScore_before_miss_finalFrame_spare() {
         // given
@@ -398,7 +395,7 @@ class FinalFrameTest {
         assertAll(
                 () -> assertThat(finalFrame.calculateAdditionalScore(spare)).isNotNull(),
                 () -> assertThat(finalFrame.calculateAdditionalScore(spare)).isInstanceOf(Score.class),
-                () -> assertThat(finalFrame.calculateAdditionalScore(spare).score()).isEqualTo(20)
+                () -> assertThat(finalFrame.calculateAdditionalScore(spare).score()).isEqualTo(19)
         );
 
     }
@@ -454,9 +451,9 @@ class FinalFrameTest {
 
     }
 
-    @DisplayName("beforeScore 가 spare 이고 States 인스턴스가 strike일 경우 알맞는 Score 반환 기능 테스트")
+    @DisplayName("beforeScore 가 spare 이고 FinalFrame 인스턴스가 strike일 경우 알맞는 Score 반환 기능 테스트")
     @Test
-    void 반환_calculateAdditionalScore_before_spare_states_strike() {
+    void 반환_calculateAdditionalScore_before_spare_finalFrame_strike() {
         // given
         Pins first = Pins.valueOf(10);
         Pins second = Pins.valueOf(1);
@@ -478,9 +475,9 @@ class FinalFrameTest {
 
     }
 
-    @DisplayName("beforeScore 가 strike 이고 States 인스턴스가 strike일 경우 알맞는 Score 반환 기능 테스트")
+    @DisplayName("beforeScore 가 strike 이고 FinalFrame 인스턴스가 strike일 경우 알맞는 Score 반환 기능 테스트")
     @Test
-    void 반환_calculateAdditionalScore_before_strike_states_strike() {
+    void 반환_calculateAdditionalScore_before_strike_finalFrame_strike() {
         // given
         Pins first = Pins.valueOf(10);
         Pins second = Pins.valueOf(1);
