@@ -4,7 +4,7 @@ import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class OneHit implements State {
+public class OneHit extends Running {
     private final Score score;
 
     public OneHit(Score score) {
@@ -39,31 +39,6 @@ public class OneHit implements State {
             return Spare.of(this, ofOne(Score.ofSpare(nextHit)));
         }
         return Miss.of(this, of(nextHit));
-    }
-
-    @Override
-    public boolean isStrike() {
-        return false;
-    }
-
-    @Override
-    public boolean isSpare() {
-        return false;
-    }
-
-    @Override
-    public boolean isReady() {
-        return false;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return true;
-    }
-
-    @Override
-    public boolean canAccumulate() {
-        return false;
     }
 
     @Override

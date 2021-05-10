@@ -4,7 +4,7 @@ import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Gutter implements State {
+public class Gutter extends Running {
     private final Score score = Score.of();
 
     private Gutter() {
@@ -12,31 +12,6 @@ public class Gutter implements State {
 
     public static Gutter of() {
         return new Gutter();
-    }
-
-    @Override
-    public boolean isStrike() {
-        return false;
-    }
-
-    @Override
-    public boolean isSpare() {
-        return false;
-    }
-
-    @Override
-    public boolean isReady() {
-        return false;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return true;
-    }
-
-    @Override
-    public boolean canAccumulate() {
-        return false;
     }
 
     @Override

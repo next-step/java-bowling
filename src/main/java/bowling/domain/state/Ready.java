@@ -4,36 +4,11 @@ import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Ready implements State {
+public class Ready extends Running {
     private final Score score = Score.of();
 
     public static Ready of() {
         return new Ready();
-    }
-
-    @Override
-    public boolean isStrike() {
-        return false;
-    }
-
-    @Override
-    public boolean isSpare() {
-        return false;
-    }
-
-    @Override
-    public boolean isReady() {
-        return true;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return true;
-    }
-
-    @Override
-    public boolean canAccumulate() {
-        return false;
     }
 
     @Override

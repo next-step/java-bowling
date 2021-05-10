@@ -10,7 +10,6 @@ public class ReadyTest {
 
     @Test
     void 준비생성() {
-        assertThat(READY.isReady()).isTrue();
         assertThat(READY.isSpare()).isFalse();
         assertThat(READY.isSpare()).isFalse();
         assertThat(READY.hasNext()).isTrue();
