@@ -73,4 +73,22 @@ class NormalFrameTest {
                 () -> assertThat(normalFrame.score().score()).isEqualTo(10)
         );
     }
+
+    @DisplayName("NormalFrame 인스턴스가 sequence 를 반환하는지 테스트")
+    @Test
+    void 반환_sequence() {
+        // given
+        Pins pins = Pins.full();
+
+        // when
+        Frame normalFrame = NormalFrame.from(1);
+        Frame nextFrame = normalFrame.bowl(pins);
+
+        // then
+        assertAll(
+                assertThat(normalFrame.sequence()).isEqualTo(1),
+                assertThat(nextFrame.sequence()).isEqualTo(2)
+        );
+
+    }
 }
