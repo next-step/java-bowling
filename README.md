@@ -204,10 +204,25 @@
 - [X] 각 프레임들은 추가점수 합산을 할 수 있고, 점수 결과를 보여줄 수 있다.
 
 ### 입출력
-- [ ] 점수결과 목록을 출력할 수 있다.
+- [X] 점수결과 목록을 출력할 수 있다.
 
 </details>
 
+<details>
+    <summary> 3단계 피드백 </summary>
+
+### [피드백링크](https://github.com/next-step/java-bowling/pull/547)
+
+1. 점수 구분 로직은 Score 내부 수행  
+  - strike 점수인지, gutter 점수인지 확인하고  
+  - strike와 spare로 구분하던 더한 횟수를, 애초에 생성시에 남은 횟수 초기화를 해주어서 또다시 if를 사용하지 않도록 변경
+
+2. 추상메소드만 사용시 추상클래스보다는 Interface  
+  - 같은 인터페이스를 상속하더라도 중복로직이 있으면 추상클래스로 분리하기
+
+3. text fixture는 외부에서 재사용되는게 아니면 test case 내부에서 수행
+
+</details>
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
