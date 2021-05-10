@@ -4,7 +4,7 @@ import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class OneHit extends State {
+public class OneHit implements State {
     private final Score score;
 
     public OneHit(Score score) {

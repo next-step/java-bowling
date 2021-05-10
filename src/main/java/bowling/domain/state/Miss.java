@@ -4,7 +4,7 @@ import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Miss extends State {
+public class Miss implements State {
     private static final String INVALID_MISS = "miss는 두 점수의 합이 10 미만이어야합니다.";
     private final State oneHit;
     private final State secondHit;

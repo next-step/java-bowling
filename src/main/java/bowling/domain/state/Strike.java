@@ -4,7 +4,7 @@ import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Strike extends State {
+public class Strike implements State {
     private static final String INVALID_SCORE = "스트라이크의 값은 10 이상이어야합니다.";
     private final State hit;
 

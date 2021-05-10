@@ -4,7 +4,7 @@ import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Ready extends State {
+public class Ready implements State {
     private final Score score = Score.of();
 
     public static Ready of() {

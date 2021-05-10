@@ -4,7 +4,7 @@ import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Gutter extends State {
+public class Gutter implements State {
     private final Score score = Score.of();
 
     private Gutter() {
