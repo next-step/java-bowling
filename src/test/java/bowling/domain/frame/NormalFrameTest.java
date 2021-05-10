@@ -86,8 +86,8 @@ class NormalFrameTest {
 
         // then
         assertAll(
-                assertThat(normalFrame.sequence()).isEqualTo(1),
-                assertThat(nextFrame.sequence()).isEqualTo(2)
+                () -> assertThat(normalFrame.sequence()).isEqualTo(1),
+                () -> assertThat(nextFrame.sequence()).isEqualTo(2)
         );
 
     }

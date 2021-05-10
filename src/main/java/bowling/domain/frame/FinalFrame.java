@@ -55,6 +55,11 @@ public final class FinalFrame extends Frame {
         return states.score();
     }
 
+    @Override
+    public final int sequence() {
+        return Frame.LAST_SEQUENCE;
+    }
+
     private final boolean hasBonusRound() {
         return states.hasBonusRound();
     }

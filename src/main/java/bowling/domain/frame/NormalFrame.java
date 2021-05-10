@@ -49,4 +49,9 @@ public final class NormalFrame extends Frame {
     public final Score score() {
         return state.score();
     }
+
+    @Override
+    public final int sequence() {
+        return sequence;
+    }
 }
