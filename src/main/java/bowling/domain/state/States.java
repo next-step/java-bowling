@@ -45,4 +45,11 @@ public final class States {
         return states.stream().anyMatch(State::isAllPinClear);
     }
 
+    public final Score calculateAdditionalScore(Score beforeScore) {
+        Score score = beforeScore;
+        for (State state : states) {
+            score = state.calculateAdditionalScore(score);
+        }
+        return score;
+    }
 }

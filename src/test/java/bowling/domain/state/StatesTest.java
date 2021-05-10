@@ -315,7 +315,7 @@ class StatesTest {
         assertAll(
                 () -> assertThat(states.calculateAdditionalScore(beforeScoreAsStrike)).isNotNull(),
                 () -> assertThat(states.calculateAdditionalScore(beforeScoreAsStrike)).isInstanceOf(Score.class),
-                () -> assertThat(states.calculateAdditionalScore(beforeScoreAsStrike).score()).isEqualTo(20)
+                () -> assertThat(states.calculateAdditionalScore(beforeScoreAsStrike).score()).isEqualTo(19)
         );
 
     }
