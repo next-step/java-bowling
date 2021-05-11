@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 import bowling.domain.state.Pins;
 import bowling.exception.NoActionBowlException;
 
@@ -59,11 +60,12 @@ public final class Frames {
         return subtractExact(frame.sequence(), OPERATION_UNIT);
     }
 
-    public final List<Score> scores() {
-        return frames.stream()
+    public final Scores scores() {
+        List<Score> scores = frames.stream()
                 .filter(Frame::isFinish)
                 .map(this::score)
                 .collect(Collectors.toList());
+        return Scores.of(scores);
     }
 
     private final Score score(final Frame frame) {
@@ -78,7 +80,7 @@ public final class Frames {
 
     private final Frame nextFrame(final Frame frame) {
         final int nextIndex = frame.sequence();
-        if(nextIndex == Frame.LAST_SEQUENCE) {
+        if (nextIndex == Frame.LAST_SEQUENCE) {
             return frame;
         }
         return frames.get(nextIndex);

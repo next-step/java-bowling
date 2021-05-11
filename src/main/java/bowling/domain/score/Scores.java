@@ -4,6 +4,7 @@ import bowling.exception.ScoreListNullPointerException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public final class Scores {
 
@@ -24,5 +25,7 @@ public final class Scores {
         }
     }
 
-
+    public final Stream<Score> stream() {
+        return scores.stream();
+    }
 }
