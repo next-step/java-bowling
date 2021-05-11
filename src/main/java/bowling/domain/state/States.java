@@ -5,10 +5,12 @@ import bowling.domain.state.running.Ready;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 public final class States {
 
     private static final int SEARCH_START_INDEX = 1;
+    public static final String DELIMITER = "|";
 
     private final LinkedList<State> states;
 
@@ -53,5 +55,11 @@ public final class States {
             score = state.calculateAdditionalScore(score);
         }
         return score;
+    }
+
+    public final String description() {
+        return states.stream()
+                .map(State::description)
+                .collect(Collectors.joining(DELIMITER));
     }
 }

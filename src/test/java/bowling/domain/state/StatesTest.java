@@ -188,13 +188,13 @@ class StatesTest {
         States readyStates = States.initialize();
         States firstBowlGutterStates = States.initialize().remove().add(FIRST_BOWL);
         States firstBowlGenericStates = States.initialize().remove().add(FirstBowl.from(NINE));
-        States strikeOnceStates = States.initialize().remove().add(FirstBowl.from(TEN));
+        States strikeOnceStates = States.initialize().remove().add(STRIKE);
         States missGenericStates = States.initialize().remove().add(firstBowlOne).remove().add(missEight);
         States missGutterFirstStates = States.initialize().remove().add(FIRST_BOWL).remove().add(MISS);
         States missGutterLastStates = States.initialize().remove().add(firstBowlNine).remove().add(missZero);
         States spareGenericStates = States.initialize().remove().add(firstBowlOne).remove().add(spareNine).add(STRIKE);
         States spareGutterStates = States.initialize().remove().add(FIRST_BOWL).remove().add(SPARE).add(STRIKE);
-        States strikeGutterStates = States.initialize().remove().add(STRIKE).add(FIRST_BOWL).remove().add(STRIKE);
+        States strikeGutterStates = States.initialize().remove().add(STRIKE).add(Ready.initialize().bowl(Pins.valueOf(0))).remove().add(SPARE);
         States strikeLastGutterStates = States.initialize().remove().add(STRIKE).add(STRIKE).add(FIRST_BOWL);
         States allStrikeStates = States.initialize().remove().add(STRIKE).add(STRIKE).add(STRIKE);
 
@@ -209,7 +209,7 @@ class StatesTest {
                 () -> assertThat(missGutterLastStates.description()).isEqualTo("9|-"),
                 () -> assertThat(spareGenericStates.description()).isEqualTo("1|/|X"),
                 () -> assertThat(spareGutterStates.description()).isEqualTo("-|/|X"),
-                () -> assertThat(strikeGutterStates.description()).isEqualTo("X|-|X"),
+                () -> assertThat(strikeGutterStates.description()).isEqualTo("X|-|/"),
                 () -> assertThat(strikeLastGutterStates.description()).isEqualTo("X|X|-"),
                 () -> assertThat(allStrikeStates.description()).isEqualTo("X|X|X")
         );
