@@ -1,9 +1,11 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Score;
+import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Strike;
 import bowling.domain.state.running.FirstBowl;
 import bowling.domain.state.running.Ready;
+import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class StatesTest {
 
     private static final Pins ZERO = Pins.valueOf(0);
+    private static final Pins ONE = Pins.valueOf(1);
+    private static final Pins EIGHT = Pins.valueOf(8);
     private static final Pins NINE = Pins.valueOf(9);
     private static final Pins TEN = Pins.valueOf(10);
 
@@ -159,7 +163,6 @@ class StatesTest {
                 () -> assertThat(spareStates.calculateAdditionalScore(MISS_SCORE).score()).isEqualTo(9),
                 () -> assertThat(spareStates.calculateAdditionalScore(SPARE_SCORE).score()).isEqualTo(10),
                 () -> assertThat(spareStates.calculateAdditionalScore(STRIKE_SCORE).score()).isEqualTo(20),
-                () -> assertThat(spareStates.calculateAdditionalScore(STRIKE_SCORE).score()).isEqualTo(20),
                 () -> assertThat(strikeStates.calculateAdditionalScore(MISS_SCORE).score()).isEqualTo(9),
                 () -> assertThat(strikeStates.calculateAdditionalScore(SPARE_SCORE).score()).isEqualTo(20),
                 () -> assertThat(strikeStates.calculateAdditionalScore(STRIKE_SCORE).score()).isEqualTo(20),
@@ -170,5 +173,47 @@ class StatesTest {
 
     }
 
+    @DisplayName("States 의 description 기능 테스트")
+    @Test
+    void 반환_description() {
+        // given
+        State firstBowlOne = FirstBowl.from(ONE);
+        State missEight = firstBowlOne.bowl(EIGHT);
+        State firstBowlNine = FirstBowl.from(NINE);
+        State missZero = firstBowlNine.bowl(ZERO);
+        State spareNine = firstBowlOne.bowl(NINE);
+
+        // when
+        // 시나리오대로 작성
+        States readyStates = States.initialize();
+        States firstBowlGutterStates = States.initialize().remove().add(FIRST_BOWL);
+        States firstBowlGenericStates = States.initialize().remove().add(FirstBowl.from(NINE));
+        States strikeOnceStates = States.initialize().remove().add(FirstBowl.from(TEN));
+        States missGenericStates = States.initialize().remove().add(firstBowlOne).remove().add(missEight);
+        States missGutterFirstStates = States.initialize().remove().add(FIRST_BOWL).remove().add(MISS);
+        States missGutterLastStates = States.initialize().remove().add(firstBowlNine).remove().add(missZero);
+        States spareGenericStates = States.initialize().remove().add(firstBowlOne).remove().add(spareNine).add(STRIKE);
+        States spareGutterStates = States.initialize().remove().add(FIRST_BOWL).remove().add(SPARE).add(STRIKE);
+        States strikeGutterStates = States.initialize().remove().add(STRIKE).add(FIRST_BOWL).remove().add(STRIKE);
+        States strikeLastGutterStates = States.initialize().remove().add(STRIKE).add(STRIKE).add(FIRST_BOWL);
+        States allStrikeStates = States.initialize().remove().add(STRIKE).add(STRIKE).add(STRIKE);
+
+        // then
+        assertAll(
+                () -> assertThat(readyStates.description()).isEqualTo(Strings.EMPTY),
+                () -> assertThat(firstBowlGutterStates.description()).isEqualTo("-"),
+                () -> assertThat(firstBowlGenericStates.description()).isEqualTo("9"),
+                () -> assertThat(strikeOnceStates.description()).isEqualTo("X"),
+                () -> assertThat(missGenericStates.description()).isEqualTo("1|8"),
+                () -> assertThat(missGutterFirstStates.description()).isEqualTo("-|9"),
+                () -> assertThat(missGutterLastStates.description()).isEqualTo("9|-"),
+                () -> assertThat(spareGenericStates.description()).isEqualTo("1|/|X"),
+                () -> assertThat(spareGutterStates.description()).isEqualTo("-|/|X"),
+                () -> assertThat(strikeGutterStates.description()).isEqualTo("X|-|X"),
+                () -> assertThat(strikeLastGutterStates.description()).isEqualTo("X|X|-"),
+                () -> assertThat(allStrikeStates.description()).isEqualTo("X|X|X")
+        );
+
+    }
 
 }
