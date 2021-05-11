@@ -68,6 +68,11 @@ public final class FinalFrame extends Frame {
         return states.calculateAdditionalScore(beforeScore);
     }
 
+    @Override
+    public String description() {
+        return null;
+    }
+
     private final boolean hasBonusRound() {
         return states.hasBonusRound();
     }

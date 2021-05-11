@@ -159,12 +159,12 @@ class NormalFrameTest {
     void 반환_description_Miss_일반적일_때() {
         // when
         Frame normalFrame = NormalFrame.from(1);
-        normalFrame.bowl(Pins.valueOf(0));
-        normalFrame.bowl(Pins.valueOf(9));
+        normalFrame.bowl(Pins.valueOf(1));
+        normalFrame.bowl(Pins.valueOf(8));
         String actual = normalFrame.description();
 
         // then
-        assertThat(actual).isEqualTo("0|9");
+        assertThat(actual).isEqualTo("1|8");
     }
 
     @DisplayName("Miss 이면서 거터일 때, NormalFrame 인스턴스가 description 을반환하는지 테스트")

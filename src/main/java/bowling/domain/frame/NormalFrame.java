@@ -62,4 +62,9 @@ public final class NormalFrame extends Frame {
         }
         return state.calculateAdditionalScore(beforeScore);
     }
+
+    @Override
+    public final String description() {
+        return state.description();
+    }
 }
