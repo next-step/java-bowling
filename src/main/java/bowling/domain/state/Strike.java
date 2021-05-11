@@ -1,9 +1,9 @@
 package bowling.domain.state;
 
-import bowling.domain.exception.IllegalPointException;
+import bowling.exception.IllegalPointException;
 
 public class Strike implements PitchState {
-    public static int STRIKE = 10;
+    public static final int STRIKE = 10;
     public int point;
 
     public Strike(int point) {

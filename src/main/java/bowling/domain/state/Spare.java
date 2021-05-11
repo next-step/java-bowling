@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import bowling.domain.exception.IllegalPointException;
+import bowling.exception.IllegalPointException;
 
 public class Spare implements PitchState {
     private int firstPoint;

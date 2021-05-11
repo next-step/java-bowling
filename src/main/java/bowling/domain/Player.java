@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.exception.IllegalPlayerName;
+import bowling.exception.IllegalPlayerName;
 
 public class Player {
     public static int NAME_MAX_SIZE = 3;

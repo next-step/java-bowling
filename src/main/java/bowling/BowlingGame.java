@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.controller.BowlingController;
+import bowling.controller.BowlingController;
 import bowling.domain.view.InputView;
 
 public class BowlingGame {

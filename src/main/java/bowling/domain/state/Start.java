@@ -1,11 +1,16 @@
 package bowling.domain.state;
 
-import bowling.domain.exception.IllegalPointException;
+import bowling.exception.IllegalPointException;
 
 public class Start implements PitchState {
-    public static int MIN_POINT = 0;
+    public static final int MIN_POINT = 0;
+    public static final Start start = new Start();
 
-    public Start() {
+    private Start() {
+    }
+
+    public static Start createOf() {
+        return start;
     }
 
     @Override

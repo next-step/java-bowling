@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import bowling.domain.exception.IllegalPointException;
+import bowling.exception.IllegalPointException;
 
 public class Ready implements PitchState {
     private int point;
@@ -15,13 +15,13 @@ public class Ready implements PitchState {
         if (point < Start.MIN_POINT || point > Strike.STRIKE) {
             throw new IllegalPointException("잘못된 포인트 값입니다.");
         }
+
+        if (this.point + point > 10) {
+            throw new IllegalPointException("잘못된 포인트 값입니다.");
+        }
     }
 
     public PitchState next(int point) {
-        if (point == Strike.STRIKE) {
-            return new Strike(Strike.STRIKE);
-        }
-
         if (this.point + point == Strike.STRIKE) {
             return new Spare(this.point, point);
         }
