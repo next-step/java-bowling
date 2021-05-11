@@ -57,6 +57,10 @@ class PlayerTest {
         Name name = Name.valueOf("kwj");
 
         // when
+        Player player = Player.from(name);
+        for (int i = 1; i <= 12; i++) {
+            player.playBowl(Pins.full());
+        }
 
         // then
         assertThat(player.isFinish()).isTrue();
