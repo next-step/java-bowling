@@ -79,4 +79,18 @@ class PlayerTest {
         assertThat(player.sequence()).isEqualTo(1);
     }
 
+
+    @DisplayName("Player 인스턴스가 이름을 반환하는 기능 테스트")
+    @Test
+    void 반환_이름() {
+        // given
+        String expected = "kwj";
+        Name name = Name.valueOf(expected);
+
+        // when
+        Player player = Player.from(name);
+
+        // then
+        assertThat(player.name()).isEqualTo(expected);
+    }
 }
