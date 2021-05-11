@@ -24,12 +24,14 @@ public final class States {
         return states.getLast();
     }
 
-    public final void add(final State addition) {
+    public final States add(final State addition) {
         states.addLast(addition);
+        return this;
     }
 
-    public final void remove() {
+    public final States remove() {
         states.removeLast();
+        return this;
     }
 
     public final Score score() {

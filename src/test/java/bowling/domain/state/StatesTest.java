@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.score.Score;
 import bowling.domain.state.finish.Strike;
+import bowling.domain.state.running.FirstBowl;
 import bowling.domain.state.running.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StatesTest {
+
+    private static final Pins ZERO = Pins.valueOf(0);
+    private static final Pins NINE = Pins.valueOf(9);
+    private static final Pins TEN = Pins.valueOf(10);
+
+    private static final State FIRST_BOWL = Ready.initialize().bowl(ZERO);
+    private static final State MISS = FIRST_BOWL.bowl(NINE);
+    private static final State SPARE = FIRST_BOWL.bowl(TEN);
+    private static final State STRIKE = Ready.initialize().bowl(TEN);
+
+    private static final Score MISS_SCORE = Score.miss(Pins.valueOf(9));
+    private static final Score SPARE_SCORE = Score.spare();
+    private static final Score STRIKE_SCORE = Score.strike();
 
     @DisplayName("States 인스턴스 생성 여부 테스트")
     @Test
@@ -39,38 +53,28 @@ class StatesTest {
     @Test
     void 반환_보너스_여부_없을때() {
         // given
-        State first = Ready.initialize().bowl(Pins.valueOf(9));
-        State second = first.bowl(Pins.valueOf(0));
+        State first = Ready.initialize().bowl(NINE);
+        State second = first.bowl(ZERO);
 
         // when
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.remove();
-        states.add(second);
-        boolean actual = states.hasBonusRound();
+        States states = States.initialize().remove().add(first).remove().add(second);
 
         // then
-        assertThat(actual).isFalse();
+        assertThat(states.hasBonusRound()).isFalse();
     }
 
     @DisplayName("States 인스턴스가 보너스 라운드를 얻었는지에 대한 테스트")
     @Test
     void 반환_보너스_여부_있을때() {
         // given
-        State first = Ready.initialize().bowl(Pins.valueOf(0));
-        State second = first.bowl(Pins.valueOf(10));
+        State first = Ready.initialize().bowl(ZERO);
+        State second = first.bowl(TEN);
 
         // when
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.remove();
-        states.add(second);
-        boolean actual = states.hasBonusRound();
+        States states = States.initialize().remove().add(first).remove().add(second);
 
         // then
-        assertThat(actual).isTrue();
+        assertThat(states.hasBonusRound()).isTrue();
     }
 
     @DisplayName("States 인스턴스에 인스턴스 추가 기능 테스트")
@@ -80,8 +84,7 @@ class StatesTest {
         State expected = Strike.initialize();
 
         // when
-        States states = States.initialize();
-        states.add(expected);
+        States states = States.initialize().add(expected);
         State actual = states.current();
 
         // then
@@ -97,13 +100,10 @@ class StatesTest {
     void 삭제() {
         // given
         State expected = Strike.initialize();
-        State removed = Ready.initialize().bowl(Pins.valueOf(9));
+        State removed = Ready.initialize().bowl(NINE);
 
         // when
-        States states = States.initialize();
-        states.add(expected);
-        states.add(removed);
-        states.remove();
+        States states = States.initialize().add(expected).add(removed).remove();
         State actual = states.current();
 
         // then
@@ -114,454 +114,60 @@ class StatesTest {
 
     }
 
-
-    @DisplayName("miss 일 때, States 인스턴스가 알맞는 Score 반환 기능 테스트")
+    @DisplayName("States 인스턴스가 알맞는 Score 반환 기능 테스트")
     @Test
-    void 반환_score_miss() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(9));
-        State second = first.bowl(Pins.valueOf(0));
-
+    void 반환_score() {
         // when
         // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.remove();
-        states.add(second);
+        Score firstScore = States.initialize().remove().add(FIRST_BOWL).remove().add(MISS).score();
+        Score secondScore = States.initialize().remove().add(FIRST_BOWL).remove().add(SPARE).add(FIRST_BOWL).score();
+        Score thirdScore = States.initialize().remove().add(FIRST_BOWL).remove().add(SPARE).add(STRIKE).score();
+        Score fourthScore = States.initialize().remove().add(STRIKE).add(FIRST_BOWL).remove().add(MISS).score();
+        Score fifthScore = States.initialize().remove().add(STRIKE).add(MISS).remove().add(SPARE).score();
+        Score sixthScore = States.initialize().remove().add(STRIKE).add(STRIKE).add(FirstBowl.from(NINE)).score();
+        Score seventhScore = States.initialize().remove().add(STRIKE).add(STRIKE).add(STRIKE).score();
 
         // then
         assertAll(
-                () -> assertThat(states.score()).isNotNull(),
-                () -> assertThat(states.score()).isInstanceOf(Score.class),
-                () -> assertThat(states.score().score()).isEqualTo(9)
-        );
-
-    }
-
-    @DisplayName("spare and firstBowl 일 때, States 인스턴스가 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_score_spare_and_firstBowl() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(9));
-        State second = first.bowl(Pins.valueOf(1));
-        State third = Ready.initialize().bowl(Pins.valueOf(9));
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.remove();
-        states.add(second);
-        states.add(third);
-
-        // then
-        assertAll(
-                () -> assertThat(states.score()).isNotNull(),
-                () -> assertThat(states.score()).isInstanceOf(Score.class),
-                () -> assertThat(states.score().score()).isEqualTo(19)
-        );
-    }
-
-
-    @DisplayName("spare and strike 일 때, States 인스턴스가 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_score_spare_and_strike() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(9));
-        State second = first.bowl(Pins.valueOf(1));
-        State third = Ready.initialize().bowl(Pins.valueOf(10));
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.remove();
-        states.add(second);
-        states.add(third);
-
-        // then
-        assertAll(
-                () -> assertThat(states.score()).isNotNull(),
-                () -> assertThat(states.score()).isInstanceOf(Score.class),
-                () -> assertThat(states.score().score()).isEqualTo(20)
-        );
-    }
-
-
-    @DisplayName("strike_and_miss 일때, States 인스턴스가 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_score_strike_and_miss() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(10));
-        State second = Ready.initialize().bowl(Pins.valueOf(9));
-        State third = second.bowl(Pins.valueOf(0));
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.add(second);
-        states.remove();
-        states.add(third);
-
-        // then
-        assertAll(
-                () -> assertThat(states.score()).isNotNull(),
-                () -> assertThat(states.score()).isInstanceOf(Score.class),
-                () -> assertThat(states.score().score()).isEqualTo(19)
-        );
-
-    }
-
-    @DisplayName("strike_and_spare 일때, States 인스턴스가 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_score_strike_and_spare() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(10));
-        State second = Ready.initialize().bowl(Pins.valueOf(9));
-        State third = second.bowl(Pins.valueOf(1));
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.add(second);
-        states.remove();
-        states.add(third);
-
-        // then
-        assertAll(
-                () -> assertThat(states.score()).isNotNull(),
-                () -> assertThat(states.score()).isInstanceOf(Score.class),
-                () -> assertThat(states.score().score()).isEqualTo(20)
-        );
-
-    }
-
-    @DisplayName("strike_and_strike 일때, States 인스턴스가 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_score_strike_and_strike_and_firstBowl() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(10));
-        State second = Ready.initialize().bowl(Pins.valueOf(10));
-        State third = Ready.initialize().bowl(Pins.valueOf(9));
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.add(second);
-        states.add(third);
-
-        // then
-        assertAll(
-                () -> assertThat(states.score()).isNotNull(),
-                () -> assertThat(states.score()).isInstanceOf(Score.class),
-                () -> assertThat(states.score().score()).isEqualTo(29)
-        );
-
-    }
-
-    @DisplayName("strike_and_strike 일때, States 인스턴스가 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_score_strike_and_strike_and_strike() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(10));
-        State second = Ready.initialize().bowl(Pins.valueOf(10));
-        State third = Ready.initialize().bowl(Pins.valueOf(10));
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.add(second);
-        states.add(third);
-
-        // then
-        assertAll(
-                () -> assertThat(states.score()).isNotNull(),
-                () -> assertThat(states.score()).isInstanceOf(Score.class),
-                () -> assertThat(states.score().score()).isEqualTo(30)
-        );
-
-    }
-
-    @DisplayName("beforeScore 가 miss 이고 States 인스턴스가 miss일 경우 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_calculateAdditionalScore_before_miss_states_miss() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(9));
-        State second = first.bowl(Pins.valueOf(0));
-        Score miss = Score.miss(Pins.valueOf(9));
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.remove();
-        states.add(second);
-
-        // then
-        assertAll(
-                () -> assertThat(states.calculateAdditionalScore(miss)).isNotNull(),
-                () -> assertThat(states.calculateAdditionalScore(miss)).isInstanceOf(Score.class),
-                () -> assertThat(states.calculateAdditionalScore(miss).score()).isEqualTo(9)
-        );
-
-    }
-
-    @DisplayName("beforeScore 가 spare 이고 States 인스턴스가 miss일 경우 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_calculateAdditionalScore_before_spare_states_miss() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(9));
-        State second = first.bowl(Pins.valueOf(0));
-        Score spare = Score.spare();
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.remove();
-        states.add(second);
-
-        // then
-        assertAll(
-                () -> assertThat(states.calculateAdditionalScore(spare)).isNotNull(),
-                () -> assertThat(states.calculateAdditionalScore(spare)).isInstanceOf(Score.class),
-                () -> assertThat(states.calculateAdditionalScore(spare).score()).isEqualTo(19)
-        );
-
-    }
-
-    @DisplayName("beforeScore 가 strike 이고 States 인스턴스가 miss일 경우 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_calculateAdditionalScore_before_strike_states_miss() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(9));
-        State second = first.bowl(Pins.valueOf(0));
-        Score strike = Score.strike();
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.remove();
-        states.add(second);
-
-        // then
-        assertAll(
-                () -> assertThat(states.calculateAdditionalScore(strike)).isNotNull(),
-                () -> assertThat(states.calculateAdditionalScore(strike)).isInstanceOf(Score.class),
-                () -> assertThat(states.calculateAdditionalScore(strike).score()).isEqualTo(19)
-        );
-
-    }
-
-    @DisplayName("beforeScore 가 miss 이고 States 인스턴스가 spare일 경우 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_calculateAdditionalScore_before_miss_states_spare() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(9));
-        State second = first.bowl(Pins.valueOf(1));
-        State third = Ready.initialize().bowl(Pins.valueOf(10));
-
-        Score spare = Score.miss(Pins.valueOf(9));
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.remove();
-        states.add(second);
-        states.add(third);
-
-        // then
-        assertAll(
-                () -> assertThat(states.calculateAdditionalScore(spare)).isNotNull(),
-                () -> assertThat(states.calculateAdditionalScore(spare)).isInstanceOf(Score.class),
-                () -> assertThat(states.calculateAdditionalScore(spare).score()).isEqualTo(9)
-        );
-
-    }
-
-    @DisplayName("beforeScore 가 spare 이고 States 인스턴스가 spare일 경우 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_calculateAdditionalScore_before_spare_states_spare() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(9));
-        State second = first.bowl(Pins.valueOf(1));
-        State third = Ready.initialize().bowl(Pins.valueOf(10));
-
-        Score spare = Score.spare();
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.remove();
-        states.add(second);
-        states.add(third);
-
-        // then
-        assertAll(
-                () -> assertThat(states.calculateAdditionalScore(spare)).isNotNull(),
-                () -> assertThat(states.calculateAdditionalScore(spare)).isInstanceOf(Score.class),
-                () -> assertThat(states.calculateAdditionalScore(spare).score()).isEqualTo(19)
+                () -> assertThat(firstScore.score()).isEqualTo(9),
+                () -> assertThat(secondScore.score()).isEqualTo(10),
+                () -> assertThat(thirdScore.score()).isEqualTo(20),
+                () -> assertThat(fourthScore.score()).isEqualTo(19),
+                () -> assertThat(fifthScore.score()).isEqualTo(20),
+                () -> assertThat(sixthScore.score()).isEqualTo(29),
+                () -> assertThat(seventhScore.score()).isEqualTo(30)
         );
 
     }
 
 
-    @DisplayName("beforeScore 가 strike 이고 States 인스턴스가 spare일 경우 알맞는 Score 반환 기능 테스트")
+    @DisplayName("States 의 calculateAdditionalScore 기능 테스트")
     @Test
-    void 반환_calculateAdditionalScore_before_strike_states_spare() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(9));
-        State second = first.bowl(Pins.valueOf(1));
-        State third = Ready.initialize().bowl(Pins.valueOf(10));
-
-        Score strike = Score.strike();
-
+    void 반환_calculateAdditionalScore() {
         // when
         // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.remove();
-        states.add(second);
-        states.add(third);
+        States missStates = States.initialize().remove().add(FIRST_BOWL).remove().add(MISS);
+        States spareStates = States.initialize().remove().add(FIRST_BOWL).remove().add(SPARE).add(STRIKE);
+        States strikeStates = States.initialize().remove().add(STRIKE).add(FIRST_BOWL).remove().add(SPARE);
+        States allStrikeStates = States.initialize().remove().add(STRIKE).add(STRIKE).add(STRIKE);
 
         // then
         assertAll(
-                () -> assertThat(states.calculateAdditionalScore(strike)).isNotNull(),
-                () -> assertThat(states.calculateAdditionalScore(strike)).isInstanceOf(Score.class),
-                () -> assertThat(states.calculateAdditionalScore(strike).score()).isEqualTo(20)
+                () -> assertThat(missStates.calculateAdditionalScore(MISS_SCORE).score()).isEqualTo(9),
+                () -> assertThat(missStates.calculateAdditionalScore(SPARE_SCORE).score()).isEqualTo(10),
+                () -> assertThat(missStates.calculateAdditionalScore(STRIKE_SCORE).score()).isEqualTo(19),
+                () -> assertThat(spareStates.calculateAdditionalScore(MISS_SCORE).score()).isEqualTo(9),
+                () -> assertThat(spareStates.calculateAdditionalScore(SPARE_SCORE).score()).isEqualTo(10),
+                () -> assertThat(spareStates.calculateAdditionalScore(STRIKE_SCORE).score()).isEqualTo(20),
+                () -> assertThat(spareStates.calculateAdditionalScore(STRIKE_SCORE).score()).isEqualTo(20),
+                () -> assertThat(strikeStates.calculateAdditionalScore(MISS_SCORE).score()).isEqualTo(9),
+                () -> assertThat(strikeStates.calculateAdditionalScore(SPARE_SCORE).score()).isEqualTo(20),
+                () -> assertThat(strikeStates.calculateAdditionalScore(STRIKE_SCORE).score()).isEqualTo(20),
+                () -> assertThat(allStrikeStates.calculateAdditionalScore(MISS_SCORE).score()).isEqualTo(9),
+                () -> assertThat(allStrikeStates.calculateAdditionalScore(SPARE_SCORE).score()).isEqualTo(20),
+                () -> assertThat(allStrikeStates.calculateAdditionalScore(STRIKE_SCORE).score()).isEqualTo(30)
         );
 
-    }
-
-
-    @DisplayName("beforeScore 가 miss 이고 States 인스턴스가 strike일 경우 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_calculateAdditionalScore_before_miss_states_strike() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(10));
-        State second = Ready.initialize().bowl(Pins.valueOf(1));
-        State third = second.bowl(Pins.valueOf(9));
-
-        Score strike = Score.miss(Pins.valueOf(9));
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.add(second);
-        states.remove();
-        states.add(third);
-
-        // then
-        assertAll(
-                () -> assertThat(states.calculateAdditionalScore(strike)).isNotNull(),
-                () -> assertThat(states.calculateAdditionalScore(strike)).isInstanceOf(Score.class),
-                () -> assertThat(states.calculateAdditionalScore(strike).score()).isEqualTo(9)
-        );
-
-    }
-
-    @DisplayName("beforeScore 가 spare 이고 States 인스턴스가 strike일 경우 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_calculateAdditionalScore_before_spare_states_strike() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(10));
-        State second = Ready.initialize().bowl(Pins.valueOf(1));
-        State third = second.bowl(Pins.valueOf(9));
-
-        Score spare = Score.spare();
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.add(second);
-        states.remove();
-        states.add(third);
-
-        // then
-        assertAll(
-                () -> assertThat(states.calculateAdditionalScore(spare)).isNotNull(),
-                () -> assertThat(states.calculateAdditionalScore(spare)).isInstanceOf(Score.class),
-                () -> assertThat(states.calculateAdditionalScore(spare).score()).isEqualTo(20)
-        );
-
-    }
-
-    @DisplayName("beforeScore 가 strike 이고 States 인스턴스가 strike일 경우 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_calculateAdditionalScore_before_strike_states_strike() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(10));
-        State second = Ready.initialize().bowl(Pins.valueOf(1));
-        State third = second.bowl(Pins.valueOf(9));
-
-        Score strike = Score.strike();
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.add(second);
-        states.remove();
-        states.add(third);
-
-        // then
-        assertAll(
-                () -> assertThat(states.calculateAdditionalScore(strike)).isNotNull(),
-                () -> assertThat(states.calculateAdditionalScore(strike)).isInstanceOf(Score.class),
-                () -> assertThat(states.calculateAdditionalScore(strike).score()).isEqualTo(21)
-        );
-
-    }
-
-    @DisplayName("모두 strike인 경우 알맞는 Score 반환 기능 테스트")
-    @Test
-    void 반환_calculateAdditionalScore_strike_strike_strike() {
-        // given
-        State first = Ready.initialize().bowl(Pins.valueOf(10));
-        State second = Ready.initialize().bowl(Pins.valueOf(10));
-        State third = Ready.initialize().bowl(Pins.valueOf(10));
-
-        Score strike = Score.strike();
-
-        // when
-        // 시나리오대로 작성
-        States states = States.initialize();
-        states.remove();
-        states.add(first);
-        states.add(second);
-        states.add(third);
-
-        // then
-        assertAll(
-                () -> assertThat(states.calculateAdditionalScore(strike)).isNotNull(),
-                () -> assertThat(states.calculateAdditionalScore(strike)).isInstanceOf(Score.class),
-                () -> assertThat(states.calculateAdditionalScore(strike).score()).isEqualTo(30)
-        );
     }
 
 
