@@ -1,5 +1,6 @@
 package bowling.domain.player;
 
+import bowling.exception.NameNullPointerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
