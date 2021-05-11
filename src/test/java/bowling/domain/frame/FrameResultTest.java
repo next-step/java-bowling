@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Score;
+import bowling.exception.FrameNullPointerException;
 import bowling.exception.ScoreListNullPointerException;
 import bowling.exception.ScoreNullPointerException;
 import org.junit.jupiter.api.DisplayName;
@@ -25,9 +26,22 @@ class FrameResultTest {
         assertThat(frameResult).isNotNull();
     }
 
-    @DisplayName("FrameResult 인스턴스 생성 여부 테스트")
+    @DisplayName("FrameResult 인스턴스 생성시 Frame 가 null 일 경우 예외처리 테스트")
     @Test
-    void 검증() {
+    void 검증_Frame_null() {
+        // given
+        Frame frame = null;
+        Score score = Score.strike();
+
+        // when
+        assertThatThrownBy(() -> FrameResult.of(frame, score))
+                .isInstanceOf(FrameNullPointerException.class)
+                .hasMessage("Frame 인스턴스가 null 입니다.");
+    }
+
+    @DisplayName("FrameResult 인스턴스 생성시 Score 가 null 일 경우 예외처리 테스트")
+    @Test
+    void 검증_Score_null() {
         // given
         Frame frame = FinalFrame.initialize();
         Score score = null;
@@ -36,6 +50,6 @@ class FrameResultTest {
         assertThatThrownBy(() -> FrameResult.of(frame, score))
                 .isInstanceOf(ScoreNullPointerException.class)
                 .hasMessage("Score 인스턴스가 null 입니다.");
-
     }
+
 }
