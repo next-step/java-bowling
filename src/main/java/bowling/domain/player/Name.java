@@ -48,4 +48,7 @@ public final class Name {
     }
 
 
+    public final String name() {
+        return name;
+    }
 }

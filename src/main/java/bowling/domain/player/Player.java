@@ -38,4 +38,8 @@ public final class Player {
     public final int sequence() {
         return frames.sequence();
     }
+
+    public final String name() {
+        return name.name();
+    }
 }

@@ -66,4 +66,17 @@ class NameTest {
                 .hasMessage("알맞는 이름의 크기가 아닙니다.");
     }
 
+    @DisplayName("Name 인스턴스가 소유한 이름 값을 반환하는지 테스트")
+    @Test
+    void 반환_이름() {
+        // given
+        String expected = "kwj";
+
+        // when
+        Name name = Name.valueOf(expected);
+
+        assertThat(name.name()).isEqualTo(expected);
+    }
+
+
 }
