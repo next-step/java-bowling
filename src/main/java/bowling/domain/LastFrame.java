@@ -3,7 +3,7 @@ package bowling.domain;
 import java.util.Collections;
 import java.util.List;
 
-public final class LastFrame extends Frame {
+public final class LastFrame extends DefaultFrame {
     private static final String FIRST_STRIKE_OR_SECOND_SPARE_MESSAGE =
             "세 번째 투구를 진행하기 위해서는 첫 번째 투구가 스트라이크이거나 두 번째 투구가 스페어야 합니다.";
 
@@ -11,22 +11,22 @@ public final class LastFrame extends Frame {
         super(pitches);
     }
 
-    public static Frame init() {
+    public static DefaultFrame init() {
         return new LastFrame(Collections.emptyList());
     }
 
     @Override
     public boolean playing() {
-        return !isPitchesFull() && (pitches.size() < maxPitchesCount() - 1 || isFirstStrike() || isSecondSpare());
+        return !isPitchesFull() && (pitches().size() < maxPitchesCount() - 1 || isFirstStrike() || isSecondSpare());
     }
 
     @Override
-    public Frame play(final int knockedPinsCount) {
+    public DefaultFrame play(final int knockedPinsCount) {
         return play(KnockedPins.from(knockedPinsCount));
     }
 
     @Override
-    public Frame play(final KnockedPins knockedPins) {
+    public DefaultFrame play(final KnockedPins knockedPins) {
         validatePitchesFull();
         validateFirstStrikeOrSecondSpare();
 
@@ -34,18 +34,18 @@ public final class LastFrame extends Frame {
     }
 
     private void validateFirstStrikeOrSecondSpare() {
-        if (pitches.size() == maxPitchesCount() - 1 && !isFirstStrike() && !isSecondSpare()) {
+        if (pitches().size() == maxPitchesCount() - 1 && !isFirstStrike() && !isSecondSpare()) {
             throw new IllegalArgumentException(FIRST_STRIKE_OR_SECOND_SPARE_MESSAGE);
         }
     }
 
     @Override
-    public Frame next() {
+    public DefaultFrame next() {
         throw new IllegalArgumentException();
     }
 
     @Override
-    public Frame last() {
+    public DefaultFrame last() {
         throw new IllegalArgumentException();
     }
 

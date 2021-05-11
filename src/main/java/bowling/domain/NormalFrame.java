@@ -3,14 +3,14 @@ package bowling.domain;
 import java.util.Collections;
 import java.util.List;
 
-public final class NormalFrame extends Frame {
+public final class NormalFrame extends DefaultFrame {
     private static final String FIRST_STRIKE_MESSAGE = "첫 번재 투구가 스트라이크인 경우, 두 번째 투구를 진행할 수 없습니다.";
 
     private NormalFrame(final List<Pitch> pitches) {
         super(pitches);
     }
 
-    public static Frame init() {
+    public static DefaultFrame init() {
         return new NormalFrame(Collections.emptyList());
     }
 
@@ -20,12 +20,12 @@ public final class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame play(final int knockedPinsCount) {
+    public DefaultFrame play(final int knockedPinsCount) {
         return play(KnockedPins.from(knockedPinsCount));
     }
 
     @Override
-    public Frame play(final KnockedPins knockedPins) {
+    public DefaultFrame play(final KnockedPins knockedPins) {
         validatePitchesFull();
         validateFirstStrike();
 
@@ -39,12 +39,12 @@ public final class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame next() {
+    public DefaultFrame next() {
         return NormalFrame.init();
     }
 
     @Override
-    public Frame last() {
+    public DefaultFrame last() {
         return LastFrame.init();
     }
 

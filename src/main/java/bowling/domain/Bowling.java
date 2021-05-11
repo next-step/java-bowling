@@ -32,7 +32,7 @@ public final class Bowling {
     }
 
     private static Frame initBody(KnockedPinsInput knockedPinsInput, FramesOutput framesOutput,
-                                  List<Frame> frames, Frame frame) {
+                                          List<Frame> frames, Frame frame) {
         for (int i = 2; i < 10; i++) {
             frame = frame.next();
             frame = playedFrame(knockedPinsInput, framesOutput, frames, frame, i);
@@ -49,7 +49,7 @@ public final class Bowling {
     }
 
     private static Frame playedFrame(KnockedPinsInput knockedPinsInput, FramesOutput framesOutput,
-                                     List<Frame> frames, Frame frame, int frameIndex) {
+                                             List<Frame> frames, Frame frame, int frameIndex) {
         while (frame.playing()) {
             frame = frame.play(knockedPinsInput.count(frameIndex));
 
