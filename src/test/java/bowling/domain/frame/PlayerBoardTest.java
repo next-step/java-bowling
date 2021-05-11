@@ -2,16 +2,15 @@ package bowling.domain.frame;
 
 import bowling.domain.Player;
 import bowling.domain.turn.FallenPins;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerBoardTest {
   @Test
   @DisplayName("현재 프레임이 준비 상태인지 체크")
-  void currentFrameFinishedCheckTest(){
+  void currentFrameFinishedCheckTest() {
     Player player = new Player("zfz");
     PlayerBoard playerBoard = new PlayerBoard(player);
 
@@ -21,7 +20,7 @@ class PlayerBoardTest {
 
   @Test
   @DisplayName("프레임 진행 중일 때 true를 return한다")
-  void currentFrameRunningTest(){
+  void currentFrameRunningTest() {
     Player player = new Player("zfz");
     PlayerBoard playerBoard = new PlayerBoard(player);
 
@@ -31,7 +30,7 @@ class PlayerBoardTest {
 
   @Test
   @DisplayName("하나의 프레임이 완료되어 넘어가면 false를 return한다")
-  void currentFrameFinishedTest(){
+  void currentFrameFinishedTest() {
     Player player = new Player("zfz");
     PlayerBoard playerBoard = new PlayerBoard(player);
 
@@ -41,7 +40,7 @@ class PlayerBoardTest {
 
   @Test
   @DisplayName("전체가 종료되면 false를 return한다")
-  void finishedAllRoundTest(){
+  void finishedAllRoundTest() {
     Player player = new Player("zfz");
     PlayerBoard playerBoard = new PlayerBoard(player);
 

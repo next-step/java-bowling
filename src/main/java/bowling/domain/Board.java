@@ -28,7 +28,7 @@ public class Board {
     return roundNumber;
   }
 
-  public void addRound(){
+  public void addRound() {
     roundNumber += 1;
   }
 

@@ -24,11 +24,11 @@ public class PlayerBoard {
     currentFrame = currentFrame.bowl(pins);
   }
 
-  public boolean checkTargetRoundFinished(int round){
+  public boolean checkTargetRoundFinished(int round) {
     return !checkFinished() && round() == round;
   }
 
-  public int round(){
+  public int round() {
     return currentFrame.round();
   }
 

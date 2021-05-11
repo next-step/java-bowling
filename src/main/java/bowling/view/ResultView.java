@@ -16,7 +16,7 @@ public class ResultView {
   private static final String NUMBER_FORMAT = "%6s";
 
   public void printFullBoard(List<PlayerBoard> playerBoards) {
-    for(PlayerBoard playerBoard : playerBoards){
+    for (PlayerBoard playerBoard : playerBoards) {
       printBoard(playerBoard);
     }
   }

@@ -25,13 +25,13 @@ public class BowlingBoard {
 
   private void setupBoard() {
     int playersCount = inputView.initPlayersCount();
-    for(int i=0; i<playersCount; i++){
-      insertPlayers(i+1);
+    for (int i = 0; i < playersCount; i++) {
+      insertPlayers(i + 1);
     }
     printBoards();
   }
 
-  private void insertPlayers(int playerCount){
+  private void insertPlayers(int playerCount) {
     Player player = new Player(inputView.setupPlayer(playerCount));
     board.addPlayerBoard(player);
   }
@@ -50,14 +50,14 @@ public class BowlingBoard {
   }
 
   private void playFrame(PlayerBoard playerBoard, int round) {
-    while(playerBoard.checkTargetRoundFinished(round)){
+    while (playerBoard.checkTargetRoundFinished(round)) {
       int fallenPins = inputView.setupPins(playerBoard.round());
       playerBoard.addNewBall(new FallenPins(fallenPins));
       printBoards();
     }
   }
 
-  private void printBoards(){
+  private void printBoards() {
     resultView.printFullBoard(board.playerBoards());
   }
 }

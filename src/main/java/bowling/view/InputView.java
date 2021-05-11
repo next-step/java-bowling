@@ -9,7 +9,7 @@ public class InputView {
     scanner = new Scanner(System.in);
   }
 
-  public int initPlayersCount(){
+  public int initPlayersCount() {
     System.out.print("How many people?");
     return scanner.nextInt();
   }
