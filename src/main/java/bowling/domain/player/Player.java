@@ -21,7 +21,7 @@ public final class Player {
         return new Player(name);
     }
 
-    public Player(final Name name) {
+    private Player(final Name name) {
         validateNull(name);
         this.name = name;
         this.frames = Frames.initialize();
