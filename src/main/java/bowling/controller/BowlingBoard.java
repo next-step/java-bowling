@@ -21,8 +21,12 @@ public class BowlingBoard {
 
   public void run() {
     Player player = new Player(inputView.setupPlayer());
-    board.addRound(player);
+    board.addPlayerBoard(player);
     playGame();
+  }
+
+  private void setupBoard(){
+
   }
 
   private void playGame() {
@@ -32,14 +36,13 @@ public class BowlingBoard {
   }
 
   private void playRound(Board board) {
-    for (PlayerBoard playerBoard : board.rounds()) {
+    for (PlayerBoard playerBoard : board.playerBoards()) {
       playFrame(playerBoard);
     }
   }
 
   private void playFrame(PlayerBoard playerBoard) {
-    Frame currentFrame = playerBoard.currentFrame();
-    int fallenPins = inputView.setupPins(currentFrame.round());
+    int fallenPins = inputView.setupPins(playerBoard.round());
     playerBoard.addNewBall(new FallenPins(fallenPins));
     resultView.printBoard(playerBoard);
   }

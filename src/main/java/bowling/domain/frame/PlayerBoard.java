@@ -28,6 +28,10 @@ public class PlayerBoard {
     currentFrame = currentFrame.bowl(pins);
   }
 
+  public int round(){
+    return currentFrame.round();
+  }
+
   public String playerName() {
     return player.name();
   }
