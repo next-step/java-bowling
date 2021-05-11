@@ -6,7 +6,7 @@ import java.util.List;
 
 public final class Bowling {
     private static final int MAX_FRAMES_COUNT = 10;
-    private static final int LAST_FRAME_INDEX = MAX_FRAMES_COUNT - 1;
+    private static final int FINAL_FRAME_INDEX = MAX_FRAMES_COUNT - 1;
     private static final String WRONG_PLAY_MESSAGE = "playing()이 true가 아닐 때는 play()를 호출할 수 없습니다.";
 
     private final List<Frame> frames;
@@ -20,7 +20,7 @@ public final class Bowling {
     }
 
     public boolean playing() {
-        return frames.size() < MAX_FRAMES_COUNT || frames.get(LAST_FRAME_INDEX).playing();
+        return frames.size() < MAX_FRAMES_COUNT || frames.get(FINAL_FRAME_INDEX).playing();
     }
 
     public Bowling play(final int knockedPinsCount) {
@@ -54,7 +54,7 @@ public final class Bowling {
             return frame;
         }
 
-        if (frames.size() < LAST_FRAME_INDEX) {
+        if (frames.size() < FINAL_FRAME_INDEX) {
             return frame.next();
         }
 

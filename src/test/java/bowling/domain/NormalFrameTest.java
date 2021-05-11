@@ -65,6 +65,6 @@ public class NormalFrameTest {
     public void last() {
         final Frame last = NormalFrame.init().last();
 
-        assertThat(last).isInstanceOf(LastFrame.class);
+        assertThat(last).isInstanceOf(FinalFrame.class);
     }
 }

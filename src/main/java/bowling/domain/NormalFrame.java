@@ -45,7 +45,7 @@ public final class NormalFrame extends DefaultFrame {
 
     @Override
     public DefaultFrame last() {
-        return LastFrame.init();
+        return FinalFrame.init();
     }
 
     @Override

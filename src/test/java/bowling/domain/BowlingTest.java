@@ -20,7 +20,7 @@ public class BowlingTest {
         }
 
         assertThat(bowling.frames().size()).isEqualTo(10);
-        assertThat(bowling.frames().get(9)).isInstanceOf(LastFrame.class);
+        assertThat(bowling.frames().get(9)).isInstanceOf(FinalFrame.class);
     }
 
     @Test
