@@ -22,5 +22,16 @@ class PlayerTest {
         assertThat(player).isNotNull();
     }
 
+    @DisplayName("Player 인스턴스 생성할 때 null 입력시 예외처리 테스트")
+    @Test
+    void 검증() {
+        // given
+        Name name = null;
+
+        // when
+        assertThatThrownBy(() -> Player.from(name))
+                .isInstanceOf(NameNullPointerException.class)
+                .hasMessage("Name 인스턴스가 null 입니다.");
+    }
 
 }
