@@ -51,4 +51,12 @@ public final class Player {
     public final Scores scores() {
         return frames.scores();
     }
+
+    public final Frames frames() {
+        return frames;
+    }
+
+    public final int sum() {
+        return scores().sum();
+    }
 }

@@ -55,4 +55,17 @@ class ScoresTest {
         assertThat(scores.sum()).isEqualTo(25);
     }
 
+    @DisplayName("Scores 인스턴스가 소유한 자료들의 갯수를 반환하는지 테스트")
+    @Test
+    void 반환_사이즈() {
+        // given
+        List<Score> scoreList = new ArrayList<>(Arrays.asList(Score.miss(Pins.valueOf(5)), Score.spare(), Score.strike()));
+
+        // when
+        Scores scores = Scores.of(scoreList);
+
+        // then
+        assertThat(scores.size()).isEqualTo(3);
+    }
+
 }

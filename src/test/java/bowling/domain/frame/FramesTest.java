@@ -33,6 +33,16 @@ class FramesTest {
         assertThat(frames.sequence()).isEqualTo(1);
     }
 
+    @DisplayName("Frames 인스턴스가 인덱스를 기준으로 특정 Frame 을 반환하는지 테스트")
+    @Test
+    void 반환_특정_frame() {
+        // when
+        Frames frames = Frames.initialize();
+
+        // then
+        assertThat(frames.get(0).sequence()).isEqualTo(1);
+    }
+
 
     @DisplayName("Frames 인스턴스 현재 frame 종료 여부 테스트")
     @Test

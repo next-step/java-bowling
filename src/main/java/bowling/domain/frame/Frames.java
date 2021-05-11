@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.lang.Math.subtractExact;
+import static java.util.Collections.unmodifiableList;
 
 public final class Frames {
 
@@ -86,4 +87,7 @@ public final class Frames {
         return frames.get(nextIndex);
     }
 
+    public final Frame get(final int index) {
+        return unmodifiableList(frames).get(index);
+    }
 }

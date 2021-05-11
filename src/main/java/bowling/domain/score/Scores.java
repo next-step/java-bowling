@@ -34,4 +34,8 @@ public final class Scores {
                 .mapToInt(Score::score)
                 .sum();
     }
+
+    public final int size() {
+        return scores.size();
+    }
 }
