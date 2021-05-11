@@ -1,34 +1,28 @@
-package bowling.domain.controller;
+package bowling.controller;
 
 
 import bowling.domain.Player;
 import bowling.domain.frame.*;
-import bowling.domain.view.InputView;
-import bowling.domain.view.ResultView;
+import bowling.view.InputView;
+import bowling.view.ResultView;
 
 
 public class BowlingController {
 
+    public static Player createPlayer() {
+        return new Player(InputView.getPlayer());
+    }
+
     public static void start(Player player) {
-        Frame frame = new NormalFrame(Round.createOf(), null);
+        Frame frame = new Frame(NormalRound.createOf(), null);
         ResultView.printRound();
         ResultView.printResult(player.getName());
 
         while (!frame.isEnd()) {
-            int frameRoundCount = getFrameRoundCount(frame);
+            int frameRoundCount = frame.getFrameRoundCount();
             frame = frame.pitch(InputView.getPitch(frameRoundCount));
 
-            ResultView.printBowlingResult(player, frame.getFrameResponse());
+            ResultView.printBowlingResult(player, frame.getPreviousFrame());
         }
-    }
-
-    private static int getFrameRoundCount(Frame frame) {
-        Round round = frame.getRound();
-
-        if (frame instanceof FinalFrame) {
-            return 10;
-        }
-
-        return round.getRound();
     }
 }
