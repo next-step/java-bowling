@@ -1,7 +1,5 @@
 package bowling.views;
 
-import bowling.domain.KnockedPinsInput;
-
 import java.util.Scanner;
 
 public final class InputView {
@@ -12,13 +10,11 @@ public final class InputView {
         return scanner.nextLine();
     }
 
-    public static KnockedPinsInput knockedPinsInput() {
-        return frameIndex -> {
-            System.out.printf("%d프레임 투구: ", frameIndex);
-            final int result = scanner.nextInt();
-            clearInputBuffer();
-            return result;
-        };
+    public static int knockedPinsCount(final int currentFrameIndex) {
+        System.out.printf("%d프레임 투구: ", currentFrameIndex);
+        final int result = scanner.nextInt();
+        clearInputBuffer();
+        return result;
     }
 
     private static void clearInputBuffer() {

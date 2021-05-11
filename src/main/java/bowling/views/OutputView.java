@@ -17,12 +17,10 @@ public class OutputView {
     private static final String SPARE_VIEW = "/";
     private static final String GUTTER_VIEW = "-";
 
-    public static FramesOutput framesOutput(final Player player) {
-        return frames -> {
-            printTitle();
-            print(player, frames);
-            System.out.println();
-        };
+    public static void print(final Player player, final Bowling bowling) {
+        printTitle();
+        print(player, bowling.frames());
+        System.out.println();
     }
 
     private static void printTitle() {

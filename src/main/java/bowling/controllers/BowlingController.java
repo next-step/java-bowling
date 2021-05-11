@@ -9,6 +9,12 @@ public class BowlingController {
     public static void run() {
         final Player player = new Player(InputView.name());
 
-        Bowling.from(InputView.knockedPinsInput(), OutputView.framesOutput(player));
+        Bowling bowling = Bowling.init();
+        OutputView.print(player, bowling);
+
+        while (bowling.playing()) {
+            bowling = bowling.play(InputView.knockedPinsCount(bowling.currentFrameIndex()));
+            OutputView.print(player, bowling);
+        }
     }
 }

@@ -1,64 +1,71 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class Bowling {
-    final List<Frame> frames;
+    private static final int MAX_FRAMES_COUNT = 10;
+    private static final int LAST_FRAME_INDEX = MAX_FRAMES_COUNT - 1;
+    private static final String WRONG_PLAY_MESSAGE = "playing()이 true가 아닐 때는 play()를 호출할 수 없습니다.";
 
-    public Bowling(final List<Frame> frames) {
+    private final List<Frame> frames;
+
+    private Bowling(final List<Frame> frames) {
         this.frames = frames;
     }
 
-    public static Bowling from(final KnockedPinsInput knockedPinsInput, final FramesOutput framesOutput) {
-        final List<Frame> frames = new ArrayList<>();
+    public static Bowling init() {
+        return new Bowling(Collections.singletonList(NormalFrame.init()));
+    }
 
-        framesOutput.print(frames);
+    public boolean playing() {
+        return frames.size() < MAX_FRAMES_COUNT || frames.get(LAST_FRAME_INDEX).playing();
+    }
 
-        Frame frame = initFirst(knockedPinsInput, framesOutput, frames);
-        frame = initBody(knockedPinsInput, framesOutput, frames, frame);
-        initLast(knockedPinsInput, framesOutput, frames, frame);
+    public Bowling play(final int knockedPinsCount) {
+        return play(KnockedPins.from(knockedPinsCount));
+    }
+
+    public Bowling play(final KnockedPins knockedPins) {
+        validatePlaying();
+
+        final List<Frame> frames = new ArrayList<>(this.frames);
+        final Frame lastFrame = frames.get(frames.size() - 1);
+
+        if (lastFrame.playing()) {
+            frames.remove(lastFrame);
+        }
+
+        final Frame playedFrame = nextFrame(frames, lastFrame).play(knockedPins);
+        frames.add(playedFrame);
 
         return new Bowling(frames);
     }
 
-    private static Frame initFirst(KnockedPinsInput knockedPinsInput, FramesOutput framesOutput, List<Frame> frames) {
-        Frame frame = NormalFrame.init();
-        frame = playedFrame(knockedPinsInput, framesOutput, frames, frame, 1);
-        frames.add(frame);
-        return frame;
-    }
-
-    private static Frame initBody(KnockedPinsInput knockedPinsInput, FramesOutput framesOutput,
-                                          List<Frame> frames, Frame frame) {
-        for (int i = 2; i < 10; i++) {
-            frame = frame.next();
-            frame = playedFrame(knockedPinsInput, framesOutput, frames, frame, i);
-            frames.add(frame);
+    private void validatePlaying() {
+        if (!playing()) {
+            throw new IllegalStateException(WRONG_PLAY_MESSAGE);
         }
-        return frame;
     }
 
-    private static void initLast(KnockedPinsInput knockedPinsInput, FramesOutput framesOutput,
-                                 List<Frame> frames, Frame frame) {
-        frame = frame.last();
-        frame = playedFrame(knockedPinsInput, framesOutput, frames, frame, 10);
-        frames.add(frame);
-    }
-
-    private static Frame playedFrame(KnockedPinsInput knockedPinsInput, FramesOutput framesOutput,
-                                             List<Frame> frames, Frame frame, int frameIndex) {
-        while (frame.playing()) {
-            frame = frame.play(knockedPinsInput.count(frameIndex));
-
-            framesOutput.print(
-                    Stream.concat(frames.stream(), Stream.of(frame))
-                            .collect(Collectors.toList())
-            );
+    private Frame nextFrame(final List<Frame> frames, final Frame frame) {
+        if (frame.playing()) {
+            return frame;
         }
 
-        return frame;
+        if (frames.size() < LAST_FRAME_INDEX) {
+            return frame.next();
+        }
+
+        return frame.last();
+    }
+
+    public List<Frame> frames() {
+        return Collections.unmodifiableList(frames);
+    }
+
+    public int currentFrameIndex() {
+        return frames.size();
     }
 }
