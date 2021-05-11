@@ -7,6 +7,7 @@ import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 import org.apache.logging.log4j.util.Strings;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -48,23 +49,36 @@ public final class ResultView {
                 .forEach(scoreboardBuilder::append);
         scoreboardBuilder.append(formatFinalFrame(frames.get(LAST_FRAME_INDEX).description()));
         scoreboardBuilder.append(frontFormat(Strings.EMPTY));
-        final Scores scores = player.scores();
 
-        final String scoreFrames = scores.stream()
+        final Scores scores = player.scores();
+        final List<String> scoreFrameList = getScoreFrameList(scores);
+        final String scoreFrame = getScoreFrame(scoreFrameList);
+        final String emptyScoreFrame = getEmptyScoreFrame(scoreFrameList);
+
+        scoreboardBuilder.append(scoreFrame);
+        scoreboardBuilder.append(emptyScoreFrame).append(NEWLINE);
+        System.out.println(scoreboardBuilder);
+    }
+
+    private final String getScoreFrame(final List<String> scoreFrameList) {
+        return scoreFrameList.stream().collect(Collectors.joining());
+    }
+
+    private final String getEmptyScoreFrame(final List<String> scoreFrameList) {
+        return IntStream.range(scoreFrameList.size(), Frame.LAST_SEQUENCE)
+                .mapToObj(i -> Strings.EMPTY)
+                .map(this::formatNormalFrame)
+                .collect(Collectors.joining());
+    }
+
+    private final List<String> getScoreFrameList(final Scores scores) {
+        return scores.stream()
                 .limit(scores.size())
                 .map(Score::score)
                 .filter(this::filteringUnavailable)
                 .map(String::valueOf)
                 .map(this::formatNormalFrame)
-                .collect(Collectors.joining());
-        final String emptyScoreFrame = IntStream.range(scores.size(), Frame.LAST_SEQUENCE)
-                .mapToObj(i -> Strings.EMPTY)
-                .map(this::formatNormalFrame)
-                .collect(Collectors.joining());
-
-        scoreboardBuilder.append(scoreFrames);
-        scoreboardBuilder.append(emptyScoreFrame).append(NEWLINE);
-        System.out.println(scoreboardBuilder);
+                .collect(Collectors.toList());
     }
 
     private final boolean filteringUnavailable(final int score) {
