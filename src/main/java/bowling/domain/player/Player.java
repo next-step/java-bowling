@@ -26,4 +26,7 @@ public final class Player {
         }
     }
 
+    public final boolean isFinish() {
+        return frames.isFinish();
+    }
 }

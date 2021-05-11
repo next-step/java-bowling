@@ -40,11 +40,10 @@ class PlayerTest {
     void 종료_여부() {
         // given
         Name name = Name.valueOf("kwj");
-        int round = 1;
 
         // when
         Player player = Player.from(name);
-        boolean actual = player.isFinish(round);
+        boolean actual = player.isFinish();
 
         // then
         assertThat(actual).isFalse();
