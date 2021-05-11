@@ -1,4 +1,4 @@
-package bowling.domain.view;
+package bowling.view;
 
 import java.util.Scanner;
 
