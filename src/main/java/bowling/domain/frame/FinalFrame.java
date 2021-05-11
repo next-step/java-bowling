@@ -69,8 +69,8 @@ public final class FinalFrame extends Frame {
     }
 
     @Override
-    public String description() {
-        return null;
+    public final String description() {
+        return states.description();
     }
 
     private final boolean hasBonusRound() {

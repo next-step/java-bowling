@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.exception.NoActionBowlException;
+import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -163,31 +164,38 @@ class FinalFrameTest {
         );
     }
 
-    @DisplayName("FinalFrame 의 description()에 대한 테스트")
+    @DisplayName("FinalFrame 의 description 기능 테스트")
     @Test
     void 반환_description() {
         // when
-        String firstActual = FinalFrame.initialize().bowl(ZERO).description();
-        String secondActual = FinalFrame.initialize().bowl(NINE).description();
-        String thirdActual = FinalFrame.initialize().bowl(ZERO).bowl(ZERO).description();
-        String fourthActual = FinalFrame.initialize().bowl(ONE).bowl(EIGHT).description();
-        String fifthActual = FinalFrame.initialize().bowl(ZERO).bowl(TEN).description();
-        String sixthActual = FinalFrame.initialize().bowl(ONE).bowl(NINE).description();
-        String seventhActual = FinalFrame.initialize().bowl(TEN).description();
-        String lastActual = FinalFrame.initialize().bowl(TEN).bowl(TEN).bowl(TEN).description();
-
+        Frame firstFrame = FinalFrame.initialize().bowl(ZERO);
+        Frame secondFrame = FinalFrame.initialize().bowl(NINE);
+        Frame thirdFrame = FinalFrame.initialize().bowl(TEN);
+        Frame fourthFrame = FinalFrame.initialize().bowl(ONE).bowl(EIGHT);
+        Frame fifthFrame = FinalFrame.initialize().bowl(ZERO).bowl(NINE);
+        Frame sixthFrame = FinalFrame.initialize().bowl(NINE).bowl(ZERO);
+        Frame seventhFrame = FinalFrame.initialize().bowl(ONE).bowl(NINE).bowl(TEN);
+        Frame eightFrame = FinalFrame.initialize().bowl(ZERO).bowl(TEN).bowl(TEN);
+        Frame nineFrame = FinalFrame.initialize().bowl(TEN).bowl(ZERO).bowl(TEN);
+        Frame tenFrame = FinalFrame.initialize().bowl(TEN).bowl(TEN).bowl(ZERO);
+        Frame elevenFrame = FinalFrame.initialize().bowl(TEN).bowl(TEN).bowl(TEN);
 
         // then
         assertAll(
-                () -> assertThat(firstActual).isEqualTo("-"),
-                () -> assertThat(secondActual).isEqualTo("9"),
-                () -> assertThat(thirdActual).isEqualTo("-|-"),
-                () -> assertThat(fourthActual).isEqualTo("1|8"),
-                () -> assertThat(fifthActual).isEqualTo("-|/"),
-                () -> assertThat(sixthActual).isEqualTo("1|/"),
-                () -> assertThat(seventhActual).isEqualTo("X"),
-                () -> assertThat(lastActual).isEqualTo("X|X|X")
+                () -> assertThat(FinalFrame.initialize().description()).isEqualTo(Strings.EMPTY),
+                () -> assertThat(firstFrame.description()).isEqualTo("-"),
+                () -> assertThat(secondFrame.description()).isEqualTo("9"),
+                () -> assertThat(thirdFrame.description()).isEqualTo("X"),
+                () -> assertThat(fourthFrame.description()).isEqualTo("1|8"),
+                () -> assertThat(fifthFrame.description()).isEqualTo("-|9"),
+                () -> assertThat(sixthFrame.description()).isEqualTo("9|-"),
+                () -> assertThat(seventhFrame.description()).isEqualTo("1|/|X"),
+                () -> assertThat(eightFrame.description()).isEqualTo("-|/|X"),
+                () -> assertThat(nineFrame.description()).isEqualTo("X|-|/"),
+                () -> assertThat(tenFrame.description()).isEqualTo("X|X|-"),
+                () -> assertThat(elevenFrame.description()).isEqualTo("X|X|X")
         );
+
     }
 
 }
