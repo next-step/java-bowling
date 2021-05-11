@@ -9,7 +9,7 @@ public class Board {
   private static final int FIRST_ROUND = 1;
 
   private final List<PlayerBoard> playerBoards;
-  private final int roundNumber;
+  private int roundNumber;
 
   public Board() {
     playerBoards = new ArrayList<>();
@@ -26,6 +26,10 @@ public class Board {
 
   public int runningFrame() {
     return roundNumber;
+  }
+
+  public void addRound(){
+    roundNumber += 1;
   }
 
   public void addPlayerBoard(Player player) {

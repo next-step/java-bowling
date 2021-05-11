@@ -20,10 +20,6 @@ public class PlayerBoard {
     return currentFrame.round() == FINAL_ROUND && currentFrame.checkFinished();
   }
 
-  public Frame currentFrame() {
-    return currentFrame;
-  }
-
   public void addNewBall(FallenPins pins) {
     currentFrame = currentFrame.bowl(pins);
   }
