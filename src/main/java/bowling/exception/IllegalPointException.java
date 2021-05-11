@@ -1,4 +1,4 @@
-package bowling.domain.exception;
+package bowling.exception;
 
 public class IllegalPointException extends RuntimeException {
     public IllegalPointException() {

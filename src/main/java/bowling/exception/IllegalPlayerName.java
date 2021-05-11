@@ -1,4 +1,4 @@
-package bowling.domain.exception;
+package bowling.exception;
 
 public class IllegalPlayerName extends RuntimeException {
     public IllegalPlayerName() {
