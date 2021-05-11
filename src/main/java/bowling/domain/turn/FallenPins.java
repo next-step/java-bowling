@@ -5,6 +5,11 @@ import bowling.error.InvalidFallenPinsException;
 import java.util.Objects;
 
 public class FallenPins {
+  private static final String WALL_SYMBOL = "|";
+  private static final String SPARE_SYMBOL = "/";
+  private static final String GUTTER_SYMBOL = "-";
+  private static final String STRIKE_SYMBOL = "X";
+
   private static final int MIN_PINS = 0;
   private static final int MAX_PINS = 10;
 
@@ -15,26 +20,34 @@ public class FallenPins {
     this.pins = pins;
   }
 
-  public boolean checkPins(int pins) {
+  public void checkPins(int pins) {
     if (pins < MIN_PINS || pins > MAX_PINS) {
       throw new InvalidFallenPinsException();
     }
-    return true;
   }
 
   public int pins() {
     return pins;
   }
 
-  public boolean checkAddable(FallenPins fallenPins) {
+  public void checkAddable(FallenPins fallenPins) {
     int totalFallenPins = this.pins + fallenPins.pins;
 
     checkPins(totalFallenPins);
-    return true;
+  }
+
+  public FallenPins addShot(FallenPins secondShot) {
+    checkAddable(secondShot);
+
+    return new FallenPins(pins + secondShot.pins);
   }
 
   public boolean isStrike() {
     return pins == MAX_PINS;
+  }
+
+  public boolean isSpare(FallenPins secondPins) {
+    return pins + secondPins.pins == MAX_PINS;
   }
 
   @Override
@@ -50,10 +63,30 @@ public class FallenPins {
     return Objects.hash(pins);
   }
 
-  @Override
-  public String toString() {
-    return "FallenPins{" +
-      "pins=" + pins +
-      '}';
+  public String show() {
+    if (pins == MAX_PINS) {
+      return STRIKE_SYMBOL;
+    }
+
+    if (pins == MIN_PINS) {
+      return GUTTER_SYMBOL;
+    }
+    return String.valueOf(pins);
+  }
+
+  public String show(FallenPins secondPins) {
+    StringBuilder stringBuilder = new StringBuilder();
+
+    stringBuilder
+      .append(show())
+      .append(WALL_SYMBOL);
+
+    if (isSpare(secondPins)) {
+      stringBuilder
+        .append(SPARE_SYMBOL);
+      return stringBuilder.toString();
+    }
+    stringBuilder.append(secondPins.show());
+    return stringBuilder.toString();
   }
 }

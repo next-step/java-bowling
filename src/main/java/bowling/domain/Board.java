@@ -1,38 +1,27 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Round;
+import bowling.domain.frame.PlayerBoard;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
   private static final int FIRST_ROUND = 1;
-  private static final int ROUND_ADDING_NUMBER = 1;
 
-  private final List<Round> rounds;
-  private int roundNumber;
+  private final List<PlayerBoard> playerBoards;
+  private final int roundNumber;
 
   public Board() {
-    rounds = new ArrayList<>();
+    playerBoards = new ArrayList<>();
     roundNumber = FIRST_ROUND;
   }
 
-  public void makeFirstFrame(Round round) {
-    round.add(Frame.of(roundNumber));
-  }
-
-  public void addingFrame() {
-    roundNumber += ROUND_ADDING_NUMBER;
-    rounds.stream().forEach(round -> round.add(round.tail().makeNextRound()));
-  }
-
   public int size() {
-    return rounds.size();
+    return playerBoards.size();
   }
 
-  public List<Round> rounds() {
-    return rounds;
+  public List<PlayerBoard> rounds() {
+    return playerBoards;
   }
 
   public int runningFrame() {
@@ -40,22 +29,13 @@ public class Board {
   }
 
   public void addRound(Player player) {
-    Round round = new Round(player);
-    makeFirstFrame(round);
-    rounds.add(round);
-  }
-
-  public boolean checkCurrentFrameDone() {
-    long frameFinishedRounds = rounds.stream().filter(round -> round.checkCurrentRoundFinished()).count();
-    long roundsSize = size();
-    return frameFinishedRounds == roundsSize;
+    PlayerBoard playerBoard = new PlayerBoard(player);
+    playerBoards.add(playerBoard);
   }
 
   public boolean checkFinished() {
-    long finishedCount = rounds.stream()
-      .filter(round -> round.checkFinished())
-      .count();
-    long fullSize = rounds.size();
+    long finishedCount = playerBoards.stream().filter(playerBoard -> playerBoard.checkFinished()).count();
+    long fullSize = playerBoards.size();
     return finishedCount == fullSize;
   }
 }

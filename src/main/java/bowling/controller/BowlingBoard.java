@@ -3,18 +3,15 @@ package bowling.controller;
 import bowling.domain.Board;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.Round;
+import bowling.domain.frame.PlayerBoard;
 import bowling.domain.turn.FallenPins;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingBoard {
-  private static final int FIRST_ROUND = 1;
-
   private final InputView inputView;
   private final ResultView resultView;
   private final Board board;
-
 
   public BowlingBoard() {
     inputView = new InputView();
@@ -35,24 +32,15 @@ public class BowlingBoard {
   }
 
   private void playRound(Board board) {
-    checkAndAddingFrame();
-    for (Round round : board.rounds()) {
-      playFrame(round);
+    for (PlayerBoard playerBoard : board.rounds()) {
+      playFrame(playerBoard);
     }
   }
 
-  private void playFrame(Round round) {
-    Frame tailFrame = round.tail();
-    if (!tailFrame.checkFinished()) {
-      int fallenPins = inputView.setupPins(board.runningFrame());
-      round.addNewBall(new FallenPins(fallenPins));
-      resultView.printBoard(round);
-    }
-  }
-
-  private void checkAndAddingFrame() {
-    if (board.checkCurrentFrameDone()) {
-      board.addingFrame();
-    }
+  private void playFrame(PlayerBoard playerBoard) {
+    Frame currentFrame = playerBoard.currentFrame();
+    int fallenPins = inputView.setupPins(currentFrame.round());
+    playerBoard.addNewBall(new FallenPins(fallenPins));
+    resultView.printBoard(playerBoard);
   }
 }
