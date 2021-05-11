@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
-import bowling.domain.exception.IllegalPointException;
-import org.junit.Before;
+import bowling.exception.IllegalPointException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ class StartTest {
 
     @BeforeEach
     void init() {
-        start = new Start();
+        start = Start.createOf();
     }
 
     @DisplayName("볼링핀의 갯수 Validate 테스트")

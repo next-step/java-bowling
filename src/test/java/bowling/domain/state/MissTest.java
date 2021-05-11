@@ -1,8 +1,7 @@
 package bowling.domain.state;
 
-import bowling.domain.exception.IllegalPointException;
+import bowling.exception.IllegalPointException;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

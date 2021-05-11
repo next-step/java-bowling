@@ -1,10 +1,9 @@
 package bowling.domain.state;
 
-import bowling.domain.exception.IllegalPointException;
+import bowling.exception.IllegalPointException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,15 +24,6 @@ class ReadyTest {
         PitchState next = ready.next(4);
 
         assertTrue(next instanceof Miss);
-    }
-
-    @DisplayName("next가 Strike일 경우 테스트")
-    @Test
-    void nextStrikeTest() {
-        Ready ready = new Ready(0);
-        PitchState next = ready.next(10);
-
-        assertTrue(next instanceof Strike);
     }
 
     @DisplayName("next가 Spare일 경우 테스트")
