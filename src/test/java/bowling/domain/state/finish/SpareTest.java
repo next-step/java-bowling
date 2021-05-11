@@ -147,7 +147,7 @@ class SpareTest {
         String actual = spare.description();
 
         // given
-        assertThat(actual).isEqualTo(firstPins.count()+"|/");
+        assertThat(actual).isEqualTo(firstPins.count() + "|/");
     }
 
     @DisplayName("Spare 인스턴스가 gutter 를 알맞게 표기하는지 테스트")

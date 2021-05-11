@@ -57,7 +57,7 @@ public final class NormalFrame extends Frame {
 
     @Override
     public final Score calculateAdditionalScore(final Score beforeScore) {
-        if(beforeScore.isFinish()) {
+        if (beforeScore.isFinish()) {
             return beforeScore;
         }
         return state.calculateAdditionalScore(beforeScore);

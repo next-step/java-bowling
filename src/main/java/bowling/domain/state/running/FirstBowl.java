@@ -18,7 +18,7 @@ public final class FirstBowl extends Running {
 
     private final Pins firstBowl;
 
-    public static final State from(Pins firstBowl) {
+    public static final State from(final Pins firstBowl) {
         return new FirstBowl(firstBowl);
     }
 
@@ -42,18 +42,18 @@ public final class FirstBowl extends Running {
 
     @Override
     public final State bowl(final Pins secondBowl) {
-        if(firstBowl.isSpare(secondBowl.count())){
+        if (firstBowl.isSpare(secondBowl.count())) {
             return Spare.of(firstBowl, secondBowl);
         }
-        if(firstBowl.isMiss(secondBowl.count())) {
+        if (firstBowl.isMiss(secondBowl.count())) {
             return Miss.of(firstBowl, secondBowl);
         }
         throw new InvalidPinsSizeException();
     }
 
     @Override
-    public final Score calculateAdditionalScore(Score beforeScore) {
-        if(beforeScore.isFinish()){
+    public final Score calculateAdditionalScore(final Score beforeScore) {
+        if (beforeScore.isFinish()) {
             return beforeScore;
         }
         return beforeScore.addBonusScore(firstBowl.count());

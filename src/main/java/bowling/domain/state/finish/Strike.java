@@ -19,7 +19,7 @@ public final class Strike extends Finish {
     }
 
     private final void validateStrike() {
-        if(!pins.isStrike()) {
+        if (!pins.isStrike()) {
             throw new InvalidPinsSizeException();
         }
     }

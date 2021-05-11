@@ -30,7 +30,7 @@ public final class Ready extends Running {
     }
 
     @Override
-    public final Score calculateAdditionalScore(Score beforeScore) {
+    public final Score calculateAdditionalScore(final Score beforeScore) {
         return Score.unavailable();
     }
 
