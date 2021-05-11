@@ -28,4 +28,10 @@ public final class Scores {
     public final Stream<Score> stream() {
         return scores.stream();
     }
+
+    public final int sum() {
+        return scores.stream()
+                .mapToInt(Score::score)
+                .sum();
+    }
 }
