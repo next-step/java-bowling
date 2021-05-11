@@ -31,12 +31,12 @@ public final class ResultView {
         scoreboardBuilder.append(SCORE_BOARD_HEADER);
         scoreboardBuilder.append(nameFormat(player.name()));
 
-        Frames frames = player.scoreBoard();
-        IntStream.range(NORMAL_FRAME_START_INDEX, LAST_FRAME_INDEX)
-                .mapToObj(index -> frames.get(index))
-                .map(Frame::description)
-                .forEach(scoreboardBuilder::append);
-        System.out.println(scoreboardBuilder);
+//        Frames frames = player.scoreBoard();
+//        IntStream.range(NORMAL_FRAME_START_INDEX, LAST_FRAME_INDEX)
+//                .mapToObj(index -> frames.get(index))
+//                .map(Frame::description)
+//                .forEach(scoreboardBuilder::append);
+//        System.out.println(scoreboardBuilder);
     }
 
     private String nameFormat(String sentence) {
