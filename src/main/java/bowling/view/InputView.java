@@ -24,8 +24,8 @@ public final class InputView {
         return SCANNER.nextLine();
     }
 
-    public final int InputHitCountByConsole(final int index) {
-        System.out.println(String.format(INPUT_HIT_COUNT_MESSAGE, index));
+    public final int InputHitCountByConsole(final int sequence) {
+        System.out.println(String.format(INPUT_HIT_COUNT_MESSAGE, sequence));
         return valueOf(SCANNER.nextLine());
     }
 
