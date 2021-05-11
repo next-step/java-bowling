@@ -1,12 +1,10 @@
 package bowling.domain.player;
 
 import bowling.domain.frame.Frames;
-import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 import bowling.domain.state.Pins;
 import bowling.exception.NameNullPointerException;
 
-import java.util.List;
 import java.util.Objects;
 
 public final class Player {
