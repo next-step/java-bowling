@@ -1,5 +1,6 @@
 package bowling.domain.player;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.exception.NameNullPointerException;
 import org.junit.jupiter.api.DisplayName;
@@ -15,13 +16,19 @@ class PlayerTest {
     @Test
     void 생성() {
         // given
-        Name name = Name.valueOf("kwj");
+        String stringName = "kwj";
+        Name name = Name.valueOf(stringName);
 
         // when
-        Player player = Player.from(name);
+        Player firstPlayer = Player.from(stringName);
+        Player secondPlayer = Player.from(name);
 
         // then
-        assertThat(player).isNotNull();
+        assertAll(
+                () -> assertThat(firstPlayer).isNotNull(),
+                () -> assertThat(secondPlayer).isNotNull()
+        );
+
     }
 
     @DisplayName("Player 인스턴스 생성할 때 null 입력시 예외처리 테스트")
@@ -59,7 +66,7 @@ class PlayerTest {
         // when
         Player player = Player.from(name);
         for (int i = 1; i <= 12; i++) {
-            player.playBowl(Pins.full());
+            player.bowl(Pins.full());
         }
 
         // then
@@ -79,7 +86,6 @@ class PlayerTest {
         assertThat(player.sequence()).isEqualTo(1);
     }
 
-
     @DisplayName("Player 인스턴스가 이름을 반환하는 기능 테스트")
     @Test
     void 반환_이름() {
@@ -92,5 +98,47 @@ class PlayerTest {
 
         // then
         assertThat(player.name()).isEqualTo(expected);
+    }
+
+    @DisplayName("Player 인스턴스가 자신의 점수 목록을 반환하는 기능 테스트")
+    @Test
+    void 반환_점수_목록() {
+        // given
+        String expected = "kwj";
+        Name name = Name.valueOf(expected);
+
+        // when
+        Player player = Player.from(name);
+
+        // then
+        assertThat(player.name()).isEqualTo(expected);
+    }
+
+    @DisplayName("Frames 인스턴스가 프레임별 점수를 리스트를 반환하는지 테스트")
+    @Test
+    void 반환_scores() {
+        // given
+        Player firstPlayer = Player.from("first");
+        Player secondPlayer = Player.from("second");
+        Player thirdPlayer = Player.from("thid");
+
+        // when
+        while (!firstPlayer.isFinish()) {
+            firstPlayer.bowl(Pins.valueOf(1));
+        }
+        while (!secondPlayer.isFinish()) {
+            secondPlayer.bowl(Pins.valueOf(5));
+        }
+        while (!thirdPlayer.isFinish()) {
+            thirdPlayer.bowl(Pins.valueOf(10));
+        }
+
+        // when
+        assertAll(
+                () -> assertThat(firstPlayer.scores().stream().mapToInt(Score::score).sum()).isEqualTo(20),
+                () -> assertThat(secondPlayer.scores().stream().mapToInt(Score::score).sum()).isEqualTo(150),
+                () -> assertThat(thirdFrames.scores().stream().mapToInt(Score::score).sum()).isEqualTo(300)
+        );
+
     }
 }

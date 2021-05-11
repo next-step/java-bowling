@@ -11,6 +11,10 @@ public final class Player {
     private final Name name;
     private final Frames frames;
 
+    public static final Player from(final String name) {
+        return from(Name.valueOf(name));
+    }
+
     public static final Player from(final Name name) {
         return new Player(name);
     }
@@ -31,7 +35,7 @@ public final class Player {
         return frames.isFinish();
     }
 
-    public final void playBowl(final Pins fallPins) {
+    public final void bowl(final Pins fallPins) {
         frames.bowl(fallPins);
     }
 
