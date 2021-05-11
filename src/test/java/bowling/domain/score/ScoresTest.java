@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.exception.ScoreListNullPointerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ScoresTest {
 
@@ -32,8 +32,8 @@ class ScoresTest {
         List<Score> scoreList = null;
 
         // when and then
-        assertThatThrownBy(()->Scores.of(scoreList))
+        assertThatThrownBy(() -> Scores.of(scoreList))
                 .isInstanceOf(ScoreListNullPointerException.class)
-                .hasMessage("List<Score> 가 null 입니다.");
+                .hasMessage("List<Score> 인스턴스가 null 입니다.");
     }
 }
