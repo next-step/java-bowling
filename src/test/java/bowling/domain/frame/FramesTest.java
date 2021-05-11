@@ -97,12 +97,12 @@ class FramesTest {
         while (!thirdFrames.isFinish()) {
             thirdFrames.bowl(Pins.valueOf(10));
         }
-        
+
         // when
         assertAll(
-                () -> assertThat(firstFrames.scores().stream().mapToInt(Score::score).sum()).isEqualTo(20),
-                () -> assertThat(secondFrames.scores().stream().mapToInt(Score::score).sum()).isEqualTo(150),
-                () -> assertThat(thirdFrames.scores().stream().mapToInt(Score::score).sum()).isEqualTo(300)
+                () -> assertThat(firstFrames.scores().sum()).isEqualTo(20),
+                () -> assertThat(secondFrames.scores().sum()).isEqualTo(150),
+                () -> assertThat(thirdFrames.scores().sum()).isEqualTo(300)
         );
 
     }
