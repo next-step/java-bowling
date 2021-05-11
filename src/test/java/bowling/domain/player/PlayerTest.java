@@ -118,9 +118,9 @@ class PlayerTest {
     @Test
     void 반환_scores() {
         // given
-        Player firstPlayer = Player.from("first");
-        Player secondPlayer = Player.from("second");
-        Player thirdPlayer = Player.from("thid");
+        Player firstPlayer = Player.from("one");
+        Player secondPlayer = Player.from("two");
+        Player thirdPlayer = Player.from("thr");
 
         // when
         while (!firstPlayer.isFinish()) {
@@ -137,7 +137,7 @@ class PlayerTest {
         assertAll(
                 () -> assertThat(firstPlayer.scores().stream().mapToInt(Score::score).sum()).isEqualTo(20),
                 () -> assertThat(secondPlayer.scores().stream().mapToInt(Score::score).sum()).isEqualTo(150),
-                () -> assertThat(thirdFrames.scores().stream().mapToInt(Score::score).sum()).isEqualTo(300)
+                () -> assertThat(thirdPlayer.scores().stream().mapToInt(Score::score).sum()).isEqualTo(300)
         );
 
     }
