@@ -34,4 +34,8 @@ public final class Player {
     public final void playBowl(final Pins fallPins) {
         frames.bowl(fallPins);
     }
+
+    public final int sequence() {
+        return frames.sequence();
+    }
 }
