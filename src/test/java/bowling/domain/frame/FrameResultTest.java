@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Score;
 import bowling.exception.ScoreListNullPointerException;
+import bowling.exception.ScoreNullPointerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
