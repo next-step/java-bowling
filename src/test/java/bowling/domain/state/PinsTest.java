@@ -120,6 +120,24 @@ class PinsTest {
         );
     }
 
+    @DisplayName("Pins 인스턴스가 맞은 값이 Strike인지 테스트")
+    @Test
+    void 반환_isStrike() {
+        // given
+        Pins strike = Pins.full();
+        Pins spare = Pins.valueOf(9);
+
+        // when
+        boolean firstActual = strike.isStrike();
+        boolean secondActual = spare.isStrike();
+
+        // then
+        assertAll(
+                () -> assertThat(firstActual).isTrue(),
+                () -> assertThat(secondActual).isFalse()
+        );
+    }
+
 
     @DisplayName("Pins 인스턴스가 맞은 값이 스페어인지 테스트")
     @Test

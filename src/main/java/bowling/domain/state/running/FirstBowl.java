@@ -13,6 +13,7 @@ import java.util.Objects;
 
 public final class FirstBowl extends Running {
 
+    private static final String GUTTER = "-";
     private static final int EMPTY_VALUE = 0;
 
     private final Pins firstBowl;
@@ -60,6 +61,13 @@ public final class FirstBowl extends Running {
 
     @Override
     public final String description() {
-        return null;
+        return toMark(firstBowl);
+    }
+
+    private final String toMark(final Pins pins) {
+        if (pins.isEmpty()) {
+            return GUTTER;
+        }
+        return String.valueOf(pins.count());
     }
 }

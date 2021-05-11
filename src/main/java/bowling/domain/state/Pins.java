@@ -61,6 +61,10 @@ public final class Pins {
         return addExact(count, fallCount) == FULL;
     }
 
+    public final boolean isStrike() {
+        return count == FULL;
+    }
+
     public final boolean isEmpty() {
         return count == EMPTY;
     }
@@ -68,5 +72,6 @@ public final class Pins {
     public final int count() {
         return count;
     }
+
 
 }

@@ -134,4 +134,34 @@ class SpareTest {
         );
     }
 
+    @DisplayName("Spare 인스턴스가 알맞는 표기 정보를 반환하는지 테스트")
+    @Test
+    void 반환_description_일반적인_경우() {
+        // given
+        Pins zeroPins = Pins.valueOf(0);
+        Pins firstPins = Pins.valueOf(1);
+        Pins secondPins = Pins.valueOf(9);
+
+        // when
+        State spare = Spare.of(firstPins, secondPins);
+        String actual = spare.description();
+
+        // given
+        assertThat(actual).isEqualTo(firstPins.count()+"|/");
+    }
+
+    @DisplayName("Spare 인스턴스가 gutter 를 알맞게 표기하는지 테스트")
+    @Test
+    void 반환_description_gutter_있는_경우() {
+        // given
+        Pins zeroPins = Pins.valueOf(0);
+        Pins secondPins = Pins.valueOf(10);
+
+        // when
+        State spare = Spare.of(zeroPins, secondPins);
+        String actual = spare.description();
+
+        // then
+        assertThat(actual).isEqualTo("-|/");
+    }
 }

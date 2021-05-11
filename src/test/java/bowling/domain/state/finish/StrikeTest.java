@@ -86,4 +86,17 @@ class StrikeTest {
                 () -> assertThat(actual.score()).isEqualTo(beforeScore.score() + strike.score().score())
         );
     }
+
+    @DisplayName("Strike 인스턴스가 알맞는 표기 정보를 반환하는지 테스트")
+    @Test
+    void 반환_description() {
+        // given
+        State strike = Strike.initialize();
+
+        // when
+        String actual = strike.description();
+
+        // then
+        assertThat(actual).isEqualTo("X");
+    }
 }

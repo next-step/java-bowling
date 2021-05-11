@@ -12,6 +12,9 @@ import static java.lang.Math.addExact;
 
 public final class Miss extends Finish {
 
+    private static final String DESCRIPTION = "%s|%s";
+    private static final String GUTTER = "-";
+
     private final Pins firstPins;
     private final Pins secondPins;
 
@@ -49,7 +52,7 @@ public final class Miss extends Finish {
     }
 
     private final int sum() {
-        return addExact(firstPins.count(), secondPins.count());
+        return addExact(firstCount(), secondCount());
     }
 
     @Override
@@ -57,15 +60,32 @@ public final class Miss extends Finish {
         if (beforeScore.isFinish()) {
             return beforeScore;
         }
-        Score addedScore = beforeScore.addBonusScore(firstPins.count());
+        Score addedScore = beforeScore.addBonusScore(firstCount());
         if (addedScore.isFinish()) {
             return addedScore;
         }
-        return addedScore.addBonusScore(secondPins.count());
+        return addedScore.addBonusScore(secondCount());
+    }
+
+    private final int firstCount() {
+        return firstPins.count();
+    }
+
+    private final int secondCount() {
+        return secondPins.count();
     }
 
     @Override
     public final String description() {
-        return null;
+        validateSize(firstPins, secondPins);
+        return String.format(DESCRIPTION, toMark(firstPins), toMark(secondPins));
     }
+
+    private final String toMark(final Pins pins) {
+        if (pins.isEmpty()) {
+            return GUTTER;
+        }
+        return String.valueOf(pins.count());
+    }
+
 }

@@ -1,17 +1,27 @@
 package bowling.domain.state.finish;
 
 import bowling.domain.score.Score;
+import bowling.domain.state.Pins;
 import bowling.domain.state.State;
+import bowling.exception.InvalidPinsSizeException;
 
 public final class Strike extends Finish {
 
-    private static final int FULL = 10;
+    private static final String STRIKE = "X";
+    private final Pins pins;
 
     public static final State initialize() {
         return new Strike();
     }
 
     private Strike() {
+        this.pins = Pins.full();
+    }
+
+    private final void validateStrike() {
+        if(!pins.isStrike()) {
+            throw new InvalidPinsSizeException();
+        }
     }
 
     @Override
@@ -29,11 +39,13 @@ public final class Strike extends Finish {
         if (beforeScore.isFinish()) {
             return beforeScore;
         }
-        return beforeScore.addBonusScore(FULL);
+        return beforeScore.addBonusScore(pins.count());
     }
 
     @Override
     public final String description() {
-        return null;
+        validateStrike();
+        return STRIKE;
     }
+
 }

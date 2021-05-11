@@ -133,4 +133,34 @@ class MissTest {
         );
     }
 
+    @DisplayName("Miss 인스턴스가 점수를 알맞게 표기하는지 테스트")
+    @Test
+    void 반환_description_일반적인_경우() {
+        // given
+        Pins firstPins = Pins.valueOf(1);
+        Pins secondPins = Pins.valueOf(8);
+
+        // when
+        State miss = Miss.of(firstPins, secondPins);
+        String actual = miss.description();
+
+        // then
+        assertThat(actual).isEqualTo("1|8");
+    }
+
+    @DisplayName("Miss 인스턴스가 gutter 를 알맞게 표기하는지 테스트")
+    @Test
+    void 반환_description_gutter_있는_경우() {
+        // given
+        Pins zeroPins = Pins.valueOf(0);
+        Pins secondPins = Pins.valueOf(0);
+
+        // when
+        State miss = Miss.of(zeroPins, secondPins);
+        String actual = miss.description();
+
+        // then
+        assertThat(actual).isEqualTo("-|-");
+    }
+
 }

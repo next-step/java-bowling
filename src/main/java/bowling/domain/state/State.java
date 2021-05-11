@@ -14,4 +14,5 @@ public interface State {
     Score calculateAdditionalScore(Score beforeScore);
 
     String description();
+
 }

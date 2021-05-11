@@ -145,4 +145,22 @@ class FirstBowlTest {
         );
     }
 
+    @DisplayName("FirstBowl 인스턴스가 점수를 알맞게 표기하는지 테스트")
+    @Test
+    void 반환_description() {
+        // given
+        Pins zeroPins = Pins.valueOf(0);
+        Pins generalPins = Pins.valueOf(9);
+
+        // when
+        State zeroFirstBowl = FirstBowl.from(zeroPins);
+        State generalFirstBowl = FirstBowl.from(generalPins);
+
+        // then
+        assertAll(
+                () -> assertThat(zeroFirstBowl.description()).isEqualTo("-"),
+                () -> assertThat(generalFirstBowl.description()).isEqualTo("9")
+        );
+    }
+
 }
