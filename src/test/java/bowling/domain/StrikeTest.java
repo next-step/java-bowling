@@ -13,7 +13,7 @@ public class StrikeTest {
     @Test
     public void play_strike() {
         Pitch pitch = new Strike();
-        pitch = pitch.play(KnockedPins.from(10));
+        pitch = pitch.play(10);
 
         assertThat(pitch).isInstanceOf(Strike.class);
     }
@@ -21,7 +21,7 @@ public class StrikeTest {
     @Test
     public void play_normal() {
         Pitch pitch = new Strike();
-        pitch = pitch.play(KnockedPins.from(6));
+        pitch = pitch.play(6);
 
         assertThat(pitch).isInstanceOf(Normal.class);
         assertThat(pitch.knockedPins()).isEqualTo(KnockedPins.from(6));

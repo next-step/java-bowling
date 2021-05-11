@@ -11,7 +11,7 @@ public class KnockedPinsTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 10})
     public void count(final int count) {
-        assertThat(KnockedPins.from(count).count()).isEqualTo(count);
+        assertThat(KnockedPins.from(count)).isEqualTo(KnockedPins.from(count));
     }
 
     @Test

@@ -9,6 +9,11 @@ public final class Strike implements Pitch {
     }
 
     @Override
+    public Pitch play(final int knockedPinsCount) {
+        return play(KnockedPins.from(knockedPinsCount));
+    }
+
+    @Override
     public Pitch play(final KnockedPins knockedPins) {
         if (knockedPins.count() == STRIKE_PINS_COUNT) {
             return new Strike();

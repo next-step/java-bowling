@@ -8,6 +8,10 @@ public final class Spare implements Pitch {
 
     private final KnockedPins knockedPins;
 
+    public Spare(final int knockedPinsCount) {
+        this(KnockedPins.from(knockedPinsCount));
+    }
+
     public Spare(final KnockedPins knockedPins) {
         validateMinKnockedPins(knockedPins);
         this.knockedPins = knockedPins;
@@ -22,6 +26,11 @@ public final class Spare implements Pitch {
     @Override
     public KnockedPins knockedPins() {
         return knockedPins;
+    }
+
+    @Override
+    public Pitch play(final int knockedPinsCount) {
+        return play(KnockedPins.from(knockedPinsCount));
     }
 
     @Override

@@ -8,6 +8,10 @@ public final class Normal implements Pitch {
 
     private final KnockedPins knockedPins;
 
+    public Normal(final int knockedPinsCount) {
+        this(KnockedPins.from(knockedPinsCount));
+    }
+
     public Normal(final KnockedPins knockedPins) {
         validateMaxKnockedPins(knockedPins);
         this.knockedPins = knockedPins;
@@ -22,6 +26,11 @@ public final class Normal implements Pitch {
     @Override
     public KnockedPins knockedPins() {
         return knockedPins;
+    }
+
+    @Override
+    public Pitch play(final int knockedPinsCount) {
+        return play(KnockedPins.from(knockedPinsCount));
     }
 
     @Override
