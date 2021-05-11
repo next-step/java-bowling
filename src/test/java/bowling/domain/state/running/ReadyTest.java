@@ -3,6 +3,7 @@ package bowling.domain.state.running;
 import bowling.domain.state.Pins;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Strike;
+import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -54,6 +55,19 @@ class ReadyTest {
                 () -> assertThat(actual).isNotNull(),
                 () -> assertThat(actual).isInstanceOf(FirstBowl.class)
         );
+    }
+
+    @DisplayName("Ready 인스턴스가 알맞는 표기 정보를 반환하는지 테스트")
+    @Test
+    void 반환_description() {
+        // given
+        State ready = Ready.initialize();
+
+        // when
+        String actual = ready.description();
+
+        // then
+        assertThat(actual).isEqualTo(Strings.EMPTY);
     }
 
 }

@@ -4,6 +4,7 @@ import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Strike;
+import org.apache.logging.log4j.util.Strings;
 
 public final class Ready extends Running {
 
@@ -35,6 +36,6 @@ public final class Ready extends Running {
 
     @Override
     public final String description() {
-        return null;
+        return Strings.EMPTY;
     }
 }
