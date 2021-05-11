@@ -1,6 +1,7 @@
 package bowling.domain.player;
 
 import bowling.domain.frame.Frames;
+import bowling.domain.state.Pins;
 import bowling.exception.NameNullPointerException;
 
 import java.util.Objects;
@@ -28,5 +29,9 @@ public final class Player {
 
     public final boolean isFinish() {
         return frames.isFinish();
+    }
+
+    public final void playBowl(final Pins fallPins) {
+        frames.bowl(fallPins);
     }
 }

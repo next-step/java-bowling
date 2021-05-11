@@ -1,5 +1,6 @@
 package bowling.domain.player;
 
+import bowling.domain.state.Pins;
 import bowling.exception.NameNullPointerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,6 +48,18 @@ class PlayerTest {
 
         // then
         assertThat(actual).isFalse();
+    }
+
+    @DisplayName("Player 인스턴스가 게임을 시작하는 기능 테스트")
+    @Test
+    void 기능_투구() {
+        // given
+        Name name = Name.valueOf("kwj");
+
+        // when
+
+        // then
+        assertThat(player.isFinish()).isTrue();
     }
 
 }
