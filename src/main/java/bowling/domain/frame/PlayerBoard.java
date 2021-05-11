@@ -24,6 +24,8 @@ public class PlayerBoard {
     return currentFrame;
   }
 
+
+
   public void addNewBall(FallenPins pins) {
     currentFrame = currentFrame.bowl(pins);
   }
@@ -34,5 +36,9 @@ public class PlayerBoard {
 
   public Frame firstFrame() {
     return firstFrame;
+  }
+
+  public boolean checkCurrentFrameFinished() {
+    return currentFrame.checkFinished();
   }
 }
