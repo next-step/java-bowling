@@ -66,4 +66,17 @@ class PlayerTest {
         assertThat(player.isFinish()).isTrue();
     }
 
+    @DisplayName("Player 인스턴스가 현재 투구 순서(라운드)를 반환하는 기능 테스트")
+    @Test
+    void 반환_현재_순서() {
+        // given
+        Name name = Name.valueOf("kwj");
+
+        // when
+        Player player = Player.from(name);
+
+        // then
+        assertThat(player.sequence()).isEqualTo(1);
+    }
+
 }
