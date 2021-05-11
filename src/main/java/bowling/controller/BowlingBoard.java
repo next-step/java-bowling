@@ -50,7 +50,7 @@ public class BowlingBoard {
   }
 
   private void playFrame(PlayerBoard playerBoard, int round) {
-    while(!playerBoard.checkFinished() && playerBoard.round() == round){
+    while(playerBoard.checkTargetRoundFinished(round)){
       int fallenPins = inputView.setupPins(playerBoard.round());
       playerBoard.addNewBall(new FallenPins(fallenPins));
       printBoards();
