@@ -1,8 +1,7 @@
 package bowling.domain.player;
 
-import bowling.domain.player.Name;
 import bowling.exception.InvalidNameSizeException;
-import bowling.exception.NameIncludeVariableLanguage;
+import bowling.exception.NameIncludeVariableLanguageException;
 import bowling.exception.StringNullPointerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +44,7 @@ class NameTest {
 
         // when and then
         assertThatThrownBy(() -> Name.valueOf(stringName))
-                .isInstanceOf(NameIncludeVariableLanguage.class)
+                .isInstanceOf(NameIncludeVariableLanguageException.class)
                 .hasMessage("이름에 영어 이외에 다른 언어들이 섞여있습니다.");
     }
 

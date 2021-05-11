@@ -1,7 +1,7 @@
 package bowling.domain.player;
 
 import bowling.exception.InvalidNameSizeException;
-import bowling.exception.NameIncludeVariableLanguage;
+import bowling.exception.NameIncludeVariableLanguageException;
 import bowling.exception.StringNullPointerException;
 import org.apache.logging.log4j.util.Strings;
 
@@ -39,7 +39,7 @@ public final class Name {
 
     private final void validateAlphabet(final String name) {
         if (!replaceSpecialCharacters(name).equals(name)) {
-            throw new NameIncludeVariableLanguage();
+            throw new NameIncludeVariableLanguageException();
         }
     }
 
