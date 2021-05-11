@@ -1,11 +1,12 @@
-package bowling.domain;
+package bowling;
 
 import bowling.controller.BowlingController;
-import bowling.domain.view.InputView;
+import bowling.domain.Player;
+import bowling.view.InputView;
 
 public class BowlingGame {
     public static void main(String[] args) {
-        Player player = new Player(InputView.getPlayer());
+        Player player = BowlingController.createPlayer();
         BowlingController.start(player);
     }
 }
