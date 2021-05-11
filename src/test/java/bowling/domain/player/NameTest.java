@@ -75,6 +75,7 @@ class NameTest {
         // when
         Name name = Name.valueOf(expected);
 
+        // then
         assertThat(name.name()).isEqualTo(expected);
     }
 
