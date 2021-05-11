@@ -35,4 +35,19 @@ class PlayerTest {
                 .hasMessage("Name 인스턴스가 null 입니다.");
     }
 
+    @DisplayName("Player 인스턴스가 종료 여부를 반환하는 기능 테스트")
+    @Test
+    void 종료_여부() {
+        // given
+        Name name = Name.valueOf("kwj");
+        int round = 1;
+
+        // when
+        Player player = Player.from(name);
+        boolean actual = player.isFinish(round);
+
+        // then
+        assertThat(actual).isFalse();
+    }
+
 }
