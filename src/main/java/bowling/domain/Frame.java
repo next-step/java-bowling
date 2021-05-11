@@ -18,6 +18,8 @@ public abstract class Frame {
 
     public abstract boolean playing();
 
+    public abstract Frame play(int knockedPinsCount);
+
     public abstract Frame play(KnockedPins knockedPins);
 
     public abstract Frame next();

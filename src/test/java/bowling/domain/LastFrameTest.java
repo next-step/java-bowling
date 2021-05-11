@@ -18,10 +18,10 @@ public class LastFrameTest {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             final Frame frame = LastFrame.init();
 
-            frame.play(KnockedPins.from(10))
-                    .play(KnockedPins.from(10))
-                    .play(KnockedPins.from(10))
-                    .play(KnockedPins.from(10));
+            frame.play(10)
+                    .play(10)
+                    .play(10)
+                    .play(10);
         });
     }
 
@@ -30,9 +30,9 @@ public class LastFrameTest {
     public void invalid_투구_2개_초과() {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             final Frame frame = LastFrame.init();
-            frame.play(KnockedPins.from(3))
-                    .play(KnockedPins.from(3))
-                    .play(KnockedPins.from(3));
+            frame.play(3)
+                    .play(3)
+                    .play(3);
         });
     }
 
@@ -41,10 +41,10 @@ public class LastFrameTest {
         Frame frame = LastFrame.init();
         assertThat(frame.playing()).isTrue();
 
-        frame = frame.play(KnockedPins.from(7));
+        frame = frame.play(7);
         assertThat(frame.playing()).isTrue();
 
-        frame = frame.play(KnockedPins.from(2));
+        frame = frame.play(2);
         assertThat(frame.playing()).isFalse();
     }
 
@@ -53,13 +53,13 @@ public class LastFrameTest {
         Frame frame = LastFrame.init();
         assertThat(frame.playing()).isTrue();
 
-        frame = frame.play(KnockedPins.from(10));
+        frame = frame.play(10);
         assertThat(frame.playing()).isTrue();
 
-        frame = frame.play(KnockedPins.from(7));
+        frame = frame.play(7);
         assertThat(frame.playing()).isTrue();
 
-        frame = frame.play(KnockedPins.from(2));
+        frame = frame.play(2);
         assertThat(frame.playing()).isFalse();
     }
 
@@ -68,13 +68,13 @@ public class LastFrameTest {
         Frame frame = LastFrame.init();
         assertThat(frame.playing()).isTrue();
 
-        frame = frame.play(KnockedPins.from(7));
+        frame = frame.play(7);
         assertThat(frame.playing()).isTrue();
 
-        frame = frame.play(KnockedPins.from(3));
+        frame = frame.play(3);
         assertThat(frame.playing()).isTrue();
 
-        frame = frame.play(KnockedPins.from(10));
+        frame = frame.play(10);
         assertThat(frame.playing()).isFalse();
     }
 

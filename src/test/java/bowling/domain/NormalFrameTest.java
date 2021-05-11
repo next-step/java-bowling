@@ -17,9 +17,9 @@ public class NormalFrameTest {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             final Frame frame = NormalFrame.init();
 
-            frame.play(KnockedPins.from(3))
-                    .play(KnockedPins.from(3))
-                    .play(KnockedPins.from(3));
+            frame.play(3)
+                    .play(3)
+                    .play(3);
         });
     }
 
@@ -28,8 +28,8 @@ public class NormalFrameTest {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             final Frame frame = NormalFrame.init();
 
-            frame.play(KnockedPins.from(10))
-                    .play(KnockedPins.from(3));
+            frame.play(10)
+                    .play(3);
         });
     }
 
@@ -38,10 +38,10 @@ public class NormalFrameTest {
         Frame frame = NormalFrame.init();
         assertThat(frame.playing()).isTrue();
 
-        frame = frame.play(KnockedPins.from(7));
+        frame = frame.play(7);
         assertThat(frame.playing()).isTrue();
 
-        frame = frame.play(KnockedPins.from(2));
+        frame = frame.play(2);
         assertThat(frame.playing()).isFalse();
     }
 
@@ -50,7 +50,7 @@ public class NormalFrameTest {
         Frame frame = NormalFrame.init();
         assertThat(frame.playing()).isTrue();
 
-        frame = frame.play(KnockedPins.from(10));
+        frame = frame.play(10);
         assertThat(frame.playing()).isFalse();
     }
 

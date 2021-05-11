@@ -51,7 +51,7 @@ public final class Bowling {
     private static Frame playedFrame(KnockedPinsInput knockedPinsInput, FramesOutput framesOutput,
                                      List<Frame> frames, Frame frame, int frameIndex) {
         while (frame.playing()) {
-            frame = frame.play(KnockedPins.from(knockedPinsInput.count(frameIndex)));
+            frame = frame.play(knockedPinsInput.count(frameIndex));
 
             framesOutput.print(
                     Stream.concat(frames.stream(), Stream.of(frame))

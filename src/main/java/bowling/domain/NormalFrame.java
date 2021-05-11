@@ -20,6 +20,11 @@ public final class NormalFrame extends Frame {
     }
 
     @Override
+    public Frame play(final int knockedPinsCount) {
+        return play(KnockedPins.from(knockedPinsCount));
+    }
+
+    @Override
     public Frame play(final KnockedPins knockedPins) {
         validatePitchesFull();
         validateFirstStrike();
