@@ -83,6 +83,11 @@ public class NormalFrame implements Frame {
   }
 
   @Override
+  public boolean checkReady() {
+    return state instanceof Ready;
+  }
+
+  @Override
   public boolean checkFinished() {
     return state.isFinished();
   }

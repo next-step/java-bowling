@@ -88,6 +88,11 @@ public class FinalFrame implements Frame {
   }
 
   @Override
+  public boolean checkReady() {
+    return states.getFirst() instanceof Ready;
+  }
+
+  @Override
   public boolean checkFinished() {
     Score score;
     try {

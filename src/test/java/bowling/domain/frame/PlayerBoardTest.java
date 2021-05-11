@@ -10,12 +10,12 @@ import static org.assertj.core.api.Assertions.*;
 
 class PlayerBoardTest {
   @Test
-  @DisplayName("현재 프레임이 종료되었는지 체크")
+  @DisplayName("현재 프레임이 준비 상태인지 체크")
   void currentFrameFinishedCheckTest(){
     Player player = new Player("zfz");
     PlayerBoard playerBoard = new PlayerBoard(player);
 
     playerBoard.addNewBall(new FallenPins(10));
-    assertThat(playerBoard.checkCurrentFrameFinished()).isTrue();
+    assertThat(playerBoard.checkCurrentFrameReady()).isTrue();
   }
 }

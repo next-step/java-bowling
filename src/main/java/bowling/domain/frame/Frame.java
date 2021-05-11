@@ -6,6 +6,8 @@ import bowling.domain.turn.FallenPins;
 
 public interface Frame {
 
+  boolean checkReady();
+
   boolean checkFinished();
 
   String show();
