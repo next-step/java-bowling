@@ -562,7 +562,6 @@ class StatesTest {
                 () -> assertThat(states.calculateAdditionalScore(strike)).isInstanceOf(Score.class),
                 () -> assertThat(states.calculateAdditionalScore(strike).score()).isEqualTo(30)
         );
-
     }
 
 
