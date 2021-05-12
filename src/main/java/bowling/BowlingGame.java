@@ -1,7 +1,7 @@
 package bowling;
 
 import bowling.domain.HitNumber;
-import bowling.domain.Name;
+import bowling.domain.player.Name;
 import bowling.domain.frame.Frames;
 
 import static bowling.view.InputView.*;

@@ -1,6 +1,6 @@
 package bowling.util;
 
-import bowling.domain.Name;
+import bowling.domain.player.Name;
 import org.junit.jupiter.api.Test;
 
 import static bowling.domain.frame.FramesTest.lastFrames;

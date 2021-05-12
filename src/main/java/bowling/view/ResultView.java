@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Name;
+import bowling.domain.player.Name;
 import bowling.domain.Score;
 import bowling.domain.frame.Frames;
 

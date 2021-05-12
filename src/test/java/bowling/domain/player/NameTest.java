@@ -1,14 +1,14 @@
-package bowling.domain;
+package bowling.domain.player;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class NameTest {
     @Test
     void 플레이어는이름을지닌다() {
-        assertThat(Name.of("이름1")).isEqualTo(Name.of("이름1"));
+        Assertions.assertThat(Name.of("이름1")).isEqualTo(Name.of("이름1"));
     }
 
     @Test
