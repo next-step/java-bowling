@@ -6,7 +6,7 @@ import bowling.domain.state.State;
 import bowling.domain.state.States;
 import bowling.exception.NoActionBowlException;
 
-public final class FinalFrame extends Frame {
+public final class FinalFrame implements Frame {
 
     private final States states;
     private FinalRound finalRound;

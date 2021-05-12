@@ -6,7 +6,7 @@ import bowling.domain.state.State;
 
 import static java.lang.Math.addExact;
 
-public final class NormalFrame extends Frame {
+public final class NormalFrame implements Frame {
 
     private static final int INCREASE_UNIT = 1;
 

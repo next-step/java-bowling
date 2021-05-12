@@ -3,20 +3,20 @@ package bowling.domain.frame;
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 
-public abstract class Frame {
+public interface Frame {
 
-    public static final int START_SEQUENCE = 1;
-    public static final int LAST_SEQUENCE = 10;
+    int START_SEQUENCE = 1;
+    int LAST_SEQUENCE = 10;
 
-    public abstract Frame bowl(Pins fallPins);
+    Frame bowl(Pins fallPins);
 
-    public abstract boolean isFinish();
+    boolean isFinish();
 
-    public abstract Score score();
+    Score score();
 
-    public abstract int sequence();
+    int sequence();
 
-    public abstract Score calculateAdditionalScore(Score beforeScore);
+    Score calculateAdditionalScore(Score beforeScore);
 
-    public abstract String description();
+    String description();
 }
