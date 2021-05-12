@@ -42,36 +42,30 @@ public final class ResultView {
         scoreboardBuilder.append(frontFormat(player.name()));
 
         final Frames frames = player.frames();
-        IntStream.range(NORMAL_FRAME_START_INDEX, LAST_FRAME_INDEX)
-                .mapToObj(index -> frames.get(index))
-                .map(Frame::description)
-                .map(this::formatNormalFrame)
-                .forEach(scoreboardBuilder::append);
-        scoreboardBuilder.append(formatFinalFrame(frames.get(LAST_FRAME_INDEX).description()));
+        scoreboardBuilder.append(mapToNormalFrameStatus(frames));
+        scoreboardBuilder.append(mapToFinalFrameStatus(frames));
+
         scoreboardBuilder.append(frontFormat(Strings.EMPTY));
-
         final Scores scores = player.scores();
-        final List<String> scoreFrameList = getScoreFrameList(scores);
-        final String scoreFrame = getScoreFrame(scoreFrameList);
-        final String emptyScoreFrame = getEmptyScoreFrame(scoreFrameList);
-
-        scoreboardBuilder.append(scoreFrame);
-        scoreboardBuilder.append(emptyScoreFrame).append(NEWLINE);
+        final List<String> scoreFrameList = scoreFrameList(scores);
+        scoreboardBuilder.append(mapToScoreFrame(scoreFrameList));
+        scoreboardBuilder.append(mapToEmptyScoreFrame(scoreFrameList)).append(NEWLINE);
         System.out.println(scoreboardBuilder);
     }
 
-    private final String getScoreFrame(final List<String> scoreFrameList) {
-        return scoreFrameList.stream().collect(Collectors.joining());
-    }
-
-    private final String getEmptyScoreFrame(final List<String> scoreFrameList) {
-        return IntStream.range(scoreFrameList.size(), Frame.LAST_SEQUENCE)
-                .mapToObj(i -> Strings.EMPTY)
+    private final String mapToNormalFrameStatus(final Frames frames) {
+        return IntStream.range(NORMAL_FRAME_START_INDEX, LAST_FRAME_INDEX)
+                .mapToObj(frames::get)
+                .map(Frame::description)
                 .map(this::formatNormalFrame)
                 .collect(Collectors.joining());
     }
 
-    private final List<String> getScoreFrameList(final Scores scores) {
+    private final String mapToFinalFrameStatus(final Frames frames) {
+        return formatFinalFrame(frames.get(LAST_FRAME_INDEX).description());
+    }
+
+    private final List<String> scoreFrameList(final Scores scores) {
         return scores.stream()
                 .limit(scores.size())
                 .map(Score::score)
@@ -83,6 +77,17 @@ public final class ResultView {
 
     private final boolean filteringUnavailable(final int score) {
         return score != UN_AVAILABLE;
+    }
+
+    private final String mapToScoreFrame(final List<String> scoreFrameList) {
+        return scoreFrameList.stream().collect(Collectors.joining());
+    }
+
+    private final String mapToEmptyScoreFrame(final List<String> scoreFrameList) {
+        return IntStream.range(scoreFrameList.size(), Frame.LAST_SEQUENCE)
+                .mapToObj(i -> Strings.EMPTY)
+                .map(this::formatNormalFrame)
+                .collect(Collectors.joining());
     }
 
     private final String frontFormat(final String sentence) {

@@ -1,7 +1,6 @@
 package bowling;
 
 import bowling.domain.player.Player;
-import bowling.domain.state.Pins;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
