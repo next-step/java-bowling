@@ -2,6 +2,7 @@ package qna.domain;
 
 import org.junit.Before;
 import org.junit.Test;
+import qna.CannotDeleteException;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -12,34 +13,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AnswersTest {
     private Answer answer1;
     private Answer answer2;
-    private Answer answer3;
 
     @Before
     public void setUp() {
         answer1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         answer2 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents2");
-        answer3 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents3");
     }
 
     @Test
-    public void isOwner_참() {
+    public void delete() throws CannotDeleteException {
         final Answers answers = new Answers(Arrays.asList(answer1, answer2));
 
-        assertThat(answers.isOwner(UserTest.JAVAJIGI)).isTrue();
-    }
-
-    @Test
-    public void isOwner_거짓() {
-        final Answers answers = new Answers(Arrays.asList(answer1, answer2, answer3));
-
-        assertThat(answers.isOwner(UserTest.JAVAJIGI)).isFalse();
-    }
-
-    @Test
-    public void delete() {
-        final Answers answers = new Answers(Arrays.asList(answer1, answer2));
-
-        final List<DeleteHistory> deleteHistories = answers.delete();
+        final List<DeleteHistory> deleteHistories = answers.delete(UserTest.JAVAJIGI);
 
         verify(deleteHistories);
     }
