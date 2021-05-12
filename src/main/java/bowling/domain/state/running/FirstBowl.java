@@ -18,11 +18,7 @@ public final class FirstBowl extends Running {
 
     private final Pins firstBowl;
 
-    public static final State from(final Pins firstBowl) {
-        return new FirstBowl(firstBowl);
-    }
-
-    private FirstBowl(final Pins firstBowl) {
+    public FirstBowl(final Pins firstBowl) {
         validateNull(firstBowl);
         validateSize(firstBowl);
         this.firstBowl = firstBowl;
@@ -43,10 +39,10 @@ public final class FirstBowl extends Running {
     @Override
     public final State bowl(final Pins secondBowl) {
         if (firstBowl.isSpare(secondBowl.count())) {
-            return Spare.of(firstBowl, secondBowl);
+            return new Spare(firstBowl, secondBowl);
         }
         if (firstBowl.isMiss(secondBowl.count())) {
-            return Miss.of(firstBowl, secondBowl);
+            return new Miss(firstBowl, secondBowl);
         }
         throw new InvalidPinsSizeException();
     }

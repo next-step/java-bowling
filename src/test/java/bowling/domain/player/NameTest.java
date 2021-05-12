@@ -18,7 +18,7 @@ class NameTest {
         String stringName = "kwj";
 
         // when
-        Name name = Name.valueOf(stringName);
+        Name name = new Name(stringName);
 
         // then
         assertThat(name).isNotNull();
@@ -31,7 +31,7 @@ class NameTest {
         String stringName = null;
 
         // when and then
-        assertThatThrownBy(() -> Name.valueOf(stringName))
+        assertThatThrownBy(() -> new Name(stringName))
                 .isInstanceOf(StringNullPointerException.class)
                 .hasMessage("String 인스턴스가 null 입니다.");
     }
@@ -43,7 +43,7 @@ class NameTest {
         String stringName = "김우재";
 
         // when and then
-        assertThatThrownBy(() -> Name.valueOf(stringName))
+        assertThatThrownBy(() -> new Name(stringName))
                 .isInstanceOf(NameIncludeVariableLanguageException.class)
                 .hasMessage("이름에 영어 이외에 다른 언어들이 섞여있습니다.");
     }
@@ -56,11 +56,11 @@ class NameTest {
         String overSizeName = "wooji";
 
         // when and then
-        assertThatThrownBy(() -> Name.valueOf(emptyName))
+        assertThatThrownBy(() -> new Name(emptyName))
                 .isInstanceOf(InvalidNameSizeException.class)
                 .hasMessage("알맞는 이름의 크기가 아닙니다.");
 
-        assertThatThrownBy(() -> Name.valueOf(overSizeName))
+        assertThatThrownBy(() -> new Name(overSizeName))
                 .isInstanceOf(InvalidNameSizeException.class)
                 .hasMessage("알맞는 이름의 크기가 아닙니다.");
     }
@@ -72,7 +72,7 @@ class NameTest {
         String expected = "kwj";
 
         // when
-        Name name = Name.valueOf(expected);
+        Name name = new Name(expected);
 
         // then
         assertThat(name.name()).isEqualTo(expected);

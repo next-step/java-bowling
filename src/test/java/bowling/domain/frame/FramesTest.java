@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.exception.NoActionBowlException;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +15,7 @@ class FramesTest {
     @Test
     void 생성() {
         // when
-        Frames frames = Frames.initialize();
+        Frames frames = new Frames();
 
         // then
         assertThat(frames).isNotNull();
@@ -27,7 +26,7 @@ class FramesTest {
     @Test
     void 반환_순서() {
         // when
-        Frames frames = Frames.initialize();
+        Frames frames = new Frames();
 
         // then
         assertThat(frames.sequence()).isEqualTo(1);
@@ -37,7 +36,7 @@ class FramesTest {
     @Test
     void 반환_특정_frame() {
         // when
-        Frames frames = Frames.initialize();
+        Frames frames = new Frames();
 
         // then
         assertThat(frames.get(0).sequence()).isEqualTo(1);
@@ -48,7 +47,7 @@ class FramesTest {
     @Test
     void 종료() {
         // when
-        Frames frames = Frames.initialize();
+        Frames frames = new Frames();
 
         // then
         assertThat(frames.isFinish()).isFalse();
@@ -58,7 +57,7 @@ class FramesTest {
     @Test
     void 투구_bowl() {
         // given
-        Frames frames = Frames.initialize();
+        Frames frames = new Frames();
 
         // when
         for (int i = 0; i < 12; i++) {
@@ -76,7 +75,7 @@ class FramesTest {
     @Test
     void 검증_bowl() {
         // given
-        Frames frames = Frames.initialize();
+        Frames frames = new Frames();
 
         // when
         while (!frames.isFinish()) {
@@ -93,9 +92,9 @@ class FramesTest {
     @Test
     void 반환_scores() {
         // given
-        Frames firstFrames = Frames.initialize();
-        Frames secondFrames = Frames.initialize();
-        Frames thirdFrames = Frames.initialize();
+        Frames firstFrames = new Frames();
+        Frames secondFrames = new Frames();
+        Frames thirdFrames = new Frames();
 
         // when
         while (!firstFrames.isFinish()) {

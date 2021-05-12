@@ -14,11 +14,7 @@ public final class Name {
 
     private final String name;
 
-    public static final Name valueOf(final String name) {
-        return new Name(name);
-    }
-
-    private Name(final String name) {
+    public Name(final String name) {
         validateNull(name);
         validateSize(name);
         validateAlphabet(name);

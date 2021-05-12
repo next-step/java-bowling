@@ -27,14 +27,10 @@ public final class Frames {
 
     private final List<Frame> generateFrames() {
         final List<Frame> frames = IntStream.range(Frame.START_SEQUENCE, Frame.LAST_SEQUENCE)
-                .mapToObj(NormalFrame::from)
+                .mapToObj(NormalFrame::new)
                 .collect(Collectors.toList());
-        frames.add(FinalFrame.initialize());
+        frames.add(new FinalFrame());
         return frames;
-    }
-
-    public static final Frames initialize() {
-        return new Frames();
     }
 
     public final int sequence() {
@@ -66,7 +62,7 @@ public final class Frames {
                 .filter(Frame::isFinish)
                 .map(this::score)
                 .collect(Collectors.toList());
-        return Scores.of(scores);
+        return new Scores(scores);
     }
 
     private final Score score(final Frame frame) {

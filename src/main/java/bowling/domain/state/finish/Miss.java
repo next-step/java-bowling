@@ -2,7 +2,6 @@ package bowling.domain.state.finish;
 
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
-import bowling.domain.state.State;
 import bowling.exception.InvalidMissSizeException;
 import bowling.exception.PinsNullPointerException;
 
@@ -18,11 +17,7 @@ public final class Miss extends Finish {
     private final Pins firstPins;
     private final Pins secondPins;
 
-    public static final State of(final Pins firstPins, final Pins secondPins) {
-        return new Miss(firstPins, secondPins);
-    }
-
-    private Miss(final Pins firstPins, final Pins secondPins) {
+    public Miss(final Pins firstPins, final Pins secondPins) {
         validateNull(firstPins, secondPins);
         validateSize(firstPins, secondPins);
         this.firstPins = firstPins;

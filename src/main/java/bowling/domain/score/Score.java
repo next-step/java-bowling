@@ -11,9 +11,8 @@ import static java.lang.Math.addExact;
 public final class Score {
 
     private static final int UN_AVAILABLE_SCORE = -1;
-    private static final int MAXIMUM_SCORE = 30;
-
     private static final int ALL_PIN_COUNT = 10;
+    private static final int MAXIMUM_SCORE = 30;
 
     private final int score;
     private final BonusCount bonusCount;

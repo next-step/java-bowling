@@ -16,7 +16,7 @@ class ReadyTest {
     @Test
     void 생성() {
         // when
-        State ready = Ready.initialize();
+        State ready = new Ready();
 
         // then
         assertAll(
@@ -32,7 +32,7 @@ class ReadyTest {
         Pins pins = Pins.valueOf(10);
 
         // when
-        State ready = Ready.initialize();
+        State ready = new Ready();
         State actual = ready.bowl(pins);
 
         assertAll(
@@ -48,7 +48,7 @@ class ReadyTest {
         Pins pins = Pins.valueOf(9);
 
         // when
-        State ready = Ready.initialize();
+        State ready = new Ready();
         State actual = ready.bowl(pins);
 
         assertAll(
@@ -61,7 +61,7 @@ class ReadyTest {
     @Test
     void 반환_description() {
         // given
-        State ready = Ready.initialize();
+        State ready = new Ready();
 
         // when
         String actual = ready.description();

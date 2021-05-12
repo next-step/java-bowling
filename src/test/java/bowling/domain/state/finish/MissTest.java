@@ -3,7 +3,6 @@ package bowling.domain.state.finish;
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.domain.state.State;
-import bowling.domain.state.finish.Miss;
 import bowling.exception.InvalidMissSizeException;
 import bowling.exception.PinsNullPointerException;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +21,7 @@ class MissTest {
         Pins firstPins = Pins.valueOf(9);
         Pins secondPins = Pins.valueOf(0);
 
-        State miss = Miss.of(firstPins, secondPins);
+        State miss = new Miss(firstPins, secondPins);
 
         assertAll(
                 () -> assertThat(miss).isNotNull(),
@@ -38,7 +37,7 @@ class MissTest {
         Pins secondPins = null;
 
         // when and then
-        assertThatThrownBy(() -> Miss.of(firstPins, secondPins))
+        assertThatThrownBy(() -> new Miss(firstPins, secondPins))
                 .isInstanceOf(PinsNullPointerException.class)
                 .hasMessage("Pins 인스턴스가 null 입니다.");
     }
@@ -51,7 +50,7 @@ class MissTest {
         Pins secondPins = Pins.valueOf(1);
 
         // when and then
-        assertThatThrownBy(() -> Miss.of(firstPins, secondPins))
+        assertThatThrownBy(() -> new Miss(firstPins, secondPins))
                 .isInstanceOf(InvalidMissSizeException.class)
                 .hasMessage("Miss 에 대해 알맞지 않은 크기가 입력 되었습니다.");
     }
@@ -64,7 +63,7 @@ class MissTest {
         Pins secondPins = Pins.valueOf(8);
 
         // when
-        State miss = Miss.of(firstPins, secondPins);
+        State miss = new Miss(firstPins, secondPins);
 
         // then
         assertAll(
@@ -84,7 +83,7 @@ class MissTest {
         Pins secondPins = Pins.valueOf(8);
 
         // when
-        State miss = Miss.of(firstPins, secondPins);
+        State miss = new Miss(firstPins, secondPins);
         Score beforeScore = Score.miss(Pins.valueOf(0));
         Score actual = miss.calculateAdditionalScore(beforeScore);
 
@@ -103,7 +102,7 @@ class MissTest {
         Pins secondPins = Pins.valueOf(8);
 
         // when
-        State miss = Miss.of(firstPins, secondPins);
+        State miss = new Miss(firstPins, secondPins);
         Score beforeScore = Score.spare();
         Score actual = miss.calculateAdditionalScore(beforeScore);
 
@@ -122,7 +121,7 @@ class MissTest {
         Pins secondPins = Pins.valueOf(8);
 
         // when
-        State miss = Miss.of(firstPins, secondPins);
+        State miss = new Miss(firstPins, secondPins);
         Score beforeScore = Score.strike();
         Score actual = miss.calculateAdditionalScore(beforeScore);
 
@@ -141,7 +140,7 @@ class MissTest {
         Pins secondPins = Pins.valueOf(8);
 
         // when
-        State miss = Miss.of(firstPins, secondPins);
+        State miss = new Miss(firstPins, secondPins);
         String actual = miss.description();
 
         // then
@@ -156,7 +155,7 @@ class MissTest {
         Pins secondPins = Pins.valueOf(0);
 
         // when
-        State miss = Miss.of(zeroPins, secondPins);
+        State miss = new Miss(zeroPins, secondPins);
         String actual = miss.description();
 
         // then

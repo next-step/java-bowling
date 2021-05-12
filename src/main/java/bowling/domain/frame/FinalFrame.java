@@ -4,7 +4,6 @@ import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.domain.state.State;
 import bowling.domain.state.States;
-import bowling.domain.state.running.Ready;
 import bowling.exception.NoActionBowlException;
 
 public final class FinalFrame extends Frame {
@@ -12,13 +11,9 @@ public final class FinalFrame extends Frame {
     private final States states;
     private FinalRound finalRound;
 
-    private FinalFrame() {
+    public FinalFrame() {
         this.states = States.initialize();
         this.finalRound = FinalRound.initialize();
-    }
-
-    public static final Frame initialize() {
-        return new FinalFrame();
     }
 
     @Override
@@ -36,7 +31,7 @@ public final class FinalFrame extends Frame {
     }
 
     private final State generateReady() {
-        return Ready.initialize();
+        return State.initialize();
     }
 
     private final void validateRound() {

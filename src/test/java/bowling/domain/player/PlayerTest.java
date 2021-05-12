@@ -17,7 +17,7 @@ class PlayerTest {
     void 생성() {
         // given
         String stringName = "kwj";
-        Name name = Name.valueOf(stringName);
+        Name name = new Name(stringName);
 
         // when
         Player firstPlayer = Player.from(stringName);
@@ -47,7 +47,7 @@ class PlayerTest {
     @Test
     void 종료_여부() {
         // given
-        Name name = Name.valueOf("kwj");
+        Name name = new Name("kwj");
 
         // when
         Player player = Player.from(name);
@@ -61,7 +61,7 @@ class PlayerTest {
     @Test
     void 기능_투구() {
         // given
-        Name name = Name.valueOf("kwj");
+        Name name = new Name("kwj");
 
         // when
         Player player = Player.from(name);
@@ -77,7 +77,7 @@ class PlayerTest {
     @Test
     void 반환_현재_순서() {
         // given
-        Name name = Name.valueOf("kwj");
+        Name name = new Name("kwj");
 
         // when
         Player player = Player.from(name);
@@ -91,7 +91,7 @@ class PlayerTest {
     void 반환_이름() {
         // given
         String expected = "kwj";
-        Name name = Name.valueOf(expected);
+        Name name = new Name(expected);
 
         // when
         Player player = Player.from(name);
@@ -105,7 +105,7 @@ class PlayerTest {
     void 반환_점수_목록() {
         // given
         String expected = "kwj";
-        Name name = Name.valueOf(expected);
+        Name name = new Name(expected);
 
         // when
         Player player = Player.from(name);

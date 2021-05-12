@@ -23,7 +23,7 @@ class FinalFrameTest {
     @Test
     void 생성() {
         // when
-        Frame finalFrame = FinalFrame.initialize();
+        Frame finalFrame = new FinalFrame();
 
         // then
         assertAll(
@@ -36,10 +36,10 @@ class FinalFrameTest {
     @Test
     void 투구_bowl() {
         // when
-        Frame firstFrame = FinalFrame.initialize().bowl(ZERO).bowl(NINE);
-        Frame secondFrame = FinalFrame.initialize().bowl(ONE).bowl(NINE);
-        Frame thirdFrame = FinalFrame.initialize().bowl(ONE).bowl(NINE).bowl(TEN);
-        Frame fourthFrame = FinalFrame.initialize().bowl(TEN).bowl(TEN).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(ZERO).bowl(NINE);
+        Frame secondFrame = new FinalFrame().bowl(ONE).bowl(NINE);
+        Frame thirdFrame = new FinalFrame().bowl(ONE).bowl(NINE).bowl(TEN);
+        Frame fourthFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(TEN);
 
         // then
         assertAll(
@@ -54,8 +54,8 @@ class FinalFrameTest {
     @Test
     void bowl_보너스_있을때_예외처리() {
         // when
-        Frame firstFrame = FinalFrame.initialize().bowl(ZERO).bowl(NINE);
-        Frame secondFrame = FinalFrame.initialize().bowl(NINE).bowl(ONE).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(ZERO).bowl(NINE);
+        Frame secondFrame = new FinalFrame().bowl(NINE).bowl(ONE).bowl(TEN);
 
         // then
         assertAll(
@@ -74,13 +74,13 @@ class FinalFrameTest {
     @Test
     void 반환_score() {
         // when
-        Frame firstFrame = FinalFrame.initialize().bowl(NINE).bowl(ZERO);
-        Frame secondFrame = FinalFrame.initialize().bowl(NINE).bowl(ONE).bowl(NINE);
-        Frame thirdFrame = FinalFrame.initialize().bowl(NINE).bowl(ONE).bowl(TEN);
-        Frame fourthFrame = FinalFrame.initialize().bowl(TEN).bowl(NINE).bowl(ZERO);
-        Frame fifthFrame = FinalFrame.initialize().bowl(TEN).bowl(NINE).bowl(ONE);
-        Frame sixthFrame = FinalFrame.initialize().bowl(TEN).bowl(TEN).bowl(NINE);
-        Frame seventhFrame = FinalFrame.initialize().bowl(TEN).bowl(TEN).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(NINE).bowl(ZERO);
+        Frame secondFrame = new FinalFrame().bowl(NINE).bowl(ONE).bowl(NINE);
+        Frame thirdFrame = new FinalFrame().bowl(NINE).bowl(ONE).bowl(TEN);
+        Frame fourthFrame = new FinalFrame().bowl(TEN).bowl(NINE).bowl(ZERO);
+        Frame fifthFrame = new FinalFrame().bowl(TEN).bowl(NINE).bowl(ONE);
+        Frame sixthFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(NINE);
+        Frame seventhFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(TEN);
 
         // then
         assertAll(
@@ -102,11 +102,11 @@ class FinalFrameTest {
         Score miss = Score.miss(NINE);
 
         // when
-        Frame firstFrame = FinalFrame.initialize().bowl(ZERO).bowl(ZERO);
-        Frame secondFrame = FinalFrame.initialize().bowl(ONE).bowl(EIGHT);
-        Frame thirdFrame = FinalFrame.initialize().bowl(ONE).bowl(NINE).bowl(TEN);
-        Frame fourthFrame = FinalFrame.initialize().bowl(NINE).bowl(ONE).bowl(TEN);
-        Frame sixthFrame = FinalFrame.initialize().bowl(TEN).bowl(TEN).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(ZERO).bowl(ZERO);
+        Frame secondFrame = new FinalFrame().bowl(ONE).bowl(EIGHT);
+        Frame thirdFrame = new FinalFrame().bowl(ONE).bowl(NINE).bowl(TEN);
+        Frame fourthFrame = new FinalFrame().bowl(NINE).bowl(ONE).bowl(TEN);
+        Frame sixthFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(TEN);
 
         // then
         assertAll(
@@ -125,11 +125,11 @@ class FinalFrameTest {
         Score spare = Score.spare();
 
         // when
-        Frame firstFrame = FinalFrame.initialize().bowl(ZERO).bowl(ZERO);
-        Frame secondFrame = FinalFrame.initialize().bowl(ONE).bowl(EIGHT);
-        Frame thirdFrame = FinalFrame.initialize().bowl(ONE).bowl(NINE).bowl(TEN);
-        Frame fourthFrame = FinalFrame.initialize().bowl(NINE).bowl(ONE).bowl(TEN);
-        Frame sixthFrame = FinalFrame.initialize().bowl(TEN).bowl(TEN).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(ZERO).bowl(ZERO);
+        Frame secondFrame = new FinalFrame().bowl(ONE).bowl(EIGHT);
+        Frame thirdFrame = new FinalFrame().bowl(ONE).bowl(NINE).bowl(TEN);
+        Frame fourthFrame = new FinalFrame().bowl(NINE).bowl(ONE).bowl(TEN);
+        Frame sixthFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(TEN);
 
         // then
         assertAll(
@@ -148,11 +148,11 @@ class FinalFrameTest {
         Score strike = Score.strike();
 
         // when
-        Frame firstFrame = FinalFrame.initialize().bowl(ZERO).bowl(ZERO);
-        Frame secondFrame = FinalFrame.initialize().bowl(ONE).bowl(EIGHT);
-        Frame thirdFrame = FinalFrame.initialize().bowl(ONE).bowl(NINE).bowl(TEN);
-        Frame fourthFrame = FinalFrame.initialize().bowl(NINE).bowl(ONE).bowl(TEN);
-        Frame sixthFrame = FinalFrame.initialize().bowl(TEN).bowl(TEN).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(ZERO).bowl(ZERO);
+        Frame secondFrame = new FinalFrame().bowl(ONE).bowl(EIGHT);
+        Frame thirdFrame = new FinalFrame().bowl(ONE).bowl(NINE).bowl(TEN);
+        Frame fourthFrame = new FinalFrame().bowl(NINE).bowl(ONE).bowl(TEN);
+        Frame sixthFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(TEN);
 
         // then
         assertAll(
@@ -168,21 +168,21 @@ class FinalFrameTest {
     @Test
     void 반환_description() {
         // when
-        Frame firstFrame = FinalFrame.initialize().bowl(ZERO);
-        Frame secondFrame = FinalFrame.initialize().bowl(NINE);
-        Frame thirdFrame = FinalFrame.initialize().bowl(TEN);
-        Frame fourthFrame = FinalFrame.initialize().bowl(ONE).bowl(EIGHT);
-        Frame fifthFrame = FinalFrame.initialize().bowl(ZERO).bowl(NINE);
-        Frame sixthFrame = FinalFrame.initialize().bowl(NINE).bowl(ZERO);
-        Frame seventhFrame = FinalFrame.initialize().bowl(ONE).bowl(NINE).bowl(TEN);
-        Frame eightFrame = FinalFrame.initialize().bowl(ZERO).bowl(TEN).bowl(TEN);
-        Frame nineFrame = FinalFrame.initialize().bowl(TEN).bowl(ZERO).bowl(TEN);
-        Frame tenFrame = FinalFrame.initialize().bowl(TEN).bowl(TEN).bowl(ZERO);
-        Frame elevenFrame = FinalFrame.initialize().bowl(TEN).bowl(TEN).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(ZERO);
+        Frame secondFrame = new FinalFrame().bowl(NINE);
+        Frame thirdFrame = new FinalFrame().bowl(TEN);
+        Frame fourthFrame = new FinalFrame().bowl(ONE).bowl(EIGHT);
+        Frame fifthFrame = new FinalFrame().bowl(ZERO).bowl(NINE);
+        Frame sixthFrame = new FinalFrame().bowl(NINE).bowl(ZERO);
+        Frame seventhFrame = new FinalFrame().bowl(ONE).bowl(NINE).bowl(TEN);
+        Frame eightFrame = new FinalFrame().bowl(ZERO).bowl(TEN).bowl(TEN);
+        Frame nineFrame = new FinalFrame().bowl(TEN).bowl(ZERO).bowl(TEN);
+        Frame tenFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(ZERO);
+        Frame elevenFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(TEN);
 
         // then
         assertAll(
-                () -> assertThat(FinalFrame.initialize().description()).isEqualTo(Strings.EMPTY),
+                () -> assertThat(new FinalFrame().description()).isEqualTo(Strings.EMPTY),
                 () -> assertThat(firstFrame.description()).isEqualTo("-"),
                 () -> assertThat(secondFrame.description()).isEqualTo("9"),
                 () -> assertThat(thirdFrame.description()).isEqualTo("X"),

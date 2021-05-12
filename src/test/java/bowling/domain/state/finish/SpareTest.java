@@ -3,7 +3,6 @@ package bowling.domain.state.finish;
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.domain.state.State;
-import bowling.domain.state.finish.Spare;
 import bowling.exception.InvalidSpareSizeException;
 import bowling.exception.PinsNullPointerException;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +22,7 @@ class SpareTest {
         Pins secondPins = Pins.valueOf(10);
 
         // when
-        State spare = Spare.of(firstPins, secondPins);
+        State spare = new Spare(firstPins, secondPins);
 
         // then
         assertAll(
@@ -40,7 +39,7 @@ class SpareTest {
         Pins secondPins = null;
 
         // when and then
-        assertThatThrownBy(() -> Spare.of(firstPins, secondPins))
+        assertThatThrownBy(() -> new Spare(firstPins, secondPins))
                 .isInstanceOf(PinsNullPointerException.class)
                 .hasMessage("Pins 인스턴스가 null 입니다.");
     }
@@ -53,7 +52,7 @@ class SpareTest {
         Pins secondPins = Pins.valueOf(10);
 
         // when and then
-        assertThatThrownBy(() -> Spare.of(firstPins, secondPins))
+        assertThatThrownBy(() -> new Spare(firstPins, secondPins))
                 .isInstanceOf(InvalidSpareSizeException.class)
                 .hasMessage("Spare 에 대해 알맞지 않은 크기가 입력 되었습니다.");
     }
@@ -66,7 +65,7 @@ class SpareTest {
         Pins secondPins = Pins.valueOf(10);
 
         // when
-        State spare = Spare.of(firstPins, secondPins);
+        State spare = new Spare(firstPins, secondPins);
 
         // then
         assertAll(
@@ -85,7 +84,7 @@ class SpareTest {
         Pins secondPins = Pins.valueOf(9);
 
         // when
-        State spare = Spare.of(firstPins, secondPins);
+        State spare = new Spare(firstPins, secondPins);
         Score beforeScore = Score.miss(Pins.valueOf(0));
         Score actual = spare.calculateAdditionalScore(beforeScore);
 
@@ -104,7 +103,7 @@ class SpareTest {
         Pins secondPins = Pins.valueOf(9);
 
         // when
-        State spare = Spare.of(firstPins, secondPins);
+        State spare = new Spare(firstPins, secondPins);
         Score beforeScore = Score.spare();
         Score actual = spare.calculateAdditionalScore(beforeScore);
 
@@ -123,7 +122,7 @@ class SpareTest {
         Pins secondPins = Pins.valueOf(9);
 
         // when
-        State spare = Spare.of(firstPins, secondPins);
+        State spare = new Spare(firstPins, secondPins);
         Score beforeScore = Score.strike();
         Score actual = spare.calculateAdditionalScore(beforeScore);
 
@@ -138,12 +137,11 @@ class SpareTest {
     @Test
     void 반환_description_일반적인_경우() {
         // given
-        Pins zeroPins = Pins.valueOf(0);
         Pins firstPins = Pins.valueOf(1);
         Pins secondPins = Pins.valueOf(9);
 
         // when
-        State spare = Spare.of(firstPins, secondPins);
+        State spare = new Spare(firstPins, secondPins);
         String actual = spare.description();
 
         // given
@@ -158,7 +156,7 @@ class SpareTest {
         Pins secondPins = Pins.valueOf(10);
 
         // when
-        State spare = Spare.of(zeroPins, secondPins);
+        State spare = new Spare(zeroPins, secondPins);
         String actual = spare.description();
 
         // then

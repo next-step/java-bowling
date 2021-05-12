@@ -2,7 +2,6 @@ package bowling.domain.state.finish;
 
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
-import bowling.domain.state.State;
 import bowling.exception.InvalidSpareSizeException;
 import bowling.exception.PinsNullPointerException;
 
@@ -17,11 +16,7 @@ public final class Spare extends Finish {
     private final Pins firstPins;
     private final Pins secondPins;
 
-    public static final State of(final Pins firstPins, final Pins secondPins) {
-        return new Spare(firstPins, secondPins);
-    }
-
-    private Spare(final Pins firstPins, final Pins secondPins) {
+    public Spare(final Pins firstPins, final Pins secondPins) {
         validateNull(firstPins, secondPins);
         validateSize(firstPins, secondPins);
         this.firstPins = firstPins;

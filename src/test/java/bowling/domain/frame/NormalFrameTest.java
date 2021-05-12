@@ -15,7 +15,7 @@ class NormalFrameTest {
     @Test
     void 생성() {
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
 
         // then
         assertAll(
@@ -31,7 +31,7 @@ class NormalFrameTest {
         Pins pins = Pins.valueOf(9);
 
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
         Frame returnedFrame = normalFrame.bowl(pins);
         // then
         assertAll(
@@ -47,7 +47,7 @@ class NormalFrameTest {
         Pins pins = Pins.full();
 
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
         Frame nextFrame = normalFrame.bowl(pins);
 
         // then
@@ -64,7 +64,7 @@ class NormalFrameTest {
         Pins pins = Pins.full();
 
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
         normalFrame.bowl(pins);
 
         // then
@@ -82,7 +82,7 @@ class NormalFrameTest {
         Pins pins = Pins.full();
 
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
         Frame nextFrame = normalFrame.bowl(pins);
 
         // then
@@ -97,7 +97,7 @@ class NormalFrameTest {
     @Test
     void 반환_description_ready_일_때() {
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
         String actual = normalFrame.description();
 
         // then
@@ -108,7 +108,7 @@ class NormalFrameTest {
     @Test
     void 반환_description_FirstBowl_일반적일_때() {
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
         normalFrame.bowl(Pins.valueOf(1));
         String actual = normalFrame.description();
 
@@ -120,7 +120,7 @@ class NormalFrameTest {
     @Test
     void 반환_description_FirstBowl_거터일_때() {
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
         normalFrame.bowl(Pins.valueOf(0));
         String actual = normalFrame.description();
 
@@ -132,7 +132,7 @@ class NormalFrameTest {
     @Test
     void 반환_description_Spare_일반적일_때() {
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
         normalFrame.bowl(Pins.valueOf(1));
         normalFrame.bowl(Pins.valueOf(9));
         String actual = normalFrame.description();
@@ -145,7 +145,7 @@ class NormalFrameTest {
     @Test
     void 반환_description_Spare_거터일_때() {
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
         normalFrame.bowl(Pins.valueOf(0));
         normalFrame.bowl(Pins.valueOf(10));
         String actual = normalFrame.description();
@@ -158,7 +158,7 @@ class NormalFrameTest {
     @Test
     void 반환_description_Miss_일반적일_때() {
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
         normalFrame.bowl(Pins.valueOf(1));
         normalFrame.bowl(Pins.valueOf(8));
         String actual = normalFrame.description();
@@ -171,7 +171,7 @@ class NormalFrameTest {
     @Test
     void 반환_description_Miss_거터일_때_() {
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
         normalFrame.bowl(Pins.valueOf(0));
         normalFrame.bowl(Pins.valueOf(0));
         String actual = normalFrame.description();
@@ -184,7 +184,7 @@ class NormalFrameTest {
     @Test
     void 반환_description_Strike_거터일_때_() {
         // when
-        Frame normalFrame = NormalFrame.from(1);
+        Frame normalFrame = new NormalFrame(1);
         normalFrame.bowl(Pins.valueOf(10));
         String actual = normalFrame.description();
 

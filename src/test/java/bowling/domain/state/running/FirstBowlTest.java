@@ -5,7 +5,6 @@ import bowling.domain.state.Pins;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
-import bowling.domain.state.running.FirstBowl;
 import bowling.exception.InvalidFirstBowlSizeException;
 import bowling.exception.PinsNullPointerException;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +23,7 @@ class FirstBowlTest {
         Pins pins = Pins.valueOf(9);
 
         // when
-        State firstBowl = FirstBowl.from(pins);
+        State firstBowl = new FirstBowl(pins);
 
         // then
         assertAll(
@@ -40,7 +39,7 @@ class FirstBowlTest {
         Pins pins = null;
 
         // when and then
-        assertThatThrownBy(() -> FirstBowl.from(pins))
+        assertThatThrownBy(() -> new FirstBowl(pins))
                 .isInstanceOf(PinsNullPointerException.class)
                 .hasMessage("Pins 인스턴스가 null 입니다.");
     }
@@ -52,7 +51,7 @@ class FirstBowlTest {
         Pins pins = Pins.valueOf(10);
 
         // when and then
-        assertThatThrownBy(() -> FirstBowl.from(pins))
+        assertThatThrownBy(() -> new FirstBowl(pins))
                 .isInstanceOf(InvalidFirstBowlSizeException.class)
                 .hasMessage("FirstBowl 에 대해 알맞지 않은 크기가 입력 되었습니다.");
     }
@@ -64,7 +63,7 @@ class FirstBowlTest {
         Pins pins = Pins.valueOf(9);
 
         // when
-        State firstBowl = FirstBowl.from(pins);
+        State firstBowl = new FirstBowl(pins);
         State actual = firstBowl.bowl(Pins.valueOf(1));
 
         // then
@@ -81,7 +80,7 @@ class FirstBowlTest {
         Pins pins = Pins.valueOf(9);
 
         // when
-        State firstBowl = FirstBowl.from(pins);
+        State firstBowl = new FirstBowl(pins);
         State actual = firstBowl.bowl(Pins.valueOf(0));
 
         // then
@@ -98,7 +97,7 @@ class FirstBowlTest {
         Pins pins = Pins.valueOf(9);
 
         // when
-        State firstBowl = FirstBowl.from(pins);
+        State firstBowl = new FirstBowl(pins);
         Score beforeScore = Score.miss(Pins.valueOf(0));
         Score actual = firstBowl.calculateAdditionalScore(beforeScore);
 
@@ -116,7 +115,7 @@ class FirstBowlTest {
         Pins pins = Pins.valueOf(9);
 
         // when
-        State firstBowl = FirstBowl.from(pins);
+        State firstBowl = new FirstBowl(pins);
         Score beforeScore = Score.spare();
         Score actual = firstBowl.calculateAdditionalScore(beforeScore);
 
@@ -134,7 +133,7 @@ class FirstBowlTest {
         Pins pins = Pins.valueOf(9);
 
         // when
-        State firstBowl = FirstBowl.from(pins);
+        State firstBowl = new FirstBowl(pins);
         Score beforeScore = Score.strike();
         Score actual = firstBowl.calculateAdditionalScore(beforeScore);
 
@@ -153,8 +152,8 @@ class FirstBowlTest {
         Pins generalPins = Pins.valueOf(9);
 
         // when
-        State zeroFirstBowl = FirstBowl.from(zeroPins);
-        State generalFirstBowl = FirstBowl.from(generalPins);
+        State zeroFirstBowl = new FirstBowl(zeroPins);
+        State generalFirstBowl = new FirstBowl(generalPins);
 
         // then
         assertAll(

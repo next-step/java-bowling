@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.domain.state.State;
-import bowling.domain.state.running.Ready;
 
 import static java.lang.Math.addExact;
 
@@ -14,13 +13,9 @@ public final class NormalFrame extends Frame {
     private State state;
     private final int sequence;
 
-    private NormalFrame(final int sequence) {
-        this.state = Ready.initialize();
+    public NormalFrame(final int sequence) {
+        this.state = State.initialize();
         this.sequence = sequence;
-    }
-
-    public static final Frame from(final int sequence) {
-        return new NormalFrame(sequence);
     }
 
     @Override
@@ -35,7 +30,7 @@ public final class NormalFrame extends Frame {
     private final Frame generateNextFrame() {
         final int nextSequence = addExact(sequence, INCREASE_UNIT);
         if (nextSequence == LAST_SEQUENCE) {
-            return FinalFrame.initialize();
+            return new FinalFrame();
         }
         return new NormalFrame(nextSequence);
     }

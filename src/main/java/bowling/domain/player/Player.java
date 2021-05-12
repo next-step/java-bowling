@@ -13,7 +13,7 @@ public final class Player {
     private final Frames frames;
 
     public static final Player from(final String name) {
-        return from(Name.valueOf(name));
+        return from(new Name(name));
     }
 
     public static final Player from(final Name name) {
@@ -23,7 +23,7 @@ public final class Player {
     private Player(final Name name) {
         validateNull(name);
         this.name = name;
-        this.frames = Frames.initialize();
+        this.frames = new Frames();
     }
 
     private final void validateNull(final Name name) {

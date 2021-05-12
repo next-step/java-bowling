@@ -3,7 +3,6 @@ package bowling.domain.state.finish;
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.domain.state.State;
-import bowling.domain.state.finish.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +14,7 @@ class StrikeTest {
     @DisplayName("Strike 인스턴스 생성 여부 테스트")
     @Test
     void 생성() {
-        State strike = Strike.initialize();
+        State strike = new Strike();
 
         assertAll(
                 () -> assertThat(strike).isNotNull(),
@@ -26,7 +25,7 @@ class StrikeTest {
     @DisplayName("Strike 인스턴스의 Score 반환 여부 테스트")
     @Test
     void 반환_Score() {
-        State strike = Strike.initialize();
+        State strike = new Strike();
 
         assertAll(
                 () -> assertThat(strike.score()).isNotNull(),
@@ -40,7 +39,7 @@ class StrikeTest {
     @Test
     void 반환_calculateAdditionalScore_Miss_일_경우() {
         // given
-        State strike = Strike.initialize();
+        State strike = new Strike();
 
         // when
         Score beforeScore = Score.miss(Pins.valueOf(0));
@@ -57,7 +56,7 @@ class StrikeTest {
     @Test
     void 반환_calculateAdditionalScore_Spare_일_경우() {
         // given
-        State strike = Strike.initialize();
+        State strike = new Strike();
 
         // when
         Score beforeScore = Score.spare();
@@ -74,7 +73,7 @@ class StrikeTest {
     @Test
     void 반환_calculateAdditionalScore_Strike_일_경우() {
         // given
-        State strike = Strike.initialize();
+        State strike = new Strike();
 
         // when
         Score beforeScore = Score.strike();
@@ -91,7 +90,7 @@ class StrikeTest {
     @Test
     void 반환_description() {
         // given
-        State strike = Strike.initialize();
+        State strike = new Strike();
 
         // when
         String actual = strike.description();

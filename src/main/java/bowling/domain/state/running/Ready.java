@@ -8,21 +8,17 @@ import org.apache.logging.log4j.util.Strings;
 
 public final class Ready extends Running {
 
-    private Pins readyPins = Pins.full();
+    private final Pins readyPins = Pins.full();
 
-    public static final State initialize() {
-        return new Ready();
-    }
-
-    private Ready() {
+    public Ready() {
     }
 
     @Override
     public final State bowl(final Pins firstPins) {
         if (crush(firstPins).isEmpty()) {
-            return Strike.initialize();
+            return new Strike();
         }
-        return FirstBowl.from(firstPins);
+        return new FirstBowl(firstPins);
     }
 
     private final Pins crush(final Pins firstPins) {

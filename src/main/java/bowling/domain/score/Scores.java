@@ -10,11 +10,7 @@ public final class Scores {
 
     private final List<Score> scores;
 
-    public static final Scores of(final List<Score> scores) {
-        return new Scores(scores);
-    }
-
-    private Scores(final List<Score> scores) {
+    public Scores(final List<Score> scores) {
         validateNull(scores);
         this.scores = scores;
     }

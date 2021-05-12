@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Score;
-import bowling.domain.state.running.Ready;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -10,12 +9,12 @@ import java.util.stream.Collectors;
 public final class States {
 
     private static final int SEARCH_START_INDEX = 1;
-    public static final String DELIMITER = "|";
+    private static final String DELIMITER = "|";
 
     private final LinkedList<State> states;
 
     private States() {
-        this.states = new LinkedList<>(Arrays.asList(Ready.initialize()));
+        this.states = new LinkedList<>(Arrays.asList(State.initialize()));
     }
 
     public static final States initialize() {

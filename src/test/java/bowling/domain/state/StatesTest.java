@@ -1,10 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.score.Score;
-import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Strike;
 import bowling.domain.state.running.FirstBowl;
-import bowling.domain.state.running.Ready;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,10 +18,10 @@ class StatesTest {
     private static final Pins NINE = Pins.valueOf(9);
     private static final Pins TEN = Pins.valueOf(10);
 
-    private static final State FIRST_BOWL = Ready.initialize().bowl(ZERO);
+    private static final State FIRST_BOWL = State.initialize().bowl(ZERO);
     private static final State MISS = FIRST_BOWL.bowl(NINE);
     private static final State SPARE = FIRST_BOWL.bowl(TEN);
-    private static final State STRIKE = Ready.initialize().bowl(TEN);
+    private static final State STRIKE = State.initialize().bowl(TEN);
 
     private static final Score MISS_SCORE = Score.miss(Pins.valueOf(9));
     private static final Score SPARE_SCORE = Score.spare();
@@ -57,7 +55,7 @@ class StatesTest {
     @Test
     void 반환_보너스_여부_없을때() {
         // given
-        State first = Ready.initialize().bowl(NINE);
+        State first = State.initialize().bowl(NINE);
         State second = first.bowl(ZERO);
 
         // when
@@ -71,7 +69,7 @@ class StatesTest {
     @Test
     void 반환_보너스_여부_있을때() {
         // given
-        State first = Ready.initialize().bowl(ZERO);
+        State first = State.initialize().bowl(ZERO);
         State second = first.bowl(TEN);
 
         // when
@@ -85,7 +83,7 @@ class StatesTest {
     @Test
     void 추가() {
         // given
-        State expected = Strike.initialize();
+        State expected = new Strike();
 
         // when
         States states = States.initialize().add(expected);
@@ -103,8 +101,8 @@ class StatesTest {
     @Test
     void 삭제() {
         // given
-        State expected = Strike.initialize();
-        State removed = Ready.initialize().bowl(NINE);
+        State expected = new Strike();
+        State removed = State.initialize().bowl(NINE);
 
         // when
         States states = States.initialize().add(expected).add(removed).remove();
@@ -128,7 +126,7 @@ class StatesTest {
         Score thirdScore = States.initialize().remove().add(FIRST_BOWL).remove().add(SPARE).add(STRIKE).score();
         Score fourthScore = States.initialize().remove().add(STRIKE).add(FIRST_BOWL).remove().add(MISS).score();
         Score fifthScore = States.initialize().remove().add(STRIKE).add(MISS).remove().add(SPARE).score();
-        Score sixthScore = States.initialize().remove().add(STRIKE).add(STRIKE).add(FirstBowl.from(NINE)).score();
+        Score sixthScore = States.initialize().remove().add(STRIKE).add(STRIKE).add(new FirstBowl(NINE)).score();
         Score seventhScore = States.initialize().remove().add(STRIKE).add(STRIKE).add(STRIKE).score();
 
         // then
@@ -177,9 +175,9 @@ class StatesTest {
     @Test
     void 반환_description() {
         // given
-        State firstBowlOne = FirstBowl.from(ONE);
+        State firstBowlOne = new FirstBowl(ONE);
         State missEight = firstBowlOne.bowl(EIGHT);
-        State firstBowlNine = FirstBowl.from(NINE);
+        State firstBowlNine = new FirstBowl(NINE);
         State missZero = firstBowlNine.bowl(ZERO);
         State spareNine = firstBowlOne.bowl(NINE);
 
@@ -187,14 +185,14 @@ class StatesTest {
         // 시나리오대로 작성
         States readyStates = States.initialize();
         States firstBowlGutterStates = States.initialize().remove().add(FIRST_BOWL);
-        States firstBowlGenericStates = States.initialize().remove().add(FirstBowl.from(NINE));
+        States firstBowlGenericStates = States.initialize().remove().add(new FirstBowl(NINE));
         States strikeOnceStates = States.initialize().remove().add(STRIKE);
         States missGenericStates = States.initialize().remove().add(firstBowlOne).remove().add(missEight);
         States missGutterFirstStates = States.initialize().remove().add(FIRST_BOWL).remove().add(MISS);
         States missGutterLastStates = States.initialize().remove().add(firstBowlNine).remove().add(missZero);
         States spareGenericStates = States.initialize().remove().add(firstBowlOne).remove().add(spareNine).add(STRIKE);
         States spareGutterStates = States.initialize().remove().add(FIRST_BOWL).remove().add(SPARE).add(STRIKE);
-        States strikeGutterStates = States.initialize().remove().add(STRIKE).add(Ready.initialize().bowl(Pins.valueOf(0))).remove().add(SPARE);
+        States strikeGutterStates = States.initialize().remove().add(STRIKE).add(State.initialize().bowl(Pins.valueOf(0))).remove().add(SPARE);
         States strikeLastGutterStates = States.initialize().remove().add(STRIKE).add(STRIKE).add(FIRST_BOWL);
         States allStrikeStates = States.initialize().remove().add(STRIKE).add(STRIKE).add(STRIKE);
 
