@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.Player;
-import bowling.domain.turn.FallenPins;
 
 public class PlayerBoard {
   private static final int FIRST_ROUND = 1;
@@ -20,7 +19,7 @@ public class PlayerBoard {
     return currentFrame.round() == FINAL_ROUND && currentFrame.checkFinished();
   }
 
-  public void addNewBall(FallenPins pins) {
+  public void addNewBall(int pins) {
     currentFrame = currentFrame.bowl(pins);
   }
 

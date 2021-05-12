@@ -31,6 +31,11 @@ public class NormalFrame implements Frame {
   }
 
   @Override
+  public Frame bowl(int pins) {
+    return bowl(new FallenPins(pins));
+  }
+
+  @Override
   public TotalResult showFullResult() {
     TotalResult totalResult = new TotalResult();
 

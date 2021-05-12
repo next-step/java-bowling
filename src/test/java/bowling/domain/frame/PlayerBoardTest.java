@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.Player;
-import bowling.domain.turn.FallenPins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,7 @@ class PlayerBoardTest {
     Player player = new Player("zfz");
     PlayerBoard playerBoard = new PlayerBoard(player);
 
-    playerBoard.addNewBall(new FallenPins(10));
+    playerBoard.addNewBall(10);
     assertThat(playerBoard.checkCurrentFrameReady()).isTrue();
   }
 
@@ -24,7 +23,7 @@ class PlayerBoardTest {
     Player player = new Player("zfz");
     PlayerBoard playerBoard = new PlayerBoard(player);
 
-    playerBoard.addNewBall(new FallenPins(5));
+    playerBoard.addNewBall(5);
     assertThat(playerBoard.checkTargetRoundFinished(1)).isTrue();
   }
 
@@ -34,7 +33,7 @@ class PlayerBoardTest {
     Player player = new Player("zfz");
     PlayerBoard playerBoard = new PlayerBoard(player);
 
-    playerBoard.addNewBall(new FallenPins(10));
+    playerBoard.addNewBall(10);
     assertThat(playerBoard.checkTargetRoundFinished(1)).isFalse();
   }
 
@@ -44,15 +43,15 @@ class PlayerBoardTest {
     Player player = new Player("zfz");
     PlayerBoard playerBoard = new PlayerBoard(player);
 
-    playerBoard.firstFrame().bowl(new FallenPins(10))
-      .bowl(new FallenPins(2)).bowl(new FallenPins(8))
-      .bowl(new FallenPins(7)).bowl(new FallenPins(1))
-      .bowl(new FallenPins(2)).bowl(new FallenPins(4))
-      .bowl(new FallenPins(3)).bowl(new FallenPins(6))
-      .bowl(new FallenPins(7)).bowl(new FallenPins(2))
-      .bowl(new FallenPins(7)).bowl(new FallenPins(1))
-      .bowl(new FallenPins(6)).bowl(new FallenPins(0))
-      .bowl(new FallenPins(10)).bowl(new FallenPins(1)).bowl(new FallenPins(5));
+    playerBoard.firstFrame().bowl(10)
+      .bowl(2).bowl(8)
+      .bowl(7).bowl(1)
+      .bowl(2).bowl(4)
+      .bowl(3).bowl(6)
+      .bowl(7).bowl(2)
+      .bowl(7).bowl(1)
+      .bowl(6).bowl(0)
+      .bowl(10).bowl(1).bowl(5);
 
     assertThat(playerBoard.checkTargetRoundFinished(10)).isFalse();
   }

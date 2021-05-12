@@ -14,6 +14,8 @@ public interface Frame {
 
   Frame bowl(FallenPins fallenPins);
 
+  Frame bowl(int pins);
+
   TotalResult showFullResult();
 
   void addResult(TotalResult totalResult);

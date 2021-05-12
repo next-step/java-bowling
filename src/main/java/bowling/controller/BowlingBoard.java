@@ -3,7 +3,6 @@ package bowling.controller;
 import bowling.domain.Board;
 import bowling.domain.Player;
 import bowling.domain.frame.PlayerBoard;
-import bowling.domain.turn.FallenPins;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -52,7 +51,7 @@ public class BowlingBoard {
   private void playFrame(PlayerBoard playerBoard, int round) {
     while (playerBoard.checkTargetRoundFinished(round)) {
       int fallenPins = inputView.setupPins(playerBoard.round());
-      playerBoard.addNewBall(new FallenPins(fallenPins));
+      playerBoard.addNewBall(fallenPins);
       printBoards();
     }
   }
