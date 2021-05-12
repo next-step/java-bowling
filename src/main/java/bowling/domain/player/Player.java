@@ -27,12 +27,16 @@ public class Player {
         return new Player(Name.of(name), frames);
     }
 
-    public void bowl(int hitNumber) {
-        frames.play(HitNumber.of(hitNumber));
+    public boolean bowlWithNext(HitNumber hitNumber) {
+        return frames.playWithNext(hitNumber);
     }
 
     public boolean isFinished() {
         return frames.isFinished();
+    }
+
+    public String toStringName() {
+        return name.toString();
     }
 
     @Override

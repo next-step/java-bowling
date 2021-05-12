@@ -13,7 +13,7 @@ public class BowlingGame {
         Frames frames = Frames.of();
         while (!frames.isFinished()) {
             HitNumber hit = HitNumber.of(inputHitNumber(frames.getLastIndex()));
-            frames.play(hit);
+            frames.playWithNext(hit);
             showFrames(player, frames);
             showScores(frames.totalScores());
         }

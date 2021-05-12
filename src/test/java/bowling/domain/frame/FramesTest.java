@@ -26,14 +26,14 @@ public class FramesTest {
 
     @Test
     void 프레임이종료되었을때_다음프레임생성() {
-        frames.play(HitNumber.of(10));
+        frames.playWithNext(HitNumber.of(10));
         assertThat(frames.getLastIndex()).isEqualTo(2);
         System.out.println(frames);
     }
 
     @Test
     void 프레임이아직종료되지않았을때_현재프레임() {
-        frames.play(HitNumber.of(3));
+        frames.playWithNext(HitNumber.of(3));
         assertThat(frames.getLastIndex()).isEqualTo(1);
     }
 
@@ -49,7 +49,7 @@ public class FramesTest {
     public static Frames lastFrames() {
         Frames frames = Frames.of();
         for (int i = 0; i < 12; i++) {
-            frames.play(HitNumber.of(10));
+            frames.playWithNext(HitNumber.of(10));
         }
         return frames;
     }

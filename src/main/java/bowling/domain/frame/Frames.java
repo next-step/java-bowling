@@ -20,12 +20,14 @@ public class Frames {
         return new Frames();
     }
 
-    public void play(HitNumber hitNumber) {
+    public boolean playWithNext(HitNumber hitNumber) {
         rollOne(hitNumber);
         addHitScore(hitNumber);
         if (isNeededToNext()) {
             addNext();
+            return true;
         }
+        return false;
     }
 
     public List<Score> totalScores() {
