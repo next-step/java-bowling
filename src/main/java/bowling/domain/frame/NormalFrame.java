@@ -19,17 +19,17 @@ public final class NormalFrame implements Frame {
     }
 
     @Override
+    public Frame bowl(final int pins) {
+        return bowl(Pins.valueOf(pins));
+    }
+
+    @Override
     public final Frame bowl(final Pins fallPins) {
         state = state.bowl(fallPins);
         if (state.isFinish()) {
             return generateNextFrame();
         }
         return this;
-    }
-
-    @Override
-    public Frame bowl(final int pins) {
-        return bowl(Pins.valueOf(pins));
     }
 
     private final Frame generateNextFrame() {

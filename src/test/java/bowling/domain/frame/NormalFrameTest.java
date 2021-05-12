@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Score;
-import bowling.domain.state.Pins;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,13 +56,10 @@ class NormalFrameTest {
         // when
         Frame normalFrame = new NormalFrame(1);
         normalFrame.bowl(10);
+        Score score = normalFrame.score();
 
         // then
-        assertAll(
-                () -> assertThat(normalFrame.score()).isNotNull(),
-                () -> assertThat(normalFrame.score()).isInstanceOf(Score.class),
-                () -> assertThat(normalFrame.score().score()).isEqualTo(10)
-        );
+        assertThat(score.score()).isEqualTo(10);
     }
 
     @DisplayName("NormalFrame 인스턴스가 sequence 를 반환하는지 테스트")

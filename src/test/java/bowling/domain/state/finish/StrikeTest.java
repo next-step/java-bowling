@@ -14,8 +14,10 @@ class StrikeTest {
     @DisplayName("Strike 인스턴스 생성 여부 테스트")
     @Test
     void 생성() {
+        // when
         State strike = new Strike();
 
+        // then
         assertAll(
                 () -> assertThat(strike).isNotNull(),
                 () -> assertThat(strike).isInstanceOf(Strike.class)
@@ -25,13 +27,16 @@ class StrikeTest {
     @DisplayName("Strike 인스턴스의 Score 반환 여부 테스트")
     @Test
     void 반환_Score() {
+        // given
         State strike = new Strike();
 
+        // when
+        Score strikeScore = strike.score();
+
+        // then
         assertAll(
-                () -> assertThat(strike.score()).isNotNull(),
-                () -> assertThat(strike.score()).isInstanceOf(Score.class),
-                () -> assertThat(strike.score().isFinish()).isFalse(),
-                () -> assertThat(strike.score().score()).isEqualTo(10)
+                () -> assertThat(strikeScore.isFinish()).isFalse(),
+                () -> assertThat(strikeScore.score()).isEqualTo(10)
         );
     }
 

@@ -52,15 +52,16 @@ class SpareTest {
     @DisplayName("Spare 인스턴스가 알맞는 Score 인스턴스를 반한하는지 테스트")
     @Test
     void 반환_score() {
-        // when
+        // given
         State spare = new Spare(0, 10);
+
+        // when
+        Score spareScore = spare.score();
 
         // then
         assertAll(
-                () -> assertThat(spare.score()).isNotNull(),
-                () -> assertThat(spare.score()).isInstanceOf(Score.class),
-                () -> assertThat(spare.score().isFinish()).isFalse(),
-                () -> assertThat(spare.score().score()).isEqualTo(10)
+                () -> assertThat(spareScore.isFinish()).isFalse(),
+                () -> assertThat(spareScore.score()).isEqualTo(10)
         );
     }
 

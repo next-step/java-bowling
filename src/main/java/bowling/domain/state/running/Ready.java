@@ -14,16 +14,16 @@ public final class Ready extends Running {
     }
 
     @Override
+    public State bowl(final int pins) {
+        return bowl(Pins.valueOf(pins));
+    }
+
+    @Override
     public final State bowl(final Pins firstPins) {
         if (crush(firstPins).isEmpty()) {
             return new Strike();
         }
         return new FirstBowl(firstPins);
-    }
-
-    @Override
-    public State bowl(final int pins) {
-        return bowl(Pins.valueOf(pins));
     }
 
     private final Pins crush(final Pins firstPins) {

@@ -67,7 +67,7 @@ class FinalFrameTest {
     @DisplayName("FinalFrame 인스턴스가 알맞는 Score 반환 기능 테스트")
     @Test
     void 반환_score() {
-        // when
+        // given
         Frame firstFrame = new FinalFrame().bowl(9).bowl(0);
         Frame secondFrame = new FinalFrame().bowl(9).bowl(1).bowl(9);
         Frame thirdFrame = new FinalFrame().bowl(9).bowl(1).bowl(10);
@@ -76,15 +76,24 @@ class FinalFrameTest {
         Frame sixthFrame = new FinalFrame().bowl(10).bowl(10).bowl(9);
         Frame seventhFrame = new FinalFrame().bowl(10).bowl(10).bowl(10);
 
+        // when
+        Score firstScore = firstFrame.score();
+        Score secondScore = secondFrame.score();
+        Score thirdScore = thirdFrame.score();
+        Score fourthScore = fourthFrame.score();
+        Score fifthScore = fifthFrame.score();
+        Score sixthScore = sixthFrame.score();
+        Score seventhScore = seventhFrame.score();
+
         // then
         assertAll(
-                () -> assertThat(firstFrame.score().score()).isEqualTo(9),
-                () -> assertThat(secondFrame.score().score()).isEqualTo(19),
-                () -> assertThat(thirdFrame.score().score()).isEqualTo(20),
-                () -> assertThat(fourthFrame.score().score()).isEqualTo(19),
-                () -> assertThat(fifthFrame.score().score()).isEqualTo(20),
-                () -> assertThat(sixthFrame.score().score()).isEqualTo(29),
-                () -> assertThat(seventhFrame.score().score()).isEqualTo(30)
+                () -> assertThat(firstScore.score()).isEqualTo(9),
+                () -> assertThat(secondScore.score()).isEqualTo(19),
+                () -> assertThat(thirdScore.score()).isEqualTo(20),
+                () -> assertThat(fourthScore.score()).isEqualTo(19),
+                () -> assertThat(fifthScore.score()).isEqualTo(20),
+                () -> assertThat(sixthScore.score()).isEqualTo(29),
+                () -> assertThat(seventhScore.score()).isEqualTo(30)
         );
 
     }
@@ -102,13 +111,20 @@ class FinalFrameTest {
         Frame fourthFrame = new FinalFrame().bowl(9).bowl(1).bowl(10);
         Frame sixthFrame = new FinalFrame().bowl(10).bowl(10).bowl(10);
 
+        // when
+        Score firstScore = firstFrame.calculateAdditionalScore(miss);
+        Score secondScore = secondFrame.calculateAdditionalScore(miss);
+        Score thirdScore = thirdFrame.calculateAdditionalScore(miss);
+        Score fourthScore = fourthFrame.calculateAdditionalScore(miss);
+        Score fifthScore = sixthFrame.calculateAdditionalScore(miss);
+
         // then
         assertAll(
-                () -> assertThat(firstFrame.calculateAdditionalScore(miss).score()).isEqualTo(9),
-                () -> assertThat(secondFrame.calculateAdditionalScore(miss).score()).isEqualTo(9),
-                () -> assertThat(thirdFrame.calculateAdditionalScore(miss).score()).isEqualTo(9),
-                () -> assertThat(fourthFrame.calculateAdditionalScore(miss).score()).isEqualTo(9),
-                () -> assertThat(sixthFrame.calculateAdditionalScore(miss).score()).isEqualTo(9)
+                () -> assertThat(firstScore.score()).isEqualTo(9),
+                () -> assertThat(secondScore.score()).isEqualTo(9),
+                () -> assertThat(thirdScore.score()).isEqualTo(9),
+                () -> assertThat(fourthScore.score()).isEqualTo(9),
+                () -> assertThat(fifthScore.score()).isEqualTo(9)
         );
     }
 
@@ -117,21 +133,26 @@ class FinalFrameTest {
     void 반환_calculateAdditionalScore_이전이_spare일때() {
         // given
         Score spare = Score.spare();
-
-        // when
         Frame firstFrame = new FinalFrame().bowl(0).bowl(0);
         Frame secondFrame = new FinalFrame().bowl(1).bowl(8);
         Frame thirdFrame = new FinalFrame().bowl(1).bowl(9).bowl(10);
         Frame fourthFrame = new FinalFrame().bowl(9).bowl(1).bowl(10);
         Frame sixthFrame = new FinalFrame().bowl(10).bowl(10).bowl(10);
 
+        // when
+        Score firstScore = firstFrame.calculateAdditionalScore(spare);
+        Score secondScore = secondFrame.calculateAdditionalScore(spare);
+        Score thirdScore = thirdFrame.calculateAdditionalScore(spare);
+        Score fourthScore = fourthFrame.calculateAdditionalScore(spare);
+        Score fifthScore = sixthFrame.calculateAdditionalScore(spare);
+
         // then
         assertAll(
-                () -> assertThat(firstFrame.calculateAdditionalScore(spare).score()).isEqualTo(10),
-                () -> assertThat(secondFrame.calculateAdditionalScore(spare).score()).isEqualTo(11),
-                () -> assertThat(thirdFrame.calculateAdditionalScore(spare).score()).isEqualTo(11),
-                () -> assertThat(fourthFrame.calculateAdditionalScore(spare).score()).isEqualTo(19),
-                () -> assertThat(sixthFrame.calculateAdditionalScore(spare).score()).isEqualTo(20)
+                () -> assertThat(firstScore.score()).isEqualTo(10),
+                () -> assertThat(secondScore.score()).isEqualTo(11),
+                () -> assertThat(thirdScore.score()).isEqualTo(11),
+                () -> assertThat(fourthScore.score()).isEqualTo(19),
+                () -> assertThat(fifthScore.score()).isEqualTo(20)
         );
     }
 
@@ -140,21 +161,27 @@ class FinalFrameTest {
     void 반환_calculateAdditionalScore_이전이_strike일때() {
         // given
         Score strike = Score.strike();
-
-        // when
         Frame firstFrame = new FinalFrame().bowl(0).bowl(0);
         Frame secondFrame = new FinalFrame().bowl(1).bowl(8);
         Frame thirdFrame = new FinalFrame().bowl(1).bowl(9).bowl(10);
         Frame fourthFrame = new FinalFrame().bowl(9).bowl(1).bowl(10);
         Frame sixthFrame = new FinalFrame().bowl(10).bowl(10).bowl(10);
 
+        // when
+        Score firstScore = firstFrame.calculateAdditionalScore(strike);
+        Score secondScore = secondFrame.calculateAdditionalScore(strike);
+        Score thirdScore = thirdFrame.calculateAdditionalScore(strike);
+        Score fourthScore = fourthFrame.calculateAdditionalScore(strike);
+        Score fifthScore = sixthFrame.calculateAdditionalScore(strike);
+
+
         // then
         assertAll(
-                () -> assertThat(firstFrame.calculateAdditionalScore(strike).score()).isEqualTo(10),
-                () -> assertThat(secondFrame.calculateAdditionalScore(strike).score()).isEqualTo(19),
-                () -> assertThat(thirdFrame.calculateAdditionalScore(strike).score()).isEqualTo(20),
-                () -> assertThat(fourthFrame.calculateAdditionalScore(strike).score()).isEqualTo(20),
-                () -> assertThat(sixthFrame.calculateAdditionalScore(strike).score()).isEqualTo(30)
+                () -> assertThat(firstScore.score()).isEqualTo(10),
+                () -> assertThat(secondScore.score()).isEqualTo(19),
+                () -> assertThat(thirdScore.score()).isEqualTo(20),
+                () -> assertThat(fourthScore.score()).isEqualTo(20),
+                () -> assertThat(fifthScore.score()).isEqualTo(30)
         );
     }
 

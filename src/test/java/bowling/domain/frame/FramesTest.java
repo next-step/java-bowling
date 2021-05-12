@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Scores;
 import bowling.exception.NoActionBowlException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -107,11 +108,15 @@ class FramesTest {
             thirdFrames.bowl(10);
         }
 
+        Scores firstScores = firstFrames.scores();
+        Scores secondScores = secondFrames.scores();
+        Scores thirdScores = thirdFrames.scores();
+
         // when
         assertAll(
-                () -> assertThat(firstFrames.scores().sum()).isEqualTo(20),
-                () -> assertThat(secondFrames.scores().sum()).isEqualTo(150),
-                () -> assertThat(thirdFrames.scores().sum()).isEqualTo(300)
+                () -> assertThat(firstScores.sum()).isEqualTo(20),
+                () -> assertThat(secondScores.sum()).isEqualTo(150),
+                () -> assertThat(thirdScores.sum()).isEqualTo(300)
         );
 
     }

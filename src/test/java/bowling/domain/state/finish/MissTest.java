@@ -52,15 +52,16 @@ class MissTest {
     @DisplayName("Miss 인스턴스가 알맞은 Score 반환하는지 테스트")
     @Test
     void 반환_score() {
-        // when
+        // given
         State miss = new Miss(1, 8);
+
+        // when
+        Score missScore = miss.score();
 
         // then
         assertAll(
-                () -> assertThat(miss.score()).isNotNull(),
-                () -> assertThat(miss.score()).isInstanceOf(Score.class),
-                () -> assertThat(miss.score().isFinish()).isTrue(),
-                () -> assertThat(miss.score().score()).isEqualTo(9)
+                () -> assertThat(missScore.isFinish()).isTrue(),
+                () -> assertThat(missScore.score()).isEqualTo(9)
         );
 
     }
