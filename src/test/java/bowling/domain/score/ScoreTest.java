@@ -12,11 +12,8 @@ class ScoreTest {
     @DisplayName("Score 인스턴스가 miss 를 나타내는 인스턴스를 반환하는지 테스트")
     @Test
     void 생성_miss() {
-        // given
-        Pins pins = Pins.valueOf(9);
-
         // when
-        Score score = Score.miss(pins);
+        Score score = Score.miss(9);
 
         // then
         assertAll(
@@ -69,11 +66,8 @@ class ScoreTest {
     @DisplayName("Score 인스턴스가 보너스 점수를 다 더했는지를 반환하는 테스트")
     @Test
     void 반환_finish() {
-        // given
-        Pins pins = Pins.valueOf(9);
-
         // when
-        Score noneBonusScore = Score.miss(pins);
+        Score noneBonusScore = Score.miss(9);
 
         // then
         assertThat(noneBonusScore.isFinish()).isTrue();
@@ -83,11 +77,10 @@ class ScoreTest {
     @Test
     void 반환_addBonusScore() {
         // given
-        int bonusScore = 10;
         Score target = Score.spare();
 
         // when
-        Score score = target.addBonusScore(bonusScore);
+        Score score = target.addBonusScore(10);
 
         // then
         assertAll(
@@ -101,17 +94,16 @@ class ScoreTest {
     @Test
     void 반환_score() {
         // given
-        Pins pins = Pins.valueOf(9);
         int allClear = 10;
 
         // when
-        Score miss = Score.miss(pins);
+        Score miss = Score.miss(9);
         Score spare = Score.spare();
         Score strike = Score.strike();
 
         // then
         assertAll(
-                () -> assertThat(miss.score()).isEqualTo(pins.count()),
+                () -> assertThat(miss.score()).isEqualTo(9),
                 () -> assertThat(spare.score()).isEqualTo(allClear),
                 () -> assertThat(strike.score()).isEqualTo(allClear)
         );

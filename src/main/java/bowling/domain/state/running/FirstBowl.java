@@ -18,6 +18,10 @@ public final class FirstBowl extends Running {
 
     private final Pins firstBowl;
 
+    public FirstBowl(final int firstBowl) {
+        this(Pins.valueOf(firstBowl));
+    }
+
     public FirstBowl(final Pins firstBowl) {
         validateNull(firstBowl);
         validateSize(firstBowl);
@@ -45,6 +49,11 @@ public final class FirstBowl extends Running {
             return new Miss(firstBowl, secondBowl);
         }
         throw new InvalidPinsSizeException();
+    }
+
+    @Override
+    public State bowl(final int pins) {
+        return bowl(Pins.valueOf(pins));
     }
 
     @Override

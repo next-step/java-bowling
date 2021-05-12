@@ -16,6 +16,10 @@ public final class Spare extends Finish {
     private final Pins firstPins;
     private final Pins secondPins;
 
+    public Spare(final int firstPins, final int secondPins) {
+        this(Pins.valueOf(firstPins), Pins.valueOf(secondPins));
+    }
+
     public Spare(final Pins firstPins, final Pins secondPins) {
         validateNull(firstPins, secondPins);
         validateSize(firstPins, secondPins);

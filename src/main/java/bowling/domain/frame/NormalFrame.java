@@ -27,6 +27,11 @@ public final class NormalFrame implements Frame {
         return this;
     }
 
+    @Override
+    public Frame bowl(final int pins) {
+        return bowl(Pins.valueOf(pins));
+    }
+
     private final Frame generateNextFrame() {
         final int nextSequence = addExact(sequence, INCREASE_UNIT);
         if (nextSequence == LAST_SEQUENCE) {

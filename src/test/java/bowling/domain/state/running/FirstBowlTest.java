@@ -19,11 +19,8 @@ class FirstBowlTest {
     @DisplayName("FirstBowl 인스턴스 생성 여부 테스트")
     @Test
     void 생성() {
-        // given
-        Pins pins = Pins.valueOf(9);
-
         // when
-        State firstBowl = new FirstBowl(pins);
+        State firstBowl = new FirstBowl(9);
 
         // then
         assertAll(
@@ -47,11 +44,8 @@ class FirstBowlTest {
     @DisplayName("FirstBowl 인스턴스에 10의 값을 가진 Pins 입력시 예외처리 테스트")
     @Test
     void 검증_10값을_가진_Pins() {
-        // given
-        Pins pins = Pins.valueOf(10);
-
         // when and then
-        assertThatThrownBy(() -> new FirstBowl(pins))
+        assertThatThrownBy(() -> new FirstBowl(10))
                 .isInstanceOf(InvalidFirstBowlSizeException.class)
                 .hasMessage("FirstBowl 에 대해 알맞지 않은 크기가 입력 되었습니다.");
     }
@@ -59,12 +53,9 @@ class FirstBowlTest {
     @DisplayName("FirstBowl 인스턴스가 Spare 를 반환하는지 테스트")
     @Test
     void 반환_bowl_Spare() {
-        // given
-        Pins pins = Pins.valueOf(9);
-
         // when
-        State firstBowl = new FirstBowl(pins);
-        State actual = firstBowl.bowl(Pins.valueOf(1));
+        State firstBowl = new FirstBowl(9);
+        State actual = firstBowl.bowl(1);
 
         // then
         assertAll(
@@ -76,12 +67,9 @@ class FirstBowlTest {
     @DisplayName("FirstBowl 인스턴스가 Miss 를 반환하는지 테스트")
     @Test
     void 반환_bowl_Miss() {
-        // given
-        Pins pins = Pins.valueOf(9);
-
         // when
-        State firstBowl = new FirstBowl(pins);
-        State actual = firstBowl.bowl(Pins.valueOf(0));
+        State firstBowl = new FirstBowl(9);
+        State actual = firstBowl.bowl(0);
 
         // then
         assertAll(
@@ -93,11 +81,8 @@ class FirstBowlTest {
     @DisplayName("이전이 Miss 일 때, calculateAdditionalScore 의 결과로 알맞는 Score 인스턴스를 반한하는지 테스트")
     @Test
     void 반환_calculateAdditionalScore_Miss_일_경우() {
-        // given
-        Pins pins = Pins.valueOf(9);
-
         // when
-        State firstBowl = new FirstBowl(pins);
+        State firstBowl = new FirstBowl(9);
         Score beforeScore = Score.miss(Pins.valueOf(0));
         Score actual = firstBowl.calculateAdditionalScore(beforeScore);
 
@@ -111,49 +96,39 @@ class FirstBowlTest {
     @DisplayName("이전이 Spare 일 때, calculateAdditionalScore 의 결과로 알맞는 Score 인스턴스를 반한하는지 테스트")
     @Test
     void 반환_calculateAdditionalScore_Spare_일_경우() {
-        // given
-        Pins pins = Pins.valueOf(9);
-
         // when
-        State firstBowl = new FirstBowl(pins);
+        State firstBowl = new FirstBowl(9);
         Score beforeScore = Score.spare();
         Score actual = firstBowl.calculateAdditionalScore(beforeScore);
 
         // then
         assertAll(
                 () -> assertThat(actual.isFinish()).isTrue(),
-                () -> assertThat(actual.score()).isEqualTo(beforeScore.score() + pins.count())
+                () -> assertThat(actual.score()).isEqualTo(beforeScore.score() + 9)
         );
     }
 
     @DisplayName("이전이 Strike 일 때, calculateAdditionalScore 의 결과로 알맞는 Score 인스턴스를 반한하는지 테스트")
     @Test
     void 반환_calculateAdditionalScore_Strike_일_경우() {
-        // given
-        Pins pins = Pins.valueOf(9);
-
         // when
-        State firstBowl = new FirstBowl(pins);
+        State firstBowl = new FirstBowl(9);
         Score beforeScore = Score.strike();
         Score actual = firstBowl.calculateAdditionalScore(beforeScore);
 
         // then
         assertAll(
                 () -> assertThat(actual.isFinish()).isFalse(),
-                () -> assertThat(actual.score()).isEqualTo(beforeScore.score() + pins.count())
+                () -> assertThat(actual.score()).isEqualTo(beforeScore.score() + 9)
         );
     }
 
     @DisplayName("FirstBowl 인스턴스가 점수를 알맞게 표기하는지 테스트")
     @Test
     void 반환_description() {
-        // given
-        Pins zeroPins = Pins.valueOf(0);
-        Pins generalPins = Pins.valueOf(9);
-
         // when
-        State zeroFirstBowl = new FirstBowl(zeroPins);
-        State generalFirstBowl = new FirstBowl(generalPins);
+        State zeroFirstBowl = new FirstBowl(0);
+        State generalFirstBowl = new FirstBowl(9);
 
         // then
         assertAll(

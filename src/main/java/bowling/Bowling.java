@@ -27,8 +27,7 @@ public final class Bowling {
 
     private static final void playBowl(final Player player) {
         try {
-            final Pins fallPins = Pins.valueOf(INPUT_VIEW.InputFallCountByConsole(player.sequence()));
-            player.bowl(fallPins);
+            player.bowl(INPUT_VIEW.InputFallCountByConsole(player.sequence()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             playBowl(player);
@@ -37,7 +36,7 @@ public final class Bowling {
 
     private static final Player getPlayer() {
         try {
-            return Player.from(INPUT_VIEW.InputPlayerNameByConsole());
+            return new Player(INPUT_VIEW.InputPlayerNameByConsole());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return getPlayer();

@@ -13,12 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FinalFrameTest {
 
-    private static final Pins ZERO = Pins.valueOf(0);
-    private static final Pins ONE = Pins.valueOf(1);
-    private static final Pins EIGHT = Pins.valueOf(8);
-    private static final Pins NINE = Pins.valueOf(9);
-    private static final Pins TEN = Pins.valueOf(10);
-
     @DisplayName("FinalFrame 인스턴스 생성 여부 테스트")
     @Test
     void 생성() {
@@ -36,10 +30,10 @@ class FinalFrameTest {
     @Test
     void 투구_bowl() {
         // when
-        Frame firstFrame = new FinalFrame().bowl(ZERO).bowl(NINE);
-        Frame secondFrame = new FinalFrame().bowl(ONE).bowl(NINE);
-        Frame thirdFrame = new FinalFrame().bowl(ONE).bowl(NINE).bowl(TEN);
-        Frame fourthFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(0).bowl(9);
+        Frame secondFrame = new FinalFrame().bowl(1).bowl(9);
+        Frame thirdFrame = new FinalFrame().bowl(1).bowl(9).bowl(10);
+        Frame fourthFrame = new FinalFrame().bowl(10).bowl(10).bowl(10);
 
         // then
         assertAll(
@@ -54,16 +48,16 @@ class FinalFrameTest {
     @Test
     void bowl_보너스_있을때_예외처리() {
         // when
-        Frame firstFrame = new FinalFrame().bowl(ZERO).bowl(NINE);
-        Frame secondFrame = new FinalFrame().bowl(NINE).bowl(ONE).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(0).bowl(9);
+        Frame secondFrame = new FinalFrame().bowl(9).bowl(1).bowl(10);
 
         // then
         assertAll(
-                () -> assertThatThrownBy(() -> firstFrame.bowl(TEN))
+                () -> assertThatThrownBy(() -> firstFrame.bowl(10))
                         .isInstanceOf(NoActionBowlException.class)
                         .hasMessage("현재 상태에서는 더 이상 볼을 던질 수 없습니다."),
 
-                () -> assertThatThrownBy(() -> secondFrame.bowl(TEN))
+                () -> assertThatThrownBy(() -> secondFrame.bowl(10))
                         .isInstanceOf(NoActionBowlException.class)
                         .hasMessage("현재 상태에서는 더 이상 볼을 던질 수 없습니다.")
         );
@@ -74,13 +68,13 @@ class FinalFrameTest {
     @Test
     void 반환_score() {
         // when
-        Frame firstFrame = new FinalFrame().bowl(NINE).bowl(ZERO);
-        Frame secondFrame = new FinalFrame().bowl(NINE).bowl(ONE).bowl(NINE);
-        Frame thirdFrame = new FinalFrame().bowl(NINE).bowl(ONE).bowl(TEN);
-        Frame fourthFrame = new FinalFrame().bowl(TEN).bowl(NINE).bowl(ZERO);
-        Frame fifthFrame = new FinalFrame().bowl(TEN).bowl(NINE).bowl(ONE);
-        Frame sixthFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(NINE);
-        Frame seventhFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(9).bowl(0);
+        Frame secondFrame = new FinalFrame().bowl(9).bowl(1).bowl(9);
+        Frame thirdFrame = new FinalFrame().bowl(9).bowl(1).bowl(10);
+        Frame fourthFrame = new FinalFrame().bowl(10).bowl(9).bowl(0);
+        Frame fifthFrame = new FinalFrame().bowl(10).bowl(9).bowl(1);
+        Frame sixthFrame = new FinalFrame().bowl(10).bowl(10).bowl(9);
+        Frame seventhFrame = new FinalFrame().bowl(10).bowl(10).bowl(10);
 
         // then
         assertAll(
@@ -99,14 +93,14 @@ class FinalFrameTest {
     @Test
     void 반환_calculateAdditionalScore_이전이_miss일때() {
         // given
-        Score miss = Score.miss(NINE);
+        Score miss = Score.miss(Pins.valueOf(9));
 
         // when
-        Frame firstFrame = new FinalFrame().bowl(ZERO).bowl(ZERO);
-        Frame secondFrame = new FinalFrame().bowl(ONE).bowl(EIGHT);
-        Frame thirdFrame = new FinalFrame().bowl(ONE).bowl(NINE).bowl(TEN);
-        Frame fourthFrame = new FinalFrame().bowl(NINE).bowl(ONE).bowl(TEN);
-        Frame sixthFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(0).bowl(0);
+        Frame secondFrame = new FinalFrame().bowl(1).bowl(8);
+        Frame thirdFrame = new FinalFrame().bowl(1).bowl(9).bowl(10);
+        Frame fourthFrame = new FinalFrame().bowl(9).bowl(1).bowl(10);
+        Frame sixthFrame = new FinalFrame().bowl(10).bowl(10).bowl(10);
 
         // then
         assertAll(
@@ -125,11 +119,11 @@ class FinalFrameTest {
         Score spare = Score.spare();
 
         // when
-        Frame firstFrame = new FinalFrame().bowl(ZERO).bowl(ZERO);
-        Frame secondFrame = new FinalFrame().bowl(ONE).bowl(EIGHT);
-        Frame thirdFrame = new FinalFrame().bowl(ONE).bowl(NINE).bowl(TEN);
-        Frame fourthFrame = new FinalFrame().bowl(NINE).bowl(ONE).bowl(TEN);
-        Frame sixthFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(0).bowl(0);
+        Frame secondFrame = new FinalFrame().bowl(1).bowl(8);
+        Frame thirdFrame = new FinalFrame().bowl(1).bowl(9).bowl(10);
+        Frame fourthFrame = new FinalFrame().bowl(9).bowl(1).bowl(10);
+        Frame sixthFrame = new FinalFrame().bowl(10).bowl(10).bowl(10);
 
         // then
         assertAll(
@@ -148,11 +142,11 @@ class FinalFrameTest {
         Score strike = Score.strike();
 
         // when
-        Frame firstFrame = new FinalFrame().bowl(ZERO).bowl(ZERO);
-        Frame secondFrame = new FinalFrame().bowl(ONE).bowl(EIGHT);
-        Frame thirdFrame = new FinalFrame().bowl(ONE).bowl(NINE).bowl(TEN);
-        Frame fourthFrame = new FinalFrame().bowl(NINE).bowl(ONE).bowl(TEN);
-        Frame sixthFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(0).bowl(0);
+        Frame secondFrame = new FinalFrame().bowl(1).bowl(8);
+        Frame thirdFrame = new FinalFrame().bowl(1).bowl(9).bowl(10);
+        Frame fourthFrame = new FinalFrame().bowl(9).bowl(1).bowl(10);
+        Frame sixthFrame = new FinalFrame().bowl(10).bowl(10).bowl(10);
 
         // then
         assertAll(
@@ -168,17 +162,17 @@ class FinalFrameTest {
     @Test
     void 반환_description() {
         // when
-        Frame firstFrame = new FinalFrame().bowl(ZERO);
-        Frame secondFrame = new FinalFrame().bowl(NINE);
-        Frame thirdFrame = new FinalFrame().bowl(TEN);
-        Frame fourthFrame = new FinalFrame().bowl(ONE).bowl(EIGHT);
-        Frame fifthFrame = new FinalFrame().bowl(ZERO).bowl(NINE);
-        Frame sixthFrame = new FinalFrame().bowl(NINE).bowl(ZERO);
-        Frame seventhFrame = new FinalFrame().bowl(ONE).bowl(NINE).bowl(TEN);
-        Frame eightFrame = new FinalFrame().bowl(ZERO).bowl(TEN).bowl(TEN);
-        Frame nineFrame = new FinalFrame().bowl(TEN).bowl(ZERO).bowl(TEN);
-        Frame tenFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(ZERO);
-        Frame elevenFrame = new FinalFrame().bowl(TEN).bowl(TEN).bowl(TEN);
+        Frame firstFrame = new FinalFrame().bowl(0);
+        Frame secondFrame = new FinalFrame().bowl(9);
+        Frame thirdFrame = new FinalFrame().bowl(10);
+        Frame fourthFrame = new FinalFrame().bowl(1).bowl(8);
+        Frame fifthFrame = new FinalFrame().bowl(0).bowl(9);
+        Frame sixthFrame = new FinalFrame().bowl(9).bowl(0);
+        Frame seventhFrame = new FinalFrame().bowl(1).bowl(9).bowl(10);
+        Frame eightFrame = new FinalFrame().bowl(0).bowl(10).bowl(10);
+        Frame nineFrame = new FinalFrame().bowl(10).bowl(0).bowl(10);
+        Frame tenFrame = new FinalFrame().bowl(10).bowl(10).bowl(0);
+        Frame elevenFrame = new FinalFrame().bowl(10).bowl(10).bowl(10);
 
         // then
         assertAll(

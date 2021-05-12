@@ -11,6 +11,8 @@ public interface State {
 
     State bowl(Pins pins);
 
+    State bowl(int pins);
+
     boolean isFinish();
 
     boolean isAllPinClear();

@@ -12,16 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StatesTest {
 
-    private static final Pins ZERO = Pins.valueOf(0);
-    private static final Pins ONE = Pins.valueOf(1);
-    private static final Pins EIGHT = Pins.valueOf(8);
-    private static final Pins NINE = Pins.valueOf(9);
-    private static final Pins TEN = Pins.valueOf(10);
-
-    private static final State FIRST_BOWL = State.initialize().bowl(ZERO);
-    private static final State MISS = FIRST_BOWL.bowl(NINE);
-    private static final State SPARE = FIRST_BOWL.bowl(TEN);
-    private static final State STRIKE = State.initialize().bowl(TEN);
+    private static final State FIRST_BOWL = State.initialize().bowl(0);
+    private static final State MISS = FIRST_BOWL.bowl(9);
+    private static final State SPARE = FIRST_BOWL.bowl(10);
+    private static final State STRIKE = State.initialize().bowl(10);
 
     private static final Score MISS_SCORE = Score.miss(Pins.valueOf(9));
     private static final Score SPARE_SCORE = Score.spare();
@@ -55,8 +49,8 @@ class StatesTest {
     @Test
     void 반환_보너스_여부_없을때() {
         // given
-        State first = State.initialize().bowl(NINE);
-        State second = first.bowl(ZERO);
+        State first = State.initialize().bowl(9);
+        State second = first.bowl(0);
 
         // when
         States states = States.initialize().remove().add(first).remove().add(second);
@@ -69,8 +63,8 @@ class StatesTest {
     @Test
     void 반환_보너스_여부_있을때() {
         // given
-        State first = State.initialize().bowl(ZERO);
-        State second = first.bowl(TEN);
+        State first = State.initialize().bowl(0);
+        State second = first.bowl(10);
 
         // when
         States states = States.initialize().remove().add(first).remove().add(second);
@@ -102,7 +96,7 @@ class StatesTest {
     void 삭제() {
         // given
         State expected = new Strike();
-        State removed = State.initialize().bowl(NINE);
+        State removed = State.initialize().bowl(9);
 
         // when
         States states = States.initialize().add(expected).add(removed).remove();
@@ -126,7 +120,7 @@ class StatesTest {
         Score thirdScore = States.initialize().remove().add(FIRST_BOWL).remove().add(SPARE).add(STRIKE).score();
         Score fourthScore = States.initialize().remove().add(STRIKE).add(FIRST_BOWL).remove().add(MISS).score();
         Score fifthScore = States.initialize().remove().add(STRIKE).add(MISS).remove().add(SPARE).score();
-        Score sixthScore = States.initialize().remove().add(STRIKE).add(STRIKE).add(new FirstBowl(NINE)).score();
+        Score sixthScore = States.initialize().remove().add(STRIKE).add(STRIKE).add(new FirstBowl(9)).score();
         Score seventhScore = States.initialize().remove().add(STRIKE).add(STRIKE).add(STRIKE).score();
 
         // then
@@ -175,17 +169,17 @@ class StatesTest {
     @Test
     void 반환_description() {
         // given
-        State firstBowlOne = new FirstBowl(ONE);
-        State missEight = firstBowlOne.bowl(EIGHT);
-        State firstBowlNine = new FirstBowl(NINE);
-        State missZero = firstBowlNine.bowl(ZERO);
-        State spareNine = firstBowlOne.bowl(NINE);
+        State firstBowlOne = new FirstBowl(1);
+        State missEight = firstBowlOne.bowl(8);
+        State firstBowlNine = new FirstBowl(9);
+        State missZero = firstBowlNine.bowl(0);
+        State spareNine = firstBowlOne.bowl(9);
 
         // when
         // 시나리오대로 작성
         States readyStates = States.initialize();
         States firstBowlGutterStates = States.initialize().remove().add(FIRST_BOWL);
-        States firstBowlGenericStates = States.initialize().remove().add(new FirstBowl(NINE));
+        States firstBowlGenericStates = States.initialize().remove().add(new FirstBowl(9));
         States strikeOnceStates = States.initialize().remove().add(STRIKE);
         States missGenericStates = States.initialize().remove().add(firstBowlOne).remove().add(missEight);
         States missGutterFirstStates = States.initialize().remove().add(FIRST_BOWL).remove().add(MISS);

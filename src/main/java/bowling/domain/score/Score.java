@@ -21,6 +21,10 @@ public final class Score {
         return new Score(UN_AVAILABLE_SCORE, BonusCount.none());
     }
 
+    public static final Score miss(final int pins) {
+        return miss(Pins.valueOf(pins));
+    }
+
     public static final Score miss(final Pins pins) {
         return new Score(pins.count(), BonusCount.none());
     }

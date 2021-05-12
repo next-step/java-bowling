@@ -41,6 +41,10 @@ public final class Frames {
         return current.isFinish();
     }
 
+    public final void bowl(final int pins) {
+        bowl(Pins.valueOf(pins));
+    }
+
     public final void bowl(final Pins pins) {
         validateFinish();
         current = current.bowl(pins);

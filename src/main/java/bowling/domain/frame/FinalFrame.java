@@ -17,6 +17,11 @@ public final class FinalFrame implements Frame {
     }
 
     @Override
+    public Frame bowl(final int pins) {
+        return bowl(Pins.valueOf(pins));
+    }
+
+    @Override
     public final Frame bowl(final Pins fallPins) {
         validateRound();
         finalRound = finalRound.next();

@@ -12,6 +12,11 @@ public abstract class Finish implements State {
     }
 
     @Override
+    public State bowl(final int pins) {
+        throw new NoActionBowlException();
+    }
+
+    @Override
     public final boolean isFinish() {
         return true;
     }

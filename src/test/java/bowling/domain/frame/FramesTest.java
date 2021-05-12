@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.Pins;
 import bowling.exception.NoActionBowlException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,9 +36,10 @@ class FramesTest {
     void 반환_특정_frame() {
         // when
         Frames frames = new Frames();
+        Frame frame = frames.get(0);
 
         // then
-        assertThat(frames.get(0).sequence()).isEqualTo(1);
+        assertThat(frame.sequence()).isEqualTo(1);
     }
 
 
@@ -61,7 +61,7 @@ class FramesTest {
 
         // when
         for (int i = 0; i < 12; i++) {
-            frames.bowl(Pins.valueOf(10));
+            frames.bowl(10);
         }
 
         // then
@@ -79,11 +79,11 @@ class FramesTest {
 
         // when
         while (!frames.isFinish()) {
-            frames.bowl(Pins.valueOf(10));
+            frames.bowl(10);
         }
 
         // then
-        assertThatThrownBy(() -> frames.bowl(Pins.valueOf(1)))
+        assertThatThrownBy(() -> frames.bowl(1))
                 .isInstanceOf(NoActionBowlException.class)
                 .hasMessage("현재 상태에서는 더 이상 볼을 던질 수 없습니다.");
     }
@@ -98,13 +98,13 @@ class FramesTest {
 
         // when
         while (!firstFrames.isFinish()) {
-            firstFrames.bowl(Pins.valueOf(1));
+            firstFrames.bowl(1);
         }
         while (!secondFrames.isFinish()) {
-            secondFrames.bowl(Pins.valueOf(5));
+            secondFrames.bowl(5);
         }
         while (!thirdFrames.isFinish()) {
-            thirdFrames.bowl(Pins.valueOf(10));
+            thirdFrames.bowl(10);
         }
 
         // when

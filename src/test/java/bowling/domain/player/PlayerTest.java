@@ -20,8 +20,8 @@ class PlayerTest {
         Name name = new Name(stringName);
 
         // when
-        Player firstPlayer = Player.from(stringName);
-        Player secondPlayer = Player.from(name);
+        Player firstPlayer = new Player(stringName);
+        Player secondPlayer = new Player(name);
 
         // then
         assertAll(
@@ -38,7 +38,7 @@ class PlayerTest {
         Name name = null;
 
         // when
-        assertThatThrownBy(() -> Player.from(name))
+        assertThatThrownBy(() -> new Player(name))
                 .isInstanceOf(NameNullPointerException.class)
                 .hasMessage("Name 인스턴스가 null 입니다.");
     }
@@ -50,7 +50,7 @@ class PlayerTest {
         Name name = new Name("kwj");
 
         // when
-        Player player = Player.from(name);
+        Player player = new Player(name);
         boolean actual = player.isFinish();
 
         // then
@@ -64,7 +64,7 @@ class PlayerTest {
         Name name = new Name("kwj");
 
         // when
-        Player player = Player.from(name);
+        Player player = new Player(name);
         for (int i = 1; i <= 12; i++) {
             player.bowl(Pins.full());
         }
@@ -80,7 +80,7 @@ class PlayerTest {
         Name name = new Name("kwj");
 
         // when
-        Player player = Player.from(name);
+        Player player = new Player(name);
 
         // then
         assertThat(player.sequence()).isEqualTo(1);
@@ -94,7 +94,7 @@ class PlayerTest {
         Name name = new Name(expected);
 
         // when
-        Player player = Player.from(name);
+        Player player = new Player(name);
 
         // then
         assertThat(player.name()).isEqualTo(expected);
@@ -108,7 +108,7 @@ class PlayerTest {
         Name name = new Name(expected);
 
         // when
-        Player player = Player.from(name);
+        Player player = new Player(name);
 
         // then
         assertThat(player.name()).isEqualTo(expected);
@@ -118,9 +118,9 @@ class PlayerTest {
     @Test
     void 반환_scores() {
         // given
-        Player firstPlayer = Player.from("one");
-        Player secondPlayer = Player.from("two");
-        Player thirdPlayer = Player.from("thr");
+        Player firstPlayer = new Player("one");
+        Player secondPlayer = new Player("two");
+        Player thirdPlayer = new Player("thr");
 
         // when
         while (!firstPlayer.isFinish()) {

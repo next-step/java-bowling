@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
+import bowling.domain.state.State;
 
 public interface Frame {
 
@@ -9,6 +10,8 @@ public interface Frame {
     int LAST_SEQUENCE = 10;
 
     Frame bowl(Pins fallPins);
+
+    Frame bowl(int pins);
 
     boolean isFinish();
 

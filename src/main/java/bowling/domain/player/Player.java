@@ -12,18 +12,18 @@ public final class Player {
     private final Name name;
     private final Frames frames;
 
-    public static final Player from(final String name) {
-        return from(new Name(name));
+    public Player(final String name) {
+        this(new Name(name), new Frames());
     }
 
-    public static final Player from(final Name name) {
-        return new Player(name);
+    public Player(final Name name) {
+        this(name, new Frames());
     }
 
-    private Player(final Name name) {
+    public Player(final Name name, final Frames frames) {
         validateNull(name);
         this.name = name;
-        this.frames = new Frames();
+        this.frames = frames;
     }
 
     private final void validateNull(final Name name) {
@@ -34,6 +34,10 @@ public final class Player {
 
     public final boolean isFinish() {
         return frames.isFinish();
+    }
+
+    public final void bowl(final int fallPins) {
+        bowl(Pins.valueOf(fallPins));
     }
 
     public final void bowl(final Pins fallPins) {

@@ -21,6 +21,11 @@ public final class Ready extends Running {
         return new FirstBowl(firstPins);
     }
 
+    @Override
+    public State bowl(final int pins) {
+        return bowl(Pins.valueOf(pins));
+    }
+
     private final Pins crush(final Pins firstPins) {
         return readyPins.hit(firstPins.count());
     }

@@ -1,6 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.state.Pins;
 import bowling.exception.ScoreListNullPointerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,7 +42,7 @@ class ScoresTest {
     @Test
     void 반환_합계() {
         // given
-        List<Score> scoreList = new ArrayList<>(Arrays.asList(Score.miss(Pins.valueOf(5)), Score.spare(), Score.strike()));
+        List<Score> scoreList = new ArrayList<>(Arrays.asList(Score.miss(5), Score.spare(), Score.strike()));
 
         // when
         Scores scores = new Scores(scoreList);
@@ -56,7 +55,7 @@ class ScoresTest {
     @Test
     void 반환_사이즈() {
         // given
-        List<Score> scoreList = new ArrayList<>(Arrays.asList(Score.miss(Pins.valueOf(5)), Score.spare(), Score.strike()));
+        List<Score> scoreList = new ArrayList<>(Arrays.asList(Score.miss(5), Score.spare(), Score.strike()));
 
         // when
         Scores scores = new Scores(scoreList);

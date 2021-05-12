@@ -17,6 +17,10 @@ public final class Miss extends Finish {
     private final Pins firstPins;
     private final Pins secondPins;
 
+    public Miss(final int firstPins, final int secondPins) {
+        this(Pins.valueOf(firstPins), Pins.valueOf(secondPins));
+    }
+
     public Miss(final Pins firstPins, final Pins secondPins) {
         validateNull(firstPins, secondPins);
         validateSize(firstPins, secondPins);
