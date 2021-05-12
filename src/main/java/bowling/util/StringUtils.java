@@ -1,6 +1,6 @@
 package bowling.util;
 
-import bowling.domain.Player;
+import bowling.domain.Name;
 import bowling.domain.Score;
 import bowling.domain.frame.Frames;
 
@@ -19,7 +19,7 @@ public class StringUtils {
     private static final String BLANK_FORMAT = "      |";
     private static final String SLASH = "|";
 
-    public static String convertName(Player player) {
+    public static String convertName(Name player) {
         return String.format(NAME_FORMAT, player.toString());
     }
 
