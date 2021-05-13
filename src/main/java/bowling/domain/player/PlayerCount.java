@@ -31,6 +31,7 @@ public final class PlayerCount {
     }
 
     public final PlayerCount next() {
+        validateNextSequence(nextSequence);
         return new PlayerCount(playerCount, Math.addExact(sequence, INCREASE_UNIT));
     }
 
