@@ -40,10 +40,7 @@ public class Players {
 
     public List<Player> getWinner() {
         validCanWinning();
-        Score maxScore = players.stream()
-                .map(player -> player.totalScore())
-                .max(Score::compareTo)
-                .orElseThrow(IllegalStateException::new);
+        Score maxScore = findMaxScore();
         return players.stream()
                 .filter(player -> Score.compareTo(
                         player.totalScore(), maxScore) == 0)
@@ -52,6 +49,13 @@ public class Players {
 
     public List<Player> getPlayers() {
         return unmodifiableList(players);
+    }
+
+    private Score findMaxScore() {
+        return players.stream()
+                .map(player -> player.totalScore())
+                .max(Score::compareTo)
+                .orElseThrow(IllegalStateException::new);
     }
 
     private void validContinue(Boolean isNext, Player nowPlayer) {
