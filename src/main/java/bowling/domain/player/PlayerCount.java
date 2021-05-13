@@ -33,4 +33,8 @@ public final class PlayerCount {
     public final PlayerCount next() {
         return new PlayerCount(playerCount, Math.addExact(sequence, INCREASE_UNIT));
     }
+
+    public final boolean isFinish() {
+        return sequence == playerCount;
+    }
 }
