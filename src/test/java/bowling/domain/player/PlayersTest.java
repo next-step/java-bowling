@@ -1,17 +1,19 @@
 package bowling.domain.player;
 
+import bowling.domain.frame.Frames;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static bowling.view.ResultView.showPlayers;
+import static bowling.domain.frame.FramesTest.lastFrames;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayersTest {
     private Players players;
     private List<String> nameList = Arrays.asList("이름1", "이름2", "이름3");
+    private Frames allStrikeFrame = lastFrames();
 
     @BeforeEach
     void setUp() {
@@ -45,11 +47,25 @@ public class PlayersTest {
     }
 
     @Test
-    void 모든플레이어의프레임이종료() {
+    void 모든플레이어의프레임이종료_여러사람우승() {
         for(int i = 0; i < nameList.size() * 12; i++) {
             players.play(10);
         }
         assertThat(players.isFinished()).isTrue();
-        showPlayers(players);
+        assertThat(players.getWinner())
+                .containsExactly(Player.of("이름1", allStrikeFrame),
+                        Player.of("이름2", allStrikeFrame), Player.of("이름3", allStrikeFrame));
+    }
+
+    @Test
+    void 모든플레이어프레임이종료_한사람만우승() {
+        while(!players.isFinished()) {
+            if(players.whoseTurn().equals("이름3")) {
+                players.play(10);
+                continue;
+            }
+            players.play(0);
+        }
+        assertThat(players.getWinner()).containsExactly(Player.of("이름3", allStrikeFrame));
     }
 }

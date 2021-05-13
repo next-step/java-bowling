@@ -87,6 +87,10 @@ public class Score {
         return score >= DEFAULT_MAX_SCORE;
     }
 
+    public static int compareTo(Score score1, Score score2) {
+        return score1.score - score2.score;
+    }
+
     private static void validLeft(int left) {
         if (left < INIT_NUM) {
             throw new IllegalStateException(INVALID_LEFT);

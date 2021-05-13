@@ -1,6 +1,7 @@
 package bowling.domain.player;
 
 import bowling.domain.HitNumber;
+import bowling.domain.Score;
 
 import java.util.*;
 
@@ -8,13 +9,10 @@ import static java.util.Collections.unmodifiableList;
 import static java.util.stream.Collectors.toList;
 
 public class Players {
+    private static final String INVALID_WINNING_STATE = "아직 게임이 종료되지 않아 우승자를 가릴 수 없습니다.";
+    private static final int FRAME_LAST_INDEX = 10 - 1;
     private final List<Player> players;
     private final Queue<Player> now;
-
-    private Players() {
-        players = new ArrayList<>();
-        now = new LinkedList<>();
-    }
 
     private Players(List<Player> players) {
         this.players = players;
@@ -29,10 +27,7 @@ public class Players {
 
     public void play(int hitNumber) {
         Player nowPlayer = now.peek();
-        if(nowPlayer.bowlWithNext(HitNumber.of(hitNumber)) || nowPlayer.isFinished()) {
-            now.poll();
-            validContinue(nowPlayer);
-        }
+        validContinue(nowPlayer.bowlWithNext(HitNumber.of(hitNumber)), nowPlayer);
     }
 
     public String whoseTurn() {
@@ -44,11 +39,28 @@ public class Players {
                 .noneMatch(player -> !player.isFinished());
     }
 
+    public List<Player> getWinner() {
+        if(!isFinished()) {
+            throw new IllegalStateException(INVALID_WINNING_STATE);
+        }
+        Score maxScore = players.stream()
+                .map(player -> player.totalScores().get(FRAME_LAST_INDEX))
+                .max(Score::compareTo)
+                .orElseThrow(IllegalStateException::new);
+        return players.stream()
+                .filter(player -> Score.compareTo(player.totalScores().get(FRAME_LAST_INDEX), maxScore) == 0)
+                .collect(toList());
+    }
+
     public List<Player> getPlayers() {
         return unmodifiableList(players);
     }
 
-    private void validContinue(Player nowPlayer) {
+    private void validContinue(Boolean isNext, Player nowPlayer) {
+        if(!isNext && !nowPlayer.isFinished()) {
+            return;
+        }
+        now.poll();
         if(!nowPlayer.isFinished()) {
             now.add(nowPlayer);
         }
