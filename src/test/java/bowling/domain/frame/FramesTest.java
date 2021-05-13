@@ -28,7 +28,6 @@ public class FramesTest {
     void 프레임이종료되었을때_다음프레임생성() {
         frames.playWithNext(HitNumber.of(10));
         assertThat(frames.getLastIndex()).isEqualTo(2);
-        System.out.println(frames);
     }
 
     @Test
@@ -43,7 +42,6 @@ public class FramesTest {
         assertThat(lastFrames.isFinished()).isTrue();
         List<Score> scores = lastFrames.totalScores();
         assertThat(scores.get(scores.size() - 1)).isEqualTo(Score.of(300));
-        System.out.println(frames);
     }
 
     public static Frames lastFrames() {

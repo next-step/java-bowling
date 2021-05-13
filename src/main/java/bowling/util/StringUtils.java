@@ -1,8 +1,11 @@
 package bowling.util;
 
 import bowling.domain.Score;
+import bowling.domain.player.Player;
 
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 
 public class StringUtils {
@@ -44,6 +47,12 @@ public class StringUtils {
 
     public static String[] splitPlayer(String player) {
         return player.split(PLAYER_DELIMITER);
+    }
+
+    public static String convertWinners(List<Player> winners) {
+        return String.join(", ", winners.stream()
+                .map(winner -> winner.toStringName())
+                .collect(toList()));
     }
 
     private static String removeLast(String str) {

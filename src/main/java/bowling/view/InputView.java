@@ -36,7 +36,7 @@ public class InputView {
     }
 
     private static int inputPlayerNum() {
-        System.out.println(ASK_INPUT_PLAYER_NUM);
+        System.out.print(ASK_INPUT_PLAYER_NUM);
         return parseInt(sc.nextLine().trim());
     }
 }

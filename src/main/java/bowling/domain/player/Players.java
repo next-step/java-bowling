@@ -40,15 +40,14 @@ public class Players {
     }
 
     public List<Player> getWinner() {
-        if(!isFinished()) {
-            throw new IllegalStateException(INVALID_WINNING_STATE);
-        }
+        validCanWinning();
         Score maxScore = players.stream()
                 .map(player -> player.totalScores().get(FRAME_LAST_INDEX))
                 .max(Score::compareTo)
                 .orElseThrow(IllegalStateException::new);
         return players.stream()
-                .filter(player -> Score.compareTo(player.totalScores().get(FRAME_LAST_INDEX), maxScore) == 0)
+                .filter(player -> Score.compareTo(
+                        player.totalScores().get(FRAME_LAST_INDEX), maxScore) == 0)
                 .collect(toList());
     }
 
@@ -63,6 +62,12 @@ public class Players {
         now.poll();
         if(!nowPlayer.isFinished()) {
             now.add(nowPlayer);
+        }
+    }
+
+    private void validCanWinning() {
+        if(!isFinished()) {
+            throw new IllegalStateException(INVALID_WINNING_STATE);
         }
     }
 

@@ -14,7 +14,7 @@ public class BowlingGame {
             players.play(inputHitNumber(players.whoseTurn()));
             showPlayers(players);
         }
-        printEnd();
+        printEnd(players.getWinner());
         close();
     }
 }
