@@ -4,6 +4,7 @@ import bowling.domain.HitNumber;
 
 import java.util.*;
 
+import static java.util.Collections.unmodifiableList;
 import static java.util.stream.Collectors.toList;
 
 public class Players {
@@ -41,6 +42,10 @@ public class Players {
     public boolean isFinished() {
         return players.stream()
                 .noneMatch(player -> !player.isFinished());
+    }
+
+    public List<Player> getPlayers() {
+        return unmodifiableList(players);
     }
 
     private void validContinue(Player nowPlayer) {

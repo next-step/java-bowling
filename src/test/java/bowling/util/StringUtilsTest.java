@@ -11,12 +11,12 @@ public class StringUtilsTest {
 
     @Test
     void 이름확인() {
-        System.out.println(convertName(Name.of("확인용")));
+        System.out.println(convertName(Name.of("확인용").toString()));
     }
 
     @Test
     void 프레임확인() {
-        System.out.println(convertFrames(lastFrames()));
+        System.out.println(convertFrames(lastFrames().toString()));
     }
 
     @Test

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static bowling.view.ResultView.showPlayers;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayersTest {
@@ -49,5 +50,6 @@ public class PlayersTest {
             players.play(10);
         }
         assertThat(players.isFinished()).isTrue();
+        showPlayers(players);
     }
 }

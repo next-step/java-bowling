@@ -1,8 +1,10 @@
 package bowling.domain.player;
 
 import bowling.domain.HitNumber;
+import bowling.domain.Score;
 import bowling.domain.frame.Frames;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Player {
@@ -35,6 +37,10 @@ public class Player {
         return frames.isFinished();
     }
 
+    public List<Score> totalScores() {
+        return frames.totalScores();
+    }
+
     public String toStringName() {
         return name.toString();
     }
@@ -52,4 +58,8 @@ public class Player {
         return Objects.hash(name, frames);
     }
 
+    @Override
+    public String toString() {
+        return "" + name + ":" + frames + "";
+    }
 }
