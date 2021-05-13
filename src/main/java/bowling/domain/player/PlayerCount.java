@@ -1,4 +1,10 @@
 package bowling.domain.player;
 
-public class PlayerCount {
+public final class PlayerCount {
+
+    private final int playerCount;
+
+    public PlayerCount(final int playerCount) {
+        this.playerCount = playerCount;
+    }
 }
