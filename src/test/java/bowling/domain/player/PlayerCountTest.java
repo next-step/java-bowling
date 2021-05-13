@@ -1,5 +1,6 @@
 package bowling.domain.player;
 
+import bowling.exception.InvalidPlayerCountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,11 +34,11 @@ class PlayerCountTest {
         assertAll(
                 () -> assertThatThrownBy(() -> new PlayerCount(zero))
                         .isInstanceOf(InvalidPlayerCountException.class)
-                        .hasMessage("PlayerCount 에 대해 알맞지 않은 크기 (%s)가 입력 되었습니다."),
+                        .hasMessage("PlayerCount 에 대해 알맞지 않은 크기 (0)가 입력 되었습니다."),
 
                 () -> assertThatThrownBy(() -> new PlayerCount(negative))
                         .isInstanceOf(InvalidPlayerCountException.class)
-                        .hasMessage("PlayerCount 에 대해 알맞지 않은 크기 (%s)가 입력 되었습니다.")
+                        .hasMessage("PlayerCount 에 대해 알맞지 않은 크기 (-1)가 입력 되었습니다.")
         );
 
     }
