@@ -4,7 +4,7 @@ import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.domain.state.State;
 import bowling.domain.state.States;
-import bowling.exception.NoActionBowlException;
+import bowling.exception.NoMoreBowlException;
 
 public final class FinalFrame implements Frame {
 
@@ -41,7 +41,7 @@ public final class FinalFrame implements Frame {
 
     private final void validateRound() {
         if (isFinish()) {
-            throw new NoActionBowlException();
+            throw new NoMoreBowlException();
         }
     }
 

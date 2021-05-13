@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
-import bowling.exception.NoActionBowlException;
+import bowling.exception.NoMoreBowlException;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -54,11 +54,11 @@ class FinalFrameTest {
         // then
         assertAll(
                 () -> assertThatThrownBy(() -> firstFrame.bowl(10))
-                        .isInstanceOf(NoActionBowlException.class)
+                        .isInstanceOf(NoMoreBowlException.class)
                         .hasMessage("현재 상태에서는 더 이상 볼을 던질 수 없습니다."),
 
                 () -> assertThatThrownBy(() -> secondFrame.bowl(10))
-                        .isInstanceOf(NoActionBowlException.class)
+                        .isInstanceOf(NoMoreBowlException.class)
                         .hasMessage("현재 상태에서는 더 이상 볼을 던질 수 없습니다.")
         );
 
