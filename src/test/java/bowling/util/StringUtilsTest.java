@@ -3,7 +3,7 @@ package bowling.util;
 import bowling.domain.player.Name;
 import org.junit.jupiter.api.Test;
 
-import static bowling.domain.frame.FramesTest.lastFrames;
+import static bowling.domain.frame.PlayerTest.allStrikePlayer;
 import static bowling.util.StringUtils.convertFrames;
 import static bowling.util.StringUtils.convertName;
 
@@ -16,7 +16,7 @@ public class StringUtilsTest {
 
     @Test
     void 프레임확인() {
-        System.out.println(convertFrames(lastFrames().toString()));
+        System.out.println(convertFrames(allStrikePlayer("테스트").toString()));
     }
 
     @Test

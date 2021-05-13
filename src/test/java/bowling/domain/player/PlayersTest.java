@@ -1,19 +1,17 @@
 package bowling.domain.player;
 
-import bowling.domain.frame.Frames;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static bowling.domain.frame.FramesTest.lastFrames;
+import static bowling.domain.frame.PlayerTest.allStrikePlayer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayersTest {
     private Players players;
     private List<String> nameList = Arrays.asList("이름1", "이름2", "이름3");
-    private Frames allStrikeFrame = lastFrames();
 
     @BeforeEach
     void setUp() {
@@ -53,8 +51,7 @@ public class PlayersTest {
         }
         assertThat(players.isFinished()).isTrue();
         assertThat(players.getWinner())
-                .containsExactly(Player.of("이름1", allStrikeFrame),
-                        Player.of("이름2", allStrikeFrame), Player.of("이름3", allStrikeFrame));
+                .containsExactly(allStrikePlayer("이름1"), allStrikePlayer("이름2"), allStrikePlayer("이름3"));
     }
 
     @Test
@@ -66,6 +63,6 @@ public class PlayersTest {
             }
             players.play(0);
         }
-        assertThat(players.getWinner()).containsExactly(Player.of("이름3", allStrikeFrame));
+        assertThat(players.getWinner()).containsExactly(allStrikePlayer("이름3"));
     }
 }

@@ -26,7 +26,7 @@ public class Players {
 
     public void play(int hitNumber) {
         Player nowPlayer = now.peek();
-        validContinue(nowPlayer.bowlWithNext(HitNumber.of(hitNumber)), nowPlayer);
+        validContinue(nowPlayer.playWithNext(HitNumber.of(hitNumber)), nowPlayer);
     }
 
     public String whoseTurn() {
