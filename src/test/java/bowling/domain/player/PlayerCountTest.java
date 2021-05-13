@@ -70,4 +70,18 @@ class PlayerCountTest {
         assertThat(next.sequence()).isEqualTo(2);
     }
 
+
+    @DisplayName("PlayerCount 인스턴스가 종료 여부를 반환하는지 테스트")
+    @Test
+    void 반환_종료_여부() {
+        // given
+        int count = 1;
+
+        // when
+        PlayerCount playerCount = new PlayerCount(count);
+
+        // then
+        assertThat(playerCount.isFinish()).isTrue();
+    }
+
 }
