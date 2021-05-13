@@ -13,23 +13,13 @@ public class Score {
     private final int score;
     private final int left;
 
-    public Score() {
-        score = INIT_NUM;
-        left = INIT_NUM;
-    }
-
-    private Score(int score) {
-        this.score = score;
-        this.left = INIT_NUM;
-    }
-
     private Score(int score, int left) {
         this.score = score;
         this.left = left;
     }
 
     public static Score of() {
-        return new Score();
+        return new Score(INIT_NUM, INIT_NUM);
     }
 
     public static Score of(int score) {
@@ -37,7 +27,7 @@ public class Score {
         if(score == DEFAULT_MAX_SCORE) {
             return ofStrike();
         }
-        return new Score(score);
+        return new Score(score, INIT_NUM);
     }
 
     public static Score of(int score, int left) {

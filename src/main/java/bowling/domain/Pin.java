@@ -15,13 +15,7 @@ public class Pin {
     private int tryNum = 0;
     private int pinNum = 10;
 
-    private Pin() {
-
-    }
-
-    private Pin(int tryNum) {
-        this.tryNum = tryNum;
-    }
+    private Pin() { }
 
     private Pin(int tryNum, int pinNum) {
         this.tryNum = tryNum;
@@ -32,15 +26,15 @@ public class Pin {
         return new Pin();
     }
 
-    public Pin reload() {
-        validTry(this.tryNum);
-        return new Pin(this.tryNum);
-    }
-
     public static Pin of(int tryNum, int pinNum) {
         validTry(tryNum);
         validPinNum(pinNum);
         return new Pin(tryNum, pinNum);
+    }
+
+    public Pin reload() {
+        validTry(this.tryNum);
+        return new Pin(this.tryNum, PIN_NUM_UPPER_BOUND);
     }
 
     public State hit(State type, HitNumber rollNumber) {

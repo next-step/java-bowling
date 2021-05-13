@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OneHitTest {
-    public static final OneHit ONE_HIT_3 = new OneHit(3);
+    public static final OneHit ONE_HIT_3 = OneHit.ofOne(3);
 
     @Test
     void OneHit생성() {
@@ -18,7 +18,7 @@ public class OneHitTest {
     @Test
     void 첫투구결과를생성() {
         State result = OneHit.of(3);
-        assertThat(result).isEqualTo(new OneHit(3));
+        assertThat(result).isEqualTo(OneHit.ofOne(3));
     }
 
     @Test

@@ -12,12 +12,7 @@ import java.util.Objects;
 public class RollResults {
     private final List<State> results;
 
-    private RollResults(State result) {
-        results = new ArrayList<>();
-        results.add(result);
-    }
-
-    public RollResults(List<State> results) {
+    private RollResults(List<State> results) {
         this.results = results;
     }
 
@@ -26,7 +21,9 @@ public class RollResults {
     }
 
     public static RollResults of(State result) {
-        return new RollResults(result);
+        List<State> results = new ArrayList<>();
+        results.add(result);
+        return new RollResults(results);
     }
 
     public static RollResults of(List<State> results) {

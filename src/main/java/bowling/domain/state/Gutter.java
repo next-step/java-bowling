@@ -7,9 +7,6 @@ import java.util.Objects;
 public class Gutter extends Running {
     private final Score score = Score.of();
 
-    private Gutter() {
-    }
-
     public static Gutter of() {
         return new Gutter();
     }
@@ -22,7 +19,7 @@ public class Gutter extends Running {
     @Override
     public State next(int nextHit) {
         if (Score.of(nextHit).isStrike()) {
-            return Spare.of(this, new OneHit(nextHit));
+            return Spare.of(this, OneHit.ofOne(nextHit));
         }
         return Miss.of(this, OneHit.of(nextHit));
     }

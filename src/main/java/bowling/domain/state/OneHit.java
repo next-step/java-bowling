@@ -7,12 +7,12 @@ import java.util.Objects;
 public class OneHit extends Running {
     private final Score score;
 
-    public OneHit(int score) {
-        this(Score.of(score));
-    }
-
     public OneHit(Score score) {
         this.score = score;
+    }
+
+    public static OneHit ofOne(int score) {
+        return new OneHit(Score.of(score));
     }
 
     public static State of(int score) {

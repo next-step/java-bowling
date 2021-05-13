@@ -14,7 +14,7 @@ public class NormalFrame implements Frame{
     private final Pin pin;
     private final State result;
 
-    public NormalFrame(Pin pin, State result) {
+    private NormalFrame(Pin pin, State result) {
         this.pin = pin;
         this.result = result;
     }
