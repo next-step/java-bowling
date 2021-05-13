@@ -22,7 +22,7 @@ public class Spare extends Finished {
 
     public static Spare of(State firstHit) {
         validFirst(firstHit.eval());
-        return new Spare(firstHit, new OneHit(Score.ofSpare(firstHit.eval())));
+        return new Spare(firstHit, OneHit.ofOne(Score.ofSpare(firstHit.eval())));
     }
 
     public static Spare of(State firstHit, State secondHit) {
@@ -47,7 +47,7 @@ public class Spare extends Finished {
 
     @Override
     public State next(int nextScore) {
-        return of(firstHit, new OneHit(secondHit.eval().add(nextScore)));
+        return of(firstHit, OneHit.ofOne(secondHit.eval().add(nextScore)));
     }
 
     private static void valid(Score firstScore, Score secondScore) {

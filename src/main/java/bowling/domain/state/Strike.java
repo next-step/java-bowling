@@ -13,7 +13,7 @@ public class Strike extends Finished {
     }
 
     public static Strike of() {
-        return new Strike(new OneHit(Score.ofStrike()));
+        return new Strike(OneHit.ofOne(Score.ofStrike()));
     }
 
     public static Strike of(State hit) {
@@ -38,7 +38,7 @@ public class Strike extends Finished {
 
     @Override
     public State next(int nextScore) {
-        return of(new OneHit(hit.eval().add(nextScore)));
+        return of(OneHit.ofOne(hit.eval().add(nextScore)));
     }
 
     private static void valid(Score score) {
