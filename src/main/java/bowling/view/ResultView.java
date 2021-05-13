@@ -18,17 +18,18 @@ public class ResultView {
             showFrames(playerStr[0], playerStr[1]);
             showScores(player.totalScores());
         });
+        System.out.println();
     }
-
-    public static void showFrames(String name, String frames) {
-        System.out.println(convertName(name) + convertFrames(frames));
-    }
-
-    public static void showScores(List<Score> scores) {
-        System.out.println(convertScores(scores));
-    }
-
     public static void printEnd() {
         System.out.println(END);
     }
+
+    private static void showFrames(String name, String frames) {
+        System.out.println(convertName(name) + convertFrames(frames));
+    }
+
+    private static void showScores(List<Score> scores) {
+        System.out.println(convertScores(scores));
+    }
+
 }
