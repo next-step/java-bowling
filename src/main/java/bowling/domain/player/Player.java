@@ -41,10 +41,7 @@ public class Player {
     }
 
     public List<Score> totalScores() {
-        List<Score> eachScore = frames.stream()
-                .filter(frame -> frame.isFinished() && !frame.canAccumulate())
-                .map(frame -> frame.totalScore())
-                .collect(Collectors.toList());
+        List<Score> eachScore = getEachScore();
         for (int i = 1; i < eachScore.size(); i++) {
             eachScore.set(i, eachScore.get(i - 1).calculate(eachScore.get(i)));
         }
@@ -75,6 +72,13 @@ public class Player {
         for (int i = 0; i < frames.size() - 1; i++) {
             frames.set(i, hitNumber.addScore(frames.get(i)));
         }
+    }
+
+    private List<Score> getEachScore() {
+        return frames.stream()
+                .filter(frame -> frame.isFinished() && !frame.canAccumulate())
+                .map(frame -> frame.totalScore())
+                .collect(Collectors.toList());
     }
 
     private boolean isNeededToNext() {
