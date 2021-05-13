@@ -26,7 +26,7 @@ public final class Bowling {
 
     private static final void playBowl(final Player player) {
         try {
-            player.bowl(INPUT_VIEW.InputFallCountByConsole(player.sequence()));
+            player.bowl(INPUT_VIEW.InputFallCountByConsole(player.name()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             playBowl(player);
