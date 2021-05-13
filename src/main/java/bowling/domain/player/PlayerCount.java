@@ -5,6 +5,7 @@ import bowling.exception.InvalidPlayerCountException;
 public final class PlayerCount {
 
     private static final int MINIMUM_PLAYER_COUNT = 1;
+    private static final int INCREASE_UNIT = 1;
 
     private final int playerCount;
     private final int sequence;
@@ -29,4 +30,7 @@ public final class PlayerCount {
         return sequence;
     }
 
+    public final PlayerCount next() {
+        return new PlayerCount(playerCount, Math.addExact(sequence, INCREASE_UNIT));
+    }
 }

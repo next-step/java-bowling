@@ -69,4 +69,5 @@ class PlayerCountTest {
         // then
         assertThat(next.sequence()).isEqualTo(2);
     }
+
 }
