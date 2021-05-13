@@ -10,7 +10,6 @@ import static java.util.stream.Collectors.toList;
 
 public class Players {
     private static final String INVALID_WINNING_STATE = "아직 게임이 종료되지 않아 우승자를 가릴 수 없습니다.";
-    private static final int FRAME_LAST_INDEX = 10 - 1;
     private final List<Player> players;
     private final Queue<Player> now;
 
@@ -42,12 +41,12 @@ public class Players {
     public List<Player> getWinner() {
         validCanWinning();
         Score maxScore = players.stream()
-                .map(player -> player.totalScores().get(FRAME_LAST_INDEX))
+                .map(player -> player.totalScore())
                 .max(Score::compareTo)
                 .orElseThrow(IllegalStateException::new);
         return players.stream()
                 .filter(player -> Score.compareTo(
-                        player.totalScores().get(FRAME_LAST_INDEX), maxScore) == 0)
+                        player.totalScore(), maxScore) == 0)
                 .collect(toList());
     }
 

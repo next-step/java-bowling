@@ -41,6 +41,10 @@ public class Player {
         return frames.totalScores();
     }
 
+    public Score totalScore() {
+        return frames.totalScore();
+    }
+
     public String toStringName() {
         return name.toString();
     }

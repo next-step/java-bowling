@@ -41,6 +41,10 @@ public class Frames {
         return eachScore;
     }
 
+    public Score totalScore() {
+        return totalScores().get(MAX_INDEX - 1);
+    }
+
     public boolean isFinished() {
         return frames.size() == MAX_INDEX && getLast().isFinished();
     }
