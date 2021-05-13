@@ -22,7 +22,7 @@ public class Gutter extends Running {
     @Override
     public State next(int nextHit) {
         if (Score.of(nextHit).isStrike()) {
-            return Spare.of(this, OneHit.ofOne(nextHit));
+            return Spare.of(this, new OneHit(nextHit));
         }
         return Miss.of(this, OneHit.of(nextHit));
     }
