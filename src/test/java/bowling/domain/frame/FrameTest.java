@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.result.TotalResult;
-import bowling.domain.turn.FallenPins;
 import bowling.error.CannotMakeFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,16 +22,16 @@ class FrameTest {
   @DisplayName("전체 진행 테스트")
   void fullGameTest() {
     Frame frame = FrameFactory.of(1);
-    frame.bowl(new FallenPins(10))
-      .bowl(new FallenPins(10))
-      .bowl(new FallenPins(2)).bowl(new FallenPins(8))
-      .bowl(new FallenPins(7)).bowl(new FallenPins(1))
-      .bowl(new FallenPins(2)).bowl(new FallenPins(4))
-      .bowl(new FallenPins(3)).bowl(new FallenPins(6))
-      .bowl(new FallenPins(7)).bowl(new FallenPins(2))
-      .bowl(new FallenPins(7)).bowl(new FallenPins(1))
-      .bowl(new FallenPins(6)).bowl(new FallenPins(0))
-      .bowl(new FallenPins(10)).bowl(new FallenPins(1)).bowl(new FallenPins(5));
+    frame.bowl(10)
+      .bowl(10)
+      .bowl(2).bowl(8)
+      .bowl(7).bowl(1)
+      .bowl(2).bowl(4)
+      .bowl(3).bowl(6)
+      .bowl(7).bowl(2)
+      .bowl(7).bowl(1)
+      .bowl(6).bowl(0)
+      .bowl(10).bowl(1).bowl(5);
 
     TotalResult totalResult = frame.showFullResult();
 

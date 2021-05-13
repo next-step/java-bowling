@@ -41,6 +41,11 @@ public class FinalFrame implements Frame {
   }
 
   @Override
+  public Frame bowl(int pins) {
+    return bowl(new FallenPins(pins));
+  }
+
+  @Override
   public TotalResult showFullResult() {
     throw new RuntimeException();
   }
@@ -85,6 +90,11 @@ public class FinalFrame implements Frame {
     }
 
     return addingScore;
+  }
+
+  @Override
+  public boolean checkReady() {
+    return states.getFirst() instanceof Ready;
   }
 
   @Override

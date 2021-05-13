@@ -6,11 +6,15 @@ import bowling.domain.turn.FallenPins;
 
 public interface Frame {
 
+  boolean checkReady();
+
   boolean checkFinished();
 
   String show();
 
   Frame bowl(FallenPins fallenPins);
+
+  Frame bowl(int pins);
 
   TotalResult showFullResult();
 

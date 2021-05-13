@@ -4,6 +4,8 @@ import bowling.domain.frame.PlayerBoard;
 import bowling.domain.result.FrameResult;
 import bowling.domain.result.TotalResult;
 
+import java.util.List;
+
 public class ResultView {
   private static final String SCORE_TITLE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
   private static final String WALL = "|";
@@ -13,7 +15,13 @@ public class ResultView {
   private static final String NAME_FORMAT = "%5s";
   private static final String NUMBER_FORMAT = "%6s";
 
-  public void printBoard(PlayerBoard playerBoard) {
+  public void printFullBoard(List<PlayerBoard> playerBoards) {
+    for (PlayerBoard playerBoard : playerBoards) {
+      printBoard(playerBoard);
+    }
+  }
+
+  private void printBoard(PlayerBoard playerBoard) {
     System.out.println(SCORE_TITLE);
 
     printName(playerBoard.playerName());
@@ -51,5 +59,6 @@ public class ResultView {
     }
     System.out.println();
   }
+
 
 }

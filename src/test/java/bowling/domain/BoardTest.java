@@ -11,7 +11,7 @@ class BoardTest {
   @DisplayName("생성, 1라운드 테스트")
   void createTest() {
     Board board = new Board();
-    board.addRound(new Player("STS"));
+    board.addPlayerBoard(new Player("STS"));
 
     assertThat(board.size()).isEqualTo(1);
   }

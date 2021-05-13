@@ -9,8 +9,13 @@ public class InputView {
     scanner = new Scanner(System.in);
   }
 
-  public String setupPlayer() {
-    System.out.print("플레이어 이름은(3 english letters)?: ");
+  public int initPlayersCount() {
+    System.out.print("How many people?");
+    return scanner.nextInt();
+  }
+
+  public String setupPlayer(int playerCount) {
+    System.out.print(String.format("플레이어 %d의 이름은(3 english letters)?: ", playerCount));
     return scanner.next();
   }
 
