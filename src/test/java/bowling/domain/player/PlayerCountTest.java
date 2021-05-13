@@ -1,6 +1,7 @@
 package bowling.domain.player;
 
 import bowling.exception.InvalidPlayerCountException;
+import bowling.exception.NoMoreNextPlayerCountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -94,6 +95,7 @@ class PlayerCountTest {
         // when
         PlayerCount playerCount = new PlayerCount(count);
 
+        // then
         assertThatThrownBy(() -> playerCount.next())
                 .isInstanceOf(NoMoreNextPlayerCountException.class)
                 .hasMessage("PlayerCount 의 다음 순서로 넘어갈 수 없습니다.");

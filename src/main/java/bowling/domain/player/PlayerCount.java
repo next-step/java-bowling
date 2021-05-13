@@ -1,6 +1,7 @@
 package bowling.domain.player;
 
 import bowling.exception.InvalidPlayerCountException;
+import bowling.exception.NoMoreNextPlayerCountException;
 
 public final class PlayerCount {
 
@@ -31,8 +32,14 @@ public final class PlayerCount {
     }
 
     public final PlayerCount next() {
-        validateNextSequence(nextSequence);
+        validateFinish();
         return new PlayerCount(playerCount, Math.addExact(sequence, INCREASE_UNIT));
+    }
+
+    private final void validateFinish() {
+        if(isFinish()) {
+            throw new NoMoreNextPlayerCountException();
+        }
     }
 
     public final boolean isFinish() {
