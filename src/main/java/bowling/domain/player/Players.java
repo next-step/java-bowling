@@ -28,18 +28,22 @@ public class Players {
 
     public void play(int hitNumber) {
         Player nowPlayer = now.peek();
-        if(nowPlayer.bowlWithNext(HitNumber.of(hitNumber))) {
-            return;
+        if(nowPlayer.bowlWithNext(HitNumber.of(hitNumber)) || nowPlayer.isFinished()) {
+            now.poll();
+            validContinue(nowPlayer);
         }
-        now.poll();
-        validFinished(nowPlayer);
     }
 
     public String whoseTurn() {
         return now.peek().toStringName();
     }
 
-    private void validFinished(Player nowPlayer) {
+    public boolean isFinished() {
+        return players.stream()
+                .noneMatch(player -> !player.isFinished());
+    }
+
+    private void validContinue(Player nowPlayer) {
         if(!nowPlayer.isFinished()) {
             now.add(nowPlayer);
         }
