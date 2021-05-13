@@ -55,4 +55,18 @@ class PlayerCountTest {
         // then
         assertThat(playerCount.sequence()).isEqualTo(1);
     }
+
+    @DisplayName("PlayerCount 인스턴스가 다음 순서로 이동 가능한지 테스트")
+    @Test
+    void 반환_다음_순서() {
+        // given
+        int count = 10;
+
+        // when
+        PlayerCount playerCount = new PlayerCount(count);
+        PlayerCount next = playerCount.next();
+
+        // then
+        assertThat(next.sequence()).isEqualTo(2);
+    }
 }
