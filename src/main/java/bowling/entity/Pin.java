@@ -22,14 +22,26 @@ public class Pin {
         }
     }
 
-    public int sumPin(Pin secondPin) {
+    public int sum(Pin secondPin) {
         int sumPin = pin + secondPin.pin;
 
+        validateSum(sumPin);
+
+        return sumPin;
+    }
+
+    public Score sumScore(Score score) {
+        return score.calculate(this.pin);
+    }
+
+    private void validateSum(int sumPin) {
         if (sumPin > MAX_PIN_COUNT) {
             throw new IllegalArgumentException(SUM_RANGE_OVER_PIN_MESSAGE);
         }
+    }
 
-        return sumPin;
+    public boolean isTenPin() {
+        return this.pin == 10;
     }
 
     public int pin() {

@@ -1,13 +1,25 @@
 package bowling.entity.score;
 
 import bowling.entity.Pin;
+import bowling.entity.Score;
 
 import java.util.Objects;
 
 import static bowling.entity.Pin.MAX_PIN_COUNT;
 
-public class Strike implements ScoreType {
+public class Strike extends Finish {
     private static final String STRIKE_SYMBOL = "X";
+    private static final int STRIKE_SCORE_REMAIN = 2;
+
+    private final int remain;
+
+    public Strike() {
+        this.remain = STRIKE_SCORE_REMAIN;
+    }
+
+    public Strike(int remain) {
+        this.remain = remain;
+    }
 
     @Override
     public String scoreResult() {
@@ -15,15 +27,22 @@ public class Strike implements ScoreType {
     }
 
     @Override
-    public boolean isFrameEnd() {
-        return true;
+    public Score score() {
+        return new Score(MAX_PIN_COUNT, remain);
     }
 
     @Override
-    public ScoreType bowl(Pin fallenPin) {
-        if (fallenPin.pin() == MAX_PIN_COUNT) {
-            return new Strike();
+    public Score calculate(Score beforeScore) {
+
+        if (beforeScore.calculatePossible()) {
+            return beforeScore;
         }
-        return new NormalScore(fallenPin);
+
+        return beforeScore.calculate(MAX_PIN_COUNT);
+    }
+
+    @Override
+    public Score frameScore() {
+        return new Score(MAX_PIN_COUNT, remain);
     }
 }

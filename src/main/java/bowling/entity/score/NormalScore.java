@@ -1,13 +1,16 @@
 package bowling.entity.score;
 
 import bowling.entity.Pin;
+import bowling.entity.Score;
 
 import java.util.Objects;
 
-import static bowling.entity.Pin.MAX_PIN_COUNT;
-
-public class NormalScore implements ScoreType {
+public class NormalScore extends OnGoing {
     private final Pin pin;
+
+    public NormalScore(int pinValue) {
+        this.pin = new Pin(pinValue);
+    }
 
     public NormalScore(Pin pin) {
         this.pin = pin;
@@ -19,17 +22,20 @@ public class NormalScore implements ScoreType {
     }
 
     @Override
-    public boolean isFrameEnd() {
-        return false;
+    public Score score() {
+        return new Score(pin.pin(), 0);
     }
 
     @Override
-    public ScoreType bowl(Pin fallenPin) {
-        if (pin.sumPin(fallenPin) == MAX_PIN_COUNT) {
-            return new Spare(pin);
+    public Score calculate(Score beforeScore) {
+
+        beforeScore = pin.sumScore(beforeScore);
+
+        if (beforeScore.calculatePossible()) {
+            return beforeScore;
         }
 
-        return new Miss(pin, fallenPin);
+        throw new CalculateImPossibleException();
     }
 
     @Override

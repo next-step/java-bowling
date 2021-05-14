@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.entity.frame.FrameResult;
-import bowling.entity.frame.NormalFrameResult;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -17,21 +16,21 @@ public class ResultView {
     private static final String EMPTY_STRING = "";
     private static final int NON_START_FRAME = 0;
 
-    private ResultView() {
+    public ResultView() {
     }
 
-    public static void bowlingGameStartPrint(String userName) {
-        ResultView.bowlingFrameListPrint();
-        ResultView.userNamePrint(userName);
-        ResultView.userBowlingFrameEmptyListPrint(NON_START_FRAME);
+    public void bowlingGameStartPrint(String userName) {
+        bowlingFrameListPrint();
+        userNamePrint(userName);
+        userBowlingFrameEmptyListPrint(NON_START_FRAME);
     }
 
-    public static void bowlingFrameAndNamePrint(String userName) {
-        ResultView.bowlingFrameListPrint();
-        ResultView.userNamePrint(userName);
+    public void bowlingFrameAndNamePrint(String userName) {
+        bowlingFrameListPrint();
+        userNamePrint(userName);
     }
 
-    public static void bowlingFrameListPrint() {
+    public void bowlingFrameListPrint() {
         String name = "NAME";
         userNamePrint(name);
 
@@ -40,17 +39,38 @@ public class ResultView {
         System.out.println();
     }
 
-    public static void userNamePrint(String userName) {
+    public void userNamePrint(String userName) {
         System.out.printf(PRINT_NAME_FORMAT, userName);
     }
 
-    public static void normalFramePrint(List<FrameResult> bowlingResults) {
+    public void framePrint(List<FrameResult> bowlingResults) {
         for (FrameResult bowlingResult : bowlingResults) {
             System.out.printf(PRINT_FORMAT, bowlingResult.bowlingScore().replace('0', GUTTER_SYMBOL));
         }
     }
 
-    public static void userBowlingFrameEmptyListPrint(int printStartFrame) {
+    public void frameScorePrint(List<FrameResult> bowlingResults) {
+        userNamePrint("");
+
+        for (FrameResult bowlingResult : bowlingResults) {
+            int score = bowlingResult.totalScore();
+
+            emptyFramePrint(score);
+
+            if (score != -1) {
+                System.out.printf(PRINT_FORMAT, score);
+            }
+
+        }
+    }
+
+    private void emptyFramePrint(int score) {
+        if (score == -1) {
+            System.out.printf(PRINT_FORMAT, "");
+        }
+    }
+
+    public void userBowlingFrameEmptyListPrint(int printStartFrame) {
         for (int i = printStartFrame; i <= END_FRAME - 1; i++) {
             System.out.printf(PRINT_FORMAT, EMPTY_STRING);
         }

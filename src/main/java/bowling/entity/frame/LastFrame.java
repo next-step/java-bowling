@@ -2,8 +2,10 @@ package bowling.entity.frame;
 
 import bowling.entity.BowlingBoard;
 import bowling.entity.Pin;
-import bowling.entity.score.None;
+import bowling.entity.TotalScore;
+import bowling.entity.score.CalculateImPossibleException;
 import bowling.entity.score.ScoreType;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static bowling.controller.BowlingController.END_FRAME;
 import static bowling.entity.Pin.SCORE_ASSOCIATION_SYMBOL;
+import static bowling.entity.frame.NormalFrame.NOT_CALCULATE_VALUE;
 
 public class LastFrame implements Frame {
     private static final int EMPTY = 0;
@@ -21,7 +24,7 @@ public class LastFrame implements Frame {
     private final List<ScoreType> scoreTypes;
 
     public LastFrame() {
-        lastFrameInfo = new LastFrameInfo(new None());
+        lastFrameInfo = new LastFrameInfo();
         this.scoreTypes = new ArrayList<>();
     }
 
@@ -33,22 +36,38 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public void addFrameResult(BowlingBoard bowlingBoard) {
-        normalFrameResult(bowlingBoard);
-        lastFrameResult(bowlingBoard);
-    }
-
-    private void normalFrameResult(BowlingBoard bowlingBoard) {
-        String scoreResult = lastFrameInfo.scoreResult();
-
-        if (!(scoreResult.equals("")) && (frameNo() != END_FRAME)) {
-            bowlingBoard.addResult(new NormalFrameResult(scoreResult));
+    public void addScore(TotalScore totalScore) {
+        if (!CollectionUtils.isEmpty(scoreTypes)) {
+            totalScore.addScore(scoreTypes);
         }
     }
 
-    private void lastFrameResult(BowlingBoard bowlingBoard) {
+    @Override
+    public void addFrameResult(BowlingBoard bowlingBoard, TotalScore totalScore) {
         if (scoreTypes.size() != EMPTY) {
-            bowlingBoard.addResult(new LastFrameResult(scoreTypesResult()));
+            int totalScoreResult;
+
+            try {
+                totalScoreResult = totalScore.getFrameScoreResults(frameNo());
+            } catch (CalculateImPossibleException e) {
+                totalScoreResult = NOT_CALCULATE_VALUE;
+            }
+
+            LastFrameResult lastFrameResult = lastFrameResult(totalScoreResult);
+            bowlingBoard.addResult(lastFrameResult);
+        }
+    }
+
+    private LastFrameResult lastFrameResult(int totalScore) {
+
+        if (!lastFrameInfo.bowlingGameEnd()) {
+            return new LastFrameResult(scoreTypesResult(), NOT_CALCULATE_VALUE);
+        }
+
+        try {
+            return new LastFrameResult(scoreTypesResult(), totalScore);
+        } catch (CalculateImPossibleException e) {
+            return new LastFrameResult(scoreTypesResult(), NOT_CALCULATE_VALUE);
         }
     }
 
@@ -72,8 +91,11 @@ public class LastFrame implements Frame {
 
     @Override
     public BowlingBoard bowlingBoard() {
+        TotalScore totalScore = new TotalScore();
+        addScore(totalScore);
+
         BowlingBoard bowlingBoard = new BowlingBoard();
-        addFrameResult(bowlingBoard);
+        addFrameResult(bowlingBoard, totalScore);
         return bowlingBoard;
     }
 
