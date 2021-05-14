@@ -23,10 +23,10 @@ public final class Bowling {
         final PlayerCount playerCount = getPlayerCount();
         final Players players = new Players(getPlayers(playerCount));
         Player player = getPlayer(playerCount);
-        RESULT_VIEW.printScoreBoard(player);
+        RESULT_VIEW.printScoreBoard(players);
         while (!player.isFinish()) {
             playBowl(player);
-            RESULT_VIEW.printScoreBoard(player);
+            RESULT_VIEW.printScoreBoard(players);
         }
         RESULT_VIEW.printResult(player);
     }
