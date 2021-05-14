@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.player.Name;
+import bowling.domain.player.PlayerCount;
 
 import java.util.Scanner;
 
@@ -28,8 +28,12 @@ public final class InputView {
         return valueOf(SCANNER.nextLine());
     }
 
-    public final String InputPlayerNameByConsole() {
-        System.out.println(INPUT_PLAYER_NAME_MESSAGE);
+    public final String InputPlayerNameByConsole(final PlayerCount playerCount) {
+        return InputPlayerNameByConsole(playerCount.sequence());
+    }
+
+    public final String InputPlayerNameByConsole(final int sequence) {
+        System.out.println(String.format(INPUT_PLAYER_NAME_MESSAGE, sequence));
         return SCANNER.nextLine();
     }
 

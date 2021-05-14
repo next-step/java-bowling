@@ -37,12 +37,12 @@ public final class PlayerCount {
     }
 
     private final void validateFinish() {
-        if(isFinish()) {
+        if(!hasNext()) {
             throw new NoMoreNextPlayerCountException();
         }
     }
 
-    public final boolean isFinish() {
-        return sequence == playerCount;
+    public final boolean hasNext() {
+        return sequence <= playerCount;
     }
 }

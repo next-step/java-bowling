@@ -52,17 +52,23 @@ class PlayerCountTest {
     }
 
 
-    @DisplayName("PlayerCount 인스턴스가 종료 여부를 반환하는지 테스트")
+    @DisplayName("PlayerCount 인스턴스가 다음으로 이동 할 수 있는지 여부를 반환하는지 테스트")
     @Test
     void 반환_종료_여부() {
         // given
-        int count = 1;
+        int firstCount = 1;
+        int secondCount = 2;
 
         // when
-        PlayerCount playerCount = new PlayerCount(count);
+        PlayerCount firstPlayerCount = new PlayerCount(firstCount);
+        PlayerCount secondPlayerCount = new PlayerCount(secondCount);
 
         // then
-        assertThat(playerCount.isFinish()).isTrue();
+        assertAll(
+                () -> assertThat(firstPlayerCount.hasNext()).isTrue(),
+                () -> assertThat(secondPlayerCount.hasNext()).isTrue()
+        );
+
     }
 
 
@@ -94,9 +100,10 @@ class PlayerCountTest {
 
         // when
         PlayerCount playerCount = new PlayerCount(count);
+        PlayerCount nextPlayerCount = playerCount.next();
 
         // then
-        assertThatThrownBy(() -> playerCount.next())
+        assertThatThrownBy(() -> nextPlayerCount.next())
                 .isInstanceOf(NoMoreNextPlayerCountException.class)
                 .hasMessage("PlayerCount 의 다음 순서로 넘어갈 수 없습니다.");
     }
