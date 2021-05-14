@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -54,6 +55,25 @@ class PlayersTest {
                 () -> assertThat(players.stream()).isNotNull(),
                 () -> assertThat(players.stream()).isInstanceOf(Stream.class)
         );
+
+    }
+
+    @DisplayName("Players 인스턴스가 모든 프레임을 종료했는지 여부틀 반환 여부 테스트")
+    @Test
+    void 반환_isAllFinish() {
+        // given
+        Player kwj = new Player("kwj");
+        Player kwi = new Player("kwi");
+        List<Player> playerList = new ArrayList<>(Arrays.asList(kwj, kwi));
+
+        // when
+        Players players = new Players(playerList);
+        for (int i = 0; i < 12; i++) {
+            players.stream().forEach(player -> player.bowl(10));
+        }
+
+        // then
+        assertThat(players.isAllFinish()).isTrue();
 
     }
 
