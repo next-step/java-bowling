@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -39,5 +40,21 @@ class PlayersTest {
                 .hasMessage("List<Player> 인스턴스가 null 입니다.");
     }
 
+    @DisplayName("Players 인스턴스가 Stream<Player> 인스턴스를 반환하는지 테스트")
+    @Test
+    void 반환_stream() {
+        // given
+        List<Player> playerList = new ArrayList<>();
+
+        // when
+        Players players = new Players(playerList);
+
+        // then
+        assertAll(
+                () -> assertThat(players.stream()).isNotNull(),
+                () -> assertThat(players.stream()).isInstanceOf(Stream.class)
+        );
+
+    }
 
 }

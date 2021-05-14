@@ -20,9 +20,8 @@ public final class Bowling {
     }
 
     public static void main(String[] args) {
-        PlayerCount playerCount = getPlayerCount();
-        Players players = new Players(getPlayers(playerCount));
-
+        final PlayerCount playerCount = getPlayerCount();
+        final Players players = new Players(getPlayers(playerCount));
         Player player = getPlayer(playerCount);
         RESULT_VIEW.printScoreBoard(player);
         while (!player.isFinish()) {
@@ -32,12 +31,12 @@ public final class Bowling {
         RESULT_VIEW.printResult(player);
     }
 
-    private static final List<Player> getPlayers(PlayerCount playerCount) {
+    private static final List<Player> getPlayers(final PlayerCount playerCount) {
         final List<Player> players = new ArrayList<>();
-        while (!playerCount.hasNext()) {
-            System.out.println("언제 종료됨?");
-            players.add(getPlayer(playerCount));
-            playerCount = playerCount.next();
+        PlayerCount generateCount = playerCount;
+        while (generateCount.hasNext()) {
+            players.add(getPlayer(generateCount));
+            generateCount = generateCount.next();
         }
         return players;
     }

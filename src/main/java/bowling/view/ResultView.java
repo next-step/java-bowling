@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
+import bowling.domain.player.Players;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 import org.apache.logging.log4j.util.Strings;
@@ -36,7 +37,11 @@ public final class ResultView {
         return ResultViewHolder.instance;
     }
 
-    public final void printScoreBoard(final Player player) {
+    public final void printScoreBoards(final Players players) {
+        //players.stream().map(StringBuilder::toString)
+    }
+
+    public final StringBuilder printScoreBoard(final Player player) {
         final StringBuilder scoreboardBuilder = new StringBuilder();
         scoreboardBuilder.append(SCORE_BOARD_HEADER).append(NEWLINE);
         scoreboardBuilder.append(frontFormat(player.name()));
@@ -50,7 +55,7 @@ public final class ResultView {
         final List<String> scoreFrameList = scoreFrameList(scores);
         scoreboardBuilder.append(mapToScoreFrame(scoreFrameList));
         scoreboardBuilder.append(mapToEmptyScoreFrame(scoreFrameList)).append(NEWLINE);
-        System.out.println(scoreboardBuilder);
+        return scoreboardBuilder;
     }
 
     private final String mapToNormalFrameStatus(final Frames frames) {
