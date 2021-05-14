@@ -22,12 +22,14 @@ public class BowlingTest {
             bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
             assertThat(frameScore(bowlingPrintFrame, i).bowlingScore().equals("X")).isTrue();
         }
-        assertThat(frameScore(bowlingPrintFrame, 8).totalScore() == 270 ).isTrue();
+        assertThat(frameScore(bowlingPrintFrame, 6).totalScore() == 210 ).isTrue();
 
         bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
         assertThat(frameScore(bowlingPrintFrame, 9).bowlingScore().equals("X")).isTrue();
+        assertThat(frameScore(bowlingPrintFrame, 7).totalScore() == 240 ).isTrue();
         bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
         assertThat(frameScore(bowlingPrintFrame, 9).bowlingScore().equals("X|X")).isTrue();
+        assertThat(frameScore(bowlingPrintFrame, 8).totalScore() == 270 ).isTrue();
         bowlingFrame = bowlingController.bowl(bowlingFrame, 10);
         assertThat(frameScore(bowlingPrintFrame, 9).bowlingScore().equals("X|X|X")).isTrue();
         assertThat(frameScore(bowlingPrintFrame, 9).totalScore() == 300 ).isTrue();
@@ -49,6 +51,7 @@ public class BowlingTest {
         assertThat(frameScore(bowlingPrintFrame, 1).bowlingScore().equals("5")).isTrue();
         assertThat(frameScore(bowlingPrintFrame, 1).totalScore() == -1 ).isTrue();
         bowlingFrame = bowlingController.bowl(bowlingFrame, 0);
+
         assertThat(frameScore(bowlingPrintFrame, 1).bowlingScore().equals("5|0")).isTrue();
         assertThat(frameScore(bowlingPrintFrame, 0).totalScore() == 15).isTrue();
         assertThat(frameScore(bowlingPrintFrame, 1).totalScore() == 20).isTrue();

@@ -9,7 +9,7 @@ public abstract class OnGoing implements ScoreType {
     }
 
     @Override
-    public Score score() {
+    public Score frameScore() {
         throw new CalculateImPossibleException();
-    }
+    };
 }

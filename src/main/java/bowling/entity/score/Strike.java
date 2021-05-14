@@ -11,22 +11,24 @@ public class Strike extends Finish {
     private static final String STRIKE_SYMBOL = "X";
     private static final int STRIKE_SCORE_REMAIN = 2;
 
+    private final int remain;
+
+    public Strike() {
+        this.remain = STRIKE_SCORE_REMAIN;
+    }
+
+    public Strike(int remain) {
+        this.remain = remain;
+    }
+
     @Override
     public String scoreResult() {
         return STRIKE_SYMBOL;
     }
 
     @Override
-    public ScoreType bowl(Pin fallenPin) {
-        if (fallenPin.pin() == MAX_PIN_COUNT) {
-            return new Strike();
-        }
-        return new NormalScore(fallenPin);
-    }
-
-    @Override
     public Score score() {
-        return new Score(MAX_PIN_COUNT, STRIKE_SCORE_REMAIN);
+        return new Score(MAX_PIN_COUNT, remain);
     }
 
     @Override
@@ -37,5 +39,10 @@ public class Strike extends Finish {
         }
 
         return beforeScore.calculate(MAX_PIN_COUNT);
+    }
+
+    @Override
+    public Score frameScore() {
+        return new Score(MAX_PIN_COUNT, remain);
     }
 }

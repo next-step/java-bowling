@@ -15,20 +15,12 @@ public class StrikeTest {
     private Pin strikePin;
     private Pin normalPin;
     private ScoreType strike;
-    private ScoreType none;
 
     @BeforeEach
     void setup() {
         strikePin = new Pin(10);
         normalPin = new Pin(5);
         strike = new Strike();
-        none = new None();
-    }
-
-    @Test
-    @DisplayName("스트라이크 생성")
-    public void createStrike() {
-        assertThat(none.bowl(strikePin) instanceof Strike).isTrue();
     }
 
     @Test
@@ -43,15 +35,4 @@ public class StrikeTest {
         assertThat(strike.isFrameEnd()).isTrue();
     }
 
-    @Test
-    @DisplayName("스트라이크 다음 10개 쓰러트릴 시 스트라이크")
-    public void nextScoreIsStrike() {
-        assertThat(strike.bowl(strikePin) instanceof Strike).isTrue();
-    }
-
-    @Test
-    @DisplayName("스트라이크 다음 쓰러트린 핀이 10개 아닐 경우 일반 점수")
-    public void nextScoreIsNormalScore() {
-        assertThat(strike.bowl(normalPin) instanceof NormalScore).isTrue();
-    }
 }

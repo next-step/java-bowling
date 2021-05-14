@@ -40,6 +40,10 @@ public class Pin {
         }
     }
 
+    public boolean isTenPin() {
+        return this.pin == 10;
+    }
+
     public int pin() {
         return pin;
     }

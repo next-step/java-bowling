@@ -28,6 +28,14 @@ public class Score {
         return score;
     }
 
+    public int remain() {
+        return remain;
+    }
+
+    public Score calculateEnd() {
+        return new Score(this.score, remain -1);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

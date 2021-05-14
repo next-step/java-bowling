@@ -28,16 +28,4 @@ public class NoneTest {
     public void isFrameEnd() {
         assertThat(none.isFrameEnd()).isFalse();
     }
-
-    @Test
-    @DisplayName("다음 10개 쓰러트릴 시 스트라이크")
-    public void nextScoreIsStrike() {
-        assertThat(none.bowl(strikePin) instanceof Strike).isTrue();
-    }
-
-    @Test
-    @DisplayName("다음 쓰러트린 핀이 10개 아닐 경우 일반 점수")
-    public void nextScoreIsNormalScore() {
-        assertThat(none.bowl(normalPin) instanceof NormalScore).isTrue();
-    }
 }

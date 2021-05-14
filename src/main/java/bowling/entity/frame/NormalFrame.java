@@ -2,10 +2,12 @@ package bowling.entity.frame;
 
 import bowling.entity.BowlingBoard;
 import bowling.entity.Pin;
-import bowling.entity.Score;
+import bowling.entity.TotalScore;
 import bowling.entity.score.CalculateImPossibleException;
 import bowling.entity.score.ScoreType;
+import org.springframework.util.CollectionUtils;
 
+import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
@@ -19,10 +21,6 @@ public class NormalFrame implements Frame {
         this.normalFrameInfo = new NormalFrameInfo(frameNo);
     }
 
-    public NormalFrame(int frameNo, ScoreType scoreType) {
-        this.normalFrameInfo = new NormalFrameInfo(frameNo, scoreType);
-    }
-
     public Frame bowl(Pin fallenPin) {
 
         if (normalFrameInfo.bowl(fallenPin).isFrameEnd()) {
@@ -33,7 +31,6 @@ public class NormalFrame implements Frame {
         return this;
     }
 
-
     private Frame nextFrame() {
         if (normalFrameInfo.nextFrameIsLastFrame()) {
             return new LastFrame();
@@ -41,32 +38,27 @@ public class NormalFrame implements Frame {
         return new NormalFrame(normalFrameInfo.frameNo() + 1);
     }
 
-    private Score score() {
-        Score score = normalFrameInfo.score();
+    public BowlingBoard bowlingBoard() {
+        TotalScore totalScore = new TotalScore();
+        addScore(totalScore);
 
-        if (score.calculatePossible()) {
-            return score;
-        }
+        BowlingBoard bowlingBoard = new BowlingBoard();
+        addFrameResult(bowlingBoard, totalScore);
 
-        return nextFrame.calculate(score);
+        return bowlingBoard;
     }
 
     @Override
-    public Score calculate(Score score) {
+    public void addScore(TotalScore totalScore){
 
-        Score calculateScore = normalFrameInfo.calculate(score);
-
-        if (calculateScore.calculatePossible()) {
-            return calculateScore;
+        List<ScoreType> scoreTypes = normalFrameInfo.scoreTypes();
+        if (!CollectionUtils.isEmpty(scoreTypes)) {
+            totalScore.addScore(scoreTypes);
         }
 
-        return nextFrame.calculate(calculateScore);
-    }
-
-    public BowlingBoard bowlingBoard() {
-        BowlingBoard bowlingBoard = new BowlingBoard();
-        addFrameResult(bowlingBoard, 0);
-        return bowlingBoard;
+        if (nextFrame != null) {
+            nextFrame.addScore(totalScore);
+        }
     }
 
     private NormalFrameResult frameResult(String scoreResult, int totalScore) {
@@ -76,19 +68,26 @@ public class NormalFrame implements Frame {
         }
 
         try {
-            totalScore += score().score();
             return new NormalFrameResult(scoreResult, totalScore);
         } catch (CalculateImPossibleException e) {
             return new NormalFrameResult(scoreResult, NOT_CALCULATE_VALUE);
         }
     }
 
-    public void addFrameResult(BowlingBoard bowlingBoard, int totalScore) {
+    @Override
+    public void addFrameResult(BowlingBoard bowlingBoard, TotalScore totalScore) {
+
         String scoreResult = normalFrameInfo.scoreResult();
+        int totalScoreResult;
+
+        try {
+            totalScoreResult = totalScore.getFrameScoreResults(frameNo());
+        } catch (CalculateImPossibleException e) {
+            totalScoreResult = NOT_CALCULATE_VALUE;
+        }
 
         if (bowlResultIsNotNone(scoreResult)) {
-            NormalFrameResult frameResult = frameResult(scoreResult, totalScore);
-            totalScore = frameResult.totalScore();
+            NormalFrameResult frameResult = frameResult(scoreResult, totalScoreResult);
             bowlingBoard.addResult(frameResult);
         }
 

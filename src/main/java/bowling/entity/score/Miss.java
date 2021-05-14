@@ -5,7 +5,6 @@ import bowling.entity.Score;
 
 import java.util.Objects;
 
-import static bowling.entity.Pin.MAX_PIN_COUNT;
 import static bowling.entity.Pin.SCORE_ASSOCIATION_SYMBOL;
 
 public class Miss extends Finish {
@@ -33,16 +32,8 @@ public class Miss extends Finish {
     }
 
     @Override
-    public ScoreType bowl(Pin fallenPin) {
-        if (fallenPin.pin() == MAX_PIN_COUNT) {
-            return new Strike();
-        }
-        return new NormalScore(fallenPin);
-    }
-
-    @Override
     public Score score() {
-        return new Score(firstPin.sum(secondPin));
+        return new Score(secondPin.pin());
     }
 
     @Override
@@ -55,6 +46,11 @@ public class Miss extends Finish {
 
         beforeScore = secondPin.sumScore(beforeScore);
         return beforeScore;
+    }
+
+    @Override
+    public Score frameScore() {
+        return new Score(firstPin.sum(secondPin));
     }
 
     @Override

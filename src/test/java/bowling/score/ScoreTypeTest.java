@@ -1,36 +1,35 @@
 package bowling.score;
 
 import bowling.entity.Pin;
+import bowling.entity.frame.NormalFrame;
 import bowling.entity.score.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ScoreTypeTest {
 
-    private Pin halfFallenPin;
-    private ScoreType none;
-    private ScoreType normalScore;
-    private ScoreType strike;
-    private ScoreType spare;
+    private LinkedList<Pin> pins;
 
     @BeforeEach
-    void setup() {
-        halfFallenPin = new Pin(5);
-        none = new None();
-        normalScore = new NormalScore(halfFallenPin);
-        strike = new Strike();
-        spare = new Spare(halfFallenPin);
+    public void setup(){
+        pins = new LinkedList<>();
     }
 
     @Test
     @DisplayName("쓰러트린 핀 결과가 스트라이크")
     public void scoreTypeStrike() {
-        Pin fallenPin = new Pin(10);
 
-        ScoreType strike = none.bowl(fallenPin);
+        pins.add(new Pin(10));
+
+        ScoreTypeEnum scoreType = ScoreTypeEnum.findScoreType(1, true);
+        ScoreType strike = scoreType.createScoreType(pins);
 
         assertThat(strike instanceof Strike).isTrue();
     }
@@ -38,19 +37,22 @@ public class ScoreTypeTest {
     @Test
     @DisplayName("쓰러트린 핀 결과가 일반 점수")
     public void scoreTypeNormalScore() {
-        ScoreType normalScore = none.bowl(halfFallenPin);
-        ScoreType normalScoreAfterStrike = strike.bowl(halfFallenPin);
-        ScoreType normalScoreAfterSpare = spare.bowl(halfFallenPin);
+        pins.add(new Pin(5));
+
+        ScoreTypeEnum scoreType = ScoreTypeEnum.findScoreType(1, false);
+        ScoreType normalScore = scoreType.createScoreType(pins);
 
         assertThat(normalScore instanceof NormalScore).isTrue();
-        assertThat(normalScoreAfterStrike instanceof NormalScore).isTrue();
-        assertThat(normalScoreAfterSpare instanceof NormalScore).isTrue();
     }
 
     @Test
     @DisplayName("쓰러트린 핀 결과가 스페어")
     public void scoreTypeSpare() {
-        ScoreType spare = normalScore.bowl(halfFallenPin);
+        pins.add(new Pin(5));
+        pins.add(new Pin(5));
+
+        ScoreTypeEnum scoreType = ScoreTypeEnum.findScoreType(2, true);
+        ScoreType spare = scoreType.createScoreType(pins);
 
         assertThat(spare instanceof Spare).isTrue();
     }
@@ -58,9 +60,11 @@ public class ScoreTypeTest {
     @Test
     @DisplayName("쓰러트린 핀 결과가 미스")
     public void scoreTypeMiss() {
-        Pin fallenPin = new Pin(4);
+        pins.add(new Pin(5));
+        pins.add(new Pin(4));
 
-        ScoreType miss = normalScore.bowl(fallenPin);
+        ScoreTypeEnum scoreType = ScoreTypeEnum.findScoreType(2, false);
+        ScoreType miss = scoreType.createScoreType(pins);
 
         assertThat(miss instanceof Miss).isTrue();
     }

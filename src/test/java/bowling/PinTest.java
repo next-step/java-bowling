@@ -42,28 +42,6 @@ public class PinTest {
 
     }
 
-//    @Test
-//    @DisplayName("스트라이크 조건을 만족하는 핀")
-//    public void strikePin(){
-//        int fallenPin = 10;
-//
-//        Pin pin = new Pin(fallenPin);
-//
-//        assertThat(pin.isStrike()).isTrue();
-//    }
-//
-//    @Test
-//    @DisplayName("스페어 조건을 만족하는 핀")
-//    public void sparePin(){
-//        int firstFallenPin = 5;
-//        int secondFallenPin = 5;
-//
-//        Pin pin = new Pin(firstFallenPin);
-//        Pin secondPin = new Pin(secondFallenPin);
-//
-//        assertThat(pin.isSpare(secondPin)).isTrue();
-//    }
-
     @Test
     @DisplayName("핀 생성 실패")
     public void createPinFail() {

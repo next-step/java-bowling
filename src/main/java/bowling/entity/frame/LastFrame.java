@@ -2,10 +2,10 @@ package bowling.entity.frame;
 
 import bowling.entity.BowlingBoard;
 import bowling.entity.Pin;
-import bowling.entity.Score;
+import bowling.entity.TotalScore;
 import bowling.entity.score.CalculateImPossibleException;
-import bowling.entity.score.None;
 import bowling.entity.score.ScoreType;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class LastFrame implements Frame {
     private final List<ScoreType> scoreTypes;
 
     public LastFrame() {
-        lastFrameInfo = new LastFrameInfo(new None());
+        lastFrameInfo = new LastFrameInfo();
         this.scoreTypes = new ArrayList<>();
     }
 
@@ -35,32 +35,25 @@ public class LastFrame implements Frame {
         return this;
     }
 
-    public Score score() {
-        Score score = lastFrameInfo.score();
-
-        if (score.calculatePossible()) {
-            return score;
+    @Override
+    public void addScore(TotalScore totalScore) {
+        if (!CollectionUtils.isEmpty(scoreTypes)) {
+            totalScore.addScore(scoreTypes);
         }
-
-        return calculate(score);
     }
 
     @Override
-    public Score calculate(Score score) {
-
-        Score calculateScore = lastFrameInfo.calculate(score);
-
-//        if (calculateScore.calculatePossible()) {
-//            return calculateScore;
-//        }
-
-        return calculateScore;
-    }
-
-    @Override
-    public void addFrameResult(BowlingBoard bowlingBoard, int totalScore) {
+    public void addFrameResult(BowlingBoard bowlingBoard, TotalScore totalScore) {
         if (scoreTypes.size() != EMPTY) {
-            LastFrameResult lastFrameResult = lastFrameResult(totalScore);
+            int totalScoreResult;
+
+            try {
+                totalScoreResult = totalScore.getFrameScoreResults(frameNo());
+            } catch (CalculateImPossibleException e) {
+                totalScoreResult = NOT_CALCULATE_VALUE;
+            }
+
+            LastFrameResult lastFrameResult = lastFrameResult(totalScoreResult);
             bowlingBoard.addResult(lastFrameResult);
         }
     }
@@ -72,21 +65,10 @@ public class LastFrame implements Frame {
         }
 
         try {
-            totalScore = totalScoreSum(totalScore);
             return new LastFrameResult(scoreTypesResult(), totalScore);
         } catch (CalculateImPossibleException e) {
             return new LastFrameResult(scoreTypesResult(), NOT_CALCULATE_VALUE);
         }
-    }
-
-    private int totalScoreSum(int totalScore) {
-
-        totalScore += scoreTypes.stream()
-                .filter(ScoreType::isFrameEnd)
-                .mapToInt(scoreType -> scoreType.score().score())
-                .sum();
-
-        return totalScore;
     }
 
     private String scoreTypesResult() {
@@ -109,8 +91,11 @@ public class LastFrame implements Frame {
 
     @Override
     public BowlingBoard bowlingBoard() {
+        TotalScore totalScore = new TotalScore();
+        addScore(totalScore);
+
         BowlingBoard bowlingBoard = new BowlingBoard();
-        addFrameResult(bowlingBoard, 0);
+        addFrameResult(bowlingBoard, totalScore);
         return bowlingBoard;
     }
 
