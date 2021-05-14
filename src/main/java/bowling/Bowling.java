@@ -118,7 +118,7 @@ public final class Bowling {
 //
 //    private static final void playBowlingGame(final Players players) {
 //        RESULT_VIEW.printScoreBoard(players);
-//        while (!players.isEndGame()) {
+//        while (!players.isAllFinish()) {
 //            players.stream().forEach(Bowling::playBowl);
 //            RESULT_VIEW.printScoreBoard(players);
 //        }
@@ -126,7 +126,7 @@ public final class Bowling {
 //    }
 //
 //    private static final void playBowl(final Player player) {
-//        final Frame frame = player.currentFrame();
+//        final Frame frame = player.current();
 //        while (!frame.isFinish()) {
 //            bowl(player);
 //        }
