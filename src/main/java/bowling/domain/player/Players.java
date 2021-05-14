@@ -4,6 +4,7 @@ import bowling.exception.PlayerListNullPointerException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public final class Players {
 
@@ -18,5 +19,9 @@ public final class Players {
         if (Objects.isNull(players)) {
             throw new PlayerListNullPointerException();
         }
+    }
+
+    public final Stream<Player> stream() {
+        return players.stream();
     }
 }
