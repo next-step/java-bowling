@@ -72,14 +72,14 @@ public final class ResultView {
 
     private final String normalFrameStatus(final Frames frames) {
         return IntStream.range(NORMAL_FRAME_START_INDEX, LAST_FRAME_INDEX)
-                .mapToObj(frames::get)
+                .mapToObj(frames::frameByIndex)
                 .map(Frame::description)
                 .map(this::normalFrame)
                 .collect(Collectors.joining());
     }
 
     private final String finalFrameStatus(final Frames frames) {
-        return finalFrame(frames.get(LAST_FRAME_INDEX).description());
+        return finalFrame(frames.frameByIndex(LAST_FRAME_INDEX).description());
     }
 
     private final List<String> scoreFrameList(final Scores scores) {

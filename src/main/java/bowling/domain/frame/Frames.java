@@ -87,7 +87,7 @@ public final class Frames {
         return frames.get(nextIndex);
     }
 
-    public final Frame get(final int index) {
+    public final Frame frameByIndex(final int index) {
         return unmodifiableList(frames).get(index);
     }
 }
