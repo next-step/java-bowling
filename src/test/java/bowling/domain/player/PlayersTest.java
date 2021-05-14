@@ -1,5 +1,6 @@
 package bowling.domain.player;
 
+import bowling.exception.PlayerListNullPointerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +37,6 @@ class PlayersTest {
         assertThatThrownBy(() -> new Players(nullList))
                 .isInstanceOf(PlayerListNullPointerException.class)
                 .hasMessage("List<Player> 인스턴스가 null 입니다.");
-
     }
 
 
