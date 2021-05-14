@@ -90,4 +90,8 @@ public final class Frames {
     public final Frame frameByIndex(final int index) {
         return unmodifiableList(frames).get(index);
     }
+
+    public final Frame current() {
+        return current;
+    }
 }
