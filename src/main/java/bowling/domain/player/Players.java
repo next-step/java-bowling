@@ -24,4 +24,9 @@ public final class Players {
     public final Stream<Player> stream() {
         return players.stream();
     }
+
+    public final boolean isAllFinish() {
+        return stream()
+                .allMatch(Player::isFinish);
+    }
 }

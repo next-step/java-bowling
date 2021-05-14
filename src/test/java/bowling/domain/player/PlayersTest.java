@@ -74,7 +74,6 @@ class PlayersTest {
 
         // then
         assertThat(players.isAllFinish()).isTrue();
-
     }
 
 }
