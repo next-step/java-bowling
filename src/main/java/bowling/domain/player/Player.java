@@ -61,10 +61,6 @@ public final class Player {
         return frames;
     }
 
-    public final int sum() {
-        return scores().sum();
-    }
-
     public final Frame current() {
         return frames.current();
     }

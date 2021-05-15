@@ -15,12 +15,12 @@ import java.util.stream.IntStream;
 public final class ResultView {
 
     private static final String SCORE_BOARD_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+    private static final String BOWLING_GAME_END_MESSAGE = "모든 볼링 게임이 종료되었습니다.";
     private static final String FRONT_FRAME = " %4s ";
     private static final String NORMAL_FRAME = "  %-3s ";
     private static final String FINAL_FRAME = " %-5s";
     private static final String DELIMITER = "|";
     private static final String NEWLINE = "\n";
-    private static final String ENDING_MESSAGE = "%s님의 총합 점수 : %s";
 
     private static final int UN_AVAILABLE = -1;
     private static final int NORMAL_FRAME_START_INDEX = 0;
@@ -122,9 +122,8 @@ public final class ResultView {
         return String.format(FINAL_FRAME, mark) + DELIMITER + NEWLINE;
     }
 
-    public final void printResult(final Player player) {
-        System.out.println(String.format(ENDING_MESSAGE, player.name(), player.sum()));
+    public final void printEndGame() {
+        System.out.println(BOWLING_GAME_END_MESSAGE);
     }
-
 }
 

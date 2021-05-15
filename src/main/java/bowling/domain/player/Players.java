@@ -26,7 +26,6 @@ public final class Players {
     }
 
     public final boolean isAllFinish() {
-        return stream()
-                .allMatch(Player::isFinish);
+        return stream().allMatch(Player::isFinish);
     }
 }
