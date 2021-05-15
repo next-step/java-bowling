@@ -37,7 +37,7 @@ public final class PlayerCount {
     }
 
     private final void validateFinish() {
-        if(!hasNext()) {
+        if (!hasNext()) {
             throw new NoMoreNextPlayerCountException();
         }
     }
