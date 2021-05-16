@@ -12,7 +12,7 @@ public class BowlingController {
     public void play() {
         BowlingGame bowlingGame = new BowlingGame(inputView.getName());
         while (!bowlingGame.isEnd()) {
-            bowlingGame.play(inputView.getPoint(0));
+            bowlingGame.play(inputView.getPoint(bowlingGame.frameCount()));
         }
     }
 }

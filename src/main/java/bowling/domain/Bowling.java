@@ -36,4 +36,8 @@ public class Bowling {
     public int closedScores() {
         return frames.closedFrames();
     }
+
+    public int frameCount() {
+        return frames.frameCount();
+    }
 }

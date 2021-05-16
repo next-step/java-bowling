@@ -18,4 +18,8 @@ public class BowlingGame implements Playable{
     public boolean isEnd() {
         return bowling.isEnd();
     }
+
+    public int frameCount() {
+        return bowling.frameCount();
+    }
 }
