@@ -1,6 +1,6 @@
 package bowling;
 
-public class BowlingMain {
+public class BowlingApplication {
     public static void main(String[] args) {
 
     }
