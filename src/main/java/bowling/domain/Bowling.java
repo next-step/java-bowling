@@ -2,7 +2,6 @@ package bowling.domain;
 
 import bowling.domain.bonusPointFrame.BonusPointFrame;
 import bowling.domain.bonusPointFrame.BonusPointFrames;
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
 public class Bowling implements Playable {

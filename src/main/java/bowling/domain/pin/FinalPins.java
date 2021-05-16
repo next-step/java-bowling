@@ -8,7 +8,6 @@ import java.util.List;
 
 public class FinalPins extends Pins {
     private static final int NORMAL_PIN_SIZE = 2;
-    private static final int PIN_SIZE = 3;
 
     private boolean newPins;
     private List<Pin> pins;
@@ -45,10 +44,10 @@ public class FinalPins extends Pins {
 
     @Override
     public boolean isEnd() {
-        if(pins.size()<NORMAL_PIN_SIZE){
+        if (pins.size() < NORMAL_PIN_SIZE) {
             return false;
         }
-        if(pins.size()==NORMAL_PIN_SIZE){
+        if (pins.size() == NORMAL_PIN_SIZE) {
             Pin firstPin = pins.get(FIRST);
             Pin secondPin = pins.get(SECOND);
             return !(firstPin.didClear() || secondPin.didClear(firstPin));
@@ -61,32 +60,32 @@ public class FinalPins extends Pins {
         if (pins.size() == NOT_PLAYED || !newPins) {
             return false;
         }
-        if(pins.size()<NORMAL_PIN_SIZE){
+        if (pins.size() < NORMAL_PIN_SIZE) {
             return pins.get(FIRST).didClear();
         }
-        if(pins.size()==NORMAL_PIN_SIZE){
+        if (pins.size() == NORMAL_PIN_SIZE) {
             return strikeConsideringTwoPins(pins.get(FIRST), pins.get(SECOND));
         }
         return strikeConsideringTwoPins(pins.get(SECOND), pins.get(THIRD));
     }
 
-    private boolean strikeConsideringTwoPins(Pin firstPin, Pin secondPin){
+    private boolean strikeConsideringTwoPins(Pin firstPin, Pin secondPin) {
         return firstPin.didClear() && secondPin.didClear();
     }
 
     @Override
     public boolean isSpare() {
-        if (isStrike() || pins.size()<NORMAL_PIN_SIZE) {
+        if (isStrike() || pins.size() < NORMAL_PIN_SIZE) {
             return false;
         }
-        if(pins.size()==NORMAL_PIN_SIZE){
+        if (pins.size() == NORMAL_PIN_SIZE) {
             return spareConsideringTwoPins(pins.get(FIRST), pins.get(SECOND));
         }
         return spareConsideringTwoPins(pins.get(SECOND), pins.get(THIRD));
     }
 
-    private boolean spareConsideringTwoPins(Pin firstPin, Pin secondPin){
-        if(firstPin.didClear()){
+    private boolean spareConsideringTwoPins(Pin firstPin, Pin secondPin) {
+        if (firstPin.didClear()) {
             return false;
         }
         return secondPin.didClear(firstPin);
