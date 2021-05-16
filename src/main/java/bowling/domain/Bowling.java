@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.bonusPointFrame.BonusPointFrame;
 import bowling.domain.bonusPointFrame.BonusPointFrames;
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
 public class Bowling implements Playable {
@@ -27,7 +28,7 @@ public class Bowling implements Playable {
 
     private void updateBonusFrame() {
         int bonusCount = frames.currentFrameBonus();
-        if (bonusCount == NO_BONUS) {
+        if (bonusCount == NO_BONUS || !frames.currentFrame().isEnd()) {
             return;
         }
         bonusPointFrames.addBonusPointFrame(new BonusPointFrame(bonusCount, frames.currentFrame()));

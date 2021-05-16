@@ -59,7 +59,7 @@ class FramesTest {
             "1,3,2,8,10,10,10,10,10,10,10,6,4,10:1,1,2,2,3,4,5,6,7,8,9,10,10,10,10",
             "9,1,10,0,0,10,10,10,10,10,10,0,0:1,1,2,3,3,4,5,6,7,8,9,10,10"}, delimiter = ':')
     @DisplayName("볼링 프레임 수를 정확하게 알려 줄 수 있다")
-    void canTellFrameCount(String rawPinStrings, String frameCountStrings) {
+    void canDetermineFrameCount(String rawPinStrings, String frameCountStrings) {
         SoftAssertions softAssertions = new SoftAssertions();
         List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, ",");
         List<Integer> frameCounts = TestUtil.stringListToIntegerList(frameCountStrings, ",");
@@ -72,5 +72,14 @@ class FramesTest {
         }
         softAssertions.assertAll();
     }
+
+//    @ParameterizedTest
+//    @CsvSource(value = {"10,10,10,10,10,10,10,10,10,10,10,10", "2,2,2,2,2,2,2,2,2,2"}, delimiter = ':')
+//    @DisplayName("볼링 프레임 수를 정확하게 알려 줄 수 있다")
+//    void canDetermineBonusFrame(String rawPinStrings, ){
+//        SoftAssertions softAssertions = new SoftAssertions();
+//        List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, ",");
+//
+//    }
 
 }
