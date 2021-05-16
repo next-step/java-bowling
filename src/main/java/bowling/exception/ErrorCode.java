@@ -4,7 +4,11 @@ public enum ErrorCode {
     INVALID_PIN("P001", "Pin should be number between 0~10"),
     INVALID_SECOND_PIN("P002", "Second Pin is either not in range of 0~10 or exceed 10 when added with first pin"),
 
-    INVALID_BOWL("PI001", "Cannot bowl to fully occupied pins");
+    INVALID_BOWL("PI001", "Cannot bowl to fully occupied pins"),
+
+    INVALID_FRAME_MOVE("F001", "Cannot move frame when it is the last frame of the game"),
+
+    BONUS_LEFT("B001", "Still need to add bonus points in frame");
 
     private String code;
     private String message;

@@ -1,6 +1,8 @@
 package bowling.domain.bonusPointFrame;
 
 import bowling.domain.frame.Frame;
+import bowling.exception.CustomException;
+import bowling.exception.ErrorCode;
 
 public class BonusPointFrame {
 
@@ -19,5 +21,12 @@ public class BonusPointFrame {
 
     public boolean needMoreBonus() {
         return count > 0;
+    }
+
+    public void endScoring() {
+        if(count>0){
+            throw new CustomException(ErrorCode.BONUS_LEFT);
+        }
+        frame.endScoring();
     }
 }

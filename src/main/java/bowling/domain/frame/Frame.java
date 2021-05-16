@@ -15,4 +15,6 @@ public abstract class Frame {
     public abstract boolean isEnd();
 
     public abstract int bonusAmount();
+
+    public abstract void endScoring();
 }

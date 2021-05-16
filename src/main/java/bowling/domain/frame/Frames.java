@@ -1,11 +1,14 @@
 package bowling.domain.frame;
 
+import bowling.exception.CustomException;
+import bowling.exception.ErrorCode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Frames {
 
-    private static final int FIRST_FRAME = 1;
+    private static final int INIT_FRAME = 0;
     private static final int LAST_NORMAL_FRAME = 9;
     private static final int FINAL_FRAME = 10;
 
@@ -13,24 +16,55 @@ public class Frames {
     private List<Frame> frames;
 
     public Frames() {
-        frameCount = toIndex(FIRST_FRAME);
+        frameCount = INIT_FRAME;
         frames = new ArrayList<>();
     }
 
     public void bowl(int pin) {
-
+        int frameIndex = toIndex(frameCount);
+        if (isEnd()) {
+            throw new CustomException(ErrorCode.INVALID_BOWL);
+        }
+        Frame frame = frames.get(frameIndex);
+        frame.bowl(pin);
     }
 
-    public void moveFrame() {
-
+    public void moveFrameIfNeeded() {
+        if (!shouldMoveFrame()) {
+            return;
+        }
+        if (frameCount == LAST_NORMAL_FRAME) {
+            frames.add(new FinalFrame());
+            frameCount++;
+        }
+        if (frameCount < LAST_NORMAL_FRAME) {
+            frames.add(new NormalFrame());
+            frameCount++;
+        }
     }
 
-    public boolean currentFrameNeedBonus() {
-        return false;
+    private boolean shouldMoveFrame() {
+        if (frameCount == INIT_FRAME) {
+            return true;
+        }
+        int frameIndex = toIndex(frameCount);
+        return frames.get(frameIndex).isEnd() && frameCount < FINAL_FRAME;
+    }
+
+    public int currentFrameBonus() {
+        int frameIndex = toIndex(frameCount);
+        Frame currentFrame = frames.get(frameIndex);
+        return currentFrame.bonusAmount();
     }
 
     public Frame currentFrame() {
-        return null;
+        int frameIndex = toIndex(frameCount);
+        return frames.get(frameIndex);
+    }
+
+    public boolean isEnd() {
+        int frameIndex = toIndex(frameCount);
+        return frameCount == FINAL_FRAME && frames.get(frameIndex).isEnd();
     }
 
     private int toIndex(int value) {

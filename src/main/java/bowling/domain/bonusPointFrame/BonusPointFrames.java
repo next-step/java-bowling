@@ -13,9 +13,19 @@ public class BonusPointFrames {
     }
 
     public void update() {
+        List<BonusPointFrame> outdated = bonusPointFrames.stream()
+                .filter(bonusPointFrame -> !bonusPointFrame.needMoreBonus())
+                .collect(Collectors.toList());
+        for (BonusPointFrame bonusPointFrame : outdated) {
+            bonusPointFrame.endScoring();
+        }
+
         bonusPointFrames = bonusPointFrames.stream()
                 .filter(BonusPointFrame::needMoreBonus)
                 .collect(Collectors.toList());
     }
 
+    public void addBonusPointFrame(BonusPointFrame bonusPointFrame) {
+        bonusPointFrames.add(bonusPointFrame);
+    }
 }

@@ -1,25 +1,26 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.FinalPins;
+import bowling.domain.Score;
 
 public class FinalFrame extends Frame {
-    private int score;
+    private Score score;
     private FinalPins finalPins;
 
     public FinalFrame() {
-        score = INIT_SCORE;
+        score = new Score();
         finalPins = new FinalPins();
     }
 
     @Override
     public void addPoint(int bonusPoint) {
-        score += bonusPoint;
+        score.addScore(bonusPoint);
     }
 
     @Override
     public void bowl(int pin) {
         finalPins.bowl(pin);
-        score += pin;
+        score.addScore(pin);
     }
 
     @Override
@@ -36,5 +37,10 @@ public class FinalFrame extends Frame {
             return SPARE_BONUS;
         }
         return NO_BONUS;
+    }
+
+    @Override
+    public void endScoring() {
+        score.endScoring();
     }
 }
