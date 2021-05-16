@@ -34,23 +34,24 @@ class FinalPinsTest {
     @DisplayName("스트라이크를 판단할 수 있다")
     void canDetermineStrike(String rawPinStrings, boolean expected) {
         List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, DELIMITER);
-        for(int index = 0;index<rawPins.size()-1;index++){
+        for (int index = 0; index < rawPins.size() - 1; index++) {
             finalPins.bowl(rawPins.get(index));
         }
-        finalPins.bowl(rawPins.get(rawPins.size()-1));
+        finalPins.bowl(rawPins.get(rawPins.size() - 1));
         assertThat(finalPins.isStrike()).isEqualTo(expected);
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10,0,10:true", "10,0:false", "9,1:true", "8,2:true", "7,3:true", "6,4:true",
+    @CsvSource(value = {"10,0,10:true", "10,1,9:true", "10,2,8:true", "10,5,5:true", "10,6,4:true",
+            "10,0:false", "9,1:true", "8,2:true", "7,3:true", "6,4:true",
             "5,5:true", "4,3:false", "8,1:false", "5,3:false", "0,2:false"}, delimiter = ':')
     @DisplayName("스페어처리를 판단할 수 있다")
     void canDetermineSpare(String rawPinStrings, boolean expected) {
         List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, DELIMITER);
-        for(int index = 0;index<rawPins.size()-1;index++){
+        for (int index = 0; index < rawPins.size() - 1; index++) {
             finalPins.bowl(rawPins.get(index));
         }
-        finalPins.bowl(rawPins.get(rawPins.size()-1));
+        finalPins.bowl(rawPins.get(rawPins.size() - 1));
         assertThat(finalPins.isSpare()).isEqualTo(expected);
     }
 

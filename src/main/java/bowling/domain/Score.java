@@ -21,8 +21,11 @@ public class Score {
     }
 
     public void addScore(int score) {
-        if(!valid(score)){
+        if(!validScore(score)){
             throw new CustomException(ErrorCode.INVALID_SCORE);
+        }
+        if(endedScoring){
+            throw new CustomException(ErrorCode.INVALID_SCORE_ADDITION);
         }
         this.score += score;
     }
@@ -31,7 +34,7 @@ public class Score {
         this.endedScoring = ENDED_SCORING;
     }
 
-    private boolean valid(int score){
+    private boolean validScore(int score){
         return score>=MINIMUM_SCORE && score<= MAXIMUM_SCORE;
     }
 }
