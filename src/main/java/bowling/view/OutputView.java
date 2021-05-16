@@ -60,14 +60,16 @@ public class OutputView {
         Bowling bowling = bowlingGame.bowling();
         Frames frames = bowling.frames();
         List<Frame> frameList = frames.frames();
+        int accumulatedScore = INIT_SCORE;
         for (int index = 0; index < frameList.size(); index++) {
             Frame frame = frameList.get(index);
-            stringBuilder.append(frameScoreString(frame, index));
+            stringBuilder.append(frameScoreString(frame, index, accumulatedScore));
+            accumulatedScore+=frame.score().score();
         }
         return stringBuilder;
     }
 
-    private StringBuilder frameScoreString(Frame frame, int index) {
+    private StringBuilder frameScoreString(Frame frame, int index, int accumulatedScore) {
         StringBuilder stringBuilder = new StringBuilder();
         if (!frame.endedScoring() && index != LAST_FRAME - 1) {
             stringBuilder.append(EMPTY_SPACE_DOUBLE);
@@ -81,7 +83,7 @@ public class OutputView {
             stringBuilder.append(RIGHT_BOX_DOUBLE_SPACE);
             return stringBuilder;
         }
-        int rawScore = frame.score().score();
+        int rawScore = frame.score().score() + accumulatedScore;
         String stringScore = String.valueOf(rawScore);
         stringBuilder.append(EMPTY_SPACE_DOUBLE);
         if (index == LAST_FRAME - 1) {
