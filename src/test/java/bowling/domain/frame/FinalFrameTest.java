@@ -93,7 +93,6 @@ public class FinalFrameTest {
         assertThat(resultFrame).isEqualTo(FinalFrame.of(THIRD_THREE_HIT_PIN, SPARE_THIRD_THREE_RESULTS));
         assertThat(resultFrame.isFinished()).isTrue();
         assertThat(resultFrame.totalScore()).isEqualTo(Score.of(13));
-        System.out.println(resultFrame);
     }
 
     @Test

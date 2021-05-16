@@ -1,19 +1,19 @@
-package bowling.domain;
+package bowling.domain.player;
 
 import java.util.Objects;
 
-public class Player {
+public class Name {
     private static final int NAME_LENGTH = 3;
     private static final String INVALID_NAME = "이름은 3자여야합니다.";
     private final String name;
 
-    private Player(String name) {
+    private Name(String name) {
         this.name = name;
     }
 
-    public static Player of(String name) {
+    public static Name of(String name) {
         validName(name);
-        return new Player(name);
+        return new Name(name);
     }
 
     private static void validName(String name) {
@@ -26,7 +26,7 @@ public class Player {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
+        Name player = (Name) o;
         return Objects.equals(name, player.name);
     }
 

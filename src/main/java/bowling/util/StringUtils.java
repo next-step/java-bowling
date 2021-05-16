@@ -1,16 +1,15 @@
 package bowling.util;
 
-import bowling.domain.Player;
 import bowling.domain.Score;
-import bowling.domain.frame.Frames;
+import bowling.domain.player.Player;
 
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 
 public class StringUtils {
     private static final int MAX_INDEX = 10;
-    private static final int MAX_WIDTH = 6;
-    private static final int MIN_WIDTH = 3;
     private static final String DELIMITER_LAST = "[\\[\\]]";
     private static final String DELIMITER = ",";
     private static final String NAME_FORMAT = "|  %s |";
@@ -18,14 +17,15 @@ public class StringUtils {
     private static final String SCORE_FORMAT = " %3s  |";
     private static final String BLANK_FORMAT = "      |";
     private static final String SLASH = "|";
+    private static final String PLAYER_DELIMITER = ":";
 
-    public static String convertName(Player player) {
-        return String.format(NAME_FORMAT, player.toString());
+    public static String convertName(String player) {
+        return String.format(NAME_FORMAT, player);
     }
 
-    public static String convertFrames(Frames frames) {
+    public static String convertFrames(String frames) {
         StringBuilder stringBuilder = new StringBuilder();
-        String[] frameStr = removeLast(frames.toString()).split(DELIMITER);
+        String[] frameStr = removeLast(frames).split(DELIMITER);
         for (int i = 0; i < frameStr.length; i++) {
             stringBuilder.append(
                     replaceNull(String.format(" %-5s|", frameStr[i].trim())));
@@ -43,6 +43,16 @@ public class StringUtils {
             stringBuilder.append(BLANK_FORMAT);
         }
         return stringBuilder.toString();
+    }
+
+    public static String[] splitPlayer(String player) {
+        return player.split(PLAYER_DELIMITER);
+    }
+
+    public static String convertWinners(List<Player> winners) {
+        return String.join(", ", winners.stream()
+                .map(winner -> winner.toStringName())
+                .collect(toList()));
     }
 
     private static String removeLast(String str) {

@@ -38,7 +38,7 @@ public class Strike extends Finished {
 
     @Override
     public State next(int nextScore) {
-        return of(OneHit.of(hit.eval().add(nextScore)));
+        return of(OneHit.ofOne(hit.eval().add(nextScore)));
     }
 
     private static void valid(Score score) {

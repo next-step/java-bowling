@@ -7,12 +7,12 @@ import java.util.Objects;
 public class OneHit extends Running {
     private final Score score;
 
-    public OneHit(Score score) {
+    private OneHit(Score score) {
         this.score = score;
     }
 
     public static OneHit ofOne(int score) {
-        return ofOne(Score.of(score));
+        return new OneHit(Score.of(score));
     }
 
     public static OneHit ofOne(Score score) {
@@ -36,7 +36,7 @@ public class OneHit extends Running {
     @Override
     public State next(int nextHit) {
         if (score.calculate(nextHit).isClear()) {
-            return Spare.of(this, ofOne(Score.ofSpare(nextHit)));
+            return Spare.of(this, new OneHit(Score.ofSpare(nextHit)));
         }
         return Miss.of(this, of(nextHit));
     }
