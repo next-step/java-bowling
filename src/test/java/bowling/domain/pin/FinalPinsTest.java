@@ -3,6 +3,7 @@ package bowling.domain.pin;
 import bowling.domain.TestUtil;
 import bowling.exception.CustomException;
 import bowling.exception.ErrorCode;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -71,7 +72,23 @@ class FinalPinsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"0,10,3,4", "10,10,10,3", "10,0,10,4", "8,2,3,2", "0,0,10"})
+    @ValueSource(strings = {"0,10,3", "10,10,10", "10,0,10", "8,2,3", "0,0", "6,4,10"})
+    @DisplayName("정해진 횟수보다 더 많이 던지면 INVALID_BOWL을 던진다")
+    void canBowlFinalFrame(String rawPins) {
+        SoftAssertions softAssertions = new SoftAssertions();
+        List<Integer> integers = Arrays.stream(rawPins.split(","))
+                .map(Integer::valueOf)
+                .collect(Collectors.toList());
+        for (int count = 0; count < integers.size(); count++) {
+            softAssertions.assertThat(finalPins.isEnd()).isFalse();
+            finalPins.bowl(integers.get(count));
+        }
+        softAssertions.assertThat(finalPins.isEnd()).isTrue();
+        softAssertions.assertAll();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"0,10,3,4", "10,10,10,3", "10,0,10,4", "8,2,3,2", "0,0,10", "6,4,10,3"})
     @DisplayName("정해진 횟수보다 더 많이 던지면 INVALID_BOWL을 던진다")
     void tooMuchBowlThrowsException(String rawPins) {
         List<Integer> integers = Arrays.stream(rawPins.split(","))

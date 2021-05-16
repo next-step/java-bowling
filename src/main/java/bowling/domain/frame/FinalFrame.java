@@ -37,7 +37,7 @@ public class FinalFrame extends Frame {
         if (finalPins.bowlCount() == ONCE && finalPins.isStrike()) {
             return STRIKE_BONUS;
         }
-        if (finalPins.bowlCount() == TWICE && finalPins.isSpare()) {
+        if (finalPins.bowlCount() == TWICE && (finalPins.isStrike() || finalPins.isSpare())) {
             return SPARE_BONUS;
         }
         return NO_BONUS;
