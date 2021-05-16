@@ -21,6 +21,8 @@ public class Bowling implements Playable {
         frames.moveFrameIfNeeded();
         frames.bowl(point);
         updateBonusFrame();
+        bonusPointFrames.addBonusPoints(point);
+        bonusPointFrames.update();
     }
 
     private void updateBonusFrame() {

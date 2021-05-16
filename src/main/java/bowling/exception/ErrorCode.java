@@ -6,9 +6,9 @@ public enum ErrorCode {
 
     INVALID_BOWL("PI001", "Cannot bowl to fully occupied pins"),
 
-    INVALID_FRAME_MOVE("F001", "Cannot move frame when it is the last frame of the game"),
+    BONUS_LEFT("B001", "Still need to add bonus points in frame"),
 
-    BONUS_LEFT("B001", "Still need to add bonus points in frame");
+    INVALID_SCORE("S001", "score added to single frame should be between 0~10");
 
     private String code;
     private String message;

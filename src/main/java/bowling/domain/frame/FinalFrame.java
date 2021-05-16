@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.FinalPins;
 import bowling.domain.Score;
+import bowling.domain.pin.FinalPins;
 
 public class FinalFrame extends Frame {
     private Score score;

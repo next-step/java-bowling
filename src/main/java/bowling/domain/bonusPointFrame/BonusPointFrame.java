@@ -24,7 +24,7 @@ public class BonusPointFrame {
     }
 
     public void endScoring() {
-        if(count>0){
+        if (count > 0) {
             throw new CustomException(ErrorCode.BONUS_LEFT);
         }
         frame.endScoring();

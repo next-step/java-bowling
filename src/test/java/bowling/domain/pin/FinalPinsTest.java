@@ -50,11 +50,11 @@ class FinalPinsTest {
         List<Integer> integers = Arrays.stream(rawPins.split(","))
                 .map(Integer::valueOf)
                 .collect(Collectors.toList());
-        for(int count = 0;count<integers.size()-1;count++){
+        for (int count = 0; count < integers.size() - 1; count++) {
             finalPins.bowl(integers.get(count));
         }
-        int finalRawPin = integers.get(integers.size()-1);
-        CustomException customException = assertThrows(CustomException.class, ()-> finalPins.bowl(finalRawPin));
+        int finalRawPin = integers.get(integers.size() - 1);
+        CustomException customException = assertThrows(CustomException.class, () -> finalPins.bowl(finalRawPin));
         assertThat(customException.errorCode()).isEqualTo(ErrorCode.INVALID_BOWL);
     }
 }

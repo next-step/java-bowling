@@ -67,6 +67,10 @@ public class Frames {
         return frameCount == FINAL_FRAME && frames.get(frameIndex).isEnd();
     }
 
+    public int frameCount(){
+        return frameCount;
+    }
+
     private int toIndex(int value) {
         return value - 1;
     }
