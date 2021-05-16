@@ -1,29 +1,31 @@
 package bowling.domain.pin;
 
+import bowling.exception.CustomException;
+import bowling.exception.ErrorCode;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalPins extends Pins{
-
-    private static final int NOT_PLAYED = 0;
-    private static final int FIRST = 0;
-    private static final int SECOND = 1;
+public class NormalPins extends Pins {
     private static final int PIN_SIZE = 2;
 
     private List<Pin> pins;
 
-    public NormalPins(){
+    public NormalPins() {
         pins = new ArrayList<>();
     }
 
     @Override
-    public void bowl() {
-
+    public void bowl(int pin) {
+        if (pins.size() == PIN_SIZE) {
+            throw new CustomException(ErrorCode.INVALID_BOWL);
+        }
+        pins.add(new Pin(pin));
     }
 
     @Override
     public boolean isStrike() {
-        if(pins.size()==NOT_PLAYED){
+        if (pins.size() == NOT_PLAYED) {
             return false;
         }
         return pins.get(FIRST).didClear();
@@ -31,6 +33,14 @@ public class NormalPins extends Pins{
 
     @Override
     public boolean isSpare() {
-        return false;
+        if (isStrike()) {
+            return false;
+        }
+        if (pins.size() != PIN_SIZE) {
+            return false;
+        }
+        Pin firstPin = pins.get(FIRST);
+        Pin secondPin = pins.get(SECOND);
+        return secondPin.didClear(firstPin);
     }
 }
