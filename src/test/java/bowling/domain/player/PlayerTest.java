@@ -1,5 +1,6 @@
 package bowling.domain.player;
 
+import bowling.domain.frame.Frame;
 import bowling.domain.score.Score;
 import bowling.domain.state.Pins;
 import bowling.exception.NameNullPointerException;
@@ -133,12 +134,30 @@ class PlayerTest {
             thirdPlayer.bowl(Pins.valueOf(10));
         }
 
-        // when
+        // then
         assertAll(
                 () -> assertThat(firstPlayer.scores().stream().mapToInt(Score::score).sum()).isEqualTo(20),
                 () -> assertThat(secondPlayer.scores().stream().mapToInt(Score::score).sum()).isEqualTo(150),
                 () -> assertThat(thirdPlayer.scores().stream().mapToInt(Score::score).sum()).isEqualTo(300)
         );
 
+    }
+
+    @DisplayName("Player 인스턴스가 현재 프레임을 반환하는지 테스트")
+    @Test
+    void 반환_current() {
+        // given
+        String name = "kwj";
+
+        // when
+        Player player = new Player(name);
+        Frame current = player.current();
+
+        // then
+        assertAll(
+                () -> assertThat(current).isNotNull(),
+                () -> assertThat(current.sequence()).isEqualTo(1),
+                () -> assertThat(current.isFinish()).isFalse()
+        );
     }
 }

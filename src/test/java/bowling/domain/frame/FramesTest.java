@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Scores;
-import bowling.exception.NoActionBowlException;
+import bowling.exception.NoMoreBowlException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +37,7 @@ class FramesTest {
     void 반환_특정_frame() {
         // when
         Frames frames = new Frames();
-        Frame frame = frames.get(0);
+        Frame frame = frames.frameByIndex(0);
 
         // then
         assertThat(frame.sequence()).isEqualTo(1);
@@ -85,7 +85,7 @@ class FramesTest {
 
         // then
         assertThatThrownBy(() -> frames.bowl(1))
-                .isInstanceOf(NoActionBowlException.class)
+                .isInstanceOf(NoMoreBowlException.class)
                 .hasMessage("현재 상태에서는 더 이상 볼을 던질 수 없습니다.");
     }
 
@@ -112,11 +112,29 @@ class FramesTest {
         Scores secondScores = secondFrames.scores();
         Scores thirdScores = thirdFrames.scores();
 
-        // when
+        // then
         assertAll(
                 () -> assertThat(firstScores.sum()).isEqualTo(20),
                 () -> assertThat(secondScores.sum()).isEqualTo(150),
                 () -> assertThat(thirdScores.sum()).isEqualTo(300)
+        );
+
+    }
+
+    @DisplayName("Frames 인스턴스가 현재 프레임을 반환하는지 테스트")
+    @Test
+    void 반환_current() {
+        // given
+        Frames frames = new Frames();
+        Frame expected = frames.frameByIndex(0);
+
+        // when
+        Frame actual = frames.current();
+
+        // then
+        assertAll(
+                () -> assertThat(actual).isSameAs(expected),
+                () -> assertThat(actual).isEqualTo(expected)
         );
 
     }

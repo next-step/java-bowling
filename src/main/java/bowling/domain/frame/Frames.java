@@ -3,7 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 import bowling.domain.state.Pins;
-import bowling.exception.NoActionBowlException;
+import bowling.exception.NoMoreBowlException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,7 +53,7 @@ public final class Frames {
 
     private final void validateFinish() {
         if (isFinish()) {
-            throw new NoActionBowlException();
+            throw new NoMoreBowlException();
         }
     }
 
@@ -87,7 +87,11 @@ public final class Frames {
         return frames.get(nextIndex);
     }
 
-    public final Frame get(final int index) {
+    public final Frame frameByIndex(final int index) {
         return unmodifiableList(frames).get(index);
+    }
+
+    public final Frame current() {
+        return current;
     }
 }

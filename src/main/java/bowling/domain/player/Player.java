@@ -1,5 +1,6 @@
 package bowling.domain.player;
 
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.score.Scores;
 import bowling.domain.state.Pins;
@@ -60,7 +61,7 @@ public final class Player {
         return frames;
     }
 
-    public final int sum() {
-        return scores().sum();
+    public final Frame current() {
+        return frames.current();
     }
 }
