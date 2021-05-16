@@ -79,9 +79,9 @@ class FinalPinsTest {
         List<Integer> integers = Arrays.stream(rawPins.split(","))
                 .map(Integer::valueOf)
                 .collect(Collectors.toList());
-        for (int count = 0; count < integers.size(); count++) {
+        for (Integer integer : integers) {
             softAssertions.assertThat(finalPins.isEnd()).isFalse();
-            finalPins.bowl(integers.get(count));
+            finalPins.bowl(integer);
         }
         softAssertions.assertThat(finalPins.isEnd()).isTrue();
         softAssertions.assertAll();

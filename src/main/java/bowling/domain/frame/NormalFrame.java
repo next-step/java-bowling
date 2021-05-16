@@ -44,4 +44,9 @@ public class NormalFrame extends Frame {
         score.endScoring();
     }
 
+    @Override
+    public boolean endedScoring() {
+        return score.endedScoring();
+    }
+
 }

@@ -37,4 +37,8 @@ public class Score {
     private boolean validScore(int score){
         return score>=MINIMUM_SCORE && score<= MAXIMUM_SCORE;
     }
+
+    public boolean endedScoring() {
+        return endedScoring;
+    }
 }

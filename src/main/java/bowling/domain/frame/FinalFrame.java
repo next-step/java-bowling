@@ -47,4 +47,9 @@ public class FinalFrame extends Frame {
     public void endScoring() {
         score.endScoring();
     }
+
+    @Override
+    public boolean endedScoring() {
+        return score.endedScoring();
+    }
 }

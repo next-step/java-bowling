@@ -20,11 +20,11 @@ public class BonusPointFrame {
     }
 
     public boolean needMoreBonus() {
-        return count > 0;
+        return count >= 0;
     }
 
     public void endScoring() {
-        if (count > 0) {
+        if (count >= 0) {
             throw new CustomException(ErrorCode.BONUS_LEFT);
         }
         frame.endScoring();

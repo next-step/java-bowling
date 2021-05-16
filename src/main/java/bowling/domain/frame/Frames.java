@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Frames {
 
+    private static final int INIT_NUMBER = 0;
     private static final int INIT_FRAME = 0;
     private static final int LAST_NORMAL_FRAME = 9;
     private static final int FINAL_FRAME = 10;
@@ -67,7 +68,14 @@ public class Frames {
         return frameCount == FINAL_FRAME && frames.get(frameIndex).isEnd();
     }
 
-    public int frameCount(){
+    public int closedFrames() {
+        return frames.stream()
+                .map(Frame::endedScoring)
+                .map(isClosed -> isClosed.compareTo(false))
+                .reduce(INIT_NUMBER, Integer::sum);
+    }
+
+    public int frameCount() {
         return frameCount;
     }
 
