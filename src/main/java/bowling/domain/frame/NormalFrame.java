@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.Score;
 import bowling.domain.pin.NormalPins;
+import bowling.domain.pin.Pins;
 
 public class NormalFrame extends Frame {
     private Score score;
@@ -49,6 +50,11 @@ public class NormalFrame extends Frame {
     @Override
     public boolean endedScoring() {
         return score.endedScoring();
+    }
+
+    @Override
+    public Pins pins() {
+        return normalPins;
     }
 
 }

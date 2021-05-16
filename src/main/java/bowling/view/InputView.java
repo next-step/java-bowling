@@ -11,7 +11,7 @@ public class InputView {
     }
 
     public int getPoint(int frameCount) {
-        System.out.printf(String.format("%d프레임 투구 : ", frameCount));
+        System.out.printf(String.format("%d 프레임 투구 : ", frameCount));
         return Integer.parseInt(scanner.nextLine().trim());
     }
 

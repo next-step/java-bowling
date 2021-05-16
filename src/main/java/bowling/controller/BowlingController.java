@@ -11,8 +11,10 @@ public class BowlingController {
 
     public void play() {
         BowlingGame bowlingGame = new BowlingGame(inputView.getName());
+        outputView.printGame(bowlingGame);
         while (!bowlingGame.isEnd()) {
             bowlingGame.play(inputView.getPoint(bowlingGame.frameCount()));
+            outputView.printGame(bowlingGame);
         }
     }
 }

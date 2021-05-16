@@ -40,4 +40,8 @@ public class Bowling {
     public int frameCount() {
         return frames.frameCount();
     }
+
+    public Frames frames() {
+        return frames;
+    }
 }

@@ -52,4 +52,14 @@ public class NormalPins extends Pins {
         Pin secondPin = pins.get(SECOND);
         return secondPin.didClear(firstPin);
     }
+
+    @Override
+    public Pin pin(int index) {
+        return pins.get(index);
+    }
+
+    @Override
+    public int size() {
+        return pins.size();
+    }
 }

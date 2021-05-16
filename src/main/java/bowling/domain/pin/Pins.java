@@ -14,4 +14,8 @@ public abstract class Pins {
     public abstract boolean isStrike();
 
     public abstract boolean isSpare();
+
+    public abstract Pin pin(int index);
+
+    public abstract int size();
 }

@@ -84,6 +84,16 @@ public class FinalPins extends Pins {
         return spareConsideringTwoPins(pins.get(SECOND), pins.get(THIRD));
     }
 
+    @Override
+    public Pin pin(int index) {
+        return pins.get(index);
+    }
+
+    @Override
+    public int size() {
+        return pins.size();
+    }
+
     private boolean spareConsideringTwoPins(Pin firstPin, Pin secondPin) {
         if (firstPin.didClear()) {
             return false;

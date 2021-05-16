@@ -25,6 +25,6 @@ public class Player {
     }
 
     public String name() {
-        return this.name;
+        return name;
     }
 }

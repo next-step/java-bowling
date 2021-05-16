@@ -34,4 +34,12 @@ public class Pin {
     public boolean didClear(Pin firstPin) {
         return firstPin.pin + pin == MAXIMUM_PIN;
     }
+
+    public boolean guttered() {
+        return pin==MINIMUM_PIN;
+    }
+
+    public int pin() {
+        return pin;
+    }
 }

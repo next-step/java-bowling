@@ -1,5 +1,8 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.NormalPins;
+import bowling.domain.pin.Pins;
+
 public abstract class Frame {
 
     public static final int STRIKE_BONUS = 2;
@@ -17,4 +20,6 @@ public abstract class Frame {
     public abstract void endScoring();
 
     public abstract boolean endedScoring();
+
+    public abstract Pins pins();
 }

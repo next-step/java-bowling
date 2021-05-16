@@ -90,4 +90,12 @@ public class Frames {
     private int toIndex(int value) {
         return value - 1;
     }
+
+    public int size() {
+        return frames.size();
+    }
+
+    public List<Frame> frames() {
+        return frames;
+    }
 }

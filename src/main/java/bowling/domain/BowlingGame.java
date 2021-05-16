@@ -22,4 +22,12 @@ public class BowlingGame implements Playable{
     public int frameCount() {
         return bowling.frameCount();
     }
+
+    public Player player() {
+        return player;
+    }
+
+    public Bowling bowling() {
+        return bowling;
+    }
 }

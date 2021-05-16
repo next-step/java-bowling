@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.Score;
 import bowling.domain.pin.FinalPins;
+import bowling.domain.pin.Pins;
 
 public class FinalFrame extends Frame {
 
@@ -53,5 +54,10 @@ public class FinalFrame extends Frame {
     @Override
     public boolean endedScoring() {
         return score.endedScoring();
+    }
+
+    @Override
+    public Pins pins() {
+        return finalPins;
     }
 }
