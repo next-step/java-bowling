@@ -18,17 +18,18 @@ public class FinalPins extends Pins {
 
     @Override
     public void bowl(int pin) {
-        if (!validBowl()) {
+        if (isEnd()) {
             throw new CustomException(ErrorCode.INVALID_BOWL);
         }
         pins.add(new Pin(pin));
     }
 
-    private boolean validBowl() {
+    @Override
+    public boolean isEnd() {
         if((isStrike() || isSpare()) && pins.size()==PIN_SIZE){
-            return false;
+            return true;
         }
-        return (isStrike() || isSpare()) || pins.size() != NORMAL_PIN_SIZE;
+        return !((isStrike() || isSpare()) || pins.size() != NORMAL_PIN_SIZE);
     }
 
     @Override

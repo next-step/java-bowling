@@ -17,10 +17,15 @@ public class NormalPins extends Pins {
 
     @Override
     public void bowl(int pin) {
-        if (pins.size() == PIN_SIZE) {
+        if (isEnd()) {
             throw new CustomException(ErrorCode.INVALID_BOWL);
         }
         pins.add(new Pin(pin));
+    }
+
+    @Override
+    public boolean isEnd() {
+        return isStrike() || isSpare() || pins.size()==PIN_SIZE;
     }
 
     @Override

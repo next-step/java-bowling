@@ -29,7 +29,7 @@ class NormalPinsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10:0:false", "9:1:true", "8:2:true", "7:3:true", "6:4:true",
+    @CsvSource(value = {"9:1:true", "8:2:true", "7:3:true", "6:4:true",
             "5:5:true", "4:3:false", "8:1:false", "5:3:false", "0:2:false"}, delimiter = ':')
     @DisplayName("스페어를 판단할 수 있다")
     void canDetermineSpare(int rawFirstPin, int rawSecondPin, boolean expected) {
@@ -39,7 +39,7 @@ class NormalPinsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"0:0:0", "10:0:10", "8:2:3"}, delimiter = ':')
+    @CsvSource(value = {"0:0:0", "8:2:3"}, delimiter = ':')
     @DisplayName("정해진 횟수보다 더 많이 던지면 INVALID_BOWL을 던진다")
     void tooMuchBowlThrowsException(int rawFirstPin, int rawSecondPin, int rawThirdPin) {
         normalPins.bowl(rawFirstPin);

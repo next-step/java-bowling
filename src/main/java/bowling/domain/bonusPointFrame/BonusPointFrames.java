@@ -4,6 +4,5 @@ import java.util.List;
 
 public class BonusPointFrames {
     private List<BonusPointFrame> bonusPointFrames;
-
     
 }
