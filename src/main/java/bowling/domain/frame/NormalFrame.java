@@ -12,8 +12,14 @@ public class NormalFrame extends Frame{
     }
 
     @Override
+    public void addPoint(int bonusPoint) {
+        score+=bonusPoint;
+    }
+
+    @Override
     public void bowl(int pin) {
         normalPins.bowl(pin);
+        score+=pin;
     }
 
     @Override

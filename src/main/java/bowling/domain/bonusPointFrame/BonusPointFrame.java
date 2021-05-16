@@ -11,4 +11,13 @@ public class BonusPointFrame {
         this.count = count;
         this.frame = frame;
     }
+
+    public void addBonusPoint(int point){
+        frame.addPoint(point);
+        count--;
+    }
+
+    public boolean needMoreBonus(){
+        return count>0;
+    }
 }
