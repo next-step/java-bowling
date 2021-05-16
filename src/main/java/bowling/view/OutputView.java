@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.Bowling;
 import bowling.domain.BowlingGame;
 import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.pin.FinalPins;
@@ -10,8 +11,11 @@ import bowling.domain.pin.NormalPins;
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
 
+import java.util.List;
+
 public class OutputView {
 
+    private static final int INIT_SCORE = 0;
     private static final int NORMAL_PIN_SIZE = 2;
     private static final int FINAL_BONUS_PIN_SIZE = 3;
     private static final int LAST_NORMAL_FRAME = 9;
@@ -37,11 +41,69 @@ public class OutputView {
 
     public void printGame(BowlingGame bowlingGame) {
         System.out.println(BOARD);
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(nameStringBuilder(bowlingGame));
-        stringBuilder.append(pointStringBuilder(bowlingGame.bowling()));
-        System.out.println(stringBuilder.toString());
+
+        StringBuilder frameStringBuilder = new StringBuilder();
+        frameStringBuilder.append(nameStringBuilder(bowlingGame));
+        frameStringBuilder.append(pinStringBuilder(bowlingGame.bowling()));
+        System.out.println(frameStringBuilder.toString());
+
+        StringBuilder scoresStringBuilder = new StringBuilder();
+        scoresStringBuilder.append(scoreHeaderBuilder());
+        scoresStringBuilder.append(scoreStringBuilder(bowlingGame));
+        System.out.println(scoresStringBuilder.toString());
+
         System.out.println();
+    }
+
+    private StringBuilder scoreStringBuilder(BowlingGame bowlingGame) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Bowling bowling = bowlingGame.bowling();
+        Frames frames = bowling.frames();
+        List<Frame> frameList = frames.frames();
+        for (int index = 0; index < frameList.size(); index++) {
+            Frame frame = frameList.get(index);
+            stringBuilder.append(frameScoreString(frame, index));
+        }
+        return stringBuilder;
+    }
+
+    private StringBuilder frameScoreString(Frame frame, int index) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (!frame.endedScoring() && index != LAST_FRAME - 1) {
+            stringBuilder.append(EMPTY_SPACE_DOUBLE);
+            stringBuilder.append(EMPTY_SPACE_DOUBLE);
+            stringBuilder.append(RIGHT_BOX_DOUBLE_SPACE);
+            return stringBuilder;
+        }
+        if (!frame.endedScoring() && index == LAST_FRAME - 1) {
+            stringBuilder.append(EMPTY_SPACE_TRIPLE);
+            stringBuilder.append(EMPTY_SPACE_TRIPLE);
+            stringBuilder.append(RIGHT_BOX_DOUBLE_SPACE);
+            return stringBuilder;
+        }
+        int rawScore = frame.score().score();
+        String stringScore = String.valueOf(rawScore);
+        stringBuilder.append(EMPTY_SPACE_DOUBLE);
+        if (index == LAST_FRAME - 1) {
+            stringBuilder.append(EMPTY_SPACE_SINGLE);
+        }
+        stringBuilder.append(stringScore);
+        for (int count = 0; count < 3 - stringScore.length(); count++) {
+            stringBuilder.append(EMPTY_SPACE_SINGLE);
+        }
+        if (index == LAST_FRAME - 1) {
+            stringBuilder.append(EMPTY_SPACE_SINGLE);
+        }
+        stringBuilder.append(RIGHT_BOX_SINGLE_SPACE);
+        return stringBuilder;
+    }
+
+    private StringBuilder scoreHeaderBuilder() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(LEFT_BOX_SINGLE_SPACE);
+        stringBuilder.append(EMPTY_SPACE_TRIPLE);
+        stringBuilder.append(RIGHT_BOX_DOUBLE_SPACE);
+        return stringBuilder;
     }
 
     private StringBuilder nameStringBuilder(BowlingGame bowlingGame) {
@@ -52,7 +114,7 @@ public class OutputView {
         return stringBuilder;
     }
 
-    private StringBuilder pointStringBuilder(Bowling bowling) {
+    private StringBuilder pinStringBuilder(Bowling bowling) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(normalFrameStrings(bowling.frames()));
         stringBuilder.append(finalFrameStrings(bowling.frames()));
@@ -137,12 +199,12 @@ public class OutputView {
                     DIVIDER, convertIfNeeded(thirdPin)));
             return stringBuilder;
         }
-        if(firstPin.didClear() & thirdPin.didClear(secondPin)){
+        if (firstPin.didClear() & thirdPin.didClear(secondPin)) {
             stringBuilder.append(String.format(FINAL_FRAME_FORMAT, STRIKE, DIVIDER, convertIfNeeded(secondPin),
                     DIVIDER, SPARE));
             return stringBuilder;
         }
-        if(firstPin.didClear()){
+        if (firstPin.didClear()) {
             stringBuilder.append(String.format(FINAL_FRAME_FORMAT, STRIKE, DIVIDER, convertIfNeeded(secondPin),
                     DIVIDER, convertIfNeeded(thirdPin)));
             return stringBuilder;
@@ -160,7 +222,7 @@ public class OutputView {
                     DIVIDER, EMPTY_SPACE_SINGLE));
             return stringBuilder;
         }
-        if(pins.size()<NORMAL_PIN_SIZE){
+        if (pins.size() < NORMAL_PIN_SIZE) {
             stringBuilder.append(String.format(FINAL_FRAME_FORMAT, gutterIfNeeded(firstPin), DIVIDER, EMPTY_SPACE_SINGLE,
                     DIVIDER, EMPTY_SPACE_SINGLE));
             return stringBuilder;

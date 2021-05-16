@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Score;
 import bowling.domain.pin.NormalPins;
 import bowling.domain.pin.Pins;
 
@@ -22,4 +23,6 @@ public abstract class Frame {
     public abstract boolean endedScoring();
 
     public abstract Pins pins();
+
+    public abstract Score score();
 }

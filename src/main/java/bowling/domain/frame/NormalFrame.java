@@ -57,4 +57,9 @@ public class NormalFrame extends Frame {
         return normalPins;
     }
 
+    @Override
+    public Score score() {
+        return score;
+    }
+
 }

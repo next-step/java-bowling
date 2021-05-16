@@ -60,4 +60,9 @@ public class FinalFrame extends Frame {
     public Pins pins() {
         return finalPins;
     }
+
+    @Override
+    public Score score() {
+        return score;
+    }
 }

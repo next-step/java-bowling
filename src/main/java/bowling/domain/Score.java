@@ -41,4 +41,8 @@ public class Score {
     public boolean endedScoring() {
         return endedScoring;
     }
+
+    public int score() {
+        return score;
+    }
 }
