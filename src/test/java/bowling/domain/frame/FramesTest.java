@@ -67,9 +67,9 @@ class FramesTest {
         for (int index = 0; index < rawPins.size(); index++) {
             int rawPin = rawPins.get(index);
             int frameCount = frameCounts.get(index);
+            softAssertions.assertThat(frames.frameCount()).isEqualTo(frameCount);
             frames.moveFrameIfNeeded();
             frames.bowl(rawPin);
-            softAssertions.assertThat(frames.frameCount()).isEqualTo(frameCount);
         }
         softAssertions.assertAll();
     }
