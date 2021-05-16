@@ -4,6 +4,8 @@ public abstract class Pins {
     public static final int NOT_PLAYED = 0;
     public static final int FIRST = 0;
     public static final int SECOND = 1;
+    public static final int THIRD = 2;
+    public static final int MAXIMUM_PINS = 10;
 
     public abstract void bowl(int pin);
 

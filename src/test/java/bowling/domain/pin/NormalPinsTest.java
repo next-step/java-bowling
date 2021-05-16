@@ -2,6 +2,7 @@ package bowling.domain.pin;
 
 import bowling.exception.CustomException;
 import bowling.exception.ErrorCode;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -36,6 +37,16 @@ class NormalPinsTest {
         normalPins.bowl(rawFirstPin);
         normalPins.bowl(rawSecondPin);
         assertThat(normalPins.isSpare()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"9:2", "8:3", "7:5", "6:10",
+            "5:6", "4:8", "8:7", "5:9"}, delimiter = ':')
+    @DisplayName("한번 세워진 핀보다 더 많은 핀을 쓰러뜨리려고 하면 INVALID_SECOND_PIN을 던진다")
+    void bowlOverflowThrowsException(int rawFirstPin, int rawSecondPin) {
+        normalPins.bowl(rawFirstPin);
+        CustomException customException = assertThrows(CustomException.class, ()->normalPins.bowl(rawSecondPin));
+        assertThat(customException.errorCode()).isEqualTo(ErrorCode.INVALID_SECOND_PIN);
     }
 
     @ParameterizedTest

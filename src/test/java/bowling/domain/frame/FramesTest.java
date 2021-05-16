@@ -16,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FramesTest {
 
+    private static final String DELIMITER = ",";
+
     private Frames frames = new Frames();
 
     @ParameterizedTest
@@ -25,7 +27,7 @@ class FramesTest {
     @DisplayName("볼링을 끝까지 진행할 수 있다")
     void canBowlToEnd(String rawPinStrings) {
         SoftAssertions softAssertions = new SoftAssertions();
-        List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, ",");
+        List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, DELIMITER);
         for (Integer rawPin : rawPins) {
             softAssertions.assertThat(frames.isEnd()).isFalse();
             frames.moveFrameIfNeeded();
@@ -42,7 +44,7 @@ class FramesTest {
             "9,1,10,0,0,10,10,10,10,10,10,0,0,0"}, delimiter = ':')
     @DisplayName("정해진 수 보다 더 많이 던질 수는 없다")
     void tooMuchBowlThrowsException(String rawPinStrings) {
-        List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, ",");
+        List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, DELIMITER);
         for (int index = 0; index < rawPins.size() - 1; index++) {
             int rawPin = rawPins.get(index);
             frames.moveFrameIfNeeded();
@@ -61,8 +63,8 @@ class FramesTest {
     @DisplayName("볼링 프레임 수를 정확하게 알려 줄 수 있다")
     void canDetermineFrameCount(String rawPinStrings, String frameCountStrings) {
         SoftAssertions softAssertions = new SoftAssertions();
-        List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, ",");
-        List<Integer> frameCounts = TestUtil.stringListToIntegerList(frameCountStrings, ",");
+        List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, DELIMITER);
+        List<Integer> frameCounts = TestUtil.stringListToIntegerList(frameCountStrings, DELIMITER);
         for (int index = 0; index < rawPins.size(); index++) {
             int rawPin = rawPins.get(index);
             int frameCount = frameCounts.get(index);
@@ -75,10 +77,11 @@ class FramesTest {
 
 //    @ParameterizedTest
 //    @CsvSource(value = {"10,10,10,10,10,10,10,10,10,10,10,10", "2,2,2,2,2,2,2,2,2,2"}, delimiter = ':')
-//    @DisplayName("볼링 프레임 수를 정확하게 알려 줄 수 있다")
-//    void canDetermineBonusFrame(String rawPinStrings, ){
+//    @DisplayName("볼링의 보너스 프레임 수를 정확하게 알려 줄 수 있다")
+//    void canDetermineBonusCount(String rawPinStrings, String rawBonusCountStrings){
 //        SoftAssertions softAssertions = new SoftAssertions();
-//        List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, ",");
+//        List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, DELIMITER);
+//        List<Integer> rawBonus = TestUtil.stringListToIntegerList(rawBonusCountStrings, DELIMITER);
 //
 //    }
 

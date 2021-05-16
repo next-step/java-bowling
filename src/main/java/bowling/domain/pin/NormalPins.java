@@ -20,7 +20,11 @@ public class NormalPins extends Pins {
         if (isEnd()) {
             throw new CustomException(ErrorCode.INVALID_BOWL);
         }
-        pins.add(new Pin(pin));
+        if(pins.isEmpty()){
+            pins.add(new Pin(pin));
+            return;
+        }
+        pins.add(new Pin(pins.get(FIRST), pin));
     }
 
     @Override

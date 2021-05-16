@@ -4,6 +4,10 @@ import bowling.domain.Score;
 import bowling.domain.pin.FinalPins;
 
 public class FinalFrame extends Frame {
+
+    private static final int ONCE = 1;
+    private static final int TWICE = 2;
+
     private Score score;
     private FinalPins finalPins;
 
@@ -30,10 +34,10 @@ public class FinalFrame extends Frame {
 
     @Override
     public int bonusAmount() {
-        if (finalPins.isStrike()) {
+        if (finalPins.bowlCount() == ONCE && finalPins.isStrike()) {
             return STRIKE_BONUS;
         }
-        if (finalPins.isSpare()) {
+        if (finalPins.bowlCount() == TWICE && finalPins.isSpare()) {
             return SPARE_BONUS;
         }
         return NO_BONUS;
