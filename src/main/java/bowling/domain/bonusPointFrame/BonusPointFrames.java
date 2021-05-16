@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class BonusPointFrames {
     private List<BonusPointFrame> bonusPointFrames;
 
-    public BonusPointFrames(){
+    public BonusPointFrames() {
         bonusPointFrames = new ArrayList<>();
     }
 

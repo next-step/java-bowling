@@ -41,7 +41,9 @@ public class NormalFrame extends Frame {
 
     @Override
     public void endScoring() {
-        score.endScoring();
+        if (isEnd()) {
+            score.endScoring();
+        }
     }
 
     @Override

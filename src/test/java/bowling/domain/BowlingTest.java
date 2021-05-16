@@ -38,7 +38,8 @@ class BowlingTest {
 
     @ParameterizedTest
     @CsvSource(value = {"10,10,10,10,10,10,10,10,10,10,10,10:0,0,1,2,3,4,5,6,7,8,9,10",
-            "1,3,2,8,10,10,10,10,10,10,10,6,4,10:0,0,0,0,0,0,0,0,0,0,0,0,0,0"}, delimiter = ':')
+            "1,3,2,8,10,10,10,10,10,10,10,6,4,10:0,1,1,1,2,2,3,4,5,6,7,8,9,10",
+            "9,1,10,0,0,10,10,10,10,10,10,0,0:0,0,1,1,3,3,3,4,5,6,7,8,10"}, delimiter = ':')
     @DisplayName("볼링 진행과정 도중 계산이 끝난 프레임을 계산할 수 있다")
     void canDetermineEndedScores(String rawPinStrings, String rawEndedScoreStrings) {
         SoftAssertions softAssertions = new SoftAssertions();
@@ -48,8 +49,7 @@ class BowlingTest {
             int rawPin = rawPins.get(index);
             int rawEndedScore = rawEndedScores.get(index);
             bowling.play(rawPin);
-            System.out.println(bowling.closedScores());
-//            softAssertions.assertThat(bowling.closedScores()).isEqualTo(rawEndedScore);
+            softAssertions.assertThat(bowling.closedScores()).isEqualTo(rawEndedScore);
         }
         softAssertions.assertAll();
     }
