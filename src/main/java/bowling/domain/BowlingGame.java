@@ -1,10 +1,10 @@
 package bowling.domain;
 
-public class BowlingGame implements Playable{
+public class BowlingGame implements Playable {
     private Player player;
     private Bowling bowling;
 
-    public BowlingGame(String name){
+    public BowlingGame(String name) {
         player = new Player(name);
         bowling = new Bowling();
     }

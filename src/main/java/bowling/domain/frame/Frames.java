@@ -76,13 +76,13 @@ public class Frames {
     }
 
     public int frameCount() {
-        if(frames.isEmpty()){
-            return frames.size()+1;
+        if (frames.isEmpty()) {
+            return frames.size() + 1;
         }
         int frameIndex = toIndex(frameCount);
         Frame currentFrame = frames.get(frameIndex);
-        if(currentFrame.isEnd()){
-            return frameCount+1;
+        if (currentFrame.isEnd()) {
+            return frameCount + 1;
         }
         return frameCount;
     }

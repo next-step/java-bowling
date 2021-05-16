@@ -13,8 +13,8 @@ public class Player {
 
     private String name;
 
-    public Player(String name){
-        if(!valid(name)){
+    public Player(String name) {
+        if (!valid(name)) {
             throw new CustomException(ErrorCode.INVALID_NAME);
         }
         this.name = name;

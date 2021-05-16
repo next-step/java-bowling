@@ -64,7 +64,7 @@ public class OutputView {
         for (int index = 0; index < frameList.size(); index++) {
             Frame frame = frameList.get(index);
             stringBuilder.append(frameScoreString(frame, index, accumulatedScore));
-            accumulatedScore+=frame.score().score();
+            accumulatedScore += frame.score().score();
         }
         return stringBuilder;
     }

@@ -36,7 +36,7 @@ public class Pin {
     }
 
     public boolean guttered() {
-        return pin==MINIMUM_PIN;
+        return pin == MINIMUM_PIN;
     }
 
     public int pin() {

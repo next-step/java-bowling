@@ -22,12 +22,12 @@ class FinalFrameTest {
 
     @ParameterizedTest
     @CsvSource(value = {"10:0", "10,10:0", "10,9:0", "9,1:0", "0,10:0",
-            "3,7:0", "5,5:0", "10,10,10:0", "10,9,1:0","9,0:0",
+            "3,7:0", "5,5:0", "10,10,10:0", "10,9,1:0", "9,0:0",
             "0,3:0", "2,7:0", "5,0:0"}, delimiter = ':')
     @DisplayName("보너스를 확인할 수 있다")
     void canDetermineStrikeBonusStatus(String rawScoreStrings, int bonus) {
         List<Integer> rawScores = TestUtil.stringListToIntegerList(rawScoreStrings, DELIMITER);
-        for(Integer rawScore:rawScores){
+        for (Integer rawScore : rawScores) {
             finalFrame.bowl(rawScore);
         }
         assertThat(finalFrame.bonusAmount()).isEqualTo(bonus);

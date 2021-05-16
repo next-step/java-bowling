@@ -45,7 +45,7 @@ class BowlingTest {
         SoftAssertions softAssertions = new SoftAssertions();
         List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, DELIMITER);
         List<Integer> rawEndedScores = TestUtil.stringListToIntegerList(rawEndedScoreStrings, DELIMITER);
-        for(int index = 0;index<rawPins.size();index++){
+        for (int index = 0; index < rawPins.size(); index++) {
             int rawPin = rawPins.get(index);
             int rawEndedScore = rawEndedScores.get(index);
             bowling.play(rawPin);
