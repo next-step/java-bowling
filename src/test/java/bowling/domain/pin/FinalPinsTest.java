@@ -43,7 +43,7 @@ class FinalPinsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10,0,10:true", "10,1,9:true", "10,2,8:true", "10,5,5:true", "10,6,4:true",
+    @CsvSource(value = {"10,0,10:false", "10,1,9:false", "10,2,8:false", "10,5,5:false", "10,6,4:false",
             "10,0:false", "9,1:true", "8,2:true", "7,3:true", "6,4:true",
             "5,5:true", "4,3:false", "8,1:false", "5,3:false", "0,2:false"}, delimiter = ':')
     @DisplayName("스페어처리를 판단할 수 있다")
