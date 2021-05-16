@@ -1,11 +1,14 @@
 package bowling.domain.pin;
 
+import bowling.exception.CustomException;
+import bowling.exception.ErrorCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class NormalPinsTest {
 
@@ -33,6 +36,16 @@ class NormalPinsTest {
         normalPins.bowl(rawFirstPin);
         normalPins.bowl(rawSecondPin);
         assertThat(normalPins.isSpare()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"0:0:0", "10:0:10", "8:2:3"}, delimiter = ':')
+    @DisplayName("정해진 횟수보다 더 많이 던지면 INVALID_BOWL을 던진다")
+    void tooMuchBowlThrowsException(int rawFirstPin, int rawSecondPin, int rawThirdPin) {
+        normalPins.bowl(rawFirstPin);
+        normalPins.bowl(rawSecondPin);
+        CustomException customException = assertThrows(CustomException.class, () -> normalPins.bowl(rawThirdPin));
+        assertThat(customException.errorCode()).isEqualTo(ErrorCode.INVALID_BOWL);
     }
 
 }

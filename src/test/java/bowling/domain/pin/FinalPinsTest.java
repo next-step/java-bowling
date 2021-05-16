@@ -1,11 +1,19 @@
 package bowling.domain.pin;
 
+import bowling.exception.CustomException;
+import bowling.exception.ErrorCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FinalPinsTest {
 
@@ -33,5 +41,20 @@ class FinalPinsTest {
         finalPins.bowl(rawFirstPin);
         finalPins.bowl(rawSecondPin);
         assertThat(finalPins.isSpare()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"0,10,3,4", "10,10,10,3", "10,0,10,4", "8,2,3,2", "0,0,10"})
+    @DisplayName("정해진 횟수보다 더 많이 던지면 INVALID_BOWL을 던진다")
+    void tooMuchBowlThrowsException(String rawPins) {
+        List<Integer> integers = Arrays.stream(rawPins.split(","))
+                .map(Integer::valueOf)
+                .collect(Collectors.toList());
+        for(int count = 0;count<integers.size()-1;count++){
+            finalPins.bowl(integers.get(count));
+        }
+        int finalRawPin = integers.get(integers.size()-1);
+        CustomException customException = assertThrows(CustomException.class, ()-> finalPins.bowl(finalRawPin));
+        assertThat(customException.errorCode()).isEqualTo(ErrorCode.INVALID_BOWL);
     }
 }
