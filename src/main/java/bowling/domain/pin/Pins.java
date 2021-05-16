@@ -8,6 +8,8 @@ public abstract class Pins {
     public abstract void bowl(int pin);
 
     public abstract boolean isEnd();
+
     public abstract boolean isStrike();
+
     public abstract boolean isSpare();
 }

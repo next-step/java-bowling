@@ -13,13 +13,13 @@ public class FinalFrame extends Frame {
 
     @Override
     public void addPoint(int bonusPoint) {
-        score+=bonusPoint;
+        score += bonusPoint;
     }
 
     @Override
     public void bowl(int pin) {
         finalPins.bowl(pin);
-        score+=pin;
+        score += pin;
     }
 
     @Override

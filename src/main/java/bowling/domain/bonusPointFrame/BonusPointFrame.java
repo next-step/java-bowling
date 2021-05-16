@@ -7,17 +7,17 @@ public class BonusPointFrame {
     private int count;
     private Frame frame;
 
-    public BonusPointFrame(int count, Frame frame){
+    public BonusPointFrame(int count, Frame frame) {
         this.count = count;
         this.frame = frame;
     }
 
-    public void addBonusPoint(int point){
+    public void addBonusPoint(int point) {
         frame.addPoint(point);
         count--;
     }
 
-    public boolean needMoreBonus(){
-        return count>0;
+    public boolean needMoreBonus() {
+        return count > 0;
     }
 }

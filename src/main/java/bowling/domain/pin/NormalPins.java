@@ -25,7 +25,7 @@ public class NormalPins extends Pins {
 
     @Override
     public boolean isEnd() {
-        return isStrike() || isSpare() || pins.size()==PIN_SIZE;
+        return isStrike() || isSpare() || pins.size() == PIN_SIZE;
     }
 
     @Override

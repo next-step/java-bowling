@@ -26,7 +26,7 @@ public class FinalPins extends Pins {
 
     @Override
     public boolean isEnd() {
-        if((isStrike() || isSpare()) && pins.size()==PIN_SIZE){
+        if ((isStrike() || isSpare()) && pins.size() == PIN_SIZE) {
             return true;
         }
         return !((isStrike() || isSpare()) || pins.size() != NORMAL_PIN_SIZE);

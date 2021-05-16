@@ -12,28 +12,28 @@ public class Frames {
     private int frameCount;
     private List<Frame> frames;
 
-    public Frames(){
+    public Frames() {
         frameCount = toIndex(FIRST_FRAME);
         frames = new ArrayList<>();
     }
 
-    public void bowl(int pin){
+    public void bowl(int pin) {
 
     }
 
-    public void moveFrame(){
+    public void moveFrame() {
 
     }
 
-    public boolean currentFrameNeedBonus(){
+    public boolean currentFrameNeedBonus() {
         return false;
     }
 
-    public Frame currentFrame(){
+    public Frame currentFrame() {
         return null;
     }
 
-    private int toIndex(int value){
-        return value-1;
+    private int toIndex(int value) {
+        return value - 1;
     }
 }
