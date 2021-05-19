@@ -77,7 +77,7 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
+    public Question deleteQuestion(boolean deleted) {
         this.deleted = deleted;
         return this;
     }
@@ -95,33 +95,24 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void otherUserAnswer(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
-    }
-
-    public void authroized(User loginUser) throws CannotDeleteException {
+    public void authorized(User loginUser) throws CannotDeleteException {
         if (!this.isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
 
     public List<DeleteHistory> delete(User loginUser, long questionId) throws CannotDeleteException {
-        authroized(loginUser);
-        otherUserAnswer(loginUser);
+        System.out.println("loginUser = " + loginUser);
+        authorized(loginUser);
 
-        return deleteHistories(questionId, new Answers(getAnswers()));
+        return deleteHistories(questionId, new Answers(getAnswers()), loginUser);
     }
 
-    private List<DeleteHistory> deleteHistories(long questionId, Answers answers) {
+    private List<DeleteHistory> deleteHistories(long questionId, Answers answers, User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        setDeleted(true);
+        deleteQuestion(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, writer, LocalDateTime.now()));
-        answers.setDeleted(true);
-        answers.deleteHistoriesAdd(deleteHistories);
+        answers.delete(true, loginUser, deleteHistories);
         return deleteHistories;
     }
 }
