@@ -29,9 +29,7 @@ class FinalPinsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10:true", "10,10:true", "10,10,10:true", "0,10:false", "9:false",
-            "8:2:10:true", "8:false", "7:false", "6:false", "5:false",
-            "4:false", "1:false", "3:false", "0:false"}, delimiter = ':')
+    @CsvSource(value = {"10:true", "10,2:true", "10,10,3:true", "0,10:false", "8:false", "0:false"}, delimiter = ':')
     @DisplayName("스트라이크를 판단할 수 있다")
     void canDetermineStrike(String rawPinStrings, boolean expected) {
         List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, DELIMITER);
@@ -43,9 +41,7 @@ class FinalPinsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10,0,10:false", "10,1,9:false", "10,2,8:false", "10,5,5:false", "10,6,4:false",
-            "10,0:false", "9,1:true", "8,2:true", "7,3:true", "6,4:true",
-            "5,5:true", "4,3:false", "8,1:false", "5,3:false", "0,2:false"}, delimiter = ':')
+    @CsvSource(value = {"10,0,10:false", "10,0:false", "9,1:true", "5,5:true", "4,3:false"}, delimiter = ':')
     @DisplayName("스페어처리를 판단할 수 있다")
     void canDetermineSpare(String rawPinStrings, boolean expected) {
         List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, DELIMITER);
@@ -57,9 +53,7 @@ class FinalPinsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"9,2", "8,3", "7,5", "6,10", "5,6",
-            "4,8", "8,7", "5,9", "10,2,9", "10,8,3", "10,7,5",
-            "10,6,10", "10,5,6", "10,4,8", "10,8,7", "10,5,9"})
+    @ValueSource(strings = {"9,2", "10,8,3"})
     @DisplayName("두번째에서 남은 핀보다 더 많은 핀을 쓰러뜨리려고 하면 INVALID_SECOND_PIN을 던진다")
     void bowlOverflowThrowsException(String rawPinStrings) {
         List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, ",");
@@ -72,7 +66,7 @@ class FinalPinsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"0,10,3", "10,10,10", "10,0,10", "8,2,3", "0,0", "6,4,10"})
+    @ValueSource(strings = {"0,10,3", "10,10,10", "10,0,10", "8,2,3", "0,0"})
     @DisplayName("정해진 횟수보다 더 많이 던지면 INVALID_BOWL을 던진다")
     void canBowlFinalFrame(String rawPins) {
         SoftAssertions softAssertions = new SoftAssertions();

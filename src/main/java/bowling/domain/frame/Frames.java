@@ -5,10 +5,10 @@ import bowling.exception.ErrorCode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
 
-    private static final int INIT_NUMBER = 0;
     private static final int INIT_FRAME = 0;
     private static final int LAST_NORMAL_FRAME = 9;
     private static final int FINAL_FRAME = 10;
@@ -19,15 +19,6 @@ public class Frames {
     public Frames() {
         frameCount = INIT_FRAME;
         frames = new ArrayList<>();
-    }
-
-    public void bowl(int pin) {
-        int frameIndex = toIndex(frameCount);
-        if (isEnd()) {
-            throw new CustomException(ErrorCode.INVALID_BOWL);
-        }
-        Frame frame = frames.get(frameIndex);
-        frame.bowl(pin);
     }
 
     public void moveFrameIfNeeded() {
@@ -51,27 +42,28 @@ public class Frames {
         return frames.get(frameIndex).isEnd() && frameCount < FINAL_FRAME;
     }
 
-    public int currentFrameBonus() {
+    public void bowl(int pin) {
         int frameIndex = toIndex(frameCount);
-        Frame currentFrame = frames.get(frameIndex);
-        return currentFrame.bonusAmount();
+        if (isEnd()) {
+            throw new CustomException(ErrorCode.INVALID_BOWL);
+        }
+        Frame frame = frames.get(frameIndex);
+        frame.bowl(pin);
     }
 
-    public Frame currentFrame() {
-        int frameIndex = toIndex(frameCount);
-        return frames.get(frameIndex);
+    public void updateScores(int point) {
+        frames = frames.stream()
+                .filter(frame -> !frame.endedScoring())
+                .map(frame -> {
+                    frame.addPoint(point);
+                    return frame;
+                })
+                .collect(Collectors.toList());
     }
 
     public boolean isEnd() {
         int frameIndex = toIndex(frameCount);
         return frameCount == FINAL_FRAME && frames.get(frameIndex).isEnd();
-    }
-
-    public int closedFrames() {
-        return frames.stream()
-                .map(Frame::endedScoring)
-                .map(isClosed -> isClosed.compareTo(false))
-                .reduce(INIT_NUMBER, Integer::sum);
     }
 
     public int frameCount() {
@@ -96,5 +88,11 @@ public class Frames {
 
     public List<Frame> frames() {
         return frames;
+    }
+
+    public int closedScores() {
+        return (int)frames.stream()
+                .filter(frame -> frame.endedScoring())
+                .count();
     }
 }
