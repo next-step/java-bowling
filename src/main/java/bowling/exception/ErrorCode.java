@@ -1,13 +1,15 @@
 package bowling.exception;
 
 public enum ErrorCode {
+    INVALID_PIN("P001", "Pin should be number between 0~10"),
+    INVALID_SECOND_PIN("P002", "Second Pin is either not in range of 0~10 or exceed 10 when added with first pin"),
 
-    INVALID_NAME("N001", "Name should be 3 English letters"),
+    INVALID_BOWL("PI001", "Cannot bowl to fully occupied pins"),
 
-    INVALID_POINT("P001", "Point should be number between 0~10"),
-    INVALID_POINT_SUM("P002", "Point in single frame cannot exceed 10"),
+    INVALID_SCORE("S001", "score added to single frame should be between 0~10"),
+    INVALID_SCORE_ADDITION("S002", "Cannot add score after score is fixed"),
 
-    INVALID_POINT_COUNT("PS001", "Point count must be positive");
+    INVALID_NAME("N001", "Name must be made of 3 alphabet letters");
 
     private String code;
     private String message;

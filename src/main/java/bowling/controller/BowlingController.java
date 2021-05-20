@@ -1,21 +1,20 @@
 package bowling.controller;
 
-import bowling.domain.Game;
-import bowling.domain.Name;
+import bowling.domain.Bowling;
 import bowling.view.InputView;
-import bowling.view.ResultView;
+import bowling.view.OutputView;
 
 public class BowlingController {
 
     private InputView inputView = new InputView();
-    private ResultView resultView = new ResultView();
+    private OutputView outputView = new OutputView();
 
-    public void playBowling() {
-        Name name = new Name(inputView.getName());
-        Game game = new Game();
-        while (!game.ended()) {
-            game.throwBall(inputView.getPoint(game.frameCount()));
-            resultView.printScoreBoard(game, name);
+    public void play() {
+        Bowling bowling = new Bowling(inputView.getName());
+        outputView.printGame(bowling);
+        while (!bowling.isEnd()) {
+            bowling.play(inputView.getPoint(bowling.frameCount()));
+            outputView.printGame(bowling);
         }
     }
 }

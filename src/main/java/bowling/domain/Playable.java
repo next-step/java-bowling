@@ -1,12 +1,7 @@
 package bowling.domain;
 
 public interface Playable {
+    void play(int point);
 
-    void throwBall(int point);
-
-    boolean ended();
-
-    boolean striked();
-
-    boolean spared();
+    boolean isEnd();
 }

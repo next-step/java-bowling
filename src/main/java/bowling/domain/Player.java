@@ -5,24 +5,19 @@ import bowling.exception.ErrorCode;
 
 import java.util.regex.Pattern;
 
-public class Name {
+public class Player {
 
     private static final int VALID_LENGTH = 3;
 
     private static final String VALID_NAME_REGEX = "[A-Za-z]+";
 
-    private final String name;
+    private String name;
 
-    public Name(String name) {
-        this.name = verifiedName(name);
-    }
-
-    private String verifiedName(String name) {
-        name = name.trim();
+    public Player(String name) {
         if (!valid(name)) {
             throw new CustomException(ErrorCode.INVALID_NAME);
         }
-        return name;
+        this.name = name;
     }
 
     private boolean valid(String name) {
@@ -30,6 +25,7 @@ public class Name {
     }
 
     public String name() {
-        return this.name;
+        return name;
     }
+
 }

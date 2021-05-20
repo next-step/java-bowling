@@ -2,17 +2,18 @@ package bowling.domain.frame;
 
 import bowling.exception.CustomException;
 import bowling.exception.ErrorCode;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FinalFrameTest {
+
+    private static final int STRIKE = 10;
+    private static final int GUTTER = 0;
+    private static final int HALF = 5;
 
     private FinalFrame finalFrame;
 
@@ -21,48 +22,42 @@ class FinalFrameTest {
         finalFrame = new FinalFrame();
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"1:2", "0:9", "5:3", "6:2"}, delimiter = ':')
-    void canThrowTwoBalls(int prePoint, int curPoint) {
-        finalFrame.throwBall(prePoint);
-        finalFrame.throwBall(curPoint);
-        assertThat(finalFrame.ended()).isTrue();
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"1:9", "0:10", "5:5", "6:4", "10:2"}, delimiter = ':')
-    void canThrowBonusBall(int prePoint, int curPoint) {
-        finalFrame.throwBall(prePoint);
-        finalFrame.throwBall(curPoint);
-        assertThat(finalFrame.ended()).isFalse();
-
-        finalFrame.throwBall(prePoint);
-        assertThat(finalFrame.ended()).isTrue();
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"9:2", "8:4", "10:8", "4:7", "9:4", "8:3"}, delimiter = ':')
-    @DisplayName("두 점수의 합이 10을 넘으면 INVALID_POINT_SUM을 던짐")
-    void secondPointNotInRangeThrowsException(int curPoint, int prePoint) {
-        finalFrame.throwBall(prePoint);
-        CustomException customException = assertThrows(CustomException.class, () -> finalFrame.throwBall(curPoint));
-        assertThat(customException.errorCode()).isEqualTo(ErrorCode.INVALID_POINT_SUM);
+    @Test
+    @DisplayName("스트라이크일 때 세만에 프레임이 종료된다")
+    void strikeGetsTwoExtraChances() {
+        finalFrame.bowl(STRIKE);
+        assertThat(finalFrame.isEnd()).isFalse();
+        finalFrame.bowl(STRIKE);
+        assertThat(finalFrame.isEnd()).isFalse();
+        finalFrame.bowl(STRIKE);
+        assertThat(finalFrame.isEnd()).isTrue();
     }
 
     @Test
-    void canThrowBonusBalls() {
-        SoftAssertions softAssertions = new SoftAssertions();
+    @DisplayName("스트라이크를 치고 두 번의 시도에서 스트라이크 없이 10을 초과하면 INVALID_SECOND_PIN을 던진다")
+    void invalidPinSumAfterStrikeThrowsException() {
+        finalFrame.bowl(STRIKE);
+        finalFrame.bowl(HALF);
+        CustomException customException = assertThrows(CustomException.class, () -> finalFrame.bowl(STRIKE));
+        assertThat(customException.errorCode()).isEqualTo(ErrorCode.INVALID_SECOND_PIN);
+    }
 
-        finalFrame.throwBall(10);
-        softAssertions.assertThat(finalFrame.ended()).isFalse();
+    @Test
+    @DisplayName("스페어일 때는 세번만에 프레임이 종료된다")
+    void spareGetsOneExtraChance() {
+        finalFrame.bowl(GUTTER);
+        finalFrame.bowl(STRIKE);
+        assertThat(finalFrame.isEnd()).isFalse();
+        finalFrame.bowl(STRIKE);
+        assertThat(finalFrame.isEnd()).isTrue();
+    }
 
-        finalFrame.throwBall(10);
-        softAssertions.assertThat(finalFrame.ended()).isFalse();
-
-        finalFrame.throwBall(10);
-        softAssertions.assertThat(finalFrame.ended()).isTrue();
-
-        softAssertions.assertAll();
+    @Test
+    @DisplayName("보너스점수가 없는 케이스에서 두번만에 프레임이 종료된다")
+    void noBonusEndsFrame() {
+        finalFrame.bowl(GUTTER);
+        finalFrame.bowl(HALF);
+        assertThat(finalFrame.isEnd()).isTrue();
     }
 
 }

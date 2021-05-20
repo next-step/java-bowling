@@ -1,37 +1,19 @@
 package bowling.domain.frame;
 
-import bowling.domain.Playable;
-import bowling.domain.point.Points;
+import bowling.domain.Score;
+import bowling.domain.pin.Pins;
 
-public class Frame implements Playable {
+public interface Frame {
 
-    private Points points;
+    void addPoint(int bonusPoint);
 
-    public Frame() {
-        this.points = new Points();
-    }
+    void bowl(int pin);
 
-    @Override
-    public boolean ended() {
-        return points.ended();
-    }
+    boolean isEnd();
 
-    @Override
-    public void throwBall(int point) {
-        points.throwBall(point);
-    }
+    boolean endedScoring();
 
-    @Override
-    public boolean striked() {
-        return points.striked();
-    }
+    Pins pins();
 
-    @Override
-    public boolean spared() {
-        return points.spared();
-    }
-
-    public Points getPoints() {
-        return points;
-    }
+    Score score();
 }
