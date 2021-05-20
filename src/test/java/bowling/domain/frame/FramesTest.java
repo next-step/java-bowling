@@ -74,23 +74,4 @@ class FramesTest {
         softAssertions.assertAll();
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"10,10,10,10,10,10,10,10,10,10,10,10:2,2,2,2,2,2,2,2,2,0,0,0",
-            "1,3,2,8,10,10,10,10,10,10,10,6,4,10:0,0,0,1,2,2,2,2,2,2,2,0,0,0",
-            "9,1,10,0,0,10,10,10,10,10,10,0,0:0,1,2,0,0,2,2,2,2,2,2,0,0"}, delimiter = ':')
-    @DisplayName("볼링의 보너스 프레임 수를 정확하게 알려 줄 수 있다")
-    void canDetermineBonusCount(String rawPinStrings, String rawBonusCountStrings) {
-        SoftAssertions softAssertions = new SoftAssertions();
-        List<Integer> rawPins = TestUtil.stringListToIntegerList(rawPinStrings, DELIMITER);
-        List<Integer> rawBonuses = TestUtil.stringListToIntegerList(rawBonusCountStrings, DELIMITER);
-        for (int index = 0; index < rawPins.size(); index++) {
-            int rawPin = rawPins.get(index);
-            int rawBonus = rawBonuses.get(index);
-            frames.moveFrameIfNeeded();
-            frames.bowl(rawPin);
-            softAssertions.assertThat(frames.currentFrameBonus()).isEqualTo(rawBonus);
-        }
-        softAssertions.assertAll();
-    }
-
 }

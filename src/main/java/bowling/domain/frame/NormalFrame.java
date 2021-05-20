@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.NormalScore;
-import bowling.domain.score.Score;
+import bowling.domain.Score;
 import bowling.domain.pin.NormalPins;
 import bowling.domain.pin.Pins;
 
@@ -10,7 +9,7 @@ public class NormalFrame implements Frame {
     private NormalPins normalPins;
 
     public NormalFrame() {
-        score = new NormalScore();
+        score = new Score();
         normalPins = new NormalPins();
     }
 
@@ -22,7 +21,9 @@ public class NormalFrame implements Frame {
     @Override
     public void bowl(int pin) {
         normalPins.bowl(pin);
-        score.addScore(pin);
+        if (normalPins.isStrike() || normalPins.isSpare()) {
+            score.addBonus();
+        }
     }
 
     @Override
@@ -31,26 +32,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int bonusAmount() {
-        if (normalPins.isStrike()) {
-            return STRIKE_BONUS;
-        }
-        if (normalPins.isSpare()) {
-            return SPARE_BONUS;
-        }
-        return NO_BONUS;
-    }
-
-    @Override
-    public void endScoring() {
-        if (isEnd()) {
-            score.endScoring();
-        }
-    }
-
-    @Override
     public boolean endedScoring() {
-        return score.endedScoring();
+        return normalPins.isEnd() && !score.hasBonus();
     }
 
     @Override

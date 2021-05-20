@@ -1,41 +1,45 @@
-package bowling.domain.score;
+package bowling.domain;
 
 import bowling.exception.CustomException;
 import bowling.exception.ErrorCode;
 
-public class FinalScore implements Score {
-    private int score;
-    private boolean endedScoring;
+public class Score {
 
-    public FinalScore() {
+    private static final int MINIMUM_SINGLE_SCORE = 0;
+    private static final int MAXIMUM_SINGLE_SCORE = 10;
+
+    private static final int INIT_SCORE = 0;
+    private static final int INIT_BONUS = 2;
+
+    private int score;
+    private int bonus;
+
+    public Score() {
         score = INIT_SCORE;
-        endedScoring = INIT_ENDED_SCORING;
+        bonus = INIT_BONUS;
     }
 
-    @Override
     public void addScore(int score) {
         if (!validScore(score)) {
             throw new CustomException(ErrorCode.INVALID_SCORE);
         }
-        if (endedScoring) {
+        if (!hasBonus()) {
             throw new CustomException(ErrorCode.INVALID_SCORE_ADDITION);
         }
         this.score += score;
+        bonus--;
     }
 
-    @Override
-    public void endScoring() {
-        this.endedScoring = ENDED_SCORING;
+    public void addBonus() {
+        this.bonus++;
     }
 
-    @Override
-    public boolean endedScoring() {
-        return endedScoring;
-    }
-
-    @Override
     public int score() {
         return score;
+    }
+
+    public boolean hasBonus() {
+        return bonus > 0;
     }
 
     private boolean validScore(int score) {

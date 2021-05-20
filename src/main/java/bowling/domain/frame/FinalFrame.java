@@ -1,20 +1,19 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.FinalScore;
-import bowling.domain.score.Score;
+import bowling.domain.Score;
 import bowling.domain.pin.FinalPins;
 import bowling.domain.pin.Pins;
 
 public class FinalFrame implements Frame {
 
-    private static final int ONCE = 1;
-    private static final int TWICE = 2;
+    private static final int ONE = 1;
+    private static final int TWO = 2;
 
     private Score score;
-    private FinalPins finalPins;
+    private Pins finalPins;
 
     public FinalFrame() {
-        score = new FinalScore();
+        score = new Score();
         finalPins = new FinalPins();
     }
 
@@ -26,7 +25,12 @@ public class FinalFrame implements Frame {
     @Override
     public void bowl(int pin) {
         finalPins.bowl(pin);
-        score.addScore(pin);
+        if (finalPins.isStrike() && finalPins.size() == ONE) {
+            score.addBonus();
+        }
+        if (finalPins.isSpare() && finalPins.size() == TWO) {
+            score.addBonus();
+        }
     }
 
     @Override
@@ -35,20 +39,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int bonusAmount() {
-        return NO_BONUS;
-    }
-
-    @Override
-    public void endScoring() {
-        if (isEnd()) {
-            score.endScoring();
-        }
-    }
-
-    @Override
     public boolean endedScoring() {
-        return score.endedScoring();
+        return finalPins.isEnd() && !score.hasBonus();
     }
 
     @Override

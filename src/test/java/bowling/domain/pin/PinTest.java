@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class PinTest {
 
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    @ValueSource(ints = {0, 6, 10})
     @DisplayName("핀을 생성할 수 있다")
     void canGenerateValidPin(int rawPin) {
         Pin pin = new Pin(rawPin);
@@ -33,7 +33,7 @@ class PinTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"0, 10", "1 ,9", "2,8", "3,5", "4,5"})
+    @ValueSource(strings = {"0, 10", "1 ,9", "3,5"})
     @DisplayName("핀을 2개 생성할 수 있다")
     void canGenerateTwoPins(String rawPins) {
         List<Integer> rawPinValues = Arrays.stream(rawPins.split(","))
@@ -45,7 +45,7 @@ class PinTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"2, 9", "1 ,10", "6,8", "8,5"})
+    @ValueSource(strings = {"2, 9", "1 ,10", "6,8"})
     @DisplayName("두 번째 핀이 잘못됐을 경우 INVALID_SECOND_PIN을 던진다")
     void invalidSecondPinThrowsException(String rawPins) {
         List<Integer> rawPinValues = Arrays.stream(rawPins.split(","))
@@ -59,7 +59,7 @@ class PinTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10:true", "9:false", "8:false", "7:false", "6:false", "0:false"}, delimiter = ':')
+    @CsvSource(value = {"10:true", "6:false", "0:false"}, delimiter = ':')
     @DisplayName("스트라이크 여부를 판단할 수 있다")
     void canDetermineStrike(int rawPin, boolean expected) {
         Pin pin = new Pin(rawPin);
@@ -67,10 +67,9 @@ class PinTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10:0:true", "9:1:true", "8:2:true", "7:3:true",
-            "6:4:true", "0:10:true", "0:9:false", "3:2:false", "4:5:false"}, delimiter = ':')
-    @DisplayName("스트라이크 여부를 판단할 수 있다")
-    void canDetermineStrike(int rawFirstPin, int rawSecondPin, boolean expected) {
+    @CsvSource(value = {"9:1:true", "0:10:true", "0:9:false", "3:2:false"}, delimiter = ':')
+    @DisplayName("스페어 여부를 판단할 수 있다")
+    void canDetermineSpare(int rawFirstPin, int rawSecondPin, boolean expected) {
         Pin firstPin = new Pin(rawFirstPin);
         Pin secondPin = new Pin(firstPin, rawSecondPin);
         assertThat(secondPin.didClear(firstPin)).isEqualTo(expected);
