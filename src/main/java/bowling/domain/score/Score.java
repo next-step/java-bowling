@@ -2,8 +2,8 @@ package bowling.domain.score;
 
 public interface Score {
 
-    int MINIMUM_SCORE = 0;
-    int MAXIMUM_SCORE = 10;
+    int MINIMUM_SINGLE_SCORE = 0;
+    int MAXIMUM_SINGLE_SCORE = 10;
 
     int INIT_SCORE = 0;
     boolean INIT_ENDED_SCORING = false;

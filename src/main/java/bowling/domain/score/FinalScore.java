@@ -39,7 +39,7 @@ public class FinalScore implements Score {
     }
 
     private boolean validScore(int score) {
-        return score >= MINIMUM_SCORE && score <= MAXIMUM_SCORE;
+        return score >= MINIMUM_SINGLE_SCORE && score <= MAXIMUM_SINGLE_SCORE;
     }
 
 }

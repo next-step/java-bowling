@@ -15,9 +15,9 @@ public interface Frame {
 
     boolean isEnd();
 
-    int bonusAmount();
-
     void endScoring();
+
+    int bonusAmount();
 
     boolean endedScoring();
 

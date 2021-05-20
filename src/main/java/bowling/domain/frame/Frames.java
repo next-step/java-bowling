@@ -36,12 +36,11 @@ public class Frames {
         }
         if (frameCount == LAST_NORMAL_FRAME) {
             frames.add(new FinalFrame());
-            frameCount++;
         }
         if (frameCount < LAST_NORMAL_FRAME) {
             frames.add(new NormalFrame());
-            frameCount++;
         }
+        frameCount++;
     }
 
     private boolean shouldMoveFrame() {
