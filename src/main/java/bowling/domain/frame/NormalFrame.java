@@ -21,7 +21,7 @@ public class NormalFrame implements Frame {
     @Override
     public void bowl(int pin) {
         normalPins.bowl(pin);
-        if(normalPins.isStrike() || normalPins.isSpare()){
+        if (normalPins.isStrike() || normalPins.isSpare()) {
             score.addBonus();
         }
     }

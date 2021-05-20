@@ -129,4 +129,4 @@
 - 점수를 검증해야 한다
 
 ### 클래스 다이어그램
-<img src="./classDiagram.png"/>
+<img src="classDiagramBeforeReview.png"/>

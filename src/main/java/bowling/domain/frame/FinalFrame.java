@@ -25,10 +25,10 @@ public class FinalFrame implements Frame {
     @Override
     public void bowl(int pin) {
         finalPins.bowl(pin);
-        if(finalPins.isStrike() && finalPins.size()==ONE){
+        if (finalPins.isStrike() && finalPins.size() == ONE) {
             score.addBonus();
         }
-        if(finalPins.isSpare() && finalPins.size()==TWO){
+        if (finalPins.isSpare() && finalPins.size() == TWO) {
             score.addBonus();
         }
     }

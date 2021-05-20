@@ -88,7 +88,7 @@ public class Frames {
     }
 
     public int closedScores() {
-        return (int)frames.stream()
+        return (int) frames.stream()
                 .filter(Frame::endedScoring)
                 .count();
     }
