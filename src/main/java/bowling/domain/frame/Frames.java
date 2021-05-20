@@ -52,12 +52,9 @@ public class Frames {
     }
 
     public void updateScores(int point) {
-        frames = frames.stream()
+        frames.stream()
                 .filter(frame -> !frame.endedScoring())
-                .map(frame -> {
-                    frame.addPoint(point);
-                    return frame;
-                })
+                .peek(frame -> frame.addPoint(point))
                 .collect(Collectors.toList());
     }
 
@@ -92,7 +89,7 @@ public class Frames {
 
     public int closedScores() {
         return (int)frames.stream()
-                .filter(frame -> frame.endedScoring())
+                .filter(Frame::endedScoring)
                 .count();
     }
 }

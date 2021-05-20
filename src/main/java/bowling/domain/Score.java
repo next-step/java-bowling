@@ -1,4 +1,4 @@
-package bowling.domain.score;
+package bowling.domain;
 
 import bowling.exception.CustomException;
 import bowling.exception.ErrorCode;
@@ -23,20 +23,15 @@ public class Score {
         if (!validScore(score)) {
             throw new CustomException(ErrorCode.INVALID_SCORE);
         }
-        if(!hasBonus()){
+        if (!hasBonus()) {
             throw new CustomException(ErrorCode.INVALID_SCORE_ADDITION);
         }
         this.score += score;
         bonus--;
     }
 
-    public void addBonus(Bonus bonus) {
-        if (bonus.equals(Bonus.STRIKE)) {
-            this.bonus = 2;
-        }
-        if (bonus.equals(Bonus.SPARE)) {
-            this.bonus = 1;
-        }
+    public void addBonus() {
+        this.bonus++;
     }
 
     public int score() {

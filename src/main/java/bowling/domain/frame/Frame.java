@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
+import bowling.domain.Score;
 import bowling.domain.pin.Pins;
 
 public interface Frame {

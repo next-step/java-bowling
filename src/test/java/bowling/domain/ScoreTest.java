@@ -1,5 +1,6 @@
-package bowling.domain.score;
+package bowling.domain;
 
+import bowling.domain.Score;
 import bowling.domain.TestUtil;
 import bowling.exception.CustomException;
 import bowling.exception.ErrorCode;
@@ -53,12 +54,12 @@ class ScoreTest {
         assertThat(customException.errorCode()).isEqualTo(ErrorCode.INVALID_SCORE_ADDITION);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index}: {1}")
     @MethodSource(value = "canAddValidBonusScoresParameters")
     @DisplayName("보너스가 있을 경우 보너스의 횟수만큼 점수를 더할 수 있다")
-    void canAddValidBonusScores(Bonus bonus, String scoreString) {
+    void canAddValidBonusScores(String scoreString, String caseName) {
         SoftAssertions softAssertions = new SoftAssertions();
-        score.addBonus(bonus);
+        score.addBonus();
         List<Integer> rawScores = TestUtil.stringListToIntegerList(scoreString, ",");
         for (int rawScore : rawScores) {
             softAssertions.assertThat(score.hasBonus()).isTrue();
@@ -69,8 +70,8 @@ class ScoreTest {
 
     static Stream<Arguments> canAddValidBonusScoresParameters() {
         return Stream.of(
-                Arguments.of(Bonus.STRIKE, "0,0"),
-                Arguments.of(Bonus.SPARE, "0")
+                Arguments.of("0,0", "Strike"),
+                Arguments.of("0", "Spare")
         );
     }
 
