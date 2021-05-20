@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.FinalScore;
-import bowling.domain.score.Score;
+import bowling.domain.Score;
 import bowling.domain.pin.FinalPins;
 import bowling.domain.pin.Pins;
 
@@ -11,10 +10,10 @@ public class FinalFrame implements Frame {
     private static final int TWICE = 2;
 
     private Score score;
-    private FinalPins finalPins;
+    private Pins finalPins;
 
     public FinalFrame() {
-        score = new FinalScore();
+        score = new Score();
         finalPins = new FinalPins();
     }
 
@@ -26,7 +25,7 @@ public class FinalFrame implements Frame {
     @Override
     public void bowl(int pin) {
         finalPins.bowl(pin);
-        score.addScore(pin);
+//        score.addScore(pin);
     }
 
     @Override

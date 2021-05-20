@@ -1,6 +1,6 @@
 //package bowling.domain;
 //
-//import bowling.domain.score.Score;
+//import bowling.domain.Player.Score;
 //import bowling.exception.CustomException;
 //import bowling.exception.ErrorCode;
 //import org.junit.jupiter.api.BeforeEach;
