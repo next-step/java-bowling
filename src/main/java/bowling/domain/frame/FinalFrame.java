@@ -1,10 +1,11 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
+import bowling.domain.score.FinalScore;
+import bowling.domain.score.Score;
 import bowling.domain.pin.FinalPins;
 import bowling.domain.pin.Pins;
 
-public class FinalFrame extends Frame {
+public class FinalFrame implements Frame {
 
     private static final int ONCE = 1;
     private static final int TWICE = 2;
@@ -13,7 +14,7 @@ public class FinalFrame extends Frame {
     private FinalPins finalPins;
 
     public FinalFrame() {
-        score = new Score();
+        score = new FinalScore();
         finalPins = new FinalPins();
     }
 

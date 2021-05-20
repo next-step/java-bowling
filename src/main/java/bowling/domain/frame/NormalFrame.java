@@ -1,15 +1,16 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
+import bowling.domain.score.NormalScore;
+import bowling.domain.score.Score;
 import bowling.domain.pin.NormalPins;
 import bowling.domain.pin.Pins;
 
-public class NormalFrame extends Frame {
+public class NormalFrame implements Frame {
     private Score score;
     private NormalPins normalPins;
 
     public NormalFrame() {
-        score = new Score();
+        score = new NormalScore();
         normalPins = new NormalPins();
     }
 

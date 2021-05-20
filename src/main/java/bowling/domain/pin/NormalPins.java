@@ -6,7 +6,7 @@ import bowling.exception.ErrorCode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalPins extends Pins {
+public class NormalPins implements Pins {
     private static final int PIN_SIZE = 2;
 
     private List<Pin> pins;

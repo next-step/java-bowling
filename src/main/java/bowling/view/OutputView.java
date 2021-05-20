@@ -40,19 +40,19 @@ public class OutputView {
     private static final String FINAL_FRAME_FORMAT = "%s%s%s%s%s";
 
     public void printGame(BowlingGame bowlingGame) {
-        System.out.println(BOARD);
-
-        StringBuilder frameStringBuilder = new StringBuilder();
-        frameStringBuilder.append(nameStringBuilder(bowlingGame));
-        frameStringBuilder.append(pinStringBuilder(bowlingGame.bowling()));
-        System.out.println(frameStringBuilder.toString());
-
-        StringBuilder scoresStringBuilder = new StringBuilder();
-        scoresStringBuilder.append(scoreHeaderBuilder());
-        scoresStringBuilder.append(scoreStringBuilder(bowlingGame));
-        System.out.println(scoresStringBuilder.toString());
-
-        System.out.println();
+//        System.out.println(BOARD);
+//
+//        StringBuilder frameStringBuilder = new StringBuilder();
+//        frameStringBuilder.append(nameStringBuilder(bowlingGame));
+//        frameStringBuilder.append(pinStringBuilder(bowlingGame.bowling()));
+//        System.out.println(frameStringBuilder.toString());
+//
+//        StringBuilder scoresStringBuilder = new StringBuilder();
+//        scoresStringBuilder.append(scoreHeaderBuilder());
+//        scoresStringBuilder.append(scoreStringBuilder(bowlingGame));
+//        System.out.println(scoresStringBuilder.toString());
+//
+//        System.out.println();
     }
 
     private StringBuilder scoreStringBuilder(BowlingGame bowlingGame) {

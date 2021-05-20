@@ -1,27 +1,27 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
+import bowling.domain.score.Score;
 import bowling.domain.pin.Pins;
 
-public abstract class Frame {
+public interface Frame {
 
-    public static final int STRIKE_BONUS = 2;
-    public static final int SPARE_BONUS = 1;
-    public static final int NO_BONUS = 0;
+    int STRIKE_BONUS = 2;
+    int SPARE_BONUS = 1;
+    int NO_BONUS = 0;
 
-    public abstract void addPoint(int bonusPoint);
+    void addPoint(int bonusPoint);
 
-    public abstract void bowl(int pin);
+    void bowl(int pin);
 
-    public abstract boolean isEnd();
+    boolean isEnd();
 
-    public abstract int bonusAmount();
+    int bonusAmount();
 
-    public abstract void endScoring();
+    void endScoring();
 
-    public abstract boolean endedScoring();
+    boolean endedScoring();
 
-    public abstract Pins pins();
+    Pins pins();
 
-    public abstract Score score();
+    Score score();
 }
