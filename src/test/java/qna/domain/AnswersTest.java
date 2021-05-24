@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import qna.CannotDeleteException;
 
 class AnswersTest {
   public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
@@ -26,5 +27,22 @@ class AnswersTest {
           () -> assertEquals(answerList.get(0), A1),
           () -> assertEquals(answerList.get(1), A2)
       );
+  }
+
+  @Test
+  @DisplayName("로그인하지 않은 사용자의 글을 확인하는 경우 CannotDeleteException이 발생한다.")
+  public void is_login_user_throw_exception() throws Exception {
+    //given
+    Answers answers = new Answers();
+
+    //when
+    answers.add(A1);
+
+    CannotDeleteException thrown = assertThrows(CannotDeleteException.class,
+        () -> answers.isOwner(UserTest.SANJIGI)
+    );
+
+    //then
+    assertTrue(thrown.getMessage().contains("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다."));
   }
 }
