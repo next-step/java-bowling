@@ -19,7 +19,7 @@
 ### Answers
 + Answer의 일급콜렉션으로 입력받은 리스트에 작성자가 동일한지 검증하는 객체
 + checkOwner(User loginUser) : Answers를 순회하면서 작성자가 모두 동일한지 검증한다.  
-+ of() :List<Answer>드 를 반환하는 메서
++ of() :List<Answer>드 를 반환하는 메서드
 
 ### DeleteHistories 
 + DeleteHistory의 일급콜렉션으로 각각의 타입에 맞는 DeleteHistory를 생성하는 객
@@ -30,6 +30,6 @@
 ### DeleteHistoryManager
 + Answer와 Question을 받아서 실질적인 삭제처리를 하는 객체
 + deleteQuestion(boolean isDeleted, DeleteHistories deleteHistories) : Question에 대한 삭제 처리를 하는 메서드 
-+ deleteAnswer(boolean isDeleted, DeleteHistories deleteHistories) : Answer에 대한 삭제드 처리를 하는 메서
++ deleteAnswer(boolean isDeleted, DeleteHistories deleteHistories) : Answer에 대한 삭제드 처리를 하는 메서드
 
 
