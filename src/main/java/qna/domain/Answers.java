@@ -1,5 +1,6 @@
 package qna.domain;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -33,19 +34,14 @@ public class Answers {
     answers.add(answer);
   }
 
-  public void isOwner(User loginUser) throws CannotDeleteException {
-    for (Answer answer : answers) {
-      if (!answer.isOwner(loginUser)) {
-        throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-      }
+  public void checkOwner(User loginUser) throws CannotDeleteException {
+    hasNotOwnerAnswer(answers.stream()
+        .allMatch(answer -> answer.isOwner(loginUser)));
+  }
+
+  private void hasNotOwnerAnswer(Boolean hasNotOwnerAnswer) throws CannotDeleteException {
+    if(!hasNotOwnerAnswer){
+      throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Long getId() {
-    return id;
   }
 }

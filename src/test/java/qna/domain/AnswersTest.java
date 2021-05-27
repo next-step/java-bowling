@@ -39,7 +39,7 @@ class AnswersTest {
     answers.add(A1);
 
     CannotDeleteException thrown = assertThrows(CannotDeleteException.class,
-        () -> answers.isOwner(UserTest.SANJIGI)
+        () -> answers.checkOwner(UserTest.SANJIGI)
     );
 
     //then
