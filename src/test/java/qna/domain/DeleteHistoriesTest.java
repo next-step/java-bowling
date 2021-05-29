@@ -21,7 +21,7 @@ class DeleteHistoriesTest {
     DeleteHistories deleteHistories = new DeleteHistories(createTargetList);
 
     //then
-    assertEquals(deleteHistories.of(), createTargetList);
+    assertEquals(deleteHistories.get(), createTargetList);
   }
 
   @Test
@@ -32,24 +32,6 @@ class DeleteHistoriesTest {
     //when
     deleteHistories.add(DeleteHistoryTest.DQ1);
     //then
-    assertEquals(deleteHistories.of().get(0), DeleteHistoryTest.DQ1);
-  }
-
-  @Test
-  @DisplayName("DeleteHistories에 Answer를 전달하여 해당 타입의 DeleteHistory를 만들 수 있다")
-  public void create_answerType_DeleteHistory() throws Exception {
-    //given
-    DeleteHistories deleteHistories = new DeleteHistories();
-    //when
-    assertDoesNotThrow(() -> deleteHistories.createAnswerDeleteHistory(AnswerTest.A1));
-  }
-
-  @Test
-  @DisplayName("DeleteHistories에 Question을 전달하여 해당 타입의 DeleteHistory를 만들 수 있다")
-  public void create_questionType_DeleteHistory() throws Exception {
-    //given
-    DeleteHistories deleteHistories = new DeleteHistories();
-    //when
-    assertDoesNotThrow(() -> deleteHistories.createQuestionDeleteHistory(QuestionTest.Q1));
+    assertEquals(deleteHistories.get().get(0), DeleteHistoryTest.DQ1);
   }
 }
