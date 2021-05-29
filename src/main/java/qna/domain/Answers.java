@@ -34,7 +34,7 @@ public class Answers {
     this.answers = answers;
   }
 
-  public List<Answer> of() {
+  public List<Answer> get() {
     return answers;
   }
 

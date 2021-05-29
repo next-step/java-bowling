@@ -22,7 +22,7 @@ class AnswersTest {
       answers.add(A2);
 
       //then
-      List<Answer> answerList = answers.of();
+      List<Answer> answerList = answers.get();
       assertAll(
           () -> assertEquals(answerList.get(0), A1),
           () -> assertEquals(answerList.get(1), A2)
