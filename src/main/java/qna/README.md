@@ -27,9 +27,9 @@
 + `createQuestionDeleteHistory(Question question)` : Question에 대한 DeleteHistory를 생성하는 메서드 
 + `of()` : `List<DeleteHistory>` 를 반환하는 메서드 
 
-### DeleteHistoryManager
-+ Answer와 Question을 받아서 실질적인 삭제처리를 하는 객체
-+ `deleteQuestion(boolean isDeleted, DeleteHistories deleteHistories)` : Question에 대한 삭제 처리를 하는 메서드 
-+ `deleteAnswer(boolean isDeleted, DeleteHistories deleteHistories)` : Answer에 대한 삭제드 처리를 하는 메서드
+### Question
++ 질문을 처리하는 객체이다.
++ `validate(User loginUser, Question question)` : 삭제 처리를 위한 검증을 수행하는 메서드
++ `deleteProcess(User loginUser, DeleteHistories deleteHistories)` : 실질적인 질문을 삭제 처리를 하는 메서드 
 
 
