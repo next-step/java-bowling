@@ -1,10 +1,15 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import qna.CannotDeleteException;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import static java.lang.Boolean.TRUE;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -73,17 +78,46 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-        return this;
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public Answers answers() {
-        return answers;
+    public DeleteHistories deleteProcess(User loginUser, DeleteHistories deleteHistories) throws CannotDeleteException {
+        validate(loginUser, this);
+        deleteQuestion(deleteHistories);
+        deleteAnswer(deleteHistories);
+        return deleteHistories;
+    }
+
+    private void deleteQuestion(DeleteHistories deleteHistories) {
+        this.setDeleted(TRUE);
+        deleteHistories.add(DeleteHistory.create(this));
+    }
+
+    private void deleteAnswer(DeleteHistories deleteHistories) {
+        answers.get()
+            .stream()
+            .map(answer -> DeleteHistory.create(answer.setDeleted(TRUE)))
+            .forEachOrdered(deleteHistories::add);
+    }
+
+    private void validate(User loginUser, Question question) throws CannotDeleteException {
+        validateQuestionOwner(loginUser, question);
+        validateAnswerOwner(loginUser);
+    }
+
+    private void validateQuestionOwner(User loginUser, Question question) throws CannotDeleteException {
+        if (!question.isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private void validateAnswerOwner(User loginUser) throws CannotDeleteException {
+        answers.checkOwner(loginUser);
     }
 
     @Override

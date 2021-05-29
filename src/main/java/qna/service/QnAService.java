@@ -9,7 +9,6 @@ import qna.NotFoundException;
 import qna.domain.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 
 @Service("qnaService")
 public class QnAService {
@@ -32,22 +31,8 @@ public class QnAService {
 
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
-        Question question = findQuestionById(questionId);
-        validateQuestionOwner(loginUser, question);
-
-        question.answers()
-            .checkOwner(loginUser);
-
-        DeleteHistoryManager deleteHistoryManager = new DeleteHistoryManager(question.answers(), question);
-
-        DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistoryManager.deleteProcess(true, deleteHistories);
-        deleteHistoryService.saveAll(deleteHistories.of());
-    }
-
-    private void validateQuestionOwner(User loginUser, Question question) throws CannotDeleteException {
-        if (!question.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
+        deleteHistoryService.saveAll(findQuestionById(questionId)
+            .deleteProcess(loginUser, new DeleteHistories())
+            .get());
     }
 }
