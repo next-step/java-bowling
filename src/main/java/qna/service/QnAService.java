@@ -8,7 +8,6 @@ import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.domain.*;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +16,17 @@ import java.util.List;
 public class QnAService {
     private static final Logger log = LoggerFactory.getLogger(QnAService.class);
 
-    @Resource(name = "questionRepository")
-    private QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
 
-    @Resource(name = "answerRepository")
-    private AnswerRepository answerRepository;
+    private final AnswerRepository answerRepository;
 
-    @Resource(name = "deleteHistoryService")
-    private DeleteHistoryService deleteHistoryService;
+    private final DeleteHistoryService deleteHistoryService;
+
+    public QnAService(QuestionRepository questionRepository, AnswerRepository answerRepository, DeleteHistoryService deleteHistoryService) {
+        this.questionRepository = questionRepository;
+        this.answerRepository = answerRepository;
+        this.deleteHistoryService = deleteHistoryService;
+    }
 
     @Transactional(readOnly = true)
     public Question findQuestionById(Long id) {
