@@ -1,9 +1,12 @@
 package qna.domain;
 
-import qna.NotFoundException;
-import qna.UnAuthorizedException;
+import qna.exception.CannotDeleteException;
+import qna.exception.NotFoundException;
+import qna.exception.UnAuthorizedException;
 
 import javax.persistence.*;
+
+import static qna.exception.CannotDeleteException.QUESTION_WITH_OTHERS_ANSWER;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -30,11 +33,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -43,13 +46,13 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     public Answer setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
     }
 
     public boolean isOwner(User writer) {
@@ -66,6 +69,22 @@ public class Answer extends AbstractEntity {
 
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    public DeleteHistory deleteAnswer(User loginUser) {
+        validateOwner(loginUser);
+        deleted = true;
+        return DeleteHistory.createAnswerHistory(getId(), loginUser);
+    }
+
+    private void validateOwner(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(QUESTION_WITH_OTHERS_ANSWER);
+        }
+    }
+
+    public boolean isDeletable(User loginUser) {
+        return isOwner(loginUser);
     }
 
     @Override
