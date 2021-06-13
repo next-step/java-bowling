@@ -3,6 +3,9 @@ package bowling.domain;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -86,5 +89,59 @@ public class FinalFrameTest {
     @Test
     public void last() {
         assertThatIllegalArgumentException().isThrownBy(() -> FinalFrame.init().last());
+    }
+
+
+    @Test
+    public void score_open() {
+        Frame frame = FinalFrame.init();
+        frame = frame.play(7);
+        frame = frame.play(2);
+
+        assertThat(frame.score(Collections.singletonList(frame))).isEqualTo(new Score(9, 0));
+    }
+
+    @Test
+    public void score_spare() {
+        Frame frame = FinalFrame.init();
+        frame = frame.play(7);
+        frame = frame.play(3);
+        frame = frame.play(7);
+
+        assertThat(frame.score(Collections.singletonList(frame))).isEqualTo(new Score(17, 0));
+    }
+
+    @Test
+    public void score_strike() {
+        Frame frame = FinalFrame.init();
+        frame = frame.play(10);
+        frame = frame.play(10);
+        frame = frame.play(10);
+
+        assertThat(frame.score(Collections.singletonList(frame))).isEqualTo(new Score(30, 0));
+    }
+
+    @Test
+    public void additionalScore_before_spare() {
+        Frame frame = NormalFrame.init();
+        frame = frame.play(7);
+        frame = frame.play(3);
+
+        Frame last = frame.last();
+        last = last.play(10);
+
+        assertThat(frame.score(Arrays.asList(frame, last))).isEqualTo(new Score(20, 0));
+    }
+
+    @Test
+    public void additionalScore_before_strike() {
+        Frame frame = NormalFrame.init();
+        frame = frame.play(10);
+
+        Frame last = frame.last();
+        last = last.play(10);
+        last = last.play(10);
+
+        assertThat(frame.score(Arrays.asList(frame, last))).isEqualTo(new Score(30, 0));
     }
 }

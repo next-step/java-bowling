@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class FinalFrame extends DefaultFrame {
     private static final String FIRST_STRIKE_OR_SECOND_SPARE_MESSAGE =
@@ -56,11 +57,25 @@ public final class FinalFrame extends DefaultFrame {
 
     @Override
     public Score score(List<Frame> frames) {
-        return null;
+        return new Score(
+                pitches().stream()
+                        .map(Pitch::knockedPins)
+                        .map(KnockedPins::count)
+                        .reduce(0, Integer::sum),
+                playing() ? maxPitchesCount() - pitches().size() : 0
+        );
     }
 
     @Override
     public Score additionalScore(Score beforeScore, List<Frame> frames) {
-        return null;
+        final List<Pitch> limitedPitches = pitches().stream()
+                .limit(beforeScore.left())
+                .collect(Collectors.toList());
+
+        for (final Pitch pitch : limitedPitches) {
+            beforeScore = beforeScore.play(pitch);
+        }
+
+        return beforeScore;
     }
 }
