@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class Score {
     private static final int MAX_SCORE = 30;
     private static final int MIN_SCORE = 0;
@@ -19,6 +21,18 @@ public class Score {
 
         this.score = score;
         this.left = left;
+    }
+
+    public static Score strike() {
+        return new Score(10, 2);
+    }
+
+    public static Score spare() {
+        return new Score(10, 1);
+    }
+
+    public static Score open(int score) {
+        return new Score(score, 0);
     }
 
     private void validateScore(int score) {
@@ -41,6 +55,10 @@ public class Score {
         return play(KnockedPins.from(knockedPinsCount));
     }
 
+    public Score play(Pitch pitch) {
+        return play(pitch.knockedPins());
+    }
+
     public Score play(KnockedPins knockedPins) {
         return new Score(score + knockedPins.count(), left - 1);
     }
@@ -50,5 +68,22 @@ public class Score {
             throw new IllegalStateException(CALCULABLE_ERROR_MESSAGE);
         }
         return score;
+    }
+
+    public int left() {
+        return left;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score && left == score1.left;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score, left);
     }
 }

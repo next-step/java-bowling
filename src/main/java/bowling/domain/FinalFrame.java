@@ -53,4 +53,14 @@ public final class FinalFrame extends DefaultFrame {
     protected int maxPitchesCount() {
         return 3;
     }
+
+    @Override
+    public Score score(List<Frame> frames) {
+        return null;
+    }
+
+    @Override
+    public Score additionalScore(Score beforeScore, List<Frame> frames) {
+        return null;
+    }
 }
