@@ -14,4 +14,8 @@ public interface Frame {
     Frame last();
 
     List<Pitch> pitches();
+
+    Score score(List<Frame> frames);
+
+    Score additionalScore(Score beforeScore, List<Frame> frames);
 }

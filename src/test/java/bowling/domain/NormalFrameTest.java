@@ -2,8 +2,10 @@ package bowling.domain;
 
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import java.util.Arrays;
+import java.util.Collections;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class NormalFrameTest {
     @Test
@@ -66,5 +68,40 @@ public class NormalFrameTest {
         final Frame last = NormalFrame.init().last();
 
         assertThat(last).isInstanceOf(FinalFrame.class);
+    }
+
+    @Test
+    public void score_open() {
+        Frame frame = NormalFrame.init();
+        frame = frame.play(7);
+        frame = frame.play(2);
+
+        assertThat(frame.score(Collections.singletonList(frame))).isEqualTo(new Score(9, 0));
+    }
+
+    @Test
+    public void score_spare() {
+        Frame frame = NormalFrame.init();
+        frame = frame.play(7);
+        frame = frame.play(3);
+
+        Frame next = frame.next();
+        next = next.play(7);
+
+        assertThat(frame.score(Arrays.asList(frame, next))).isEqualTo(new Score(17, 0));
+    }
+
+    @Test
+    public void score_strike() {
+        Frame frame = NormalFrame.init();
+        frame = frame.play(10);
+
+        Frame next1 = frame.next();
+        next1 = next1.play(10);
+
+        Frame next2 = next1.next();
+        next2 = next2.play(10);
+
+        assertThat(frame.score(Arrays.asList(frame, next1, next2))).isEqualTo(new Score(30, 0));
     }
 }

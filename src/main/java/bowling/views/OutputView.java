@@ -19,7 +19,8 @@ public class OutputView {
 
     public static void print(final Player player, final Bowling bowling) {
         printTitle();
-        print(player, bowling.frames());
+        printFrames(player, bowling.frames());
+        printScores(bowling.frames());
         System.out.println();
     }
 
@@ -36,7 +37,7 @@ public class OutputView {
         System.out.println(withDivider(views));
     }
 
-    private static void print(final Player player, final List<Frame> frames) {
+    private static void printFrames(final Player player, final List<Frame> frames) {
         final List<String> views = new ArrayList<>();
 
         views.add(StringUtil.center(player.name(), DEFAULT_LENGTH));
@@ -80,5 +81,30 @@ public class OutputView {
 
     private static String withDivider(final List<String> views) {
         return DEFAULT_DIVIDER + String.join(DEFAULT_DIVIDER, views) + DEFAULT_DIVIDER;
+    }
+
+    private static void printScores(List<Frame> frames) {
+        final List<String> views = new ArrayList<>();
+
+        final List<Frame> calculableFrames = frames.stream()
+                .filter(e -> e.score(frames).calculable())
+                .collect(Collectors.toList());
+
+        int totalScore = 0;
+
+        views.add(StringUtil.center("", DEFAULT_LENGTH));
+
+        for (Frame frame  : calculableFrames) {
+            totalScore += frame.score(frames).score();
+            views.add(StringUtil.center(String.join(DEFAULT_DIVIDER, String.valueOf(totalScore)), DEFAULT_LENGTH));
+        }
+
+        views.addAll(
+                IntStream.rangeClosed(1, 10 - calculableFrames.size())
+                        .mapToObj(i -> StringUtil.center("", DEFAULT_LENGTH))
+                        .collect(Collectors.toList())
+        );
+
+        System.out.println(withDivider(views));
     }
 }
