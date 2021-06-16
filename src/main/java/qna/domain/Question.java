@@ -18,6 +18,7 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
+    @Embedded
     private final Answers answers = new Answers();
 
     private boolean deleted = false;
@@ -71,7 +72,6 @@ public class Question extends AbstractEntity {
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
-
 
     public boolean isDeleted() {
         return deleted;

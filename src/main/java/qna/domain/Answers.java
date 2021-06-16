@@ -4,6 +4,7 @@ import org.hibernate.annotations.Where;
 import qna.exception.CannotDeleteException;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Objects;
 
 import static qna.exception.CannotDeleteException.QUESTION_WITH_OTHERS_ANSWER;
 
+@Embeddable
 public class Answers {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
