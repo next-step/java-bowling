@@ -50,11 +50,6 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isOwner(User writer) {
         return this.writer.equals(writer);
     }
