@@ -4,30 +4,30 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class Bowling {
+public final class Game {
     private static final int MAX_FRAMES_COUNT = 10;
     private static final int FINAL_FRAME_INDEX = MAX_FRAMES_COUNT - 1;
     private static final String WRONG_PLAY_MESSAGE = "playing()이 true가 아닐 때는 play()를 호출할 수 없습니다.";
 
     private final List<Frame> frames;
 
-    private Bowling(final List<Frame> frames) {
+    private Game(final List<Frame> frames) {
         this.frames = frames;
     }
 
-    public static Bowling init() {
-        return new Bowling(Collections.singletonList(NormalFrame.init()));
+    public static Game init() {
+        return new Game(Collections.singletonList(NormalFrame.init()));
     }
 
     public boolean playing() {
         return frames.size() < MAX_FRAMES_COUNT || frames.get(FINAL_FRAME_INDEX).playing();
     }
 
-    public Bowling play(final int knockedPinsCount) {
+    public Game play(final int knockedPinsCount) {
         return play(KnockedPins.from(knockedPinsCount));
     }
 
-    public Bowling play(final KnockedPins knockedPins) {
+    public Game play(final KnockedPins knockedPins) {
         validatePlaying();
 
         final List<Frame> frames = new ArrayList<>(this.frames);
@@ -40,7 +40,7 @@ public final class Bowling {
         final Frame playedFrame = nextFrame(frames, lastFrame).play(knockedPins);
         frames.add(playedFrame);
 
-        return new Bowling(frames);
+        return new Game(frames);
     }
 
     private void validatePlaying() {
