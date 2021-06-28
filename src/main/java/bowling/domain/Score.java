@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.pitch.Pitch;
+
 import java.util.Objects;
 
 public class Score {

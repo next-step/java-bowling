@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.pitch;
+
+import bowling.domain.KnockedPins;
 
 public final class Spare implements Pitch {
     private static final int MIN_KNOCKED_PINS_COUNT = 1;

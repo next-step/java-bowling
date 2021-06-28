@@ -1,8 +1,10 @@
 package bowling.domain;
 
+import bowling.domain.frame.FinalFrame;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class GameTest {
     @Test

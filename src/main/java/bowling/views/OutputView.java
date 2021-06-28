@@ -1,6 +1,12 @@
 package bowling.views;
 
-import bowling.domain.*;
+import bowling.domain.Bowling;
+import bowling.domain.Game;
+import bowling.domain.Player;
+import bowling.domain.frame.Frame;
+import bowling.domain.pitch.Pitch;
+import bowling.domain.pitch.Spare;
+import bowling.domain.pitch.Strike;
 import bowling.utils.StringUtil;
 
 import java.util.ArrayList;

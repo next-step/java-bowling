@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.pitch;
 
+import bowling.domain.KnockedPins;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
