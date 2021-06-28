@@ -13,7 +13,7 @@ public class BowlingController {
         OutputView.print(player, game);
 
         while (game.playing()) {
-            game = game.play(InputView.knockedPinsCount(game.currentFrameIndex()));
+            game = game.play(InputView.knockedPinsCount(game.currentFrameNumber()));
             OutputView.print(player, game);
         }
     }

@@ -65,7 +65,7 @@ public final class Game {
         return Collections.unmodifiableList(frames);
     }
 
-    public int currentFrameIndex() {
+    public int currentFrameNumber() {
         return frames.size();
     }
 }

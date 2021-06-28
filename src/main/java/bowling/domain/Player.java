@@ -35,6 +35,14 @@ public class Player {
         return new Player(name, game.play(knockedPinsCount));
     }
 
+    public boolean playedFrame(int frameNumber) {
+        if (game.currentFrameNumber() < frameNumber) {
+            return false;
+        }
+
+        return !frames().get(frameNumber - 1).playing();
+    }
+
     public List<Frame> frames() {
         return game.frames();
     }
