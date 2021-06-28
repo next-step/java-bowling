@@ -1,20 +1,31 @@
 package bowling.controllers;
 
-import bowling.domain.Game;
+import bowling.domain.Bowling;
 import bowling.domain.Player;
 import bowling.views.InputView;
 import bowling.views.OutputView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BowlingController {
     public static void run() {
-        final Player player = new Player(InputView.name());
+        Bowling bowling = new Bowling(players(InputView.playersCount()));
+        OutputView.print(bowling);
 
-        Game game = Game.init();
-        OutputView.print(player, game);
-
-        while (game.playing()) {
-            game = game.play(InputView.knockedPinsCount(game.currentFrameNumber()));
-            OutputView.print(player, game);
+        while (bowling.playing()) {
+            bowling = bowling.play(InputView.knockedPinsCount(bowling.currentPlayer()));
+            OutputView.print(bowling);
         }
+    }
+
+    private static List<Player> players(int count) {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 1; i <= count; i++) {
+            players.add(new Player(InputView.name(i)));
+        }
+
+        return players;
     }
 }
