@@ -31,20 +31,25 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+    public static DeleteHistory createQuestionHistory(Long questionId, User loginUser) {
+        return new DeleteHistory(ContentType.QUESTION, questionId, loginUser, LocalDateTime.now());
+    }
+
+    public static DeleteHistory createAnswerHistory(Long answerId, User loginUser) {
+        return new DeleteHistory(ContentType.ANSWER, answerId, loginUser, LocalDateTime.now());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeleteHistory that = (DeleteHistory) o;
-        return Objects.equals(id, that.id) &&
-                contentType == that.contentType &&
-                Objects.equals(contentId, that.contentId) &&
-                Objects.equals(deletedBy, that.deletedBy);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, contentType, contentId, deletedBy);
+        return Objects.hash(id);
     }
 
     @Override
