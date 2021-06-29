@@ -1,47 +1,40 @@
 package bowling.domain;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Bowling {
-    private final List<Player> players;
+    private static final int INITIAL_FRAME_NUMBER = 1;
+
+    private final Players players;
     private final int currentFrameNumber;
 
     public Bowling(List<Player> players) {
-        this(players, 1);
+        this(new Players(players), INITIAL_FRAME_NUMBER);
     }
 
-    private Bowling(List<Player> players, int currentFrameNumber) {
+    private Bowling(Players players, int currentFrameNumber) {
         this.players = players;
         this.currentFrameNumber = currentFrameNumber;
     }
 
     public Player currentPlayer() {
-        return players.stream()
-                .filter(player -> !player.playedFrame(currentFrameNumber))
-                .findFirst()
-                .orElse(null);
+        return players.playingPlayer(currentFrameNumber);
     }
 
     public Bowling play(int knockedPinsCount) {
-        final List<Player> newPlayers = players.stream()
-                .map(player -> player.equals(currentPlayer()) ? player.play(knockedPinsCount) : player)
-                .collect(Collectors.toList());
+        final Players newPlayers = players.play(currentFrameNumber, knockedPinsCount);
 
-        final int newCurrentFrameNumber = newPlayers.stream()
-                .allMatch(player -> player.playedFrame(currentFrameNumber)) ?
+        final int newCurrentFrameNumber = newPlayers.played(currentFrameNumber) ?
                 currentFrameNumber + 1 : currentFrameNumber;
 
         return new Bowling(newPlayers, newCurrentFrameNumber);
     }
 
     public boolean playing() {
-        return players.stream()
-                .anyMatch(Player::playing);
+        return players.playing();
     }
 
-    public List<Player> players() {
-        return Collections.unmodifiableList(players);
+    public Players players() {
+        return players;
     }
 }
