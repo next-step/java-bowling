@@ -1,71 +1,40 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public final class Bowling {
-    private static final int MAX_FRAMES_COUNT = 10;
-    private static final int FINAL_FRAME_INDEX = MAX_FRAMES_COUNT - 1;
-    private static final String WRONG_PLAY_MESSAGE = "playing()이 true가 아닐 때는 play()를 호출할 수 없습니다.";
+public class Bowling {
+    private static final int INITIAL_FRAME_NUMBER = 1;
 
-    private final List<Frame> frames;
+    private final Players players;
+    private final int currentFrameNumber;
 
-    private Bowling(final List<Frame> frames) {
-        this.frames = frames;
+    public Bowling(List<Player> players) {
+        this(new Players(players), INITIAL_FRAME_NUMBER);
     }
 
-    public static Bowling init() {
-        return new Bowling(Collections.singletonList(NormalFrame.init()));
+    private Bowling(Players players, int currentFrameNumber) {
+        this.players = players;
+        this.currentFrameNumber = currentFrameNumber;
+    }
+
+    public Player currentPlayer() {
+        return players.playingPlayer(currentFrameNumber);
+    }
+
+    public Bowling play(int knockedPinsCount) {
+        final Players newPlayers = players.play(currentFrameNumber, knockedPinsCount);
+
+        final int newCurrentFrameNumber = newPlayers.played(currentFrameNumber) ?
+                currentFrameNumber + 1 : currentFrameNumber;
+
+        return new Bowling(newPlayers, newCurrentFrameNumber);
     }
 
     public boolean playing() {
-        return frames.size() < MAX_FRAMES_COUNT || frames.get(FINAL_FRAME_INDEX).playing();
+        return players.playing();
     }
 
-    public Bowling play(final int knockedPinsCount) {
-        return play(KnockedPins.from(knockedPinsCount));
-    }
-
-    public Bowling play(final KnockedPins knockedPins) {
-        validatePlaying();
-
-        final List<Frame> frames = new ArrayList<>(this.frames);
-        final Frame lastFrame = frames.get(frames.size() - 1);
-
-        if (lastFrame.playing()) {
-            frames.remove(lastFrame);
-        }
-
-        final Frame playedFrame = nextFrame(frames, lastFrame).play(knockedPins);
-        frames.add(playedFrame);
-
-        return new Bowling(frames);
-    }
-
-    private void validatePlaying() {
-        if (!playing()) {
-            throw new IllegalStateException(WRONG_PLAY_MESSAGE);
-        }
-    }
-
-    private Frame nextFrame(final List<Frame> frames, final Frame frame) {
-        if (frame.playing()) {
-            return frame;
-        }
-
-        if (frames.size() < FINAL_FRAME_INDEX) {
-            return frame.next();
-        }
-
-        return frame.last();
-    }
-
-    public List<Frame> frames() {
-        return Collections.unmodifiableList(frames);
-    }
-
-    public int currentFrameIndex() {
-        return frames.size();
+    public Players players() {
+        return players;
     }
 }

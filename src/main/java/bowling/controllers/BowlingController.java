@@ -5,16 +5,27 @@ import bowling.domain.Player;
 import bowling.views.InputView;
 import bowling.views.OutputView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BowlingController {
     public static void run() {
-        final Player player = new Player(InputView.name());
-
-        Bowling bowling = Bowling.init();
-        OutputView.print(player, bowling);
+        Bowling bowling = new Bowling(players(InputView.playersCount()));
+        OutputView.print(bowling);
 
         while (bowling.playing()) {
-            bowling = bowling.play(InputView.knockedPinsCount(bowling.currentFrameIndex()));
-            OutputView.print(player, bowling);
+            bowling = bowling.play(InputView.knockedPinsCount(bowling.currentPlayer()));
+            OutputView.print(bowling);
         }
+    }
+
+    private static List<Player> players(int count) {
+        final List<Player> players = new ArrayList<>();
+
+        for (int i = 1; i <= count; i++) {
+            players.add(new Player(InputView.name(i)));
+        }
+
+        return players;
     }
 }

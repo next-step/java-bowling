@@ -1,11 +1,13 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Score;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class NormalFrameTest {
     @Test

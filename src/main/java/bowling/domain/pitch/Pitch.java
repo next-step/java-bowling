@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.pitch;
+
+import bowling.domain.KnockedPins;
 
 public interface Pitch {
     KnockedPins knockedPins();

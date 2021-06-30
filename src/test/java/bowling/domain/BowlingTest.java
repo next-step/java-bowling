@@ -2,37 +2,41 @@ package bowling.domain;
 
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class BowlingTest {
     @Test
-    public void init() {
-        final Bowling bowling = Bowling.init();
-        assertThat(bowling.playing()).isTrue();
+    public void create() {
+        final List<Player> players = Arrays.asList(new Player("LHG"), new Player("PJS"));
+        assertThatCode(() -> new Bowling(players)).doesNotThrowAnyException();
     }
 
     @Test
-    public void play() {
-        Bowling bowling = Bowling.init();
+    public void currentPlayer() {
+        final List<Player> players = Arrays.asList(new Player("LHG"), new Player("PJS"));
+        Bowling bowling = new Bowling(players);
+        assertThat(bowling.currentPlayer().name()).isEqualTo("LHG");
 
-        while (bowling.playing()) {
-            bowling = bowling.play(10);
-        }
+        bowling = bowling.play(10);
+        assertThat(bowling.currentPlayer().name()).isEqualTo("PJS");
 
-        assertThat(bowling.frames().size()).isEqualTo(10);
-        assertThat(bowling.frames().get(9)).isInstanceOf(FinalFrame.class);
-    }
+        bowling = bowling.play(8);
+        assertThat(bowling.currentPlayer().name()).isEqualTo("PJS");
 
-    @Test
-    public void play_invalid() {
-        assertThatIllegalStateException().isThrownBy(() -> {
-            Bowling bowling = Bowling.init();
+        bowling = bowling.play(2);
+        assertThat(bowling.currentPlayer().name()).isEqualTo("LHG");
 
-            while (bowling.playing()) {
-                bowling = bowling.play(10);
-            }
+        bowling = bowling.play(8);
+        assertThat(bowling.currentPlayer().name()).isEqualTo("LHG");
 
-            bowling.play(10);
-        });
+        bowling = bowling.play(2);
+        assertThat(bowling.currentPlayer().name()).isEqualTo("PJS");
+
+        bowling = bowling.play(10);
+        assertThat(bowling.currentPlayer().name()).isEqualTo("LHG");
     }
 }

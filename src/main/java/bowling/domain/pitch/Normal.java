@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.pitch;
+
+import bowling.domain.KnockedPins;
 
 public final class Normal implements Pitch {
     private static final int MAX_KNOCKED_PINS_COUNT = 9;
