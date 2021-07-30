@@ -29,4 +29,8 @@ public class Answers {
     public void add(Answer answer) {
         answers.add(answer);
     }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
 }
