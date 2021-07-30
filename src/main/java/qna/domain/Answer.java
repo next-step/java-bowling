@@ -45,11 +45,12 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer delete(User loginUser) {
+    public DeleteHistory delete(User loginUser) {
         validate(loginUser);
 
-        this.deleted = true;
-        return this;
+        deleted = true;
+
+        return DeleteHistory.ofAnswer(getId(), getWriter());
     }
 
     private void validate(User loginUser) throws CannotDeleteException {
@@ -81,9 +82,5 @@ public class Answer extends AbstractEntity {
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
-    }
-
-    public DeleteHistory toDeleteHistory() {
-        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }
 }

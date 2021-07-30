@@ -6,8 +6,11 @@ import qna.CannotDeleteException;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -92,39 +95,33 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> deleteAnswers(User loginUser) {
-        answers.forEach(answer -> answer.delete(loginUser));
         return answers.stream()
-                .map(Answer::toDeleteHistory)
+                .map(answer -> answer.delete(loginUser))
                 .collect(Collectors.toList());
+    }
+
+    public List<DeleteHistory> delete(User loginUser) {
+        return Stream.of(deleteQuestion(loginUser), deleteAnswers(loginUser))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+    private List<DeleteHistory> deleteQuestion(User loginUser) {
+        validateOwner(loginUser);
+
+        deleted = true;
+
+        return Collections.singletonList(DeleteHistory.ofQuestion(getId(), getWriter()));
+    }
+
+    private void validateOwner(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
-
-    public List<DeleteHistory> delete(User loginUser) {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        DeleteHistory deleteHistory = deleteQuestion(loginUser);
-        List<DeleteHistory> deletedAnswerHistories = deleteAnswers(loginUser);
-
-        deleteHistories.add(deleteHistory);
-        deleteHistories.addAll(deletedAnswerHistories);
-
-        return deleteHistories;
-    }
-
-    private DeleteHistory deleteQuestion(User loginUser) {
-        validate(loginUser);
-
-        deleted = true;
-
-        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
-    }
-
-    private void validate(User loginUser) {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
     }
 }
