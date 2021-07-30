@@ -63,7 +63,7 @@ public class QuestionTest {
 
         questionWithoutAnswer.delete(JAVAJIGI);
 
-        assertThat(question.isDeleted()).isTrue();
+        assertThat(questionWithoutAnswer.isDeleted()).isTrue();
     }
 
     @DisplayName("질문자와 답변글의 모든 답변자 같은 경우 삭제가 가능")
