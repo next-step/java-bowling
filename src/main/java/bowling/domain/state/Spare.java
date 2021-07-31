@@ -9,7 +9,6 @@ public class Spare extends State {
         this.downedPins = downedPins;
     }
 
-
     public static State from(DownedPins downedPins) {
         return new Spare(downedPins);
     }
