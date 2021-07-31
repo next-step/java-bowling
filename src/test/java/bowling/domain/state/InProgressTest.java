@@ -11,28 +11,28 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("준비 상태를 표현하는 상태 클래스 테스트")
-class PreparationTest {
+@DisplayName("진행중 상태의 테스트")
+class InProgressTest {
 
-    @DisplayName("준비 상태는 초기화시 필요한 정보가 없다")
+    @DisplayName("진행중 상태는 하나의 쓰러진 핀을 가지고 초기화 한다")
     @Test
     void init() {
-        assertThat(Preparation.instance()).isInstanceOf(Preparation.class);
+        assertThat(InProgress.from(DownedPins.from(5))).isInstanceOf(InProgress.class);
     }
 
-    @DisplayName("준비 상태에서 핀을 쓰러뜨리면 다음 상태를 반환한다")
+    @DisplayName("진행중 상태에서 핀을 쓰러뜨리면 다음 상태를 반환한다")
     @MethodSource
     @ParameterizedTest
     void downPins(DownedPins downedPins, Class<State> expectedState) {
-        Preparation preparation = Preparation.instance();
+        InProgress inProgress = InProgress.from(DownedPins.from(5));
 
-        assertThat(preparation.downPins(downedPins)).isInstanceOf(expectedState);
+        assertThat(inProgress.downPins(downedPins)).isInstanceOf(expectedState);
     }
 
     private static Stream<Arguments> downPins() {
         return Stream.of(
-                Arguments.of(DownedPins.from(5), InProgress.class),
-                Arguments.of(DownedPins.from(10), Strike.class)
+                Arguments.of(DownedPins.from(5), Spare.class),
+                Arguments.of(DownedPins.from(2), Miss.class)
         );
     }
 
