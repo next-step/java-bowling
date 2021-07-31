@@ -8,6 +8,7 @@ public abstract class State {
 
     public State downPins(DownedPin downedPin) {
         validate(downedPin);
+
         return nextState(downedPin);
     }
 
