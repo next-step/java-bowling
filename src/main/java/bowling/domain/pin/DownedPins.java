@@ -30,6 +30,10 @@ public class DownedPins {
         return numOfDownedPins == MAX_NUM_OF_DOWNED_PINS;
     }
 
+    public DownedPins add(DownedPins additionalDownedPins) {
+        return new DownedPins(this.numOfDownedPins + additionalDownedPins.numOfDownedPins);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,9 +45,5 @@ public class DownedPins {
     @Override
     public int hashCode() {
         return Objects.hash(numOfDownedPins);
-    }
-
-    public boolean add(DownedPins anotherDownedPins) {
-        return false;
     }
 }
