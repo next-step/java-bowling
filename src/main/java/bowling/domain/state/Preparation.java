@@ -5,6 +5,7 @@ import bowling.domain.pin.DownedPins;
 public class Preparation extends State {
 
     private Preparation() {}
+
     public static Preparation instance() {
         return new Preparation();
     }

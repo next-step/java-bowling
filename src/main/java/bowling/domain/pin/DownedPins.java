@@ -17,7 +17,7 @@ public class DownedPins {
     private void validate(int numOfDownedPins) {
         if (numOfDownedPins < MIN_NUM_OF_DOWNED_PINS || numOfDownedPins > MAX_NUM_OF_DOWNED_PINS) {
             throw new IllegalArgumentException(
-                    "Number of downed pins should range in " + MIN_NUM_OF_DOWNED_PINS + " ~ " + MAX_NUM_OF_DOWNED_PINS
+                    "Number of downed pins should be ranged in " + MIN_NUM_OF_DOWNED_PINS + " ~ " + MAX_NUM_OF_DOWNED_PINS
             );
         }
     }
