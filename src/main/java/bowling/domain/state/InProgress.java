@@ -15,7 +15,13 @@ public class InProgress extends State {
     }
 
     @Override
-    protected State nextState(DownedPins downedPins) {
-        return null;
+    protected State nextState(DownedPins additionalDownedPins) {
+        DownedPins downedPinsTotal = downedPins.add(additionalDownedPins);
+
+        if (downedPinsTotal.isAllDown()) {
+            return Spare.from(downedPins);
+        }
+
+        return Miss.of(downedPins, additionalDownedPins);
     }
 }
