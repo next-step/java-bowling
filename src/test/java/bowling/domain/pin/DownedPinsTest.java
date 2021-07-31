@@ -42,4 +42,18 @@ class DownedPinsTest {
         );
     }
 
+    @DisplayName("핀이 모두 쓰러졌는지 판별해서 반환한다")
+    @MethodSource
+    @ParameterizedTest
+    void isAllDown(DownedPins downedPins, boolean expectedValue) {
+        assertThat(downedPins.isAllDown()).isEqualTo(expectedValue);
+    }
+
+    private static Stream<Arguments> isAllDown() {
+        return Stream.of(
+                Arguments.of(DownedPins.from(5), false),
+                Arguments.of(DownedPins.from(10), true)
+        );
+    }
+
 }

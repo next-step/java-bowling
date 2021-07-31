@@ -26,6 +26,10 @@ public class DownedPins {
         return new DownedPins(numOfDownedPins);
     }
 
+    public boolean isAllDown() {
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,9 +41,5 @@ public class DownedPins {
     @Override
     public int hashCode() {
         return Objects.hash(numOfDownedPins);
-    }
-
-    public boolean isAllDown() {
-        return false;
     }
 }
