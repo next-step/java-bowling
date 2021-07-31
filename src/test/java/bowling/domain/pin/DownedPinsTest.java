@@ -56,8 +56,7 @@ class DownedPinsTest {
         );
     }
 
-
-    @DisplayName("핀이 모두 쓰러졌는지 판별해서 반환한다")
+    @DisplayName("쓰러진 핀 두 객체를 더해 새로운 쓰러진 핀 객체를 반환한다")
     @MethodSource
     @ParameterizedTest
     void add(DownedPins downedPins, DownedPins anotherDownedPins, DownedPins expectedDownedPins) {
@@ -68,6 +67,20 @@ class DownedPinsTest {
         return Stream.of(
                 Arguments.of(DownedPins.from(5), DownedPins.from(5), DownedPins.from(10)),
                 Arguments.of(DownedPins.from(5), DownedPins.from(2), DownedPins.from(7))
+        );
+    }
+
+    @DisplayName("쓰러진 핀 두개의 값이 한계치를 지나면 예외를 발생시킨다")
+    @MethodSource
+    @ParameterizedTest
+    void addException(DownedPins downedPins, DownedPins anotherDownedPins) {
+        assertThatThrownBy(() -> downedPins.add(anotherDownedPins)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private static Stream<Arguments> addException() {
+        return Stream.of(
+                Arguments.of(DownedPins.from(5), DownedPins.from(10)),
+                Arguments.of(DownedPins.from(5), DownedPins.from(6))
         );
     }
 
