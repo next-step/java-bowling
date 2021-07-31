@@ -3,7 +3,11 @@ package bowling.domain.pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -22,6 +26,20 @@ class DownedPinTest {
     @ParameterizedTest
     void initException(int numOfDownedPins) {
         assertThatThrownBy(() ->DownedPin.from(numOfDownedPins)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("쓰러진 핀의 갯수가 같다면 동일하다고 판단한다")
+    @MethodSource
+    @ParameterizedTest
+    void equals(int numOfDownedPins, DownedPin expectedDownedPin) {
+        assertThat(DownedPin.from(numOfDownedPins)).isEqualTo(expectedDownedPin);
+    }
+
+    private static Stream<Arguments> equals() {
+        return Stream.of(
+                Arguments.of(5, DownedPin.from(5)),
+                Arguments.of(10, DownedPin.from(10))
+        );
     }
 
 }
