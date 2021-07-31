@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
 
-public class Miss extends State {
+public class Miss extends EndState {
     private final DownedPins firstDownedPins;
     private final DownedPins secondDownedPins;
 
@@ -13,10 +13,5 @@ public class Miss extends State {
 
     public static State of(DownedPins firstDownedPins, DownedPins secondDownedPins) {
         return new Miss(firstDownedPins, secondDownedPins);
-    }
-
-    @Override
-    protected State nextState(DownedPins downedPins) {
-        return null;
     }
 }
