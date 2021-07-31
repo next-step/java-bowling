@@ -1,7 +1,13 @@
 package bowling.domain.pin;
 
 public class Pin {
-    public static Object from(int i) {
-        return null;
+    private final int downedPins;
+
+    private Pin(int downedPins) {
+        this.downedPins = downedPins;
+    }
+
+    public static Pin from(int downedPins) {
+        return new Pin(downedPins);
     }
 }
