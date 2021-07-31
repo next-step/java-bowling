@@ -2,8 +2,11 @@ package bowling.domain.state;
 
 import bowling.domain.pin.DownedPin;
 
-public class State {
-    public Object downPins(DownedPin downedPin) {
-        return null;
+public abstract class State {
+
+    public State downPins(DownedPin downedPin) {
+        return nextState(downedPin);
     }
+
+    protected abstract State nextState(DownedPin downedPin);
 }

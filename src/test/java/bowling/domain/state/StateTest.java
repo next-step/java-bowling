@@ -12,10 +12,18 @@ class StateTest {
     @DisplayName("상태에 쓰러진 핀 정보를 넘기면 다음 상태를 넘긴다")
     @Test
     void downPins() {
-        State someState = new State();
+        State someState = new SomeState();
         DownedPin downedPin = DownedPin.from(5);
 
         assertThat(someState.downPins(downedPin)).isInstanceOf(State.class);
+    }
+
+    class SomeState extends State {
+
+        @Override
+        protected State nextState(DownedPin downedPin) {
+            return new SomeState();
+        }
     }
 
 }
