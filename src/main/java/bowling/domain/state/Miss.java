@@ -1,4 +1,10 @@
 package bowling.domain.state;
 
-public class Miss {
+import bowling.domain.pin.DownedPins;
+
+public class Miss extends State {
+    @Override
+    protected State nextState(DownedPins downedPins) {
+        return null;
+    }
 }

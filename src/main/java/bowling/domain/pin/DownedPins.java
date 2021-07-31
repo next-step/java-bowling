@@ -42,4 +42,8 @@ public class DownedPins {
     public int hashCode() {
         return Objects.hash(numOfDownedPins);
     }
+
+    public boolean add(DownedPins anotherDownedPins) {
+        return false;
+    }
 }

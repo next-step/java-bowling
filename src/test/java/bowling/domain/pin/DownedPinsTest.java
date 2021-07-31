@@ -56,4 +56,19 @@ class DownedPinsTest {
         );
     }
 
+
+    @DisplayName("핀이 모두 쓰러졌는지 판별해서 반환한다")
+    @MethodSource
+    @ParameterizedTest
+    void add(DownedPins downedPins, DownedPins anotherDownedPins, DownedPins expectedDownedPins) {
+        assertThat(downedPins.add(anotherDownedPins)).isEqualTo(expectedDownedPins);
+    }
+
+    private static Stream<Arguments> add() {
+        return Stream.of(
+                Arguments.of(DownedPins.from(5), DownedPins.from(5), DownedPins.from(10)),
+                Arguments.of(DownedPins.from(5), DownedPins.from(2), DownedPins.from(7))
+        );
+    }
+
 }

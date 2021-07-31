@@ -1,4 +1,10 @@
 package bowling.domain.state;
 
-public class Spare {
+import bowling.domain.pin.DownedPins;
+
+public class Spare extends State {
+    @Override
+    protected State nextState(DownedPins downedPins) {
+        return null;
+    }
 }
