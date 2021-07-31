@@ -27,7 +27,7 @@ public class DownedPins {
     }
 
     public boolean isAllDown() {
-        return false;
+        return numOfDownedPins == MAX_NUM_OF_DOWNED_PINS;
     }
 
     @Override
