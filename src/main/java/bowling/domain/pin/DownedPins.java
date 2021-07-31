@@ -2,13 +2,13 @@ package bowling.domain.pin;
 
 import java.util.Objects;
 
-public class DownedPin {
+public class DownedPins {
     private static final int MIN_NUM_OF_DOWNED_PINS = 0;
     private static final int MAX_NUM_OF_DOWNED_PINS = 10;
 
     private final int numOfDownedPins;
 
-    private DownedPin(int numOfDownedPins) {
+    private DownedPins(int numOfDownedPins) {
         validate(numOfDownedPins);
 
         this.numOfDownedPins = numOfDownedPins;
@@ -22,20 +22,24 @@ public class DownedPin {
         }
     }
 
-    public static DownedPin from(int numOfDownedPins) {
-        return new DownedPin(numOfDownedPins);
+    public static DownedPins from(int numOfDownedPins) {
+        return new DownedPins(numOfDownedPins);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DownedPin downedPin = (DownedPin) o;
-        return numOfDownedPins == downedPin.numOfDownedPins;
+        DownedPins downedPins = (DownedPins) o;
+        return numOfDownedPins == downedPins.numOfDownedPins;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(numOfDownedPins);
+    }
+
+    public boolean isAllDown() {
+        return false;
     }
 }

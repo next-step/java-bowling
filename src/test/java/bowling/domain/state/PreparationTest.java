@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import bowling.domain.pin.DownedPin;
+import bowling.domain.pin.DownedPins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,16 +23,16 @@ class PreparationTest {
     @DisplayName("준비 상태에서 핀을 쓰러뜨릴면 다음 상태를 반환한다")
     @MethodSource
     @ParameterizedTest
-    void downPins(DownedPin downedPin, State expectedState) {
+    void downPins(DownedPins downedPins, State expectedState) {
         Preparation preparation = Preparation.instance();
 
-        assertThat(preparation.downPins(downedPin)).isEqualTo(expectedState);
+        assertThat(preparation.downPins(downedPins)).isEqualTo(expectedState);
     }
 
     private static Stream<Arguments> downPins() {
         return Stream.of(
-                Arguments.of(DownedPin.from(5), InProgress.from(DownedPin.from(5))),
-                Arguments.of(DownedPin.from(10), Strike.instance())
+                Arguments.of(DownedPins.from(5), InProgress.from(DownedPins.from(5))),
+                Arguments.of(DownedPins.from(10), Strike.instance())
         );
     }
 

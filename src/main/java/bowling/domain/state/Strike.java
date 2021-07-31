@@ -1,14 +1,14 @@
 package bowling.domain.state;
 
-import bowling.domain.pin.DownedPin;
+import bowling.domain.pin.DownedPins;
 
 public class Strike extends State {
-    public static Object instance() {
-        return null;
+    public static Strike instance() {
+        return new Strike();
     }
 
     @Override
-    protected State nextState(DownedPin downedPin) {
+    protected State nextState(DownedPins downedPins) {
         return null;
     }
 }

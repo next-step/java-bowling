@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import bowling.domain.pin.DownedPin;
+import bowling.domain.pin.DownedPins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,9 +14,9 @@ class StateTest {
     @Test
     void downPins() {
         State someState = new SomeState();
-        DownedPin downedPin = DownedPin.from(5);
+        DownedPins downedPins = DownedPins.from(5);
 
-        assertThat(someState.downPins(downedPin)).isInstanceOf(State.class);
+        assertThat(someState.downPins(downedPins)).isInstanceOf(State.class);
     }
 
     @DisplayName("상태에 쓰러진 null 핀 정보를 넘기면 예외를 발생 시킨다")
@@ -30,7 +30,7 @@ class StateTest {
     class SomeState extends State {
 
         @Override
-        protected State nextState(DownedPin downedPin) {
+        protected State nextState(DownedPins downedPins) {
             return new SomeState();
         }
     }

@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-import bowling.domain.pin.DownedPin;
+import bowling.domain.pin.DownedPins;
 
 public class Preparation extends State {
 
@@ -10,7 +10,11 @@ public class Preparation extends State {
     }
 
     @Override
-    protected State nextState(DownedPin downedPin) {
-        return null;
+    protected State nextState(DownedPins downedPins) {
+        if (downedPins.isAllDown()) {
+            return Strike.instance();
+        }
+
+        return InProgress.from(downedPins);
     }
 }

@@ -1,22 +1,22 @@
 package bowling.domain.state;
 
-import bowling.domain.pin.DownedPin;
+import bowling.domain.pin.DownedPins;
 
 import java.util.Objects;
 
 public abstract class State {
 
-    public State downPins(DownedPin downedPin) {
-        validate(downedPin);
+    public State downPins(DownedPins downedPins) {
+        validate(downedPins);
 
-        return nextState(downedPin);
+        return nextState(downedPins);
     }
 
-    private void validate(DownedPin downedPin) {
-        if (Objects.isNull(downedPin)) {
+    private void validate(DownedPins downedPins) {
+        if (Objects.isNull(downedPins)) {
             throw new IllegalArgumentException("DownedPin can't be null");
         }
     }
 
-    protected abstract State nextState(DownedPin downedPin);
+    protected abstract State nextState(DownedPins downedPins);
 }
