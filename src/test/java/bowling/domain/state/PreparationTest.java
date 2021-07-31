@@ -23,16 +23,16 @@ class PreparationTest {
     @DisplayName("준비 상태에서 핀을 쓰러뜨릴면 다음 상태를 반환한다")
     @MethodSource
     @ParameterizedTest
-    void downPins(DownedPins downedPins, State expectedState) {
+    void downPins(DownedPins downedPins, Class<State> expectedState) {
         Preparation preparation = Preparation.instance();
 
-        assertThat(preparation.downPins(downedPins)).isEqualTo(expectedState);
+        assertThat(preparation.downPins(downedPins)).isInstanceOf(expectedState);
     }
 
     private static Stream<Arguments> downPins() {
         return Stream.of(
-                Arguments.of(DownedPins.from(5), InProgress.from(DownedPins.from(5))),
-                Arguments.of(DownedPins.from(10), Strike.instance())
+                Arguments.of(DownedPins.from(5), InProgress.class),
+                Arguments.of(DownedPins.from(10), Strike.class)
         );
     }
 
