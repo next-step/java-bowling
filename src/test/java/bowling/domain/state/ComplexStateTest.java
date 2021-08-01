@@ -90,5 +90,34 @@ class ComplexStateTest {
         );
     }
 
+    @DisplayName("복합 상태에서 마지막 상태가 Clean(Strike, Spare) 일 경우 추가적인 기회를 줄 수 있다")
+    @MethodSource
+    @ParameterizedTest
+    void extraChance(List<DownedPins> prepareDownedPins) {
+        ComplexState complexState = ComplexState.init();
+        prepareDownedPins.forEach(complexState::downPins);
+
+        int prevCount = complexState.getState().size();
+        complexState.giveExtraChange();
+
+        assertThat(complexState.getState().size()).isEqualTo(prevCount + 1);
+    }
+
+    private static Stream<Arguments> extraChance() {
+        return Stream.of(
+                Arguments.of( // strike
+                        Collections.singletonList(
+                                DOWNED_PINS_10
+                        )
+                ),
+
+                Arguments.of( // spare
+                        Arrays.asList(
+                                DOWNED_PINS_5,
+                                DOWNED_PINS_5
+                        )
+                )
+        );
+    }
 
 }
