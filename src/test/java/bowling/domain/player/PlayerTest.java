@@ -11,7 +11,7 @@ class PlayerTest {
     @DisplayName("플레이어는 길이 문자열을 가지고 초기화 한다")
     @Test
     void init() {
-        assertThat(Player.from()).isInstanceOf(Player.class);
+        assertThat(Player.from("NOK")).isInstanceOf(Player.class);
     }
 
 }
