@@ -7,7 +7,7 @@ import java.util.List;
 public class LastInProgress extends State {
     private static final int MAX_ROLL_COUNT = 3;
 
-    private int rollCount;
+    private int tryCount;
     private final ComplexState complexState;
 
     public LastInProgress() {
@@ -20,7 +20,7 @@ public class LastInProgress extends State {
 
     @Override
     protected State nextState(DownedPins downedPins) {
-        ++rollCount;
+        ++tryCount;
 
         complexState.nextState(downedPins);
 
@@ -38,7 +38,7 @@ public class LastInProgress extends State {
 
     @Override
     public boolean isEnd() {
-        return rollCount == MAX_ROLL_COUNT || complexState.isEnd();
+        return tryCount == MAX_ROLL_COUNT || complexState.isEnd();
     }
 
     @Override
