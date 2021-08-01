@@ -1,9 +1,11 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.DownedPins;
 import bowling.dto.StateDtos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntConsumer;
 import java.util.stream.Collectors;
 
 public class Frames {
@@ -28,5 +30,9 @@ public class Frames {
 
     public boolean isBowlingEnd() {
         return false;
+    }
+
+    public void downPins(DownedPins downedPins) {
+
     }
 }

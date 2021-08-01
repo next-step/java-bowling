@@ -3,6 +3,9 @@ package bowling.domain.frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
+import static bowling.domain.Fixture.DOWNED_PINS_10;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("프레임 그룹에 대한 테스트")
@@ -26,7 +29,13 @@ class FramesTest {
     void isBowlingEnd() {
         Frames frames = Frames.init();
 
+        IntStream.range(0, 13)
+                .forEach(i -> {
+                    frames.downPins(DOWNED_PINS_10);
+                    assertThat(frames.isBowlingEnd()).isFalse();
+                });
 
+        assertThat(frames.isBowlingEnd()).isTrue();
     }
 
 }
