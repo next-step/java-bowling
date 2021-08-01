@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class InProgress extends State {
-
     private final DownedPins downedPins;
 
     private InProgress(DownedPins downedPins) {
