@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 import static bowling.domain.Fixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("마지막 프레임의 진행상태 테스트")
 class LastInProgressTest {
@@ -72,6 +73,35 @@ class LastInProgressTest {
                 ),
                 Arguments.of( // Triple Strike
                         Arrays.asList(
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10
+                        )
+                )
+        );
+    }
+
+    @DisplayName("마지막 프레임의 진행 상태는 최대 3번까지 가능하지만, 불가능한 경우 예외를 발생 시킨다")
+    @MethodSource
+    @ParameterizedTest
+    void downPinsException(List<DownedPins> prepareDownedPins) {
+        LastInProgress lastInProgress = LastInProgress.init();
+
+        assertThatThrownBy(() -> prepareDownedPins.forEach(lastInProgress::downPins)).isInstanceOf(IllegalStateException.class);
+    }
+
+    private static Stream<Arguments> downPinsException() {
+        return Stream.of(
+                Arguments.of( // Miss
+                        Arrays.asList(
+                                DOWNED_PINS_5,
+                                DOWNED_PINS_2,
+                                DOWNED_PINS_2
+                        )
+                ),
+                Arguments.of( // Triple Strike
+                        Arrays.asList(
+                                DOWNED_PINS_10,
                                 DOWNED_PINS_10,
                                 DOWNED_PINS_10,
                                 DOWNED_PINS_10
