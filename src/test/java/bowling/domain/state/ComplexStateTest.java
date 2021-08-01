@@ -98,7 +98,7 @@ class ComplexStateTest {
         prepareDownedPins.forEach(complexState::downPins);
 
         int prevCount = complexState.getState().size();
-        complexState.giveExtraChange();
+        complexState.giveExtraChance();
 
         assertThat(complexState.getState().size()).isEqualTo(prevCount + 1);
     }

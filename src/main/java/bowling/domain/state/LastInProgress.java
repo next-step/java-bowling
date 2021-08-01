@@ -32,7 +32,7 @@ public class LastInProgress extends State {
             return LastEnd.from(complexState);
         }
 
-        complexState.giveExtraChange();
+        complexState.giveExtraChance();
         return this;
     }
 

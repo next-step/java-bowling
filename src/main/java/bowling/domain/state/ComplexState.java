@@ -32,7 +32,7 @@ public class ComplexState extends State {
         states.add(updatedState);
     }
 
-    public void giveExtraChange() {
+    public void giveExtraChance() {
         if (lastState().isClean()) {
             states.add(Preparation.init());
         }
