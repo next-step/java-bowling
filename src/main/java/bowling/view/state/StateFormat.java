@@ -26,7 +26,7 @@ public enum StateFormat {
     private final Class<? extends State> stateType;
     private final Function<StateDto, String> converter;
 
-    StateFormat(final Class<? extends State> stateType, final Function<StateDto, String> converter) {
+    StateFormat(Class<? extends State> stateType, Function<StateDto, String> converter) {
         this.stateType = stateType;
         this.converter = converter;
     }
