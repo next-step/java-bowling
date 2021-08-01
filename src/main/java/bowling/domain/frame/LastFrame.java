@@ -12,4 +12,9 @@ public class LastFrame extends Frame {
     public static Frame init() {
         return new LastFrame(LastInProgress.init());
     }
+
+    @Override
+    public boolean isBowlingEnd() {
+        return state.isEnd();
+    }
 }

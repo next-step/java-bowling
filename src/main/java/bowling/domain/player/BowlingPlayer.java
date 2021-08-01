@@ -14,4 +14,8 @@ public class BowlingPlayer {
     public static BowlingPlayer from(String name) {
         return new BowlingPlayer(name);
     }
+
+    public boolean isBowlingEnd() {
+        return frames.isBowlingEnd();
+    }
 }

@@ -33,6 +33,13 @@ class FrameTest {
         assertThat(someFrame.isEnd()).isTrue();
     }
 
+    @DisplayName("프레임은 기본적으로 볼링 게임이 끝난 상태가 아니다")
+    @Test
+    void isBowlingEnd() {
+        SomeFrame someFrame = new SomeFrame(Preparation.instance());
+
+        assertThat(someFrame.isBowlingEnd()).isFalse();
+    }
 
     class SomeFrame extends Frame {
         protected SomeFrame(State state) {

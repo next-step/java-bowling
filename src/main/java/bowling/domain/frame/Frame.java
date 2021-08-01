@@ -26,4 +26,8 @@ public abstract class Frame {
     public StateDtos getFrameStates() {
         return StateDtos.from(state.getState());
     }
+
+    public boolean isBowlingEnd() {
+        return false;
+    }
 }

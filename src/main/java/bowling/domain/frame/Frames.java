@@ -25,4 +25,8 @@ public class Frames {
                 .map(Frame::getFrameStates)
                 .collect(Collectors.toList());
     }
+
+    public boolean isBowlingEnd() {
+        return false;
+    }
 }
