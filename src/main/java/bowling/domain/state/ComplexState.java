@@ -38,13 +38,13 @@ public class ComplexState extends State {
         }
     }
 
+    private State lastState() {
+        return states.peek();
+    }
+
     @Override
     public boolean isEnd() {
         return lastState().isMiss();
-    }
-
-    private State lastState() {
-        return states.peek();
     }
 
     @Override
