@@ -7,11 +7,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static bowling.domain.Fixture.DOWNED_PINS_2;
-import static bowling.domain.Fixture.DOWNED_PINS_5;
+import static bowling.domain.Fixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("마지막 프레임의 진행상태 테스트")
@@ -26,13 +26,10 @@ class LastInProgressTest {
     @DisplayName("마지막 프레임의 진행 상태는 최대 3번까지 투구가 가능하다")
     @MethodSource
     @ParameterizedTest
-    void downPins(List<DownedPins> play) {
+    void downPins(List<DownedPins> prepareDownedPins) {
         LastInProgress lastInProgress = LastInProgress.init();
 
-        play.forEach(downedPins -> {
-            lastInProgress.downPins(downedPins);
-            assertThat(lastInProgress.isEnd()).isFalse();
-        });
+        prepareDownedPins.forEach(lastInProgress::downPins);
 
         assertThat(lastInProgress.isEnd()).isTrue();
     }
@@ -40,13 +37,45 @@ class LastInProgressTest {
     private static Stream<Arguments> downPins() {
         return Stream.of(
                 Arguments.of( // Miss
-                        DOWNED_PINS_5,
-                        DOWNED_PINS_2
+                        Arrays.asList(
+                            DOWNED_PINS_5,
+                            DOWNED_PINS_2
+                        )
                 ),
-                Arguments.of( // 3 pitch
-                        DOWNED_PINS_5,
-                        DOWNED_PINS_2,
-                        DOWNED_PINS_5
+                Arguments.of( // Spare, roll
+                        Arrays.asList(
+                            DOWNED_PINS_5,
+                            DOWNED_PINS_5,
+                            DOWNED_PINS_5
+                        )
+                ),
+                Arguments.of( // Strike, Miss
+                        Arrays.asList(
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_5,
+                                DOWNED_PINS_2
+                        )
+                ),
+                Arguments.of( // Strike, Spare
+                        Arrays.asList(
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_5,
+                                DOWNED_PINS_5
+                        )
+                ),
+                Arguments.of( // Double Strike, roll
+                        Arrays.asList(
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_5
+                        )
+                ),
+                Arguments.of( // Triple Strike
+                        Arrays.asList(
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10
+                        )
                 )
         );
     }
