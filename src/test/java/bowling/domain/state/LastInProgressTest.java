@@ -10,6 +10,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static bowling.domain.Fixture.DOWNED_PINS_2;
+import static bowling.domain.Fixture.DOWNED_PINS_5;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("마지막 프레임의 진행상태 테스트")
@@ -38,13 +40,13 @@ class LastInProgressTest {
     private static Stream<Arguments> downPins() {
         return Stream.of(
                 Arguments.of( // Miss
-                        DownedPins.from(5),
-                        DownedPins.from(4)
+                        DOWNED_PINS_5,
+                        DOWNED_PINS_2
                 ),
                 Arguments.of( // 3 pitch
-                        DownedPins.from(5),
-                        DownedPins.from(4),
-                        DownedPins.from(9)
+                        DOWNED_PINS_5,
+                        DOWNED_PINS_2,
+                        DOWNED_PINS_5
                 )
         );
     }

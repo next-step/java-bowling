@@ -1,9 +1,9 @@
 package bowling.domain.state;
 
-import bowling.domain.pin.DownedPins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static bowling.domain.Fixture.DOWNED_PINS_5;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -15,7 +15,7 @@ class EndStateTest {
     void downPinsException() {
         SomeEndState someEndState = new SomeEndState();
 
-        assertThatThrownBy(() -> someEndState.downPins(DownedPins.from(5))).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> someEndState.downPins(DOWNED_PINS_5)).isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("기본적으로 종료 상태는 끝이다")

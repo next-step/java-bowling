@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static bowling.domain.Fixture.DOWNED_PINS_10;
+import static bowling.domain.Fixture.DOWNED_PINS_5;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("준비 상태를 표현하는 상태 클래스 테스트")
@@ -31,8 +33,8 @@ class PreparationTest {
 
     private static Stream<Arguments> downPins() {
         return Stream.of(
-                Arguments.of(DownedPins.from(5), InProgress.class),
-                Arguments.of(DownedPins.from(10), Strike.class)
+                Arguments.of(DOWNED_PINS_5, InProgress.class),
+                Arguments.of(DOWNED_PINS_10, Strike.class)
         );
     }
 
