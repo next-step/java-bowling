@@ -1,25 +1,22 @@
 package bowling.domain.state;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
 
 public class LastEnd extends EndState {
-    private final Stack<State> states;
+    private final ComplexState complexState;
 
-    public LastEnd(List<State> states) {
-        this.states = new Stack<>();
-        this.states.addAll(states);
+    public LastEnd(ComplexState complexState) {
+        this.complexState = complexState;
     }
 
-    public static LastEnd init(List<State> states) {
-        return new LastEnd(states);
+    public static LastEnd init(ComplexState complexState) {
+        return new LastEnd(complexState);
     }
 
     @Override
     public List<State> getState() {
-        return new ArrayList<>(states);
+        return complexState.getState();
     }
 
     @Override
