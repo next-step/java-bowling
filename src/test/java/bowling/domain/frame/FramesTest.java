@@ -21,4 +21,12 @@ class FramesTest {
 
     }
 
+    @DisplayName("볼링게임의 종료 테스트")
+    @Test
+    void isBowlingEnd() {
+        Frames frames = Frames.init();
+
+
+    }
+
 }

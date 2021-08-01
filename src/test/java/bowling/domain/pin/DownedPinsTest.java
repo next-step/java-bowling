@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
+import static bowling.domain.Fixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -37,8 +38,8 @@ class DownedPinsTest {
 
     private static Stream<Arguments> equals() {
         return Stream.of(
-                Arguments.of(5, DownedPins.from(5)),
-                Arguments.of(10, DownedPins.from(10))
+                Arguments.of(5, DOWNED_PINS_5),
+                Arguments.of(10, DOWNED_PINS_10)
         );
     }
 
@@ -51,8 +52,8 @@ class DownedPinsTest {
 
     private static Stream<Arguments> isAllDown() {
         return Stream.of(
-                Arguments.of(DownedPins.from(5), false),
-                Arguments.of(DownedPins.from(10), true)
+                Arguments.of(DOWNED_PINS_5, false),
+                Arguments.of(DOWNED_PINS_10, true)
         );
     }
 
@@ -65,8 +66,8 @@ class DownedPinsTest {
 
     private static Stream<Arguments> add() {
         return Stream.of(
-                Arguments.of(DownedPins.from(5), DownedPins.from(5), DownedPins.from(10)),
-                Arguments.of(DownedPins.from(5), DownedPins.from(2), DownedPins.from(7))
+                Arguments.of(DOWNED_PINS_5, DOWNED_PINS_5, DOWNED_PINS_10),
+                Arguments.of(DOWNED_PINS_5, DOWNED_PINS_2, DOWNED_PINS_7)
         );
     }
 
@@ -79,8 +80,8 @@ class DownedPinsTest {
 
     private static Stream<Arguments> addException() {
         return Stream.of(
-                Arguments.of(DownedPins.from(5), DownedPins.from(10)),
-                Arguments.of(DownedPins.from(5), DownedPins.from(6))
+                Arguments.of(DOWNED_PINS_5, DOWNED_PINS_10),
+                Arguments.of(DOWNED_PINS_5, DOWNED_PINS_7)
         );
     }
 
