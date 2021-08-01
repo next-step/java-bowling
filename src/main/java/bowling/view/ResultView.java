@@ -7,14 +7,17 @@ import bowling.view.state.StateFormat;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static bowling.domain.frame.Frame.END_NUMBER_OF_FRAME;
+import static bowling.domain.frame.Frame.START_NUMBER_OF_FRAME;
+
 public class ResultView {
     private static final String NAME_FORMAT = "| %4s |";
     private static final String FRAME_NUMBER_FORMAT = "  %02d  |";
     private static final String FRAME_STATE_FORMAT = "  %-4s|";
     private static final String EXTRA_FRAME_STATE_FORMAT = " %-5s|";
-    private static final int NORMAL_FRAME_STATE_LIMIT = 3;
     private static final String EXTRA_FRAME_JOIN_SYMBOL = "|";
     private static final String EMPTY_STRING = "";
+    private static final int NORMAL_FRAME_STATE_LIMIT = 3;
 
     private ResultView() {}
 
@@ -26,7 +29,7 @@ public class ResultView {
     private static void printHeader() {
         printStatement(String.format(NAME_FORMAT, "NAME"));
 
-        IntStream.rangeClosed(1, 10)
+        IntStream.rangeClosed(START_NUMBER_OF_FRAME, END_NUMBER_OF_FRAME)
                 .forEach(number -> printStatement(String.format(FRAME_NUMBER_FORMAT, number)));
 
         newLine();
@@ -41,7 +44,7 @@ public class ResultView {
     }
 
     private static void printRemainFrame(BowlingPlayerDto bowlingPlayerDto) {
-        IntStream.range(bowlingPlayerDto.getCurrentFrameNumber(), 10)
+        IntStream.range(bowlingPlayerDto.getCurrentFrameNumber(), END_NUMBER_OF_FRAME)
                 .forEach(noStr -> printStatement(String.format(FRAME_STATE_FORMAT, EMPTY_STRING)));
     }
 
