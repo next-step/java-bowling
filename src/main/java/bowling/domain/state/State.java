@@ -2,6 +2,8 @@ package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class State {
@@ -30,5 +32,9 @@ public abstract class State {
 
     protected boolean isClean() {
         return false;
+    }
+
+    public List<State> getState() {
+        return Collections.singletonList(this);
     }
 }

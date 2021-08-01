@@ -2,6 +2,8 @@ package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class ComplexState extends State {
@@ -42,5 +44,10 @@ public class ComplexState extends State {
 
     private State lastState() {
         return states.peek();
+    }
+
+    @Override
+    public List<State> getState() {
+        return new ArrayList<>(states);
     }
 }
