@@ -19,4 +19,8 @@ public abstract class State {
     }
 
     protected abstract State nextState(DownedPins downedPins);
+
+    public boolean isEnd() {
+        return false;
+    }
 }

@@ -7,4 +7,9 @@ public abstract class EndState extends State {
     protected State nextState(DownedPins downedPins) {
         throw new IllegalStateException("EndState can't down pins");
     }
+
+    @Override
+    public boolean isEnd() {
+        return true;
+    }
 }

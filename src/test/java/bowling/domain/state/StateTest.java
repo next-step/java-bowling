@@ -27,6 +27,14 @@ class StateTest {
         assertThatThrownBy(() -> someState.downPins(null)).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("기본적으로 일반 상태는 종료상태가 아니다")
+    @Test
+    void isEnd() {
+        State someState = new SomeState();
+
+        assertThat(someState.isEnd()).isFalse();
+    }
+
     class SomeState extends State {
 
         @Override
