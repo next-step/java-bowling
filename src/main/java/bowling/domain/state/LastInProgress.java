@@ -5,7 +5,7 @@ import bowling.domain.pin.DownedPins;
 import java.util.List;
 
 public class LastInProgress extends State {
-    private static final int MAX_ROLL_COUNT = 3;
+    private static final int TRY_COUNT_LIMIT = 3;
 
     private int tryCount;
     private final ComplexState complexState;
@@ -38,7 +38,7 @@ public class LastInProgress extends State {
 
     @Override
     public boolean isEnd() {
-        return tryCount == MAX_ROLL_COUNT || complexState.isEnd();
+        return tryCount == TRY_COUNT_LIMIT || complexState.isEnd();
     }
 
     @Override
