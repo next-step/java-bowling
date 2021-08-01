@@ -11,6 +11,10 @@ public class ResultView {
     private static final String NAME_FORMAT = "| %4s |";
     private static final String FRAME_NUMBER_FORMAT = "  %02d  |";
     private static final String FRAME_STATE_FORMAT = "  %-4s|";
+    private static final String EXTRA_FRAME_STATE_FORMAT = " %-5s|";
+    private static final int NORMAL_FRAME_STATE_LIMIT = 3;
+    private static final String EXTRA_FRAME_JOIN_SYMBOL = "|";
+    private static final String EMPTY_STRING = "";
 
     private ResultView() {}
 
@@ -38,21 +42,25 @@ public class ResultView {
 
     private static void printRemainFrame(BowlingPlayerDto bowlingPlayerDto) {
         IntStream.range(bowlingPlayerDto.getCurrentFrameNumber(), 10)
-                .forEach(noStr -> printStatement(String.format(FRAME_STATE_FORMAT, "")));
+                .forEach(noStr -> printStatement(String.format(FRAME_STATE_FORMAT, EMPTY_STRING)));
     }
 
     private static void printPlayedFrame(BowlingPlayerDto bowlingPlayerDto) {
         bowlingPlayerDto.getStates()
                 .stream()
                 .map(ResultView::convertToString)
-                .forEach(state -> printStatement(String.format(FRAME_STATE_FORMAT, state)));
+                .forEach(state -> printStatement(toFrameState(state)));
+    }
+
+    private static String toFrameState(String state) {
+        return String.format(state.length() > NORMAL_FRAME_STATE_LIMIT ? EXTRA_FRAME_STATE_FORMAT : FRAME_STATE_FORMAT, state);
     }
 
     private static String convertToString(StateDtos stateDtos) {
         return stateDtos.getStateDtos()
                 .stream()
                 .map(StateFormat::convert)
-                .collect(Collectors.joining());
+                .collect(Collectors.joining(EXTRA_FRAME_JOIN_SYMBOL));
     }
 
     private static void printStatement(String statement) {
