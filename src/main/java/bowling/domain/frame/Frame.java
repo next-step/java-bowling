@@ -14,4 +14,7 @@ public abstract class Frame {
         this.state = state.downPins(downedPins);
     }
 
+    protected boolean isEnd() {
+        return state.isEnd();
+    }
 }
