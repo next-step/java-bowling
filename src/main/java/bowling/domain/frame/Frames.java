@@ -21,16 +21,6 @@ public class Frames {
         return new Frames();
     }
 
-    public List<StateDtos> getTotalStates() {
-        return frames.stream()
-                .map(Frame::getFrameStates)
-                .collect(Collectors.toList());
-    }
-
-    public boolean isBowlingEnd() {
-        return currentFrame().isBowlingEnd();
-    }
-
     public void downPins(DownedPins downedPins) {
         Frame currentFrame = currentFrame();
 
@@ -38,7 +28,17 @@ public class Frames {
         currentFrame.appendFrame(frames);
     }
 
+    public boolean isBowlingEnd() {
+        return currentFrame().isBowlingEnd();
+    }
+
     private Frame currentFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    public List<StateDtos> getTotalStates() {
+        return frames.stream()
+                .map(Frame::getFrameStates)
+                .collect(Collectors.toList());
     }
 }
