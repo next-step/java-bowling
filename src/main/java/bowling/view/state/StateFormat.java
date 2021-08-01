@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public enum StateFormat {
     PREPARATION(Preparation.class, state -> ""),
-    INPROGRESS(InProgress.class, state -> String.format("%s", NumberSymbol.convert(state.getFirstDownedPins()))),
+    IN_PROGRESS(InProgress.class, state -> String.format("%s", NumberSymbol.convert(state.getFirstDownedPins()))),
     SPARE(Spare.class, state -> String.format("%s|/", NumberSymbol.convert(state.getFirstDownedPins()))),
     STRIKE(Strike.class, state -> String.format("%s", NumberSymbol.convert(state.getFirstDownedPins()))),
     MISS(Miss.class, state -> String.format(
