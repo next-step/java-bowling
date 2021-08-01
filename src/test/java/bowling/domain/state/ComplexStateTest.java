@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static bowling.domain.Fixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("마지막 상태에서 여러 상태를 담기 위한 복합 상태")
@@ -31,11 +32,11 @@ class ComplexStateTest {
         List<State> states = complexState.getState();
         assertThat(states.get(states.size() - 1)).isInstanceOf(Preparation.class);
 
-        complexState.downPins(DownedPins.from(5));
+        complexState.downPins(DOWNED_PINS_5);
         states = complexState.getState();
         assertThat(states.get(states.size() - 1)).isInstanceOf(InProgress.class);
 
-        complexState.downPins(DownedPins.from(5));
+        complexState.downPins(DOWNED_PINS_5);
         states = complexState.getState();
         assertThat(states.get(states.size() - 1)).isInstanceOf(Spare.class);
     }
@@ -54,14 +55,14 @@ class ComplexStateTest {
         return Stream.of(
                 Arguments.of(
                         Collections.singletonList(
-                                DownedPins.from(10)
+                                DOWNED_PINS_10
                         ),
                         false
                 ),
 
                 Arguments.of(
                         Collections.singletonList(
-                                DownedPins.from(5)
+                                DOWNED_PINS_5
                         ),
                         false
                 ),
@@ -73,16 +74,16 @@ class ComplexStateTest {
 
                 Arguments.of(
                         Arrays.asList(
-                                DownedPins.from(5),
-                                DownedPins.from(5)
-                                ),
+                                DOWNED_PINS_5,
+                                DOWNED_PINS_5
+                        ),
                         false
                 ),
 
                 Arguments.of(
                         Arrays.asList(
-                                DownedPins.from(5),
-                                DownedPins.from(2)
+                                DOWNED_PINS_5,
+                                DOWNED_PINS_2
                         ),
                         true
                 )
