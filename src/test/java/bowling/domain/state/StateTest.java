@@ -53,7 +53,7 @@ class StateTest {
         assertThat(someState.isClean()).isFalse();
     }
 
-    class SomeState extends State {
+    static class SomeState extends State {
 
         @Override
         protected State nextState(DownedPins downedPins) {

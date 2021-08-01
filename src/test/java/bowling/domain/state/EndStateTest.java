@@ -28,7 +28,7 @@ class EndStateTest {
         assertThat(someEndState.isEnd()).isTrue();
     }
 
-    class SomeEndState extends EndState {
+    static class SomeEndState extends EndState {
         @Override
         public List<Integer> getDownedPins() {
             return null;

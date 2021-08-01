@@ -41,7 +41,7 @@ class FrameTest {
         assertThat(someFrame.isBowlingEnd()).isFalse();
     }
 
-    class SomeFrame extends Frame {
+    static class SomeFrame extends Frame {
         protected SomeFrame(State state) {
             super(state);
         }
