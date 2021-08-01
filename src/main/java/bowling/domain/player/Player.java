@@ -22,4 +22,8 @@ public class Player {
     public static Player from(String name) {
         return new Player(name);
     }
+
+    public String getName() {
+        return name;
+    }
 }
