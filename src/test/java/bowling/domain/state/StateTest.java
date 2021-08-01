@@ -4,6 +4,8 @@ import bowling.domain.pin.DownedPins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static bowling.domain.Fixture.DOWNED_PINS_5;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -56,6 +58,11 @@ class StateTest {
         @Override
         protected State nextState(DownedPins downedPins) {
             return new SomeState();
+        }
+
+        @Override
+        public List<Integer> getDownedPins() {
+            return null;
         }
     }
 

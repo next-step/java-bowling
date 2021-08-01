@@ -37,4 +37,6 @@ public abstract class State {
     public List<State> getState() {
         return Collections.singletonList(this);
     }
+
+    public abstract List<Integer> getDownedPins();
 }

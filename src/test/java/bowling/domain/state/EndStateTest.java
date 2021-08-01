@@ -3,6 +3,8 @@ package bowling.domain.state;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static bowling.domain.Fixture.DOWNED_PINS_5;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -26,5 +28,10 @@ class EndStateTest {
         assertThat(someEndState.isEnd()).isTrue();
     }
 
-    class SomeEndState extends EndState {}
+    class SomeEndState extends EndState {
+        @Override
+        public List<Integer> getDownedPins() {
+            return null;
+        }
+    }
 }

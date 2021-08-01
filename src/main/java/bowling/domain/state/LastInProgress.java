@@ -45,4 +45,9 @@ public class LastInProgress extends State {
     public List<State> getState() {
         return complexState.getState();
     }
+
+    @Override
+    public List<Integer> getDownedPins() {
+        return complexState.getDownedPins();
+    }
 }

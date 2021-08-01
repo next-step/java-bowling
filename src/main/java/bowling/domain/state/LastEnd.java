@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -19,5 +20,10 @@ public class LastEnd extends EndState {
     @Override
     public List<State> getState() {
         return new ArrayList<>(states);
+    }
+
+    @Override
+    public List<Integer> getDownedPins() {
+        return Collections.emptyList();
     }
 }

@@ -3,8 +3,8 @@ package bowling.domain.pin;
 import java.util.Objects;
 
 public class DownedPins {
-    private static final int MIN_NUM_OF_DOWNED_PINS = 0;
-    private static final int MAX_NUM_OF_DOWNED_PINS = 10;
+    public static final int MIN_NUM_OF_DOWNED_PINS = 0;
+    public static final int MAX_NUM_OF_DOWNED_PINS = 10;
 
     private final int numOfDownedPins;
 
@@ -45,5 +45,9 @@ public class DownedPins {
     @Override
     public int hashCode() {
         return Objects.hash(numOfDownedPins);
+    }
+
+    public int getNumOfDownedPins() {
+        return numOfDownedPins;
     }
 }

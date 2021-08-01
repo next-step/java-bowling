@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.DownedPins;
 import bowling.domain.state.State;
+import bowling.dto.StateDtos;
 
 import java.util.List;
 
@@ -21,4 +22,8 @@ public abstract class Frame {
     }
 
     protected void appendFrame(List<Frame> frames) {}
+
+    public StateDtos getFrameStates() {
+        return StateDtos.from(state.getState());
+    }
 }

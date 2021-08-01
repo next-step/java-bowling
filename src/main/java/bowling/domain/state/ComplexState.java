@@ -3,6 +3,7 @@ package bowling.domain.state;
 import bowling.domain.pin.DownedPins;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -49,5 +50,10 @@ public class ComplexState extends State {
     @Override
     public List<State> getState() {
         return new ArrayList<>(states);
+    }
+
+    @Override
+    public List<Integer> getDownedPins() {
+        return Collections.emptyList();
     }
 }
