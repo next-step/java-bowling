@@ -3,8 +3,14 @@ package bowling.domain.state;
 import bowling.domain.pin.DownedPins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,5 +39,55 @@ class ComplexStateTest {
         states = complexState.getState();
         assertThat(states.get(states.size() - 1)).isInstanceOf(Spare.class);
     }
+
+    @DisplayName("복합 상태의 끝은 마지막 상태가 Miss일 경우 뿐이다")
+    @MethodSource
+    @ParameterizedTest
+    void isEnd(List<DownedPins> prepareDownedPins, boolean expectedValue) {
+        ComplexState complexState = ComplexState.init();
+        prepareDownedPins.forEach(complexState::downPins);
+
+        assertThat(complexState.isEnd()).isEqualTo(expectedValue);
+    }
+
+    private static Stream<Arguments> isEnd() {
+        return Stream.of(
+                Arguments.of(
+                        Collections.singletonList(
+                                DownedPins.from(10)
+                        ),
+                        false
+                ),
+
+                Arguments.of(
+                        Collections.singletonList(
+                                DownedPins.from(5)
+                        ),
+                        false
+                ),
+
+                Arguments.of(
+                        Collections.emptyList(),
+                        false
+                ),
+
+                Arguments.of(
+                        Arrays.asList(
+                                DownedPins.from(5),
+                                DownedPins.from(5)
+                                ),
+                        false
+                ),
+
+                Arguments.of(
+                        Arrays.asList(
+                                DownedPins.from(5),
+                                DownedPins.from(2)
+                        ),
+                        true
+                )
+        );
+    }
+
 
 }
