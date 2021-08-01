@@ -5,7 +5,6 @@ import bowling.dto.StateDtos;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.IntConsumer;
 import java.util.stream.Collectors;
 
 public class Frames {
@@ -33,6 +32,13 @@ public class Frames {
     }
 
     public void downPins(DownedPins downedPins) {
+        Frame currentFrame = currentFrame();
 
+        currentFrame.downPins(downedPins);
+        currentFrame.appendFrame(frames);
+    }
+
+    private Frame currentFrame() {
+        return frames.get(frames.size() - 1);
     }
 }

@@ -29,12 +29,14 @@ class FramesTest {
     void isBowlingEnd() {
         Frames frames = Frames.init();
 
-        IntStream.range(0, 13)
+        IntStream.range(0, 11)
                 .forEach(i -> {
+                    System.out.println(i);
                     frames.downPins(DOWNED_PINS_10);
                     assertThat(frames.isBowlingEnd()).isFalse();
                 });
 
+        frames.downPins(DOWNED_PINS_10);
         assertThat(frames.isBowlingEnd()).isTrue();
     }
 
