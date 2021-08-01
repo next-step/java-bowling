@@ -22,6 +22,9 @@ class FramesTest {
     void downPins() {
         Frames frames = Frames.init();
 
+        assertThat(frames.getTotalStates().size()).isEqualTo(1);
+        frames.downPins(DOWNED_PINS_10);
+        assertThat(frames.getTotalStates().size()).isEqualTo(2);
     }
 
     @DisplayName("볼링게임의 종료 테스트")
