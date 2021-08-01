@@ -19,8 +19,8 @@ public class BowlingPlayer {
         return new BowlingPlayer(name);
     }
 
-    public void play(int numberOfDownedPins) {
-        DownedPins downedPins = DownedPins.from(numberOfDownedPins);
+    public void play(int numbOfDownedPins) {
+        DownedPins downedPins = DownedPins.from(numbOfDownedPins);
 
         frames.downPins(downedPins);
     }

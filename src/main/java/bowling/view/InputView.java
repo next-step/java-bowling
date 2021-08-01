@@ -19,7 +19,7 @@ public class InputView {
                 .trim();
     }
 
-    public static int inputNumberOfDownedPins(BowlingPlayerDto bowlingPlayerDto) {
+    public static int inputNumOfDownedPins(BowlingPlayerDto bowlingPlayerDto) {
         printStatement(String.format(INPUT_NUM_OF_DOWNED_PIN_FORMAT, bowlingPlayerDto.getCurrentFrameNumber()));
 
         return getInt();

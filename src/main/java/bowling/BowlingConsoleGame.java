@@ -13,7 +13,7 @@ public class BowlingConsoleGame {
 
         ResultView.printScoreBoard(BowlingPlayerDto.from(bowlingPlayer));
         while(!bowlingPlayer.isBowlingEnd()) {
-            int downedPins = InputView.inputNumberOfDownedPins(BowlingPlayerDto.from(bowlingPlayer));
+            int downedPins = InputView.inputNumOfDownedPins(BowlingPlayerDto.from(bowlingPlayer));
 
             bowlingPlayer.play(downedPins);
 
