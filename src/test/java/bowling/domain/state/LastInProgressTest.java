@@ -4,9 +4,11 @@ import bowling.domain.pin.DownedPins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,5 +33,19 @@ class LastInProgressTest {
         });
 
         assertThat(lastInProgress.isEnd()).isTrue();
+    }
+
+    private static Stream<Arguments> downPins() {
+        return Stream.of(
+                Arguments.of( // Miss
+                        DownedPins.from(5),
+                        DownedPins.from(4)
+                ),
+                Arguments.of( // 3 pitch
+                        DownedPins.from(5),
+                        DownedPins.from(4),
+                        DownedPins.from(9)
+                )
+        );
     }
 }
