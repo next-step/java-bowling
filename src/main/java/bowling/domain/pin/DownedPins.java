@@ -34,6 +34,10 @@ public class DownedPins {
         return new DownedPins(this.numOfDownedPins + additionalDownedPins.numOfDownedPins);
     }
 
+    public int getNumOfDownedPins() {
+        return numOfDownedPins;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,9 +49,5 @@ public class DownedPins {
     @Override
     public int hashCode() {
         return Objects.hash(numOfDownedPins);
-    }
-
-    public int getNumOfDownedPins() {
-        return numOfDownedPins;
     }
 }
