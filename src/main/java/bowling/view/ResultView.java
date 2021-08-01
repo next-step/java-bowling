@@ -1,7 +1,10 @@
 package bowling.view;
 
 import bowling.dto.BowlingPlayerDto;
+import bowling.dto.StateDtos;
+import bowling.view.state.StateFormat;
 
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ResultView {
@@ -39,6 +42,17 @@ public class ResultView {
     }
 
     private static void printPlayedFrame(BowlingPlayerDto bowlingPlayerDto) {
+        bowlingPlayerDto.getStates()
+                .stream()
+                .map(ResultView::convertToString)
+                .forEach(state -> printStatement(String.format(FRAME_STATE_FORMAT, state)));
+    }
+
+    private static String convertToString(StateDtos stateDtos) {
+        return stateDtos.getStateDtos()
+                .stream()
+                .map(StateFormat::convert)
+                .collect(Collectors.joining());
     }
 
     private static void printStatement(String statement) {
