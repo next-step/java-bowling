@@ -4,7 +4,7 @@ import bowling.domain.pin.DownedPins;
 
 import java.util.Stack;
 
-public class ComplexState {
+public class ComplexState extends State {
     private final Stack<State> states;
 
     public ComplexState() {
@@ -16,23 +16,31 @@ public class ComplexState {
         return new ComplexState();
     }
 
-    public void updateLastState(DownedPins downedPins) {
-        State lastState = states.pop();
-        State updatedState = lastState.downPins(downedPins);
+    @Override
+    protected State nextState(DownedPins downedPins) {
+        State updatedState = lastState().downPins(downedPins);
+        changeLastState(updatedState);
 
+        return this;
+    }
+
+    private void changeLastState(State updatedState) {
+        states.pop();
         states.add(updatedState);
     }
 
     public void giveExtraChange() {
-        State lastState = states.peek();
-
-        if (lastState.isClean()) {
+        if (lastState().isClean()) {
             states.add(Preparation.instance());
         }
     }
 
+    @Override
     public boolean isEnd() {
-        State lastState = states.peek();
-        return lastState.isMiss();
+        return lastState().isMiss();
+    }
+
+    private State lastState() {
+        return states.peek();
     }
 }

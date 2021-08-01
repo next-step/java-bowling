@@ -14,4 +14,5 @@ class ComplexStateTest {
         assertThat(ComplexState.init()).isInstanceOf(ComplexState.class);
     }
 
+
 }
