@@ -28,7 +28,7 @@ public class Frames {
     }
 
     public boolean isBowlingEnd() {
-        return false;
+        return currentFrame().isBowlingEnd();
     }
 
     public void downPins(DownedPins downedPins) {

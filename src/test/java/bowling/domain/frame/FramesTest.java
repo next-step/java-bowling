@@ -31,7 +31,6 @@ class FramesTest {
 
         IntStream.range(0, 11)
                 .forEach(i -> {
-                    System.out.println(i);
                     frames.downPins(DOWNED_PINS_10);
                     assertThat(frames.isBowlingEnd()).isFalse();
                 });
