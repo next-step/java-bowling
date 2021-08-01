@@ -14,4 +14,12 @@ class MissTest {
     void init() {
         assertThat(Miss.of(DownedPins.from(5), DownedPins.from(2))).isInstanceOf(Miss.class);
     }
+
+    @DisplayName("Miss 상태에서 isMiss 테스트")
+    @Test
+    void isMiss() {
+        Miss miss = Miss.of(DownedPins.from(5), DownedPins.from(2));
+
+        assertThat(miss.isMiss()).isTrue();
+    }
 }

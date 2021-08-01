@@ -23,4 +23,8 @@ public abstract class State {
     public boolean isEnd() {
         return false;
     }
+
+    protected boolean isMiss() {
+        return false;
+    }
 }

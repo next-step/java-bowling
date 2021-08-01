@@ -35,6 +35,14 @@ class StateTest {
         assertThat(someState.isEnd()).isFalse();
     }
 
+    @DisplayName("기본적으로 일반 상태는 Miss 상태가 아니다")
+    @Test
+    void isMiss() {
+        State someState = new SomeState();
+
+        assertThat(someState.isMiss()).isFalse();
+    }
+
     class SomeState extends State {
 
         @Override

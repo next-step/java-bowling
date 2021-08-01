@@ -11,7 +11,12 @@ public class Miss extends EndState {
         this.secondDownedPins = secondDownedPins;
     }
 
-    public static State of(DownedPins firstDownedPins, DownedPins secondDownedPins) {
+    public static Miss of(DownedPins firstDownedPins, DownedPins secondDownedPins) {
         return new Miss(firstDownedPins, secondDownedPins);
+    }
+
+    @Override
+    protected boolean isMiss() {
+        return true;
     }
 }
