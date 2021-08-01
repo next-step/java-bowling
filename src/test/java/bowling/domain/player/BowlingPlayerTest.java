@@ -11,7 +11,7 @@ class BowlingPlayerTest {
     @DisplayName("볼링 플레이어는 이름을 가지고 초기화 한다")
     @Test
     void init() {
-        assertThat(BowlingPlayer.init("NOK")).isInstanceOf(BowlingPlayer.class);
+        assertThat(BowlingPlayer.from("NOK")).isInstanceOf(BowlingPlayer.class);
     }
 
 }
