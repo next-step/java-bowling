@@ -25,7 +25,7 @@ public class LastInProgress extends State {
 
         updateLastState(downedPins);
 
-        return this;
+        return updateTotalState();
     }
 
     private void updateLastState(DownedPins downedPins) {
