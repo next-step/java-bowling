@@ -14,4 +14,11 @@ class StrikeTest {
         assertThat(Strike.instance()).isInstanceOf(Strike.class);
     }
 
+    @DisplayName("Strike 상태는 Clean 상태다")
+    @Test
+    void isClean() {
+        Strike strike = Strike.instance();
+
+        assertThat(strike.isClean()).isTrue();
+    }
 }

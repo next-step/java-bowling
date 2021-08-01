@@ -4,4 +4,9 @@ public class Strike extends EndState {
     public static Strike instance() {
         return new Strike();
     }
+
+    @Override
+    protected boolean isClean() {
+        return true;
+    }
 }

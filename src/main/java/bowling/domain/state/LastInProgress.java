@@ -11,7 +11,8 @@ public class LastInProgress extends State {
     private final Stack<State> states;
 
     public LastInProgress() {
-        this.states = new Stack<>();
+        states = new Stack<>();
+        states.add(Preparation.instance());
     }
 
     public static LastInProgress init() {
@@ -20,7 +21,35 @@ public class LastInProgress extends State {
 
     @Override
     protected State nextState(DownedPins downedPins) {
-        return null;
+        ++rollCount;
+
+        updateLastState(downedPins);
+
+        return this;
+    }
+
+    private void updateLastState(DownedPins downedPins) {
+        State lastState = states.pop();
+        State updatedState = lastState.downPins(downedPins);
+
+        states.add(updatedState);
+    }
+
+    private State updateTotalState() {
+        if (isEnd()) {
+            return LastEnd.init(states);
+        }
+
+        giveExtraChance();
+        return this;
+    }
+
+    private void giveExtraChance() {
+        State lastState = states.peek();
+
+        if (lastState.isClean()) {
+            states.add(Preparation.instance());
+        }
     }
 
     @Override

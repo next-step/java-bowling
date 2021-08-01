@@ -27,4 +27,8 @@ public abstract class State {
     protected boolean isMiss() {
         return false;
     }
+
+    protected boolean isClean() {
+        return false;
+    }
 }

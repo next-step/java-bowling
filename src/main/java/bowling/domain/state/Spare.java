@@ -9,7 +9,12 @@ public class Spare extends EndState {
         this.downedPins = downedPins;
     }
 
-    public static State from(DownedPins downedPins) {
+    public static Spare from(DownedPins downedPins) {
         return new Spare(downedPins);
+    }
+
+    @Override
+    protected boolean isClean() {
+        return true;
     }
 }

@@ -43,6 +43,14 @@ class StateTest {
         assertThat(someState.isMiss()).isFalse();
     }
 
+    @DisplayName("기본적으로 일반 상태는 Clean 상태가 아니다")
+    @Test
+    void isClean() {
+        State someState = new SomeState();
+
+        assertThat(someState.isClean()).isFalse();
+    }
+
     class SomeState extends State {
 
         @Override

@@ -14,4 +14,12 @@ class SpareTest {
     void init() {
         assertThat(Spare.from(DownedPins.from(5))).isInstanceOf(Spare.class);
     }
+
+    @DisplayName("Spare 상태는 Clean 상태다")
+    @Test
+    void isClean() {
+        Spare spare = Spare.from(DownedPins.from(5));
+
+        assertThat(spare.isClean()).isTrue();
+    }
 }
