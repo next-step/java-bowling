@@ -5,6 +5,8 @@ import bowling.domain.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static bowling.domain.Fixture.DOWNED_PINS_10;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,5 +38,8 @@ class FrameTest {
         protected SomeFrame(State state) {
             super(state);
         }
+
+        @Override
+        protected void appendFrame(List<Frame> frames) {}
     }
 }

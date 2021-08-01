@@ -3,7 +3,11 @@ package bowling.domain.frame;
 import bowling.domain.pin.DownedPins;
 import bowling.domain.state.State;
 
+import java.util.List;
+
 public abstract class Frame {
+    public static final int LIMIT_OF_FRAME_SIZE = 10;
+
     protected State state;
 
     protected Frame(State state) {
@@ -17,4 +21,6 @@ public abstract class Frame {
     protected boolean isEnd() {
         return state.isEnd();
     }
+
+    protected abstract void appendFrame(List<Frame> frames);
 }
