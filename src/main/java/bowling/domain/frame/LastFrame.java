@@ -9,7 +9,7 @@ public class LastFrame extends Frame {
         super(state);
     }
 
-    public static Frame init() {
+    public static LastFrame init() {
         return new LastFrame(LastInProgress.init());
     }
 
