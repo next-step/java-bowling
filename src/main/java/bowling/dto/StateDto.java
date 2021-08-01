@@ -25,4 +25,8 @@ public class StateDto {
         return state.getDownedPins()
                 .get(INDEX_OF_SECOND_DOWNED_PINS);
     }
+
+    public Class<? extends State> getStateClass() {
+        return state.getClass();
+    }
 }
