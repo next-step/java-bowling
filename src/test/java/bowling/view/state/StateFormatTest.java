@@ -24,13 +24,13 @@ class StateFormatTest {
 
     private static Stream<Arguments> convert() {
         return Stream.of(
-                Arguments.of(Preparation.instance(), ""),
+                Arguments.of(Preparation.init(), ""),
                 Arguments.of(InProgress.from(DOWNED_PINS_5), "5"),
                 Arguments.of(InProgress.from(DOWNED_PINS_0), "-"),
                 Arguments.of(Miss.of(DOWNED_PINS_5, DOWNED_PINS_2), "5|2"),
                 Arguments.of(Miss.of(DOWNED_PINS_5, DOWNED_PINS_0), "5|-"),
                 Arguments.of(Spare.from(DOWNED_PINS_5), "5|/"),
-                Arguments.of(Strike.instance(), "X")
+                Arguments.of(Strike.init(), "X")
         );
     }
 

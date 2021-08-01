@@ -7,7 +7,7 @@ import static bowling.domain.pin.DownedPins.MAX_NUM_OF_DOWNED_PINS;
 
 public class Strike extends EndState {
 
-    public static Strike instance() {
+    public static Strike init() {
         return new Strike();
     }
 

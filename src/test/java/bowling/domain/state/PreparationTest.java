@@ -19,14 +19,14 @@ class PreparationTest {
     @DisplayName("준비 상태는 초기화시 필요한 정보가 없다")
     @Test
     void init() {
-        assertThat(Preparation.instance()).isInstanceOf(Preparation.class);
+        assertThat(Preparation.init()).isInstanceOf(Preparation.class);
     }
 
     @DisplayName("준비 상태에서 핀을 쓰러뜨리면 다음 상태를 반환한다")
     @MethodSource
     @ParameterizedTest
     void downPins(DownedPins downedPins, Class<State> expectedState) {
-        Preparation preparation = Preparation.instance();
+        Preparation preparation = Preparation.init();
 
         assertThat(preparation.downPins(downedPins)).isInstanceOf(expectedState);
     }

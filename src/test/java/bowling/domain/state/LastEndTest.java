@@ -13,7 +13,7 @@ class LastEndTest {
     void init() {
         ComplexState complexState = ComplexState.init();
 
-        assertThat(LastEnd.init(complexState)).isInstanceOf(LastEnd.class);
+        assertThat(LastEnd.from(complexState)).isInstanceOf(LastEnd.class);
     }
 
 }

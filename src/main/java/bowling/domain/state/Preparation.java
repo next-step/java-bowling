@@ -9,14 +9,14 @@ public class Preparation extends State {
 
     private Preparation() {}
 
-    public static Preparation instance() {
+    public static Preparation init() {
         return new Preparation();
     }
 
     @Override
     protected State nextState(DownedPins downedPins) {
         if (downedPins.isAllDown()) {
-            return Strike.instance();
+            return Strike.init();
         }
 
         return InProgress.from(downedPins);

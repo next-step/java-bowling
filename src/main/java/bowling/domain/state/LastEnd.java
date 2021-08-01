@@ -10,7 +10,7 @@ public class LastEnd extends EndState {
         this.complexState = complexState;
     }
 
-    public static LastEnd init(ComplexState complexState) {
+    public static LastEnd from(ComplexState complexState) {
         return new LastEnd(complexState);
     }
 

@@ -12,7 +12,7 @@ public class ComplexState extends State {
 
     public ComplexState() {
         states = new Stack<>();
-        states.add(Preparation.instance());
+        states.add(Preparation.init());
     }
 
     public static ComplexState init() {
@@ -34,7 +34,7 @@ public class ComplexState extends State {
 
     public void giveExtraChange() {
         if (lastState().isClean()) {
-            states.add(Preparation.instance());
+            states.add(Preparation.init());
         }
     }
 

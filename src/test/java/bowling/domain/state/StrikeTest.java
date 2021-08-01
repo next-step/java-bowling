@@ -11,13 +11,13 @@ class StrikeTest {
     @DisplayName("Strike 는 초기화시 어떤 정보도 필요 없다")
     @Test
     void init() {
-        assertThat(Strike.instance()).isInstanceOf(Strike.class);
+        assertThat(Strike.init()).isInstanceOf(Strike.class);
     }
 
     @DisplayName("Strike 상태는 Clean 상태다")
     @Test
     void isClean() {
-        Strike strike = Strike.instance();
+        Strike strike = Strike.init();
 
         assertThat(strike.isClean()).isTrue();
     }

@@ -29,7 +29,7 @@ public class LastInProgress extends State {
 
     private State updateTotalState() {
         if (isEnd()) {
-            return LastEnd.init(complexState);
+            return LastEnd.from(complexState);
         }
 
         complexState.giveExtraChange();

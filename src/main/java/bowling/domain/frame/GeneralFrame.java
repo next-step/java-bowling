@@ -13,7 +13,7 @@ public class GeneralFrame extends Frame {
     }
 
     public static GeneralFrame init() {
-        return new GeneralFrame(Preparation.instance());
+        return new GeneralFrame(Preparation.init());
     }
 
     @Override
