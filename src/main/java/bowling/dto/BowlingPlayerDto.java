@@ -6,7 +6,7 @@ import java.util.List;
 
 public class BowlingPlayerDto {
     private final String name;
-    private final int currentFrameNumber;
+    private final int currentFrameNumber; // 1 base
     private final List<StateDtos> states;
 
     private BowlingPlayerDto(BowlingPlayer player) {

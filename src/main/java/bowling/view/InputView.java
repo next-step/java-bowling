@@ -20,13 +20,13 @@ public class InputView {
     }
 
     public static int inputNumberOfDownedPins(BowlingPlayerDto bowlingPlayerDto) {
-        printStatement(String.format(INPUT_NUM_OF_DOWNED_PIN_FORMAT, bowlingPlayerDto.getCurrentFrameNumber() + 1));
+        printStatement(String.format(INPUT_NUM_OF_DOWNED_PIN_FORMAT, bowlingPlayerDto.getCurrentFrameNumber()));
 
         return getInt();
     }
 
     private static void printStatement(String statement) {
-        System.out.println(statement);
+        System.out.print(statement);
     }
 
     private static int getInt() {

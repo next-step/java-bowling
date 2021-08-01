@@ -56,7 +56,7 @@ public class ResultView {
     }
 
     private static void printStatement(String statement) {
-        System.out.println(statement);
+        System.out.print(statement);
     }
 
     private static void newLine() {
