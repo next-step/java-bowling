@@ -1,6 +1,8 @@
 package bowling.domain.player;
 
 public class Player {
+    private static final int LIMIT_LENGTH_OF_NAME = 3;
+
     private final String name;
 
     public Player(String name) {
