@@ -7,7 +7,7 @@ public class InProgressScore extends Score {
         this.leftCount = leftCount;
     }
 
-    public static Object init(int i, int i1) {
-        return null;
+    public static InProgressScore init(int score, int leftCount) {
+        return new InProgressScore(score, leftCount);
     }
 }
