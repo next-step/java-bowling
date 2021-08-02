@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.InCalculableScore;
 import bowling.domain.score.InProgressScore;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
@@ -55,11 +56,11 @@ class StateTest {
         assertThat(someState.isClean()).isFalse();
     }
 
-    @DisplayName("상태에 따라 스코어를 반환한다")
+    @DisplayName("기본적으로 어떤 상태의 스코어 값은 계산 불가능 상태이다")
     @Test
     void score() {
         State someState = new SomeState();
-        assertThat(someState.Score()).isInstanceOf(Score.class);
+        assertThat(someState.Score()).isInstanceOf(InCalculableScore.class);
     }
 
     static class SomeState extends State {
@@ -72,11 +73,6 @@ class StateTest {
         @Override
         public List<Integer> getDownedPins() {
             return null;
-        }
-
-        @Override
-        public Score Score() {
-            return InProgressScore.init(10, 1);
         }
     }
 
