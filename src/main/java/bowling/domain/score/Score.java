@@ -6,4 +6,8 @@ public abstract class Score {
     protected Score(int score) {
         this.score = score;
     }
+
+    public boolean isCalculable() {
+        return false;
+    }
 }
