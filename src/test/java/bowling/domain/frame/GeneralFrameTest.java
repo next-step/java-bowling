@@ -68,7 +68,7 @@ class GeneralFrameTest {
         assertThat(generalFrame.getScore()).isEqualTo(InCalculableScore.init());
 
         generalFrame.downPins(DOWNED_PINS_5);
-        assertThat(generalFrame.getScore()).isEqualTo(InProgressScore.init(10, 1));
+        assertThat(generalFrame.getScore()).isEqualTo(InProgressScore.of(10, 1));
     }
 
     @DisplayName("프레임의 점수 구하기 스트라이크")

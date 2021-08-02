@@ -131,7 +131,7 @@ class LastInProgressTest {
                                 DOWNED_PINS_10
                         ),
                         InProgressScore.ofStrike(),
-                        InProgressScore.init(20, 1)
+                        InProgressScore.of(20, 1)
                 ),
 
                 Arguments.of(
@@ -184,7 +184,7 @@ class LastInProgressTest {
                         Collections.singletonList(
                                 DOWNED_PINS_10
                         ),
-                        InProgressScore.init(5, 1),
+                        InProgressScore.of(5, 1),
                         CalculableScore.from(15)
                 ),
 
@@ -193,7 +193,7 @@ class LastInProgressTest {
                                 DOWNED_PINS_10,
                                 DOWNED_PINS_10
                         ),
-                        InProgressScore.init(5, 1),
+                        InProgressScore.of(5, 1),
                         CalculableScore.from(15)
                 ),
 
@@ -203,7 +203,7 @@ class LastInProgressTest {
                                 DOWNED_PINS_10,
                                 DOWNED_PINS_10
                         ),
-                        InProgressScore.init(5, 1),
+                        InProgressScore.of(5, 1),
                         CalculableScore.from(15)
                 )
         );

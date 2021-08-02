@@ -41,9 +41,9 @@ class StrikeTest {
 
     private static Stream<Arguments> addScore() {
         return Stream.of(
-                Arguments.of(InProgressScore.ofStrike(), InProgressScore.init(20, 1)),
+                Arguments.of(InProgressScore.ofStrike(), InProgressScore.of(20, 1)),
                 Arguments.of(InProgressScore.ofSpare(), CalculableScore.from(20)),
-                Arguments.of(InProgressScore.init(5, 2), InProgressScore.init(15, 1))
+                Arguments.of(InProgressScore.of(5, 2), InProgressScore.of(15, 1))
         );
     }
 

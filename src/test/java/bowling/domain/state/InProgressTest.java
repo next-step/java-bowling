@@ -52,10 +52,10 @@ class InProgressTest {
 
     private static Stream<Arguments> addScore() {
         return Stream.of(
-                Arguments.of(InProgressScore.ofStrike(), InProgressScore.init(15, 1)),
+                Arguments.of(InProgressScore.ofStrike(), InProgressScore.of(15, 1)),
                 Arguments.of(InProgressScore.ofSpare(), CalculableScore.from(15)),
-                Arguments.of(InProgressScore.init(5, 1), CalculableScore.from(10)),
-                Arguments.of(InProgressScore.init(5, 2), InProgressScore.init(10, 1))
+                Arguments.of(InProgressScore.of(5, 1), CalculableScore.from(10)),
+                Arguments.of(InProgressScore.of(5, 2), InProgressScore.of(10, 1))
         );
     }
 

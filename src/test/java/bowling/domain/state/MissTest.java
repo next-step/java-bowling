@@ -54,8 +54,8 @@ class MissTest {
         return Stream.of(
                 Arguments.of(InProgressScore.ofStrike(), CalculableScore.from(17)),
                 Arguments.of(InProgressScore.ofSpare(), CalculableScore.from(15)),
-                Arguments.of(InProgressScore.init(5, 1), CalculableScore.from(10)),
-                Arguments.of(InProgressScore.init(5, 2), CalculableScore.from(12))
+                Arguments.of(InProgressScore.of(5, 1), CalculableScore.from(10)),
+                Arguments.of(InProgressScore.of(5, 2), CalculableScore.from(12))
         );
     }
 }

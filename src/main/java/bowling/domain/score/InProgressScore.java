@@ -25,7 +25,7 @@ public class InProgressScore extends Score {
         }
     }
 
-    public static InProgressScore init(int score, int leftCount) {
+    public static InProgressScore of(int score, int leftCount) {
         return new InProgressScore(score, leftCount);
     }
 
@@ -45,7 +45,7 @@ public class InProgressScore extends Score {
             return CalculableScore.from(score + anotherScore.score);
         }
 
-        return InProgressScore.init(score + anotherScore.score, nextLeftCount);
+        return InProgressScore.of(score + anotherScore.score, nextLeftCount);
     }
 
     @Override

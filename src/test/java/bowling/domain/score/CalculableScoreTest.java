@@ -19,7 +19,7 @@ class CalculableScoreTest {
     @Test
     void addException() {
         CalculableScore calculableScore = CalculableScore.from(25);
-        InProgressScore anotherScore = InProgressScore.init(10, 2);
+        InProgressScore anotherScore = InProgressScore.of(10, 2);
         assertThatThrownBy(() -> calculableScore.add(anotherScore)).isInstanceOf(IllegalStateException.class);
     }
 
