@@ -26,6 +26,17 @@ public class Miss extends EndState {
     }
 
     @Override
+    protected Score addBonusScore(Score score) {
+        Score addScore = score.add(firstDownedPins.score());
+
+        if (addScore.isCalculable()) {
+            return addScore;
+        }
+
+        return addScore.add(secondDownedPins.score());
+    }
+
+    @Override
     protected boolean isMiss() {
         return true;
     }
