@@ -31,11 +31,6 @@ class EndStateTest {
 
     static class SomeEndState extends EndState {
         @Override
-        public Score Score() {
-            return null;
-        }
-
-        @Override
         public List<Integer> getDownedPins() {
             return null;
         }

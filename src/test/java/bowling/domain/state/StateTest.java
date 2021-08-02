@@ -2,8 +2,6 @@ package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
 import bowling.domain.score.InCalculableScore;
-import bowling.domain.score.InProgressScore;
-import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
