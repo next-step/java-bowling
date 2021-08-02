@@ -17,8 +17,8 @@ public class LastEnd extends EndState {
     }
 
     @Override
-    public Score Score() {
-        return null;
+    public Score score() {
+        return complexState.score();
     }
 
     @Override

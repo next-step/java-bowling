@@ -15,7 +15,7 @@ public class Strike extends EndState {
     }
 
     @Override
-    public Score Score() {
+    public Score score() {
         return InProgressScore.ofStrike();
     }
 

@@ -24,7 +24,7 @@ public abstract class State {
 
     protected abstract State nextState(DownedPins downedPins);
 
-    public Score Score() {
+    public Score score() {
         return InCalculableScore.init();
     }
 

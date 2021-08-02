@@ -58,7 +58,7 @@ class StateTest {
     @Test
     void score() {
         State someState = new SomeState();
-        assertThat(someState.Score()).isInstanceOf(InCalculableScore.class);
+        assertThat(someState.score()).isInstanceOf(InCalculableScore.class);
     }
 
     static class SomeState extends State {

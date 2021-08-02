@@ -44,7 +44,7 @@ public class ComplexState extends State {
     }
 
     @Override
-    public Score Score() {
+    public Score score() {
         return null;
     }
 

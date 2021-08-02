@@ -30,7 +30,7 @@ class MissTest {
     @Test
     void score() {
         Miss miss = Miss.of(DOWNED_PINS_5, DOWNED_PINS_2);
-        Score score = miss.Score();
+        Score score = miss.score();
 
         assertThat(score).isInstanceOf(CalculableScore.class);
         assertThat(score.toInt()).isEqualTo(7);

@@ -21,7 +21,7 @@ public class Miss extends EndState {
     }
 
     @Override
-    public Score Score() {
+    public Score score() {
         return CalculableScore.from(firstDownedPins.score().add(secondDownedPins.score()));
     }
 

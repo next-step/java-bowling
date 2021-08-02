@@ -19,7 +19,7 @@ public class Spare extends EndState {
     }
 
     @Override
-    public Score Score() {
+    public Score score() {
         return InProgressScore.ofSpare();
     }
 
