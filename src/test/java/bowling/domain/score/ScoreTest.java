@@ -38,4 +38,10 @@ class ScoreTest {
 
         assertThat(score.add(anotherScore)).isInstanceOf(Score.class);
     }
+
+    @DisplayName("스코어 객체는 스코어 값이 같아면 동일한 객체로 판별한다.")
+    @Test
+    void equals() {
+        assertThat(Score.from(10)).isEqualTo(Score.from(10));
+    }
 }

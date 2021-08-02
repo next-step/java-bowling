@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import java.util.Objects;
+
 public class Score {
     private static final int SCORE_LIMIT = 30;
 
@@ -27,5 +29,18 @@ public class Score {
 
     public Score add(Score anotherScore) {
         return new Score(score + anotherScore.score);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }
