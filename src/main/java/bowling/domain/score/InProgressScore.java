@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class InProgressScore extends Score {
     private static final int LEFT_COUNT_LIMIT = 2;
+    private static final int ZERO = 0;
 
     private final int leftCount;
 
@@ -32,11 +33,13 @@ public class InProgressScore extends Score {
 
     @Override
     public Score add(Score anotherScore) {
-        if (leftCount == 1) {
+        int nextLeftCount = leftCount - 1;
+
+        if (nextLeftCount == ZERO) {
             return CalculableScore.from(score + anotherScore.score);
         }
 
-        return InProgressScore.init(score + anotherScore.score, leftCount - 1);
+        return InProgressScore.init(score + anotherScore.score, nextLeftCount);
     }
 
     @Override
