@@ -20,6 +20,11 @@ public class Strike extends EndState {
     }
 
     @Override
+    protected Score addBonusScore(Score score) {
+        return score.add(Score.ofStrike());
+    }
+
+    @Override
     protected boolean isClean() {
         return true;
     }

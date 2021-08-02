@@ -2,6 +2,8 @@ package bowling.domain.score;
 
 import java.util.Objects;
 
+import static bowling.domain.pin.DownedPins.MAX_NUM_OF_DOWNED_PINS;
+
 public class Score {
     private static final int SCORE_LIMIT = 30;
 
@@ -15,6 +17,10 @@ public class Score {
 
     public static Score from(int score) {
         return new Score(score);
+    }
+
+    public static Score ofStrike() {
+        return new Score(MAX_NUM_OF_DOWNED_PINS);
     }
 
     private void validate(int score) {
