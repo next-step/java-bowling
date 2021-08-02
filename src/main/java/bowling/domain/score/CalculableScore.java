@@ -16,6 +16,6 @@ public class CalculableScore extends Score {
 
     @Override
     public Score add(Score anotherScore) {
-        return null;
+        throw new IllegalStateException("Calculable score can't add more score");
     }
 }
