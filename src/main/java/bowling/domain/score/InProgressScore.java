@@ -29,11 +29,11 @@ public class InProgressScore extends Score {
         return new InProgressScore(score, leftCount);
     }
 
-    public static Score ofStrike() {
+    public static InProgressScore ofStrike() {
         return new InProgressScore(MAX_NUM_OF_DOWNED_PINS, LEFT_COUNT_LIMIT);
     }
 
-    public static Score ofSpare() {
+    public static InProgressScore ofSpare() {
         return new InProgressScore(MAX_NUM_OF_DOWNED_PINS, LEFT_COUNT_LIMIT_OF_SPARE);
     }
 

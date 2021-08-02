@@ -3,14 +3,15 @@ package bowling.domain.state;
 import bowling.domain.pin.DownedPins;
 import bowling.domain.score.CalculableScore;
 import bowling.domain.score.InCalculableScore;
+import bowling.domain.score.InProgressScore;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static bowling.domain.Fixture.DOWNED_PINS_5;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("프레임 상태 표현을 위한 클래스 테스트")
 class StateTest {
@@ -71,6 +72,15 @@ class StateTest {
         assertThat(someState.addScore(calculableScore)).isEqualTo(calculableScore);
     }
 
+    @DisplayName("스코어 값을 더할때 이미 스코어가 계산 불가능 하다면 추가적인 연산후 계산된 스코어를 반환한다")
+    @Test
+    void addBonusScore() {
+        SomeState someState = new SomeState();
+        InProgressScore inProgressScore = InProgressScore.ofSpare();
+
+        assertThat(someState.addScore(inProgressScore)).isNotEqualTo(inProgressScore);
+    }
+
     static class SomeState extends State {
 
         @Override
@@ -81,6 +91,11 @@ class StateTest {
         @Override
         public List<Integer> getDownedPins() {
             return null;
+        }
+
+        @Override
+        protected Score addBonusScore(Score score) {
+            return InProgressScore.ofStrike();
         }
     }
 
