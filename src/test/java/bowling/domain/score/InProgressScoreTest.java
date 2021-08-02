@@ -27,4 +27,13 @@ class InProgressScoreTest {
     void initException() {
         assertThatThrownBy(() -> InProgressScore.init(10, 3)).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("스코어 끼리 더하면 새로운 스코어를 반환한다")
+    @Test
+    void add() {
+        InProgressScore inProgressScore = InProgressScore.init(10, 2);
+        Score score = Score.from(10);
+
+        assertThat(inProgressScore.add(score)).isInstanceOf(Score.class);
+    }
 }
