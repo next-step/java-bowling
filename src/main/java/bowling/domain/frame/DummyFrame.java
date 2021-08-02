@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 
 import java.util.List;
@@ -12,6 +13,16 @@ public class DummyFrame extends Frame {
     @Override
     protected void appendFrame(List<Frame> frames) {
         // do nothing
+    }
+
+    @Override
+    public Score getScore() {
+        return null;
+    }
+
+    @Override
+    public Score addBonusScore(Score score) {
+        return score;
     }
 
 }

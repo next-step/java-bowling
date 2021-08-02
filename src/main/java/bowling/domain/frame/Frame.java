@@ -35,11 +35,8 @@ public abstract class Frame {
         return false;
     }
 
-    public Score score() {
-        return state.score();
-    }
+    public abstract Score getScore();
 
-    public Score addScore(Score score) {
-        return state.addScore(score);
-    }
+    public abstract Score addBonusScore(Score score);
+
 }

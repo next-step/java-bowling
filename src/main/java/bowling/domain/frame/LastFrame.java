@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.LastInProgress;
 import bowling.domain.state.State;
 
@@ -23,5 +24,15 @@ public class LastFrame extends Frame {
     @Override
     public boolean isBowlingEnd() {
         return state.isEnd();
+    }
+
+    @Override
+    public Score getScore() {
+        return state.score();
+    }
+
+    @Override
+    public Score addBonusScore(Score score) {
+        return state.addScore(score);
     }
 }

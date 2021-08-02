@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.Preparation;
 import bowling.domain.state.State;
 
@@ -24,6 +25,18 @@ public class GeneralFrame extends Frame {
         if (isEnd()) {
             initNextFrame(frames);
         }
+    }
+
+    @Override
+    public Score getScore() {
+        return state.score();
+    }
+
+    @Override
+    public Score addBonusScore(Score score) {
+        Score addedScore = state.addScore(score);
+
+        return nextFrame.addBonusScore(addedScore);
     }
 
     private void initNextFrame(List<Frame> frames) {
