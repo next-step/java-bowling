@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("점수를 계산하기 위한 Score 클래스 테스트")
 class ScoreTest {
@@ -23,9 +24,20 @@ class ScoreTest {
         assertThat((new SomeScore(10)).isCalculable()).isFalse();
     }
 
+    @DisplayName("볼링 점수를 초기화 할때 점수의 최대값은 30을 넘길 수 없다")
+    @Test
+    void initException() {
+        assertThatThrownBy(() -> new SomeScore(31)).isInstanceOf(IllegalArgumentException.class);
+    }
+
     static class SomeScore extends Score {
         protected SomeScore(int score) {
             super(score);
+        }
+
+        @Override
+        public boolean isCalculable() {
+            return false;
         }
     }
 }

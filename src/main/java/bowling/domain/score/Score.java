@@ -7,7 +7,5 @@ public abstract class Score {
         this.score = score;
     }
 
-    public boolean isCalculable() {
-        return false;
-    }
+    public abstract boolean isCalculable();
 }

@@ -22,4 +22,9 @@ public class InProgressScore extends Score {
     public static InProgressScore init(int score, int leftCount) {
         return new InProgressScore(score, leftCount);
     }
+
+    @Override
+    public boolean isCalculable() {
+        return false;
+    }
 }
