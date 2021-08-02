@@ -1,6 +1,10 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.CalculableScore;
+import bowling.domain.score.InCalculableScore;
+import bowling.domain.score.InProgressScore;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -116,6 +120,55 @@ class ComplexStateTest {
                                 DOWNED_PINS_5,
                                 DOWNED_PINS_5
                         )
+                )
+        );
+    }
+
+    @DisplayName("복합 상태의 점수 계산 테스트")
+    @MethodSource
+    @ParameterizedTest
+    void score(List<DownedPins> prepareDownedPins, Score expectedScore) {
+        ComplexState complexState = ComplexState.init();
+        prepareDownedPins.forEach(complexState::downPins);
+
+        assertThat(complexState.score()).isEqualTo(expectedScore);
+    }
+
+    private static Stream<Arguments> score() {
+        return Stream.of(
+                Arguments.of(
+                        Collections.singletonList(
+                                DOWNED_PINS_10
+                        ),
+                        InProgressScore.ofStrike()
+                ),
+
+                Arguments.of(
+                        Collections.singletonList(
+                                DOWNED_PINS_5
+                        ),
+                        InCalculableScore.init()
+                ),
+
+                Arguments.of(
+                        Collections.emptyList(),
+                        InCalculableScore.init()
+                ),
+
+                Arguments.of(
+                        Arrays.asList(
+                                DOWNED_PINS_5,
+                                DOWNED_PINS_5
+                        ),
+                        InProgressScore.ofSpare()
+                ),
+
+                Arguments.of(
+                        Arrays.asList(
+                                DOWNED_PINS_5,
+                                DOWNED_PINS_2
+                        ),
+                        CalculableScore.from(7)
                 )
         );
     }

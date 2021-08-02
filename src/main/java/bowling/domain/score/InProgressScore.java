@@ -38,11 +38,6 @@ public class InProgressScore extends Score {
     }
 
     @Override
-    public boolean isCalculable() {
-        return false;
-    }
-
-    @Override
     public Score add(Score anotherScore) {
         int nextLeftCount = leftCount - 1;
 

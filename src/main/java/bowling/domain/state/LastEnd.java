@@ -22,6 +22,11 @@ public class LastEnd extends EndState {
     }
 
     @Override
+    protected Score addBonusScore(Score score) {
+        return complexState.addScore(score);
+    }
+
+    @Override
     public List<State> getState() {
         return complexState.getState();
     }

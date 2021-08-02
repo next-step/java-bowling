@@ -45,7 +45,26 @@ public class ComplexState extends State {
 
     @Override
     public Score score() {
-        return null;
+        Score score = firstState().score();
+
+        for(State state : states.subList(1, states.size())) {
+            score = state.addScore(score);
+        }
+
+        return score;
+    }
+
+    private State firstState() {
+        return states.get(0);
+    }
+
+    @Override
+    protected Score addBonusScore(Score score) {
+        for (State state : states) {
+            score = state.addScore(score);
+        }
+
+        return score;
     }
 
     @Override
