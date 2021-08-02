@@ -30,6 +30,10 @@ public class InProgressScore extends Score {
 
     @Override
     public Score add(Score anotherScore) {
-        return null;
+        if (leftCount == 1) {
+            return CalculableScore.from(score + anotherScore.score);
+        }
+
+        return InProgressScore.init(score + anotherScore.score, leftCount - 1);
     }
 }
