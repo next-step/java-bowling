@@ -24,7 +24,6 @@ class ScoreTest {
     }
 
     static class SomeScore extends Score {
-
         protected SomeScore(int score) {
             super(score);
         }
