@@ -27,4 +27,9 @@ public class InProgressScore extends Score {
     public boolean isCalculable() {
         return false;
     }
+
+    @Override
+    public Score add(Score anotherScore) {
+        return null;
+    }
 }

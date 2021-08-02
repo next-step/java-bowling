@@ -30,6 +30,15 @@ class ScoreTest {
         assertThatThrownBy(() -> new SomeScore(31)).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("점수끼리는 더할 수 있으며, 더한 결과는 새로운 스코어를 반환한다")
+    @Test
+    void add() {
+        SomeScore someScore = new SomeScore(10);
+        SomeScore anotherSomeScore = new SomeScore(10);
+
+        assertThat(someScore.add(anotherSomeScore)).isInstanceOf(Score.class);
+    }
+
     static class SomeScore extends Score {
         protected SomeScore(int score) {
             super(score);
@@ -38,6 +47,11 @@ class ScoreTest {
         @Override
         public boolean isCalculable() {
             return false;
+        }
+
+        @Override
+        public Score add(Score anotherScore) {
+            return new SomeScore(score + anotherScore.score);
         }
     }
 }

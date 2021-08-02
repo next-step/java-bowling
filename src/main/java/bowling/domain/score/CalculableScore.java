@@ -13,4 +13,9 @@ public class CalculableScore extends Score {
     public boolean isCalculable() {
         return true;
     }
+
+    @Override
+    public Score add(Score anotherScore) {
+        return null;
+    }
 }

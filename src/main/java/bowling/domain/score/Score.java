@@ -17,4 +17,6 @@ public abstract class Score {
     }
 
     public abstract boolean isCalculable();
+
+    public abstract Score add(Score anotherScore);
 }
