@@ -1,5 +1,7 @@
 package bowling.domain.pin;
 
+import bowling.domain.score.Score;
+
 import java.util.Objects;
 
 public class DownedPins {
@@ -38,6 +40,10 @@ public class DownedPins {
         return numOfDownedPins;
     }
 
+    public Score score() {
+        return Score.from(numOfDownedPins);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,9 +55,5 @@ public class DownedPins {
     @Override
     public int hashCode() {
         return Objects.hash(numOfDownedPins);
-    }
-
-    public boolean score() {
-        return false;
     }
 }
