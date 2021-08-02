@@ -36,4 +36,15 @@ class InProgressScoreTest {
 
         assertThat(inProgressScore.add(score)).isInstanceOf(Score.class);
     }
+
+    @DisplayName("계산중인 스코어 객체는 스코어 값이 같아면 동일하고, 남은 횟수가 같으면 같은 객체로 판별한다.")
+    @Test
+    void equals() {
+        InProgressScore inProgressScore = InProgressScore.init(10, 2);
+        InProgressScore anotherInProgressScore = InProgressScore.init(10, 2);
+        InProgressScore theOtherInProgressScore = InProgressScore.init(10, 1);
+
+        assertThat(inProgressScore).isEqualTo(anotherInProgressScore);
+        assertThat(inProgressScore).isNotEqualTo(theOtherInProgressScore);
+    }
 }
