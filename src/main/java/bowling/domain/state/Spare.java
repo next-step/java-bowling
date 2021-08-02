@@ -24,6 +24,17 @@ public class Spare extends EndState {
     }
 
     @Override
+    protected Score addBonusScore(Score score) {
+        Score addScore = score.add(downedPins.score());
+
+        if (addScore.isCalculable()) {
+            return addScore;
+        }
+
+        return score.add(downedPins.padScore());
+    }
+
+    @Override
     protected boolean isClean() {
         return true;
     }

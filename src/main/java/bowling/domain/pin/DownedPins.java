@@ -44,6 +44,10 @@ public class DownedPins {
         return Score.from(numOfDownedPins);
     }
 
+    public Score padScore() {
+        return Score.from(MAX_NUM_OF_DOWNED_PINS - numOfDownedPins);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
