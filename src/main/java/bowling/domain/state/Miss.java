@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.CalculableScore;
 import bowling.domain.score.Score;
 
 import java.util.Arrays;
@@ -21,7 +22,7 @@ public class Miss extends EndState {
 
     @Override
     public Score Score() {
-        return null;
+        return CalculableScore.from(firstDownedPins.score().add(secondDownedPins.score()));
     }
 
     @Override

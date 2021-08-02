@@ -31,6 +31,10 @@ public class Score {
         return new Score(score + anotherScore.score);
     }
 
+    public int toInt() {
+        return score;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

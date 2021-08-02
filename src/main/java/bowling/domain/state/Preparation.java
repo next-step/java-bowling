@@ -24,11 +24,6 @@ public class Preparation extends State {
     }
 
     @Override
-    public Score Score() {
-        return null;
-    }
-
-    @Override
     public List<Integer> getDownedPins() {
         return Collections.emptyList();
     }

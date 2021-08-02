@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.score.CalculableScore;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,5 +24,15 @@ class MissTest {
         Miss miss = Miss.of(DOWNED_PINS_5, DOWNED_PINS_2);
 
         assertThat(miss.isMiss()).isTrue();
+    }
+
+    @DisplayName("Miss 상태에서의 스코어는 계산 가능하며 그 값은 두개의 핀의 합과 같다")
+    @Test
+    void score() {
+        Miss miss = Miss.of(DOWNED_PINS_5, DOWNED_PINS_2);
+        Score score = miss.Score();
+
+        assertThat(score).isInstanceOf(CalculableScore.class);
+        assertThat(score.toInt()).isEqualTo(7);
     }
 }

@@ -9,6 +9,10 @@ public class CalculableScore extends Score {
         return new CalculableScore(score);
     }
 
+    public static CalculableScore from(Score score) {
+        return new CalculableScore(score.score);
+    }
+
     @Override
     public boolean isCalculable() {
         return true;

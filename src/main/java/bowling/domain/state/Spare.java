@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.InProgressScore;
 import bowling.domain.score.Score;
 
 import java.util.Collections;
@@ -19,7 +20,7 @@ public class Spare extends EndState {
 
     @Override
     public Score Score() {
-        return null;
+        return InProgressScore.ofSpare();
     }
 
     @Override
