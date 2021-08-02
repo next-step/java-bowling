@@ -1,6 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.score.CalculableScore;
 import bowling.domain.score.InProgressScore;
 import bowling.domain.score.Score;
 
