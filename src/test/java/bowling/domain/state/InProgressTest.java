@@ -1,6 +1,9 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.CalculableScore;
+import bowling.domain.score.InProgressScore;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,6 +38,24 @@ class InProgressTest {
         return Stream.of(
                 Arguments.of(DOWNED_PINS_5, Spare.class),
                 Arguments.of(DOWNED_PINS_2, Miss.class)
+        );
+    }
+
+    @DisplayName("InProgress 상태에 스코어를 더하면 한 번 더한 스코어를 반환한다")
+    @MethodSource
+    @ParameterizedTest
+    void addScore(Score score, Score expectedScore) {
+        InProgress inProgress = InProgress.from(DOWNED_PINS_5);
+
+        assertThat(inProgress.addScore(score)).isEqualTo(expectedScore);
+    }
+
+    private static Stream<Arguments> addScore() {
+        return Stream.of(
+                Arguments.of(InProgressScore.ofStrike(), InProgressScore.init(15, 1)),
+                Arguments.of(InProgressScore.ofSpare(), CalculableScore.from(15)),
+                Arguments.of(InProgressScore.init(5, 1), CalculableScore.from(10)),
+                Arguments.of(InProgressScore.init(5, 2), InProgressScore.init(10, 1))
         );
     }
 
