@@ -6,6 +6,7 @@ import static bowling.domain.pin.DownedPins.MAX_NUM_OF_DOWNED_PINS;
 
 public class InProgressScore extends Score {
     private static final int LEFT_COUNT_LIMIT = 2;
+    private static final int LEFT_COUNT_LIMIT_OF_SPARE = 1;
     private static final int ZERO = 0;
 
     private final int leftCount;
@@ -30,6 +31,10 @@ public class InProgressScore extends Score {
 
     public static Score ofStrike() {
         return new InProgressScore(MAX_NUM_OF_DOWNED_PINS, LEFT_COUNT_LIMIT);
+    }
+
+    public static Score ofSpare() {
+        return new InProgressScore(MAX_NUM_OF_DOWNED_PINS, LEFT_COUNT_LIMIT_OF_SPARE);
     }
 
     @Override

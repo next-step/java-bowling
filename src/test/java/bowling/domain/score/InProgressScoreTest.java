@@ -53,4 +53,10 @@ class InProgressScoreTest {
     void ofStrike() {
         assertThat(InProgressScore.ofStrike()).isEqualTo(InProgressScore.init(10, 2));
     }
+
+    @DisplayName("스페어의 스코어는 점수가 10에 남은 횟수가 1이다")
+    @Test
+    void ofSpare() {
+        assertThat(InProgressScore.ofSpare()).isEqualTo(InProgressScore.init(10, 1));
+    }
 }
