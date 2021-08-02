@@ -47,4 +47,10 @@ class InProgressScoreTest {
         assertThat(inProgressScore).isEqualTo(anotherInProgressScore);
         assertThat(inProgressScore).isNotEqualTo(theOtherInProgressScore);
     }
+
+    @DisplayName("스트라이크의 스코어는 점수가 10에 남은 횟수가 2이다")
+    @Test
+    void ofStrike() {
+        assertThat(InProgressScore.ofStrike()).isEqualTo(InProgressScore.init(10, 2));
+    }
 }

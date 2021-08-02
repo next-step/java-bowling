@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.score.CalculableScore;
+import bowling.domain.score.InProgressScore;
 import bowling.domain.score.Score;
 
 import java.util.Collections;
@@ -15,7 +17,7 @@ public class Strike extends EndState {
 
     @Override
     public Score Score() {
-        return null;
+        return InProgressScore.ofStrike();
     }
 
     @Override
