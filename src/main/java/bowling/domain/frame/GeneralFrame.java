@@ -29,11 +29,11 @@ public class GeneralFrame extends Frame {
 
     @Override
     public Score getScore() {
-        return state.score();
+        return nextFrame.addBonusScore(state.score());
     }
 
     @Override
-    public Score addBonusScore(Score score) {
+    protected Score addBonusScore(Score score) {
         Score addedScore = state.addScore(score);
 
         return nextFrame.addBonusScore(addedScore);

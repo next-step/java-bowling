@@ -21,7 +21,7 @@ public class DummyFrame extends Frame {
     }
 
     @Override
-    public Score addBonusScore(Score score) {
+    protected Score addBonusScore(Score score) {
         return score;
     }
 

@@ -55,4 +55,5 @@ class GeneralFrameTest {
         frame.appendFrame(frames);
         assertThat(frames.get(frames.size() - 1)).isInstanceOf(LastFrame.class);
     }
+
 }

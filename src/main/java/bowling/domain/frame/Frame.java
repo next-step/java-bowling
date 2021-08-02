@@ -37,6 +37,6 @@ public abstract class Frame {
 
     public abstract Score getScore();
 
-    public abstract Score addBonusScore(Score score);
+    protected abstract Score addBonusScore(Score score);
 
 }
