@@ -5,6 +5,10 @@ public class CalculableScore extends Score {
         super(score);
     }
 
+    public static Object from(int i) {
+        return null;
+    }
+
     @Override
     public boolean isCalculable() {
         return true;
