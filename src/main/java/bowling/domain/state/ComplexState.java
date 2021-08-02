@@ -49,7 +49,7 @@ public class ComplexState extends State {
     public Score score() {
         Score score = firstState().score();
 
-        for(State state : states.subList(START_IDX_OF_SUB_STATES, states.size())) {
+        for (State state : states.subList(START_IDX_OF_SUB_STATES, states.size())) {
             score = state.addScore(score);
         }
 
