@@ -8,8 +8,11 @@ import java.util.List;
 public class GeneralFrame extends Frame {
     private static final int LIMIT_SIZE_OF_GENERAL_FRAME = 9;
 
+    private Frame nextFrame;
+
     private GeneralFrame(State state) {
         super(state);
+        nextFrame = new DummyFrame(Preparation.init());
     }
 
     public static GeneralFrame init() {
@@ -25,10 +28,15 @@ public class GeneralFrame extends Frame {
 
     private void initNextFrame(List<Frame> frames) {
         if (frames.size() < LIMIT_SIZE_OF_GENERAL_FRAME) {
-            frames.add(GeneralFrame.init());
+            updateNextFrame(frames, GeneralFrame.init());
             return;
         }
 
-        frames.add(LastFrame.init());
+        updateNextFrame(frames, LastFrame.init());
+    }
+
+    private void updateNextFrame(List<Frame> frames, Frame nextFrame) {
+        this.nextFrame = nextFrame;
+        frames.add(nextFrame);
     }
 }

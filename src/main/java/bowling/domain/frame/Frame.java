@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.dto.StateDtos;
 
@@ -24,7 +25,7 @@ public abstract class Frame {
         return state.isEnd();
     }
 
-    protected void appendFrame(List<Frame> frames) {}
+    protected abstract void appendFrame(List<Frame> frames);
 
     public StateDtos getFrameStates() {
         return StateDtos.from(state.getState());
@@ -32,5 +33,13 @@ public abstract class Frame {
 
     public boolean isBowlingEnd() {
         return false;
+    }
+
+    public Score score() {
+        return state.score();
+    }
+
+    public Score addScore(Score score) {
+        return state.addScore(score);
     }
 }
