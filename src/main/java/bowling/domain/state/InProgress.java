@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.Score;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +26,11 @@ public class InProgress extends State {
         }
 
         return Miss.of(downedPins, additionalDownedPins);
+    }
+
+    @Override
+    public Score Score() {
+        return null;
     }
 
     @Override

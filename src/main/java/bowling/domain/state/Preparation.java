@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.Score;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +21,11 @@ public class Preparation extends State {
         }
 
         return InProgress.from(downedPins);
+    }
+
+    @Override
+    public Score Score() {
+        return null;
     }
 
     @Override

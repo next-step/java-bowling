@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.InProgressScore;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,6 +55,13 @@ class StateTest {
         assertThat(someState.isClean()).isFalse();
     }
 
+    @DisplayName("상태에 따라 스코어를 반환한다")
+    @Test
+    void score() {
+        State someState = new SomeState();
+        assertThat(someState.Score()).isInstanceOf(Score.class);
+    }
+
     static class SomeState extends State {
 
         @Override
@@ -63,6 +72,11 @@ class StateTest {
         @Override
         public List<Integer> getDownedPins() {
             return null;
+        }
+
+        @Override
+        public Score Score() {
+            return InProgressScore.init(10, 1);
         }
     }
 

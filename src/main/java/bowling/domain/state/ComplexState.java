@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,6 +41,11 @@ public class ComplexState extends State {
 
     private State lastState() {
         return states.peek();
+    }
+
+    @Override
+    public Score Score() {
+        return null;
     }
 
     @Override

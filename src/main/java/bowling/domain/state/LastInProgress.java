@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.Score;
 
 import java.util.List;
 
@@ -34,6 +35,11 @@ public class LastInProgress extends State {
 
         complexState.giveExtraChance();
         return this;
+    }
+
+    @Override
+    public Score Score() {
+        return null;
     }
 
     @Override

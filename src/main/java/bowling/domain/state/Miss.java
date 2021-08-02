@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.Score;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +17,11 @@ public class Miss extends EndState {
 
     public static Miss of(DownedPins firstDownedPins, DownedPins secondDownedPins) {
         return new Miss(firstDownedPins, secondDownedPins);
+    }
+
+    @Override
+    public Score Score() {
+        return null;
     }
 
     @Override
