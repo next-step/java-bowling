@@ -5,8 +5,8 @@ public class CalculableScore extends Score {
         super(score);
     }
 
-    public static Object from(int i) {
-        return null;
+    public static CalculableScore from(int score) {
+        return new CalculableScore(score);
     }
 
     @Override
