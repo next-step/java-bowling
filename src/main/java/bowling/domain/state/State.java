@@ -28,6 +28,18 @@ public abstract class State {
         return InCalculableScore.init();
     }
 
+    public Score addScore(Score score) {
+        if (score.isCalculable()) {
+            return score;
+        }
+
+        return addBonusScore(score);
+    }
+
+    protected Score addBonusScore(Score score) {
+        return score;
+    }
+
     public boolean isEnd() {
         return false;
     }

@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.CalculableScore;
 import bowling.domain.score.InCalculableScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -59,6 +60,15 @@ class StateTest {
     void score() {
         State someState = new SomeState();
         assertThat(someState.score()).isInstanceOf(InCalculableScore.class);
+    }
+
+    @DisplayName("스코어 값을 더할때 이미 스코어가 계산 가능하다면 그대로 리턴한다.")
+    @Test
+    void addScore() {
+        SomeState someState = new SomeState();
+        CalculableScore calculableScore = CalculableScore.from(10);
+
+        assertThat(someState.addScore(calculableScore)).isEqualTo(calculableScore);
     }
 
     static class SomeState extends State {
