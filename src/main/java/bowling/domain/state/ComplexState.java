@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Stack;
 
 public class ComplexState extends State {
+    private static final int START_IDX_OF_SUB_STATES = 1;
+    private static final int START_IDX_OF_STATES = 0;
     private final Stack<State> states;
 
     public ComplexState() {
@@ -47,7 +49,7 @@ public class ComplexState extends State {
     public Score score() {
         Score score = firstState().score();
 
-        for(State state : states.subList(1, states.size())) {
+        for(State state : states.subList(START_IDX_OF_SUB_STATES, states.size())) {
             score = state.addScore(score);
         }
 
@@ -55,7 +57,7 @@ public class ComplexState extends State {
     }
 
     private State firstState() {
-        return states.get(0);
+        return states.get(START_IDX_OF_STATES);
     }
 
     @Override
