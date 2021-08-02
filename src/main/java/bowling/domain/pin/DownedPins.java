@@ -50,4 +50,8 @@ public class DownedPins {
     public int hashCode() {
         return Objects.hash(numOfDownedPins);
     }
+
+    public boolean score() {
+        return false;
+    }
 }
