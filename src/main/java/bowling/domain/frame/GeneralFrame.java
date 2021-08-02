@@ -13,7 +13,7 @@ public class GeneralFrame extends Frame {
 
     private GeneralFrame(State state) {
         super(state);
-        nextFrame = new DummyFrame(Preparation.init());
+        nextFrame = DummyFrame.init();
     }
 
     public static GeneralFrame init() {
