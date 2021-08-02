@@ -31,7 +31,7 @@ public class Spare extends EndState {
             return addScore;
         }
 
-        return score.add(downedPins.padScore());
+        return addScore.add(downedPins.padScore());
     }
 
     @Override
