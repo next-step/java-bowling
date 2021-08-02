@@ -1,6 +1,9 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.CalculableScore;
+import bowling.domain.score.InProgressScore;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,6 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -109,4 +113,100 @@ class LastInProgressTest {
                 )
         );
     }
+
+    @DisplayName("복합 상태의 점수 추가 점수 계산 테스트")
+    @MethodSource
+    @ParameterizedTest
+    void addScore(List<DownedPins> prepareDownedPins, Score inputScore, Score expectedScore) {
+        LastInProgress lastInProgress = LastInProgress.init();
+        prepareDownedPins.forEach(lastInProgress::downPins);
+
+        assertThat(lastInProgress.addBonusScore(inputScore)).isEqualTo(expectedScore);
+    }
+
+    private static Stream<Arguments> addScore() {
+        return Stream.of(
+                Arguments.of(
+                        Collections.singletonList(
+                                DOWNED_PINS_10
+                        ),
+                        InProgressScore.ofStrike(),
+                        InProgressScore.init(20, 1)
+                ),
+
+                Arguments.of(
+                        Arrays.asList(
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10
+                        ),
+                        InProgressScore.ofStrike(),
+                        CalculableScore.from(30)
+                ),
+
+                Arguments.of(
+                        Arrays.asList(
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10
+                        ),
+                        InProgressScore.ofStrike(),
+                        CalculableScore.from(30)
+                ),
+
+                Arguments.of(
+                        Collections.singletonList(
+                                DOWNED_PINS_10
+                        ),
+                        InProgressScore.ofSpare(),
+                        CalculableScore.from(20)
+                ),
+
+                Arguments.of(
+                        Arrays.asList(
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10
+                        ),
+                        InProgressScore.ofSpare(),
+                        CalculableScore.from(20)
+                ),
+
+                Arguments.of(
+                        Arrays.asList(
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10
+                        ),
+                        InProgressScore.ofSpare(),
+                        CalculableScore.from(20)
+                ),
+
+                Arguments.of(
+                        Collections.singletonList(
+                                DOWNED_PINS_10
+                        ),
+                        InProgressScore.init(5, 1),
+                        CalculableScore.from(15)
+                ),
+
+                Arguments.of(
+                        Arrays.asList(
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10
+                        ),
+                        InProgressScore.init(5, 1),
+                        CalculableScore.from(15)
+                ),
+
+                Arguments.of(
+                        Arrays.asList(
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10,
+                                DOWNED_PINS_10
+                        ),
+                        InProgressScore.init(5, 1),
+                        CalculableScore.from(15)
+                )
+        );
+    }
+
 }
