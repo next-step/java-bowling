@@ -1,19 +1,18 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Score;
-import bowling.domain.state.LastInProgress;
+import bowling.domain.state.Preparation;
 import bowling.domain.state.State;
 
 import java.util.List;
 
-public class LastFrame extends Frame {
-
-    protected LastFrame(State state) {
+public class DummyFrame extends Frame {
+    protected DummyFrame(State state) {
         super(state);
     }
 
-    public static LastFrame init() {
-        return new LastFrame(LastInProgress.init());
+    public static DummyFrame init() {
+        return new DummyFrame(Preparation.init());
     }
 
     @Override
@@ -22,17 +21,13 @@ public class LastFrame extends Frame {
     }
 
     @Override
-    public boolean isBowlingEnd() {
-        return state.isEnd();
-    }
-
-    @Override
     public Score getScore() {
-        return state.score();
+        return null;
     }
 
     @Override
     protected Score addBonusScore(Score score) {
-        return state.addScore(score);
+        return score;
     }
+
 }

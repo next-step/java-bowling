@@ -8,10 +8,12 @@ public class BowlingPlayerDto {
     private final String name;
     private final int currentFrameNumber; // 1 base
     private final List<StateDtos> states;
+    private final List<ScoreDto> scores;
 
     private BowlingPlayerDto(BowlingPlayer player) {
         this.name = player.getName();
         this.states = player.getStates();
+        this.scores = player.getScores();
         this.currentFrameNumber = states.size();
     }
 
@@ -29,6 +31,10 @@ public class BowlingPlayerDto {
 
     public List<StateDtos> getStates() {
         return states;
+    }
+
+    public List<ScoreDto> getScores() {
+        return scores;
     }
 
 }

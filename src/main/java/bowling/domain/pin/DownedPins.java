@@ -1,5 +1,7 @@
 package bowling.domain.pin;
 
+import bowling.domain.score.Score;
+
 import java.util.Objects;
 
 public class DownedPins {
@@ -36,6 +38,14 @@ public class DownedPins {
 
     public int getNumOfDownedPins() {
         return numOfDownedPins;
+    }
+
+    public Score score() {
+        return Score.from(numOfDownedPins);
+    }
+
+    public Score padScore() {
+        return Score.from(MAX_NUM_OF_DOWNED_PINS - numOfDownedPins);
     }
 
     @Override

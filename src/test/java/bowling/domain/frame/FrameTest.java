@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.Preparation;
 import bowling.domain.state.State;
 import org.junit.jupiter.api.DisplayName;
@@ -48,5 +49,15 @@ class FrameTest {
 
         @Override
         protected void appendFrame(List<Frame> frames) {}
+
+        @Override
+        public Score getScore() {
+            return null;
+        }
+
+        @Override
+        public Score addBonusScore(Score score) {
+            return null;
+        }
     }
 }

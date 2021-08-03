@@ -1,9 +1,11 @@
 package bowling.view;
 
 import bowling.dto.BowlingPlayerDto;
+import bowling.dto.ScoreDto;
 import bowling.dto.StateDtos;
 import bowling.view.state.StateFormat;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -14,6 +16,7 @@ public class ResultView {
     private static final String NAME_FORMAT = "| %4s |";
     private static final String FRAME_NUMBER_FORMAT = "  %02d  |";
     private static final String FRAME_STATE_FORMAT = "  %-4s|";
+    private static final String FRAME_SCORE_FORMAT = "  %-4d|";
     private static final String EXTRA_FRAME_STATE_FORMAT = " %-5s|";
     private static final String EXTRA_FRAME_JOIN_SYMBOL = "|";
     private static final String EMPTY_STRING = "";
@@ -36,10 +39,21 @@ public class ResultView {
     }
 
     private static void printPlayer(BowlingPlayerDto bowlingPlayerDto) {
+        printFrame(bowlingPlayerDto);
+        printScore(bowlingPlayerDto);
+    }
+
+    private static void printFrame(BowlingPlayerDto bowlingPlayerDto) {
         printStatement(String.format(NAME_FORMAT, bowlingPlayerDto.getName()));
         printPlayedFrame(bowlingPlayerDto);
         printRemainFrame(bowlingPlayerDto);
+        newLine();
+    }
 
+    private static void printScore(BowlingPlayerDto bowlingPlayerDto) {
+        printStatement(String.format(NAME_FORMAT, EMPTY_STRING));
+        printCalculatedScore(bowlingPlayerDto);
+        printInCalculatedScore(bowlingPlayerDto);
         newLine();
     }
 
@@ -53,6 +67,20 @@ public class ResultView {
                 .stream()
                 .map(ResultView::convertToString)
                 .forEach(state -> printStatement(toFrameState(state)));
+    }
+
+    private static void printCalculatedScore(BowlingPlayerDto bowlingPlayerDto) {
+        AtomicInteger totalScore = new AtomicInteger(0);
+        bowlingPlayerDto.getScores()
+                .stream()
+                .map(ScoreDto::getScore)
+                .map(totalScore::addAndGet)
+                .forEach(score -> printStatement(String.format(FRAME_SCORE_FORMAT, score)));
+    }
+
+    private static void printInCalculatedScore(BowlingPlayerDto bowlingPlayerDto) {
+        IntStream.range(bowlingPlayerDto.getScores().size(), END_NUMBER_OF_FRAME)
+                .forEach(noStr -> printStatement(String.format(FRAME_STATE_FORMAT, EMPTY_STRING)));
     }
 
     private static String toFrameState(String state) {

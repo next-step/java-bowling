@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.score.Score;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -12,6 +14,16 @@ public class LastEnd extends EndState {
 
     public static LastEnd from(ComplexState complexState) {
         return new LastEnd(complexState);
+    }
+
+    @Override
+    public Score score() {
+        return complexState.score();
+    }
+
+    @Override
+    protected Score addBonusScore(Score score) {
+        return complexState.addScore(score);
     }
 
     @Override

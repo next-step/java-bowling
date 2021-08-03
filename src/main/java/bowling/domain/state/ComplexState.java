@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.Score;
+import bowling.exception.ParallelOperationNotSupportException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +10,8 @@ import java.util.List;
 import java.util.Stack;
 
 public class ComplexState extends State {
+    private static final int START_IDX_OF_SUB_STATES = 1;
+    private static final int START_IDX_OF_STATES = 0;
     private final Stack<State> states;
 
     public ComplexState() {
@@ -40,6 +44,30 @@ public class ComplexState extends State {
 
     private State lastState() {
         return states.peek();
+    }
+
+    @Override
+    public Score score() {
+        return subStates().stream()
+                .reduce(firstState().score(),
+                        (interScore, state) -> state.addScore(interScore),
+                        (x, y) -> { throw new ParallelOperationNotSupportException(); });
+    }
+
+    private List<State> subStates() {
+        return states.subList(START_IDX_OF_SUB_STATES, states.size());
+    }
+
+    private State firstState() {
+        return states.get(START_IDX_OF_STATES);
+    }
+
+    @Override
+    protected Score addBonusScore(Score score) {
+        return states.stream()
+                .reduce(score,
+                        (interScore, state) -> state.addScore(interScore),
+                        (x, y) -> { throw new ParallelOperationNotSupportException(); });
     }
 
     @Override

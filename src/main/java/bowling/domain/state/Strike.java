@@ -1,5 +1,8 @@
 package bowling.domain.state;
 
+import bowling.domain.score.InProgressScore;
+import bowling.domain.score.Score;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -9,6 +12,16 @@ public class Strike extends EndState {
 
     public static Strike init() {
         return new Strike();
+    }
+
+    @Override
+    public Score score() {
+        return InProgressScore.ofStrike();
+    }
+
+    @Override
+    protected Score addBonusScore(Score score) {
+        return score.add(Score.ofStrike());
     }
 
     @Override

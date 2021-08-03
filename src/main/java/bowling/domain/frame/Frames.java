@@ -1,6 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.Score;
+import bowling.dto.ScoreDto;
 import bowling.dto.StateDtos;
 
 import java.util.ArrayList;
@@ -39,6 +41,14 @@ public class Frames {
     public List<StateDtos> getTotalStates() {
         return frames.stream()
                 .map(Frame::getFrameStates)
+                .collect(Collectors.toList());
+    }
+
+    public List<ScoreDto> getScores() {
+        return frames.stream()
+                .map(Frame::getScore)
+                .filter(Score::isCalculable)
+                .map(ScoreDto::from)
                 .collect(Collectors.toList());
     }
 }

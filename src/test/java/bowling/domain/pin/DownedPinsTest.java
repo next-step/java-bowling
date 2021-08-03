@@ -1,5 +1,6 @@
 package bowling.domain.pin;
 
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -83,6 +84,18 @@ class DownedPinsTest {
                 Arguments.of(DOWNED_PINS_5, DOWNED_PINS_10),
                 Arguments.of(DOWNED_PINS_5, DOWNED_PINS_7)
         );
+    }
+
+    @DisplayName("쓰러진 핀으로 스코어를 만들어 낼 수 있다")
+    @Test
+    void score() {
+        assertThat(DOWNED_PINS_5.score()).isEqualTo(Score.from(5));
+    }
+
+    @DisplayName("쓰러진 핀으로 스코어를 만들어 낼 수 있다 이때 핀의 최대값 - 쓰러진 핀의 값으로 남은 핀의 점수를 반환할 수 있따")
+    @Test
+    void padScore() {
+        assertThat(DOWNED_PINS_7.padScore()).isEqualTo(DOWNED_PINS_3.score());
     }
 
 }

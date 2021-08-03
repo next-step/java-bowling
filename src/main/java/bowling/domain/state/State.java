@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.DownedPins;
+import bowling.domain.score.InCalculableScore;
+import bowling.domain.score.Score;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +24,22 @@ public abstract class State {
 
     protected abstract State nextState(DownedPins downedPins);
 
+    public Score score() {
+        return InCalculableScore.init();
+    }
+
+    public Score addScore(Score score) {
+        if (score.isCalculable()) {
+            return score;
+        }
+
+        return addBonusScore(score);
+    }
+
+    protected Score addBonusScore(Score score) {
+        return score;
+    }
+
     public boolean isEnd() {
         return false;
     }
@@ -39,4 +57,5 @@ public abstract class State {
     }
 
     public abstract List<Integer> getDownedPins();
+
 }
