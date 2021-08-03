@@ -209,4 +209,16 @@ class LastInProgressTest {
         );
     }
 
+    @DisplayName("마지막 프레임의 진행의 턴 종료 상태는 복합 상태값의 턴 종료 상태의 값으로 판단한다")
+    @Test
+    void turnOver() {
+        LastInProgress lastInProgress = LastInProgress.init();
+
+        assertThat(lastInProgress.isTurnOver()).isTrue();
+
+        lastInProgress.downPins(DOWNED_PINS_10);
+
+        assertThat(lastInProgress.isTurnOver()).isFalse();
+    }
+
 }

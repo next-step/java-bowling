@@ -173,4 +173,15 @@ class ComplexStateTest {
         );
     }
 
+    @DisplayName("복합 상태의 턴 종료는 첫번째 상태값이 준비 상태여야 한다")
+    @Test
+    void turnOver() {
+        ComplexState complexState = ComplexState.init();
+
+        assertThat(complexState.isTurnOver()).isTrue();
+
+        complexState.downPins(DOWNED_PINS_10);
+
+        assertThat(complexState.isTurnOver()).isFalse();
+    }
 }

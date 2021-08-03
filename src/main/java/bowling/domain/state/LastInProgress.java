@@ -56,4 +56,9 @@ public class LastInProgress extends State {
     public List<Integer> getDownedPins() {
         return complexState.getDownedPins();
     }
+
+    @Override
+    public boolean isTurnOver() {
+        return complexState.isTurnOver();
+    }
 }
