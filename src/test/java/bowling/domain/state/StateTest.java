@@ -81,6 +81,13 @@ class StateTest {
         assertThat(someState.addScore(inProgressScore)).isNotEqualTo(inProgressScore);
     }
 
+    @DisplayName("기본적으로 상태값은 play 순서를 넘기는 turn over 상태가 아니다")
+    @Test
+    void turnOver() {
+        SomeState someState = new SomeState();
+        assertThat(someState.isTurnOver()).isFalse();
+    }
+
     static class SomeState extends State {
 
         @Override
