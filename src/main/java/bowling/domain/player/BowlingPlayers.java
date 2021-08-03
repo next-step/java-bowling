@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BowlingPlayers {
+    private static final int IDX_OF_FIRST_PLAYER = 0;
+
     private final List<BowlingPlayer> bowlingPlayers;
 
     public BowlingPlayers(List<String> names) {
@@ -14,5 +16,9 @@ public class BowlingPlayers {
 
     public static BowlingPlayers init(List<String> names) {
         return new BowlingPlayers(names);
+    }
+
+    public BowlingPlayer firstPlayer() {
+        return bowlingPlayers.get(IDX_OF_FIRST_PLAYER);
     }
 }
