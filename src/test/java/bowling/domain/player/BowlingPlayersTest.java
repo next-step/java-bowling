@@ -30,4 +30,21 @@ class BowlingPlayersTest {
         assertThat(bowlingPlayers.firstPlayer().getName()).isEqualTo(PLAYER_NAMES.get(0));
     }
 
+    @DisplayName("플레이어 교대 시키기")
+    @Test
+    void rotatePlayer() {
+        BowlingPlayers bowlingPlayers = new BowlingPlayers(PLAYER_NAMES);
+
+        BowlingPlayer currentPlayer = bowlingPlayers.firstPlayer();
+        BowlingPlayer nextPlayer = bowlingPlayers.rotatePlayer(currentPlayer);
+        assertThat(nextPlayer.getName()).isEqualTo(PLAYER_NAMES.get(1));
+
+        currentPlayer = nextPlayer;
+        nextPlayer = bowlingPlayers.rotatePlayer(currentPlayer);
+        assertThat(nextPlayer.getName()).isEqualTo(PLAYER_NAMES.get(2));
+
+        currentPlayer = nextPlayer;
+        nextPlayer = bowlingPlayers.rotatePlayer(currentPlayer);
+        assertThat(nextPlayer.getName()).isEqualTo(PLAYER_NAMES.get(0));
+    }
 }

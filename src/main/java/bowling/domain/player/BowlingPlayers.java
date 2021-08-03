@@ -30,4 +30,11 @@ public class BowlingPlayers {
     public BowlingPlayer firstPlayer() {
         return bowlingPlayers.get(IDX_OF_FIRST_PLAYER);
     }
+
+    public BowlingPlayer rotatePlayer(BowlingPlayer currentPlayer) {
+        int indexOfCurrentPlayer = bowlingPlayers.indexOf(currentPlayer);
+        int indexOfNextPlayer = (indexOfCurrentPlayer + 1) % bowlingPlayers.size();
+
+        return bowlingPlayers.get(indexOfNextPlayer);
+    }
 }

@@ -6,7 +6,6 @@ import bowling.domain.player.BowlingPlayers;
 import java.util.List;
 
 public class BowlingGame {
-
     private BowlingPlayer currentPlayer;
     private final BowlingPlayers bowlingPlayers;
 
@@ -17,5 +16,17 @@ public class BowlingGame {
 
     public static BowlingGame init(List<String> names) {
         return new BowlingGame(names);
+    }
+
+    public void play(int numberOfDownedPins) {
+        currentPlayer.play(numberOfDownedPins);
+
+        rotatePlayer();
+    }
+
+    private void rotatePlayer() {
+        if (currentPlayer.isBowlingEnd()) {
+            currentPlayer = bowlingPlayers.rotatePlayer(currentPlayer);
+        }
     }
 }
