@@ -86,7 +86,7 @@ public class ComplexState extends State {
     }
 
     @Override
-    public boolean isTurnOver() {
-        return firstState().isTurnOver();
+    public boolean isStart() {
+        return firstState().isStart();
     }
 }

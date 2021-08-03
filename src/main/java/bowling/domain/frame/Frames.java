@@ -35,7 +35,7 @@ public class Frames {
     }
 
     public boolean isTurnOver() {
-        return currentFrame().isTurnOver();
+        return currentFrame().isStartState();
     }
 
     private Frame currentFrame() {

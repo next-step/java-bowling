@@ -214,11 +214,11 @@ class LastInProgressTest {
     void turnOver() {
         LastInProgress lastInProgress = LastInProgress.init();
 
-        assertThat(lastInProgress.isTurnOver()).isTrue();
+        assertThat(lastInProgress.isStart()).isTrue();
 
         lastInProgress.downPins(DOWNED_PINS_10);
 
-        assertThat(lastInProgress.isTurnOver()).isFalse();
+        assertThat(lastInProgress.isStart()).isFalse();
     }
 
 }

@@ -58,7 +58,7 @@ public class LastInProgress extends State {
     }
 
     @Override
-    public boolean isTurnOver() {
-        return complexState.isTurnOver();
+    public boolean isStart() {
+        return complexState.isStart();
     }
 }

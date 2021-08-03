@@ -85,7 +85,7 @@ class StateTest {
     @Test
     void turnOver() {
         SomeState someState = new SomeState();
-        assertThat(someState.isTurnOver()).isFalse();
+        assertThat(someState.isStart()).isFalse();
     }
 
     static class SomeState extends State {

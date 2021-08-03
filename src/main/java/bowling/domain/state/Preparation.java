@@ -28,7 +28,7 @@ public class Preparation extends State {
     }
 
     @Override
-    public boolean isTurnOver() {
+    public boolean isStart() {
         return true;
     }
 }

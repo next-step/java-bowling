@@ -37,7 +37,7 @@ public class LastEnd extends EndState {
     }
 
     @Override
-    public boolean isTurnOver() {
+    public boolean isStart() {
         return true;
     }
 

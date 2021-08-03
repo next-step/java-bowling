@@ -22,7 +22,7 @@ class LastEndTest {
         ComplexState complexState = ComplexState.init();
         LastEnd lastEnd = LastEnd.from(complexState);
 
-        assertThat(lastEnd.isTurnOver()).isTrue();
+        assertThat(lastEnd.isStart()).isTrue();
     }
 
 }

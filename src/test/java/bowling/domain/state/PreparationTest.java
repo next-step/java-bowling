@@ -43,7 +43,7 @@ class PreparationTest {
     void turnOver() {
         Preparation preparation = Preparation.init();
 
-        assertThat(preparation.isTurnOver()).isTrue();
+        assertThat(preparation.isStart()).isTrue();
     }
 
 }

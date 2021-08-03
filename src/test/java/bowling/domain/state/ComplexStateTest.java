@@ -178,10 +178,10 @@ class ComplexStateTest {
     void turnOver() {
         ComplexState complexState = ComplexState.init();
 
-        assertThat(complexState.isTurnOver()).isTrue();
+        assertThat(complexState.isStart()).isTrue();
 
         complexState.downPins(DOWNED_PINS_10);
 
-        assertThat(complexState.isTurnOver()).isFalse();
+        assertThat(complexState.isStart()).isFalse();
     }
 }
