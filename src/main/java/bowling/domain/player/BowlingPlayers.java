@@ -1,5 +1,7 @@
 package bowling.domain.player;
 
+import bowling.dto.BowlingPlayerDto;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -36,5 +38,16 @@ public class BowlingPlayers {
         int indexOfNextPlayer = (indexOfCurrentPlayer + 1) % bowlingPlayers.size();
 
         return bowlingPlayers.get(indexOfNextPlayer);
+    }
+
+    public List<BowlingPlayerDto> playerDtos() {
+        return bowlingPlayers.stream()
+                .map(BowlingPlayerDto::from)
+                .collect(Collectors.toList());
+    }
+
+    public boolean isAllPlayersEnd() {
+        return bowlingPlayers.stream()
+                .allMatch(BowlingPlayer::isBowlingEnd);
     }
 }

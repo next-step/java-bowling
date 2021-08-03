@@ -5,6 +5,7 @@ import bowling.dto.ScoreDto;
 import bowling.dto.StateDtos;
 import bowling.view.state.StateFormat;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -25,8 +26,13 @@ public class ResultView {
     private ResultView() {}
 
     public static void printScoreBoard(BowlingPlayerDto bowlingPlayerDto) {
-        printHeader();
         printPlayer(bowlingPlayerDto);
+    }
+
+    public static void printScoreBoards(List<BowlingPlayerDto> bowlingPlayerDtos) {
+        printHeader();
+        bowlingPlayerDtos.forEach(ResultView::printScoreBoard);
+        newLine();
     }
 
     private static void printHeader() {

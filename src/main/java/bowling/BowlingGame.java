@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.player.BowlingPlayer;
 import bowling.domain.player.BowlingPlayers;
+import bowling.dto.BowlingPlayerDto;
 
 import java.util.List;
 
@@ -28,5 +29,17 @@ public class BowlingGame {
         if (currentPlayer.isTurnOver()) {
             currentPlayer = bowlingPlayers.rotatePlayer(currentPlayer);
         }
+    }
+
+    public List<BowlingPlayerDto> playerDtos() {
+        return bowlingPlayers.playerDtos();
+    }
+
+    public boolean isGameEnd() {
+        return bowlingPlayers.isAllPlayersEnd();
+    }
+
+    public BowlingPlayerDto currentPlayerDto() {
+        return BowlingPlayerDto.from(currentPlayer);
     }
 }

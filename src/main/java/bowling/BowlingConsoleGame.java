@@ -1,23 +1,24 @@
 package bowling;
 
-import bowling.domain.player.BowlingPlayer;
-import bowling.dto.BowlingPlayerDto;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
+import java.util.List;
 
 public class BowlingConsoleGame {
 
     public static void main(String[] args) {
-        String name = InputView.inputPlayerName();
-        BowlingPlayer bowlingPlayer = BowlingPlayer.from(name);
+        List<String> names = InputView.inputPlayerNames();
+        BowlingGame bowlingGame = BowlingGame.init(names);
 
-        ResultView.printScoreBoard(BowlingPlayerDto.from(bowlingPlayer));
-        while(!bowlingPlayer.isBowlingEnd()) {
-            int downedPins = InputView.inputNumOfDownedPins(BowlingPlayerDto.from(bowlingPlayer));
+        ResultView.printScoreBoards(bowlingGame.playerDtos());
 
-            bowlingPlayer.play(downedPins);
+        while(!bowlingGame.isGameEnd()) {
+            int downedPins = InputView.inputNumOfDownedPins(bowlingGame.currentPlayerDto());
 
-            ResultView.printScoreBoard(BowlingPlayerDto.from(bowlingPlayer));
+            bowlingGame.play(downedPins);
+
+            ResultView.printScoreBoards(bowlingGame.playerDtos());
         }
     }
 }
