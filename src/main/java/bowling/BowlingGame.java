@@ -25,7 +25,7 @@ public class BowlingGame {
     }
 
     private void rotatePlayer() {
-        if (currentPlayer.isBowlingEnd()) {
+        if (currentPlayer.isTurnOver()) {
             currentPlayer = bowlingPlayers.rotatePlayer(currentPlayer);
         }
     }

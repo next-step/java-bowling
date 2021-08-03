@@ -30,6 +30,10 @@ public class BowlingPlayer {
         return frames.isBowlingEnd();
     }
 
+    public boolean isTurnOver() {
+        return frames.isTurnOver();
+    }
+
     public String getName() {
         return player.getName();
     }

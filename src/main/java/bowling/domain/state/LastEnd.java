@@ -35,4 +35,10 @@ public class LastEnd extends EndState {
     public List<Integer> getDownedPins() {
         return Collections.emptyList();
     }
+
+    @Override
+    public boolean isTurnOver() {
+        return true;
+    }
+
 }

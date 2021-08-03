@@ -39,4 +39,7 @@ public abstract class Frame {
 
     protected abstract Score addBonusScore(Score score);
 
+    public boolean isTurnOver() {
+        return state.isTurnOver();
+    }
 }
