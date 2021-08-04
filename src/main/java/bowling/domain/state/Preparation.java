@@ -26,4 +26,9 @@ public class Preparation extends State {
     public List<Integer> getDownedPins() {
         return Collections.emptyList();
     }
+
+    @Override
+    public boolean isStart() {
+        return true;
+    }
 }

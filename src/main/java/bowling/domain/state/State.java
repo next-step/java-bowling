@@ -58,4 +58,8 @@ public abstract class State {
 
     public abstract List<Integer> getDownedPins();
 
+    public boolean isStart() {
+        return false;
+    }
+
 }

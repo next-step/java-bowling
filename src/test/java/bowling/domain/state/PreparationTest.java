@@ -38,4 +38,12 @@ class PreparationTest {
         );
     }
 
+    @DisplayName("플레이어가 던진 후의 최신 프레임에서 상태값이 Preparation 이라면 플레이 순서를 교대해야하는 turn over 상태이다")
+    @Test
+    void turnOver() {
+        Preparation preparation = Preparation.init();
+
+        assertThat(preparation.isStart()).isTrue();
+    }
+
 }

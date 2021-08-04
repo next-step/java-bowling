@@ -34,6 +34,10 @@ public class Frames {
         return currentFrame().isBowlingEnd();
     }
 
+    public boolean isTurnOver() {
+        return currentFrame().isStartState();
+    }
+
     private Frame currentFrame() {
         return frames.get(frames.size() - 1);
     }

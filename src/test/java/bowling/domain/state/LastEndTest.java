@@ -16,4 +16,13 @@ class LastEndTest {
         assertThat(LastEnd.from(complexState)).isInstanceOf(LastEnd.class);
     }
 
+    @DisplayName("모든 투구가 끝난 상태인 lastEnd 상태는 플레이 순서를 넘기는 turn over 상태이다")
+    @Test
+    void turnOver() {
+        ComplexState complexState = ComplexState.init();
+        LastEnd lastEnd = LastEnd.from(complexState);
+
+        assertThat(lastEnd.isStart()).isTrue();
+    }
+
 }
