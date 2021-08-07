@@ -17,4 +17,12 @@ public class Frames {
         return new Frames();
     }
 
+    public boolean isBowlingFinish() {
+        return currentFrame().isBowlingFinish();
+    }
+
+    private Frame currentFrame() {
+        return frames.get(frames.size() - 1);
+    }
+
 }

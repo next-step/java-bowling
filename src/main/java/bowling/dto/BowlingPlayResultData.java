@@ -13,7 +13,7 @@ public class BowlingPlayResultData {
         return new BowlingPlayResultData(bowler);
     }
 
-    public String getName() {
+    public String getPlayerName() {
         return name;
     }
 
