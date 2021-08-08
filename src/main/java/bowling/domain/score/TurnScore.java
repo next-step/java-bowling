@@ -24,10 +24,6 @@ public final class TurnScore extends Score {
         return score == MAX_VALUE;
     }
 
-    public static TurnScore max() {
-        return of(MAX_VALUE);
-    }
-
     public static TurnScore of(int score) {
         if (!CACHED.containsKey(score)) {
             throw new IllegalArgumentException("유효하지 않은 스코어 입니다.");
