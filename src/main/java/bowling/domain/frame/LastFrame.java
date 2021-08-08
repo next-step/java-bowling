@@ -1,10 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
-import bowling.domain.state.pitching.LastPitching;
 import bowling.domain.state.CommonState;
-
-import java.util.List;
+import bowling.domain.state.pitching.LastPitching;
 
 public class LastFrame implements Frame {
 
@@ -19,17 +17,13 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public boolean isBowlingFinish() {
-        return false;
-    }
-
-    @Override
     public void hitPins(Pins pins) {
         this.state = state.hitPins(pins);
     }
 
     @Override
-    public void addFrame(List<Frame> frames) {
-
+    public boolean isBowlingFinish() {
+        return state.isFinish();
     }
+
 }

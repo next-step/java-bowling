@@ -9,7 +9,7 @@ import java.util.List;
 public class CommonFrame implements Frame {
     public static final int START_NUMBER = 1;
     public static final int END_NUMBER = 10;
-    private static final int LIMIT_COUNT_OF_COMMON_FRAME = 9;
+    private static final int COUNT_OF_COMMON_FRAME = 9;
 
     private CommonState state;
 
@@ -26,19 +26,6 @@ public class CommonFrame implements Frame {
         return false;
     }
 
-    private boolean isFrameFinish() {
-        return false;
-    }
-
-    private void createNextFrame(List<Frame> frames) {
-        if (frames.size() < LIMIT_COUNT_OF_COMMON_FRAME) {
-            frames.add(CommonFrame.of());
-            return;
-        }
-
-        frames.add(LastFrame.of());
-    }
-
     @Override
     public void hitPins(Pins pins) {
         this.state = state.hitPins(pins);
@@ -49,6 +36,19 @@ public class CommonFrame implements Frame {
         if (isFrameFinish()) {
             createNextFrame(frames);
         }
+    }
+
+    private boolean isFrameFinish() {
+        return state.isFinish();
+    }
+
+    private void createNextFrame(List<Frame> frames) {
+        if (frames.size() < COUNT_OF_COMMON_FRAME) {
+            frames.add(CommonFrame.of());
+            return;
+        }
+
+        frames.add(LastFrame.of());
     }
 
 }
