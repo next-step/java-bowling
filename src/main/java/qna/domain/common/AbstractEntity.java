@@ -1,4 +1,4 @@
-package qna.domain;
+package qna.domain.common;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -28,13 +28,8 @@ public class AbstractEntity {
         this.id = id;
     }
 
-    public Long getId() {
+    public Long id() {
         return id;
-    }
-
-    public AbstractEntity setId(Long id) {
-        this.id = id;
-        return this;
     }
 
     @Override
