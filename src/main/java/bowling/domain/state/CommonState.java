@@ -7,6 +7,6 @@ import java.util.List;
 public interface CommonState extends ResultState {
 
     CommonState hitPins(Pins pins);
-    List<Integer> getFallenPins();
+    List<Integer> getHittedPins();
 
 }
