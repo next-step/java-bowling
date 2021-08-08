@@ -1,7 +1,10 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pins;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Frames {
 
@@ -11,6 +14,7 @@ public class Frames {
 
     private Frames() {
         frames = new ArrayList<>(LIMIT_SIZE_OF_FRAMES);
+        frames.add(CommonFrame.of());
     }
 
     public static Frames of() {
@@ -18,11 +22,26 @@ public class Frames {
     }
 
     public boolean isBowlingFinish() {
-        return currentFrame().isBowlingFinish();
+        return createFrame().isBowlingFinish();
     }
 
-    private Frame currentFrame() {
+    private Frame createFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    public void hitPins(Pins pins) {
+        validate(pins);
+
+        Frame frame = createFrame();
+        frame.hitPins(pins);
+//        frame.next();
+        frame.addFrame(frames);
+    }
+
+    private void validate(Pins downedPins) {
+        if (Objects.isNull(downedPins)) {
+            throw new IllegalArgumentException("Pin들은 null일 수 없습니다.");
+        }
     }
 
 }

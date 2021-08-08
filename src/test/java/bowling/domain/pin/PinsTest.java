@@ -33,7 +33,7 @@ class PinsTest {
         Pins pins = Pins.of(10);
 
         //act
-        int count = pins.getCountFallenPins();
+        int count = pins.getCountHitPins();
 
         //assert
         assertThat(count).isEqualTo(10);
@@ -47,7 +47,21 @@ class PinsTest {
         Pins pins = Pins.of(count);
 
         //act, assert
-        assertThat(pins.isAllFallen()).isEqualTo(expected);
+        assertThat(pins.isAllHit()).isEqualTo(expected);
+    }
+
+    @DisplayName("Pins와 Pins를 더하여 총 count pins수를 구할 수 있다")
+    @Test
+    public void should_return_pins_add_pins() throws Exception {
+        //arrange
+        Pins pins1 = Pins.of(10);
+        Pins pins2 = Pins.of(5);
+
+        //act
+        Pins result = pins1.add(pins2);
+
+        //assert
+        assertThat(result.getCountHitPins()).isEqualTo(15);
     }
 
 }

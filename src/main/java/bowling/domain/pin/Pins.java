@@ -3,20 +3,20 @@ package bowling.domain.pin;
 public class Pins {
 
     public static final int MIN_COUNT_FALLEN_PINS = 0;
-    public static final int MAX_COUNT_FALLEN_PINS = 10;
+    public static final int MAX_COUNT_HIT_PINS = 10;
 
-    private final int countFallenPins;
+    private final int countHitPins;
 
-    private Pins(int countFallenPins) {
-        validate(countFallenPins);
+    private Pins(int countHitPins) {
+        validate(countHitPins);
 
-        this.countFallenPins = countFallenPins;
+        this.countHitPins = countHitPins;
     }
 
     private void validate(int countFallenPins) {
-        if (countFallenPins < MIN_COUNT_FALLEN_PINS || countFallenPins > MAX_COUNT_FALLEN_PINS) {
+        if (countFallenPins < MIN_COUNT_FALLEN_PINS || countFallenPins > MAX_COUNT_HIT_PINS) {
             throw new IllegalArgumentException(
-                    "핀의 개수는 " + MIN_COUNT_FALLEN_PINS + " ~ " + MAX_COUNT_FALLEN_PINS + " 사이입니다."
+                    "핀의 개수는 " + MIN_COUNT_FALLEN_PINS + " ~ " + MAX_COUNT_HIT_PINS + " 사이입니다."
             );
         }
     }
@@ -26,15 +26,15 @@ public class Pins {
     }
 
     public Pins add(Pins pins) {
-        return new Pins(countFallenPins + pins.countFallenPins);
+        return new Pins(countHitPins + pins.countHitPins);
     }
 
-    public int getCountFallenPins() {
-        return countFallenPins;
+    public int getCountHitPins() {
+        return countHitPins;
     }
 
-    public boolean isAllFallen() {
-        return countFallenPins == MAX_COUNT_FALLEN_PINS;
+    public boolean isAllHit() {
+        return countHitPins == MAX_COUNT_HIT_PINS;
     }
 
     @Override
@@ -44,11 +44,11 @@ public class Pins {
 
         Pins pins = (Pins) o;
 
-        return countFallenPins == pins.countFallenPins;
+        return countHitPins == pins.countHitPins;
     }
 
     @Override
     public int hashCode() {
-        return countFallenPins;
+        return countHitPins;
     }
 }
