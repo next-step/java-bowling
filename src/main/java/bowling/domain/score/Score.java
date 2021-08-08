@@ -22,8 +22,9 @@ public class Score {
         if (this == compareValue) {
             return true;
         }
-        if (!(compareValue instanceof Score))
+        if (!(compareValue instanceof Score)) {
             return false;
+        }
         final Score compareScore = (Score) compareValue;
         return score == compareScore.score;
     }
