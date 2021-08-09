@@ -3,6 +3,7 @@ package qna.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -42,6 +43,7 @@ public class QnaServiceTest {
         question.addAnswer(answer);
     }
 
+    @DisplayName("deleteHistories 등록 테스트")
     @Test
     public void delete_성공() {
         when(questionRepository.findByIdAndDeletedFalse(question.id()))

@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.domain.answer.Answer;
 import qna.domain.question.Question;
@@ -21,6 +22,7 @@ public class AnswerTest {
         question.addAnswer(answer);
     }
 
+    @DisplayName("delete 테스트 - 작성자가 같은 경우 삭제")
     @Test
     void delete_작성자가_같은_경우_성공() {
         DeletePipe deletePipe = new DeletePipe(UserTest.JAVAJIGI);
@@ -31,6 +33,7 @@ public class AnswerTest {
                 .isTrue();
     }
 
+    @DisplayName("delete 테스트 - 작성자가 다른 경우 실패")
     @Test
     void delete_작성자가_다른_경우_실패() {
         DeletePipe deletePipe = new DeletePipe(UserTest.SANJIGI);
