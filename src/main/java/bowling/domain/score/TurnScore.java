@@ -20,6 +20,10 @@ public final class TurnScore extends Score {
         super(score);
     }
 
+    public boolean isMax() {
+        return score == MAX_VALUE;
+    }
+
     public static TurnScore max() {
         return of(MAX_VALUE);
     }

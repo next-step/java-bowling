@@ -8,15 +8,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FrameTest {
-    @ValueSource(strings = {"0,10", "10,0", "5,4"})
+    @ValueSource(strings = {"0,10", "10", "5,4"})
     @DisplayName("bowl 테스트")
     @ParameterizedTest
     void bowlTest(String scores) {
-        assertThatCode(() -> toFrameWithBowl(scores))
-                .doesNotThrowAnyException();
+        assertThat(toFrameWithBowl(scores).isCompleted())
+                .isTrue();
     }
 
     @ValueSource(strings = {"0,10,10,2", "10,0,3,1", "5,4,9,4"})
@@ -28,7 +29,7 @@ class FrameTest {
     }
 
     @CsvSource(value = {
-            "10,0|true",
+            "10|true", // 스트라이크는 다음턴이 자동으로 생략 된다.
             "9,1|false",
     }, delimiter = '|')
     @DisplayName("isStrike 테스트")
@@ -39,7 +40,8 @@ class FrameTest {
     }
 
     @CsvSource(value = {
-            "10,0|false",
+            "10|false",
+            "5,4|false",
             "4,6|true",
             "1,9|true"
     }, delimiter = '|')
@@ -60,6 +62,17 @@ class FrameTest {
     void isMissTest(String strScores, boolean correct) {
         assertThat(toFrameWithBowl(strScores).isMiss())
                 .isEqualTo(correct);
+    }
+
+    @CsvSource(value = {
+            "10|1",
+            "1,0|2",
+            "0,1|2"
+    }, delimiter = '|')
+    void scoresTest(String strScores, int correctSize) {
+        assertThat(
+                toFrameWithBowl(strScores).scores().size()
+        ).isEqualTo(correctSize);
     }
 
     private Frame toFrameWithBowl(String strScores) {

@@ -5,6 +5,8 @@ import bowling.domain.turn.FirstTurn;
 import bowling.domain.turn.SecondTurn;
 import bowling.exception.BowlFailureException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Frame {
@@ -25,28 +27,31 @@ public class Frame {
     }
 
     public Frame bowl(final TurnScore score) {
-        if (isFirstTurn()) {
+        if (currentFirstTurn()) {
             return new Frame(
                     new FirstTurn(score)
             );
         }
-        if (isSecondTurn()) {
+        if (currentSecondTurn()) {
             return new Frame(firstTurn, firstTurn.secondTurn(score));
         }
 
         throw new BowlFailureException();
     }
 
-    private boolean isFirstTurn() {
+    private boolean currentFirstTurn() {
         return Objects.isNull(firstTurn);
     }
 
-    private boolean isSecondTurn() {
-        return Objects.isNull(secondTurn);
+    private boolean currentSecondTurn() {
+        return !isStrike() && Objects.isNull(secondTurn);
     }
 
     public boolean isCompleted() {
-        return !isFirstTurn() && !isSecondTurn();
+        if (isStrike()) {
+            return true;
+        }
+        return !currentFirstTurn() && !currentSecondTurn();
     }
 
     public boolean isWaiting() {
@@ -54,14 +59,35 @@ public class Frame {
     }
 
     public final boolean isStrike() {
+        if (Objects.isNull(firstTurn)) {
+            return false;
+        }
         return firstTurn.isStrike();
     }
 
     public final boolean isSpare() {
+        if (Objects.isNull(secondTurn)) {
+            return false;
+        }
         return secondTurn.isSpare();
     }
 
     public final boolean isMiss() {
+        if (Objects.isNull(firstTurn) && Objects.isNull(secondTurn)) {
+            return false;
+        }
         return firstTurn.isGutter() && secondTurn.isGutter();
+    }
+
+    public List<TurnScore> scores() {
+        List<TurnScore> scores = new ArrayList<>();
+
+        if (Objects.nonNull(firstTurn)) {
+            scores.add(firstTurn.score());
+        }
+        if (Objects.nonNull(secondTurn)) {
+            scores.add(secondTurn.score());
+        }
+        return scores;
     }
 }
