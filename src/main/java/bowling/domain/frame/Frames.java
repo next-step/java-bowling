@@ -24,7 +24,9 @@ public final class Frames implements Iterable<Frame> {
     }
 
     public static Frames generate(final int size) {
-        validateGenerateSize(size);
+        if (size <= 0) {
+            throw new IllegalArgumentException("최소 1개의 프레임을 생성 해야 합니다.");
+        }
 
         List<Frame> frames = generateExcludeFinalFrame(size);
         addFinalFrame(frames);
@@ -42,12 +44,6 @@ public final class Frames implements Iterable<Frame> {
         frames.add(new FinalFrame());
     }
 
-    private static void validateGenerateSize(final int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("최소 1개의 프레임을 생성 해야 합니다.");
-        }
-    }
-
     public void bowl(TurnScore score) {
         Frame waitingFrame = waitingFrame()
                 .orElseThrow(BowlFailureException::new);
@@ -63,7 +59,7 @@ public final class Frames implements Iterable<Frame> {
 
     public boolean isCompleted() {
         return frames.stream()
-                .noneMatch(Frame::isWaiting);
+                .allMatch(Frame::isCompleted);
     }
 
     private void replace(Frame oldFrame, Frame newFrame) {
