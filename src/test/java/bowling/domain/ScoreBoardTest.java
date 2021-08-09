@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.score.TurnScore;
 import bowling.domain.turn.Turn;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,6 +15,7 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoreBoardTest {
+    @DisplayName("generate 테스트 - 전달받은 Name 객체의 갯수만큼 Frame 베이스를 준비한다.")
     @ValueSource(strings = {
             "PJS", "PJS,KYJ"
     })
@@ -26,6 +28,7 @@ class ScoreBoardTest {
         ).isEqualTo(names.size());
     }
 
+    @DisplayName("bowl 테스트")
     @CsvSource({
             "PJS",
             "PJS,KYJ"
