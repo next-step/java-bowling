@@ -8,10 +8,6 @@ public class Turn {
         this.score = score;
     }
 
-    public final TurnScore score() {
-        return score;
-    }
-
     public final boolean isGutter() {
         return score.isZero();
     }
