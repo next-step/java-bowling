@@ -49,6 +49,10 @@ public class Frame {
         return !isFirstTurn() && !isSecondTurn();
     }
 
+    public boolean isWaiting() {
+        return !isCompleted();
+    }
+
     public final boolean isStrike() {
         return firstTurn.isStrike();
     }
