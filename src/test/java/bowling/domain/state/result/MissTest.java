@@ -44,7 +44,7 @@ class MissTest {
         Miss miss = Miss.of(Pins.of(1), Pins.of(9));
 
         //act, assert
-        assertFalse(miss.isClean());
+        assertFalse(miss.isAllHit());
     }
 
     @DisplayName("Miss는 isMiss을 true로 반환해야한다")

@@ -45,7 +45,7 @@ class StrikeTest {
         Strike strike = Strike.of();
 
         //act, assert
-        assertTrue(strike.isClean());
+        assertTrue(strike.isAllHit());
     }
 
     @DisplayName("Strike는 isMiss을 false로 반환해야한다")

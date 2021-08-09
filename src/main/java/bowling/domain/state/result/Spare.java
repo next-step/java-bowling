@@ -17,7 +17,7 @@ public class Spare extends End {
     }
 
     @Override
-    public boolean isClean() {
+    public boolean isAllHit() {
         return true;
     }
 

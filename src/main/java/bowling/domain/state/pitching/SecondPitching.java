@@ -46,7 +46,7 @@ public class SecondPitching implements CommonState {
     }
 
     @Override
-    public boolean isClean() {
+    public boolean isAllHit() {
         return false;
     }
 }

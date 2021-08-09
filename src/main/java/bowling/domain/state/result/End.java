@@ -13,4 +13,5 @@ public abstract class End implements CommonState {
     public CommonState hitPins(Pins pins) {
         throw new IllegalStateException("다음은 없습니다");
     }
+
 }

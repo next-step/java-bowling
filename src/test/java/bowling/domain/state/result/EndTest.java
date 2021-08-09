@@ -39,7 +39,7 @@ class EndTest {
         };
 
         //act, assert
-        assertFalse(end.isClean());
+        assertFalse(end.isAllHit());
     }
 
     @DisplayName("End는 isMiss을 false로 반환해야한다")

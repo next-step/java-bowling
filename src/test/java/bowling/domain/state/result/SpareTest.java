@@ -44,7 +44,7 @@ class SpareTest {
         Spare spare = Spare.of(Pins.of(1));
 
         //act, assert
-        assertTrue(spare.isClean());
+        assertTrue(spare.isAllHit());
     }
 
     @DisplayName("Spare는 isMiss을 false로 반환해야한다")

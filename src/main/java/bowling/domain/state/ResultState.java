@@ -9,7 +9,7 @@ public interface ResultState {
         return false;
     }
 
-    default boolean isClean() {
+    default boolean isAllHit() {
         return false;
     }
 }

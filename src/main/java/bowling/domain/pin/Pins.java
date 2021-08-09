@@ -2,7 +2,7 @@ package bowling.domain.pin;
 
 public class Pins {
 
-    public static final int MIN_COUNT_FALLEN_PINS = 0;
+    public static final int MIN_COUNT_HIT_PINS = 0;
     public static final int MAX_COUNT_HIT_PINS = 10;
 
     private final int countHitPins;
@@ -14,9 +14,9 @@ public class Pins {
     }
 
     private void validate(int countFallenPins) {
-        if (countFallenPins < MIN_COUNT_FALLEN_PINS || countFallenPins > MAX_COUNT_HIT_PINS) {
+        if (countFallenPins < MIN_COUNT_HIT_PINS || countFallenPins > MAX_COUNT_HIT_PINS) {
             throw new IllegalArgumentException(
-                    "핀의 개수는 " + MIN_COUNT_FALLEN_PINS + " ~ " + MAX_COUNT_HIT_PINS + " 사이입니다."
+                    "핀의 개수는 " + MIN_COUNT_HIT_PINS + " ~ " + MAX_COUNT_HIT_PINS + " 사이입니다."
             );
         }
     }

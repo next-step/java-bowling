@@ -14,7 +14,7 @@ public class Strike extends End {
     }
 
     @Override
-    public boolean isClean() {
+    public boolean isAllHit() {
         return true;
     }
 
