@@ -21,10 +21,6 @@ public class Score {
         return score;
     }
 
-    public final int value() {
-        return score;
-    }
-
     @Override
     public boolean equals(final Object compareValue) {
         if (this == compareValue) {
