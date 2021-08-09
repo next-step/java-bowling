@@ -1,7 +1,6 @@
 package bowling.domain.score;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -9,7 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class TurnScoreTest {
     @ValueSource(ints = {
@@ -30,13 +30,6 @@ public class TurnScoreTest {
     void ofInvalidTest(int score) {
         assertThatThrownBy(() -> TurnScore.of(score))
                 .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("isMax 테스트")
-    @Test
-    void isMax() {
-        assertThat(TurnScore.of(10).isMax())
-                .isTrue();
     }
 
     public static List<TurnScore> toFrameScores(String strScores) {

@@ -34,12 +34,17 @@ public final class FinalFrame extends Frame {
 
     private boolean isBonusTurn() {
         return super.isCompleted()
-                && Objects.isNull(bonusTurn)
-                && (isStrike() || isSpare());
+                && isAvailableBonusTurn()
+                && Objects.isNull(bonusTurn);
     }
 
     @Override
     public boolean isCompleted() {
-        return super.isCompleted() && Objects.nonNull(bonusTurn);
+        return super.isCompleted()
+                && (isAvailableBonusTurn() ? Objects.nonNull(bonusTurn) : Objects.isNull(bonusTurn));
+    }
+
+    private boolean isAvailableBonusTurn() {
+        return isStrike() || isSpare();
     }
 }

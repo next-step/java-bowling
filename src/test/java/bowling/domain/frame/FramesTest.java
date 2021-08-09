@@ -1,15 +1,16 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.score.TurnScore;
 import bowling.domain.score.TurnScoreTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class FramesTest {
     @ValueSource(ints = {
@@ -34,7 +35,7 @@ class FramesTest {
 
     @ValueSource(strings = {
             "0,0,0,10,10",
-            "10,4",
+            "10,0,3,4",
             "5,4"
     })
     @DisplayName("bowl 테스트")

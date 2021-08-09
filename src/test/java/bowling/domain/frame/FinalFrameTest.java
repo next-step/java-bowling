@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.TurnScore;
+import bowling.domain.score.TurnScoreTest;
 import bowling.exception.BowlFailureException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -13,24 +14,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FinalFrameTest {
-    private static FrameTest frameTest;
-
-    @BeforeAll
-    public static void setUp() {
-        frameTest = new FrameTest();
-    }
-
-    @CsvSource({"0,10,10", "10,0,10"})
-    @DisplayName("bowl 테스트 - 스페어 또는 스트라이크에만 허용 된다.")
+    @ValueSource(strings = {"0,10,10", "10,0,10", "4,5"})
+    @DisplayName("bowl 테스트 - 스페어 또는 스트라이크에만 보너스 기회가 허용 된다.")
     @ParameterizedTest
     void bowlTest(String scores) {
-        assertThatCode(() -> toFinalFrameWithBowl(scores))
-                .doesNotThrowAnyException();
+        Frame frame = toFinalFrameWithBowl(scores);
+
+        assertThat(frame.isCompleted())
+                .isTrue();
     }
 
     @ValueSource(strings = {"4,5,10", "0,5,4", "10,0,10,10", "0,10,10,10"})
@@ -43,7 +38,7 @@ class FinalFrameTest {
 
     private Frame toFinalFrameWithBowl(String strScores) {
         Frame frame = new FinalFrame();
-        for (TurnScore iScore : frameTest.toFrameScores(strScores)) {
+        for (TurnScore iScore : TurnScoreTest.toFrameScores(strScores)) {
             frame = frame.bowl(iScore);
         }
         return frame;
