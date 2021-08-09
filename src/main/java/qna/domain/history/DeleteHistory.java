@@ -1,4 +1,8 @@
-package qna.domain;
+package qna.domain.history;
+
+import qna.domain.common.AbstractEntity;
+import qna.domain.user.User;
+import qna.exception.NotFoundException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,20 +25,38 @@ public class DeleteHistory {
 
     private LocalDateTime createDate = LocalDateTime.now();
 
+    //////////////////////// 구분선
+
     public DeleteHistory() {
     }
 
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
+    private DeleteHistory(ContentType contentType, Long contentId, User deletedBy) {
         this.contentType = contentType;
         this.contentId = contentId;
         this.deletedBy = deletedBy;
-        this.createDate = createDate;
+        this.createDate = LocalDateTime.now();
+    }
+
+    public static DeleteHistory of(AbstractEntity abstractEntity, User user) {
+        ContentType contentType =
+                ContentType.of(abstractEntity)
+                        .orElseThrow(NotFoundException::new);
+
+        return new DeleteHistory(
+                contentType,
+                abstractEntity.id(),
+                user
+        );
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         DeleteHistory that = (DeleteHistory) o;
         return Objects.equals(id, that.id) &&
                 contentType == that.contentType &&

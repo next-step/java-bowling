@@ -1,6 +1,6 @@
-package qna.domain;
+package qna.domain.user;
 
-import qna.UnAuthorizedException;
+import qna.domain.common.AbstractEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,11 +21,9 @@ public class User extends AbstractEntity {
 
     private String email;
 
-    public User() {
-    }
+    //////////////////////// 구분선
 
-    public User(String userId, String password, String name, String email) {
-        this(null, userId, password, name, email);
+    public User() {
     }
 
     public User(Long id, String userId, String password, String name, String email) {
@@ -34,55 +32,6 @@ public class User extends AbstractEntity {
         this.password = password;
         this.name = name;
         this.email = email;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public User setUserId(String userId) {
-        this.userId = userId;
-        return this;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public User setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public void update(User loginUser, User target) {
-        if (!matchUserId(loginUser.getUserId())) {
-            throw new UnAuthorizedException();
-        }
-
-        if (!matchPassword(target.getPassword())) {
-            throw new UnAuthorizedException();
-        }
-
-        this.name = target.name;
-        this.email = target.email;
     }
 
     private boolean matchUserId(String userId) {
