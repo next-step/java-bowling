@@ -1,7 +1,8 @@
 package bowling;
 
+import bowling.domain.BowlingGame;
 import bowling.domain.player.Bowler;
-import bowling.dto.BowlingPlayResultData;
+import bowling.domain.dto.BowlingPlayResultData;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -10,8 +11,14 @@ public class BowlingContoroller {
     public static void main(String[] args) {
         String name = InputView.inputPlayerName();
         Bowler bowler = Bowler.of(name);
+        BowlingGame bowlingGame = BowlingGame.start(bowler);
 
         ResultView.printBowlingScore(BowlingPlayResultData.of(bowler));
+        while(!bowlingGame.isFinish()) {
+            int pins = InputView.inputCountOfHitPins(BowlingPlayResultData.of(bowler));
+            bowlingGame.play(pins);
+            ResultView.printBowlingScore(BowlingPlayResultData.of(bowler));
+        }
     }
 
 }

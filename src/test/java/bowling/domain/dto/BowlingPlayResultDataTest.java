@@ -1,4 +1,4 @@
-package bowling.dto;
+package bowling.domain.dto;
 
 import bowling.domain.player.Bowler;
 import org.junit.jupiter.api.DisplayName;

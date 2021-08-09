@@ -1,10 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.dto.StateDatas;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Frames {
 
@@ -34,14 +36,19 @@ public class Frames {
 
         Frame frame = createFrame();
         frame.hitPins(pins);
-//        frame.next();
         frame.addFrame(frames);
     }
 
-    private void validate(Pins downedPins) {
-        if (Objects.isNull(downedPins)) {
+    private void validate(Pins pins) {
+        if (Objects.isNull(pins)) {
             throw new IllegalArgumentException("Pin들은 null일 수 없습니다.");
         }
+    }
+
+    public List<StateDatas> getAllStates() {
+        return frames.stream()
+                .map(FrameResult::getFrameStates)
+                .collect(Collectors.toList());
     }
 
 }

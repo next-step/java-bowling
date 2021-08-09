@@ -3,12 +3,13 @@ package bowling.domain.frame;
 import bowling.domain.pin.Pins;
 import bowling.domain.state.CommonState;
 import bowling.domain.state.pitching.FirstPitching;
+import bowling.domain.dto.StateDatas;
 
 import java.util.List;
 
 public class CommonFrame implements Frame {
-    public static final int START_NUMBER = 1;
-    public static final int END_NUMBER = 10;
+    public static final int START_COUNT = 1;
+    public static final int END_COUNT = 10;
     private static final int COUNT_OF_COMMON_FRAME = 9;
 
     private CommonState state;
@@ -33,13 +34,15 @@ public class CommonFrame implements Frame {
 
     @Override
     public void addFrame(List<Frame> frames) {
-        if (isFrameFinish()) {
-            createNextFrame(frames);
+        if (isFrameNotFinish()) {
+            return;
         }
+
+        createNextFrame(frames);
     }
 
-    private boolean isFrameFinish() {
-        return state.isFinish();
+    private boolean isFrameNotFinish() {
+        return !state.isFinish();
     }
 
     private void createNextFrame(List<Frame> frames) {
@@ -51,4 +54,8 @@ public class CommonFrame implements Frame {
         frames.add(LastFrame.of());
     }
 
+    @Override
+    public StateDatas getFrameStates() {
+        return StateDatas.of(state.getState());
+    }
 }

@@ -4,7 +4,7 @@ import bowling.domain.pin.Pins;
 
 import java.util.List;
 
-public interface Frame {
+public interface Frame extends FrameResult {
 
     boolean isBowlingFinish();
 

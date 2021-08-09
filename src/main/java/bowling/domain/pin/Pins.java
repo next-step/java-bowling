@@ -21,8 +21,8 @@ public class Pins {
         }
     }
 
-    public static Pins of(int numOfDownedPins) {
-        return new Pins(numOfDownedPins);
+    public static Pins of(int pinCount) {
+        return new Pins(pinCount);
     }
 
     public Pins add(Pins pins) {
