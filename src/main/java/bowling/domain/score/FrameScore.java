@@ -20,10 +20,6 @@ public class FrameScore extends Score {
         super(score);
     }
 
-    public static FrameScore max() {
-        return of(MAX_VALUE);
-    }
-
     public static FrameScore of(int score) {
         if (!CACHED.containsKey(score)) {
             throw new IllegalArgumentException("유효하지 않은 스코어 입니다.");

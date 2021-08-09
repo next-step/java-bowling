@@ -9,12 +9,12 @@ public class Score {
         this.score = score;
     }
 
-    public boolean isZero() {
-        return this.score == 0;
-    }
-
     public final Score sum(Score score) {
         return new Score(this.score + score.score);
+    }
+
+    public boolean isZero() {
+        return this.score == 0;
     }
 
     public final int value() {
