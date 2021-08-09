@@ -15,8 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class BowlingSolutionTest {
     @CsvSource(value = {
-            // 테스트의 결과가 섞여 주석 처리
-            // "PJS|10,8,2,7,0,10,4,5,4,5,4,5,4,5,4,5,4,6,10", // 총 10프레임 19번의 투구 (스트라이크 -2, 마지막 스페어 + 1)
+            "PJS|10,8,2,7,0,10,4,5,4,5,4,5,4,5,4,5,4,6,10", // 총 10프레임 19번의 투구 (스트라이크 -2, 마지막 스페어 + 1)
             "PJS|10,8,2,7,0,10,4,5,4,5,4,5,4,5,4,5,10,10" // 총 10프레임 18번의 투구 (스트라이크 -3, 마지막 스트라이크 + 1)
     }, delimiter = '|')
     @DisplayName("통합 테스트")

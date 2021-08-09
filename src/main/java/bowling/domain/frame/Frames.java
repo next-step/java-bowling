@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.score.TurnScore;
 import bowling.exception.BowlFailureException;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -24,8 +25,8 @@ public final class Frames implements Iterable<Frame> {
     }
 
     public static Frames generate(final int size) {
-        if (size <= 0) {
-            throw new IllegalArgumentException("최소 1개의 프레임을 생성 해야 합니다.");
+        if (size == 0) {
+            return new Frames(Collections.emptyList());
         }
 
         List<Frame> frames = generateExcludeFinalFrame(size);
@@ -66,6 +67,13 @@ public final class Frames implements Iterable<Frame> {
         int oldFrameIndex = frames.indexOf(oldFrame);
 
         frames.set(oldFrameIndex, newFrame);
+    }
+
+    public int currentFrameNumber() {
+        Frame waitingFrame = waitingFrame()
+                .orElseThrow(NullPointerException::new);
+
+        return frames.indexOf(waitingFrame);
     }
 
     public int size() {
