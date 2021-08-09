@@ -28,8 +28,9 @@ public class AnswersInQuestion implements Iterable<Answer> {
     }
 
     public void delete(DeletePipe deletePipe) {
-        for (Answer iAnswer : answers)
+        for (Answer iAnswer : answers) {
             iAnswer.delete(deletePipe);
+        }
     }
 
     public void add(Answer answer) {
