@@ -1,11 +1,9 @@
 package bowling.domain;
 
 import bowling.domain.score.TurnScore;
-import bowling.domain.turn.Turn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,26 +13,13 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ScoreBoardTest {
-    @DisplayName("generate 테스트 - 전달받은 Name 객체의 갯수만큼 Frame 베이스를 준비한다.")
-    @ValueSource(strings = {
-            "PJS", "PJS,KYJ"
-    })
-    @ParameterizedTest
-    void generateTest(String strNames) {
-        List<Name> names = toNames(strNames);
-
-        assertThat(
-                ScoreBoard.generate(names).size()
-        ).isEqualTo(names.size());
-    }
-
-    @DisplayName("bowl 테스트")
+    @DisplayName("record 테스트")
     @CsvSource({
             "PJS",
             "PJS,KYJ"
     })
     @ParameterizedTest
-    void bowlTest(String strNames) {
+    void recordTest(String strNames) {
         List<Name> names = toNames(strNames);
         ScoreBoard scoreBoard = ScoreBoard.generate(names);
 
@@ -43,17 +28,17 @@ class ScoreBoardTest {
         int turnSize = 2;
         int bowlSize = names.size() * frameSize * turnSize;
 
-        for (Name iName : names) {
-            IntStream.range(0, bowlSize)
-                    .forEach(index -> scoreBoard.bowl(iName, turnScore));
-        }
+        IntStream.range(0, bowlSize)
+                .forEach(index -> scoreBoard.record(scoreBoard.currentPlayer(), turnScore));
         assertThat(
                 scoreBoard.isCompleted()
         ).isTrue();
     }
 
     private List<Name> toNames(String strNames) {
-        return Arrays.stream(strNames.split(","))
+        String[] splitNames = strNames.split(",");
+
+        return Arrays.stream(splitNames)
                 .map(Name::new)
                 .collect(Collectors.toList());
     }

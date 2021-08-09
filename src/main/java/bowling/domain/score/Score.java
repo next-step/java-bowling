@@ -17,6 +17,10 @@ public class Score {
         return new Score(this.score + score.score);
     }
 
+    public final int value() {
+        return score;
+    }
+
     @Override
     public boolean equals(final Object compareValue) {
         if (this == compareValue) {
@@ -32,5 +36,10 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(score);
     }
 }
