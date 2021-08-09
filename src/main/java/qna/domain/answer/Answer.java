@@ -1,13 +1,12 @@
 package qna.domain.answer;
 
+import qna.domain.history.DeleteHistory;
 import qna.exception.CannotDeleteException;
 import qna.exception.NotFoundException;
 import qna.exception.UnAuthorizedException;
 import qna.domain.common.AbstractEntity;
-import qna.domain.history.DeleteHistory;
 import qna.domain.user.User;
 import qna.domain.question.Question;
-import qna.dto.DeletePipe;
 
 import javax.persistence.*;
 
@@ -64,11 +63,12 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public void delete(DeletePipe pipe) {
-        validateDeletable(pipe.loginUser());
+    public DeleteHistory delete(User loginUser) {
+        validateDeletable(loginUser);
 
         this.deleted = true;
-        pipe.addDeleteHistory(this);
+
+        return DeleteHistory.of(this, loginUser);
     }
 
     private void validateDeletable(User longUser) {

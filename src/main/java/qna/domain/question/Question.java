@@ -1,12 +1,14 @@
 package qna.domain.question;
 
+import qna.domain.history.DeleteHistory;
 import qna.exception.CannotDeleteException;
 import qna.domain.common.AbstractEntity;
 import qna.domain.answer.Answer;
 import qna.domain.user.User;
-import qna.dto.DeletePipe;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -55,13 +57,20 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public void delete(DeletePipe pipe) {
-        validateDeletable(pipe.loginUser());
+    public List<DeleteHistory> delete(User loginUser) {
+        validateDeletable(loginUser);
 
         this.deleted = true;
-        pipe.addDeleteHistory(this);
 
-        answers.delete(pipe);
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(
+                DeleteHistory.of(this, loginUser)
+        );
+        deleteHistories.addAll(
+                answers.delete(loginUser)
+        );
+
+        return deleteHistories;
     }
 
     private void validateDeletable(User longUser) {

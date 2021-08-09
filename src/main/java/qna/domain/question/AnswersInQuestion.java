@@ -2,14 +2,14 @@ package qna.domain.question;
 
 import org.hibernate.annotations.Where;
 import qna.domain.answer.Answer;
+import qna.domain.history.DeleteHistory;
 import qna.domain.user.User;
-import qna.dto.DeletePipe;
-import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class AnswersInQuestion implements Iterable<Answer> {
@@ -27,10 +27,10 @@ public class AnswersInQuestion implements Iterable<Answer> {
                 .allMatch(iAnswer -> iAnswer.isOwner(writer));
     }
 
-    public void delete(DeletePipe deletePipe) {
-        for (Answer iAnswer : answers) {
-            iAnswer.delete(deletePipe);
-        }
+    public List<DeleteHistory> delete(User loginUser) {
+        return answers.stream()
+                .map(iAnswer -> iAnswer.delete(loginUser))
+                .collect(Collectors.toList());
     }
 
     public void add(Answer answer) {

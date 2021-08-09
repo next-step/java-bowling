@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.domain.answer.Answer;
 import qna.domain.question.Question;
-import qna.dto.DeletePipe;
 import qna.exception.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,9 +24,7 @@ public class AnswerTest {
     @DisplayName("delete 테스트 - 작성자가 같은 경우 삭제")
     @Test
     void delete_작성자가_같은_경우_성공() {
-        DeletePipe deletePipe = new DeletePipe(UserTest.JAVAJIGI);
-
-        answer.delete(deletePipe);
+        answer.delete(UserTest.JAVAJIGI);
 
         assertThat(answer.isDeleted())
                 .isTrue();
@@ -36,9 +33,7 @@ public class AnswerTest {
     @DisplayName("delete 테스트 - 작성자가 다른 경우 실패")
     @Test
     void delete_작성자가_다른_경우_실패() {
-        DeletePipe deletePipe = new DeletePipe(UserTest.SANJIGI);
-
-        assertThatThrownBy(() -> answer.delete(deletePipe))
+        assertThatThrownBy(() -> answer.delete(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage(CannotDeleteException.ErrorCode.NOT_PERMISSIONS.message());
     }
