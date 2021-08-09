@@ -9,7 +9,6 @@ public class Pins {
 
     private Pins(int countHitPins) {
         validate(countHitPins);
-
         this.countHitPins = countHitPins;
     }
 

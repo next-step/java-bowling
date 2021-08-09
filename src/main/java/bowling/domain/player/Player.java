@@ -7,9 +7,8 @@ public class Player {
 
     private final String name;
 
-    public Player(String name) {
+    private Player(String name) {
         validate(name);
-
         this.name = name;
     }
 

@@ -1,7 +1,5 @@
 package bowling.domain.state.result;
 
-import bowling.domain.state.CommonState;
-
 import java.util.Collections;
 import java.util.List;
 

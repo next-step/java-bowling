@@ -27,9 +27,9 @@ class EndTest {
         assertTrue(end.isFinish());
     }
 
-    @DisplayName("End는 isClean을 false로 반환해야한다")
+    @DisplayName("End는 isAllHit를 false로 반환해야한다")
     @Test
-    void should_return_false_is_clean() {
+    void should_return_false_is_all_hit() {
         //arrange
         End end = new End() {
             @Override

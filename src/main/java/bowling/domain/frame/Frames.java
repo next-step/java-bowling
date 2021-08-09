@@ -27,10 +27,6 @@ public class Frames {
         return createFrame().isBowlingFinish();
     }
 
-    private Frame createFrame() {
-        return frames.get(frames.size() - 1);
-    }
-
     public void hitPins(Pins pins) {
         validate(pins);
 
@@ -39,16 +35,20 @@ public class Frames {
         frame.addFrame(frames);
     }
 
-    private void validate(Pins pins) {
-        if (Objects.isNull(pins)) {
-            throw new IllegalArgumentException("Pin들은 null일 수 없습니다.");
-        }
-    }
-
     public List<StateDatas> getAllStates() {
         return frames.stream()
                 .map(FrameResult::getFrameStates)
                 .collect(Collectors.toList());
+    }
+
+    private Frame createFrame() {
+        return frames.get(frames.size() - 1);
+    }
+
+    private void validate(Pins pins) {
+        if (Objects.isNull(pins)) {
+            throw new IllegalArgumentException("Pin들은 null일 수 없습니다.");
+        }
     }
 
 }

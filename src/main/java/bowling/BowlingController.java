@@ -6,7 +6,7 @@ import bowling.domain.dto.BowlingPlayResultData;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
-public class BowlingContoroller {
+public class BowlingController {
 
     public static void main(String[] args) {
         String name = InputView.inputPlayerName();
@@ -14,7 +14,7 @@ public class BowlingContoroller {
         BowlingGame bowlingGame = BowlingGame.start(bowler);
 
         ResultView.printBowlingScore(BowlingPlayResultData.of(bowler));
-        while(!bowlingGame.isFinish()) {
+        while (!bowlingGame.isFinish()) {
             int pins = InputView.inputCountOfHitPins(BowlingPlayResultData.of(bowler));
             bowlingGame.play(pins);
             ResultView.printBowlingScore(BowlingPlayResultData.of(bowler));

@@ -37,9 +37,9 @@ class MissTest {
         assertTrue(miss.isFinish());
     }
 
-    @DisplayName("Miss는 isClean를 false로 반환해야한다")
+    @DisplayName("Miss는 isAllHit를 false로 반환해야한다")
     @Test
-    void should_return_false_is_clean() {
+    void should_return_false_is_all_hit() {
         //arrange
         Miss miss = Miss.of(Pins.of(1), Pins.of(9));
 

@@ -10,7 +10,8 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    private InputView() {}
+    private InputView() {
+    }
 
     public static String inputPlayerName() {
         print(INPUT_PLAYER_NAME);

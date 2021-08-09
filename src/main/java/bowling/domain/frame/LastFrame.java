@@ -31,4 +31,5 @@ public class LastFrame implements Frame {
     public StateDatas getFrameStates() {
         return StateDatas.of(state.getState());
     }
+
 }

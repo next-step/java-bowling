@@ -41,6 +41,11 @@ public class CommonFrame implements Frame {
         createNextFrame(frames);
     }
 
+    @Override
+    public StateDatas getFrameStates() {
+        return StateDatas.of(state.getState());
+    }
+
     private boolean isFrameNotFinish() {
         return !state.isFinish();
     }
@@ -54,8 +59,4 @@ public class CommonFrame implements Frame {
         frames.add(LastFrame.of());
     }
 
-    @Override
-    public StateDatas getFrameStates() {
-        return StateDatas.of(state.getState());
-    }
 }

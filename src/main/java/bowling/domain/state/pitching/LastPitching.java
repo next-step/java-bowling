@@ -10,8 +10,8 @@ import java.util.List;
 public class LastPitching implements CommonState {
     private static final int LIMIT_ATTEMPT_COUNT = 3;
 
-    private int attemptCount;
     private final BunchState bunchState;
+    private int attemptCount;
 
     protected LastPitching() {
         bunchState = BunchState.of();
@@ -29,15 +29,6 @@ public class LastPitching implements CommonState {
         return updateState();
     }
 
-    private CommonState updateState() {
-        if (isFinish()) {
-            return Finish.of(bunchState);
-        }
-
-        bunchState.addExtraChance();
-        return this;
-    }
-
     @Override
     public boolean isFinish() {
         return attemptCount == LIMIT_ATTEMPT_COUNT || bunchState.isFinish();
@@ -51,5 +42,14 @@ public class LastPitching implements CommonState {
     @Override
     public List<CommonState> getState() {
         return bunchState.getState();
+    }
+
+    private CommonState updateState() {
+        if (isFinish()) {
+            return Finish.of(bunchState);
+        }
+
+        bunchState.addExtraChance();
+        return this;
     }
 }

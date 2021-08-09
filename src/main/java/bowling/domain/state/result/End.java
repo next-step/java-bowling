@@ -4,6 +4,7 @@ import bowling.domain.pin.Pins;
 import bowling.domain.state.CommonState;
 
 public abstract class End implements CommonState {
+
     @Override
     public boolean isFinish() {
         return true;

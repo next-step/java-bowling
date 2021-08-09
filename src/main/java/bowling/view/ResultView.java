@@ -18,7 +18,8 @@ public class ResultView {
     private static final String EXTRA_CHANCE_MARK = "|";
     private static final int FRAME_STATE_LIMIT = 3;
 
-    private ResultView() {}
+    private ResultView() {
+    }
 
     public static void printBowlingScore(BowlingPlayResultData resultData) {
         printHeader();

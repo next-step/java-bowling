@@ -29,5 +29,4 @@ public class BowlingPlayResultData {
         return states.size();
     }
 
-
 }

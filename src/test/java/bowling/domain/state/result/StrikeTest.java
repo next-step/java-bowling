@@ -38,9 +38,9 @@ class StrikeTest {
         assertTrue(strike.isFinish());
     }
 
-    @DisplayName("Strike는 isClean를 true로 반환해야한다")
+    @DisplayName("Strike는 isAllHit를 true로 반환해야한다")
     @Test
-    void should_return_true_is_clean() {
+    void should_return_true_is_all_hit() {
         //arrange
         Strike strike = Strike.of();
 

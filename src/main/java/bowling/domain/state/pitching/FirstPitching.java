@@ -9,7 +9,8 @@ import java.util.List;
 
 public class FirstPitching implements CommonState {
 
-    private FirstPitching() {}
+    private FirstPitching() {
+    }
 
     public static FirstPitching of() {
         return new FirstPitching();

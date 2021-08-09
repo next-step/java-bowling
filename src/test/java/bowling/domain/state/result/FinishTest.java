@@ -38,9 +38,9 @@ class FinishTest {
         assertTrue(finish.isFinish());
     }
 
-    @DisplayName("Finish는 isClean를 false로 반환해야한다")
+    @DisplayName("Finish는 isAllHit를 false로 반환해야한다")
     @Test
-    void should_return_false_is_clean() {
+    void should_return_false_is_all_hit() {
         //arrange
         Finish finish = Finish.of(BunchState.of());
 

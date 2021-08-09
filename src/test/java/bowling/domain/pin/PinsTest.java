@@ -54,14 +54,14 @@ class PinsTest {
     @Test
     public void should_return_pins_add_pins() throws Exception {
         //arrange
-        Pins pins1 = Pins.of(10);
+        Pins pins1 = Pins.of(2);
         Pins pins2 = Pins.of(5);
 
         //act
         Pins result = pins1.add(pins2);
 
         //assert
-        assertThat(result.getCountHitPins()).isEqualTo(15);
+        assertThat(result.getCountHitPins()).isEqualTo(7);
     }
 
 }

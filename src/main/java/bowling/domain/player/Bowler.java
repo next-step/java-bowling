@@ -11,7 +11,7 @@ public class Bowler {
     private final Player player;
     private final Frames frames;
 
-    public Bowler(String name) {
+    private Bowler(String name) {
         player = Player.of(name);
         frames = Frames.of();
     }
