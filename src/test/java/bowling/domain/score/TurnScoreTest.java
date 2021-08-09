@@ -4,10 +4,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class TurnScoreTest {
+public class TurnScoreTest {
     @ValueSource(ints = {
             0, 1, 10
     })
@@ -26,5 +30,12 @@ class TurnScoreTest {
     void ofInvalidTest(int score) {
         assertThatThrownBy(() -> TurnScore.of(score))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    public static List<TurnScore> toFrameScores(String strScores) {
+        return Arrays.stream(strScores.split(","))
+                .map(Integer::parseInt)
+                .map(TurnScore::of)
+                .collect(Collectors.toList());
     }
 }
