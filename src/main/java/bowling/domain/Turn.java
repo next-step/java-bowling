@@ -2,6 +2,8 @@ package bowling.domain;
 
 import bowling.domain.score.TurnScore;
 
+import java.util.Objects;
+
 public class Turn {
     protected final TurnScore score;
 
@@ -35,6 +37,23 @@ public class Turn {
 
     public boolean isAllClear() {
         return score.isAllClear();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Turn turn = (Turn) o;
+        return Objects.equals(score, turn.score);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 
     @Override

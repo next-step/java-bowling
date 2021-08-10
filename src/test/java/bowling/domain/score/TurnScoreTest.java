@@ -33,9 +33,9 @@ public class TurnScoreTest {
                 .isInstanceOf(InvalidTurnScoreException.class);
     }
 
-    @DisplayName("isMax 테스트")
+    @DisplayName("isAllClear 테스트")
     @Test
-    void isMax() {
+    void isAllClearTest() {
         assertThat(TurnScore.of(10).isAllClear())
                 .isTrue();
     }

@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class FrameTest {
+public class FrameTest {
     @ValueSource(strings = {"0,10", "10", "5,4"})
     @DisplayName("bowl 테스트")
     @ParameterizedTest
@@ -54,7 +54,7 @@ class FrameTest {
         ).isEqualTo(correctSize);
     }
 
-    private Frame toFrameWithBowl(String strScores) {
+    public static Frame toFrameWithBowl(String strScores) {
         Frame frame = new Frame(1);
 
         TurnScoreTest.toFrameScores(strScores)

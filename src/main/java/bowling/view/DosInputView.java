@@ -17,14 +17,8 @@ public class DosInputView implements InputView {
     @Override
     public int inputTurnScore(int currentFrameNumber) {
         return inputNumber(
-                Text.INPUT_TURN_SCORE.format(
-                        toDisplayCurrentFrameNumber(currentFrameNumber)
-                )
+                Text.INPUT_TURN_SCORE.format(currentFrameNumber)
         );
-    }
-
-    private int toDisplayCurrentFrameNumber(int currentFrameNumber) {
-        return currentFrameNumber + 1;
     }
 
     private int inputNumber(String guideText) {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FrameFormat {
-    private static final char TURN_SCORE_DELIMITER = '/';
+    private static final char TURN_SCORE_DELIMITER = '|';
     private final Frame frame;
 
     public FrameFormat(final Frame frame) {

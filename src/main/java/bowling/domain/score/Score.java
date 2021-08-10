@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Score {
     protected final int score;
 
-    protected Score(final int score) {
+    public Score(final int score) {
         this.score = score;
     }
 
