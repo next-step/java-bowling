@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.scoreboard;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
@@ -15,30 +15,26 @@ import java.util.stream.IntStream;
 import static bowling.exception.PlayerEmptyException.*;
 
 public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
-    public static final int DEFAULT_FRAMES_SIZE = 10;
-
     private final Map<Player, Frames> framesEachPlayer;
+    private final PlayerOrderStrategy playerOrderStrategy;
 
-    private int playerCounter;
-
-    private ScoreBoard(final Map<Player, Frames> framesEachPlayer) {
+    private ScoreBoard(final Map<Player, Frames> framesEachPlayer, final PlayerOrderStrategy playerOrderStrategy) {
         this.framesEachPlayer = framesEachPlayer;
-        playerCounter = 0;
+        this.playerOrderStrategy = playerOrderStrategy;
     }
 
-    public static ScoreBoard generate(final List<PlayerName> names) {
+    public static ScoreBoard generate(final List<PlayerName> names, final PlayerOrderStrategy playerOrderStrategy) {
         validateGenerateNames(names);
 
-        return IntStream.range(0, names.size())
+        Map<Player, Frames> framesEachPlayer = IntStream.range(0, names.size())
                 .boxed()
                 .collect(
-                        Collectors.collectingAndThen(
-                                Collectors.toMap(
-                                        index -> new Player(names.get(index), index),
-                                        index -> new Frames()
-                                ), ScoreBoard::new
+                        Collectors.toMap(
+                                index -> new Player(names.get(index), index),
+                                index -> new Frames()
                         )
                 );
+        return new ScoreBoard(framesEachPlayer, playerOrderStrategy);
     }
 
     private static void validateGenerateNames(final List<PlayerName> names) {
@@ -52,7 +48,7 @@ public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
 
         frames.bowl(score);
 
-        ++playerCounter;
+        playerOrderStrategy.checkout();
     }
 
     public int currentFrameNumber(final Player player) {
@@ -62,16 +58,7 @@ public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
     }
 
     public Player currentPlayer() {
-        int playerIndex = playerIndex();
-
-        //noinspection OptionalGetWithoutIsPresent
-        return framesEachPlayer.keySet().stream()
-                .filter(iPlayer -> iPlayer.matchesOrder(playerIndex))
-                .findFirst().get();
-    }
-
-    private int playerIndex() {
-        return playerCounter % framesEachPlayer.size();
+        return playerOrderStrategy.currentPlayer(framesEachPlayer.keySet());
     }
 
     private Frames findFrames(final Player player) {
@@ -84,13 +71,6 @@ public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
     public boolean isCompleted() {
         return framesEachPlayer.values().stream()
                 .allMatch(Frames::isCompleted);
-    }
-
-    public int framesSize() {
-        return framesEachPlayer.values()
-                .iterator()
-                .next()
-                .size();
     }
 
     @Override

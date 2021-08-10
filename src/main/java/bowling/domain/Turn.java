@@ -1,4 +1,4 @@
-package bowling.domain.turn;
+package bowling.domain;
 
 import bowling.domain.score.TurnScore;
 

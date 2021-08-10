@@ -13,10 +13,6 @@ public class Score {
         return new Score(this.score + score.score);
     }
 
-    public static Score empty() {
-        return InnerLazyClass.EMPTY_SCORE;
-    }
-
     public boolean isEmpty() {
         return InnerLazyClass.EMPTY_SCORE.equals(this);
     }

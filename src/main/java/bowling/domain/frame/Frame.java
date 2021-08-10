@@ -1,15 +1,12 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.FrameScoreGrade;
 import bowling.domain.score.TurnScore;
 import bowling.domain.score.TurnScores;
-import bowling.domain.turn.Turn;
+import bowling.domain.Turn;
 import bowling.exception.BowlFailureException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class Frame {
@@ -32,7 +29,7 @@ public class Frame {
         return FrameState.of(turns).isCompleted();
     }
 
-    public FrameScoreGrade frameScore() {
+    public FrameScoreGrade frameScoreGrade() {
         if (!FrameState.of(turns).isCompleted()) {
             return FrameScoreGrade.EMPTY;
         }

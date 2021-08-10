@@ -2,6 +2,8 @@ package bowling.domain;
 
 import bowling.domain.player.PlayerName;
 import bowling.domain.score.TurnScore;
+import bowling.domain.scoreboard.RotationPlayerOrderStrategy;
+import bowling.domain.scoreboard.ScoreBoard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -22,7 +24,7 @@ class ScoreBoardTest {
     @ParameterizedTest
     void recordTest(String strNames) {
         List<PlayerName> names = toNames(strNames);
-        ScoreBoard scoreBoard = ScoreBoard.generate(names);
+        ScoreBoard scoreBoard = ScoreBoard.generate(names, new RotationPlayerOrderStrategy());
 
         TurnScore turnScore = TurnScore.of(3);
         int frameSize = 10;

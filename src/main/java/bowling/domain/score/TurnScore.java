@@ -1,6 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.turn.Turn;
 import bowling.exception.InvalidTurnScoreException;
 
 import java.util.Map;

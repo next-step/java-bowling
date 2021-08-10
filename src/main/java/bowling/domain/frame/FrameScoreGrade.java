@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.turn.Turn;
+import bowling.domain.Turn;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;

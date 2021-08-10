@@ -1,10 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.TurnScore;
-import bowling.domain.turn.Turn;
-
-import java.util.LinkedList;
-import java.util.List;
+import bowling.domain.Turn;
 
 public final class FinalFrame extends Frame {
     private Turn bonusTurn;
@@ -41,7 +38,7 @@ public final class FinalFrame extends Frame {
     }
 
     private boolean isAvailableBonusTurn() {
-        FrameScoreGrade frameScore = frameScore();
+        FrameScoreGrade frameScore = frameScoreGrade();
         return frameScore == FrameScoreGrade.STRIKE || frameScore == FrameScoreGrade.SPARE;
     }
 

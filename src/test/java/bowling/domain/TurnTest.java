@@ -1,5 +1,6 @@
-package bowling.domain.turn;
+package bowling.domain;
 
+import bowling.domain.Turn;
 import bowling.domain.score.TurnScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -2,7 +2,8 @@ package bowling;
 
 import bowling.domain.player.PlayerName;
 import bowling.domain.player.Player;
-import bowling.domain.ScoreBoard;
+import bowling.domain.scoreboard.RotationPlayerOrderStrategy;
+import bowling.domain.scoreboard.ScoreBoard;
 import bowling.domain.score.TurnScore;
 import bowling.view.DosInputView;
 import bowling.view.DosResultView;
@@ -46,7 +47,7 @@ public class BowlingSolution {
 
     private ScoreBoard startRecord(PlayerName name) {
         return ScoreBoard.generate(
-                Collections.singletonList(name)
+                Collections.singletonList(name), new RotationPlayerOrderStrategy()
         );
     }
 

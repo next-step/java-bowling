@@ -4,15 +4,15 @@ import java.util.Objects;
 
 public class Player {
     private final PlayerName name;
-    private final int gameOrder;
+    private final int gameIndex;
 
-    public Player(final PlayerName name, final int gameOrder) {
+    public Player(final PlayerName name, final int gameIndex) {
         this.name = name;
-        this.gameOrder = gameOrder;
+        this.gameIndex = gameIndex;
     }
 
-    public boolean matchesOrder(final int order) {
-        return gameOrder == order;
+    public boolean matchesOrder(final int gameIndex) {
+        return this.gameIndex == gameIndex;
     }
 
     public PlayerName name() {
@@ -28,16 +28,16 @@ public class Player {
             return false;
         }
         final Player player = (Player) o;
-        return gameOrder == player.gameOrder && Objects.equals(name, player.name);
+        return gameIndex == player.gameIndex && Objects.equals(name, player.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, gameOrder);
+        return Objects.hash(name, gameIndex);
     }
 
     @Override
     public String toString() {
-        return "Player{" + "name=" + name + ", gameOrder=" + gameOrder + '}';
+        return "Player{" + "name=" + name + ", gameIndex=" + gameIndex + '}';
     }
 }
