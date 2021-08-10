@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 
 public class Frames {
 
-    private static final int LIMIT_SIZE_OF_FRAMES = 10;
+    private static final int LIMIT_COUNT_OF_FRAMES = 10;
 
     private final List<Frame> frames;
 
     private Frames() {
-        frames = new ArrayList<>(LIMIT_SIZE_OF_FRAMES);
+        frames = new ArrayList<>(LIMIT_COUNT_OF_FRAMES);
         frames.add(CommonFrame.of());
     }
 
