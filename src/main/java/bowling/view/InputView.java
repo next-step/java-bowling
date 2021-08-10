@@ -15,13 +15,11 @@ public class InputView {
 
     public static String inputPlayerName() {
         print(INPUT_PLAYER_NAME);
-
         return getInputValue();
     }
 
     public static int inputCountOfHitPins(BowlingPlayResultData data) {
         print(String.format(INPUT_COUNT_OF_PIN_FORMAT, data.getFrameCount()));
-
         return getInputIntValue();
     }
 

@@ -18,8 +18,8 @@ public class BowlingGame {
         bowler.playBowling(pins);
     }
 
-    public boolean isFinish() {
-        return bowler.isBowlingFinish();
+    public boolean isNotFinish() {
+        return !bowler.isBowlingFinish();
     }
 
 }

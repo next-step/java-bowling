@@ -10,19 +10,19 @@ import bowling.domain.state.result.Strike;
 import java.util.Arrays;
 import java.util.function.Function;
 
-public enum StateFormat {
-    STRIKE(Strike.class.getSimpleName(), state -> String.format("%s", RecordMark.STRIKE.getMark())),
-    SPARE(Spare.class.getSimpleName(), state -> String.format("%s|/", RecordMark.find(state.getCountFirstPins()))),
+public enum ResultStateFormat {
+    STRIKE(Strike.class.getSimpleName(), state -> String.format("%s", BowlingRecordMark.STRIKE.getMark())),
+    SPARE(Spare.class.getSimpleName(), state -> String.format("%s|/", BowlingRecordMark.find(state.getCountFirstPins()))),
     MISS(Miss.class.getSimpleName(), state -> String.format("%s|%s",
-            RecordMark.find(state.getCountFirstPins()),
-            RecordMark.find(state.getCountSecondPins()))),
+            BowlingRecordMark.find(state.getCountFirstPins()),
+            BowlingRecordMark.find(state.getCountSecondPins()))),
     FIRST_PITCHING(FirstPitching.class.getSimpleName(), state -> ""),
-    SECOND_PITCHING(SecondPitching.class.getSimpleName(), state -> RecordMark.find(state.getCountFirstPins()));
+    SECOND_PITCHING(SecondPitching.class.getSimpleName(), state -> BowlingRecordMark.find(state.getCountFirstPins()));
 
     private final String type;
     private final Function<StateData, String> changeFunc;
 
-    StateFormat(String type, Function<StateData, String> changeFunc) {
+    ResultStateFormat(String type, Function<StateData, String> changeFunc) {
         this.type = type;
         this.changeFunc = changeFunc;
     }

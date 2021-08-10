@@ -14,7 +14,7 @@ public class BowlingController {
         BowlingGame bowlingGame = BowlingGame.start(bowler);
 
         ResultView.printBowlingScore(BowlingPlayResultData.of(bowler));
-        while (!bowlingGame.isFinish()) {
+        while (bowlingGame.isNotFinish()) {
             int pins = InputView.inputCountOfHitPins(BowlingPlayResultData.of(bowler));
             bowlingGame.play(pins);
             ResultView.printBowlingScore(BowlingPlayResultData.of(bowler));

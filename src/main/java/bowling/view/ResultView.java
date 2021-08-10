@@ -58,7 +58,7 @@ public class ResultView {
     private static String makeRecordValue(StateDatas stateDatas) {
         return stateDatas.getStateDatas()
                 .stream()
-                .map(StateFormat::getValue)
+                .map(ResultStateFormat::getValue)
                 .collect(Collectors.joining(EXTRA_CHANCE_MARK));
     }
 

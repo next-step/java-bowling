@@ -2,14 +2,14 @@ package bowling.view;
 
 import java.util.Arrays;
 
-public enum RecordMark {
+public enum BowlingRecordMark {
     GUTTER(0, "-"),
     STRIKE(10, "X");
 
     private final int record;
     private final String mark;
 
-    RecordMark(int record, String mark) {
+    BowlingRecordMark(int record, String mark) {
         this.record = record;
         this.mark = mark;
     }
