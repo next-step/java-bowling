@@ -4,17 +4,17 @@ import bowling.domain.player.Bowler;
 
 import java.util.List;
 
-public class BowlingPlayResultData {
+public class BowlingGameResult {
     private final String name;
     private final List<StateDatas> states;
 
-    private BowlingPlayResultData(Bowler bowler) {
+    private BowlingGameResult(Bowler bowler) {
         this.name = bowler.getName();
         this.states = bowler.getStates();
     }
 
-    public static BowlingPlayResultData of(Bowler bowler) {
-        return new BowlingPlayResultData(bowler);
+    public static BowlingGameResult of(Bowler bowler) {
+        return new BowlingGameResult(bowler);
     }
 
     public String getPlayerName() {

@@ -1,7 +1,7 @@
 package bowling.view;
 
 import bowling.domain.frame.CommonFrame;
-import bowling.domain.dto.BowlingPlayResultData;
+import bowling.domain.dto.BowlingGameResult;
 import bowling.domain.dto.StateDatas;
 
 import java.util.stream.Collectors;
@@ -21,7 +21,7 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printBowlingScore(BowlingPlayResultData resultData) {
+    public static void printBowlingScore(BowlingGameResult resultData) {
         printHeader();
         printBowlingFrame(resultData);
     }
@@ -35,7 +35,7 @@ public class ResultView {
         printNextLine();
     }
 
-    private static void printBowlingFrame(BowlingPlayResultData resultData) {
+    private static void printBowlingFrame(BowlingGameResult resultData) {
         print(String.format(NAME_FORMAT, resultData.getPlayerName()));
         printFrame(resultData);
         printLeftFrame(resultData);
@@ -43,14 +43,14 @@ public class ResultView {
         printNextLine();
     }
 
-    private static void printFrame(BowlingPlayResultData resultData) {
+    private static void printFrame(BowlingGameResult resultData) {
         resultData.getStates()
                 .stream()
                 .map(ResultView::makeRecordValue)
                 .forEach(value -> print(getStateString(value)));
     }
 
-    private static void printLeftFrame(BowlingPlayResultData resultData) {
+    private static void printLeftFrame(BowlingGameResult resultData) {
         IntStream.range(resultData.getFrameCount(), CommonFrame.END_COUNT)
                 .forEach(value -> print(String.format(FRAME_FORMAT, "")));
     }

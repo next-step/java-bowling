@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BowlingPlayResultDataTest {
+class BowlingGameResultTest {
 
     @DisplayName("Bowler정보로 BowlingPlayResultData를 생성한다")
     @Test
@@ -15,7 +15,7 @@ class BowlingPlayResultDataTest {
         Bowler bowler = Bowler.of("abc");
 
         //act, assert
-        assertThat(BowlingPlayResultData.of(bowler)).isInstanceOf(BowlingPlayResultData.class);
+        assertThat(BowlingGameResult.of(bowler)).isInstanceOf(BowlingGameResult.class);
     }
 
     @DisplayName("BowlingPlayResultData는 playerName을 반환한다")
@@ -25,7 +25,7 @@ class BowlingPlayResultDataTest {
         Bowler bowler = Bowler.of("abc");
 
         //act
-        BowlingPlayResultData data = BowlingPlayResultData.of(bowler);
+        BowlingGameResult data = BowlingGameResult.of(bowler);
 
         //assert
         assertThat(data.getPlayerName()).isEqualTo("abc");

@@ -2,7 +2,7 @@ package bowling;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.player.Bowler;
-import bowling.domain.dto.BowlingPlayResultData;
+import bowling.domain.dto.BowlingGameResult;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -13,11 +13,11 @@ public class BowlingController {
         Bowler bowler = Bowler.of(name);
         BowlingGame bowlingGame = BowlingGame.start(bowler);
 
-        ResultView.printBowlingScore(BowlingPlayResultData.of(bowler));
+        ResultView.printBowlingScore(BowlingGameResult.of(bowler));
         while (bowlingGame.isNotFinish()) {
-            int pins = InputView.inputCountOfHitPins(BowlingPlayResultData.of(bowler));
+            int pins = InputView.inputCountOfHitPins(BowlingGameResult.of(bowler));
             bowlingGame.play(pins);
-            ResultView.printBowlingScore(BowlingPlayResultData.of(bowler));
+            ResultView.printBowlingScore(BowlingGameResult.of(bowler));
         }
     }
 

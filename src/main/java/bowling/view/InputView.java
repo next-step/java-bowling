@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.dto.BowlingPlayResultData;
+import bowling.domain.dto.BowlingGameResult;
 
 import java.util.Scanner;
 
@@ -18,7 +18,7 @@ public class InputView {
         return getInputValue();
     }
 
-    public static int inputCountOfHitPins(BowlingPlayResultData data) {
+    public static int inputCountOfHitPins(BowlingGameResult data) {
         print(String.format(INPUT_COUNT_OF_PIN_FORMAT, data.getFrameCount()));
         return getInputIntValue();
     }
