@@ -5,7 +5,7 @@ import bowling.domain.score.TurnScore;
 
 public class ScoreFormat {
     private static final String MISS = "-";
-    private static final String STRIKE = "-";
+    private static final String STRIKE = "X";
 
     private final Score score;
 
@@ -14,9 +14,19 @@ public class ScoreFormat {
     }
 
     public String format() {
-        if (score instanceof TurnScore && ((TurnScore) score).isAllClear()) {
+        if (score instanceof TurnScore) {
+            return toTurnScoreFormat((TurnScore) score);
+        }
+        return String.valueOf(score.value());
+    }
+
+    private String toTurnScoreFormat(TurnScore turnScore) {
+        if (turnScore.isAllClear()) {
             return STRIKE;
         }
-        return score.isZero() ? MISS : String.valueOf(score.value());
+        if (turnScore.isZero()) {
+            return MISS;
+        }
+        return String.valueOf(turnScore.value());
     }
 }
