@@ -1,13 +1,14 @@
 package bowling.domain;
 
 import bowling.domain.frame.Frames;
+import bowling.domain.player.Player;
+import bowling.domain.player.PlayerName;
 import bowling.domain.score.TurnScore;
 import bowling.exception.PlayerEmptyException;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -25,10 +26,8 @@ public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
         playerCounter = 0;
     }
 
-    public static ScoreBoard generate(final List<Name> names) {
-        if (names.isEmpty()) {
-            throw new PlayerEmptyException(ErrorCode.EMPTY);
-        }
+    public static ScoreBoard generate(final List<PlayerName> names) {
+        validateGenerateNames(names);
 
         return IntStream.range(0, names.size())
                 .boxed()
@@ -36,24 +35,28 @@ public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
                         Collectors.collectingAndThen(
                                 Collectors.toMap(
                                         index -> new Player(names.get(index), index),
-                                        index -> Frames.generate(DEFAULT_FRAMES_SIZE)
+                                        index -> new Frames()
                                 ), ScoreBoard::new
                         )
                 );
     }
 
+    private static void validateGenerateNames(final List<PlayerName> names) {
+        if (names.isEmpty()) {
+            throw new PlayerEmptyException(ErrorCode.EMPTY);
+        }
+    }
+
     public void record(final Player player, final TurnScore score) {
-        Frames frames = findFrames(player)
-                .orElseThrow(() -> new PlayerEmptyException(ErrorCode.NOT_FOUND));
+        Frames frames = findFrames(player);
 
         frames.bowl(score);
 
         ++playerCounter;
     }
 
-    public int currentFrameNumber(Player player) {
-        Frames frames = findFrames(player)
-                .orElseThrow(() -> new PlayerEmptyException(ErrorCode.NOT_FOUND));
+    public int currentFrameNumber(final Player player) {
+        Frames frames = findFrames(player);
 
         return frames.currentFrameNumber();
     }
@@ -68,14 +71,14 @@ public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
     }
 
     private int playerIndex() {
-        return this.playerCounter % framesEachPlayer.size();
+        return playerCounter % framesEachPlayer.size();
     }
 
-    private Optional<Frames> findFrames(Player player) {
-        if (framesEachPlayer.containsKey(player)) {
-            return Optional.of(framesEachPlayer.get(player));
+    private Frames findFrames(final Player player) {
+        if (!framesEachPlayer.containsKey(player)) {
+            throw new PlayerEmptyException(ErrorCode.NOT_FOUND);
         }
-        return Optional.empty();
+        return framesEachPlayer.get(player);
     }
 
     public boolean isCompleted() {
@@ -84,7 +87,7 @@ public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
     }
 
     public int framesSize() {
-        return this.framesEachPlayer.values()
+        return framesEachPlayer.values()
                 .iterator()
                 .next()
                 .size();

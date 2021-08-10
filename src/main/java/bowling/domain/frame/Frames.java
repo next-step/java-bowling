@@ -1,79 +1,45 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.TurnScore;
-import bowling.exception.BowlFailureException;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
 
 public final class Frames implements Iterable<Frame> {
-    private final List<Frame> frames;
-    private Frames(final List<Frame> frames) {
-        validateFrameSize(frames);
+    private static final int START_FRAME_NUMBER = 1;
+    public static final int MAX_FRAME_NUMBER = 10;
 
-        this.frames = frames;
+    private final LinkedList<Frame> frames;
+
+    public Frames() {
+        frames = new LinkedList<>();
+        frames.add(
+                new Frame(START_FRAME_NUMBER)
+        );
     }
 
-    private void validateFrameSize(final List<Frame> frames) {
-        if (frames.isEmpty()) {
-            throw new IllegalArgumentException("최소 1개의 프레임을 생성 해야 합니다.");
+    public void bowl(final TurnScore score) {
+        inProgressFrame().bowl(score);
+    }
+
+    private Frame inProgressFrame() {
+        Frame lastFrame = frames.getLast();
+
+        if (lastFrame.isCompleted()) {
+            frames.add(
+                    lastFrame.nextFrame()
+            );
+            return frames.getLast();
         }
-    }
-
-    public static Frames generate(final int size) {
-        if (size == 0) {
-            return new Frames(Collections.emptyList());
-        }
-
-        List<Frame> frames = generateExcludeFinalFrame(size);
-        addFinalFrame(frames);
-
-        return new Frames(frames);
-    }
-
-    private static List<Frame> generateExcludeFinalFrame(final int size) {
-        return Stream.generate(Frame::new)
-                .limit(size - 1)
-                .collect(Collectors.toList());
-    }
-
-    private static void addFinalFrame(List<Frame> frames) {
-        frames.add(new FinalFrame());
-    }
-
-    public void bowl(TurnScore score) {
-        Frame waitingFrame = waitingFrame()
-                .orElseThrow(BowlFailureException::new);
-
-        replace(waitingFrame, waitingFrame.bowl(score));
-    }
-
-    private Optional<Frame> waitingFrame() {
-        return frames.stream()
-                .filter(Frame::isWaiting)
-                .findFirst();
+        return lastFrame;
     }
 
     public boolean isCompleted() {
-        return frames.stream()
-                .allMatch(Frame::isCompleted);
-    }
-
-    private void replace(Frame oldFrame, Frame newFrame) {
-        int oldFrameIndex = frames.indexOf(oldFrame);
-
-        frames.set(oldFrameIndex, newFrame);
+        return frames.size() == MAX_FRAME_NUMBER
+                && frames.getLast().isCompleted();
     }
 
     public int currentFrameNumber() {
-        Frame waitingFrame = waitingFrame()
-                .orElseThrow(NullPointerException::new);
-
-        return frames.indexOf(waitingFrame);
+        return inProgressFrame().currentFrameNumber();
     }
 
     public int size() {

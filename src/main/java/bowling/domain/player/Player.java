@@ -1,21 +1,21 @@
-package bowling.domain;
+package bowling.domain.player;
 
 import java.util.Objects;
 
 public class Player {
-    private final Name name;
+    private final PlayerName name;
     private final int gameOrder;
 
-    public Player(final Name name, final int gameOrder) {
+    public Player(final PlayerName name, final int gameOrder) {
         this.name = name;
         this.gameOrder = gameOrder;
     }
 
-    public boolean matchesOrder(int order) {
+    public boolean matchesOrder(final int order) {
         return gameOrder == order;
     }
 
-    public Name name() {
+    public PlayerName name() {
         return name;
     }
 
@@ -34,5 +34,10 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name, gameOrder);
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" + "name=" + name + ", gameOrder=" + gameOrder + '}';
     }
 }

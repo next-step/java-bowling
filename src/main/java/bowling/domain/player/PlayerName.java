@@ -1,24 +1,22 @@
-package bowling.domain;
+package bowling.domain.player;
 
+import bowling.exception.InvalidPlayerNameException;
 import bowling.util.StringLengthRange;
 
 import java.util.Objects;
 
-public class Name {
+public class PlayerName {
     private static final StringLengthRange VALID_NAME_LENGTH = new StringLengthRange(1, 3);
 
     private final String name;
 
-    public Name(String name) {
-        VALID_NAME_LENGTH.orThrow(name, () ->
-                new IllegalArgumentException("이름의 길이가 올바르지 않습니다.")
-        );
+    public PlayerName(final String name) {
+        VALID_NAME_LENGTH.orThrow(name, InvalidPlayerNameException::new);
 
         this.name = name;
     }
 
-
-    public String toString() {
+    public String value() {
         return name;
     }
 
@@ -30,12 +28,17 @@ public class Name {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final Name name1 = (Name) o;
+        final PlayerName name1 = (PlayerName) o;
         return Objects.equals(name, name1.name);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerName{" + "name='" + name + '\'' + '}';
     }
 }

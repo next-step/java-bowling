@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.exception.InvalidTurnScoreException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,13 +30,13 @@ public class TurnScoreTest {
     @DisplayName("score가 0 미만이거나 10 초과일떄")
     void ofInvalidTest(int score) {
         assertThatThrownBy(() -> TurnScore.of(score))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidTurnScoreException.class);
     }
 
     @DisplayName("isMax 테스트")
     @Test
     void isMax() {
-        assertThat(TurnScore.of(10).isMax())
+        assertThat(TurnScore.of(10).isAllClear())
                 .isTrue();
     }
 

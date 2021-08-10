@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.TurnScore;
 import bowling.domain.score.TurnScoreTest;
+import bowling.domain.turn.Turn;
 import bowling.exception.BowlFailureException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,9 +32,9 @@ class FinalFrameTest {
 
     private Frame toFinalFrameWithBowl(String strScores) {
         Frame frame = new FinalFrame();
-        for (TurnScore iScore : TurnScoreTest.toFrameScores(strScores)) {
-            frame = frame.bowl(iScore);
-        }
+        TurnScoreTest.toFrameScores(strScores)
+                .forEach(frame::bowl);
+
         return frame;
     }
 }

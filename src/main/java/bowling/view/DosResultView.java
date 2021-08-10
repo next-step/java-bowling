@@ -1,34 +1,31 @@
 package bowling.view;
 
-import bowling.domain.Player;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.FrameScoreGrade;
+import bowling.domain.player.Player;
 import bowling.domain.ScoreBoard;
 import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.score.Score;
 import bowling.domain.score.TurnScore;
 import org.apache.logging.log4j.util.Strings;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class DosResultView implements ResultView {
     @Override
-    public void printException(final Exception e) {
-        System.out.println(e.getMessage());
-    }
-
-    @Override
     public void printScoreBoard(final ScoreBoard scoreBoard) {
-        printTitles(scoreBoard);
+        printTitles();
         printAllPlayer(scoreBoard);
     }
 
-    private void printTitles(final ScoreBoard scoreBoard) {
+    private void printTitles() {
         System.out.print(
                 nameBoxedText(Text.NAME_TITLE)
         );
-        IntStream.rangeClosed(1, scoreBoard.framesSize())
+        IntStream.rangeClosed(1, Frames.MAX_FRAME_NUMBER)
                 .forEach(index ->
                         System.out.print(
                                 frameBoxedText(Text.FRAME_TITLE.format(index))
@@ -48,13 +45,14 @@ public class DosResultView implements ResultView {
     private void printPlayerLine(Player player, Frames frames) {
         printPlayerName(player);
         frames.forEach(this::printFrame);
+        printEmptyFrame(Frames.MAX_FRAME_NUMBER - frames.size());
 
         printEmptyLine();
     }
 
     private void printPlayerName(final Player player) {
         System.out.print(
-                nameBoxedText(player.name())
+                nameBoxedText(player.name().value())
         );
     }
 
@@ -66,6 +64,15 @@ public class DosResultView implements ResultView {
         );
     }
 
+    private void printEmptyFrame(int size) {
+        IntStream.range(0, size)
+                .forEach(index ->
+                        System.out.print(
+                                frameBoxedText("")
+                        )
+                );
+    }
+
     private String nameBoxedText(Object obj) {
         return Text.NAME_BOX.format(obj);
     }
@@ -75,13 +82,15 @@ public class DosResultView implements ResultView {
     }
 
     private String toDisplayFrameScore(Frame frame) {
-        if (frame.isStrike()) {
+        FrameScoreGrade frameScore = frame.frameScore();
+
+        if (frameScore == FrameScoreGrade.STRIKE) {
             return toDisplayStrikeScore(frame);
         }
-        if (frame.isSpare()) {
+        if (frameScore == FrameScoreGrade.SPARE) {
             return toDisplaySpareScore(frame);
         }
-        if (frame.isMiss()) {
+        if (frameScore == FrameScoreGrade.MISS) {
             return Text.MISS.toString();
         }
         return toDisplayScores(frame);
@@ -111,20 +120,23 @@ public class DosResultView implements ResultView {
     }
 
     private String toDisplayFirstTurnScore(Frame frame) {
-        return toDisplayScore(frame.scores().get(0));
+        return toDisplayScore(frame.scores().first());
     }
 
     private String toDisplayScores(Frame frame) {
-        List<String> displayScores =
-                frame.scores().stream()
-                        .map(this::toDisplayScore)
-                        .collect(Collectors.toList());
+        List<String> displayScores = new ArrayList<>();
+        frame.scores().forEach(
+                iTurnScore ->
+                        displayScores.add(
+                                toDisplayScore(iTurnScore)
+                        )
+        );
 
         return Strings.join(displayScores, Text.TURN_SCORE_DELIMITER.toChar());
     }
 
-    private String toDisplayScore(TurnScore score) {
-        if (score.isMax()) {
+    private String toDisplayScore(Score score) {
+        if (score instanceof TurnScore && ((TurnScore) score).isAllClear()) {
             return Text.STRIKE.toString();
         }
         return score.isZero() ? Text.MISS.toString() : String.valueOf(score.value());

@@ -1,7 +1,7 @@
 package bowling;
 
-import bowling.domain.Name;
-import bowling.domain.Player;
+import bowling.domain.player.PlayerName;
+import bowling.domain.player.Player;
 import bowling.domain.ScoreBoard;
 import bowling.domain.score.TurnScore;
 import bowling.view.DosInputView;
@@ -13,9 +13,11 @@ import java.util.Collections;
 
 public class BowlingSolution {
     public static void main(String[] args) {
-        new BowlingSolution(
-                new DosInputView(), new DosResultView()
-        ).run();
+        try {
+            new BowlingSolution(new DosInputView(), new DosResultView()).run();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private final InputView inputView;
@@ -26,16 +28,8 @@ public class BowlingSolution {
         this.resultView = resultView;
     }
 
-    protected void run() {
-        try {
-            realRun();
-        } catch (Exception e) {
-            resultView.printException(e);
-        }
-    }
-
-    private void realRun() {
-        Name name = inputName();
+    public void run() {
+        PlayerName name = inputName();
 
         ScoreBoard scoreBoard = startRecord(name);
         resultView.printScoreBoard(scoreBoard);
@@ -46,11 +40,11 @@ public class BowlingSolution {
         }
     }
 
-    private Name inputName() {
-        return new Name(inputView.inputName());
+    private PlayerName inputName() {
+        return new PlayerName(inputView.inputName());
     }
 
-    private ScoreBoard startRecord(Name name) {
+    private ScoreBoard startRecord(PlayerName name) {
         return ScoreBoard.generate(
                 Collections.singletonList(name)
         );

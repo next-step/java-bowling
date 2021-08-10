@@ -1,5 +1,8 @@
 package bowling.domain.score;
 
+import bowling.domain.turn.Turn;
+import bowling.exception.InvalidTurnScoreException;
+
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -20,18 +23,28 @@ public final class TurnScore extends Score {
         super(score);
     }
 
-    public boolean isMax() {
+    public static TurnScore empty() {
+        return InnerLazyClass.EMPTY_TURN_SCORE;
+    }
+
+    public boolean isAllClear() {
         return score == MAX_VALUE;
     }
 
-    public static TurnScore max() {
-        return of(MAX_VALUE);
-    }
-
-    public static TurnScore of(int score) {
+    public static TurnScore of(final int score) {
         if (!CACHED.containsKey(score)) {
-            throw new IllegalArgumentException("유효하지 않은 스코어 입니다.");
+            throw new InvalidTurnScoreException();
         }
         return CACHED.get(score);
+    }
+
+    public static TurnScore of(final Score score) {
+        return of(score.value());
+    }
+
+    private static class InnerLazyClass {
+        private static final int EMPTY_VALUE = -1;
+
+        private static final TurnScore EMPTY_TURN_SCORE = new TurnScore(EMPTY_VALUE);
     }
 }

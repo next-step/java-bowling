@@ -1,93 +1,95 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.FrameScoreGrade;
 import bowling.domain.score.TurnScore;
-import bowling.domain.turn.FirstTurn;
-import bowling.domain.turn.SecondTurn;
+import bowling.domain.score.TurnScores;
+import bowling.domain.turn.Turn;
 import bowling.exception.BowlFailureException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Frame {
-    protected final FirstTurn firstTurn;
-    protected final SecondTurn secondTurn;
+    protected final LinkedList<Turn> turns;
+    private final int currentFrameNumber;
 
-    protected Frame(final FirstTurn firstTurn, final SecondTurn secondTurn) {
-        this.firstTurn = firstTurn;
-        this.secondTurn = secondTurn;
+    protected Frame(int frameNumber) {
+        this.turns = new LinkedList<>();
+        this.currentFrameNumber = frameNumber;
     }
 
-    protected Frame(final FirstTurn firstTurn) {
-        this(firstTurn, null);
-    }
-
-    public Frame() {
-        this(null, null);
-    }
-
-    public Frame bowl(final TurnScore score) {
-        if (currentFirstTurn()) {
-            return new Frame(
-                    new FirstTurn(score)
-            );
+    public void bowl(final TurnScore score) {
+        if (isCompleted()) {
+            throw new BowlFailureException();
         }
-        if (currentSecondTurn()) {
-            return new Frame(firstTurn, firstTurn.secondTurn(score));
-        }
-
-        throw new BowlFailureException();
-    }
-
-    private boolean currentFirstTurn() {
-        return Objects.isNull(firstTurn);
-    }
-
-    private boolean currentSecondTurn() {
-        return !isStrike() && Objects.isNull(secondTurn);
+        turns.add(new Turn(score));
     }
 
     public boolean isCompleted() {
-        if (isStrike()) {
-            return true;
-        }
-        return !currentFirstTurn() && !currentSecondTurn();
+        return FrameState.of(turns).isCompleted();
     }
 
-    public boolean isWaiting() {
-        return !isCompleted();
+    public FrameScoreGrade frameScore() {
+        if (!FrameState.of(turns).isCompleted()) {
+            return FrameScoreGrade.EMPTY;
+        }
+        return FrameScoreGrade.of(turns.getFirst(), turns.getLast());
     }
 
-    public final boolean isStrike() {
-        if (Objects.isNull(firstTurn)) {
-            return false;
-        }
-        return firstTurn.isStrike();
+    public TurnScores scores() {
+        return turns.stream()
+                .map(Turn::value)
+                .collect(
+                        Collectors.collectingAndThen(
+                                Collectors.toList(), TurnScores::new
+                        )
+                );
     }
 
-    public final boolean isSpare() {
-        if (Objects.isNull(secondTurn)) {
-            return false;
-        }
-        return secondTurn.isSpare();
+    public int currentFrameNumber() {
+        return currentFrameNumber;
     }
 
-    public final boolean isMiss() {
-        if (Objects.isNull(firstTurn) && Objects.isNull(secondTurn)) {
-            return false;
-        }
-        return firstTurn.isGutter() && secondTurn.isGutter();
+    public Frame nextFrame() {
+        int nextFrameNumber = nextFrameNumber();
+
+        return nextFrameNumber == Frames.MAX_FRAME_NUMBER ?
+                new FinalFrame() : new Frame(nextFrameNumber);
     }
 
-    public List<TurnScore> scores() {
-        List<TurnScore> scores = new ArrayList<>();
+    private int nextFrameNumber() {
+        return currentFrameNumber + 1;
+    }
 
-        if (Objects.nonNull(firstTurn)) {
-            scores.add(firstTurn.score());
+    private enum FrameState {
+        FIRST_TURN(0),
+        SECOND_TURN(1),
+        COMPLETED(2);
+
+        private final int matchesTurnSize;
+
+        FrameState(final int matchesTurnSize) {
+            this.matchesTurnSize = matchesTurnSize;
         }
-        if (Objects.nonNull(secondTurn)) {
-            scores.add(secondTurn.score());
+
+        public boolean isCompleted() {
+            return this == COMPLETED;
         }
-        return scores;
+
+        public static FrameState of(LinkedList<Turn> turns) {
+            if (!turns.isEmpty() && turns.getFirst().isAllClear()) {
+                return COMPLETED;
+            }
+
+            int turnSize = turns.size();
+
+            //noinspection OptionalGetWithoutIsPresent
+            return Arrays.stream(values())
+                    .filter(iFrameState -> iFrameState.matchesTurnSize == turnSize)
+                    .findFirst().get();
+        }
     }
 }

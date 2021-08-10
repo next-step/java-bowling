@@ -3,14 +3,22 @@ package bowling.domain.score;
 import java.util.Objects;
 
 public class Score {
-    protected int score;
+    protected final int score;
 
-    protected Score(int score) {
+    protected Score(final int score) {
         this.score = score;
     }
 
-    public final Score sum(Score score) {
+    public final Score sum(final Score score) {
         return new Score(this.score + score.score);
+    }
+
+    public static Score empty() {
+        return InnerLazyClass.EMPTY_SCORE;
+    }
+
+    public boolean isEmpty() {
+        return InnerLazyClass.EMPTY_SCORE.equals(this);
     }
 
     public boolean isZero() {
@@ -40,6 +48,12 @@ public class Score {
 
     @Override
     public String toString() {
-        return String.valueOf(score);
+        return "Score{" + "score=" + score + '}';
+    }
+
+    private static class InnerLazyClass {
+        private static final int EMPTY_VALUE = -1;
+
+        private static final Score EMPTY_SCORE = new Score(EMPTY_VALUE);
     }
 }

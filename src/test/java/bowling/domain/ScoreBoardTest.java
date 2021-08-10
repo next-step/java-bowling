@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.player.PlayerName;
 import bowling.domain.score.TurnScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +21,7 @@ class ScoreBoardTest {
     })
     @ParameterizedTest
     void recordTest(String strNames) {
-        List<Name> names = toNames(strNames);
+        List<PlayerName> names = toNames(strNames);
         ScoreBoard scoreBoard = ScoreBoard.generate(names);
 
         TurnScore turnScore = TurnScore.of(3);
@@ -35,11 +36,11 @@ class ScoreBoardTest {
         ).isTrue();
     }
 
-    private List<Name> toNames(String strNames) {
+    private List<PlayerName> toNames(String strNames) {
         String[] splitNames = strNames.split(",");
 
         return Arrays.stream(splitNames)
-                .map(Name::new)
+                .map(PlayerName::new)
                 .collect(Collectors.toList());
     }
 }
