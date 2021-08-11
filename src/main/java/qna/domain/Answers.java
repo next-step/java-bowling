@@ -8,6 +8,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -25,7 +26,10 @@ public class Answers {
         this.answers.add(answer);
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public List<DeleteHistory> delete(User loginUser) {
+        return answers.stream()
+                .filter(user -> user.isOwner(loginUser))
+                .map(answer -> answer.delete(loginUser))
+                .collect(Collectors.toList());
     }
 }
