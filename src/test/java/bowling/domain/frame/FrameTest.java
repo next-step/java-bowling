@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.score.TurnScoreTest;
 import bowling.exception.BowlFailureException;
 import org.junit.jupiter.api.DisplayName;
@@ -27,19 +28,31 @@ public class FrameTest {
                 .isInstanceOf(BowlFailureException.class);
     }
 
-    @CsvSource(value = {
-            "10|STRIKE", // 스트라이크는 다음턴이 자동으로 생략 된다.
-            "9,1|SPARE",
-            "4,5|NORMAL",
-            "0,0|MISS"
-    }, delimiter = '|')
-    @DisplayName("frameScore 테스트")
+    @ValueSource(strings = {
+            "5,5",
+            "10"
+    })
+    @DisplayName("스트라이크나 스페어 일 때 다음 프레임의 정보가 없다면 frameScore()의 결과는 Empty이여야 한다.")
     @ParameterizedTest
-    void isStrikeTest(String strScores, String correctFrameScoreName) {
-        FrameScoreGrade correct = FrameScoreGrade.valueOf(correctFrameScoreName);
+    void frameScoreEmptyTest(String strScores) {
+        Frame frame = toFrameWithBowl(strScores);
 
-        assertThat(toFrameWithBowl(strScores).frameScoreGrade())
-                .isEqualTo(correct);
+        assertThat(frame.frameScore().isEmpty())
+                .isTrue();
+    }
+
+    @CsvSource(value = {
+            "5,4=9",
+            "0,1=1",
+            "0,0=0"
+    }, delimiter = '=')
+    @DisplayName("스트라이크나 스페어가 아니라면 즉시 계산 되어야 한다.")
+    @ParameterizedTest
+    void frameScoreNormalTest(String strScores, int correct) {
+        Frame frame = toFrameWithBowl(strScores);
+
+        assertThat(frame.frameScore())
+                .isEqualTo(new Score(correct));
     }
 
     @CsvSource(value = {
@@ -50,12 +63,12 @@ public class FrameTest {
     @ParameterizedTest
     void scoresTest(String strScores, int correctSize) {
         assertThat(
-                toFrameWithBowl(strScores).scores().size()
+                toFrameWithBowl(strScores).turnScores().size()
         ).isEqualTo(correctSize);
     }
 
     public static Frame toFrameWithBowl(String strScores) {
-        Frame frame = new Frame(1);
+        Frame frame = Frame.firstFrame();
 
         TurnScoreTest.toFrameScores(strScores)
                 .forEach(frame::bowl);

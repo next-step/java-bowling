@@ -1,10 +1,15 @@
 package bowling.view;
 
 import bowling.domain.frame.Frame;
+import bowling.domain.score.framescore.FrameScore;
+import bowling.domain.score.framescore.InProgress;
 import bowling.domain.player.Player;
+import bowling.domain.score.Score;
 import bowling.domain.scoreboard.ScoreBoard;
 import bowling.domain.frame.Frames;
 import bowling.view.util.FrameFormat;
+import bowling.view.util.ScoreFormat;
+
 import java.util.stream.IntStream;
 
 public class DosResultView implements ResultView {
@@ -29,13 +34,16 @@ public class DosResultView implements ResultView {
 
     private void printAllPlayer(final ScoreBoard scoreBoard) {
         scoreBoard.forEach(
-                iEntry -> printPlayerLine(iEntry.getKey(), iEntry.getValue())
+                iEntry -> {
+                    printPlayerFrameLine(iEntry.getKey(), iEntry.getValue());
+                    printPlayerFrameScoreLine(iEntry.getValue());
+                }
         );
 
         printEmptyLine();
     }
 
-    private void printPlayerLine(Player player, Frames frames) {
+    private void printPlayerFrameLine(Player player, Frames frames) {
         printPlayerName(player);
         frames.forEach(this::printFrame);
         printEmptyFrame(Frames.MAX_FRAME_NUMBER - frames.size());
@@ -64,6 +72,40 @@ public class DosResultView implements ResultView {
                                 frameBoxedText(Text.EMPTY)
                         )
                 );
+    }
+
+    private void printPlayerFrameScoreLine(final Frames frames) {
+        System.out.print(nameBoxedText(Text.EMPTY));
+
+        Score cumulativeScore = new Score(0);
+
+        for (Frame iFrame : frames) {
+            cumulativeScore = cumulativeScore.sum(
+                    printFrameScore(cumulativeScore, iFrame)
+            );
+        }
+        printEmptyFrame(Frames.MAX_FRAME_NUMBER - frames.size());
+
+        printEmptyLine();
+    }
+
+    private Score printFrameScore(Score cumulativeScore, final Frame frame) {
+        FrameScore iFrameScore = frame.frameScore();
+
+        if (iFrameScore instanceof InProgress || iFrameScore.isEmpty()) {
+            System.out.print(
+                    frameBoxedText(Text.EMPTY)
+            );
+            return Score.empty();
+        }
+
+        cumulativeScore = cumulativeScore.sum(iFrameScore);
+        System.out.print(
+                frameBoxedText(
+                        new ScoreFormat(cumulativeScore).format()
+                )
+        );
+        return iFrameScore;
     }
 
     private String nameBoxedText(Object obj) {

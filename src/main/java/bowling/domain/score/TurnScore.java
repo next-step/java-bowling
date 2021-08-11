@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public final class TurnScore extends Score {
+public class TurnScore extends Score {
     private static final int MIN_VALUE = 0;
     private static final int MAX_VALUE = 10;
     private static final Map<Integer, TurnScore> CACHED =
@@ -42,8 +42,11 @@ public final class TurnScore extends Score {
     }
 
     private static class InnerLazyClass {
-        private static final int EMPTY_VALUE = -1;
-
-        private static final TurnScore EMPTY_TURN_SCORE = new TurnScore(EMPTY_VALUE);
+        private static final TurnScore EMPTY_TURN_SCORE = new TurnScore(0) {
+            @Override
+            public boolean isEmpty() {
+                return true;
+            }
+        };
     }
 }

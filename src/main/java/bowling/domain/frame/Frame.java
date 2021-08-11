@@ -1,21 +1,32 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.framescore.*;
 import bowling.domain.score.TurnScore;
 import bowling.domain.score.TurnScores;
 import bowling.domain.Turn;
 import bowling.exception.BowlFailureException;
+import bowling.util.Pagination;
 
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Frame {
-    protected final LinkedList<Turn> turns;
-    private final int currentFrameNumber;
+    private static final int FIRST_FRAME_NUMBER = 1;
 
-    protected Frame(int frameNumber) {
+    protected final LinkedList<Turn> turns;
+
+    protected Pagination<Frame> pagination;
+
+    protected Frame() {
         this.turns = new LinkedList<>();
-        this.currentFrameNumber = frameNumber;
+    }
+
+    public static Frame firstFrame() {
+        Frame newFrame = new Frame();
+        newFrame.pagination = new Pagination<>(
+                FIRST_FRAME_NUMBER, newFrame, Pagination.empty()
+        );
+        return newFrame;
     }
 
     public void bowl(final TurnScore score) {
@@ -29,14 +40,33 @@ public class Frame {
         return FrameState.of(turns).isCompleted();
     }
 
-    public FrameScoreGrade frameScoreGrade() {
-        if (!FrameState.of(turns).isCompleted()) {
-            return FrameScoreGrade.EMPTY;
-        }
-        return FrameScoreGrade.of(turns.getFirst(), turns.getLast());
+    public boolean isCompletedFirstTurn() {
+        return turns.size() >= 1;
     }
 
-    public TurnScores scores() {
+    public FrameScore frameScore() {
+        if (!FrameState.of(turns).isCompleted()) {
+            return new InProgress(turnScores());
+        }
+
+        Turn firstTurn = turns.getFirst();
+        if (firstTurn.isAllClear()) {
+            return Strike.of(pagination);
+        }
+
+        Turn secondTurn = turns.getLast();
+        if (firstTurn.union(secondTurn).isAllClear()) {
+            return Spare.of(pagination);
+        }
+
+        if (firstTurn.isGutter() && secondTurn.isGutter()) {
+            return Miss.instance();
+        }
+
+        return new FrameScore(turnScores());
+    }
+
+    public TurnScores turnScores() {
         return turns.stream()
                 .map(Turn::value)
                 .collect(
@@ -47,18 +77,17 @@ public class Frame {
     }
 
     public int currentFrameNumber() {
-        return currentFrameNumber;
+        return pagination.currentPageNumber();
     }
 
-    public Frame nextFrame() {
-        int nextFrameNumber = nextFrameNumber();
+    public Frame newNextFrame() {
+        int nextFrameNumber = pagination.nextPageNumber();
 
-        return nextFrameNumber == Frames.MAX_FRAME_NUMBER ?
-                new FinalFrame() : new Frame(nextFrameNumber);
-    }
+        Frame nextInstance = nextFrameNumber == Frames.MAX_FRAME_NUMBER ?
+                new FinalFrame() : new Frame();
+        nextInstance.pagination = pagination.newNextPage(nextInstance);
 
-    private int nextFrameNumber() {
-        return currentFrameNumber + 1;
+        return nextInstance;
     }
 
     private enum FrameState {
@@ -83,10 +112,11 @@ public class Frame {
 
             int turnSize = turns.size();
 
-            //noinspection OptionalGetWithoutIsPresent
+            //noinspection
             return Arrays.stream(values())
                     .filter(iFrameState -> iFrameState.matchesTurnSize == turnSize)
-                    .findFirst().get();
+                    .findFirst()
+                    .orElse(COMPLETED);
         }
     }
 }

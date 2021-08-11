@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FrameFormatTest {
     @CsvSource(value = {
             "10=X",
+            "5=5",
             "0,10=-|/",
             "4,5=4|5"
     }, delimiter = '=')

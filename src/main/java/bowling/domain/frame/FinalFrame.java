@@ -1,13 +1,20 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.framescore.BonusSpare;
+import bowling.domain.score.framescore.FrameScore;
+import bowling.domain.score.framescore.Spare;
+import bowling.domain.score.framescore.Strike;
 import bowling.domain.score.TurnScore;
 import bowling.domain.Turn;
+import bowling.domain.score.TurnScores;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public final class FinalFrame extends Frame {
     private Turn bonusTurn;
 
     public FinalFrame() {
-        super(Frames.MAX_FRAME_NUMBER);
         bonusTurn = Turn.empty();
     }
 
@@ -18,6 +25,23 @@ public final class FinalFrame extends Frame {
             return;
         }
         super.bowl(score);
+    }
+
+    @Override
+    public FrameScore frameScore() {
+        FrameScore frameScore = super.frameScore();
+
+        if (!isCompleted()) {
+            return frameScore;
+        }
+
+        if (frameScore instanceof Spare) {
+            return new BonusSpare(turnScores());
+        }
+
+        return new FrameScore(
+                turnScores()
+        );
     }
 
     private boolean currentBonusTurn() {
@@ -38,8 +62,20 @@ public final class FinalFrame extends Frame {
     }
 
     private boolean isAvailableBonusTurn() {
-        FrameScoreGrade frameScore = frameScoreGrade();
-        return frameScore == FrameScoreGrade.STRIKE || frameScore == FrameScoreGrade.SPARE;
+        FrameScore frameScore = super.frameScore();
+        return frameScore instanceof Spare || frameScore instanceof Strike;
+    }
+
+    @Override
+    public TurnScores turnScores() {
+        List<TurnScore> turnScores = turns.stream()
+                .map(Turn::value)
+                .collect(Collectors.toList());
+        if (!bonusTurn.isEmpty()) {
+            turnScores.add(bonusTurn.value());
+        }
+
+        return new TurnScores(turnScores);
     }
 
     public TurnScore bonusScore() {

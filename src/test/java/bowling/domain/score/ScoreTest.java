@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.domain.Turn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,6 +13,13 @@ class ScoreTest {
     @Test
     void isZero() {
         assertThat(new Score(0).isZero())
+                .isTrue();
+    }
+
+    @DisplayName("empty 테스트")
+    @Test
+    void isZeroOfEmpty() {
+        assertThat(Score.empty().isEmpty())
                 .isTrue();
     }
 
