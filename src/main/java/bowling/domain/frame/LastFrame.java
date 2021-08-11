@@ -3,7 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.pin.Pins;
 import bowling.domain.state.CommonState;
 import bowling.domain.state.pitching.LastPitching;
-import bowling.domain.dto.StateDatas;
+import bowling.domain.dto.StateData;
 
 public class LastFrame implements Frame {
 
@@ -28,8 +28,8 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public StateDatas getFrameStates() {
-        return StateDatas.of(state.getState());
+    public StateData getFrameStates() {
+        return StateData.of(state.getState());
     }
 
 }

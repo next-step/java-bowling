@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
-import bowling.domain.dto.StateDatas;
+import bowling.domain.dto.StateData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class Frames {
         frame.addFrame(frames);
     }
 
-    public List<StateDatas> getAllStates() {
+    public List<StateData> getAllStates() {
         return frames.stream()
                 .map(FrameResult::getFrameStates)
                 .collect(Collectors.toList());

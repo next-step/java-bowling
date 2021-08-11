@@ -3,33 +3,22 @@ package bowling.domain.dto;
 import bowling.domain.state.CommonState;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StateData {
-    private static final int FIRST_PITCHING_INDEX = 0;
-    private static final int SECOND_PITCHING_INDEX = 1;
+    private final List<StateDatum> stateData;
 
-    private final String type;
-    private final List<Integer> hitPins;
-
-    private StateData(CommonState state) {
-        this.type = state.getClass().getSimpleName();
-        this.hitPins = state.getHitPins();
+    private StateData(List<CommonState> states) {
+        stateData = states.stream()
+                .map(StateDatum::of)
+                .collect(Collectors.toList());
     }
 
-    public static StateData of(CommonState state) {
-        return new StateData(state);
+    public static StateData of(List<CommonState> states) {
+        return new StateData(states);
     }
 
-    public String getType() {
-        return type;
+    public List<StateDatum> getStateData() {
+        return stateData;
     }
-
-    public int getCountFirstPins() {
-        return hitPins.get(FIRST_PITCHING_INDEX);
-    }
-
-    public int getCountSecondPins() {
-        return hitPins.get(SECOND_PITCHING_INDEX);
-    }
-
 }

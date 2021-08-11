@@ -6,7 +6,7 @@ import java.util.List;
 
 public class BowlingGameResult {
     private final String name;
-    private final List<StateDatas> states;
+    private final List<StateData> states;
 
     private BowlingGameResult(Bowler bowler) {
         this.name = bowler.getName();
@@ -21,7 +21,7 @@ public class BowlingGameResult {
         return name;
     }
 
-    public List<StateDatas> getStates() {
+    public List<StateData> getStates() {
         return states;
     }
 

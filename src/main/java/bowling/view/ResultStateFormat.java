@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.dto.StateData;
+import bowling.domain.dto.StateDatum;
 import bowling.domain.state.pitching.FirstPitching;
 import bowling.domain.state.pitching.SecondPitching;
 import bowling.domain.state.result.Miss;
@@ -20,18 +20,18 @@ public enum ResultStateFormat {
     SECOND_PITCHING(SecondPitching.class.getSimpleName(), state -> BowlingRecordMark.find(state.getCountFirstPins()));
 
     private final String type;
-    private final Function<StateData, String> changeFunc;
+    private final Function<StateDatum, String> changeFunc;
 
-    ResultStateFormat(String type, Function<StateData, String> changeFunc) {
+    ResultStateFormat(String type, Function<StateDatum, String> changeFunc) {
         this.type = type;
         this.changeFunc = changeFunc;
     }
 
-    public static String getValue(StateData stateData) {
+    public static String getValue(StateDatum stateDatum) {
         return Arrays.stream(values())
-                .filter(key -> key.type.equals(stateData.getType()))
+                .filter(key -> key.type.equals(stateDatum.getType()))
                 .findFirst()
-                .map(format -> format.changeFunc.apply(stateData))
+                .map(format -> format.changeFunc.apply(stateDatum))
                 .orElseThrow(IllegalArgumentException::new);
     }
 

@@ -2,7 +2,7 @@ package bowling.view;
 
 import bowling.domain.frame.CommonFrame;
 import bowling.domain.dto.BowlingGameResult;
-import bowling.domain.dto.StateDatas;
+import bowling.domain.dto.StateData;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -55,8 +55,8 @@ public class ResultView {
                 .forEach(value -> print(String.format(FRAME_FORMAT, "")));
     }
 
-    private static String makeRecordValue(StateDatas stateDatas) {
-        return stateDatas.getStateDatas()
+    private static String makeRecordValue(StateData stateData) {
+        return stateData.getStateData()
                 .stream()
                 .map(ResultStateFormat::getValue)
                 .collect(Collectors.joining(EXTRA_CHANCE_MARK));

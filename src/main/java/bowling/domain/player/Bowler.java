@@ -3,7 +3,7 @@ package bowling.domain.player;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.pin.Pins;
-import bowling.domain.dto.StateDatas;
+import bowling.domain.dto.StateData;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class Bowler {
         return frames.isBowlingFinish();
     }
 
-    public List<StateDatas> getStates() {
+    public List<StateData> getStates() {
         return frames.getAllStates();
     }
 

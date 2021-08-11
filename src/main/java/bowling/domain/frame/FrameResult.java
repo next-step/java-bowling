@@ -1,9 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.dto.StateDatas;
+import bowling.domain.dto.StateData;
 
 public interface FrameResult {
 
-    StateDatas getFrameStates();
+    StateData getFrameStates();
 
 }
