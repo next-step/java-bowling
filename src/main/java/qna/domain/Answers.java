@@ -18,12 +18,12 @@ public class Answers {
     @OrderBy("id ASC")
     private final List<Answer> answers;
 
-    public Answers() {
+    protected Answers() {
         this.answers = new ArrayList<>();
     }
 
     public void add(Answer answer) {
-        this.answers.add(answer);
+        answers.add(answer);
     }
 
     public List<DeleteHistory> delete(User loginUser) {
