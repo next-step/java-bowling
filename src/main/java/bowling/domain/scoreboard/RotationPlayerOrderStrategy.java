@@ -1,6 +1,7 @@
 package bowling.domain.scoreboard;
 
 import bowling.domain.player.Player;
+import bowling.domain.player.PlayerGameIndex;
 
 import java.util.Collection;
 
@@ -13,7 +14,7 @@ public class RotationPlayerOrderStrategy implements PlayerOrderStrategy {
 
     @Override
     public Player currentPlayer(Collection<Player> players) {
-        int playerIndex = currentPlayerIndex(players.size());
+        PlayerGameIndex playerIndex = currentPlayerIndex(players.size());
 
         //noinspection OptionalGetWithoutIsPresent
         return players.stream()
@@ -28,7 +29,7 @@ public class RotationPlayerOrderStrategy implements PlayerOrderStrategy {
         ++playerCounter;
     }
 
-    private int currentPlayerIndex(int playerSize) {
-        return playerCounter % playerSize;
+    private PlayerGameIndex currentPlayerIndex(int playerSize) {
+        return new PlayerGameIndex(playerCounter % playerSize);
     }
 }

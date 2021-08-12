@@ -1,6 +1,7 @@
 package bowling.domain.scoreboard;
 
 import bowling.domain.player.Player;
+import bowling.domain.player.PlayerGameIndex;
 import bowling.domain.player.PlayerName;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -45,7 +46,7 @@ class RotationPlayerOrderStrategyTest {
                         new Player(
                                 new PlayerName(
                                         splitPlayerNames[index]
-                                ), index)
+                                ), new PlayerGameIndex(index))
                 )
                 .collect(Collectors.toList());
     }
