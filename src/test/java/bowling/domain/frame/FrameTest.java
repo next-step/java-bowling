@@ -32,13 +32,13 @@ public class FrameTest {
             "5,5",
             "10"
     })
-    @DisplayName("스트라이크나 스페어 일 때 다음 프레임의 정보가 없다면 frameScore()의 결과는 Empty이여야 한다.")
+    @DisplayName("스트라이크나 스페어 일 때 다음 프레임의 정보가 없다면 isShowScoreValue는 false여야 한다.")
     @ParameterizedTest
     void frameScoreEmptyTest(String strScores) {
         Frame frame = toFrameWithBowl(strScores);
 
-        assertThat(frame.frameScore().isEmpty())
-                .isTrue();
+        assertThat(frame.frameScore().isShowScoreValue())
+                .isFalse();
     }
 
     @CsvSource(value = {
@@ -51,7 +51,7 @@ public class FrameTest {
     void frameScoreNormalTest(String strScores, int correct) {
         Frame frame = toFrameWithBowl(strScores);
 
-        assertThat(frame.frameScore())
+        assertThat(frame.frameScore().turnScores().sum())
                 .isEqualTo(new Score(correct));
     }
 

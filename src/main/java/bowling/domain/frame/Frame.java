@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.framescore.*;
+import bowling.domain.framescore.*;
 import bowling.domain.score.TurnScore;
 import bowling.domain.score.TurnScores;
 import bowling.domain.Turn;
@@ -45,8 +45,8 @@ public class Frame {
     }
 
     public FrameScore frameScore() {
-        if (!FrameState.of(turns).isCompleted()) {
-            return new InProgress(turnScores());
+        if (!isCompleted()) {
+            return Normal.of(turnScores(), false);
         }
 
         Turn firstTurn = turns.getFirst();
@@ -63,7 +63,7 @@ public class Frame {
             return Miss.instance();
         }
 
-        return new FrameScore(turnScores());
+        return Normal.of(turnScores(), true);
     }
 
     public TurnScores turnScores() {

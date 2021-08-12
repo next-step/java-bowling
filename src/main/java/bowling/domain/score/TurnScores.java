@@ -1,13 +1,12 @@
 package bowling.domain.score;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TurnScores implements Iterable<TurnScore> {
     private final List<TurnScore> scores;
+
+    private Score sumScoreCache;
 
     public TurnScores(final List<TurnScore> scores) {
         this.scores = scores;
@@ -15,6 +14,10 @@ public class TurnScores implements Iterable<TurnScore> {
 
     public static TurnScores empty() {
         return new TurnScores(Collections.emptyList());
+    }
+
+    public boolean isEmpty() {
+        return scores.isEmpty();
     }
 
     public TurnScore first() {
@@ -26,11 +29,18 @@ public class TurnScores implements Iterable<TurnScore> {
     }
 
     public Score sum() {
-        int sumValue = scores.stream().mapToInt(
-                Score::value
-        ).sum();
+        if (Objects.isNull(sumScoreCache)) {
+            registerSumScoreCache();
+        }
+        return sumScoreCache;
+    }
 
-        return new Score(sumValue);
+    private synchronized void registerSumScoreCache() {
+        if (Objects.isNull(sumScoreCache)) {
+            sumScoreCache = new Score(
+                    scores.stream().mapToInt(Score::value).sum()
+            );
+        }
     }
 
 

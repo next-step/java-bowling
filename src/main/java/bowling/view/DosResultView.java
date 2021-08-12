@@ -4,8 +4,7 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 import bowling.domain.score.Score;
-import bowling.domain.score.framescore.FrameScore;
-import bowling.domain.score.framescore.InProgress;
+import bowling.domain.framescore.FrameScore;
 import bowling.domain.scoreboard.ScoreBoard;
 import bowling.view.util.FrameFormat;
 import bowling.view.util.ScoreFormat;
@@ -60,7 +59,7 @@ public class DosResultView implements ResultView {
     private void printFrame(final Frame frame) {
         System.out.print(
                 frameBoxedText(
-                        new FrameFormat(frame).format()
+                        new FrameFormat(frame.frameScore()).format()
                 )
         );
     }
@@ -92,20 +91,23 @@ public class DosResultView implements ResultView {
     private Score printFrameScore(Score cumulativeScore, final Frame frame) {
         FrameScore iFrameScore = frame.frameScore();
 
-        if (iFrameScore instanceof InProgress || iFrameScore.isEmpty()) {
+        if (!iFrameScore.isShowScoreValue()) {
             System.out.print(
                     frameBoxedText(Text.EMPTY)
             );
             return Score.empty();
         }
 
-        cumulativeScore = cumulativeScore.sum(iFrameScore);
+        Score iFrameScoreSumValue = iFrameScore.turnScores().sum();
+        cumulativeScore = cumulativeScore.sum(
+                iFrameScoreSumValue
+        );
         System.out.print(
                 frameBoxedText(
                         new ScoreFormat(cumulativeScore).format()
                 )
         );
-        return iFrameScore;
+        return iFrameScoreSumValue;
     }
 
     private String nameBoxedText(Object obj) {

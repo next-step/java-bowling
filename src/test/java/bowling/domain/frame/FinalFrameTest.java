@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FinalFrameTest {
+public class FinalFrameTest {
     @ValueSource(strings = {"0,10,10", "10,10", "4,5"})
     @DisplayName("bowl 테스트 - 스페어 또는 스트라이크에만 보너스 기회가 허용 된다.")
     @ParameterizedTest
@@ -18,7 +18,7 @@ class FinalFrameTest {
                 .isTrue();
     }
 
-    private Frame toFinalFrameWithBowl(String strScores) {
+    public static Frame toFinalFrameWithBowl(String strScores) {
         Frame frame = Frame.firstFrame();
         for (int i = 0; i < 9; i++) {
             frame = frame.newNextFrame();

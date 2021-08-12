@@ -1,4 +1,4 @@
-package bowling.domain.score.framescore;
+package bowling.domain.framescore;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.score.TurnScore;
@@ -8,17 +8,20 @@ import bowling.util.Pagination;
 import java.util.Collections;
 
 public class Spare extends FrameScore {
-    private Spare(TurnScores turnScores) {
+    private final boolean showScoreValue;
+
+    protected Spare(TurnScores turnScores, boolean showScoreValue) {
         super(turnScores);
+        this.showScoreValue = showScoreValue;
     }
 
     public static Spare of(TurnScores turnScores) {
-        return new Spare(turnScores);
+        return new Spare(turnScores, true);
     }
 
     public static Spare of(Pagination<Frame> pagination) {
         if (!isComputable(pagination)) {
-            return InnerLazyClass.EMPTY;
+            return new Spare(pagination.currentElement().turnScores(), false);
         }
 
         Pagination<Frame> nextPage = pagination.next();
@@ -26,7 +29,7 @@ public class Spare extends FrameScore {
         TurnScores nextFrameScores = nextPage.currentElement().turnScores();
 
         return new Spare(
-                unionWithBonusScore(currentFrameScores, nextFrameScores)
+                unionWithBonusScore(currentFrameScores, nextFrameScores), true
         );
     }
 
@@ -45,12 +48,13 @@ public class Spare extends FrameScore {
         );
     }
 
-    private static class InnerLazyClass {
-        private static final Spare EMPTY = new Spare(TurnScores.empty()) {
-            @Override
-            public boolean isEmpty() {
-                return true;
-            }
-        };
+    @Override
+    public boolean isShowScoreValue() {
+        return showScoreValue;
+    }
+
+    @Override
+    public boolean isCompleted() {
+        return true;
     }
 }

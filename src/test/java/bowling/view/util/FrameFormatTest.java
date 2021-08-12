@@ -19,7 +19,7 @@ class FrameFormatTest {
     void formatTest(String strScores, String correctFormat) {
         assertThat(
                 new FrameFormat(
-                        FrameTest.toFrameWithBowl(strScores)
+                        FrameTest.toFrameWithBowl(strScores).frameScore()
                 ).format()
         ).isEqualTo(correctFormat);
     }
