@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.Turn;
 import bowling.domain.score.TurnScore;
 import bowling.exception.InvalidTurnScoreException;
 import org.junit.jupiter.api.DisplayName;
@@ -8,7 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class TurnTest {
     private static class FakeTurn extends Turn {

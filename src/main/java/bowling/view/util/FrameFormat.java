@@ -1,9 +1,9 @@
 package bowling.view.util;
 
 import bowling.domain.frame.Frame;
-import bowling.domain.score.framescore.*;
 import bowling.domain.score.Score;
 import bowling.domain.score.TurnScores;
+import bowling.domain.score.framescore.*;
 import org.apache.logging.log4j.util.Strings;
 
 import java.util.ArrayList;
@@ -31,12 +31,12 @@ public class FrameFormat {
         if (frameScore instanceof Miss) {
             return Text.MISS.toString();
         }
-        if (frameScore.isEmpty()) {
-            return EMPTY;
-        }
         if (frameScore instanceof BonusSpare) {
             TurnScores turnScores = frame.turnScores();
-            return Text.SPARE_BONUS.format(turnScores.first().value(), turnScores.last().value());
+            return Text.BONUS_SPARE.format(turnScores.first().value(), turnScores.last().value());
+        }
+        if (frameScore.isEmpty()) {
+            return EMPTY;
         }
 
         return toDisplayScores(frame);
@@ -46,27 +46,28 @@ public class FrameFormat {
         return scoreFormat(frame.turnScores().first());
     }
 
+    private String scoreFormat(Score score) {
+        return new ScoreFormat(score).format();
+    }
+
     private String toDisplayScores(Frame frame) {
         List<String> displayScores = new ArrayList<>();
         frame.turnScores().forEach(
                 iTurnScore ->
                         displayScores.add(
-                                new ScoreFormat(iTurnScore).format()
+                                scoreFormat(iTurnScore)
                         )
         );
 
         return Strings.join(displayScores, TURN_SCORE_DELIMITER);
     }
 
-    private String scoreFormat(Score score) {
-        return new ScoreFormat(score).format();
-    }
 
     private enum Text {
         MISS("-"),
         STRIKE("X"),
         SPARE("%s|/"),
-        SPARE_BONUS("%d|/|%d");
+        BONUS_SPARE("%d|/|%d");
 
         private final String str;
 

@@ -26,26 +26,17 @@ public class TurnScores implements Iterable<TurnScore> {
     }
 
     public Score sum() {
-        return Score.sum(
-                toScoreList()
-        );
+        int sumValue = scores.stream().mapToInt(
+                Score::value
+        ).sum();
+
+        return new Score(sumValue);
     }
 
-    private List<Score> toScoreList() {
-        return scores.stream().map(iScore -> (Score) iScore)
-                .collect(Collectors.toList());
-    }
 
     public TurnScores union(TurnScores turnScores) {
         List<TurnScore> newScores = new ArrayList<>(scores);
         newScores.addAll(turnScores.scores);
-
-        return new TurnScores(newScores);
-    }
-
-    public TurnScores union(TurnScore turnScore) {
-        List<TurnScore> newScores = new ArrayList<>(scores);
-        newScores.add(turnScore);
 
         return new TurnScores(newScores);
     }

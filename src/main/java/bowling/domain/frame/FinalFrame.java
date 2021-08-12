@@ -77,8 +77,4 @@ public final class FinalFrame extends Frame {
 
         return new TurnScores(turnScores);
     }
-
-    public TurnScore bonusScore() {
-        return bonusTurn.value();
-    }
 }

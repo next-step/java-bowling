@@ -2,8 +2,6 @@ package bowling.domain.scoreboard;
 
 import bowling.domain.player.PlayerName;
 import bowling.domain.score.TurnScore;
-import bowling.domain.scoreboard.RotationPlayerOrderStrategy;
-import bowling.domain.scoreboard.ScoreBoard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

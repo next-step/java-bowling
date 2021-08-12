@@ -1,12 +1,12 @@
 package bowling.view;
 
 import bowling.domain.frame.Frame;
-import bowling.domain.score.framescore.FrameScore;
-import bowling.domain.score.framescore.InProgress;
+import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 import bowling.domain.score.Score;
+import bowling.domain.score.framescore.FrameScore;
+import bowling.domain.score.framescore.InProgress;
 import bowling.domain.scoreboard.ScoreBoard;
-import bowling.domain.frame.Frames;
 import bowling.view.util.FrameFormat;
 import bowling.view.util.ScoreFormat;
 

@@ -2,13 +2,9 @@ package bowling.domain.score.framescore;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.score.TurnScore;
-import bowling.domain.score.TurnScoreTest;
-import bowling.domain.score.TurnScores;
 import bowling.util.Pagination;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

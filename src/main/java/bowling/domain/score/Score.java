@@ -10,14 +10,6 @@ public class Score {
         this.score = score;
     }
 
-    public static Score sum(List<Score> scores) {
-        return new Score(
-                scores.stream()
-                .mapToInt(Score::value)
-                .sum()
-        );
-    }
-
     public final Score sum(final Score score) {
         return new Score(this.score + score.score);
     }

@@ -1,10 +1,10 @@
 package bowling;
 
-import bowling.domain.player.PlayerName;
 import bowling.domain.player.Player;
+import bowling.domain.player.PlayerName;
+import bowling.domain.score.TurnScore;
 import bowling.domain.scoreboard.RotationPlayerOrderStrategy;
 import bowling.domain.scoreboard.ScoreBoard;
-import bowling.domain.score.TurnScore;
 import bowling.view.DosInputView;
 import bowling.view.DosResultView;
 import bowling.view.InputView;
