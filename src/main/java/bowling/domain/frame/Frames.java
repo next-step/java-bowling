@@ -1,7 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.ScoreData;
 import bowling.domain.pin.Pins;
 import bowling.domain.dto.StateData;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,14 @@ public class Frames {
     public List<StateData> getAllStates() {
         return frames.stream()
                 .map(FrameResult::getFrameStates)
+                .collect(Collectors.toList());
+    }
+
+    public List<ScoreData> getScores() {
+        return frames.stream()
+                .map(Frame::getScore)
+                .filter(Score::isCompute)
+                .map(ScoreData::of)
                 .collect(Collectors.toList());
     }
 

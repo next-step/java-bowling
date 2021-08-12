@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.domain.state.CommonState;
 import bowling.domain.state.pitching.FirstPitching;
 import bowling.domain.dto.StateData;
@@ -13,9 +14,11 @@ public class CommonFrame implements Frame {
     private static final int COUNT_OF_COMMON_FRAME = 9;
 
     private CommonState state;
+    private Frame nextFrame;
 
     private CommonFrame(CommonState state) {
         this.state = state;
+        nextFrame = InitialFrame.of();
     }
 
     public static CommonFrame of() {
@@ -46,17 +49,34 @@ public class CommonFrame implements Frame {
         return StateData.of(state.getState());
     }
 
+    @Override
+    public Score getScore() {
+        return nextFrame.addBonusScore(state.score());
+    }
+
+    @Override
+    public Score addBonusScore(Score score) {
+        Score addedScore = state.addScore(score);
+
+        return nextFrame.addBonusScore(addedScore);
+    }
+
     private boolean isFrameNotFinish() {
         return !state.isFinish();
     }
 
     private void createNextFrame(List<Frame> frames) {
         if (frames.size() < COUNT_OF_COMMON_FRAME) {
-            frames.add(CommonFrame.of());
+            updateNextFrame(frames, CommonFrame.of());
             return;
         }
 
-        frames.add(LastFrame.of());
+        updateNextFrame(frames, LastFrame.of());
+    }
+
+    private void updateNextFrame(List<Frame> frames, Frame nextFrame) {
+        this.nextFrame = nextFrame;
+        frames.add(nextFrame);
     }
 
 }

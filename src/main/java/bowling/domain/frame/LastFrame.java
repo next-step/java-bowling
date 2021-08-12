@@ -1,9 +1,10 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.StateData;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.domain.state.CommonState;
 import bowling.domain.state.pitching.LastPitching;
-import bowling.domain.dto.StateData;
 
 public class LastFrame implements Frame {
 
@@ -30,6 +31,16 @@ public class LastFrame implements Frame {
     @Override
     public StateData getFrameStates() {
         return StateData.of(state.getState());
+    }
+
+    @Override
+    public Score getScore() {
+        return state.score();
+    }
+
+    @Override
+    public Score addBonusScore(Score score) {
+        return state.addScore(score);
     }
 
 }

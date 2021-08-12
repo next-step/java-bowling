@@ -1,6 +1,7 @@
 package bowling.domain.player;
 
 
+import bowling.domain.dto.ScoreData;
 import bowling.domain.frame.Frames;
 import bowling.domain.pin.Pins;
 import bowling.domain.dto.StateData;
@@ -35,6 +36,10 @@ public class Bowler {
     public void playBowling(int pins) {
         Pins hitPins = Pins.of(pins);
         frames.hitPins(hitPins);
+    }
+
+    public List<ScoreData> getScores() {
+        return frames.getScores();
     }
 
 }

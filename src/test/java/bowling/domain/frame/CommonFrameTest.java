@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.ComputableScore;
+import bowling.domain.score.ProgressScore;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,6 +56,50 @@ class CommonFrameTest {
 
         //assert
         assertThat(frames.size()).isEqualTo(2);
+    }
+
+    @DisplayName("strike에 대한 score를 구할 수 있다")
+    @Test
+    void should_return_score_for_strike() {
+        //arrange
+        CommonFrame commonFrame = CommonFrame.of();
+        commonFrame.hitPins(Pins.of(10));
+
+        //act
+        Score score = commonFrame.getScore();
+
+        //assert
+        assertThat(score).isEqualTo(ProgressScore.ofStrike());
+    }
+
+    @DisplayName("spare에 대한 score를 구할 수 있다")
+    @Test
+    void should_return_score_for_spare() {
+        //arrange
+        CommonFrame commonFrame = CommonFrame.of();
+        commonFrame.hitPins(Pins.of(1));
+        commonFrame.hitPins(Pins.of(9));
+
+        //act
+        Score score = commonFrame.getScore();
+
+        //assert
+        assertThat(score).isEqualTo(ProgressScore.of(10, 1));
+    }
+
+    @DisplayName("miss에 대한 score를 구할 수 있다")
+    @Test
+    void should_return_score_for_miss() {
+        //arrange
+        CommonFrame commonFrame = CommonFrame.of();
+        commonFrame.hitPins(Pins.of(1));
+        commonFrame.hitPins(Pins.of(1));
+
+        //act
+        Score score = commonFrame.getScore();
+
+        //assert
+        assertThat(score).isEqualTo(ComputableScore.of(Pins.of(2).score()));
     }
 
 }
