@@ -1,23 +1,18 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.state.CommonState;
 import bowling.domain.state.pitching.FirstPitching;
-import bowling.domain.dto.StateData;
 
 import java.util.List;
 
-public class CommonFrame implements Frame {
-    public static final int START_COUNT = 1;
-    public static final int END_COUNT = 10;
+public class CommonFrame extends Frame {
     private static final int COUNT_OF_COMMON_FRAME = 9;
 
-    private CommonState state;
     private Frame nextFrame;
 
     private CommonFrame(CommonState state) {
-        this.state = state;
+        super(state);
         nextFrame = InitialFrame.of();
     }
 
@@ -26,17 +21,12 @@ public class CommonFrame implements Frame {
     }
 
     @Override
-    public boolean isBowlingFinish() {
-        return false;
+    public Score getScore() {
+        return nextFrame.addBonusScore(state.score());
     }
 
     @Override
-    public void hitPins(Pins pins) {
-        this.state = state.hitPins(pins);
-    }
-
-    @Override
-    public void addFrame(List<Frame> frames) {
+    protected void addFrame(List<Frame> frames) {
         if (isFrameNotFinish()) {
             return;
         }
@@ -45,17 +35,7 @@ public class CommonFrame implements Frame {
     }
 
     @Override
-    public StateData getFrameStates() {
-        return StateData.of(state.getState());
-    }
-
-    @Override
-    public Score getScore() {
-        return nextFrame.addBonusScore(state.score());
-    }
-
-    @Override
-    public Score addBonusScore(Score score) {
+    protected Score addBonusScore(Score score) {
         Score addedScore = state.addScore(score);
 
         return nextFrame.addBonusScore(addedScore);

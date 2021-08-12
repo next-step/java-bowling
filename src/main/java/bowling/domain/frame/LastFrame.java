@@ -1,26 +1,17 @@
 package bowling.domain.frame;
 
-import bowling.domain.dto.StateData;
-import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.state.CommonState;
 import bowling.domain.state.pitching.LastPitching;
 
-public class LastFrame implements Frame {
-
-    private CommonState state;
+public class LastFrame extends Frame {
 
     private LastFrame(CommonState state) {
-        this.state = state;
+        super(state);
     }
 
     public static LastFrame of() {
         return new LastFrame(LastPitching.of());
-    }
-
-    @Override
-    public void hitPins(Pins pins) {
-        this.state = state.hitPins(pins);
     }
 
     @Override
@@ -29,17 +20,12 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public StateData getFrameStates() {
-        return StateData.of(state.getState());
-    }
-
-    @Override
     public Score getScore() {
         return state.score();
     }
 
     @Override
-    public Score addBonusScore(Score score) {
+    protected Score addBonusScore(Score score) {
         return state.addScore(score);
     }
 

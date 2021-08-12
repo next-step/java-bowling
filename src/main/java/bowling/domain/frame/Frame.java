@@ -3,22 +3,40 @@ package bowling.domain.frame;
 import bowling.domain.dto.StateData;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
+import bowling.domain.state.CommonState;
+import bowling.domain.state.pitching.FirstPitching;
 
 import java.util.List;
 
-public interface Frame {
+public abstract class Frame {
 
-    boolean isBowlingFinish();
+    public static final int START_COUNT = 1;
+    public static final int END_COUNT = 10;
 
-    default void hitPins(Pins pins) {
+    protected CommonState state;
+
+    protected Frame(CommonState state) {
+        this.state = state;
     }
 
-    default void addFrame(List<Frame> frames) {
+    public abstract Score getScore();
+
+    protected abstract Score addBonusScore(Score score);
+
+    public void hitPins(Pins pins) {
+        this.state = state.hitPins(pins);
     }
 
-    Score getScore();
+    public StateData getFrameStates() {
+        return StateData.of(state.getState());
+    }
 
-    Score addBonusScore(Score score);
+    public boolean isBowlingFinish() {
+        return false;
+    }
 
-    StateData getFrameStates();
+    protected void addFrame(List<Frame> frames) {
+
+    }
+
 }
