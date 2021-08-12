@@ -4,7 +4,6 @@ import bowling.domain.dto.StateData;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.state.CommonState;
-import bowling.domain.state.pitching.FirstPitching;
 
 import java.util.List;
 

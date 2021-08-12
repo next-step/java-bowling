@@ -3,7 +3,7 @@ package bowling.domain.state.result;
 import bowling.domain.pin.Pins;
 import bowling.domain.state.CommonState;
 
-public abstract class End implements CommonState {
+public abstract class End extends CommonState {
 
     @Override
     public boolean isFinish() {

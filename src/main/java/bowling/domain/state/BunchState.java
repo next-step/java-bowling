@@ -6,7 +6,7 @@ import bowling.domain.state.pitching.FirstPitching;
 
 import java.util.*;
 
-public class BunchState implements CommonState {
+public class BunchState extends CommonState {
     private static final int START_IDX_OF_SUB_STATES = 1;
     private static final int START_IDX_OF_STATES = 0;
 

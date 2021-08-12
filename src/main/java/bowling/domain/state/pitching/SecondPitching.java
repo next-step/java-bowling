@@ -9,7 +9,7 @@ import bowling.domain.state.result.Spare;
 import java.util.Collections;
 import java.util.List;
 
-public class SecondPitching implements CommonState {
+public class SecondPitching extends CommonState {
     private final Pins pins;
 
     private SecondPitching(Pins pins) {

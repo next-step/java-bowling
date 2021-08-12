@@ -7,7 +7,7 @@ import bowling.domain.state.result.Strike;
 import java.util.Collections;
 import java.util.List;
 
-public class FirstPitching implements CommonState {
+public class FirstPitching extends CommonState {
 
     private FirstPitching() {
     }

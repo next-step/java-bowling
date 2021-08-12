@@ -8,7 +8,7 @@ import bowling.domain.state.result.Finish;
 
 import java.util.List;
 
-public class LastPitching implements CommonState {
+public class LastPitching extends CommonState {
     private static final int LIMIT_ATTEMPT_COUNT = 3;
 
     private final BunchState bunchState;
