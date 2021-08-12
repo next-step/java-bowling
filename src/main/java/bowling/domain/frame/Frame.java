@@ -1,12 +1,12 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.StateData;
 import bowling.domain.pin.Pins;
-import bowling.domain.score.CommonScore;
 import bowling.domain.score.Score;
 
 import java.util.List;
 
-public interface Frame extends FrameResult {
+public interface Frame {
 
     boolean isBowlingFinish();
 
@@ -19,4 +19,6 @@ public interface Frame extends FrameResult {
     Score getScore();
 
     Score addBonusScore(Score score);
+
+    StateData getFrameStates();
 }

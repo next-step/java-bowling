@@ -40,7 +40,7 @@ public class Frames {
 
     public List<StateData> getAllStates() {
         return frames.stream()
-                .map(FrameResult::getFrameStates)
+                .map(Frame::getFrameStates)
                 .collect(Collectors.toList());
     }
 
