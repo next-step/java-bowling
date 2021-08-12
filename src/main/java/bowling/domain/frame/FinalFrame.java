@@ -5,7 +5,9 @@ import bowling.domain.score.TurnScore;
 import bowling.domain.Turn;
 import bowling.domain.score.TurnScores;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class FinalFrame extends Frame {
@@ -30,7 +32,16 @@ public final class FinalFrame extends Frame {
 
     @Override
     public FrameScore frameScore() {
-        return new FinalFrameScore(baseFrameScore, isCompleted());
+        TurnScores turnScores = baseFrameScore.turnScores();
+        if (isAvailableBonusTurn()) {
+            turnScores = turnScores.union(
+                    new TurnScores(
+                            Collections.singletonList(bonusTurn.value())
+                    )
+            );
+        }
+
+        return new FinalFrameScore(baseFrameScore, turnScores, isCompleted());
     }
 
     private boolean currentBonusTurn() {

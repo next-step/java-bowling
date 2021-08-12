@@ -39,9 +39,10 @@ public class FrameFormat {
 
     private String toDisplayFinalFrameScore(FinalFrameScore finalFrameScore) {
         if (finalFrameScore.isSpare()) {
-            return Text.FINAL_SPARE.format(
-                    frameScore.turnScores().first().value(), frameScore.turnScores().last().value()
-            );
+            int firstValue = frameScore.turnScores().first().value();
+            return finalFrameScore.isCompleted() ?
+                    Text.FINAL_SPARE.format(firstValue, frameScore.turnScores().last().value()) :
+                    Text.SPARE.format(firstValue);
         }
         return toDisplayTurnScores(frameScore.turnScores());
     }
