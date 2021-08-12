@@ -19,7 +19,7 @@ public class Question extends AbstractEntity {
     private User writer;
 
     @Embedded
-    private Answers answers = new Answers();
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -63,11 +63,15 @@ public class Question extends AbstractEntity {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
+
+        return initDeleteHistory(loginUser);
+    }
+
+    private List<DeleteHistory> initDeleteHistory(User loginUser) {
         deleted = true;
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(DeleteHistory.of(ContentType.QUESTION, getId(), writer));
         deleteHistories.addAll(answers.delete(loginUser));
-
         return deleteHistories;
     }
 
