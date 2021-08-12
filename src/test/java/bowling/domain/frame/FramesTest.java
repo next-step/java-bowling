@@ -1,11 +1,12 @@
 package bowling.domain.frame;
 
+import bowling.exception.NullArgumentException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FramesTest {
 
@@ -16,14 +17,14 @@ class FramesTest {
         assertThat(Frames.of()).isInstanceOf(Frames.class);
     }
 
-    @DisplayName("Pins가 null 이면 IllegalArgumentException을 반환한다")
+    @DisplayName("Pins가 null 이면 NullArgumentException을 반환한다")
     @Test
     void should_throw_exception_when_pins_null() {
         //arrange
         Frames frames = Frames.of();
 
-        //arrange, act, assert
-        assertThatIllegalArgumentException().isThrownBy(() -> frames.hitPins(null));
+        //act, assert
+        assertThatThrownBy(() -> frames.hitPins(null)).isInstanceOf(NullArgumentException.class);
     }
 
     @DisplayName("Bowling 게임이 끝났는지 확인 결과를 반환한다")

@@ -4,6 +4,7 @@ import bowling.domain.dto.ScoreData;
 import bowling.domain.pin.Pins;
 import bowling.domain.dto.StateData;
 import bowling.domain.score.Score;
+import bowling.exception.NullArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class Frames {
 
     private void validate(Pins pins) {
         if (Objects.isNull(pins)) {
-            throw new IllegalArgumentException("Pin들은 null일 수 없습니다.");
+            throw new NullArgumentException("Pin들은");
         }
     }
 

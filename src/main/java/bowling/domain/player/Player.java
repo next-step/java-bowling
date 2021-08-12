@@ -1,5 +1,7 @@
 package bowling.domain.player;
 
+import bowling.exception.RangeArgumentException;
+
 import java.util.Objects;
 
 public class Player {
@@ -14,7 +16,7 @@ public class Player {
 
     private void validate(String name) {
         if (isEmpty(name) || name.length() != LIMIT_LENGTH_OF_NAME) {
-            throw new IllegalArgumentException("이름은 " + LIMIT_LENGTH_OF_NAME + " 자 이어야 합니다.");
+            throw RangeArgumentException.onlyEqualTo(LIMIT_LENGTH_OF_NAME);
         }
     }
 

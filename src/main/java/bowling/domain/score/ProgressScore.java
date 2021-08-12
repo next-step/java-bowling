@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import bowling.exception.RangeArgumentException;
+
 import static bowling.domain.pin.Pins.MAX_COUNT_HIT_PINS;
 
 public class ProgressScore implements Score {
@@ -19,7 +21,7 @@ public class ProgressScore implements Score {
 
     private void validate(int leftCount) {
         if (leftCount > COMMON_LEFT_COUNT) {
-            throw new IllegalArgumentException("left count는 " + COMMON_LEFT_COUNT + " 를 넘기면 안된다");
+            throw RangeArgumentException.lessThan(COMMON_LEFT_COUNT);
         }
     }
 

@@ -20,6 +20,6 @@ public class ComputableScore extends CommonScore {
 
     @Override
     public Score add(Score anotherScore) {
-        throw new IllegalStateException("Calculable score can't add more score");
+        throw new IllegalStateException("ComputableScore는 더 할수 없습니다.");
     }
 }

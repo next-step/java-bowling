@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import bowling.exception.RangeArgumentException;
+
 import static bowling.domain.pin.Pins.MAX_COUNT_HIT_PINS;
 
 public class CommonScore implements Score {
@@ -15,7 +17,7 @@ public class CommonScore implements Score {
 
     private void validate(int score) {
         if (score > MAX_VALUE) {
-            throw new IllegalArgumentException("Score는 " + MAX_VALUE + " 값을 넘기면 안됩니다");
+            throw RangeArgumentException.lessThan(MAX_VALUE);
         }
     }
 

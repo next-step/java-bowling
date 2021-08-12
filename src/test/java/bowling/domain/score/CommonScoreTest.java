@@ -1,11 +1,11 @@
 package bowling.domain.score;
 
+import bowling.exception.RangeArgumentException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static bowling.domain.pin.Pins.MAX_COUNT_HIT_PINS;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -22,11 +22,11 @@ class CommonScoreTest {
         );
     }
 
-    @DisplayName("Score value는 30을 넘기면 ThatIllegalArgumentException이 발생한다")
+    @DisplayName("Score value는 30을 넘기면 RangeArgumentException이 발생한다")
     @Test
     void should_throw_exception_value_over_30() {
         //arrange, act, assert
-        assertThatIllegalArgumentException().isThrownBy(() -> CommonScore.of(31));
+        assertThatThrownBy(() -> CommonScore.of(31)).isInstanceOf(RangeArgumentException.class);
     }
 
     @DisplayName("strike score value는 10이다")

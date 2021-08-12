@@ -1,11 +1,11 @@
 package bowling.domain.score;
 
+import bowling.exception.RangeArgumentException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static bowling.domain.pin.Pins.MAX_COUNT_HIT_PINS;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProgressScoreTest {
@@ -21,11 +21,11 @@ class ProgressScoreTest {
         );
     }
 
-    @DisplayName("Progress value는 3을 넘기면 ThatIllegalArgumentException이 발생한다")
+    @DisplayName("Progress value는 3을 넘기면 RangeArgumentException이 발생한다")
     @Test
     void should_throw_exception_left_count_over_2() {
         //arrange, act, assert
-        assertThatIllegalArgumentException().isThrownBy(() -> ProgressScore.of(30, 3));
+        assertThatThrownBy(() -> ProgressScore.of(30, 3)).isInstanceOf(RangeArgumentException.class);
     }
 
     @DisplayName("strike ProgressScore를 생성할수 있다")

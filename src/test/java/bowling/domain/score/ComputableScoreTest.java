@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.exception.RangeArgumentException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,11 +31,11 @@ class ComputableScoreTest {
         );
     }
 
-    @DisplayName("ComputableScore value는 30을 넘기면 ThatIllegalArgumentException이 발생한다")
+    @DisplayName("ComputableScore value는 30을 넘기면 RangeArgumentException이 발생한다")
     @Test
     void should_throw_exception_value_over_30() {
         //arrange, act, assert
-        assertThatIllegalArgumentException().isThrownBy(() -> ComputableScore.of(31));
+        assertThatThrownBy(() -> ComputableScore.of(31)).isInstanceOf(RangeArgumentException.class);
     }
 
     @DisplayName("ComputableScore는 계산가능하지 않다")
