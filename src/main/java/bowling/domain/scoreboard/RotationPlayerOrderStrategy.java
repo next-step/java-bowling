@@ -6,6 +6,7 @@ import java.util.Collection;
 
 public class RotationPlayerOrderStrategy implements PlayerOrderStrategy {
     private int playerCounter;
+
     public RotationPlayerOrderStrategy() {
         playerCounter = 0;
     }
