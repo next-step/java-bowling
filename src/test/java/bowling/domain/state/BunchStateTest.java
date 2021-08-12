@@ -106,10 +106,10 @@ class BunchStateTest {
     @DisplayName("LastFrame의 여러 상태의 점수 계산 테스트")
     @MethodSource
     @ParameterizedTest
-    void should_add_score(List<Pins> prepareDownedPins, Score expectedScore) {
+    void should_add_score(List<Pins> pins, Score expectedScore) {
         //arrange
         BunchState bunchState = BunchState.of();
-        prepareDownedPins.forEach(bunchState::hitPins);
+        pins.forEach(bunchState::hitPins);
 
         //act, assert
         assertThat(bunchState.score()).isEqualTo(expectedScore);
