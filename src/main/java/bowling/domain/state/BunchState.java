@@ -1,15 +1,19 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.domain.state.pitching.FirstPitching;
 
 import java.util.*;
 
 public class BunchState implements CommonState {
-    private final Deque<CommonState> states;
+    private static final int START_IDX_OF_SUB_STATES = 1;
+    private static final int START_IDX_OF_STATES = 0;
+
+    private final Stack<CommonState> states;
 
     protected BunchState() {
-        states = new ArrayDeque<>();
+        states = new Stack<>();
         states.add(FirstPitching.of());
     }
 
@@ -44,6 +48,30 @@ public class BunchState implements CommonState {
     }
 
     @Override
+    public Score score() {
+        return subStates().stream()
+                .reduce(firstState().score(),
+                        (interScore, state) -> state.addScore(interScore),
+                        (x, y) -> { throw new IllegalStateException(); });
+    }
+
+    @Override
+    public Score addBonusScore(Score score) {
+        return states.stream()
+                .reduce(score,
+                        (interScore, state) -> state.addScore(interScore),
+                        (x, y) -> { throw new IllegalStateException(); });
+    }
+
+    private CommonState firstState() {
+        return states.get(START_IDX_OF_STATES);
+    }
+
+    private List<CommonState> subStates() {
+        return states.subList(START_IDX_OF_SUB_STATES, states.size());
+    }
+
+    @Override
     public List<CommonState> getState() {
         return new ArrayList<>(states);
     }
@@ -61,12 +89,12 @@ public class BunchState implements CommonState {
     }
 
     private void changeLastState(CommonState state) {
-        states.removeLast();
+        states.pop();
         states.add(state);
     }
 
     private CommonState lastState() {
-        return states.getLast();
+        return states.peek();
     }
 
 }

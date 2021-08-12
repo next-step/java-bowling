@@ -1,8 +1,9 @@
 package bowling.domain.state.pitching;
 
 import bowling.domain.pin.Pins;
-import bowling.domain.state.CommonState;
+import bowling.domain.score.Score;
 import bowling.domain.state.BunchState;
+import bowling.domain.state.CommonState;
 import bowling.domain.state.result.Finish;
 
 import java.util.List;
@@ -42,6 +43,16 @@ public class LastPitching implements CommonState {
     @Override
     public List<CommonState> getState() {
         return bunchState.getState();
+    }
+
+    @Override
+    public Score score() {
+        return bunchState.score();
+    }
+
+    @Override
+    public Score addBonusScore(Score score) {
+        return bunchState.addScore(score);
     }
 
     private CommonState updateState() {

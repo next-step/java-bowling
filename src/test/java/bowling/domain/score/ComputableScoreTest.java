@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class ComputableCommonScoreTest {
+class ComputableScoreTest {
 
     @DisplayName("ComputableScore는 value로 생성한다")
     @Test

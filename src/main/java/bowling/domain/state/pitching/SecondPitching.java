@@ -1,6 +1,7 @@
 package bowling.domain.state.pitching;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.domain.state.CommonState;
 import bowling.domain.state.result.Miss;
 import bowling.domain.state.result.Spare;
@@ -48,5 +49,10 @@ public class SecondPitching implements CommonState {
     @Override
     public boolean isAllHit() {
         return false;
+    }
+
+    @Override
+    public Score addBonusScore(Score score) {
+        return score.add(pins.score());
     }
 }

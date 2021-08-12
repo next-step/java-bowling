@@ -1,5 +1,7 @@
 package bowling.domain.pin;
 
+import bowling.domain.score.CommonScore;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -62,6 +64,19 @@ class PinsTest {
 
         //assert
         assertThat(result.getCountHitPins()).isEqualTo(7);
+    }
+
+    @DisplayName("핀으로 스코어를 만든다")
+    @Test
+    void should_make_score() {
+        //arrange, act, assert
+        assertThat(Pins.of(1).score()).isEqualTo(CommonScore.of(1));
+    }
+
+    @DisplayName("남은 핀의 score를 반환할 수 있다")
+    @Test
+    void should_make_spare_score() {
+        assertThat(Pins.of(1).spareScore()).isEqualTo(Pins.of(9).score());
     }
 
 }

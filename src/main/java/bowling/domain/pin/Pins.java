@@ -1,5 +1,8 @@
 package bowling.domain.pin;
 
+import bowling.domain.score.CommonScore;
+import bowling.domain.score.Score;
+
 public class Pins {
 
     public static final int MIN_COUNT_HIT_PINS = 0;
@@ -34,6 +37,14 @@ public class Pins {
 
     public boolean isAllHit() {
         return countHitPins == MAX_COUNT_HIT_PINS;
+    }
+
+    public Score score() {
+        return CommonScore.of(countHitPins);
+    }
+
+    public Score spareScore() {
+        return CommonScore.of(MAX_COUNT_HIT_PINS - countHitPins);
     }
 
     @Override

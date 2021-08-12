@@ -1,10 +1,18 @@
 package bowling.domain.state.pitching;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.ComputableScore;
+import bowling.domain.score.ProgressScore;
+import bowling.domain.score.Score;
 import bowling.domain.state.result.Miss;
 import bowling.domain.state.result.Spare;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -76,6 +84,26 @@ class SecondPitchingTest {
 
         //act, assert
         assertFalse(secondPitching.isMiss());
+    }
+
+    @DisplayName("InProgress 상태에 스코어를 더하면 한 번 더한 스코어를 반환한다")
+    @MethodSource
+    @ParameterizedTest
+    void should_add_score(Score score, Score expectedScore) {
+        //arrange
+        SecondPitching secondPitching = SecondPitching.of(Pins.of(1));
+
+        //act, assert
+        assertThat(secondPitching.addScore(score)).isEqualTo(expectedScore);
+    }
+
+    private static Stream<Arguments> should_add_score() {
+        return Stream.of(
+                Arguments.of(ProgressScore.ofStrike(), ProgressScore.of(11, 1)),
+                Arguments.of(ProgressScore.ofSpare(), ComputableScore.of(11)),
+                Arguments.of(ProgressScore.of(1, 1), ComputableScore.of(2)),
+                Arguments.of(ProgressScore.of(1, 2), ProgressScore.of(2, 1))
+        );
     }
 
 }

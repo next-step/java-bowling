@@ -1,6 +1,8 @@
 package bowling.domain.state.result;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.ComputableScore;
+import bowling.domain.score.Score;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +28,22 @@ public class Miss extends End {
     @Override
     public List<Integer> getHitPins() {
         return Arrays.asList(firstPins.getCountHitPins(), secondPins.getCountHitPins());
+    }
+
+    @Override
+    public Score score() {
+        return ComputableScore.of(firstPins.score().add(secondPins.score()));
+    }
+
+    @Override
+    public Score addBonusScore(Score score) {
+        Score resultScore = score.add(firstPins.score());
+
+        if (resultScore.isCompute()) {
+            return resultScore;
+        }
+
+        return resultScore.add(secondPins.score());
     }
 
 }
