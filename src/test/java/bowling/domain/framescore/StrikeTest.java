@@ -1,6 +1,7 @@
 package bowling.domain.framescore;
 
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import bowling.domain.score.TurnScore;
 import bowling.util.Pagination;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,8 +15,8 @@ class StrikeTest {
 
     @BeforeEach
     public void setUp() {
-        Frame frame = Frame.firstFrame();
-        Frame nextFrame = Frame.firstFrame();
+        Frame frame = NormalFrame.firstFrame();
+        Frame nextFrame = NormalFrame.firstFrame();
 
         frame.bowl(TurnScore.of(10));
 

@@ -1,21 +1,26 @@
 package bowling.domain.frame;
 
-import bowling.domain.framescore.*;
-import bowling.domain.score.TurnScore;
 import bowling.domain.Turn;
+import bowling.domain.framescore.FinalFrameScore;
+import bowling.domain.framescore.FrameScore;
+import bowling.domain.framescore.Spare;
+import bowling.domain.framescore.Strike;
+import bowling.domain.score.TurnScore;
 import bowling.domain.score.TurnScores;
+import bowling.util.Pagination;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
-public final class FinalFrame extends Frame {
-    private FrameScore baseFrameScore;
-
+public class FinalFrame implements Frame {
+    private final NormalFrame normalFrame;
     private Turn bonusTurn;
 
     public FinalFrame() {
+        normalFrame = new NormalFrame();
+        normalFrame.pagination = new Pagination<>(
+                Frames.MAX_FRAME_NUMBER, normalFrame, Pagination.empty()
+        );
+
         bonusTurn = Turn.empty();
     }
 
@@ -25,15 +30,25 @@ public final class FinalFrame extends Frame {
             bonusTurn = new Turn(score);
             return;
         }
-        super.bowl(score);
+        normalFrame.bowl(score);
+    }
 
-        baseFrameScore = super.frameScore();
+    private boolean currentBonusTurn() {
+        return normalFrame.isCompleted()            // 기본 턴이 완료 되어야 하고
+                && isAvailableBonusTurn()     // 스트라이크나 스페어여야 하며
+                && bonusTurn.isEmpty();       // 보너스 턴을 이미 진행하지 않았어야 한다.
+    }
+
+    private boolean isAvailableBonusTurn() {
+        FrameScore frameScore = normalFrame.frameScore();
+        return frameScore instanceof Spare || frameScore instanceof Strike;
     }
 
     @Override
-    public FrameScore frameScore() {
-        TurnScores turnScores = baseFrameScore.turnScores();
-        if (isAvailableBonusTurn()) {
+    public TurnScores turnScores() {
+        TurnScores turnScores = normalFrame.turnScores();
+
+        if (!bonusTurn.isEmpty()) {
             turnScores = turnScores.union(
                     new TurnScores(
                             Collections.singletonList(bonusTurn.value())
@@ -41,18 +56,17 @@ public final class FinalFrame extends Frame {
             );
         }
 
-        return new FinalFrameScore(baseFrameScore, turnScores, isCompleted());
+        return turnScores;
     }
 
-    private boolean currentBonusTurn() {
-        return super.isCompleted()            // 기본 턴이 완료 되어야 하고
-                && isAvailableBonusTurn()     // 스트라이크나 스페어여야 하며
-                && bonusTurn.isEmpty();       // 보너스 턴을 이미 진행하지 않았어야 한다.
+    @Override
+    public FrameScore frameScore() {
+        return new FinalFrameScore(normalFrame.frameScore(), turnScores(), isCompleted());
     }
 
     @Override
     public boolean isCompleted() {
-        if (!super.isCompleted()) {
+        if (!normalFrame.isCompleted()) {
             return false;
         }
         if (isAvailableBonusTurn()) {
@@ -61,20 +75,8 @@ public final class FinalFrame extends Frame {
         return true;
     }
 
-    private boolean isAvailableBonusTurn() {
-        return baseFrameScore instanceof Spare || baseFrameScore instanceof Strike;
-    }
-
     @Override
-    public TurnScores turnScores() {
-        List<TurnScore> turnScores = turns.stream()
-                .map(Turn::value)
-                .collect(Collectors.toList());
-
-        if (!bonusTurn.isEmpty()) {
-            turnScores.add(bonusTurn.value());
-        }
-
-        return new TurnScores(turnScores);
+    public int currentFrameNumber() {
+        return Frames.MAX_FRAME_NUMBER;
     }
 }

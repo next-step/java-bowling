@@ -1,8 +1,10 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.TurnScore;
+import bowling.exception.InvalidFrameStateException;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public final class Frames implements Iterable<Frame> {
     public static final int MAX_FRAME_NUMBER = 10;
@@ -11,7 +13,7 @@ public final class Frames implements Iterable<Frame> {
 
     public Frames() {
         frames = new LinkedList<>();
-        frames.add(Frame.firstFrame());
+        frames.add(NormalFrame.firstFrame());
     }
 
     public void bowl(final TurnScore score) {
@@ -23,11 +25,18 @@ public final class Frames implements Iterable<Frame> {
 
         if (lastFrame.isCompleted()) {
             frames.add(
-                    lastFrame.newNextFrame()
+                    newNextFrame(lastFrame)
             );
             return frames.getLast();
         }
         return lastFrame;
+    }
+
+    private Frame newNextFrame(Frame currentFrame) {
+        if (!(currentFrame instanceof NormalFrame)) {
+            throw new InvalidFrameStateException(InvalidFrameStateException.ErrorCode.NEXT_FRAME_FAILURE);
+        }
+        return ((NormalFrame) currentFrame).newNextFrame();
     }
 
     public boolean isCompleted() {

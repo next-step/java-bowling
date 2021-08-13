@@ -41,16 +41,12 @@ public class Pagination<T> {
         return nextPage;
     }
 
-    private boolean isLast() {
-        return next.isEmpty();
-    }
-
     public static<T> Pagination<T> empty() {
         return InnerLazyClass.EMPTY;
     }
 
     private static class InnerLazyClass {
-        private static final Pagination EMPTY = new Pagination(0, null, null) {
+        private static final Pagination EMPTY = new Pagination(0, null, empty()) {
             @Override
             public boolean isEmpty() {
                 return true;

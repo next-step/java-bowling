@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static bowling.exception.PlayerEmptyException.*;
+import static bowling.exception.PlayerEmptyException.ErrorCode;
 
 public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
     private final Map<Player, Frames> framesEachPlayer;

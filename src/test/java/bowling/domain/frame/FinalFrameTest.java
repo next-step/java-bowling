@@ -19,9 +19,9 @@ public class FinalFrameTest {
     }
 
     public static Frame toFinalFrameWithBowl(String strScores) {
-        Frame frame = Frame.firstFrame();
+        Frame frame = NormalFrame.firstFrame();
         for (int i = 0; i < 9; i++) {
-            frame = frame.newNextFrame();
+            frame = ((NormalFrame) frame).newNextFrame();
         }
 
         TurnScoreTest.toFrameScores(strScores)

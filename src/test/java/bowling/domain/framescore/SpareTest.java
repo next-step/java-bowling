@@ -1,10 +1,9 @@
 package bowling.domain.framescore;
 
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import bowling.domain.score.TurnScore;
-import bowling.domain.score.TurnScores;
 import bowling.util.Pagination;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,8 +15,8 @@ class SpareTest {
 
     @BeforeEach
     public void setUp() {
-        Frame frame = Frame.firstFrame();
-        Frame nextFrame = Frame.firstFrame();
+        Frame frame = NormalFrame.firstFrame();
+        Frame nextFrame = NormalFrame.firstFrame();
 
         frame.bowl(TurnScore.of(5));
         frame.bowl(TurnScore.of(5));
@@ -36,7 +35,7 @@ class SpareTest {
     @DisplayName("Spare는 다음 프레임의 첫 턴이 완료 되어야 출력 한다. - 다음 프레임 첫 턴 미완료")
     @Test
     void isNotShowScoreValueTest() {
-        Frame nextFrame = pagination.next().currentElement();
+        pagination.next().currentElement();
 
         assertThat(
                 Spare.of(pagination).isShowScoreValue()

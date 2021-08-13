@@ -35,7 +35,12 @@ public class Spare extends FrameScore {
 
     private static boolean isComputable(Pagination<Frame> pagination) {
         Pagination<Frame> nextPage = pagination.next();
-        return !nextPage.isEmpty() && nextPage.currentElement().isCompletedFirstTurn();
+        return !nextPage.isEmpty()
+                && isCompletedNextFrameFirstTurn(nextPage.currentElement());
+    }
+
+    private static boolean isCompletedNextFrameFirstTurn(Frame nextFrame) {
+        return nextFrame.turnScores().size() >= 1;
     }
 
     private static TurnScores unionWithBonusScore(TurnScores currentFrameScores, TurnScores nextFrameScores) {

@@ -1,6 +1,7 @@
 package bowling.util;
 
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ class PaginationTest {
     @DisplayName("다음 Element 호출")
     @Test
     void next() {
-        Frame nextFrame = Frame.firstFrame();
+        Frame nextFrame = NormalFrame.firstFrame();
 
         Pagination<Frame> pagination = samplePagination();
         pagination.newNextPage(nextFrame);
@@ -22,7 +23,7 @@ class PaginationTest {
     @DisplayName("현재 Element 호출")
     @Test
     void currentElement() {
-        Frame frame = Frame.firstFrame();
+        Frame frame = NormalFrame.firstFrame();
         Pagination<Frame> pagination = new Pagination<>(1, frame, Pagination.empty());
 
         assertThat(pagination.currentElement())
@@ -47,7 +48,7 @@ class PaginationTest {
     @Test
     void newNextPageTest() {
         Pagination<Frame> pagination = samplePagination();
-        pagination.newNextPage(Frame.firstFrame());
+        pagination.newNextPage(NormalFrame.firstFrame());
 
         assertThat(pagination.next().isEmpty())
                 .isFalse();
@@ -61,6 +62,6 @@ class PaginationTest {
     }
 
     private Pagination<Frame> samplePagination() {
-        return new Pagination<>(1, Frame.firstFrame(), Pagination.empty());
+        return new Pagination<>(1, NormalFrame.firstFrame(), Pagination.empty());
     }
 }

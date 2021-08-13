@@ -1,7 +1,6 @@
 package bowling.domain.score;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TurnScores implements Iterable<TurnScore> {
     private final List<TurnScore> scores;
@@ -42,7 +41,6 @@ public class TurnScores implements Iterable<TurnScore> {
             );
         }
     }
-
 
     public TurnScores union(TurnScores turnScores) {
         List<TurnScore> newScores = new ArrayList<>(scores);

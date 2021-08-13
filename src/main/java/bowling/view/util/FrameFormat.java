@@ -1,8 +1,8 @@
 package bowling.view.util;
 
+import bowling.domain.framescore.*;
 import bowling.domain.score.Score;
 import bowling.domain.score.TurnScores;
-import bowling.domain.framescore.*;
 import org.apache.logging.log4j.util.Strings;
 
 import java.util.ArrayList;
