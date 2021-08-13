@@ -4,15 +4,15 @@ import java.util.Objects;
 
 public class Player {
     private final PlayerName name;
-    private final int gameIndex;
+    private final PlayerGameIndex gameIndex;
 
-    public Player(final PlayerName name, final int gameIndex) {
+    public Player(final PlayerName name, final PlayerGameIndex gameIndex) {
         this.name = name;
         this.gameIndex = gameIndex;
     }
 
-    public boolean matchesOrder(final int gameIndex) {
-        return this.gameIndex == gameIndex;
+    public boolean matchesOrder(final PlayerGameIndex gameIndex) {
+        return this.gameIndex.equals(gameIndex);
     }
 
     public PlayerName name() {

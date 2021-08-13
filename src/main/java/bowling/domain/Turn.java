@@ -28,7 +28,7 @@ public class Turn {
     }
 
     public boolean isEmpty() {
-        return score.isEmpty();
+        return false;
     }
 
     public boolean isGutter() {
@@ -62,6 +62,11 @@ public class Turn {
     }
 
     private static class InnerLazyClass {
-        private static final Turn EMPTY_TURN = new Turn(TurnScore.empty());
+        private static final Turn EMPTY_TURN = new Turn(TurnScore.empty()) {
+            @Override
+            public boolean isEmpty() {
+                return true;
+            }
+        };
     }
 }

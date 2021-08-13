@@ -1,9 +1,8 @@
 package bowling.view.util;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.FrameScoreGrade;
+import bowling.domain.framescore.*;
 import bowling.domain.score.Score;
+import bowling.domain.score.TurnScores;
 import org.apache.logging.log4j.util.Strings;
 
 import java.util.ArrayList;
@@ -11,61 +10,49 @@ import java.util.List;
 
 public class FrameFormat {
     private static final char TURN_SCORE_DELIMITER = '|';
-    private final Frame frame;
 
-    public FrameFormat(final Frame frame) {
-        this.frame = frame;
+    private final FrameScore frameScore;
+
+    public FrameFormat(final FrameScore frameScore) {
+        this.frameScore = frameScore;
     }
 
     public String format() {
-        FrameScoreGrade frameScore = frame.frameScoreGrade();
-
-        if (frameScore == FrameScoreGrade.STRIKE) {
-            return toDisplayStrikeScore(frame);
+        if (frameScore instanceof FinalFrameScore) {
+            return toDisplayFinalFrameScore((FinalFrameScore) frameScore);
         }
-        if (frameScore == FrameScoreGrade.SPARE) {
-            return toDisplaySpareScore(frame);
-        }
-        if (frameScore == FrameScoreGrade.MISS) {
+        if (frameScore instanceof Miss) {
             return Text.MISS.toString();
         }
-
-        return toDisplayScores(frame);
-    }
-
-    private String toDisplayStrikeScore(Frame frame) {
-        if (frame instanceof FinalFrame && frame.isCompleted()) {
-            FinalFrame finalFrame = (FinalFrame) frame;
-            return Text.STRIKE_BONUS.format(
-                    scoreFormat(finalFrame.bonusScore())
-            );
+        if (frameScore instanceof Strike) {
+            return Text.STRIKE.toString();
         }
-        return Text.STRIKE.toString();
-    }
-
-    private String toDisplaySpareScore(Frame frame) {
-        if (frame instanceof FinalFrame && frame.isCompleted()) {
-            FinalFrame finalFrame = (FinalFrame) frame;
-            return Text.SPARE_BONUS.format(
-                    toDisplayFirstTurnScore(frame),
-                    scoreFormat(finalFrame.bonusScore())
-            );
+        if (frameScore instanceof Spare) {
+            return Text.SPARE.format(toDisplayFirstTurnScore(frameScore));
         }
-        return Text.SPARE.format(
-                toDisplayFirstTurnScore(frame)
-        );
+        return toDisplayTurnScores(frameScore.turnScores());
     }
 
-    private String toDisplayFirstTurnScore(Frame frame) {
-        return scoreFormat(frame.scores().first());
+    private String toDisplayFirstTurnScore(FrameScore frameScore) {
+        return scoreFormat(frameScore.turnScores().first());
     }
 
-    private String toDisplayScores(Frame frame) {
+    private String toDisplayFinalFrameScore(FinalFrameScore finalFrameScore) {
+        if (finalFrameScore.isSpare()) {
+            int firstValue = frameScore.turnScores().first().value();
+            return finalFrameScore.isCompleted() ?
+                    Text.FINAL_SPARE.format(firstValue, frameScore.turnScores().last().value()) :
+                    Text.SPARE.format(firstValue);
+        }
+        return toDisplayTurnScores(frameScore.turnScores());
+    }
+
+    private String toDisplayTurnScores(TurnScores turnScores) {
         List<String> displayScores = new ArrayList<>();
-        frame.scores().forEach(
+        turnScores.forEach(
                 iTurnScore ->
                         displayScores.add(
-                                new ScoreFormat(iTurnScore).format()
+                                scoreFormat(iTurnScore)
                         )
         );
 
@@ -79,9 +66,8 @@ public class FrameFormat {
     private enum Text {
         MISS("-"),
         STRIKE("X"),
-        STRIKE_BONUS("X/%s"),
         SPARE("%s|/"),
-        SPARE_BONUS("%s|/|%s");
+        FINAL_SPARE("%s|/|%s");
 
         private final String str;
 

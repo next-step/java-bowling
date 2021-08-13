@@ -2,6 +2,7 @@ package bowling.domain.scoreboard;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
+import bowling.domain.player.PlayerGameIndex;
 import bowling.domain.player.PlayerName;
 import bowling.domain.score.TurnScore;
 import bowling.exception.PlayerEmptyException;
@@ -12,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static bowling.exception.PlayerEmptyException.*;
+import static bowling.exception.PlayerEmptyException.ErrorCode;
 
 public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
     private final Map<Player, Frames> framesEachPlayer;
@@ -30,7 +31,7 @@ public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
                 .boxed()
                 .collect(
                         Collectors.toMap(
-                                index -> new Player(names.get(index), index),
+                                index -> new Player(names.get(index), new PlayerGameIndex(index)),
                                 index -> new Frames()
                         )
                 );

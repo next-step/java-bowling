@@ -4,9 +4,6 @@ import bowling.domain.score.Score;
 import bowling.domain.score.TurnScore;
 
 public class ScoreFormat {
-    private static final String MISS = "-";
-    private static final String STRIKE = "X";
-
     private final Score score;
 
     public ScoreFormat(final Score score) {
@@ -14,6 +11,9 @@ public class ScoreFormat {
     }
 
     public String format() {
+        if (score.isEmpty()) {
+            return Text.EMPTY.toString();
+        }
         if (score instanceof TurnScore) {
             return toTurnScoreFormat((TurnScore) score);
         }
@@ -22,11 +22,26 @@ public class ScoreFormat {
 
     private String toTurnScoreFormat(TurnScore turnScore) {
         if (turnScore.isAllClear()) {
-            return STRIKE;
+            return Text.STRIKE.toString();
         }
         if (turnScore.isZero()) {
-            return MISS;
+            return Text.MISS.toString();
         }
         return String.valueOf(turnScore.value());
+    }
+
+    private enum Text {
+        EMPTY(""), MISS("-"), STRIKE("X");
+
+        private final String text;
+
+        Text(final String text) {
+            this.text = text;
+        }
+
+        @Override
+        public String toString() {
+            return text;
+        }
     }
 }

@@ -15,6 +15,13 @@ class ScoreTest {
                 .isTrue();
     }
 
+    @DisplayName("empty 테스트")
+    @Test
+    void isZeroOfEmpty() {
+        assertThat(Score.empty().isEmpty())
+                .isTrue();
+    }
+
     @CsvSource({
             "10, 10",
             "0, 10",

@@ -13,15 +13,19 @@ public class Score {
         return new Score(this.score + score.score);
     }
 
+    public static Score empty() {
+        return InnerLazyClass.EMPTY_SCORE;
+    }
+
     public boolean isEmpty() {
-        return InnerLazyClass.EMPTY_SCORE.equals(this);
+        return false;
     }
 
     public boolean isZero() {
         return this.score == 0;
     }
 
-    public final int value() {
+    public int value() {
         return score;
     }
 
@@ -48,8 +52,11 @@ public class Score {
     }
 
     private static class InnerLazyClass {
-        private static final int EMPTY_VALUE = -1;
-
-        private static final Score EMPTY_SCORE = new Score(EMPTY_VALUE);
+        private static final Score EMPTY_SCORE = new Score(0) {
+            @Override
+            public boolean isEmpty() {
+                return true;
+            }
+        };
     }
 }
