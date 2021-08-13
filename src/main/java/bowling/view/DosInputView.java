@@ -10,14 +10,19 @@ public class DosInputView implements InputView {
     }
 
     @Override
+    public int inputPlayerSize() {
+        return inputNumber(Text.INPUT_PLAYER_SIZE);
+    }
+
+    @Override
     public String inputName() {
         return inputLine(Text.INPUT_NAME);
     }
 
     @Override
-    public int inputTurnScore(int currentFrameNumber) {
+    public int inputTurnScore(String playerName) {
         return inputNumber(
-                Text.INPUT_TURN_SCORE.format(currentFrameNumber)
+                Text.INPUT_TURN_SCORE.format(playerName)
         );
     }
 
@@ -32,6 +37,10 @@ public class DosInputView implements InputView {
         }
     }
 
+    private int inputNumber(Text guideText) {
+        return inputNumber(guideText.toString());
+    }
+
     private String inputLine(String guideText) {
         System.out.print(guideText);
 
@@ -43,8 +52,9 @@ public class DosInputView implements InputView {
     }
 
     private enum Text {
+        INPUT_PLAYER_SIZE("How many people? "),
         INPUT_NAME("플레이어 이름은(3 english letters)?: "),
-        INPUT_TURN_SCORE("%d프레임 투구 : "),
+        INPUT_TURN_SCORE("%s's turn : : "),
         NOT_NUMBER_FORMAT("숫자의 형식이 아닙니다.");
 
         private final String str;

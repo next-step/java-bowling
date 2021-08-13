@@ -22,7 +22,7 @@ class ScoreBoardTest {
     @ParameterizedTest
     void recordTest(String strNames) {
         List<PlayerName> names = toNames(strNames);
-        ScoreBoard scoreBoard = ScoreBoard.generate(names, new RotationPlayerOrderStrategy());
+        ScoreBoard scoreBoard = ScoreBoard.generate(names, RotationPlayerOrderStrategy::new);
 
         TurnScore turnScore = TurnScore.of(3);
         int frameSize = 10;

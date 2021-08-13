@@ -44,6 +44,13 @@ public final class Frames implements Iterable<Frame> {
                 && frames.getLast().isCompleted();
     }
 
+    public boolean isCompleted(int checkTurnNumber) {
+        if (frames.size() <= checkTurnNumber) {
+            return false;
+        }
+        return frames.get(checkTurnNumber).isCompleted();
+    }
+
     public int currentFrameNumber() {
         return inProgressFrame().currentFrameNumber();
     }

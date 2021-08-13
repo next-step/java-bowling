@@ -15,14 +15,15 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class BowlingSolutionTest {
     @CsvSource(value = {
-            "PJS|10,8,2,8,1,10,4,5,4,5,4,5,4,5,4,5,4,6,10", // 총 10프레임 19번의 투구 (스트라이크 -2, 마지막 스페어 + 1)
+            "PJS,KYJ|10,5,4,8,1,2,2,8,1,1,1,10,10,4,4,5,5,4,4,5,5,4,4,5,5,4,4,5,5,4,4,5,5,4,4,6,4,10", // 총 10프레임 38번의 투구 (스트라이크 -2, 마지막 스페어 + 1)
             "PJS|10,8,2,8,1,10,4,5,4,5,4,5,4,5,4,5,10,5", // 총 10프레임 18번의 투구 (스트라이크 -3, 마지막 스트라이크 + 1)
             "PJS|10,8,2,8,1,10,4,5,4,5,4,5,4,5,4,5,4,5" // 총 10프레임 18번의 투구 (스트라이크 -3, 마지막 스트라이크 + 1)
     }, delimiter = '|')
     @DisplayName("통합 테스트")
     @ParameterizedTest
-    void run(String strName, String strTurnScores) {
-        InputView fakeInputView = new FakeInputView(strName, toIntegerList(strTurnScores));
+    void run(String strNames, String strTurnScores) {
+        List<String> playerNames = toPlayerNames(strNames);
+        InputView fakeInputView = new FakeInputView(playerNames, toTurnScores(strTurnScores));
 
         assertThatCode(() ->
                 new BowlingSolution(
@@ -31,7 +32,12 @@ public class BowlingSolutionTest {
         ).doesNotThrowAnyException();
     }
 
-    private List<Integer> toIntegerList(String strTurnScores) {
+    private List<String> toPlayerNames(String strNames) {
+        return Arrays.stream(strNames.split(","))
+                .collect(Collectors.toList());
+    }
+
+    private List<Integer> toTurnScores(String strTurnScores) {
         return Arrays.stream(strTurnScores.split(","))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());

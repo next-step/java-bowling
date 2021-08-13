@@ -1,13 +1,15 @@
 package bowling.domain.scoreboard;
 
+import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 import bowling.domain.player.PlayerGameIndex;
 import bowling.domain.player.PlayerName;
+import bowling.domain.score.TurnScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -23,31 +25,35 @@ class RotationPlayerOrderStrategyTest {
     @DisplayName("3명의 플레이어로 번갈아가며 순서가 변경 되는지 테스트")
     @ParameterizedTest
     void currentPlayer(String strPlayerName, int checkoutSize, String correctPlayerName) {
-        List<Player> players = toPlayers(strPlayerName);
+        Map<Player, Frames> playerEachFrames = toPlayerEachFrames(strPlayerName);
 
-        PlayerOrderStrategy playerOrderStrategy = new RotationPlayerOrderStrategy();
+        TurnScore strikeScore = TurnScore.of(10);
+
+        PlayerOrderStrategy playerOrderStrategy = new RotationPlayerOrderStrategy(playerEachFrames);
         for (int i = 0; i < checkoutSize; i++) {
+            playerEachFrames.get(
+                    playerOrderStrategy.currentPlayer()
+            ).bowl(strikeScore);
             playerOrderStrategy.checkout();
         }
 
         assertThat(
-                playerOrderStrategy.currentPlayer(players).name()
+                playerOrderStrategy.currentPlayer().name()
         ).isEqualTo(
                 new PlayerName(correctPlayerName)
         );
     }
 
-    private List<Player> toPlayers(String strPlayerNames) {
+    private Map<Player, Frames> toPlayerEachFrames(String strPlayerNames) {
         String[] splitPlayerNames = strPlayerNames.split(",");
 
         return IntStream.range(0, splitPlayerNames.length)
                 .boxed()
-                .map(index ->
-                        new Player(
-                                new PlayerName(
-                                        splitPlayerNames[index]
-                                ), new PlayerGameIndex(index))
-                )
-                .collect(Collectors.toList());
+                .collect(
+                        Collectors.toMap(
+                                index -> new Player(new PlayerName(splitPlayerNames[index]), new PlayerGameIndex(index)),
+                                index -> new Frames()
+                        )
+                );
     }
 }

@@ -4,7 +4,7 @@ import bowling.exception.InvalidPlayerIndexException;
 
 import java.util.Objects;
 
-public class PlayerGameIndex {
+public class PlayerGameIndex implements Comparable<PlayerGameIndex> {
     private final int gameIndex;
 
     public PlayerGameIndex(final int gameIndex) {
@@ -38,5 +38,10 @@ public class PlayerGameIndex {
     @Override
     public String toString() {
         return "PlayerGameOrder{" + "gameOrder=" + gameIndex + '}';
+    }
+
+    @Override
+    public int compareTo(final PlayerGameIndex rightPlayerGameIndex) {
+        return Integer.compare(this.gameIndex, rightPlayerGameIndex.gameIndex);
     }
 }

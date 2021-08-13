@@ -10,6 +10,7 @@ import bowling.exception.PlayerEmptyException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -24,7 +25,8 @@ public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
         this.playerOrderStrategy = playerOrderStrategy;
     }
 
-    public static ScoreBoard generate(final List<PlayerName> names, final PlayerOrderStrategy playerOrderStrategy) {
+    public static ScoreBoard generate(final List<PlayerName> names,
+                                      final Function<Map<Player,Frames>, PlayerOrderStrategy> ctorPlayerOrderStrategy) {
         validateGenerateNames(names);
 
         Map<Player, Frames> framesEachPlayer = IntStream.range(0, names.size())
@@ -35,7 +37,7 @@ public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
                                 index -> new Frames()
                         )
                 );
-        return new ScoreBoard(framesEachPlayer, playerOrderStrategy);
+        return new ScoreBoard(framesEachPlayer, ctorPlayerOrderStrategy.apply(framesEachPlayer));
     }
 
     private static void validateGenerateNames(final List<PlayerName> names) {
@@ -52,14 +54,8 @@ public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
         playerOrderStrategy.checkout();
     }
 
-    public int currentFrameNumber(final Player player) {
-        Frames frames = findFrames(player);
-
-        return frames.currentFrameNumber();
-    }
-
     public Player currentPlayer() {
-        return playerOrderStrategy.currentPlayer(framesEachPlayer.keySet());
+        return playerOrderStrategy.currentPlayer();
     }
 
     private Frames findFrames(final Player player) {
@@ -76,6 +72,10 @@ public final class ScoreBoard implements Iterable<Map.Entry<Player, Frames>> {
 
     @Override
     public Iterator<Map.Entry<Player, Frames>> iterator() {
-        return framesEachPlayer.entrySet().iterator();
+        return framesEachPlayer
+                .entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .iterator();
     }
 }
