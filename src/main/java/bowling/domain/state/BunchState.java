@@ -2,7 +2,6 @@ package bowling.domain.state;
 
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
-import bowling.domain.state.pitching.FirstPitching;
 
 import java.util.*;
 
@@ -14,7 +13,7 @@ public class BunchState extends CommonState {
 
     protected BunchState() {
         states = new Stack<>();
-        states.add(FirstPitching.of());
+        states.add(Start.of());
     }
 
     public static BunchState of() {
@@ -81,7 +80,7 @@ public class BunchState extends CommonState {
             return;
         }
 
-        states.add(FirstPitching.of());
+        states.add(Start.of());
     }
 
     protected boolean isNotAllHit() {

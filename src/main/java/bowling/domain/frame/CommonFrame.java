@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Score;
 import bowling.domain.state.CommonState;
-import bowling.domain.state.pitching.FirstPitching;
+import bowling.domain.state.Start;
 
 import java.util.List;
 
@@ -13,11 +13,11 @@ public class CommonFrame extends Frame {
 
     private CommonFrame(CommonState state) {
         super(state);
-        nextFrame = InitialFrame.of();
+        nextFrame = DummyFrame.of();
     }
 
     public static CommonFrame of() {
-        return new CommonFrame(FirstPitching.of());
+        return new CommonFrame(Start.of());
     }
 
     @Override

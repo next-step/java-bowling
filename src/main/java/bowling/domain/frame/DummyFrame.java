@@ -2,16 +2,16 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Score;
 import bowling.domain.state.CommonState;
-import bowling.domain.state.pitching.FirstPitching;
+import bowling.domain.state.Start;
 
-public class InitialFrame extends Frame {
+public class DummyFrame extends Frame {
 
-    private InitialFrame(CommonState state) {
+    private DummyFrame(CommonState state) {
         super(state);
     }
 
-    public static InitialFrame of() {
-        return new InitialFrame(FirstPitching.of());
+    public static DummyFrame of() {
+        return new DummyFrame(Start.of());
     }
 
     @Override

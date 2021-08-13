@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Score;
 import bowling.domain.state.CommonState;
-import bowling.domain.state.pitching.LastPitching;
+import bowling.domain.state.LastProgress;
 
 public class LastFrame extends Frame {
 
@@ -11,7 +11,7 @@ public class LastFrame extends Frame {
     }
 
     public static LastFrame of() {
-        return new LastFrame(LastPitching.of());
+        return new LastFrame(LastProgress.of());
     }
 
     @Override

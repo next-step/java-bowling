@@ -1,8 +1,8 @@
 package bowling.domain.dto;
 
 import bowling.domain.pin.Pins;
-import bowling.domain.state.pitching.FirstPitching;
-import bowling.domain.state.result.Miss;
+import bowling.domain.state.Start;
+import bowling.domain.state.Miss;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,10 +22,10 @@ class StateDatumTest {
     @Test
     void should_return_type_state_with_miss() {
         //arrange
-        StateDatum stateDatum = StateDatum.of(FirstPitching.of());
+        StateDatum stateDatum = StateDatum.of(Start.of());
 
         //act, assert
-        assertThat(stateDatum.getType()).isEqualTo(FirstPitching.class.getSimpleName());
+        assertThat(stateDatum.getType()).isEqualTo(Start.class.getSimpleName());
     }
 
     @DisplayName("CommonState Miss일 경우 first, second pins를 반환 할 수 있다")

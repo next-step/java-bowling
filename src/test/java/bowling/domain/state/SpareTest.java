@@ -1,9 +1,11 @@
-package bowling.domain.state.result;
+package bowling.domain.state;
 
 import bowling.domain.pin.Pins;
 import bowling.domain.score.ComputableScore;
 import bowling.domain.score.ProgressScore;
 import bowling.domain.score.Score;
+import bowling.domain.state.Spare;
+import bowling.domain.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,22 +1,20 @@
-package bowling.domain.state.result;
+package bowling.domain.state;
 
 import bowling.domain.score.Score;
-import bowling.domain.state.BunchState;
-import bowling.domain.state.CommonState;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Finish extends End {
+public class LastEnd extends End {
 
     private final BunchState bunchState;
 
-    public Finish(BunchState bunchState) {
+    public LastEnd(BunchState bunchState) {
         this.bunchState = bunchState;
     }
 
-    public static Finish of(BunchState bunchState) {
-        return new Finish(bunchState);
+    public static LastEnd of(BunchState bunchState) {
+        return new LastEnd(bunchState);
     }
 
     @Override

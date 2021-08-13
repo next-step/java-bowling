@@ -1,4 +1,4 @@
-package bowling.domain.state.result;
+package bowling.domain.state;
 
 import bowling.domain.score.ProgressScore;
 import bowling.domain.score.CommonScore;

@@ -4,8 +4,6 @@ import bowling.domain.pin.Pins;
 import bowling.domain.score.ComputableScore;
 import bowling.domain.score.ProgressScore;
 import bowling.domain.score.Score;
-import bowling.domain.state.pitching.FirstPitching;
-import bowling.domain.state.result.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -83,7 +81,7 @@ class BunchStateTest {
 
         //act, assert
         List<CommonState> states = bunchState.getState();
-        assertThat(states.get(0)).isInstanceOf(FirstPitching.class);
+        assertThat(states.get(0)).isInstanceOf(Start.class);
     }
 
     @DisplayName("BunchState는 all hit될 경우 추가 기회가 생긴다")
@@ -98,7 +96,7 @@ class BunchStateTest {
         //assert
         List<CommonState> states = bunchState.getState();
         assertAll(
-                () -> assertThat(states.get(states.size() - 1)).isInstanceOf(FirstPitching.class),
+                () -> assertThat(states.get(states.size() - 1)).isInstanceOf(Start.class),
                 () -> assertThat(states.size()).isEqualTo(2)
         );
     }

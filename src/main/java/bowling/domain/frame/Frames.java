@@ -58,7 +58,7 @@ public class Frames {
 
     private void validate(Pins pins) {
         if (Objects.isNull(pins)) {
-            throw new NullArgumentException("Pin들은");
+            throw new NullArgumentException(Pins.class.getSimpleName());
         }
     }
 

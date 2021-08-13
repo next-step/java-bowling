@@ -1,11 +1,11 @@
 package bowling.view;
 
 import bowling.domain.dto.StateDatum;
-import bowling.domain.state.pitching.FirstPitching;
-import bowling.domain.state.pitching.SecondPitching;
-import bowling.domain.state.result.Miss;
-import bowling.domain.state.result.Spare;
-import bowling.domain.state.result.Strike;
+import bowling.domain.state.Start;
+import bowling.domain.state.Progress;
+import bowling.domain.state.Miss;
+import bowling.domain.state.Spare;
+import bowling.domain.state.Strike;
 
 import java.util.Arrays;
 import java.util.function.Function;
@@ -16,8 +16,8 @@ public enum ResultStateFormat {
     MISS(Miss.class.getSimpleName(), state -> String.format("%s|%s",
             BowlingRecordMark.find(state.getCountFirstPins()),
             BowlingRecordMark.find(state.getCountSecondPins()))),
-    FIRST_PITCHING(FirstPitching.class.getSimpleName(), state -> ""),
-    SECOND_PITCHING(SecondPitching.class.getSimpleName(), state -> BowlingRecordMark.find(state.getCountFirstPins()));
+    FIRST_PITCHING(Start.class.getSimpleName(), state -> ""),
+    SECOND_PITCHING(Progress.class.getSimpleName(), state -> BowlingRecordMark.find(state.getCountFirstPins()));
 
     private final String type;
     private final Function<StateDatum, String> changeFunc;

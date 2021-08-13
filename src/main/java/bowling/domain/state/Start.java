@@ -1,19 +1,17 @@
-package bowling.domain.state.pitching;
+package bowling.domain.state;
 
 import bowling.domain.pin.Pins;
-import bowling.domain.state.CommonState;
-import bowling.domain.state.result.Strike;
 
 import java.util.Collections;
 import java.util.List;
 
-public class FirstPitching extends CommonState {
+public class Start extends CommonState {
 
-    private FirstPitching() {
+    private Start() {
     }
 
-    public static FirstPitching of() {
-        return new FirstPitching();
+    public static Start of() {
+        return new Start();
     }
 
     @Override
@@ -22,7 +20,7 @@ public class FirstPitching extends CommonState {
             return Strike.of();
         }
 
-        return SecondPitching.of(pins);
+        return Progress.of(pins);
     }
 
     @Override
