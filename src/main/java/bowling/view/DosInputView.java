@@ -54,7 +54,7 @@ public class DosInputView implements InputView {
     private enum Text {
         INPUT_PLAYER_SIZE("How many people? "),
         INPUT_NAME("플레이어 이름은(3 english letters)?: "),
-        INPUT_TURN_SCORE("%s's turn : : "),
+        INPUT_TURN_SCORE("%s's turn : "),
         NOT_NUMBER_FORMAT("숫자의 형식이 아닙니다.");
 
         private final String str;
