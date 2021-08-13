@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import qna.CannotDeleteException;
-import qna.NotFoundException;
+import qna.exception.CannotDeleteException;
+import qna.exception.NotFoundException;
 import qna.domain.*;
 
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package qna;
+package qna.exception;
 
 public class UnAuthorizedException extends RuntimeException {
     private static final long serialVersionUID = 1L;
@@ -7,8 +7,7 @@ public class UnAuthorizedException extends RuntimeException {
         super();
     }
 
-    public UnAuthorizedException(String message, Throwable cause, boolean enableSuppression,
-                                 boolean writableStackTrace) {
+    public UnAuthorizedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
