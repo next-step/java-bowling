@@ -1,14 +1,21 @@
 package qna.domain;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import qna.exception.CannotDeleteException;
 import qna.exception.NotFoundException;
 import qna.exception.UnAuthorizedException;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
+@ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Answer extends AbstractEntity {
+    @Getter
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -22,32 +29,22 @@ public class Answer extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public Answer() {
-    }
-
-    public Answer(User writer, Question question, String contents) {
+    public Answer(final User writer, final Question question, final String contents) {
         this(null, writer, question, contents);
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
+    public Answer(final Long id, final User writer, final Question question, final String contents) {
         super(id);
-
-        if(writer == null) {
-            throw new UnAuthorizedException();
-        }
-
-        if(question == null) {
-            throw new NotFoundException();
-        }
-
+        verifyNull(writer, question);
         this.writer = writer;
         this.question = question;
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public DeleteHistory delete(final User writer) {
+        verifyIsOwner(writer);
+        this.deleted = true;
+        return DeleteHistory.ofAnswer(getId(), writer);
     }
 
     public boolean isDeleted() {
@@ -58,32 +55,22 @@ public class Answer extends AbstractEntity {
         return this.writer.equals(writer);
     }
 
-    public User getWriter() {
-        return writer;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
     public void toQuestion(Question question) {
         this.question = question;
     }
 
-    public DeleteHistory delete(final User writer) throws CannotDeleteException {
-        verifyOwner(writer);
-        this.deleted = true;
-        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
-    }
-
-    private void verifyOwner(final User writer) throws CannotDeleteException {
-        if (!isOwner(writer)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+    private void verifyNull(final User writer, final Question question) {
+        if (Objects.isNull(writer)) {
+            throw new UnAuthorizedException();
+        }
+        if (Objects.isNull(question)) {
+            throw new NotFoundException();
         }
     }
 
-    @Override
-    public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+    private void verifyIsOwner(final User writer) {
+        if (!isOwner(writer)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
     }
 }
