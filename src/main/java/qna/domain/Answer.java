@@ -27,7 +27,7 @@ public class Answer extends AbstractEntity {
     @Lob
     private String contents;
 
-    private boolean deleted = false;
+    private boolean deleted;
 
     public Answer(final User writer, final Question question, final String contents) {
         this(null, writer, question, contents);
