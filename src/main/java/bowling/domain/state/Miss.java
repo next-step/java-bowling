@@ -7,7 +7,7 @@ import bowling.domain.score.Score;
 import java.util.Arrays;
 import java.util.List;
 
-public class Miss extends End {
+public class Miss extends State {
     private final Pins firstPins;
     private final Pins secondPins;
 
@@ -44,6 +44,16 @@ public class Miss extends End {
         }
 
         return resultScore.add(secondPins.score());
+    }
+
+    @Override
+    public boolean isFinish() {
+        return true;
+    }
+
+    @Override
+    public State hitPins(Pins pins) {
+        throw new IllegalStateException("다음은 없습니다");
     }
 
 }

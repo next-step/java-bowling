@@ -1,6 +1,6 @@
 package bowling.domain.dto;
 
-import bowling.domain.state.CommonState;
+import bowling.domain.state.State;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ public class StateDatum {
     private final String type;
     private final List<Integer> hitPins;
 
-    private StateDatum(CommonState state) {
+    private StateDatum(State state) {
         this.type = state.getClass().getSimpleName();
         this.hitPins = state.getHitPins();
     }
 
-    public static StateDatum of(CommonState state) {
+    public static StateDatum of(State state) {
         return new StateDatum(state);
     }
 

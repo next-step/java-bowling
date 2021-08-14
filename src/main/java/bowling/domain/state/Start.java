@@ -5,7 +5,7 @@ import bowling.domain.pin.Pins;
 import java.util.Collections;
 import java.util.List;
 
-public class Start extends CommonState {
+public class Start extends State {
 
     private Start() {
     }
@@ -15,7 +15,7 @@ public class Start extends CommonState {
     }
 
     @Override
-    public CommonState hitPins(Pins pins) {
+    public State hitPins(Pins pins) {
         if (pins.isAllHit()) {
             return Strike.of();
         }

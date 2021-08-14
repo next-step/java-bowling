@@ -7,7 +7,7 @@ import bowling.domain.score.Score;
 import java.util.Collections;
 import java.util.List;
 
-public class Spare extends End {
+public class Spare extends State {
 
     private final Pins pins;
 
@@ -43,6 +43,16 @@ public class Spare extends End {
         }
 
         return resultScore.add(pins.spareScore());
+    }
+
+    @Override
+    public boolean isFinish() {
+        return true;
+    }
+
+    @Override
+    public State hitPins(Pins pins) {
+        throw new IllegalStateException("다음은 없습니다");
     }
 
 }

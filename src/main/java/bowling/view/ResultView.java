@@ -8,10 +8,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static bowling.domain.frame.CommonFrame.END_COUNT;
-import static bowling.domain.frame.CommonFrame.START_COUNT;
-
 public class ResultView {
+    public static final int START_COUNT = 1;
+    public static final int END_COUNT = 10;
     private static final int FRAME_STATE_LIMIT = 3;
     private static final String NAME_FORMAT = "| %4s |";
     private static final String FRAME_COUNT_FORMAT = "  %02d  |";
