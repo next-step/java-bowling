@@ -11,8 +11,8 @@ import java.util.Stack;
 
 public class LastFrame extends Frame {
 
-    private static final int START_IDX_OF_STATES = 0;
-    private static final int START_IDX_OF_SUB_STATES = 1;
+    private static final int STATES_START_INDEX = 0;
+    private static final int SCORE_STATES_START_INDEX = 1;
     private static final int LIMIT_ATTEMPT_COUNT = 3;
 
     private final Stack<State> states;
@@ -29,7 +29,7 @@ public class LastFrame extends Frame {
 
     @Override
     public Score getScore() {
-        return subStates().stream()
+        return scoreStates().stream()
                 .reduce(firstState().score(),
                         (interScore, state) -> state.addScore(interScore),
                         (x, y) -> {
@@ -69,7 +69,7 @@ public class LastFrame extends Frame {
             return true;
         }
 
-        return states.get(START_IDX_OF_STATES).isStart();
+        return states.get(STATES_START_INDEX).isStart();
     }
 
     protected boolean isLimitAttemptCount() {
@@ -102,11 +102,11 @@ public class LastFrame extends Frame {
     }
 
     private State firstState() {
-        return states.get(START_IDX_OF_STATES);
+        return states.get(STATES_START_INDEX);
     }
 
-    private List<State> subStates() {
-        return states.subList(START_IDX_OF_SUB_STATES, states.size());
+    private List<State> scoreStates() {
+        return states.subList(SCORE_STATES_START_INDEX, states.size());
     }
 
     private boolean isNotAllHit() {

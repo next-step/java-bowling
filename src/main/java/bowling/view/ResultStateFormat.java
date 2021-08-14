@@ -16,8 +16,8 @@ public enum ResultStateFormat {
     MISS(Miss.class.getSimpleName(), state -> String.format("%s|%s",
             BowlingRecordMark.find(state.getCountFirstPins()),
             BowlingRecordMark.find(state.getCountSecondPins()))),
-    FIRST_PITCHING(Start.class.getSimpleName(), state -> ""),
-    SECOND_PITCHING(Progress.class.getSimpleName(), state -> BowlingRecordMark.find(state.getCountFirstPins()));
+    START(Start.class.getSimpleName(), state -> ""),
+    PROGRESS(Progress.class.getSimpleName(), state -> BowlingRecordMark.find(state.getCountFirstPins()));
 
     private final String type;
     private final Function<StateDatum, String> changeFunc;
