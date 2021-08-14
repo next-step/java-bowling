@@ -18,7 +18,7 @@ public class LastFrame extends Frame {
     private final Stack<State> states;
     private int attemptCount;
 
-    private LastFrame(State state) {
+    protected LastFrame(State state) {
         states = new Stack<>();
         states.add(state);
     }
@@ -49,37 +49,52 @@ public class LastFrame extends Frame {
 
     @Override
     public boolean isBowlingFinish() {
-        return attemptCount == LIMIT_ATTEMPT_COUNT || lastState().isMiss();
+        return isLimitAttemptCount() || isLastStateMiss();
     }
 
     public void hitPins(Pins pins) {
         attemptCount += 1;
         changeLastState(lastState().hitPins(pins));
 
-        if (!isBowlingFinish()) {
-            addExtraChance();
-        }
-    }
-
-    public boolean isNotAllHit() {
-        return !lastState().isAllHit();
-    }
-
-    public void addExtraChance() {
-        if (isNotAllHit()) {
-            return;
-        }
-
-        states.add(Start.of());
+        addExtraChance();
     }
 
     public StateData getFrameStates() {
         return StateData.of(states);
     }
 
+    @Override
+    public boolean isStart() {
+        if (isBowlingFinish()) {
+            return true;
+        }
+
+        return states.get(START_IDX_OF_STATES).isStart();
+    }
+
+    protected boolean isLimitAttemptCount() {
+        return attemptCount == LIMIT_ATTEMPT_COUNT;
+    }
+
+    protected boolean isLastStateMiss() {
+        return lastState().isMiss();
+    }
+
     private void changeLastState(State state) {
         states.pop();
         states.add(state);
+    }
+
+    private void addExtraChance() {
+        if (isBowlingFinish()) {
+            return;
+        }
+
+        if (isNotAllHit()) {
+            return;
+        }
+
+        states.add(Start.of());
     }
 
     private State lastState() {
@@ -92,6 +107,10 @@ public class LastFrame extends Frame {
 
     private List<State> subStates() {
         return states.subList(START_IDX_OF_SUB_STATES, states.size());
+    }
+
+    private boolean isNotAllHit() {
+        return !lastState().isAllHit();
     }
 
 }

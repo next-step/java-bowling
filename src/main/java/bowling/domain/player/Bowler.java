@@ -42,8 +42,8 @@ public class Bowler {
         return frames.getScores();
     }
 
-    public boolean isTurnOver() {
-        return frames.isTurnOver();
+    public boolean isBowlerChange() {
+        return frames.isBowlerChange();
     }
 
 }

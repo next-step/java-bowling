@@ -26,14 +26,10 @@ public class Frames {
         return new Frames();
     }
 
-    public boolean isBowlingFinish() {
-        return createFrame().isBowlingFinish();
-    }
-
     public void hitPins(Pins pins) {
         validate(pins);
 
-        Frame frame = createFrame();
+        Frame frame = currentFrame();
         frame.hitPins(pins);
         frame.addFrame(frames);
     }
@@ -52,7 +48,15 @@ public class Frames {
                 .collect(Collectors.toList());
     }
 
-    private Frame createFrame() {
+    public boolean isBowlingFinish() {
+        return currentFrame().isBowlingFinish();
+    }
+
+    public boolean isBowlerChange() {
+        return currentFrame().isStart();
+    }
+
+    private Frame currentFrame() {
         return frames.get(frames.size() - 1);
     }
 

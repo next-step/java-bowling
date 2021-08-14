@@ -23,6 +23,10 @@ public class Start extends State {
         return Progress.of(pins);
     }
 
+    public boolean isStart() {
+        return true;
+    }
+
     @Override
     public List<Integer> getHitPins() {
         return Collections.emptyList();

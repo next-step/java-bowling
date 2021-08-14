@@ -14,6 +14,8 @@ public abstract class Frame {
         return false;
     }
 
+    public abstract boolean isStart();
+
     protected abstract Score addStateScore(Score score);
 
     protected abstract void hitPins(Pins pins);

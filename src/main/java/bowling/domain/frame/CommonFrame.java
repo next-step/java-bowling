@@ -38,7 +38,7 @@ public class CommonFrame extends Frame {
     }
 
     @Override
-    public boolean isStartState() {
+    public boolean isStart() {
         return state.isStart();
     }
 
@@ -94,7 +94,7 @@ public class CommonFrame extends Frame {
         }
 
         @Override
-        public boolean isStartState() {
+        public boolean isStart() {
             return true;
         }
 

@@ -29,7 +29,7 @@ public class BowlingGame {
     }
 
     private void changeBowler() {
-        if (bowler.isTurnOver()) {
+        if (bowler.isBowlerChange()) {
             bowler = bowlers.changeBowler(bowler);
         }
     }

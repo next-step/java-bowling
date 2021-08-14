@@ -41,6 +41,10 @@ public abstract class State {
         return false;
     }
 
+    public boolean isStart() {
+        return false;
+    }
+
     protected Score addBonusScore(Score score) {
         return score;
     }
