@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
     id 'org.springframework.boot' version '2.4.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
@@ -49,5 +50,59 @@ test {
 gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:unchecked"
+    }
+}
+
+build {
+    dependsOn(':jacoco')
+}
+
+ext {
+    set('reportDir', file('src/report'))
+    excludeFilter = [
+            '**/Q*.*',
+            '**/exception/**',
+            '**/test/**',
+    ]
+}
+
+task jacoco(type: Test) {
+    group 'verification'
+    description 'Runs the unit tests and verify coverage using jacoco'
+
+
+    dependsOn(
+            ':jacocoTestReport',
+            ':jacocoTestCoverageVerification'
+    )
+
+    tasks['jacocoTestCoverageVerification'].mustRunAfter(tasks['jacocoTestReport'])
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled true
+        html.destination file("$reportDir/")
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: excludeFilter)
+        }))
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 250
+            }
+            excludes = excludeFilter
+        }
     }
 }
