@@ -1,8 +1,8 @@
 package bowling.domain.dto;
 
 import bowling.domain.pin.Pins;
-import bowling.domain.state.pitching.FirstPitching;
-import bowling.domain.state.result.Miss;
+import bowling.domain.state.Start;
+import bowling.domain.state.Miss;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ class StateDataTest {
     @Test
     void should_make_state_data() {
         //arrange, act, assert
-        assertThat(StateData.of(Arrays.asList(FirstPitching.of(), Miss.of(Pins.of(1), Pins.of(2)))))
+        assertThat(StateData.of(Arrays.asList(Start.of(), Miss.of(Pins.of(1), Pins.of(2)))))
                 .isInstanceOf(StateData.class);
     }
 

@@ -1,13 +1,14 @@
 package bowling.domain.pin;
 
+import bowling.domain.score.CommonScore;
+import bowling.exception.RangeArgumentException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 
 class PinsTest {
 
@@ -18,12 +19,12 @@ class PinsTest {
         assertThat(Pins.of(10)).isEqualTo(Pins.of(10));
     }
 
-    @DisplayName("핀이 0개 아래이거나 10이상이면 IllegalArgumentException을 반환한다")
+    @DisplayName("핀이 0개 아래이거나 10이상이면 RangeArgumentException을 반환한다")
     @ValueSource(ints = {-1, 11})
     @ParameterizedTest
     void should_throw_exception_when_null_or_empty(int count) {
         //arrange, act, assert
-        assertThatIllegalArgumentException().isThrownBy(() -> Pins.of(count));
+        assertThatThrownBy(() -> Pins.of(count)).isInstanceOf(RangeArgumentException.class);
     }
 
     @DisplayName("쓰러진 핀의 개수 값을 반환한다")
@@ -62,6 +63,19 @@ class PinsTest {
 
         //assert
         assertThat(result.getCountHitPins()).isEqualTo(7);
+    }
+
+    @DisplayName("핀으로 스코어를 만든다")
+    @Test
+    void should_make_score() {
+        //arrange, act, assert
+        assertThat(Pins.of(1).score()).isEqualTo(CommonScore.of(1));
+    }
+
+    @DisplayName("남은 핀의 score를 반환할 수 있다")
+    @Test
+    void should_make_spare_score() {
+        assertThat(Pins.of(1).spareScore()).isEqualTo(Pins.of(9).score());
     }
 
 }

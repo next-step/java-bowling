@@ -1,7 +1,9 @@
-package bowling.domain.state.pitching;
+package bowling.domain.state;
 
 import bowling.domain.pin.Pins;
-import bowling.domain.state.result.Strike;
+import bowling.domain.state.Progress;
+import bowling.domain.state.Start;
+import bowling.domain.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,39 +15,39 @@ class FirstPitchingTest {
     @Test
     void should_make_first_pitching() {
         //arrange, act, assert
-        assertThat(FirstPitching.of()).isInstanceOf(FirstPitching.class);
+        assertThat(Start.of()).isInstanceOf(Start.class);
     }
 
     @DisplayName("pins 10개이면 Strike가 반환된다")
     @Test
     void should_return_strike() {
         //arrange
-        FirstPitching firstPitching = FirstPitching.of();
+        Start start = Start.of();
         Pins pins = Pins.of(10);
 
         //act, assert
-        assertThat(firstPitching.hitPins(pins)).isInstanceOf(Strike.class);
+        assertThat(start.hitPins(pins)).isInstanceOf(Strike.class);
     }
 
     @DisplayName("pins 10개이하이면 SecondPitching이 반환된다")
     @Test
     void should_return_second() {
         //arrange
-        FirstPitching firstPitching = FirstPitching.of();
+        Start start = Start.of();
         Pins pins = Pins.of(9);
 
         //act, assert
-        assertThat(firstPitching.hitPins(pins)).isInstanceOf(SecondPitching.class);
+        assertThat(start.hitPins(pins)).isInstanceOf(Progress.class);
     }
 
     @DisplayName("hit Pins는 empty로 반환된다")
     @Test
     void should_return_hit_pins_empty() {
         //arrange
-        FirstPitching firstPitching = FirstPitching.of();
+        Start start = Start.of();
 
         //act, assert
-        assertThat(firstPitching.getHitPins()).isEmpty();
+        assertThat(start.getHitPins()).isEmpty();
     }
 
 }

@@ -1,4 +1,8 @@
-package bowling.domain.state.result;
+package bowling.domain.state;
+
+import bowling.domain.score.ProgressScore;
+import bowling.domain.score.CommonScore;
+import bowling.domain.score.Score;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +23,16 @@ public class Strike extends End {
     @Override
     public List<Integer> getHitPins() {
         return Collections.singletonList(MAX_COUNT_HIT_PINS);
+    }
+
+    @Override
+    public Score score() {
+        return ProgressScore.ofStrike();
+    }
+
+    @Override
+    public Score addBonusScore(Score score) {
+        return score.add(CommonScore.ofStrike());
     }
 
 }

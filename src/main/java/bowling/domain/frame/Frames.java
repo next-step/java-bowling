@@ -1,7 +1,10 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.ScoreData;
 import bowling.domain.pin.Pins;
 import bowling.domain.dto.StateData;
+import bowling.domain.score.Score;
+import bowling.exception.NullArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +40,15 @@ public class Frames {
 
     public List<StateData> getAllStates() {
         return frames.stream()
-                .map(FrameResult::getFrameStates)
+                .map(Frame::getFrameStates)
+                .collect(Collectors.toList());
+    }
+
+    public List<ScoreData> getScores() {
+        return frames.stream()
+                .map(Frame::getScore)
+                .filter(Score::isCompute)
+                .map(ScoreData::of)
                 .collect(Collectors.toList());
     }
 
@@ -47,7 +58,7 @@ public class Frames {
 
     private void validate(Pins pins) {
         if (Objects.isNull(pins)) {
-            throw new IllegalArgumentException("Pin들은 null일 수 없습니다.");
+            throw new NullArgumentException(Pins.class.getSimpleName());
         }
     }
 

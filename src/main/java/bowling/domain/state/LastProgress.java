@@ -1,24 +1,22 @@
-package bowling.domain.state.pitching;
+package bowling.domain.state;
 
 import bowling.domain.pin.Pins;
-import bowling.domain.state.CommonState;
-import bowling.domain.state.BunchState;
-import bowling.domain.state.result.Finish;
+import bowling.domain.score.Score;
 
 import java.util.List;
 
-public class LastPitching implements CommonState {
+public class LastProgress extends CommonState {
     private static final int LIMIT_ATTEMPT_COUNT = 3;
 
     private final BunchState bunchState;
     private int attemptCount;
 
-    protected LastPitching() {
+    protected LastProgress() {
         bunchState = BunchState.of();
     }
 
-    public static LastPitching of() {
-        return new LastPitching();
+    public static LastProgress of() {
+        return new LastProgress();
     }
 
     @Override
@@ -44,9 +42,19 @@ public class LastPitching implements CommonState {
         return bunchState.getState();
     }
 
+    @Override
+    public Score score() {
+        return bunchState.score();
+    }
+
+    @Override
+    public Score addBonusScore(Score score) {
+        return bunchState.addScore(score);
+    }
+
     private CommonState updateState() {
         if (isFinish()) {
-            return Finish.of(bunchState);
+            return LastEnd.of(bunchState);
         }
 
         bunchState.addExtraChance();

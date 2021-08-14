@@ -7,10 +7,12 @@ import java.util.List;
 public class BowlingGameResult {
     private final String name;
     private final List<StateData> states;
+    private final List<ScoreData> scores;
 
     private BowlingGameResult(Bowler bowler) {
         this.name = bowler.getName();
         this.states = bowler.getStates();
+        this.scores = bowler.getScores();
     }
 
     public static BowlingGameResult of(Bowler bowler) {
@@ -27,6 +29,10 @@ public class BowlingGameResult {
 
     public int getFrameCount() {
         return states.size();
+    }
+
+    public List<ScoreData> getScores() {
+        return scores;
     }
 
 }

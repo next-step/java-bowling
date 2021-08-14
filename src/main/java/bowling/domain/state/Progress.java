@@ -1,22 +1,20 @@
-package bowling.domain.state.pitching;
+package bowling.domain.state;
 
 import bowling.domain.pin.Pins;
-import bowling.domain.state.CommonState;
-import bowling.domain.state.result.Miss;
-import bowling.domain.state.result.Spare;
+import bowling.domain.score.Score;
 
 import java.util.Collections;
 import java.util.List;
 
-public class SecondPitching implements CommonState {
+public class Progress extends CommonState {
     private final Pins pins;
 
-    private SecondPitching(Pins pins) {
+    private Progress(Pins pins) {
         this.pins = pins;
     }
 
-    public static SecondPitching of(Pins pins) {
-        return new SecondPitching(pins);
+    public static Progress of(Pins pins) {
+        return new Progress(pins);
     }
 
     @Override
@@ -48,5 +46,10 @@ public class SecondPitching implements CommonState {
     @Override
     public boolean isAllHit() {
         return false;
+    }
+
+    @Override
+    public Score addBonusScore(Score score) {
+        return score.add(pins.score());
     }
 }

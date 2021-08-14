@@ -1,18 +1,48 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.CommonScore;
+import bowling.domain.score.Score;
 
 import java.util.Collections;
 import java.util.List;
 
-public interface CommonState extends ResultState {
+public abstract class CommonState {
 
-    CommonState hitPins(Pins pins);
+    public abstract CommonState hitPins(Pins pins);
 
-    List<Integer> getHitPins();
+    public abstract List<Integer> getHitPins();
 
-    default List<CommonState> getState() {
+    public List<CommonState> getState() {
         return Collections.singletonList(this);
+    }
+
+    public Score score() {
+        return CommonScore.ofBase();
+    }
+
+    public Score addScore(Score score) {
+        if (score.isCompute()) {
+            return score;
+        }
+
+        return addBonusScore(score);
+    }
+
+    public boolean isFinish() {
+        return false;
+    }
+
+    protected boolean isMiss() {
+        return false;
+    }
+
+    protected Score addBonusScore(Score score) {
+        return score;
+    }
+
+    protected boolean isAllHit() {
+        return false;
     }
 
 }
