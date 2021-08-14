@@ -17,7 +17,7 @@ public class CommonFrame extends Frame {
 
     private CommonFrame(State state) {
         this.state = state;
-        nextFrame = DummyFrame.of();
+        nextFrame = StartingFrame.of();
     }
 
     public static CommonFrame of() {
@@ -35,6 +35,11 @@ public class CommonFrame extends Frame {
 
     public StateData getFrameStates() {
         return StateData.of(state.getState());
+    }
+
+    @Override
+    public boolean isStartState() {
+        return state.isStart();
     }
 
     @Override
@@ -71,21 +76,26 @@ public class CommonFrame extends Frame {
         frames.add(nextFrame);
     }
 
-    private static class DummyFrame extends Frame {
+    private static class StartingFrame extends Frame {
 
         private State state;
 
-        private DummyFrame(State state) {
+        private StartingFrame(State state) {
             this.state = state;
         }
 
-        public static DummyFrame of() {
-            return new DummyFrame(Start.of());
+        public static StartingFrame of() {
+            return new StartingFrame(Start.of());
         }
 
         @Override
         public Score getScore() {
             return Score.NULL;
+        }
+
+        @Override
+        public boolean isStartState() {
+            return true;
         }
 
         @Override

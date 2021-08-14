@@ -1,9 +1,10 @@
 package bowling.view;
 
+import bowling.domain.dto.BowlerData;
 import bowling.domain.dto.ScoreData;
-import bowling.domain.dto.BowlingGameResult;
 import bowling.domain.dto.StateData;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -23,9 +24,10 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printBowlingScore(BowlingGameResult result) {
+    public static void printBowlingScore(List<BowlerData> bowlerData) {
         printHeader();
-        printGameResult(result);
+        bowlerData.forEach(ResultView::printGameResult);
+        printNextLine();
     }
 
     private static void printHeader() {
@@ -35,48 +37,48 @@ public class ResultView {
         printNextLine();
     }
 
-    private static void printGameResult(BowlingGameResult result) {
-        printBowlingFrame(result);
-        printScore(result);
+    private static void printGameResult(BowlerData bowlerData) {
+        printBowlingFrame(bowlerData);
+        printScore(bowlerData);
     }
 
-    private static void printBowlingFrame(BowlingGameResult result) {
-        print(String.format(NAME_FORMAT, result.getPlayerName()));
-        printFrame(result);
-        printLeftFrame(result);
+    private static void printBowlingFrame(BowlerData bowlerData) {
+        print(String.format(NAME_FORMAT, bowlerData.getBowlerName()));
+        printFrame(bowlerData);
+        printLeftFrame(bowlerData);
         printNextLine();
     }
 
-    private static void printFrame(BowlingGameResult result) {
-        result.getStates()
+    private static void printFrame(BowlerData bowlerData) {
+        bowlerData.getStates()
                 .stream()
                 .map(ResultView::convert)
                 .forEach(value -> print(getState(value)));
     }
 
-    private static void printLeftFrame(BowlingGameResult result) {
-        IntStream.range(result.getFrameCount(), END_COUNT)
+    private static void printLeftFrame(BowlerData bowlerData) {
+        IntStream.range(bowlerData.getCurrentFrameNumber(), END_COUNT)
                 .forEach(value -> print(String.format(FRAME_STATE_FORMAT, EMPTY_STRING)));
     }
 
-    private static void printScore(BowlingGameResult result) {
+    private static void printScore(BowlerData bowlerData) {
         print(String.format(NAME_FORMAT, EMPTY_STRING));
-        printComputedScore(result);
-        printLeftComputedScore(result);
+        printComputedScore(bowlerData);
+        printLeftComputedScore(bowlerData);
         printNextLine();
     }
 
-    private static void printComputedScore(BowlingGameResult result) {
+    private static void printComputedScore(BowlerData bowlerData) {
         AtomicInteger score = new AtomicInteger(0);
-        result.getScores()
+        bowlerData.getScores()
                 .stream()
                 .map(ScoreData::getValue)
                 .map(score::addAndGet)
                 .forEach(value -> print(String.format(FRAME_SCORE_FORMAT, value)));
     }
 
-    private static void printLeftComputedScore(BowlingGameResult result) {
-        IntStream.range(result.getScores().size(), END_COUNT)
+    private static void printLeftComputedScore(BowlerData bowlerData) {
+        IntStream.range(bowlerData.getScores().size(), END_COUNT)
                 .forEach(value -> print(String.format(FRAME_STATE_FORMAT, EMPTY_STRING)));
     }
 

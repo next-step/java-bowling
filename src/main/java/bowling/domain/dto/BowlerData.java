@@ -4,31 +4,33 @@ import bowling.domain.player.Bowler;
 
 import java.util.List;
 
-public class BowlingGameResult {
+public class BowlerData {
     private final String name;
+    private final int currentFrameNumber; // 1 base
     private final List<StateData> states;
     private final List<ScoreData> scores;
 
-    private BowlingGameResult(Bowler bowler) {
+    private BowlerData(Bowler bowler) {
         this.name = bowler.getName();
         this.states = bowler.getStates();
         this.scores = bowler.getScores();
+        this.currentFrameNumber = states.size();
     }
 
-    public static BowlingGameResult of(Bowler bowler) {
-        return new BowlingGameResult(bowler);
+    public static BowlerData of(Bowler bowler) {
+        return new BowlerData(bowler);
     }
 
-    public String getPlayerName() {
+    public String getBowlerName() {
         return name;
+    }
+
+    public int getCurrentFrameNumber() {
+        return currentFrameNumber;
     }
 
     public List<StateData> getStates() {
         return states;
-    }
-
-    public int getFrameCount() {
-        return states.size();
     }
 
     public List<ScoreData> getScores() {
