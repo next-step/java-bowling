@@ -56,7 +56,6 @@ build {
 ext {
     set('reportDir', file('src/report'))
     excludeFilter = [
-            '**/Q*.*',
             '**/exception/**',
             '**/test/**',
     ]
