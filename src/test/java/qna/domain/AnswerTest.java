@@ -4,6 +4,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.exception.CannotDeleteException;
+import qna.exception.NotFoundException;
+import qna.exception.UnAuthorizedException;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
@@ -27,5 +31,19 @@ public class AnswerTest {
 
         // then
         Assertions.assertThat(A1.isDeleted()).isTrue();
+    }
+
+    @Test
+    @DisplayName("객체 생성시 null이 입력되면 정해진 예외를 발생시킨다")
+    void initNull() throws Exception {
+        assertAll(
+                () -> Assertions.assertThatThrownBy(() -> {
+                    new Answer(null, QuestionTest.Q1, "Answers Contents");
+                }).isInstanceOf(UnAuthorizedException.class),
+
+                () -> Assertions.assertThatThrownBy(() -> {
+                    new Answer(UserTest.JAVAJIGI, null, "Answers Contents");
+                }).isInstanceOf(NotFoundException.class)
+        );
     }
 }
