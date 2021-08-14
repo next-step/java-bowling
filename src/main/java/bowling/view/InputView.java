@@ -1,7 +1,9 @@
 package bowling.view;
 
 public interface InputView {
+    int inputPlayerSize();
+
     String inputName();
 
-    int inputTurnScore(int currentFrameNumber);
+    int inputTurnScore(String playerName);
 }

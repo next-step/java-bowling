@@ -10,7 +10,9 @@ import bowling.view.DosResultView;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
-import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BowlingSolution {
     public static void main(String[] args) {
@@ -30,9 +32,9 @@ public class BowlingSolution {
     }
 
     public void run() {
-        PlayerName name = inputName();
+        List<PlayerName> playerNames = inputNames();
 
-        ScoreBoard scoreBoard = startRecord(name);
+        ScoreBoard scoreBoard = startRecord(playerNames);
         resultView.printScoreBoard(scoreBoard);
 
         while(!scoreBoard.isCompleted()) {
@@ -41,28 +43,31 @@ public class BowlingSolution {
         }
     }
 
-    private PlayerName inputName() {
-        return new PlayerName(inputView.inputName());
+    private List<PlayerName> inputNames() {
+        int playerSize = inputView.inputPlayerSize();
+
+        return Stream.generate(inputView::inputName)
+                        .limit(playerSize)
+                        .map(PlayerName::new)
+                        .collect(Collectors.toList());
     }
 
-    private ScoreBoard startRecord(PlayerName name) {
+    private ScoreBoard startRecord(List<PlayerName> playerNames) {
         return ScoreBoard.generate(
-                Collections.singletonList(name), new RotationPlayerOrderStrategy()
+                playerNames, RotationPlayerOrderStrategy::new
         );
     }
 
     private void recordScore(ScoreBoard scoreBoard) {
         Player currentPlayer = scoreBoard.currentPlayer();
-        TurnScore score = inputTurnScore(scoreBoard, currentPlayer);
+        TurnScore score = inputTurnScore(currentPlayer);
 
         scoreBoard.record(currentPlayer, score);
     }
 
-    private TurnScore inputTurnScore(ScoreBoard scoreBoard, Player currentPlayer) {
+    private TurnScore inputTurnScore(Player currentPlayer) {
         return TurnScore.of(
-                inputView.inputTurnScore(
-                        scoreBoard.currentFrameNumber(currentPlayer)
-                )
+                inputView.inputTurnScore(currentPlayer.name().value())
         );
     }
 }

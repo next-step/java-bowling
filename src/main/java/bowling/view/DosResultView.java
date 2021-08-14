@@ -2,13 +2,14 @@ package bowling.view;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.framescore.FrameScore;
 import bowling.domain.player.Player;
 import bowling.domain.score.Score;
-import bowling.domain.framescore.FrameScore;
 import bowling.domain.scoreboard.ScoreBoard;
 import bowling.view.util.FrameFormat;
 import bowling.view.util.ScoreFormat;
 
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public class DosResultView implements ResultView {
@@ -32,12 +33,10 @@ public class DosResultView implements ResultView {
     }
 
     private void printAllPlayer(final ScoreBoard scoreBoard) {
-        scoreBoard.forEach(
-                iEntry -> {
-                    printPlayerFrameLine(iEntry.getKey(), iEntry.getValue());
-                    printPlayerFrameScoreLine(iEntry.getValue());
-                }
-        );
+        for (Map.Entry<Player, Frames> iEntry : scoreBoard) {
+            printPlayerFrameLine(iEntry.getKey(), iEntry.getValue());
+            printPlayerFrameScoreLine(iEntry.getValue());
+        }
 
         printEmptyLine();
     }

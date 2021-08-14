@@ -2,7 +2,7 @@ package bowling.domain.player;
 
 import java.util.Objects;
 
-public class Player {
+public class Player implements Comparable<Player> {
     private final PlayerName name;
     private final PlayerGameIndex gameIndex;
 
@@ -39,5 +39,10 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" + "name=" + name + ", gameIndex=" + gameIndex + '}';
+    }
+
+    @Override
+    public int compareTo(final Player rightPlayer) {
+        return this.gameIndex.compareTo(rightPlayer.gameIndex);
     }
 }
