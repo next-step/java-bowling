@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import org.hibernate.annotations.Where;
+import qna.domain.exception.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -85,6 +86,19 @@ public class Question extends AbstractEntity {
 
     public boolean isDeleted() {
         return deleted;
+    }
+
+    public void delete(final User user) {
+        if (!writer.equals(user)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        if (answers.stream().anyMatch(a -> !a.getWriter().equals(user))) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        answers.forEach(answer -> answer.delete(user));
+        deleted = true;
     }
 
     public Question setDeleted(final boolean deleted) {
