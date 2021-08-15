@@ -17,7 +17,7 @@ public class AnswerTest {
     @DisplayName("답변의 작성자가 아닐 경우 답변을 제거할 수 없다는 예외를 발생시킨다")
     void deleteException() throws Exception {
         Assertions.assertThatThrownBy(() -> {
-            A1.delete(UserTest.SANJIGI);
+            A1.deleteBy(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
@@ -27,7 +27,7 @@ public class AnswerTest {
         Assertions.assertThat(A1.isDeleted()).isFalse();
 
         // when
-        A1.delete(UserTest.JAVAJIGI);
+        A1.deleteBy(UserTest.JAVAJIGI);
 
         // then
         Assertions.assertThat(A1.isDeleted()).isTrue();

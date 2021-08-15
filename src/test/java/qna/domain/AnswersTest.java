@@ -16,7 +16,7 @@ class AnswersTest {
 
         // when, then
         Assertions.assertThatThrownBy(() -> {
-                    answers.delete(UserTest.JAVAJIGI);
+                    answers.deleteBy(UserTest.JAVAJIGI);
                 }).isInstanceOf(CannotDeleteException.class)
                 .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
@@ -31,7 +31,7 @@ class AnswersTest {
         int answerSize = answers.size();
 
         // when
-        int deleteHistorySize = answers.delete(UserTest.JAVAJIGI).size();
+        int deleteHistorySize = answers.deleteBy(UserTest.JAVAJIGI).size();
 
         // then
         Assertions.assertThat(answerSize).isEqualTo(deleteHistorySize);

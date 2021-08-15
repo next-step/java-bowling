@@ -11,7 +11,6 @@ import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Embeddable
@@ -22,14 +21,10 @@ public class Answers {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 
-    public List<DeleteHistory> delete(final User loginUser) {
+    public List<DeleteHistory> deleteBy(final User loginUser) {
         return answers.stream()
-                .map(deleteBy(loginUser))
+                .map(answer -> answer.deleteBy(loginUser))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
-    }
-
-    private Function<Answer, DeleteHistory> deleteBy(final User loginUser) {
-        return answer -> answer.delete(loginUser);
     }
 
     public void add(final Answer answer) {

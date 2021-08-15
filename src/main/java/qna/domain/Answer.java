@@ -41,7 +41,7 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public DeleteHistory delete(final User writer) {
+    public DeleteHistory deleteBy(final User writer) {
         verifyIsOwner(writer);
         this.deleted = true;
         return DeleteHistory.ofAnswer(getId(), writer);
