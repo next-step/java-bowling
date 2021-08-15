@@ -3,24 +3,16 @@ package qna.domain.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-import static qna.domain.type.ContentType.ANSWER;
-import static qna.domain.type.ContentType.QUESTION;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import qna.domain.entity.Answer;
-import qna.domain.entity.DeleteHistory;
 import qna.domain.entity.Question;
 import qna.domain.exception.CannotDeleteException;
 import qna.domain.repository.QuestionRepository;
@@ -31,9 +23,6 @@ public class QnaServiceTest {
 
     @Mock
     private QuestionRepository questionRepository;
-
-    @Mock
-    private DeleteHistoryService deleteHistoryService;
 
     @InjectMocks
     private QnAService qnAService;
@@ -50,7 +39,7 @@ public class QnaServiceTest {
 
     @DisplayName("[성공] delete")
     @Test
-    public void delete() throws Exception {
+    public void delete() {
         // given
         given(questionRepository.findByIdAndDeletedFalse(question.getId()))
             .willReturn(Optional.of(question));
@@ -61,7 +50,6 @@ public class QnaServiceTest {
 
         // then
         assertThat(question.isDeleted()).isTrue();
-        verifyDeleteHistories();
     }
 
     @DisplayName("[실패] delete - 다른 사람이 쓴 글")
@@ -79,7 +67,7 @@ public class QnaServiceTest {
 
     @DisplayName("[성공] delete - 질문자 답변자 같음")
     @Test
-    public void delete_sameAnswerWriter() throws Exception {
+    public void delete_sameAnswerWriter() {
         // given
         given(questionRepository.findByIdAndDeletedFalse(question.getId()))
             .willReturn(Optional.of(question));
@@ -90,7 +78,6 @@ public class QnaServiceTest {
         // then
         assertThat(question.isDeleted()).isTrue();
         assertThat(answer.isDeleted()).isTrue();
-        verifyDeleteHistories();
     }
 
     @DisplayName("[실패] delete - 질문자 답변자 다름")
@@ -104,12 +91,5 @@ public class QnaServiceTest {
         assertThrows(CannotDeleteException.class, () -> qnAService.deleteQuestion(TestData.SANJIGI, question.getId()));
 
         // then
-    }
-
-    private void verifyDeleteHistories() {
-        final List<DeleteHistory> deleteHistories = Arrays.asList(
-            new DeleteHistory(QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-            new DeleteHistory(ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        verify(deleteHistoryService).saveAll(deleteHistories);
     }
 }
