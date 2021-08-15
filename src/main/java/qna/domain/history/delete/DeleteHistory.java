@@ -1,9 +1,11 @@
-package qna.domain;
+package qna.domain.history.delete;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import qna.domain.type.ContentType;
+import qna.domain.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

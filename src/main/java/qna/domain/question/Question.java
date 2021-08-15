@@ -1,9 +1,14 @@
-package qna.domain;
+package qna.domain.question;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import qna.domain.AbstractEntity;
+import qna.domain.answer.Answer;
+import qna.domain.answer.Answers;
+import qna.domain.history.delete.DeleteHistory;
+import qna.domain.user.User;
 import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
@@ -35,14 +40,14 @@ public class Question extends AbstractEntity {
     public Question(final String title, final String contents) {
         this.title = title;
         this.contents = contents;
-        this.answers = new Answers();
+        this.answers = Answers.newInstance();
     }
 
     public Question(final long id, final String title, final String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
-        this.answers = new Answers();
+        this.answers = Answers.newInstance();
     }
 
     public List<DeleteHistory> delete(final User loginUser) {

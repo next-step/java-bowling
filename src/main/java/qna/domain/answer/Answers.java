@@ -1,8 +1,10 @@
-package qna.domain;
+package qna.domain.answer;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
+import qna.domain.history.delete.DeleteHistory;
+import qna.domain.user.User;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -25,6 +27,10 @@ public class Answers {
         return answers.stream()
                 .map(answer -> answer.deleteBy(loginUser))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
+    }
+
+    public static Answers newInstance() {
+        return new Answers();
     }
 
     public void add(final Answer answer) {

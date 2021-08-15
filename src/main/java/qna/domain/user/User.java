@@ -1,9 +1,10 @@
-package qna.domain;
+package qna.domain.user;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import qna.domain.AbstractEntity;
 import qna.exception.UnAuthorizedException;
 
 import javax.persistence.Column;

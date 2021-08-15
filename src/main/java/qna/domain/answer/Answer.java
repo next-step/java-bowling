@@ -1,9 +1,13 @@
-package qna.domain;
+package qna.domain.answer;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import qna.domain.AbstractEntity;
+import qna.domain.history.delete.DeleteHistory;
+import qna.domain.question.Question;
+import qna.domain.user.User;
 import qna.exception.CannotDeleteException;
 import qna.exception.NotFoundException;
 import qna.exception.UnAuthorizedException;
