@@ -24,7 +24,7 @@ public class QnAService {
     private AnswerRepository answerRepository;
 
     @Resource(name = "deleteHistoryService")
-    private qna.domain.service.DeleteHistoryService deleteHistoryService;
+    private DeleteHistoryService deleteHistoryService;
 
     @Transactional(readOnly = true)
     public Question findQuestionById(final Long id) {

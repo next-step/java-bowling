@@ -24,6 +24,9 @@ public class QnaServiceTest {
     @Mock
     private QuestionRepository questionRepository;
 
+    @Mock
+    private DeleteHistoryService deleteHistoryService;
+
     @InjectMocks
     private QnAService qnAService;
 
