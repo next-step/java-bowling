@@ -1,6 +1,6 @@
 package qna.domain.exception;
 
-public class CannotDeleteException extends Exception {
+public class CannotDeleteException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 

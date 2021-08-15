@@ -5,6 +5,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import qna.domain.exception.CannotDeleteException;
 import qna.domain.exception.NotFoundException;
 import qna.domain.exception.UnAuthorizedException;
 
@@ -51,12 +52,15 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public Answer setDeleted(final boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public void delete(final User user) {
+        if (!isOwner(user)) {
+            throw new CannotDeleteException("답변을 삭제할 권한이 없습니다.");
+        }
+
+        deleted = true;
     }
 
-    public boolean isOwner(final User writer) {
+    private boolean isOwner(final User writer) {
         return this.writer.equals(writer);
     }
 
