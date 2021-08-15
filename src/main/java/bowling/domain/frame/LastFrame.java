@@ -55,7 +55,6 @@ public class LastFrame extends Frame {
     public void hitPins(Pins pins) {
         attemptCount += 1;
         changeLastState(lastState().hitPins(pins));
-
         addExtraChance();
     }
 

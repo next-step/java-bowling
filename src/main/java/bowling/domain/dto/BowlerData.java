@@ -6,7 +6,7 @@ import java.util.List;
 
 public class BowlerData {
     private final String name;
-    private final int currentFrameNumber; // 1 base
+    private final int currentFrameCount;
     private final List<StateData> states;
     private final List<ScoreData> scores;
 
@@ -14,7 +14,7 @@ public class BowlerData {
         this.name = bowler.getName();
         this.states = bowler.getStates();
         this.scores = bowler.getScores();
-        this.currentFrameNumber = states.size();
+        this.currentFrameCount = states.size();
     }
 
     public static BowlerData of(Bowler bowler) {
@@ -25,8 +25,8 @@ public class BowlerData {
         return name;
     }
 
-    public int getCurrentFrameNumber() {
-        return currentFrameNumber;
+    public int getCurrentFrameCount() {
+        return currentFrameCount;
     }
 
     public List<StateData> getStates() {

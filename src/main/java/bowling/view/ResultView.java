@@ -57,7 +57,7 @@ public class ResultView {
     }
 
     private static void printLeftFrame(BowlerData bowlerData) {
-        IntStream.range(bowlerData.getCurrentFrameNumber(), END_COUNT)
+        IntStream.range(bowlerData.getCurrentFrameCount(), END_COUNT)
                 .forEach(value -> print(String.format(FRAME_STATE_FORMAT, EMPTY_STRING)));
     }
 
