@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.dto.StateData;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
+import bowling.domain.state.ProgressState;
 import bowling.domain.state.State;
 import bowling.domain.state.Start;
 
@@ -39,7 +40,7 @@ public class CommonFrame extends Frame {
 
     @Override
     public boolean isStart() {
-        return state.isStart();
+        return state.getProgressState() == ProgressState.START;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class CommonFrame extends Frame {
     }
 
     private boolean isFrameNotFinish() {
-        return !state.isFinish();
+        return state.getProgressState() != ProgressState.FINISH;
     }
 
     private void createNextFrame(List<Frame> frames) {

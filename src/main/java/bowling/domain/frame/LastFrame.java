@@ -3,6 +3,8 @@ package bowling.domain.frame;
 import bowling.domain.dto.StateData;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
+import bowling.domain.state.ProgressState;
+import bowling.domain.state.ResultState;
 import bowling.domain.state.State;
 import bowling.domain.state.Start;
 
@@ -30,7 +32,7 @@ public class LastFrame extends Frame {
     @Override
     public Score getScore() {
         return scoreStates().stream()
-                .reduce(firstState().score(),
+                .reduce(getStartIndex().score(),
                         (interScore, state) -> state.addScore(interScore),
                         (x, y) -> {
                             throw new IllegalStateException();
@@ -68,7 +70,7 @@ public class LastFrame extends Frame {
             return true;
         }
 
-        return states.get(STATES_START_INDEX).isStart();
+        return getStartIndex().getProgressState() == ProgressState.START;
     }
 
     protected boolean isLimitAttemptCount() {
@@ -76,7 +78,7 @@ public class LastFrame extends Frame {
     }
 
     protected boolean isLastStateMiss() {
-        return lastState().isMiss();
+        return lastState().getResultState() == ResultState.MISS;
     }
 
     private void changeLastState(State state) {
@@ -100,16 +102,16 @@ public class LastFrame extends Frame {
         return states.peek();
     }
 
-    private State firstState() {
-        return states.get(STATES_START_INDEX);
-    }
-
     private List<State> scoreStates() {
         return states.subList(SCORE_STATES_START_INDEX, states.size());
     }
 
     private boolean isNotAllHit() {
-        return !lastState().isAllHit();
+        return lastState().getResultState() != ResultState.ALLHIT;
+    }
+
+    private State getStartIndex() {
+        return states.get(STATES_START_INDEX);
     }
 
 }

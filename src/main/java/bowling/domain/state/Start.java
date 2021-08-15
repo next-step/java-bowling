@@ -8,6 +8,8 @@ import java.util.List;
 public class Start extends State {
 
     private Start() {
+        resultState = ResultState.NONE;
+        progressState = ProgressState.START;
     }
 
     public static Start of() {

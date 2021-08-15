@@ -38,34 +38,24 @@ class StrikeTest {
         assertThatIllegalStateException().isThrownBy(() -> strike.hitPins(Pins.of(10)));
     }
 
-    @DisplayName("Strike는 isFinish를 true로 반환해야한다")
+    @DisplayName("Strike의 ProgressState는 FINISH이다")
     @Test
-    void should_return_true_is_finish() {
+    void should_return_progress_state_is_finish() {
         //arrange
         Strike strike = Strike.of();
 
         //act, assert
-        assertTrue(strike.isFinish());
+        assertThat(strike.getProgressState()).isEqualTo(ProgressState.FINISH);
     }
 
-    @DisplayName("Strike는 isAllHit를 true로 반환해야한다")
+    @DisplayName("Strike의 ResultState는 ALLHIT이다")
     @Test
-    void should_return_true_is_all_hit() {
+    void should_return_result_state_is_all_hit() {
         //arrange
         Strike strike = Strike.of();
 
         //act, assert
-        assertTrue(strike.isAllHit());
-    }
-
-    @DisplayName("Strike는 isMiss을 false로 반환해야한다")
-    @Test
-    void should_return_false_is_miss() {
-        //arrange
-        Strike strike = Strike.of();
-
-        //act, assert
-        assertFalse(strike.isMiss());
+        assertThat(strike.getResultState()).isEqualTo(ResultState.ALLHIT);
     }
 
     @DisplayName("max hit count 10을 반환한다")

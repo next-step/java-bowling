@@ -12,13 +12,13 @@ import static bowling.domain.pin.Pins.MAX_COUNT_HIT_PINS;
 
 public class Strike extends State {
 
-    public static Strike of() {
-        return new Strike();
+    private Strike() {
+        resultState = ResultState.ALLHIT;
+        progressState = ProgressState.FINISH;
     }
 
-    @Override
-    public boolean isAllHit() {
-        return true;
+    public static Strike of() {
+        return new Strike();
     }
 
     @Override
@@ -34,11 +34,6 @@ public class Strike extends State {
     @Override
     public Score addBonusScore(Score score) {
         return score.add(CommonScore.ofStrike());
-    }
-
-    @Override
-    public boolean isFinish() {
-        return true;
     }
 
     @Override

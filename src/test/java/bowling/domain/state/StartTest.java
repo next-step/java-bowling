@@ -57,5 +57,25 @@ class StartTest {
         //act, assert
         assertTrue(start.isStart());
     }
+
+    @DisplayName("Start의 ProgressState는 Start이다")
+    @Test
+    void should_return_progress_state_is_start() {
+        //arrange
+        Start start = Start.of();
+
+        //act, assert
+        assertThat(start.getProgressState()).isEqualTo(ProgressState.START);
+    }
+
+    @DisplayName("Start의 ResultState는 None이다")
+    @Test
+    void should_return_result_state_is_none() {
+        //arrange
+        Start start = Start.of();
+
+        //act, assert
+        assertThat(start.getResultState()).isEqualTo(ResultState.NONE);
+    }
     
 }

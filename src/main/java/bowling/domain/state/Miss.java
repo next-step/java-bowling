@@ -14,15 +14,12 @@ public class Miss extends State {
     private Miss(Pins firstPins, Pins secondPins) {
         this.firstPins = firstPins;
         this.secondPins = secondPins;
+        resultState = ResultState.MISS;
+        progressState = ProgressState.FINISH;
     }
 
     public static Miss of(Pins firstPins, Pins secondPins) {
         return new Miss(firstPins, secondPins);
-    }
-
-    @Override
-    public boolean isMiss() {
-        return true;
     }
 
     @Override
@@ -44,11 +41,6 @@ public class Miss extends State {
         }
 
         return resultScore.add(secondPins.score());
-    }
-
-    @Override
-    public boolean isFinish() {
-        return true;
     }
 
     @Override

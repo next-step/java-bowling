@@ -13,15 +13,12 @@ public class Spare extends State {
 
     private Spare(Pins pins) {
         this.pins = pins;
+        resultState = ResultState.ALLHIT;
+        progressState = ProgressState.FINISH;
     }
 
     public static Spare of(Pins pins) {
         return new Spare(pins);
-    }
-
-    @Override
-    public boolean isAllHit() {
-        return true;
     }
 
     @Override
@@ -43,11 +40,6 @@ public class Spare extends State {
         }
 
         return resultScore.add(pins.spareScore());
-    }
-
-    @Override
-    public boolean isFinish() {
-        return true;
     }
 
     @Override

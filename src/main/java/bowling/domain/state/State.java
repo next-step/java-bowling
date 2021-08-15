@@ -9,6 +9,9 @@ import java.util.List;
 
 public abstract class State {
 
+    protected ResultState resultState = ResultState.NONE;
+    protected ProgressState progressState = ProgressState.NONE;
+
     public abstract State hitPins(Pins pins);
 
     public abstract List<Integer> getHitPins();
@@ -29,20 +32,12 @@ public abstract class State {
         return addBonusScore(score);
     }
 
-    public boolean isFinish() {
-        return false;
+    public ResultState getResultState() {
+        return resultState;
     }
 
-    public boolean isMiss() {
-        return false;
-    }
-
-    public boolean isAllHit() {
-        return false;
-    }
-
-    public boolean isStart() {
-        return false;
+    public ProgressState getProgressState() {
+        return progressState;
     }
 
     protected Score addBonusScore(Score score) {
