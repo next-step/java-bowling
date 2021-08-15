@@ -1,15 +1,20 @@
-package qna.domain;
+package qna.domain.entity;
 
+import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class AbstractEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +29,7 @@ public class AbstractEntity {
     public AbstractEntity() {
     }
 
-    public AbstractEntity(Long id) {
+    public AbstractEntity(final Long id) {
         this.id = id;
     }
 
@@ -32,7 +37,7 @@ public class AbstractEntity {
         return id;
     }
 
-    public AbstractEntity setId(Long id) {
+    public AbstractEntity setId(final Long id) {
         this.id = id;
         return this;
     }
@@ -46,25 +51,26 @@ public class AbstractEntity {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        AbstractEntity other = (AbstractEntity) obj;
-        if (id != other.id)
-            return false;
-        return true;
+        }
+        final AbstractEntity other = (AbstractEntity) obj;
+        return id == other.id;
     }
 
     @Override
     public String toString() {
         return "AbstractEntity{" +
-                "id=" + id +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+            "id=" + id +
+            ", createdAt=" + createdAt +
+            ", updatedAt=" + updatedAt +
+            '}';
     }
 }

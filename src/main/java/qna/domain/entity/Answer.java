@@ -1,12 +1,16 @@
-package qna.domain;
+package qna.domain.entity;
 
-import qna.NotFoundException;
-import qna.UnAuthorizedException;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import qna.domain.exception.NotFoundException;
+import qna.domain.exception.UnAuthorizedException;
 
 @Entity
 public class Answer extends AbstractEntity {
+
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -23,18 +27,18 @@ public class Answer extends AbstractEntity {
     public Answer() {
     }
 
-    public Answer(User writer, Question question, String contents) {
+    public Answer(final User writer, final Question question, final String contents) {
         this(null, writer, question, contents);
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
+    public Answer(final Long id, final User writer, final Question question, final String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -43,16 +47,16 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
 
-    public boolean isOwner(User writer) {
+    public Answer setDeleted(final boolean deleted) {
+        this.deleted = deleted;
+        return this;
+    }
+
+    public boolean isOwner(final User writer) {
         return this.writer.equals(writer);
     }
 
@@ -64,7 +68,7 @@ public class Answer extends AbstractEntity {
         return contents;
     }
 
-    public void toQuestion(Question question) {
+    public void toQuestion(final Question question) {
         this.question = question;
     }
 
