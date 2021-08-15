@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
+@ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends AbstractEntity {
     public static final GuestUser GUEST_USER = new GuestUser();
