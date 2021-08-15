@@ -1,18 +1,18 @@
 package qna.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import qna.domain.DeleteHistory;
-import qna.domain.DeleteHistoryRepository;
+import qna.domain.history.delete.DeleteHistory;
+import qna.domain.history.delete.DeleteHistoryRepository;
 
-import javax.annotation.Resource;
 import java.util.List;
 
-@Service("deleteHistoryService")
+@Service
+@RequiredArgsConstructor
 public class DeleteHistoryService {
-    @Resource(name = "deleteHistoryRepository")
-    private DeleteHistoryRepository deleteHistoryRepository;
+    private final DeleteHistoryRepository deleteHistoryRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveAll(List<DeleteHistory> deleteHistories) {

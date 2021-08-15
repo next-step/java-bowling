@@ -1,13 +1,19 @@
 package qna.service;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import qna.CannotDeleteException;
-import qna.domain.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import qna.domain.answer.Answer;
+import qna.domain.history.delete.DeleteHistory;
+import qna.domain.question.Question;
+import qna.domain.question.QuestionRepository;
+import qna.domain.question.QuestionTest;
+import qna.domain.type.ContentType;
+import qna.domain.user.UserTest;
+import qna.exception.CannotDeleteException;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -19,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class QnaServiceTest {
     @Mock
     private QuestionRepository questionRepository;
@@ -33,7 +39,7 @@ public class QnaServiceTest {
     private Question question;
     private Answer answer;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
