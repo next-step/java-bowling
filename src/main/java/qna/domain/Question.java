@@ -1,13 +1,21 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
+@ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Question extends AbstractEntity {
     @Column(length = 100, nullable = false)
     private String title;
@@ -15,88 +23,65 @@ public class Question extends AbstractEntity {
     @Lob
     private String contents;
 
+    @Getter
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers;
 
-    private boolean deleted = false;
+    private boolean deleted;
 
-    public Question() {
-    }
-
-    public Question(String title, String contents) {
+    public Question(final String title, final String contents) {
         this.title = title;
         this.contents = contents;
+        this.answers = new Answers();
     }
 
-    public Question(long id, String title, String contents) {
+    public Question(final long id, final String title, final String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
+        this.answers = new Answers();
     }
 
-    public String getTitle() {
-        return title;
+    public List<DeleteHistory> delete(final User loginUser) {
+        return Stream.of(deleteQuestionBy(loginUser), answers.deleteBy(loginUser))
+                .flatMap(Collection::stream)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
     }
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
+    private List<DeleteHistory> deleteQuestionBy(final User loginUser) {
+        verifyIsOwner(loginUser);
+        this.deleted = true;
+        return Collections.singletonList(DeleteHistory.ofQuestion(getId(), getWriter()));
     }
 
-    public String getContents() {
-        return contents;
+    private void verifyIsOwner(final User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
     }
 
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
-    public User getWriter() {
-        return writer;
-    }
-
-    public Question writeBy(User loginUser) {
+    public Question writeBy(final User loginUser) {
         this.writer = loginUser;
         return this;
     }
 
-    public void addAnswer(Answer answer) {
+    public void addAnswer(final Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        this.answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
-
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public boolean isOwner(final User loginUser) {
+        return this.writer.equals(loginUser);
     }
 
     public boolean isDeleted() {
-        return deleted;
+        return this.deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    @Override
-    public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
-
-    public void delete(final User writer) throws CannotDeleteException {
-        if (!isOwner(writer)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
+    public boolean isAnswersAllDeleted() {
+        return answers.isAllDeleted();
     }
 }

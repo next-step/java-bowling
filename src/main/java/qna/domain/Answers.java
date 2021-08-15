@@ -34,4 +34,9 @@ public class Answers {
     public int size() {
         return answers.size();
     }
+
+    public boolean isAllDeleted() {
+        return answers.stream()
+                .anyMatch(Answer::isDeleted);
+    }
 }
