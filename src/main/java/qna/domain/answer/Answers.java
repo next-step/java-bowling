@@ -41,7 +41,7 @@ public class Answers {
         return answers.size();
     }
 
-    public boolean isAllDeleted() {
+    public boolean isDeletedAll() {
         return answers.stream()
                 .anyMatch(Answer::isDeleted);
     }

@@ -68,12 +68,12 @@ public class QuestionTest {
     void deleteSuccess_3() throws Exception {
         // given
         Q1.addAnswer(AnswerTest.A1);
-        Assertions.assertThat(Q1.isAnswersAllDeleted()).isFalse();
+        Assertions.assertThat(Q1.isDeletedAllAnswer()).isFalse();
 
         // when
         Q1.delete(UserTest.JAVAJIGI);
 
         // then
-        Assertions.assertThat(Q1.isAnswersAllDeleted()).isTrue();
+        Assertions.assertThat(Q1.isDeletedAllAnswer()).isTrue();
     }
 }

@@ -86,7 +86,7 @@ public class Question extends AbstractEntity {
         return this.deleted;
     }
 
-    public boolean isAnswersAllDeleted() {
-        return answers.isAllDeleted();
+    public boolean isDeletedAllAnswer() {
+        return answers.isDeletedAll();
     }
 }
