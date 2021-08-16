@@ -49,6 +49,19 @@ public class QuestionTest {
         assertThat(question.getAnswers().stream().allMatch(Answer::isDeleted)).isTrue();
     }
 
+    @DisplayName("[실패] delete - 다른 사람의 글 삭제")
+    @ParameterizedTest
+    @MethodSource("javajigiQuestion")
+    public void delete_differentQuestionWriter(final Question question) {
+        // given
+
+        // when
+        assertThrows(CannotDeleteException.class, () -> question.delete(SANJIGI));
+
+        // then
+        assertThat(question.isDeleted()).isFalse();
+    }
+
     @DisplayName("[실패] delete - 질문자 답변자 다름")
     @ParameterizedTest
     @MethodSource("javajigiQuestion")
