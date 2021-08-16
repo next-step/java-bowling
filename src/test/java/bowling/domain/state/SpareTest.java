@@ -37,34 +37,24 @@ class SpareTest {
         assertThatIllegalStateException().isThrownBy(() -> spare.hitPins(Pins.of(9)));
     }
 
-    @DisplayName("Spare는 isFinish를 true로 반환해야한다")
+    @DisplayName("Spare의 ProgressState는 FINISH이다")
     @Test
-    void should_return_true_is_finish() {
+    void should_return_progress_state_is_finish() {
         //arrange
         Spare spare = Spare.of(Pins.of(1));
 
         //act, assert
-        assertTrue(spare.isFinish());
+        assertThat(spare.getProgressState()).isEqualTo(ProgressState.FINISH);
     }
 
-    @DisplayName("Spare는 isAllHit를 true로 반환해야한다")
+    @DisplayName("Spare의 ResultState는 ALLHIT이다")
     @Test
-    void should_return_true_is_all_hit() {
+    void should_return_result_state_is_all_hit() {
         //arrange
         Spare spare = Spare.of(Pins.of(1));
 
         //act, assert
-        assertTrue(spare.isAllHit());
-    }
-
-    @DisplayName("Spare는 isMiss을 false로 반환해야한다")
-    @Test
-    void should_return_false_is_miss() {
-        //arrange
-        Spare spare = Spare.of(Pins.of(1));
-
-        //act, assert
-        assertFalse(spare.isMiss());
+        assertThat(spare.getResultState()).isEqualTo(ResultState.ALLHIT);
     }
 
     @DisplayName("first pitching에서 넘어온 첫번째 hit count를 반환한다")

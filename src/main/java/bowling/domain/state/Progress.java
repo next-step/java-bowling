@@ -6,11 +6,13 @@ import bowling.domain.score.Score;
 import java.util.Collections;
 import java.util.List;
 
-public class Progress extends CommonState {
+public class Progress extends State {
     private final Pins pins;
 
     private Progress(Pins pins) {
         this.pins = pins;
+        resultState = ResultState.NONE;
+        progressState = ProgressState.NONE;
     }
 
     public static Progress of(Pins pins) {
@@ -18,7 +20,7 @@ public class Progress extends CommonState {
     }
 
     @Override
-    public CommonState hitPins(Pins pins) {
+    public State hitPins(Pins pins) {
         Pins hitPinsTotal = this.pins.add(pins);
 
         if (hitPinsTotal.isAllHit()) {
@@ -31,21 +33,6 @@ public class Progress extends CommonState {
     @Override
     public List<Integer> getHitPins() {
         return Collections.singletonList(pins.getCountHitPins());
-    }
-
-    @Override
-    public boolean isFinish() {
-        return false;
-    }
-
-    @Override
-    public boolean isMiss() {
-        return false;
-    }
-
-    @Override
-    public boolean isAllHit() {
-        return false;
     }
 
     @Override

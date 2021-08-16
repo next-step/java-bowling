@@ -1,23 +1,22 @@
 package bowling;
 
 import bowling.domain.BowlingGame;
-import bowling.domain.player.Bowler;
-import bowling.domain.dto.BowlingGameResult;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
+import java.util.List;
 
 public class BowlingController {
 
     public static void main(String[] args) {
-        String name = InputView.inputPlayerName();
-        Bowler bowler = Bowler.of(name);
-        BowlingGame bowlingGame = BowlingGame.start(bowler);
+        List<String> names = InputView.inputPlayerNames();
+        BowlingGame bowlingGame = BowlingGame.start(names);
 
-        ResultView.printBowlingScore(BowlingGameResult.of(bowler));
+        ResultView.printBowlingScore(bowlingGame.bowlerData());
         while (bowlingGame.isNotFinish()) {
-            int pins = InputView.inputCountOfHitPins(BowlingGameResult.of(bowler));
+            int pins = InputView.inputCountOfHitPins(bowlingGame.currentBowler());
             bowlingGame.play(pins);
-            ResultView.printBowlingScore(BowlingGameResult.of(bowler));
+            ResultView.printBowlingScore(bowlingGame.bowlerData());
         }
     }
 

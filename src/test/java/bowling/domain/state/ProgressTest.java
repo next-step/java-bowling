@@ -57,34 +57,24 @@ class ProgressTest {
         assertThat(progress.getHitPins()).contains(3);
     }
 
-    @DisplayName("secondPitching은 isFinish를 false로 반환해야한다")
+    @DisplayName("secondPitching의 ProgressState는 NONE이다")
     @Test
-    void should_return_true_is_finish() {
+    void should_return_progress_state_is_none() {
         //arrange
         Progress progress = Progress.of(Pins.of(10));
 
         //act, assert
-        assertFalse(progress.isFinish());
+        assertThat(progress.getProgressState()).isEqualTo(ProgressState.NONE);
     }
 
-    @DisplayName("secondPitching은 isAllHit를 false로 반환해야한다")
+    @DisplayName("secondPitching은 ResultState는 NONE이다")
     @Test
-    void should_return_false_is_all_hit() {
+    void should_return_result_state_is_none() {
         //arrange
         Progress progress = Progress.of(Pins.of(10));
 
         //act, assert
-        assertFalse(progress.isAllHit());
-    }
-
-    @DisplayName("secondPitching은 isMiss을 false로 반환해야한다")
-    @Test
-    void should_return_true_is_miss() {
-        //arrange
-        Progress progress = Progress.of(Pins.of(10));
-
-        //act, assert
-        assertFalse(progress.isMiss());
+        assertThat(progress.getResultState()).isEqualTo(ResultState.NONE);
     }
 
     @DisplayName("InProgress 상태에 스코어를 더하면 한 번 더한 스코어를 반환한다")

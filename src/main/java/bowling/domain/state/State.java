@@ -7,13 +7,16 @@ import bowling.domain.score.Score;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class CommonState {
+public abstract class State {
 
-    public abstract CommonState hitPins(Pins pins);
+    protected ResultState resultState = ResultState.NONE;
+    protected ProgressState progressState = ProgressState.NONE;
+
+    public abstract State hitPins(Pins pins);
 
     public abstract List<Integer> getHitPins();
 
-    public List<CommonState> getState() {
+    public List<State> getState() {
         return Collections.singletonList(this);
     }
 
@@ -29,20 +32,16 @@ public abstract class CommonState {
         return addBonusScore(score);
     }
 
-    public boolean isFinish() {
-        return false;
+    public ResultState getResultState() {
+        return resultState;
     }
 
-    protected boolean isMiss() {
-        return false;
+    public ProgressState getProgressState() {
+        return progressState;
     }
 
     protected Score addBonusScore(Score score) {
         return score;
-    }
-
-    protected boolean isAllHit() {
-        return false;
     }
 
 }

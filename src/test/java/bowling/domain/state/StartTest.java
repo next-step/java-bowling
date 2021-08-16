@@ -1,17 +1,15 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.Pins;
-import bowling.domain.state.Progress;
-import bowling.domain.state.Start;
-import bowling.domain.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class FirstPitchingTest {
+class StartTest {
 
-    @DisplayName("FirstPitching 생성이 가능하다")
+    @DisplayName("Start 생성이 가능하다")
     @Test
     void should_make_first_pitching() {
         //arrange, act, assert
@@ -29,7 +27,7 @@ class FirstPitchingTest {
         assertThat(start.hitPins(pins)).isInstanceOf(Strike.class);
     }
 
-    @DisplayName("pins 10개이하이면 SecondPitching이 반환된다")
+    @DisplayName("pins 10개이하이면 Progress가 반환된다")
     @Test
     void should_return_second() {
         //arrange
@@ -50,4 +48,34 @@ class FirstPitchingTest {
         assertThat(start.getHitPins()).isEmpty();
     }
 
+    @DisplayName("프레임에서 상태값이 Start라면 bowler를 바꿔야하는 상태이다")
+    @Test
+    void should_is_start_true() {
+        //arrange
+        Start start = Start.of();
+
+        //act, assert
+        assertTrue(start.isStart());
+    }
+
+    @DisplayName("Start의 ProgressState는 Start이다")
+    @Test
+    void should_return_progress_state_is_start() {
+        //arrange
+        Start start = Start.of();
+
+        //act, assert
+        assertThat(start.getProgressState()).isEqualTo(ProgressState.START);
+    }
+
+    @DisplayName("Start의 ResultState는 None이다")
+    @Test
+    void should_return_result_state_is_none() {
+        //arrange
+        Start start = Start.of();
+
+        //act, assert
+        assertThat(start.getResultState()).isEqualTo(ResultState.NONE);
+    }
+    
 }

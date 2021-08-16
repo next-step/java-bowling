@@ -1,6 +1,6 @@
 package bowling.domain.dto;
 
-import bowling.domain.state.CommonState;
+import bowling.domain.state.State;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,13 +8,13 @@ import java.util.stream.Collectors;
 public class StateData {
     private final List<StateDatum> stateData;
 
-    private StateData(List<CommonState> states) {
+    private StateData(List<State> states) {
         stateData = states.stream()
                 .map(StateDatum::of)
                 .collect(Collectors.toList());
     }
 
-    public static StateData of(List<CommonState> states) {
+    public static StateData of(List<State> states) {
         return new StateData(states);
     }
 

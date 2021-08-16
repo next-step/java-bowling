@@ -1,6 +1,5 @@
 package bowling.domain.player;
 
-
 import bowling.domain.dto.ScoreData;
 import bowling.domain.frame.Frames;
 import bowling.domain.pin.Pins;
@@ -40,6 +39,10 @@ public class Bowler {
 
     public List<ScoreData> getScores() {
         return frames.getScores();
+    }
+
+    public boolean isBowlerChange() {
+        return frames.isBowlerChange();
     }
 
 }

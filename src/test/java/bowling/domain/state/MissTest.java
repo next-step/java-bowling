@@ -36,34 +36,24 @@ class MissTest {
         assertThatIllegalStateException().isThrownBy(() -> miss.hitPins(Pins.of(9)));
     }
 
-    @DisplayName("Miss는는 isFinish를 true로 반환해야한다")
+    @DisplayName("Miss의 ProgressState는 FINISH이다")
     @Test
-    void should_return_true_is_finish() {
+    void should_return_progress_state_is_finish() {
         //arrange
         Miss miss = Miss.of(Pins.of(1), Pins.of(9));
 
         //act, assert
-        assertTrue(miss.isFinish());
+        assertThat(miss.getProgressState()).isEqualTo(ProgressState.FINISH);
     }
 
-    @DisplayName("Miss는 isAllHit를 false로 반환해야한다")
+    @DisplayName("Miss의 ResultState는 MISS이다")
     @Test
-    void should_return_false_is_all_hit() {
+    void should_return_result_state_is_miss() {
         //arrange
         Miss miss = Miss.of(Pins.of(1), Pins.of(9));
 
         //act, assert
-        assertFalse(miss.isAllHit());
-    }
-
-    @DisplayName("Miss는 isMiss을 true로 반환해야한다")
-    @Test
-    void should_return_true_is_miss() {
-        //arrange
-        Miss miss = Miss.of(Pins.of(1), Pins.of(9));
-
-        //act, assert
-        assertTrue(miss.isMiss());
+        assertThat(miss.getResultState()).isEqualTo(ResultState.MISS);
     }
 
     @DisplayName("first pitching과 second pitching에서 넘어온 hit count를 반환한다")

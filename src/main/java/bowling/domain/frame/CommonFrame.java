@@ -1,19 +1,24 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.StateData;
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
-import bowling.domain.state.CommonState;
+import bowling.domain.state.ProgressState;
+import bowling.domain.state.State;
 import bowling.domain.state.Start;
 
 import java.util.List;
 
 public class CommonFrame extends Frame {
+
     private static final int COUNT_OF_COMMON_FRAME = 9;
 
     private Frame nextFrame;
+    private State state;
 
-    private CommonFrame(CommonState state) {
-        super(state);
-        nextFrame = DummyFrame.of();
+    private CommonFrame(State state) {
+        this.state = state;
+        nextFrame = StartingFrame.of();
     }
 
     public static CommonFrame of() {
@@ -22,7 +27,20 @@ public class CommonFrame extends Frame {
 
     @Override
     public Score getScore() {
-        return nextFrame.addBonusScore(state.score());
+        return nextFrame.addStateScore(state.score());
+    }
+
+    public void hitPins(Pins pins) {
+        this.state = state.hitPins(pins);
+    }
+
+    public StateData getFrameStates() {
+        return StateData.of(state.getState());
+    }
+
+    @Override
+    public boolean isStart() {
+        return state.getProgressState() == ProgressState.START;
     }
 
     @Override
@@ -35,14 +53,14 @@ public class CommonFrame extends Frame {
     }
 
     @Override
-    protected Score addBonusScore(Score score) {
+    protected Score addStateScore(Score score) {
         Score addedScore = state.addScore(score);
 
-        return nextFrame.addBonusScore(addedScore);
+        return nextFrame.addStateScore(addedScore);
     }
 
     private boolean isFrameNotFinish() {
-        return !state.isFinish();
+        return state.getProgressState() != ProgressState.FINISH;
     }
 
     private void createNextFrame(List<Frame> frames) {
@@ -57,6 +75,46 @@ public class CommonFrame extends Frame {
     private void updateNextFrame(List<Frame> frames, Frame nextFrame) {
         this.nextFrame = nextFrame;
         frames.add(nextFrame);
+    }
+
+    private static class StartingFrame extends Frame {
+
+        private State state;
+
+        private StartingFrame(State state) {
+            this.state = state;
+        }
+
+        public static StartingFrame of() {
+            return new StartingFrame(Start.of());
+        }
+
+        @Override
+        public Score getScore() {
+            return Score.NULL;
+        }
+
+        @Override
+        public boolean isStart() {
+            return true;
+        }
+
+        @Override
+        protected Score addStateScore(Score score) {
+            return score;
+        }
+
+
+        @Override
+        protected void hitPins(Pins pins) {
+            this.state = state.hitPins(pins);
+        }
+
+        @Override
+        protected StateData getFrameStates() {
+            return StateData.of(state.getState());
+        }
+
     }
 
 }

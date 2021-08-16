@@ -7,21 +7,18 @@ import bowling.domain.score.Score;
 import java.util.Collections;
 import java.util.List;
 
-public class Spare extends End {
+public class Spare extends State {
 
     private final Pins pins;
 
     private Spare(Pins pins) {
         this.pins = pins;
+        resultState = ResultState.ALLHIT;
+        progressState = ProgressState.FINISH;
     }
 
     public static Spare of(Pins pins) {
         return new Spare(pins);
-    }
-
-    @Override
-    public boolean isAllHit() {
-        return true;
     }
 
     @Override
@@ -43,6 +40,11 @@ public class Spare extends End {
         }
 
         return resultScore.add(pins.spareScore());
+    }
+
+    @Override
+    public State hitPins(Pins pins) {
+        throw new IllegalStateException("다음은 없습니다");
     }
 
 }
