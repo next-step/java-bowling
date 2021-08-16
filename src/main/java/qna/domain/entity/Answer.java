@@ -52,12 +52,14 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public void delete(final User user) {
+    public DeleteHistory delete(final User user) {
         if (!isOwner(user)) {
             throw new CannotDeleteException("답변을 삭제할 권한이 없습니다.");
         }
 
         deleted = true;
+
+        return DeleteHistory.fromAnswer(this);
     }
 
     private boolean isOwner(final User writer) {

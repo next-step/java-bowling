@@ -28,10 +28,11 @@ public class AnswerTest {
         // given
 
         // when
-        answer.delete(JAVAJIGI);
+        final DeleteHistory deleteHistory = answer.delete(JAVAJIGI);
 
         // then
         assertThat(answer.isDeleted()).isTrue();
+        assertThat(deleteHistory).isNotNull();
     }
 
     @DisplayName("[실패] delete - 질문자 답변자 다름")

@@ -2,6 +2,8 @@ package qna.domain.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -88,13 +90,24 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public void delete(final User user) {
+    public List<DeleteHistory> delete(final User user) {
         if (!isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
-        answers.forEach(answer -> answer.delete(user));
+        final List<DeleteHistory> deleteHistories = createDeleteHistories(user);
+
         deleted = true;
+
+        return deleteHistories;
+    }
+
+    private List<DeleteHistory> createDeleteHistories(final User user) {
+        return Stream.concat(
+                Stream.of(DeleteHistory.fromQuestion(this)),
+                answers.stream()
+                    .map(answer -> answer.delete(user)))
+            .collect(Collectors.toList());
     }
 
     public Question setDeleted(final boolean deleted) {

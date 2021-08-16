@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static qna.domain.testdata.TestData.JAVAJIGI;
 import static qna.domain.testdata.TestData.SANJIGI;
 
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,10 +29,11 @@ public class QuestionTest {
         // given
 
         // when
-        question.delete(JAVAJIGI);
+        final List<DeleteHistory> deleteHistories = question.delete(JAVAJIGI);
 
         // then
         assertThat(question.isDeleted()).isTrue();
+        assertThat(deleteHistories).hasSize(1);
     }
 
     @DisplayName("[성공] 삭제 - 질문자 답변자 같음")
@@ -42,11 +44,12 @@ public class QuestionTest {
         question.addAnswer(new Answer(question.getWriter(), question, "Answers Contents1"));
 
         // when
-        question.delete(JAVAJIGI);
+        final List<DeleteHistory> deleteHistories = question.delete(JAVAJIGI);
 
         // then
         assertThat(question.isDeleted()).isTrue();
         assertThat(question.getAnswers().stream().allMatch(Answer::isDeleted)).isTrue();
+        assertThat(deleteHistories).hasSize(2);
     }
 
     @DisplayName("[실패] delete - 다른 사람의 글 삭제")
