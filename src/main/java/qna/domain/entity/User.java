@@ -1,13 +1,13 @@
-package qna.domain;
+package qna.domain.entity;
 
-import qna.UnAuthorizedException;
-
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.util.Objects;
+import qna.domain.exception.UnAuthorizedException;
 
 @Entity
 public class User extends AbstractEntity {
+
     public static final GuestUser GUEST_USER = new GuestUser();
 
     @Column(unique = true, nullable = false)
@@ -24,11 +24,11 @@ public class User extends AbstractEntity {
     public User() {
     }
 
-    public User(String userId, String password, String name, String email) {
+    public User(final String userId, final String password, final String name, final String email) {
         this(null, userId, password, name, email);
     }
 
-    public User(Long id, String userId, String password, String name, String email) {
+    public User(final Long id, final String userId, final String password, final String name, final String email) {
         super(id);
         this.userId = userId;
         this.password = password;
@@ -40,7 +40,7 @@ public class User extends AbstractEntity {
         return userId;
     }
 
-    public User setUserId(String userId) {
+    public User setUserId(final String userId) {
         this.userId = userId;
         return this;
     }
@@ -49,7 +49,7 @@ public class User extends AbstractEntity {
         return password;
     }
 
-    public User setPassword(String password) {
+    public User setPassword(final String password) {
         this.password = password;
         return this;
     }
@@ -58,7 +58,7 @@ public class User extends AbstractEntity {
         return name;
     }
 
-    public User setName(String name) {
+    public User setName(final String name) {
         this.name = name;
         return this;
     }
@@ -67,12 +67,12 @@ public class User extends AbstractEntity {
         return email;
     }
 
-    public User setEmail(String email) {
+    public User setEmail(final String email) {
         this.email = email;
         return this;
     }
 
-    public void update(User loginUser, User target) {
+    public void update(final User loginUser, final User target) {
         if (!matchUserId(loginUser.getUserId())) {
             throw new UnAuthorizedException();
         }
@@ -85,36 +85,37 @@ public class User extends AbstractEntity {
         this.email = target.email;
     }
 
-    private boolean matchUserId(String userId) {
+    private boolean matchUserId(final String userId) {
         return this.userId.equals(userId);
     }
 
-    public boolean matchPassword(String targetPassword) {
+    public boolean matchPassword(final String targetPassword) {
         return password.equals(targetPassword);
     }
 
-    public boolean equalsNameAndEmail(User target) {
+    public boolean equalsNameAndEmail(final User target) {
         if (Objects.isNull(target)) {
             return false;
         }
 
         return name.equals(target.name) &&
-                email.equals(target.email);
+            email.equals(target.email);
     }
 
     public boolean isGuestUser() {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
+    }
+
     private static class GuestUser extends User {
+
         @Override
         public boolean isGuestUser() {
             return true;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
     }
 }
