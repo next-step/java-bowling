@@ -49,11 +49,11 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public static DeleteHistory of(final Question question) {
+    public static DeleteHistory fromQuestion(final Question question) {
         return new DeleteHistory(QUESTION, question.getId(), question.getWriter());
     }
 
-    public static DeleteHistory of(final Answer answer) {
+    public static DeleteHistory fromAnswer(final Answer answer) {
         return new DeleteHistory(ANSWER, answer.getId(), answer.getWriter());
     }
 

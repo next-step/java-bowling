@@ -21,13 +21,13 @@ public class DeleteHistoryService {
     public void deleteQuestion(final Question question) {
         deleteAnswers(question.getAnswers());
 
-        save(DeleteHistory.of(question));
+        save(DeleteHistory.fromQuestion(question));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void deleteAnswers(final List<Answer> answers) {
         saveAll(answers.stream()
-            .map(DeleteHistory::of)
+            .map(DeleteHistory::fromAnswer)
             .collect(Collectors.toList()));
     }
 
