@@ -2,5 +2,5 @@ package bowling.strategy;
 
 @FunctionalInterface
 public interface BowlGenerate {
-    int generate();
+    int generate(int range);
 }

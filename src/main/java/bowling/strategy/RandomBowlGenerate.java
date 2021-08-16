@@ -4,8 +4,6 @@ import java.util.Random;
 
 public class RandomBowlGenerate implements BowlGenerate {
 
-    private static final int RANDOM_NUMBER_RANGE = 10;
-
     private final Random random;
 
     public RandomBowlGenerate() {
@@ -13,7 +11,7 @@ public class RandomBowlGenerate implements BowlGenerate {
     }
 
     @Override
-    public int generate() {
-        return random.nextInt(RANDOM_NUMBER_RANGE);
+    public int generate(int range) {
+        return random.nextInt(range);
     }
 }
