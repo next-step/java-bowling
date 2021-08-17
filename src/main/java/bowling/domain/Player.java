@@ -13,4 +13,8 @@ public class Player {
     public static Player of(final Name name) {
         return new Player(name);
     }
+
+    public String getName() {
+        return name.getName();
+    }
 }

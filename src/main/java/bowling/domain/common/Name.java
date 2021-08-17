@@ -23,4 +23,8 @@ public class Name {
             throw new NameCreateException();
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
