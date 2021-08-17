@@ -58,4 +58,26 @@ class FrameTest {
 
         // then
     }
+
+    public static Stream<Arguments> isEnd() {
+        final Frame endFrame = Frame.of(PitchResult.of(5));
+        endFrame.pitch(PitchResult.of(5));
+        return Stream.of(
+            Arguments.of(Frame.of(PitchResult.of(1)), false),
+            Arguments.of(Frame.of(PitchResult.of(10)), true),
+            Arguments.of(endFrame, true)
+        );
+    }
+
+    @DisplayName("[실패] 완료된 프레임")
+    @ParameterizedTest
+    @MethodSource("isEnd")
+    public void isEnd(final Frame frame, final boolean expected) {
+        // given
+
+        // when
+        assertThat(frame.isEnd()).isEqualTo(expected);
+
+        // then
+    }
 }
