@@ -13,8 +13,16 @@ public class Frame {
 
     }
 
+    private Frame(final PitchResult first) {
+        this.first = first;
+    }
+
     public static Frame of() {
         return new Frame();
+    }
+
+    public static Frame of(final PitchResult first) {
+        return new Frame(first);
     }
 
     public boolean isEnd() {
