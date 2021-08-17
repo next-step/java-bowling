@@ -11,4 +11,10 @@ public class InputView {
 
         return SCANNER.nextLine();
     }
+
+    public static String inputPitch(final int frameCount) {
+        System.out.print(frameCount + "프레임 투구 : ");
+
+        return SCANNER.nextLine();
+    }
 }
