@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.frame.exception.PitchResultAddException;
+import java.util.Optional;
 
 public class Frame {
 
@@ -26,6 +27,10 @@ public class Frame {
     }
 
     public boolean isEnd() {
+        if (Optional.ofNullable(first).orElseGet(PitchResult::zero).isStrike()) {
+            return true;
+        }
+
         return first != null && second != null;
     }
 

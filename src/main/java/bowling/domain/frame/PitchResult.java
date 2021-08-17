@@ -29,4 +29,8 @@ public class PitchResult {
     public int add(final PitchResult pitchResult) {
         return this.number + pitchResult.number;
     }
+
+    public boolean isStrike() {
+        return number == MAX;
+    }
 }
