@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.exception.FramesSizeException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,12 +15,6 @@ public class Frames {
         this.frames = frames;
     }
 
-    private void framesValidation() {
-        if (frames.size() > MAX - 1) {
-            throw new FramesSizeException();
-        }
-    }
-
     public static Frames of() {
         return new Frames(Stream.of(Frame.of()).collect(Collectors.toList()));
     }
@@ -35,11 +28,15 @@ public class Frames {
     }
 
     public int current() {
-        if (frames.get(frames.size() - 1).isEnd()) {
+        if (getLast().isEnd()) {
             return frames.size() + 1;
         }
 
         return frames.size();
+    }
+
+    public Frame getLast() {
+        return frames.get(frames.size() - 1);
     }
 
     public void pitch(final PitchResult result) {
