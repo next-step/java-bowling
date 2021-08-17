@@ -18,12 +18,21 @@ public class Frame {
         this.first = first;
     }
 
+    public Frame(final PitchResult first, final PitchResult second) {
+        this.first = first;
+        this.second = second;
+    }
+
     public static Frame of() {
         return new Frame();
     }
 
     public static Frame of(final PitchResult first) {
         return new Frame(first);
+    }
+
+    public static Frame of(final PitchResult first, final PitchResult second) {
+        return new Frame(first, second);
     }
 
     public boolean isEnd() {
@@ -51,11 +60,19 @@ public class Frame {
         });
     }
 
-    public PitchResult getFirst() {
-        return first;
+    public boolean isStrike() {
+        return first.isStrike();
     }
 
-    public PitchResult getSecond() {
-        return second;
+    public boolean isSpare() {
+        return first.getNumber() + second.getNumber() == MAX;
+    }
+
+    public int getFirst() {
+        return first.getNumber();
+    }
+
+    public int getSecond() {
+        return second.getNumber();
     }
 }
