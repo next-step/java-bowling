@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 
-import bowling.domain.frame.exception.PitchResultAddException;
 import bowling.domain.frame.exception.PitchResultCreateException;
 
 public class PitchResult {
@@ -23,11 +22,11 @@ public class PitchResult {
         return new PitchResult(number);
     }
 
-    public int add(final PitchResult pitchResult) {
-        if (this.number + pitchResult.number > MAX) {
-            throw new PitchResultAddException();
-        }
+    public static PitchResult zero() {
+        return new PitchResult(0);
+    }
 
+    public int add(final PitchResult pitchResult) {
         return this.number + pitchResult.number;
     }
 }
