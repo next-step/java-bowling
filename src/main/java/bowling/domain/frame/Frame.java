@@ -35,16 +35,20 @@ public class Frame {
     }
 
     public void pitch(final PitchResult result) {
-        if (first == null) {
-            first = result;
+        final Optional<PitchResult> first = Optional.ofNullable(this.first);
+
+        if (!first.isPresent()) {
+            this.first = result;
             return;
         }
 
-        if (first.add(result) > MAX) {
-            throw new PitchResultAddException();
-        }
+        first.ifPresent(e -> {
+            if (e.add(result) > MAX) {
+                throw new PitchResultAddException();
+            }
 
-        second = result;
+            second = result;
+        });
     }
 
     public PitchResult getFirst() {
