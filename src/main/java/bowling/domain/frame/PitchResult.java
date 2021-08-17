@@ -41,4 +41,8 @@ public class PitchResult {
     public boolean isStrike() {
         return number == MAX;
     }
+
+    public int getNumber() {
+        return number;
+    }
 }
