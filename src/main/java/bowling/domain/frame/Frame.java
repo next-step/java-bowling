@@ -46,4 +46,12 @@ public class Frame {
 
         second = result;
     }
+
+    public PitchResult getFirst() {
+        return first;
+    }
+
+    public PitchResult getSecond() {
+        return second;
+    }
 }
