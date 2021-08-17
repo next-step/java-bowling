@@ -1,4 +1,4 @@
-package bowling.domain.exception;
+package bowling.domain.frame.exception;
 
 public class PitchResultCreateException extends RuntimeException {
 

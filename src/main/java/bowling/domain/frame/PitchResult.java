@@ -1,7 +1,8 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.domain.exception.PitchResultAddException;
-import bowling.domain.exception.PitchResultCreateException;
+
+import bowling.domain.frame.exception.PitchResultAddException;
+import bowling.domain.frame.exception.PitchResultCreateException;
 
 public class PitchResult {
 

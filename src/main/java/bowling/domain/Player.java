@@ -1,4 +1,6 @@
-package bowling.domain.common;
+package bowling.domain;
+
+import bowling.domain.common.Name;
 
 public class Player {
 

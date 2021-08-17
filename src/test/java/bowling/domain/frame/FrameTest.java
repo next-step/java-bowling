@@ -1,9 +1,9 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import bowling.domain.exception.PitchResultAddException;
+import bowling.domain.frame.exception.PitchResultAddException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +22,7 @@ class FrameTest {
         );
     }
 
-    @DisplayName("[생성]")
+    @DisplayName("[성공] 생성")
     @ParameterizedTest
     @MethodSource("pitchResults")
     public void create(final PitchResult first, final PitchResult second) {
@@ -43,7 +43,7 @@ class FrameTest {
         );
     }
 
-    @DisplayName("[생성] - 유효하지 않은 투구 결과")
+    @DisplayName("[실패] 생성 - 유효하지 않은 투구 결과")
     @ParameterizedTest
     @MethodSource("invalidPitchResults")
     public void create_invalidPitchResult(final PitchResult first, final PitchResult second) {
