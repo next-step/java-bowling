@@ -43,4 +43,18 @@ class PitchResultTest {
 
         // then
     }
+
+    @DisplayName("[실패] 생성 - 유효하지 않은 투구 결과 초기 값 (문자열)")
+    @ParameterizedTest
+    @CsvSource({
+        "a"
+    })
+    public void create_invalidString(final String number) {
+        // given
+
+        // when
+        assertThrows(PitchResultCreateException.class, () -> PitchResult.of(number));
+
+        // then
+    }
 }

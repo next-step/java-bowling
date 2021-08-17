@@ -22,6 +22,14 @@ public class PitchResult {
         return new PitchResult(number);
     }
 
+    public static PitchResult of(final String number) {
+        try {
+            return new PitchResult(Integer.parseInt(number));
+        } catch (final Exception ex) {
+            throw new PitchResultCreateException();
+        }
+    }
+
     public static PitchResult zero() {
         return new PitchResult(0);
     }
