@@ -16,7 +16,8 @@ public class Frames {
     }
 
     public static Frames of() {
-        return new Frames(Stream.of(Frame.of()).collect(Collectors.toList()));
+        return new Frames(Stream.of(Frame.of())
+            .collect(Collectors.toList()));
     }
 
     public boolean isEnd() {

@@ -36,11 +36,13 @@ public class Frame {
     }
 
     public boolean isEnd() {
-        if (Optional.ofNullable(first).orElseGet(PitchResult::zero).isStrike()) {
+        final PitchResult first = Optional.ofNullable(this.first)
+            .orElseGet(PitchResult::zero);
+        if (first.isStrike()) {
             return true;
         }
 
-        return first != null && second != null;
+        return this.first != null && this.second != null;
     }
 
     public void pitch(final PitchResult result) {
