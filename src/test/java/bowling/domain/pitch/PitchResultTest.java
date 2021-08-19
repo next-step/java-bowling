@@ -17,17 +17,17 @@ class PitchResultTest {
 
     public static Stream<Arguments> firstPitches() {
         return Stream.of(
-            Arguments.of(10, STRIKE),
-            Arguments.of(5, MISS),
-            Arguments.of(5, MISS),
-            Arguments.of(0, GUTTER)
+            Arguments.of(Pitch.first(10), STRIKE),
+            Arguments.of(Pitch.first(5), MISS),
+            Arguments.of(Pitch.first(5), MISS),
+            Arguments.of(Pitch.first(0), GUTTER)
         );
     }
 
     @DisplayName("[성공] 가져오기 - 첫번째")
     @ParameterizedTest
     @MethodSource("firstPitches")
-    public void find_first(final int first, final PitchResult expected) {
+    public void find_first(final Pitch first, final PitchResult expected) {
         // given
 
         // when
@@ -39,17 +39,17 @@ class PitchResultTest {
 
     public static Stream<Arguments> secondPitches() {
         return Stream.of(
-            Arguments.of(5, 5, SPARE),
-            Arguments.of(5, 3, MISS),
-            Arguments.of(0, 0, GUTTER),
-            Arguments.of(5, 0, GUTTER)
+            Arguments.of(Pitch.first(5), Pitch.first(5), SPARE),
+            Arguments.of(Pitch.first(5), Pitch.first(3), MISS),
+            Arguments.of(Pitch.first(0), Pitch.first(0), GUTTER),
+            Arguments.of(Pitch.first(5), Pitch.first(0), GUTTER)
         );
     }
 
     @DisplayName("[성공] 가져오기 - 두번째")
     @ParameterizedTest
     @MethodSource("secondPitches")
-    public void find_second(final int first, final int second, final PitchResult expected) {
+    public void find_second(final Pitch first, final Pitch second, final PitchResult expected) {
         // given
 
         // when

@@ -17,7 +17,7 @@ public class Pitch {
         }
 
         this.number = number;
-        this.pitchResult = PitchResult.findByPitch(number);
+        this.pitchResult = PitchResult.findByPitch(this);
     }
 
     private Pitch(final Pitch first, final int number) {
@@ -30,7 +30,7 @@ public class Pitch {
         }
 
         this.number = number;
-        this.pitchResult = PitchResult.findByPitch(first.getNumber(), number);
+        this.pitchResult = PitchResult.findByPitch(first, this);
     }
 
     public static Pitch first(final int number) {

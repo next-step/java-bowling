@@ -29,7 +29,7 @@ public enum FrameResult {
             return fromEndFrame(frame);
         }
 
-        return String.valueOf(frame.getFirst());
+        return String.valueOf(frame.getFirst().getNumber());
     }
 
     private static String fromEndFrame(final Frame frame) {

@@ -26,23 +26,23 @@ public enum PitchResult {
         return flag;
     }
 
-    public static PitchResult findByPitch(final int first) {
+    public static PitchResult findByPitch(final Pitch first) {
         return findByNumber(first);
     }
 
-    public static PitchResult findByPitch(final int first, final int second) {
-        if (first + second == SPARE_NUMBER) {
+    public static PitchResult findByPitch(final Pitch first, final Pitch second) {
+        if (first.getNumber() + second.getNumber() == SPARE_NUMBER) {
             return SPARE;
         }
 
         return findByNumber(second);
     }
 
-    private static PitchResult findByNumber(final int number) {
+    private static PitchResult findByNumber(final Pitch pitch) {
         return Arrays.stream(PitchResult.values())
             .filter(pitchResult -> {
                 final List<Integer> numbers = pitchResult.numbers;
-                return numbers.contains(number);
+                return numbers.contains(pitch.getNumber());
             })
             .findFirst()
             .orElseGet(() -> MISS);
