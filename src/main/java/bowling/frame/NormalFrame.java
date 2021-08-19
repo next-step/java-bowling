@@ -3,7 +3,7 @@ package bowling.frame;
 import bowling.pin.Pin;
 import bowling.state.Ready;
 import bowling.state.State;
-import bowling.state.last.LastStateProxy;
+import bowling.state.LastStateProxy;
 
 import java.util.List;
 
