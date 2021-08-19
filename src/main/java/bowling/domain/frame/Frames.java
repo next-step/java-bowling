@@ -24,10 +24,6 @@ public class Frames {
         return frames.size() == MAX && getLast().isEnd();
     }
 
-    public int size() {
-        return frames.size();
-    }
-
     public int current() {
         if (getLast().isEnd()) {
             return frames.size() + 1;

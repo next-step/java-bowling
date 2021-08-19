@@ -12,12 +12,12 @@ class FramesTest {
     @DisplayName("[성공] 투구")
     @ParameterizedTest
     @CsvSource({
-        "2,1",
+        "2,2",
         "3,2",
-        "4,2",
+        "4,3",
         "5,3",
         "9,5",
-        "10,5",
+        "10,6",
     })
     public void pitch(final int pitchCount, final int expected) {
         // given
@@ -29,6 +29,6 @@ class FramesTest {
         }
 
         // then
-        assertThat(frames.size()).isEqualTo(expected);
+        assertThat(frames.current()).isEqualTo(expected);
     }
 }
