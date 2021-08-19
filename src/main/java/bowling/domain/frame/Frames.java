@@ -21,7 +21,7 @@ public class Frames {
     }
 
     public boolean isEnd() {
-        return frames.size() == MAX && frames.get(frames.size() - 1).isEnd();
+        return frames.size() == MAX && getLast().isEnd();
     }
 
     public int size() {
@@ -41,16 +41,16 @@ public class Frames {
     }
 
     public void pitch(final PitchResult result) {
-        final Frame frame = frames.get(frames.size() - 1);
+        final Frame lastFrame = getLast();
 
-        if (frame.isEnd()) {
+        if (lastFrame.isEnd()) {
             final Frame newFrame = Frame.of();
             newFrame.pitch(result);
             frames.add(newFrame);
             return;
         }
 
-        frame.pitch(result);
+        lastFrame.pitch(result);
     }
 
     public List<Frame> getFrames() {
