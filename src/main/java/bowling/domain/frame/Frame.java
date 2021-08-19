@@ -44,7 +44,7 @@ public abstract class Frame {
         first.ifPresent(e -> addSecond(result));
     }
 
-    private void addSecond(final PitchResult result) {
+    protected void addSecond(final PitchResult result) {
         if (first.add(result) > MAX) {
             throw new PitchResultAddException();
         }

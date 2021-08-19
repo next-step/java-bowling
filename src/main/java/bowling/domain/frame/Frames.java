@@ -46,6 +46,13 @@ public class Frames {
             return;
         }
 
+        if (current.isEnd() && frames.size() == MAX - 1) {
+            final LastFrame newFrame = LastFrame.of();
+            newFrame.pitch(result);
+            frames.add(newFrame);
+            return;
+        }
+
         current.pitch(result);
     }
 
