@@ -14,7 +14,7 @@ public class BowlingGame {
         final Frames frames = Frames.of();
 
         while (!frames.isEnd()) {
-            frames.pitch(Pitch.of(InputView.inputPitch(frames.currentIndex())));
+            frames.pitch(Pitch.first(InputView.inputPitch(frames.currentIndex())));
             ResultView.printResultBoard(player, frames);
         }
     }

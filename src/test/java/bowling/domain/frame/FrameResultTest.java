@@ -15,10 +15,10 @@ class FrameResultTest {
 
     public static Stream<Arguments> normalFrames() {
         return Stream.of(
-            Arguments.of(NormalFrame.of(Pitch.of(10)), FrameResult.STRIKE.getFlag()),
-            Arguments.of(NormalFrame.of(Pitch.of(5), Pitch.of(5)), "5|/"),
-            Arguments.of(NormalFrame.of(Pitch.of(5), Pitch.of(3)), "5|3"),
-            Arguments.of(NormalFrame.of(Pitch.of(0), Pitch.of(0)), "-|-")
+            Arguments.of(NormalFrame.of(Pitch.first(10)), FrameResult.STRIKE.getFlag()),
+            Arguments.of(NormalFrame.of(Pitch.first(5), Pitch.first(5)), "5|/"),
+            Arguments.of(NormalFrame.of(Pitch.first(5), Pitch.first(3)), "5|3"),
+            Arguments.of(NormalFrame.of(Pitch.first(0), Pitch.first(0)), "-|-")
         );
     }
 
@@ -37,10 +37,10 @@ class FrameResultTest {
 
     public static Stream<Arguments> lastFrames() {
         return Stream.of(
-            Arguments.of(LastFrame.of(Pitch.of(10), Pitch.of(10), Pitch.of(10)), "X|X|X"),
-            Arguments.of(LastFrame.of(Pitch.of(5), Pitch.of(5), Pitch.of(5)), "5|/|5"),
-            Arguments.of(LastFrame.of(Pitch.of(5), Pitch.of(3)), "5|3"),
-            Arguments.of(LastFrame.of(Pitch.of(0), Pitch.of(0)), "-|-")
+            Arguments.of(LastFrame.of(Pitch.first(10), Pitch.first(10), Pitch.first(10)), "X|X|X"),
+            Arguments.of(LastFrame.of(Pitch.first(5), Pitch.first(5), Pitch.first(5)), "5|/|5"),
+            Arguments.of(LastFrame.of(Pitch.first(5), Pitch.first(3)), "5|3"),
+            Arguments.of(LastFrame.of(Pitch.first(0), Pitch.first(0)), "-|-")
         );
     }
 

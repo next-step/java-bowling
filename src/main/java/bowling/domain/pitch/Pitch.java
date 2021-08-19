@@ -9,6 +9,7 @@ public class Pitch {
     private static final int MAX = 10;
 
     private final int number;
+    private final PitchResult pitchResult;
 
     private Pitch(final int number) {
         if (number < MIN || number > MAX) {
@@ -16,18 +17,36 @@ public class Pitch {
         }
 
         this.number = number;
+        this.pitchResult = PitchResult.findByPitch(number);
     }
 
-    public static Pitch of(final int number) {
+    private Pitch(final Pitch first, final int number) {
+        if (number < MIN || number > MAX) {
+            throw new PitchResultCreateException();
+        }
+
+        if (first.getNumber() + number > MAX) {
+            throw new PitchResultCreateException();
+        }
+
+        this.number = number;
+        this.pitchResult = PitchResult.findByPitch(first.getNumber(), number);
+    }
+
+    public static Pitch first(final int number) {
         return new Pitch(number);
     }
 
-    public static Pitch of(final String number) {
+    public static Pitch first(final String number) {
         try {
             return new Pitch(Integer.parseInt(number));
         } catch (final Exception ex) {
             throw new PitchResultCreateException();
         }
+    }
+
+    public Pitch second(final int number) {
+        return new Pitch(this, number);
     }
 
     public static Pitch zero() {
@@ -44,5 +63,9 @@ public class Pitch {
 
     public int getNumber() {
         return number;
+    }
+
+    public PitchResult getPitchResult() {
+        return pitchResult;
     }
 }

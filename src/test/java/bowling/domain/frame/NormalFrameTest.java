@@ -16,10 +16,10 @@ class NormalFrameTest {
 
     public static Stream<Arguments> pitchResults() {
         return Stream.of(
-            Arguments.of(Pitch.of(0), Pitch.of(10)),
-            Arguments.of(Pitch.of(1), Pitch.of(9)),
-            Arguments.of(Pitch.of(9), Pitch.of(1)),
-            Arguments.of(Pitch.of(10), Pitch.of(0))
+            Arguments.of(Pitch.first(0), Pitch.first(10)),
+            Arguments.of(Pitch.first(1), Pitch.first(9)),
+            Arguments.of(Pitch.first(9), Pitch.first(1)),
+            Arguments.of(Pitch.first(10), Pitch.first(0))
         );
     }
 
@@ -40,9 +40,9 @@ class NormalFrameTest {
 
     public static Stream<Arguments> invalidPitchResults() {
         return Stream.of(
-            Arguments.of(Pitch.of(1), Pitch.of(10)),
-            Arguments.of(Pitch.of(5), Pitch.of(9)),
-            Arguments.of(Pitch.of(10), Pitch.of(1))
+            Arguments.of(Pitch.first(1), Pitch.first(10)),
+            Arguments.of(Pitch.first(5), Pitch.first(9)),
+            Arguments.of(Pitch.first(10), Pitch.first(1))
         );
     }
 
@@ -61,11 +61,11 @@ class NormalFrameTest {
     }
 
     public static Stream<Arguments> isEnd() {
-        final NormalFrame endNormalFrame = NormalFrame.of(Pitch.of(5));
-        endNormalFrame.pitch(Pitch.of(5));
+        final NormalFrame endNormalFrame = NormalFrame.of(Pitch.first(5));
+        endNormalFrame.pitch(Pitch.first(5));
         return Stream.of(
-            Arguments.of(NormalFrame.of(Pitch.of(1)), false),
-            Arguments.of(NormalFrame.of(Pitch.of(10)), true),
+            Arguments.of(NormalFrame.of(Pitch.first(1)), false),
+            Arguments.of(NormalFrame.of(Pitch.first(10)), true),
             Arguments.of(endNormalFrame, true)
         );
     }
