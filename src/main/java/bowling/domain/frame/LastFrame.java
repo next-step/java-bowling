@@ -41,6 +41,16 @@ public class LastFrame extends Frame {
     }
 
     @Override
+    public boolean isStrike() {
+        return first.isStrike();
+    }
+
+    @Override
+    public boolean isSpare() {
+        return first.getNumber() + second.getNumber() == MAX;
+    }
+
+    @Override
     public void pitch(final Pitch result) {
         if (first != null && second != null) {
             bonus = result;

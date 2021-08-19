@@ -34,17 +34,6 @@ public abstract class Frame {
         return this.first != null && this.second != null;
     }
 
-    public void pitch(final Pitch result) {
-        final Optional<Pitch> first = Optional.ofNullable(this.first);
-
-        if (!first.isPresent()) {
-            this.first = result;
-            return;
-        }
-
-        first.ifPresent(e -> addSecond(result));
-    }
-
     protected void addSecond(final Pitch result) {
         if (first.add(result) > MAX) {
             throw new PitchResultAddException();
@@ -53,13 +42,11 @@ public abstract class Frame {
         second = result;
     }
 
-    public boolean isStrike() {
-        return first.isStrike();
-    }
+    public abstract void pitch(final Pitch result);
 
-    public boolean isSpare() {
-        return first.getNumber() + second.getNumber() == MAX;
-    }
+    public abstract boolean isStrike();
+
+    public abstract boolean isSpare();
 
     public int getFirst() {
         return first.getNumber();
