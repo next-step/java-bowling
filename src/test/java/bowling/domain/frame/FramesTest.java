@@ -29,6 +29,6 @@ class FramesTest {
         }
 
         // then
-        assertThat(frames.current()).isEqualTo(expected);
+        assertThat(frames.currentIndex()).isEqualTo(expected);
     }
 }

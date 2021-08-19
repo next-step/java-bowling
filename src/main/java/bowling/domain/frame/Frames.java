@@ -21,32 +21,32 @@ public class Frames {
     }
 
     public boolean isEnd() {
-        return frames.size() == MAX && getLast().isEnd();
+        return frames.size() == MAX && current().isEnd();
     }
 
-    public int current() {
-        if (getLast().isEnd()) {
+    public Frame current() {
+        return frames.get(frames.size() - 1);
+    }
+
+    public int currentIndex() {
+        if (frames.get(frames.size() - 1).isEnd()) {
             return frames.size() + 1;
         }
 
         return frames.size();
     }
 
-    public Frame getLast() {
-        return frames.get(frames.size() - 1);
-    }
-
     public void pitch(final PitchResult result) {
-        final Frame lastFrame = getLast();
+        final Frame current = current();
 
-        if (lastFrame.isEnd()) {
-            final NormalFrame newNormalFrame = NormalFrame.of();
-            newNormalFrame.pitch(result);
-            frames.add(newNormalFrame);
+        if (current.isEnd()) {
+            final NormalFrame newFrame = NormalFrame.of();
+            newFrame.pitch(result);
+            frames.add(newFrame);
             return;
         }
 
-        lastFrame.pitch(result);
+        current.pitch(result);
     }
 
     public List<Frame> getFrames() {
