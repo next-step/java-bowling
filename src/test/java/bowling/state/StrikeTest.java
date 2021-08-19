@@ -19,9 +19,9 @@ class StrikeTest {
 
     @Test
     @DisplayName("Strike는 더이상 상태가 변할 수 없다")
-    void update() {
+    void nextPitch() {
         Assertions.assertThatThrownBy(() -> {
-            strike.update(downedPins);
+            strike.nextPitch(downedPins);
         }).isInstanceOf(EndStateException.class);
     }
 
