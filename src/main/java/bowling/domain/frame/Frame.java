@@ -53,13 +53,15 @@ public class Frame {
             return;
         }
 
-        first.ifPresent(e -> {
-            if (e.add(result) > MAX) {
-                throw new PitchResultAddException();
-            }
+        first.ifPresent(e -> addSecond(result));
+    }
 
-            second = result;
-        });
+    private void addSecond(final PitchResult result) {
+        if (first.add(result) > MAX) {
+            throw new PitchResultAddException();
+        }
+
+        second = result;
     }
 
     public boolean isStrike() {
