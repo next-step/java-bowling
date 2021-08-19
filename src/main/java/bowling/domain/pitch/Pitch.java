@@ -57,10 +57,6 @@ public class Pitch {
         return this.number + pitchResult.number;
     }
 
-    public boolean isStrike() {
-        return number == MAX;
-    }
-
     public int getNumber() {
         return number;
     }

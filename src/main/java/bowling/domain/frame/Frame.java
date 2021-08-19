@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pitch.Pitch;
+import bowling.domain.pitch.PitchResult;
 import bowling.domain.pitch.exception.PitchResultAddException;
 import java.util.Optional;
 
@@ -27,7 +28,7 @@ public abstract class Frame {
     public boolean isEnd() {
         final Pitch first = Optional.ofNullable(this.first)
             .orElseGet(Pitch::zero);
-        if (first.isStrike()) {
+        if (first.getPitchResult().equals(PitchResult.STRIKE)) {
             return true;
         }
 
@@ -44,15 +45,11 @@ public abstract class Frame {
 
     public abstract void pitch(final Pitch result);
 
-    public abstract boolean isStrike();
-
-    public abstract boolean isSpare();
-
-    public int getFirst() {
-        return first.getNumber();
+    public Pitch getFirst() {
+        return first;
     }
 
-    public int getSecond() {
-        return second.getNumber();
+    public Pitch getSecond() {
+        return second;
     }
 }

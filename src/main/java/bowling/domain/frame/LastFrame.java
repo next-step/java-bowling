@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import static bowling.domain.pitch.PitchResult.STRIKE;
+
 import bowling.domain.pitch.Pitch;
 import java.util.Optional;
 
@@ -41,16 +43,6 @@ public class LastFrame extends Frame {
     }
 
     @Override
-    public boolean isStrike() {
-        return first.isStrike();
-    }
-
-    @Override
-    public boolean isSpare() {
-        return first.getNumber() + second.getNumber() == MAX;
-    }
-
-    @Override
     public void pitch(final Pitch result) {
         if (first != null && second != null) {
             bonus = result;
@@ -67,7 +59,8 @@ public class LastFrame extends Frame {
     }
 
     public boolean possibleBouns() {
-        return isStrike() || isSpare();
+        return first.getPitchResult().equals(STRIKE)
+            || first.getNumber() + second.getNumber() == MAX;
     }
 
     public int getBonus() {

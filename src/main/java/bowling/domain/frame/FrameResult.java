@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.pitch.PitchResult;
+
 public enum FrameResult {
 
     STRIKE("X"),
@@ -19,7 +21,7 @@ public enum FrameResult {
     }
 
     public static String get(final Frame frame) {
-        if (frame.isStrike()) {
+        if (frame.getFirst().getPitchResult().equals(PitchResult.STRIKE)) {
             return STRIKE.flag;
         }
 
@@ -31,11 +33,11 @@ public enum FrameResult {
     }
 
     private static String fromEndFrame(final Frame frame) {
-        if (frame.isSpare()) {
-            return frame.getFirst() + DELIMITER + SPARE.flag;
+        if (frame.getFirst().getNumber() + frame.getSecond().getNumber() == 10) {
+            return frame.getFirst().getNumber() + DELIMITER + SPARE.flag;
         }
 
-        final String result = frame.getFirst() + DELIMITER + frame.getSecond();
+        final String result = frame.getFirst().getNumber() + DELIMITER + frame.getSecond().getNumber();
         return result.replaceAll("0", GUTTER.flag);
     }
 }

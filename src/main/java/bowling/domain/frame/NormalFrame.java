@@ -30,16 +30,6 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isStrike() {
-        return first.isStrike();
-    }
-
-    @Override
-    public boolean isSpare() {
-        return first.getNumber() + second.getNumber() == MAX;
-    }
-
-    @Override
     public void pitch(final Pitch result) {
         final Optional<Pitch> first = Optional.ofNullable(this.first);
 
