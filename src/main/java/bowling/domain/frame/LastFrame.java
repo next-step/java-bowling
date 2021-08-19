@@ -1,24 +1,25 @@
 package bowling.domain.frame;
 
+import bowling.domain.pitch.Pitch;
 import java.util.Optional;
 
 public class LastFrame extends Frame {
 
-    protected PitchResult bonus;
+    protected Pitch bonus;
 
     private LastFrame() {
         super();
     }
 
-    private LastFrame(final PitchResult first) {
+    private LastFrame(final Pitch first) {
         super(first);
     }
 
-    private LastFrame(final PitchResult first, final PitchResult second) {
+    private LastFrame(final Pitch first, final Pitch second) {
         super(first, second);
     }
 
-    private LastFrame(final PitchResult first, final PitchResult second, final PitchResult bonus) {
+    private LastFrame(final Pitch first, final Pitch second, final Pitch bonus) {
         super(first, second);
         this.bonus = bonus;
     }
@@ -27,25 +28,25 @@ public class LastFrame extends Frame {
         return new LastFrame();
     }
 
-    public static LastFrame of(final PitchResult first) {
+    public static LastFrame of(final Pitch first) {
         return new LastFrame(first);
     }
 
-    public static LastFrame of(final PitchResult first, final PitchResult second) {
+    public static LastFrame of(final Pitch first, final Pitch second) {
         return new LastFrame(first, second);
     }
 
-    public static LastFrame of(final PitchResult first, final PitchResult second, final PitchResult bonus) {
+    public static LastFrame of(final Pitch first, final Pitch second, final Pitch bonus) {
         return new LastFrame(first, second, bonus);
     }
 
     @Override
-    public void pitch(final PitchResult result) {
+    public void pitch(final Pitch result) {
         if (first != null && second != null) {
             bonus = result;
         }
 
-        final Optional<PitchResult> first = Optional.ofNullable(this.first);
+        final Optional<Pitch> first = Optional.ofNullable(this.first);
 
         if (!first.isPresent()) {
             this.first = result;

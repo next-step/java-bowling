@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pitch.Pitch;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +37,7 @@ public class Frames {
         return frames.size();
     }
 
-    public void pitch(final PitchResult result) {
+    public void pitch(final Pitch result) {
         final Frame current = current();
 
         if (current.isEnd()) {

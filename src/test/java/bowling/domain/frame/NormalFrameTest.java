@@ -3,7 +3,8 @@ package bowling.domain.frame;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import bowling.domain.frame.exception.PitchResultAddException;
+import bowling.domain.pitch.Pitch;
+import bowling.domain.pitch.exception.PitchResultAddException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,17 +16,17 @@ class NormalFrameTest {
 
     public static Stream<Arguments> pitchResults() {
         return Stream.of(
-            Arguments.of(PitchResult.of(0), PitchResult.of(10)),
-            Arguments.of(PitchResult.of(1), PitchResult.of(9)),
-            Arguments.of(PitchResult.of(9), PitchResult.of(1)),
-            Arguments.of(PitchResult.of(10), PitchResult.of(0))
+            Arguments.of(Pitch.of(0), Pitch.of(10)),
+            Arguments.of(Pitch.of(1), Pitch.of(9)),
+            Arguments.of(Pitch.of(9), Pitch.of(1)),
+            Arguments.of(Pitch.of(10), Pitch.of(0))
         );
     }
 
     @DisplayName("[성공] 생성")
     @ParameterizedTest
     @MethodSource("pitchResults")
-    public void create(final PitchResult first, final PitchResult second) {
+    public void create(final Pitch first, final Pitch second) {
         // given
         final NormalFrame normalFrame = NormalFrame.of();
 
@@ -39,16 +40,16 @@ class NormalFrameTest {
 
     public static Stream<Arguments> invalidPitchResults() {
         return Stream.of(
-            Arguments.of(PitchResult.of(1), PitchResult.of(10)),
-            Arguments.of(PitchResult.of(5), PitchResult.of(9)),
-            Arguments.of(PitchResult.of(10), PitchResult.of(1))
+            Arguments.of(Pitch.of(1), Pitch.of(10)),
+            Arguments.of(Pitch.of(5), Pitch.of(9)),
+            Arguments.of(Pitch.of(10), Pitch.of(1))
         );
     }
 
     @DisplayName("[실패] 생성 - 유효하지 않은 투구 결과")
     @ParameterizedTest
     @MethodSource("invalidPitchResults")
-    public void create_invalidPitchResult(final PitchResult first, final PitchResult second) {
+    public void create_invalidPitchResult(final Pitch first, final Pitch second) {
         // given
         final NormalFrame normalFrame = NormalFrame.of();
         normalFrame.pitch(first);
@@ -60,11 +61,11 @@ class NormalFrameTest {
     }
 
     public static Stream<Arguments> isEnd() {
-        final NormalFrame endNormalFrame = NormalFrame.of(PitchResult.of(5));
-        endNormalFrame.pitch(PitchResult.of(5));
+        final NormalFrame endNormalFrame = NormalFrame.of(Pitch.of(5));
+        endNormalFrame.pitch(Pitch.of(5));
         return Stream.of(
-            Arguments.of(NormalFrame.of(PitchResult.of(1)), false),
-            Arguments.of(NormalFrame.of(PitchResult.of(10)), true),
+            Arguments.of(NormalFrame.of(Pitch.of(1)), false),
+            Arguments.of(NormalFrame.of(Pitch.of(10)), true),
             Arguments.of(endNormalFrame, true)
         );
     }

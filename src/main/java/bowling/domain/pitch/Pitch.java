@@ -1,16 +1,16 @@
-package bowling.domain.frame;
+package bowling.domain.pitch;
 
 
-import bowling.domain.frame.exception.PitchResultCreateException;
+import bowling.domain.pitch.exception.PitchResultCreateException;
 
-public class PitchResult {
+public class Pitch {
 
     private static final int MIN = 0;
     private static final int MAX = 10;
 
     private final int number;
 
-    private PitchResult(final int number) {
+    private Pitch(final int number) {
         if (number < MIN || number > MAX) {
             throw new PitchResultCreateException();
         }
@@ -18,23 +18,23 @@ public class PitchResult {
         this.number = number;
     }
 
-    public static PitchResult of(final int number) {
-        return new PitchResult(number);
+    public static Pitch of(final int number) {
+        return new Pitch(number);
     }
 
-    public static PitchResult of(final String number) {
+    public static Pitch of(final String number) {
         try {
-            return new PitchResult(Integer.parseInt(number));
+            return new Pitch(Integer.parseInt(number));
         } catch (final Exception ex) {
             throw new PitchResultCreateException();
         }
     }
 
-    public static PitchResult zero() {
-        return new PitchResult(0);
+    public static Pitch zero() {
+        return new Pitch(0);
     }
 
-    public int add(final PitchResult pitchResult) {
+    public int add(final Pitch pitchResult) {
         return this.number + pitchResult.number;
     }
 

@@ -1,16 +1,18 @@
 package bowling.domain.frame;
 
+import bowling.domain.pitch.Pitch;
+
 public class NormalFrame extends Frame {
 
     private NormalFrame() {
         super();
     }
 
-    private NormalFrame(final PitchResult first) {
+    private NormalFrame(final Pitch first) {
         super(first);
     }
 
-    private NormalFrame(final PitchResult first, final PitchResult second) {
+    private NormalFrame(final Pitch first, final Pitch second) {
         super(first, second);
     }
 
@@ -18,11 +20,11 @@ public class NormalFrame extends Frame {
         return new NormalFrame();
     }
 
-    public static NormalFrame of(final PitchResult first) {
+    public static NormalFrame of(final Pitch first) {
         return new NormalFrame(first);
     }
 
-    public static NormalFrame of(final PitchResult first, final PitchResult second) {
+    public static NormalFrame of(final Pitch first, final Pitch second) {
         return new NormalFrame(first, second);
     }
 }

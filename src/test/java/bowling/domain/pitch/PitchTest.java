@@ -1,15 +1,16 @@
-package bowling.domain.frame;
+package bowling.domain.pitch;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import bowling.domain.frame.exception.PitchResultCreateException;
+import bowling.domain.pitch.Pitch;
+import bowling.domain.pitch.exception.PitchResultCreateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayName("투구 결과")
-class PitchResultTest {
+class PitchTest {
 
     @DisplayName("[성공] 생성")
     @ParameterizedTest
@@ -23,7 +24,7 @@ class PitchResultTest {
         // given
 
         // when
-        final PitchResult pitchResult = PitchResult.of(number);
+        final Pitch pitchResult = Pitch.of(number);
 
         // then
         assertThat(pitchResult).isNotNull();
@@ -39,7 +40,7 @@ class PitchResultTest {
         // given
 
         // when
-        assertThrows(PitchResultCreateException.class, () -> PitchResult.of(number));
+        assertThrows(PitchResultCreateException.class, () -> Pitch.of(number));
 
         // then
     }
@@ -53,7 +54,7 @@ class PitchResultTest {
         // given
 
         // when
-        assertThrows(PitchResultCreateException.class, () -> PitchResult.of(number));
+        assertThrows(PitchResultCreateException.class, () -> Pitch.of(number));
 
         // then
     }

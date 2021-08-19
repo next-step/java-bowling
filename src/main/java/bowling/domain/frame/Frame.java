@@ -1,31 +1,32 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.exception.PitchResultAddException;
+import bowling.domain.pitch.Pitch;
+import bowling.domain.pitch.exception.PitchResultAddException;
 import java.util.Optional;
 
 public abstract class Frame {
 
     protected static final int MAX = 10;
 
-    protected PitchResult first;
-    protected PitchResult second;
+    protected Pitch first;
+    protected Pitch second;
 
     protected Frame() {
 
     }
 
-    protected Frame(final PitchResult first) {
+    protected Frame(final Pitch first) {
         this.first = first;
     }
 
-    protected Frame(final PitchResult first, final PitchResult second) {
+    protected Frame(final Pitch first, final Pitch second) {
         this.first = first;
         this.second = second;
     }
 
     public boolean isEnd() {
-        final PitchResult first = Optional.ofNullable(this.first)
-            .orElseGet(PitchResult::zero);
+        final Pitch first = Optional.ofNullable(this.first)
+            .orElseGet(Pitch::zero);
         if (first.isStrike()) {
             return true;
         }
@@ -33,8 +34,8 @@ public abstract class Frame {
         return this.first != null && this.second != null;
     }
 
-    public void pitch(final PitchResult result) {
-        final Optional<PitchResult> first = Optional.ofNullable(this.first);
+    public void pitch(final Pitch result) {
+        final Optional<Pitch> first = Optional.ofNullable(this.first);
 
         if (!first.isPresent()) {
             this.first = result;
@@ -44,7 +45,7 @@ public abstract class Frame {
         first.ifPresent(e -> addSecond(result));
     }
 
-    protected void addSecond(final PitchResult result) {
+    protected void addSecond(final Pitch result) {
         if (first.add(result) > MAX) {
             throw new PitchResultAddException();
         }
