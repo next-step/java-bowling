@@ -18,24 +18,24 @@ public enum FrameResult {
         return flag;
     }
 
-    public static String get(final Frame frame) {
-        if (frame.isStrike()) {
+    public static String get(final NormalFrame normalFrame) {
+        if (normalFrame.isStrike()) {
             return STRIKE.flag;
         }
 
-        if (frame.isEnd()) {
-            return fromEndFrame(frame);
+        if (normalFrame.isEnd()) {
+            return fromEndFrame(normalFrame);
         }
 
-        return String.valueOf(frame.getFirst());
+        return String.valueOf(normalFrame.getFirst());
     }
 
-    private static String fromEndFrame(final Frame frame) {
-        if (frame.isSpare()) {
-            return frame.getFirst() + DELIMITER + SPARE.flag;
+    private static String fromEndFrame(final NormalFrame normalFrame) {
+        if (normalFrame.isSpare()) {
+            return normalFrame.getFirst() + DELIMITER + SPARE.flag;
         }
 
-        final String result = frame.getFirst() + DELIMITER + frame.getSecond();
+        final String result = normalFrame.getFirst() + DELIMITER + normalFrame.getSecond();
         return result.replaceAll("0", GUTTER.flag);
     }
 }

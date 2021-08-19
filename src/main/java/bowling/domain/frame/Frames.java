@@ -9,47 +9,47 @@ public class Frames {
 
     private static final int MAX = 10;
 
-    private final List<Frame> frames;
+    private final List<NormalFrame> normalFrames;
 
-    private Frames(final List<Frame> frames) {
-        this.frames = frames;
+    private Frames(final List<NormalFrame> normalFrames) {
+        this.normalFrames = normalFrames;
     }
 
     public static Frames of() {
-        return new Frames(Stream.of(Frame.of())
+        return new Frames(Stream.of(NormalFrame.of())
             .collect(Collectors.toList()));
     }
 
     public boolean isEnd() {
-        return frames.size() == MAX && getLast().isEnd();
+        return normalFrames.size() == MAX && getLast().isEnd();
     }
 
     public int current() {
         if (getLast().isEnd()) {
-            return frames.size() + 1;
+            return normalFrames.size() + 1;
         }
 
-        return frames.size();
+        return normalFrames.size();
     }
 
-    public Frame getLast() {
-        return frames.get(frames.size() - 1);
+    public NormalFrame getLast() {
+        return normalFrames.get(normalFrames.size() - 1);
     }
 
     public void pitch(final PitchResult result) {
-        final Frame lastFrame = getLast();
+        final NormalFrame lastNormalFrame = getLast();
 
-        if (lastFrame.isEnd()) {
-            final Frame newFrame = Frame.of();
-            newFrame.pitch(result);
-            frames.add(newFrame);
+        if (lastNormalFrame.isEnd()) {
+            final NormalFrame newNormalFrame = NormalFrame.of();
+            newNormalFrame.pitch(result);
+            normalFrames.add(newNormalFrame);
             return;
         }
 
-        lastFrame.pitch(result);
+        lastNormalFrame.pitch(result);
     }
 
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
+    public List<NormalFrame> getFrames() {
+        return Collections.unmodifiableList(normalFrames);
     }
 }

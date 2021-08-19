@@ -10,8 +10,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-@DisplayName("프레임")
-class FrameTest {
+@DisplayName("보통 프레임")
+class NormalFrameTest {
 
     public static Stream<Arguments> pitchResults() {
         return Stream.of(
@@ -27,14 +27,14 @@ class FrameTest {
     @MethodSource("pitchResults")
     public void create(final PitchResult first, final PitchResult second) {
         // given
-        final Frame frame = Frame.of();
+        final NormalFrame normalFrame = NormalFrame.of();
 
         // when
-        frame.pitch(first);
-        frame.pitch(second);
+        normalFrame.pitch(first);
+        normalFrame.pitch(second);
 
         // then
-        assertThat(frame).isNotNull();
+        assertThat(normalFrame).isNotNull();
     }
 
     public static Stream<Arguments> invalidPitchResults() {
@@ -50,33 +50,33 @@ class FrameTest {
     @MethodSource("invalidPitchResults")
     public void create_invalidPitchResult(final PitchResult first, final PitchResult second) {
         // given
-        final Frame frame = Frame.of();
-        frame.pitch(first);
+        final NormalFrame normalFrame = NormalFrame.of();
+        normalFrame.pitch(first);
 
         // when
-        assertThrows(PitchResultAddException.class, () -> frame.pitch(second));
+        assertThrows(PitchResultAddException.class, () -> normalFrame.pitch(second));
 
         // then
     }
 
     public static Stream<Arguments> isEnd() {
-        final Frame endFrame = Frame.of(PitchResult.of(5));
-        endFrame.pitch(PitchResult.of(5));
+        final NormalFrame endNormalFrame = NormalFrame.of(PitchResult.of(5));
+        endNormalFrame.pitch(PitchResult.of(5));
         return Stream.of(
-            Arguments.of(Frame.of(PitchResult.of(1)), false),
-            Arguments.of(Frame.of(PitchResult.of(10)), true),
-            Arguments.of(endFrame, true)
+            Arguments.of(NormalFrame.of(PitchResult.of(1)), false),
+            Arguments.of(NormalFrame.of(PitchResult.of(10)), true),
+            Arguments.of(endNormalFrame, true)
         );
     }
 
     @DisplayName("[실패] 완료된 프레임")
     @ParameterizedTest
     @MethodSource("isEnd")
-    public void isEnd(final Frame frame, final boolean expected) {
+    public void isEnd(final NormalFrame normalFrame, final boolean expected) {
         // given
 
         // when
-        assertThat(frame.isEnd()).isEqualTo(expected);
+        assertThat(normalFrame.isEnd()).isEqualTo(expected);
 
         // then
     }

@@ -3,36 +3,36 @@ package bowling.domain.frame;
 import bowling.domain.frame.exception.PitchResultAddException;
 import java.util.Optional;
 
-public class Frame {
+public class NormalFrame {
 
     private static final int MAX = 10;
 
     private PitchResult first;
     private PitchResult second;
 
-    private Frame() {
+    private NormalFrame() {
 
     }
 
-    private Frame(final PitchResult first) {
+    private NormalFrame(final PitchResult first) {
         this.first = first;
     }
 
-    public Frame(final PitchResult first, final PitchResult second) {
+    public NormalFrame(final PitchResult first, final PitchResult second) {
         this.first = first;
         this.second = second;
     }
 
-    public static Frame of() {
-        return new Frame();
+    public static NormalFrame of() {
+        return new NormalFrame();
     }
 
-    public static Frame of(final PitchResult first) {
-        return new Frame(first);
+    public static NormalFrame of(final PitchResult first) {
+        return new NormalFrame(first);
     }
 
-    public static Frame of(final PitchResult first, final PitchResult second) {
-        return new Frame(first, second);
+    public static NormalFrame of(final PitchResult first, final PitchResult second) {
+        return new NormalFrame(first, second);
     }
 
     public boolean isEnd() {
