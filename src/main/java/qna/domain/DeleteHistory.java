@@ -13,8 +13,6 @@ public class DeleteHistory {
     @Enumerated(EnumType.STRING)
     private ContentType contentType;
 
-    private Long contentId;
-
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_deletehistory_to_user"))
     private User deletedBy;
@@ -24,9 +22,8 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy) {
+    public DeleteHistory(ContentType contentType, User deletedBy) {
         this.contentType = contentType;
-        this.contentId = contentId;
         this.deletedBy = deletedBy;
         this.createDate = LocalDateTime.now();
     }
@@ -38,18 +35,17 @@ public class DeleteHistory {
         DeleteHistory that = (DeleteHistory) o;
         return Objects.equals(id, that.id) &&
                 contentType == that.contentType &&
-                Objects.equals(contentId, that.contentId) &&
                 Objects.equals(deletedBy, that.deletedBy);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, contentType, contentId, deletedBy);
+        return Objects.hash(id, contentType, deletedBy);
     }
 
     @Override
     public String toString() {
-        return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
+        return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", deletedBy="
                 + deletedBy + ", createDate=" + createDate + "]";
     }
 }
