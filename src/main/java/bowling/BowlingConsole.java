@@ -1,3 +1,5 @@
+package bowling;
+
 import bowling.frame.Frames;
 import bowling.pin.Pin;
 
