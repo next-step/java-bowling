@@ -12,14 +12,14 @@ public class AnswerTest {
 
     @Test
     void 같은지_테스트() throws CannotDeleteException {
-        A1.isOwner(UserTest.JAVAJIGI);
+        A1.otherPersonComment(UserTest.JAVAJIGI);
         assertThat(A1.getWriter()).isEqualTo(UserTest.JAVAJIGI);
     }
 
     @Test
     void 예외처리() {
         assertThatThrownBy(() -> {
-            A1.isOwner(UserTest.SANJIGI);
+            A1.otherPersonComment(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
 
     }
