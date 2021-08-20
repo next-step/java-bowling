@@ -21,6 +21,13 @@ public enum FrameResult {
     }
 
     public static String get(final Frame frame) {
+        if (frame instanceof LastFrame) {
+            final LastFrame lastFrame = (LastFrame) frame;
+            return lastFrame.getFirst().getNumber() + DELIMITER
+                + lastFrame.getSecond().getNumber() + DELIMITER
+                + lastFrame.getBonus().getNumber();
+        }
+
         if (frame.getFirst().getPitchResult().equals(PitchResult.STRIKE)) {
             return STRIKE.flag;
         }

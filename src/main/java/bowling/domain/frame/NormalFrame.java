@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pitch.Pitch;
+import bowling.domain.pitch.PitchResult;
 import java.util.Optional;
 
 public class NormalFrame extends Frame {
@@ -27,6 +28,17 @@ public class NormalFrame extends Frame {
 
     public static NormalFrame of(final Pitch first, final Pitch second) {
         return new NormalFrame(first, second);
+    }
+
+    @Override
+    public boolean isEnd() {
+        final Pitch first = Optional.ofNullable(this.first)
+            .orElseGet(Pitch::zero);
+        if (first.getPitchResult().equals(PitchResult.STRIKE)) {
+            return true;
+        }
+
+        return this.first != null && this.second != null;
     }
 
     @Override

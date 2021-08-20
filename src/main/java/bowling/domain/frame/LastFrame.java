@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import static bowling.domain.pitch.PitchResult.STRIKE;
 
 import bowling.domain.pitch.Pitch;
+import bowling.domain.pitch.PitchResult;
 import java.util.Optional;
 
 public class LastFrame extends Frame {
@@ -43,6 +44,17 @@ public class LastFrame extends Frame {
     }
 
     @Override
+    public boolean isEnd() {
+        final Pitch first = Optional.ofNullable(this.first)
+            .orElseGet(Pitch::zero);
+        if (first.getPitchResult().equals(PitchResult.STRIKE)) {
+            return true;
+        }
+
+        return this.first != null && this.second != null;
+    }
+
+    @Override
     public void pitch(final Pitch result) {
         if (first != null && second != null) {
             bonus = result;
@@ -63,7 +75,7 @@ public class LastFrame extends Frame {
             || first.getNumber() + second.getNumber() == MAX;
     }
 
-    public int getBonus() {
-        return bonus.getNumber();
+    public Pitch getBonus() {
+        return bonus;
     }
 }
