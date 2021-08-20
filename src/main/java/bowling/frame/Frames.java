@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frames {
-    private static final int LIMIT_FRAME_OF_BOWLING_GAME = 10;
+    public static final int FIRST_FRAME_OF_BOWLING_GAME = 1;
+    public static final int LIMIT_FRAME_OF_BOWLING_GAME = 10;
 
     private final List<Frame> frames;
 
