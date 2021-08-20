@@ -20,7 +20,7 @@ public class LastStateDecoratorTest {
     }
 
     @Test
-    @DisplayName("마지막 프레임이 끝나는 경우는 첫 투구에 Miss, 두번째 투구에도 Miss가 나는 경우 뿐이다")
+    @DisplayName("마지막 프레임이 2턴만에 경우는 첫 투구에 Miss, 두번째 투구에도 Miss가 나는 경우 뿐이다")
     void nextPitch() throws Exception {
         decorator.nextPitch(Pin.from(5));
         decorator.nextPitch(Pin.from(3));

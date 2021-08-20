@@ -45,6 +45,7 @@ public class LastStateDecorator implements State {
     public void tailStateCheck() {
         if (lastState() instanceof Progress) {
             states.add(popLastState().nextPitch(Pin.from(Pin.MIN_COUNT_OF_PIN)));
+            return;
         }
         if (lastState() instanceof Ready) {
             popLastState();
@@ -58,7 +59,7 @@ public class LastStateDecorator implements State {
 
     @Override
     public boolean isEnd() {
-        return !isExtraChance();
+        return lastState() instanceof End || !isExtraChance();
     }
 
     @Override

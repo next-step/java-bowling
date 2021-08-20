@@ -37,6 +37,6 @@ public class Frames {
     }
 
     public boolean isEnd() {
-        return getLastFrame().hasTurn();
+        return getLastFrame() instanceof LastFrame && !getLastFrame().hasTurn();
     }
 }
