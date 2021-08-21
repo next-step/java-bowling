@@ -1,4 +1,4 @@
-package bowling.player;
+package bowling.domain.player;
 
 import bowling.exception.IllegalPayerNameException;
 import org.junit.jupiter.api.DisplayName;

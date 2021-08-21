@@ -1,4 +1,4 @@
-package bowling.bowling;
+package bowling.domain;
 
 import bowling.exception.IllegalPinNumberException;
 
@@ -27,7 +27,5 @@ public class Pins {
             throw new IllegalPinNumberException(pin);
         }
     }
-
-
 }
 

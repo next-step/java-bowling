@@ -1,6 +1,5 @@
-package bowling.bowling;
+package bowling.domain;
 
-import bowling.exception.IllegalPayerNameException;
 import bowling.exception.IllegalPinNumberException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
