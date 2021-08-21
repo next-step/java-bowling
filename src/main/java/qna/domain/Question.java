@@ -72,25 +72,33 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public Question authValidation(User loginUser) throws CannotDeleteException{
+    private Question authValidation(User loginUser) throws CannotDeleteException{
         if(!writer.equals(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
         return this;
     }
 
-    public void ownerValidation(User loginUser) throws CannotDeleteException{
+    private void ownerValidation(User loginUser) throws CannotDeleteException{
         for (Answer answer : answers) {
             answer.otherPersonComment(loginUser);
         }
     }
 
-    public List<DeleteHistory> delete(Question question) {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        this.deleted = true;
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, question.getWriter()));
+    public List<DeleteHistory> delete(User loginUser) {
+        this.authValidation(loginUser);
+        this.ownerValidation(loginUser);
+
+        List<DeleteHistory> deleteHistories = deleteQuestion();
         deleteAnswers(deleteHistories);
 
+        return deleteHistories;
+    }
+
+    private List<DeleteHistory> deleteQuestion() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        this.deleted = true;
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getWriter()));
         return deleteHistories;
     }
 
