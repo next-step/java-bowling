@@ -7,6 +7,7 @@ import java.util.List;
 
 import static bowling.frame.Frames.FIRST_FRAME_OF_BOWLING_GAME;
 import static bowling.frame.Frames.LIMIT_FRAME_OF_BOWLING_GAME;
+import static java.util.stream.IntStream.range;
 import static java.util.stream.IntStream.rangeClosed;
 
 public class ResultView {
@@ -36,11 +37,10 @@ public class ResultView {
 
         List<StateDto> states = resultDto.getStates();
         states.stream()
-                .filter(stateDto -> !stateDto.getScores().isEmpty())
-                .map(stateDto -> stateDto.getScores().get(0))
+                .map(StateView::convert)
                 .forEach(score -> print(String.format(FORMAT_FRAME_STATE, score)));
 
-        rangeClosed(0, 10 - states.size())
+        range(0, 10 - states.size())
                 .forEach(frameCount -> print(String.format(FORMAT_FRAME_STATE, "")));
 
         newLine();

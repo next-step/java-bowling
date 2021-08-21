@@ -3,8 +3,8 @@ package bowling.dto;
 import java.util.List;
 
 public class ResultDto {
-    private PlayerDto player;
-    private StatesDto states;
+    private final PlayerDto player;
+    private final StatesDto states;
 
     private ResultDto(final PlayerDto player, final StatesDto states) {
         this.player = player;

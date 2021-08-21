@@ -3,7 +3,7 @@ package bowling.dto;
 import java.util.List;
 
 public class StatesDto {
-    private List<StateDto> stateDtos;
+    private final List<StateDto> stateDtos;
 
     private StatesDto(final List<StateDto> stateDtos) {
         this.stateDtos = stateDtos;

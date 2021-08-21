@@ -1,7 +1,7 @@
 package bowling.dto;
 
 public class PlayerDto {
-    private String name;
+    private final String name;
 
     private PlayerDto(final String name) {
         this.name = name;

@@ -2,13 +2,10 @@ package bowling.frame;
 
 import bowling.dto.StateDto;
 import bowling.pin.Pin;
-import bowling.state.End;
 import bowling.state.State;
 
 public class LastFrame implements Frame {
     private State state;
-
-    private boolean hasTurn = true;
 
     private LastFrame(final State state) {
         this.state = state;
@@ -20,9 +17,7 @@ public class LastFrame implements Frame {
 
     @Override
     public void play(final Pin pin) {
-        if (state.nextPitch(pin) instanceof End) {
-            this.hasTurn = false;
-        }
+        state.nextPitch(pin);
     }
 
     @Override
@@ -32,6 +27,6 @@ public class LastFrame implements Frame {
 
     @Override
     public StateDto currentState() {
-        return StateDto.from(state.getScore());
+        return StateDto.from(state);
     }
 }

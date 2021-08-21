@@ -47,6 +47,6 @@ public class NormalFrame implements Frame {
 
     @Override
     public StateDto currentState() {
-        return StateDto.from(state.getScore());
+        return StateDto.from(state);
     }
 }
