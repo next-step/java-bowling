@@ -27,7 +27,7 @@ public class Progress implements State {
 
     @Override
     public List<Integer> getScore() {
-        return Collections.emptyList();
+        return Collections.singletonList(downedPins.parseInt());
     }
 
     @Override
