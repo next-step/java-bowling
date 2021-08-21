@@ -10,6 +10,8 @@ public class ResultView {
     private static final String FORMAT_HEADER_FRAME_COUNT = "  %02d  |";
     private static final String FORMAT_FRAME_STATE = "  %-4s|";
 
+    private ResultView() {}
+
     public static void scoreBoard(final String name) {
         showHeader();
         showScoreBoard(name);

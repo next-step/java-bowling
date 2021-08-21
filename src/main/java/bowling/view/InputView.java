@@ -8,6 +8,8 @@ public class InputView {
     private static final String WHAT_PLAYER_NAME = "플레이어 이름은(3 english letters)?: ";
     private static final String PITCH_MESSAGE = "%d프레임 투구 : ";
 
+    private InputView() {}
+
     public static String playerName() {
         print(WHAT_PLAYER_NAME);
         return SCANNER.nextLine();
