@@ -1,5 +1,7 @@
 package bowling.player;
 
+import bowling.dto.PlayerDto;
+
 import java.util.Objects;
 
 public class Player {
@@ -17,8 +19,12 @@ public class Player {
     }
 
     private static void verifyName(String name) {
-        if(name.length() != LIMIT_NAME_LENGTH){
+        if (name.length() != LIMIT_NAME_LENGTH) {
             throw new IllegalArgumentException(String.format("선수 이름은 %s글자 여야 합니다 !", LIMIT_NAME_LENGTH));
         }
+    }
+
+    public PlayerDto convert() {
+        return PlayerDto.from(name);
     }
 }

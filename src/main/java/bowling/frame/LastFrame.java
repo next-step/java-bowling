@@ -1,5 +1,6 @@
 package bowling.frame;
 
+import bowling.dto.StateDto;
 import bowling.pin.Pin;
 import bowling.state.End;
 import bowling.state.State;
@@ -27,5 +28,10 @@ public class LastFrame implements Frame {
     @Override
     public boolean hasTurn() {
         return !state.isEnd();
+    }
+
+    @Override
+    public StateDto currentState() {
+        return StateDto.from(state.getScore());
     }
 }

@@ -1,10 +1,15 @@
 package bowling.frame;
 
+import bowling.dto.StatesDto;
 import bowling.pin.Pin;
 import bowling.state.Ready;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 public class Frames {
     public static final int FIRST_FRAME_OF_BOWLING_GAME = 1;
@@ -39,5 +44,12 @@ public class Frames {
 
     public boolean isEnd() {
         return getLastFrame() instanceof LastFrame && !getLastFrame().hasTurn();
+    }
+
+    public StatesDto convert() {
+        return StatesDto.from(frames.stream()
+                .map(Frame::currentState)
+                .collect(collectingAndThen(toList(), Collections::unmodifiableList))
+        );
     }
 }

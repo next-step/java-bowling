@@ -1,9 +1,10 @@
 package bowling.frame;
 
+import bowling.dto.StateDto;
 import bowling.pin.Pin;
+import bowling.state.LastStateProxy;
 import bowling.state.Ready;
 import bowling.state.State;
-import bowling.state.LastStateProxy;
 
 import java.util.List;
 
@@ -42,5 +43,10 @@ public class NormalFrame implements Frame {
             return;
         }
         frames.add(LastFrame.init(LastStateProxy.init()));
+    }
+
+    @Override
+    public StateDto currentState() {
+        return StateDto.from(state.getScore());
     }
 }

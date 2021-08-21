@@ -1,5 +1,10 @@
 package bowling.view;
 
+import bowling.dto.ResultDto;
+import bowling.dto.StateDto;
+
+import java.util.List;
+
 import static bowling.frame.Frames.FIRST_FRAME_OF_BOWLING_GAME;
 import static bowling.frame.Frames.LIMIT_FRAME_OF_BOWLING_GAME;
 import static java.util.stream.IntStream.rangeClosed;
@@ -12,9 +17,9 @@ public class ResultView {
 
     private ResultView() {}
 
-    public static void scoreBoard(final String name) {
+    public static void scoreBoard(final ResultDto resultDto) {
         showHeader();
-        showScoreBoard(name);
+        showScoreOfPlayer(resultDto);
     }
 
     private static void showHeader() {
@@ -26,10 +31,16 @@ public class ResultView {
         newLine();
     }
 
-    private static void showScoreBoard(final String name) {
-        print(String.format(FORMAT_NAME, name));
+    private static void showScoreOfPlayer(final ResultDto resultDto) {
+        print(String.format(FORMAT_NAME, resultDto.getName()));
 
-        rangeClosed(FIRST_FRAME_OF_BOWLING_GAME, LIMIT_FRAME_OF_BOWLING_GAME)
+        List<StateDto> states = resultDto.getStates();
+        states.stream()
+                .filter(stateDto -> !stateDto.getScores().isEmpty())
+                .map(stateDto -> stateDto.getScores().get(0))
+                .forEach(score -> print(String.format(FORMAT_FRAME_STATE, score)));
+
+        rangeClosed(0, 10 - states.size())
                 .forEach(frameCount -> print(String.format(FORMAT_FRAME_STATE, "")));
 
         newLine();
