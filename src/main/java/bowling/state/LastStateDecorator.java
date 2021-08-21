@@ -38,7 +38,7 @@ public class LastStateDecorator implements State {
         return states.remove(states.size() - 1);
     }
 
-    private State lastState() {
+    public State lastState() {
         return states.get(states.size() - 1);
     }
 

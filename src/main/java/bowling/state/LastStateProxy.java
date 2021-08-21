@@ -8,12 +8,12 @@ import java.util.List;
 public class LastStateProxy implements State {
     public static final int LIMIT_PITCH_COUNT = 3;
 
-    private LastStateDecorator lastState;
+    private LastStateDecorator state;
 
     private int currentPitchCount;
 
     public LastStateProxy() {
-        lastState = LastStateDecorator.init();
+        state = LastStateDecorator.init();
     }
 
     public static LastStateProxy init() {
@@ -23,9 +23,9 @@ public class LastStateProxy implements State {
     @Override
     public State nextPitch(final Pin pin) {
         currentPitchCount++;
-        lastState.nextPitch(pin);
+        state.nextPitch(pin);
         if (isEnd()) {
-            lastState.tailStateCheck();
+            state.tailStateCheck();
             return End.init();
         }
         return this;
@@ -38,11 +38,15 @@ public class LastStateProxy implements State {
 
     @Override
     public boolean isEnd() {
-        return lastState.isEnd() || currentPitchCount == LIMIT_PITCH_COUNT;
+        return state.isEnd() || currentPitchCount == LIMIT_PITCH_COUNT;
     }
 
     @Override
     public boolean isClean() {
         return false;
+    }
+
+    public State lastState() {
+        return state.lastState();
     }
 }

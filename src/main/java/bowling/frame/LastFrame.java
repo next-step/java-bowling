@@ -2,6 +2,7 @@ package bowling.frame;
 
 import bowling.dto.StateDto;
 import bowling.pin.Pin;
+import bowling.state.LastStateProxy;
 import bowling.state.State;
 
 public class LastFrame implements Frame {
@@ -27,6 +28,7 @@ public class LastFrame implements Frame {
 
     @Override
     public StateDto currentState() {
-        return StateDto.from(state);
+        final LastStateProxy lastStateProxy = (LastStateProxy) state;
+        return StateDto.from(lastStateProxy.lastState());
     }
 }
