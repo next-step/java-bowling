@@ -36,9 +36,9 @@ class ProgressTest {
     }
 
     @Test
-    @DisplayName("Progress상태는 반환 할 점수가 없다")
+    @DisplayName("Progress상태는 현재 처리한 Pin의 개수를 반환한다")
     void getScore() {
-        Assertions.assertThat(progress.getScore()).isEmpty();
+        Assertions.assertThat(progress.getScore()).containsExactly(5);
     }
 
     @Test
