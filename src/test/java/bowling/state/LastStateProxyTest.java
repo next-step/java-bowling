@@ -47,21 +47,4 @@ class LastStateProxyTest {
     void isClean() throws Exception {
         Assertions.assertThat(proxy.isClean()).isFalse();
     }
-
-    @Test
-    @DisplayName("호출 시 마지막 프레임의 가장 마지막의 상태를 반환한다")
-    void lastState() throws Exception {
-        Pin dummyPin = Pin.from(0);
-
-        State state = proxy.lastState();
-        Assertions.assertThat(state).isInstanceOf(Ready.class);
-
-        proxy.nextPitch(dummyPin);
-        state = proxy.lastState();
-        Assertions.assertThat(state).isInstanceOf(Progress.class);
-
-        proxy.nextPitch(dummyPin);
-        state = proxy.lastState();
-        Assertions.assertThat(state).isInstanceOf(Miss.class);
-    }
 }
