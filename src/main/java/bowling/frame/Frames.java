@@ -1,6 +1,6 @@
 package bowling.frame;
 
-import bowling.dto.StatesDto;
+import bowling.dto.StateDtos;
 import bowling.pin.Pin;
 import bowling.state.Ready;
 
@@ -46,8 +46,8 @@ public class Frames {
         return getLastFrame() instanceof LastFrame && !getLastFrame().hasTurn();
     }
 
-    public StatesDto convert() {
-        return StatesDto.from(frames.stream()
+    public StateDtos convert() {
+        return StateDtos.from(frames.stream()
                 .map(Frame::currentState)
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList))
         );

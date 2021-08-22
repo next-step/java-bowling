@@ -2,15 +2,15 @@ package bowling.dto;
 
 import java.util.List;
 
-public class StatesDto {
+public class StateDtos {
     private final List<StateDto> stateDtos;
 
-    private StatesDto(final List<StateDto> stateDtos) {
+    private StateDtos(final List<StateDto> stateDtos) {
         this.stateDtos = stateDtos;
     }
 
-    public static StatesDto from(final List<StateDto> frames) {
-        return new StatesDto(frames);
+    public static StateDtos from(final List<StateDto> frames) {
+        return new StateDtos(frames);
     }
 
     public List<StateDto> getStates() {
