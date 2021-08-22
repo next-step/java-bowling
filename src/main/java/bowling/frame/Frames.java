@@ -43,10 +43,18 @@ public class Frames {
     }
 
     public boolean isEnd() {
-        return getLastFrame() instanceof LastFrame && !getLastFrame().hasTurn();
+        return isEqualsLastFrame() && isHasNotTurn();
     }
 
-    public List<StateDtos> convert() {
+    private boolean isEqualsLastFrame() {
+        return getLastFrame() instanceof LastFrame;
+    }
+
+    private boolean isHasNotTurn() {
+        return !(getLastFrame().hasTurn());
+    }
+
+    public List<StateDtos> convertToStateDtosList() {
         return frames.stream()
                 .map(Frame::convertToStateDtos)
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList));

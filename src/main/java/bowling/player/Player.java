@@ -24,7 +24,7 @@ public class Player {
         }
     }
 
-    public PlayerDto convert() {
+    public PlayerDto convertToDto() {
         return PlayerDto.from(name);
     }
 }

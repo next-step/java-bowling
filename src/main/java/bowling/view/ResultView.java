@@ -55,7 +55,7 @@ public class ResultView {
     private static String convertToSymbol(final StateDtos stateDtos) {
         return stateDtos.getStates()
                 .stream()
-                .map(StateView::convert)
+                .map(StateView::convertToViewFormat)
                 .collect(joining(FRAME_JOINING_SYMBOL));
     }
 

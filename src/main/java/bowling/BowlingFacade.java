@@ -23,7 +23,7 @@ public class BowlingFacade {
     }
 
     public ResultDto getResult() {
-        return ResultDto.of(player.convert(), frames.convert());
+        return ResultDto.of(player.convertToDto(), frames.convertToStateDtosList());
     }
 
     public boolean isEnd() {

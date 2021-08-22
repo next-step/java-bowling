@@ -31,7 +31,7 @@ public enum StateView {
         this.stateConverter = stateConverter;
     }
 
-    public static String convert(final StateDto stateDto) {
+    public static String convertToViewFormat(final StateDto stateDto) {
         verifyContainsKey(stateDto);
         return STATE_MAP.get(stateDto.getStateType())
                 .stateConverter.apply(stateDto);
@@ -45,18 +45,18 @@ public enum StateView {
     }
 
     private static String firstDownedPinsSymbol(final StateDto state) {
-        return ScoreSymbol.convert(state.getFirstDownedPins());
+        return StateSymbol.convertToStateSymbol(state.getFirstDownedPins());
     }
 
     private static String secondDownedPinsSymbol(final StateDto state) {
-        return ScoreSymbol.convert(state.getSecondDownedPins());
+        return StateSymbol.convertToStateSymbol(state.getSecondDownedPins());
     }
 
     private Class<? extends State> getStateType() {
         return stateType;
     }
 
-    public enum ScoreSymbol {
+    public enum StateSymbol {
         GUTTER(0, "-"),
         STRIKE(10, "X");
 
@@ -67,10 +67,10 @@ public enum StateView {
 
         static {
             SCORE_SYMBOLS_MAP = Stream.of(values())
-                    .collect(toMap(ScoreSymbol::getScore, ScoreSymbol::getSymbol));
+                    .collect(toMap(StateSymbol::getScore, StateSymbol::getSymbol));
         }
 
-        ScoreSymbol(final int score, final String symbol) {
+        StateSymbol(final int score, final String symbol) {
             this.score = score;
             this.symbol = symbol;
         }
@@ -83,7 +83,7 @@ public enum StateView {
             return symbol;
         }
 
-        private static String convert(final int score) {
+        private static String convertToStateSymbol(final int score) {
             return SCORE_SYMBOLS_MAP.getOrDefault(score, String.valueOf(score));
         }
     }

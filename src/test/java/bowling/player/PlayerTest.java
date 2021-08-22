@@ -20,6 +20,6 @@ public class PlayerTest {
     @Test
     void convert() throws Exception {
         Player pjs = Player.init("PJS");
-        Assertions.assertThat(pjs.convert()).isInstanceOf(PlayerDto.class);
+        Assertions.assertThat(pjs.convertToDto()).isInstanceOf(PlayerDto.class);
     }
 }
