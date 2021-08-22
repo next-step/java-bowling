@@ -1,10 +1,12 @@
 package bowling.frame;
 
+import bowling.dto.StateDtos;
 import bowling.pin.Pin;
 import bowling.state.LastStateProxy;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -38,5 +40,10 @@ class LastFrameTest {
                 Arguments.of(Pin.from(5), Pin.from(5), Pin.from(Pin.MAX_COUNT_OF_PIN)),
                 Arguments.of(Pin.from(5), Pin.from(5), Pin.from(3))
         );
+    }
+
+    @Test
+    void convert() throws Exception {
+        Assertions.assertThat(lastFrame.convert()).isInstanceOf(StateDtos.class);
     }
 }
