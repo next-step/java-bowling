@@ -48,7 +48,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public StateDtos convert() {
+    public StateDtos convertToStateDtos() {
         final StateDto stateDto = StateDto.from(state);
         return StateDtos.from(Collections.singletonList(stateDto));
     }

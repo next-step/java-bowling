@@ -12,8 +12,8 @@ public class Progress implements State {
         this.downedPins = downedPins;
     }
 
-    public static Progress from(final Pin pin) {
-        return new Progress(pin);
+    public static Progress from(final Pin previousDownedPins) {
+        return new Progress(previousDownedPins);
     }
 
     @Override

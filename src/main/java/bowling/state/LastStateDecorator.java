@@ -21,16 +21,41 @@ public class LastStateDecorator implements State {
     }
 
     @Override
-    public State nextPitch(final Pin pin) {
-        final State updateState = popLastState().nextPitch(pin);
-        states.add(updateState);
-        nextState(updateState);
+    public State nextPitch(final Pin downedPins) {
+        final State state = popLastState().nextPitch(downedPins);
+        states.add(state);
+        nextState(state);
         return this;
     }
 
     private void nextState(final State lastState) {
         if (lastState.isClean()) {
             states.add(Ready.init());
+        }
+    }
+
+    @Override
+    public boolean isClean() {
+        return false;
+    }
+
+    @Override
+    public List<Integer> getScore() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public boolean isEnd() {
+        return lastState() instanceof End || !isExtraChance();
+    }
+
+    private boolean isExtraChance() {
+        return !lastState().isEnd();
+    }
+
+    public void tailStateCheck() {
+        if (lastState() instanceof Ready) {
+            popLastState();
         }
     }
 
@@ -44,30 +69,5 @@ public class LastStateDecorator implements State {
 
     public List<State> getStates() {
         return new ArrayList<>(states);
-    }
-
-    public void tailStateCheck() {
-        if (lastState() instanceof Ready) {
-            popLastState();
-        }
-    }
-
-    @Override
-    public List<Integer> getScore() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean isEnd() {
-        return lastState() instanceof End || !isExtraChance();
-    }
-
-    @Override
-    public boolean isClean() {
-        return false;
-    }
-
-    private boolean isExtraChance() {
-        return !lastState().isEnd();
     }
 }

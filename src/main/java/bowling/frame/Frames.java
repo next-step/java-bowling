@@ -27,7 +27,7 @@ public class Frames {
     }
 
     public void pitch(final Pin pin) {
-        Frame frame = getLastFrame();
+        final Frame frame = getLastFrame();
         frame.play(pin);
         ifItNormalFrameProceedNextFrame(frame);
     }
@@ -48,7 +48,7 @@ public class Frames {
 
     public List<StateDtos> convert() {
         return frames.stream()
-                .map(Frame::convert)
+                .map(Frame::convertToStateDtos)
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList));
     }
 }

@@ -31,7 +31,7 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public StateDtos convert() {
+    public StateDtos convertToStateDtos() {
         final LastStateProxy lastStateProxy = (LastStateProxy) state;
         return lastStateProxy.getStates().stream()
                 .map(StateDto::from)

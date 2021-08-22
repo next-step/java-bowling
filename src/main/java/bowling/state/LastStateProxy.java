@@ -21,9 +21,21 @@ public class LastStateProxy implements State {
     }
 
     @Override
-    public State nextPitch(final Pin pin) {
-        currentPitchCount++;
+    public State nextPitch(final Pin downedPins) {
+        increasePitchCount();
+        hit(downedPins);
+        return updateState();
+    }
+
+    private int increasePitchCount() {
+        return currentPitchCount++;
+    }
+
+    private void hit(final Pin pin) {
         state.nextPitch(pin);
+    }
+
+    private State updateState() {
         if (isEnd()) {
             state.tailStateCheck();
             return End.init();
@@ -38,7 +50,11 @@ public class LastStateProxy implements State {
 
     @Override
     public boolean isEnd() {
-        return state.isEnd() || currentPitchCount == LIMIT_PITCH_COUNT;
+        return state.isEnd() || isTryCountMax();
+    }
+
+    private boolean isTryCountMax() {
+        return currentPitchCount == LIMIT_PITCH_COUNT;
     }
 
     @Override

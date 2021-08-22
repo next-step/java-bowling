@@ -13,11 +13,11 @@ public class Ready implements State {
     }
 
     @Override
-    public State nextPitch(final Pin pin) {
-        if (pin.isMaxCount()) {
+    public State nextPitch(final Pin downedPins) {
+        if (downedPins.isMaxCount()) {
             return Strike.init();
         }
-        return Progress.from(pin);
+        return Progress.from(downedPins);
     }
 
     @Override

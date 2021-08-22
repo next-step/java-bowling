@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Player {
     private static final int LIMIT_NAME_LENGTH = 3;
 
-    private String name;
+    private final String name;
 
     private Player(String name) {
         this.name = name;

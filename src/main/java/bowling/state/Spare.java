@@ -18,7 +18,7 @@ public class Spare implements State {
     }
 
     @Override
-    public State nextPitch(final Pin pin) {
+    public State nextPitch(final Pin downedPins) {
         throw new EndStateException("더 이상 진행할 수 없습니다.");
     }
 

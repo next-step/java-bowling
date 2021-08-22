@@ -44,6 +44,6 @@ class LastFrameTest {
 
     @Test
     void convert() throws Exception {
-        Assertions.assertThat(lastFrame.convert()).isInstanceOf(StateDtos.class);
+        Assertions.assertThat(lastFrame.convertToStateDtos()).isInstanceOf(StateDtos.class);
     }
 }
