@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.dto.ResultDto;
+import bowling.dto.StateDtos;
 
 import static bowling.frame.Frames.FIRST_FRAME_OF_BOWLING_GAME;
 import static bowling.frame.Frames.LIMIT_FRAME_OF_BOWLING_GAME;
@@ -41,6 +42,7 @@ public class ResultView {
 
     private static void showProgressFrames(final ResultDto resultDto) {
         resultDto.getStates().stream()
+                .flatMap(stateDtos -> stateDtos.getStates().stream())
                 .map(StateView::convert)
                 .forEach(scoreString -> print(String.format(FORMAT_FRAME_STATE, scoreString)));
     }

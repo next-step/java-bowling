@@ -46,7 +46,7 @@ public class LastStateProxy implements State {
         return false;
     }
 
-    public State lastState() {
-        return state.lastState();
+    public List<State> getStates() {
+        return state.getStates();
     }
 }

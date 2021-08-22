@@ -42,6 +42,10 @@ public class LastStateDecorator implements State {
         return states.get(states.size() - 1);
     }
 
+    public List<State> getStates() {
+        return new ArrayList<>(states);
+    }
+
     public void tailStateCheck() {
         if (lastState() instanceof Progress) {
             states.add(popLastState().nextPitch(Pin.from(Pin.MIN_COUNT_OF_PIN)));

@@ -1,11 +1,13 @@
 package bowling.frame;
 
 import bowling.dto.StateDto;
+import bowling.dto.StateDtos;
 import bowling.pin.Pin;
 import bowling.state.LastStateProxy;
 import bowling.state.Ready;
 import bowling.state.State;
 
+import java.util.Collections;
 import java.util.List;
 
 public class NormalFrame implements Frame {
@@ -46,7 +48,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public StateDto currentState() {
-        return StateDto.from(state);
+    public StateDtos convert() {
+        final StateDto stateDto = StateDto.from(state);
+        return StateDtos.from(Collections.singletonList(stateDto));
     }
 }

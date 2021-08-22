@@ -1,9 +1,13 @@
 package bowling.frame;
 
 import bowling.dto.StateDto;
+import bowling.dto.StateDtos;
 import bowling.pin.Pin;
 import bowling.state.LastStateProxy;
 import bowling.state.State;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 public class LastFrame implements Frame {
     private State state;
@@ -27,8 +31,10 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public StateDto currentState() {
+    public StateDtos convert() {
         final LastStateProxy lastStateProxy = (LastStateProxy) state;
-        return StateDto.from(lastStateProxy.lastState());
+        return lastStateProxy.getStates().stream()
+                .map(StateDto::from)
+                .collect(collectingAndThen(toList(), StateDtos::from));
     }
 }

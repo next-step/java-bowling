@@ -46,10 +46,9 @@ public class Frames {
         return getLastFrame() instanceof LastFrame && !getLastFrame().hasTurn();
     }
 
-    public StateDtos convert() {
-        return StateDtos.from(frames.stream()
-                .map(Frame::currentState)
-                .collect(collectingAndThen(toList(), Collections::unmodifiableList))
-        );
+    public List<StateDtos> convert() {
+        return frames.stream()
+                .map(Frame::convert)
+                .collect(collectingAndThen(toList(), Collections::unmodifiableList));
     }
 }
