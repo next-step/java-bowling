@@ -12,6 +12,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import qna.CannotDeleteException;
+import qna.domain.answer.Answer;
+import qna.domain.answer.Answers;
+import qna.domain.history.DeleteHistory;
 
 class AnswersTest {
 

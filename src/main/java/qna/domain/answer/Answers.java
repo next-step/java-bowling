@@ -1,9 +1,11 @@
-package qna.domain;
+package qna.domain.answer;
 
 import java.util.Collections;
 import java.util.List;
 
 import qna.CannotDeleteException;
+import qna.domain.history.DeleteHistory;
+import qna.domain.user.User;
 
 public class Answers {
 

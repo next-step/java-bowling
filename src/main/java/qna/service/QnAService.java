@@ -7,13 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import qna.CannotDeleteException;
 import qna.NotFoundException;
-import qna.domain.*;
+import qna.domain.answer.AnswerRepository;
+import qna.domain.question.Question;
+import qna.domain.question.QuestionRepository;
+import qna.domain.user.User;
 
 import javax.annotation.Resource;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("qnaService")
 public class QnAService {

@@ -1,4 +1,4 @@
-package qna.domain;
+package qna.domain.question;
 
 import org.hibernate.annotations.Where;
 
@@ -9,6 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import qna.CannotDeleteException;
+import qna.domain.AbstractEntity;
+import qna.domain.ContentType;
+import qna.domain.user.User;
+import qna.domain.answer.Answer;
+import qna.domain.answer.Answers;
+import qna.domain.history.DeleteHistory;
 
 @Entity
 public class Question extends AbstractEntity {
