@@ -5,7 +5,7 @@ import bowling.dto.StateDtos;
 
 import static bowling.frame.Frames.FIRST_FRAME_OF_BOWLING_GAME;
 import static bowling.frame.Frames.LIMIT_FRAME_OF_BOWLING_GAME;
-import static java.util.stream.IntStream.range;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.IntStream.rangeClosed;
 
 public class ResultView {
@@ -13,7 +13,11 @@ public class ResultView {
     private static final String FORMAT_HEADER_NAME = "| NAME |";
     private static final String FORMAT_NAME = "| %4s |";
     private static final String FORMAT_HEADER_FRAME_COUNT = "  %02d  |";
-    private static final String FORMAT_FRAME_STATE = "  %-4s|";
+    private static final String FORMAT_NORMAL_FRAME_STATE = "  %-4s|";
+    private static final String FORMAT_LAST_FRAME_STATE = " %-5s|";
+    private static final String FRAME_JOINING_SYMBOL = "|";
+
+    private static final int NORMAL_FRAME_SYMBOL_LENGTH = 3;
 
     private ResultView() {}
 
@@ -41,15 +45,36 @@ public class ResultView {
     }
 
     private static void showProgressFrames(final ResultDto resultDto) {
-        resultDto.getStates().stream()
-                .flatMap(stateDtos -> stateDtos.getStates().stream())
+        resultDto.getStates()
+                .stream()
+                .map(ResultView::convertToSymbol)
+                .map(ResultView::toFormatting)
+                .forEach(ResultView::print);
+    }
+
+    private static String convertToSymbol(final StateDtos stateDtos) {
+        return stateDtos.getStates()
+                .stream()
                 .map(StateView::convert)
-                .forEach(scoreString -> print(String.format(FORMAT_FRAME_STATE, scoreString)));
+                .collect(joining(FRAME_JOINING_SYMBOL));
+    }
+
+    private static String toFormatting(final String state) {
+        return String.format(getFormat(state), state);
+    }
+
+    private static String getFormat(final String state) {
+        if (state.length() > NORMAL_FRAME_SYMBOL_LENGTH) {
+            return FORMAT_LAST_FRAME_STATE;
+        }
+        return FORMAT_NORMAL_FRAME_STATE;
     }
 
     private static void showRemainingFrames(final ResultDto resultDto) {
-        range(resultDto.size(), LIMIT_FRAME_OF_BOWLING_GAME)
-                .forEach(frameCount -> print(String.format(FORMAT_FRAME_STATE, EMPTY_STRING)));
+        int bound = LIMIT_FRAME_OF_BOWLING_GAME;
+        for (int count = resultDto.size(); count < bound; count++) {
+            print(String.format(FORMAT_NORMAL_FRAME_STATE, EMPTY_STRING));
+        }
     }
 
     private static void print(final String message) {
