@@ -22,4 +22,8 @@ public class ResultDto {
     public List<StateDto> getStates() {
         return states.getStates();
     }
+
+    public int size() {
+        return getStates().size();
+    }
 }
