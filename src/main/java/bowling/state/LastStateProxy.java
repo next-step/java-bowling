@@ -10,7 +10,7 @@ public class LastStateProxy implements State {
 
     private LastStateDecorator state;
 
-    private int currentPitchCount;
+    private int pitchCount;
 
     public LastStateProxy() {
         state = LastStateDecorator.init();
@@ -28,7 +28,7 @@ public class LastStateProxy implements State {
     }
 
     private int increasePitchCount() {
-        return currentPitchCount++;
+        return pitchCount++;
     }
 
     private void hit(final Pin pin) {
@@ -54,7 +54,7 @@ public class LastStateProxy implements State {
     }
 
     private boolean isTryCountMax() {
-        return currentPitchCount == LIMIT_PITCH_COUNT;
+        return pitchCount == LIMIT_PITCH_COUNT;
     }
 
     @Override
