@@ -6,8 +6,8 @@ import bowling.pin.Pin;
 import bowling.player.Player;
 
 public class BowlingFacade {
-    private Player player;
-    private Frames frames;
+    private final Player player;
+    private final Frames frames;
 
     private BowlingFacade(final Player player, final Frames frames) {
         this.player = player;
