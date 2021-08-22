@@ -5,14 +5,13 @@ import bowling.pin.Pin;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static bowling.state.LastStateProxy.LIMIT_PITCH_COUNT;
+import java.util.Stack;
 
 public class LastStateDecorator implements State {
-    private final List<State> states;
+    private final Stack<State> states;
 
     private LastStateDecorator() {
-        this.states = new ArrayList<>(LIMIT_PITCH_COUNT);
+        this.states = new Stack<>();
         states.add(Ready.init());
     }
 
@@ -22,8 +21,8 @@ public class LastStateDecorator implements State {
 
     @Override
     public State nextPitch(final Pin downedPins) {
-        final State state = popLastState().nextPitch(downedPins);
-        states.add(state);
+        final State state = states.pop().nextPitch(downedPins);
+        states.push(state);
         nextState(state);
         return this;
     }
@@ -46,25 +45,17 @@ public class LastStateDecorator implements State {
 
     @Override
     public boolean isEnd() {
-        return lastState() instanceof End || !isExtraChance();
+        return states.peek() instanceof End || !isExtraChance();
     }
 
     private boolean isExtraChance() {
-        return !lastState().isEnd();
+        return !states.peek().isEnd();
     }
 
     public void tailStateCheck() {
-        if (lastState() instanceof Ready) {
-            popLastState();
+        if (states.peek() instanceof Ready) {
+            states.pop();
         }
-    }
-
-    private State popLastState() {
-        return states.remove(states.size() - 1);
-    }
-
-    public State lastState() {
-        return states.get(states.size() - 1);
     }
 
     public List<State> getStates() {
