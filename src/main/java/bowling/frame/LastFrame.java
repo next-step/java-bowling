@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class LastFrame implements Frame {
-    private State state;
+    private final State state;
 
     private LastFrame(final State state) {
         this.state = state;
