@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.dto.ResultDto;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -15,8 +17,8 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static int pitch(final int frameCount) {
-        print(String.format(PITCH_MESSAGE, frameCount));
+    public static int pitch(final ResultDto resultDto) {
+        print(String.format(PITCH_MESSAGE, resultDto.size()));
         return Integer.parseInt(SCANNER.nextLine());
     }
 

@@ -14,8 +14,8 @@ public class BowlingFacade {
         this.frames = frames;
     }
 
-    public static BowlingFacade of(final Player player, final Frames frames) {
-        return new BowlingFacade(player, frames);
+    public static BowlingFacade of(final String name) {
+        return new BowlingFacade(Player.init(name), Frames.init());
     }
 
     public void pitch(final Pin downedPins) {
@@ -24,5 +24,9 @@ public class BowlingFacade {
 
     public ResultDto getResult() {
         return ResultDto.of(player.convert(), frames.convert());
+    }
+
+    public boolean isEnd() {
+        return frames.isEnd();
     }
 }
