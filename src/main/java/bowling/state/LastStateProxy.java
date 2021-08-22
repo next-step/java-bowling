@@ -8,7 +8,7 @@ import java.util.List;
 public class LastStateProxy implements State {
     public static final int LIMIT_PITCH_COUNT = 3;
 
-    private LastStateDecorator state;
+    private final LastStateDecorator state;
 
     private int pitchCount;
 
