@@ -30,8 +30,7 @@ public class ResultView {
         List<Frame> frameList = frames.getFrames();
         System.out.printf("|  " + player.getName() + " |");
 
-//        frameList.forEach(f -> System.out.printf("   " + getFrameStatus(f) + "   |"));
-        frameList.forEach(f -> System.out.printf("   " + getFrameStatus(f) + String.format("%5s", "|")));
+        frameList.forEach(f -> System.out.printf("   " + String.format("%-3s", getFrameStatus(f)) + String.format("%3s", "|")));
 
         IntStream.range(frameList.size(), 10)
                 .forEach(i -> System.out.printf("        |"));

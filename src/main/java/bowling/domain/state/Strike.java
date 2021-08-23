@@ -2,7 +2,6 @@ package bowling.domain.state;
 
 public class Strike implements Finished {
 
-
     private Strike() {
     }
 
