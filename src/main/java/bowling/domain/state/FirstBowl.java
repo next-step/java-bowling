@@ -25,4 +25,9 @@ public class FirstBowl implements Playing {
 
         return Gutter.of();
     }
+
+    @Override
+    public String toString() {
+        return firstPins.toString();
+    }
 }

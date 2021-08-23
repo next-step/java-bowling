@@ -31,6 +31,10 @@ public class Pins {
         return totalPins > MIN_PIN_NUMBER && getTotalPins(pins) < MAX_PIN_NUMBER;
     }
 
+    public int getPins() {
+        return pins;
+    }
+
     private int getTotalPins(Pins pins) {
         int totalPins = this.pins + pins.pins;
         validate(totalPins);

@@ -23,6 +23,6 @@ public class Miss implements Finished {
 
     @Override
     public String toString() {
-        return firstPins + "|" + secondPins;
+        return firstPins + "|" + (secondPins.getPins() == 0 ? "-" : secondPins);
     }
 }
