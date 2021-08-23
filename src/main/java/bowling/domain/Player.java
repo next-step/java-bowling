@@ -1,4 +1,4 @@
-package bowling.domain.state;
+package bowling.domain;
 
 import bowling.exception.LimitException;
 import java.util.Objects;

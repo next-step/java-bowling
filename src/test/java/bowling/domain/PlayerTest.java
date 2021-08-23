@@ -1,4 +1,4 @@
-package bowling.domain.state;
+package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
