@@ -11,6 +11,8 @@ public class FinalFrame implements Frame {
 
     private static final int FINAL_FRAME_NUMBER = 10;
     private static final int LAST_COUNT = 3;
+    private static final int SPARE_COUNT = 2;
+    private static final int MISS_COUNT = 1;
 
     private final List<State> states = new ArrayList<>();
 
@@ -50,11 +52,11 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isMissOrGutter() {
-        return states.size() == 1 && getLast() instanceof Miss || getLast() instanceof Gutter;
+        return states.size() == MISS_COUNT && getLast() instanceof Miss || getLast() instanceof Gutter;
     }
 
     private boolean isSpare() {
-        return states.size() == 2 && getLast() instanceof Spare;
+        return states.size() == SPARE_COUNT && getLast() instanceof Spare;
     }
 
     private boolean isFull() {

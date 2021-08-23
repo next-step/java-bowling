@@ -7,4 +7,6 @@ public interface State {
     State bowl(Pins pins);
 
     boolean isFinish();
+
+    boolean isClear();
 }
