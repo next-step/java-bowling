@@ -1,6 +1,7 @@
 package qna.domain;
 
 import qna.CannotDeleteException;
+import qna.ForbiddenException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -92,6 +93,13 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
+    public void delete(User loginUser) throws CannotDeleteException {
+        checkOwner(loginUser);
+        checkAnswer(loginUser);
+        deleted = true;
+        answers.delete();
+    }
+
     public void checkOwner(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
@@ -102,16 +110,18 @@ public class Question extends AbstractEntity {
         answers.checkAnswers(loginUser);
     }
 
-    public List<DeleteHistory> delete() {
-        deleted = true;
-        List<DeleteHistory> deleteHistories = makeDeleteHistory();
-        deleteHistories.addAll(answers.delete());
+    public List<DeleteHistory> makeDeleteHistory() {
+        validateDeleted();
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+        deleteHistories.addAll(answers.makeDeleteHistory());
         return deleteHistories;
     }
 
-    private List<DeleteHistory> makeDeleteHistory() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
-        return deleteHistories;
+    private void validateDeleted() {
+        if (!isDeleted()) {
+            throw new ForbiddenException("삭제되지 않은 게시물입니다.");
+        }
     }
 }

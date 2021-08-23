@@ -7,7 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +27,16 @@ public class AnswerGroup {
         }
     }
 
-    public List<DeleteHistory> delete() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+    public void delete() {
         for (Answer answer : answers) {
             answer.delete();
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        }
+    }
+
+    public List<DeleteHistory> makeDeleteHistory() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        for (Answer answer : answers) {
+            deleteHistories.add(answer.makeDeleteHistory());
         }
         return deleteHistories;
     }
