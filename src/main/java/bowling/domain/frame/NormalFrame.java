@@ -27,12 +27,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame bowl(Pins pins) {
+    public void bowl(Pins pins) {
         state = state.bowl(pins);
-        if (state.isFinish()) {
-            return createFrame();
-        }
-        return this;
     }
 
     @Override
@@ -43,9 +39,5 @@ public class NormalFrame implements Frame {
     @Override
     public List<State> getState() {
         return Collections.singletonList(state);
-    }
-
-    private Frame createFrame() {
-        return new NormalFrame(frameNumber + 1);
     }
 }

@@ -29,17 +29,15 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame bowl(Pins pins) {
+    public void bowl(Pins pins) {
         State state = getLast();
         if (state.isFinish()) {
             states.add(state);
-            return this;
+            return;
         }
 
         removeLast();
         states.add(state.bowl(pins));
-
-        return this;
     }
 
     @Override
