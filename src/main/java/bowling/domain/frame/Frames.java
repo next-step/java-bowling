@@ -24,12 +24,15 @@ public class Frames {
 
     public void bowl(Pins pins) {
         Frame frame = getLastFrame();
-        if (frame.isFinish()) {
-            createFrame();
+        frame.bowl(pins);
+
+        if (frames.size() == END_NUMBER) {
             return;
         }
 
-        frame.bowl(pins);
+        if (frame.isFinish()) {
+            createFrame();
+        }
     }
 
     public boolean isFinish() {
@@ -40,6 +43,10 @@ public class Frames {
         return Collections.unmodifiableList(frames);
     }
 
+    public Frame getLastFrame() {
+        return frames.get(frames.size() - 1);
+    }
+
     private void createFrame() {
         if (frames.size() < END_NUMBER - 1) {
             frames.add(NormalFrame.of(getLastFrame().getFrameNumber() + 1));
@@ -47,9 +54,5 @@ public class Frames {
         }
 
         frames.add(FinalFrame.of());
-    }
-
-    private Frame getLastFrame() {
-        return frames.get(frames.size() - 1);
     }
 }

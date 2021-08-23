@@ -19,6 +19,10 @@ public class Player {
         return new Player(name);
     }
 
+    public String getName() {
+        return name;
+    }
+
     private void validate(String name) {
         if (!NAME_PATTERN.matcher(name).find()) {
             throw new IllegalPayerNameException(name);

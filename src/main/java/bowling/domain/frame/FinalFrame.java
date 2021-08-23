@@ -1,8 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pins.Pins;
-import bowling.domain.state.Ready;
-import bowling.domain.state.State;
+import bowling.domain.state.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +41,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return isFull() || isLastClear();
+        return isFull() || isMissOrGutter() || isSpare();
     }
 
     @Override
@@ -50,8 +49,12 @@ public class FinalFrame implements Frame {
         return Collections.unmodifiableList(states);
     }
 
-    private boolean isLastClear() {
-        return states.size() == 1 && !getLast().isClear();
+    private boolean isMissOrGutter() {
+        return states.size() == 1 && getLast() instanceof Miss || getLast() instanceof Gutter;
+    }
+
+    private boolean isSpare() {
+        return states.size() == 2 && getLast() instanceof Spare;
     }
 
     private boolean isFull() {
