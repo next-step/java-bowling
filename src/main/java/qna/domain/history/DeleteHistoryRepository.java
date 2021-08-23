@@ -1,4 +1,4 @@
-package qna.domain;
+package qna.domain.history;
 
 import org.springframework.data.repository.CrudRepository;
 

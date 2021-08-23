@@ -1,8 +1,11 @@
-package qna.domain;
+package qna.domain.history;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import qna.domain.ContentType;
+import qna.domain.user.User;
 
 @Entity
 public class DeleteHistory {
@@ -31,6 +34,9 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+    public LocalDateTime getCreateDate(){
+        return createDate;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
