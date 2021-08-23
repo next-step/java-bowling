@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.pins;
 
+import bowling.domain.pins.Pins;
 import bowling.exception.IllegalPinNumberException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,5 +25,21 @@ class PinsTest {
     void strike() {
         assertThat(Pins.of(10).isStrike()).isTrue();
         assertThat(Pins.of(3).isStrike()).isFalse();
+    }
+
+    @DisplayName("첫번째와 두번째 입력 pin 의 합이 10이면 스페어")
+    @Test
+    void spare() {
+        Pins pins = Pins.of(3);
+
+        assertThat(pins.isSpare(Pins.of(7))).isTrue();
+    }
+
+    @DisplayName("첫번째와 두번째 입력 pin 의 합이 10보다 작으면 미스")
+    @Test
+    void miss() {
+        Pins pins = Pins.of(3);
+
+        assertThat(pins.isMiss(Pins.of(6))).isTrue();
     }
 }
