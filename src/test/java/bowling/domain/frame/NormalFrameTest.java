@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FrameTest {
+class NormalFrameTest {
 
     Frame frame;
 
@@ -25,8 +25,8 @@ class FrameTest {
     void strike() {
         frame.bowl(Pins.of(10));
 
-        assertThat(frame.getState()).isInstanceOf(Strike.class);
-        assertThat(frame.getState().toString()).hasToString("X");
+        assertThat(frame.getState().get(0)).isInstanceOf(Strike.class);
+        assertThat(frame.getState().get(0).toString()).hasToString("X");
     }
 
     @DisplayName("스페어")
@@ -35,8 +35,8 @@ class FrameTest {
         frame.bowl(Pins.of(3));
         frame.bowl(Pins.of(7));
 
-        assertThat(frame.getState()).isInstanceOf(Spare.class);
-        assertThat(frame.getState().toString()).hasToString("3|/");
+        assertThat(frame.getState().get(0)).isInstanceOf(Spare.class);
+        assertThat(frame.getState().get(0).toString()).hasToString("3|/");
     }
 
     @DisplayName("미스")
@@ -45,8 +45,8 @@ class FrameTest {
         frame.bowl(Pins.of(3));
         frame.bowl(Pins.of(4));
 
-        assertThat(frame.getState()).isInstanceOf(Miss.class);
-        assertThat(frame.getState().toString()).hasToString("3|4");
+        assertThat(frame.getState().get(0)).isInstanceOf(Miss.class);
+        assertThat(frame.getState().get(0).toString()).hasToString("3|4");
     }
 
     @DisplayName("거터")
@@ -55,7 +55,7 @@ class FrameTest {
         frame.bowl(Pins.of(0));
         frame.bowl(Pins.of(0));
 
-        assertThat(frame.getState()).isInstanceOf(Gutter.class);
-        assertThat(frame.getState().toString()).hasToString("-");
+        assertThat(frame.getState().get(0)).isInstanceOf(Gutter.class);
+        assertThat(frame.getState().get(0).toString()).hasToString("-");
     }
 }

@@ -17,6 +17,11 @@ public class Miss implements Finished {
     }
 
     @Override
+    public boolean isClear() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return firstPins + "|" + secondPins;
     }

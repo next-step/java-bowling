@@ -6,4 +6,9 @@ public interface Playing extends State {
     default boolean isFinish() {
         return false;
     }
+
+    @Override
+    default boolean isClear() {
+        return false;
+    }
 }

@@ -4,6 +4,9 @@ import bowling.domain.pins.Pins;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
+import java.util.Collections;
+import java.util.List;
+
 public class NormalFrame implements Frame {
 
     private final int frameNumber;
@@ -16,6 +19,11 @@ public class NormalFrame implements Frame {
 
     public static NormalFrame of(int frameNumber) {
         return new NormalFrame(frameNumber);
+    }
+
+    @Override
+    public int getFrameNumber() {
+        return frameNumber;
     }
 
     @Override
@@ -33,8 +41,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public State getState() {
-        return state;
+    public List<State> getState() {
+        return Collections.singletonList(state);
     }
 
     private Frame createFrame() {
