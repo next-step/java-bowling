@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.exception;
 
 public class CannotBeLessThanZero extends IllegalArgumentException{
 
