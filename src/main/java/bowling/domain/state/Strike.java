@@ -18,4 +18,9 @@ public class Strike implements State{
     public String display() {
         return pins.display();
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

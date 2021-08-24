@@ -17,4 +17,9 @@ public class Ready implements State{
     public String display() {
         throw new IllegalArgumentException("투구 시작을 하지 않았습니다.");
     }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

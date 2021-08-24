@@ -20,6 +20,11 @@ public class FirstPitch implements State{
 
     @Override
     public String display() {
-        throw new IllegalArgumentException("아직 1번의 투구가 남아있습니다.");
+        return firstPins.display();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 }

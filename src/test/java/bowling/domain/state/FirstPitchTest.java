@@ -22,6 +22,6 @@ class FirstPitchTest {
     @Test
     void 출력_예외처리() {
         FirstPitch firstPitch = new FirstPitch(Pins.pitching(7));
-        assertThatThrownBy(firstPitch::display).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(firstPitch::display).isEqualTo("7");
     }
 }

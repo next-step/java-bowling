@@ -23,4 +23,9 @@ public class Miss implements State {
     public String display() {
         return firstPins.display(secondPins);
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

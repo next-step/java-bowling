@@ -23,4 +23,9 @@ public class Spare implements State{
     public String display() {
         return firstPins.display(secondPins);
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }
