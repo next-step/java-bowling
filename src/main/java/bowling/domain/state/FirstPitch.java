@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.exception.NextPitchingException;
 
 public class FirstPitch implements State{
     private Pins firstPins;
@@ -16,6 +17,11 @@ public class FirstPitch implements State{
             return new Spare(firstPins, secondPins);
         }
         return new Miss(firstPins, secondPins);
+    }
+
+    @Override
+    public State lastPitch(int pins) {
+        throw new NextPitchingException("10 프레임");
     }
 
     @Override
