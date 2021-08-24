@@ -58,37 +58,37 @@ public class PinsTest {
     @Test
     void 일반점수_화면() {
         Pins pins = Pins.pitching(4);
-        assertThat(pins.display()).isEqualTo("4 ");
+        assertThat(pins.display()).isEqualTo("4  |");
     }
 
     @Test
     void 스트라이크_화면() {
         Pins pins = Pins.pitching(10);
-        assertThat(pins.display()).isEqualTo("X");
+        assertThat(pins.display()).isEqualTo("  X  |");
     }
 
     @Test
     void 스페어_화면() {
         Pins pins = Pins.pitching(7);
-        assertThat(pins.display(Pins.pitching(3))).isEqualTo("7 | /");
+        assertThat(pins.display(Pins.pitching(3))).isEqualTo("7 | / |");
     }
 
     @Test
     void 스페어_처리못한_화면() {
         Pins pins = Pins.pitching(7);
-        assertThat(pins.display(Pins.pitching(2))).isEqualTo("7 | 2");
+        assertThat(pins.display(Pins.pitching(2))).isEqualTo("7 | 2 |");
     }
 
     @Test
     void 거터_화면() {
         Pins pins = Pins.pitching(0);
-        assertThat(pins.display(Pins.pitching(0))).isEqualTo("- | -");
+        assertThat(pins.display(Pins.pitching(0))).isEqualTo("- | - |");
     }
 
     @Test
     void 못맞춘후_스페어() {
         Pins pins = Pins.pitching(0);
-        assertThat(pins.display(Pins.pitching(10))).isEqualTo("- | /");
+        assertThat(pins.display(Pins.pitching(10))).isEqualTo("- | / |");
     }
 
 }

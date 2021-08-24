@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import bowling.domain.Pins;
 import org.junit.jupiter.api.Test;
@@ -20,8 +19,8 @@ class FirstPitchTest {
     }
 
     @Test
-    void 출력_예외처리() {
+    void 출력() {
         FirstPitch firstPitch = new FirstPitch(Pins.pitching(7));
-        assertThatThrownBy(firstPitch::display).isEqualTo("7");
+        assertThat(firstPitch.display()).isEqualTo("7  |");
     }
 }

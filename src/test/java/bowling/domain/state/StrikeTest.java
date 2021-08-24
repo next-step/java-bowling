@@ -11,7 +11,7 @@ class StrikeTest {
     @Test
     void 출력_테스트() {
         Strike strike = new Strike(Pins.pitching(10));
-        assertThat(strike.display()).isEqualTo("X");
+        assertThat(strike.display()).isEqualTo("  X  |");
     }
 
     @Test
