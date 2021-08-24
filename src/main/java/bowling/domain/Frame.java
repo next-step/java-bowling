@@ -2,6 +2,8 @@ package bowling.domain;
 
 public abstract class Frame {
 
+	protected static final String DELIMITER = "|";
+
 	protected Pitch first;
 	protected Pitch second;
 
@@ -21,4 +23,14 @@ public abstract class Frame {
 	public abstract boolean isEnd();
 
 	public abstract void pitch(final int pinNumber);
+
+	public abstract String getResult();
+
+	public Pitch getFirst() {
+		return first;
+	}
+
+	public Pitch getSecond() {
+		return second;
+	}
 }

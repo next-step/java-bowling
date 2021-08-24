@@ -2,6 +2,8 @@ package bowling.domain;
 
 import static bowling.domain.PitchResult.*;
 
+import java.util.Optional;
+
 import bowling.domain.exception.InvalidPinCountException;
 
 public class LastFrame extends Frame {
@@ -59,6 +61,36 @@ public class LastFrame extends Frame {
 
 		addBonus(pinCount);
 	}
+
+	@Override
+	public String getResult() {
+		return String.join(
+			Optional.ofNullable(first)
+				.map(e -> String.valueOf(e.getPinCount()))
+				.orElse("")
+				+ Optional.ofNullable(second)
+				.map(e -> String.valueOf(e.getPinCount()))
+				.orElse("")
+				+ Optional.ofNullable(bonus)
+				.map(e -> String.valueOf(e.getPinCount()))
+				.orElse(""), DELIMITER);
+	}
+
+	// private String resultHelper(final Pitch first) {
+	// 	if (first.getPitchResult().equals(STRIKE)) {
+	// 		return STRIKE.getFlag();
+	// 	}
+	//
+	// 	return String.valueOf(first.getPinCount());
+	// }
+	//
+	// private String resultHelper(final Pitch first,) {
+	// 	if (first.getPitchResult().equals(STRIKE)) {
+	// 		return STRIKE.getFlag();
+	// 	}
+	//
+	// 	return String.valueOf(first.getPinCount());
+	// }
 
 	private void addSecond(final int pinCount) {
 		if (first.getPitchResult().equals(STRIKE)) {
