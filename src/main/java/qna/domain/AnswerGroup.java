@@ -21,15 +21,9 @@ public class AnswerGroup {
         this.answers.add(answer);
     }
 
-    public void checkAnswers(User loginUser) throws CannotDeleteException {
+    public void delete(User loginUser) throws CannotDeleteException {
         for (Answer answer : answers) {
-            answer.checkOwner(loginUser);
-        }
-    }
-
-    public void delete() {
-        for (Answer answer : answers) {
-            answer.delete();
+            answer.delete(loginUser);
         }
     }
 
