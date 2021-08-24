@@ -93,10 +93,12 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         checkOwner(loginUser);
         deleted = true;
-        answers.delete(loginUser);
+        List<DeleteHistory> histories = makeDeleteHistory();
+        histories.addAll(answers.delete(loginUser));
+        return histories;
     }
 
     private void checkOwner(User loginUser) throws CannotDeleteException {
@@ -105,12 +107,10 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public List<DeleteHistory> makeDeleteHistory() {
+    private List<DeleteHistory> makeDeleteHistory() {
         validateDeleted();
-
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
-        deleteHistories.addAll(answers.makeDeleteHistory());
         return deleteHistories;
     }
 

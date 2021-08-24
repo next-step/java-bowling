@@ -62,29 +62,4 @@ public class QuestionTest {
             question.delete(aUser1());
         }).isInstanceOf(CannotDeleteException.class);
     }
-
-    @Test
-    public void makeDeleteHistory() throws CannotDeleteException {
-        //given
-        Question question = aQuestion1();
-        question.delete(aUser1());
-
-        //when
-        List<DeleteHistory> deleteHistory = question.makeDeleteHistory();
-
-        //then
-        assertThat(deleteHistory).isNotNull();
-        assertThat(deleteHistory.size()).isEqualTo(1);
-    }
-
-    @Test
-    public void makeDeleteHistoryFail() throws CannotDeleteException {
-        //given
-        Question question = aQuestion1();
-
-        //given, when, then
-        assertThatThrownBy(() -> {
-            List<DeleteHistory> deleteHistory = question.makeDeleteHistory();
-        }).isInstanceOf(ForbiddenException.class);
-    }
 }

@@ -21,16 +21,10 @@ public class AnswerGroup {
         this.answers.add(answer);
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            answer.delete(loginUser);
-        }
-    }
-
-    public List<DeleteHistory> makeDeleteHistory() {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
-            deleteHistories.add(answer.makeDeleteHistory());
+            deleteHistories.add(answer.delete(loginUser));
         }
         return deleteHistories;
     }

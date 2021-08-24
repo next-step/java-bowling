@@ -82,12 +82,13 @@ public class Answer extends AbstractEntity {
         }
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistory delete(User loginUser) throws CannotDeleteException {
         checkOwner(loginUser);
         deleted = true;
+        return makeDeleteHistory();
     }
 
-    public DeleteHistory makeDeleteHistory() {
+    private DeleteHistory makeDeleteHistory() {
         validateDeleted();
         return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }

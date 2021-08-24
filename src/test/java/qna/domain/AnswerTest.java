@@ -31,28 +31,4 @@ public class AnswerTest {
             answer.delete(aUser2());
         }).isInstanceOf(CannotDeleteException.class);
     }
-
-    @Test
-    public void makeDeleteHistory() throws CannotDeleteException {
-        //given
-        Answer answer = aAnswer1();
-        answer.delete(aUser1());
-
-        //when
-        DeleteHistory deleteHistory = answer.makeDeleteHistory();
-
-        //then
-        assertThat(deleteHistory).isNotNull();
-    }
-
-    @Test
-    public void makeDeleteHistoryFail() throws CannotDeleteException {
-        //given
-        Answer answer = aAnswer1();
-
-        //given, when, then
-        assertThatThrownBy(() -> {
-            DeleteHistory deleteHistory = answer.makeDeleteHistory();
-        }).isInstanceOf(ForbiddenException.class);
-    }
 }
