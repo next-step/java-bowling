@@ -5,15 +5,16 @@ import bowling.domain.Pins;
 public class Ready implements State{
 
     @Override
-    public State nextPitch(Pins pins) {
+    public State nextPitch(int falledPins) {
+        Pins pins = Pins.pitching(falledPins);
         if(pins.isStrike()) {
-            return Strike.of(pins);
+            return new Strike(pins);
         }
-        return null;
+        return new FirstPitch(pins);
     }
 
     @Override
     public String display() {
-        return null;
+        throw new IllegalArgumentException("투구 시작을 하지 않았습니다.");
     }
 }
