@@ -20,6 +20,11 @@ public class Spare implements State{
     }
 
     @Override
+    public State lastPitch(int pins) {
+        throw new NextPitchingException(MESSAGE);
+    }
+
+    @Override
     public String display() {
         return firstPins.display(secondPins);
     }
