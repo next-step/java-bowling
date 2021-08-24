@@ -34,6 +34,7 @@ public class PinsTest {
         assertThat(pins.totalPins(Pins.pitching(4))).isEqualTo(8);
     }
 
+
     @Test
     void 스페어() {
         Pins pins = Pins.pitching(7);
@@ -52,6 +53,12 @@ public class PinsTest {
     void 일반점수() {
         Pins pins = Pins.pitching(4);
         assertThat(pins.isMiss(Pins.pitching(4))).isTrue();
+    }
+
+    @Test
+    void 일반점수_화면() {
+        Pins pins = Pins.pitching(4);
+        assertThat(pins.display()).isEqualTo("4 ");
     }
 
     @Test
