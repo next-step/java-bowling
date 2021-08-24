@@ -40,7 +40,7 @@ public class Pins {
         return totalPins;
     }
 
-    public boolean isSpear(Pins secondPins) {
+    public boolean isSpare(Pins secondPins) {
         return totalPins(secondPins) == MAX_PINS;
     }
 
@@ -59,7 +59,7 @@ public class Pins {
     public String display(Pins secondPins) {
         String result = gutterCheck(falledPins);
 
-        if (isSpear(secondPins)) {
+        if (isSpare(secondPins)) {
             return result + " | /";
         }
 
