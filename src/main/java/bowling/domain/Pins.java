@@ -53,7 +53,7 @@ public class Pins {
             return "X";
         }
 
-        return falledPins + " | ";
+        return falledPins + " ";
     }
 
     public String display(Pins secondPins) {
