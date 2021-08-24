@@ -37,14 +37,14 @@ public class PinsTest {
     @Test
     void 스페어() {
         Pins pins = Pins.pitching(7);
-        assertThat(pins.isSpear(Pins.pitching(3))).isTrue();
+        assertThat(pins.isSpare(Pins.pitching(3))).isTrue();
     }
 
     @Test
     void 스페어_예외() {
         Pins pins = Pins.pitching(7);
         assertThatThrownBy(() -> {
-            pins.isSpear(Pins.pitching(4));
+            pins.isSpare(Pins.pitching(4));
         }).isInstanceOf(CannotBeBiggerThanMax.class);
     }
 
