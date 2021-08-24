@@ -1,8 +1,6 @@
 package bowling.domain.state;
 
-import bowling.domain.Pins;
-
 public interface State {
-    State nextPitch(Pins pins);
+    State nextPitch(int pins);
     String display();
 }
