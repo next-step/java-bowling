@@ -50,20 +50,20 @@ public class Pins {
 
     public String display() {
         if(isStrike()) {
-            return "X";
+            return "  X  |";
         }
 
-        return falledPins + " ";
+        return falledPins + "  |";
     }
 
     public String display(Pins secondPins) {
         String result = gutterCheck(falledPins);
 
         if (isSpare(secondPins)) {
-            return result + " | /";
+            return " " + result + "|/" + " |";
         }
 
-        return result + " | " + gutterCheck(secondPins.falledPins);
+        return " " + result + "|" + gutterCheck(secondPins.falledPins) + " |";
     }
 
     private String gutterCheck(int falledPins) {

@@ -1,6 +1,8 @@
 package bowling.domain;
 
 import bowling.exception.LimitException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Player {
@@ -20,6 +22,12 @@ public class Player {
         if (name.length() != MAX_COUNT) {
             throw new LimitException("이름은 3글자여야 합니다.");
         }
+    }
+
+    public List<String> addName() {
+        List<String> boards = new ArrayList<>();
+        boards.add("|  " + name + " |");
+        return boards;
     }
 
     @Override
