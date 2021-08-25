@@ -25,12 +25,4 @@ public abstract class Frame {
 	public abstract void pitch(final int pinNumber);
 
 	public abstract String getResult();
-
-	public Pitch getFirst() {
-		return first;
-	}
-
-	public Pitch getSecond() {
-		return second;
-	}
 }

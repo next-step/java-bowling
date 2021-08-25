@@ -67,13 +67,12 @@ public class LastFrame extends Frame {
 	@Override
 	public String getResult() {
 		final List<String> result = new ArrayList<>();
-
 		Optional.ofNullable(first)
-			.ifPresent(e -> result.add(resultHelper(e)));
+			.ifPresent(e -> result.add(resultHelper(first)));
 		Optional.ofNullable(second)
-			.ifPresent(e -> result.add(resultHelper(first, e)));
+			.ifPresent(e -> result.add(resultHelper(first, second)));
 		Optional.ofNullable(bonus)
-			.ifPresent(e -> result.add(resultHelper(second, e)));
+			.ifPresent(e -> result.add(resultHelper(second, bonus)));
 
 		return String.join(DELIMITER, result);
 	}
