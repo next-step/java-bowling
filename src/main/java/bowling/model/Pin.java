@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class Pin {
 
-	public static final String POSITIVE_ERROR_MESSAGE = "핀은 양수만 가능 합니다.";
-	public static final String MAX_OVER_ERROR_MESSAGE = "최대 핀의 개수는 10개 입니다.";
-	public static final int MIN_PIN = 0;
-	public static final int MAX_PIN = 10;
+	private static final String POSITIVE_ERROR_MESSAGE = "핀은 양수만 가능 합니다.";
+	private static final String MAX_OVER_ERROR_MESSAGE = "최대 핀의 개수는 10개 입니다.";
+	private static final int MIN_PIN = 0;
+	private static final int MAX_PIN = 10;
 
 	private final int pin;
 
