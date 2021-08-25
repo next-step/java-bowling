@@ -12,7 +12,8 @@ public class InputView {
 		return SCANNER.nextLine();
 	}
 
-	public static String inputPitch(final int frameCount) {
+	public static String inputPitch(final int frameIndex) {
+		final int frameCount = frameIndex + 1;
 		System.out.print(frameCount + "프레임 투구 : ");
 
 		return SCANNER.nextLine();

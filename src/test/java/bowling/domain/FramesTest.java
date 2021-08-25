@@ -16,15 +16,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 @DisplayName("프레임들")
 class FramesTest {
 
+	// expected - frame index 는 0 부터 시작
 	@DisplayName("[성공] 투구")
 	@ParameterizedTest
 	@CsvSource({
-		"2,2",
-		"3,2",
-		"4,3",
-		"5,3",
-		"9,5",
-		"10,6",
+		"2,1",
+		"3,1",
+		"4,2",
+		"5,2",
+		"9,4",
+		"10,5",
 	})
 	void pitch(final int pitchCount, final int expected) {
 		// given

@@ -1,23 +1,26 @@
 package bowling.domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Frames {
 
-	private static final int MAX = 10;
+	private static final int MIN_INDEX = 0;
+	private static final int LAST_FRAME_INDEX = 9;
+	private static final int LAST_NORMAL_FRAME_INDEX = 8;
 
 	private final List<Frame> values;
 
 	public Frames() {
-		this.values = new ArrayList<>();
-		for (int i = 0; i < MAX - 1; i++) {
-			this.values.add(new NormalFrame());
-		}
+		final Stream<NormalFrame> normalFrameStream = IntStream.rangeClosed(MIN_INDEX, LAST_NORMAL_FRAME_INDEX)
+			.mapToObj(i -> new NormalFrame());
+		final Stream<LastFrame> lastFrameStream = Stream.of(new LastFrame());
 
-		this.values.add(new LastFrame());
+		this.values = Stream.concat(normalFrameStream, lastFrameStream)
+			.collect(Collectors.toList());
 	}
 
 	public Frames(final List<Frame> values) {
@@ -25,18 +28,18 @@ public class Frames {
 	}
 
 	public boolean isEnd() {
-		return values.get(MAX - 1).isEnd();
+		return values.get(LAST_FRAME_INDEX).isEnd();
 	}
 
 	public Frame current() {
-		return values.get(currentIndex() - 1);
+		return values.get(currentIndex());
 	}
 
 	public int currentIndex() {
-		return IntStream.range(0, MAX)
+		return IntStream.rangeClosed(MIN_INDEX, LAST_FRAME_INDEX)
 			.filter(i -> !values.get(i).isEnd())
 			.findFirst()
-			.orElseThrow(RuntimeException::new) + 1;
+			.orElseThrow(RuntimeException::new);
 	}
 
 	public void pitch(final Pitch result) {
