@@ -41,6 +41,10 @@ public class BowlGame {
 		}
 	}
 
+	public boolean isStrike() {
+		return gameResult.isStrike();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
