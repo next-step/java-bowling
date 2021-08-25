@@ -2,6 +2,8 @@ package bowling.domain;
 
 import static bowling.domain.PitchResult.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import bowling.domain.exception.InvalidPinCountException;
@@ -64,33 +66,33 @@ public class LastFrame extends Frame {
 
 	@Override
 	public String getResult() {
-		return String.join(
-			Optional.ofNullable(first)
-				.map(e -> String.valueOf(e.getPinCount()))
-				.orElse("")
-				+ Optional.ofNullable(second)
-				.map(e -> String.valueOf(e.getPinCount()))
-				.orElse("")
-				+ Optional.ofNullable(bonus)
-				.map(e -> String.valueOf(e.getPinCount()))
-				.orElse(""), DELIMITER);
+		final List<String> result = new ArrayList<>();
+
+		Optional.ofNullable(first)
+			.ifPresent(e -> result.add(resultHelper(e)));
+		Optional.ofNullable(second)
+			.ifPresent(e -> result.add(resultHelper(first, e)));
+		Optional.ofNullable(bonus)
+			.ifPresent(e -> result.add(resultHelper(second, e)));
+
+		return String.join(DELIMITER, result);
 	}
 
-	// private String resultHelper(final Pitch first) {
-	// 	if (first.getPitchResult().equals(STRIKE)) {
-	// 		return STRIKE.getFlag();
-	// 	}
-	//
-	// 	return String.valueOf(first.getPinCount());
-	// }
-	//
-	// private String resultHelper(final Pitch first,) {
-	// 	if (first.getPitchResult().equals(STRIKE)) {
-	// 		return STRIKE.getFlag();
-	// 	}
-	//
-	// 	return String.valueOf(first.getPinCount());
-	// }
+	private String resultHelper(final Pitch first) {
+		if (first.getPitchResult().equals(STRIKE)) {
+			return STRIKE.getFlag(first.getPinCount());
+		}
+
+		return String.valueOf(first.getPinCount());
+	}
+
+	private String resultHelper(final Pitch first, final Pitch second) {
+		if (first.getPitchResult().equals(STRIKE)) {
+			return second.getPitchResult().getFlag(second.getPinCount());
+		}
+
+		return PitchResult.findByPinCount(first.getPinCount(), second.getPinCount()).getFlag(second.getPinCount());
+	}
 
 	private void addSecond(final int pinCount) {
 		if (first.getPitchResult().equals(STRIKE)) {
