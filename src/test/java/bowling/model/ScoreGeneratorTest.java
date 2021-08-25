@@ -18,8 +18,7 @@ class ScoreGeneratorTest {
 	@Test
 	@DisplayName("점수가 2개 있을시 스트라이크, 커터, 기타 점수를 환산한다.")
 	public void getTwoScore() {
-		assertThat(ScoreGenerator.scoreGenerator(10, 10)).isEqualTo("X|X");
-		assertThat(ScoreGenerator.scoreGenerator(10, 0)).isEqualTo("X");
+		assertThat(ScoreGenerator.scoreGenerator(10, 0)).isEqualTo("X|-");
 		assertThat(ScoreGenerator.scoreGenerator(4, 6)).isEqualTo("4|/");
 		assertThat(ScoreGenerator.scoreGenerator(3, 4)).isEqualTo("3|4");
 		assertThat(ScoreGenerator.scoreGenerator(3, 0)).isEqualTo("3|-");

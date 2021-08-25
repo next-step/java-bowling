@@ -16,8 +16,11 @@ public class ScoreGenerator {
 	}
 
 	public static String scoreGenerator(int firstPin, int secondPin) {
-		if (firstPin == MAX_PIN) {
-			return "X";
+		if (firstPin == MAX_PIN && secondPin == MAX_PIN) {
+			return "X|X";
+		}
+		if (firstPin == MAX_PIN && secondPin < MAX_PIN) {
+			return "X|" + scoreGenerator(secondPin);
 		}
 		if (firstPin + secondPin == MAX_PIN) {
 			return firstPin + "|" + "/";
