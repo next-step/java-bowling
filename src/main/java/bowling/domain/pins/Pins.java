@@ -18,24 +18,11 @@ public class Pins {
         return new Pins(pins);
     }
 
-    public boolean isStrike() {
-        return pins == MAX_PIN_NUMBER;
-    }
-
-    public boolean isSpare(Pins pins) {
-        return getTotalPins(pins) == MAX_PIN_NUMBER;
-    }
-
-    public boolean isMiss(Pins pins) {
-        int totalPins = getTotalPins(pins);
-        return totalPins > MIN_PIN_NUMBER && getTotalPins(pins) < MAX_PIN_NUMBER;
-    }
-
     public int getPins() {
         return pins;
     }
 
-    private int getTotalPins(Pins pins) {
+    public int getTotalPins(Pins pins) {
         int totalPins = this.pins + pins.pins;
         validate(totalPins);
 

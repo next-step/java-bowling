@@ -13,9 +13,13 @@ public class Ready implements Playing {
 
     @Override
     public State bowl(Pins pins) {
-        if (pins.isStrike()) {
+        if (isStrike(pins)) {
             return Strike.of();
         }
         return FirstBowl.of(pins);
+    }
+
+    private boolean isStrike(Pins pins) {
+        return Pins.MAX_PIN_NUMBER == pins.getPins();
     }
 }
