@@ -9,6 +9,7 @@ public class GameResult {
 	private static final int FIRST_INDEX = 0;
 	private static final int SECOND_INDEX = 1;
 	private static final int BONUS_INDEX = 2;
+	private static final int SPARE_CHECK_INDEX = 2;
 
 	private final List<Pin> gameResult;
 
@@ -45,6 +46,13 @@ public class GameResult {
 
 	public boolean isStrike() {
 		return findScore(FIRST_INDEX).getPin() == MAX_PIN;
+	}
+
+	public boolean isNotStrikeOrSpare() {
+		if (gameResult.size() == SPARE_CHECK_INDEX) {
+			return (findScore(FIRST_INDEX).getPin() + findScore(SECOND_INDEX).getPin()) < MAX_PIN;
+		}
+		return false;
 	}
 
 	@Override

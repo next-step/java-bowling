@@ -76,7 +76,19 @@ class GameResultTest {
 		GameResult gameResult2 = new GameResult(pins2);
 
 		assertThat(gameResult2.isStrike()).isFalse();
+	}
 
+	@Test
+	@DisplayName("게임의 결과의 합산이 스트라이크나 스페어를 확인 할 수 있다.")
+	public void isNotStrikeOrSpare() {
+		List<Pin> pins = new ArrayList<>();
+		pins.add(new Pin(5));
+		GameResult gameResult = new GameResult(pins);
+
+		assertThat(gameResult.isNotStrikeOrSpare()).isFalse();
+
+		pins.add(new Pin(4));
+		assertThat(gameResult.isNotStrikeOrSpare()).isTrue();
 	}
 
 	private List<Pin> getGameResult() {
