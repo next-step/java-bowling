@@ -91,6 +91,19 @@ class GameResultTest {
 		assertThat(gameResult.isNotStrikeOrSpare()).isTrue();
 	}
 
+	@Test
+	@DisplayName("게임의 결과의 스코어를 알수 있다.")
+	public void getGameScore() {
+		List<Pin> pins = new ArrayList<>();
+		pins.add(new Pin(5));
+		GameResult gameResult = new GameResult(pins);
+
+		assertThat(gameResult.getGameScore()).isEqualTo("5");
+
+		pins.add(new Pin(4));
+		assertThat(gameResult.getGameScore()).isEqualTo("5|4");
+	}
+
 	private List<Pin> getGameResult() {
 		return Arrays.asList(new Pin(5), new Pin(3));
 	}
