@@ -49,6 +49,10 @@ public class BowlGame {
 		return gameResult.isNotStrikeOrSpare();
 	}
 
+	public String getGameScore() {
+		return gameResult.getGameScore();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
