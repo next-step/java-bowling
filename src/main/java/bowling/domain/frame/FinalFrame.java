@@ -1,23 +1,22 @@
 package bowling.domain.frame;
 
 import bowling.domain.pins.Pins;
-import bowling.domain.state.*;
+import bowling.domain.state.Gutter;
+import bowling.domain.state.Miss;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class FinalFrame implements Frame {
 
-    private static final int FINAL_FRAME_NUMBER = 10;
-    private static final int LAST_COUNT = 3;
-    private static final int SPARE_COUNT = 2;
-    private static final int MISS_COUNT = 1;
+    public static final int FINAL_FRAME_NUMBER = 10;
 
-    private final List<State> states = new ArrayList<>();
+    private State state;
 
     private FinalFrame() {
-        states.add(Ready.of());
+        this.state = Ready.of();
     }
 
     public static FinalFrame of() {
@@ -31,44 +30,29 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame bowl(Pins pins) {
-        State state = getLast();
-        if (state.isFinish()) {
-            states.add(state);
-            return this;
+        state = state.bowl(pins);
+        if (isBonusFrame()) {
+            return BonusFrame.of(state);
         }
 
-        removeLast();
-        states.add(state.bowl(pins));
         return this;
     }
 
     @Override
     public boolean isFinish() {
-        return isFull() || isMissOrGutter() || isSpare();
+        return state.isFinish();
     }
 
     @Override
     public List<State> getState() {
-        return Collections.unmodifiableList(states);
+        return Collections.singletonList(state);
     }
 
     private boolean isMissOrGutter() {
-        return states.size() == MISS_COUNT && getLast() instanceof Miss || getLast() instanceof Gutter;
+        return state instanceof Miss || state instanceof Gutter;
     }
 
-    private boolean isSpare() {
-        return states.size() == SPARE_COUNT && getLast() instanceof Spare;
-    }
-
-    private boolean isFull() {
-        return states.size() == LAST_COUNT;
-    }
-
-    private State getLast() {
-        return states.get(states.size() - 1);
-    }
-
-    private void removeLast() {
-        states.remove(states.size() - 1);
+    private boolean isBonusFrame() {
+        return isFinish() && !isMissOrGutter();
     }
 }

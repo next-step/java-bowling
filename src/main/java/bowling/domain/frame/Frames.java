@@ -26,11 +26,8 @@ public class Frames {
         Frame frame = getLastFrame();
         Frame next = frame.bowl(pins);
 
-        if (frames.size() == END_NUMBER) {
-            return;
-        }
-
         if (frame.isFinish()) {
+            checkLastFrame();
             frames.add(next);
         }
     }
@@ -45,5 +42,11 @@ public class Frames {
 
     public Frame getLastFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    private void checkLastFrame() {
+        if (frames.size() == END_NUMBER) {
+            frames.remove(frames.size() - 1);
+        }
     }
 }
