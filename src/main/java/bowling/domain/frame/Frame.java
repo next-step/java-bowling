@@ -9,7 +9,7 @@ public interface Frame {
 
     int getFrameNumber();
 
-    void bowl(Pins pins);
+    Frame bowl(Pins pins);
 
     boolean isFinish();
 

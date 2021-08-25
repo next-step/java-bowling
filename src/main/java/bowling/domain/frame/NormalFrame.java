@@ -9,6 +9,8 @@ import java.util.List;
 
 public class NormalFrame implements Frame {
 
+    private static final int NORMAL_FRAME_LAST = 9;
+
     private final int frameNumber;
     private State state;
 
@@ -27,8 +29,12 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public void bowl(Pins pins) {
+    public Frame bowl(Pins pins) {
         state = state.bowl(pins);
+        if (state.isFinish()) {
+            return createNextFrame();
+        }
+        return this;
     }
 
     @Override
@@ -39,5 +45,12 @@ public class NormalFrame implements Frame {
     @Override
     public List<State> getState() {
         return Collections.singletonList(state);
+    }
+
+    private Frame createNextFrame() {
+        if (frameNumber < NORMAL_FRAME_LAST) {
+            return NormalFrame.of(frameNumber + 1);
+        }
+        return FinalFrame.of();
     }
 }

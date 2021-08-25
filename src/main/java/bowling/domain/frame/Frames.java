@@ -24,14 +24,14 @@ public class Frames {
 
     public void bowl(Pins pins) {
         Frame frame = getLastFrame();
-        frame.bowl(pins);
+        Frame next = frame.bowl(pins);
 
         if (frames.size() == END_NUMBER) {
             return;
         }
 
         if (frame.isFinish()) {
-            createFrame();
+            frames.add(next);
         }
     }
 
@@ -45,14 +45,5 @@ public class Frames {
 
     public Frame getLastFrame() {
         return frames.get(frames.size() - 1);
-    }
-
-    private void createFrame() {
-        if (frames.size() < END_NUMBER - 1) {
-            frames.add(NormalFrame.of(getLastFrame().getFrameNumber() + 1));
-            return;
-        }
-
-        frames.add(FinalFrame.of());
     }
 }
