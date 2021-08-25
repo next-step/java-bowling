@@ -47,6 +47,14 @@ class FramesTest {
 		assertThat(frames.isContinueGame()).isTrue();
 	}
 
+	@Test
+	@DisplayName("전체 프레임을 초기화 한다.")
+	public void initCreate() {
+		Frames frames = Frames.initCreateFrames();
+
+		assertThat(frames.getFrames().size()).isEqualTo(10);
+	}
+
 	private List<Frame> getFrames() {
 		List<Frame> frames = new ArrayList<>();
 		frames.add(new NormalFrame(1));

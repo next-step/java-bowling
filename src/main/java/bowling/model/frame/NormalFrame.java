@@ -6,6 +6,7 @@ public class NormalFrame extends Frame {
 	private static final int MAX_FRAME_NUMBER = 9;
 	private static final int MIN_FRAME_NUMBER = 1;
 	private static final int MAX_PLAY_COUNT = 1;
+	private static final int ZERO_POINT = 0;
 
 	public NormalFrame(int frameNumber) {
 		super(frameNumber);
@@ -20,6 +21,7 @@ public class NormalFrame extends Frame {
 
 	@Override
 	boolean isGameEnd() {
-		return (playCount > 0 && bowlGame.isStrike()) || playCount > MAX_PLAY_COUNT;
+		return (playCount > ZERO_POINT && bowlGame.isStrike()) || playCount > MAX_PLAY_COUNT;
 	}
+
 }

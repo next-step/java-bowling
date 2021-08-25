@@ -11,9 +11,11 @@ public abstract class Frame {
 	private static final String END_GAME_ERROR_MESSAGE = "프레임별 플레이 횟수가 초과 되었습니다.";
 	protected int playCount;
 	protected final BowlGame bowlGame;
+	private final int frameNumber;
 
 	public Frame(int frameNumber) {
 		checkFrameNumber(frameNumber);
+		this.frameNumber = frameNumber;
 		bowlGame = new BowlGame(frameNumber);
 	}
 
@@ -23,10 +25,18 @@ public abstract class Frame {
 		return bowlGame.play(new Pin(strikeNumber));
 	}
 
+	public String getGameScore() {
+		return bowlGame.getGameScore();
+	}
+
 	private void checkEndGame() {
 		if (isGameEnd()) {
 			throw new IllegalStateException(END_GAME_ERROR_MESSAGE);
 		}
+	}
+
+	public int getFrameNumber() {
+		return frameNumber;
 	}
 
 	abstract void checkFrameNumber(int frameNumber);
@@ -47,4 +57,5 @@ public abstract class Frame {
 	public int hashCode() {
 		return Objects.hash(playCount, bowlGame);
 	}
+
 }

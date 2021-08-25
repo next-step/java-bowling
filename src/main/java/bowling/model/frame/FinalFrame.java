@@ -22,4 +22,5 @@ public class FinalFrame extends Frame {
 	boolean isGameEnd() {
 		return (playCount > MIN_PLAY_COUNT && bowlGame.isNotStrikeOrSpare()) || playCount > MAX_PLAY_COUNT;
 	}
+
 }

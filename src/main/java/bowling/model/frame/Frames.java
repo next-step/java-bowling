@@ -1,13 +1,19 @@
 package bowling.model.frame;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Frames {
 
 	private static final int FIRST_FRAME_NUMBER = 1;
 	private static final int FINAL_FRAME = 10;
+	private static final int NORMAL_FIRST_FRAME = 1;
+	private static final int NORMAL_FINAL_FRAME = 9;
+	private static final int FRAME_INDEX_STEP = 1;
+
 	private final List<Frame> frames;
 	private int presentFrame;
 
@@ -16,11 +22,31 @@ public class Frames {
 		presentFrame = FIRST_FRAME_NUMBER;
 	}
 
+	public static Frames initCreateFrames() {
+		List<Frame> frames = new ArrayList<>();
+		createNormalFrame(frames);
+		createFinalFrame(frames);
+		return new Frames(frames);
+	}
+
+	private static void createNormalFrame(List<Frame> frames) {
+		IntStream.rangeClosed(NORMAL_FIRST_FRAME, NORMAL_FINAL_FRAME)
+			.mapToObj(NormalFrame::new)
+			.forEach(frames::add);
+	}
+
+	private static void createFinalFrame(List<Frame> frames) {
+		frames.add(new FinalFrame(FINAL_FRAME));
+	}
+
 	public void playBowling(int strikeNumber) {
-		if (presentFrame < FINAL_FRAME && frames.get(presentFrame - 1).isGameEnd()) {
-			presentFrame = presentFrame + 1;
+		Frame frame = frames.get(presentFrame - FRAME_INDEX_STEP);
+		if (!frame.isGameEnd()) {
+			frame.playGame(strikeNumber);
 		}
-		frames.get(presentFrame - 1).playGame(strikeNumber);
+		if (presentFrame < FINAL_FRAME && frame.isGameEnd()) {
+			presentFrame = presentFrame + FRAME_INDEX_STEP;
+		}
 	}
 
 	public List<Frame> getFrames() {
