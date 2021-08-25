@@ -55,7 +55,7 @@ class GameResultTest {
 
 		GameResult gameResult2 = new GameResult(Arrays.asList(new Pin(10), new Pin(5)));
 
-		assertThat(gameResult2.isStrikeOrSpare()).isTrue();
+		assertThat(gameResult2.isStrikeOrSpare()).isFalse();
 
 		GameResult gameResult3 = new GameResult(Arrays.asList(new Pin(4), new Pin(6)));
 
@@ -69,13 +69,13 @@ class GameResultTest {
 		pins.add(new Pin(10));
 		GameResult gameResult = new GameResult(pins);
 
-		assertThat(gameResult.isStrike()).isTrue();
+		assertThat(gameResult.isFirstStrike()).isTrue();
 
 		List<Pin> pins2 = new ArrayList<>();
 		pins2.add(new Pin(9));
 		GameResult gameResult2 = new GameResult(pins2);
 
-		assertThat(gameResult2.isStrike()).isFalse();
+		assertThat(gameResult2.isFirstStrike()).isFalse();
 	}
 
 	@Test
@@ -102,6 +102,17 @@ class GameResultTest {
 
 		pins.add(new Pin(4));
 		assertThat(gameResult.getGameScore()).isEqualTo("5|4");
+	}
+
+	@Test
+	@DisplayName("마지막 프레임의 첫번쨰 볼링이 스트라이크면 나머지값만 반환한다.")
+	public void findReminderScore() {
+		List<Pin> pins = new ArrayList<>();
+		pins.add(new Pin(10));
+		pins.add(new Pin(5));
+		GameResult gameResult = new GameResult(pins);
+
+		assertThat(gameResult.findReminderScore()).isEqualTo(5);
 	}
 
 	private List<Pin> getGameResult() {

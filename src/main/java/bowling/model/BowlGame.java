@@ -19,30 +19,34 @@ public class BowlGame {
 	}
 
 	public GameResult play(Pin pin) {
-		checkNormalScore(pin);
-		checkFinalScore(pin);
+		if (frameNumber < MAX_ROUND) {
+			checkNormalScore(pin);
+		}
+		if (frameNumber == MAX_ROUND) {
+			checkFinalScore(pin);
+		}
 		gameResult.save(pin);
 		return gameResult;
 	}
 
 	private void checkNormalScore(Pin pin) {
-		if (frameNumber < MAX_ROUND && (gameResult.findTotalScore() + pin.getPin()) > MAX_PIN) {
+		if ((gameResult.findTotalScore() + pin.getPin()) > MAX_PIN) {
 			throw new IllegalArgumentException(LIMIT_MAX_PIN_ERROR_MESSAGE);
 		}
 	}
 
 	private void checkFinalScore(Pin pin) {
-		if (frameNumber == MAX_ROUND && (gameResult.isStrikeOrSpare() && pin.getPin() > MAX_PIN)) {
+		if (gameResult.isStrikeOrSpare() && pin.getPin() > MAX_PIN) {
 			throw new IllegalArgumentException(LIMIT_MAX_PIN_ERROR_MESSAGE);
 		}
-		if (frameNumber == MAX_ROUND && (gameResult.isNotStrikeOrSpare()
-			&& (gameResult.findTotalScore() + pin.getPin()) > MAX_PIN)) {
+
+		if ((!gameResult.isStrikeOrSpare() && (gameResult.findReminderScore() + pin.getPin()) > MAX_PIN)) {
 			throw new IllegalArgumentException(LIMIT_MAX_PIN_ERROR_MESSAGE);
 		}
 	}
 
 	public boolean isStrike() {
-		return gameResult.isStrike();
+		return gameResult.isFirstStrike();
 	}
 
 	public boolean isNotStrikeOrSpare() {

@@ -37,7 +37,7 @@ class BowlGameTest {
 	}
 
 	@Test
-	@DisplayName("마지막 경기시 스트라이크나 스페어이면 최대20점 아니면 최대 10점이다.")
+	@DisplayName("마지막 경기시 스트라이크나 스페어가 아니면 3경기시 예외가 발생한다.")
 	public void checkFinalFrameScore() {
 		BowlGame bowlGame = new BowlGame(10);
 		bowlGame.play(new Pin(5));
