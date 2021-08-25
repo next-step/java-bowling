@@ -35,7 +35,7 @@ public class BowlGame {
 		if (frameNumber == MAX_ROUND && (gameResult.isStrikeOrSpare() && pin.getPin() > MAX_PIN)) {
 			throw new IllegalArgumentException(LIMIT_MAX_PIN_ERROR_MESSAGE);
 		}
-		if (frameNumber == MAX_ROUND && (!gameResult.isStrikeOrSpare()
+		if (frameNumber == MAX_ROUND && (gameResult.isNotStrikeOrSpare()
 			&& (gameResult.findTotalScore() + pin.getPin()) > MAX_PIN)) {
 			throw new IllegalArgumentException(LIMIT_MAX_PIN_ERROR_MESSAGE);
 		}
@@ -43,6 +43,10 @@ public class BowlGame {
 
 	public boolean isStrike() {
 		return gameResult.isStrike();
+	}
+
+	public boolean isNotStrikeOrSpare() {
+		return gameResult.isNotStrikeOrSpare();
 	}
 
 	@Override
