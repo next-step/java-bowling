@@ -17,11 +17,6 @@ public class Spare implements Finished {
     }
 
     @Override
-    public boolean isClear() {
-        return true;
-    }
-
-    @Override
     public String toString() {
         return firstPins +"|/";
     }
