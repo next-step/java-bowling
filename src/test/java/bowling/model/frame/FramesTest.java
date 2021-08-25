@@ -24,7 +24,7 @@ class FramesTest {
 		Frames frames = new Frames(getFrames());
 		frames.playBowling(10);
 
-		assertThat(frames.getPresentFrame()).isEqualTo(1);
+		assertThat(frames.getPresentFrame()).isEqualTo(2);
 		assertThat(frames.getFrames().get(0).isGameEnd()).isTrue();
 
 		frames.playBowling(5);
