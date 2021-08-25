@@ -21,9 +21,11 @@ class BowlGameTest {
 	@DisplayName("플레이시 플레이 결과를 저장한다.")
 	public void playGame() {
 		BowlGame bowlGame = new BowlGame(1);
-		List<Pin> gameResult = bowlGame.play(new Pin(5));
+		GameResult gameResult = bowlGame.play(new Pin(5));
+		bowlGame.play(new Pin(3));
 
-		assertThat(gameResult).extracting("pin").containsExactly(5);
+		assertThat(gameResult.findScore(0)).isEqualTo(new Pin(5));
+		assertThat(gameResult.findScore(1)).isEqualTo(new Pin(3));
 	}
 
 	@Test
