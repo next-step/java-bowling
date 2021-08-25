@@ -43,6 +43,10 @@ public class GameResult {
 			.sum();
 	}
 
+	public boolean isStrike() {
+		return findScore(FIRST_INDEX).getPin() == MAX_PIN;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

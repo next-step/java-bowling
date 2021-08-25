@@ -62,6 +62,23 @@ class GameResultTest {
 		assertThat(gameResult3.isStrikeOrSpare()).isTrue();
 	}
 
+	@Test
+	@DisplayName("게임의 결과가 첫번째 10점이면 스트라이크 이다.")
+	public void isStrike() {
+		List<Pin> pins = new ArrayList<>();
+		pins.add(new Pin(10));
+		GameResult gameResult = new GameResult(pins);
+
+		assertThat(gameResult.isStrike()).isTrue();
+
+		List<Pin> pins2 = new ArrayList<>();
+		pins2.add(new Pin(9));
+		GameResult gameResult2 = new GameResult(pins2);
+
+		assertThat(gameResult2.isStrike()).isFalse();
+
+	}
+
 	private List<Pin> getGameResult() {
 		return Arrays.asList(new Pin(5), new Pin(3));
 	}
