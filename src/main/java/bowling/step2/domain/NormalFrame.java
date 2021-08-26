@@ -50,4 +50,12 @@ public class NormalFrame implements Frame {
 
         return new NormalFrame(frameNumber + 1);
     }
+
+    public int countOfFirst() {
+        return first.count();
+    }
+
+    public int countOfSecond() {
+        return second.count();
+    }
 }

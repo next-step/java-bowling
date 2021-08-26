@@ -63,4 +63,15 @@ public class LastFrame implements Frame {
         return total() < MAX;
     }
 
+    public int countOfFirst() {
+        return first.count();
+    }
+
+    public int countOfSecond() {
+        return second.count();
+    }
+
+    public int countOfAdditional() {
+        return additional.count();
+    }
 }

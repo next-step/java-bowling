@@ -1,21 +1,78 @@
 package bowling.step2;
 
+import bowling.step2.domain.LastFrame;
+import bowling.step2.domain.NormalFrame;
 import bowling.step2.domain.PitchResult;
+import bowling.step2.domain.TryNo;
 import org.junit.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PitchResultTest {
 
-    @ParameterizedTest
-    @CsvSource(value = {"NONE:10:STRIKE", "MISS:10:SPARE", "GUTTER:7:MISS"}, delimiter = ':')
-    public void 결과_생성(PitchResult prePitchResult, int totalCount, PitchResult expected) {
+    @Test
+    public void 결과_생성() {
+        NormalFrame normalFrame = NormalFrame.of(1);
+        normalFrame.pitch(TryNo.FIRST, 10);
         //given, when
-        PitchResult resultOf = PitchResult.findResultOf(prePitchResult, totalCount);
+        List<PitchResult> pitchResults = PitchResult.findResultOf(normalFrame);
 
-        //then
-        assertThat(resultOf).isEqualTo(expected);
+        assertThat(pitchResults.get(0)).isEqualTo(PitchResult.STRIKE);
+    }
+
+    @Test
+    public void 결과_생성2() {
+        NormalFrame normalFrame = NormalFrame.of(1);
+        normalFrame.pitch(TryNo.FIRST, 3);
+        normalFrame.pitch(TryNo.SECOND, 7);
+        //given, when
+        List<PitchResult> pitchResults = PitchResult.findResultOf(normalFrame);
+
+        assertThat(pitchResults.get(0)).isEqualTo(PitchResult.MISS);
+        assertThat(pitchResults.get(1)).isEqualTo(PitchResult.SPARE);
+    }
+
+    @Test
+    public void 마지막_프레임_결과_생성() {
+        LastFrame lastFrame = new LastFrame();
+        lastFrame.pitch(TryNo.FIRST, 10);
+        lastFrame.pitch(TryNo.SECOND, 10);
+        lastFrame.pitch(TryNo.ADDITIONAL, 10);
+        //given, when
+        List<PitchResult> pitchResults = PitchResult.findResultOf(lastFrame);
+
+        assertThat(pitchResults.get(0)).isEqualTo(PitchResult.STRIKE);
+        assertThat(pitchResults.get(1)).isEqualTo(PitchResult.STRIKE);
+        assertThat(pitchResults.get(2)).isEqualTo(PitchResult.STRIKE);
+    }
+
+    @Test
+    public void 마지막_프레임_결과_생성2() {
+        LastFrame lastFrame = new LastFrame();
+        lastFrame.pitch(TryNo.FIRST, 3);
+        lastFrame.pitch(TryNo.SECOND, 7);
+        lastFrame.pitch(TryNo.ADDITIONAL, 3);
+        //given, when
+        List<PitchResult> pitchResults = PitchResult.findResultOf(lastFrame);
+
+        assertThat(pitchResults.get(0)).isEqualTo(PitchResult.MISS);
+        assertThat(pitchResults.get(1)).isEqualTo(PitchResult.SPARE);
+        assertThat(pitchResults.get(2)).isEqualTo(PitchResult.MISS);
+    }
+
+    @Test
+    public void 마지막_프레임_결과_생성3() {
+        LastFrame lastFrame = new LastFrame();
+        lastFrame.pitch(TryNo.FIRST, 10);
+        lastFrame.pitch(TryNo.SECOND, 7);
+        lastFrame.pitch(TryNo.ADDITIONAL, 3);
+        //given, when
+        List<PitchResult> pitchResults = PitchResult.findResultOf(lastFrame);
+
+        assertThat(pitchResults.get(0)).isEqualTo(PitchResult.STRIKE);
+        assertThat(pitchResults.get(1)).isEqualTo(PitchResult.MISS);
+        assertThat(pitchResults.get(2)).isEqualTo(PitchResult.MISS);
     }
 }
