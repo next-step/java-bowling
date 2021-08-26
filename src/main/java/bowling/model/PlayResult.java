@@ -3,12 +3,10 @@ package bowling.model;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class PlayResult {
 
 	private static final String EMPTY_VALUE = "";
-	private static final double MAX_PIN = 10;
 	private static final int FIRST_INDEX = 0;
 	private static final int SECOND_INDEX = 1;
 	private static final int BONUS_INDEX = 2;
