@@ -43,44 +43,44 @@ class FramesTest {
 		frames.playBowling(10);
 
 		assertAll(
-			() -> assertThat(frames.isContinueGame()).isFalse(),
+			() -> assertThat(frames.isContinueGame()).isTrue(),
 			() -> {
-				frames.playBowling(10);
-				assertThat(frames.isContinueGame()).isFalse();
-			},
-			() -> {
-				frames.playBowling(10);
-				assertThat(frames.isContinueGame()).isFalse();
-			},
-			() -> {
-				frames.playBowling(10);
-				assertThat(frames.isContinueGame()).isFalse();
-			},
-			() -> {
-				frames.playBowling(10);
-				assertThat(frames.isContinueGame()).isFalse();
-			},
-			() -> {
-				frames.playBowling(10);
-				assertThat(frames.isContinueGame()).isFalse();
-			},
-			() -> {
-				frames.playBowling(10);
-				assertThat(frames.isContinueGame()).isFalse();
-			},
-			() -> {
-				frames.playBowling(10);
-				assertThat(frames.isContinueGame()).isFalse();
-			},
-			() -> {
-				frames.playBowling(10);
-				assertThat(frames.isContinueGame()).isFalse();
-			},
-			() -> {
-				frames.playBowling(10);
-				frames.playBowling(10);
 				frames.playBowling(10);
 				assertThat(frames.isContinueGame()).isTrue();
+			},
+			() -> {
+				frames.playBowling(10);
+				assertThat(frames.isContinueGame()).isTrue();
+			},
+			() -> {
+				frames.playBowling(10);
+				assertThat(frames.isContinueGame()).isTrue();
+			},
+			() -> {
+				frames.playBowling(10);
+				assertThat(frames.isContinueGame()).isTrue();
+			},
+			() -> {
+				frames.playBowling(10);
+				assertThat(frames.isContinueGame()).isTrue();
+			},
+			() -> {
+				frames.playBowling(10);
+				assertThat(frames.isContinueGame()).isTrue();
+			},
+			() -> {
+				frames.playBowling(10);
+				assertThat(frames.isContinueGame()).isTrue();
+			},
+			() -> {
+				frames.playBowling(10);
+				assertThat(frames.isContinueGame()).isTrue();
+			},
+			() -> {
+				frames.playBowling(10);
+				frames.playBowling(10);
+				frames.playBowling(10);
+				assertThat(frames.isContinueGame()).isFalse();
 			}
 		);
 	}
