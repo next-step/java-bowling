@@ -23,6 +23,11 @@ public class Question extends AbstractEntity {
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @Where(clause = "deleted = false")
+    @OrderBy("id ASC")
+    private Answers answers2 = new Answers();
+
     private boolean deleted = false;
 
     public Question() {
@@ -91,5 +96,14 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public void addAnswer2(Answer answer) {
+        answer.toQuestion(this);
+        answers2.add(answer);
+    }
+
+    public boolean isAnswerHaveOwner(User loginUser) {
+        return answers2.isOwner(loginUser);
     }
 }
