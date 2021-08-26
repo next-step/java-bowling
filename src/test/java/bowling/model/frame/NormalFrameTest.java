@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import bowling.model.PlayResult;
 import bowling.model.Pin;
 
 class NormalFrameTest {
@@ -33,12 +32,9 @@ class NormalFrameTest {
 	@DisplayName("노멀 프레임 게임시 게임 정보를 알 수 있다.")
 	public void playBowlingGame() {
 		NormalFrame normalFrame = new NormalFrame(1);
-		PlayResult playResult = normalFrame.playGame(5);
+		normalFrame.playGame(5);
 
-		assertAll(
-			() -> assertThat(playResult.findTotalScore()).isEqualTo(5),
-			() -> assertThat(playResult.findScore(0)).isEqualTo(new Pin(5))
-		);
+		assertThat(normalFrame.playResult.findScore(0)).isEqualTo(new Pin(5));
 	}
 
 	@Test
@@ -64,16 +60,5 @@ class NormalFrameTest {
 		normalFrame2.playGame(10);
 
 		assertThat(normalFrame2.isGameEnd()).isTrue();
-	}
-
-	@Test
-	@DisplayName("노멀 프레임 게임시 게임 종료 후 게임시 예외가 발생된다.")
-	public void checkIsEndGame() {
-		NormalFrame normalFrame = new NormalFrame(1);
-		normalFrame.playGame(5);
-		normalFrame.playGame(3);
-
-		assertThatThrownBy(() -> normalFrame.playGame(3))
-			.isInstanceOf(IllegalStateException.class);
 	}
 }
