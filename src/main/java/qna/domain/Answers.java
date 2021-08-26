@@ -35,6 +35,16 @@ public class Answers {
         }
     }
 
+    public void add(Answer answer) {
+        answers.add(answer);
+    }
+
+    public List<DeleteHistory> getDeleted() {
+        return answers.stream()
+                .filter(answer -> answer.isDeleted())
+                .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -47,17 +57,5 @@ public class Answers {
     @Override
     public int hashCode() {
         return Objects.hash(answers);
-    }
-
-    public void add(Answer answer) {
-        answers.add(answer);
-    }
-
-
-    public List<DeleteHistory> getDeleted() {
-        return answers.stream()
-                .filter(answer -> answer.isDeleted())
-                .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
-                .collect(Collectors.toList());
     }
 }

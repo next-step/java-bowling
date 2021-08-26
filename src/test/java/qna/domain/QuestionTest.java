@@ -16,7 +16,7 @@ public class QuestionTest {
 
     @DisplayName("Question 에 등록된 Answers 들의 Owner 가 존재하는지 테스트")
     @Test
-    void isAnswersHaveOwner(){
+    void isAnswersHaveOwner() {
         Q1.addAnswer2(AnswerTest.A1);
         Q1.addAnswer2(AnswerTest.A2);
 
@@ -25,15 +25,15 @@ public class QuestionTest {
 
     @DisplayName("Question 에 등록된 Answers 들의 Owner 가 존재하지 않을 때 테스트")
     @Test
-    void isNotAnswersHaveOwner(){
-        Q1.addAnswer2(AnswerTest.A1);
+    void isNotAnswersHaveOwner() {
+        Q2.addAnswer2(AnswerTest.A1);
 
-        assertThat(Q1.isAnswerHaveOwner(UserTest.SANJIGI)).isFalse();
+        assertThat(Q2.isAnswerHaveOwner(UserTest.SANJIGI)).isFalse();
     }
 
     @DisplayName("Question 에 등록된 Answers 들이 Deleted 상태 인지 테스트")
     @Test
-    void setDeleted(){
+    void setDeleted() {
         Q1.addAnswer2(AnswerTest.A1);
         Q1.addAnswer2(AnswerTest.A2);
 
@@ -44,7 +44,7 @@ public class QuestionTest {
 
     @DisplayName("getDeleted 테스트")
     @Test
-    void getDeleted(){
+    void getDeleted() {
         Q1.addAnswer2(AnswerTest.A1);
         Q1.addAnswer2(AnswerTest.A2);
 
@@ -52,15 +52,16 @@ public class QuestionTest {
 
         List<DeleteHistory> deleteHistories = Q1.getDeleted();
 
-        assertThat(deleteHistories).isEqualTo(Arrays.asList(new DeleteHistory(ContentType.ANSWER, AnswerTest.A1.getId(), AnswerTest.A1.getWriter(), LocalDateTime.now())
+        assertThat(deleteHistories).isEqualTo(Arrays.asList(
+                new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now())
+                , new DeleteHistory(ContentType.ANSWER, AnswerTest.A1.getId(), AnswerTest.A1.getWriter(), LocalDateTime.now())
                 , new DeleteHistory(ContentType.ANSWER, AnswerTest.A2.getId(), AnswerTest.A2.getWriter(), LocalDateTime.now())
-                , new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now())
         ));
     }
 
     @DisplayName("setDeleted false 였을 때 테스트")
     @Test
-    void getEmptyDeleted(){
+    void getEmptyDeleted() {
         Q1.addAnswer2(AnswerTest.A1);
         Q1.addAnswer2(AnswerTest.A2);
 

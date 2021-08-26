@@ -9,6 +9,8 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+    private static final int QUESTION_DELETE_HISTORY_INDEX = 0;
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -22,17 +24,9 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
-
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private Answers answers2 = new Answers();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
-
-    public Question() {
-    }
 
     public Question(String title, String contents) {
         this.title = title;
@@ -45,24 +39,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
     public User getWriter() {
         return writer;
     }
@@ -72,18 +48,13 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
-    }
-
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
-        answers2.setDeleted(deleted);
+        answers.setDeleted(deleted);
         return this;
     }
 
@@ -91,17 +62,13 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
     public void addAnswer2(Answer answer) {
         answer.toQuestion(this);
-        answers2.add(answer);
+        answers.add(answer);
     }
 
     public boolean isAnswerHaveOwner(User loginUser) {
-        return answers2.isOwner(loginUser);
+        return answers.isOwner(loginUser);
     }
 
     @Override
@@ -112,9 +79,9 @@ public class Question extends AbstractEntity {
     public List<DeleteHistory> getDeleted() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-        if(deleted){
-            deleteHistories = answers2.getDeleted();
-            deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        if (deleted) {
+            deleteHistories = answers.getDeleted();
+            deleteHistories.add(QUESTION_DELETE_HISTORY_INDEX, new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
         }
 
         return deleteHistories;
