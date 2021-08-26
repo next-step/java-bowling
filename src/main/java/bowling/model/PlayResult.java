@@ -1,5 +1,6 @@
 package bowling.model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -18,11 +19,7 @@ public class PlayResult {
 	private final List<Pin> gameResult;
 
 	public PlayResult(List<Pin> gameResult) {
-		this.gameResult = gameResult;
-	}
-
-	public void save(Pin pin) {
-		gameResult.add(pin);
+		this.gameResult = Collections.unmodifiableList(gameResult);
 	}
 
 	public Pin findScore(int index) {
@@ -33,52 +30,6 @@ public class PlayResult {
 		return gameResult.stream()
 			.mapToInt(Pin::getPin)
 			.sum();
-	}
-
-	public boolean isFirstStrike() {
-		if (gameResult.size() == FIRST_INDEX) {
-			return true;
-		}
-		return findScore(FIRST_INDEX).getPin() == MAX_PIN;
-	}
-
-	public boolean isSecondStrike() {
-		if (gameResult.size() <= SECOND_INDEX) {
-			return true;
-		}
-		return findScore(SECOND_INDEX).getPin() == MAX_PIN;
-	}
-
-	public boolean isStrikeOrSpare() {
-		if (gameResult.size() <= FIRST_INDEX_SIZE) {
-			return isFirstStrike();
-		}
-		if (isFirstStrike() && isSecondStrike()) {
-			return true;
-		}
-		if (!isFirstStrike() && gameResult.size() == SECOND_INDEX_SIZE) {
-			return (findScore(FIRST_INDEX).getPin() + findScore(SECOND_INDEX).getPin()) == MAX_PIN;
-		}
-		return false;
-	}
-
-	public int findReminderScore() {
-		if (isFirstStrike()) {
-			return IntStream.range(1, gameResult.size())
-				.map(i -> gameResult.get(i).getPin())
-				.sum();
-		}
-		return findTotalScore();
-	}
-
-	public boolean isNotStrikeOrSpare() {
-		if (gameResult.size() <= FIRST_INDEX_SIZE) {
-			return false;
-		}
-		if (gameResult.size() == SECOND_INDEX_SIZE) {
-			return (findScore(FIRST_INDEX).getPin() + findScore(SECOND_INDEX).getPin()) < MAX_PIN;
-		}
-		return false;
 	}
 
 	public String getGameScore() {
