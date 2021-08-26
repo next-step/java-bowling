@@ -5,10 +5,16 @@ public class NormalFrame implements Frame {
     private Pin first;
     private Pin second;
 
-    public NormalFrame(int frameNumber) {
+    private final int MAX = 10;
+
+    private NormalFrame(int frameNumber) {
         this.frameNumber = frameNumber;
         first = Pin.of(0);
         second = Pin.of(0);
+    }
+
+    public static NormalFrame of(int frameNumber) {
+        return new NormalFrame(frameNumber);
     }
 
     public void pitch(int tryNo, int count) {
@@ -22,12 +28,12 @@ public class NormalFrame implements Frame {
     }
 
     private void validateCount(int count) {
-        if (count > 10) {
-            throw new RuntimeException("한번에 쓰러뜨릴 수 있는 볼링핀의 갯수는 10을 넘을 수 없습니다");
+        if (count > MAX) {
+            throw new RuntimeException("한번에 쓰러뜨릴 수 있는 볼링핀의 갯수는 " + MAX + "을 넘을 수 없습니다");
         }
     }
 
-    public int sum() {
-        return first.getCount() + second.getCount();
+    public int total() {
+        return first.count() + second.count();
     }
 }

@@ -29,7 +29,7 @@ public class Pin {
         return this.count + count > MAX;
     }
 
-    public int getCount() {
+    public int count() {
         return count;
     }
 }

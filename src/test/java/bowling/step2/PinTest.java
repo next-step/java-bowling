@@ -14,7 +14,7 @@ public class PinTest {
         Pin pin = Pin.of(10);
 
         //then
-        assertThat(pin.getCount()).isEqualTo(10);
+        assertThat(pin.count()).isEqualTo(10);
     }
 
     @Test
@@ -34,11 +34,11 @@ public class PinTest {
         Pin nextPitch = pin.nextPitch(3);
 
         //then
-        assertThat(nextPitch.getCount()).isEqualTo(3);
+        assertThat(nextPitch.count()).isEqualTo(3);
     }
 
     @Test
-    public void 다음_핀_생성2() {
+    public void 다음_핀_생성_실패() {
         //given
         Pin pin = Pin.of(3);
         //when, then
