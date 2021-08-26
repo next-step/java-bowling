@@ -19,6 +19,6 @@ class SpareTest {
     @Test
     void 스페어_출력() {
         Spare spare = new Spare(Pins.pitching(7), Pins.pitching(3));
-        assertThat(spare.display()).isEqualTo("7 | / |");
+        assertThat(spare.display()).isEqualTo(" 7|/ |");
     }
 }

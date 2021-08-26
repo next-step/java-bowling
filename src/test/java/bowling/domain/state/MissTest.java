@@ -26,7 +26,7 @@ class MissTest {
 
     @Test
     void 출력_테스트() {
-        assertThat(miss.display()).isEqualTo("5 | 2 |");
+        assertThat(miss.display()).isEqualTo(" 5|2 |");
 
     }
 
