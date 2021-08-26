@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AnswersTest {
     @DisplayName("생성 테스트")
     @Test
-    void create(){
+    void create() {
         Answers answers = Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
 
         assertThat(answers).isEqualTo(Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A2)));
@@ -20,7 +20,7 @@ public class AnswersTest {
 
     @DisplayName("add 메소드 테스트")
     @Test
-    void add(){
+    void add() {
         Answers answers = Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
 
         Answers addAnswers = new Answers();
@@ -32,7 +32,7 @@ public class AnswersTest {
 
     @DisplayName("Owner 가지고 있는지 테스트")
     @Test
-    void isOwnerTest(){
+    void isOwnerTest() {
         Answers answers = Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
 
 
@@ -42,7 +42,7 @@ public class AnswersTest {
 
     @DisplayName("Owner 가지고 있지 않을 때 테스트")
     @Test
-    void isNotOwnerTest(){
+    void isNotOwnerTest() {
         Answers answers = Answers.of(Arrays.asList(AnswerTest.A1));
 
         assertThat(answers.isOwner(UserTest.SANJIGI)).isFalse();
@@ -50,7 +50,7 @@ public class AnswersTest {
 
     @DisplayName("setDeleted 테스트")
     @Test
-    void setDeleted(){
+    void setDeleted() {
         Answers answers = Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
 
         answers.setDeleted(true);
@@ -61,7 +61,7 @@ public class AnswersTest {
 
     @DisplayName("getDeleted 테스트")
     @Test
-    void getDeleted(){
+    void getDeleted() {
         Answers answers = Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
 
         AnswerTest.A1.setDeleted(false);

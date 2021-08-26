@@ -30,7 +30,7 @@ public class Answers {
     }
 
     public void setDeleted(boolean deleted) {
-        for(Answer answer : answers){
+        for (Answer answer : answers) {
             answer.setDeleted(deleted);
         }
     }
