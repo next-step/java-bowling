@@ -28,7 +28,7 @@ public class AnswersTest {
         assertThat(answers).isEqualTo(addAnswers);
     }
 
-    @DisplayName(" 테스트")
+    @DisplayName("Owner 가지고 있는지 테스트")
     @Test
     void isOwnerTest(){
         Answers answers = Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
@@ -37,7 +37,8 @@ public class AnswersTest {
         assertThat(answers.isOwner(UserTest.JAVAJIGI)).isTrue();
         assertThat(answers.isOwner(UserTest.SANJIGI)).isTrue();
     }
-
+    @DisplayName("Owner 가지고 있지 않을 때 테스트")
+    @Test
     void isNotOwnerTest(){
         Answers answers = Answers.of(Arrays.asList(AnswerTest.A1));
 
