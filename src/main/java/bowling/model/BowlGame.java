@@ -29,6 +29,18 @@ public class BowlGame {
 		return gameResult;
 	}
 
+	public GameResult play(int pin) {
+		Pin playPin = new Pin(pin);
+		if (frameNumber < MAX_ROUND) {
+			checkNormalScore(playPin);
+		}
+		if (frameNumber == MAX_ROUND) {
+			checkFinalScore(playPin);
+		}
+		gameResult.save(playPin);
+		return gameResult;
+	}
+
 	private void checkNormalScore(Pin pin) {
 		if ((gameResult.findTotalScore() + pin.getPin()) > MAX_PIN) {
 			throw new IllegalArgumentException(LIMIT_MAX_PIN_ERROR_MESSAGE);

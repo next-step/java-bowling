@@ -23,7 +23,7 @@ class BowlGameTest {
 	public void playGame() {
 		BowlGame bowlGame = new BowlGame(1);
 		GameResult gameResult = bowlGame.play(new Pin(5));
-		bowlGame.play(new Pin(3));
+		bowlGame.play(3);
 
 		assertAll(
 			() -> assertThat(gameResult.findScore(0)).isEqualTo(new Pin(5)),
@@ -35,7 +35,7 @@ class BowlGameTest {
 	@DisplayName("마지막 경기가 아닐시 총 프레임 합이 10 이상일시 예외가 발생한다.")
 	public void checkNormalFrameScore() {
 		BowlGame bowlGame = new BowlGame(1);
-		bowlGame.play(new Pin(5));
+		bowlGame.play(5);
 
 		assertThatThrownBy(() -> bowlGame.play(new Pin(7)))
 			.isInstanceOf(IllegalArgumentException.class);
@@ -45,9 +45,9 @@ class BowlGameTest {
 	@DisplayName("마지막 경기시 스트라이크 후 핀의 개수가 초가화면 예외가 발생한다.")
 	public void checkFirstStrikeOverNumber() {
 		BowlGame bowlGame = new BowlGame(10);
-		bowlGame.play(new Pin(5));
+		bowlGame.play(5);
 
-		assertThatThrownBy(() -> bowlGame.play(new Pin(6)))
+		assertThatThrownBy(() -> bowlGame.play(6))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -56,8 +56,8 @@ class BowlGameTest {
 	@CsvSource(value = {"10,10,5,6", "10,4,6,11"})
 	public void checkFirstAndSecondStrikeOverPlay(int firstPin, int secondPin, int bonusPin, int overPin) {
 		BowlGame bowlGame2 = new BowlGame(firstPin);
-		bowlGame2.play(new Pin(secondPin));
-		bowlGame2.play(new Pin(bonusPin));
+		bowlGame2.play(secondPin);
+		bowlGame2.play(bonusPin);
 
 		assertThatThrownBy(() -> bowlGame2.play(new Pin(overPin)))
 			.isInstanceOf(IllegalArgumentException.class);
