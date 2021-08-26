@@ -1,6 +1,9 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.exception.NotPitchingException;
+
+import java.util.List;
 
 public class Ready implements State{
 
@@ -24,11 +27,16 @@ public class Ready implements State{
 
     @Override
     public String display() {
-        throw new IllegalArgumentException("투구 시작을 하지 않았습니다.");
+        throw new NotPitchingException("투구 시작을 하지 않았습니다.");
     }
 
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public List<State> lastSpare(List<State> list, State state) {
+        throw new NotPitchingException("투구 시작을 하지 않았습니다.");
     }
 }

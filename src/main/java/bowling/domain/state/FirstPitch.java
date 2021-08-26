@@ -3,6 +3,8 @@ package bowling.domain.state;
 import bowling.domain.Pins;
 import bowling.exception.NextPitchingException;
 
+import java.util.List;
+
 public class FirstPitch implements State{
     private Pins firstPins;
 
@@ -32,5 +34,10 @@ public class FirstPitch implements State{
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public List<State> lastSpare(List<State> list, State state) {
+        return null;
     }
 }

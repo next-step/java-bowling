@@ -3,6 +3,8 @@ package bowling.domain.state;
 import bowling.domain.Pins;
 import bowling.exception.NextPitchingException;
 
+import java.util.List;
+
 public class Miss implements State {
     private static final String MESSAGE = "두번째 투구";
 
@@ -32,5 +34,10 @@ public class Miss implements State {
     @Override
     public boolean isFinished() {
         return true;
+    }
+
+    @Override
+    public List<State> lastSpare(List<State> list, State state) {
+        throw new NextPitchingException(MESSAGE);
     }
 }

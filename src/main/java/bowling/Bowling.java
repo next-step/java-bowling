@@ -3,16 +3,15 @@ package bowling;
 import bowling.domain.Board;
 import bowling.domain.Player;
 import bowling.domain.frame.LastFrame;
-import bowling.domain.state.Spare;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bowling {
-
     private static final int MAX_NORMAL_FRAME = 9;
     private static final int LAST_FRAME = 10;
 
@@ -53,24 +52,20 @@ public class Bowling {
         }
 
         if (!state.isFinished()) {
+            ResultView.pitchedBall(LAST_FRAME);
             secondSpare(resultList, state);
         }
 
         LastFrame lastFrame = new LastFrame(resultList);
-        board.addLast(LAST_FRAME, lastFrame.printStr());
+        board.addLast(LAST_FRAME, ResultView.lastFrame(lastFrame));
         ResultView.currentResult(board);
     }
 
     private static void secondSpare(List<State> list, State state) {
         state = state.nextPitch(InputView.inputPins());
-
         list.add(state);
-
-        if (state instanceof Spare) {
-            ResultView.pitchedBall(LAST_FRAME);
-            state = StateFactory.last(InputView.inputPins());
-            list.add(state);
-        }
+        ResultView.pitchedBall(LAST_FRAME);
+        state.lastSpare(list, state);
     }
 
     private static State firstStrike(List<State> list, State state) {

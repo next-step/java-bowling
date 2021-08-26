@@ -2,9 +2,13 @@ package bowling.domain.state;
 
 import bowling.domain.Pins;
 import bowling.exception.NextPitchingException;
+import bowling.view.InputView;
 
-public class Spare implements State{
+import java.util.List;
+
+public class Spare implements State {
     private static final String MESSAGE = "스페어";
+    private static final int LAST_FRAME = 10;
 
     private final Pins firstPins;
     private final Pins secondPins;
@@ -32,5 +36,12 @@ public class Spare implements State{
     @Override
     public boolean isFinished() {
         return true;
+    }
+
+    @Override
+    public List<State> lastSpare(List<State> list, State state) {
+        state = StateFactory.last(InputView.inputPins());
+        list.add(state);
+        return list;
     }
 }
