@@ -1,6 +1,7 @@
 package bowling.model;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +9,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class GameResultTest {
 
@@ -29,13 +32,13 @@ class GameResultTest {
 		assertThat(gameResult).isEqualTo(new GameResult(getGameResult()));
 	}
 
-	@Test
+	@ParameterizedTest
 	@DisplayName("게임의 결과를 조회 할 수 있다.")
-	public void findGameScore() {
+	@CsvSource(value = {"0,5", "1,3"})
+	public void findGameScore(int index, int pin) {
 		GameResult gameResult = new GameResult(getGameResult());
 
-		assertThat(gameResult.findScore(0)).isEqualTo(new Pin(5));
-		assertThat(gameResult.findScore(1)).isEqualTo(new Pin(3));
+		assertThat(gameResult.findScore(index)).isEqualTo(new Pin(pin));
 	}
 
 	@Test
@@ -47,35 +50,29 @@ class GameResultTest {
 	}
 
 	@Test
-	@DisplayName("게임의 결과가 스트라이크인지 스페어 인지 판단한다.")
+	@DisplayName("게임의 합이 10 이 아니면 스트라이크가 아니다.")
 	public void isStrikeOrSpare() {
-		GameResult gameResult = new GameResult(getGameResult());
-
-		assertThat(gameResult.isStrikeOrSpare()).isFalse();
-
 		GameResult gameResult2 = new GameResult(Arrays.asList(new Pin(10), new Pin(5)));
 
-		assertThat(gameResult2.isStrikeOrSpare()).isFalse();
+		assertAll(
+			() -> assertThat(gameResult2.isStrikeOrSpare()).isFalse(),
+			() -> {
+				GameResult gameResult3 = new GameResult(Arrays.asList(new Pin(4), new Pin(6)));
 
-		GameResult gameResult3 = new GameResult(Arrays.asList(new Pin(4), new Pin(6)));
-
-		assertThat(gameResult3.isStrikeOrSpare()).isTrue();
+				assertThat(gameResult3.isStrikeOrSpare()).isTrue();
+			}
+		);
 	}
 
-	@Test
+	@ParameterizedTest
 	@DisplayName("게임의 결과가 첫번째 10점이면 스트라이크 이다.")
-	public void isStrike() {
+	@CsvSource(value = {"10,true", "9,false"})
+	public void isStrike(int pin, boolean strike) {
 		List<Pin> pins = new ArrayList<>();
-		pins.add(new Pin(10));
+		pins.add(new Pin(pin));
 		GameResult gameResult = new GameResult(pins);
 
-		assertThat(gameResult.isFirstStrike()).isTrue();
-
-		List<Pin> pins2 = new ArrayList<>();
-		pins2.add(new Pin(9));
-		GameResult gameResult2 = new GameResult(pins2);
-
-		assertThat(gameResult2.isFirstStrike()).isFalse();
+		assertThat(gameResult.isFirstStrike()).isEqualTo(strike);
 	}
 
 	@Test
@@ -85,10 +82,13 @@ class GameResultTest {
 		pins.add(new Pin(5));
 		GameResult gameResult = new GameResult(pins);
 
-		assertThat(gameResult.isNotStrikeOrSpare()).isFalse();
-
-		pins.add(new Pin(4));
-		assertThat(gameResult.isNotStrikeOrSpare()).isTrue();
+		assertAll(
+			() -> assertThat(gameResult.isNotStrikeOrSpare()).isFalse(),
+			() -> {
+				pins.add(new Pin(4));
+				assertThat(gameResult.isNotStrikeOrSpare()).isTrue();
+			}
+		);
 	}
 
 	@Test
@@ -99,9 +99,6 @@ class GameResultTest {
 		GameResult gameResult = new GameResult(pins);
 
 		assertThat(gameResult.getGameScore()).isEqualTo("5");
-
-		pins.add(new Pin(4));
-		assertThat(gameResult.getGameScore()).isEqualTo("5|4");
 	}
 
 	@Test

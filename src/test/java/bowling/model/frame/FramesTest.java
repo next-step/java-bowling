@@ -1,6 +1,7 @@
 package bowling.model.frame;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +25,15 @@ class FramesTest {
 		Frames frames = new Frames(getFrames());
 		frames.playBowling(10);
 
-		assertThat(frames.getPresentFrame()).isEqualTo(2);
-		assertThat(frames.getFrames().get(0).isGameEnd()).isTrue();
-
-		frames.playBowling(5);
-		assertThat(frames.getPresentFrame()).isEqualTo(2);
-		assertThat(frames.getFrames().get(1).isGameEnd()).isFalse();
+		assertAll(
+			() -> assertThat(frames.getPresentFrame()).isEqualTo(2),
+			() -> assertThat(frames.getFrames().get(0).isGameEnd()).isTrue(),
+			() -> {
+				frames.playBowling(5);
+				assertThat(frames.getPresentFrame()).isEqualTo(2);
+				assertThat(frames.getFrames().get(1).isGameEnd()).isFalse();
+			}
+		);
 	}
 
 	@Test
@@ -38,13 +42,17 @@ class FramesTest {
 		Frames frames = new FakeFrames(getFrames());
 		frames.playBowling(10);
 
-		assertThat(frames.isContinueGame()).isFalse();
-
-		frames.playBowling(10);
-		assertThat(frames.isContinueGame()).isFalse();
-
-		frames.playBowling(10);
-		assertThat(frames.isContinueGame()).isTrue();
+		assertAll(
+			() -> assertThat(frames.isContinueGame()).isFalse(),
+			() -> {
+				frames.playBowling(10);
+				assertThat(frames.isContinueGame()).isFalse();
+			},
+			() -> {
+				frames.playBowling(10);
+				assertThat(frames.isContinueGame()).isTrue();
+			}
+		);
 	}
 
 	@Test

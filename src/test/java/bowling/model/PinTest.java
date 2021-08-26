@@ -2,6 +2,7 @@ package bowling.model;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +13,10 @@ class PinTest {
 	public void createPin() {
 		Pin pin = new Pin(5);
 
-		assertThat(pin).isEqualTo(new Pin(5));
-		assertThat(pin.getPin()).isEqualTo(5);
+		Assertions.assertAll(
+			() -> assertThat(pin).isEqualTo(new Pin(5)),
+			() -> assertThat(pin.getPin()).isEqualTo(5)
+		);
 	}
 
 	@Test

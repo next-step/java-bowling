@@ -1,9 +1,12 @@
 package bowling.model.frame;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import bowling.model.GameResult;
 import bowling.model.Pin;
@@ -18,13 +21,11 @@ class NormalFrameTest {
 		assertThat(normalFrame).isEqualTo(new NormalFrame(1));
 	}
 
-	@Test
+	@ParameterizedTest
 	@DisplayName("노멀 프레임은 1~9까지만 생성 할 수 있다.")
-	public void checkFrameNumber() {
-		assertThatThrownBy(() -> new NormalFrame(0))
-			.isInstanceOf(IllegalArgumentException.class);
-
-		assertThatThrownBy(() -> new NormalFrame(10))
+	@CsvSource(value = {"0", "10"})
+	public void checkFrameNumber(int frameNumber) {
+		assertThatThrownBy(() -> new NormalFrame(frameNumber))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -34,21 +35,31 @@ class NormalFrameTest {
 		NormalFrame normalFrame = new NormalFrame(1);
 		GameResult gameResult = normalFrame.playGame(5);
 
-		assertThat(gameResult.findTotalScore()).isEqualTo(5);
-		assertThat(gameResult.findScore(0)).isEqualTo(new Pin(5));
+		assertAll(
+			() -> assertThat(gameResult.findTotalScore()).isEqualTo(5),
+			() -> assertThat(gameResult.findScore(0)).isEqualTo(new Pin(5))
+		);
 	}
 
 	@Test
-	@DisplayName("노멀 프레임 게임시 게임 종료 정보를 알 수 있다.")
-	public void isEndGame() {
+	@DisplayName("노멀 프레임 스트라이크가 아닐시 게임 종료 정보를 알 수 있다.")
+	public void isNotStrikeEndGame() {
 		NormalFrame normalFrame = new NormalFrame(1);
 		normalFrame.playGame(5);
 
-		assertThat(normalFrame.isGameEnd()).isFalse();
+		assertAll(
+			() -> assertThat(normalFrame.isGameEnd()).isFalse(),
 
-		normalFrame.playGame(3);
-		assertThat(normalFrame.isGameEnd()).isTrue();
+			() -> {
+				normalFrame.playGame(3);
+				assertThat(normalFrame.isGameEnd()).isTrue();
+			}
+		);
+	}
 
+	@Test
+	@DisplayName("노멀 프레임의 게임이 스트라이크 일시 게임 종료 정보를 알 수 있다.")
+	public void isStrikeEndGame() {
 		NormalFrame normalFrame2 = new NormalFrame(1);
 		normalFrame2.playGame(10);
 

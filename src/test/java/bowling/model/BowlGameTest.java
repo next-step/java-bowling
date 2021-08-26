@@ -1,9 +1,12 @@
 package bowling.model;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class BowlGameTest {
 
@@ -22,8 +25,10 @@ class BowlGameTest {
 		GameResult gameResult = bowlGame.play(new Pin(5));
 		bowlGame.play(new Pin(3));
 
-		assertThat(gameResult.findScore(0)).isEqualTo(new Pin(5));
-		assertThat(gameResult.findScore(1)).isEqualTo(new Pin(3));
+		assertAll(
+			() -> assertThat(gameResult.findScore(0)).isEqualTo(new Pin(5)),
+			() -> assertThat(gameResult.findScore(1)).isEqualTo(new Pin(3))
+		);
 	}
 
 	@Test
@@ -37,27 +42,25 @@ class BowlGameTest {
 	}
 
 	@Test
-	@DisplayName("마지막 경기시 스트라이크나 스페어가 아니면 3경기시 예외가 발생한다.")
-	public void checkFinalFrameScore() {
+	@DisplayName("마지막 경기시 스트라이크 후 핀의 개수가 초가화면 예외가 발생한다.")
+	public void checkFirstStrikeOverNumber() {
 		BowlGame bowlGame = new BowlGame(10);
 		bowlGame.play(new Pin(5));
 
 		assertThatThrownBy(() -> bowlGame.play(new Pin(6)))
 			.isInstanceOf(IllegalArgumentException.class);
-
-		BowlGame bowlGame2 = new BowlGame(10);
-		bowlGame2.play(new Pin(10));
-		bowlGame2.play(new Pin(5));
-
-		assertThatThrownBy(() -> bowlGame2.play(new Pin(6)))
-			.isInstanceOf(IllegalArgumentException.class);
-
-		BowlGame bowlGame3 = new BowlGame(10);
-		bowlGame3.play(new Pin(4));
-		bowlGame3.play(new Pin(6));
-
-		assertThatThrownBy(() -> bowlGame3.play(new Pin(11)))
-			.isInstanceOf(IllegalArgumentException.class);
-
 	}
+
+	@ParameterizedTest
+	@DisplayName("마지막 볼링의 경기 수가 초과하면 예외가 발생한다.")
+	@CsvSource(value = {"10,10,5,6", "10,4,6,11"})
+	public void checkFirstAndSecondStrikeOverPlay(int firstPin, int secondPin, int bonusPin, int overPin) {
+		BowlGame bowlGame2 = new BowlGame(firstPin);
+		bowlGame2.play(new Pin(secondPin));
+		bowlGame2.play(new Pin(bonusPin));
+
+		assertThatThrownBy(() -> bowlGame2.play(new Pin(overPin)))
+			.isInstanceOf(IllegalArgumentException.class);
+	}
+
 }

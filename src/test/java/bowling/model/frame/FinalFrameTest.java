@@ -1,9 +1,12 @@
 package bowling.model.frame;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import bowling.model.GameResult;
 import bowling.model.Pin;
@@ -18,13 +21,11 @@ class FinalFrameTest {
 		assertThat(finalFrame).isEqualTo(new FinalFrame(10));
 	}
 
-	@Test
+	@ParameterizedTest
 	@DisplayName("마지막 프레임은 10만 생성 할 수 있다.")
-	public void checkFrameNumber() {
-		assertThatThrownBy(() -> new FinalFrame(9))
-			.isInstanceOf(IllegalArgumentException.class);
-
-		assertThatThrownBy(() -> new FinalFrame(11))
+	@CsvSource(value = {"9", "11"})
+	public void checkFrameNumber(int frameNumber) {
+		assertThatThrownBy(() -> new FinalFrame(frameNumber))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -34,8 +35,10 @@ class FinalFrameTest {
 		FinalFrame finalFrame = new FinalFrame(10);
 		GameResult gameResult = finalFrame.playGame(5);
 
-		assertThat(gameResult.findTotalScore()).isEqualTo(5);
-		assertThat(gameResult.findScore(0)).isEqualTo(new Pin(5));
+		assertAll(
+			() -> assertThat(gameResult.findTotalScore()).isEqualTo(5),
+			() -> assertThat(gameResult.findScore(0)).isEqualTo(new Pin(5))
+		);
 	}
 
 	@Test
@@ -44,21 +47,12 @@ class FinalFrameTest {
 		FinalFrame finalFrame = new FinalFrame(10);
 		finalFrame.playGame(5);
 
-		assertThat(finalFrame.isGameEnd()).isFalse();
-
-		finalFrame.playGame(3);
-		assertThat(finalFrame.isGameEnd()).isTrue();
-
-		FinalFrame finalFrame2 = new FinalFrame(10);
-		finalFrame2.playGame(10);
-
-		assertThat(finalFrame2.isGameEnd()).isFalse();
-
-		finalFrame2.playGame(5);
-		assertThat(finalFrame2.isGameEnd()).isFalse();
-
-		finalFrame2.playGame(3);
-		assertThat(finalFrame2.isGameEnd()).isTrue();
+		assertAll(
+			() -> assertThat(finalFrame.isGameEnd()).isFalse(),
+			() -> {
+				finalFrame.playGame(3);
+				assertThat(finalFrame.isGameEnd()).isTrue();
+			});
 	}
 
 	@Test

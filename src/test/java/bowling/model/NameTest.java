@@ -1,9 +1,12 @@
 package bowling.model;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class NameTest {
 
@@ -12,17 +15,17 @@ class NameTest {
 	public void createName() {
 		Name name = new Name("abc");
 
-		assertThat(name).isEqualTo(new Name("abc"));
-		assertThat(name.getName()).isEqualTo("abc");
+		assertAll(
+			() -> assertThat(name).isEqualTo(new Name("abc")),
+			() -> assertThat(name.getName()).isEqualTo("abc")
+		);
 	}
 
-	@Test
+	@ParameterizedTest
 	@DisplayName("이름이 3글자가 아니면 예외가 발생한다.")
-	public void checkNameLength() {
-		assertThatThrownBy(() -> new Name("ab"))
-			.isInstanceOf(IllegalArgumentException.class);
-
-		assertThatThrownBy(() -> new Name("cora"))
+	@CsvSource(value = {"ab", "cora"})
+	public void checkNameLength(String name) {
+		assertThatThrownBy(() -> new Name(name))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
