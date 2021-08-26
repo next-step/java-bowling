@@ -1,6 +1,11 @@
 package bowling.view;
 
 import bowling.domain.Board;
+import bowling.domain.frame.LastFrame;
+import bowling.domain.state.State;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class ResultView {
@@ -35,5 +40,24 @@ public class ResultView {
 
     public static void pitchedBall(int frameNum) {
         System.out.println(frameNum + " 프레임 투구");
+    }
+
+    public static String lastFrame(LastFrame lastFrame) {
+        List<State> state = lastFrame.getState();
+
+        List<String> resultList = new ArrayList<>();
+        for (int i = 0; i < state.size(); i++) {
+            State state1 = state.get(i);
+            resultList.add(state1.display().replaceAll(" ", ""));
+        }
+
+        String result = "";
+
+        for (String s : resultList) {
+            result = result + s;
+
+        }
+
+        return result;
     }
 }
