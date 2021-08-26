@@ -1,6 +1,9 @@
 package bowling.step2;
 
+import bowling.step2.domain.Frame;
+import bowling.step2.domain.LastFrame;
 import bowling.step2.domain.NormalFrame;
+import bowling.step2.domain.TryNo;
 import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -17,7 +20,7 @@ public class FrameTest {
         NormalFrame normalFrame = NormalFrame.of(1);
 
         //when
-        normalFrame.pitch(1, count);
+        normalFrame.pitch(TryNo.FIRST, count);
 
         //then
         assertThat(normalFrame.total()).isEqualTo(expected);
@@ -30,8 +33,8 @@ public class FrameTest {
         NormalFrame normalFrame = NormalFrame.of(1);
 
         //when
-        normalFrame.pitch(1, count1);
-        normalFrame.pitch(2, count2);
+        normalFrame.pitch(TryNo.FIRST, count1);
+        normalFrame.pitch(TryNo.SECOND, count2);
 
         //then
         assertThat(normalFrame.total()).isEqualTo(expected);
@@ -45,8 +48,32 @@ public class FrameTest {
 
         //when, then
         assertThatThrownBy(() -> {
-            normalFrame.pitch(1, count1);
-            normalFrame.pitch(2, count2);
+            normalFrame.pitch(TryNo.FIRST, count1);
+            normalFrame.pitch(TryNo.SECOND, count2);
         }).isInstanceOf(RuntimeException.class);
+    }
+
+    @Test
+    public void 프레임_생성() {
+        //given
+        NormalFrame normalFrame = NormalFrame.of(1);
+
+        //when
+        Frame nextFrame = normalFrame.nextFrame();
+
+        //then
+        assertThat(nextFrame).isInstanceOf(NormalFrame.class);
+    }
+
+    @Test
+    public void 마지막_프레임_생성() {
+        //given
+        NormalFrame normalFrame = NormalFrame.of(9);
+
+        //when
+        Frame nextFrame = normalFrame.nextFrame();
+
+        //then
+        assertThat(nextFrame).isInstanceOf(LastFrame.class);
     }
 }
