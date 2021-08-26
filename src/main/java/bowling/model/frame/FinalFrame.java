@@ -20,7 +20,7 @@ public class FinalFrame extends Frame {
 
 	@Override
 	boolean isGameEnd() {
-		return (playCount > MIN_PLAY_COUNT && bowlGame.isNotStrikeOrSpare()) || playCount > MAX_PLAY_COUNT;
+		return (playCount > MIN_PLAY_COUNT && playBowl.isNotStrikeOrSpare()) || playCount > MAX_PLAY_COUNT;
 	}
 
 }

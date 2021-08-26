@@ -21,7 +21,7 @@ public class NormalFrame extends Frame {
 
 	@Override
 	boolean isGameEnd() {
-		return (playCount > ZERO_POINT && bowlGame.isStrike()) || playCount > MAX_PLAY_COUNT;
+		return (playCount > ZERO_POINT && playBowl.isStrike()) || playCount > MAX_PLAY_COUNT;
 	}
 
 }

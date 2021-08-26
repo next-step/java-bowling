@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import bowling.model.GameResult;
+import bowling.model.PlayResult;
 import bowling.model.Pin;
 
 class NormalFrameTest {
@@ -33,11 +33,11 @@ class NormalFrameTest {
 	@DisplayName("노멀 프레임 게임시 게임 정보를 알 수 있다.")
 	public void playBowlingGame() {
 		NormalFrame normalFrame = new NormalFrame(1);
-		GameResult gameResult = normalFrame.playGame(5);
+		PlayResult playResult = normalFrame.playGame(5);
 
 		assertAll(
-			() -> assertThat(gameResult.findTotalScore()).isEqualTo(5),
-			() -> assertThat(gameResult.findScore(0)).isEqualTo(new Pin(5))
+			() -> assertThat(playResult.findTotalScore()).isEqualTo(5),
+			() -> assertThat(playResult.findScore(0)).isEqualTo(new Pin(5))
 		);
 	}
 

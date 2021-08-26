@@ -12,54 +12,54 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class GameResultTest {
+class PlayResultTest {
 
 	@Test
 	@DisplayName("게임의 결과를 생성한다.")
 	public void createGameResult() {
-		GameResult gameResult = new GameResult(getGameResult());
+		PlayResult playResult = new PlayResult(getGameResult());
 
-		assertThat(gameResult).isEqualTo(new GameResult(getGameResult()));
+		assertThat(playResult).isEqualTo(new PlayResult(getGameResult()));
 	}
 
 	@Test
 	@DisplayName("게임의 결과를 저장한다.")
 	public void saveGameResult() {
-		GameResult gameResult = new GameResult(new ArrayList<>());
-		gameResult.save(new Pin(5));
-		gameResult.save(new Pin(3));
+		PlayResult playResult = new PlayResult(new ArrayList<>());
+		playResult.save(new Pin(5));
+		playResult.save(new Pin(3));
 
-		assertThat(gameResult).isEqualTo(new GameResult(getGameResult()));
+		assertThat(playResult).isEqualTo(new PlayResult(getGameResult()));
 	}
 
 	@ParameterizedTest
 	@DisplayName("게임의 결과를 조회 할 수 있다.")
 	@CsvSource(value = {"0,5", "1,3"})
 	public void findGameScore(int index, int pin) {
-		GameResult gameResult = new GameResult(getGameResult());
+		PlayResult playResult = new PlayResult(getGameResult());
 
-		assertThat(gameResult.findScore(index)).isEqualTo(new Pin(pin));
+		assertThat(playResult.findScore(index)).isEqualTo(new Pin(pin));
 	}
 
 	@Test
 	@DisplayName("게임의 종합 점수를 알수 있다.")
 	public void findGameTotalScore() {
-		GameResult gameResult = new GameResult(getGameResult());
+		PlayResult playResult = new PlayResult(getGameResult());
 
-		assertThat(gameResult.findTotalScore()).isEqualTo(8);
+		assertThat(playResult.findTotalScore()).isEqualTo(8);
 	}
 
 	@Test
 	@DisplayName("게임의 합이 10 이 아니면 스트라이크가 아니다.")
 	public void isStrikeOrSpare() {
-		GameResult gameResult2 = new GameResult(Arrays.asList(new Pin(10), new Pin(5)));
+		PlayResult playResult2 = new PlayResult(Arrays.asList(new Pin(10), new Pin(5)));
 
 		assertAll(
-			() -> assertThat(gameResult2.isStrikeOrSpare()).isFalse(),
+			() -> assertThat(playResult2.isStrikeOrSpare()).isFalse(),
 			() -> {
-				GameResult gameResult3 = new GameResult(Arrays.asList(new Pin(4), new Pin(6)));
+				PlayResult playResult3 = new PlayResult(Arrays.asList(new Pin(4), new Pin(6)));
 
-				assertThat(gameResult3.isStrikeOrSpare()).isTrue();
+				assertThat(playResult3.isStrikeOrSpare()).isTrue();
 			}
 		);
 	}
@@ -70,9 +70,9 @@ class GameResultTest {
 	public void isStrike(int pin, boolean strike) {
 		List<Pin> pins = new ArrayList<>();
 		pins.add(new Pin(pin));
-		GameResult gameResult = new GameResult(pins);
+		PlayResult playResult = new PlayResult(pins);
 
-		assertThat(gameResult.isFirstStrike()).isEqualTo(strike);
+		assertThat(playResult.isFirstStrike()).isEqualTo(strike);
 	}
 
 	@Test
@@ -80,13 +80,13 @@ class GameResultTest {
 	public void isNotStrikeOrSpare() {
 		List<Pin> pins = new ArrayList<>();
 		pins.add(new Pin(5));
-		GameResult gameResult = new GameResult(pins);
+		PlayResult playResult = new PlayResult(pins);
 
 		assertAll(
-			() -> assertThat(gameResult.isNotStrikeOrSpare()).isFalse(),
+			() -> assertThat(playResult.isNotStrikeOrSpare()).isFalse(),
 			() -> {
 				pins.add(new Pin(4));
-				assertThat(gameResult.isNotStrikeOrSpare()).isTrue();
+				assertThat(playResult.isNotStrikeOrSpare()).isTrue();
 			}
 		);
 	}
@@ -96,9 +96,9 @@ class GameResultTest {
 	public void getGameScore() {
 		List<Pin> pins = new ArrayList<>();
 		pins.add(new Pin(5));
-		GameResult gameResult = new GameResult(pins);
+		PlayResult playResult = new PlayResult(pins);
 
-		assertThat(gameResult.getGameScore()).isEqualTo("5");
+		assertThat(playResult.getGameScore()).isEqualTo("5");
 	}
 
 	@Test
@@ -107,9 +107,9 @@ class GameResultTest {
 		List<Pin> pins = new ArrayList<>();
 		pins.add(new Pin(10));
 		pins.add(new Pin(5));
-		GameResult gameResult = new GameResult(pins);
+		PlayResult playResult = new PlayResult(pins);
 
-		assertThat(gameResult.findReminderScore()).isEqualTo(5);
+		assertThat(playResult.findReminderScore()).isEqualTo(5);
 	}
 
 	private List<Pin> getGameResult() {

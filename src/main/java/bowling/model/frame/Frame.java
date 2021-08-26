@@ -2,31 +2,31 @@ package bowling.model.frame;
 
 import java.util.Objects;
 
-import bowling.model.BowlGame;
-import bowling.model.GameResult;
+import bowling.model.PlayBowl;
+import bowling.model.PlayResult;
 import bowling.model.Pin;
 
 public abstract class Frame {
 
 	private static final String END_GAME_ERROR_MESSAGE = "프레임별 플레이 횟수가 초과 되었습니다.";
 	protected int playCount;
-	protected final BowlGame bowlGame;
+	protected final PlayBowl playBowl;
 	private final int frameNumber;
 
 	public Frame(int frameNumber) {
 		checkFrameNumber(frameNumber);
 		this.frameNumber = frameNumber;
-		bowlGame = new BowlGame(frameNumber);
+		playBowl = new PlayBowl(frameNumber);
 	}
 
-	public GameResult playGame(int strikeNumber) {
+	public PlayResult playGame(int strikeNumber) {
 		checkEndGame();
 		playCount++;
-		return bowlGame.play(new Pin(strikeNumber));
+		return playBowl.play(new Pin(strikeNumber));
 	}
 
 	public String getGameScore() {
-		return bowlGame.getGameScore();
+		return playBowl.getGameScore();
 	}
 
 	private void checkEndGame() {
@@ -50,12 +50,12 @@ public abstract class Frame {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Frame frame = (Frame)o;
-		return playCount == frame.playCount && Objects.equals(bowlGame, frame.bowlGame);
+		return playCount == frame.playCount && Objects.equals(playBowl, frame.playBowl);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(playCount, bowlGame);
+		return Objects.hash(playCount, playBowl);
 	}
 
 }

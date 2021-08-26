@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class GameResult {
+public class PlayResult {
 
 	private static final String EMPTY_VALUE = "";
 	private static final double MAX_PIN = 10;
@@ -17,7 +17,7 @@ public class GameResult {
 
 	private final List<Pin> gameResult;
 
-	public GameResult(List<Pin> gameResult) {
+	public PlayResult(List<Pin> gameResult) {
 		this.gameResult = gameResult;
 	}
 
@@ -101,7 +101,7 @@ public class GameResult {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		GameResult that = (GameResult)o;
+		PlayResult that = (PlayResult)o;
 		return Objects.equals(gameResult, that.gameResult);
 	}
 
