@@ -13,6 +13,7 @@ public class QuestionTest {
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
     private Question question;
+    private Question question2;
     private Answer answer;
 
     @Before
@@ -20,23 +21,27 @@ public class QuestionTest {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         question.addAnswer(answer);
+
+        question2 = new Question(2L, "title2", "contents2").writeBy(UserTest.SANJIGI);
+        question2.addAnswer(answer);
     }
 
     @Test
     public void delete() throws CannotDeleteException {
-        Q1.delete(UserTest.JAVAJIGI);
-        assertThat(Q1.isDeleted()).isTrue();
+        question.delete(UserTest.JAVAJIGI);
+        assertThat(question.isDeleted()).isTrue();
+        assertThat(answer.isDeleted()).isTrue();
     }
 
     @DisplayName("다른 유저가 작성한 경우 삭제 실패")
     @Test
     public void delete_fail() {
-        assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> question.delete(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 
+    @DisplayName("다른 유저가 작성한 답변이 있는 경우 삭제 실패")
     @Test
-    public void deleteAnswers() throws CannotDeleteException {
-        question.deleteAnswers(UserTest.JAVAJIGI);
-        assertThat(answer.isDeleted()).isTrue();
+    public void delete_fail2() {
+        assertThatThrownBy(() -> question2.delete(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 }

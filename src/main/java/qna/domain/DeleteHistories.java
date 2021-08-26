@@ -10,11 +10,12 @@ public class DeleteHistories {
         deleteHistories = new ArrayList<>();
     }
 
-    public void addQuestionHistory(Question question){
+    public void addDeleteHistory(Question question){
         this.deleteHistories.add(new DeleteHistory(question, question.getWriter()));
+        addAnswerDeleteHistory(question);
     }
 
-    public void addAnswerHistory(Question question){
+    public void addAnswerDeleteHistory(Question question){
         question.getAnswers().forEach(answer -> {
             this.deleteHistories.add(new DeleteHistory(answer, answer.getWriter()));
         });

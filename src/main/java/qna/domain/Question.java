@@ -93,10 +93,11 @@ public class Question extends AbstractEntity {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
+        deleteAnswers(loginUser);
         this.deleted = true;
     }
 
-    public void deleteAnswers(User loginUser) throws CannotDeleteException {
+    private void deleteAnswers(User loginUser) throws CannotDeleteException {
         for(Answer answer: answers){
             answer.delete(loginUser);
         }
