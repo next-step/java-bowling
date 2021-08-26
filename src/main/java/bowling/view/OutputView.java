@@ -18,11 +18,9 @@ public class OutputView {
 
 	public static void printScoreBoard(Player player, Frames frames) {
 		System.out.print(DELIMITER + " NAME " + DELIMITER);
-		System.out.print(getFrameNumbers(frames) + DELIMITER);
-		System.out.print("\n");
+		System.out.print(getFrameNumbers(frames) + DELIMITER + System.lineSeparator());
 		System.out.print(DELIMITER + printFormatter(player.getPlayerName()) + DELIMITER);
-		System.out.print(getFrameGameResult(frames) + DELIMITER);
-		System.out.print("\n");
+		System.out.print(getFrameGameResult(frames) + DELIMITER + System.lineSeparator());
 	}
 
 	private static String getFrameGameResult(Frames frames) {
