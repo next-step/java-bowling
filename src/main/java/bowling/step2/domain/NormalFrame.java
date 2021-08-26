@@ -27,22 +27,27 @@ public class NormalFrame implements Frame {
             return;
         }
 
-        second = first.nextPitch(count);
+        second = Pin.of(count);
+    }
+
+    @Override
+    public int total() {
+        return first.count() + second.count();
     }
 
     private void validateCount(int count) {
-        if (count > MAX) {
-            throw new RuntimeException("한번에 쓰러뜨릴 수 있는 볼링핀의 갯수는 " + MAX + "을 넘을 수 없습니다");
+        if (totalOfFrameIsOverTheMax(count)) {
+            throw new RuntimeException("쓰러뜨릴 수 있는 볼링핀의 갯수는 " + MAX + "을 넘을 수 없습니다");
         }
+    }
+
+    private boolean totalOfFrameIsOverTheMax(int count) {
+        return first.count() + count > MAX;
     }
 
     public Frame nextFrame() {
         if (frameNumber == LAST_NUMBER_OF_NORMAL_FRAME) return new LastFrame();
 
         return new NormalFrame(frameNumber + 1);
-    }
-
-    public int total() {
-        return first.count() + second.count();
     }
 }
