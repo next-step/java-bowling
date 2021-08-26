@@ -28,17 +28,39 @@ public enum PitchResult {
 
     private static List<PitchResult> findResultOfNormal(NormalFrame normalFrame) {
         List<PitchResult> results = new ArrayList<>();
-        results.add(PitchResult.findByCount(normalFrame.countOfFirst(), 0));
-        results.add(PitchResult.findByCount(normalFrame.countOfFirst() + normalFrame.countOfSecond(), normalFrame.countOfFirst() == 10 ? 0 : 1));
+        addFirstResult(results, normalFrame);
+        addSecondResult(results, normalFrame);
         return results;
     }
 
     private static List<PitchResult> findResultOfLast(LastFrame lastFrame) {
         List<PitchResult> results = new ArrayList<>();
-        results.add(PitchResult.findByCount(lastFrame.countOfFirst(), 0));
-        results.add(PitchResult.findByCount(lastFrame.countOfFirst() + lastFrame.countOfSecond(), lastFrame.countOfFirst() == 10 ? 0 : 1));
-        results.add(PitchResult.findByCount(lastFrame.countOfAdditional(), 0));
+        addFirstResult(results, lastFrame);
+        addSecondResult(results, lastFrame);
+        addAdditionalResult(results, lastFrame);
         return results;
+    }
+
+    private static void addFirstResult(List<PitchResult> results, Frame frame) {
+        results.add(PitchResult.findByCount(frame.countOfFirst(), 0));
+    }
+
+    private static void addSecondResult(List<PitchResult> results, Frame frame) {
+        if (frame instanceof NormalFrame) {
+            results.add(PitchResult.findByCount(frame.countOfFirst() + frame.countOfSecond(), frame.countOfFirst() == 10 ? 0 : 1));
+            return;
+        }
+
+        if (frame.countOfFirst() == 10) {
+            results.add(PitchResult.findByCount(frame.countOfSecond(), 0));
+            return;
+        }
+
+        results.add(PitchResult.findByCount(frame.countOfFirst() + frame.countOfSecond(), 1));
+    }
+
+    private static void addAdditionalResult(List<PitchResult> results, LastFrame frame) {
+        results.add(PitchResult.findByCount(frame.countOfAdditional(), 0));
     }
 
     private static PitchResult findByCount(int count, int skip) {

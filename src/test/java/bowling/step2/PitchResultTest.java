@@ -75,4 +75,18 @@ public class PitchResultTest {
         assertThat(pitchResults.get(1)).isEqualTo(PitchResult.MISS);
         assertThat(pitchResults.get(2)).isEqualTo(PitchResult.MISS);
     }
+
+    @Test
+    public void 마지막_프레임_결과_생성4() {
+        LastFrame lastFrame = new LastFrame();
+        lastFrame.pitch(TryNo.FIRST, 10);
+        lastFrame.pitch(TryNo.SECOND, 0);
+        lastFrame.pitch(TryNo.ADDITIONAL, 3);
+        //given, when
+        List<PitchResult> pitchResults = PitchResult.findResultOf(lastFrame);
+
+        assertThat(pitchResults.get(0)).isEqualTo(PitchResult.STRIKE);
+        assertThat(pitchResults.get(1)).isEqualTo(PitchResult.GUTTER);
+        assertThat(pitchResults.get(2)).isEqualTo(PitchResult.MISS);
+    }
 }
