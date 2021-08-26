@@ -3,6 +3,7 @@ package qna.domain;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +83,7 @@ public class Question extends AbstractEntity {
 
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
+        answers2.setDeleted(deleted);
         return this;
     }
 
@@ -93,11 +95,6 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    @Override
-    public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
-
     public void addAnswer2(Answer answer) {
         answer.toQuestion(this);
         answers2.add(answer);
@@ -105,5 +102,21 @@ public class Question extends AbstractEntity {
 
     public boolean isAnswerHaveOwner(User loginUser) {
         return answers2.isOwner(loginUser);
+    }
+
+    @Override
+    public String toString() {
+        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public List<DeleteHistory> getDeleted() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        if(deleted){
+            deleteHistories = answers2.getDeleted();
+            deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        }
+
+        return deleteHistories;
     }
 }

@@ -1,8 +1,10 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Answers {
     private final List<Answer> answers;
@@ -11,12 +13,12 @@ public class Answers {
         return new Answers(answers);
     }
 
-    public Answers() {
-        answers = new ArrayList<>();
-    }
-
     private Answers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public Answers() {
+        answers = new ArrayList<>();
     }
 
     public boolean isOwner(User loginUser) {
@@ -52,4 +54,10 @@ public class Answers {
     }
 
 
+    public List<DeleteHistory> getDeleted() {
+        return answers.stream()
+                .filter(answer -> answer.isDeleted())
+                .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
+                .collect(Collectors.toList());
+    }
 }

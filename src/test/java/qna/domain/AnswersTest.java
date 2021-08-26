@@ -3,7 +3,9 @@ package qna.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -55,5 +57,18 @@ public class AnswersTest {
 
         assertThat(AnswerTest.A1.isDeleted()).isTrue();
         assertThat(AnswerTest.A2.isDeleted()).isTrue();
+    }
+
+    @DisplayName("getDeleted 테스트")
+    @Test
+    void getDeleted(){
+        Answers answers = Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
+
+        AnswerTest.A1.setDeleted(false);
+        AnswerTest.A2.setDeleted(true);
+
+        List<DeleteHistory> deleteHistories = answers.getDeleted();
+
+        assertThat(deleteHistories).isEqualTo(Arrays.asList(new DeleteHistory(ContentType.ANSWER, AnswerTest.A2.getId(), AnswerTest.A2.getWriter(), LocalDateTime.now())));
     }
 }
