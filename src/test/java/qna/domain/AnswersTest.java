@@ -37,11 +37,23 @@ public class AnswersTest {
         assertThat(answers.isOwner(UserTest.JAVAJIGI)).isTrue();
         assertThat(answers.isOwner(UserTest.SANJIGI)).isTrue();
     }
+
     @DisplayName("Owner 가지고 있지 않을 때 테스트")
     @Test
     void isNotOwnerTest(){
         Answers answers = Answers.of(Arrays.asList(AnswerTest.A1));
 
         assertThat(answers.isOwner(UserTest.SANJIGI)).isFalse();
+    }
+
+    @DisplayName("setDeleted 테스트")
+    @Test
+    void setDeleted(){
+        Answers answers = Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
+
+        answers.setDeleted(true);
+
+        assertThat(AnswerTest.A1.isDeleted()).isTrue();
+        assertThat(AnswerTest.A2.isDeleted()).isTrue();
     }
 }

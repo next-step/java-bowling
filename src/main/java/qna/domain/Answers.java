@@ -27,6 +27,13 @@ public class Answers {
 
     }
 
+    public void setDeleted(boolean deleted) {
+        for(Answer answer : answers){
+            answer.setDeleted(deleted);
+        }
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,4 +50,6 @@ public class Answers {
     public void add(Answer answer) {
         answers.add(answer);
     }
+
+
 }
