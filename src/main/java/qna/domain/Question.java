@@ -35,7 +35,7 @@ public class Question extends AbstractEntity {
     }
 
     public Question(long id, String title, String contents) {
-        super(id);
+        super(id, ContentType.QUESTION);
         this.title = title;
         this.contents = contents;
     }

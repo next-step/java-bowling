@@ -21,7 +21,14 @@ public class AbstractEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    private ContentType contentType;
+
     public AbstractEntity() {
+    }
+
+    public AbstractEntity(Long id, ContentType contentType) {
+        this.id = id;
+        this.contentType = contentType;
     }
 
     public AbstractEntity(Long id) {
@@ -35,6 +42,10 @@ public class AbstractEntity {
     public AbstractEntity setId(Long id) {
         this.id = id;
         return this;
+    }
+
+    public ContentType getContentType() {
+        return contentType;
     }
 
     @Override

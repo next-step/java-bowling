@@ -29,7 +29,7 @@ public class Answer extends AbstractEntity {
     }
 
     public Answer(Long id, User writer, Question question, String contents) {
-        super(id);
+        super(id, ContentType.ANSWER);
 
         if (writer == null) {
             throw new UnAuthorizedException();
