@@ -4,7 +4,7 @@ import bowling.domain.state.State;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LastFrame implements Frame{
+public class LastFrame implements Frame {
 
     private final List<State> state;
 
@@ -12,8 +12,8 @@ public class LastFrame implements Frame{
         this.state = state;
     }
 
-    public static LastFrame of(List<State> state) {
-        return new LastFrame(state);
+    public List<State> getState() {
+        return state;
     }
 
     public String printStr() {

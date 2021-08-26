@@ -24,7 +24,7 @@ public class ResultView {
     }
 
     private static void printBoards(Board board) {
-        System.out.println(board.toString());
+        board.getBoards().forEach(System.out::print);
     }
 
     public static void currentResult(Board board) {
