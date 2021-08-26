@@ -96,6 +96,12 @@ public class Question extends AbstractEntity {
         this.deleted = true;
     }
 
+    public void deleteAnswers(User loginUser) throws CannotDeleteException {
+        for(Answer answer: answers){
+            answer.delete(loginUser);
+        }
+    }
+
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
