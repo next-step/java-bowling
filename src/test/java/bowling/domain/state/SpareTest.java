@@ -1,11 +1,11 @@
 package bowling.domain.state;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import bowling.domain.Pins;
 import bowling.exception.NextPitchingException;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class SpareTest {
     @Test
