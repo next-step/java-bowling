@@ -14,11 +14,6 @@ public class Pin {
         return new Pin(count);
     }
 
-    public Pin nextPitch(int count) {
-        validatePitch(count);
-        return Pin.of(count);
-    }
-
     private void validatePitch(int count) {
         if (sumOfPitchesOverTheMax(count)) {
             throw new RuntimeException("쓰러뜨린 핀의 개수는 10을 넘을 수 없습니다.");
