@@ -6,6 +6,7 @@ import qna.ForbiddenException;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -93,7 +94,7 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) {
         checkOwner(loginUser);
         deleted = true;
         List<DeleteHistory> histories = makeDeleteHistory();
@@ -101,7 +102,7 @@ public class Question extends AbstractEntity {
         return histories;
     }
 
-    private void checkOwner(User loginUser) throws CannotDeleteException {
+    private void checkOwner(User loginUser) {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
@@ -109,9 +110,7 @@ public class Question extends AbstractEntity {
 
     private List<DeleteHistory> makeDeleteHistory() {
         validateDeleted();
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
-        return deleteHistories;
+        return new ArrayList<>(Collections.singleton(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now())));
     }
 
     private void validateDeleted() {
