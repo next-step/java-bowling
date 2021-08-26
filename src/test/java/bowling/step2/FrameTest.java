@@ -76,4 +76,60 @@ public class FrameTest {
         //then
         assertThat(nextFrame).isInstanceOf(LastFrame.class);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"10:10:20", "6:4:10"}, delimiter = ':')
+    public void 마지막_프레임_투구_성공(int count1, int count2, int expected) {
+        //given
+        LastFrame lastFrame = new LastFrame();
+
+        //when
+        lastFrame.pitch(TryNo.FIRST, count1);
+        lastFrame.pitch(TryNo.SECOND, count2);
+
+        //then
+        assertThat(lastFrame.total()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"10:10:10:30", "6:4:10:20"}, delimiter = ':')
+    public void 마지막_프레임_추가투구_성공(int count1, int count2, int count3, int expected) {
+        //given
+        LastFrame lastFrame = new LastFrame();
+
+        //when
+        lastFrame.pitch(TryNo.FIRST, count1);
+        lastFrame.pitch(TryNo.SECOND, count2);
+        lastFrame.pitch(TryNo.ADDITIONAL, count3);
+
+        //then
+        assertThat(lastFrame.total()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"11:10", "6:6"}, delimiter = ':')
+    public void 마지막_프레임_투구_실패(int count1, int count2) {
+        //given
+        LastFrame lastFrame = new LastFrame();
+
+        //when, then
+        assertThatThrownBy(() -> {
+            lastFrame.pitch(TryNo.FIRST, count1);
+            lastFrame.pitch(TryNo.SECOND, count2);
+        }).isInstanceOf(RuntimeException.class);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"1:1:10", "6:3:10"}, delimiter = ':')
+    public void 마지막_프레임_추가투구_실패(int count1, int count2, int count3) {
+        //given
+        LastFrame lastFrame = new LastFrame();
+
+        //when, then
+        assertThatThrownBy(() -> {
+            lastFrame.pitch(TryNo.FIRST, count1);
+            lastFrame.pitch(TryNo.SECOND, count2);
+            lastFrame.pitch(TryNo.ADDITIONAL, count3);
+        }).isInstanceOf(RuntimeException.class);
+    }
 }
