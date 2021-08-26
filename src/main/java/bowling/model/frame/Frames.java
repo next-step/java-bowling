@@ -62,12 +62,16 @@ public class Frames {
 	}
 
 	public boolean isContinueGame() {
-		return (presentFrame == FINAL_FRAME) && findEndFrame();
+		if (presentFrame < FINAL_FRAME) {
+			return true;
+		}
+		return findEndFrame();
 	}
 
 	private boolean findEndFrame() {
 		return frames.stream()
-			.allMatch(Frame::isGameEnd);
+			.filter(frame -> frame.getFrameNumber() == FINAL_FRAME)
+			.noneMatch(Frame::isGameEnd);
 	}
 
 	@Override

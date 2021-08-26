@@ -2,12 +2,13 @@ package bowling.model;
 
 import java.util.Objects;
 
+import bowling.composer.RegexComposer;
+
 public class Name {
 	private static final String TYPE_MATCH_ERROR_MESSAGE = "이름은 영문만 가능합니다.";
 	private static final String LIMIT_NAME_ERROR_MESSAGE = "이름은 3글자만 허용 됩니다.";
 	private static final String NULL_ERROR_MESSAGE = "이름이 null 입니다.";
 	private static final String EMPTY_ERROR_MESSAGE = "이름이 빈값 입니다.";
-	private static final String REG_EXP = "^[a-zA-Z]*$";
 	private static final int LIMIT_LENGTH = 3;
 
 	private final String name;
@@ -43,7 +44,7 @@ public class Name {
 	}
 
 	private void checkNameTypeMatch(String name) {
-		if (!name.matches(REG_EXP)) {
+		if (!RegexComposer.isMatched(name)) {
 			throw new IllegalArgumentException(TYPE_MATCH_ERROR_MESSAGE);
 		}
 	}

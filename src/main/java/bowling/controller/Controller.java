@@ -12,7 +12,7 @@ public class Controller {
 		Player player = new Player(new Name(InputView.inputPlayerName()));
 		Frames frames = Frames.initCreateFrames();
 
-		while (!frames.isContinueGame()) {
+		while (frames.isContinueGame()) {
 			OutputView.printScoreBoard(player, frames);
 			frames.playBowling(InputView.inputStrikeNumber(frames.getPresentFrame()));
 		}
