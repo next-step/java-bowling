@@ -17,9 +17,13 @@ public class Frames {
 	private final List<Frame> frames;
 	private int presentFrame;
 
-	public Frames(List<Frame> frames) {
+	private Frames(List<Frame> frames) {
 		this.frames = frames;
 		presentFrame = FIRST_FRAME_NUMBER;
+	}
+
+	public static Frames initCreateFrames(List<Frame> frames) {
+		return new Frames(frames);
 	}
 
 	public static Frames initCreateFrames() {
