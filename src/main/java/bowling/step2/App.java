@@ -16,7 +16,7 @@ public class App {
             count = InputView.getPitch(i);
             lane.pitch(i, TryNo.FIRST, count);
             OutputView.printNow(lane);
-            if (count == 10) continue;
+            if (i != 10 && count == 10) continue;
 
             count = InputView.getPitch(i);
             lane.pitch(i, TryNo.SECOND, count);

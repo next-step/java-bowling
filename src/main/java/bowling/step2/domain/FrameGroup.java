@@ -25,6 +25,7 @@ public class FrameGroup {
 
         if (count == 10) {
             frameList.add(frame.nextFrame());
+            return;
         }
 
         if (tryNo == TryNo.SECOND) {
