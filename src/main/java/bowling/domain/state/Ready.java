@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.pins.Pins;
+import bowling.domain.score.Score;
+import bowling.exception.CannotCalculateException;
 
 public class Ready implements Playing {
 
@@ -17,6 +19,11 @@ public class Ready implements Playing {
             return Strike.of();
         }
         return FirstBowl.of(pins);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        throw new CannotCalculateException();
     }
 
     private boolean isStrike(Pins pins) {

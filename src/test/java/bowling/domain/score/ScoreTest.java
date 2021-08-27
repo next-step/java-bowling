@@ -20,7 +20,7 @@ class ScoreTest {
                 .isInstanceOf(CannotCalculateException.class);
     }
 
-    @DisplayName("스트라이크는 투구를 1번 더해야지 계산 할 수 있다.")
+    @DisplayName("스페어는 투구를 1번 더해야지 계산 할 수 있다.")
     @Test
     void spare() {
         Score score = Score.of(10, 1);

@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pins.Pins;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,5 +66,46 @@ class FramesTest {
 
         assertThat(frameList).hasSize(10);
         assertThat(frameList.get(9)).isInstanceOf(BonusFrame.class);
+    }
+
+    @DisplayName("스트라이크는 2번의 투구 후 점수를 얻는다.")
+    @Test
+    void strike_score() {
+        Frames frames = Frames.of();
+        frames.bowl(Pins.of(10));
+        frames.bowl(Pins.of(1));
+        frames.bowl(Pins.of(9));
+
+        Frame frame = frames.getFrames().get(0);
+        Score score = frame.getScore();
+
+        assertThat(score.getScore()).isEqualTo(20);
+    }
+
+    @DisplayName("스페어는 1번의 투구 후 점수를 얻는다.")
+    @Test
+    void spare_score() {
+        Frames frames = Frames.of();
+        frames.bowl(Pins.of(7));
+        frames.bowl(Pins.of(3));
+        frames.bowl(Pins.of(9));
+
+        Frame frame = frames.getFrames().get(0);
+        Score score = frame.getScore();
+
+        assertThat(score.getScore()).isEqualTo(19);
+    }
+
+    @DisplayName("미스는 바로 점수를 얻는다.")
+    @Test
+    void miss_score() {
+        Frames frames = Frames.of();
+        frames.bowl(Pins.of(7));
+        frames.bowl(Pins.of(2));
+
+        Frame frame = frames.getFrames().get(0);
+        Score score = frame.getScore();
+
+        assertThat(score.getScore()).isEqualTo(9);
     }
 }

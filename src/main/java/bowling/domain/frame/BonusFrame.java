@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pins.Pins;
+import bowling.domain.score.Score;
 import bowling.domain.state.Spare;
 import bowling.domain.state.State;
 
@@ -48,6 +49,25 @@ public class BonusFrame implements Frame {
     @Override
     public List<State> getState() {
         return Collections.unmodifiableList(states);
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = states.get(0).getScore();
+        for (int i = 1; i < states.size(); i++) {
+            State state = states.get(i);
+            score = state.calculateAdditionalScore(score);
+        }
+
+        return score;
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        for (State state : states) {
+            score = state.calculateAdditionalScore(score);
+        }
+        return score;
     }
 
     private void removeLast() {

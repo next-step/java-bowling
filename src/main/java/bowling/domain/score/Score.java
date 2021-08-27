@@ -6,8 +6,8 @@ public class Score {
 
     private static final int SCORE_COUNT_ZERO = 0 ;
 
-    private final int score;
-    private final int left;
+    private int score;
+    private int left;
 
     private Score(int score, int left) {
         this.score = score;
@@ -18,11 +18,17 @@ public class Score {
         return new Score(pinsCount, left);
     }
 
+    public Score bowl(int pinsCount) {
+        score = score + pinsCount;
+        left = left - 1;
+        return this;
+    }
+
     public int getScore() {
         if (!canCalculateScore()) {
             throw new CannotCalculateException();
         }
-        return this.score;
+        return score;
     }
 
     public boolean canCalculateScore() {

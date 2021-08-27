@@ -1,5 +1,6 @@
 package bowling.domain.pins;
 
+import bowling.domain.score.Score;
 import bowling.exception.IllegalPinNumberException;
 
 public class Pins {
@@ -27,6 +28,10 @@ public class Pins {
         validate(totalPins);
 
         return totalPins;
+    }
+
+    public Score getScore(Score score) {
+        return score.bowl(pins);
     }
 
     private static void validate(int pin) {

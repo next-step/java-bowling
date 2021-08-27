@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.pins.Pins;
+import bowling.domain.score.Score;
 
 public class Miss implements Finished {
 
@@ -14,6 +15,21 @@ public class Miss implements Finished {
 
     public static State of(Pins firstPins, Pins secondPins) {
         return new Miss(firstPins, secondPins);
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.of(firstPins.getTotalPins(secondPins), 0);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = firstPins.getScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        score = secondPins.getScore(score);
+        return score;
     }
 
     @Override
