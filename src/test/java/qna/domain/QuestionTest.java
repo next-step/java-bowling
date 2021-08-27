@@ -37,4 +37,15 @@ public class QuestionTest {
         assertThat(question.isDeleted()).isTrue();
     }
 
+    @DisplayName("질문에 답변이 있는 경우, 질문자와 답변자가 다르면 질문을 삭제할 수 없다.")
+    @Test
+    void notDeletableQuestionWithAnswers() {
+        Question question = QuestionTest.Q1;
+        question.addAnswer(AnswerTest.A1);
+        question.addAnswer(AnswerTest.A2);
+
+        assertThatThrownBy(() -> question.delete(UserTest.JAVAJIGI))
+            .isInstanceOf(CannotDeleteException.class);
+    }
+
 }
