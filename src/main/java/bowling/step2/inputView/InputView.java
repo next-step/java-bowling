@@ -3,7 +3,7 @@ package bowling.step2.inputView;
 import java.util.Scanner;
 
 public class InputView {
-    private static Scanner SC = new Scanner(System.in);
+    private static final Scanner SC = new Scanner(System.in);
 
     public static String getName() {
         printGetName();
