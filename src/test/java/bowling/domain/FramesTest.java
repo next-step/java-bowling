@@ -55,9 +55,9 @@ class FramesTest {
 	private Frames initFrames() {
 		final List<Frame> frameList = new ArrayList<>();
 		for (int i = 0; i < 9; i++) {
-			frameList.add(new NormalFrame(new Pitch(10)));
+			frameList.add(NormalFrame.of(new Pitch(10)));
 		}
-		frameList.add(new LastFrame());
+		frameList.add(LastFrame.of());
 		return new Frames(frameList);
 	}
 

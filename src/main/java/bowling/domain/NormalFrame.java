@@ -8,16 +8,28 @@ public class NormalFrame extends Frame {
 
 	private static final int MAX = 10;
 
-	public NormalFrame() {
+	private NormalFrame() {
 
 	}
 
-	public NormalFrame(final Pitch first) {
+	private NormalFrame(final Pitch first) {
 		super(first);
 	}
 
-	public NormalFrame(final Pitch first, final Pitch second) {
+	private NormalFrame(final Pitch first, final Pitch second) {
 		super(first, second);
+	}
+
+	public static NormalFrame of() {
+		return new NormalFrame();
+	}
+
+	public static NormalFrame of(final Pitch first) {
+		return new NormalFrame(first);
+	}
+
+	public static NormalFrame of(final Pitch first, final Pitch second) {
+		return new NormalFrame(first, second);
 	}
 
 	@Override

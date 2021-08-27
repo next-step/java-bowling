@@ -15,11 +15,11 @@ class LastFrameTest {
 
 	static Stream<Arguments> isEnd() {
 		return Stream.of(
-			Arguments.of(new LastFrame(new Pitch(1)), false),
-			Arguments.of(new LastFrame(new Pitch(10)), false),
-			Arguments.of(new LastFrame(new Pitch(5), new Pitch(5)), false),
-			Arguments.of(new LastFrame(new Pitch(5), new Pitch(4)), true),
-			Arguments.of(new LastFrame(new Pitch(5), new Pitch(5), new Pitch(5)), true)
+			Arguments.of(LastFrame.of(new Pitch(1)), false),
+			Arguments.of(LastFrame.of(new Pitch(10)), false),
+			Arguments.of(LastFrame.of(new Pitch(5), new Pitch(5)), false),
+			Arguments.of(LastFrame.of(new Pitch(5), new Pitch(4)), true),
+			Arguments.of(LastFrame.of(new Pitch(5), new Pitch(5), new Pitch(5)), true)
 		);
 	}
 
@@ -37,10 +37,10 @@ class LastFrameTest {
 
 	static Stream<Arguments> second() {
 		return Stream.of(
-			Arguments.of(new LastFrame(new Pitch(1)), 9, SPARE),
-			Arguments.of(new LastFrame(new Pitch(10)), 1, MISS),
-			Arguments.of(new LastFrame(new Pitch(5)), 4, MISS),
-			Arguments.of(new LastFrame(new Pitch(5)), 0, GUTTER)
+			Arguments.of(LastFrame.of(new Pitch(1)), 9, SPARE),
+			Arguments.of(LastFrame.of(new Pitch(10)), 1, MISS),
+			Arguments.of(LastFrame.of(new Pitch(5)), 4, MISS),
+			Arguments.of(LastFrame.of(new Pitch(5)), 0, GUTTER)
 		);
 	}
 
@@ -59,10 +59,10 @@ class LastFrameTest {
 
 	static Stream<Arguments> bonus() {
 		return Stream.of(
-			Arguments.of(new LastFrame(new Pitch(1)), 9, 10, STRIKE),
-			Arguments.of(new LastFrame(new Pitch(1)), 9, 0, GUTTER),
-			Arguments.of(new LastFrame(new Pitch(10)), 1, 5, MISS),
-			Arguments.of(new LastFrame(new Pitch(10)), 1, 9, SPARE)
+			Arguments.of(LastFrame.of(new Pitch(1)), 9, 10, STRIKE),
+			Arguments.of(LastFrame.of(new Pitch(1)), 9, 0, GUTTER),
+			Arguments.of(LastFrame.of(new Pitch(10)), 1, 5, MISS),
+			Arguments.of(LastFrame.of(new Pitch(10)), 1, 9, SPARE)
 		);
 	}
 

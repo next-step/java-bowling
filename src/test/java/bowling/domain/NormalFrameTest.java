@@ -29,7 +29,7 @@ class NormalFrameTest {
 	@MethodSource("pitchResults")
 	void create(final int first, final int second) {
 		// given
-		final NormalFrame normalFrame = new NormalFrame();
+		final NormalFrame normalFrame = NormalFrame.of();
 
 		// when
 		normalFrame.pitch(first);
@@ -52,7 +52,7 @@ class NormalFrameTest {
 	@MethodSource("invalidPitchResults")
 	void create_invalidPitchResult(final int first, final int second) {
 		// given
-		final NormalFrame normalFrame = new NormalFrame();
+		final NormalFrame normalFrame = NormalFrame.of();
 		normalFrame.pitch(first);
 
 		// when
@@ -63,9 +63,9 @@ class NormalFrameTest {
 
 	static Stream<Arguments> isEnd() {
 		return Stream.of(
-			Arguments.of(new NormalFrame(new Pitch(1)), false),
-			Arguments.of(new NormalFrame(new Pitch(10)), true),
-			Arguments.of(new NormalFrame(new Pitch(5), new Pitch(5)), true)
+			Arguments.of(NormalFrame.of(new Pitch(1)), false),
+			Arguments.of(NormalFrame.of(new Pitch(10)), true),
+			Arguments.of(NormalFrame.of(new Pitch(5), new Pitch(5)), true)
 		);
 	}
 

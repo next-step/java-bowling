@@ -16,8 +16,8 @@ public class Frames {
 
 	public Frames() {
 		final Stream<NormalFrame> normalFrameStream = IntStream.rangeClosed(MIN_INDEX, LAST_NORMAL_FRAME_INDEX)
-			.mapToObj(i -> new NormalFrame());
-		final Stream<LastFrame> lastFrameStream = Stream.of(new LastFrame());
+			.mapToObj(i -> NormalFrame.of());
+		final Stream<LastFrame> lastFrameStream = Stream.of(LastFrame.of());
 
 		this.values = Stream.concat(normalFrameStream, lastFrameStream)
 			.collect(Collectors.toList());
