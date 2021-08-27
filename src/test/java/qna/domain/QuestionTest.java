@@ -2,6 +2,9 @@ package qna.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,6 +54,21 @@ public class QuestionTest {
 
         assertThatThrownBy(() -> question.delete(UserTest.JAVAJIGI))
             .isInstanceOf(CannotDeleteException.class);
+    }
+
+    @DisplayName("질문을 삭제할 때 답변 또한 삭제해야 하며, 답변의 삭제 또한 삭제 상태(deleted)를 변경해야 한다.")
+    @Test
+    void deleteQuestionWithAnswers() throws Exception {
+        question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "test1"));
+        question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "test2"));
+        question.delete(UserTest.JAVAJIGI);
+
+        List<Boolean> results = question.getAnswers().stream()
+                                    .map(Answer::isDeleted)
+                                    .collect(Collectors.toList());
+
+        assertThat(question.isDeleted()).isTrue();
+        assertThat(results).containsOnly(true);
     }
 
 }
