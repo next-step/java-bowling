@@ -58,4 +58,9 @@ public class NormalFrame implements Frame {
     public Count countOfSecond() {
         return second.count();
     }
+
+    @Override
+    public String toString() {
+        return first.count().toString() + "/" + second.count().toString();
+    }
 }
