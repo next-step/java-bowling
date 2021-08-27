@@ -2,12 +2,14 @@ package qna.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import qna.CannotDeleteException;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class AnswersTest {
     @DisplayName("생성 테스트")
@@ -70,5 +72,30 @@ public class AnswersTest {
         List<DeleteHistory> deleteHistories = answers.getDeleted();
 
         assertThat(deleteHistories).isEqualTo(Arrays.asList(new DeleteHistory(ContentType.ANSWER, AnswerTest.A2.getId(), AnswerTest.A2.getWriter(), LocalDateTime.now())));
+    }
+
+    @DisplayName("delete 테스트")
+    @Test
+    void delete() throws CannotDeleteException {
+        Answers answers = Answers.of(Arrays.asList(AnswerTest.A1));
+
+        answers.delete(UserTest.JAVAJIGI);
+
+        List<DeleteHistory> deleteHistories = answers.getDeleted();
+
+        assertThat(deleteHistories).isEqualTo(Arrays.asList(
+                new DeleteHistory(ContentType.ANSWER, AnswerTest.A1.getId(), AnswerTest.A1.getWriter(), LocalDateTime.now())));
+    }
+
+    @DisplayName("deleteException 테스트")
+    @Test
+    void deleteException() {
+        Answers answers = Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
+
+        assertThatExceptionOfType(CannotDeleteException.class)
+                .isThrownBy(() -> {
+                    answers.delete(UserTest.SANJIGI);
+                }).withMessageMatching("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+
     }
 }

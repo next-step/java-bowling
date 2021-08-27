@@ -68,22 +68,14 @@ public class QuestionTest {
     @Test
     void getDeleted() throws CannotDeleteException {
         Q1.addAnswer(AnswerTest.A1);
-        Q1.addAnswer(AnswerTest.A2);
 
         Q1.delete(UserTest.JAVAJIGI);
 
         List<DeleteHistory> deleteHistories = Q1.getDeleted();
 
-        System.out.println(deleteHistories);
-        System.out.println(Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now())
-                , new DeleteHistory(ContentType.ANSWER, AnswerTest.A1.getId(), AnswerTest.A1.getWriter(), LocalDateTime.now())
-                , new DeleteHistory(ContentType.ANSWER, AnswerTest.A2.getId(), AnswerTest.A2.getWriter(), LocalDateTime.now())));
-
         assertThat(deleteHistories).isEqualTo(Arrays.asList(
                 new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now())
                 , new DeleteHistory(ContentType.ANSWER, AnswerTest.A1.getId(), AnswerTest.A1.getWriter(), LocalDateTime.now())
-                , new DeleteHistory(ContentType.ANSWER, AnswerTest.A2.getId(), AnswerTest.A2.getWriter(), LocalDateTime.now())
         ));
     }
 }
