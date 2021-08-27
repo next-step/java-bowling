@@ -51,16 +51,11 @@ public class NormalFrame implements Frame {
         return new NormalFrame(frameNumber + 1);
     }
 
-    public int countValueOfFirst() {
-        return first.value();
+    public Count countOfFirst() {
+        return first.count();
     }
 
-    public int countValueOfSecond() {
-        return second.value();
-    }
-
-    @Override
-    public String toString() {
-        return first.count() + "/" + second.count();
+    public Count countOfSecond() {
+        return second.count();
     }
 }

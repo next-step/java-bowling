@@ -2,7 +2,7 @@ package bowling.step2;
 
 import bowling.step2.domain.LastFrame;
 import bowling.step2.domain.NormalFrame;
-import bowling.step2.domain.PitchResult;
+import bowling.step2.outputView.PitchResult;
 import bowling.step2.domain.TryNo;
 import org.junit.Test;
 

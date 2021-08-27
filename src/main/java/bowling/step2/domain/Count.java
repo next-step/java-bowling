@@ -3,7 +3,6 @@ package bowling.step2.domain;
 import java.util.Arrays;
 
 public enum Count {
-    NONE(0),
     ZERO(0),
     ONE(1),
     TWO(2),
@@ -14,7 +13,8 @@ public enum Count {
     SEVEN(7),
     EIGHT(8),
     NINE(9),
-    TEN(10);
+    TEN(10),
+    NONE(0);
 
     private final int count;
 
@@ -31,5 +31,10 @@ public enum Count {
                 .filter(count1 -> count1.value() == count)
                 .findFirst()
                 .orElse(Count.NONE);
+    }
+
+    public Count sum(Count count) {
+        if (this == Count.NONE) return Count.NONE;
+        return of(this.count + count.value());
     }
 }

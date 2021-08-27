@@ -5,13 +5,16 @@ public class Pin {
 
     private final int MAX = 10;
 
+    private Pin() {
+    }
+
     private Pin(int count) {
         validatePitch(count);
         this.count = Count.of(count);
     }
 
     public static Pin of() {
-        return new Pin(0);
+        return new Pin();
     }
 
     public static Pin of(int count) {

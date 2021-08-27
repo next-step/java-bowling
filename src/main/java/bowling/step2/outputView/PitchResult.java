@@ -1,30 +1,34 @@
-package bowling.step2.domain;
+package bowling.step2.outputView;
+
+import bowling.step2.domain.Count;
+import bowling.step2.domain.Frame;
+import bowling.step2.domain.LastFrame;
+import bowling.step2.domain.NormalFrame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public enum PitchResult {
-    STRIKE(Arrays.asList(10, 20), "X"),
-    SPARE(Collections.singletonList(10), "/"),
-    ONE(Collections.singletonList(1), "1"),
-    TWO(Collections.singletonList(2), "2"),
-    THREE(Collections.singletonList(3), "3"),
-    FOUR(Collections.singletonList(4), "4"),
-    FIVE(Collections.singletonList(5), "5"),
-    SIX(Collections.singletonList(6), "6"),
-    SEVEN(Collections.singletonList(7), "7"),
-    EIGHT(Collections.singletonList(8), "8"),
-    NINE(Collections.singletonList(9), "9"),
-    GUTTER(Collections.singletonList(0), "-"),
-    NONE(Collections.singletonList(-1), " ");
+    STRIKE(Count.TEN, "X"),
+    SPARE(Count.TEN, "/"),
+    ONE(Count.ONE, "1"),
+    TWO(Count.TWO, "2"),
+    THREE(Count.THREE, "3"),
+    FOUR(Count.FOUR, "4"),
+    FIVE(Count.FIVE, "5"),
+    SIX(Count.SIX, "6"),
+    SEVEN(Count.SEVEN, "7"),
+    EIGHT(Count.EIGHT, "8"),
+    NINE(Count.NINE, "9"),
+    GUTTER(Count.ZERO, "-"),
+    NONE(Count.NONE, " ");
 
-    private final List<Integer> totalCount;
+    private final Count count;
     private final String shape;
 
-    PitchResult(List<Integer> totalCount, String shape) {
-        this.totalCount = totalCount;
+    PitchResult(Count count, String shape) {
+        this.count = count;
         this.shape = shape;
     }
 
@@ -52,31 +56,36 @@ public enum PitchResult {
     }
 
     private static void addFirstResult(List<PitchResult> results, Frame frame) {
-        results.add(PitchResult.findByCount(frame.countValueOfFirst(), 0));
+        results.add(PitchResult.findByCount(frame.countOfFirst(), 0));
     }
 
     private static void addSecondResult(List<PitchResult> results, Frame frame) {
         if (frame instanceof NormalFrame) {
-            results.add(PitchResult.findByCount(frame.countValueOfFirst() + frame.countValueOfSecond(), frame.countValueOfFirst() == 10 ? 0 : 1));
+            results.add(PitchResult.findByCount(frame.countOfFirst().sum(frame.countOfSecond()), frame.countOfFirst() == Count.TEN ? 0 : 1));
             return;
         }
 
-        if (frame.countValueOfFirst() == 10) {
-            results.add(PitchResult.findByCount(frame.countValueOfSecond(), 0));
+        if (frame.countOfSecond() == Count.NONE) {
+            results.add(PitchResult.findByCount(frame.countOfSecond(), 0));
             return;
         }
 
-        results.add(PitchResult.findByCount(frame.countValueOfFirst() + frame.countValueOfSecond(), 1));
+        if (frame.countOfFirst() == Count.TEN) {
+            results.add(PitchResult.findByCount(frame.countOfSecond(), 0));
+            return;
+        }
+
+        results.add(PitchResult.findByCount(frame.countOfFirst().sum(frame.countOfSecond()), 1));
     }
 
     private static void addAdditionalResult(List<PitchResult> results, LastFrame frame) {
         results.add(PitchResult.findByCount(frame.countOfAdditional(), 0));
     }
 
-    private static PitchResult findByCount(int count, int skip) {
+    private static PitchResult findByCount(Count count, int skip) {
         return Arrays.stream(values())
                 .skip(skip)
-                .filter(pitchResult -> pitchResult.totalCount.contains(count))
+                .filter(pitchResult -> pitchResult.count.equals(count))
                 .findFirst()
                 .orElse(PitchResult.NONE);
     }

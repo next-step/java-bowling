@@ -5,9 +5,9 @@ public interface Frame {
 
     int total();
 
-    int countValueOfFirst();
+    Count countOfFirst();
 
-    int countValueOfSecond();
+    Count countOfSecond();
 
     Frame nextFrame();
 }

@@ -2,7 +2,6 @@ package bowling.step2.outputView;
 
 import bowling.step2.domain.Frame;
 import bowling.step2.domain.Lane;
-import bowling.step2.domain.PitchResult;
 
 import java.util.List;
 import java.util.stream.Collectors;
