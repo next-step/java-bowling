@@ -26,4 +26,15 @@ public class QuestionTest {
             .isInstanceOf(CannotDeleteException.class);
     }
 
+    @DisplayName("질문에 답변이 있는 경우, 질문자와 모든 답변 글의 답변자가 같은 경우에만 질문을 삭제할 수 있다.")
+    @Test
+    void deletableQuestionWithAnswers() throws Exception {
+        Question question = QuestionTest.Q1;
+        question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "테스트1"));
+        question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "테스트2"));
+
+        question.delete(UserTest.JAVAJIGI);
+        assertThat(question.isDeleted()).isTrue();
+    }
+
 }
