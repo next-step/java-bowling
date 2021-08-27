@@ -1,8 +1,5 @@
 package bowling.step2.domain;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class NormalFrame implements Frame {
     private final int frameNumber;
     private Pin first;
@@ -35,7 +32,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public int total() {
-        return first.count() + second.count();
+        return first.value() + second.value();
     }
 
     private void validateCount(int count) {
@@ -45,7 +42,7 @@ public class NormalFrame implements Frame {
     }
 
     private boolean totalOfFrameIsOverTheMax(int count) {
-        return first.count() + count > MAX;
+        return first.value() + count > MAX;
     }
 
     public Frame nextFrame() {
@@ -54,12 +51,12 @@ public class NormalFrame implements Frame {
         return new NormalFrame(frameNumber + 1);
     }
 
-    public int countOfFirst() {
-        return first.count();
+    public int countValueOfFirst() {
+        return first.value();
     }
 
-    public int countOfSecond() {
-        return second.count();
+    public int countValueOfSecond() {
+        return second.value();
     }
 
     @Override

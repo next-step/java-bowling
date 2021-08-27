@@ -1,5 +1,6 @@
 package bowling.step2;
 
+import bowling.step2.domain.Count;
 import bowling.step2.domain.Pin;
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ public class PinTest {
         Pin pin = Pin.of(10);
 
         //then
-        assertThat(pin.count()).isEqualTo(10);
+        assertThat(pin.count()).isEqualTo(Count.TEN);
     }
 
     @Test

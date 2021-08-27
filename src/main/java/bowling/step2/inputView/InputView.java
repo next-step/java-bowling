@@ -20,6 +20,6 @@ public class InputView {
     }
 
     private static void printGetPitch(int i) {
-        System.out.println(i + "프레임 투구 : ");
+        System.out.print(i + "프레임 투구 : ");
     }
 }

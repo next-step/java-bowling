@@ -39,12 +39,12 @@ public class LastFrame implements Frame {
     }
 
     public int totalOfNormalFrame() {
-        return first.count() + second.count();
+        return first.value() + second.value();
     }
 
     @Override
     public int total() {
-        return first.count() + second.count() + additional.count();
+        return first.value() + second.value() + additional.value();
     }
 
     private void validateCount(int count) {
@@ -54,9 +54,9 @@ public class LastFrame implements Frame {
     }
 
     private void validateSumWithFirst(int count) {
-        if (first.count() == MAX) return;
+        if (first.value() == MAX) return;
 
-        validateCount(first.count() + count);
+        validateCount(first.value() + count);
     }
 
     private boolean countIsOverMax(int count) {
@@ -67,12 +67,12 @@ public class LastFrame implements Frame {
         return totalOfNormalFrame() < MAX;
     }
 
-    public int countOfFirst() {
-        return first.count();
+    public int countValueOfFirst() {
+        return first.value();
     }
 
-    public int countOfSecond() {
-        return second.count();
+    public int countValueOfSecond() {
+        return second.value();
     }
 
     @Override
@@ -81,7 +81,7 @@ public class LastFrame implements Frame {
     }
 
     public int countOfAdditional() {
-        return additional.count();
+        return additional.value();
     }
 
     @Override

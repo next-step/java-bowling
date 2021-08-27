@@ -30,7 +30,7 @@ public class PitchResultTest {
         //given, when
         List<PitchResult> pitchResults = PitchResult.findResultOf(normalFrame);
 
-        assertThat(pitchResults.get(0)).isEqualTo(PitchResult.MISS);
+        assertThat(pitchResults.get(0)).isEqualTo(PitchResult.THREE);
         assertThat(pitchResults.get(1)).isEqualTo(PitchResult.SPARE);
     }
 
@@ -57,9 +57,9 @@ public class PitchResultTest {
         //given, when
         List<PitchResult> pitchResults = PitchResult.findResultOf(lastFrame);
 
-        assertThat(pitchResults.get(0)).isEqualTo(PitchResult.MISS);
+        assertThat(pitchResults.get(0)).isEqualTo(PitchResult.THREE);
         assertThat(pitchResults.get(1)).isEqualTo(PitchResult.SPARE);
-        assertThat(pitchResults.get(2)).isEqualTo(PitchResult.MISS);
+        assertThat(pitchResults.get(2)).isEqualTo(PitchResult.THREE);
     }
 
     @Test
@@ -72,8 +72,8 @@ public class PitchResultTest {
         List<PitchResult> pitchResults = PitchResult.findResultOf(lastFrame);
 
         assertThat(pitchResults.get(0)).isEqualTo(PitchResult.STRIKE);
-        assertThat(pitchResults.get(1)).isEqualTo(PitchResult.MISS);
-        assertThat(pitchResults.get(2)).isEqualTo(PitchResult.MISS);
+        assertThat(pitchResults.get(1)).isEqualTo(PitchResult.SEVEN);
+        assertThat(pitchResults.get(2)).isEqualTo(PitchResult.THREE);
     }
 
     @Test
@@ -87,6 +87,6 @@ public class PitchResultTest {
 
         assertThat(pitchResults.get(0)).isEqualTo(PitchResult.STRIKE);
         assertThat(pitchResults.get(1)).isEqualTo(PitchResult.GUTTER);
-        assertThat(pitchResults.get(2)).isEqualTo(PitchResult.MISS);
+        assertThat(pitchResults.get(2)).isEqualTo(PitchResult.THREE);
     }
 }

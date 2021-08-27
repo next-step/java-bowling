@@ -1,17 +1,17 @@
 package bowling.step2.domain;
 
 public class Pin {
-    private final int count;
+    private Count count = Count.NONE;
 
     private final int MAX = 10;
 
     private Pin(int count) {
         validatePitch(count);
-        this.count = count;
+        this.count = Count.of(count);
     }
 
     public static Pin of() {
-        return new Pin(-1);
+        return new Pin(0);
     }
 
     public static Pin of(int count) {
@@ -25,10 +25,14 @@ public class Pin {
     }
 
     private boolean sumOfPitchesOverTheMax(int count) {
-        return this.count + count > MAX;
+        return this.count.value() + count > MAX;
     }
 
-    public int count() {
+    public Count count() {
         return count;
+    }
+
+    public int value() {
+        return count.value();
     }
 }
