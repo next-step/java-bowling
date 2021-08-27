@@ -14,7 +14,7 @@ public class AnswerTest {
     @DisplayName("답변 작성자와 로그인 사용자가 일치하면, 답변을 삭제할 수 있다.")
     @Test
     void deletable() throws Exception {
-        Answer answer = AnswerTest.A1;
+        Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "contents1");
         answer.delete(UserTest.JAVAJIGI);
         assertThat(answer.isDeleted()).isTrue();
     }
@@ -22,7 +22,8 @@ public class AnswerTest {
     @DisplayName("답변 작성자와 로그인 사용자가 일치하지 않으면, 답변 삭제 시 CannotDeleteException 예외가 발생한다.")
     @Test
     void notDeletable() {
-        assertThatThrownBy(() -> AnswerTest.A2.delete(UserTest.JAVAJIGI))
+        Answer answer = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "contents2");
+        assertThatThrownBy(() -> answer.delete(UserTest.JAVAJIGI))
             .isInstanceOf(CannotDeleteException.class);
     }
 }

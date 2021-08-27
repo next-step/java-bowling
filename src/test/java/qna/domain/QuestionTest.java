@@ -41,7 +41,6 @@ public class QuestionTest {
     void deletableQuestionWithAnswers() throws Exception {
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "테스트1"));
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "테스트2"));
-
         question.delete(UserTest.JAVAJIGI);
         assertThat(question.isDeleted()).isTrue();
     }
@@ -51,7 +50,6 @@ public class QuestionTest {
     void notDeletableQuestionWithAnswers() {
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "답변1"));
         question.addAnswer(new Answer(UserTest.SANJIGI, question, "답변2"));
-
         assertThatThrownBy(() -> question.delete(UserTest.JAVAJIGI))
             .isInstanceOf(CannotDeleteException.class);
     }
