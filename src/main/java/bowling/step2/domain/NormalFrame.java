@@ -1,5 +1,8 @@
 package bowling.step2.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class NormalFrame implements Frame {
     private final int frameNumber;
     private Pin first;
@@ -11,8 +14,8 @@ public class NormalFrame implements Frame {
 
     private NormalFrame(int frameNumber) {
         this.frameNumber = frameNumber;
-        first = Pin.of(0);
-        second = Pin.of(0);
+        first = Pin.of();
+        second = Pin.of();
     }
 
     public static NormalFrame of(int frameNumber) {
@@ -57,5 +60,10 @@ public class NormalFrame implements Frame {
 
     public int countOfSecond() {
         return second.count();
+    }
+
+    @Override
+    public String toString() {
+        return first.count() + "/" + second.count();
     }
 }

@@ -8,9 +8,9 @@ public class LastFrame implements Frame {
     private final int MAX = 10;
 
     public LastFrame() {
-        first = Pin.of(0);
-        second = Pin.of(0);
-        additional = Pin.of(0);
+        first = Pin.of();
+        second = Pin.of();
+        additional = Pin.of();
     }
 
     @Override
@@ -38,6 +38,10 @@ public class LastFrame implements Frame {
         }
     }
 
+    public int totalOfNormalFrame() {
+        return first.count() + second.count();
+    }
+
     @Override
     public int total() {
         return first.count() + second.count() + additional.count();
@@ -59,8 +63,8 @@ public class LastFrame implements Frame {
         return count > MAX;
     }
 
-    private boolean unavailableToPitchAdditional() {
-        return total() < MAX;
+    public boolean unavailableToPitchAdditional() {
+        return totalOfNormalFrame() < MAX;
     }
 
     public int countOfFirst() {
@@ -71,7 +75,17 @@ public class LastFrame implements Frame {
         return second.count();
     }
 
+    @Override
+    public Frame nextFrame() {
+        throw new RuntimeException("더이상 프레임을 생성할 수 없습니다.");
+    }
+
     public int countOfAdditional() {
         return additional.count();
+    }
+
+    @Override
+    public String toString() {
+        return first.count() + "/" + second.count() + "/" + additional.count();
     }
 }

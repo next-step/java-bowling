@@ -10,6 +10,10 @@ public class Pin {
         this.count = count;
     }
 
+    public static Pin of() {
+        return new Pin(-1);
+    }
+
     public static Pin of(int count) {
         return new Pin(count);
     }
