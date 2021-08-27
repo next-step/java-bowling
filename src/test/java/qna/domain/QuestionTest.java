@@ -22,10 +22,8 @@ public class QuestionTest {
     @DisplayName("질문 작성자와 로그인 사용자가 일치하지 않으면, 질문 삭제 시 CannotDeleteException 예외가 발생한다.")
     @Test
     void notDeletable() {
-        Question question = QuestionTest.Q1;
-        assertThatThrownBy(() -> question.delete(UserTest.SANJIGI))
+        assertThatThrownBy(() -> QuestionTest.Q1.delete(UserTest.SANJIGI))
             .isInstanceOf(CannotDeleteException.class);
-        assertThat(question.isDeleted()).isFalse();
     }
 
 }
