@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -58,11 +59,20 @@ public class Question extends AbstractEntity {
         return this;
     }
 
+    public void delete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+        deleted = true;
+
+        answers.delete(loginUser);
+    }
+
     public boolean isDeleted() {
         return deleted;
     }
 
-    public void addAnswer2(Answer answer) {
+    public void addAnswer(Answer answer) {
         answer.toQuestion(this);
         answers.add(answer);
     }
