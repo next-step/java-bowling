@@ -78,13 +78,9 @@ class FinalFrameTest {
 	public void getGameScore() {
 		FinalFrame finalFrame = new FinalFrame(10);
 		finalFrame.playGame(5);
+		finalFrame.playGame(4);
 
-		assertAll(
-			() -> assertThat(finalFrame.getGameScore()).isEqualTo(5),
-			() -> {
-				finalFrame.playGame(4);
-				assertThat(finalFrame.getGameScore()).isEqualTo(9);
-			});
+		assertThat(finalFrame.getGameScore()).isEqualTo(9);
 	}
 
 }
