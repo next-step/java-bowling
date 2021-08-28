@@ -13,6 +13,7 @@ public class PlayResult {
 	private static final int FIRST_INDEX_SIZE = 1;
 	private static final int SECOND_INDEX_SIZE = 2;
 	private static final int BONUS_INDEX_SIZE = 3;
+	private static final int MAX_PIN = 10;
 
 	private final List<Pin> gameResult;
 
@@ -20,8 +21,8 @@ public class PlayResult {
 		this.gameResult = Collections.unmodifiableList(gameResult);
 	}
 
-	public Pin findScore(int index) {
-		return gameResult.get(index);
+	public int findScore(int index) {
+		return gameResult.get(index).getPin();
 	}
 
 	public int findTotalScore() {
@@ -32,16 +33,38 @@ public class PlayResult {
 
 	public String getGameScore() {
 		if (gameResult.size() == FIRST_INDEX_SIZE) {
-			return ScoreGenerator.scoreGenerator(findScore(FIRST_INDEX).getPin());
+			return ScoreGenerator.scoreGenerator(findScore(FIRST_INDEX));
 		}
 		if (gameResult.size() == SECOND_INDEX_SIZE) {
-			return ScoreGenerator.scoreGenerator(findScore(FIRST_INDEX).getPin(), findScore(SECOND_INDEX).getPin());
+			return ScoreGenerator.scoreGenerator(findScore(FIRST_INDEX), findScore(SECOND_INDEX));
 		}
 		if (gameResult.size() == BONUS_INDEX_SIZE) {
-			return ScoreGenerator.scoreGenerator(findScore(FIRST_INDEX).getPin(), findScore(SECOND_INDEX).getPin(),
-				findScore(BONUS_INDEX).getPin());
+			return ScoreGenerator.scoreGenerator(findScore(FIRST_INDEX), findScore(SECOND_INDEX),
+				findScore(BONUS_INDEX));
 		}
 		return EMPTY_VALUE;
+	}
+
+	public boolean isGameStart() {
+		return gameResult.size() > FIRST_INDEX;
+	}
+
+	public boolean isSecondPlay() {
+		return gameResult.size() >= SECOND_INDEX_SIZE;
+	}
+
+	public boolean isStrike() {
+		return gameResult.size() > FIRST_INDEX && (findScore(FIRST_INDEX) == MAX_PIN);
+	}
+
+	public boolean isSpare() {
+		if (isStrike()) {
+			return false;
+		}
+		if (gameResult.size() < SECOND_INDEX_SIZE) {
+			return false;
+		}
+		return (findScore(FIRST_INDEX) + findScore(SECOND_INDEX) == MAX_PIN);
 	}
 
 	@Override
