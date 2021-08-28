@@ -1,5 +1,6 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,16 +100,20 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
+        this.deleted = true;
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+
         for (Answer answer : answers) {
-            answer.delete(loginUser);
+            deleteHistories.add(answer.delete(loginUser));
         }
 
-        this.deleted = true;
+        return deleteHistories;
     }
 
     @Override

@@ -25,8 +25,10 @@ public class QuestionTest {
     @DisplayName("질문 작성자와 작성자와 로그인 사용자가 일치하면, 질문을 삭제할 수 있다.")
     @Test
     void deletable() throws Exception {
-        question.delete(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistories = question.delete(UserTest.JAVAJIGI);
+
         assertThat(question.isDeleted()).isTrue();
+        assertThat(deleteHistories).hasSize(1);
     }
 
     @DisplayName("질문 작성자와 로그인 사용자가 일치하지 않으면, 질문 삭제 시 CannotDeleteException 예외가 발생한다.")
@@ -41,8 +43,10 @@ public class QuestionTest {
     void deletableQuestionWithAnswers() throws Exception {
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "테스트1"));
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "테스트2"));
-        question.delete(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistories = question.delete(UserTest.JAVAJIGI);
+
         assertThat(question.isDeleted()).isTrue();
+        assertThat(deleteHistories).hasSize(3);
     }
 
     @DisplayName("질문에 답변이 있는 경우, 질문자와 답변자가 다르면 질문을 삭제할 수 없다.")
@@ -50,6 +54,7 @@ public class QuestionTest {
     void notDeletableQuestionWithAnswers() {
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "답변1"));
         question.addAnswer(new Answer(UserTest.SANJIGI, question, "답변2"));
+
         assertThatThrownBy(() -> question.delete(UserTest.JAVAJIGI))
             .isInstanceOf(CannotDeleteException.class);
     }
@@ -59,7 +64,7 @@ public class QuestionTest {
     void deleteQuestionWithAnswers() throws Exception {
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "test1"));
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "test2"));
-        question.delete(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistories = question.delete(UserTest.JAVAJIGI);
 
         List<Boolean> results = question.getAnswers().stream()
                                     .map(Answer::isDeleted)
@@ -67,6 +72,7 @@ public class QuestionTest {
 
         assertThat(question.isDeleted()).isTrue();
         assertThat(results).containsOnly(true);
+        assertThat(deleteHistories).hasSize(3);
     }
 
 }
