@@ -54,9 +54,9 @@ public class FinalFrame extends Frame {
 
 	@Override
 	public int getGameScore() {
-		if (playResult.isGameStart()) {
-			return playResult.findTotalScore();
+		if (!isGameEnd()) {
+			return CUSTOM_SECTION_POINT;
 		}
-		return CUSTOM_SECTION_POINT;
+		return playResult.findTotalScore();
 	}
 }
