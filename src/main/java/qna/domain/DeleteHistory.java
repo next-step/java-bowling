@@ -24,6 +24,14 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
+    public static DeleteHistory newQuestion(Long contentId, User deletedBy) {
+        return new DeleteHistory(ContentType.QUESTION, contentId, deletedBy, LocalDateTime.now());
+    }
+
+    public static DeleteHistory newAnswer(Long contentId, User deletedBy) {
+        return new DeleteHistory(ContentType.ANSWER, contentId, deletedBy, LocalDateTime.now());
+    }
+
     public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
         this.contentType = contentType;
         this.contentId = contentId;
@@ -37,9 +45,9 @@ public class DeleteHistory {
         if (o == null || getClass() != o.getClass()) return false;
         DeleteHistory that = (DeleteHistory) o;
         return Objects.equals(id, that.id) &&
-                contentType == that.contentType &&
-                Objects.equals(contentId, that.contentId) &&
-                Objects.equals(deletedBy, that.deletedBy);
+            contentType == that.contentType &&
+            Objects.equals(contentId, that.contentId) &&
+            Objects.equals(deletedBy, that.deletedBy);
     }
 
     @Override
@@ -50,6 +58,6 @@ public class DeleteHistory {
     @Override
     public String toString() {
         return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
-                + deletedBy + ", createDate=" + createDate + "]";
+            + deletedBy + ", createDate=" + createDate + "]";
     }
 }
