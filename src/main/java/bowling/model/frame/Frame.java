@@ -31,7 +31,7 @@ public abstract class Frame {
 
 	public abstract String getGameStatus();
 
-	abstract boolean isGameEnd();
+	public abstract boolean isGameEnd();
 
 	abstract int getStrikeAndSpareNextScore(boolean strike, boolean spare, int sumScore);
 
