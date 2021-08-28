@@ -25,7 +25,7 @@ public class OutputView {
 
 	private static String getFrameGameResult(Frames frames) {
 		return frames.getFrames().stream()
-			.map(frame -> printFormatter(frame.getGameScore()))
+			.map(frame -> printFormatter(frame.getGameStatus()))
 			.collect(Collectors.joining(DELIMITER));
 	}
 

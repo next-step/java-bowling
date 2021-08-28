@@ -24,7 +24,7 @@ public abstract class Frame {
 
 	abstract void checkFrameNumber(int frameNumber);
 
-	public abstract String getGameScore();
+	public abstract String getGameStatus();
 
 	abstract boolean isGameEnd();
 

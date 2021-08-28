@@ -30,7 +30,7 @@ public class NormalFrame extends Frame {
 	}
 
 	@Override
-	public String getGameScore() {
+	public String getGameStatus() {
 		return playResult.getGameScore();
 	}
 

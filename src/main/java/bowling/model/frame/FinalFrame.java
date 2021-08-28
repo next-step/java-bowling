@@ -29,7 +29,7 @@ public class FinalFrame extends Frame {
 	}
 
 	@Override
-	public String getGameScore() {
+	public String getGameStatus() {
 		return playResult.getGameScore();
 	}
 
