@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import bowling.model.Player;
+import bowling.model.Score;
 import bowling.model.frame.Frames;
 
 public class OutputView {
@@ -15,12 +16,28 @@ public class OutputView {
 	private static final int MAX_PIN = 10;
 	private static final int START_INCLUSIVE = 0;
 	private static final int LIMIT_MAX_LENGTH = 5;
+	private static final int CUSTOM_SECTION_POINT = -1;
 
 	public static void printScoreBoard(Player player, Frames frames) {
 		System.out.print(DELIMITER + " NAME " + DELIMITER);
 		System.out.print(getFrameNumbers(frames) + DELIMITER + System.lineSeparator());
 		System.out.print(DELIMITER + printFormatter(player.getPlayerName()) + DELIMITER);
 		System.out.print(getFrameGameResult(frames) + DELIMITER + System.lineSeparator());
+		System.out.print(DELIMITER + printFormatter("SCORE") + DELIMITER);
+		System.out.print(getFrameGameScore(frames.getScoreBoard()) + DELIMITER + System.lineSeparator());
+	}
+
+	private static String getFrameGameScore(Score score) {
+		return score.getScore().stream()
+			.map(value -> printFormatter(convertScore(value)))
+			.collect(Collectors.joining(DELIMITER));
+	}
+
+	private static String convertScore(int gameScore) {
+		if (gameScore == CUSTOM_SECTION_POINT) {
+			return "";
+		}
+		return String.valueOf(gameScore);
 	}
 
 	private static String getFrameGameResult(Frames frames) {
