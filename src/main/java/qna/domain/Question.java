@@ -1,10 +1,19 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import static qna.domain.DeleteHistory.*;
 
+import org.hibernate.annotations.Where;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 import javax.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import qna.CannotDeleteException;
+import qna.NotFoundException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -78,6 +87,29 @@ public class Question extends AbstractEntity {
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
+    }
+
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        validateQuestion(loginUser);
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        writeQuestionDeleteHistory(deleteHistories);
+
+        answers.stream()
+            .forEach(e -> deleteHistories.add(e.delete(loginUser)));
+
+        return deleteHistories;
+    }
+
+    private void validateQuestion(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private void writeQuestionDeleteHistory(List<DeleteHistory> deleteHistories) {
+        setDeleted(true);
+        deleteHistories.add(newQuestion(getId(), getWriter()));
     }
 
     public boolean isDeleted() {
