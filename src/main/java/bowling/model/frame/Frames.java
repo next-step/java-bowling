@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
+import bowling.model.Score;
+
 public class Frames {
 
 	private static final int FIRST_FRAME_NUMBER = 1;
@@ -13,6 +15,7 @@ public class Frames {
 	private static final int NORMAL_FIRST_FRAME = 1;
 	private static final int NORMAL_FINAL_FRAME = 9;
 	private static final int FRAME_INDEX_STEP = 1;
+	private static final int ZERO_POINT = 0;
 
 	private final List<Frame> frames;
 	private int presentFrame;
@@ -30,7 +33,13 @@ public class Frames {
 		List<Frame> frames = new ArrayList<>();
 		createNormalFrame(frames);
 		createFinalFrame(frames);
+		initNextFrame(frames);
 		return new Frames(frames);
+	}
+
+	private static void initNextFrame(List<Frame> frames) {
+		IntStream.range(ZERO_POINT, NORMAL_FINAL_FRAME)
+			.forEach(i -> frames.get(i).bringNextFrame(frames.get(i + FRAME_INDEX_STEP)));
 	}
 
 	private static void createNormalFrame(List<Frame> frames) {
@@ -72,6 +81,10 @@ public class Frames {
 		return frames.stream()
 			.filter(frame -> frame.getFrameNumber() == FINAL_FRAME)
 			.noneMatch(Frame::isGameEnd);
+	}
+
+	public Score getScoreBoard(){
+		return Score.createScore(frames);
 	}
 
 	@Override
