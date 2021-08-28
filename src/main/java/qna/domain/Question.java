@@ -1,13 +1,17 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+    private static final int QUESTION_DELETE_HISTORY_INDEX = 0;
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -21,12 +25,9 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
-
-    public Question() {
-    }
 
     public Question(String title, String contents) {
         this.title = title;
@@ -39,24 +40,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
     public User getWriter() {
         return writer;
     }
@@ -66,30 +49,51 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
-    }
-
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
+        answers.setDeleted(deleted);
         return this;
+    }
+
+    public void delete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+        deleted = true;
+
+        answers.delete(loginUser);
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public void addAnswer(Answer answer) {
+        answer.toQuestion(this);
+        answers.add(answer);
+    }
+
+    public boolean isAnswerHaveOwner(User loginUser) {
+        return answers.isOwner(loginUser);
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public List<DeleteHistory> getDeleted() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        if (deleted) {
+            deleteHistories = answers.getDeleted();
+            deleteHistories.add(QUESTION_DELETE_HISTORY_INDEX, new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        }
+
+        return deleteHistories;
     }
 }
