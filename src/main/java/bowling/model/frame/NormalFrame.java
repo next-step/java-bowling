@@ -46,8 +46,11 @@ public class NormalFrame extends Frame {
 		if (spare && playResult.isGameStart()) {
 			return sumScore + playResult.findScore(FIRST_INDEX);
 		}
-		if (strike && playResult.isGameStart()) {
+		if (strike && playResult.isStrike()) {
 			return nextFrame.getStrikeAndSpareNextScore(false, true, sumScore + playResult.findTotalScore());
+		}
+		if (strike && playResult.isSecondPlay()) {
+			return sumScore + playResult.findTotalScore();
 		}
 		return CUSTOM_SECTION_POINT;
 	}
