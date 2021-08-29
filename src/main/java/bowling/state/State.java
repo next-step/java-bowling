@@ -6,5 +6,5 @@ public interface State {
 
   boolean isFinish();
 
-  String Score();
+  String score();
 }
