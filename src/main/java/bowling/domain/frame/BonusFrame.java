@@ -62,9 +62,11 @@ public class BonusFrame implements Frame {
 
     @Override
     public Score calculateAdditionalScore(Score score) {
-        for (State state : states) {
+        for (int i = 1; i < states.size(); i++) {
+            State state = states.get(i);
             score = state.calculateAdditionalScore(score);
         }
+
         return score;
     }
 
