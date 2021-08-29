@@ -8,7 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class PinTest {
+public class PinTest {
+
+  public static Pin from(int first){
+    return Pin.from(first);
+  }
 
   @DisplayName("쓰러진핀 수를 입력해서 객체를 생성 한다.")
   @Test
