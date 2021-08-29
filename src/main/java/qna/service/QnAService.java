@@ -45,8 +45,11 @@ public class QnAService {
 //                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
 //            }
 //        }
-        question.checkDeleteAutorization(loginUser);
+        question.checkDeleteAuthorization(loginUser);
 
+        // 현재 질문은 제거한 상태로 변경하고 이에 대한 정보를 setDeleted에 남긴다
+        // 질문과 답변 삭제 이력에 대한 정보를 DeleteHisotry에 남긴다.
+        // 답변
 //        List<DeleteHistory> deleteHistories = new ArrayList<>();
 //        question.setDeleted(true);
 //        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
@@ -55,5 +58,7 @@ public class QnAService {
 //            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
 //        }
 //        deleteHistoryService.saveAll(deleteHistories);
+        List<DeleteHistory> deleteArticles = question.deleteQuestion(loginUser);
+
     }
 }

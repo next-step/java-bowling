@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Answers {
@@ -22,5 +23,11 @@ public class Answers {
                 throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
             }
         }
+    }
+
+    public List<DeleteHistory> deleteAll() {
+        return answers.stream()
+                .map(Answer::deleteAnswer)
+                .collect(Collectors.toList());
     }
 }
