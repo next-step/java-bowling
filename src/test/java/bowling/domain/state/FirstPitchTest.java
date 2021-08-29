@@ -1,9 +1,9 @@
 package bowling.domain.state;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import bowling.domain.Pins;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class FirstPitchTest {
     @Test
@@ -16,11 +16,5 @@ class FirstPitchTest {
     void 미스_처리() {
         FirstPitch firstPitch = new FirstPitch(Pins.pitching(7));
         assertThat(firstPitch.nextPitch(2)).isInstanceOf(Miss.class);
-    }
-
-    @Test
-    void 출력() {
-        FirstPitch firstPitch = new FirstPitch(Pins.pitching(7));
-        assertThat(firstPitch.display()).isEqualTo("7  |");
     }
 }

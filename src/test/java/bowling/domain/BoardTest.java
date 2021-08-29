@@ -1,11 +1,11 @@
 package bowling.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {
 
@@ -20,7 +20,7 @@ public class BoardTest {
 
     @Test
     void 생성_테스트() {
-        assertThat(board.toString()).contains("asd");
+        assertThat(board.getBoards()).contains("|  asd |");
     }
 
     @Test
@@ -34,16 +34,16 @@ public class BoardTest {
             board.addFrame(1, state);
         }
 
-        assertThat(board.toString()).contains("5|3");
+        assertThat(board.getBoards()).contains("  5|3 |");
     }
 
     @Test
     void 점수판_스트라이크() {
         State state = StateFactory.first(10);
 
-        board.addFrame(1, state);
+        board.addStrike(1);
 
-        assertThat(board.toString()).contains("X");
+        assertThat(board.getBoards()).contains("   X  |");
     }
 
     @Test
@@ -52,7 +52,7 @@ public class BoardTest {
         state = state.nextPitch(3);
         board.addFrame(1, state);
 
-        assertThat(board.toString()).contains("7|/");
+        assertThat(board.getBoards()).contains("  7|/ |");
     }
 
     @Test
@@ -61,13 +61,13 @@ public class BoardTest {
         state = state.nextPitch(0);
         board.addFrame(1, state);
 
-        assertThat(board.toString()).contains("-|-");
+        assertThat(board.getBoards()).contains("  -|- |");
     }
 
     @Test
     void 마지막프레임_3스트라이크() {
         String result = "X|X|X|";
         board.addLast(10, result);
-        assertThat(board.toString()).contains("X|X|X|");
+        assertThat(board.getBoards()).contains(" X|X|X|");
     }
 }
