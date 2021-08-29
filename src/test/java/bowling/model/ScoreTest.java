@@ -28,14 +28,14 @@ public class ScoreTest {
 	public void getScore() {
 		Score score = Score.createScore(getFrames());
 
-		assertThat(score.getScore()).containsExactly(9,18,-1);
+		assertThat(score.getScore()).containsExactly(9, 18, -1);
 	}
 
 	private List<Frame> getFrames() {
 		List<Frame> frames = new ArrayList<>();
-		frames.add(getNormalFrame(1, 7,2));
-		frames.add(getNormalFrame(2, 8,1));
-		frames.add(getFinalFrame(10, 6,4));
+		frames.add(getNormalFrame(1, 7, 2));
+		frames.add(getNormalFrame(2, 8, 1));
+		frames.add(getFinalFrame());
 		IntStream.range(0, 2)
 			.forEach(i -> frames.get(i).bringNextFrame(frames.get(i + 1)));
 		return frames;
@@ -48,10 +48,10 @@ public class ScoreTest {
 		return normalFrame;
 	}
 
-	private Frame getFinalFrame(int frameNumber, int firstPin, int secondPin) {
-		FinalFrame finalFrame = new FinalFrame(frameNumber);
-		finalFrame.playGame(firstPin);
-		finalFrame.playGame(secondPin);
+	private Frame getFinalFrame() {
+		FinalFrame finalFrame = new FinalFrame(10);
+		finalFrame.playGame(6);
+		finalFrame.playGame(4);
 		return finalFrame;
 	}
 
