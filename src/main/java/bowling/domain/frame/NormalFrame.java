@@ -5,9 +5,6 @@ import bowling.domain.score.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
-import java.util.Collections;
-import java.util.List;
-
 public class NormalFrame implements Frame {
 
     private static final int NORMAL_FRAME_LAST = 9;
@@ -46,8 +43,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public List<State> getState() {
-        return Collections.singletonList(state);
+    public String getState() {
+        return state.toString();
     }
 
     @Override

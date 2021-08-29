@@ -29,4 +29,9 @@ public class Ready implements Playing {
     private boolean isStrike(Pins pins) {
         return Pins.MAX_PIN_NUMBER == pins.getPins();
     }
+
+    @Override
+    public String toString() {
+        return "  ";
+    }
 }

@@ -7,9 +7,6 @@ import bowling.domain.state.Miss;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
-import java.util.Collections;
-import java.util.List;
-
 public class FinalFrame implements Frame {
 
     public static final int FINAL_FRAME_NUMBER = 10;
@@ -47,8 +44,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<State> getState() {
-        return Collections.singletonList(state);
+    public String getState() {
+        return state.toString();
     }
 
     @Override

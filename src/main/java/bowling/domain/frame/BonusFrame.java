@@ -2,12 +2,13 @@ package bowling.domain.frame;
 
 import bowling.domain.pins.Pins;
 import bowling.domain.score.Score;
+import bowling.domain.state.Ready;
 import bowling.domain.state.Spare;
 import bowling.domain.state.State;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BonusFrame implements Frame {
 
@@ -30,25 +31,22 @@ public class BonusFrame implements Frame {
 
     @Override
     public Frame bowl(Pins pins) {
-        State state = getLast();
-        if (state.isFinish()) {
-            states.add(state);
-            return this;
-        }
-
-        removeLast();
+        State state = Ready.of();
         states.add(state.bowl(pins));
+
         return this;
     }
 
     @Override
     public boolean isFinish() {
-        return states.size() == LAST_COUNT || isSpare();
+        return states.size() == LAST_COUNT || isFirstSpare();
     }
 
     @Override
-    public List<State> getState() {
-        return Collections.unmodifiableList(states);
+    public String getState() {
+        return states.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining());
     }
 
     @Override
@@ -70,15 +68,7 @@ public class BonusFrame implements Frame {
         return score;
     }
 
-    private void removeLast() {
-        states.remove(states.size() - 1);
-    }
-
-    private State getLast() {
-        return states.get(states.size() - 1);
-    }
-
-    private boolean isSpare() {
-        return states.size() == 2 && getLast() instanceof Spare;
+    private boolean isFirstSpare() {
+        return states.size() == 2 && states.get(0) instanceof Spare;
     }
 }
