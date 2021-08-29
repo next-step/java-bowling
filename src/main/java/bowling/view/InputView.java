@@ -17,8 +17,7 @@ public class InputView {
 	}
 
 	public static int inputStrikeNumber(int presentFrame) {
-		System.out.print("\n");
-		System.out.printf(INPUT_STRIKE_NUMBER_MESSAGE, presentFrame);
+		System.out.printf(System.lineSeparator() + INPUT_STRIKE_NUMBER_MESSAGE, presentFrame);
 		if (!scanner.hasNextInt()) {
 			throw new InputMachTypeException(NUMBER_TYPE_ERROR_MESSAGE);
 		}
