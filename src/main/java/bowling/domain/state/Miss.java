@@ -27,17 +27,22 @@ public class Miss implements State {
     }
 
     @Override
-    public String display() {
-        return firstPins.display(secondPins);
-    }
-
-    @Override
     public boolean isFinished() {
         return true;
     }
 
     @Override
     public List<State> lastSpare(List<State> list, State state) {
-        throw new NextPitchingException(MESSAGE);
+        return list;
+    }
+
+    @Override
+    public int firstPins() {
+        return firstPins.getFalledPins();
+    }
+
+    @Override
+    public int secondPins() {
+        return secondPins.getFalledPins();
     }
 }

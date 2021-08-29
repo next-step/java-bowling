@@ -6,7 +6,7 @@ import bowling.exception.NextPitchingException;
 import java.util.List;
 
 
-public class Strike implements State{
+public class Strike implements State {
     private static final String MESSAGE = "스트라이크";
 
     private final Pins pins;
@@ -26,11 +26,6 @@ public class Strike implements State{
     }
 
     @Override
-    public String display() {
-        return pins.display();
-    }
-
-    @Override
     public boolean isFinished() {
         return true;
     }
@@ -40,4 +35,13 @@ public class Strike implements State{
         throw new NextPitchingException(MESSAGE);
     }
 
+    @Override
+    public int firstPins() {
+        return pins.getFalledPins();
+    }
+
+    @Override
+    public int secondPins() {
+        return 0;
+    }
 }

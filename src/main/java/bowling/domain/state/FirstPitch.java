@@ -2,10 +2,11 @@ package bowling.domain.state;
 
 import bowling.domain.Pins;
 import bowling.exception.NextPitchingException;
+import bowling.exception.NotPitchingException;
 
 import java.util.List;
 
-public class FirstPitch implements State{
+public class FirstPitch implements State {
     private Pins firstPins;
 
     public FirstPitch(Pins firstPins) {
@@ -27,17 +28,22 @@ public class FirstPitch implements State{
     }
 
     @Override
-    public String display() {
-        return firstPins.display();
-    }
-
-    @Override
     public boolean isFinished() {
         return false;
     }
 
     @Override
     public List<State> lastSpare(List<State> list, State state) {
-        return null;
+        throw new NotPitchingException("10 프레임이 아닙니다.");
+    }
+
+    @Override
+    public int firstPins() {
+        return firstPins.getFalledPins();
+    }
+
+    @Override
+    public int secondPins() {
+        return 0;
     }
 }

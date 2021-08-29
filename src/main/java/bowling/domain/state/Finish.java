@@ -25,11 +25,6 @@ public class Finish implements State {
     }
 
     @Override
-    public String display() {
-        return pins.display();
-    }
-
-    @Override
     public boolean isFinished() {
         return true;
     }
@@ -37,5 +32,15 @@ public class Finish implements State {
     @Override
     public List<State> lastSpare(List<State> list, State state) {
         throw new NextPitchingException(MESSAGE);
+    }
+
+    @Override
+    public int firstPins() {
+        return pins.getFalledPins();
+    }
+
+    @Override
+    public int secondPins() {
+        return 0;
     }
 }
