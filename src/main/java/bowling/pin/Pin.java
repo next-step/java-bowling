@@ -4,8 +4,12 @@ import java.util.Objects;
 
 public class Pin {
 
-  public static final int MAX_PINS = 10;
-  public static final int MIN_PINS = 0;
+  private static final int MAX_PINS = 10;
+  private static final int MIN_PINS = 0;
+  private static final String STRIKE = "X";
+  private static final String SEPARATOR = "|";
+  private static final String SPARE = "/";
+
   private final int fallenPin;
 
   private Pin(final int fallenPin) {
@@ -28,22 +32,36 @@ public class Pin {
   }
 
   public int totalDownPin(final Pin firstPin) {
-    if(this.fallenPin + firstPin.fallenPin > MAX_PINS){
-      throw new IllegalArgumentException(String.format("쓰러트린 핀의 총합이 %d보다 클 수 없습니다.",MAX_PINS));
+    if (this.fallenPin + firstPin.fallenPin > MAX_PINS) {
+      throw new IllegalArgumentException(String.format("쓰러트린 핀의 총합이 %d보다 클 수 없습니다.", MAX_PINS));
     }
     return this.fallenPin + firstPin.fallenPin;
   }
 
-  public boolean isStrike(){
+  public boolean isStrike() {
     return this.fallenPin == MAX_PINS;
   }
 
-  public boolean isSpare(final Pin firstPin){
+  public boolean isSpare(final Pin firstPin) {
     return totalDownPin(firstPin) == MAX_PINS;
   }
 
-  public boolean isMiss(final Pin firstPin){
+  public boolean isMiss(final Pin firstPin) {
     return totalDownPin(firstPin) < MAX_PINS;
+  }
+
+  public String score() {
+    if (isStrike()) {
+      return STRIKE;
+    }
+    return this.fallenPin + SEPARATOR;
+  }
+
+  public String score(Pin first) {
+    if (isSpare(first)) {
+      return first.fallenPin + SEPARATOR + SPARE;
+    }
+    return first.fallenPin + SEPARATOR + this.fallenPin;
   }
 
 
