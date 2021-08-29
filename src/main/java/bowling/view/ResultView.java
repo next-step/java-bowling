@@ -42,22 +42,30 @@ public class ResultView {
         System.out.println(frameNum + " 프레임 투구");
     }
 
-    public static String lastFrame(LastFrame lastFrame) {
-        List<State> state = lastFrame.getState();
-
+    public static String lastFrame(LastFrame lastFrame, Board board) {
+        List<State> stateList = lastFrame.getState();
         List<String> resultList = new ArrayList<>();
-        for (int i = 0; i < state.size(); i++) {
-            State state1 = state.get(i);
-            resultList.add(state1.display().replaceAll(" ", ""));
+        for (State state : stateList) {
+            strike(board, resultList);
+            spareOrMiss(board, resultList, state);
         }
 
         String result = "";
 
         for (String s : resultList) {
             result = result + s;
-
         }
 
         return result;
+    }
+
+    private static void spareOrMiss(final Board board, final List<String> resultList, final State state) {
+        if(state.firstPins() != 10 && state.secondPins() >= 0) {
+            resultList.set(resultList.size() - 1, board.lastSpareOrMiss(state));
+        }
+    }
+
+    private static void strike(final Board board, final List<String> resultList) {
+        resultList.add(board.lastStrike());
     }
 }
