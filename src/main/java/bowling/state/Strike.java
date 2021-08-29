@@ -11,7 +11,7 @@ public class Strike extends Finish{
   }
 
   @Override
-  public String Score() {
+  public String score() {
     return first.score();
   }
 }

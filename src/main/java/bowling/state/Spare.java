@@ -14,7 +14,7 @@ public class Spare extends Finish{
   }
 
   @Override
-  public String Score() {
+  public String score() {
     return second.score(first);
   }
 }
