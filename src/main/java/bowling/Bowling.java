@@ -32,9 +32,13 @@ public class Bowling {
         while (count < MAX_NORMAL_FRAME) {
             ResultView.pitchedBall(startFrame);
             State state = StateFactory.first(InputView.inputPins());
-            board.addFrame(startFrame, state);
+            board.addStrike(startFrame);
 
-            spare(startFrame, board, state);
+            if (!state.isFinished()) {
+                ResultView.pitchedBall(startFrame);
+                state = state.nextPitch(InputView.inputPins());
+                board.addFrame(startFrame, state);
+            }
 
             ResultView.currentResult(board);
             startFrame++;
@@ -57,7 +61,7 @@ public class Bowling {
         }
 
         LastFrame lastFrame = new LastFrame(resultList);
-        board.addLast(LAST_FRAME, ResultView.lastFrame(lastFrame));
+        board.addLast(LAST_FRAME, ResultView.lastFrame(lastFrame, board));
         ResultView.currentResult(board);
     }
 
@@ -85,13 +89,5 @@ public class Bowling {
         state = StateFactory.last(InputView.inputPins());
         list.add(state); //마지막 3번째 결과
         return state;
-    }
-
-    private static void spare(int startFrame, Board board, State state) {
-        if (!state.isFinished()) {
-            ResultView.pitchedBall(startFrame);
-            state = state.nextPitch(InputView.inputPins());
-            board.addFrame(startFrame, state);
-        }
     }
 }
