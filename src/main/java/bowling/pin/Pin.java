@@ -61,7 +61,7 @@ public class Pin {
     if (isSpare(first)) {
       return first.fallenPin + SEPARATOR + SPARE;
     }
-    return first.fallenPin + SEPARATOR + this.fallenPin;
+    return first.fallenPin + SEPARATOR + totalDownPin(first);
   }
 
 
