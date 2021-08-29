@@ -34,6 +34,18 @@ public class Pin {
     return this.fallenPin + firstPin.fallenPin;
   }
 
+  public boolean isStrike(){
+    return this.fallenPin == MAX_PINS;
+  }
+
+  public boolean isSpare(final Pin firstPin){
+    return totalDownPin(firstPin) == MAX_PINS;
+  }
+
+  public boolean isMiss(final Pin firstPin){
+    return totalDownPin(firstPin) < MAX_PINS;
+  }
+
 
   @Override
   public boolean equals(final Object o) {
