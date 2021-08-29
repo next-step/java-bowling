@@ -22,8 +22,9 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-//    private List<Answer> answers = new ArrayList<>();
     Answers answers = new Answers();
+//    private List<Answer> answers = new ArrayList<>();
+
 
     private boolean deleted = false;
 
@@ -93,7 +94,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
