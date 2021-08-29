@@ -31,27 +31,18 @@ public class Answers {
 
     }
 
-    public void setDeleted(boolean deleted) {
-        for (Answer answer : answers) {
-            answer.setDeleted(deleted);
-        }
-    }
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-    public void delete(User loginUser) throws CannotDeleteException {
         for (Answer answer : answers) {
-            answer.delete(loginUser);
+            deleteHistories.add(answer.delete(loginUser));
         }
+
+        return deleteHistories;
     }
 
     public void add(Answer answer) {
         answers.add(answer);
-    }
-
-    public List<DeleteHistory> getDeleted() {
-        return answers.stream()
-                .filter(answer -> answer.isDeleted())
-                .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
-                .collect(Collectors.toList());
     }
 
     @Override

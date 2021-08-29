@@ -4,6 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -19,20 +22,13 @@ public class AnswerTest {
         assertThat(testAnswer).isEqualTo(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1"));
     }
 
-    @DisplayName("setDeleted 함수 테스트")
-    @Test
-    void setDeleted() {
-        A1.setDeleted(false);
-
-        assertThat(A1.isDeleted()).isFalse();
-    }
-
     @DisplayName("delete 함수 테스트")
     @Test
     void delete() throws CannotDeleteException {
         A2.delete(UserTest.SANJIGI);
 
-        assertThat(A2.isDeleted()).isTrue();
+        assertThat(A2.delete(UserTest.SANJIGI)).isEqualTo(
+                new DeleteHistory(ContentType.ANSWER, AnswerTest.A2.getId(), AnswerTest.A2.getWriter(), LocalDateTime.now()));
     }
 
     @DisplayName("인가 되지 않은 사용자가 delete 할때 Exception 테스트")
@@ -46,8 +42,8 @@ public class AnswerTest {
 
     @DisplayName("isDeleted 테스트")
     @Test
-    void isDeleted() {
-        A1.setDeleted(true);
+    void isDeleted() throws CannotDeleteException {
+        A1.delete(UserTest.JAVAJIGI);
 
         assertThat(A1.isDeleted()).isTrue();
     }
