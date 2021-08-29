@@ -83,7 +83,7 @@ public class Frames {
 			.noneMatch(Frame::isGameEnd);
 	}
 
-	public Score getScoreBoard(){
+	public Score getScoreBoard() {
 		return Score.createScore(frames);
 	}
 
