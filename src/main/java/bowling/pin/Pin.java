@@ -54,7 +54,7 @@ public class Pin {
     if (isStrike()) {
       return STRIKE;
     }
-    return this.fallenPin + SEPARATOR;
+    return String.valueOf(this.fallenPin);
   }
 
   public String score(Pin first) {
