@@ -3,6 +3,7 @@ package bowling.model.frame;
 import bowling.model.Pin;
 import bowling.model.PlayResult;
 import bowling.model.play.NormalPlay;
+import bowling.model.play.Playable;
 
 public class NormalFrame extends Frame {
 
@@ -12,7 +13,7 @@ public class NormalFrame extends Frame {
 	private static final int CUSTOM_SECTION_POINT = -1;
 	private static final int FIRST_INDEX = 0;
 
-	private final NormalPlay normalPlay;
+	private final Playable normalPlay;
 
 	public NormalFrame(int frameNumber) {
 		super(frameNumber);

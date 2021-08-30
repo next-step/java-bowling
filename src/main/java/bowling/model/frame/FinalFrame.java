@@ -3,6 +3,7 @@ package bowling.model.frame;
 import bowling.model.Pin;
 import bowling.model.PlayResult;
 import bowling.model.play.FinalPlay;
+import bowling.model.play.Playable;
 
 public class FinalFrame extends Frame {
 
@@ -12,7 +13,7 @@ public class FinalFrame extends Frame {
 	private static final int FIRST_INDEX = 0;
 	private static final int SECOND_INDEX = 1;
 
-	private final FinalPlay finalPlay;
+	private final Playable finalPlay;
 
 	public FinalFrame(int frameNumber) {
 		super(frameNumber);
