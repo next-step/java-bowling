@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,8 +35,6 @@ public class ScoreTest {
 		frames.add(getNormalFrame(1, 7, 2));
 		frames.add(getNormalFrame(2, 8, 1));
 		frames.add(getFinalFrame());
-		IntStream.range(0, 2)
-			.forEach(i -> frames.get(i).bringNextFrame(frames.get(i + 1)));
 		return frames;
 	}
 
