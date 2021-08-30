@@ -74,6 +74,16 @@ public class PlayResult {
 		return isMaxPin(gameResult.get(SECOND_INDEX));
 	}
 
+	public int findScoreNextStep() {
+		if (isStrike()) {
+			return 2;
+		}
+		if (isSpare()) {
+			return 1;
+		}
+		return -1;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

@@ -111,6 +111,29 @@ class PlayResultTest {
 		assertThat(playResult.isSpare()).isTrue();
 	}
 
+	@Test
+	@DisplayName("첫번째 볼이 스트라이크이면 다음 프레임은 2단계이다.")
+	public void findScoreNextStepByStrike() {
+		List<Pin> pins = new ArrayList<>();
+		pins.add(new Pin(10));
+
+		PlayResult playResult = new PlayResult(pins);
+
+		assertThat(playResult.findScoreNextStep()).isEqualTo(2);
+	}
+
+	@Test
+	@DisplayName("결과가  스페어 이면 다음 프레임은 1단계이다.")
+	public void findScoreNextStepBySpare() {
+		List<Pin> pins = new ArrayList<>();
+		pins.add(new Pin(4));
+		pins.add(new Pin(6));
+
+		PlayResult playResult = new PlayResult(pins);
+
+		assertThat(playResult.findScoreNextStep()).isEqualTo(1);
+	}
+
 	private List<Pin> getGameResult() {
 		return Arrays.asList(new Pin(5), new Pin(3));
 	}
