@@ -1,6 +1,5 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
@@ -20,10 +19,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -69,8 +66,7 @@ public class Question extends AbstractEntity {
     }
 
     public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
+        answers.addAnswer(answer, this);
     }
 
     public boolean isOwner(User loginUser) {
@@ -84,10 +80,8 @@ public class Question extends AbstractEntity {
     }
 
     public void hasOnlyOwnAnswersElseThrow() throws CannotDeleteException {
-        for (Answer answer : answers) {
-            if (!answer.isOwner(writer)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
+        if (!answers.containsOnlyBy(getWriter())) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
 
@@ -97,9 +91,7 @@ public class Question extends AbstractEntity {
         setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
 
-        for (Answer answer : answers) {
-            deleteHistories.add(answer.delete());
-        }
+        deleteHistories.addAll(answers.delete());
 
         return deleteHistories;
     }
@@ -113,7 +105,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 

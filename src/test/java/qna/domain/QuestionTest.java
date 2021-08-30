@@ -33,9 +33,5 @@ public class QuestionTest {
         Q1.deleteWithAnswers();
 
         assertThat(Q1.isDeleted()).isTrue();
-
-        for (Answer answer : Q1.getAnswers()) {
-            assertThat(answer.isDeleted()).isTrue();
-        }
     }
 }
