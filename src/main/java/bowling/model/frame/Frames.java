@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
+import bowling.Comparator.FrameComparator;
 import bowling.model.Score;
 
 public class Frames {
@@ -15,7 +15,6 @@ public class Frames {
 	private static final int NORMAL_FIRST_FRAME = 1;
 	private static final int NORMAL_FINAL_FRAME = 9;
 	private static final int FRAME_INDEX_STEP = 1;
-	private static final int ZERO_POINT = 0;
 
 	private final List<Frame> frames;
 	private int presentFrame;
@@ -31,25 +30,26 @@ public class Frames {
 
 	public static Frames initCreateFrames() {
 		List<Frame> frames = new ArrayList<>();
-		createNormalFrame(frames);
-		createFinalFrame(frames);
-		initNextFrame(frames);
-		return new Frames(frames);
+		Frame finalFrame = createFinalFrame(frames);
+		return new Frames(createNormalFrame(frames, finalFrame));
 	}
 
-	private static void initNextFrame(List<Frame> frames) {
-		IntStream.range(ZERO_POINT, NORMAL_FINAL_FRAME)
-			.forEach(i -> frames.get(i).bringNextFrame(frames.get(i + FRAME_INDEX_STEP)));
+	private static List<Frame> createNormalFrame(List<Frame> frames, Frame finalFrame) {
+		Frame previousFrame = finalFrame;
+		for (int i = NORMAL_FINAL_FRAME; i >= NORMAL_FIRST_FRAME; i--) {
+			NormalFrame normalFrame = new NormalFrame(i, previousFrame);
+			frames.add(normalFrame);
+			previousFrame = normalFrame;
+		}
+
+		frames.sort(new FrameComparator());
+		return frames;
 	}
 
-	private static void createNormalFrame(List<Frame> frames) {
-		IntStream.rangeClosed(NORMAL_FIRST_FRAME, NORMAL_FINAL_FRAME)
-			.mapToObj(NormalFrame::new)
-			.forEach(frames::add);
-	}
-
-	private static void createFinalFrame(List<Frame> frames) {
-		frames.add(new FinalFrame(FINAL_FRAME));
+	private static Frame createFinalFrame(List<Frame> frames) {
+		FinalFrame finalFrame = new FinalFrame(FINAL_FRAME);
+		frames.add(finalFrame);
+		return finalFrame;
 	}
 
 	public void playBowling(int strikeNumber) {
