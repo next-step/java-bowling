@@ -3,11 +3,15 @@ package bowling.domain.frame;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import bowling.domain.common.Score;
 import bowling.domain.frame.exception.InvalidProgressFrameException;
 
 @DisplayName("일반 프레임")
@@ -40,12 +44,12 @@ class NormalFrameTest {
 
 	}
 
-	@DisplayName("투구 - 일반")
+	@DisplayName("투구 - miss")
 	@ParameterizedTest
 	@CsvSource({
 		"5,2"
 	})
-	void pitch_normal(final int first, final int second) {
+	void pitch_miss(final int first, final int second) {
 		// given
 		Frame frame = NormalFrame.of();
 
@@ -58,7 +62,7 @@ class NormalFrameTest {
 		assertThat(frame.possiblePitch()).isFalse();
 	}
 
-	@DisplayName("투구 - 스트라이크")
+	@DisplayName("투구 - strike")
 	@Test
 	void pitch_strike() {
 		// given
@@ -93,5 +97,88 @@ class NormalFrameTest {
 
 		// then
 		assertThat(last).isInstanceOf(FinalFrame.class);
+	}
+
+	@DisplayName("점수 계산 - miss")
+	@Test
+	void score_miss() {
+		// given
+
+		// when
+		final Frame frame = NormalFrame.of()
+			.pitch(7)
+			.pitch(2);
+
+		// then
+		assertThat(frame.caculateScore(Collections.singletonList(frame)))
+			.isEqualTo(new Score(9, 0));
+	}
+
+	@DisplayName("점수 계산 - spare")
+	@Test
+	void score_spare() {
+		// given
+		final Frame frame = NormalFrame.of()
+			.pitch(7)
+			.pitch(3);
+
+		// when
+		final Frame next = frame.next()
+			.pitch(7);
+
+		assertThat(frame.caculateScore(Arrays.asList(frame, next)))
+			.isEqualTo(new Score(17, 0));
+	}
+
+	@DisplayName("점수 계산 - strike")
+	@Test
+	void score_strike() {
+		// given
+		final Frame frame = NormalFrame.of()
+			.pitch(10);
+
+		// when
+		final Frame next1 = frame.next()
+			.pitch(10);
+
+		final Frame next2 = next1.next()
+			.pitch(10);
+
+		assertThat(frame.caculateScore(Arrays.asList(frame, next1, next2)))
+			.isEqualTo(new Score(30, 0));
+	}
+
+	@DisplayName("점수 계산 - spare - 마지막 프레임")
+	@Test
+	void score_spare_lastFrame() {
+		// given
+		final Frame frame = NormalFrame.of()
+			.pitch(7)
+			.pitch(3);
+
+		// when
+		final Frame last = frame.last()
+			.pitch(10);
+
+		// then
+		assertThat(frame.caculateScore(Arrays.asList(frame, last)))
+			.isEqualTo(new Score(20, 0));
+	}
+
+	@DisplayName("점수 계산 - strike - 마지막 프레임")
+	@Test
+	void score_strike_lastFrame() {
+		// given
+		final Frame frame = NormalFrame.of()
+			.pitch(10);
+
+		// when
+		final Frame last = frame.last()
+			.pitch(10)
+			.pitch(10);
+
+		// then
+		assertThat(frame.caculateScore(Arrays.asList(frame, last)))
+			.isEqualTo(new Score(30, 0));
 	}
 }

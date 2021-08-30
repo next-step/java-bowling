@@ -3,11 +3,14 @@ package bowling.domain.frame;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Collections;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import bowling.domain.common.Score;
 import bowling.domain.exception.InvalidMethodCallException;
 import bowling.domain.frame.exception.InvalidProgressFrameException;
 
@@ -57,17 +60,16 @@ class FinalFrameTest {
 
 	}
 
-	@DisplayName("투구 - 일반")
+	@DisplayName("투구 - miss")
 	@ParameterizedTest
 	@CsvSource({
 		"5,2"
 	})
-	void pitch_normal(final int first, final int second) {
+	void pitch_miss(final int first, final int second) {
 		// given
-		Frame frame = FinalFrame.of();
 
 		// when
-		frame = frame
+		final Frame frame = FinalFrame.of()
 			.pitch(first)
 			.pitch(second);
 
@@ -75,17 +77,17 @@ class FinalFrameTest {
 		assertThat(frame.possiblePitch()).isFalse();
 	}
 
-	@DisplayName("투구 - 스트라이크")
+	@DisplayName("투구 - strike")
 	@ParameterizedTest
 	@CsvSource({
 		"10,5,2"
 	})
 	void pitch_strike(final int first, final int second, final int bonus) {
 		// given
-		Frame frame = FinalFrame.of();
 
 		// when
-		frame = frame.pitch(first)
+		final Frame frame = FinalFrame.of()
+			.pitch(first)
 			.pitch(second)
 			.pitch(bonus);
 
@@ -93,17 +95,17 @@ class FinalFrameTest {
 		assertThat(frame.possiblePitch()).isFalse();
 	}
 
-	@DisplayName("투구 - 스페어")
+	@DisplayName("투구 - spare")
 	@ParameterizedTest
 	@CsvSource({
 		"5,5,2"
 	})
 	void pitch_spare(final int first, final int second, final int bonus) {
 		// given
-		Frame frame = FinalFrame.of();
 
 		// when
-		frame = frame.pitch(first)
+		final Frame frame = FinalFrame.of()
+			.pitch(first)
 			.pitch(second)
 			.pitch(bonus);
 
@@ -135,5 +137,52 @@ class FinalFrameTest {
 
 		// then
 
+	}
+
+	@DisplayName("점수 계산 - miss")
+	@Test
+	void score_miss() {
+		// given
+
+		// when
+		final Frame frame = FinalFrame.of()
+			.pitch(7)
+			.pitch(2);
+
+		// then
+		assertThat(frame.caculateScore(Collections.singletonList(frame)))
+			.isEqualTo(new Score(9, 0));
+	}
+
+	@DisplayName("점수 계산 - spare")
+	@Test
+	void score_spare() {
+		// given
+
+		// when
+		final Frame frame = FinalFrame.of()
+			.pitch(7)
+			.pitch(3)
+			.pitch(7);
+
+		// then
+		assertThat(frame.caculateScore(Collections.singletonList(frame)))
+			.isEqualTo(new Score(17, 0));
+	}
+
+	@DisplayName("점수 계산 - strike")
+	@Test
+	void score_strike() {
+		// given
+
+		// when
+		final Frame frame = FinalFrame.of()
+			.pitch(10)
+			.pitch(10)
+			.pitch(10);
+
+		// then
+		assertThat(frame.caculateScore(Collections.singletonList(frame)))
+			.isEqualTo(new Score(30, 0));
 	}
 }
