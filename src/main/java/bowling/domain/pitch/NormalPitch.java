@@ -1,6 +1,6 @@
 package bowling.domain.pitch;
 
-import bowling.domain.KnockedPins;
+import bowling.domain.common.KnockedPins;
 import bowling.domain.exception.InvalidPinCountException;
 
 public final class NormalPitch extends BasePitch {

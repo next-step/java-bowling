@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import bowling.domain.KnockedPins;
+import bowling.domain.common.KnockedPins;
 import bowling.domain.exception.InvalidMethodCallException;
 import bowling.domain.pitch.NormalPitch;
 import bowling.domain.pitch.Pitch;

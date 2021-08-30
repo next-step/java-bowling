@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import bowling.domain.Bowling;
-import bowling.domain.Player;
+import bowling.domain.common.Player;
 import bowling.domain.frame.Frame;
 
 public class OutputView {

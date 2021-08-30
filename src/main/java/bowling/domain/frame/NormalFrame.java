@@ -3,7 +3,7 @@ package bowling.domain.frame;
 import java.util.Collections;
 import java.util.List;
 
-import bowling.domain.KnockedPins;
+import bowling.domain.common.KnockedPins;
 import bowling.domain.frame.exception.InvalidProgressFrameException;
 import bowling.domain.pitch.Pitch;
 

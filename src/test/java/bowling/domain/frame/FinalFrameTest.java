@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import bowling.domain.exception.InvalidMethodCallException;
 import bowling.domain.frame.exception.InvalidProgressFrameException;
-import bowling.domain.frame.exception.PitchesFullException;
 
 @DisplayName("마지막 프레임")
 class FinalFrameTest {

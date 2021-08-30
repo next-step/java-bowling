@@ -1,23 +1,23 @@
-package bowling.domain;
+package bowling.domain.common;
 
 import java.util.Objects;
 
 import bowling.domain.exception.InvalidPinCountException;
 
-public final class KnockedPins {
+public final class FalledPins {
 
 	private static final int MIN_COUNT = 0;
 	private static final int MAX_COUNT = 10;
 
 	private final int count;
 
-	private KnockedPins(final int count) {
+	private FalledPins(final int count) {
 		this.count = count;
 	}
 
-	public static KnockedPins of(final int count) {
+	public static FalledPins of(final int count) {
 		validateCreate(count);
-		return new KnockedPins(count);
+		return new FalledPins(count);
 	}
 
 	private static void validateCreate(final int count) {
@@ -34,9 +34,9 @@ public final class KnockedPins {
 	public boolean equals(final Object o) {
 		if (this == o)
 			return true;
-		if (!(o instanceof KnockedPins))
+		if (!(o instanceof FalledPins))
 			return false;
-		final KnockedPins that = (KnockedPins)o;
+		final FalledPins that = (FalledPins)o;
 		return count == that.count;
 	}
 

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import bowling.domain.common.FalledPins;
 import bowling.domain.exception.InvalidProgressBowlingException;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
@@ -30,11 +31,11 @@ public final class Bowling {
 			|| frames.get(FINAL_FRAME_INDEX).possiblePitch();
 	}
 
-	public Bowling pitch(final int knockedPinsCount) {
-		return pitch(KnockedPins.of(knockedPinsCount));
+	public Bowling pitch(final int falledPinsCount) {
+		return pitch(FalledPins.of(falledPinsCount));
 	}
 
-	public Bowling pitch(final KnockedPins knockedPins) {
+	public Bowling pitch(final FalledPins falledPins) {
 		if (!possiblePitch()) {
 			throw new InvalidProgressBowlingException();
 		}
@@ -47,7 +48,7 @@ public final class Bowling {
 		}
 
 		final Frame nextFrame = nextFrame(frames, currentFrame);
-		return new Bowling(Stream.concat(frames.stream(), Stream.of(nextFrame.pitch(knockedPins)))
+		return new Bowling(Stream.concat(frames.stream(), Stream.of(nextFrame.pitch(falledPins)))
 			.collect(Collectors.toList()));
 	}
 

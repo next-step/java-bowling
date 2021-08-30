@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.common;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import bowling.domain.exception.InvalidNameException;
+import bowling.domain.common.exception.InvalidNameException;
 
 @DisplayName("플레이어")
 class PlayerTest {

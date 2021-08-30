@@ -1,7 +1,7 @@
 package bowling.controller;
 
 import bowling.domain.Bowling;
-import bowling.domain.Player;
+import bowling.domain.common.Player;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
@@ -13,8 +13,8 @@ public class BowlingController {
 
 		OutputView.printFrames(player, bowling);
 		while (bowling.possiblePitch()) {
-			final int knockedPinsCount = InputView.knockedPinsCount(bowling.currentFrameIndex());
-			bowling = bowling.pitch(knockedPinsCount);
+			final int falledPinsCount = InputView.falledPinsCount(bowling.currentFrameIndex());
+			bowling = bowling.pitch(falledPinsCount);
 			OutputView.printFrames(player, bowling);
 		}
 	}

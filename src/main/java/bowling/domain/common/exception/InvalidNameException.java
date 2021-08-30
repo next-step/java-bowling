@@ -1,4 +1,4 @@
-package bowling.domain.exception;
+package bowling.domain.common.exception;
 
 public class InvalidNameException extends RuntimeException {
 

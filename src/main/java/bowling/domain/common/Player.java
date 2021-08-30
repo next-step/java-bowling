@@ -1,6 +1,6 @@
-package bowling.domain;
+package bowling.domain.common;
 
-import bowling.domain.exception.InvalidNameException;
+import bowling.domain.common.exception.InvalidNameException;
 
 public class Player {
 

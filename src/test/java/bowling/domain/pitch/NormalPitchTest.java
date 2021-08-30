@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import bowling.domain.KnockedPins;
+import bowling.domain.common.KnockedPins;
 import bowling.domain.exception.InvalidPinCountException;
 
 @DisplayName("투구 - 일반")
