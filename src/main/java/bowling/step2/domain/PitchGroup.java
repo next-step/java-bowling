@@ -28,7 +28,7 @@ public class PitchGroup {
         }
 
         return pitches.get(pitches.size() - 1)
-                .count();
+                .count() % 10;
     }
 
     public int total() {

@@ -30,4 +30,12 @@ public class Frame {
     private boolean sumOfPitchesOverTheMax(int lastPitchCount, int count) {
         return lastPitchCount + count > MAX;
     }
+
+    public Frame nextFrame() {
+        return Frame.of(this.frameNo + 1);
+    }
+
+    public int pitchCount() {
+        return pitchGroup.size();
+    }
 }
