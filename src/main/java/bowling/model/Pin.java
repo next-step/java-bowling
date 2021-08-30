@@ -33,6 +33,15 @@ public class Pin {
 		return pin;
 	}
 
+	public boolean isMaxPin() {
+		return pin == MAX_PIN;
+	}
+
+	public boolean isMaxPin(Pin secondPin) {
+		checkMaxPinOver((this.pin + secondPin.getPin()));
+		return (this.pin + secondPin.getPin()) == MAX_PIN;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
