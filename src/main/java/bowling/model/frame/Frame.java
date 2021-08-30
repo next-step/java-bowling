@@ -9,16 +9,11 @@ public abstract class Frame {
 
 	protected PlayResult playResult;
 	protected final int frameNumber;
-	protected Frame nextFrame;
 
 	public Frame(int frameNumber) {
 		checkFrameNumber(frameNumber);
 		this.playResult = new PlayResult(new ArrayList<>());
 		this.frameNumber = frameNumber;
-	}
-
-	public void bringNextFrame(Frame nextFrame) {
-		this.nextFrame = nextFrame;
 	}
 
 	public int getFrameNumber() {
@@ -44,12 +39,11 @@ public abstract class Frame {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Frame frame = (Frame)o;
-		return frameNumber == frame.frameNumber && Objects.equals(playResult, frame.playResult)
-			&& Objects.equals(nextFrame, frame.nextFrame);
+		return frameNumber == frame.frameNumber && Objects.equals(playResult, frame.playResult);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(playResult, frameNumber, nextFrame);
+		return Objects.hash(playResult, frameNumber);
 	}
 }
