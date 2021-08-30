@@ -28,7 +28,7 @@ public enum ResultFlag {
 			.collect(Collectors.joining(delimiter));
 	}
 
-	public static String generateResultByPitch(final Pitch pitch) {
+	private static String generateResultByPitch(final Pitch pitch) {
 		if (pitch instanceof StrikePitch) {
 			return STRIKE.flag;
 		}
@@ -37,10 +37,10 @@ public enum ResultFlag {
 			return SPARE.flag;
 		}
 
-		if (pitch.knockedPins().count() == GUTTER_PINS_COUNT) {
+		if (pitch.getFalledPins().count() == GUTTER_PINS_COUNT) {
 			return GUTTER.flag;
 		}
 
-		return String.valueOf(pitch.knockedPins().count());
+		return String.valueOf(pitch.getFalledPins().count());
 	}
 }

@@ -15,6 +15,7 @@ public class OutputView {
 	public static void printFrames(final Player player, final Bowling bowling) {
 		printTitle();
 		printFrames(player, bowling.getFrames());
+		printScores(bowling.getFrames());
 		System.out.println();
 	}
 
@@ -25,7 +26,8 @@ public class OutputView {
 	private static void printFrames(final Player player, final List<Frame> frames) {
 		final String prefix = framesPrefix(player);
 		final String body = framesBody(frames);
-		final String suffix = framesSuffix(frames);
+		final int restFrameCount = 10 - frames.size() + 1;
+		final String suffix = framesSuffix(restFrameCount);
 
 		System.out.println(prefix + body + suffix);
 	}
@@ -41,9 +43,36 @@ public class OutputView {
 			.collect(Collectors.joining(DELIMITER, "", DELIMITER));
 	}
 
-	private static String framesSuffix(final List<Frame> frames) {
-		return IntStream.rangeClosed(1, 10 - frames.size())
+	private static String framesSuffix(final int count) {
+		return IntStream.range(0, count)
 			.mapToObj(r -> "      ")
+			.collect(Collectors.joining(DELIMITER));
+	}
+
+	private static void printScores(final List<Frame> frames) {
+		final String prefix = "|      |";
+		final String body = scoresBody(frames);
+		final int restFrameCount = 10 - frames.size() + 1;
+		final String suffix = scoreSuffix(restFrameCount);
+
+		System.out.println(prefix + body + suffix);
+	}
+
+	private static String scoresBody(final List<Frame> frames) {
+		if (frames.stream()
+			.noneMatch(e -> e.caculateScore(frames).possiblecalculate())) {
+			return "      |";
+		}
+
+		return frames.stream()
+			.filter(e -> e.caculateScore(frames).possiblecalculate())
+			.map(frame -> String.format("%5s ", frame.caculateScore(frames).getValue()))
 			.collect(Collectors.joining(DELIMITER, "", DELIMITER));
+	}
+
+	private static String scoreSuffix(final int count) {
+		return IntStream.range(0, count)
+			.mapToObj(r -> "      ")
+			.collect(Collectors.joining(DELIMITER));
 	}
 }
