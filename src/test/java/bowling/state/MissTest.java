@@ -12,6 +12,6 @@ class MissTest {
   @Test
   void miss() {
     Miss miss = new Miss(PinTest.from(3), PinTest.from(5));
-    assertThat(miss.score()).isEqualTo("3|5");
+    assertThat(miss.score()).isEqualTo("3|8");
   }
 }
