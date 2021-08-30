@@ -14,9 +14,24 @@ public class NormalFrame extends Frame {
 	private static final int FIRST_INDEX = 0;
 
 	private final Playable normalPlay;
+	private final Frame nextFrame;
 
 	public NormalFrame(int frameNumber) {
 		super(frameNumber);
+		this.nextFrame = getNextFrame(frameNumber);
+		normalPlay = new NormalPlay();
+	}
+
+	private Frame getNextFrame(int frameNumber) {
+		if (frameNumber == 9) {
+			return new FinalFrame(10);
+		}
+		return new NormalFrame(frameNumber + 1);
+	}
+
+	public NormalFrame(int frameNumber, Frame nextFrame) {
+		super(frameNumber);
+		this.nextFrame = nextFrame;
 		normalPlay = new NormalPlay();
 	}
 
