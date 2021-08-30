@@ -2,9 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pins.Pins;
 import bowling.domain.score.Score;
-import bowling.domain.state.Ready;
-import bowling.domain.state.Spare;
-import bowling.domain.state.State;
+import bowling.domain.state.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +29,14 @@ public class BonusFrame implements Frame {
 
     @Override
     public Frame bowl(Pins pins) {
-        State state = Ready.of();
+        State state = getLastState();
+
+        if (state.isFinish()) {
+            states.add(Ready.of().bowl(pins));
+            return this;
+        }
+
+        states.remove(states.size() - 1);
         states.add(state.bowl(pins));
 
         return this;
@@ -68,6 +73,10 @@ public class BonusFrame implements Frame {
         }
 
         return score;
+    }
+
+    private State getLastState() {
+        return states.get(states.size() - 1);
     }
 
     private boolean isFirstSpare() {

@@ -5,6 +5,7 @@ import bowling.exception.CannotCalculateException;
 public class Score {
 
     private static final int SCORE_COUNT_ZERO = 0 ;
+    private static final int EMPTY_SCORE = -1;
 
     private int score;
     private int left;
@@ -12,6 +13,10 @@ public class Score {
     private Score(int score, int left) {
         this.score = score;
         this.left = left;
+    }
+
+    public static Score of() {
+        return Score.of(0, EMPTY_SCORE);
     }
 
     public static Score of(int pinsCount, int left) {
