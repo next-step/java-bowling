@@ -13,7 +13,6 @@ public class PlayResult {
 	private static final int FIRST_INDEX_SIZE = 1;
 	private static final int SECOND_INDEX_SIZE = 2;
 	private static final int BONUS_INDEX_SIZE = 3;
-	private static final int MAX_PIN = 10;
 
 	private final List<Pin> gameResult;
 
@@ -23,6 +22,14 @@ public class PlayResult {
 
 	public int findScore(int index) {
 		return gameResult.get(index).getPin();
+	}
+
+	public boolean isMaxPin() {
+		return gameResult.get(FIRST_INDEX).isMaxPin();
+	}
+
+	public boolean isMaxPin(Pin secondPin) {
+		return gameResult.get(FIRST_INDEX).isMaxPin(secondPin);
 	}
 
 	public int findTotalScore() {
@@ -54,7 +61,7 @@ public class PlayResult {
 	}
 
 	public boolean isStrike() {
-		return gameResult.size() > FIRST_INDEX && (findScore(FIRST_INDEX) == MAX_PIN);
+		return gameResult.size() > FIRST_INDEX && (isMaxPin());
 	}
 
 	public boolean isSpare() {
@@ -64,7 +71,7 @@ public class PlayResult {
 		if (gameResult.size() < SECOND_INDEX_SIZE) {
 			return false;
 		}
-		return (findScore(FIRST_INDEX) + findScore(SECOND_INDEX) == MAX_PIN);
+		return isMaxPin(gameResult.get(SECOND_INDEX));
 	}
 
 	@Override
