@@ -9,7 +9,6 @@ import bowling.model.frame.Frame;
 
 public class Score {
 
-	private static final int CUSTOM_SECTION_POINT = -1;
 	private static final int ZERO_POINT = 0;
 
 	private final List<Integer> score;
@@ -28,11 +27,11 @@ public class Score {
 	}
 
 	private static int sumScore(int totalScore, Frame frame, List<Integer> score) {
-		if (frame.isGameEnd() && frame.getGameScore() > CUSTOM_SECTION_POINT) {
+		if (frame.isGameEnd() && frame.getGameScore() > -1) {
 			score.add(totalScore + frame.getGameScore());
 			return totalScore + frame.getGameScore();
 		}
-		score.add(CUSTOM_SECTION_POINT);
+		score.add(-1);
 		return totalScore;
 	}
 

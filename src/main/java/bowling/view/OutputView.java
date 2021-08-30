@@ -16,7 +16,6 @@ public class OutputView {
 	private static final int MAX_PIN = 10;
 	private static final int START_INCLUSIVE = 0;
 	private static final int LIMIT_MAX_LENGTH = 5;
-	private static final int CUSTOM_SECTION_POINT = -1;
 
 	public static void printScoreBoard(Player player, Frames frames) {
 		System.out.print(DELIMITER + " NAME " + DELIMITER);
@@ -34,7 +33,7 @@ public class OutputView {
 	}
 
 	private static String convertScore(int gameScore) {
-		if (gameScore == CUSTOM_SECTION_POINT) {
+		if (gameScore == -1) {
 			return "";
 		}
 		return String.valueOf(gameScore);
