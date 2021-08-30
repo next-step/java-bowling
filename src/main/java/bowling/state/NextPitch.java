@@ -23,6 +23,6 @@ public class NextPitch extends Running {
 
   @Override
   public String score() {
-    return "";
+    return firstPin.score();
   }
 }
