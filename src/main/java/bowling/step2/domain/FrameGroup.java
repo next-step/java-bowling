@@ -27,7 +27,7 @@ public class FrameGroup {
     }
 
     private boolean frameFinished() {
-        return lastFrame().pitchCount() == 2;
+        return lastFrame().finished();
     }
 
     public void nextFrame() {

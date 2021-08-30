@@ -22,12 +22,12 @@ public class Frame {
     }
 
     private void validatePitchCount(int lastPitchCount, int count) {
-        if (sumOfPitchesOverTheMax(lastPitchCount, count)) {
+        if (sumWithLastPitchOverTheMax(lastPitchCount, count)) {
             throw new RuntimeException("쓰러뜨릴 수 있는 핀의 갯수를 넘어섰습니다.");
         }
     }
 
-    private boolean sumOfPitchesOverTheMax(int lastPitchCount, int count) {
+    private boolean sumWithLastPitchOverTheMax(int lastPitchCount, int count) {
         return lastPitchCount + count > MAX;
     }
 
@@ -37,5 +37,9 @@ public class Frame {
 
     public int pitchCount() {
         return pitchGroup.size();
+    }
+
+    public boolean finished() {
+        return pitchGroup.size() == 2;
     }
 }
