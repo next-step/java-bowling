@@ -80,18 +80,17 @@ class NormalFrameTest {
 	}
 
 	@Test
-	@DisplayName("노멀 프레임이 스페어이면 아전과 해당 프레임 합산점수 와 다음 프레임의 첫번째 점수를 합산한다.")
+	@DisplayName("노멀 프레임이 스트라이크가 아니면 이전 점수와  합산한다.")
 	public void getStrikeByNextScore() {
 		NormalFrame normalFrame2 = new NormalFrame(2);
 		normalFrame2.playGame(6);
 
-		NormalFrame normalFrame = new NormalFrame(1);
+		NormalFrame normalFrame = new NormalFrame(1, normalFrame2);
 		normalFrame.playGame(5);
 		normalFrame.playGame(5);
-		normalFrame.bringNextFrame(normalFrame2);
 		int result = normalFrame.getStrikeAndSpareNextScore(true, false, 10);
 
-		assertThat(result).isEqualTo(26);
+		assertThat(result).isEqualTo(20);
 	}
 
 	@Test
@@ -110,28 +109,24 @@ class NormalFrameTest {
 		NormalFrame normalFrame2 = new NormalFrame(2);
 		normalFrame2.playGame(6);
 
-		NormalFrame normalFrame = new NormalFrame(1);
+		NormalFrame normalFrame = new NormalFrame(1, normalFrame2);
 		normalFrame.playGame(4);
 		normalFrame.playGame(6);
-		normalFrame.bringNextFrame(normalFrame2);
 
 		assertThat(normalFrame.getGameScore()).isEqualTo(16);
 	}
 
 	@Test
-	@DisplayName("노멀레임 점수중 스트라이크이면 다다음 프레임 1번공의 점수와 합산을 계산한다.")
+	@DisplayName("노멀레임 점수가 더블이면 다다음 프레임 1번공의 점수와 합산을 계산한다.")
 	public void getGameScoreByStrike() {
 		NormalFrame normalFrame3 = new NormalFrame(3);
 		normalFrame3.playGame(9);
 
-		NormalFrame normalFrame2 = new NormalFrame(2);
-		normalFrame2.playGame(6);
-		normalFrame2.playGame(4);
-		normalFrame2.bringNextFrame(normalFrame3);
+		NormalFrame normalFrame2 = new NormalFrame(2, normalFrame3);
+		normalFrame2.playGame(10);
 
-		NormalFrame normalFrame = new NormalFrame(1);
+		NormalFrame normalFrame = new NormalFrame(1, normalFrame2);
 		normalFrame.playGame(10);
-		normalFrame.bringNextFrame(normalFrame2);
 
 		assertThat(normalFrame.getGameScore()).isEqualTo(29);
 	}
@@ -142,13 +137,11 @@ class NormalFrameTest {
 		NormalFrame normalFrame3 = new NormalFrame(3);
 		normalFrame3.playGame(9);
 
-		NormalFrame normalFrame2 = new NormalFrame(2);
+		NormalFrame normalFrame2 = new NormalFrame(2, normalFrame3);
 		normalFrame2.playGame(10);
-		normalFrame2.bringNextFrame(normalFrame3);
 
-		NormalFrame normalFrame = new NormalFrame(1);
+		NormalFrame normalFrame = new NormalFrame(1, normalFrame2);
 		normalFrame.playGame(10);
-		normalFrame.bringNextFrame(normalFrame2);
 
 		assertThat(normalFrame.getGameScore()).isEqualTo(29);
 	}
