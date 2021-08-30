@@ -23,6 +23,6 @@ class NextPitchTest {
   @CsvSource(value = {"1,8","2,7","3,6","4,5","5,4","6,3","7,2","8,1"})
   void firstBallIsMiss(int first, int second) {
     NextPitch firstBall = new NextPitch(PinTest.from(first));
-    assertThat(firstBall.nextPitch(second).score()).contains(first+"|"+second);
+    assertThat(firstBall.nextPitch(second).score()).contains(first+"|"+Integer.sum(first,second));
   }
 }
