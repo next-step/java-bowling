@@ -58,7 +58,7 @@ class FinalFrameTest {
 		FinalFrame finalFrame = new FinalFrame(10);
 		finalFrame.playGame(5);
 		finalFrame.playGame(4);
-		int score = finalFrame.getStrikeAndSpareNextScore(true, false, 10);
+		int score = finalFrame.getStrikeAndSpareNextScore(2, 10);
 
 		assertThat(score).isEqualTo(19);
 	}
@@ -68,7 +68,7 @@ class FinalFrameTest {
 	public void getStrikeNextScore() {
 		FinalFrame finalFrame = new FinalFrame(10);
 		finalFrame.playGame(5);
-		int score = finalFrame.getStrikeAndSpareNextScore(false, true, 10);
+		int score = finalFrame.getStrikeAndSpareNextScore(1, 10);
 
 		assertThat(score).isEqualTo(15);
 	}

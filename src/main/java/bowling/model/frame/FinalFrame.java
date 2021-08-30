@@ -9,7 +9,6 @@ public class FinalFrame extends Frame {
 
 	private static final String FRAME_RANGE_ERROR_MESSAGE = "마지막 프레임은 10만 가능 합니다.";
 	private static final int FINAL_FRAME_NUMBER = 10;
-	private static final int CUSTOM_SECTION_POINT = -1;
 	private static final int FIRST_INDEX = 0;
 	private static final int SECOND_INDEX = 1;
 
@@ -43,20 +42,20 @@ public class FinalFrame extends Frame {
 	}
 
 	@Override
-	int getStrikeAndSpareNextScore(boolean strike, boolean spare, int sumScore) {
-		if (spare && playResult.isGameStart()) {
+	int getStrikeAndSpareNextScore(int leftStep, int sumScore) {
+		if (leftStep == 1 && playResult.isGameStart()) {
 			return sumScore + playResult.findScore(FIRST_INDEX);
 		}
-		if (strike && playResult.isSecondPlay()) {
+		if (leftStep == 2 && playResult.isSecondPlay()) {
 			return sumScore + (playResult.findScore(FIRST_INDEX) + playResult.findScore(SECOND_INDEX));
 		}
-		return CUSTOM_SECTION_POINT;
+		return -1;
 	}
 
 	@Override
 	public int getGameScore() {
 		if (!isGameEnd()) {
-			return CUSTOM_SECTION_POINT;
+			return -1;
 		}
 		return playResult.findTotalScore();
 	}
