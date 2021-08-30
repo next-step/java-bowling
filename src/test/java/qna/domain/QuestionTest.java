@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
@@ -24,5 +25,17 @@ public class QuestionTest {
 
         assertThatThrownBy(Q1::hasOnlyOwnAnswersElseThrow)
                 .isInstanceOf(CannotDeleteException.class);
+    }
+
+    @Test
+    @DisplayName("글을 삭제하는 테스트")
+    void deleteWithAnswers() {
+        Q1.deleteWithAnswers();
+
+        assertThat(Q1.isDeleted()).isTrue();
+
+        for (Answer answer : Q1.getAnswers()) {
+            assertThat(answer.isDeleted()).isTrue();
+        }
     }
 }
