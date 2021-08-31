@@ -45,17 +45,8 @@ public class Play implements Playable {
 		return gameResult.get(index);
 	}
 
-	public int findReminderScore() {
-		if ((countGame() > MIN_PLAY_COUNT) && isSpare()) {
-			return 0;
-		}
-		return gameResult.stream()
-			.filter(value -> value.getPin() < MAX_PIN)
-			.mapToInt(Pin::getPin).sum();
-	}
-
 	private void checkScore(Pin pin) {
-		if (!isStrike() && (findReminderScore() + pin.getPin() > MAX_PIN)) {
+		if (!isStrike() && !isSpare() && (countGame() > 0 && findPin(FIRST_INDEX).isOverPin(pin))) {
 			throw new IllegalArgumentException(LIMIT_MAX_PIN_ERROR_MESSAGE);
 		}
 	}

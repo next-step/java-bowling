@@ -50,16 +50,6 @@ class PlayTest {
 	}
 
 	@Test
-	@DisplayName("스트라이크가아닌 나머지 점수 합계를 알 수 있다.")
-	public void findReminderScore() {
-		Play play = new Play(1);
-		play.play(new Pin(5));
-		play.play(new Pin(4));
-
-		assertThat(play.findReminderScore()).isEqualTo(9);
-	}
-
-	@Test
 	@DisplayName("스트라이크가 아니고 핀의 합이 10 초과이면 예외가 발생된다.")
 	public void checkScore() {
 		Play play = new Play(1);
