@@ -17,7 +17,7 @@ public class QuestionTest {
         Q1.addAnswer(givenA1);
 
         // When
-        Q1.deleteAnswer(new ArrayList<>());
+        Q1.deleteAnswer(new DeleteHistories());
 
         // Then
         assertThat(givenA1.isDeleted()).isTrue();

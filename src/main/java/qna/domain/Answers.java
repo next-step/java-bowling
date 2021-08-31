@@ -34,10 +34,10 @@ public class Answers {
         return answers.stream().allMatch(answer -> answer.isOwner(loginUser));
     }
 
-    public void deleteAnswer(List<DeleteHistory> deleteHistories) {
+    public void deleteAnswer(DeleteHistories deleteHistories) {
         for (Answer answer : answers) {
             answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+            deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
     }
 }

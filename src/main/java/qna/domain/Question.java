@@ -7,7 +7,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -41,24 +41,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
     public User getWriter() {
         return writer;
     }
@@ -77,8 +59,9 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public Question deleted(DeleteHistories deleteHistory) {
+        this.deleted = true;
+        deleteHistory.addDeleteHistory(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
         return this;
     }
 
@@ -86,16 +69,18 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
+    public boolean isAnswerEmptyByLoginUser(User loginUser) {
+        return answers.isAnswerEmptyByLoginUser(loginUser);
+    }
+
+    public void deleteAnswer(DeleteHistories deleteHistories) {
+        answers.deleteAnswer(deleteHistories);
+    }
+
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public boolean isAnswerEmptyByLoginUser(User loginUser) {
-        return answers.isAnswerEmptyByLoginUser(loginUser);
-    }
 
-    public void deleteAnswer(List<DeleteHistory> deleteHistories) {
-        answers.deleteAnswer(deleteHistories);
-    }
 }
