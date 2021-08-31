@@ -47,7 +47,7 @@ public class FinalFrame extends Frame {
 
 	@Override
 	int calculateScoreDouble(PlayResult beforeResult) {
-		return -1;
+		return playResult.calculateDouble(beforeResult);
 	}
 
 	@Override
