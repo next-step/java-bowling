@@ -50,6 +50,6 @@ class PinTest {
 	public void isMaxPinBySecondPin(int firstPin, int secondPin, boolean maxPin) {
 		Pin pin = new Pin(firstPin);
 
-		assertThat(pin.isMaxPin(new Pin(secondPin))).isEqualTo(maxPin);
+		assertThat(pin.add(new Pin(secondPin)).isMaxPin()).isEqualTo(maxPin);
 	}
 }
