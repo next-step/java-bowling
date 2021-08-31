@@ -8,20 +8,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DeleteHistoriesTest {
 
-    private DeleteHistories deleteHistories;
-
-    @BeforeEach
-    void setUp() {
-        deleteHistories = new DeleteHistories();
-    }
-
     @Test
     @DisplayName("답변 삭제 이력 추가")
     void add_answer() {
         //given
+        DeleteHistories deleteHistories = DeleteHistories.of(AnswersTest.ANSWERS1);
 
         //when
-        deleteHistories.add(AnswersTest.ANSWERS1);
         int actual = deleteHistories.size();
 
         //then
@@ -32,9 +25,9 @@ public class DeleteHistoriesTest {
     @DisplayName("질문 삭제 이력 추가")
     void add_question() {
         //given
+        DeleteHistories deleteHistories = DeleteHistories.of(QuestionTest.Q1);
 
         //when
-        deleteHistories.add(QuestionTest.Q1);
         int actual = deleteHistories.size();
 
         //then
@@ -49,8 +42,9 @@ public class DeleteHistoriesTest {
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "Answers Contents1"));
         question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "Answers Contents2"));
 
+        DeleteHistories deleteHistories = DeleteHistories.of(question);
+
         //when
-        deleteHistories.add(question);
         int actual = deleteHistories.size();
 
         //then

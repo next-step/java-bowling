@@ -7,20 +7,35 @@ import java.util.List;
 
 public class DeleteHistories {
 
-    private final List<DeleteHistory> histories = new ArrayList<>();
+    private final List<DeleteHistory> histories;
 
-    public void add(DeleteHistory deleteHistory) {
-        histories.add(deleteHistory);
+    private DeleteHistories(List<DeleteHistory> histories) {
+        this.histories = histories;
     }
 
-    public void add(Question question) {
+    public static DeleteHistories of(Question question) {
+        List<DeleteHistory> histories = new ArrayList<>();
         histories.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
-        add(question.getAnswers());
+        return new DeleteHistories(histories).add(question.getAnswers());
     }
 
-    public void add(Answers answers) {
+    public static DeleteHistories of(Answers answers) {
+        List<DeleteHistory> histories = new ArrayList<>();
         answers.getAnswers()
                 .forEach(answer -> histories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now())));
+        return new DeleteHistories(histories);
+    }
+
+    public DeleteHistories add(Question question) {
+        histories.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
+        add(question.getAnswers());
+        return new DeleteHistories(histories);
+    }
+
+    public DeleteHistories add(Answers answers) {
+        answers.getAnswers()
+                .forEach(answer -> histories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now())));
+        return new DeleteHistories(histories);
     }
 
     public List<DeleteHistory> getHistories() {

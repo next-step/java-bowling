@@ -92,9 +92,7 @@ public class Question extends AbstractEntity {
         answers.deleteAll();
         this.deleted = true;
 
-        DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories.add(this);
-        return deleteHistories;
+        return DeleteHistories.of(this);
     }
 
     public boolean isDeleted() {
@@ -104,8 +102,6 @@ public class Question extends AbstractEntity {
     public Answers getAnswers() {
         return answers;
     }
-
-
 
     @Override
     public String toString() {
