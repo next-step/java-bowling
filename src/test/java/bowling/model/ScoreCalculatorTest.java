@@ -12,22 +12,22 @@ import bowling.model.frame.FinalFrame;
 import bowling.model.frame.Frame;
 import bowling.model.frame.NormalFrame;
 
-public class ScoreTest {
+public class ScoreCalculatorTest {
 
 	@Test
 	@DisplayName("프레임의 정보를 입력하면 스코어가 생성된다.")
 	public void createScore() {
-		Score score = Score.createScore(getFrames());
+		ScoreCalculator scoreCalculator = ScoreCalculator.createScore(getFrames());
 
-		assertThat(score).isEqualTo(Score.createScore(getFrames()));
+		assertThat(scoreCalculator).isEqualTo(ScoreCalculator.createScore(getFrames()));
 	}
 
 	@Test
 	@DisplayName("프레임의 정보를 입력하면 스코어 점수를 알수 있다.")
 	public void getScore() {
-		Score score = Score.createScore(getFrames());
+		ScoreCalculator scoreCalculator = ScoreCalculator.createScore(getFrames());
 
-		assertThat(score.getScore()).containsExactly(9, 18, -1);
+		assertThat(scoreCalculator.getScore()).containsExactly(9, 18, -1);
 	}
 
 	private List<Frame> getFrames() {

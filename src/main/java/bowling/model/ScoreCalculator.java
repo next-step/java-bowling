@@ -7,23 +7,23 @@ import java.util.Objects;
 
 import bowling.model.frame.Frame;
 
-public class Score {
+public class ScoreCalculator {
 
 	private static final int ZERO_POINT = 0;
 
 	private final List<Integer> score;
 
-	private Score(List<Integer> score) {
+	private ScoreCalculator(List<Integer> score) {
 		this.score = Collections.unmodifiableList(score);
 	}
 
-	public static Score createScore(List<Frame> frames) {
+	public static ScoreCalculator createScore(List<Frame> frames) {
 		List<Integer> score = new ArrayList<>();
 		int totalScore = ZERO_POINT;
 		for (Frame frame : frames) {
 			totalScore = sumScore(totalScore, frame, score);
 		}
-		return new Score(score);
+		return new ScoreCalculator(score);
 	}
 
 	private static int sumScore(int totalScore, Frame frame, List<Integer> score) {
@@ -45,8 +45,8 @@ public class Score {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Score score1 = (Score)o;
-		return Objects.equals(score, score1.score);
+		ScoreCalculator scoreCalculator1 = (ScoreCalculator)o;
+		return Objects.equals(score, scoreCalculator1.score);
 	}
 
 	@Override

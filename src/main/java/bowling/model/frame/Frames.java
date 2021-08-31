@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import bowling.Comparator.FrameComparator;
-import bowling.model.Score;
+import bowling.model.ScoreCalculator;
 
 public class Frames {
 
@@ -83,8 +83,8 @@ public class Frames {
 			.noneMatch(Frame::isGameEnd);
 	}
 
-	public Score getScoreBoard() {
-		return Score.createScore(frames);
+	public ScoreCalculator getScoreBoard() {
+		return ScoreCalculator.createScore(frames);
 	}
 
 	@Override
