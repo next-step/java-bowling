@@ -1,12 +1,12 @@
 package bowling.domain.pitch;
 
-import bowling.domain.common.KnockedPins;
+import bowling.domain.common.FalledPins;
 
 public interface Pitch {
 
-	Pitch play(final int knockedPinsCount);
+	Pitch play(final int falledPinsCount);
 
-	Pitch play(final KnockedPins knockedPins);
+	Pitch play(final FalledPins falledPins);
 
-	KnockedPins getKnockedPins();
+	FalledPins getFalledPins();
 }

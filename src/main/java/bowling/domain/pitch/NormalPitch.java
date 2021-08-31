@@ -1,37 +1,37 @@
 package bowling.domain.pitch;
 
-import bowling.domain.common.KnockedPins;
+import bowling.domain.common.FalledPins;
 import bowling.domain.exception.InvalidPinCountException;
 
 public final class NormalPitch extends BasePitch {
 
-	private static final int MAX_KNOCKED_PINS_COUNT = 9;
+	private static final int MAX_FALLED_PINS_COUNT = 9;
 
-	public NormalPitch(final KnockedPins knockedPins) {
-		createValidation(knockedPins);
-		this.knockedPins = knockedPins;
+	public NormalPitch(final FalledPins falledPins) {
+		createValidation(falledPins);
+		this.falledPins = falledPins;
 	}
 
-	public NormalPitch(final int knockedPinsCount) {
-		this(KnockedPins.of(knockedPinsCount));
+	public NormalPitch(final int falledPinsCount) {
+		this(FalledPins.of(falledPinsCount));
 	}
 
-	private void createValidation(final KnockedPins knockedPins) {
-		if (knockedPins.count() > MAX_KNOCKED_PINS_COUNT) {
+	private void createValidation(final FalledPins falledPins) {
+		if (falledPins.count() > MAX_FALLED_PINS_COUNT) {
 			throw new InvalidPinCountException();
 		}
 	}
 
 	@Override
-	public Pitch play(final KnockedPins knockedPins) {
-		if (this.knockedPins.count() + knockedPins.count() == STRIKE_PINS_COUNT) {
-			return new SparePitch(knockedPins);
+	public Pitch play(final FalledPins falledPins) {
+		if (this.falledPins.count() + falledPins.count() == STRIKE_PINS_COUNT) {
+			return new SparePitch(falledPins);
 		}
 
-		if (this.knockedPins.count() + knockedPins.count() > MAX_KNOCKED_PINS_COUNT) {
+		if (this.falledPins.count() + falledPins.count() > MAX_FALLED_PINS_COUNT) {
 			throw new InvalidPinCountException();
 		}
 
-		return new NormalPitch(knockedPins);
+		return new NormalPitch(falledPins);
 	}
 }

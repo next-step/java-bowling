@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import bowling.domain.common.KnockedPins;
+import bowling.domain.common.FalledPins;
 import bowling.domain.exception.InvalidPinCountException;
 
 @DisplayName("투구 - 일반")
@@ -34,7 +34,7 @@ class NormalPitchTest {
 
 		// then
 		assertThat(pitch).isInstanceOf(SparePitch.class);
-		assertThat(pitch.getKnockedPins()).isEqualTo(KnockedPins.of(pinCount));
+		assertThat(pitch.getFalledPins()).isEqualTo(FalledPins.of(pinCount));
 	}
 
 	static Stream<Arguments> normal() {
@@ -57,7 +57,7 @@ class NormalPitchTest {
 
 		// then
 		assertThat(pitch).isInstanceOf(NormalPitch.class);
-		assertThat(pitch.getKnockedPins()).isEqualTo(KnockedPins.of(pinCount));
+		assertThat(pitch.getFalledPins()).isEqualTo(FalledPins.of(pinCount));
 	}
 
 	static Stream<Arguments> normalInvalid() {
