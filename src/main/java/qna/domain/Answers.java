@@ -16,15 +16,16 @@ public class Answers {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private final List<Answer> answers;
+
+    public Answers() {
+        answers = new ArrayList<>();
+    }
 
     public Answers(List<Answer> answers) {
         this.answers = answers;
     }
 
-    protected Answers() {
-
-    }
 
     public void add(Answer answer) {
         answers.add(answer);
