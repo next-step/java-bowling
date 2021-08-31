@@ -7,4 +7,6 @@ public interface State {
   boolean isFinish();
 
   String score();
+
+  int totalPin();
 }
