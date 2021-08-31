@@ -3,8 +3,6 @@ package bowling.model.play;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,9 +22,9 @@ class PlayTest {
 	@DisplayName("플레이를 하면 플레이 결과가 생성된다.")
 	public void playBowling() {
 		Play play = new Play(1);
-		List<Pin> result = play.play(new Pin(10));
+		Play result = play.play(new Pin(10));
 
-		assertThat(result).extracting("pin").containsExactly(10);
+		assertThat(result.getGameResult()).extracting("pin").containsExactly(10);
 	}
 
 	@Test
