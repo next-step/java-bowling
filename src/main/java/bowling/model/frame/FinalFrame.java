@@ -9,8 +9,6 @@ public class FinalFrame extends Frame {
 
 	private static final String FRAME_RANGE_ERROR_MESSAGE = "마지막 프레임은 10만 가능 합니다.";
 	private static final int FINAL_FRAME_NUMBER = 10;
-	private static final int FIRST_INDEX = 0;
-	private static final int SECOND_INDEX = 1;
 
 	private final Playable play;
 
@@ -28,7 +26,8 @@ public class FinalFrame extends Frame {
 
 	@Override
 	public void playGame(int strikeNumber) {
-		playResult = new PlayResult(play.play(new Pin(strikeNumber)));
+		Play play = this.play.play(new Pin(strikeNumber));
+		playResult = new PlayResult(play.getGameResult());
 	}
 
 	@Override
@@ -42,13 +41,12 @@ public class FinalFrame extends Frame {
 	}
 
 	@Override
-	int calculateScore(int leftStep, int sumScore) {
-		if (leftStep == 1 && playResult.isGameStart()) {
-			return sumScore + playResult.findScore(FIRST_INDEX);
-		}
-		if (leftStep == 2 && playResult.isSecondPlay()) {
-			return sumScore + (playResult.findScore(FIRST_INDEX) + playResult.findScore(SECOND_INDEX));
-		}
+	int calculateScore(PlayResult beforeResult) {
+		return playResult.calculateFrame(beforeResult);
+	}
+
+	@Override
+	int calculateScoreDouble(PlayResult beforeResult) {
 		return -1;
 	}
 
@@ -57,6 +55,6 @@ public class FinalFrame extends Frame {
 		if (!isGameEnd()) {
 			return -1;
 		}
-		return playResult.findTotalScore();
+		return playResult.getTotalScore();
 	}
 }

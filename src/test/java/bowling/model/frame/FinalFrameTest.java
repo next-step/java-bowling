@@ -33,7 +33,7 @@ class FinalFrameTest {
 		finalFrame.playGame(5);
 
 		assertAll(
-			() -> assertThat(finalFrame.playResult.findTotalScore()).isEqualTo(5),
+			() -> assertThat(finalFrame.playResult.getTotalScore()).isEqualTo(5),
 			() -> assertThat(finalFrame.playResult.findScore(0)).isEqualTo(5)
 		);
 	}
@@ -58,7 +58,10 @@ class FinalFrameTest {
 		FinalFrame finalFrame = new FinalFrame(10);
 		finalFrame.playGame(5);
 		finalFrame.playGame(4);
-		int score = finalFrame.calculateScore(2, 10);
+
+		NormalFrame normalFrame = new NormalFrame(9, finalFrame);
+		normalFrame.playGame(10);
+		int score = finalFrame.calculateScore(normalFrame.playResult);
 
 		assertThat(score).isEqualTo(19);
 	}
@@ -68,7 +71,12 @@ class FinalFrameTest {
 	public void getStrikeNextScore() {
 		FinalFrame finalFrame = new FinalFrame(10);
 		finalFrame.playGame(5);
-		int score = finalFrame.calculateScore(1, 10);
+
+		NormalFrame normalFrame = new NormalFrame(9, finalFrame);
+		normalFrame.playGame(4);
+		normalFrame.playGame(6);
+
+		int score = finalFrame.calculateScore(normalFrame.playResult);
 
 		assertThat(score).isEqualTo(15);
 	}
