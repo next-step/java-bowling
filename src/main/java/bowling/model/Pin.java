@@ -37,9 +37,9 @@ public class Pin {
 		return pin == MAX_PIN;
 	}
 
-	public boolean isMaxPin(Pin secondPin) {
+	public Pin add(Pin secondPin) {
 		checkMaxPinOver((this.pin + secondPin.getPin()));
-		return (this.pin + secondPin.getPin()) == MAX_PIN;
+		return new Pin(this.pin + secondPin.getPin());
 	}
 
 	@Override
