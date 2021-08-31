@@ -18,6 +18,8 @@ public class ResultView {
   private static final String HEADER_VALUE_DIGITS = "   %02d   |";
   private static final String HEADER_NAME = "|  NAME  |";
   private static final String VALUE_BLANK = "        |";
+  public static final String GUTTER = "-";
+  public static final String NO_HIT = "0";
 
   public static void printBoard(final ResultDto result) {
 
@@ -30,18 +32,30 @@ public class ResultView {
 
     values.add(String.format(VALUE_NAME_DIGITS, result.getName()));
 
-    result.getFrames().stream().map(ResultView::widthFormat).forEach(values::add);
-
-    IntStream.range(result.getFrames().size(), END_BLANK_MAX).mapToObj(i -> VALUE_BLANK).forEach(values::add);
+    writeScoreMark(result, values);
+    writeBlankMark(result, values);
 
     System.out.println(String.join("", values));
   }
 
+  private static void writeBlankMark(final ResultDto result, final List<String> values) {
+    IntStream.range(result.getFrames().size(), END_BLANK_MAX)
+        .mapToObj(i -> VALUE_BLANK)
+        .forEach(values::add);
+  }
+
+  private static void writeScoreMark(final ResultDto result, final List<String> values) {
+    result.getFrames()
+        .stream()
+        .map(ResultView::widthFormat)
+        .forEach(values::add);
+  }
+
   private static String widthFormat(final Frame frame) {
     if (frame.getScore().length() > LIMIT_SCORE_LENGTH) {
-      return String.format(VALUE_DIGITS_FINAL, frame.getScore().replace("0","-"));
+      return String.format(VALUE_DIGITS_FINAL, frame.getScore().replace(NO_HIT, GUTTER));
     }
-    return String.format(VALUE_DIGITS_NORMAL, frame.getScore().replace("0","-"));
+    return String.format(VALUE_DIGITS_NORMAL, frame.getScore().replace(NO_HIT, GUTTER));
   }
 
   private static void printHeader() {
