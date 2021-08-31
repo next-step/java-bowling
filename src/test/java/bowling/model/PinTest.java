@@ -62,4 +62,12 @@ class PinTest {
 		assertThat(pin.isOverPin(new Pin(secondPin))).isEqualTo(maxPin);
 	}
 
+	@Test
+	@DisplayName("핀의 수가 0이면 true 이다.")
+	public void isMinPin() {
+		Pin pin = new Pin(0);
+
+		assertThat(pin.isMinPin()).isTrue();
+	}
+
 }

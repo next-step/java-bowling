@@ -37,6 +37,10 @@ public class Pin {
 		return pin == MAX_PIN;
 	}
 
+	public boolean isMinPin() {
+		return pin == MIN_PIN;
+	}
+
 	public Pin add(Pin secondPin) {
 		checkMaxPinOver((this.pin + secondPin.getPin()));
 		return new Pin(this.pin + secondPin.getPin());
