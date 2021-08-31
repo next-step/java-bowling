@@ -2,7 +2,7 @@ package bowling.model.frame;
 
 import bowling.model.Pin;
 import bowling.model.PlayResult;
-import bowling.model.play.FinalPlay;
+import bowling.model.play.Play;
 import bowling.model.play.Playable;
 
 public class FinalFrame extends Frame {
@@ -12,11 +12,11 @@ public class FinalFrame extends Frame {
 	private static final int FIRST_INDEX = 0;
 	private static final int SECOND_INDEX = 1;
 
-	private final Playable finalPlay;
+	private final Playable play;
 
 	public FinalFrame(int frameNumber) {
 		super(frameNumber);
-		finalPlay = new FinalPlay();
+		play = new Play(frameNumber);
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class FinalFrame extends Frame {
 
 	@Override
 	public void playGame(int strikeNumber) {
-		playResult = new PlayResult(finalPlay.play(new Pin(strikeNumber)));
+		playResult = new PlayResult(play.play(new Pin(strikeNumber)));
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class FinalFrame extends Frame {
 
 	@Override
 	public boolean isGameEnd() {
-		return finalPlay.isGameEnd();
+		return play.isGameEnd();
 	}
 
 	@Override
