@@ -68,6 +68,10 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
+    public Question question() {
+        return question;
+    }
+
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
