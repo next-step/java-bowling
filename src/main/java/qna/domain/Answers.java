@@ -31,6 +31,10 @@ public class Answers {
                 .allMatch(answer -> answer.isOwner(loginUser));
     }
 
+    public void add(Answer answer) {
+        this.answers.add(answer);
+    }
+
     public void delete() {
         answers.forEach(Answer::delete);
     }
