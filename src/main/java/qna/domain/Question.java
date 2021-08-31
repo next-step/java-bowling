@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -85,15 +87,19 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public List<DeleteHistory> deleteWithAnswers() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+    public List<DeleteHistory> deleteWithAnswers(User loginUser) throws CannotDeleteException {
+        validateDeletePermission(loginUser);
 
         setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
 
-        deleteHistories.addAll(answers.delete());
+        return Stream.concat(Stream.of(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now())),
+                        answers.delete().stream())
+                .collect(Collectors.toList());
+    }
 
-        return deleteHistories;
+    private void validateDeletePermission(User loginUser) throws CannotDeleteException {
+        isOwnerElseThrow(loginUser);
+        hasOnlyOwnAnswersElseThrow();
     }
 
     public Question setDeleted(boolean deleted) {

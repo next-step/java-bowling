@@ -8,6 +8,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -22,22 +23,13 @@ public class Answers {
     }
 
     public boolean containsOnlyBy(User writer) {
-        for (Answer answer : values) {
-            if (!answer.isOwner(writer)) {
-                return false;
-            }
-        }
-
-        return true;
+        return values.stream()
+                .allMatch(answer -> answer.isOwner(writer));
     }
 
     public List<DeleteHistory> delete() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-
-        for (Answer answer : values) {
-            deleteHistories.add(answer.delete());
-        }
-
-        return deleteHistories;
+        return values.stream()
+                .map(Answer::delete)
+                .collect(Collectors.toList());
     }
 }

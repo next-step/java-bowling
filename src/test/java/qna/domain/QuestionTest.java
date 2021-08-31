@@ -21,16 +21,16 @@ public class QuestionTest {
     @Test
     @DisplayName("글이 타인의 답변을 가지고있으면 예외를 발생시키는 테스트")
     void hasOnlyOwnAnswersElseThrowTest() {
-        Q1.addAnswer(new Answer(UserTest.SANJIGI, Q1, "test answer for Q1"));
+        Q2.addAnswer(new Answer(UserTest.JAVAJIGI, Q2, "test answer for Q2"));
 
-        assertThatThrownBy(Q1::hasOnlyOwnAnswersElseThrow)
+        assertThatThrownBy(Q2::hasOnlyOwnAnswersElseThrow)
                 .isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
     @DisplayName("글을 삭제하는 테스트")
-    void deleteWithAnswers() {
-        Q1.deleteWithAnswers();
+    void deleteWithAnswers() throws CannotDeleteException {
+        Q1.deleteWithAnswers(UserTest.JAVAJIGI);
 
         assertThat(Q1.isDeleted()).isTrue();
     }
