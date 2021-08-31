@@ -13,6 +13,7 @@ public class PlayResult {
 	private static final int FIRST_INDEX_SIZE = 1;
 	private static final int SECOND_INDEX_SIZE = 2;
 	private static final int BONUS_INDEX_SIZE = 3;
+	private static final int MAX_PIN = 10;
 
 	private final List<Pin> gameResult;
 
@@ -22,20 +23,6 @@ public class PlayResult {
 
 	public int findScore(int index) {
 		return gameResult.get(index).getPin();
-	}
-
-	public boolean isMaxPin() {
-		return gameResult.get(FIRST_INDEX).isMaxPin();
-	}
-
-	public boolean isMaxPin(Pin secondPin) {
-		return gameResult.get(FIRST_INDEX).add(secondPin).isMaxPin();
-	}
-
-	public int findTotalScore() {
-		return gameResult.stream()
-			.mapToInt(Pin::getPin)
-			.sum();
 	}
 
 	public String getGameResult() {
@@ -56,8 +43,39 @@ public class PlayResult {
 		return gameResult.size() > FIRST_INDEX;
 	}
 
-	public boolean isSecondPlay() {
-		return gameResult.size() >= SECOND_INDEX_SIZE;
+	public int countGame() {
+		return gameResult.size();
+	}
+
+	public int calculateFrame(PlayResult beforeResult) {
+		if (beforeResult.isSpare() && isGameStart()) {
+			return MAX_PIN + findScore(FIRST_INDEX);
+		}
+		if (beforeResult.isStrike() && countGame() > 1) {
+			return MAX_PIN + (findScore(FIRST_INDEX) + findScore(SECOND_INDEX));
+		}
+		return -1;
+	}
+
+	public int calculateDouble(PlayResult beforeResult) {
+		if (isGameStart()) {
+			return (MAX_PIN + beforeResult.getTotalScore()) + findScore(FIRST_INDEX);
+		}
+		return -1;
+	}
+
+	public int getTotalScore() {
+		return gameResult.stream()
+			.mapToInt(Pin::getPin)
+			.sum();
+	}
+
+	public boolean isMaxPin() {
+		return gameResult.get(FIRST_INDEX).isMaxPin();
+	}
+
+	public boolean isMaxPin(Pin secondPin) {
+		return gameResult.get(FIRST_INDEX).add(secondPin).isMaxPin();
 	}
 
 	public boolean isStrike() {
@@ -72,16 +90,6 @@ public class PlayResult {
 			return false;
 		}
 		return isMaxPin(gameResult.get(SECOND_INDEX));
-	}
-
-	public int findScoreNextStep() {
-		if (isStrike()) {
-			return 2;
-		}
-		if (isSpare()) {
-			return 1;
-		}
-		return -1;
 	}
 
 	@Override
