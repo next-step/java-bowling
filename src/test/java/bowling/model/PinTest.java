@@ -52,4 +52,14 @@ class PinTest {
 
 		assertThat(pin.add(new Pin(secondPin)).isMaxPin()).isEqualTo(maxPin);
 	}
+
+	@ParameterizedTest
+	@DisplayName("핀의 수와 합이 10이상이면 true 이다.")
+	@CsvSource(value = {"2,9,true", "4,5,false"})
+	public void isOverPin(int firstPin, int secondPin, boolean maxPin) {
+		Pin pin = new Pin(firstPin);
+
+		assertThat(pin.isOverPin(new Pin(secondPin))).isEqualTo(maxPin);
+	}
+
 }
