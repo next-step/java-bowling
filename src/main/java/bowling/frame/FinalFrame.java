@@ -14,6 +14,10 @@ public class FinalFrame implements Frame {
   private static final String SPARE = "/";
   private static final String STRIKE = "X";
 
+  private boolean stop = false;
+
+  private int limitBallCount;
+
   private final LinkedList<State> states = new LinkedList<>();
 
   public FinalFrame() {
@@ -28,16 +32,27 @@ public class FinalFrame implements Frame {
     State state = states.getLast();
 
     if (state.isFinish()) {
+
       validationLimitPitch(state);
 
-      State current = StateFactory.startPitch().nextPitch(pinCount);
-      states.add(current);
+      states.add(StateFactory.startPitch().nextPitch(pinCount));
+      stop = true;
+
       return this;
     }
 
     states.removeLast();
     states.add(state.nextPitch(pinCount));
+    limitBallCount++;
+
+    checkLimitBallCount();
     return this;
+  }
+
+  private void checkLimitBallCount() {
+    if (states.getLast().totalPin() != MAX_FRAME_SIZE && limitBallCount == MAX_STATES_SIZE) {
+      stop = true;
+    }
   }
 
   private void validationEndFrame(final int size) {
@@ -60,6 +75,6 @@ public class FinalFrame implements Frame {
   }
 
   public boolean isGameEnd() {
-    return states.size() > MAX_STATES_SIZE;
+    return stop;
   }
 }
