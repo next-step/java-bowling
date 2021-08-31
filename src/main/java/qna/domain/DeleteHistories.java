@@ -9,7 +9,6 @@ public class DeleteHistories {
 
     private final List<DeleteHistory> histories = new ArrayList<>();
 
-
     public void add(DeleteHistory deleteHistory) {
         histories.add(deleteHistory);
     }
