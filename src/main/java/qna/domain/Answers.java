@@ -5,7 +5,6 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import org.hibernate.annotations.Where;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +35,7 @@ public class Answers {
 
     public void deleteAnswer(DeleteHistories deleteHistories) {
         for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+            answer.delete(deleteHistories);
         }
     }
 }

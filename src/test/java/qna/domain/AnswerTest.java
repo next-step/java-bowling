@@ -22,7 +22,7 @@ class AnswerTest {
     @Test
     void delete() {
         // Given
-        A1.setDeleted(true);
+        A1.delete(new DeleteHistories());
 
         assertThat(A1.isDeleted()).isTrue();
     }
