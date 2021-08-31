@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -33,6 +34,22 @@ class AnswersTest {
 
         //then
         assertThat(actual).isEqualTo(expected);
+
+    }
+
+    @Test
+    @DisplayName("모든 답변 삭제")
+    void delete() throws Exception {
+        //given
+        ANSWERS1.delete();
+
+        //when
+        boolean actual = ANSWERS1.getAnswers()
+                .stream()
+                .allMatch(Answer::isDeleted);
+
+        //then
+        assertThat(actual).isTrue();
 
     }
 
