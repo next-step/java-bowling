@@ -6,6 +6,8 @@ public class NextPitch extends Running {
 
   private final Pin firstPin;
 
+  private int totalPin;
+
   public NextPitch(final Pin firstPin) {
     this.firstPin = firstPin;
   }
@@ -13,6 +15,7 @@ public class NextPitch extends Running {
   @Override
   public State nextPitch(final int fallenPin) {
     Pin currentPin = Pin.from(fallenPin);
+    totalPin = firstPin.totalDownPin(currentPin);
 
     if (currentPin.isSpare(firstPin)) {
       return new Spare(firstPin, currentPin);
@@ -24,5 +27,10 @@ public class NextPitch extends Running {
   @Override
   public String score() {
     return firstPin.score();
+  }
+
+  @Override
+  public int totalPin() {
+    return totalPin;
   }
 }
