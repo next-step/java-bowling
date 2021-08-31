@@ -1,10 +1,6 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -69,6 +65,11 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
+    public void addAnswers(Answers answers) {
+        answers.toQuestion(this);
+        this.answers.addAll(answers);
+    }
+
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
@@ -83,6 +84,14 @@ public class Question extends AbstractEntity {
 
     public Answers getAnswers() {
         return answers;
+    }
+
+    public boolean deletable(User loginUser) {
+        if (!isOwner(loginUser)) {
+            return false;
+        }
+
+        return answers.deletableBy(loginUser);
     }
 
     @Override
