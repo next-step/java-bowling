@@ -10,9 +10,13 @@ public interface Playable {
 
 	int countGame();
 
+	Pin findPin(int index);
+
 	boolean isStrike();
 
 	boolean isSpare();
+
+	boolean isMiss();
 
 	boolean isGameEnd();
 
