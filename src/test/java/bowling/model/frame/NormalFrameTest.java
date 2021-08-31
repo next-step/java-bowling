@@ -64,7 +64,7 @@ class NormalFrameTest {
 	@DisplayName("노멀 프레임이 스트라이크나 스페어가 아니면 -1을 반환한다.")
 	public void getNotStrikeAndNotSpare() {
 		NormalFrame normalFrame = new NormalFrame(1);
-		int result = normalFrame.calculateScore(0, 10);
+		int result = normalFrame.calculateScore(normalFrame.playResult);
 
 		assertThat(result).isEqualTo(-1);
 	}
@@ -72,9 +72,13 @@ class NormalFrameTest {
 	@Test
 	@DisplayName("노멀 프레임이 스페어이면 이전점수와 해당 프레임의 첫번째 점수를 합산한다.")
 	public void getSpareByNextScore() {
-		NormalFrame normalFrame = new NormalFrame(1);
+		NormalFrame normalFrame2 = new NormalFrame(2);
+		normalFrame2.playGame(5);
+
+		NormalFrame normalFrame = new NormalFrame(1, normalFrame2);
 		normalFrame.playGame(5);
-		int result = normalFrame.calculateScore(1, 10);
+		normalFrame.playGame(5);
+		int result = normalFrame2.calculateScore(normalFrame.playResult);
 
 		assertThat(result).isEqualTo(15);
 	}
@@ -88,9 +92,9 @@ class NormalFrameTest {
 		NormalFrame normalFrame = new NormalFrame(1, normalFrame2);
 		normalFrame.playGame(5);
 		normalFrame.playGame(5);
-		int result = normalFrame.calculateScore(2, 10);
+		int result = normalFrame2.calculateScore(normalFrame.playResult);
 
-		assertThat(result).isEqualTo(20);
+		assertThat(result).isEqualTo(16);
 	}
 
 	@Test
