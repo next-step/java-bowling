@@ -4,6 +4,8 @@ import bowling.pin.Pin;
 
 public class Strike extends Finish{
 
+  public static final int PIN_MAX = 10;
+
   private final Pin first;
 
   public Strike(final Pin first) {
@@ -17,6 +19,6 @@ public class Strike extends Finish{
 
   @Override
   public int totalPin() {
-    return 10;
+    return PIN_MAX;
   }
 }
