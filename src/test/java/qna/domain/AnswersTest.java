@@ -41,7 +41,7 @@ class AnswersTest {
     @DisplayName("모든 답변 삭제")
     void delete() throws Exception {
         //given
-        ANSWERS1.delete();
+        ANSWERS1.deleteAll();
 
         //when
         boolean actual = ANSWERS1.getAnswers()

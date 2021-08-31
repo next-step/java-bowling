@@ -35,7 +35,7 @@ public class Answers {
         this.answers.add(answer);
     }
 
-    public void delete() {
+    public void deleteAll() {
         answers.forEach(Answer::delete);
     }
 
