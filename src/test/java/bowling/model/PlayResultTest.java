@@ -40,16 +40,6 @@ class PlayResultTest {
 	}
 
 	@Test
-	@DisplayName("게임의 결과의 스코어를 알수 있다.")
-	public void getGameScore() {
-		List<Pin> pins = new ArrayList<>();
-		pins.add(new Pin(5));
-		PlayResult playResult = new PlayResult(pins);
-
-		assertThat(playResult.getGameResult()).isEqualTo("5");
-	}
-
-	@Test
 	@DisplayName("게임의 시작 유무를 알수 있다.")
 	public void isGameStart() {
 		List<Pin> pins = new ArrayList<>();

@@ -6,13 +6,9 @@ import java.util.Objects;
 
 public class PlayResult {
 
-	private static final String EMPTY_VALUE = "";
 	private static final int FIRST_INDEX = 0;
 	private static final int SECOND_INDEX = 1;
-	private static final int BONUS_INDEX = 2;
-	private static final int FIRST_INDEX_SIZE = 1;
 	private static final int SECOND_INDEX_SIZE = 2;
-	private static final int BONUS_INDEX_SIZE = 3;
 	private static final int MAX_PIN = 10;
 
 	private final List<Pin> gameResult;
@@ -23,20 +19,6 @@ public class PlayResult {
 
 	public int findScore(int index) {
 		return gameResult.get(index).getPin();
-	}
-
-	public String getGameResult() {
-		if (gameResult.size() == FIRST_INDEX_SIZE) {
-			return ScoreGenerator.scoreGenerator(findScore(FIRST_INDEX));
-		}
-		if (gameResult.size() == SECOND_INDEX_SIZE) {
-			return ScoreGenerator.scoreGenerator(findScore(FIRST_INDEX), findScore(SECOND_INDEX));
-		}
-		if (gameResult.size() == BONUS_INDEX_SIZE) {
-			return ScoreGenerator.scoreGenerator(findScore(FIRST_INDEX), findScore(SECOND_INDEX),
-				findScore(BONUS_INDEX));
-		}
-		return EMPTY_VALUE;
 	}
 
 	public boolean isGameStart() {
