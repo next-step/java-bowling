@@ -50,24 +50,19 @@ public class Play implements Playable {
 	}
 
 	@Override
-	public int countGame() {
-		return gameResult.size();
-	}
-
-	@Override
 	public Pin findPin(int index) {
 		return gameResult.get(index);
 	}
 
 	private void checkScore(Pin pin) {
-		if (!isStrike() && !isSpare() && (countGame() > 0 && findPin(FIRST_INDEX).isOverPin(pin))) {
+		if (!isStrike() && !isSpare() && (gameResult.size() > 0 && findPin(FIRST_INDEX).isOverPin(pin))) {
 			throw new IllegalArgumentException(LIMIT_MAX_PIN_ERROR_MESSAGE);
 		}
 	}
 
 	@Override
 	public boolean isStrike() {
-		if (countGame() == 0) {
+		if (gameResult.size() == 0) {
 			return false;
 		}
 		return gameResult.get(0).isMaxPin();
@@ -78,7 +73,7 @@ public class Play implements Playable {
 		if (isStrike()) {
 			return false;
 		}
-		if (countGame() < MAX_PLAY_COUNT) {
+		if (gameResult.size() < MAX_PLAY_COUNT) {
 			return false;
 		}
 		return findPin(FIRST_INDEX).add(findPin(SECOND_INDEX)).isMaxPin();
@@ -89,7 +84,7 @@ public class Play implements Playable {
 		if (isStrike()) {
 			return false;
 		}
-		if (countGame() < MAX_PLAY_COUNT) {
+		if (gameResult.size() < MAX_PLAY_COUNT) {
 			return false;
 		}
 		return !findPin(FIRST_INDEX).add(findPin(SECOND_INDEX)).isMaxPin();
@@ -97,18 +92,18 @@ public class Play implements Playable {
 
 	@Override
 	public boolean isGameEnd() {
-		if ((isMiss() && (countGame() > MIN_PLAY_COUNT)) || countGame() > MAX_PLAY_COUNT) {
+		if ((isMiss() && (gameResult.size() > MIN_PLAY_COUNT)) || gameResult.size() > MAX_PLAY_COUNT) {
 			return true;
 		}
-		return (frameNumber < FINAL_FRAME_NUMBER && (isStrike() || countGame() > MIN_PLAY_COUNT));
+		return (frameNumber < FINAL_FRAME_NUMBER && (isStrike() || gameResult.size() > MIN_PLAY_COUNT));
 	}
 
 	@Override
 	public int calculateFrame(Playable beforeResult) {
-		if (beforeResult.isSpare() && countGame() > 0) {
+		if (beforeResult.isSpare() && gameResult.size() > 0) {
 			return 10 + findPin(FIRST_INDEX).getPin();
 		}
-		if (beforeResult.isStrike() && countGame() > 1) {
+		if (beforeResult.isStrike() && gameResult.size() > 1) {
 			return 10 + (findPin(FIRST_INDEX).getPin() + findPin(SECOND_INDEX).getPin());
 		}
 		return -1;
@@ -116,7 +111,7 @@ public class Play implements Playable {
 
 	@Override
 	public int calculateDouble(Playable beforeResult) {
-		if (countGame() > 0) {
+		if (gameResult.size() > 0) {
 			return (10 + beforeResult.getTotalScore()) + findPin(FIRST_INDEX).getPin();
 		}
 		return -1;

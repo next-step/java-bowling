@@ -19,15 +19,6 @@ class PlayTest {
 	}
 
 	@Test
-	@DisplayName("플레이를 하면 플레이 판수를 알수 있다.")
-	public void countGame() {
-		Play play = new Play(1);
-		play.play(new Pin(10));
-
-		assertThat(play.countGame()).isEqualTo(1);
-	}
-
-	@Test
 	@DisplayName("플레이 이후 해당 번째 스코어를 찾을 수 있다.")
 	public void findPin() {
 		Play play = new Play(1);

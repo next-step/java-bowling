@@ -6,8 +6,6 @@ public interface Playable {
 
 	Play play(Pin pin);
 
-	int countGame();
-
 	Pin findPin(int index);
 
 	String getGameStatus();
