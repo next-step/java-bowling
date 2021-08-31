@@ -1,6 +1,6 @@
 package bowling.step2;
 
-import bowling.step2.domain.Frame;
+import bowling.step2.domain.NormalFrame;
 import bowling.step2.domain.FrameGroup;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ public class FrameTest {
     @Test
     public void pitchSuccess() {
         //given
-        Frame frame = Frame.of(1);
+        NormalFrame frame = NormalFrame.of(1);
 
         //when
         frame.pitch(5);
@@ -23,7 +23,7 @@ public class FrameTest {
     @Test
     public void totalPitchCountNotInRange() {
         //given
-        Frame frame = Frame.of(1);
+        NormalFrame frame = NormalFrame.of(1);
 
         //when
         assertThatThrownBy(() -> {

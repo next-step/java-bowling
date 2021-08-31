@@ -1,45 +1,9 @@
 package bowling.step2.domain;
 
-public class Frame {
-    private final int frameNo;
+public interface Frame {
+    void pitch(int count);
 
-    private final PitchGroup pitchGroup;
+    Frame nextFrame();
 
-    private final int MAX = 10;
-
-    private Frame(int frameNo) {
-        this.frameNo = frameNo;
-        this.pitchGroup = PitchGroup.of();
-    }
-
-    public static Frame of(int frameNo) {
-        return new Frame(frameNo);
-    }
-
-    public void pitch(int count) {
-        validatePitchCount(pitchGroup.lastPitchCount(), count);
-        pitchGroup.pitch(count);
-    }
-
-    private void validatePitchCount(int lastPitchCount, int count) {
-        if (sumWithLastPitchOverTheMax(lastPitchCount, count)) {
-            throw new RuntimeException("쓰러뜨릴 수 있는 핀의 갯수를 넘어섰습니다.");
-        }
-    }
-
-    private boolean sumWithLastPitchOverTheMax(int lastPitchCount, int count) {
-        return lastPitchCount + count > MAX;
-    }
-
-    public Frame nextFrame() {
-        return Frame.of(this.frameNo + 1);
-    }
-
-    public int pitchCount() {
-        return pitchGroup.size();
-    }
-
-    public boolean finished() {
-        return pitchGroup.size() == 2;
-    }
+    boolean finished();
 }

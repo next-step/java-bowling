@@ -10,7 +10,7 @@ public class FrameGroup {
     private final int MAX = 10;
 
     private FrameGroup() {
-        this.frameList = new ArrayList<>(Collections.singletonList(Frame.of(1)));
+        this.frameList = new ArrayList<>(Collections.singletonList(NormalFrame.of(1)));
     }
 
     public static FrameGroup of() {
@@ -32,6 +32,11 @@ public class FrameGroup {
 
     public void nextFrame() {
         validateFrameGroupSize();
+
+        if (lastFrame() instanceof LastFrame) {
+            return;
+        }
+
         frameList.add(lastFrame().nextFrame());
     }
 
