@@ -8,6 +8,7 @@ import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -15,9 +16,9 @@ public class QuestionTest {
 
     @Test
     @DisplayName("질문 삭제")
-    void delete() {
+    void delete() throws CannotDeleteException {
         //given
-        Q1.delete();
+        Q1.deleteBy(UserTest.JAVAJIGI);
 
         //when
         boolean actual = Q1.isDeleted();
@@ -34,10 +35,9 @@ public class QuestionTest {
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
 
         //when
-        boolean actual = question.deletable(UserTest.JAVAJIGI);
 
         //then
-        assertThat(actual).isTrue();
+        assertDoesNotThrow(() -> question.deletable(UserTest.JAVAJIGI));
 
     }
 
@@ -65,10 +65,9 @@ public class QuestionTest {
         question.addAnswers(AnswersTest.ANSWERS1);
 
         //when
-        boolean actual = question.deletable(UserTest.JAVAJIGI);
 
         //then
-        assertThat(actual).isTrue();
+        assertDoesNotThrow(() -> question.deletable(UserTest.JAVAJIGI));
 
     }
 
