@@ -57,12 +57,12 @@ public class NormalFrame extends Frame {
 	}
 
 	@Override
-	int getStrikeAndSpareNextScore(int leftStep, int sumScore) {
+	int calculateScore(int leftStep, int sumScore) {
 		if (leftStep == 1 && playResult.isGameStart()) {
 			return sumScore + playResult.findScore(FIRST_INDEX);
 		}
 		if (leftStep == 2 && playResult.isStrike()) {
-			return nextFrame.getStrikeAndSpareNextScore(1, sumScore + playResult.findTotalScore());
+			return nextFrame.calculateScore(1, sumScore + playResult.findTotalScore());
 		}
 		if (leftStep == 2 && playResult.isSecondPlay()) {
 			return sumScore + playResult.findTotalScore();
@@ -78,6 +78,6 @@ public class NormalFrame extends Frame {
 		if (!(playResult.isStrike() || playResult.isSpare())) {
 			return playResult.findTotalScore();
 		}
-		return nextFrame.getStrikeAndSpareNextScore(playResult.findScoreNextStep(), 10);
+		return nextFrame.calculateScore(playResult.findScoreNextStep(), 10);
 	}
 }

@@ -28,7 +28,7 @@ public abstract class Frame {
 
 	public abstract boolean isGameEnd();
 
-	abstract int getStrikeAndSpareNextScore(int leftStep, int sumScore);
+	abstract int calculateScore(int leftStep, int sumScore);
 
 	public abstract int getGameScore();
 

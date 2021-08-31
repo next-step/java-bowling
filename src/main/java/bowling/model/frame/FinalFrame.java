@@ -42,7 +42,7 @@ public class FinalFrame extends Frame {
 	}
 
 	@Override
-	int getStrikeAndSpareNextScore(int leftStep, int sumScore) {
+	int calculateScore(int leftStep, int sumScore) {
 		if (leftStep == 1 && playResult.isGameStart()) {
 			return sumScore + playResult.findScore(FIRST_INDEX);
 		}
