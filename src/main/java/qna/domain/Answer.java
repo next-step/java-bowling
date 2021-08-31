@@ -66,10 +66,6 @@ public class Answer extends AbstractEntity {
         return writer;
     }
 
-    public void toQuestion(Question question) {
-        this.question = question;
-    }
-
     public Question question() {
         return question;
     }
@@ -91,12 +87,11 @@ public class Answer extends AbstractEntity {
             return false;
         }
         Answer answer = (Answer) o;
-        return deleted == answer.deleted && Objects.equals(writer, answer.writer) && Objects.equals(question, answer.question)
-            && Objects.equals(contents, answer.contents);
+        return deleted == answer.deleted && Objects.equals(writer, answer.writer) && Objects.equals(contents, answer.contents);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), writer, question, contents, deleted);
+        return Objects.hash(super.hashCode(), writer, contents, deleted);
     }
 }

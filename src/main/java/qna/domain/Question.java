@@ -42,7 +42,7 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public User getWriter() {
+    public User writer() {
         return writer;
     }
 
@@ -52,7 +52,6 @@ public class Question extends AbstractEntity {
     }
 
     public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
         answers.add(answer);
     }
 
@@ -62,8 +61,12 @@ public class Question extends AbstractEntity {
 
     public Question deleted(DeleteHistories deleteHistory) {
         this.deleted = true;
-        deleteHistory.addDeleteHistory(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
+        deleteHistory.addDeleteHistory(new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer(), LocalDateTime.now()));
         return this;
+    }
+
+    public void deleteAnswer(DeleteHistories deleteHistories) {
+        answers.deleteAnswer(deleteHistories);
     }
 
     public boolean isDeleted() {
@@ -74,8 +77,8 @@ public class Question extends AbstractEntity {
         return answers.isAnswerEmptyByLoginUser(loginUser);
     }
 
-    public void deleteAnswer(DeleteHistories deleteHistories) {
-        answers.deleteAnswer(deleteHistories);
+    public Answers answers() {
+        return answers;
     }
 
     @Override
