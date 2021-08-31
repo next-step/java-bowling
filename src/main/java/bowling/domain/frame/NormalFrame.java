@@ -1,17 +1,16 @@
 package bowling.domain.frame;
 
 import bowling.domain.pins.Pins;
+import bowling.domain.score.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
-
-import java.util.Collections;
-import java.util.List;
 
 public class NormalFrame implements Frame {
 
     private static final int NORMAL_FRAME_LAST = 9;
 
     private final int frameNumber;
+    private Frame next;
     private State state;
 
     private NormalFrame(int frameNumber) {
@@ -32,7 +31,8 @@ public class NormalFrame implements Frame {
     public Frame bowl(Pins pins) {
         state = state.bowl(pins);
         if (state.isFinish()) {
-            return createNextFrame();
+            next = createNextFrame();
+            return next;
         }
         return this;
     }
@@ -43,8 +43,27 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public List<State> getState() {
-        return Collections.singletonList(state);
+    public String getState() {
+        return state.toString();
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = state.getScore();
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        return next.calculateAdditionalScore(score);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = state.calculateAdditionalScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return next.calculateAdditionalScore(score);
     }
 
     private Frame createNextFrame() {

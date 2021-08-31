@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.pins.Pins;
+import bowling.domain.score.Score;
+import bowling.exception.CannotCalculateException;
 
 import static bowling.domain.pins.Pins.MAX_PIN_NUMBER;
 import static bowling.domain.pins.Pins.MIN_PIN_NUMBER;
@@ -27,6 +29,15 @@ public class FirstBowl implements Playing {
         }
 
         return Gutter.of();
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = firstPins.getScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        throw new CannotCalculateException();
     }
 
     private boolean isSpare(Pins pins) {

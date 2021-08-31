@@ -1,18 +1,17 @@
 package bowling.domain.frame;
 
 import bowling.domain.pins.Pins;
+import bowling.domain.score.Score;
 import bowling.domain.state.Gutter;
 import bowling.domain.state.Miss;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
-import java.util.Collections;
-import java.util.List;
-
 public class FinalFrame implements Frame {
 
     public static final int FINAL_FRAME_NUMBER = 10;
 
+    private Frame next;
     private State state;
 
     private FinalFrame() {
@@ -32,7 +31,8 @@ public class FinalFrame implements Frame {
     public Frame bowl(Pins pins) {
         state = state.bowl(pins);
         if (isBonusFrame()) {
-            return BonusFrame.of(state);
+            next = BonusFrame.of(state);
+            return next;
         }
 
         return this;
@@ -44,8 +44,27 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<State> getState() {
-        return Collections.singletonList(state);
+    public String getState() {
+        return state.toString();
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = state.getScore();
+        if (score.canCalculateScore()) {
+            return score;
+        }
+
+        return next.calculateAdditionalScore(score);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = state.calculateAdditionalScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return next.calculateAdditionalScore(score);
     }
 
     private boolean isMissOrGutter() {

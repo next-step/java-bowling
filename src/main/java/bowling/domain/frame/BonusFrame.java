@@ -1,12 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.pins.Pins;
-import bowling.domain.state.Spare;
-import bowling.domain.state.State;
+import bowling.domain.score.Score;
+import bowling.domain.state.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BonusFrame implements Frame {
 
@@ -29,36 +29,57 @@ public class BonusFrame implements Frame {
 
     @Override
     public Frame bowl(Pins pins) {
-        State state = getLast();
+        State state = getLastState();
+
         if (state.isFinish()) {
-            states.add(state);
+            states.add(Ready.of().bowl(pins));
             return this;
         }
 
-        removeLast();
+        states.remove(states.size() - 1);
         states.add(state.bowl(pins));
+
         return this;
     }
 
     @Override
     public boolean isFinish() {
-        return states.size() == LAST_COUNT || isSpare();
+        return states.size() == LAST_COUNT || isFirstSpare();
     }
 
     @Override
-    public List<State> getState() {
-        return Collections.unmodifiableList(states);
+    public String getState() {
+        return states.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining());
     }
 
-    private void removeLast() {
-        states.remove(states.size() - 1);
+    @Override
+    public Score getScore() {
+        Score score = states.get(0).getScore();
+        for (int i = 1; i < states.size(); i++) {
+            State state = states.get(i);
+            score = state.calculateAdditionalScore(score);
+        }
+
+        return score;
     }
 
-    private State getLast() {
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        for (int i = 1; i < states.size(); i++) {
+            State state = states.get(i);
+            score = state.calculateAdditionalScore(score);
+        }
+
+        return score;
+    }
+
+    private State getLastState() {
         return states.get(states.size() - 1);
     }
 
-    private boolean isSpare() {
-        return states.size() == 2 && getLast() instanceof Spare;
+    private boolean isFirstSpare() {
+        return states.size() == 2 && states.get(0) instanceof Spare;
     }
 }

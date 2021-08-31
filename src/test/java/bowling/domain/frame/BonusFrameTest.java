@@ -18,14 +18,16 @@ class BonusFrameTest {
         frame.bowl(Pins.of(10));
 
         assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.getState()).isEqualTo("XXX");
     }
 
     @DisplayName("마지막 프레임에 스페어를 치면 한번 더 투구 할 수 있다.")
     @Test
     void final_frame_spare() {
         Frame frame = BonusFrame.of(Spare.of(Pins.of(3), Pins.of(7)));
-        frame.bowl(Pins.of(10));
+        frame.bowl(Pins.of(5));
 
         assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.getState()).isEqualTo("3|/5");
     }
 }
