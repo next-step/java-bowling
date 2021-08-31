@@ -28,7 +28,9 @@ public abstract class Frame {
 
 	public abstract boolean isGameEnd();
 
-	abstract int calculateScore(int leftStep, int sumScore);
+	abstract int calculateScore(PlayResult playResult);
+
+	abstract int calculateScoreDouble(PlayResult beforeResult);
 
 	public abstract int getGameScore();
 
