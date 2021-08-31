@@ -4,7 +4,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import bowling.model.Player;
-import bowling.model.Score;
+import bowling.model.ScoreCalculator;
 import bowling.model.frame.Frames;
 
 public class OutputView {
@@ -26,8 +26,8 @@ public class OutputView {
 		System.out.print(getFrameGameScore(frames.getScoreBoard()) + DELIMITER + System.lineSeparator());
 	}
 
-	private static String getFrameGameScore(Score score) {
-		return score.getScore().stream()
+	private static String getFrameGameScore(ScoreCalculator scoreCalculator) {
+		return scoreCalculator.getScore().stream()
 			.map(value -> printFormatter(convertScore(value)))
 			.collect(Collectors.joining(DELIMITER));
 	}
