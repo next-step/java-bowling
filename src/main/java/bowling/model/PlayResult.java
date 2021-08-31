@@ -29,7 +29,7 @@ public class PlayResult {
 	}
 
 	public boolean isMaxPin(Pin secondPin) {
-		return gameResult.get(FIRST_INDEX).isMaxPin(secondPin);
+		return gameResult.get(FIRST_INDEX).add(secondPin).isMaxPin();
 	}
 
 	public int findTotalScore() {
