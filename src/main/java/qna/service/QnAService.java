@@ -6,12 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qna.CannotDeleteException;
 import qna.NotFoundException;
-import qna.domain.AnswerRepository;
-import qna.domain.Question;
-import qna.domain.QuestionRepository;
-import qna.domain.User;
+import qna.domain.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
@@ -35,8 +34,12 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
 
-        QuestionerManagement questionerManagement = QuestionerManagement.of(questionRepository.findByDeletedFalse());
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-        deleteHistoryService.saveAll(questionerManagement.deleteHistory(loginUser, questionId));
+        Question question = findQuestionById(questionId);
+
+        deleteHistories = question.delete(loginUser);
+
+        deleteHistoryService.saveAll(deleteHistories);
     }
 }
