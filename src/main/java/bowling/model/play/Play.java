@@ -25,9 +25,13 @@ public class Play implements Playable {
 	}
 
 	@Override
-	public List<Pin> play(Pin pin) {
+	public Play play(Pin pin) {
 		checkScore(pin);
 		gameResult.add(pin);
+		return this;
+	}
+
+	public List<Pin> getGameResult() {
 		return Collections.unmodifiableList(gameResult);
 	}
 
