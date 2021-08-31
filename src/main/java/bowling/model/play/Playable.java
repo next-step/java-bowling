@@ -8,9 +8,11 @@ public interface Playable {
 
 	List<Pin> play(Pin pin);
 
-	boolean isFirstStrike();
+	int countGame();
 
-	boolean isNotStrikeOrSpare();
+	boolean isStrike();
+
+	boolean isSpare();
 
 	boolean isGameEnd();
 
