@@ -11,16 +11,16 @@ import java.util.stream.Collectors;
 public class Answers {
     private final List<Answer> answers;
 
-    public static Answers of(List<Answer> answers) {
-        return new Answers(answers);
-    }
-
     private Answers(List<Answer> answers) {
         this.answers = answers;
     }
 
     public Answers() {
         answers = new ArrayList<>();
+    }
+
+    public static Answers of(List<Answer> answers) {
+        return new Answers(answers);
     }
 
     public boolean isOwner(User loginUser) {
