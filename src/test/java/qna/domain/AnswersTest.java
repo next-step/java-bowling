@@ -14,12 +14,12 @@ class AnswersTest {
         Answers answers = new Answers();
         answers.add(givenA1);
         DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.ANSWER, givenA1.getId(), givenA1.getWriter(), LocalDateTime.now()));
+        deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.ANSWER, givenA1.getId(), givenA1.writer(), LocalDateTime.now()));
 
         // When
         answers.deleteAnswer(deleteHistories);
 
         // Then
-        assertThat(answers.isAnswerEmptyByLoginUser(AnswerTest.A1.getWriter())).isTrue();
+        assertThat(answers.isAnswerEmptyByLoginUser(AnswerTest.A1.writer())).isTrue();
     }
 }
