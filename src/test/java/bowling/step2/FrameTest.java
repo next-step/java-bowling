@@ -1,5 +1,6 @@
 package bowling.step2;
 
+import bowling.step2.domain.LastFrame;
 import bowling.step2.domain.NormalFrame;
 import bowling.step2.domain.FrameGroup;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,19 @@ public class FrameTest {
         //when
         frame.pitch(5);
         frame.pitch(5);
+
+        //then
+    }
+
+    @Test
+    public void pitchSuccess2() {
+        //given
+        LastFrame frame = LastFrame.of(10);
+
+        //when
+        frame.pitch(5);
+        frame.pitch(5);
+        frame.pitch(6);
 
         //then
     }
@@ -53,43 +67,11 @@ public class FrameTest {
         FrameGroup frameGroup = FrameGroup.of();
 
         //when
-        assertThatThrownBy(() -> {
-            for (int i = 0; i < 11; i++) {
-                frameGroup.nextFrame();
-            }
-        }).isInstanceOf(RuntimeException.class);
+        for (int i = 0; i < 11; i++) {
+            frameGroup.nextFrame();
+        }
 
         //then
-    }
-
-    @Test
-    public void makeNextFrameWithPitches() {
-        //given
-        FrameGroup frameGroup = FrameGroup.of();
-
-        //when
-        frameGroup.pitch(5);
-        frameGroup.pitch(5);
-        frameGroup.pitch(5);
-        frameGroup.pitch(5);
-
-        //then
-        assertThat(frameGroup.currentSize()).isEqualTo(3);
-    }
-
-    @Test
-    public void makeNextFrameWithPitches2() {
-        //given
-        FrameGroup frameGroup = FrameGroup.of();
-
-        //when
-        frameGroup.pitch(5);
-        frameGroup.pitch(5);
-        frameGroup.pitch(5);
-        frameGroup.pitch(5);
-        frameGroup.pitch(5);
-
-        //then
-        assertThat(frameGroup.currentSize()).isEqualTo(3);
+        assertThat(frameGroup.currentSize()).isNotEqualTo(11);
     }
 }

@@ -29,4 +29,9 @@ public class Pitch {
     public int count() {
         return this.count;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(count);
+    }
 }

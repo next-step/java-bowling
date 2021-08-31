@@ -39,12 +39,18 @@ public class LastFrame implements Frame {
         throw new RuntimeException("더이상 프레임을 생성할 수 없습니다.");
     }
 
-    public int pitchCount() {
-        return pitchGroup.size();
+    @Override
+    public boolean finished() {
+        return (pitchGroup.size() == 2 && pitchGroup.total() < 10) || pitchGroup.size() == MAX_PITCH_SIZE;
     }
 
     @Override
-    public boolean finished() {
-        return pitchGroup.size() == MAX_PITCH_SIZE;
+    public boolean isAbleToPitch() {
+        return pitchGroup.total() < MAX && pitchGroup.size() < MAX_PITCH_SIZE;
+    }
+
+    @Override
+    public String current() {
+        return pitchGroup.toString();
     }
 }

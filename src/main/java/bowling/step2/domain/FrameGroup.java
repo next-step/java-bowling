@@ -21,12 +21,9 @@ public class FrameGroup {
         frameList.get(frameList.size() - 1)
                 .pitch(count);
 
-        if (frameFinished()) {
-            nextFrame();
-        }
     }
 
-    private boolean frameFinished() {
+    public boolean frameFinished() {
         return lastFrame().finished();
     }
 
@@ -56,5 +53,9 @@ public class FrameGroup {
 
     public int currentSize() {
         return frameList.size();
+    }
+
+    public List<Frame> current() {
+        return frameList;
     }
 }

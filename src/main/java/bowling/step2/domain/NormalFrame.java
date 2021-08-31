@@ -1,6 +1,6 @@
 package bowling.step2.domain;
 
-public class NormalFrame implements Frame{
+public class NormalFrame implements Frame {
     private final int frameNo;
 
     private final PitchGroup pitchGroup;
@@ -55,6 +55,16 @@ public class NormalFrame implements Frame{
 
     @Override
     public boolean finished() {
-        return pitchGroup.size() == MAX_PITCH_SIZE;
+        return pitchGroup.size() == MAX_PITCH_SIZE || pitchGroup.total() == MAX;
+    }
+
+    @Override
+    public boolean isAbleToPitch() {
+        return pitchGroup.total() < MAX && pitchGroup.size() < MAX_PITCH_SIZE;
+    }
+
+    @Override
+    public String current() {
+        return pitchGroup.toString();
     }
 }

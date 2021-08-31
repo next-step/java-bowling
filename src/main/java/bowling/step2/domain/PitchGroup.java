@@ -27,13 +27,17 @@ public class PitchGroup {
             return 0;
         }
 
-        return pitches.get(pitches.size() - 1)
-                .count() % 10;
+        return total() % 10;
     }
 
     public int total() {
         return pitches.stream()
                 .mapToInt(Pitch::count)
                 .sum();
+    }
+
+    @Override
+    public String toString() {
+        return pitches.toString();
     }
 }

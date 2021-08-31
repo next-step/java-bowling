@@ -6,4 +6,8 @@ public interface Frame {
     Frame nextFrame();
 
     boolean finished();
+
+    boolean isAbleToPitch();
+
+    String current();
 }

@@ -1,5 +1,8 @@
 package bowling.step2.domain;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Lane {
     private final String name;
 
@@ -18,7 +21,23 @@ public class Lane {
         frameGroup.pitch(count);
     }
 
+    public boolean frameFinished() {
+        return frameGroup.frameFinished();
+    }
+
     public void nextFrame() {
         frameGroup.nextFrame();
+    }
+
+    public boolean isAbleToPitch() {
+        return frameGroup.lastFrame()
+                .isAbleToPitch();
+    }
+
+    public List<String> getResult() {
+        return frameGroup.current()
+                .stream()
+                .map(Frame::current)
+                .collect(Collectors.toList());
     }
 }
