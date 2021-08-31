@@ -1,8 +1,6 @@
 package bowling.model.frame;
 
 import bowling.model.Pin;
-import bowling.model.PlayResult;
-import bowling.model.play.Play;
 import bowling.model.play.Playable;
 
 public class FinalFrame extends Frame {
@@ -10,11 +8,8 @@ public class FinalFrame extends Frame {
 	private static final String FRAME_RANGE_ERROR_MESSAGE = "마지막 프레임은 10만 가능 합니다.";
 	private static final int FINAL_FRAME_NUMBER = 10;
 
-	private final Playable play;
-
 	public FinalFrame(int frameNumber) {
 		super(frameNumber);
-		play = new Play(frameNumber);
 	}
 
 	@Override
@@ -26,8 +21,7 @@ public class FinalFrame extends Frame {
 
 	@Override
 	public void playGame(int strikeNumber) {
-		Play play = this.play.play(new Pin(strikeNumber));
-		playResult = new PlayResult(play.getGameResult());
+		play.play(new Pin(strikeNumber));
 	}
 
 	@Override
@@ -41,13 +35,13 @@ public class FinalFrame extends Frame {
 	}
 
 	@Override
-	int calculateScore(PlayResult beforeResult) {
-		return playResult.calculateFrame(beforeResult);
+	int calculateScore(Playable beforeResult) {
+		return play.calculateFrame(beforeResult);
 	}
 
 	@Override
-	int calculateScoreDouble(PlayResult beforeResult) {
-		return playResult.calculateDouble(beforeResult);
+	int calculateScoreDouble(Playable beforeResult) {
+		return play.calculateDouble(beforeResult);
 	}
 
 	@Override
@@ -55,6 +49,6 @@ public class FinalFrame extends Frame {
 		if (!isGameEnd()) {
 			return -1;
 		}
-		return playResult.getTotalScore();
+		return play.getTotalScore();
 	}
 }
