@@ -12,7 +12,7 @@ import bowling.model.frame.FinalFrame;
 import bowling.model.frame.Frame;
 import bowling.model.frame.NormalFrame;
 
-public class ScoreCalculatorTest {
+public class StateCalculatorTest {
 
 	@Test
 	@DisplayName("프레임의 정보를 입력하면 스코어가 생성된다.")

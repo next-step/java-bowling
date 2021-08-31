@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ScoreGeneratorTest {
+class StateGeneratorTest {
 
 	@Test
 	@DisplayName("점수 하나만 있을시 스트라이크, 커터, 기타 점수를 환산한다.")
