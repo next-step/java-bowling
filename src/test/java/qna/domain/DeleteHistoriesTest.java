@@ -28,7 +28,6 @@ public class DeleteHistoriesTest {
         assertThat(actual).isEqualTo(2);
     }
 
-
     @Test
     @DisplayName("질문 삭제 이력 추가")
     void add_question() {
@@ -40,6 +39,22 @@ public class DeleteHistoriesTest {
 
         //then
         assertThat(actual).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("질문 및 답변 삭제 이력 추가")
+    void add_question_and_answer() {
+        //given
+        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "Answers Contents1"));
+        question.addAnswer(new Answer(UserTest.JAVAJIGI, question, "Answers Contents2"));
+
+        //when
+        deleteHistories.add(question);
+        int actual = deleteHistories.size();
+
+        //then
+        assertThat(actual).isEqualTo(3);
     }
 
 
