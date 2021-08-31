@@ -38,7 +38,7 @@ public class PlayResult {
 			.sum();
 	}
 
-	public String getGameScore() {
+	public String getGameResult() {
 		if (gameResult.size() == FIRST_INDEX_SIZE) {
 			return ScoreGenerator.scoreGenerator(findScore(FIRST_INDEX));
 		}

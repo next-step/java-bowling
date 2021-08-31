@@ -46,7 +46,7 @@ class PlayResultTest {
 		pins.add(new Pin(5));
 		PlayResult playResult = new PlayResult(pins);
 
-		assertThat(playResult.getGameScore()).isEqualTo("5");
+		assertThat(playResult.getGameResult()).isEqualTo("5");
 	}
 
 	@Test
