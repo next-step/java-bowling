@@ -1,7 +1,6 @@
 package bowling.model.play;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,10 +32,6 @@ public class Play implements Playable {
 		checkScore(pin);
 		gameResult.add(pin);
 		return this;
-	}
-
-	public List<Pin> getGameResult() {
-		return Collections.unmodifiableList(gameResult);
 	}
 
 	@Override
@@ -106,6 +101,32 @@ public class Play implements Playable {
 			return true;
 		}
 		return (frameNumber < FINAL_FRAME_NUMBER && (isStrike() || countGame() > MIN_PLAY_COUNT));
+	}
+
+	@Override
+	public int calculateFrame(Playable beforeResult) {
+		if (beforeResult.isSpare() && countGame() > 0) {
+			return 10 + findPin(FIRST_INDEX).getPin();
+		}
+		if (beforeResult.isStrike() && countGame() > 1) {
+			return 10 + (findPin(FIRST_INDEX).getPin() + findPin(SECOND_INDEX).getPin());
+		}
+		return -1;
+	}
+
+	@Override
+	public int calculateDouble(Playable beforeResult) {
+		if (countGame() > 0) {
+			return (10 + beforeResult.getTotalScore()) + findPin(FIRST_INDEX).getPin();
+		}
+		return -1;
+	}
+
+	@Override
+	public int getTotalScore() {
+		return gameResult.stream()
+			.mapToInt(Pin::getPin)
+			.sum();
 	}
 
 	@Override

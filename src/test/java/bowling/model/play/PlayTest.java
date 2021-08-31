@@ -19,15 +19,6 @@ class PlayTest {
 	}
 
 	@Test
-	@DisplayName("플레이를 하면 플레이 결과가 생성된다.")
-	public void playBowling() {
-		Play play = new Play(1);
-		Play result = play.play(new Pin(10));
-
-		assertThat(result.getGameResult()).extracting("pin").containsExactly(10);
-	}
-
-	@Test
 	@DisplayName("플레이를 하면 플레이 판수를 알수 있다.")
 	public void countGame() {
 		Play play = new Play(1);

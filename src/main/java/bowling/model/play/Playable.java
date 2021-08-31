@@ -20,4 +20,10 @@ public interface Playable {
 
 	boolean isGameEnd();
 
+	int calculateFrame(Playable beforeResult);
+
+	int calculateDouble(Playable beforeResult);
+
+	int getTotalScore();
+
 }
