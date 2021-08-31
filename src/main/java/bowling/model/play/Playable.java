@@ -10,6 +10,8 @@ public interface Playable {
 
 	Pin findPin(int index);
 
+	String getGameStatus();
+
 	boolean isStrike();
 
 	boolean isSpare();
