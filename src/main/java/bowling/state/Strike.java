@@ -14,4 +14,9 @@ public class Strike extends Finish{
   public String score() {
     return first.score();
   }
+
+  @Override
+  public int totalPin() {
+    return 10;
+  }
 }

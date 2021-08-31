@@ -17,4 +17,9 @@ public class Miss extends Finish{
   public String score() {
     return second.score(first);
   }
+
+  @Override
+  public int totalPin() {
+    return second.totalDownPin(first);
+  }
 }
