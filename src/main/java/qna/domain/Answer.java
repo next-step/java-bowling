@@ -1,6 +1,5 @@
 package qna.domain;
 
-import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 

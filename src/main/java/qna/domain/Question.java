@@ -74,8 +74,13 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public void delete() {
+    public DeleteHistories delete() {
+        answers.deleteAll();
         this.deleted = true;
+
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.add(this);
+        return deleteHistories;
     }
 
     public boolean isDeleted() {

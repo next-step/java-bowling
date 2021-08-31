@@ -27,12 +27,19 @@ public class Answers {
     }
 
     public boolean deletableBy(User loginUser) {
+        if (answers.isEmpty()) {
+            return true;
+        }
         return answers.stream()
                 .allMatch(answer -> answer.isOwner(loginUser));
     }
 
     public void add(Answer answer) {
         this.answers.add(answer);
+    }
+
+    public void addAll(Answers answers) {
+        this.answers.addAll(answers.getAnswers());
     }
 
     public void deleteAll() {
@@ -42,4 +49,9 @@ public class Answers {
     public List<Answer> getAnswers() {
         return Collections.unmodifiableList(answers);
     }
+
+    public void toQuestion(Question question) {
+        this.answers.forEach(answer -> answer.toQuestion(question));
+    }
+
 }
