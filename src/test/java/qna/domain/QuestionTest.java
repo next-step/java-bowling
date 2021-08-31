@@ -1,15 +1,13 @@
 package qna.domain;
 
 
+import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
+import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -29,48 +27,66 @@ public class QuestionTest {
 
     }
 
-    @ParameterizedTest(name = "질문 작성자 일치 여부 {index} [{arguments}]")
-    @MethodSource("deletable")
-    @DisplayName("삭제 가능 여부 - 질문 작성자 일치 여부")
-    void deletable(User loginUser, boolean expected) {
+    @Test
+    @DisplayName("삭제 가능 여부 - 질문 작성자 일치")
+    void deletable() throws CannotDeleteException {
         //given
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
 
         //when
-        boolean actual = question.deletable(loginUser);
+        boolean actual = question.deletable(UserTest.JAVAJIGI);
 
         //then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isTrue();
 
     }
 
-    private static Stream<Arguments> deletable() {
-        return Stream.of(
-                Arguments.of(UserTest.JAVAJIGI, true),
-                Arguments.of(UserTest.SANJIGI, false)
-        );
-    }
-
-
-    @ParameterizedTest(name = "질문 작성자, 답변 작성자 일치 여부 {index} [{arguments}]")
-    @MethodSource("deletable_with_answers")
-    @DisplayName("삭제 가능 여부 - 질문 작성자 and 답변 작성자 일치 여부")
-    void deletable_with_answers(User loginUser, Answers answers, boolean expected) {
+    @Test
+    @DisplayName("삭제 가능 여부 - 질문 작성자 불일치")
+    void deletable_mismatch() throws CannotDeleteException {
         //given
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        question.addAnswers(answers);
 
         //when
-        boolean actual = question.deletable(loginUser);
+        ThrowableAssert.ThrowingCallable actual = () -> question.deletable(UserTest.SANJIGI);
 
         //then
-        assertThat(actual).isEqualTo(expected);
+        assertThatThrownBy(actual)
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessage("질문을 삭제할 권한이 없습니다.");
 
     }
-    private static Stream<Arguments> deletable_with_answers() {
-        return Stream.of(
-                Arguments.of(UserTest.JAVAJIGI, AnswersTest.ANSWERS1, true),
-                Arguments.of(UserTest.JAVAJIGI, AnswersTest.ANSWERS2, false)
-        );
+
+    @Test
+    @DisplayName("삭제 가능 여부 - 질문 작성자 and 답변 작성자 일치")
+    void deletable_with_answers() throws CannotDeleteException {
+        //given
+        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question.addAnswers(AnswersTest.ANSWERS1);
+
+        //when
+        boolean actual = question.deletable(UserTest.JAVAJIGI);
+
+        //then
+        assertThat(actual).isTrue();
+
     }
+
+    @Test
+    @DisplayName("삭제 가능 여부 - 질문 작성자 and 답변 작성자 불일치")
+    void deletable_with_answers_mismatch() {
+        //given
+        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question.addAnswers(AnswersTest.ANSWERS2);
+
+        //when
+        ThrowableAssert.ThrowingCallable actual = () -> question.deletable(UserTest.JAVAJIGI);
+
+        //then
+        assertThatThrownBy(actual)
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+
+    }
+
 }
