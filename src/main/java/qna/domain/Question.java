@@ -87,8 +87,8 @@ public class Question extends AbstractEntity {
 
     public void delete(final User loginUser) {
         validateOwner(loginUser);
-        answers.validateOtherUserAnswer(writer);
-        deleted = true;
+        answers.deleteAll(writer);
+        setDeleted(true);
     }
 
     private void validateOwner(final User loginUser) {

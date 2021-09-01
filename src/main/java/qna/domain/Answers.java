@@ -26,15 +26,21 @@ public final class Answers {
         answers.add(answer);
     }
 
-    public void validateOtherUserAnswer(final User writer) {
-        for (Answer answer : answers) {
-            if (!writer.equals(answer.getWriter())) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
-    }
-
     public List<Answer> getAnswers() {
         return answers;
     }
+
+    public void deleteAll(final User writer) {
+        for (Answer answer : answers) {
+            if (isOtherUserAnswer(writer, answer.getWriter())) {
+                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+            }
+            answer.setDeleted(true);
+        }
+    }
+
+    private boolean isOtherUserAnswer(final User writer, final User answerWriter) {
+        return !writer.equals(answerWriter);
+    }
+
 }
