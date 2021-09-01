@@ -7,6 +7,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import qna.CannotDeleteException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -59,7 +60,9 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question deleted(DeleteHistories deleteHistory) {
+    public Question delete(User loginUser, DeleteHistories deleteHistory) throws CannotDeleteException {
+        validateDelete(loginUser);
+
         this.deleted = true;
         deleteHistory.addDeleteHistory(new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer(), LocalDateTime.now()));
         return this;
@@ -79,6 +82,16 @@ public class Question extends AbstractEntity {
 
     public Answers answers() {
         return answers;
+    }
+
+    public void validateDelete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        if (!isAnswerEmptyByLoginUser(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
     }
 
     @Override
@@ -106,4 +119,5 @@ public class Question extends AbstractEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), title, contents, writer, answers, deleted);
     }
+
 }
