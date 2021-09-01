@@ -49,11 +49,6 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public DeleteHistory deleteByUser(User user) throws CannotDeleteException {
         validateUserAuthority(user);
         deleted = true;
@@ -68,10 +63,6 @@ public class Answer extends AbstractEntity {
 
     public User getWriter() {
         return writer;
-    }
-
-    public String getContents() {
-        return contents;
     }
 
     public void toQuestion(Question question) {
