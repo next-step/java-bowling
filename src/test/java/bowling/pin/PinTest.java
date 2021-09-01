@@ -46,24 +46,4 @@ public class PinTest {
     assertThatThrownBy(() -> second.totalDownPin(first))
         .isInstanceOf(IllegalArgumentException.class);
   }
-
-  @Test
-  void strike() {
-    Pin first = Pin.from(10);
-    assertThat(first.isStrike()).isTrue();
-  }
-
-  @Test
-  void spare() {
-    Pin first = Pin.from(5);
-    Pin second = Pin.from(5);
-    assertThat(second.isSpare(first)).isTrue();
-  }
-
-  @Test
-  void miss() {
-    Pin first = Pin.from(5);
-    Pin second = Pin.from(4);
-    assertThat(second.isMiss(first)).isTrue();
-  }
 }
