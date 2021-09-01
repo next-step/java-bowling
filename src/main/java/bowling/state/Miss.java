@@ -4,6 +4,8 @@ import bowling.pin.Pin;
 
 public class Miss extends Finish{
 
+  private static final String SEPARATOR = "|";
+
   private final Pin first;
 
   private final Pin second;
@@ -15,7 +17,7 @@ public class Miss extends Finish{
 
   @Override
   public String score() {
-    return second.score(first);
+    return first.totalDownPin() + SEPARATOR + second.totalDownPin();
   }
 
   @Override
