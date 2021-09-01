@@ -20,7 +20,7 @@ class PlayerNameTest {
 
   @DisplayName("입력되는 글자가 영어 3어글가 아닐때 검증을 확인한다.")
   @ParameterizedTest
-  @ValueSource(strings = {"abcd", "가나다","!@2"})
+  @ValueSource(strings = {"abcd", "가나다", "!@2"})
   void validationName(String names) {
     assertAll(
         () -> assertThatThrownBy(() -> new PlayerName(names))

@@ -27,7 +27,7 @@ class FirstPitchTest {
 
   @DisplayName("첫번째 공을 꾸렬 쓰러트린 핀의 수를 확인한다.")
   @ParameterizedTest
-  @ValueSource(ints = {1,2,3,4,5,6,7,8,9,10})
+  @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
   void startBallIsNotStrikeTotalPin(int pinCount) {
     FirstPitch startBall = new FirstPitch();
     startBall.nextPitch(pinCount);

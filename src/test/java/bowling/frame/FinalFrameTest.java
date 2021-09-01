@@ -55,7 +55,7 @@ class FinalFrameTest {
             .play(10)
             .play(10)
             .play(10)
-        ).isInstanceOf(RuntimeException.class);
+    ).isInstanceOf(RuntimeException.class);
   }
 
 }

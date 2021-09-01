@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class PinTest {
 
-  public static Pin from(int first){
+  public static Pin from(int first) {
     return Pin.from(first);
   }
 
@@ -23,7 +23,7 @@ public class PinTest {
 
   @DisplayName("입력하는 핀의 값이 0보다 작거나 10보다 클 수 없다.")
   @ParameterizedTest
-  @ValueSource(ints = {-1,11})
+  @ValueSource(ints = {-1, 11})
   void validationCreatePins(int pin) {
     assertThatThrownBy(() -> Pin.from(pin))
         .isInstanceOf(IllegalArgumentException.class);

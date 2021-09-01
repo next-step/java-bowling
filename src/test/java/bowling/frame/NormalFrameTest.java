@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
 class NormalFrameTest {
+
   @Test
   void strike() {
     NormalFrame normalFrame = new NormalFrame(1);
