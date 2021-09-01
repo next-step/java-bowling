@@ -55,6 +55,17 @@ public class FinalFrame implements Frame {
   }
 
   private void checkLimitBallCount() {
+    checkLimitTwoPitches();
+    checkLimitThreePitches();
+  }
+
+  private void checkLimitThreePitches() {
+    if (states.getLast().totalPin() == MAX_PIN && states.size() == MAX_LIMIT_BALL_COUNT) {
+      stop = true;
+    }
+  }
+
+  private void checkLimitTwoPitches() {
     if (states.getLast().totalPin() != MAX_PIN && limitBallCount == MAX_LIMIT_BALL_COUNT) {
       stop = true;
     }
