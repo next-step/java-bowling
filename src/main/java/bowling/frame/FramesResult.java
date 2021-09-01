@@ -14,15 +14,15 @@ public class FramesResult {
     this.frames = frames;
   }
 
-  public static FramesResult of(final PlayerName playerName) {
+  public static FramesResult of(final PlayerName playerName){
     return new FramesResult(playerName, new Frames());
   }
 
-  public boolean isEndOfGame() {
+  public boolean isEndOfGame(){
     return frames.isEnd();
   }
 
-  public void playing(final int pinCount) {
+  public void playing(final int pinCount){
     frames.pitch(pinCount);
   }
 
@@ -30,7 +30,7 @@ public class FramesResult {
     return frames.size();
   }
 
-  public ResultDto getResult() {
+  public ResultDto getResult(){
     return ResultDto.of(playerName.toString(), frames.resultList());
   }
 }

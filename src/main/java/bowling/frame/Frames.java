@@ -1,5 +1,6 @@
 package bowling.frame;
 
+import bowling.dto.FrameDto;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,23 +8,23 @@ public class Frames {
 
   private static final int FIRST_FRAME = 1;
 
-  private final LinkedList<Frame> frames;
+  private final LinkedList<FrameDto> frames;
 
   public Frames() {
     this.frames = new LinkedList<>();
-    frames.add(new NormalFrame(FIRST_FRAME));
+    frames.add(FrameDto.from(new NormalFrame(FIRST_FRAME)));
   }
 
   public void pitch(final int pin) {
 
-    Frame currentFrame = frames.getLast().play(pin);
+    Frame currentFrame = frames.getLast().getFrame().play(pin);
 
     addNewFrame(currentFrame);
   }
 
   private void addNewFrame(final Frame currentFrame) {
-    if (!currentFrame.equals(frames.getLast())) {
-      frames.add(currentFrame);
+    if (!currentFrame.equals(frames.getLast().getFrame())) {
+      frames.add(FrameDto.from(currentFrame));
     }
   }
 
@@ -31,12 +32,11 @@ public class Frames {
     return frames.size();
   }
 
-  public List<Frame> resultList() {
+  public List<FrameDto> resultList() {
     return frames;
   }
 
   public boolean isEnd() {
-    return frames.getLast().isGameEnd();
+    return frames.getLast().getFrame().isGameEnd();
   }
-
 }

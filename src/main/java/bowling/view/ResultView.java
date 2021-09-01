@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.dto.FrameDto;
 import bowling.dto.ResultDto;
 import bowling.frame.Frame;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class ResultView {
   private static void writeScoreMark(final ResultDto result, final List<String> values) {
     result.getFrames()
         .stream()
-        .map(ResultView::widthFormat)
+        .map((FrameDto frame) -> widthFormat(frame.getFrame()))
         .forEach(values::add);
   }
 

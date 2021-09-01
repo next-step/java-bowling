@@ -1,20 +1,19 @@
 package bowling.dto;
 
-import bowling.frame.Frame;
 import java.util.List;
 
 public class ResultDto {
 
   private final String name;
 
-  private final List<Frame> frames;
+  private final List<FrameDto> frames;
 
-  private ResultDto(final String name, final List<Frame> frames) {
+  private ResultDto(final String name, final List<FrameDto> frames) {
     this.name = name;
     this.frames = frames;
   }
 
-  public static ResultDto of(final String name, final List<Frame> resultList) {
+  public static ResultDto of(final String name, final List<FrameDto> resultList) {
     return new ResultDto(name, resultList);
   }
 
@@ -22,7 +21,7 @@ public class ResultDto {
     return name;
   }
 
-  public List<Frame> getFrames() {
+  public List<FrameDto> getFrames() {
     return frames;
   }
 }
