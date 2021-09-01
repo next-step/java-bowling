@@ -11,14 +11,6 @@ public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
-
-    @DisplayName("글의 상태를 삭제로 바꾼다.")
-    @Test
-    void delete() throws CannotDeleteException {
-        assertThat(Q1.deleteByUser(UserTest.JAVAJIGI).isDeleted()).isTrue();
-        assertThat(Q2.deleteByUser(UserTest.SANJIGI).isDeleted()).isTrue();
-    }
-
     @DisplayName("글쓴이가 아니면 에러가 발생한다.")
     @Test
     void validWriterException() {
@@ -26,5 +18,14 @@ public class QuestionTest {
                 .isInstanceOf(CannotDeleteException.class);
         assertThatThrownBy(() -> Q2.deleteByUser(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class);
+    }
+
+    @DisplayName("글을 삭제하면 삭제기록을 반환한다.")
+    @Test
+    void successDeleted() throws CannotDeleteException {
+        assertThat(Q1.deleteByUser(UserTest.JAVAJIGI))
+                .isInstanceOf(DeleteHistory.class);
+        assertThat(Q2.deleteByUser(UserTest.SANJIGI))
+                .isInstanceOf(DeleteHistory.class);
     }
 }

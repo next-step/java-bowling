@@ -4,6 +4,7 @@ import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,10 +73,10 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public Question deleteByUser(User loginUser) throws CannotDeleteException {
+    public DeleteHistory deleteByUser(User loginUser) throws CannotDeleteException {
         validUserAuthority(loginUser);
         deleted = true;
-        return this;
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 
     private void validUserAuthority(User user) throws CannotDeleteException {
@@ -84,13 +85,17 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    public List<DeleteHistory> deleteAnswersByUser(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        for (Answer answer : answers) {
+            DeleteHistory deleteHistory = answer.deleteByUser(loginUser);
+            deleteHistories.add(deleteHistory);
+        }
+        return deleteHistories;
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public boolean isDeleted() {
+        return deleted;
     }
 
     public List<Answer> getAnswers() {
@@ -100,11 +105,5 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
-
-    public void deleteAnswersByUser(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            answer.deleteByUser(loginUser);
-        }
     }
 }
