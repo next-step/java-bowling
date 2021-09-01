@@ -59,6 +59,7 @@ public class QnAService {
 //        }
 //        deleteHistoryService.saveAll(deleteHistories);
         List<DeleteHistory> deleteArticles = question.deleteQuestion(loginUser);
+        deleteHistoryService.saveAll(deleteArticles);
 
     }
 }
