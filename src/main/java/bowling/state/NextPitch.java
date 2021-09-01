@@ -4,6 +4,8 @@ import bowling.pin.Pin;
 
 public class NextPitch extends Running {
 
+  private static final int MAX_PINS = 10;
+
   private final Pin firstPin;
 
   private int totalPin;
@@ -17,16 +19,19 @@ public class NextPitch extends Running {
     Pin currentPin = Pin.from(fallenPin);
     totalPin = firstPin.totalDownPin(currentPin);
 
-    if (currentPin.isSpare(firstPin)) {
+    if (isSpare(currentPin)) {
       return new Spare(firstPin, currentPin);
     }
-
     return new Miss(firstPin, currentPin);
+  }
+
+  private boolean isSpare(final Pin currentPin) {
+    return currentPin.totalDownPin(firstPin) == MAX_PINS;
   }
 
   @Override
   public String score() {
-    return firstPin.score();
+    return String.valueOf(firstPin.totalDownPin());
   }
 
   @Override

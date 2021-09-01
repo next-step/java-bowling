@@ -2,7 +2,9 @@ package bowling.state;
 
 import bowling.pin.Pin;
 
-public class FirstPitch extends Running{
+public class FirstPitch extends Running {
+
+  private static final int MAX_PINS = 10;
 
   private Pin currentPin;
 
@@ -13,11 +15,14 @@ public class FirstPitch extends Running{
   public State nextPitch(final int fallenPin) {
     currentPin = Pin.from(fallenPin);
 
-    if (currentPin.isStrike()) {
+    if (isStrike()) {
       return new Strike(currentPin);
     }
-
     return new NextPitch(currentPin);
+  }
+
+  private boolean isStrike() {
+    return currentPin.totalDownPin() == MAX_PINS;
   }
 
   @Override
