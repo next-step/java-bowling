@@ -9,13 +9,13 @@ public class InsertView {
 
   private static final Scanner scanner = new Scanner(System.in);
 
-  public static String inputName(){
+  public static String inputName() {
     System.out.print(MSG_INSERT_NAME);
     return scanner.nextLine();
   }
 
-  public static int throwBall(int round){
-    System.out.print(round+ MSG_BALL_COUNT);
+  public static int throwBall(int round) {
+    System.out.print(round + MSG_BALL_COUNT);
     return scanner.nextInt();
   }
 }
