@@ -2,7 +2,7 @@ package bowling.frame;
 
 public interface Frame {
 
-  Frame play(int pinCount, final int size);
+  Frame play(int pinCount);
 
   String getScore();
 

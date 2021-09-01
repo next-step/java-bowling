@@ -9,7 +9,7 @@ public class FinalFrame implements Frame {
 
   private static final int MAX_LIMIT_BALL_COUNT = 2;
   private static final int MAX_STATES_SIZE = 3;
-  private static final int MAX_FRAME_SIZE = 10;
+  private static final int MAX_PIN = 10;
   private static final String MSG_ERROR_END_FRAME = "이미 종료된 프레임입니다.";
   private static final String SEPARATOR = "|";
   private static final String SPARE = "/";
@@ -26,9 +26,9 @@ public class FinalFrame implements Frame {
   }
 
   @Override
-  public Frame play(final int pinCount, final int size) {
+  public Frame play(final int pinCount) {
 
-    validationEndFrame(size);
+    validationEndFrame();
 
     State state = states.getLast();
 
@@ -55,13 +55,13 @@ public class FinalFrame implements Frame {
   }
 
   private void checkLimitBallCount() {
-    if (states.getLast().totalPin() != MAX_FRAME_SIZE && limitBallCount == MAX_LIMIT_BALL_COUNT) {
+    if (states.getLast().totalPin() != MAX_PIN && limitBallCount == MAX_LIMIT_BALL_COUNT) {
       stop = true;
     }
   }
 
-  private void validationEndFrame(final int size) {
-    if (states.size() == MAX_STATES_SIZE && size == MAX_FRAME_SIZE) {
+  private void validationEndFrame() {
+    if (states.size() == MAX_STATES_SIZE) {
       throw new RuntimeException(MSG_ERROR_END_FRAME);
     }
   }
