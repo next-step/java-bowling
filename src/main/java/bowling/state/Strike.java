@@ -2,7 +2,7 @@ package bowling.state;
 
 import bowling.pin.Pin;
 
-public class Strike extends Finish{
+public class Strike extends Finish {
 
   private static final String STRIKE = "X";
 

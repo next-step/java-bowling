@@ -2,7 +2,7 @@ package bowling.state;
 
 import bowling.pin.Pin;
 
-public class Miss extends Finish{
+public class Miss extends Finish {
 
   private static final String SEPARATOR = "|";
 

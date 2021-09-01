@@ -2,7 +2,7 @@ package bowling.state;
 
 import bowling.pin.Pin;
 
-public class Spare extends Finish{
+public class Spare extends Finish {
 
   private static final String SEPARATOR = "|";
   private static final String SPARE = "/";
