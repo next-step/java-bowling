@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Answers {
-    private List<Answer> answers;
+    private final List<Answer> answers;
 
     private Answers(List<Answer> answers) {
         this.answers = answers;
