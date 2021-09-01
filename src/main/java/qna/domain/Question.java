@@ -72,17 +72,15 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public void validUserAuthority(User loginUser) throws CannotDeleteException {
-        if (!writer.equals(loginUser)) {
-            throw new CannotDeleteException("작성자만 삭제 할 수 있습니다.");
-        }
-
-        validAnswersAuthority(loginUser);
+    public Question deleteByUser(User loginUser) throws CannotDeleteException {
+        validUserAuthority(loginUser);
+        deleted = true;
+        return this;
     }
 
-    private void validAnswersAuthority(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            answer.validateUserAuthority(loginUser);
+    private void validUserAuthority(User user) throws CannotDeleteException {
+        if (!writer.equals(user)) {
+            throw new CannotDeleteException("작성자만 삭제 할 수 있습니다.");
         }
     }
 
@@ -102,5 +100,11 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public void deleteAnswersByUser(User loginUser) throws CannotDeleteException {
+        for (Answer answer : answers) {
+            answer.deleteByUser(loginUser);
+        }
     }
 }
