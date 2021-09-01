@@ -11,7 +11,7 @@ public class FrameDto {
     this.frame = frame;
   }
 
-  public static FrameDto from(final Frame frame){
+  public static FrameDto from(final Frame frame) {
     return new FrameDto(frame);
   }
 
