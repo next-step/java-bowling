@@ -14,8 +14,8 @@ class FinalFrameTest {
   @Test
   void finalTwoPitch() {
     Frame frame = new FinalFrame();
-    frame.play(8, 10)
-        .play(1, 10);
+    frame.play(8)
+        .play(1);
     assertThat(frame.getScore()).isEqualTo("8|9");
   }
 
@@ -24,9 +24,9 @@ class FinalFrameTest {
   void validationOverTwoPitch() {
     Frame frame = new FinalFrame();
     assertThatThrownBy(() ->
-        frame.play(1, 10)
-            .play(8, 10)
-            .play(10, 10)
+        frame.play(1)
+            .play(8)
+            .play(10)
     ).isInstanceOf(RuntimeException.class);
   }
 
@@ -40,9 +40,9 @@ class FinalFrameTest {
   })
   void finalThreePitch(int size, int pin1, int pin2, int pin3, String score) {
     Frame frame = new FinalFrame();
-    frame.play(pin1, size)
-        .play(pin2, size)
-        .play(pin3, size);
+    frame.play(pin1)
+        .play(pin2)
+        .play(pin3);
     assertThat(frame.getScore()).isEqualTo(score);
   }
 
@@ -51,10 +51,10 @@ class FinalFrameTest {
   void validationOverThreePitch() {
     Frame frame = new FinalFrame();
     assertThatThrownBy(() ->
-        frame.play(10, 10)
-            .play(10, 10)
-            .play(10, 10)
-            .play(10,10)
+        frame.play(10)
+            .play(10)
+            .play(10)
+            .play(10)
         ).isInstanceOf(RuntimeException.class);
   }
 
