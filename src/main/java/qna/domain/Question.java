@@ -1,10 +1,13 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -18,10 +21,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -67,12 +68,38 @@ public class Question extends AbstractEntity {
     }
 
     public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
+        answers.addAnswer(answer, this);
     }
 
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
+    }
+
+    public void isOwnerElseThrow(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    public void hasOnlyOwnAnswersElseThrow() throws CannotDeleteException {
+        if (!answers.containsOnlyBy(getWriter())) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
+    public List<DeleteHistory> deleteWithAnswers(User loginUser) throws CannotDeleteException {
+        validateDeletePermission(loginUser);
+
+        setDeleted(true);
+
+        return Stream.concat(Stream.of(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now())),
+                        answers.delete().stream())
+                .collect(Collectors.toList());
+    }
+
+    private void validateDeletePermission(User loginUser) throws CannotDeleteException {
+        isOwnerElseThrow(loginUser);
+        hasOnlyOwnAnswersElseThrow();
     }
 
     public Question setDeleted(boolean deleted) {
@@ -84,7 +111,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
