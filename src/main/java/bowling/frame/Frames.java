@@ -17,6 +17,11 @@ public class Frames {
   public void pitch(final int pin) {
 
     Frame currentFrame = frames.getLast().play(pin);
+
+    addNewFrame(currentFrame);
+  }
+
+  private void addNewFrame(final Frame currentFrame) {
     if (!currentFrame.equals(frames.getLast())) {
       frames.add(currentFrame);
     }
