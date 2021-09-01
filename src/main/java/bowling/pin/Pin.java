@@ -41,6 +41,13 @@ public class Pin {
     return this.fallenPin + firstPin.fallenPin;
   }
 
+  public int totalDownPin() {
+    if (this.fallenPin > MAX_PINS) {
+      throw new IllegalArgumentException(String.format(MSG_ERROR_DOWN_PIN_MAX, MAX_PINS));
+    }
+    return this.fallenPin;
+  }
+
   public boolean isStrike() {
     return this.fallenPin == MAX_PINS;
   }
