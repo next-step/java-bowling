@@ -7,7 +7,7 @@ public class InsertView {
   private static final String MSG_INSERT_NAME = "플레이어 이름은(3 english letters)? : ";
   private static final String MSG_BALL_COUNT = "프레임 투구 : ";
 
-  private static Scanner scanner = new Scanner(System.in);
+  private static final Scanner scanner = new Scanner(System.in);
 
   public static String inputName(){
     System.out.print(MSG_INSERT_NAME);
