@@ -33,12 +33,12 @@ class FinalFrameTest {
   @DisplayName("마지막 프레임 3구를 굴렸을때 해당하는 스코어를 반환한다.")
   @ParameterizedTest
   @CsvSource(value = {
-      "10,10,10,10,X|X|X",
-      "10,10,10,7,X|X|7",
-      "10,10,2,8,X|2|/",
-      "10,8,2,10,8|/|X"
+      "10,10,10,X|X|X",
+      "10,10,7,X|X|7",
+      "10,2,8,X|2|/",
+      "8,2,10,8|/|X"
   })
-  void finalThreePitch(int size, int pin1, int pin2, int pin3, String score) {
+  void finalThreePitch(int pin1, int pin2, int pin3, String score) {
     Frame frame = new FinalFrame();
     frame.play(pin1)
         .play(pin2)
