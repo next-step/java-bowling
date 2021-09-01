@@ -1,8 +1,10 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +20,13 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+//    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+//    @Where(clause = "deleted = false")
+//    @OrderBy("id ASC")
+    @Embedded
+    Answers answers = new Answers();
+//    private List<Answer> answers = new ArrayList<>();
+
 
     private boolean deleted = false;
 
@@ -37,6 +42,13 @@ public class Question extends AbstractEntity {
         super(id);
         this.title = title;
         this.contents = contents;
+    }
+
+    public void checkDeleteAuthorization(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+        answers.checkDeleteAuthorization(loginUser);
     }
 
     public String getTitle() {
@@ -84,12 +96,22 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public List<DeleteHistory> deleteQuestion(User loginUser) {
+        List<DeleteHistory> deleteList = new ArrayList<>();
+
+        this.setDeleted(true);
+        deleteList.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+        deleteList.addAll(answers.deleteAll());
+
+        return deleteList;
     }
 }
