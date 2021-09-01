@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
+
+import bowling.Comparator.FrameComparator;
+import bowling.model.ScoreCalculator;
 
 public class Frames {
 
@@ -28,19 +30,26 @@ public class Frames {
 
 	public static Frames initCreateFrames() {
 		List<Frame> frames = new ArrayList<>();
-		createNormalFrame(frames);
-		createFinalFrame(frames);
-		return new Frames(frames);
+		Frame finalFrame = createFinalFrame(frames);
+		return new Frames(createNormalFrame(frames, finalFrame));
 	}
 
-	private static void createNormalFrame(List<Frame> frames) {
-		IntStream.rangeClosed(NORMAL_FIRST_FRAME, NORMAL_FINAL_FRAME)
-			.mapToObj(NormalFrame::new)
-			.forEach(frames::add);
+	private static List<Frame> createNormalFrame(List<Frame> frames, Frame finalFrame) {
+		Frame previousFrame = finalFrame;
+		for (int i = NORMAL_FINAL_FRAME; i >= NORMAL_FIRST_FRAME; i--) {
+			NormalFrame normalFrame = new NormalFrame(i, previousFrame);
+			frames.add(normalFrame);
+			previousFrame = normalFrame;
+		}
+
+		frames.sort(new FrameComparator());
+		return frames;
 	}
 
-	private static void createFinalFrame(List<Frame> frames) {
-		frames.add(new FinalFrame(FINAL_FRAME));
+	private static Frame createFinalFrame(List<Frame> frames) {
+		FinalFrame finalFrame = new FinalFrame(FINAL_FRAME);
+		frames.add(finalFrame);
+		return finalFrame;
 	}
 
 	public void playBowling(int strikeNumber) {
@@ -72,6 +81,10 @@ public class Frames {
 		return frames.stream()
 			.filter(frame -> frame.getFrameNumber() == FINAL_FRAME)
 			.noneMatch(Frame::isGameEnd);
+	}
+
+	public ScoreCalculator getScoreBoard() {
+		return ScoreCalculator.createScore(frames);
 	}
 
 	@Override

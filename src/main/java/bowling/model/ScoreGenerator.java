@@ -5,40 +5,40 @@ public class ScoreGenerator {
 	private static final int MAX_PIN = 10;
 	private static final int MIN_PIN = 0;
 
-	public static String scoreGenerator(int firstPin) {
-		if (firstPin == MAX_PIN) {
+	public static String scoreGenerator(Pin firstPin) {
+		if (firstPin.isMaxPin()) {
 			return "X";
 		}
-		if (firstPin == MIN_PIN) {
+		if (firstPin.isMinPin()) {
 			return "-";
 		}
-		return String.valueOf(firstPin);
+		return String.valueOf(firstPin.getPin());
 	}
 
-	public static String scoreGenerator(int firstPin, int secondPin) {
-		if (firstPin == MAX_PIN && secondPin == MAX_PIN) {
+	public static String scoreGenerator(Pin firstPin, Pin secondPin) {
+		if (firstPin.isMaxPin() && secondPin.isMaxPin()) {
 			return "X|X";
 		}
-		if (firstPin == MAX_PIN && secondPin < MAX_PIN) {
+		if (firstPin.isMaxPin() && !secondPin.isMaxPin()) {
 			return "X|" + scoreGenerator(secondPin);
 		}
-		if (firstPin + secondPin == MAX_PIN) {
-			return firstPin + "|" + "/";
+		if (firstPin.add(secondPin).isMaxPin()) {
+			return scoreGenerator(firstPin) + "|" + "/";
 		}
 		return scoreGenerator(firstPin) + "|" + scoreGenerator(secondPin);
 	}
 
-	public static String scoreGenerator(int firstPin, int secondPin, int bonusPin) {
-		if (firstPin == MAX_PIN && secondPin == MAX_PIN && bonusPin == MAX_PIN) {
+	public static String scoreGenerator(Pin firstPin, Pin secondPin, Pin bonusPin) {
+		if (firstPin.isMaxPin() && secondPin.isMaxPin() && bonusPin.isMaxPin()) {
 			return "X|X|X";
 		}
-		if (firstPin == MAX_PIN && secondPin == MAX_PIN) {
+		if (firstPin.isMaxPin() && secondPin.isMaxPin()) {
 			return "X|X|" + scoreGenerator(bonusPin);
 		}
-		if (firstPin == MAX_PIN && secondPin == MIN_PIN) {
+		if (firstPin.isMaxPin() && secondPin.isMinPin()) {
 			return "X|-|" + scoreGenerator(bonusPin);
 		}
-		if (firstPin == MAX_PIN) {
+		if (firstPin.isMaxPin()) {
 			return "X|" + scoreGenerator(secondPin, bonusPin);
 		}
 		return scoreGenerator(firstPin, secondPin) + "|" + scoreGenerator(bonusPin);

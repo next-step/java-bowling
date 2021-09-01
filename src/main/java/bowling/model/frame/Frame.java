@@ -1,18 +1,18 @@
 package bowling.model.frame;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
-import bowling.model.PlayResult;
+import bowling.model.play.Play;
+import bowling.model.play.Playable;
 
 public abstract class Frame {
 
-	protected PlayResult playResult;
+	protected final Playable play;
 	protected final int frameNumber;
 
 	public Frame(int frameNumber) {
 		checkFrameNumber(frameNumber);
-		this.playResult = new PlayResult(new ArrayList<>());
+		this.play = new Play(frameNumber);
 		this.frameNumber = frameNumber;
 	}
 
@@ -24,9 +24,15 @@ public abstract class Frame {
 
 	abstract void checkFrameNumber(int frameNumber);
 
-	public abstract String getGameScore();
+	public abstract String getGameStatus();
 
-	abstract boolean isGameEnd();
+	public abstract boolean isGameEnd();
+
+	abstract int calculateScore(Playable playResult);
+
+	abstract int calculateScoreDouble(Playable beforeResult);
+
+	public abstract int getGameScore();
 
 	@Override
 	public boolean equals(Object o) {
@@ -35,11 +41,11 @@ public abstract class Frame {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Frame frame = (Frame)o;
-		return frameNumber == frame.frameNumber && Objects.equals(playResult, frame.playResult);
+		return frameNumber == frame.frameNumber && Objects.equals(play, frame.play);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(playResult, frameNumber);
+		return Objects.hash(play, frameNumber);
 	}
 }

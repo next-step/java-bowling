@@ -1,8 +1,7 @@
 package bowling.model.frame;
 
 import bowling.model.Pin;
-import bowling.model.PlayResult;
-import bowling.model.play.NormalPlay;
+import bowling.model.play.Playable;
 
 public class NormalFrame extends Frame {
 
@@ -10,11 +9,23 @@ public class NormalFrame extends Frame {
 	private static final int MAX_FRAME_NUMBER = 9;
 	private static final int MIN_FRAME_NUMBER = 1;
 
-	private final NormalPlay normalPlay;
+	private final Frame nextFrame;
 
 	public NormalFrame(int frameNumber) {
 		super(frameNumber);
-		normalPlay = new NormalPlay();
+		this.nextFrame = getNextFrame(frameNumber);
+	}
+
+	private Frame getNextFrame(int frameNumber) {
+		if (frameNumber == 9) {
+			return new FinalFrame(10);
+		}
+		return new NormalFrame(frameNumber + 1);
+	}
+
+	public NormalFrame(int frameNumber, Frame nextFrame) {
+		super(frameNumber);
+		this.nextFrame = nextFrame;
 	}
 
 	@Override
@@ -26,17 +37,40 @@ public class NormalFrame extends Frame {
 
 	@Override
 	public void playGame(int strikeNumber) {
-		playResult = new PlayResult(normalPlay.play(new Pin(strikeNumber)));
+		play.play(new Pin(strikeNumber));
 	}
 
 	@Override
-	public String getGameScore() {
-		return playResult.getGameScore();
+	public String getGameStatus() {
+		return play.getGameStatus();
 	}
 
 	@Override
 	public boolean isGameEnd() {
-		return normalPlay.isGameEnd();
+		return play.isGameEnd();
 	}
 
+	@Override
+	int calculateScore(Playable beforeResult) {
+		if (play.isStrike() && beforeResult.isStrike()) {
+			return nextFrame.calculateScoreDouble(beforeResult);
+		}
+		return play.calculateFrame(beforeResult);
+	}
+
+	@Override
+	int calculateScoreDouble(Playable beforeResult) {
+		return play.calculateDouble(beforeResult);
+	}
+
+	@Override
+	public int getGameScore() {
+		if (!isGameEnd()) {
+			return -1;
+		}
+		if (play.isMiss()) {
+			return play.getTotalScore();
+		}
+		return nextFrame.calculateScore(play);
+	}
 }

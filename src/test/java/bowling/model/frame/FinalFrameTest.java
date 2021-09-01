@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import bowling.model.Pin;
-
 class FinalFrameTest {
 
 	@Test
@@ -34,10 +32,7 @@ class FinalFrameTest {
 		FinalFrame finalFrame = new FinalFrame(10);
 		finalFrame.playGame(5);
 
-		assertAll(
-			() -> assertThat(finalFrame.playResult.findTotalScore()).isEqualTo(5),
-			() -> assertThat(finalFrame.playResult.findScore(0)).isEqualTo(new Pin(5))
-		);
+		assertThat(finalFrame.getGameScore()).isEqualTo(5);
 	}
 
 	@Test
@@ -53,4 +48,44 @@ class FinalFrameTest {
 				assertThat(finalFrame.isGameEnd()).isTrue();
 			});
 	}
+
+	@Test
+	@DisplayName("마지막프레임의 이전 프레임이 스트라이크이면 2번째공의 합산의 합을 반환한다.")
+	public void getSpareNextScore() {
+		FinalFrame finalFrame = new FinalFrame(10);
+		finalFrame.playGame(5);
+		finalFrame.playGame(4);
+
+		NormalFrame normalFrame = new NormalFrame(9, finalFrame);
+		normalFrame.playGame(10);
+		int score = finalFrame.calculateScore(normalFrame.play);
+
+		assertThat(score).isEqualTo(19);
+	}
+
+	@Test
+	@DisplayName("마지막프레임의 이전 프레임이 스페어이면 1번째공의 합산의 합을 반환한다.")
+	public void getStrikeNextScore() {
+		FinalFrame finalFrame = new FinalFrame(10);
+		finalFrame.playGame(5);
+
+		NormalFrame normalFrame = new NormalFrame(9, finalFrame);
+		normalFrame.playGame(4);
+		normalFrame.playGame(6);
+
+		int score = finalFrame.calculateScore(normalFrame.play);
+
+		assertThat(score).isEqualTo(15);
+	}
+
+	@Test
+	@DisplayName("마지막프레임은 해당 점수만 계산한다.")
+	public void getGameScore() {
+		FinalFrame finalFrame = new FinalFrame(10);
+		finalFrame.playGame(5);
+		finalFrame.playGame(4);
+
+		assertThat(finalFrame.getGameScore()).isEqualTo(9);
+	}
+
 }

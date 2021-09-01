@@ -1,17 +1,27 @@
 package bowling.model.play;
 
-import java.util.List;
-
 import bowling.model.Pin;
 
 public interface Playable {
 
-	List<Pin> play(Pin pin);
+	Play play(Pin pin);
 
-	boolean isFirstStrike();
+	Pin findPin(int index);
 
-	boolean isNotStrikeOrSpare();
+	String getGameStatus();
+
+	boolean isStrike();
+
+	boolean isSpare();
+
+	boolean isMiss();
 
 	boolean isGameEnd();
+
+	int calculateFrame(Playable beforeResult);
+
+	int calculateDouble(Playable beforeResult);
+
+	int getTotalScore();
 
 }
