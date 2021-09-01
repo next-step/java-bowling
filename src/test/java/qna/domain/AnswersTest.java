@@ -13,7 +13,7 @@ class AnswersTest {
     void canNotDeleteAnswer() {
         Answers answers = new Answers();
         answers.add(AnswerTest.A1);
-        Assertions.assertThatThrownBy(() -> {answers.checkDeleteAutorization(UserTest.SANJIGI);})
+        Assertions.assertThatThrownBy(() -> {answers.checkDeleteAuthorization(UserTest.SANJIGI);})
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
@@ -23,6 +23,6 @@ class AnswersTest {
     void canDeleteAnswer() {
         Answers answers = new Answers();
         answers.add(AnswerTest.A1);
-        answers.checkDeleteAutorization(UserTest.JAVAJIGI);
+        answers.checkDeleteAuthorization(UserTest.JAVAJIGI);
     }
 }

@@ -20,9 +20,10 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
+//    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+//    @Where(clause = "deleted = false")
+//    @OrderBy("id ASC")
+    @Embedded
     Answers answers = new Answers();
 //    private List<Answer> answers = new ArrayList<>();
 
@@ -47,7 +48,7 @@ public class Question extends AbstractEntity {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-        answers.checkDeleteAutorization(loginUser);
+        answers.checkDeleteAuthorization(loginUser);
     }
 
     public String getTitle() {
