@@ -55,10 +55,13 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public DeleteHistory deleteByUser(User loginUser) throws CannotDeleteException {
-        validUserAuthority(loginUser);
+    public List<DeleteHistory> deleteByUser(User user) throws CannotDeleteException {
+        validUserAuthority(user);
         deleted = true;
-        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+
+        List<DeleteHistory> deleteHistories = deleteAnswersByUser(user);
+        deleteHistories.add(0, new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        return deleteHistories;
     }
 
     private void validUserAuthority(User user) throws CannotDeleteException {
@@ -67,7 +70,7 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public List<DeleteHistory> deleteAnswersByUser(User user) throws CannotDeleteException {
+    private List<DeleteHistory> deleteAnswersByUser(User user) throws CannotDeleteException {
         return Answers.from(answers).delete(user);
     }
 

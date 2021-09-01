@@ -11,6 +11,18 @@ public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
     public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
+
+    @DisplayName("글의 상태를 삭제로 바꾼다.")
+    @Test
+    void delete() throws CannotDeleteException {
+
+        assertThat(A1.isDeleted()).isFalse();
+
+        A1.deleteByUser(UserTest.JAVAJIGI);
+
+        assertThat(A1.isDeleted()).isTrue();
+    }
+
     @DisplayName("글쓴이가 아니면 에러가 발생한다.")
     @Test
     void validWriterException() {
