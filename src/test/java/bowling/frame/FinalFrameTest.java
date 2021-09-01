@@ -16,7 +16,7 @@ class FinalFrameTest {
     Frame frame = new FinalFrame();
     frame.play(8)
         .play(1);
-    assertThat(frame.getScore()).isEqualTo("8|9");
+    assertThat(frame.getScore()).isEqualTo("8|1");
   }
 
   @DisplayName("마지막 프레임에서 2구에 스페어 이상 처리가 안된 상태에서 추가로 3구를 굴릴 경우, 에러가 발생한다.")

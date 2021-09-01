@@ -27,6 +27,6 @@ class NormalFrameTest {
     frame.play(4);
     frame.play(5);
 
-    assertThat(frame.getScore()).isEqualTo("4|9");
+    assertThat(frame.getScore()).isEqualTo("4|5");
   }
 }

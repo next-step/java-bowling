@@ -12,7 +12,7 @@ class MissTest {
   @Test
   void missMark() {
     Miss miss = new Miss(PinTest.from(3), PinTest.from(5));
-    assertThat(miss.score()).isEqualTo("3|8");
+    assertThat(miss.score()).isEqualTo("3|5");
   }
 
   @DisplayName("미스 판별이 되엇을때 쓰러트린 핀 개수를 출력하는지 확인한다.")
