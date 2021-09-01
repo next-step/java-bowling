@@ -47,6 +47,6 @@ public class PlayerName {
 
   @Override
   public String toString() {
-    return String.valueOf(name);
+    return name;
   }
 }
