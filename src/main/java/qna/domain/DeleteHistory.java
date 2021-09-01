@@ -24,11 +24,10 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
-        this.contentType = contentType;
-        this.contentId = contentId;
-        this.deletedBy = deletedBy;
-        this.createDate = createDate;
+    public <T extends AbstractEntity> DeleteHistory(T content, User user) {
+        this.contentType = content.getContentType();
+        this.contentId = content.getId();
+        this.deletedBy = user;
     }
 
     @Override
