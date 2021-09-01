@@ -27,12 +27,16 @@ public class ScoreCalculator {
 	}
 
 	private static int sumScore(int totalScore, Frame frame, List<Integer> score) {
-		if (frame.isGameEnd() && frame.getGameScore() > -1) {
+		if (isPrintScore(frame)) {
 			score.add(totalScore + frame.getGameScore());
 			return totalScore + frame.getGameScore();
 		}
-		score.add(-1);
+		score.add(frame.getGameScore());
 		return totalScore;
+	}
+
+	private static boolean isPrintScore(Frame frame) {
+		return frame.getGameScore() > -1;
 	}
 
 	public List<Integer> getScore() {
