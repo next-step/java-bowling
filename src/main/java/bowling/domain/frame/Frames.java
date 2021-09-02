@@ -10,8 +10,9 @@ public class Frames {
 
     private static final int START_NUMBER = 1;
     private static final int END_NUMBER = 10;
-    private final List<Frame> frames;
+
     private boolean isTurnOver;
+    private final List<Frame> frames;
 
     private Frames() {
         this.isTurnOver = false;
