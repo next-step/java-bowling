@@ -73,7 +73,7 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public DeleteHistory deleted() {
+    public DeleteHistory changeDeletedStatus() {
         this.deleted = true;
         return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
     }
@@ -89,7 +89,7 @@ public class Question extends AbstractEntity {
     public DeleteHistories delete(final User loginUser) {
         validateOwner(loginUser);
         DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories.add(deleted());
+        deleteHistories.add(changeDeletedStatus());
         deleteHistories.addAll(answers.deleteAll(writer));
         return deleteHistories;
     }
