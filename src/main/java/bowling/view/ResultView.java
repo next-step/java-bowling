@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.dto.FrameDto;
 import bowling.dto.ResultDto;
-import bowling.frame.Frame;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -48,15 +47,15 @@ public class ResultView {
   private static void writeScoreMark(final ResultDto result, final List<String> values) {
     result.getFrames()
         .stream()
-        .map((FrameDto frame) -> widthFormat(frame.getFrame()))
+        .map((FrameDto frame) -> widthFormat(frame.frameScoreMark()))
         .forEach(values::add);
   }
 
-  private static String widthFormat(final Frame frame) {
-    if (frame.getScore().length() > LIMIT_SCORE_LENGTH) {
-      return String.format(VALUE_DIGITS_FINAL, frame.getScore().replace(NO_HIT, GUTTER));
+  private static String widthFormat(final String scoreMark) {
+    if (scoreMark.length() > LIMIT_SCORE_LENGTH) {
+      return String.format(VALUE_DIGITS_FINAL, scoreMark.replace(NO_HIT, GUTTER));
     }
-    return String.format(VALUE_DIGITS_NORMAL, frame.getScore().replace(NO_HIT, GUTTER));
+    return String.format(VALUE_DIGITS_NORMAL, scoreMark.replace(NO_HIT, GUTTER));
   }
 
   private static void printHeader() {
