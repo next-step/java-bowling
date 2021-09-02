@@ -4,18 +4,18 @@ import java.util.Objects;
 
 public class FrameDto {
 
-  private final String frame;
+  private final String scoreMark;
 
-  private FrameDto(final String frame) {
-    this.frame = frame;
+  private FrameDto(final String scoreMark) {
+    this.scoreMark = scoreMark;
   }
 
-  public static FrameDto from(final String frame) {
-    return new FrameDto(frame);
+  public static FrameDto from(final String scoreMark) {
+    return new FrameDto(scoreMark);
   }
 
   public String frameScoreMark() {
-    return frame;
+    return scoreMark;
   }
 
   @Override
@@ -27,11 +27,11 @@ public class FrameDto {
       return false;
     }
     final FrameDto frameDto = (FrameDto) o;
-    return Objects.equals(frame, frameDto.frame);
+    return Objects.equals(scoreMark, frameDto.scoreMark);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(frame);
+    return Objects.hash(scoreMark);
   }
 }
