@@ -28,18 +28,31 @@
 * 점수 계산 방식을 모르는 사람은 구글에서 "볼링 점수 계산법"과 같은 키워드로 검색해 볼링 게임의 점수 계산 방식을 학습한 후 구현을 시작한다.
 
 Pin 의 책임..
-숫자 기록
-남은 핀 알려주는 기능
+* 숫자 기록
+* 남은 핀 알려주는 기능
 
-Frame 의 책임 
-첫번째 Pin , 두번째 Pin 을 상태로 가지고 있음
-두번째 Pin 으로 score 계산
-isFinish 이 프레임이 끝났는지 안끝났는지 알려줌
+State(두개의 Pins 들로) 책임..
+* bowl 메시지 로 첫번째구 firstPins 두번째구 secondPins 기록
+* 끝났니 ? 메세지
+* Gutter,Strike,Spare ?
+
+Frame 의 책임
+* State(두개의 Pins 들로)
+Gutter,Strike,Spare ?
+
+* isFinish 메시지로 Frame이 끝났는지 알려줌
+
+* bowl 메세지 첫번째 Pins들에 기록 끝난거 아니면
+* bowl 메세지 두번째 Pins들에 기록
+* score 계산
+* NormalFrame , LastFrame 이 있다 Frame을 상속
 
 Frames
-Frame들을 가지고 있음
-Frame들에게 !isFinish가 아니면 bowl을 시킴
-boolean trial = false;
-Pin pin;
+LinkedList<Frame> frames 
 
+협력
+1. Frame -> isnotFinish ->첫번째공 bowl 메시지 -> State -> bowl 메세지 -> Pins 기록
+2. State -> isNotFinish -> Frame 두번째공 -> State -> 두번째 Pins 기록
 
+1. Frame -> 첫번째공 bowl 메시지 -> State -> bowl 메세지 -> Pins 기록
+2. Frame -> inFinish -> 다음 프레임..
