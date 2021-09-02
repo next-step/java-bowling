@@ -15,12 +15,20 @@ public class DeleteHistories {
 
     public static DeleteHistories of(Question question) {
         List<DeleteHistory> histories = new ArrayList<>();
-        histories.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
-        return new DeleteHistories(histories).add(question.getAnswers());
+        return questionDeleteHistories(question, histories);
     }
 
     public static DeleteHistories of(Answers answers) {
         List<DeleteHistory> histories = new ArrayList<>();
+        return answersDeleteHistories(answers, histories);
+    }
+
+    private static DeleteHistories questionDeleteHistories(Question question, List<DeleteHistory> histories) {
+        histories.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
+        return new DeleteHistories(histories).add(question.getAnswers());
+    }
+
+    private static DeleteHistories answersDeleteHistories(Answers answers, List<DeleteHistory> histories) {
         answers.getAnswers()
                 .forEach(answer -> histories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now())));
         return new DeleteHistories(histories);
@@ -28,15 +36,12 @@ public class DeleteHistories {
 
     public DeleteHistories add(Question question) {
         List<DeleteHistory> histories = new ArrayList<>(this.histories);
-        histories.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
-        return new DeleteHistories(histories).add(question.getAnswers());
+        return questionDeleteHistories(question, histories);
     }
 
     public DeleteHistories add(Answers answers) {
         List<DeleteHistory> histories = new ArrayList<>(this.histories);
-        answers.getAnswers()
-                .forEach(answer -> histories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now())));
-        return new DeleteHistories(histories);
+        return answersDeleteHistories(answers, histories);
     }
 
     public List<DeleteHistory> getHistories() {
