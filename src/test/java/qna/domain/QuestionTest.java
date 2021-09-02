@@ -57,35 +57,4 @@ public class QuestionTest {
 
     }
 
-    @Test
-    @DisplayName("삭제 가능 여부 - 질문 작성자 and 답변 작성자 일치")
-    void deletable_with_answers() throws CannotDeleteException {
-        //given
-        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        question.addAnswers(AnswersTest.ANSWERS1);
-
-        //when
-
-        //then
-        assertDoesNotThrow(() -> question.deletable(UserTest.JAVAJIGI));
-
-    }
-
-    @Test
-    @DisplayName("삭제 가능 여부 - 질문 작성자 and 답변 작성자 불일치")
-    void deletable_with_answers_mismatch() {
-        //given
-        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        question.addAnswers(AnswersTest.ANSWERS2);
-
-        //when
-        ThrowableAssert.ThrowingCallable actual = () -> question.deletable(UserTest.JAVAJIGI);
-
-        //then
-        assertThatThrownBy(actual)
-                .isInstanceOf(CannotDeleteException.class)
-                .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-
-    }
-
 }

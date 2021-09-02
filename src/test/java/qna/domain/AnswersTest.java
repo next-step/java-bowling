@@ -1,15 +1,19 @@
 package qna.domain;
 
+import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import qna.CannotDeleteException;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class AnswersTest {
 
@@ -41,7 +45,7 @@ class AnswersTest {
     @DisplayName("모든 답변 삭제")
     void delete() throws Exception {
         //given
-        ANSWERS1.deleteAll();
+        ANSWERS1.deleteAll(UserTest.JAVAJIGI);
 
         //when
         boolean actual = ANSWERS1.getAnswers()
@@ -50,6 +54,32 @@ class AnswersTest {
 
         //then
         assertThat(actual).isTrue();
+
+    }
+
+    @Test
+    @DisplayName("삭제 성공 - 답변 작성자 일치")
+    void deletable() throws CannotDeleteException {
+        //given
+
+        //when
+
+        //then
+        assertDoesNotThrow(() -> ANSWERS1.deleteAll(UserTest.JAVAJIGI));
+
+    }
+
+    @Test
+    @DisplayName("삭제 실패 - 답변 작성자 불일치")
+    void deletable_mismatch() throws CannotDeleteException {
+        //given
+        //when
+        ThrowableAssert.ThrowingCallable actual = () -> ANSWERS2.deleteAll(UserTest.JAVAJIGI);
+
+        //then
+        assertThatThrownBy(actual)
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
 
     }
 
