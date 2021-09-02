@@ -3,10 +3,10 @@ package bowling.domain.player;
 import java.util.Objects;
 
 public class Player {
-    private final String name;
+    private final Name name;
 
     public Player(String name) {
-        this.name = name;
+        this.name = new Name(name);
     }
 
     @Override
