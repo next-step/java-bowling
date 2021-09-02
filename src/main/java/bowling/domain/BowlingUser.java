@@ -31,4 +31,8 @@ public class BowlingUser {
     public String getName() {
         return name;
     }
+
+    public void updateThirdResult(int thirdBowlingScore) {
+        scores.set(scores.size() - 1, bowlingScore.thirdTransfer(scores.get(scores.size() - 1), thirdBowlingScore));
+    }
 }

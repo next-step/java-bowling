@@ -25,7 +25,7 @@ public class ResultView {
         System.out.print("      |");
     }
 
-    public static void printCurrentRound(Integer round, Integer score) {
+    public static void printCurrentRoundInfo(Integer round, Integer score) {
         System.out.println(round + FRAME_INFO_MESSAGE + score);
     }
 }
