@@ -2,6 +2,7 @@ package bowling.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.pin.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,6 +32,6 @@ class FirstPitchTest {
   void startBallIsNotStrikeTotalPin(int pinCount) {
     FirstPitch startBall = new FirstPitch();
     startBall.nextPitch(pinCount);
-    assertThat(startBall.totalPin()).isEqualTo(pinCount);
+    assertThat(startBall.totalPin()).isEqualTo(Pin.from(pinCount));
   }
 }

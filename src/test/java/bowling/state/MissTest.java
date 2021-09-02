@@ -2,6 +2,7 @@ package bowling.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.pin.Pin;
 import bowling.pin.PinTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,6 @@ class MissTest {
   @Test
   void missTotalPin() {
     Miss miss = new Miss(PinTest.from(3), PinTest.from(5));
-    assertThat(miss.totalPin()).isEqualTo(8);
+    assertThat(miss.totalPin()).isEqualTo(Pin.from(8));
   }
 }

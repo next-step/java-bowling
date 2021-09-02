@@ -3,6 +3,7 @@ package bowling.state;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
+import bowling.pin.Pin;
 import bowling.pin.PinTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,6 @@ class SpareTest {
   @Test
   void spareTotalPin() {
     Spare spare = new Spare(PinTest.from(5), PinTest.from(5));
-    assertThat(spare.totalPin()).isEqualTo(10);
+    assertThat(spare.totalPin()).isEqualTo(Pin.from(10));
   }
 }

@@ -2,6 +2,7 @@ package bowling.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.pin.Pin;
 import bowling.pin.PinTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,6 +33,6 @@ class NextPitchTest {
   @CsvSource(value = {"1,8,9", "2,7,9", "3,6,9", "4,5,9", "5,4,9", "6,3,9", "7,2,9", "8,1,9"})
   void firstBallIsMissTotalCount(int first, int second, int total) {
     NextPitch firstBall = new NextPitch(PinTest.from(first));
-    assertThat(firstBall.nextPitch(second).totalPin()).isEqualTo(total);
+    assertThat(firstBall.nextPitch(second).totalPin()).isEqualTo(Pin.from(total));
   }
 }
