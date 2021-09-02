@@ -27,12 +27,13 @@ public class DeleteHistories {
     }
 
     public DeleteHistories add(Question question) {
+        List<DeleteHistory> histories = new ArrayList<>(this.histories);
         histories.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
-        add(question.getAnswers());
-        return new DeleteHistories(histories);
+        return new DeleteHistories(histories).add(question.getAnswers());
     }
 
     public DeleteHistories add(Answers answers) {
+        List<DeleteHistory> histories = new ArrayList<>(this.histories);
         answers.getAnswers()
                 .forEach(answer -> histories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now())));
         return new DeleteHistories(histories);
