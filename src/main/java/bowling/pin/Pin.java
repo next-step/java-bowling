@@ -32,18 +32,15 @@ public class Pin {
     }
   }
 
-  public int totalDownPin(final Pin firstPin) {
+  public Pin totalDownPin(final Pin firstPin) {
     if (this.fallenPin + firstPin.fallenPin > MAX_PINS) {
       throw new IllegalArgumentException(String.format(MSG_ERROR_DOWN_PIN_MAX, MAX_PINS));
     }
-    return this.fallenPin + firstPin.fallenPin;
+    return from(this.fallenPin + firstPin.fallenPin);
   }
 
-  public int totalDownPin() {
-    if (this.fallenPin > MAX_PINS) {
-      throw new IllegalArgumentException(String.format(MSG_ERROR_DOWN_PIN_MAX, MAX_PINS));
-    }
-    return this.fallenPin;
+  public Pin totalDownPin() {
+    return from(this.fallenPin);
   }
 
   @Override
@@ -61,5 +58,10 @@ public class Pin {
   @Override
   public int hashCode() {
     return Objects.hash(fallenPin);
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(fallenPin);
   }
 }
