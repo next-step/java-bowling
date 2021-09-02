@@ -23,9 +23,13 @@ public class Frames {
   }
 
   private void addNewFrame(final Frame currentFrame) {
-    if (!currentFrame.equals(frames.getLast().getFrame())) {
+    if (isNotSameFrame(currentFrame)) {
       frames.add(FrameDto.from(currentFrame));
     }
+  }
+
+  private boolean isNotSameFrame(final Frame currentFrame) {
+    return !currentFrame.equals(frames.getLast().getFrame());
   }
 
   public int size() {
