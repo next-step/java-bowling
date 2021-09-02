@@ -1,5 +1,7 @@
 package bowling.state;
 
+import bowling.pin.Pin;
+
 public interface State {
 
   State nextPitch(int fallenPin);
@@ -8,5 +10,5 @@ public interface State {
 
   String score();
 
-  int totalPin();
+  Pin totalPin();
 }

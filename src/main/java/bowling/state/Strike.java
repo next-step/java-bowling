@@ -18,7 +18,7 @@ public class Strike extends Finish {
   }
 
   @Override
-  public int totalPin() {
-    return first.totalDownPin();
+  public Pin totalPin() {
+    return first;
   }
 }

@@ -1,8 +1,10 @@
 package bowling.frame;
 
+import bowling.pin.Pin;
 import bowling.state.State;
 import bowling.state.StateFactory;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
@@ -60,15 +62,21 @@ public class FinalFrame implements Frame {
   }
 
   private void checkLimitThreePitches() {
-    if (states.getLast().totalPin() == MAX_PIN && states.size() == MAX_LIMIT_BALL_COUNT) {
+    if (isTotalDownTen() && states.size() == MAX_LIMIT_BALL_COUNT) {
       stop = true;
     }
   }
 
   private void checkLimitTwoPitches() {
-    if (states.getLast().totalPin() != MAX_PIN && limitBallCount == MAX_LIMIT_BALL_COUNT) {
+    if (!isTotalDownTen() && limitBallCount == MAX_LIMIT_BALL_COUNT) {
       stop = true;
     }
+  }
+
+  private boolean isTotalDownTen() {
+    return Optional.ofNullable(states.getLast().totalPin())
+        .map(pin -> pin.equals(Pin.from(MAX_PIN)))
+        .orElse(false);
   }
 
   private void validationEndFrame() {

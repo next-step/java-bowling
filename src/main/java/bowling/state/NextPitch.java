@@ -8,7 +8,7 @@ public class NextPitch extends Running {
 
   private final Pin firstPin;
 
-  private int totalPin;
+  private Pin totalPin;
 
   public NextPitch(final Pin firstPin) {
     this.firstPin = firstPin;
@@ -26,7 +26,7 @@ public class NextPitch extends Running {
   }
 
   private boolean isSpare(final Pin currentPin) {
-    return currentPin.totalDownPin(firstPin) == MAX_PINS;
+    return currentPin.totalDownPin(firstPin).equals(Pin.from(MAX_PINS));
   }
 
   @Override
@@ -35,7 +35,7 @@ public class NextPitch extends Running {
   }
 
   @Override
-  public int totalPin() {
+  public Pin totalPin() {
     return totalPin;
   }
 }

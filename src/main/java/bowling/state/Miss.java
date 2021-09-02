@@ -17,11 +17,11 @@ public class Miss extends Finish {
 
   @Override
   public String score() {
-    return first.totalDownPin() + SEPARATOR + second.totalDownPin();
+    return first.totalDownPin().toString() + SEPARATOR + second.totalDownPin().toString();
   }
 
   @Override
-  public int totalPin() {
+  public Pin totalPin() {
     return second.totalDownPin(first);
   }
 }
