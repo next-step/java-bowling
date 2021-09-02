@@ -1,21 +1,20 @@
 package bowling.dto;
 
-import bowling.frame.Frame;
 import java.util.Objects;
 
 public class FrameDto {
 
-  private final Frame frame;
+  private final String frame;
 
-  private FrameDto(final Frame frame) {
+  private FrameDto(final String frame) {
     this.frame = frame;
   }
 
-  public static FrameDto from(final Frame frame) {
+  public static FrameDto from(final String frame) {
     return new FrameDto(frame);
   }
 
-  public Frame getFrame() {
+  public String frameScoreMark() {
     return frame;
   }
 
