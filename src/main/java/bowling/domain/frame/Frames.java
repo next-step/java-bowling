@@ -10,10 +10,11 @@ public class Frames {
 
     private static final int START_NUMBER = 1;
     private static final int END_NUMBER = 10;
-
     private final List<Frame> frames;
+    private boolean isTurnOver;
 
     private Frames() {
+        this.isTurnOver = false;
         this.frames = new ArrayList<>();
         frames.add(NormalFrame.of(START_NUMBER));
     }
@@ -27,6 +28,7 @@ public class Frames {
         Frame next = frame.bowl(pins);
 
         if (frame.isFinish()) {
+            isTurnOver = true;
             checkLastFrame();
             frames.add(next);
         }
@@ -42,6 +44,10 @@ public class Frames {
 
     public Frame getLastFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    public boolean isTurnOver() {
+        return isTurnOver;
     }
 
     private void checkLastFrame() {
