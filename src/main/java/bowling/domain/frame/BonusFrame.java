@@ -2,7 +2,9 @@ package bowling.domain.frame;
 
 import bowling.domain.pins.Pins;
 import bowling.domain.score.Score;
-import bowling.domain.state.*;
+import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
+import bowling.domain.state.State;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,11 +1,8 @@
 package bowling;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
 import bowling.domain.pins.Pins;
 import bowling.domain.player.BowlingPlayer;
 import bowling.domain.player.BowlingPlayers;
-import bowling.domain.player.Player;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 

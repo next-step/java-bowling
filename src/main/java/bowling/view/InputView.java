@@ -1,7 +1,5 @@
 package bowling.view;
 
-import antlr.collections.impl.IntRange;
-
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
