@@ -34,7 +34,7 @@ public class PinTest {
   void totalPin() {
     Pin first = Pin.from(5);
     Pin second = Pin.from(5);
-    assertThat(second.totalDownPin(first)).isEqualTo(10);
+    assertThat(second.totalDownPin(first)).isEqualTo(Pin.from(10));
   }
 
   @DisplayName("공을 두번 굴려서 최종적으로 쓰러트린 핀의 수가 10을 넘을 수 없는지 확인한다.")
