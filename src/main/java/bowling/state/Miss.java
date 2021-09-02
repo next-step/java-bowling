@@ -17,7 +17,7 @@ public class Miss extends Finish {
 
   @Override
   public String score() {
-    return first.totalDownPin().toString() + SEPARATOR + second.totalDownPin().toString();
+    return first.toString() + SEPARATOR + second.toString();
   }
 
   @Override

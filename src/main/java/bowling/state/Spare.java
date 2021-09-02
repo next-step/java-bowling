@@ -18,7 +18,7 @@ public class Spare extends Finish {
 
   @Override
   public String score() {
-    return first.totalDownPin().toString() + SEPARATOR + SPARE;
+    return first.toString() + SEPARATOR + SPARE;
   }
 
   @Override

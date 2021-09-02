@@ -22,7 +22,7 @@ public class FirstPitch extends Running {
   }
 
   private boolean isStrike() {
-    return currentPin.totalDownPin().equals(Pin.from(MAX_PINS));
+    return currentPin.equals(Pin.from(MAX_PINS));
   }
 
   @Override

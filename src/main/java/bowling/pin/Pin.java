@@ -39,10 +39,6 @@ public class Pin {
     return from(this.fallenPin + firstPin.fallenPin);
   }
 
-  public Pin totalDownPin() {
-    return from(this.fallenPin);
-  }
-
   @Override
   public boolean equals(final Object o) {
     if (this == o) {

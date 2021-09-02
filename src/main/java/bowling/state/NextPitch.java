@@ -31,7 +31,7 @@ public class NextPitch extends Running {
 
   @Override
   public String score() {
-    return String.valueOf(firstPin.totalDownPin());
+    return firstPin.toString();
   }
 
   @Override
