@@ -3,6 +3,7 @@ package bowling.domain.player;
 import bowling.domain.frame.Frames;
 import bowling.domain.pins.Pins;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,10 @@ public class BowlingPlayers {
 
     public BowlingPlayer getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public List<BowlingPlayer> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
     private void playerRotate() {

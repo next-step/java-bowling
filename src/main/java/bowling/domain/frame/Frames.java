@@ -25,6 +25,7 @@ public class Frames {
     }
 
     public void bowl(Pins pins) {
+        isTurnOver = false;
         Frame frame = getLastFrame();
         Frame next = frame.bowl(pins);
 
