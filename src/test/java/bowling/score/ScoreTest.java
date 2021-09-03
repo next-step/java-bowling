@@ -12,27 +12,30 @@ class ScoreTest {
   @DisplayName("스트라이크를 쳤을때 볼카운드2에 점수 10인 스코어 객체가 생성된다.")
   @Test
   void strike() {
-    assertThat(Score.strike()).isEqualTo(Score.strike());
+    Score strike = Score.strike();
+    assertThat(strike.scoreValue().getScore()).isEqualTo(10);
   }
 
   @DisplayName("스페어를 쳤을때 볼카운드1에 점수 10인 스코어 객체가 생성된다.")
   @Test
   void spare() {
-    assertThat(Score.spare()).isEqualTo(Score.spare());
+    Score spare = Score.spare();
+    assertThat(spare.scoreValue().getScore()).isEqualTo(10);
   }
 
   @DisplayName("미스를 쳣을때 볼카운0에 점수가 할당된 스코어 객체가 생성된다.")
   @Test
   void miss() {
-    assertThat(Score.from(8)).isEqualTo(Score.from(8));
+    Score miss = Score.miss(8);
+    assertThat(miss.scoreValue().getScore()).isEqualTo(8);
   }
 
   @DisplayName("스트라이크와 스페어를 쳤을때, 각각 보너스 적용 볼카운트 만큼 값이 합산되는지 확인한다.")
   @Test
   void sum() {
     assertAll(
-        () -> assertThat(Score.spare().sum(5)).isEqualTo(Score.from(15)),
-        () -> assertThat(Score.strike().sum(5).sum(5)).isEqualTo(Score.from(20))
+        () -> assertThat(Score.spare().sum(5)).isEqualTo(Score.miss(15)),
+        () -> assertThat(Score.strike().sum(5).sum(5)).isEqualTo(Score.miss(20))
     );
   }
 
