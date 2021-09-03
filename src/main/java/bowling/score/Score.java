@@ -1,5 +1,6 @@
 package bowling.score;
 
+import bowling.dto.ScoreDto;
 import java.util.Objects;
 
 public class Score {
@@ -14,10 +15,6 @@ public class Score {
 
   private final int ballCount;
 
-  public Score(final int score) {
-    this(score, DEFAULT_BALL_COUNT);
-  }
-
   private Score(final int score, final int ballCount) {
     this.score = score;
     this.ballCount = ballCount;
@@ -31,7 +28,7 @@ public class Score {
     return new Score(MAX_SCORE, SPARE_BALL_COUNT);
   }
 
-  public static Score from(final int score){
+  public static Score miss(final int score){
     return new Score(score, DEFAULT_BALL_COUNT);
   }
 
@@ -41,9 +38,17 @@ public class Score {
   }
 
   private void validationBallCount() {
-    if(this.ballCount == DEFAULT_BALL_COUNT){
+    if(isFinishBallCount()){
       throw new IllegalArgumentException(MSG_ERROR_LIMIT_BALL_COUNT);
     }
+  }
+
+  public boolean isFinishBallCount() {
+    return ballCount == DEFAULT_BALL_COUNT;
+  }
+
+  public ScoreDto scoreValue(){
+    return ScoreDto.from(score);
   }
 
   @Override
