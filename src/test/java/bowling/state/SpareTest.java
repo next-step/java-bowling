@@ -6,6 +6,7 @@ import bowling.pin.Pin;
 import bowling.pin.PinTest;
 import bowling.score.Score;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -34,5 +35,14 @@ class SpareTest {
   void spareScore(int first, int second) {
     Spare spare = new Spare(PinTest.from(first), PinTest.from(second));
     assertThat(spare.score()).isEqualTo(Score.spare());
+  }
+
+  @DisplayName("스페어 보너스 점수가 공1개까지 적용되는지 확인한다.")
+  @Test
+  void scoreCalculate() {
+    Spare spare = new Spare(PinTest.from(1), PinTest.from(9));
+    Score score = spare.calculateScore(Score.strike());
+
+    assertThat(score.scoreValue().getScore()).isEqualTo(20);
   }
 }

@@ -1,6 +1,7 @@
 package bowling.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import bowling.pin.Pin;
 import bowling.pin.PinTest;
@@ -31,5 +32,19 @@ class StrikeTest {
   void strikeScore() {
     Strike strike = new Strike(PinTest.from(STRIKE));
     assertThat(strike.score()).isEqualTo(Score.strike());
+  }
+
+  @DisplayName("스트라이크 보너스 점수가 공 2개까지 전부 적용되는지 확인한다.")
+  @Test
+  void scoreCalculate() {
+    Strike strike = new Strike(PinTest.from(10));
+
+    Score strikeScore = Score.strike();
+    strikeScore = strike.calculateScore(strikeScore);
+    strikeScore = strike.calculateScore(strikeScore);
+
+    int total = strike.calculateScore(strikeScore).scoreValue().getScore();
+
+    assertThat(total).isEqualTo(30);
   }
 }
