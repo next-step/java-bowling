@@ -9,7 +9,5 @@ public interface Frame {
 
     boolean finished();
 
-    boolean isAbleToPitch();
-
     List<Integer> current();
 }

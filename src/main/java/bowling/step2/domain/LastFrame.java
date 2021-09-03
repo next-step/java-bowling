@@ -65,11 +65,6 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public boolean isAbleToPitch() {
-        return totalCountIsLessThanMax() && pitchGroup.size() < MAX_PITCH_SIZE;
-    }
-
-    @Override
     public List<Integer> current() {
         return pitchGroup.pitches();
     }

@@ -3,9 +3,9 @@ package bowling.step2.outputView.pitchResult;
 import bowling.step2.outputView.state.PitchStatus;
 
 public class PitchResult {
-    private PitchStatus pitchStatus;
+    private final PitchStatus pitchStatus;
 
-    private Integer count;
+    private final Integer count;
 
     public PitchResult(PitchStatus pitchStatus, Integer count) {
         this.pitchStatus = pitchStatus;

@@ -51,18 +51,9 @@ public class NormalFrame implements Frame {
         return this.frameNo == MAX_NORMAL_FRAME_NUM;
     }
 
-    public int pitchCount() {
-        return pitchGroup.size();
-    }
-
     @Override
     public boolean finished() {
         return pitchGroup.size() == MAX_PITCH_SIZE || pitchGroup.total() == MAX;
-    }
-
-    @Override
-    public boolean isAbleToPitch() {
-        return pitchGroup.total() < MAX && pitchGroup.size() < MAX_PITCH_SIZE;
     }
 
     @Override
