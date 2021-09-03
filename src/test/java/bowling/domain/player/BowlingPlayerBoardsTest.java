@@ -9,13 +9,13 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BowlingPlayersTest {
+class BowlingPlayerBoardsTest {
 
-    private BowlingPlayers players;
+    private BowlingPlayerBoards players;
 
     @BeforeEach
     void setup() {
-        players = BowlingPlayers.of(Arrays.asList("AAA", "BBB", "CCC"));
+        players = BowlingPlayerBoards.of(Arrays.asList("AAA", "BBB", "CCC"));
     }
 
     @DisplayName("플레이어 턴이 종료되면 다음 플레이어의 턴이 된다.")

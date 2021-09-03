@@ -1,8 +1,8 @@
 package bowling;
 
 import bowling.domain.pins.Pins;
-import bowling.domain.player.BowlingPlayer;
-import bowling.domain.player.BowlingPlayers;
+import bowling.domain.player.BowlingPlayerBoard;
+import bowling.domain.player.BowlingPlayerBoards;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -14,14 +14,14 @@ public class App {
 
         int inputPlayerCount = InputView.getInputPlayerCount();
         List<String> inputPlayerNames = InputView.getInputPlayerNames(inputPlayerCount);
-        BowlingPlayers bowlingPlayers = BowlingPlayers.of(inputPlayerNames);
-        ResultView.printBoard(bowlingPlayers);
+        BowlingPlayerBoards bowlingPlayerBoards = BowlingPlayerBoards.of(inputPlayerNames);
+        ResultView.printBoard(bowlingPlayerBoards);
 
-        while (!bowlingPlayers.isFinish()) {
-            BowlingPlayer currentPlayer = bowlingPlayers.getCurrentPlayer();
+        while (!bowlingPlayerBoards.isFinish()) {
+            BowlingPlayerBoard currentPlayer = bowlingPlayerBoards.getCurrentPlayer();
             int pins = InputView.getInputPitch(currentPlayer.getPlayerName());
-            bowlingPlayers.bowl(Pins.of(pins));
-            ResultView.printBoard(bowlingPlayers);
+            bowlingPlayerBoards.bowl(Pins.of(pins));
+            ResultView.printBoard(bowlingPlayerBoards);
         }
     }
 }

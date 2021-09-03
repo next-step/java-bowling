@@ -3,20 +3,20 @@ package bowling.domain.player;
 import bowling.domain.frame.Frames;
 import bowling.domain.score.ScoreResult;
 
-public class BowlingPlayer {
+public class BowlingPlayerBoard {
 
     private final Player player;
     private final Frames frames;
     private final ScoreResult scoreResult;
 
-    private BowlingPlayer(String name) {
+    private BowlingPlayerBoard(String name) {
         this.player = Player.of(name);
         this.frames = Frames.of();
         this.scoreResult = ScoreResult.of();
     }
 
-    public static BowlingPlayer of(String name) {
-        return new BowlingPlayer(name);
+    public static BowlingPlayerBoard of(String name) {
+        return new BowlingPlayerBoard(name);
     }
 
     public boolean isTurnOver() {

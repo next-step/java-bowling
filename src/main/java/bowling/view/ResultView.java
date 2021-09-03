@@ -2,8 +2,8 @@ package bowling.view;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
-import bowling.domain.player.BowlingPlayer;
-import bowling.domain.player.BowlingPlayers;
+import bowling.domain.player.BowlingPlayerBoard;
+import bowling.domain.player.BowlingPlayerBoards;
 import bowling.domain.score.ScoreResult;
 
 import java.util.List;
@@ -14,8 +14,8 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printBoard(BowlingPlayers bowlingPlayers) {
-        List<BowlingPlayer> players = bowlingPlayers.getPlayers();
+    public static void printBoard(BowlingPlayerBoards bowlingPlayerBoards) {
+        List<BowlingPlayerBoard> players = bowlingPlayerBoards.getPlayers();
         printBoardHead();
         players.forEach(p -> {
             printBoardFrame(p);
@@ -31,7 +31,7 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void printBoardFrame(BowlingPlayer player) {
+    private static void printBoardFrame(BowlingPlayerBoard player) {
         ScoreResult scoreResult = player.getScoreResult();
         String playerName = player.getPlayerName();
         Frames frames = player.getFrames();

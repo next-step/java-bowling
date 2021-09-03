@@ -7,22 +7,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BowlingPlayers {
+public class BowlingPlayerBoards {
 
     private static final int FIRST_PLAYER_INDEX = 0;
 
-    private BowlingPlayer currentPlayer;
-    private final List<BowlingPlayer> players;
+    private BowlingPlayerBoard currentPlayer;
+    private final List<BowlingPlayerBoard> players;
 
-    private BowlingPlayers(List<BowlingPlayer> players) {
+    private BowlingPlayerBoards(List<BowlingPlayerBoard> players) {
         this.players = players;
         this.currentPlayer = this.players.get(FIRST_PLAYER_INDEX);
     }
 
-    public static BowlingPlayers of(List<String> playerNames) {
-        return new BowlingPlayers(
+    public static BowlingPlayerBoards of(List<String> playerNames) {
+        return new BowlingPlayerBoards(
                 playerNames.stream()
-                        .map(BowlingPlayer::of)
+                        .map(BowlingPlayerBoard::of)
                         .collect(Collectors.toList())
         );
     }
@@ -38,11 +38,11 @@ public class BowlingPlayers {
         return getLastPlayer().getFrames().isFinish();
     }
 
-    public BowlingPlayer getCurrentPlayer() {
+    public BowlingPlayerBoard getCurrentPlayer() {
         return currentPlayer;
     }
 
-    public List<BowlingPlayer> getPlayers() {
+    public List<BowlingPlayerBoard> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
@@ -54,7 +54,7 @@ public class BowlingPlayers {
         }
     }
 
-    private BowlingPlayer getLastPlayer() {
+    private BowlingPlayerBoard getLastPlayer() {
         return players.get(players.size() - 1);
     }
 }
