@@ -24,8 +24,8 @@ public class SinglePitching {
         return this.fallenPin == MAX_FALLEN_PIN;
     }
 
-    public boolean isSpare(SinglePitching singlePitching) {
-        return !isStrike() && sumIsMax(singlePitching);
+    public boolean isSpare(SinglePitching firstPitching) {
+        return !firstPitching.isStrike() && sumIsMax(firstPitching);
     }
 
     private boolean sumIsMax(SinglePitching singlePitching) {

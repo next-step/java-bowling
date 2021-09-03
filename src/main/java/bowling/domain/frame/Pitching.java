@@ -36,7 +36,7 @@ public class Pitching {
     }
 
     public boolean isSpare() {
-        return !isStrike() && first.isSpare(second);
+        return !isStrike() && second.isSpare(first);
     }
 
     public int sum() {

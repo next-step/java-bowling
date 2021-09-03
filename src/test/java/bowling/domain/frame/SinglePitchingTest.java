@@ -68,10 +68,10 @@ class SinglePitchingTest {
     @DisplayName("스페어 여부")
     void spare(int first, int second, boolean expected) {
         //given
-        SinglePitching singlePitching = new SinglePitching(first);
+        SinglePitching singlePitching = new SinglePitching(second);
 
         //when
-        boolean actual = singlePitching.isSpare(new SinglePitching(second));
+        boolean actual = singlePitching.isSpare(new SinglePitching(first));
 
         //then
         assertThat(actual).isEqualTo(expected);
