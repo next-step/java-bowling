@@ -99,7 +99,7 @@ public class FinalFitchTest {
         fitch.bowl(Pins.of(4));
         fitch.bowl(Pins.of(3));
 
-        assertThat(fitch.getState()).isEqualTo(State.NORMAL);
+        assertThat(fitch.getState()).isEqualTo(Statement.NORMAL);
     }
 
     @DisplayName("첫번째 Strike, 두번째 gutter , 세번째 Strike")
@@ -109,15 +109,15 @@ public class FinalFitchTest {
 
         fitch.bowl(Pins.of(10));
 
-        assertThat(fitch.getState()).isEqualTo(State.STRIKE);
+        assertThat(fitch.getState()).isEqualTo(Statement.STRIKE);
 
         fitch.bowl(Pins.of(0));
 
-        assertThat(fitch.getState()).isEqualTo(State.GUTTER);
+        assertThat(fitch.getState()).isEqualTo(Statement.GUTTER);
 
         fitch.bowl(Pins.of(10));
 
-        assertThat(fitch.getState()).isEqualTo(State.STRIKE);
+        assertThat(fitch.getState()).isEqualTo(Statement.STRIKE);
     }
 
     @DisplayName("합산 10점 Spare 후 Strike")
@@ -127,15 +127,15 @@ public class FinalFitchTest {
 
         fitch.bowl(Pins.of(5));
 
-        assertThat(fitch.getState()).isEqualTo(State.NORMAL);
+        assertThat(fitch.getState()).isEqualTo(Statement.NORMAL);
 
         fitch.bowl(Pins.of(5));
 
-        assertThat(fitch.getState()).isEqualTo(State.SPARE);
+        assertThat(fitch.getState()).isEqualTo(Statement.SPARE);
 
         fitch.bowl(Pins.of(10));
 
-        assertThat(fitch.getState()).isEqualTo(State.STRIKE);
+        assertThat(fitch.getState()).isEqualTo(Statement.STRIKE);
     }
 
     @DisplayName("두번째 구에서 Spare 후 Strike")
@@ -145,15 +145,15 @@ public class FinalFitchTest {
 
         fitch.bowl(Pins.of(0));
 
-        assertThat(fitch.getState()).isEqualTo(State.GUTTER);
+        assertThat(fitch.getState()).isEqualTo(Statement.GUTTER);
 
         fitch.bowl(Pins.of(10));
 
-        assertThat(fitch.getState()).isEqualTo(State.SPARE);
+        assertThat(fitch.getState()).isEqualTo(Statement.SPARE);
 
         fitch.bowl(Pins.of(10));
 
-        assertThat(fitch.getState()).isEqualTo(State.STRIKE);
+        assertThat(fitch.getState()).isEqualTo(Statement.STRIKE);
     }
 
     @DisplayName("10점 연속 세번일 때 Strike")
@@ -163,15 +163,15 @@ public class FinalFitchTest {
 
         fitch.bowl(Pins.of(10));
 
-        assertThat(fitch.getState()).isEqualTo(State.STRIKE);
+        assertThat(fitch.getState()).isEqualTo(Statement.STRIKE);
 
         fitch.bowl(Pins.of(10));
 
-        assertThat(fitch.getState()).isEqualTo(State.STRIKE);
+        assertThat(fitch.getState()).isEqualTo(Statement.STRIKE);
 
         fitch.bowl(Pins.of(10));
 
-        assertThat(fitch.getState()).isEqualTo(State.STRIKE);
+        assertThat(fitch.getState()).isEqualTo(Statement.STRIKE);
     }
 
     @DisplayName("상태 Spare")
@@ -182,7 +182,7 @@ public class FinalFitchTest {
         fitch.bowl(Pins.of(5));
         fitch.bowl(Pins.of(5));
 
-        assertThat(fitch.getState()).isEqualTo(State.SPARE);
+        assertThat(fitch.getState()).isEqualTo(Statement.SPARE);
     }
 
     @DisplayName("상태 Gutter")
@@ -192,11 +192,11 @@ public class FinalFitchTest {
 
         fitch.bowl(Pins.of(0));
 
-        assertThat(fitch.getState()).isEqualTo(State.GUTTER);
+        assertThat(fitch.getState()).isEqualTo(Statement.GUTTER);
 
         fitch.bowl(Pins.of(5));
 
-        assertThat(fitch.getState()).isEqualTo(State.NORMAL);
+        assertThat(fitch.getState()).isEqualTo(Statement.NORMAL);
     }
 
     @DisplayName("상태 Gutter")
@@ -206,11 +206,11 @@ public class FinalFitchTest {
 
         fitch.bowl(Pins.of(5));
 
-        assertThat(fitch.getState()).isEqualTo(State.NORMAL);
+        assertThat(fitch.getState()).isEqualTo(Statement.NORMAL);
 
         fitch.bowl(Pins.of(0));
 
-        assertThat(fitch.getState()).isEqualTo(State.GUTTER);
+        assertThat(fitch.getState()).isEqualTo(Statement.GUTTER);
     }
 
     @DisplayName("상태 Gutter")
@@ -220,15 +220,15 @@ public class FinalFitchTest {
 
         fitch.bowl(Pins.of(5));
 
-        assertThat(fitch.getState()).isEqualTo(State.NORMAL);
+        assertThat(fitch.getState()).isEqualTo(Statement.NORMAL);
 
         fitch.bowl(Pins.of(5));
 
-        assertThat(fitch.getState()).isEqualTo(State.SPARE);
+        assertThat(fitch.getState()).isEqualTo(Statement.SPARE);
 
         fitch.bowl(Pins.of(0));
 
-        assertThat(fitch.getState()).isEqualTo(State.GUTTER);
+        assertThat(fitch.getState()).isEqualTo(Statement.GUTTER);
     }
 
     @DisplayName("상태 Miss")
@@ -238,7 +238,7 @@ public class FinalFitchTest {
 
         fitch.bowl(Pins.of(0));
         fitch.bowl(Pins.of(0));
-        assertThat(fitch.getState()).isEqualTo(State.MISS);
+        assertThat(fitch.getState()).isEqualTo(Statement.MISS);
 
     }
 }

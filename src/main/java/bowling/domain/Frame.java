@@ -1,24 +1,43 @@
 package bowling.domain;
 
-public interface Frame {
+public abstract class Frame {
+    protected Fitch fitch;
 
-    void bowl(Pins pins);
+    public void bowl(Pins pins) {
+        fitch.bowl(pins);
+    }
 
-    Pins getFirstPin();
+    public Pins getFirstPin() {
+        return fitch.getFirstPin();
+    }
 
-    Pins getSecondPin();
+    public Pins getSecondPin() {
+        return fitch.getSecondPin();
+    }
 
-    Pins getBonusPin();
+    public Pins getBonusPin() {
+        return fitch.getBonusPin();
+    }
 
-    boolean isFirstFitchDone();
+    public boolean isFirstFitchDone() {
+        return fitch.isFirstFitchDone();
+    }
 
-    boolean isSecondFitchDone();
+    public boolean isSecondFitchDone() {
+        return fitch.isSecondFitchDone();
+    }
 
-    boolean isBonusFitchDone();
+    public boolean isBonusFitchDone() {
+        return fitch.isBonusFitchDone();
+    }
 
-    boolean isFinish();
+    public boolean isFinish() {
+        return fitch.isFinish();
+    }
 
-    int getFrameNumber();
+    public abstract int getFrameNumber();
 
-    Frame next();
+    public abstract Frame next();
+
+
 }

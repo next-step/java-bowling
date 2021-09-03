@@ -49,7 +49,7 @@ public class NormalFitchTest {
         fitch.bowl(Pins.of(4));
         fitch.bowl(Pins.of(3));
 
-        assertThat(fitch.getState()).isEqualTo(State.NORMAL);
+        assertThat(fitch.getState()).isEqualTo(Statement.NORMAL);
     }
 
     @DisplayName("상태 Strike")
@@ -59,7 +59,7 @@ public class NormalFitchTest {
 
         fitch.bowl(Pins.of(10));
 
-        assertThat(fitch.getState()).isEqualTo(State.STRIKE);
+        assertThat(fitch.getState()).isEqualTo(Statement.STRIKE);
     }
 
     @DisplayName("상태 Spare")
@@ -70,7 +70,7 @@ public class NormalFitchTest {
         fitch.bowl(Pins.of(0));
         fitch.bowl(Pins.of(10));
 
-        assertThat(fitch.getState()).isEqualTo(State.SPARE);
+        assertThat(fitch.getState()).isEqualTo(Statement.SPARE);
     }
 
     @DisplayName("상태 Gutter")
@@ -80,11 +80,11 @@ public class NormalFitchTest {
 
         fitch.bowl(Pins.of(0));
 
-        assertThat(fitch.getState()).isEqualTo(State.GUTTER);
+        assertThat(fitch.getState()).isEqualTo(Statement.GUTTER);
 
         fitch.bowl(Pins.of(5));
 
-        assertThat(fitch.getState()).isEqualTo(State.NORMAL);
+        assertThat(fitch.getState()).isEqualTo(Statement.NORMAL);
     }
 
     @DisplayName("상태 Gutter")
@@ -94,11 +94,11 @@ public class NormalFitchTest {
 
         fitch.bowl(Pins.of(5));
 
-        assertThat(fitch.getState()).isEqualTo(State.NORMAL);
+        assertThat(fitch.getState()).isEqualTo(Statement.NORMAL);
 
         fitch.bowl(Pins.of(0));
 
-        assertThat(fitch.getState()).isEqualTo(State.GUTTER);
+        assertThat(fitch.getState()).isEqualTo(Statement.GUTTER);
     }
 
     @DisplayName("상태 Miss")
@@ -108,7 +108,7 @@ public class NormalFitchTest {
 
         fitch.bowl(Pins.of(0));
         fitch.bowl(Pins.of(0));
-        assertThat(fitch.getState()).isEqualTo(State.MISS);
+        assertThat(fitch.getState()).isEqualTo(Statement.MISS);
 
     }
 

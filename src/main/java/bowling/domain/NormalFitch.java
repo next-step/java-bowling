@@ -28,20 +28,20 @@ public class NormalFitch extends Fitch {
     }
 
     @Override
-    public State getState() {
+    public Statement getState() {
         if (isStrike()) {
-            return State.STRIKE;
+            return Statement.STRIKE;
         }
         if (isSpare()) {
-            return State.SPARE;
+            return Statement.SPARE;
         }
         if (isMiss()) {
-            return State.MISS;
+            return Statement.MISS;
         }
         if (isGutter()) {
-            return State.GUTTER;
+            return Statement.GUTTER;
         }
-        return State.NORMAL;
+        return Statement.NORMAL;
     }
 
     private boolean isStrike() {
@@ -64,5 +64,15 @@ public class NormalFitch extends Fitch {
 
     private boolean isSpare() {
         return isFirstFitchDone() && isSecondFitchDone() && secondPins.isSumTheMaxPin(firstPins);
+    }
+
+    @Override
+    public boolean isBonusFitchDone() {
+        return false;
+    }
+
+    @Override
+    public Pins getBonusPin() {
+        return null;
     }
 }

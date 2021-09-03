@@ -37,32 +37,35 @@ public class FinalFitch extends Fitch {
         }
         return false;
     }
-
+    @Override
     public boolean isBonusFitchDone() {
         return !Objects.isNull(bonusPins);
     }
 
-    public Pins getBonusPins() {
+    @Override
+    public Pins getBonusPin() {
         return bonusPins;
     }
 
     @Override
-    public State getState() {
+    public Statement getState() {
         if (isStrike()) {
-            return State.STRIKE;
+            return Statement.STRIKE;
         }
         if (isMiss()) {
-            return State.MISS;
+            return Statement.MISS;
         }
         if (isGutter()) {
-            return State.GUTTER;
+            return Statement.GUTTER;
         }
         if (isSpare()) {
-            return State.SPARE;
+            return Statement.SPARE;
         }
 
-        return State.NORMAL;
+        return Statement.NORMAL;
     }
+
+
 
     private boolean isDoubleStrike() {
         if (isFirstFitchDone() && isSecondFitchDone() && firstPins.isMaxPins() && secondPins.isMaxPins()) {
