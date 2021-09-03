@@ -1,6 +1,7 @@
 package bowling.state;
 
 import bowling.pin.Pin;
+import bowling.score.Score;
 
 public class Spare extends Finish {
 
@@ -24,5 +25,10 @@ public class Spare extends Finish {
   @Override
   public Pin totalPin() {
     return second.totalDownPin(first);
+  }
+
+  @Override
+  public Score score() {
+    return Score.spare();
   }
 }

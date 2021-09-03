@@ -39,6 +39,10 @@ public class Pin {
     return from(this.fallenPin + firstPin.fallenPin);
   }
 
+  public int pinCount(){
+    return this.fallenPin;
+  }
+
   @Override
   public boolean equals(final Object o) {
     if (this == o) {
@@ -60,4 +64,5 @@ public class Pin {
   public String toString() {
     return String.valueOf(fallenPin);
   }
+
 }

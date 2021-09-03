@@ -1,6 +1,7 @@
 package bowling.state;
 
 import bowling.pin.Pin;
+import bowling.score.Score;
 
 public interface State {
 
@@ -8,7 +9,9 @@ public interface State {
 
   boolean isFinish();
 
-  String score();
+  String scoreMessage();
 
   Pin totalPin();
+
+  Score score();
 }
