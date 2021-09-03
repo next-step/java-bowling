@@ -35,6 +35,48 @@ public class FrameTest {
     }
 
     @Test
+    public void pitchFail() {
+        //given
+        NormalFrame frame = NormalFrame.of(1);
+
+        //when
+        frame.pitch(5);
+        frame.pitch(6);
+
+        //then
+    }
+
+    @Test
+    public void pitchFail2() {
+        //given
+        LastFrame frame = LastFrame.of(10);
+
+        //when
+        assertThatThrownBy(() -> {
+            frame.pitch(0);
+            frame.pitch(0);
+            frame.pitch(6);
+        }).isInstanceOf(RuntimeException.class);
+
+        //then
+    }
+
+    @Test
+    public void pitchFail3() {
+        //given
+        LastFrame frame = LastFrame.of(10);
+
+        //when
+        assertThatThrownBy(() -> {
+            frame.pitch(5);
+            frame.pitch(7);
+            frame.pitch(6);
+        }).isInstanceOf(RuntimeException.class);
+
+        //then
+    }
+
+    @Test
     public void totalPitchCountNotInRange() {
         //given
         NormalFrame frame = NormalFrame.of(1);

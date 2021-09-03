@@ -9,8 +9,8 @@ public class App {
         Lane lane = Lane.of(name);
 
         int pitch;
-
         int currentNo = 1;
+
         do {
             pitch = InputView.getPitch(currentNo);
             lane.pitch(pitch);
