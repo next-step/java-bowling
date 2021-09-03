@@ -4,23 +4,18 @@ import java.util.Objects;
 
 public class NormalFrame {
 
-    private final int first;
-    private final int second;
+    private final Pitching pitching;
 
-    public NormalFrame(int first, int second) {
-        validatePitching(first, second);
-        this.first = first;
-        this.second = second;
+    public NormalFrame(Pitching pitching) {
+        this.pitching = pitching;
     }
 
     public NormalFrame(int first) {
-        this(first, 0);
+        this(Pitching.first(first));
     }
 
-    private void validatePitching(int first, int second) {
-        if (PitchingValidation.of(first, second) != PitchingValidation.NONE) {
-            throw new NormalFrameException();
-        }
+    public NormalFrame(int first, int second) {
+        this(Pitching.first(first).second(second));
     }
 
     @Override
@@ -28,11 +23,11 @@ public class NormalFrame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return first == that.first && second == that.second;
+        return Objects.equals(pitching, that.pitching);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(first, second);
+        return Objects.hash(pitching);
     }
 }

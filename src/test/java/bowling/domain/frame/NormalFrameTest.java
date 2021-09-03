@@ -55,7 +55,7 @@ class NormalFrameTest {
 
 
         //then
-        assertThatThrownBy(actual).isInstanceOf(NormalFrameException.class);
+        assertThatThrownBy(actual).isInstanceOf(PitchingException.class);
 
     }
 

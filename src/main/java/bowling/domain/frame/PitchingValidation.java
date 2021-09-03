@@ -25,6 +25,10 @@ public enum PitchingValidation {
                 .orElse(NONE);
     }
 
+    public String message() {
+        return message;
+    }
+
     private static class Constants {
         public static final String MINUS_MESSAGE = "쓰러트린 핀의 수가 0보다 커야 합니다.";
         public static final String EXCEED_MESSAGE = "쓰러트린 핀의 수가 10보다 클 수 없습니다.";
