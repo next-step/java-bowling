@@ -1,8 +1,10 @@
 package bowling.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import bowling.pin.Pin;
+import bowling.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -33,5 +35,15 @@ class FirstPitchTest {
     FirstPitch startBall = new FirstPitch();
     startBall.nextPitch(pinCount);
     assertThat(startBall.totalPin()).isEqualTo(Pin.from(pinCount));
+  }
+
+  @DisplayName("첫 공을 굴려서 스코어 계산을 호출하면 에러가 발생 해야 한다.")
+  @Test
+  void validationCalculate() {
+    FirstPitch startBall = new FirstPitch();
+    startBall.nextPitch(5);
+    assertThatThrownBy(() -> startBall.calculateScore(Score.strike()))
+        .isInstanceOf(RuntimeException.class);
+
   }
 }
