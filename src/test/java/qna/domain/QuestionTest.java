@@ -45,22 +45,28 @@ public class QuestionTest {
     @DisplayName("글을 삭제하면 답변도 같이 삭제된다.")
     @Test
     void deleteWithAnswer() throws CannotDeleteException {
-        Q1.addAnswer(AnswerTest.A1);
+        Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        Q1.addAnswer(answer);
 
         Q1.deleteByUser(UserTest.JAVAJIGI);
 
         assertThat(Q1.isDeleted()).isTrue();
-        assertThat(AnswerTest.A1.isDeleted()).isTrue();
+        assertThat(answer.isDeleted()).isTrue();
     }
 
     @DisplayName("글을 삭제할때, 본인이 작성하지 않은 답변이 있으면 에러가 발생한다.")
     @Test
     void deleteWithAnswerException() {
-        Q1.addAnswer(AnswerTest.A1);
-        Q1.addAnswer(AnswerTest.A2);
+        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+
+        Answer answer1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        Answer answer2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
+
+        question.addAnswer(answer1);
+        question.addAnswer(answer2);
 
         assertThatThrownBy(
-                () -> Q1.deleteByUser(UserTest.JAVAJIGI)
+                () -> question.deleteByUser(UserTest.JAVAJIGI)
         ).isInstanceOf(CannotDeleteException.class);
 
     }
