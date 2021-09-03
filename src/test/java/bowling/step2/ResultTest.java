@@ -3,124 +3,123 @@ package bowling.step2;
 import bowling.step2.domain.LastFrame;
 import bowling.step2.domain.NormalFrame;
 import bowling.step2.outputView.pitchResult.FrameResult;
-import bowling.step2.outputView.pitchResult.PitchResult;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ResultTest {
     @Test
-    public void test() {
+    public void normalFrameResult() {
+        //given
         NormalFrame normalFrame = NormalFrame.of(1);
         normalFrame.pitch(3);
         normalFrame.pitch(6);
+        String expected = "3|6";
 
+        //when
         FrameResult frameResult = FrameResult.of(normalFrame);
 
-        List<PitchResult> pitchResults = frameResult.getPitchResults();
-
-        for (PitchResult pitchResult : pitchResults) {
-            String result = pitchResult.result();
-            System.out.println(result);
-        }
+        //then
+        String pitchResults = frameResult.getPitchResults();
+        assertThat(pitchResults).isEqualTo(expected);
     }
 
     @Test
-    public void test0() {
+    public void normalFrameResult1() {
+        //given
         NormalFrame normalFrame = NormalFrame.of(1);
         normalFrame.pitch(3);
         normalFrame.pitch(7);
+        String expected = "3|/";
 
+        //when
         FrameResult frameResult = FrameResult.of(normalFrame);
 
-        List<PitchResult> pitchResults = frameResult.getPitchResults();
-
-        for (PitchResult pitchResult : pitchResults) {
-            String result = pitchResult.result();
-            System.out.println(result);
-        }
+        //then
+        String pitchResults = frameResult.getPitchResults();
+        assertThat(pitchResults).isEqualTo(expected);
     }
 
     @Test
-    public void test2() {
+    public void normalFrameResult2() {
+        //given
         NormalFrame normalFrame = NormalFrame.of(1);
         normalFrame.pitch(10);
+        String expected = "X";
 
+        //when
         FrameResult frameResult = FrameResult.of(normalFrame);
 
-        List<PitchResult> pitchResults = frameResult.getPitchResults();
-
-        for (PitchResult pitchResult : pitchResults) {
-            String result = pitchResult.result();
-            System.out.println(result);
-        }
+        //then
+        String pitchResults = frameResult.getPitchResults();
+        assertThat(pitchResults).isEqualTo(expected);
     }
 
     @Test
-    public void test3() {
+    public void lastFrameResult() {
+        //given
         LastFrame lastFrame = LastFrame.of(1);
         lastFrame.pitch(3);
         lastFrame.pitch(7);
         lastFrame.pitch(7);
+        String expected = "3|/|7";
 
+        //when
         FrameResult frameResult = FrameResult.of(lastFrame);
 
-        List<PitchResult> pitchResults = frameResult.getPitchResults();
-
-        for (PitchResult pitchResult : pitchResults) {
-            String result = pitchResult.result();
-            System.out.println(result);
-        }
+        //then
+        String pitchResults = frameResult.getPitchResults();
+        assertThat(pitchResults).isEqualTo(expected);
     }
 
     @Test
-    public void test4() {
+    public void lastFrameResult2() {
+        //given
         LastFrame lastFrame = LastFrame.of(1);
         lastFrame.pitch(3);
         lastFrame.pitch(7);
         lastFrame.pitch(10);
+        String expected = "3|/|X";
 
+        //when
         FrameResult frameResult = FrameResult.of(lastFrame);
 
-        List<PitchResult> pitchResults = frameResult.getPitchResults();
-
-        for (PitchResult pitchResult : pitchResults) {
-            String result = pitchResult.result();
-            System.out.println(result);
-        }
+        //then
+        String pitchResults = frameResult.getPitchResults();
+        assertThat(pitchResults).isEqualTo(expected);
     }
 
     @Test
-    public void test5() {
+    public void lastFrameResult3() {
+        //given
         LastFrame lastFrame = LastFrame.of(1);
         lastFrame.pitch(10);
         lastFrame.pitch(10);
         lastFrame.pitch(3);
+        String expected = "X|X|3";
 
+        //when
         FrameResult frameResult = FrameResult.of(lastFrame);
 
-        List<PitchResult> pitchResults = frameResult.getPitchResults();
-
-        for (PitchResult pitchResult : pitchResults) {
-            String result = pitchResult.result();
-            System.out.println(result);
-        }
+        //then
+        String pitchResults = frameResult.getPitchResults();
+        assertThat(pitchResults).isEqualTo(expected);
     }
 
     @Test
-    public void test6() {
+    public void lastFrameResult4() {
+        //given
         LastFrame lastFrame = LastFrame.of(1);
         lastFrame.pitch(10);
         lastFrame.pitch(3);
         lastFrame.pitch(7);
+        String expected = "X|3|/";
 
+        //when
         FrameResult frameResult = FrameResult.of(lastFrame);
 
-        List<PitchResult> pitchResults = frameResult.getPitchResults();
-
-        for (PitchResult pitchResult : pitchResults) {
-            String result = pitchResult.result();
-            System.out.println(result);
-        }
+        //then
+        String pitchResults = frameResult.getPitchResults();
+        assertThat(pitchResults).isEqualTo(expected);
     }
 }
