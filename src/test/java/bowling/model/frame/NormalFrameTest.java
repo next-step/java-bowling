@@ -3,10 +3,14 @@ package bowling.model.frame;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import bowling.model.score.Score;
 
 class NormalFrameTest {
 
@@ -32,7 +36,7 @@ class NormalFrameTest {
 		NormalFrame normalFrame = new NormalFrame(1);
 		normalFrame.playGame(5);
 
-		assertThat(normalFrame.getGameScore()).isEqualTo(5);
+		assertThat(normalFrame.getGameScore()).isEqualTo(-1);
 	}
 
 	@Test
@@ -64,9 +68,9 @@ class NormalFrameTest {
 	@DisplayName("노멀 프레임이 스트라이크나 스페어가 아니면 -1을 반환한다.")
 	public void getNotStrikeAndNotSpare() {
 		NormalFrame normalFrame = new NormalFrame(1);
-		int result = normalFrame.calculateScore(normalFrame.play);
+		int result = normalFrame.calculateScore(Score.nothing(new ArrayList<>()));
 
-		assertThat(result).isEqualTo(-1);
+		assertThat(result).isEqualTo(0);
 	}
 
 	@Test
@@ -78,7 +82,7 @@ class NormalFrameTest {
 		NormalFrame normalFrame = new NormalFrame(1, normalFrame2);
 		normalFrame.playGame(5);
 		normalFrame.playGame(5);
-		int result = normalFrame2.calculateScore(normalFrame.play);
+		int result = normalFrame2.calculateScore(Score.spare(new ArrayList<>()));
 
 		assertThat(result).isEqualTo(15);
 	}
@@ -92,7 +96,7 @@ class NormalFrameTest {
 		NormalFrame normalFrame = new NormalFrame(1, normalFrame2);
 		normalFrame.playGame(5);
 		normalFrame.playGame(5);
-		int result = normalFrame2.calculateScore(normalFrame.play);
+		int result = normalFrame2.calculateScore(Score.spare(new ArrayList<>()));
 
 		assertThat(result).isEqualTo(16);
 	}
