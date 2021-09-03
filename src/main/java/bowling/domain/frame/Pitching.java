@@ -3,18 +3,21 @@ package bowling.domain.frame;
 import java.util.Objects;
 
 public class Pitching {
-    public static final int STRIKE = 10;
 
-    private final int first;
-    private final int second;
+    private final SinglePitching first;
+    private final SinglePitching second;
 
-    private Pitching(int first, int second) {
+    private Pitching(SinglePitching first, SinglePitching second) {
         validatePitching(first, second);
         this.first = first;
         this.second = second;
     }
 
-    private void validatePitching(int first, int second) {
+    private Pitching(int first, int second) {
+        this(new SinglePitching(first), new SinglePitching(second));
+    }
+
+    private void validatePitching(SinglePitching first, SinglePitching second) {
         PitchingValidation pitchingValidation = PitchingValidation.of(first, second);
         if (pitchingValidation != PitchingValidation.NONE) {
             throw new PitchingException(pitchingValidation.message());
@@ -25,19 +28,19 @@ public class Pitching {
     }
 
     public Pitching second(int second) {
-        return new Pitching(this.first, second);
+        return new Pitching(this.first, new SinglePitching(second));
     }
 
     public boolean isStrike() {
-        return first == STRIKE;
+        return this.first.isStrike();
     }
 
     public boolean isSpare() {
-        return !isStrike() && (first + second) == STRIKE;
+        return !isStrike() && first.isSpare(second);
     }
 
     public int sum() {
-        return first + second;
+        return first.sum(second);
     }
 
     @Override
@@ -45,12 +48,11 @@ public class Pitching {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pitching pitching = (Pitching) o;
-        return first == pitching.first && second == pitching.second;
+        return Objects.equals(first, pitching.first) && Objects.equals(second, pitching.second);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(first, second);
     }
-
 }

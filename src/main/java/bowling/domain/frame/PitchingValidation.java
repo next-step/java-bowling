@@ -25,6 +25,10 @@ public enum PitchingValidation {
                 .orElse(NONE);
     }
 
+    public static PitchingValidation of(SinglePitching first, SinglePitching second) {
+        return of(first.fallenPin(), second.fallenPin());
+    }
+
     public String message() {
         return message;
     }
