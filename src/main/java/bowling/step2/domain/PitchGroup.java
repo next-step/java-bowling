@@ -2,6 +2,7 @@ package bowling.step2.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PitchGroup {
     private final List<Pitch> pitches;
@@ -36,8 +37,9 @@ public class PitchGroup {
                 .sum();
     }
 
-    @Override
-    public String toString() {
-        return pitches.toString();
+    public List<Integer> pitches() {
+        return pitches.stream()
+                .map(Pitch::count)
+                .collect(Collectors.toList());
     }
 }

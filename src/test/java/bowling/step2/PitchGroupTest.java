@@ -21,6 +21,19 @@ public class PitchGroupTest {
     }
 
     @Test
+    public void pitchSuccess2() {
+        //given
+        PitchGroup pitchGroup = PitchGroup.of();
+
+        //when
+        pitchGroup.pitch(3);
+        pitchGroup.pitch(6);
+
+        //then
+
+    }
+
+    @Test
     public void pitchFail() {
         //given
         PitchGroup pitchGroup = PitchGroup.of();

@@ -1,5 +1,7 @@
 package bowling.step2.domain;
 
+import java.util.List;
+
 public interface Frame {
     void pitch(int count);
 
@@ -9,5 +11,5 @@ public interface Frame {
 
     boolean isAbleToPitch();
 
-    String current();
+    List<Integer> current();
 }

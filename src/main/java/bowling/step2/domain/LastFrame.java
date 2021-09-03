@@ -1,5 +1,7 @@
 package bowling.step2.domain;
 
+import java.util.List;
+
 public class LastFrame implements Frame {
     private final int frameNo;
 
@@ -68,7 +70,7 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public String current() {
-        return pitchGroup.toString();
+    public List<Integer> current() {
+        return pitchGroup.pitches();
     }
 }
