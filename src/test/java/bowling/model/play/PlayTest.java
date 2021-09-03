@@ -3,10 +3,15 @@ package bowling.model.play;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import bowling.model.Pin;
+import bowling.model.score.Score;
 
 class PlayTest {
 
@@ -102,5 +107,49 @@ class PlayTest {
 			() -> assertThat(play.isGameEnd()).isTrue(),
 			() -> assertThat(play2.isGameEnd()).isTrue()
 		);
+	}
+
+	@Test
+	@DisplayName("play 가 스트라이크 이면 Score 가 strike 이다.")
+	public void playToScoreByStrike() {
+		Play play = new Play(1);
+		Score score = play.play(new Pin(10));
+
+		assertThat(score).isEqualTo(Score.strike(getPins(10)));
+	}
+
+	@Test
+	@DisplayName("play 가 스페어 이면 Score 가 spare 이다.")
+	public void playToScoreBySpare() {
+		Play play = new Play(1);
+		play.play(new Pin(4));
+		Score score = play.play(new Pin(6));
+
+		assertThat(score).isEqualTo(Score.spare(Arrays.asList(new Pin(4), new Pin(6))));
+	}
+
+	@Test
+	@DisplayName("play 가 스페어나 스트라이크가 아니면 Score 가 miss 이다.")
+	public void playToScoreByMiss() {
+		Play play = new Play(1);
+		play.play(new Pin(4));
+		Score score = play.play(new Pin(4));
+
+		assertThat(score).isEqualTo(Score.miss(Arrays.asList(new Pin(4), new Pin(4)), 8));
+	}
+
+	@Test
+	@DisplayName("play 가 완료가 아니면 Score 가 nothing 이다.")
+	public void playToScoreByNothing() {
+		Play play = new Play(1);
+		Score score = play.play(new Pin(4));
+
+		assertThat(score).isEqualTo(Score.nothing(getPins(4)));
+	}
+
+	private List<Pin> getPins(int pin) {
+		List<Pin> pins = new ArrayList<>();
+		pins.add(new Pin(pin));
+		return pins;
 	}
 }

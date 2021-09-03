@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import bowling.model.Pin;
 import bowling.model.ScoreGenerator;
+import bowling.model.score.Score;
 
 public class Play implements Playable {
 
@@ -28,10 +29,25 @@ public class Play implements Playable {
 	}
 
 	@Override
-	public Play play(Pin pin) {
+	public Score play(Pin pin) {
 		checkScore(pin);
 		gameResult.add(pin);
-		return this;
+		return createScore();
+	}
+
+	private Score createScore() {
+		if (isStrike() && frameNumber < 10) {
+			return Score.strike(gameResult);
+		}
+		if (isSpare() && frameNumber < 10) {
+			return Score.spare(gameResult);
+		}
+		if (isGameEnd()) {
+			return Score.miss(gameResult, gameResult.stream()
+				.mapToInt(Pin::getPin)
+				.sum());
+		}
+		return Score.nothing(gameResult);
 	}
 
 	@Override
@@ -96,32 +112,6 @@ public class Play implements Playable {
 			return true;
 		}
 		return (frameNumber < FINAL_FRAME_NUMBER && (isStrike() || gameResult.size() > MIN_PLAY_COUNT));
-	}
-
-	@Override
-	public int calculateFrame(Playable beforeResult) {
-		if (beforeResult.isSpare() && gameResult.size() > 0) {
-			return 10 + findPin(FIRST_INDEX).getPin();
-		}
-		if (beforeResult.isStrike() && gameResult.size() > 1) {
-			return 10 + (findPin(FIRST_INDEX).getPin() + findPin(SECOND_INDEX).getPin());
-		}
-		return -1;
-	}
-
-	@Override
-	public int calculateDouble(Playable beforeResult) {
-		if (gameResult.size() > 0) {
-			return (10 + beforeResult.getTotalScore()) + findPin(FIRST_INDEX).getPin();
-		}
-		return -1;
-	}
-
-	@Override
-	public int getTotalScore() {
-		return gameResult.stream()
-			.mapToInt(Pin::getPin)
-			.sum();
 	}
 
 	@Override
