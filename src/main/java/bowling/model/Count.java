@@ -7,7 +7,7 @@ public class Count {
 	private static final int LIMIT_START = 1;
 	private static final int LIMIT_END = 4;
 	private static final String LIMIT_RANGE_ERROR_MESSAGE = "카운트는 0보다 크고 4보다 작거나 같습니다.";
-	
+
 	private final int count;
 
 	public Count(int count) {
