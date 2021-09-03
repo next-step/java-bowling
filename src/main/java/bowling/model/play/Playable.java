@@ -1,10 +1,11 @@
 package bowling.model.play;
 
 import bowling.model.Pin;
+import bowling.model.score.Score;
 
 public interface Playable {
 
-	Play play(Pin pin);
+	Score play(Pin pin);
 
 	Pin findPin(int index);
 
@@ -17,11 +18,5 @@ public interface Playable {
 	boolean isMiss();
 
 	boolean isGameEnd();
-
-	int calculateFrame(Playable beforeResult);
-
-	int calculateDouble(Playable beforeResult);
-
-	int getTotalScore();
 
 }
