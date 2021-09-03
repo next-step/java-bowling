@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import bowling.model.frame.FinalFrame;
 import bowling.model.frame.Frame;
 import bowling.model.frame.NormalFrame;
-import bowling.model.score.ScoreCalculator;
 
 public class StateCalculatorTest {
 

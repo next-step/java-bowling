@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import bowling.model.Pin;
-import bowling.model.score.ScoreGenerator;
 
 class StateGeneratorTest {
 
