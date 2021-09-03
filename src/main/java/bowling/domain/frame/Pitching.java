@@ -34,6 +34,10 @@ public class Pitching {
         return first != 10 && (first + second) == 10;
     }
 
+    public int sum() {
+        return first + second;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,4 +50,5 @@ public class Pitching {
     public int hashCode() {
         return Objects.hash(first, second);
     }
+
 }

@@ -40,6 +40,24 @@ class PitchingTest {
 
     }
 
+    @ParameterizedTest(name = "점수 합계 {index} [{arguments}]")
+    @CsvSource(value = {
+            "10,0,10",
+            "0,10,10",
+            "0,0,0"
+    })
+    @DisplayName("두 번의 투구 점수 합계")
+    void sum(int first, int second, int expected) throws Exception {
+        //given
+        Pitching pitching = Pitching.first(first).second(second);
+
+        //when
+
+        //then
+        assertThat(pitching.sum()).isEqualTo(expected);
+
+    }
+
 
 
 }
