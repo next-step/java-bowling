@@ -1,11 +1,17 @@
 package bowling.domain.frame;
 
+import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PitchingTest {
 
@@ -47,7 +53,7 @@ class PitchingTest {
             "0,0,0"
     })
     @DisplayName("두 번의 투구 점수 합계")
-    void sum(int first, int second, int expected) throws Exception {
+    void sum(int first, int second, int expected) {
         //given
         Pitching pitching = Pitching.first(first).second(second);
 
@@ -58,6 +64,27 @@ class PitchingTest {
 
     }
 
+    @ParameterizedTest
+    @MethodSource("invalid")
+    void invalid(int first, int second, String expected) {
+        //given
+        Pitching pitching = Pitching.first(first);
+
+        //when
+        ThrowableAssert.ThrowingCallable actual = () -> pitching.second(second);
+
+        //then
+        assertThatThrownBy(actual).isInstanceOf(PitchingException.class)
+                .hasMessage(expected);
+
+    }
+
+    private static Stream<Arguments> invalid() {
+        return Stream.of(
+                Arguments.of(5, 6, PitchingValidation.EXCEED_LIMIT_SUM.message()),
+                Arguments.of(10, 1, PitchingValidation.POST_STRIKE_PITCHING.message())
+        );
+    }
 
 
 }

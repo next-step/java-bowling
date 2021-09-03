@@ -29,9 +29,7 @@ class PitchingValidationTest {
         return Stream.of(
                 Arguments.of(10, 0, PitchingValidation.NONE),
                 Arguments.of(5, 6, PitchingValidation.EXCEED_LIMIT_SUM),
-                Arguments.of(11, 11, PitchingValidation.EXCEED_LIMIT_PER_PITCHING),
                 Arguments.of(10, 1, PitchingValidation.POST_STRIKE_PITCHING),
-                Arguments.of(-1, 0, PitchingValidation.MINUS),
                 Arguments.of(10, 0, PitchingValidation.NONE),
                 Arguments.of(0, 10, PitchingValidation.NONE),
                 Arguments.of(5, 4, PitchingValidation.NONE),
