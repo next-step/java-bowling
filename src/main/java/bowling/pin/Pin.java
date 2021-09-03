@@ -1,5 +1,6 @@
 package bowling.pin;
 
+import bowling.score.Score;
 import java.util.Objects;
 
 public class Pin {
@@ -41,6 +42,10 @@ public class Pin {
 
   public int pinCount(){
     return this.fallenPin;
+  }
+
+  public Score sumScore(final Score firstScore) {
+    return firstScore.sum(this.fallenPin);
   }
 
   @Override
