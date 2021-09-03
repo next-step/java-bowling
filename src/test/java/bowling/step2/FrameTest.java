@@ -1,8 +1,8 @@
 package bowling.step2;
 
+import bowling.step2.domain.FrameGroup;
 import bowling.step2.domain.LastFrame;
 import bowling.step2.domain.NormalFrame;
-import bowling.step2.domain.FrameGroup;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,8 +40,10 @@ public class FrameTest {
         NormalFrame frame = NormalFrame.of(1);
 
         //when
-        frame.pitch(5);
-        frame.pitch(6);
+        assertThatThrownBy(() -> {
+            frame.pitch(5);
+            frame.pitch(6);
+        }).isInstanceOf(RuntimeException.class);
 
         //then
     }
