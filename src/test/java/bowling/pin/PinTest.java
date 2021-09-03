@@ -46,4 +46,12 @@ public class PinTest {
     assertThatThrownBy(() -> second.totalDownPin(first))
         .isInstanceOf(IllegalArgumentException.class);
   }
+
+  @DisplayName("핀의 수를 반환한다.")
+  @Test
+  void pinCount() {
+    Pin first = Pin.from(5);
+    Pin second = Pin.from(5);
+    assertThat(first.pinCount()).isEqualTo(second.pinCount());
+  }
 }
