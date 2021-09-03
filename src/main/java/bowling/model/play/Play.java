@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import bowling.model.Pin;
-import bowling.model.ScoreGenerator;
+import bowling.model.score.ScoreGenerator;
 import bowling.model.score.Score;
 
 public class Play implements Playable {

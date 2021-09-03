@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.model.score;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import bowling.model.frame.FinalFrame;
 import bowling.model.frame.Frame;
 import bowling.model.frame.NormalFrame;
+import bowling.model.score.ScoreCalculator;
 
 public class StateCalculatorTest {
 

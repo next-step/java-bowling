@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import bowling.model.Player;
-import bowling.model.ScoreCalculator;
+import bowling.model.score.ScoreCalculator;
 import bowling.model.frame.Frames;
 
 public class OutputView {

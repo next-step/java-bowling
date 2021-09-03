@@ -1,4 +1,6 @@
-package bowling.model;
+package bowling.model.score;
+
+import bowling.model.Pin;
 
 public class ScoreGenerator {
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import bowling.Comparator.FrameComparator;
-import bowling.model.ScoreCalculator;
+import bowling.model.score.ScoreCalculator;
 
 public class Frames {
 

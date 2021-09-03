@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.model.score;
 
 import java.util.ArrayList;
 import java.util.Collections;
