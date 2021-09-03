@@ -16,7 +16,7 @@ public class SinglePitching {
 
     private void validate(int fallenPin) {
         if (fallenPin < MIN_FALLEN_PIN || fallenPin > MAX_FALLEN_PIN) {
-            throw new PitchingException("1회 투구 점수 범위를 벗어났습니다. 유효범위 0~10. 현재 점수 : " + fallenPin);
+            throw new SinglePitchingException(fallenPin);
         }
     }
 
