@@ -14,4 +14,6 @@ public interface State {
   Pin totalPin();
 
   Score score();
+
+  Score calculateScore(Score score);
 }
