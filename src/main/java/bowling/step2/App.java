@@ -15,13 +15,12 @@ public class App {
         do {
             pitch = InputView.getPitch(currentNo);
             lane.pitch(pitch);
+            OutputView.showResult(lane);
 
             if (lane.frameFinished()) {
                 lane.nextFrame();
                 currentNo++;
             }
-
-            OutputView.showResult(lane);
         } while (currentNo <= 10);
     }
 }

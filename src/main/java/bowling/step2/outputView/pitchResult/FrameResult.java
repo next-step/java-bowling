@@ -3,8 +3,6 @@ package bowling.step2.outputView.pitchResult;
 import bowling.step2.domain.Frame;
 import bowling.step2.outputView.pitchResult.factory.PitchResultGroupFactory;
 
-import java.util.List;
-
 public class FrameResult {
     private final PitchResultGroup pitchResultGroup;
 
@@ -16,7 +14,7 @@ public class FrameResult {
         return new FrameResult(frame);
     }
 
-    public List<PitchResult> getPitchResults() {
+    public String getPitchResults() {
         return pitchResultGroup.getPitchResults();
     }
 }

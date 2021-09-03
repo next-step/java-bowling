@@ -15,7 +15,6 @@ public class OutputView {
         List<Frame> current = lane.current();
 
         current.forEach(OutputView::showResult);
-
         System.out.println();
     }
 
@@ -28,72 +27,21 @@ public class OutputView {
         while (sb.length() < 4) {
             sb.append(" ");
         }
-        System.out.print("| " + sb.toString() + " |");
+        System.out.print("| " + sb + " |");
     }
 
     private static void showResult(Frame frame) {
-//        if (frame instanceof LastFrame) {
-//            showLastFrame(frame);
-//            return;
-//        }
-//        showNormalFrame(frame);
-
-        int size = frame.current()
-                .size();
-
         FrameResult frameResult = FrameResult.of(frame);
+
+        String pitchResults = frameResult.getPitchResults();
+        appendBlack(pitchResults);
     }
 
-    private static void showNormalFrame(Frame frame) {
-        List<Integer> current = frame.current();
-        for (int i = 0; i < current.size(); i++) {
-            if (i == 0) {
-                if (current.get(i) == 10) {
-                    System.out.print("  X  ");
-                    break;
-                } else {
-                    System.out.print(" " + current.get(i) + "|");
-                }
-            } else {
-                if (current.get(i) == 10) {
-                    System.out.print("| ");
-                } else {
-                    System.out.print(current.get(i) + " ");
-                }
-            }
+    private static void appendBlack(String name) {
+        StringBuilder sb = new StringBuilder(name);
+        while (sb.length() < 5) {
+            sb.append(" ");
         }
-
-        System.out.print(" |");
-    }
-
-    private static void showLastFrame(Frame frame) {
-        List<Integer> current = frame.current();
-        for (int i = 0; i < current.size(); i++) {
-            if (i == 0) {
-                if (current.get(i) == 10) {
-                    System.out.print("X|");
-                } else {
-                    System.out.print(" " + current.get(i) + "|");
-                }
-            } else if (i == 1) {
-                if (current.get(i) == 10) {
-                    System.out.print("X|");
-                } else if (current.get(i) + current.get(0) == 10) {
-                    System.out.print("/|");
-                } else {
-                    System.out.print(current.get(i) + " ");
-                }
-            } else {
-                if (current.get(i) == 10) {
-                    System.out.print("X");
-                } else if (current.get(i) + current.get(1) == 10) {
-                    System.out.print("/");
-                } else {
-                    System.out.print(current.get(i));
-                }
-            }
-        }
-
-        System.out.print("|");
+        System.out.print(" " + sb + "|");
     }
 }
