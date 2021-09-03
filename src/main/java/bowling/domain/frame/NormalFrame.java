@@ -8,24 +8,19 @@ public class NormalFrame {
     private final int second;
 
     public NormalFrame(int first, int second) {
-        if (first > 10 || second > 10) {
-            throw new NormalFrameException();
-        }
-        if (first < 0 || second < 0) {
-            throw new NormalFrameException();
-        }
-        if (first == 10 && second > 0) {
-            throw new NormalFrameException();
-        }
-        if (first + second > 10) {
-            throw new NormalFrameException();
-        }
+        validatePitching(first, second);
         this.first = first;
         this.second = second;
     }
 
     public NormalFrame(int first) {
         this(first, 0);
+    }
+
+    private void validatePitching(int first, int second) {
+        if (PitchingValidation.of(first, second) != PitchingValidation.NONE) {
+            throw new NormalFrameException();
+        }
     }
 
     @Override
