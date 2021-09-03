@@ -11,6 +11,10 @@ public class Participant {
         this.name = name;
     }
 
+    public static Participant of(String name) {
+        return new Participant(name);
+    }
+
     private void validateName(String name) {
         if (nameLengthNotInRange(name)) {
             throw new RuntimeException("이름은 1에서 3자리까지 가능합니다.");
@@ -19,10 +23,6 @@ public class Participant {
 
     private boolean nameLengthNotInRange(String name) {
         return name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH;
-    }
-
-    public static Participant of(String name) {
-        return new Participant(name);
     }
 
     public String name() {
