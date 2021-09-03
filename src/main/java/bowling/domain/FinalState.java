@@ -43,4 +43,17 @@ public class FinalState extends State {
 
         return true;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FinalState that = (FinalState) o;
+        return Objects.equals(bonusPins, that.bonusPins);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bonusPins);
+    }
 }

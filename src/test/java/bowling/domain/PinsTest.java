@@ -22,7 +22,7 @@ public class PinsTest {
         assertThat(pins.getFallenPins()).isEqualTo(4);
     }
 
-    @DisplayName("10개니? 메시지 테스트")
+    @DisplayName("Strike 테스트")
     @Test
     void isStrike(){
         Pins pins = Pins.of(10);

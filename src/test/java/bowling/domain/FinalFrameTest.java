@@ -100,6 +100,8 @@ public class FinalFrameTest {
         assertThat(frame.isFinish()).isFalse();
         frame.bowl(Pins.of(10));
         assertThat(frame.isFinish()).isTrue();
-
     }
+
 }
+
+

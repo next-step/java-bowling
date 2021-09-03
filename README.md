@@ -51,6 +51,7 @@ Frames
 LinkedList<Frame> frames 
 
 Frame 이 이미 다음걸 알고있는데 frames가 필요할까 ..?
+이제까지의 기록, 출력하려면.. 필요
 
 협력
 1. Frame -> isNotFinish ->첫번째공 bowl 메시지 -> State -> bowl 메세지 -> Pins 기록

@@ -40,27 +40,25 @@ public class NormalFrameTest {
 
     }
 
-    @DisplayName("종료되면 다음 Frame 을 가르킴")
+    @DisplayName("마지막 10번째 Frame frameNumber 10")
     @Test
-    void isFinishNext(){
-        NormalFrame frame = new NormalFrame(1);
+    void NormalFrameLastToFinalFrameGetNumber(){
+        NormalFrame frame = new NormalFrame(9);
+        Frame finalFrame = frame.bowl(Pins.of(10));
 
-        frame.bowl(Pins.of(3));
-        frame.isFinish();
-        assertThat(frame.next()).isNull();
-
-        frame.bowl(Pins.of(5));
-        frame.isFinish();
-        assertThat(frame.next()).isNotNull();
-
+        assertThat(finalFrame.getFrameNumber()).isEqualTo(10);
     }
 
-    @DisplayName("마지막 9번째 NormalFrame 의 next 는 Null")
+    @DisplayName("마지막 10번째 Frame 은 FinalFrame 이므로 pin 두번 Strike 면 종료가 false")
     @Test
-    void isFinalFrameNextNull(){
-        NormalFrame frame = new NormalFrame(8);
-        frame.bowl(Pins.of(10));
-        frame.isFinish();
-        assertThat(frame.next()).isNull();
+    void isEndTest(){
+        NormalFrame frame = new NormalFrame(9);
+        Frame finalFrame = frame.bowl(Pins.of(10));
+
+        finalFrame.bowl(Pins.of(10));
+        finalFrame.bowl(Pins.of(10));
+        assertThat(finalFrame.isFinish()).isFalse();
     }
+
+
 }
