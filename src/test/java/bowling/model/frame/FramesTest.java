@@ -93,6 +93,21 @@ class FramesTest {
 		assertThat(frames.getFrames().size()).isEqualTo(10);
 	}
 
+	@Test
+	@DisplayName("볼링게임 후 프레임별 종료 유무를 알 수 있다.")
+	public void isEndGameOfFrame() {
+		Frames frames = Frames.initCreateFrames();
+		boolean endGameFrame1 = frames.playBowling(4);
+
+		assertAll(
+			() -> assertThat(endGameFrame1).isFalse(),
+			() -> {
+				boolean endGameFrame2 = frames.playBowling(6);
+				assertThat(endGameFrame2).isTrue();
+			}
+		);
+	}
+
 	private static List<Frame> getFrames() {
 		List<Frame> frames = new ArrayList<>();
 		frames.add(new NormalFrame(1));

@@ -52,7 +52,7 @@ public class Frames {
 		return finalFrame;
 	}
 
-	public void playBowling(int strikeNumber) {
+	public boolean playBowling(int strikeNumber) {
 		Frame frame = frames.get(presentFrame - FRAME_INDEX_STEP);
 		if (!frame.isGameEnd()) {
 			frame.playGame(strikeNumber);
@@ -60,6 +60,7 @@ public class Frames {
 		if (presentFrame < FINAL_FRAME && frame.isGameEnd()) {
 			presentFrame = presentFrame + FRAME_INDEX_STEP;
 		}
+		return frame.isGameEnd();
 	}
 
 	public List<Frame> getFrames() {
