@@ -65,7 +65,7 @@ public class Question extends AbstractEntity {
     }
 
     private void validUserAuthority(User user) throws CannotDeleteException {
-        if (!writer.equals(user)) {
+        if (!writer.isSameUser(user)) {
             throw new CannotDeleteException("작성자만 삭제 할 수 있습니다.");
         }
     }

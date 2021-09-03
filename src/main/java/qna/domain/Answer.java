@@ -55,8 +55,8 @@ public class Answer extends AbstractEntity {
         return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }
 
-    private void validateUserAuthority(User loginUser) throws CannotDeleteException {
-        if (!writer.equals(loginUser)) {
+    private void validateUserAuthority(User user) throws CannotDeleteException {
+        if (!writer.isSameUser(user)) {
             throw new CannotDeleteException("작성자만 삭제 할 수 있습니다.");
         }
     }
