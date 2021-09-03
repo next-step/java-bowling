@@ -1,6 +1,5 @@
 package bowling.domain.player;
 
-import bowling.domain.frame.Frames;
 import bowling.domain.pins.Pins;
 
 import java.util.Collections;
@@ -10,9 +9,8 @@ import java.util.stream.Collectors;
 public class BowlingPlayerBoards {
 
     private static final int FIRST_PLAYER_INDEX = 0;
-
-    private BowlingPlayerBoard currentPlayer;
     private final List<BowlingPlayerBoard> players;
+    private BowlingPlayerBoard currentPlayer;
 
     private BowlingPlayerBoards(List<BowlingPlayerBoard> players) {
         this.players = players;
@@ -28,14 +26,12 @@ public class BowlingPlayerBoards {
     }
 
     public void bowl(Pins pins) {
-        Frames frames = currentPlayer.getFrames();
-        frames.bowl(pins);
-
+        currentPlayer.bowl(pins);
         playerRotate();
     }
 
     public boolean isFinish() {
-        return getLastPlayer().getFrames().isFinish();
+        return getLastPlayer().isFinish();
     }
 
     public BowlingPlayerBoard getCurrentPlayer() {
