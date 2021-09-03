@@ -86,7 +86,7 @@ public class FinalFrame implements Frame {
   }
 
   private void validationLimitPitch(final State state) {
-    if (!state.score().contains(SPARE) && !state.score().contains(STRIKE)) {
+    if (!state.scoreMessage().contains(SPARE) && !state.scoreMessage().contains(STRIKE)) {
       throw new RuntimeException(MSG_ERROR_END_FRAME);
     }
   }
@@ -94,7 +94,7 @@ public class FinalFrame implements Frame {
   @Override
   public String getScore() {
     return states.stream()
-        .map(State::score)
+        .map(State::scoreMessage)
         .collect(Collectors.joining(SEPARATOR));
   }
 

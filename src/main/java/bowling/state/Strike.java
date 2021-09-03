@@ -13,7 +13,7 @@ public class Strike extends Finish {
   }
 
   @Override
-  public String score() {
+  public String scoreMessage() {
     return STRIKE;
   }
 

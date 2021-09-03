@@ -30,7 +30,7 @@ public class NextPitch extends Running {
   }
 
   @Override
-  public String score() {
+  public String scoreMessage() {
     return firstPin.toString();
   }
 

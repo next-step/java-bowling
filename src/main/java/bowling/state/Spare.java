@@ -17,7 +17,7 @@ public class Spare extends Finish {
   }
 
   @Override
-  public String score() {
+  public String scoreMessage() {
     return first.toString() + SEPARATOR + SPARE;
   }
 

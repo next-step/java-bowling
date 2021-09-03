@@ -16,7 +16,7 @@ public class Miss extends Finish {
   }
 
   @Override
-  public String score() {
+  public String scoreMessage() {
     return first.toString() + SEPARATOR + second.toString();
   }
 

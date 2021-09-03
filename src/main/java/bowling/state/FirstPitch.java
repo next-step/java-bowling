@@ -26,7 +26,7 @@ public class FirstPitch extends Running {
   }
 
   @Override
-  public String score() {
+  public String scoreMessage() {
     return "";
   }
 

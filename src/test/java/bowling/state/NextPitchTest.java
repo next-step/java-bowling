@@ -17,7 +17,7 @@ class NextPitchTest {
   void firstBallIsSpare(int first, int second, String spareMark) {
     NextPitch firstBall = new NextPitch(PinTest.from(first));
 
-    assertThat(firstBall.nextPitch(second).score()).contains(first + "|" + spareMark);
+    assertThat(firstBall.nextPitch(second).scoreMessage()).contains(first + "|" + spareMark);
   }
 
   @DisplayName("처음공과 두번째공을 굴려서 미스가 반환되는지 확인한다.")
@@ -25,7 +25,7 @@ class NextPitchTest {
   @CsvSource(value = {"1,8", "2,7", "3,6", "4,5", "5,4", "6,3", "7,2", "8,1"})
   void firstBallIsMiss(int first, int second) {
     NextPitch firstBall = new NextPitch(PinTest.from(first));
-    assertThat(firstBall.nextPitch(second).score()).contains(first + "|" + second);
+    assertThat(firstBall.nextPitch(second).scoreMessage()).contains(first + "|" + second);
   }
 
   @DisplayName("처음공과 두번째공을 굴려서 쓰러트린 핀수가 반환되는지 확인한다.")

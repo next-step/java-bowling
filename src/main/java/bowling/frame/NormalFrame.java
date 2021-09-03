@@ -36,7 +36,7 @@ public class NormalFrame implements Frame {
 
   @Override
   public String getScore() {
-    return state.score();
+    return state.scoreMessage();
   }
 
   @Override

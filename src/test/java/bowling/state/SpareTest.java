@@ -14,7 +14,7 @@ class SpareTest {
   @Test
   void spareMark() {
     Spare spare = new Spare(PinTest.from(5), PinTest.from(5));
-    assertThat(spare.score()).isEqualTo("5|/");
+    assertThat(spare.scoreMessage()).isEqualTo("5|/");
   }
 
   @DisplayName("스페어 판별이 되엇을때 쓰러트린 핀 개수를 출력하는지 확인한다.")
