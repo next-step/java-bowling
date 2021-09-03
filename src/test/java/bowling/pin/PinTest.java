@@ -3,6 +3,7 @@ package bowling.pin;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import bowling.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -53,5 +54,13 @@ public class PinTest {
     Pin first = Pin.from(5);
     Pin second = Pin.from(5);
     assertThat(first.pinCount()).isEqualTo(second.pinCount());
+  }
+
+  @DisplayName("기존 스코어에 쓰러트린 핀의 값이 추가되는지 확인한다.")
+  @Test
+  void sumScore() {
+    Pin pin = Pin.from(5);
+    Score score = pin.sumScore(Score.strike());
+    assertThat(score.scoreValue().getScore()).isEqualTo(15);
   }
 }
