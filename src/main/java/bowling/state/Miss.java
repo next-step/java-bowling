@@ -28,6 +28,15 @@ public class Miss extends Finish {
 
   @Override
   public Score score() {
-    return Score.from(totalPin().pinCount());
+    return Score.miss(totalPin().pinCount());
+  }
+
+  @Override
+  public Score calculateScore(Score score) {
+    score = first.sumScore(score);
+    if(score.isFinishBallCount()){
+      return score;
+    }
+    return second.sumScore(score);
   }
 }

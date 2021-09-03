@@ -31,4 +31,13 @@ public class Spare extends Finish {
   public Score score() {
     return Score.spare();
   }
+
+  @Override
+  public Score calculateScore(Score score) {
+    score = first.sumScore(score);
+    if(score.isFinishBallCount()){
+      return score;
+    }
+    return second.sumScore(score);
+  }
 }

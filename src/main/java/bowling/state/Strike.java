@@ -27,4 +27,12 @@ public class Strike extends Finish {
   public Score score() {
     return Score.strike();
   }
+
+  @Override
+  public Score calculateScore(final Score score) {
+    if(score.isFinishBallCount()){
+      return score;
+    }
+    return score.sum(first.pinCount());
+  }
 }
