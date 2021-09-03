@@ -2,13 +2,19 @@ package bowling.domain;
 
 public interface Frame {
 
-    Frame bowl(Pins pins);
+    void bowl(Pins pins);
 
     Pins getFirstPin();
 
     Pins getSecondPin();
 
+    boolean isFirstFitchDone();
+
+    boolean isSecondFitchDone();
+
     boolean isFinish();
 
     int getFrameNumber();
+
+    Frame next();
 }

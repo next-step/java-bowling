@@ -7,18 +7,17 @@ public class FinalFrame implements Frame {
 
     private FinalState state;
 
-    public FinalFrame(){
+    public FinalFrame() {
         state = new FinalState();
     }
 
     @Override
-    public Frame bowl(Pins pins) {
+    public void bowl(Pins pins) {
         state.bowl(pins);
-        return this;
     }
 
     @Override
-    public Pins getFirstPin(){
+    public Pins getFirstPin() {
         return state.getFirstPin();
     }
 
@@ -28,13 +27,29 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isFinish(){
+    public boolean isFirstFitchDone() {
+        return state.isFirstFitchDone();
+    }
+
+    @Override
+    public boolean isSecondFitchDone() {
+        return state.isSecondFitchDone();
+    }
+
+
+    @Override
+    public boolean isFinish() {
         return state.isFinish();
     }
 
     @Override
-    public int getFrameNumber(){
+    public int getFrameNumber() {
         return FINAL_FRAME_NUMBER;
+    }
+
+    @Override
+    public Frame next() {
+        return this;
     }
 
     @Override

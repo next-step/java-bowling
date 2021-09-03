@@ -21,12 +21,27 @@ public class Frames {
         return frames.get(frameNumber);
     }
 
-    public void add(Frame frame) {
-        frames.add(frame);
+    public void addFirst(Frame frame) {
+        frames.addFirst(frame);
     }
 
-    public boolean isFinish() {
-        return frames.getLast().isFinish();
+    public int size() {
+        return frames.size();
+    }
+
+    public void add(Frame frame) {
+        if(isNextFrame(frame)){
+            frames.add(frame);
+            return;
+        }
+        frames.remove(frames.size() - 1);
+        frames.addLast(frame);
+
+    }
+
+    private boolean isNextFrame(Frame frame) {
+        Frame prevFrame = frames.getLast();
+        return !prevFrame.equals(frame);
     }
 
     @Override
@@ -41,6 +56,7 @@ public class Frames {
     public int hashCode() {
         return Objects.hash(frames);
     }
+
 
 
 }

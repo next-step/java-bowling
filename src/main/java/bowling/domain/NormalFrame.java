@@ -16,8 +16,12 @@ public class NormalFrame implements Frame{
     }
 
     @Override
-    public Frame bowl(Pins pins) {
+    public void bowl(Pins pins) {
         state.bowl(pins);
+    }
+
+    @Override
+    public Frame next() {
         if(isFinish()){
             return getFrame();
         }
@@ -41,6 +45,15 @@ public class NormalFrame implements Frame{
     @Override
     public Pins getSecondPin() {
         return state.getSecondPin();
+    }
+
+    @Override
+    public boolean isFirstFitchDone(){
+        return state.isFirstFitchDone();
+    }
+    @Override
+    public boolean isSecondFitchDone(){
+        return state.isSecondFitchDone();
     }
 
     @Override

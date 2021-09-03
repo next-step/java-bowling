@@ -11,9 +11,15 @@ public class BowlingApplication {
     public static void main(String args[]) {
         String player = InputView.getPlayerName();
 
+        Frames frames = new Frames();
         Frame frame = new NormalFrame(1);
+        frames.addFirst(frame);
+
         while (!frame.isFinish()) {
-            frame = frame.bowl(Pins.of(InputView.getFrameScore(frame.getFrameNumber())));
+            frame.bowl(Pins.of(InputView.getFrameScore(frame.getFrameNumber())));
+            frames.add(frame);
+            ResultView.printFrames(player, frames);
+            frame = frame.next();
         }
 
     }

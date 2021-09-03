@@ -40,11 +40,13 @@ public class NormalFrameTest {
 
     }
 
-    @DisplayName("마지막 10번째 Frame frameNumber 10")
+    @DisplayName("마지막 10번째 Frame 은 frameNumber 10")
     @Test
     void NormalFrameLastToFinalFrameGetNumber(){
         NormalFrame frame = new NormalFrame(9);
-        Frame finalFrame = frame.bowl(Pins.of(10));
+        frame.bowl(Pins.of(10));
+
+        Frame finalFrame = frame.next();
 
         assertThat(finalFrame.getFrameNumber()).isEqualTo(10);
     }
@@ -53,10 +55,13 @@ public class NormalFrameTest {
     @Test
     void isEndTest(){
         NormalFrame frame = new NormalFrame(9);
-        Frame finalFrame = frame.bowl(Pins.of(10));
+        frame.bowl(Pins.of(10));
+
+        Frame finalFrame = frame.next();
 
         finalFrame.bowl(Pins.of(10));
         finalFrame.bowl(Pins.of(10));
+
         assertThat(finalFrame.isFinish()).isFalse();
     }
 
