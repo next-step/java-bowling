@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import bowling.model.play.Play;
 import bowling.model.play.Playable;
+import bowling.model.score.Score;
 
 public abstract class Frame {
 
@@ -28,9 +29,7 @@ public abstract class Frame {
 
 	public abstract boolean isGameEnd();
 
-	abstract int calculateScore(Playable playResult);
-
-	abstract int calculateScoreDouble(Playable beforeResult);
+	abstract int calculateScore(Score score);
 
 	public abstract int getGameScore();
 
