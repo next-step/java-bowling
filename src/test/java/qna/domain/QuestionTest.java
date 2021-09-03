@@ -41,4 +41,27 @@ public class QuestionTest {
         assertThat(Q2.deleteByUser(UserTest.SANJIGI))
                 .isInstanceOf(ArrayList.class);
     }
+
+    @DisplayName("글을 삭제하면 답변도 같이 삭제된다.")
+    @Test
+    void deleteWithAnswer() throws CannotDeleteException {
+        Q1.addAnswer(AnswerTest.A1);
+
+        Q1.deleteByUser(UserTest.JAVAJIGI);
+
+        assertThat(Q1.isDeleted()).isTrue();
+        assertThat(AnswerTest.A1.isDeleted()).isTrue();
+    }
+
+    @DisplayName("글을 삭제할때, 본인이 작성하지 않은 답변이 있으면 에러가 발생한다.")
+    @Test
+    void deleteWithAnswerException() {
+        Q1.addAnswer(AnswerTest.A1);
+        Q1.addAnswer(AnswerTest.A2);
+
+        assertThatThrownBy(
+                () -> Q1.deleteByUser(UserTest.JAVAJIGI)
+        ).isInstanceOf(CannotDeleteException.class);
+
+    }
 }
