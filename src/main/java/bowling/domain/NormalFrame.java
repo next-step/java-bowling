@@ -7,12 +7,12 @@ public class NormalFrame implements Frame{
 
     private final int frameNumber;
 
-    private NormalState state;
+    private NormalFitch state;
     private Frame next;
 
     public NormalFrame(int frameNumber){
         this.frameNumber = frameNumber;
-        state = new NormalState();
+        state = new NormalFitch();
     }
 
     @Override
@@ -48,12 +48,22 @@ public class NormalFrame implements Frame{
     }
 
     @Override
+    public Pins getBonusPin() {
+        return null;
+    }
+
+    @Override
     public boolean isFirstFitchDone(){
         return state.isFirstFitchDone();
     }
     @Override
     public boolean isSecondFitchDone(){
         return state.isSecondFitchDone();
+    }
+
+    @Override
+    public boolean isBonusFitchDone() {
+        return false;
     }
 
     @Override

@@ -20,12 +20,16 @@ public class Pins {
         return fallenPins;
     }
 
-    public boolean isStrike() {
+    public boolean isMaxPins() {
         return fallenPins == MAX_PIN;
     }
 
-    public boolean isSpare(Pins firstPins) {
+    public boolean isSumTheMaxPin(Pins firstPins) {
         return this.fallenPins + firstPins.fallenPins == MAX_PIN;
+    }
+
+    public boolean isMinPins() {
+        return fallenPins == MIN_PIN;
     }
 
     @Override

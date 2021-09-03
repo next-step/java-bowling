@@ -8,9 +8,13 @@ public interface Frame {
 
     Pins getSecondPin();
 
+    Pins getBonusPin();
+
     boolean isFirstFitchDone();
 
     boolean isSecondFitchDone();
+
+    boolean isBonusFitchDone();
 
     boolean isFinish();
 

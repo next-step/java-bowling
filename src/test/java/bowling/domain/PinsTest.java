@@ -27,6 +27,6 @@ public class PinsTest {
     void isStrike(){
         Pins pins = Pins.of(10);
 
-        assertThat(pins.isStrike()).isTrue();
+        assertThat(pins.isMaxPins()).isTrue();
     }
 }

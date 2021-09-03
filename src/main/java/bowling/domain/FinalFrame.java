@@ -5,10 +5,10 @@ import java.util.Objects;
 public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NUMBER = 10;
 
-    private FinalState state;
+    private FinalFitch state;
 
     public FinalFrame() {
-        state = new FinalState();
+        state = new FinalFitch();
     }
 
     @Override
@@ -27,6 +27,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public Pins getBonusPin() {
+        return state.getBonusPins();
+    }
+
+    @Override
     public boolean isFirstFitchDone() {
         return state.isFirstFitchDone();
     }
@@ -34,6 +39,11 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isSecondFitchDone() {
         return state.isSecondFitchDone();
+    }
+
+    @Override
+    public boolean isBonusFitchDone() {
+        return state.isBonusFitchDone();
     }
 
 

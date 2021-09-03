@@ -44,6 +44,10 @@ public class Frames {
         return !prevFrame.equals(frame);
     }
 
+    public Frame getLast() {
+        return frames.getLast();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
