@@ -2,7 +2,7 @@ package bowling.step2.outputView;
 
 import bowling.step2.domain.Frame;
 import bowling.step2.domain.Lane;
-import bowling.step2.domain.LastFrame;
+import bowling.step2.outputView.pitchResult.FrameResult;
 
 import java.util.List;
 
@@ -32,11 +32,16 @@ public class OutputView {
     }
 
     private static void showResult(Frame frame) {
-        if (frame instanceof LastFrame) {
-            showLastFrame(frame);
-            return;
-        }
-        showNormalFrame(frame);
+//        if (frame instanceof LastFrame) {
+//            showLastFrame(frame);
+//            return;
+//        }
+//        showNormalFrame(frame);
+
+        int size = frame.current()
+                .size();
+
+        FrameResult frameResult = FrameResult.of(frame);
     }
 
     private static void showNormalFrame(Frame frame) {
