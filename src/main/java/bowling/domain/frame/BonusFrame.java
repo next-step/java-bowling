@@ -25,11 +25,6 @@ public class BonusFrame implements Frame {
     }
 
     @Override
-    public int getFrameNumber() {
-        return FinalFrame.FINAL_FRAME_NUMBER;
-    }
-
-    @Override
     public Frame bowl(Pins pins) {
         State state = getLastState();
 
@@ -47,6 +42,11 @@ public class BonusFrame implements Frame {
     @Override
     public boolean isFinish() {
         return states.size() == LAST_COUNT || isFirstSpare();
+    }
+
+    @Override
+    public boolean isReady() {
+        return false;
     }
 
     @Override

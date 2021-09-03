@@ -23,11 +23,6 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int getFrameNumber() {
-        return frameNumber;
-    }
-
-    @Override
     public Frame bowl(Pins pins) {
         state = state.bowl(pins);
         if (state.isFinish()) {
@@ -40,6 +35,11 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isFinish() {
         return state.isFinish();
+    }
+
+    @Override
+    public boolean isReady() {
+        return state instanceof Ready;
     }
 
     @Override
