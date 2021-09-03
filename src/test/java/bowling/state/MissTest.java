@@ -47,7 +47,7 @@ class MissTest {
 
         () -> assertThat(
             new Miss(PinTest.from(1), PinTest.from(2)).calculateScore(Score.spare()))
-            .isEqualTo(Score.miss(13))
+            .isEqualTo(Score.miss(11))
     );
   }
 }
