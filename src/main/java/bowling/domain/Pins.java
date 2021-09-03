@@ -34,9 +34,10 @@ public class Pins {
     }
 
     public boolean isStrike() {
-        if(fallenPins == MAX_PIN){
-            return true;
-        }
-        return false;
+        return fallenPins == MAX_PIN;
+    }
+
+    public boolean isSpare(Pins firstPins) {
+        return this.fallenPins + firstPins.fallenPins == MAX_PIN;
     }
 }

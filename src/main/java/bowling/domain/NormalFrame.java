@@ -1,28 +1,45 @@
 package bowling.domain;
 
-public class NormalFrame {
-    private State state;
+public class NormalFrame implements Frame{
+    private static final int FINAL_NORMAL_FRAME_NUMBER = 9;
+
+    private final int frameNumber;
+
+    private NormalState normalState;
     private NormalFrame next;
 
-    public NormalFrame(){
-        state = new State();
+    public NormalFrame(int frameNumber){
+        this.frameNumber = frameNumber;
+        normalState = new NormalState();
     }
-    public void bowl(int fallenPins) {
-        state.bowl(fallenPins);
+    @Override
+    public void bowl(Pins pins) {
+        normalState.bowl(pins);
     }
 
+    @Override
     public Pins getFirstPin(){
-        return state.getFirstPin();
+        return normalState.getFirstPin();
     }
 
+    @Override
+    public Pins getSecondPin() {
+        return normalState.getSecondPin();
+    }
+
+    @Override
     public boolean isFinish(){
-        if(state.isFinish()){
-            next = new NormalFrame();
+        if(normalState.isFinish()){
+            next = new NormalFrame(frameNumber + 1);
+            return true;
         }
         return false;
     }
 
-    public NormalFrame next() {
+    public Frame next() {
+        if(frameNumber + 1 == FINAL_NORMAL_FRAME_NUMBER){
+            return null;
+        }
         return next;
     }
 }

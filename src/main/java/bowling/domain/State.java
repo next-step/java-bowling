@@ -1,36 +1,18 @@
 package bowling.domain;
 
-import java.util.Objects;
+public abstract class State {
+    protected Pins firstPins;
+    protected Pins secondPins;
 
-public class State {
-    private Pins firstPins;
-    private Pins secondPins;
-
-    public void bowl(int fallenPins) {
-        if (Objects.isNull(firstPins)) {
-            firstPins = Pins.of(fallenPins);
-            return;
-        }
-
-        if (!Objects.isNull(firstPins)) {
-            secondPins = Pins.of(fallenPins);
-        }
-    }
+    public abstract void bowl(Pins pins);
 
     public Pins getFirstPin() {
         return firstPins;
     }
 
-    public boolean isFinish() {
-        if (Objects.isNull(firstPins)) {
-            return false;
-        }
-        if (firstPins.isStrike()) {
-            return true;
-        }
-        if (!Objects.isNull(secondPins)) {
-            return true;
-        }
-        return false;
+    public Pins getSecondPin() {
+        return secondPins;
     }
+
+    public abstract boolean isFinish();
 }

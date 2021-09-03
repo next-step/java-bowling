@@ -50,8 +50,10 @@ Gutter,Strike,Spare ?
 Frames
 LinkedList<Frame> frames 
 
+Frame 이 이미 다음걸 알고있는데 frames가 필요할까 ..?
+
 협력
-1. Frame -> isnotFinish ->첫번째공 bowl 메시지 -> State -> bowl 메세지 -> Pins 기록
+1. Frame -> isNotFinish ->첫번째공 bowl 메시지 -> State -> bowl 메세지 -> Pins 기록
 2. State -> isNotFinish -> Frame 두번째공 -> State -> 두번째 Pins 기록
 
 1. Frame -> 첫번째공 bowl 메시지 -> State -> bowl 메세지 -> Pins 기록
