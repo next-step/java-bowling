@@ -3,6 +3,8 @@ package bowling.domain.frame;
 import java.util.Objects;
 
 public class Pitching {
+    public static final int STRIKE = 10;
+
     private final int first;
     private final int second;
 
@@ -27,11 +29,11 @@ public class Pitching {
     }
 
     public boolean isStrike() {
-        return first == 10;
+        return first == STRIKE;
     }
 
     public boolean isSpare() {
-        return first != 10 && (first + second) == 10;
+        return !isStrike() && (first + second) == STRIKE;
     }
 
     public int sum() {
