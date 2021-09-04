@@ -7,6 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.stream.Stream;
 
@@ -84,6 +86,23 @@ class PitchingTest {
                 Arguments.of(5, 6, PitchingValidation.EXCEED_LIMIT_SUM.message()),
                 Arguments.of(10, 1, PitchingValidation.POST_STRIKE_PITCHING.message())
         );
+    }
+
+    @ParameterizedTest(name = "모든 투구 완료 여부 {index} [{arguments}]")
+    @CsvSource(value = {
+            "10,true",
+            "0,false"
+    })
+    @DisplayName("모든 투구 완료")
+    void complete_pitching(int firstPitching, boolean expected) {
+        //given
+
+        //when
+        Pitching pitching = Pitching.first(firstPitching);
+
+        //then
+        assertThat(pitching.allPitched()).isEqualTo(expected);
+
     }
 
 }

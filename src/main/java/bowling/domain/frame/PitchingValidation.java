@@ -23,6 +23,9 @@ public enum PitchingValidation {
     }
 
     public static PitchingValidation of(SinglePitching first, SinglePitching second) {
+        if (second == null) {
+            return of(first.fallenPin(), 0);
+        }
         return of(first.fallenPin(), second.fallenPin());
     }
 

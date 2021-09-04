@@ -13,10 +13,6 @@ public class Pitching {
         this.second = second;
     }
 
-    private Pitching(int first, int second) {
-        this(new SinglePitching(first), new SinglePitching(second));
-    }
-
     private void validatePitching(SinglePitching first, SinglePitching second) {
         PitchingValidation pitchingValidation = PitchingValidation.of(first, second);
         if (pitchingValidation != PitchingValidation.NONE) {
@@ -24,7 +20,7 @@ public class Pitching {
         }
     }
     public static Pitching first(int first) {
-        return new Pitching(first, 0);
+        return new Pitching(new SinglePitching(first), null);
     }
 
     public Pitching second(int second) {
@@ -36,11 +32,21 @@ public class Pitching {
     }
 
     public boolean isSpare() {
+        if (second == null) {
+            return false;
+        }
         return !isStrike() && second.isSpare(first);
     }
 
     public int sum() {
         return first.sum(second);
+    }
+
+    public boolean allPitched() {
+        if (isStrike() || isSpare()) {
+            return true;
+        }
+        return !isStrike() && second != null;
     }
 
     @Override
