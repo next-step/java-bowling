@@ -4,7 +4,7 @@ public class FinalFrame extends Frame {
     private static final int FINAL_FRAME_NUMBER = 10;
 
     public FinalFrame() {
-        fitch = new FinalFitch();
+        pitch = new FinalPitch();
         states = new States();
     }
 

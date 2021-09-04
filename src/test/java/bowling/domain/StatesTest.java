@@ -40,8 +40,8 @@ public class StatesTest {
 
         States states = frame.getStates();
 
-        assertThat(states.getFirstFitch()).isEqualTo(State.GUTTER);
-        assertThat(states.getSecondFitch()).isEqualTo(State.SPARE);
-        assertThat(states.getBonusFitch()).isEqualTo(State.NORMAL);
+        assertThat(states.getFirstPitch()).isEqualTo(State.GUTTER);
+        assertThat(states.getSecondPitch()).isEqualTo(State.SPARE);
+        assertThat(states.getBonusPitch()).isEqualTo(State.NORMAL);
     }
 }

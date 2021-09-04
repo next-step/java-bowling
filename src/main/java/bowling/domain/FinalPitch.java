@@ -2,29 +2,28 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class FinalFitch extends Fitch {
-
+public class FinalPitch extends Pitch {
     private Pins bonusPins;
 
     @Override
     public void bowl(Pins pins) {
-        if (!isFirstFitchDone()) {
+        if (!isFirstPitchDone()) {
             firstPins = pins;
             return;
         }
-        if (!isSecondFitchDone()) {
+        if (!isSecondPitchDone()) {
             secondPins = pins;
             validate();
             return;
         }
-        if (!isBonusFitchDone()) {
+        if (!isBonusPitchDone()) {
             bonusPins = pins;
         }
     }
 
     @Override
     public boolean isFinish() {
-        if (isBonusFitchDone()) {
+        if (isBonusPitchDone()) {
             return true;
         }
         if (isSpare()) {
@@ -33,14 +32,14 @@ public class FinalFitch extends Fitch {
         if (isDoubleStrike()) {
             return false;
         }
-        if (isFirstFitchDone() && isSecondFitchDone()) {
+        if (isFirstPitchDone() && isSecondPitchDone()) {
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean isBonusFitchDone() {
+    public boolean isBonusPitchDone() {
         return !Objects.isNull(bonusPins);
     }
 
@@ -67,57 +66,52 @@ public class FinalFitch extends Fitch {
         return State.NORMAL;
     }
 
-
     private boolean isDoubleStrike() {
-        if (isFirstFitchDone() && isSecondFitchDone() && !isBonusFitchDone() && firstPins.isMaxPins() && secondPins.isMaxPins()) {
+        if (isFirstPitchDone() && isSecondPitchDone() && !isBonusPitchDone() && firstPins.isMaxPins() && secondPins.isMaxPins()) {
             return true;
         }
         return false;
     }
 
-
     private boolean isStrike() {
-        if (isFirstFitchDone() && !isSecondFitchDone() && firstPins.isMaxPins()) {
+        if (isFirstPitchDone() && !isSecondPitchDone() && firstPins.isMaxPins()) {
             return true;
         }
         if (isDoubleStrike()) {
             return true;
         }
-        if (isBonusFitchDone() && bonusPins.isMaxPins()) {
+        if (isBonusPitchDone() && bonusPins.isMaxPins()) {
             return true;
         }
         return false;
     }
 
     private boolean isGutter() {
-        if (isFirstFitchDone() && !isSecondFitchDone() && firstPins.isMinPins()) {
+        if (isFirstPitchDone() && !isSecondPitchDone() && firstPins.isMinPins()) {
             return true;
         }
-        if (isFirstFitchDone() && isSecondFitchDone() && secondPins.isMinPins()) {
+        if (isFirstPitchDone() && isSecondPitchDone() && secondPins.isMinPins()) {
             return true;
         }
-        if (isBonusFitchDone() && bonusPins.isMinPins()) {
+        if (isBonusPitchDone() && bonusPins.isMinPins()) {
             return true;
         }
         return false;
     }
 
     private boolean isMiss() {
-        return isFirstFitchDone() && isSecondFitchDone() && firstPins.isMinPins() && secondPins.isMinPins();
+        return isFirstPitchDone() && isSecondPitchDone() && firstPins.isMinPins() && secondPins.isMinPins();
     }
 
     private boolean isSpare() {
-        if (isFirstFitchDone() && isSecondFitchDone() && !isBonusFitchDone() && secondPins.isSumTheMaxPin(firstPins)) {
-            return true;
-        }
-        return false;
+        return isFirstPitchDone() && isSecondPitchDone() && !isBonusPitchDone() && secondPins.isSumTheMaxPin(firstPins);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FinalFitch that = (FinalFitch) o;
+        FinalPitch that = (FinalPitch) o;
         return Objects.equals(bonusPins, that.bonusPins);
     }
 

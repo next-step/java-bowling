@@ -1,13 +1,15 @@
 package bowling.domain;
 
-public class NormalFitch extends Fitch {
+import bowling.exception.IsNotSupportException;
+
+public class NormalPitch extends Pitch {
     @Override
     public void bowl(Pins pins) {
-        if (!isFirstFitchDone()) {
+        if (!isFirstPitchDone()) {
             firstPins = pins;
             return;
         }
-        if (!isSecondFitchDone()) {
+        if (!isSecondPitchDone()) {
             secondPins = pins;
             validate();
         }
@@ -15,13 +17,13 @@ public class NormalFitch extends Fitch {
 
     @Override
     public boolean isFinish() {
-        if (!isFirstFitchDone()) {
+        if (!isFirstPitchDone()) {
             return false;
         }
         if (isStrike()) {
             return true;
         }
-        if (isSecondFitchDone()) {
+        if (isSecondPitchDone()) {
             return true;
         }
         return false;
@@ -44,35 +46,37 @@ public class NormalFitch extends Fitch {
         return State.NORMAL;
     }
 
-    private boolean isStrike() {
-        return isFirstFitchDone() && !isSecondFitchDone() && firstPins.isMaxPins();
+    public boolean isStrike() {
+        return isFirstPitchDone() && !isSecondPitchDone() && firstPins.isMaxPins();
     }
 
-    private boolean isGutter() {
-        if (isFirstFitchDone() && !isSecondFitchDone() && firstPins.isMinPins()) {
+    public boolean isGutter() {
+        if (isFirstPitchDone() && !isSecondPitchDone() && firstPins.isMinPins()) {
             return true;
         }
-        if (isFirstFitchDone() && isSecondFitchDone() && secondPins.isMinPins()) {
+        if (isFirstPitchDone() && isSecondPitchDone() && secondPins.isMinPins()) {
             return true;
         }
         return false;
     }
 
-    private boolean isMiss() {
-        return isFirstFitchDone() && isSecondFitchDone() && firstPins.isMinPins() && secondPins.isMinPins();
+    public boolean isMiss() {
+        return isFirstPitchDone() && isSecondPitchDone() && firstPins.isMinPins() && secondPins.isMinPins();
     }
 
-    private boolean isSpare() {
-        return isFirstFitchDone() && isSecondFitchDone() && secondPins.isSumTheMaxPin(firstPins);
+    public boolean isSpare() {
+        return isFirstPitchDone() && isSecondPitchDone() && secondPins.isSumTheMaxPin(firstPins);
     }
 
     @Override
-    public boolean isBonusFitchDone() {
-        return false;
+    public boolean isBonusPitchDone() {
+        throw new IsNotSupportException();
     }
 
     @Override
     public Pins getBonusPin() {
-        return null;
+        throw new IsNotSupportException();
     }
+
+
 }

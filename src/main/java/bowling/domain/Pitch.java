@@ -4,21 +4,21 @@ import bowling.exception.OverTheMaxPinsException;
 
 import java.util.Objects;
 
-public abstract class Fitch {
+public abstract class Pitch{
     protected Pins firstPins;
     protected Pins secondPins;
 
     protected void validate() {
-        if (secondPins.isSumOverTheMaxPin(firstPins)) {
+        if (!firstPins.isMaxPins() && secondPins.isSumOverTheMaxPin(firstPins)) {
             throw new OverTheMaxPinsException();
         }
     }
 
-    public boolean isFirstFitchDone() {
+    public boolean isFirstPitchDone() {
         return !Objects.isNull(firstPins);
     }
 
-    public boolean isSecondFitchDone() {
+    public boolean isSecondPitchDone() {
         return !Objects.isNull(secondPins);
     }
 
@@ -30,13 +30,13 @@ public abstract class Fitch {
         return secondPins;
     }
 
+    public abstract Pins getBonusPin();
+
     public abstract void bowl(Pins pins);
 
     public abstract boolean isFinish();
 
     public abstract State getState();
 
-    public abstract boolean isBonusFitchDone();
-
-    public abstract Pins getBonusPin();
+    public abstract boolean isBonusPitchDone();
 }

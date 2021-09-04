@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class States {
-    private static final int FIRST_FITCH_STATE = 0;
-    private static final int SECOND_FITCH_STATE = 1;
-    private static final int BONUS_FITCH_STATE = 2;
+    private static final int FIRST_Pitch_STATE = 0;
+    private static final int SECOND_Pitch_STATE = 1;
+    private static final int BONUS_Pitch_STATE = 2;
 
     private List<State> states;
 
@@ -27,16 +27,16 @@ public class States {
         states.add(state);
     }
 
-    public State getFirstFitch() {
-        return states.get(FIRST_FITCH_STATE);
+    public State getFirstPitch() {
+        return states.get(FIRST_Pitch_STATE);
     }
 
-    public State getSecondFitch() {
-        return states.get(SECOND_FITCH_STATE);
+    public State getSecondPitch() {
+        return states.get(SECOND_Pitch_STATE);
     }
 
-    public State getBonusFitch() {
-        return states.get(BONUS_FITCH_STATE);
+    public State getBonusPitch() {
+        return states.get(BONUS_Pitch_STATE);
     }
 
     @Override

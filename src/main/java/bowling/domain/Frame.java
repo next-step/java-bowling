@@ -1,40 +1,40 @@
 package bowling.domain;
 
 public abstract class Frame {
-    protected Fitch fitch;
+    protected Pitch pitch;
     protected States states;
 
     public void bowl(Pins pins) {
-        fitch.bowl(pins);
-        states.add(fitch.getState());
+        pitch.bowl(pins);
+        states.add(pitch.getState());
     }
 
     public Pins getFirstPin() {
-        return fitch.getFirstPin();
+        return pitch.getFirstPin();
     }
 
     public Pins getSecondPin() {
-        return fitch.getSecondPin();
+        return pitch.getSecondPin();
     }
 
     public Pins getBonusPin() {
-        return fitch.getBonusPin();
+        return pitch.getBonusPin();
     }
 
-    public boolean isFirstFitchDone() {
-        return fitch.isFirstFitchDone();
+    public boolean isFirstPitchDone() {
+        return pitch.isFirstPitchDone();
     }
 
-    public boolean isSecondFitchDone() {
-        return fitch.isSecondFitchDone();
+    public boolean isSecondPitchDone() {
+        return pitch.isSecondPitchDone();
     }
 
-    public boolean isBonusFitchDone() {
-        return fitch.isBonusFitchDone();
+    public boolean isBonusPitchDone() {
+        return pitch.isBonusPitchDone();
     }
 
     public boolean isFinish() {
-        return fitch.isFinish();
+        return pitch.isFinish();
     }
 
     public States getStates() {

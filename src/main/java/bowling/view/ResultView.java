@@ -36,36 +36,36 @@ public class ResultView {
 
     private static void printScore(Frames frames) {
         for (int numberOfGame = 0; numberOfGame < frames.size(); numberOfGame++) {
-            printForFitchCondition(numberOfGame, frames);
+            printForPitchCondition(numberOfGame, frames);
         }
     }
 
-    private static void printForFitchCondition(int numberOfGame, Frames frames) {
+    private static void printForPitchCondition(int numberOfGame, Frames frames) {
         Frame currentFrame = frames.get(numberOfGame);
 
-        if (currentFrame.isFirstFitchDone()) {
-            drawFirstFitch(numberOfGame, currentFrame);
+        if (currentFrame.isFirstPitchDone()) {
+            drawFirstPitch(numberOfGame, currentFrame);
         }
-        if (currentFrame.isSecondFitchDone()) {
-            drawSecondFitch(numberOfGame, currentFrame);
+        if (currentFrame.isSecondPitchDone()) {
+            drawSecondPitch(numberOfGame, currentFrame);
         }
-        if (currentFrame.isBonusFitchDone()) {
-            drawLastFitch(currentFrame);
+        if (currentFrame.isBonusPitchDone()) {
+            drawLastPitch(currentFrame);
         }
     }
 
-    private static void drawFirstFitch(int numberOfGame, Frame currentFrame) {
+    private static void drawFirstPitch(int numberOfGame, Frame currentFrame) {
         States states = currentFrame.getStates();
         Pins firstPin = currentFrame.getFirstPin();
 
-        if (drawIfFinalFrame(numberOfGame, states.getFirstFitch())) {
+        if (drawIfFinalFrame(numberOfGame, states.getFirstPitch())) {
             return;
         }
-        if (states.getFirstFitch() == State.STRIKE) {
+        if (states.getFirstPitch() == State.STRIKE) {
             System.out.print(STRIKE);
             return;
         }
-        if (states.getFirstFitch() == State.GUTTER) {
+        if (states.getFirstPitch() == State.GUTTER) {
             System.out.print(NO_SPACE_GUTTER);
             return;
         }
@@ -73,22 +73,22 @@ public class ResultView {
         System.out.print(BLANK + firstPin.getFallenPins() + BOUND_LINE);
     }
 
-    private static void drawSecondFitch(int numberOfGame, Frame currentFrame) {
+    private static void drawSecondPitch(int numberOfGame, Frame currentFrame) {
         States states = currentFrame.getStates();
         Pins secondPin = currentFrame.getSecondPin();
 
-        if (drawIfFinalFrame(numberOfGame, states.getSecondFitch())) {
+        if (drawIfFinalFrame(numberOfGame, states.getSecondPitch())) {
             return;
         }
-        if (states.getSecondFitch() == State.GUTTER) {
+        if (states.getSecondPitch() == State.GUTTER) {
             System.out.print(GUTTER);
             return;
         }
-        if (states.getSecondFitch() == State.MISS) {
+        if (states.getSecondPitch() == State.MISS) {
             System.out.print(GUTTER);
             return;
         }
-        if (states.getSecondFitch() == State.SPARE) {
+        if (states.getSecondPitch() == State.SPARE) {
             System.out.print(SPARE);
             return;
         }
@@ -115,15 +115,15 @@ public class ResultView {
         return false;
     }
 
-    private static void drawLastFitch(Frame last) {
+    private static void drawLastPitch(Frame last) {
         States states = last.getStates();
         Pins bonusPin = last.getBonusPin();
 
-        if (states.getBonusFitch() == State.STRIKE) {
+        if (states.getBonusPitch() == State.STRIKE) {
             System.out.print(NO_SPACE_STRIKE);
             return;
         }
-        if (states.getBonusFitch() == State.GUTTER) {
+        if (states.getBonusPitch() == State.GUTTER) {
             System.out.print(GUTTER);
             return;
         }
@@ -133,29 +133,29 @@ public class ResultView {
     private static void printRemainBoard(Frames frames) {
         Frame currentFrame = frames.getLast();
 
-        if (currentFrame.isFirstFitchDone() && !currentFrame.isSecondFitchDone()) {
-            drawRemainFirstFitch(frames);
+        if (currentFrame.isFirstPitchDone() && !currentFrame.isSecondPitchDone()) {
+            drawRemainFirstPitch(frames);
             System.out.println();
             return;
         }
-        if (currentFrame.isSecondFitchDone()) {
-            drawRemainSecondFitch(frames);
+        if (currentFrame.isSecondPitchDone()) {
+            drawRemainSecondPitch(frames);
             System.out.println();
             return;
         }
     }
 
-    private static void drawRemainSecondFitch(Frames frames) {
+    private static void drawRemainSecondPitch(Frames frames) {
         for (int numberOfGame = frames.size(); numberOfGame <= FINAL_FRAME; numberOfGame++) {
             System.out.print(BLANK_FRAME);
         }
     }
 
-    private static void drawRemainFirstFitch(Frames frames) {
+    private static void drawRemainFirstPitch(Frames frames) {
         Frame currentFrame = frames.getLast();
         States states = currentFrame.getStates();
 
-        if (states.getFirstFitch() != State.STRIKE) {
+        if (states.getFirstPitch() != State.STRIKE) {
             System.out.print(HALF_BLANK_FRAME);
         }
 

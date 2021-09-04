@@ -31,18 +31,18 @@
 * 숫자 기록
 * 남은 핀 알려주는 기능
 
-### Fitch(두개의 Pins 들로) 책임 과 역할..
+### Pitch(두개의 Pins 들로) 책임 과 역할..
 * bowl 메시지 로 첫번째구 firstPins 두번째구 secondPins 기록
 * 끝났니 ? 메세지
 * 상태 바로 구할수 있음 ..Gutter,Strike,Spare ?
-* Fitch 를 상속해서 NormalFrame 에서 던질때 FinalFrame 에서 던질때 Fitch
+* Pitch 를 상속해서 NormalFrame 에서 던질때 FinalFrame 에서 던질때 Pitch
 
 ###Frame 의 책임 과 역할..
 
 * isFinish 메시지로 Frame이 끝났는지 알려줌
 * bowl 메세지 첫번째 Pins들에 기록 끝난거 아니면
 * bowl 메세지 두번째 Pins들에 기록
-* Fitch 간 이루어진 첫번째 던졌을때, 두번째 던졌을 때 상태들(Gutter,Strike,Spare )을 가지고 있음
+* Pitch 간 이루어진 첫번째 던졌을때, 두번째 던졌을 때 상태들(Gutter,Strike,Spare )을 가지고 있음
 * NormalFrame , FinalFrame 이 있다. Frame을 상속
 * 다음 Frame 을 알고 있어야함
 
