@@ -1,5 +1,6 @@
 package bowling.frame;
 
+import bowling.score.Score;
 import bowling.state.State;
 import bowling.state.StateFactory;
 
@@ -35,12 +36,22 @@ public class NormalFrame implements Frame {
   }
 
   @Override
-  public String getScore() {
+  public String getScoreMessage() {
     return state.scoreMessage();
   }
 
   @Override
   public boolean isGameEnd() {
     return false;
+  }
+
+  @Override
+  public Score score() {
+    return state.score();
+  }
+
+  @Override
+  public Score frameScoreAdd(final Score before) {
+    return state.calculateScore(before);
   }
 }
