@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.InvalidPinsException;
+
 import java.util.Objects;
 
 public class Pins {
@@ -9,11 +11,18 @@ public class Pins {
     private final int fallenPins;
 
     private Pins(int fallenPins) {
+        validate(fallenPins);
         this.fallenPins = fallenPins;
     }
 
     public static Pins of(int fallenPins) {
         return new Pins(fallenPins);
+    }
+
+    private void validate(int fallenPins) {
+        if (Objects.isNull(fallenPins) || fallenPins < MIN_PIN || fallenPins > MAX_PIN) {
+            throw new InvalidPinsException();
+        }
     }
 
     public int getFallenPins() {
@@ -46,4 +55,7 @@ public class Pins {
     }
 
 
+    public boolean isSumOverTheMaxPin(Pins firstPins) {
+        return fallenPins + firstPins.fallenPins > MAX_PIN;
+    }
 }

@@ -9,6 +9,7 @@ public class NormalFitch extends Fitch {
         }
         if (!isSecondFitchDone()) {
             secondPins = pins;
+            validate();
         }
     }
 

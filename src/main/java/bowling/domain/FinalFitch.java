@@ -14,6 +14,7 @@ public class FinalFitch extends Fitch {
         }
         if (!isSecondFitchDone()) {
             secondPins = pins;
+            validate();
             return;
         }
         if (!isBonusFitchDone()) {
@@ -37,6 +38,7 @@ public class FinalFitch extends Fitch {
         }
         return false;
     }
+
     @Override
     public boolean isBonusFitchDone() {
         return !Objects.isNull(bonusPins);
@@ -64,7 +66,6 @@ public class FinalFitch extends Fitch {
 
         return State.NORMAL;
     }
-
 
 
     private boolean isDoubleStrike() {

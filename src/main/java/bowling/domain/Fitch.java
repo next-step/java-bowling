@@ -1,16 +1,24 @@
 package bowling.domain;
 
+import bowling.exception.OverTheMaxPinsException;
+
 import java.util.Objects;
 
 public abstract class Fitch {
     protected Pins firstPins;
     protected Pins secondPins;
 
-    public boolean isFirstFitchDone(){
+    protected void validate() {
+        if (secondPins.isSumOverTheMaxPin(firstPins)) {
+            throw new OverTheMaxPinsException();
+        }
+    }
+
+    public boolean isFirstFitchDone() {
         return !Objects.isNull(firstPins);
     }
 
-    public boolean isSecondFitchDone(){
+    public boolean isSecondFitchDone() {
         return !Objects.isNull(secondPins);
     }
 

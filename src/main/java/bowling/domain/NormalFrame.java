@@ -6,7 +6,7 @@ public class NormalFrame extends Frame {
     private final int frameNumber;
     private Frame next;
 
-    public NormalFrame(int frameNumber){
+    public NormalFrame(int frameNumber) {
         this.frameNumber = frameNumber;
         fitch = new NormalFitch();
         states = new States();
@@ -19,14 +19,14 @@ public class NormalFrame extends Frame {
 
     @Override
     public Frame next() {
-        if(isFinish()){
+        if (isFinish()) {
             return getFrame();
         }
         return this;
     }
 
     private Frame getFrame() {
-        if(frameNumber == FINAL_NORMAL_FRAME_NUMBER){
+        if (frameNumber == FINAL_NORMAL_FRAME_NUMBER) {
             next = new FinalFrame();
             return next;
         }

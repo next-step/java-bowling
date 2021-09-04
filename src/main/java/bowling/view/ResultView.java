@@ -41,21 +41,22 @@ public class ResultView {
     }
 
     private static void printForFitchCondition(int numberOfGame, Frames frames) {
-        if (frames.get(numberOfGame).isFirstFitchDone()) {
-            drawFirstFitch(numberOfGame, frames);
+        Frame currentFrame = frames.get(numberOfGame);
+
+        if (currentFrame.isFirstFitchDone()) {
+            drawFirstFitch(numberOfGame, currentFrame);
         }
-        if (frames.get(numberOfGame).isSecondFitchDone()) {
-            drawSecondFitch(numberOfGame, frames);
+        if (currentFrame.isSecondFitchDone()) {
+            drawSecondFitch(numberOfGame, currentFrame);
         }
-        if (frames.get(numberOfGame).isBonusFitchDone()) {
-            drawLastFitch(frames.getLast());
+        if (currentFrame.isBonusFitchDone()) {
+            drawLastFitch(currentFrame);
         }
     }
 
-    private static void drawFirstFitch(int numberOfGame, Frames frames) {
-        Frame current = frames.get(numberOfGame);
-        States states = current.getStates();
-        Pins firstPin = current.getFirstPin();
+    private static void drawFirstFitch(int numberOfGame, Frame currentFrame) {
+        States states = currentFrame.getStates();
+        Pins firstPin = currentFrame.getFirstPin();
 
         if (drawIfFinalFrame(numberOfGame, states.getFirstFitch())) {
             return;
@@ -72,10 +73,9 @@ public class ResultView {
         System.out.print(BLANK + firstPin.getFallenPins() + BOUND_LINE);
     }
 
-    private static void drawSecondFitch(int numberOfGame, Frames frames) {
-        Frame current = frames.get(numberOfGame);
-        States states = current.getStates();
-        Pins secondPin = current.getSecondPin();
+    private static void drawSecondFitch(int numberOfGame, Frame currentFrame) {
+        States states = currentFrame.getStates();
+        Pins secondPin = currentFrame.getSecondPin();
 
         if (drawIfFinalFrame(numberOfGame, states.getSecondFitch())) {
             return;
@@ -143,7 +143,6 @@ public class ResultView {
             System.out.println();
             return;
         }
-
     }
 
     private static void drawRemainSecondFitch(Frames frames) {
@@ -164,7 +163,5 @@ public class ResultView {
             System.out.print(BLANK_FRAME);
         }
     }
-
-
 }
 

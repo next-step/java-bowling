@@ -1,49 +1,64 @@
 package bowling.domain;
 
+import bowling.exception.OverTheMaxPinsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class NormalFitchTest {
 
     @DisplayName("bowl 테스트")
     @Test
-    void bowlTest(){
-        NormalFitch normalState = new NormalFitch();
+    void bowlTest() {
+        Fitch fitch = new NormalFitch();
 
-        normalState.bowl(Pins.of(4));
+        fitch.bowl(Pins.of(4));
 
-        assertThat(normalState.getFirstPin()).isEqualTo(Pins.of(4));
+        assertThat(fitch.getFirstPin()).isEqualTo(Pins.of(4));
+    }
+
+    @DisplayName("exception 테스트(두핀이 10이 넘었을 때)")
+    @Test
+    void bowlExceptionTest() {
+        Fitch fitch = new NormalFitch();
+
+        fitch.bowl(Pins.of(4));
+
+        assertThatExceptionOfType(OverTheMaxPinsException.class)
+                .isThrownBy(() -> {
+                    fitch.bowl(Pins.of(7));
+                }).withMessageMatching("두 핀의 합이 10이 넘습니다.");
     }
 
     @DisplayName("안쳤을 때는 False, 한번 만 첬을 때는 False, 두번 다 쳤을 때는 True 테스트")
     @Test
-    void isNormalFinish(){
-        NormalFitch normalState = new NormalFitch();
+    void isNormalFinish() {
+        Fitch fitch = new NormalFitch();
 
-        assertThat(normalState.isFinish()).isFalse();
+        assertThat(fitch.isFinish()).isFalse();
 
-        normalState.bowl(Pins.of(4));
-        assertThat(normalState.isFinish()).isFalse();
+        fitch.bowl(Pins.of(4));
+        assertThat(fitch.isFinish()).isFalse();
 
-        normalState.bowl(Pins.of(3));
-        assertThat(normalState.isFinish()).isTrue();
+        fitch.bowl(Pins.of(3));
+        assertThat(fitch.isFinish()).isTrue();
     }
 
     @DisplayName("스트라이크 쳤을 때는 바로 True")
     @Test
-    void isStrikeFinish(){
-        NormalFitch normalState = new NormalFitch();
+    void isStrikeFinish() {
+        Fitch fitch = new NormalFitch();
 
-        normalState.bowl(Pins.of(10));
-        assertThat(normalState.isFinish()).isTrue();
+        fitch.bowl(Pins.of(10));
+        assertThat(fitch.isFinish()).isTrue();
 
     }
 
     @DisplayName("상태 Normal")
     @Test
-    void isNormal(){
+    void isNormal() {
         Fitch fitch = new NormalFitch();
 
         fitch.bowl(Pins.of(4));
@@ -54,7 +69,7 @@ public class NormalFitchTest {
 
     @DisplayName("상태 Strike")
     @Test
-    void isStrike(){
+    void isStrike() {
         Fitch fitch = new NormalFitch();
 
         fitch.bowl(Pins.of(10));
@@ -64,7 +79,7 @@ public class NormalFitchTest {
 
     @DisplayName("상태 Spare")
     @Test
-    void isSpare(){
+    void isSpare() {
         Fitch fitch = new NormalFitch();
 
         fitch.bowl(Pins.of(0));
@@ -75,7 +90,7 @@ public class NormalFitchTest {
 
     @DisplayName("상태 Gutter")
     @Test
-    void isGutter(){
+    void isGutter() {
         Fitch fitch = new NormalFitch();
 
         fitch.bowl(Pins.of(0));
@@ -89,7 +104,7 @@ public class NormalFitchTest {
 
     @DisplayName("상태 Gutter")
     @Test
-    void isGutter2(){
+    void isGutter2() {
         Fitch fitch = new NormalFitch();
 
         fitch.bowl(Pins.of(5));
@@ -103,13 +118,12 @@ public class NormalFitchTest {
 
     @DisplayName("상태 Miss")
     @Test
-    void isMiss(){
+    void isMiss() {
         Fitch fitch = new NormalFitch();
 
         fitch.bowl(Pins.of(0));
         fitch.bowl(Pins.of(0));
         assertThat(fitch.getState()).isEqualTo(State.MISS);
-
     }
 
 }

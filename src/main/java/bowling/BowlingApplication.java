@@ -21,6 +21,5 @@ public class BowlingApplication {
             ResultView.printFrames(player, frames);
             frame = frame.next();
         }
-
     }
 }

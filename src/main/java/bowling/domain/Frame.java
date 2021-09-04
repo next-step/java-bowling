@@ -37,11 +37,7 @@ public abstract class Frame {
         return fitch.isFinish();
     }
 
-    public Fitch getFitch(){
-        return fitch;
-    }
-
-    public States getStates(){
+    public States getStates() {
         return states;
     }
 

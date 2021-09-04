@@ -1,11 +1,27 @@
 package bowling.domain;
 
+import bowling.exception.OverTheMaxPinsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class FinalFitchTest {
+
+    @DisplayName("exception 테스트(두핀이 10이 넘었을 때)")
+    @Test
+    void bowlExceptionTest() {
+        Fitch fitch = new FinalFitch();
+
+        fitch.bowl(Pins.of(4));
+
+        assertThatExceptionOfType(OverTheMaxPinsException.class)
+                .isThrownBy(() -> {
+                    fitch.bowl(Pins.of(7));
+                }).withMessageMatching("두 핀의 합이 10이 넘습니다.");
+    }
+
     @DisplayName("안쳤을 때는 False, 한번 만 첬을 때는 False, 두번 다 쳤을 때는 True 테스트")
     @Test
     void isNormalFinish(){
