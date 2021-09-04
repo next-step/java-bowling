@@ -11,6 +11,7 @@ import java.util.List;
 
 @Service("deleteHistoryService")
 public class DeleteHistoryService {
+
     @Resource(name = "deleteHistoryRepository")
     private DeleteHistoryRepository deleteHistoryRepository;
 

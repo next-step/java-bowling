@@ -23,7 +23,8 @@ public class DeleteHistory {
 
     private LocalDateTime createDate = LocalDateTime.now();
 
-    public DeleteHistory() {
+    protected DeleteHistory() {
+
     }
 
     public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
@@ -37,8 +38,9 @@ public class DeleteHistory {
         return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
     }
 
-    public static List<DeleteHistory> of(final List<Answer> answers) {
-        return answers.stream()
+    public static List<DeleteHistory> of(final Answers answers) {
+        return answers.elements()
+                .stream()
                 .map(DeleteHistory::of)
                 .collect(Collectors.toList());
     }

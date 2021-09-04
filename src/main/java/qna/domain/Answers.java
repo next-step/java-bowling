@@ -8,6 +8,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Embeddable
@@ -30,12 +31,16 @@ public class Answers {
         answers.add(answer);
     }
 
-    public List<DeleteHistory> delete(final User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(final User loginUser) throws CannotDeleteException {
         checkAnswerWrittenBySomeoneElse(loginUser);
         for (Answer answer : answers) {
             answer.changeDeleted(true);
         }
-        return DeleteHistory.of(answers);
+        return DeleteHistories.of(this);
+    }
+
+    public List<Answer> elements() {
+        return Collections.unmodifiableList(answers);
     }
 
     private void checkAnswerWrittenBySomeoneElse(User loginUser) throws CannotDeleteException {
