@@ -39,7 +39,7 @@ public class Frames {
 
   public List<FrameDto> resultList() {
     return frames.stream()
-        .map(frame -> FrameDto.from(frame.getScore()))
+        .map(frame -> FrameDto.from(frame.getScoreMessage()))
         .collect(Collectors.toList());
   }
 
