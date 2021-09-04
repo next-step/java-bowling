@@ -24,19 +24,19 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
+    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
+        this.contentType = contentType;
+        this.contentId = contentId;
+        this.deletedBy = deletedBy;
+        this.createDate = createDate;
+    }
+
     public static DeleteHistory newQuestion(Long contentId, User deletedBy) {
         return new DeleteHistory(ContentType.QUESTION, contentId, deletedBy, LocalDateTime.now());
     }
 
     public static DeleteHistory newAnswer(Long contentId, User deletedBy) {
         return new DeleteHistory(ContentType.ANSWER, contentId, deletedBy, LocalDateTime.now());
-    }
-
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
-        this.contentType = contentType;
-        this.contentId = contentId;
-        this.deletedBy = deletedBy;
-        this.createDate = createDate;
     }
 
     @Override
