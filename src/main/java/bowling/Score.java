@@ -23,6 +23,10 @@ public class Score {
         return new Score(this.value + score.value);
     }
 
+    public FrameResult getFrameResult() {
+        return FrameResult.MISS;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
