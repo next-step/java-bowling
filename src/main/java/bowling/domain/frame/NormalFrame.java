@@ -1,12 +1,13 @@
 package bowling.domain.frame;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import bowling.domain.common.FalledPins;
 import bowling.domain.common.Score;
 import bowling.domain.frame.exception.InvalidProgressFrameException;
 import bowling.domain.pitch.Pitch;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public final class NormalFrame extends BaseFrame {
 
@@ -60,9 +61,9 @@ public final class NormalFrame extends BaseFrame {
 
 	private Score playingScore() {
 		final int falledPinsCountSum = pitches().stream()
-				.map(Pitch::getFalledPins)
-				.mapToInt(FalledPins::count)
-				.sum();
+			.map(Pitch::getFalledPins)
+			.mapToInt(FalledPins::count)
+			.sum();
 		final int leftCount = MAX_PITCHES_COUNT - pitches().size();
 
 		return new Score(falledPinsCountSum, leftCount);
@@ -78,16 +79,16 @@ public final class NormalFrame extends BaseFrame {
 		}
 
 		return Score.miss(pitches().stream()
-				.map(Pitch::getFalledPins)
-				.mapToInt(FalledPins::count)
-				.sum());
+			.map(Pitch::getFalledPins)
+			.mapToInt(FalledPins::count)
+			.sum());
 	}
 
 	@Override
 	public Score additionalScore(Score beforeScore, final List<Frame> frames) {
 		final List<Pitch> limitedPitches = pitches().stream()
-				.limit(beforeScore.getLeftCount())
-				.collect(Collectors.toList());
+			.limit(beforeScore.getLeftCount())
+			.collect(Collectors.toList());
 
 		for (final Pitch pitch : limitedPitches) {
 			beforeScore = beforeScore.plus(pitch);
@@ -99,15 +100,6 @@ public final class NormalFrame extends BaseFrame {
 
 		return nextCalculatedScore(beforeScore, frames);
 	}
-
-//	private Score nextCalculatedScore(final Score score, final List<Frame> frames) {
-//		try {
-//			final Frame nextFrame = frames.get(frames.indexOf(this) + 1);
-//			return nextFrame.additionalScore(score, frames);
-//		} catch (final IndexOutOfBoundsException e) {
-//			return score;
-//		}
-//	}
 
 	private Score nextCalculatedScore(final Score score, final List<Frame> frames) {
 		final Frame nextFrame = nextFrame(frames);
