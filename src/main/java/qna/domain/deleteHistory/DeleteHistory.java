@@ -1,4 +1,9 @@
-package qna.domain;
+package qna.domain.deleteHistory;
+
+import qna.domain.answers.Answer;
+import qna.domain.answers.Answers;
+import qna.domain.questions.Question;
+import qna.domain.users.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,8 +13,10 @@ import java.util.stream.Collectors;
 
 @Entity
 public class DeleteHistory {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "delete_history_id")
     private Long id;
 
     @Enumerated(EnumType.STRING)

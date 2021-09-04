@@ -1,6 +1,8 @@
-package qna.domain;
+package qna.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import qna.domain.answers.Answer;
+import qna.domain.questions.Question;
 
 import java.util.List;
 import java.util.Optional;

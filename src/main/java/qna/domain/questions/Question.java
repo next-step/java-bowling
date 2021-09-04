@@ -1,12 +1,22 @@
-package qna.domain;
+package qna.domain.questions;
 
+import qna.domain.BaseEntity;
+import qna.domain.answers.Answer;
+import qna.domain.answers.Answers;
+import qna.domain.deleteHistory.DeleteHistories;
+import qna.domain.users.User;
 import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Question extends AbstractEntity {
+public class Question extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "question_id")
+    private Long id;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -27,12 +37,11 @@ public class Question extends AbstractEntity {
     }
 
     public Question(final String title, final String contents) {
-        this.title = title;
-        this.contents = contents;
+        this(null, title, contents);
     }
 
-    public Question(final long id, final String title, final String contents) {
-        super(id);
+    public Question(final Long id, final String title, final String contents) {
+        this.id = id;
         this.title = title;
         this.contents = contents;
     }
@@ -55,6 +64,10 @@ public class Question extends AbstractEntity {
         if (!writer.equals(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public User getWriter() {

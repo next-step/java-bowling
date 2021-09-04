@@ -2,6 +2,7 @@ package qna.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import qna.domain.answers.Answers;
 import qna.exception.CannotDeleteException;
 
 import java.util.Arrays;

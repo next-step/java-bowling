@@ -1,6 +1,8 @@
-package qna.domain;
+package qna.domain.answers;
 
 import org.hibernate.annotations.Where;
+import qna.domain.deleteHistory.DeleteHistories;
+import qna.domain.users.User;
 import qna.exception.CannotDeleteException;
 
 import javax.persistence.CascadeType;

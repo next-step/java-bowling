@@ -1,17 +1,23 @@
-package qna.domain;
+package qna.domain.users;
 
+import qna.domain.BaseEntity;
 import qna.exception.UnAuthorizedException;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class User extends AbstractEntity {
+public class User extends BaseEntity {
+
     public static final GuestUser GUEST_USER = new GuestUser();
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long id;
+
     @Column(unique = true, nullable = false)
-    private String userId;
+    private String account;
 
     @Column(nullable = false)
     private String password;
@@ -24,24 +30,24 @@ public class User extends AbstractEntity {
     public User() {
     }
 
-    public User(String userId, String password, String name, String email) {
-        this(null, userId, password, name, email);
+    public User(final String account, final String password, final String name, final String email) {
+        this(null, account, password, name, email);
     }
 
-    public User(Long id, String userId, String password, String name, String email) {
-        super(id);
-        this.userId = userId;
+    public User(final Long id, final String account, final String password, final String name, final String email) {
+        this.id = id;
+        this.account = account;
         this.password = password;
         this.name = name;
         this.email = email;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getAccount() {
+        return account;
     }
 
-    public User setUserId(String userId) {
-        this.userId = userId;
+    public User setAccount(String userId) {
+        this.account = userId;
         return this;
     }
 
@@ -49,31 +55,8 @@ public class User extends AbstractEntity {
         return password;
     }
 
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public User setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
     public void update(User loginUser, User target) {
-        if (!matchUserId(loginUser.getUserId())) {
+        if (!matchUserId(loginUser.getAccount())) {
             throw new UnAuthorizedException();
         }
 
@@ -86,7 +69,7 @@ public class User extends AbstractEntity {
     }
 
     private boolean matchUserId(String userId) {
-        return this.userId.equals(userId);
+        return this.account.equals(userId);
     }
 
     public boolean matchPassword(String targetPassword) {
@@ -115,6 +98,6 @@ public class User extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
+        return "User [userId=" + account + ", password=" + password + ", name=" + name + ", email=" + email + "]";
     }
 }

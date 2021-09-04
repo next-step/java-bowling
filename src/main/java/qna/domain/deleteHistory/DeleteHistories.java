@@ -1,4 +1,7 @@
-package qna.domain;
+package qna.domain.deleteHistory;
+
+import qna.domain.answers.Answers;
+import qna.domain.questions.Question;
 
 import java.util.ArrayList;
 import java.util.Collections;

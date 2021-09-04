@@ -1,5 +1,8 @@
-package qna.domain;
+package qna.domain.answers;
 
+import qna.domain.BaseEntity;
+import qna.domain.questions.Question;
+import qna.domain.users.User;
 import qna.exception.NotFoundException;
 import qna.exception.UnAuthorizedException;
 
@@ -7,7 +10,12 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class Answer extends AbstractEntity {
+public class Answer extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "answer_id")
+    private Long id;
 
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
@@ -23,14 +31,14 @@ public class Answer extends AbstractEntity {
     private boolean deleted = false;
 
     public Answer() {
+
     }
 
-    public Answer(User writer, Question question, String contents) {
+    public Answer(final User writer, final Question question, final String contents) {
         this(null, writer, question, contents);
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
-        super(id);
+    public Answer(final Long id, final User writer, final Question question, final String contents) {
 
         if (writer == null) {
             throw new UnAuthorizedException();
@@ -39,7 +47,7 @@ public class Answer extends AbstractEntity {
         if (question == null) {
             throw new NotFoundException();
         }
-
+        this.id = id;
         this.writer = writer;
         this.question = question;
         this.contents = contents;
@@ -48,6 +56,10 @@ public class Answer extends AbstractEntity {
     public Answer changeDeleted(final boolean deleted) {
         this.deleted = deleted;
         return this;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public boolean isDeleted() {
