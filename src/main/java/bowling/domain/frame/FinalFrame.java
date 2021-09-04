@@ -9,8 +9,6 @@ import bowling.domain.state.State;
 
 public class FinalFrame implements Frame {
 
-    public static final int FINAL_FRAME_NUMBER = 10;
-
     private Frame next;
     private State state;
 
@@ -20,11 +18,6 @@ public class FinalFrame implements Frame {
 
     public static FinalFrame of() {
         return new FinalFrame();
-    }
-
-    @Override
-    public int getFrameNumber() {
-        return FINAL_FRAME_NUMBER;
     }
 
     @Override
@@ -41,6 +34,11 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isFinish() {
         return state.isFinish();
+    }
+
+    @Override
+    public boolean isReady() {
+        return state instanceof Ready;
     }
 
     @Override

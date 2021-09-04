@@ -108,4 +108,13 @@ class FramesTest {
 
         assertThat(score.getScore()).isEqualTo(9);
     }
+
+    @DisplayName("현재 프레임이 종료 되었는지 확인한다.")
+    @Test
+    void current_frame_turn_over() {
+        Frames frames = Frames.of();
+        frames.bowl(Pins.of(10));
+
+        assertThat(frames.isTurnOver()).isTrue();
+    }
 }

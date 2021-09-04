@@ -36,6 +36,11 @@ public class Frames {
         return frames.size() == END_NUMBER && getLastFrame().isFinish();
     }
 
+    public boolean isTurnOver() {
+        Frame lastFrame = getLastFrame();
+        return lastFrame.isFinish() || lastFrame.isReady();
+    }
+
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
     }

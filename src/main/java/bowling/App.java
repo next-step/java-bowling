@@ -1,25 +1,27 @@
 package bowling;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
 import bowling.domain.pins.Pins;
-import bowling.domain.player.Player;
+import bowling.domain.player.BowlingPlayerBoard;
+import bowling.domain.player.BowlingPlayerBoards;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
+import java.util.List;
 
 public class App {
 
     public static void main(String[] args) {
 
-        String name = InputView.getInputPlayerName();
-        Player player = Player.of(name);
-        Frames frames = Frames.of();
-        ResultView.printBoard(player, frames);
-        while (!frames.isFinish()) {
-            Frame frame = frames.getLastFrame();
-            int pins = InputView.getInputPitch(frame.getFrameNumber());
-            frames.bowl(Pins.of(pins));
-            ResultView.printBoard(player, frames);
+        int inputPlayerCount = InputView.getInputPlayerCount();
+        List<String> inputPlayerNames = InputView.getInputPlayerNames(inputPlayerCount);
+        BowlingPlayerBoards bowlingPlayerBoards = BowlingPlayerBoards.of(inputPlayerNames);
+        ResultView.printBoard(bowlingPlayerBoards);
+
+        while (!bowlingPlayerBoards.isFinish()) {
+            BowlingPlayerBoard currentPlayer = bowlingPlayerBoards.getCurrentPlayer();
+            int pins = InputView.getInputPitch(currentPlayer.getPlayerName());
+            bowlingPlayerBoards.bowl(Pins.of(pins));
+            ResultView.printBoard(bowlingPlayerBoards);
         }
     }
 }

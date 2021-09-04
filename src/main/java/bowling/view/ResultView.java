@@ -2,7 +2,8 @@ package bowling.view;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
-import bowling.domain.player.Player;
+import bowling.domain.player.BowlingPlayerBoard;
+import bowling.domain.player.BowlingPlayerBoards;
 import bowling.domain.score.ScoreResult;
 
 import java.util.List;
@@ -10,15 +11,17 @@ import java.util.stream.IntStream;
 
 public class ResultView {
 
-    private static final ScoreResult scoreResult = ScoreResult.of();
-
     private ResultView() {
     }
 
-    public static void printBoard(Player player, Frames frames) {
+    public static void printBoard(BowlingPlayerBoards bowlingPlayerBoards) {
+        List<BowlingPlayerBoard> players = bowlingPlayerBoards.getPlayers();
         printBoardHead();
-        printBoardFrame(player, frames);
-        printBoardScore();
+        players.forEach(p -> {
+            printBoardFrame(p);
+            printBoardScore(p.getScoreResult());
+        });
+
     }
 
     private static void printBoardHead() {
@@ -28,10 +31,15 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void printBoardFrame(Player player, Frames frames) {
+    private static void printBoardFrame(BowlingPlayerBoard player) {
+        ScoreResult scoreResult = player.getScoreResult();
+        String playerName = player.getPlayerName();
+        Frames frames = player.getFrames();
+
         scoreResult.clear();
+
         List<Frame> frameList = frames.getFrames();
-        System.out.printf("|  " + player.getName() + " |");
+        System.out.printf("|  " + playerName + " |");
 
         frameList.forEach(f -> {
             scoreResult.addScoreResult(f.getScoreResult());
@@ -41,7 +49,7 @@ public class ResultView {
         emptyBoard(frameList.size());
     }
 
-    private static void printBoardScore() {
+    private static void printBoardScore(ScoreResult scoreResult) {
         List<Integer> scores = scoreResult.getScores();
         System.out.printf("|      |");
 

@@ -6,11 +6,11 @@ import bowling.exception.CannotCalculateException;
 
 public interface Frame {
 
-    int getFrameNumber();
-
     Frame bowl(Pins pins);
 
     boolean isFinish();
+
+    boolean isReady();
 
     String getState();
 
