@@ -1,6 +1,6 @@
 package bowling.domain;
 
-public enum Statement {
+public enum State {
     STRIKE,
     GUTTER,
     MISS,

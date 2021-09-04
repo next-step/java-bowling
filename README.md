@@ -27,33 +27,30 @@
 * 볼링 게임의 점수 계산 방식 아는 사람은 바로 구현을 시작한다.
 * 점수 계산 방식을 모르는 사람은 구글에서 "볼링 점수 계산법"과 같은 키워드로 검색해 볼링 게임의 점수 계산 방식을 학습한 후 구현을 시작한다.
 
-Pin 의 책임..
+### Pins 의 책임 과 역할..
 * 숫자 기록
 * 남은 핀 알려주는 기능
 
-State(두개의 Pins 들로) 책임..
+### Fitch(두개의 Pins 들로) 책임 과 역할..
 * bowl 메시지 로 첫번째구 firstPins 두번째구 secondPins 기록
 * 끝났니 ? 메세지
-* Gutter,Strike,Spare ?
+* 상태 바로 구할수 있음 ..Gutter,Strike,Spare ?
+* Fitch 를 상속해서 NormalFrame 에서 던질때 FinalFrame 에서 던질때 Fitch
 
-Frame 의 책임
-* State(두개의 Pins 들로)
-Gutter,Strike,Spare ?
+###Frame 의 책임 과 역할..
 
 * isFinish 메시지로 Frame이 끝났는지 알려줌
-
 * bowl 메세지 첫번째 Pins들에 기록 끝난거 아니면
 * bowl 메세지 두번째 Pins들에 기록
-* score 계산
-* NormalFrame , LastFrame 이 있다 Frame을 상속
+* Fitch 간 이루어진 첫번째 던졌을때, 두번째 던졌을 때 상태들(Gutter,Strike,Spare )을 가지고 있음
+* NormalFrame , FinalFrame 이 있다. Frame을 상속
+* 다음 Frame 을 알고 있어야함
 
-Frames
-LinkedList<Frame> frames 
+###Frames 의 책임 과 역할
+* 모든 Frame 들을 가지고 있음
+* LinkedList<Frame> frames 
 
-Frame 이 이미 다음걸 알고있는데 frames가 필요할까 ..?
-이제까지의 기록, 출력하려면.. 필요
-
-협력
+### 협력
 1. Frame -> isNotFinish ->첫번째공 bowl 메시지 -> State -> bowl 메세지 -> Pins 기록
 2. State -> isNotFinish -> Frame 두번째공 -> State -> 두번째 Pins 기록
 

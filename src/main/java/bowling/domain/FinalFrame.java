@@ -5,6 +5,7 @@ public class FinalFrame extends Frame {
 
     public FinalFrame() {
         fitch = new FinalFitch();
+        states = new States();
     }
 
     @Override

@@ -48,27 +48,27 @@ public class FinalFitch extends Fitch {
     }
 
     @Override
-    public Statement getState() {
+    public State getState() {
         if (isStrike()) {
-            return Statement.STRIKE;
+            return State.STRIKE;
         }
         if (isMiss()) {
-            return Statement.MISS;
+            return State.MISS;
         }
         if (isGutter()) {
-            return Statement.GUTTER;
+            return State.GUTTER;
         }
         if (isSpare()) {
-            return Statement.SPARE;
+            return State.SPARE;
         }
 
-        return Statement.NORMAL;
+        return State.NORMAL;
     }
 
 
 
     private boolean isDoubleStrike() {
-        if (isFirstFitchDone() && isSecondFitchDone() && firstPins.isMaxPins() && secondPins.isMaxPins()) {
+        if (isFirstFitchDone() && isSecondFitchDone() && !isBonusFitchDone() && firstPins.isMaxPins() && secondPins.isMaxPins()) {
             return true;
         }
         return false;
@@ -95,7 +95,7 @@ public class FinalFitch extends Fitch {
         if (isFirstFitchDone() && isSecondFitchDone() && secondPins.isMinPins()) {
             return true;
         }
-        if (isSpare() && isBonusFitchDone() && bonusPins.isMinPins()) {
+        if (isBonusFitchDone() && bonusPins.isMinPins()) {
             return true;
         }
         return false;
@@ -106,7 +106,7 @@ public class FinalFitch extends Fitch {
     }
 
     private boolean isSpare() {
-        if (isFirstFitchDone() && isSecondFitchDone() && secondPins.isSumTheMaxPin(firstPins)) {
+        if (isFirstFitchDone() && isSecondFitchDone() && !isBonusFitchDone() && secondPins.isSumTheMaxPin(firstPins)) {
             return true;
         }
         return false;

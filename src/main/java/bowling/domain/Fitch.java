@@ -26,7 +26,7 @@ public abstract class Fitch {
 
     public abstract boolean isFinish();
 
-    public abstract Statement getState();
+    public abstract State getState();
 
     public abstract boolean isBonusFitchDone();
 

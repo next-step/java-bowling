@@ -2,9 +2,11 @@ package bowling.domain;
 
 public abstract class Frame {
     protected Fitch fitch;
+    protected States states;
 
     public void bowl(Pins pins) {
         fitch.bowl(pins);
+        states.add(fitch.getState());
     }
 
     public Pins getFirstPin() {
@@ -33,6 +35,14 @@ public abstract class Frame {
 
     public boolean isFinish() {
         return fitch.isFinish();
+    }
+
+    public Fitch getFitch(){
+        return fitch;
+    }
+
+    public States getStates(){
+        return states;
     }
 
     public abstract int getFrameNumber();

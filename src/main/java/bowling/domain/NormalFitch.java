@@ -1,7 +1,6 @@
 package bowling.domain;
 
 public class NormalFitch extends Fitch {
-
     @Override
     public void bowl(Pins pins) {
         if (!isFirstFitchDone()) {
@@ -28,20 +27,20 @@ public class NormalFitch extends Fitch {
     }
 
     @Override
-    public Statement getState() {
+    public State getState() {
         if (isStrike()) {
-            return Statement.STRIKE;
+            return State.STRIKE;
         }
         if (isSpare()) {
-            return Statement.SPARE;
+            return State.SPARE;
         }
         if (isMiss()) {
-            return Statement.MISS;
+            return State.MISS;
         }
         if (isGutter()) {
-            return Statement.GUTTER;
+            return State.GUTTER;
         }
-        return Statement.NORMAL;
+        return State.NORMAL;
     }
 
     private boolean isStrike() {

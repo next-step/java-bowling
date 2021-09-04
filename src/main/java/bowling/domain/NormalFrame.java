@@ -9,6 +9,7 @@ public class NormalFrame extends Frame {
     public NormalFrame(int frameNumber){
         this.frameNumber = frameNumber;
         fitch = new NormalFitch();
+        states = new States();
     }
 
     @Override
