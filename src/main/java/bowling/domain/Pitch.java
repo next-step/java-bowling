@@ -4,7 +4,7 @@ import bowling.exception.OverTheMaxPinsException;
 
 import java.util.Objects;
 
-public abstract class Pitch{
+public abstract class Pitch {
     protected Pins firstPins;
     protected Pins secondPins;
 

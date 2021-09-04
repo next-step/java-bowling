@@ -6,9 +6,10 @@ import java.util.Objects;
 public class Frames {
     private LinkedList<Frame> frames;
 
-    public Frames(){
+    public Frames() {
         frames = new LinkedList<>();
     }
+
     private Frames(LinkedList<Frame> frames) {
         this.frames = frames;
     }
@@ -30,7 +31,7 @@ public class Frames {
     }
 
     public void add(Frame frame) {
-        if(isNextFrame(frame)){
+        if (isNextFrame(frame)) {
             frames.add(frame);
             return;
         }
@@ -60,7 +61,6 @@ public class Frames {
     public int hashCode() {
         return Objects.hash(frames);
     }
-
 
 
 }
