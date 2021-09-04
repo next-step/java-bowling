@@ -1,15 +1,14 @@
 package bowling.domain;
 
+import bowling.domain.common.FalledPins;
+import bowling.domain.exception.InvalidProgressBowlingException;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import bowling.domain.common.FalledPins;
-import bowling.domain.exception.InvalidProgressBowlingException;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
 
 public final class Bowling {
 
@@ -28,7 +27,7 @@ public final class Bowling {
 
 	public boolean possiblePitch() {
 		return frames.size() < MAX_FRAMES_COUNT
-			|| frames.get(FINAL_FRAME_INDEX).possiblePitch();
+				|| frames.get(FINAL_FRAME_INDEX).possiblePitch();
 	}
 
 	public Bowling pitch(final int falledPinsCount) {
@@ -49,7 +48,7 @@ public final class Bowling {
 
 		final Frame nextFrame = nextFrame(frames, currentFrame);
 		return new Bowling(Stream.concat(frames.stream(), Stream.of(nextFrame.pitch(falledPins)))
-			.collect(Collectors.toList()));
+				.collect(Collectors.toList()));
 	}
 
 	private Frame nextFrame(final List<Frame> frames, final Frame frame) {
@@ -65,7 +64,10 @@ public final class Bowling {
 	}
 
 	public int currentFrameIndex() {
-		return frames.size();
+		final int lastFrameIndex = frames.size() - 1;
+		return (frames.get(lastFrameIndex).possiblePitch())
+				? lastFrameIndex + 1
+				: lastFrameIndex + 2;
 	}
 
 	public List<Frame> getFrames() {
