@@ -1,10 +1,8 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-import qna.CannotDeleteException;
+import qna.exception.CannotDeleteException;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,72 +18,58 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
     public Question() {
     }
 
-    public Question(String title, String contents) {
+    public Question(final String title, final String contents) {
         this.title = title;
         this.contents = contents;
     }
 
-    public Question(long id, String title, String contents) {
+    public Question(final long id, final String title, final String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
-        if (!this.isOwner(loginUser)) {
+    public void addAnswer(final Answer answer) {
+        answer.toQuestion(this);
+        answers.add(answer);
+    }
+
+    public List<DeleteHistory> delete(final User loginUser) throws CannotDeleteException {
+        checkWriter(loginUser);
+
+        this.deleted = true;
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(DeleteHistory.of(this));
+        deleteHistories.addAll(answers.delete(loginUser));
+        return deleteHistories;
+    }
+
+    private void checkWriter(User loginUser) throws CannotDeleteException {
+        if (!writer.equals(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
-        this.deleted = true;
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, super.getId(), writer, LocalDateTime.now()));
-
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
-        return deleteHistories;
     }
 
     public User getWriter() {
         return writer;
     }
 
-    public Question writeBy(User loginUser) {
+    public Question writeBy(final User loginUser) {
         this.writer = loginUser;
         return this;
     }
 
-    public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
-    }
-
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
-
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
