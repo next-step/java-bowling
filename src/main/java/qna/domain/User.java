@@ -102,8 +102,17 @@ public class User extends AbstractEntity {
                 email.equals(target.email);
     }
 
+    public boolean isSameUser(User user) {
+        return equalsNameAndEmail(user) && matchUserId(user.userId);
+    }
+
     public boolean isGuestUser() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
     }
 
     private static class GuestUser extends User {
@@ -111,10 +120,5 @@ public class User extends AbstractEntity {
         public boolean isGuestUser() {
             return true;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
     }
 }
