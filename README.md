@@ -33,15 +33,9 @@
   * add 메소드
     * 첫번째 투구면 현재점수만 저장
     * 두번째 투구면 이전점수와 현재점수로 점수 저장
-  * next 메서드 : 다음 투구가 유효한지 확인
-    * size가 2이면 false
-    * 나머지는 true
-  * finalNext 메서드
-    * size가 2이고 strike나 spare가 포함되어있으면 true
-    * 나머지는 true
-  * 점수 계산 메소드
-    * strike나 spare가 포함되면 바로 점수 반환
-    * 나머지는 점수 합산
+//  * 점수 계산 메소드
+//    * strike나 spare가 포함되면 바로 점수 반환
+//    * 나머지는 점수 합산
 * frame
   * 프레임 번호 : frameNo (1~10)
   * 점수 리스트 : scores
