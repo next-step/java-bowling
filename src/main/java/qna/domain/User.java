@@ -36,15 +36,14 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-
     public void update(User loginUser, User target) {
-//        if (!matchUserId(loginUser.getUserId())) {
-//            throw new UnAuthorizedException();
-//        }
-//
-//        if (!matchPassword(target.getPassword())) {
-//            throw new UnAuthorizedException();
-//        }
+        if (!matchUserId(loginUser.getUserId())) {
+            throw new UnAuthorizedException();
+        }
+
+        if (!matchPassword(target.getPassword())) {
+            throw new UnAuthorizedException();
+        }
 
         this.name = target.name;
         this.email = target.email;
@@ -56,6 +55,14 @@ public class User extends AbstractEntity {
 
     public boolean matchPassword(String targetPassword) {
         return password.equals(targetPassword);
+    }
+
+    private String getPassword() {
+        return password;
+    }
+
+    private String getUserId() {
+        return userId;
     }
 
     public boolean equalsNameAndEmail(User target) {
