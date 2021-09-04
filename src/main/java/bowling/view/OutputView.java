@@ -4,6 +4,7 @@ import bowling.domain.Bowling;
 import bowling.domain.common.Player;
 import bowling.domain.frame.Frame;
 import bowling.view.dto.PrintDto;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -62,14 +63,19 @@ public class OutputView {
 	}
 
 	private static String scoresBody(final List<Frame> frames) {
-		if (frames.stream()
-				.noneMatch(e -> e.caculateScore(frames).possiblecalculate())) {
-			return "";
+		final List<Frame> calculableFrames = frames.stream()
+				.filter(e -> e.caculateScore(frames).possiblecalculate())
+				.collect(Collectors.toList());
+
+		int totalScore = 0;
+		final List<PrintDto> printDtos = new ArrayList<>();
+
+		for (final Frame frame : calculableFrames) {
+			totalScore += frame.caculateScore(frames).getValue();
+			printDtos.add(PrintDto.forScore(totalScore));
 		}
 
-		return frames.stream()
-				.filter(e -> e.caculateScore(frames).possiblecalculate())
-				.map(frame -> PrintDto.forScore(frame, frames))
+		return printDtos.stream()
 				.map(PrintDto::toString)
 				.collect(Collectors.joining());
 	}

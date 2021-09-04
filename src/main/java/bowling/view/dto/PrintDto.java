@@ -2,7 +2,6 @@ package bowling.view.dto;
 
 import bowling.domain.frame.Frame;
 import bowling.view.ResultFlag;
-import java.util.List;
 
 public class PrintDto {
 
@@ -10,25 +9,27 @@ public class PrintDto {
 
 	private final String string;
 
-	private PrintDto(final String string) {
-		this.string = string;
+	private PrintDto(final String input) {
+		this.string = input;
+	}
+
+	private PrintDto(final int input) {
+		this.string = String.valueOf(input);
 	}
 
 	public static PrintDto of() {
-		return new PrintDto("      ");
+		return new PrintDto("     ");
 	}
 
 	public static PrintDto forFrameResult(final Frame frame) {
-		final String result = ResultFlag.generateResultByFrame(frame, DELIMITER);
-		return new PrintDto(String.format("%5s ", result));
+		return new PrintDto(ResultFlag.generateResultByFrame(frame, DELIMITER));
 	}
 
-	public static PrintDto forScore(final Frame frame, final List<Frame> frames) {
-		final String result = String.format("%5s ", frame.caculateScore(frames).getValue());
-		return new PrintDto(result);
+	public static PrintDto forScore(final int score) {
+		return new PrintDto(score);
 	}
 
 	@Override public String toString() {
-		return string + DELIMITER;
+		return String.format("%5s ", string) + DELIMITER;
 	}
 }
