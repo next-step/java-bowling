@@ -1,6 +1,6 @@
 package bowling;
 
 public class ScoreFrame {
-    private Score firesScore;
+    private Score firstScore;
     private Score secondScore;
 }
