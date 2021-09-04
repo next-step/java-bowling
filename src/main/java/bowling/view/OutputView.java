@@ -1,12 +1,12 @@
 package bowling.view;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import bowling.domain.Bowling;
 import bowling.domain.common.Player;
 import bowling.domain.frame.Frame;
+import bowling.view.dto.PrintDto;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class OutputView {
 
@@ -26,8 +26,8 @@ public class OutputView {
 	private static void printFrames(final Player player, final List<Frame> frames) {
 		final String prefix = framesPrefix(player);
 		final String body = framesBody(frames);
-		final int restFrameCount = 10 - frames.size() + 1;
-		final String suffix = framesSuffix(restFrameCount);
+		final int restFrameCount = 10 - frames.size();
+		final String suffix = suffix(restFrameCount);
 
 		System.out.println(prefix + body + suffix);
 	}
@@ -38,41 +38,39 @@ public class OutputView {
 
 	private static String framesBody(final List<Frame> frames) {
 		return frames.stream()
-			.map(frame -> ResultFlag.generateResultByFrame(frame, DELIMITER))
-			.map(r -> String.format("%5s ", r))
-			.collect(Collectors.joining(DELIMITER, "", DELIMITER));
+				.map(PrintDto::forFrameResult)
+				.map(PrintDto::toString)
+				.collect(Collectors.joining());
 	}
 
-	private static String framesSuffix(final int count) {
+	private static String suffix(final int count) {
 		return IntStream.range(0, count)
-			.mapToObj(r -> "      ")
-			.collect(Collectors.joining(DELIMITER));
+				.mapToObj(i -> PrintDto.of())
+				.map(PrintDto::toString)
+				.collect(Collectors.joining());
 	}
 
 	private static void printScores(final List<Frame> frames) {
 		final String prefix = "|      |";
 		final String body = scoresBody(frames);
-		final int restFrameCount = 10 - frames.size() + 1;
-		final String suffix = scoreSuffix(restFrameCount);
+		final int restFrameCount = (int) (10 - frames.stream()
+				.filter(e -> e.caculateScore(frames).possiblecalculate())
+				.count());
+		final String suffix = suffix(restFrameCount);
 
 		System.out.println(prefix + body + suffix);
 	}
 
 	private static String scoresBody(final List<Frame> frames) {
 		if (frames.stream()
-			.noneMatch(e -> e.caculateScore(frames).possiblecalculate())) {
-			return "      |";
+				.noneMatch(e -> e.caculateScore(frames).possiblecalculate())) {
+			return "";
 		}
 
 		return frames.stream()
-			.filter(e -> e.caculateScore(frames).possiblecalculate())
-			.map(frame -> String.format("%5s ", frame.caculateScore(frames).getValue()))
-			.collect(Collectors.joining(DELIMITER, "", DELIMITER));
-	}
-
-	private static String scoreSuffix(final int count) {
-		return IntStream.range(0, count)
-			.mapToObj(r -> "      ")
-			.collect(Collectors.joining(DELIMITER));
+				.filter(e -> e.caculateScore(frames).possiblecalculate())
+				.map(frame -> PrintDto.forScore(frame, frames))
+				.map(PrintDto::toString)
+				.collect(Collectors.joining());
 	}
 }
