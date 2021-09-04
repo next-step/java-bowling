@@ -73,9 +73,9 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public DeleteHistory changeDeletedStatus() {
-        this.deleted = true;
-        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
+    private static DeleteHistory changeDeletedStatus(Question question) {
+        question.deleted = true;
+        return new DeleteHistory(ContentType.QUESTION, question.getId(), question.writer, LocalDateTime.now());
     }
 
     public boolean isDeleted() {
@@ -89,7 +89,7 @@ public class Question extends AbstractEntity {
     public DeleteHistories delete(final User loginUser) {
         validateOwner(loginUser);
         DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories.add(changeDeletedStatus());
+        deleteHistories.add(changeDeletedStatus(this));
         deleteHistories.addAll(answers.deleteAll(writer));
         return deleteHistories;
     }
