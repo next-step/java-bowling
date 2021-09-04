@@ -48,8 +48,12 @@ public class Answer extends AbstractEntity {
         if (!this.isOwner(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
-        this.deleted = true;
+        changeDeletedStatus(true);
         return this;
+    }
+
+    private void changeDeletedStatus(boolean status) {
+        this.deleted = status;
     }
 
     public boolean isDeleted() {
