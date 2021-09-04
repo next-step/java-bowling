@@ -22,6 +22,10 @@ public class Answers {
         answers = new ArrayList<>();
     }
 
+    public Answers(final List<Answer> answers) {
+        this.answers = answers;
+    }
+
     public void add(final Answer answer) {
         answers.add(answer);
     }
