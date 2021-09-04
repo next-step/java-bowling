@@ -28,7 +28,7 @@ public class Score {
     return new Score(MAX_SCORE, SPARE_BALL_COUNT);
   }
 
-  public static Score miss(final int score){
+  public static Score miss(final int score) {
     return new Score(score, DEFAULT_BALL_COUNT);
   }
 
@@ -38,7 +38,7 @@ public class Score {
   }
 
   private void validationBallCount() {
-    if(isFinishBallCount()){
+    if (isFinishBallCount()) {
       throw new IllegalArgumentException(MSG_ERROR_LIMIT_BALL_COUNT);
     }
   }
@@ -47,7 +47,7 @@ public class Score {
     return ballCount == DEFAULT_BALL_COUNT;
   }
 
-  public ScoreDto scoreValue(){
+  public ScoreDto scoreValue() {
     return ScoreDto.from(score);
   }
 
