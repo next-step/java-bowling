@@ -7,3 +7,60 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## 기능 요구사항
+### 그리기
+* 최종 목표는 볼링 점수를 계산하는 프로그램을 구현한다. 1단계 목표는 점수 계산을 제외한 볼링 게임 점수판을 구현하는 것이다.
+* 각 프레임이 스트라이크이면 "X", 스페어이면 "9 | /", 미스이면 "8 | 1", 과 같이 출력하도록 구현한다.
+  * 스트라이크(strike) : 프레임의 첫번째 투구에서 모든 핀(10개)을 쓰러트린 상태
+  * 스페어(spare) : 프레임의 두번재 투구에서 모든 핀(10개)을 쓰러트린 상태
+  * 미스(miss) : 프레임의 두번재 투구에서도 모든 핀이 쓰러지지 않은 상태
+  * 거터(gutter) : 핀을 하나도 쓰러트리지 못한 상태. 거터는 "-"로 표시
+* 10 프레임은 스트라이크이거나 스페어이면 한 번을 더 투구할 수 있다.
+
+## TODO
+### 점수계산
+* score enum
+  * strike(x) : 10점
+  * spare(/) : 10점
+  * miss(숫자) : 1~9점
+  * gutter(-) : 0점
+  * 정적 팩토리 메서드
+    * 이전 점수 + 현재점수가 10이면 spare
+    * 나머지는 점수대로 할당
+* scores 일급콜렉션
+  * score list
+  * add 메소드
+    * 첫번째 투구면 현재점수만 저장
+    * 두번째 투구면 이전점수와 현재점수로 점수 저장
+  * next 메서드 : 다음 투구가 유효한지 확인
+    * size가 2이면 false
+    * 나머지는 true
+  * finalNext 메서드
+    * size가 2이고 strike나 spare가 포함되어있으면 true
+    * 나머지는 true
+  * 점수 계산 메소드
+    * strike나 spare가 포함되면 바로 점수 반환
+    * 나머지는 점수 합산
+* frame
+  * 프레임 번호 : frameNo (1~10)
+  * 점수 리스트 : scores
+  * 점수 저장 메소드
+      * 현재 점수를 add
+* normalFrame (1~9)
+  * 다음 프레임 확인 메소드
+    * 현재 점수가 10이거나 score size가 2이면 다음 프레임 생성 후 반환
+    * 그 외에는 현재 프레임 번호 반환
+  * private 다음 프레임 생성 메소드
+    * frameNo가 9면 finalFrame 생성
+    * 나머지는 normalFrame 생성
+* finalFrame (10)
+  * 다음 프레임 확인 메소드
+    * score size가 3이면 11 반환
+    * score size가 2이고 strike나 spare가 포함되어있지 않으면 11 반환
+    * 그 외에는 현재 프레임 번호 반환
+* player
+  * name : 참가자명
+  * frame
+* players 일급콜렉션
+  * player list
