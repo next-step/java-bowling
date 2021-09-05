@@ -9,7 +9,7 @@ import java.util.List;
 public class FrameGroup {
     private final List<Frame> frames;
 
-    private static final int MAX = 10;
+    private static final int FRAMES_MAX_SIZE = 10;
 
     public FrameGroup(List<Frame> frames) {
         this.frames = frames;
@@ -44,7 +44,7 @@ public class FrameGroup {
     }
 
     private boolean frameListSizeOverTheMax() {
-        return frames.size() > MAX;
+        return frames.size() > FRAMES_MAX_SIZE;
     }
 
     public Frame lastFrame() {

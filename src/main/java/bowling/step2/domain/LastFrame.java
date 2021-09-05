@@ -1,7 +1,6 @@
 package bowling.step2.domain;
 
 import bowling.step2.domain.visitor.FrameVisitor;
-import bowling.step2.domain.visitor.FrameVisitorImpl;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class LastFrame implements Frame {
 
     private final PitchGroup pitchGroup;
 
-    private final int MAX = 10;
+    private final int MAX_PITCH_TOTAL_COUNT = 10;
 
     private static final int MAX_PITCH_SIZE = 3;
 
@@ -39,7 +38,7 @@ public class LastFrame implements Frame {
     }
 
     private boolean totalCountIsLessThanMax() {
-        return pitchGroup.total() < MAX;
+        return pitchGroup.total() < MAX_PITCH_TOTAL_COUNT;
     }
 
     private boolean pitchGroupSizeIsTwo() {
@@ -54,7 +53,7 @@ public class LastFrame implements Frame {
     }
 
     private boolean sumWithLastPitchOverTheMax(int lastPitchCount, int count) {
-        return lastPitchCount + count > MAX;
+        return lastPitchCount + count > MAX_PITCH_TOTAL_COUNT;
     }
 
     @Override

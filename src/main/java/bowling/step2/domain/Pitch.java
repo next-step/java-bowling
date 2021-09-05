@@ -3,9 +3,9 @@ package bowling.step2.domain;
 public class Pitch {
     private final int count;
 
-    private static final int MIN = 0;
+    private static final int MIN_PITCH_COUNT = 0;
 
-    private static final int MAX = 10;
+    private static final int MAX_PITCH_COUNT = 10;
 
     private Pitch(int count) {
         validateCount(count);
@@ -18,12 +18,12 @@ public class Pitch {
 
     private void validateCount(int count) {
         if (countNotInRange(count)) {
-            throw new RuntimeException("쓰러뜨릴수 있는 Pin의 갯수는 " + MIN + "이상 " + MAX + "이하여야 합니다.");
+            throw new RuntimeException("쓰러뜨릴수 있는 Pin의 갯수는 " + MIN_PITCH_COUNT + "이상 " + MAX_PITCH_COUNT + "이하여야 합니다.");
         }
     }
 
     private boolean countNotInRange(int count) {
-        return count < MIN || count > MAX;
+        return count < MIN_PITCH_COUNT || count > MAX_PITCH_COUNT;
     }
 
     public int count() {
