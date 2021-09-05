@@ -1,45 +1,72 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import bowling.domain.score.Score;
 
 public class Frames {
     public static final int TOTAL_FRAME_NUMBER = 10;
 
-    private List<Frame> frames;
-    private List<String> results;
+    private final List<Frame> frames;
+    private final List<String> results;
 
-    public List<String> initFrames() {
-        frames = Stream.generate(NormalFrame::create)
-            .limit(TOTAL_FRAME_NUMBER - 1)
-            .collect(Collectors.toList());
-        frames.add(FinalFrame.create());
-
-        results = Stream.generate(() -> "")
-            .limit(TOTAL_FRAME_NUMBER)
-            .collect(Collectors.toList());
-        return results;
+    private Frames(List<Integer> scores) {
+        frames = new ArrayList<>();
+        results = new ArrayList<>();
+        throwBalls(scores);
     }
 
-    public void throwBalls(int frameNumber, List<Integer> scores) {
-        scores.forEach(i -> throwBall(frameNumber
-            , Score.from(i))
-        );
+    public static Frames from(List<Integer> scores) {
+        return new Frames(scores);
     }
 
-    public void throwBall(int frameNumber, Score score) {
-        frames.get(frameNumber - 1).addScore(score);
-        results.set(frameNumber - 1,
-            frames.get(frameNumber - 1)
-                .toScoreSymbol()
-        );
+    public void throwBalls(int score) {
+        throwBall(Score.from(score));
     }
 
-    public boolean isNext(int frameNumber) {
-        return frames.get(frameNumber - 1).isNextFrame();
+    public void throwBalls(List<Integer> scores) {
+        scores.forEach(i -> throwBall(Score.from(i)));
+    }
+
+    private void throwBall(Score score) {
+        int framesIndex = frames.size() - 1;
+        if (framesIndex >= 0 && !isNext()) {
+            frames.get(framesIndex).addScore(score);
+            results.set(framesIndex, frames.get(framesIndex).toScoreSymbol());
+            return;
+        }
+
+        addFrame(score);
+        framesIndex = frames.size() - 1;
+        results.add(frames.get(framesIndex).toScoreSymbol());
+    }
+
+    private void addFrame(Score score) {
+        int framesSize = frames.size();
+        if (framesSize < TOTAL_FRAME_NUMBER - 1) {
+            frames.add(NormalFrame.of(score));
+        }
+
+        if (framesSize == TOTAL_FRAME_NUMBER - 1) {
+            frames.add(FinalFrame.of(score));
+        }
+    }
+
+    public boolean isNext() {
+        if (frames.size() == 0) {
+            return false;
+        }
+
+        int frameNumberIndex = frames.size() - 1;
+        return frames.get(frameNumberIndex).isNextFrame();
+    }
+
+    public int nextFrameNumber() {
+        if (isNext()) {
+            return frames.size() + 1;
+        }
+        return frames.size();
     }
 
     public List<String> results() {
