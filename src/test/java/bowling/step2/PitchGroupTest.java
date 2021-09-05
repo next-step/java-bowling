@@ -24,7 +24,7 @@ public class PitchGroupTest {
             @DisplayName("테스트가 성공한다")
             public void pitchSuccess() {
                 //given
-                PitchGroup pitchGroup = PitchGroup.of();
+                PitchGroup pitchGroup = PitchGroup.of(2);
 
                 //when
                 pitchGroup.pitch(10);
@@ -38,7 +38,7 @@ public class PitchGroupTest {
             @DisplayName("테스트가 성공한다")
             public void pitchSuccess2() {
                 //given
-                PitchGroup pitchGroup = PitchGroup.of();
+                PitchGroup pitchGroup = PitchGroup.of(2);
 
                 //when
                 pitchGroup.pitch(3);
@@ -52,7 +52,7 @@ public class PitchGroupTest {
             @DisplayName("수행한 pitch의 수만큼 pitchGroup size를 갖는다")
             public void pitchSize() {
                 //given
-                PitchGroup pitchGroup = PitchGroup.of();
+                PitchGroup pitchGroup = PitchGroup.of(2);
 
                 //when
                 pitchGroup.pitch(3);
@@ -70,7 +70,7 @@ public class PitchGroupTest {
             @DisplayName("테스트가 실패한다")
             public void pitchFail() {
                 //given
-                PitchGroup pitchGroup = PitchGroup.of();
+                PitchGroup pitchGroup = PitchGroup.of(2);
 
                 //when
                 assertThatThrownBy(() -> pitchGroup.pitch(11)).isInstanceOf(RuntimeException.class);

@@ -9,15 +9,13 @@ public class NormalFrame implements Frame {
 
     private final PitchGroup pitchGroup;
 
-    private static final int MAX_PITCH_TOTAL_COUNT = 10;
-
     private static final int MAX_PITCH_SIZE = 2;
 
     private static final int MAX_NORMAL_FRAME_NUM = 9;
 
     private NormalFrame(int frameNo) {
         this.frameNo = frameNo;
-        this.pitchGroup = PitchGroup.of();
+        this.pitchGroup = PitchGroup.of(MAX_PITCH_SIZE);
     }
 
     public static NormalFrame of(int frameNo) {
@@ -26,18 +24,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public void pitch(int count) {
-        validatePitchCount(pitchGroup.lastPitchCount(), count);
         pitchGroup.pitch(count);
-    }
-
-    private void validatePitchCount(int lastPitchCount, int count) {
-        if (sumWithLastPitchOverTheMax(lastPitchCount, count)) {
-            throw new RuntimeException("쓰러뜨릴 수 있는 핀의 갯수를 넘어섰습니다.");
-        }
-    }
-
-    private boolean sumWithLastPitchOverTheMax(int lastPitchCount, int count) {
-        return lastPitchCount + count > MAX_PITCH_TOTAL_COUNT;
     }
 
     @Override
@@ -51,7 +38,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean finished() {
-        return pitchGroup.size() == MAX_PITCH_SIZE || pitchGroup.total() == MAX_PITCH_TOTAL_COUNT;
+        return pitchGroup.finished();
     }
 
     @Override
