@@ -38,6 +38,32 @@ public class PinsTest {
     void isStrike() {
         Pins pins = Pins.of(10);
 
-        assertThat(pins.isMaxPins()).isTrue();
+        assertThat(pins.isMax()).isTrue();
+    }
+
+    @DisplayName("Sum 테스트")
+    @Test
+    void isSumTest() {
+        Pins pins = Pins.of(3);
+        Pins secondPins = Pins.of(5);
+        Pins sum = pins.sum(secondPins);
+
+        assertThat(sum).isEqualTo(Pins.of(8));
+    }
+
+    @DisplayName("isMax 테스트")
+    @Test
+    void isMaxTest() {
+        Pins pins = Pins.of(10);
+
+        assertThat(pins.isMax()).isTrue();
+    }
+
+    @DisplayName("isMin 테스트")
+    @Test
+    void isMinTest() {
+        Pins pins = Pins.of(0);
+
+        assertThat(pins.isMin()).isTrue();
     }
 }

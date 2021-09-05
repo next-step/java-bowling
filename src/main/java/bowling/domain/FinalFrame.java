@@ -4,8 +4,7 @@ public class FinalFrame extends Frame {
     private static final int FINAL_FRAME_NUMBER = 10;
 
     public FinalFrame() {
-        pitch = new FinalPitch();
-        states = new States();
+        super(new FinalPitch(), States.newInstance());
     }
 
     @Override

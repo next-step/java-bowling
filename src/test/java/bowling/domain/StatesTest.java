@@ -24,15 +24,13 @@ public class StatesTest {
 
         Frame frame = new NormalFrame(1);
         frame.bowl(Pins.of(0));
-
         frame.bowl(Pins.of(3));
-
         assertThat(states).isEqualTo(frame.getStates());
     }
 
-    @DisplayName("getState 테스트")
+    @DisplayName("getStateOfFirstPitch 테스트")
     @Test
-    void getState() {
+    void getStateOfFirstPitch() {
         Frame frame = new FinalFrame();
         frame.bowl(Pins.of(0));
         frame.bowl(Pins.of(10));
@@ -41,7 +39,33 @@ public class StatesTest {
         States states = frame.getStates();
 
         assertThat(states.getFirstPitch()).isEqualTo(State.GUTTER);
+    }
+
+    @DisplayName("getStateOfSecondPitch 테스트")
+    @Test
+    void getStateOfSecondPitch() {
+        Frame frame = new FinalFrame();
+        frame.bowl(Pins.of(0));
+        frame.bowl(Pins.of(10));
+        frame.bowl(Pins.of(5));
+
+        States states = frame.getStates();
+
         assertThat(states.getSecondPitch()).isEqualTo(State.SPARE);
+    }
+
+    @DisplayName("getStateOfBonusPitch 테스트")
+    @Test
+    void getStateOfBonusPitch() {
+        Frame frame = new FinalFrame();
+        frame.bowl(Pins.of(0));
+        frame.bowl(Pins.of(10));
+        frame.bowl(Pins.of(5));
+
+        States states = frame.getStates();
+
         assertThat(states.getBonusPitch()).isEqualTo(State.NORMAL);
     }
+
+
 }

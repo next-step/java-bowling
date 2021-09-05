@@ -9,17 +9,17 @@ public abstract class Pitch {
     protected Pins secondPins;
 
     protected void validate() {
-        if (!firstPins.isMaxPins() && secondPins.isSumOverTheMaxPin(firstPins)) {
+        if (!firstPins.isMax() && firstPins.isOverMax(secondPins)) {
             throw new OverTheMaxPinsException();
         }
     }
 
     public boolean isFirstPitchDone() {
-        return !Objects.isNull(firstPins);
+        return Objects.nonNull(firstPins);
     }
 
     public boolean isSecondPitchDone() {
-        return !Objects.isNull(secondPins);
+        return Objects.nonNull(secondPins);
     }
 
     public Pins getFirstPin() {

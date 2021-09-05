@@ -47,25 +47,25 @@ public class NormalPitch extends Pitch {
     }
 
     public boolean isStrike() {
-        return isFirstPitchDone() && !isSecondPitchDone() && firstPins.isMaxPins();
+        return isFirstPitchDone() && !isSecondPitchDone() && firstPins.isMax();
     }
 
     public boolean isGutter() {
-        if (isFirstPitchDone() && !isSecondPitchDone() && firstPins.isMinPins()) {
+        if (isFirstPitchDone() && !isSecondPitchDone() && firstPins.isMin()) {
             return true;
         }
-        if (isFirstPitchDone() && isSecondPitchDone() && secondPins.isMinPins()) {
+        if (isFirstPitchDone() && isSecondPitchDone() && secondPins.isMin()) {
             return true;
         }
         return false;
     }
 
     public boolean isMiss() {
-        return isFirstPitchDone() && isSecondPitchDone() && firstPins.isMinPins() && secondPins.isMinPins();
+        return isFirstPitchDone() && isSecondPitchDone() && firstPins.isMin() && secondPins.isMin();
     }
 
     public boolean isSpare() {
-        return isFirstPitchDone() && isSecondPitchDone() && secondPins.isSumTheMaxPin(firstPins);
+        return isFirstPitchDone() && isSecondPitchDone() && secondPins.sum(firstPins).isMax();
     }
 
     @Override

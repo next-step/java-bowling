@@ -6,16 +6,14 @@ import java.util.Objects;
 public class Frames {
     private LinkedList<Frame> frames;
 
-    public Frames() {
+    private Frames() {
         frames = new LinkedList<>();
+        Frame frame = new NormalFrame(1);
+        frames.addFirst(frame);
     }
 
-    private Frames(LinkedList<Frame> frames) {
-        this.frames = frames;
-    }
-
-    public static Frames of(LinkedList<Frame> frames) {
-        return new Frames(frames);
+    public static Frames newInstance() {
+        return new Frames();
     }
 
     public Frame get(int frameNumber) {
@@ -45,7 +43,7 @@ public class Frames {
         return !prevFrame.equals(frame);
     }
 
-    public Frame getLast() {
+    public Frame currentFrame() {
         return frames.getLast();
     }
 

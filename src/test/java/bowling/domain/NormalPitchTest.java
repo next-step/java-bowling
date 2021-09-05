@@ -34,14 +34,18 @@ public class NormalPitchTest {
 
     @DisplayName("안쳤을 때는 False, 한번 만 첬을 때는 False, 두번 다 쳤을 때는 True 테스트")
     @Test
-    void isNormalFinish() {
+    void isNotFirstFinish() {
         Pitch pitch = new NormalPitch();
 
         assertThat(pitch.isFinish()).isFalse();
+    }
+
+    @DisplayName("안쳤을 때는 False, 한번 만 첬을 때는 False, 두번 다 쳤을 때는 True 테스트")
+    @Test
+    void isNormalFinish() {
+        Pitch pitch = new NormalPitch();
 
         pitch.bowl(Pins.of(4));
-        assertThat(pitch.isFinish()).isFalse();
-
         pitch.bowl(Pins.of(3));
         assertThat(pitch.isFinish()).isTrue();
     }
@@ -51,6 +55,17 @@ public class NormalPitchTest {
     void isStrikeFinish() {
         Pitch pitch = new NormalPitch();
 
+        pitch.bowl(Pins.of(10));
+        assertThat(pitch.isFinish()).isTrue();
+
+    }
+
+    @DisplayName("스트라이크 쳤을 때는 바로 True")
+    @Test
+    void isStrike2Finish() {
+        Pitch pitch = new NormalPitch();
+
+        pitch.bowl(Pins.of(10));
         pitch.bowl(Pins.of(10));
         assertThat(pitch.isFinish()).isTrue();
 
@@ -88,7 +103,7 @@ public class NormalPitchTest {
         assertThat(pitch.getState()).isEqualTo(State.SPARE);
     }
 
-    @DisplayName("상태 Gutter")
+    @DisplayName("첫번째 구 Gutter")
     @Test
     void isGutter() {
         Pitch pitch = new NormalPitch();
@@ -96,21 +111,14 @@ public class NormalPitchTest {
         pitch.bowl(Pins.of(0));
 
         assertThat(pitch.getState()).isEqualTo(State.GUTTER);
-
-        pitch.bowl(Pins.of(5));
-
-        assertThat(pitch.getState()).isEqualTo(State.NORMAL);
     }
 
-    @DisplayName("상태 Gutter")
+    @DisplayName("두번 째 구 Gutter")
     @Test
     void isGutter2() {
         Pitch pitch = new NormalPitch();
 
         pitch.bowl(Pins.of(5));
-
-        assertThat(pitch.getState()).isEqualTo(State.NORMAL);
-
         pitch.bowl(Pins.of(0));
 
         assertThat(pitch.getState()).isEqualTo(State.GUTTER);

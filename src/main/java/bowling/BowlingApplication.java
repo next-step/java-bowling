@@ -11,7 +11,7 @@ public class BowlingApplication {
     public static void main(String args[]) {
         String player = InputView.getPlayerName();
 
-        Frames frames = new Frames();
+        Frames frames = Frames.newInstance();
         Frame frame = new NormalFrame(1);
         frames.addFirst(frame);
 

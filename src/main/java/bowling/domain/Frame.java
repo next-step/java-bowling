@@ -4,6 +4,11 @@ public abstract class Frame {
     protected Pitch pitch;
     protected States states;
 
+    protected Frame(Pitch pitch, States states) {
+        this.pitch = pitch;
+        this.states = states;
+    }
+
     public void bowl(Pins pins) {
         pitch.bowl(pins);
         states.add(pitch.getState());

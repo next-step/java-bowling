@@ -131,7 +131,7 @@ public class ResultView {
     }
 
     private static void printRemainBoard(Frames frames) {
-        Frame currentFrame = frames.getLast();
+        Frame currentFrame = frames.currentFrame();
 
         if (currentFrame.isFirstPitchDone() && !currentFrame.isSecondPitchDone()) {
             drawRemainFirstPitch(frames);
@@ -152,7 +152,7 @@ public class ResultView {
     }
 
     private static void drawRemainFirstPitch(Frames frames) {
-        Frame currentFrame = frames.getLast();
+        Frame currentFrame = frames.currentFrame();
         States states = currentFrame.getStates();
 
         if (states.getFirstPitch() != State.STRIKE) {

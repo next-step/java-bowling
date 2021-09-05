@@ -7,9 +7,8 @@ public class NormalFrame extends Frame {
     private Frame next;
 
     public NormalFrame(int frameNumber) {
+        super(new NormalPitch(), States.newInstance());
         this.frameNumber = frameNumber;
-        pitch = new NormalPitch();
-        states = new States();
     }
 
     @Override

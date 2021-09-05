@@ -5,8 +5,8 @@ import bowling.exception.InvalidPinsException;
 import java.util.Objects;
 
 public class Pins {
-    private static final int MAX_PIN = 10;
-    private static final int MIN_PIN = 0;
+    private static final int MAX = 10;
+    private static final int MIN = 0;
 
     private final int fallenPins;
 
@@ -20,25 +20,30 @@ public class Pins {
     }
 
     private void validate(int fallenPins) {
-        if (Objects.isNull(fallenPins) || fallenPins < MIN_PIN || fallenPins > MAX_PIN) {
+        if (Objects.isNull(fallenPins) || fallenPins < MIN || fallenPins > MAX) {
             throw new InvalidPinsException();
         }
     }
+
+    public boolean isMax() {
+        return fallenPins == MAX;
+    }
+
+    public boolean isMin() {
+        return fallenPins == MIN;
+    }
+
 
     public int getFallenPins() {
         return fallenPins;
     }
 
-    public boolean isMaxPins() {
-        return fallenPins == MAX_PIN;
+    public Pins sum(Pins otherPins) {
+        return Pins.of(fallenPins + otherPins.fallenPins);
     }
 
-    public boolean isSumTheMaxPin(Pins firstPins) {
-        return this.fallenPins + firstPins.fallenPins == MAX_PIN;
-    }
-
-    public boolean isMinPins() {
-        return fallenPins == MIN_PIN;
+    public boolean isOverMax(Pins otherPins) {
+        return fallenPins + otherPins.fallenPins > MAX;
     }
 
     @Override
@@ -52,10 +57,5 @@ public class Pins {
     @Override
     public int hashCode() {
         return Objects.hash(fallenPins);
-    }
-
-
-    public boolean isSumOverTheMaxPin(Pins firstPins) {
-        return fallenPins + firstPins.fallenPins > MAX_PIN;
     }
 }

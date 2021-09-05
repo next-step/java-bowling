@@ -5,5 +5,5 @@ public enum State {
     GUTTER,
     MISS,
     SPARE,
-    NORMAL;
+    NORMAL
 }

@@ -26,10 +26,10 @@ public class FinalPitch extends Pitch {
         if (isBonusPitchDone()) {
             return true;
         }
-        if (isSpare()) {
+        if (isDoubleStrike()) {
             return false;
         }
-        if (isDoubleStrike()) {
+        if (isSpare()) {
             return false;
         }
         if (isFirstPitchDone() && isSecondPitchDone()) {
@@ -40,7 +40,7 @@ public class FinalPitch extends Pitch {
 
     @Override
     public boolean isBonusPitchDone() {
-        return !Objects.isNull(bonusPins);
+        return Objects.nonNull(bonusPins);
     }
 
     @Override
@@ -67,44 +67,44 @@ public class FinalPitch extends Pitch {
     }
 
     private boolean isDoubleStrike() {
-        if (isFirstPitchDone() && isSecondPitchDone() && !isBonusPitchDone() && firstPins.isMaxPins() && secondPins.isMaxPins()) {
+        if (isFirstPitchDone() && isSecondPitchDone() && !isBonusPitchDone() && firstPins.isMax() && secondPins.isMax()) {
             return true;
         }
         return false;
     }
 
     private boolean isStrike() {
-        if (isFirstPitchDone() && !isSecondPitchDone() && firstPins.isMaxPins()) {
+        if (isFirstPitchDone() && !isSecondPitchDone() && firstPins.isMax()) {
             return true;
         }
         if (isDoubleStrike()) {
             return true;
         }
-        if (isBonusPitchDone() && bonusPins.isMaxPins()) {
+        if (isBonusPitchDone() && bonusPins.isMax()) {
             return true;
         }
         return false;
     }
 
     private boolean isGutter() {
-        if (isFirstPitchDone() && !isSecondPitchDone() && firstPins.isMinPins()) {
+        if (isFirstPitchDone() && !isSecondPitchDone() && firstPins.isMin()) {
             return true;
         }
-        if (isFirstPitchDone() && isSecondPitchDone() && secondPins.isMinPins()) {
+        if (isFirstPitchDone() && isSecondPitchDone() && secondPins.isMin()) {
             return true;
         }
-        if (isBonusPitchDone() && bonusPins.isMinPins()) {
+        if (isBonusPitchDone() && bonusPins.isMin()) {
             return true;
         }
         return false;
     }
 
     private boolean isMiss() {
-        return isFirstPitchDone() && isSecondPitchDone() && firstPins.isMinPins() && secondPins.isMinPins();
+        return isFirstPitchDone() && isSecondPitchDone() && firstPins.isMin() && secondPins.isMin();
     }
 
     private boolean isSpare() {
-        return isFirstPitchDone() && isSecondPitchDone() && !isBonusPitchDone() && secondPins.isSumTheMaxPin(firstPins);
+        return isFirstPitchDone() && isSecondPitchDone() && !isBonusPitchDone() && firstPins.sum(secondPins).isMax();
     }
 
     @Override
