@@ -92,24 +92,6 @@ class NormalPlayTest {
 	}
 
 	@Test
-	@DisplayName("마지막 프레임은 3번 플레이하거나 미스이면 종료이다.")
-	public void isGameEndByFinalFrame() {
-		NormalPlay normalPlay = new NormalPlay(1);
-		normalPlay.play(new Pin(10));
-		normalPlay.play(new Pin(5));
-		normalPlay.play(new Pin(4));
-
-		NormalPlay normalPlay2 = new NormalPlay(1);
-		normalPlay2.play(new Pin(4));
-		normalPlay2.play(new Pin(5));
-
-		assertAll(
-			() -> assertThat(normalPlay.isGameEnd()).isTrue(),
-			() -> assertThat(normalPlay2.isGameEnd()).isTrue()
-		);
-	}
-
-	@Test
 	@DisplayName("play 가 스트라이크 이면 Score 가 strike 이다.")
 	public void playToScoreByStrike() {
 		NormalPlay normalPlay = new NormalPlay(1);
@@ -145,6 +127,15 @@ class NormalPlayTest {
 		Score score = normalPlay.play(new Pin(4));
 
 		assertThat(score).isEqualTo(Score.nothing(getPins(4)));
+	}
+
+	@Test
+	@DisplayName("play 시 게임플레이 횟수를 알 수 있다.")
+	public void countGame() {
+		NormalPlay normalPlay = new NormalPlay(1);
+		normalPlay.play(new Pin(4));
+
+		assertThat(normalPlay.countGame()).isEqualTo(1);
 	}
 
 	private List<Pin> getPins(int pin) {
