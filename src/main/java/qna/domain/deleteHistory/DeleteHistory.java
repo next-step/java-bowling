@@ -1,13 +1,22 @@
-package qna.domain;
+package qna.domain.deleteHistory;
+
+import qna.domain.answers.Answer;
+import qna.domain.answers.Answers;
+import qna.domain.questions.Question;
+import qna.domain.users.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 public class DeleteHistory {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "delete_history_id")
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -15,13 +24,14 @@ public class DeleteHistory {
 
     private Long contentId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_deletehistory_to_user"))
     private User deletedBy;
 
     private LocalDateTime createDate = LocalDateTime.now();
 
-    public DeleteHistory() {
+    protected DeleteHistory() {
+
     }
 
     public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
@@ -29,6 +39,21 @@ public class DeleteHistory {
         this.contentId = contentId;
         this.deletedBy = deletedBy;
         this.createDate = createDate;
+    }
+
+    private static DeleteHistory of(final Answer answer) {
+        return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
+    }
+
+    protected static List<DeleteHistory> of(final Answers answers) {
+        return answers.elements()
+                .stream()
+                .map(DeleteHistory::of)
+                .collect(Collectors.toList());
+    }
+
+    protected static DeleteHistory of(final Question question) {
+        return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
     }
 
     @Override
