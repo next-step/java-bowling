@@ -56,8 +56,9 @@ public class Question extends BaseEntity {
 
         this.deleted = true;
 
+        DeleteHistories questionHistories = DeleteHistories.of(this);
         DeleteHistories answerHistories = answers.delete(loginUser);
-        return DeleteHistories.concat(DeleteHistories.of(this), answerHistories);
+        return DeleteHistories.concat(questionHistories, answerHistories);
     }
 
     private void checkWriter(User loginUser) throws CannotDeleteException {

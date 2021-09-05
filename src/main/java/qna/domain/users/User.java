@@ -46,11 +46,6 @@ public class User extends BaseEntity {
         return account;
     }
 
-    public User setAccount(String userId) {
-        this.account = userId;
-        return this;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -99,5 +94,19 @@ public class User extends BaseEntity {
     @Override
     public String toString() {
         return "User [userId=" + account + ", password=" + password + ", name=" + name + ", email=" + email + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(account, user.account) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, account, password, name, email);
     }
 }

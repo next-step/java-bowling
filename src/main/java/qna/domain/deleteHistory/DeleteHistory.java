@@ -45,14 +45,14 @@ public class DeleteHistory {
         return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
     }
 
-    public static List<DeleteHistory> of(final Answers answers) {
+    protected static List<DeleteHistory> of(final Answers answers) {
         return answers.elements()
                 .stream()
                 .map(DeleteHistory::of)
                 .collect(Collectors.toList());
     }
 
-    public static DeleteHistory of(final Question question) {
+    protected static DeleteHistory of(final Question question) {
         return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
     }
 
