@@ -1,5 +1,7 @@
 package bowling.step2.domain;
 
+import bowling.step2.domain.pitchresult.NormalFramePitchResultGroup;
+import bowling.step2.domain.pitchresult.PitchResultGroup;
 import bowling.step2.domain.visitor.FrameVisitor;
 
 import java.util.List;
@@ -46,6 +48,11 @@ public class NormalFrame implements Frame {
     @Override
     public List<Integer> current() {
         return pitchGroup.pitches();
+    }
+
+    @Override
+    public PitchResultGroup createResult() {
+        return NormalFramePitchResultGroup.of(this);
     }
 
     public int frameNo() {
