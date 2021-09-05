@@ -24,8 +24,6 @@ public class Answer extends AbstractEntity {
 
     private boolean deleted = false;
 
-    private List<DeleteHistory> deleteHistories = new ArrayList<>();
-
     public Answer() {
     }
 

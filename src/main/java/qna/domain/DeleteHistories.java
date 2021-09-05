@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class DeleteHistories {
+    private static final String CREATE_ERROR = "입력 값이 null 입니다.";
+
     private List<DeleteHistory> deleteHistories;
 
     public DeleteHistories() {
@@ -12,6 +14,9 @@ public class DeleteHistories {
     }
 
     public DeleteHistories(List<DeleteHistory> deleteHistories) {
+        if (deleteHistories == null) {
+            throw new IllegalArgumentException(CREATE_ERROR);
+        }
         this.deleteHistories = deleteHistories;
     }
 
@@ -19,12 +24,12 @@ public class DeleteHistories {
         deleteHistories.add(deleteHistory);
     }
 
-    public List<DeleteHistory> values() {
-        return deleteHistories;
-    }
-
     public void addAll(DeleteHistories deleteAnswers) {
         deleteHistories.addAll(deleteAnswers.values());
+    }
+
+    public List<DeleteHistory> values() {
+        return deleteHistories;
     }
 
     @Override
