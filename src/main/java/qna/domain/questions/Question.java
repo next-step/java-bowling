@@ -4,6 +4,8 @@ import qna.domain.BaseEntity;
 import qna.domain.answers.Answer;
 import qna.domain.answers.Answers;
 import qna.domain.deleteHistory.DeleteHistories;
+import qna.domain.questions.vo.Contents;
+import qna.domain.questions.vo.Title;
 import qna.domain.users.User;
 import qna.exception.CannotDeleteException;
 
@@ -18,11 +20,11 @@ public class Question extends BaseEntity {
     @Column(name = "question_id")
     private Long id;
 
-    @Column(length = 100, nullable = false)
-    private String title;
+    @Embedded
+    private Title title;
 
-    @Lob
-    private String contents;
+    @Embedded
+    private Contents contents;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
@@ -42,8 +44,8 @@ public class Question extends BaseEntity {
 
     public Question(final Long id, final String title, final String contents) {
         this.id = id;
-        this.title = title;
-        this.contents = contents;
+        this.title = new Title(title);
+        this.contents = new Contents(contents);
     }
 
     public void addAnswer(final Answer answer) {
