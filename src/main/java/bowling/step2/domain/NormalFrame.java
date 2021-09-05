@@ -1,5 +1,8 @@
 package bowling.step2.domain;
 
+import bowling.step2.domain.visitor.FrameVisitor;
+import bowling.step2.domain.visitor.FrameVisitorImpl;
+
 import java.util.List;
 
 public class NormalFrame implements Frame {
@@ -39,15 +42,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame nextFrame() {
-        if (isLastOfNormalFrame()) {
-            return LastFrame.of(this.frameNo + 1);
-        }
-
-        return NormalFrame.of(this.frameNo + 1);
+    public Frame nextFrame(FrameVisitor frameVisitor) {
+        return frameVisitor.nextFrame(this);
     }
 
-    private boolean isLastOfNormalFrame() {
+    public boolean isLastOfNormalFrame() {
         return this.frameNo == MAX_NORMAL_FRAME_NUM;
     }
 
@@ -59,5 +58,9 @@ public class NormalFrame implements Frame {
     @Override
     public List<Integer> current() {
         return pitchGroup.pitches();
+    }
+
+    public int frameNo() {
+        return this.frameNo;
     }
 }

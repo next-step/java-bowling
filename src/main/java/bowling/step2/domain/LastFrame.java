@@ -1,5 +1,8 @@
 package bowling.step2.domain;
 
+import bowling.step2.domain.visitor.FrameVisitor;
+import bowling.step2.domain.visitor.FrameVisitorImpl;
+
 import java.util.List;
 
 public class LastFrame implements Frame {
@@ -55,8 +58,8 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public Frame nextFrame() {
-        throw new RuntimeException("더이상 프레임을 생성할 수 없습니다.");
+    public Frame nextFrame(FrameVisitor frameVisitor) {
+        return frameVisitor.nextFrame(this);
     }
 
     @Override

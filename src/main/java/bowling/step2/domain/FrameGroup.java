@@ -1,5 +1,7 @@
 package bowling.step2.domain;
 
+import bowling.step2.domain.visitor.FrameVisitorImpl;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +16,7 @@ public class FrameGroup {
     }
 
     public static FrameGroup of() {
-        return new FrameGroup(Collections.singletonList(NormalFrame.of(1)));
+        return new FrameGroup(new ArrayList<>(Collections.singletonList(NormalFrame.of(1))));
     }
 
     public void pitch(int count) {
@@ -29,11 +31,10 @@ public class FrameGroup {
     public void nextFrame() {
         validateFrameGroupSize();
 
-        if (lastFrame() instanceof LastFrame) {
-            return;
-        }
+        Frame frame = lastFrame().nextFrame(new FrameVisitorImpl());
+        if (frame == null) return;
 
-        frames.add(lastFrame().nextFrame());
+        frames.add(frame);
     }
 
     private void validateFrameGroupSize() {
