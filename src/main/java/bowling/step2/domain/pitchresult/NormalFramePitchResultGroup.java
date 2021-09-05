@@ -1,49 +1,39 @@
-package bowling.step2.outputview.pitchresult;
+package bowling.step2.domain.pitchresult;
 
 import bowling.step2.domain.Frame;
-import bowling.step2.outputview.state.Gutter;
-import bowling.step2.outputview.state.Miss;
-import bowling.step2.outputview.state.Spare;
-import bowling.step2.outputview.state.Strike;
+import bowling.step2.domain.state.Gutter;
+import bowling.step2.domain.state.Miss;
+import bowling.step2.domain.state.Spare;
+import bowling.step2.domain.state.Strike;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LastFramePitchResultGroup implements PitchResultGroup {
+public class NormalFramePitchResultGroup implements PitchResultGroup {
     private final List<PitchResult> pitchResults;
 
-    private LastFramePitchResultGroup(List<PitchResult> pitchResults) {
+    private NormalFramePitchResultGroup(List<PitchResult> pitchResults) {
         this.pitchResults = pitchResults;
     }
 
-    public static LastFramePitchResultGroup of(Frame frame) {
+    public static NormalFramePitchResultGroup of(Frame frame) {
         List<Integer> current = frame.current();
-        List<PitchResult> temp = new ArrayList<>();
 
+        List<PitchResult> temp = new ArrayList<>();
         temp.add(makeFirstResult(current.get(0)));
 
         if (pitchedOnlyOnce(current)) {
-            return new LastFramePitchResultGroup(temp);
+            return new NormalFramePitchResultGroup(temp);
         }
 
         temp.add(makeSecondResult(current.get(0), current.get(1)));
 
-        if (pitchedJustTwice(current)) {
-            return new LastFramePitchResultGroup(temp);
-        }
-
-        temp.add(makeSecondResult(current.get(1), current.get(2)));
-
-        return new LastFramePitchResultGroup(temp);
+        return new NormalFramePitchResultGroup(temp);
     }
 
     private static boolean pitchedOnlyOnce(List<Integer> current) {
         return current.size() == 1;
-    }
-
-    private static boolean pitchedJustTwice(List<Integer> current) {
-        return current.size() == 2;
     }
 
     private static PitchResult makeFirstResult(int count) {
@@ -57,10 +47,6 @@ public class LastFramePitchResultGroup implements PitchResultGroup {
     private static PitchResult makeSecondResult(int prevCount, int count) {
         if (prevCount + count == 10) {
             return PitchResult.of(new Spare(), count);
-        }
-
-        if (count == 10) {
-            return PitchResult.of(new Strike(), count);
         }
 
         return getPitchResult(count);

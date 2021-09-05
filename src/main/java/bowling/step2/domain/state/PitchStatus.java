@@ -1,4 +1,4 @@
-package bowling.step2.outputview.state;
+package bowling.step2.domain.state;
 
 public interface PitchStatus {
     String result(int count);

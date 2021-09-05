@@ -2,7 +2,7 @@ package bowling.step2;
 
 import bowling.step2.domain.LastFrame;
 import bowling.step2.domain.NormalFrame;
-import bowling.step2.outputview.pitchresult.FrameResult;
+import bowling.step2.domain.pitchresult.FrameResult;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
