@@ -70,7 +70,7 @@ public class NormalPitch extends Pitch {
 
     @Override
     public boolean isBonusPitchDone() {
-        throw new IsNotSupportException();
+        return false;
     }
 
     @Override
