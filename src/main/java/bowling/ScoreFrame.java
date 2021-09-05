@@ -1,5 +1,6 @@
 package bowling;
 
 public interface ScoreFrame {
-    ScoreFrame bowl(int score);
+    ScoreFrame process(int score);
+    int getTurnNumber();
 }

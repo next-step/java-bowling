@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.Objects;
+
 public class NormalScoreFrame implements ScoreFrame {
     private Turn turn;
     private FrameResult previousFrameResult = FrameResult.MISS;
@@ -10,7 +12,8 @@ public class NormalScoreFrame implements ScoreFrame {
         this.previousFrameResult = previousFrameResult;
     }
 
-    public ScoreFrame bowl(int scoreValue) {
+    @Override
+    public ScoreFrame process(int scoreValue) {
         scores.add(new Score(scoreValue));
 
         if (scores.isEnd()) {
@@ -20,11 +23,29 @@ public class NormalScoreFrame implements ScoreFrame {
         return this;
     }
 
+    @Override
+    public int getTurnNumber() {
+        return turn.getNumber();
+    }
+
     private ScoreFrame getNextFrame(FrameResult frameResult) {
         if (turn.isLastDoubleBallTurn()) {
             return new FinalScoreFrame(turn.getNextTurn());
         }
 
         return new NormalScoreFrame(turn.getNextTurn(), frameResult);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalScoreFrame that = (NormalScoreFrame) o;
+        return Objects.equals(turn, that.turn);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(turn);
     }
 }

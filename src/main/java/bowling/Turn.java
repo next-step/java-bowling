@@ -19,6 +19,10 @@ public class Turn {
         return new Turn(value + 1);
     }
 
+    public int getNumber() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
