@@ -8,12 +8,19 @@ import bowling.model.Pin;
 
 public class Score extends ScoreStatus {
 
+	private static final int SPARE_LEFT_NUMBER = 1;
+	private static final int STRIKE_LEFT_NUMBER = 2;
+	private static final int MISS_LEFT_NUMBER = 0;
+	private static final int MAX_MIN = 10;
+	private static final int DOUBLE_MAX_MIN = 20;
+	private static final int ZERO_POINT = 0;
+
 	private final int score;
 	private final int left;
 
 	private Score(int left) {
 		super(new ArrayList<>());
-		score = 0;
+		score = ZERO_POINT;
 		this.left = left;
 	}
 
@@ -24,7 +31,7 @@ public class Score extends ScoreStatus {
 	}
 
 	public Score Double() {
-		return new Score(getFrameScore(), 20, 1);
+		return new Score(getFrameScore(), DOUBLE_MAX_MIN, SPARE_LEFT_NUMBER);
 	}
 
 	public static Score init() {
@@ -32,23 +39,23 @@ public class Score extends ScoreStatus {
 	}
 
 	public static Score strike(List<Pin> frameScore) {
-		return new Score(frameScore, 10, 2);
+		return new Score(frameScore, MAX_MIN, STRIKE_LEFT_NUMBER);
 	}
 
 	public static Score spare(List<Pin> frameScore) {
-		return new Score(frameScore, 10, 1);
+		return new Score(frameScore, MAX_MIN, SPARE_LEFT_NUMBER);
 	}
 
 	public static Score miss(List<Pin> frameScore, int score) {
-		return new Score(frameScore, score, 0);
+		return new Score(frameScore, score, MISS_LEFT_NUMBER);
 	}
 
 	public static Score nothing(List<Pin> frameScore) {
-		return new Score(frameScore, 0, -1);
+		return new Score(frameScore, ZERO_POINT, -1);
 	}
 
 	public boolean isMiss() {
-		return left == 0;
+		return left == ZERO_POINT;
 	}
 
 	public int calculate(Score score) {
@@ -63,7 +70,7 @@ public class Score extends ScoreStatus {
 	}
 
 	public boolean moveNotNextCalculate(Score score) {
-		return isDoubleCondition() && score.getLeft() == 2;
+		return isDoubleCondition() && score.getLeft() == STRIKE_LEFT_NUMBER;
 	}
 
 	public int getLeft() {

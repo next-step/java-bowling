@@ -9,6 +9,9 @@ import bowling.model.Pin;
 
 public abstract class ScoreStatus {
 
+	private static final int FIRST_INDEX = 0;
+	private static final int SECOND_INDEX = 1;
+	
 	private final List<Pin> frameScore;
 
 	public ScoreStatus(List<Pin> frameScore) {
@@ -16,17 +19,17 @@ public abstract class ScoreStatus {
 	}
 
 	public boolean isDoubleCondition() {
-		if (frameScore.size() == 0) {
+		if (frameScore.size() == FIRST_INDEX) {
 			return false;
 		}
-		return frameScore.get(0).isMaxPin() && frameScore.size() == 1;
+		return frameScore.get(FIRST_INDEX).isMaxPin() && frameScore.size() == SECOND_INDEX;
 	}
 
 	public int getFrameScore(int left) {
 		if (frameScore.size() < left) {
 			return -1;
 		}
-		return IntStream.range(0, left)
+		return IntStream.range(FIRST_INDEX, left)
 			.map(i -> frameScore.get(i).getPin())
 			.sum();
 	}
