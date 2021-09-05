@@ -1,24 +1,21 @@
 package bowling.controller;
 
+import java.util.ArrayList;
+
+import bowling.domain.Player;
 import bowling.domain.frame.Frames;
-import bowling.domain.score.Score;
 import bowling.view.InputView;
 import bowling.view.ResultView;
-
-import java.util.List;
 
 public class BowlingGameController {
     public static void main(String[] args) {
         InputView inputView = new InputView();
         ResultView resultView = new ResultView();
+        Frames frames = Frames.from(new ArrayList<>());
+        Player player = Player.from(inputView.inputPlayerName());
 
-        Frames frames = new Frames();
-        List<String> scores = frames.initFrames();
-
-        String playerName = inputView.inputPlayerName();
-        resultView.outputScores(playerName, scores);
-
-        executeGame(frames, playerName);
+        resultView.outputScores(player.name(), frames.results());
+        executeGame(frames, player.name());
         inputView.scannerClose();
     }
 
@@ -29,10 +26,8 @@ public class BowlingGameController {
         int frameNumber = 1;
         while (frameNumber <= Frames.TOTAL_FRAME_NUMBER) {
             int downPinNumber = inputView.inputNFrameThrow(frameNumber);
-            frames.throwBall(frameNumber, Score.from(downPinNumber));
-            if (frames.isNext(frameNumber)) {
-                frameNumber++;
-            }
+            frames.throwBalls(downPinNumber);
+            frameNumber = frames.nextFrameNumber();
             resultView.outputScores(playerName, frames.results());
         }
     }
