@@ -36,7 +36,7 @@ public class DeleteHistory {
     }
 
     public static DeleteHistory answerOf(final Long contentId, final User deletedBy) {
-        return new DeleteHistory(ContentType.QUESTION, contentId, deletedBy, LocalDateTime.now());
+        return new DeleteHistory(ContentType.ANSWER, contentId, deletedBy, LocalDateTime.now());
     }
 
     @Override
