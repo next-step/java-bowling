@@ -27,11 +27,8 @@ public class User extends BaseEntity {
 
     private String email;
 
-    public User() {
-    }
+    protected User() {
 
-    public User(final String account, final String password, final String name, final String email) {
-        this(null, account, password, name, email);
     }
 
     public User(final Long id, final String account, final String password, final String name, final String email) {
@@ -50,34 +47,32 @@ public class User extends BaseEntity {
         return password;
     }
 
-    public void update(User loginUser, User target) {
-        if (!matchUserId(loginUser.getAccount())) {
-            throw new UnAuthorizedException();
-        }
-
-        if (!matchPassword(target.getPassword())) {
-            throw new UnAuthorizedException();
-        }
+    public void update(final User loginUser, final User target) {
+        checkAccount(loginUser.getAccount());
+        checkPassword(target.getPassword());
 
         this.name = target.name;
         this.email = target.email;
     }
 
-    private boolean matchUserId(String userId) {
-        return this.account.equals(userId);
-    }
-
-    public boolean matchPassword(String targetPassword) {
-        return password.equals(targetPassword);
-    }
-
-    public boolean equalsNameAndEmail(User target) {
-        if (Objects.isNull(target)) {
-            return false;
+    private void checkAccount(final String account) {
+        if (!matchAccount(account)) {
+            throw new UnAuthorizedException();
         }
+    }
 
-        return name.equals(target.name) &&
-                email.equals(target.email);
+    private void checkPassword(final String password) {
+        if (!matchPassword(password)) {
+            throw new UnAuthorizedException();
+        }
+    }
+
+    private boolean matchAccount(final String account) {
+        return this.account.equals(account);
+    }
+
+    private boolean matchPassword(final String targetPassword) {
+        return this.password.equals(targetPassword);
     }
 
     public boolean isGuestUser() {
