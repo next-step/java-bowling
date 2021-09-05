@@ -3,8 +3,8 @@ package bowling.step2.domain;
 public class Participant {
     private final String name;
 
-    private final int MIN_NAME_LENGTH = 1;
-    private final int MAX_NAME_LENGTH = 3;
+    private static final int MIN_NAME_LENGTH = 1;
+    private static final int MAX_NAME_LENGTH = 3;
 
     private Participant(String name) {
         validateName(name);

@@ -7,7 +7,7 @@ import java.util.List;
 public class FrameGroup {
     private final List<Frame> frameList;
 
-    private final int MAX = 10;
+    private static final int MAX = 10;
 
     private FrameGroup() {
         this.frameList = new ArrayList<>(Collections.singletonList(NormalFrame.of(1)));
@@ -29,10 +29,6 @@ public class FrameGroup {
 
     public void nextFrame() {
         validateFrameGroupSize();
-
-        if (lastFrame() instanceof LastFrame) {
-            return;
-        }
 
         frameList.add(lastFrame().nextFrame());
     }

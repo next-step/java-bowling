@@ -15,6 +15,7 @@ public class PitchTest {
         Pitch pitch = Pitch.of(10);
 
         //then
+        assertThat(pitch.count()).isEqualTo(10);
     }
 
     @Test
@@ -22,9 +23,7 @@ public class PitchTest {
         //given
 
         //when
-        assertThatThrownBy(() -> {
-            Pitch pitch = Pitch.of(11);
-        }).isInstanceOf(RuntimeException.class);
+        assertThatThrownBy(() -> Pitch.of(11)).isInstanceOf(RuntimeException.class);
 
         //then
     }

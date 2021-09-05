@@ -3,9 +3,9 @@ package bowling.step2.domain;
 public class Pitch {
     private final int count;
 
-    private final int MIN = 0;
+    private static final int MIN = 0;
 
-    private final int MAX = 10;
+    private static final int MAX = 10;
 
     private Pitch(int count) {
         validateCount(count);

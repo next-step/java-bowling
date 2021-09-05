@@ -39,9 +39,7 @@ public class PitchGroupTest {
         PitchGroup pitchGroup = PitchGroup.of();
 
         //when
-        assertThatThrownBy(() -> {
-            pitchGroup.pitch(11);
-        }).isInstanceOf(RuntimeException.class);
+        assertThatThrownBy(() -> pitchGroup.pitch(11)).isInstanceOf(RuntimeException.class);
 
         //then
     }

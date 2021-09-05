@@ -7,11 +7,11 @@ public class NormalFrame implements Frame {
 
     private final PitchGroup pitchGroup;
 
-    private final int MAX = 10;
+    private static final int MAX = 10;
 
-    private final int MAX_PITCH_SIZE = 2;
+    private static final int MAX_PITCH_SIZE = 2;
 
-    private final int MAX_NORMAL_FRAME_NUM = 9;
+    private static final int MAX_NORMAL_FRAME_NUM = 9;
 
     private NormalFrame(int frameNo) {
         this.frameNo = frameNo;

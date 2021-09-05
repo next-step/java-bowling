@@ -9,9 +9,9 @@ public class LastFrame implements Frame {
 
     private final int MAX = 10;
 
-    private final int MAX_PITCH_SIZE = 3;
+    private static final int MAX_PITCH_SIZE = 3;
 
-    private final int NORMAL_PITCH_SIZE = 2;
+    private static final int NORMAL_PITCH_SIZE = 2;
 
     private LastFrame(int frameNo) {
         this.frameNo = frameNo;

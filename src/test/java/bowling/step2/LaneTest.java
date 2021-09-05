@@ -7,7 +7,7 @@ public class LaneTest {
     @Test
     public void pitchSuccess() {
         //given
-        Lane lane = Lane.of("Test");
+        Lane lane = Lane.of("ttt");
 
         //when
         lane.pitch(5);

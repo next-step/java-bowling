@@ -9,11 +9,10 @@ public class App {
         String name = InputView.getName();
         Lane lane = Lane.of(name);
 
-        int pitch;
         int currentNo = 1;
 
         do {
-            pitch = InputView.getPitch(currentNo);
+            int pitch = InputView.getPitch(currentNo);
             lane.pitch(pitch);
             OutputView.showResult(lane);
 
