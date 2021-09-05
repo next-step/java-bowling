@@ -1,36 +1,54 @@
 package bowling.view;
 
 import bowling.Player;
+import bowling.ScoreFrame;
 import bowling.ScoreFrames;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class BowlingOutputView {
-    private static int START_FRAME = 1;
-    private static int END_FRAME = 10;
-    private static int FRAME_WIDTH = 6;
+    private static final int START_FRAME = 1;
+    private static final int END_FRAME = 10;
+    private static final int FRAME_WIDTH = 6;
 
     public static void printFramesStatus(Player player, ScoreFrames scoreFrames) {
         String turns = IntStream.rangeClosed(START_FRAME, END_FRAME)
                 .mapToObj(i -> String.format("%02d", i))
-                .map(s -> String.format("|%s", getCenterAlignedStringWithFixedPadding(s, FRAME_WIDTH)))
+                .map(s -> String.format("|%s", toCenterAlignedWithFixedPaddedString(s)))
                 .collect(Collectors.joining());
 
         System.out.println("| NAME " + turns + "|");
 
-        String playerName = String.format("|%s", getCenterAlignedStringWithFixedPadding(player.getNameString(), FRAME_WIDTH));
+        Iterator<ScoreFrame> iterator = scoreFrames.iterator();
+        String scores = IntStream.rangeClosed(START_FRAME, END_FRAME)
+                .mapToObj(i -> getNextScoreString(iterator))
+                .map(s -> String.format("|%s", toCenterAlignedWithFixedPaddedString(s)))
+                .collect(Collectors.joining());
 
-        System.out.println(playerName);
+        String playerName = String.format("|%s",
+                toCenterAlignedWithFixedPaddedString(player.getNameString()));
+
+        System.out.println(playerName + scores + "|");
     }
 
-    private static String getCenterAlignedStringWithFixedPadding(String value, int width) {
-        int spaceSize = width - value.length();
+    private static String getNextScoreString(Iterator<ScoreFrame> iterator) {
+        try {
+            return iterator.next().getScoreString();
+        } catch (NoSuchElementException e) {
+            return "";
+        }
+    }
+
+    private static String toCenterAlignedWithFixedPaddedString(String value) {
+        int spaceSize = BowlingOutputView.FRAME_WIDTH - value.length();
         int prefixSize = spaceSize / 2;
         int suffixSize = (spaceSize + 1) / 2;
 
-        return width > value.length() ? getSpace(prefixSize) + value + getSpace(suffixSize) : value;
+        return BowlingOutputView.FRAME_WIDTH > value.length() ? getSpace(prefixSize) + value + getSpace(suffixSize) : value;
     }
 
     private static String getSpace(int prefixSize) {

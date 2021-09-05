@@ -1,5 +1,6 @@
 package bowling;
 
+import java.util.List;
 import java.util.Objects;
 
 public class NormalScoreFrame implements ScoreFrame {
@@ -26,6 +27,11 @@ public class NormalScoreFrame implements ScoreFrame {
     @Override
     public int getTurnNumber() {
         return turn.getNumber();
+    }
+
+    @Override
+    public String getScoreString() {
+        return scores.getScoresString();
     }
 
     private ScoreFrame getNextFrame(FrameResult frameResult) {

@@ -3,7 +3,7 @@ package bowling;
 import java.util.Objects;
 
 public class Score {
-    private final static int MAX_SCORE = 10;
+    private static final int MAX_SCORE = 10;
 
     private final int value;
 
@@ -33,6 +33,10 @@ public class Score {
         }
 
         return FrameResult.MISS;
+    }
+
+    public int toInt() {
+        return value;
     }
 
     @Override

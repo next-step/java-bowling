@@ -8,6 +8,8 @@ public class FinalScoreFrame implements ScoreFrame {
     private Score secondScore;
     private Score thirdScore;
 
+    private Scores scores = new Scores();
+
     public FinalScoreFrame(Turn turn) {
         this.turn = turn;
     }
@@ -20,6 +22,11 @@ public class FinalScoreFrame implements ScoreFrame {
     @Override
     public int getTurnNumber() {
         return turn.getNumber();
+    }
+
+    @Override
+    public String getScoreString() {
+        return scores.getScoresString();
     }
 
     @Override

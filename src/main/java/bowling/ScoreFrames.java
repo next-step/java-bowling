@@ -1,14 +1,16 @@
 package bowling;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-public class ScoreFrames {
+public class ScoreFrames implements Iterable<ScoreFrame> {
     private static final int START_TURN = 1;
+    private static final int END_TURN = 10;
 
-    private final List<ScoreFrame> scoreFrames = Collections.singletonList(
-            new NormalScoreFrame(new Turn(START_TURN), FrameResult.MISS));
+    private List<ScoreFrame> scoreFrames = new LinkedList<>();
+
+    public ScoreFrames() {
+        scoreFrames.add(new NormalScoreFrame(new Turn(START_TURN), FrameResult.MISS));
+    }
 
     public void bowl(int score) {
         ScoreFrame nextScoreFrame = getLastScoreFrame().process(score);
@@ -22,12 +24,16 @@ public class ScoreFrames {
         return getLastScoreFrame().getTurnNumber();
     }
 
-    public Iterator<ScoreFrame> iterator() {
-        return scoreFrames.iterator();
+    public boolean isContinued() {
+        return getCurrentTurn() <= END_TURN;
     }
 
     private ScoreFrame getLastScoreFrame() {
         return scoreFrames.get(scoreFrames.size() - 1);
     }
 
+    @Override
+    public Iterator<ScoreFrame> iterator() {
+        return scoreFrames.iterator();
+    }
 }
