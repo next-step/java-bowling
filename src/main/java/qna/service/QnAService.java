@@ -1,17 +1,18 @@
 package qna.service;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.domain.AnswerRepository;
 import qna.domain.Question;
 import qna.domain.QuestionRepository;
 import qna.domain.User;
-
-import javax.annotation.Resource;
 
 @Service("qnaService")
 public class QnAService {
