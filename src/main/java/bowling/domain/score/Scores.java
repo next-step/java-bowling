@@ -1,10 +1,10 @@
 package bowling.domain.score;
 
-import bowling.domain.frame.Frame;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import bowling.domain.frame.Frame;
 
 public class Scores {
     private final List<Score> scores;
@@ -15,7 +15,7 @@ public class Scores {
 
     public static Scores of(Score... scores) {
         return new Scores(Arrays.stream(scores)
-            .map(Score::from)
+            .map(i -> Score.from(i.score()))
             .collect(Collectors.toList())
         );
     }
@@ -74,9 +74,9 @@ public class Scores {
             return false;
         }
 
-        Score firstScore  = scores.get(0);
+        Score firstScore = scores.get(0);
         Score secondScore = scores.get(1);
-        Score thirdScore  = scores.get(2);
+        Score thirdScore = scores.get(2);
         if (firstScore.isEqualTenAfterAdd(secondScore)) {
             return false;
         }
@@ -84,24 +84,24 @@ public class Scores {
     }
 
     public Score firstTryScore() {
-        if (scores.size() < 1) {
-            return null;
-        }
-        return Score.from(scores.get(0));
+        return Score.from(scores
+            .get(0)
+            .score()
+        );
     }
 
     public Score secondTryScore() {
-        if (scores.size() < 2) {
-            return null;
-        }
-        return Score.from(scores.get(1));
+        return Score.from(scores
+            .get(1)
+            .score()
+        );
     }
 
     public Score thirdTryScore() {
-        if (scores.size() < 3) {
-            return null;
-        }
-        return Score.from(scores.get(2));
+        return Score.from(scores
+            .get(2)
+            .score()
+        );
     }
 
     public int numberOfTurnInFrame() {
