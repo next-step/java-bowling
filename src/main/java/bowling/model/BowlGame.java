@@ -10,11 +10,11 @@ import bowling.model.frame.Frames;
 public class BowlGame {
 
 	private final List<Player> players;
-	private int currentPlayer;
+	private int currentPlayerIndex;
 
 	private BowlGame(List<Player> players) {
 		this.players = players;
-		this.currentPlayer = 0;
+		this.currentPlayerIndex = 0;
 	}
 
 	public static BowlGame createBowlGame(String[] players) {
@@ -33,15 +33,15 @@ public class BowlGame {
 	}
 
 	public Player turnPlayer() {
-		return players.get(currentPlayer);
+		return players.get(currentPlayerIndex);
 	}
 
 	public boolean playBowling(int inputStrikeNumber) {
-		boolean endGame = players.get(currentPlayer)
+		boolean endGame = players.get(currentPlayerIndex)
 			.getFrames()
 			.playBowling(inputStrikeNumber);
 		if (endGame) {
-			currentPlayer = findTurnOfPlay(currentPlayer);
+			currentPlayerIndex = findTurnOfPlay(currentPlayerIndex);
 		}
 		return endGame;
 	}
