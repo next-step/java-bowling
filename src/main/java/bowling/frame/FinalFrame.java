@@ -1,6 +1,8 @@
 package bowling.frame;
 
 import bowling.score.Score;
+import bowling.score.ScoreBoard;
+import bowling.score.ScoreResult;
 import bowling.state.State;
 import bowling.state.StateFactory;
 import java.util.LinkedList;
@@ -8,12 +10,10 @@ import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 
-  private static final int MAX_STATES_SIZE = 3;
   private static final int START_STATES_INDEX = 1;
   private static final String MSG_ERROR_END_FRAME = "이미 종료된 프레임입니다.";
   private static final String SEPARATOR = "|";
-  private static final String SPARE = "/";
-  private static final String STRIKE = "X";
+  private static final int NOT_SUM_SCORE_VALUE = -1;
 
   private final LinkedList<State> states = new LinkedList<>();
 
@@ -23,33 +23,24 @@ public class FinalFrame implements Frame {
 
   @Override
   public Frame play(final int pinCount) {
-    validationEndFrame();
-    State state = states.getLast();
+    if(isGameEnd()){
+      throw new RuntimeException(MSG_ERROR_END_FRAME);
+    }
+
+    State currentState = states.getLast();
 
     if (states.getLast().isFinish()) {
-      validationLimitPitch(state);
       states.add(StateFactory.startPitch().nextPitch(pinCount));
       return this;
     }
 
     states.removeLast();
-    states.add(state.nextPitch(pinCount));
+    states.add(currentState.nextPitch(pinCount));
     return this;
   }
 
-  private void validationEndFrame() {
-    if (states.size() == MAX_STATES_SIZE) {
-      throw new RuntimeException(MSG_ERROR_END_FRAME);
-    }
-  }
-
-  private void validationLimitPitch(final State state) {
-    if (!state.scoreMessage().contains(SPARE) && !state.scoreMessage().contains(STRIKE)) {
-      throw new RuntimeException(MSG_ERROR_END_FRAME);
-    }
-  }
-
   public boolean isGameEnd() {
+
     if (states.getFirst().isFinish()) {
       return isFinish();
     }
@@ -74,19 +65,50 @@ public class FinalFrame implements Frame {
   @Override
   public Score score() {
     Score score = states.getFirst().score();
+
     for (int i = START_STATES_INDEX; i < states.size(); i++) {
       score = states.get(i).calculateScore(score);
     }
+
     return score;
   }
 
   @Override
   public Score frameScoreAdd(Score score) {
-    Score currentScore = score;
     for (State state : states) {
-      score = state.calculateScore(currentScore);
+      score = state.calculateScore(score);
     }
 
     return score;
+  }
+
+  @Override
+  public int scoreValue() {
+    return score().scoreValue().getScore();
+  }
+
+  @Override
+  public ScoreResult createScoreResult() {
+    if (!isFinish()) {
+      return new ScoreResult(getScoreMessage(), NOT_SUM_SCORE_VALUE);
+    }
+
+    try {
+      return new ScoreResult(getScoreMessage(), scoreValue());
+    } catch (RuntimeException e) {
+      return new ScoreResult(getScoreMessage(), NOT_SUM_SCORE_VALUE);
+    }
+  }
+
+  @Override
+  public ScoreBoard createScoreBoard() {
+    ScoreBoard scoreBoard = new ScoreBoard();
+    addScoreResult(scoreBoard);
+    return scoreBoard;
+  }
+
+  @Override
+  public void addScoreResult(final ScoreBoard scoreBoard) {
+    scoreBoard.addScoreResult(createScoreResult());
   }
 }
