@@ -1,9 +1,9 @@
 package bowling.domain.frame;
 
+import java.util.Objects;
+
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
-
-import java.util.Objects;
 
 public abstract class Frame {
     public static final Score TEN_SCORE = Score.from(10);
@@ -51,12 +51,12 @@ public abstract class Frame {
 
     public String toScoreSymbol() {
         Score firstTryScore = scores.firstTryScore();
-        Score secondTryScore = scores.secondTryScore();
 
-        if (Objects.isNull(secondTryScore)) {
+        if (scores.numberOfTurnInFrame() <= 1) {
             return changeScoreToSymbol(firstTryScore);
         }
 
+        Score secondTryScore = scores.secondTryScore();
         if (firstTryScore.isEqualTenAfterAdd(secondTryScore)) {
             return changeScoreToSpare(firstTryScore);
         }
