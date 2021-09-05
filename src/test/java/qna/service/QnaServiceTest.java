@@ -13,6 +13,7 @@ import qna.domain.deleteHistory.ContentType;
 import qna.domain.deleteHistory.DeleteHistory;
 import qna.domain.questions.Question;
 import qna.exception.CannotDeleteException;
+import qna.repository.DeleteHistoryRepository;
 import qna.repository.QuestionRepository;
 
 import java.time.LocalDateTime;
@@ -27,11 +28,11 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QnaServiceTest {
-    @Mock
-    private QuestionRepository questionRepository;
 
     @Mock
-    private DeleteHistoryService deleteHistoryService;
+    private QuestionRepository questionRepository;
+    @Mock
+    private DeleteHistoryRepository deleteHistoryRepository;
 
     @InjectMocks
     private QnAService qnAService;
@@ -40,7 +41,7 @@ public class QnaServiceTest {
     private Answer answer;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         question.addAnswer(answer);
@@ -58,7 +59,7 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_다른_사람이_쓴_글() throws Exception {
+    public void delete_다른_사람이_쓴_글() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {
@@ -78,7 +79,7 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
+    public void delete_답변_중_다른_사람이_쓴_글() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThatThrownBy(() -> {
@@ -90,6 +91,6 @@ public class QnaServiceTest {
         List<DeleteHistory> deleteHistories = Arrays.asList(
                 new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
                 new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        verify(deleteHistoryService).saveAll(deleteHistories);
+        verify(deleteHistoryRepository).saveAll(deleteHistories);
     }
 }

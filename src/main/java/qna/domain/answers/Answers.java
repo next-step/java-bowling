@@ -33,7 +33,7 @@ public class Answers {
         answers.add(answer);
     }
 
-    public DeleteHistories delete(final User loginUser) throws CannotDeleteException {
+    public DeleteHistories deleteAll(final User loginUser) throws CannotDeleteException {
         checkAnswerWrittenBySomeoneElse(loginUser);
         for (Answer answer : answers) {
             answer.changeDeleted(true);

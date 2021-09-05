@@ -23,14 +23,12 @@ class AnswersTest {
     @Test
     @DisplayName("자신의 답변만 삭제 가능")
     void canOnlyDeleteOwnAnswers() {
-        assertDoesNotThrow(() -> answers1.delete(UserTest.JAVAJIGI));
+        assertDoesNotThrow(() -> answers1.deleteAll(UserTest.JAVAJIGI));
     }
 
     @Test
     @DisplayName("자신이 작성한 답변이 아닐경우 삭제 불가능")
     void ifTheAnswerIsNotYourOwnItCannotBeDeleted() {
-        assertThrows(CannotDeleteException.class, () -> answers2.delete(UserTest.JAVAJIGI));
+        assertThrows(CannotDeleteException.class, () -> answers2.deleteAll(UserTest.JAVAJIGI));
     }
-
-
 }

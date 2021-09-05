@@ -40,17 +40,25 @@ public class Answer extends BaseEntity {
 
     public Answer(final Long id, final User writer, final Question question, final String contents) {
 
-        if (writer == null) {
-            throw new UnAuthorizedException();
-        }
+        checkUnAuthorized(writer);
+        checkExistsQuestion(question);
 
-        if (question == null) {
-            throw new NotFoundException();
-        }
         this.id = id;
         this.writer = writer;
         this.question = question;
         this.contents = contents;
+    }
+
+    private void checkExistsQuestion(final Question question) {
+        if (question == null) {
+            throw new NotFoundException();
+        }
+    }
+
+    private void checkUnAuthorized(final User writer) {
+        if (writer == null) {
+            throw new UnAuthorizedException();
+        }
     }
 
     public Answer changeDeleted(final boolean deleted) {
@@ -74,7 +82,7 @@ public class Answer extends BaseEntity {
         return writer;
     }
 
-    public void toQuestion(Question question) {
+    public void changeQuestion(Question question) {
         this.question = question;
     }
 

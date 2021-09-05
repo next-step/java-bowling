@@ -24,7 +24,7 @@ public class Question extends BaseEntity {
     @Lob
     private String contents;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
@@ -47,7 +47,7 @@ public class Question extends BaseEntity {
     }
 
     public void addAnswer(final Answer answer) {
-        answer.toQuestion(this);
+        answer.changeQuestion(this);
         answers.add(answer);
     }
 
@@ -57,11 +57,11 @@ public class Question extends BaseEntity {
         this.deleted = true;
 
         DeleteHistories questionHistories = DeleteHistories.of(this);
-        DeleteHistories answerHistories = answers.delete(loginUser);
+        DeleteHistories answerHistories = answers.deleteAll(loginUser);
         return DeleteHistories.concat(questionHistories, answerHistories);
     }
 
-    private void checkWriter(User loginUser) throws CannotDeleteException {
+    private void checkWriter(final User loginUser) throws CannotDeleteException {
         if (!writer.equals(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }

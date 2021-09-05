@@ -30,5 +30,4 @@ class AnswerTest {
         JAVAJIGI_ANSWER.changeDeleted(true);
         assertEquals(JAVAJIGI_ANSWER.isDeleted(), true);
     }
-
 }
