@@ -9,11 +9,15 @@ public class LastFrame implements Frame {
 
     private final PitchGroup pitchGroup;
 
+    private static final int MAX_PITCH_TOTAL_COUNT = 10;
+
     private static final int MAX_PITCH_SIZE = 3;
+
+    private static final int NORMAL_PITCH_SIZE = 2;
 
     private LastFrame(int frameNo) {
         this.frameNo = frameNo;
-        this.pitchGroup = PitchGroup.of(MAX_PITCH_SIZE);
+        this.pitchGroup = PitchGroup.of();
     }
 
     public static LastFrame of(int frameNo) {
@@ -22,6 +26,7 @@ public class LastFrame implements Frame {
 
     @Override
     public void pitch(int count) {
+        validateAdditionalPitch();
         pitchGroup.pitch(count);
     }
 
@@ -33,7 +38,21 @@ public class LastFrame implements Frame {
 
     @Override
     public boolean finished() {
-        return pitchGroup.finished();
+        return (pitchGroupSizeIsTwo() && totalCountIsLessThanMax()) || pitchGroup.size() == MAX_PITCH_SIZE;
+    }
+
+    private void validateAdditionalPitch() {
+        if (pitchGroupSizeIsTwo() && totalCountIsLessThanMax()) {
+            throw new RuntimeException("더이상 공을 던질 수 없습니다.");
+        }
+    }
+
+    private boolean totalCountIsLessThanMax() {
+        return pitchGroup.total() < MAX_PITCH_TOTAL_COUNT;
+    }
+
+    private boolean pitchGroupSizeIsTwo() {
+        return pitchGroup.size() == NORMAL_PITCH_SIZE;
     }
 
     @Override

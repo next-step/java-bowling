@@ -9,22 +9,16 @@ public class PitchGroup {
 
     private static final int MAX_PITCH_TOTAL_COUNT = 10;
 
-    private static final int NORMAL_PITCH_SIZE = 2;
-
-    private final int MAX_PITCH_SIZE;
-
-    private PitchGroup(int max_pitch_size) {
-        MAX_PITCH_SIZE = max_pitch_size;
+    private PitchGroup() {
         this.pitches = new ArrayList<>();
     }
 
-    public static PitchGroup of(int maxPitchSize) {
-        return new PitchGroup(maxPitchSize);
+    public static PitchGroup of() {
+        return new PitchGroup();
     }
 
     public void pitch(int count) {
         validatePitchCount(lastPitchCount(), count);
-        validateAdditionalPitch();
         pitches.add(Pitch.of(count));
     }
 
@@ -37,21 +31,6 @@ public class PitchGroup {
     private boolean sumWithLastPitchOverTheMax(int lastPitchCount, int count) {
         return lastPitchCount + count > MAX_PITCH_TOTAL_COUNT;
     }
-
-    private void validateAdditionalPitch() {
-        if (pitchGroupSizeIsTwo() && totalCountIsLessThanMax()) {
-            throw new RuntimeException("더이상 공을 던질 수 없습니다.");
-        }
-    }
-
-    private boolean totalCountIsLessThanMax() {
-        return total() < MAX_PITCH_TOTAL_COUNT;
-    }
-
-    private boolean pitchGroupSizeIsTwo() {
-        return size() == NORMAL_PITCH_SIZE;
-    }
-
 
     public int size() {
         return pitches.size();
@@ -75,9 +54,5 @@ public class PitchGroup {
         return pitches.stream()
                 .map(Pitch::count)
                 .collect(Collectors.toList());
-    }
-
-    public boolean finished() {
-        return (pitchGroupSizeIsTwo() && totalCountIsLessThanMax()) || size() == MAX_PITCH_SIZE;
     }
 }
