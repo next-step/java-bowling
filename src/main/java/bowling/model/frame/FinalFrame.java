@@ -28,11 +28,6 @@ public class FinalFrame extends Frame {
 	}
 
 	@Override
-	public String getGameStatus() {
-		return play.getGameStatus();
-	}
-
-	@Override
 	public boolean isGameEnd() {
 		return play.isGameEnd();
 	}
