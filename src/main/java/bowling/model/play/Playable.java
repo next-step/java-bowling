@@ -9,7 +9,7 @@ public interface Playable {
 
 	Pin findPin(int index);
 
-	String getGameStatus();
+	int countGame();
 
 	boolean isStrike();
 
