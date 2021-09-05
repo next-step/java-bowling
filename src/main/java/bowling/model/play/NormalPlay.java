@@ -8,7 +8,7 @@ import bowling.model.Pin;
 import bowling.model.score.ScoreGenerator;
 import bowling.model.score.Score;
 
-public class Play implements Playable {
+public class NormalPlay implements Playable {
 
 	private static final String LIMIT_MAX_PIN_ERROR_MESSAGE = "최대 쓰러뜨릴 수 있는 수가 초과 하였습니다.";
 	private static final String EMPTY_VALUE = "";
@@ -23,7 +23,7 @@ public class Play implements Playable {
 	private final int frameNumber;
 	private final List<Pin> gameResult;
 
-	public Play(int frameNumber) {
+	public NormalPlay(int frameNumber) {
 		this.frameNumber = frameNumber;
 		this.gameResult = new ArrayList<>();
 	}
@@ -120,8 +120,8 @@ public class Play implements Playable {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Play play = (Play)o;
-		return frameNumber == play.frameNumber && Objects.equals(gameResult, play.gameResult);
+		NormalPlay normalPlay = (NormalPlay)o;
+		return frameNumber == normalPlay.frameNumber && Objects.equals(gameResult, normalPlay.gameResult);
 	}
 
 	@Override

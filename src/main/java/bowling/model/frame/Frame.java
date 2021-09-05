@@ -2,7 +2,7 @@ package bowling.model.frame;
 
 import java.util.Objects;
 
-import bowling.model.play.Play;
+import bowling.model.play.NormalPlay;
 import bowling.model.play.Playable;
 import bowling.model.score.Score;
 
@@ -13,7 +13,7 @@ public abstract class Frame {
 
 	public Frame(int frameNumber) {
 		checkFrameNumber(frameNumber);
-		this.play = new Play(frameNumber);
+		this.play = new NormalPlay(frameNumber);
 		this.frameNumber = frameNumber;
 	}
 
