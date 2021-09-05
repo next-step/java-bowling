@@ -10,7 +10,7 @@ public final class StrikePitch extends BasePitch {
 
 	@Override
 	public Pitch play(final Pins pins) {
-		if (pins.count() == STRIKE_PINS_COUNT) {
+		if (pins.isEqualsCount(STRIKE_PINS_COUNT)) {
 			return new StrikePitch();
 		}
 

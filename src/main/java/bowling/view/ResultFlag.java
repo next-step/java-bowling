@@ -2,6 +2,7 @@ package bowling.view;
 
 import java.util.stream.Collectors;
 
+import bowling.domain.common.Pins;
 import bowling.domain.frame.Frame;
 import bowling.domain.pitch.Pitch;
 import bowling.domain.pitch.SparePitch;
@@ -13,7 +14,7 @@ public enum ResultFlag {
 	SPARE("/"),
 	GUTTER("-");
 
-	private static final int GUTTER_PINS_COUNT = 0;
+	private static final Pins GUTTER_PINS = Pins.of(0);
 
 	private final String flag;
 
@@ -37,7 +38,7 @@ public enum ResultFlag {
 			return SPARE.flag;
 		}
 
-		if (pitch.getPins().count() == GUTTER_PINS_COUNT) {
+		if (pitch.getPins().isEqualsCount(GUTTER_PINS)) {
 			return GUTTER.flag;
 		}
 

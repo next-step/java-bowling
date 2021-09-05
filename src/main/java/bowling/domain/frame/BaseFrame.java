@@ -14,7 +14,7 @@ import bowling.domain.pitch.StrikePitch;
 
 public abstract class BaseFrame implements Frame {
 
-	private static final int STRIKE_PINS_COUNT = 10;
+	private static final Pins STRIKE_PINS = Pins.of(10);
 	private static final int FIRST_INDEX = 0;
 	private static final int SECOND_INDEX = 1;
 
@@ -39,7 +39,7 @@ public abstract class BaseFrame implements Frame {
 	}
 
 	private Pitch firstPitch(final Pins pins) {
-		return (pins.count() == STRIKE_PINS_COUNT)
+		return (pins.isEqualsCount(STRIKE_PINS))
 			? new StrikePitch()
 			: new NormalPitch(pins);
 	}

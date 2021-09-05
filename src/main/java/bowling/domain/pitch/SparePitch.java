@@ -5,7 +5,7 @@ import bowling.domain.exception.InvalidPinCountException;
 
 public final class SparePitch extends BasePitch {
 
-	private static final int MIN_PINS_COUNT = 1;
+	private static final Pins MIN_PINS = Pins.of(1);
 
 	public SparePitch(final Pins pins) {
 		createValidation(pins);
@@ -13,14 +13,14 @@ public final class SparePitch extends BasePitch {
 	}
 
 	private void createValidation(final Pins pins) {
-		if (pins.count() < MIN_PINS_COUNT) {
+		if (pins.isSmallerThan(MIN_PINS)) {
 			throw new InvalidPinCountException();
 		}
 	}
 
 	@Override
 	public Pitch play(final Pins pins) {
-		if (pins.count() == STRIKE_PINS_COUNT) {
+		if (pins.isEqualsCount(STRIKE_PINS_COUNT)) {
 			return new StrikePitch();
 		}
 

@@ -30,6 +30,38 @@ public final class Pins {
 		return count;
 	}
 
+	public int sumCount(final Pins pins) {
+		return sumCount(pins.count);
+	}
+
+	public int sumCount(final int count) {
+		return this.count + count;
+	}
+
+	public boolean isEqualsCount(final Pins pins) {
+		return isEqualsCount(pins.count);
+	}
+
+	public boolean isEqualsCount(final int count) {
+		return this.count == count;
+	}
+
+	public boolean isBiggerThan(final Pins pins) {
+		return isBiggerThan(pins.count);
+	}
+
+	public boolean isBiggerThan(final int count) {
+		return this.count > count;
+	}
+
+	public boolean isSmallerThan(final Pins pins) {
+		return isSmallerThan(pins.count);
+	}
+
+	public boolean isSmallerThan(final int count) {
+		return this.count < count;
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o)
