@@ -1,4 +1,4 @@
-package bowling.step2.outputView.state;
+package bowling.step2.outputview.state;
 
 public class Strike implements PitchStatus {
     @Override

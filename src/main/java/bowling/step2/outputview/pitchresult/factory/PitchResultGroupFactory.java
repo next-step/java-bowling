@@ -1,10 +1,10 @@
-package bowling.step2.outputView.pitchResult.factory;
+package bowling.step2.outputview.pitchresult.factory;
 
 import bowling.step2.domain.Frame;
 import bowling.step2.domain.NormalFrame;
-import bowling.step2.outputView.pitchResult.LastFramePitchResultGroup;
-import bowling.step2.outputView.pitchResult.NormalFramePitchResultGroup;
-import bowling.step2.outputView.pitchResult.PitchResultGroup;
+import bowling.step2.outputview.pitchresult.LastFramePitchResultGroup;
+import bowling.step2.outputview.pitchresult.NormalFramePitchResultGroup;
+import bowling.step2.outputview.pitchresult.PitchResultGroup;
 
 public class PitchResultGroupFactory {
     public static PitchResultGroup create(Frame frame) {

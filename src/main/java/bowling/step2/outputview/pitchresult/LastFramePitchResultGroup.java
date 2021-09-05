@@ -1,10 +1,10 @@
-package bowling.step2.outputView.pitchResult;
+package bowling.step2.outputview.pitchresult;
 
 import bowling.step2.domain.Frame;
-import bowling.step2.outputView.state.Gutter;
-import bowling.step2.outputView.state.Miss;
-import bowling.step2.outputView.state.Spare;
-import bowling.step2.outputView.state.Strike;
+import bowling.step2.outputview.state.Gutter;
+import bowling.step2.outputview.state.Miss;
+import bowling.step2.outputview.state.Spare;
+import bowling.step2.outputview.state.Strike;
 
 import java.util.ArrayList;
 import java.util.List;

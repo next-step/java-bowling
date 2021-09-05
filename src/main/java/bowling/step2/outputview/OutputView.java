@@ -1,8 +1,8 @@
-package bowling.step2.outputView;
+package bowling.step2.outputview;
 
 import bowling.step2.domain.Frame;
 import bowling.step2.domain.Lane;
-import bowling.step2.outputView.pitchResult.FrameResult;
+import bowling.step2.outputview.pitchresult.FrameResult;
 
 import java.util.List;
 

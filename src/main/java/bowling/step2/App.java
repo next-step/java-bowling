@@ -1,8 +1,8 @@
 package bowling.step2;
 
 import bowling.step2.domain.Lane;
-import bowling.step2.inputView.InputView;
-import bowling.step2.outputView.OutputView;
+import bowling.step2.inputview.InputView;
+import bowling.step2.outputview.OutputView;
 
 public class App {
     public static void main(String[] args) {

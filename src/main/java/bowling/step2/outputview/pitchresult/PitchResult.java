@@ -1,6 +1,6 @@
-package bowling.step2.outputView.pitchResult;
+package bowling.step2.outputview.pitchresult;
 
-import bowling.step2.outputView.state.PitchStatus;
+import bowling.step2.outputview.state.PitchStatus;
 
 public class PitchResult {
     private final PitchStatus pitchStatus;
