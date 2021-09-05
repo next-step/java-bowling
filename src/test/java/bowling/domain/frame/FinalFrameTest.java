@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 class FinalFrameTest {
 
@@ -43,8 +44,11 @@ class FinalFrameTest {
     @DisplayName("0과 10사이의 정수의 Scores객체를 입력 받으면, NormalFrame 객체를 생성한다")
     @Test
     void createScoreTest() {
-        assertThat(FinalFrame.of(Score.from(0))).isInstanceOf(FinalFrame.class);
-        assertThat(FinalFrame.of(Score.from(10))).isInstanceOf(FinalFrame.class);
+        assertAll(
+            () -> assertThat(FinalFrame.of(Score.from(0))).isInstanceOf(FinalFrame.class),
+            () -> assertThat(FinalFrame.of(Score.from(5))).isInstanceOf(FinalFrame.class),
+            () -> assertThat(FinalFrame.of(Score.from(10))).isInstanceOf(FinalFrame.class)
+        );
     }
 
     @DisplayName("첫번째 투구가 스트라이크가 아니고, 첫번째와 두번쨰 투구로 쓰러뜨린 핀의 합이 10을 벗어나면 예외를 던진다")
