@@ -23,7 +23,15 @@ public class Score {
         return new Score(this.value + score.value);
     }
 
-    public FrameResult getFrameResult() {
+    public Boolean isMaxScore() {
+        return value == MAX_SCORE;
+    }
+
+    public FrameResult getSpareOrMiss() {
+        if (value == MAX_SCORE) {
+            return FrameResult.SPARE;
+        }
+
         return FrameResult.MISS;
     }
 
