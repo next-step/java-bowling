@@ -14,4 +14,9 @@ public class BowlingConsoleInputView {
         System.out.println("플레이어 이름은(3 english letters)?:");
         return scanner.nextLine();
     }
+
+    public String enterScore(int index) {
+        System.out.printf("%d프레임 투구 : ", index);
+        return scanner.nextLine();
+    }
 }

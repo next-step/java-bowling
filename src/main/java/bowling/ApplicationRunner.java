@@ -11,5 +11,10 @@ public class ApplicationRunner {
 
         BowlingConsoleInputView inputView = new BowlingConsoleInputView(scanner);
         String playerText = inputView.enterPlayer();
+
+        for (int i = 1; i <= 10; i++) {
+            String scoreText = inputView.enterScore(i);
+
+        }
     }
 }
