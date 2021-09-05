@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import bowling.score.Score;
+import bowling.score.ScoreBoard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -94,5 +95,17 @@ class FinalFrameTest {
   void threePitchesFinish() {
     frame.play(1).play(9).play(1);
     assertThat(frame.isGameEnd()).isTrue();
+  }
+
+  @Test
+  void name() {
+    Frame frame = new NormalFrame(9);
+    frame.play(10)
+        .play(10)
+        .play(10)
+        .play(10);
+
+    ScoreBoard scoreBoard = frame.createScoreBoard();
+    System.out.println("scoreBoard = " + scoreBoard.toString());
   }
 }
