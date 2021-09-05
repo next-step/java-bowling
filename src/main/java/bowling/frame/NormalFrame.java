@@ -83,15 +83,12 @@ public class NormalFrame implements Frame {
   @Override
   public ScoreResult createScoreResult() {
     if (!state.isFinish()) {
-      System.out.println("----1----");
       return new ScoreResult(state.scoreMessage(), NOT_SUM_SCORE_VALUE);
     }
 
     try {
-      System.out.println("----2----");
       return new ScoreResult(state.scoreMessage(), scoreValue());
     } catch (RuntimeException e) {
-      System.out.println("----3----");
       return new ScoreResult(state.scoreMessage(), NOT_SUM_SCORE_VALUE);
     }
   }
