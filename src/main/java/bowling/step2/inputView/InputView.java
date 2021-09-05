@@ -14,12 +14,12 @@ public class InputView {
         System.out.print("플레이어 이름은(3 english letters)?: ");
     }
 
-    public static int getPitch(int i) {
-        printGetPitch(i);
+    public static int getPitch(int frameCount) {
+        printGetPitch(frameCount);
         return Integer.parseInt(SC.nextLine());
     }
 
-    private static void printGetPitch(int i) {
-        System.out.print(i + "프레임 투구 : ");
+    private static void printGetPitch(int frameCount) {
+        System.out.print(frameCount + "프레임 투구 : ");
     }
 }
