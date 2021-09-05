@@ -5,22 +5,21 @@ import java.util.Collections;
 import java.util.List;
 
 public class FrameGroup {
-    private final List<Frame> frameList;
+    private final List<Frame> frames;
 
     private static final int MAX = 10;
 
-    private FrameGroup() {
-        this.frameList = new ArrayList<>(Collections.singletonList(NormalFrame.of(1)));
+    public FrameGroup(List<Frame> frames) {
+        this.frames = frames;
     }
 
     public static FrameGroup of() {
-        return new FrameGroup();
+        return new FrameGroup(Collections.singletonList(NormalFrame.of(1)));
     }
 
     public void pitch(int count) {
-        frameList.get(frameList.size() - 1)
+        frames.get(frames.size() - 1)
                 .pitch(count);
-
     }
 
     public boolean frameFinished() {
@@ -30,7 +29,11 @@ public class FrameGroup {
     public void nextFrame() {
         validateFrameGroupSize();
 
-        frameList.add(lastFrame().nextFrame());
+        if (lastFrame() instanceof LastFrame) {
+            return;
+        }
+
+        frames.add(lastFrame().nextFrame());
     }
 
     private void validateFrameGroupSize() {
@@ -40,18 +43,18 @@ public class FrameGroup {
     }
 
     private boolean frameListSizeOverTheMax() {
-        return frameList.size() > MAX;
+        return frames.size() > MAX;
     }
 
     public Frame lastFrame() {
-        return frameList.get(frameList.size() - 1);
+        return frames.get(frames.size() - 1);
     }
 
     public int currentSize() {
-        return frameList.size();
+        return frames.size();
     }
 
     public List<Frame> current() {
-        return frameList;
+        return frames;
     }
 }
