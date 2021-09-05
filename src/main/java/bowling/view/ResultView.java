@@ -16,15 +16,44 @@ public class ResultView {
   private static final String VALUE_DIGITS_NORMAL = "  %3s   |";
   private static final String VALUE_DIGITS_FINAL = "  %3s |";
   private static final String HEADER_VALUE_DIGITS = "   %02d   |";
+  private static final String VALUE_DIGITS = "   %3d  |";
   private static final String HEADER_NAME = "|  NAME  |";
+  private static final String DEFAULT_BLANK = "|        |";
   private static final String VALUE_BLANK = "        |";
-  public static final String GUTTER = "-";
-  public static final String NO_HIT = "0";
+  private static final String GUTTER = "-";
+  private static final String NO_HIT = "0";
+  private static final String DEFAULT_SCORE_VALUE = "-1";
+  private static final String DEFAULT_SCORE_BLANK = "  ";
 
   public static void printBoard(final ResultDto result) {
-
     printHeader();
     printBody(result);
+    printBodyScore(result);
+  }
+
+  private static void printHeader() {
+    List<String> header = new ArrayList<>();
+    header.add(HEADER_NAME);
+
+    IntStream.range(START_INCLUSIVE, END_EXCLUSIVE)
+        .forEach(round -> createHeader(header, round));
+
+    System.out.println(String.join("", header));
+  }
+
+  private static void createHeader(final List<String> header, final int round) {
+    header.add(String.format(HEADER_VALUE_DIGITS, round));
+  }
+
+  private static String widthFormat(final String scoreMark) {
+    if (scoreMark.length() > LIMIT_SCORE_LENGTH) {
+      return String.format(VALUE_DIGITS_FINAL, scoreMark.replace(NO_HIT, GUTTER));
+    }
+    return String.format(VALUE_DIGITS_NORMAL, scoreMark.replace(NO_HIT, GUTTER));
+  }
+
+  private static String widthFormatScore(final int score) {
+    return String.format(VALUE_DIGITS, score).replace(DEFAULT_SCORE_VALUE, DEFAULT_SCORE_BLANK);
   }
 
   private static void printBody(final ResultDto result) {
@@ -47,28 +76,25 @@ public class ResultView {
   private static void writeScoreMark(final ResultDto result, final List<String> values) {
     result.getFrames()
         .stream()
-        .map((FrameDto frame) -> widthFormat(frame.frameScoreMark()))
+        .map((FrameDto frame) -> widthFormat(frame.getScoreMark()))
         .forEach(values::add);
   }
 
-  private static String widthFormat(final String scoreMark) {
-    if (scoreMark.length() > LIMIT_SCORE_LENGTH) {
-      return String.format(VALUE_DIGITS_FINAL, scoreMark.replace(NO_HIT, GUTTER));
-    }
-    return String.format(VALUE_DIGITS_NORMAL, scoreMark.replace(NO_HIT, GUTTER));
+  private static void printBodyScore(final ResultDto result) {
+    List<String> values = new ArrayList<>();
+
+    values.add(DEFAULT_BLANK);
+
+    writeScoreValue(result, values);
+    writeBlankMark(result, values);
+
+    System.out.println(String.join("", values));
   }
 
-  private static void printHeader() {
-    List<String> header = new ArrayList<>();
-    header.add(HEADER_NAME);
-
-    IntStream.range(START_INCLUSIVE, END_EXCLUSIVE)
-        .forEach(round -> createHeader(header, round));
-
-    System.out.println(String.join("", header));
-  }
-
-  private static void createHeader(final List<String> header, final int round) {
-    header.add(String.format(HEADER_VALUE_DIGITS, round));
+  private static void writeScoreValue(final ResultDto result, final List<String> values) {
+    result.getFrames()
+        .stream()
+        .map((FrameDto frame) -> widthFormatScore(frame.getTotalScore()))
+        .forEach(values::add);
   }
 }
