@@ -10,7 +10,7 @@ public class NormalFrame extends Frame {
         super(scores);
     }
 
-    public NormalFrame(Scores scores) {
+    private NormalFrame(Scores scores) {
         super(scores);
     }
 
