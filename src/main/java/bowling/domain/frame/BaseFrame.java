@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import bowling.domain.common.FalledPins;
+import bowling.domain.common.Pins;
 import bowling.domain.exception.InvalidMethodCallException;
 import bowling.domain.pitch.NormalPitch;
 import bowling.domain.pitch.Pitch;
@@ -25,27 +25,27 @@ public abstract class BaseFrame implements Frame {
 	}
 
 	@Override
-	public Frame pitch(final int falledPinsCount) {
-		return pitch(FalledPins.of(falledPinsCount));
+	public Frame pitch(final int pinsCount) {
+		return pitch(Pins.of(pinsCount));
 	}
 
-	protected List<Pitch> playedPitches(final FalledPins falledPins) {
+	protected List<Pitch> playedPitches(final Pins pins) {
 		final Pitch playedPitch = pitches.isEmpty()
-			? firstPitch(falledPins)
-			: otherPitch(falledPins);
+			? firstPitch(pins)
+			: otherPitch(pins);
 
 		return Stream.concat(pitches.stream(), Stream.of(playedPitch))
 			.collect(Collectors.toList());
 	}
 
-	private Pitch firstPitch(final FalledPins falledPins) {
-		return (falledPins.count() == STRIKE_PINS_COUNT)
+	private Pitch firstPitch(final Pins pins) {
+		return (pins.count() == STRIKE_PINS_COUNT)
 			? new StrikePitch()
-			: new NormalPitch(falledPins);
+			: new NormalPitch(pins);
 	}
 
-	private Pitch otherPitch(final FalledPins falledPins) {
-		return pitches.get(pitches.size() - 1).play(falledPins);
+	private Pitch otherPitch(final Pins pins) {
+		return pitches.get(pitches.size() - 1).play(pins);
 	}
 
 	protected boolean isFirstStrike() {

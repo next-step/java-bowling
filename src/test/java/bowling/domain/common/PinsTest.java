@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import bowling.domain.exception.InvalidPinCountException;
 
 @DisplayName("쓰러진 핀")
-class FalledPinsTest {
+class PinsTest {
 
 	@DisplayName("[실패] 생성 - 유효하지 않은 핀 개수")
 	@ParameterizedTest
@@ -19,7 +19,7 @@ class FalledPinsTest {
 		// given
 
 		// when
-		Assertions.assertThrows(InvalidPinCountException.class, () -> FalledPins.of(pinCount));
+		Assertions.assertThrows(InvalidPinCountException.class, () -> Pins.of(pinCount));
 
 		// then
 	}

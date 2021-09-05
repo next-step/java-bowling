@@ -1,18 +1,18 @@
 package bowling.domain.pitch;
 
-import bowling.domain.common.FalledPins;
+import bowling.domain.common.Pins;
 
 public abstract class BasePitch implements Pitch {
 
 	protected static final int STRIKE_PINS_COUNT = 10;
 
-	protected FalledPins falledPins;
+	protected Pins pins;
 
-	public Pitch play(final int falledPinsCount) {
-		return play(FalledPins.of(falledPinsCount));
+	public Pitch play(final int pinsCount) {
+		return play(Pins.of(pinsCount));
 	}
 
-	public FalledPins getFalledPins() {
-		return falledPins;
+	public Pins getPins() {
+		return pins;
 	}
 }

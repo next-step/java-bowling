@@ -1,19 +1,19 @@
 package bowling.domain.pitch;
 
-import bowling.domain.common.FalledPins;
+import bowling.domain.common.Pins;
 
 public final class StrikePitch extends BasePitch {
 
 	public StrikePitch() {
-		this.falledPins = FalledPins.of(STRIKE_PINS_COUNT);
+		this.pins = Pins.of(STRIKE_PINS_COUNT);
 	}
 
 	@Override
-	public Pitch play(final FalledPins falledPins) {
-		if (falledPins.count() == STRIKE_PINS_COUNT) {
+	public Pitch play(final Pins pins) {
+		if (pins.count() == STRIKE_PINS_COUNT) {
 			return new StrikePitch();
 		}
 
-		return new NormalPitch(falledPins);
+		return new NormalPitch(pins);
 	}
 }

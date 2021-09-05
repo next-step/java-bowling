@@ -37,10 +37,10 @@ public enum ResultFlag {
 			return SPARE.flag;
 		}
 
-		if (pitch.getFalledPins().count() == GUTTER_PINS_COUNT) {
+		if (pitch.getPins().count() == GUTTER_PINS_COUNT) {
 			return GUTTER.flag;
 		}
 
-		return String.valueOf(pitch.getFalledPins().count());
+		return String.valueOf(pitch.getPins().count());
 	}
 }

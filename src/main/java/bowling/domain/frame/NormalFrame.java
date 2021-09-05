@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import bowling.domain.common.FalledPins;
+import bowling.domain.common.Pins;
 import bowling.domain.common.Score;
 import bowling.domain.frame.exception.InvalidProgressFrameException;
 import bowling.domain.pitch.Pitch;
@@ -27,12 +27,12 @@ public final class NormalFrame extends BaseFrame {
 	}
 
 	@Override
-	public Frame pitch(final FalledPins falledPins) {
+	public Frame pitch(final Pins pins) {
 		if (!possiblePitch()) {
 			throw new InvalidProgressFrameException();
 		}
 
-		return new NormalFrame(playedPitches(falledPins));
+		return new NormalFrame(playedPitches(pins));
 	}
 
 	@Override
@@ -60,13 +60,13 @@ public final class NormalFrame extends BaseFrame {
 	}
 
 	private Score playingScore() {
-		final int falledPinsCountSum = pitches().stream()
-			.map(Pitch::getFalledPins)
-			.mapToInt(FalledPins::count)
+		final int pinsCountSum = pitches().stream()
+			.map(Pitch::getPins)
+			.mapToInt(Pins::count)
 			.sum();
 		final int leftCount = MAX_PITCHES_COUNT - pitches().size();
 
-		return new Score(falledPinsCountSum, leftCount);
+		return new Score(pinsCountSum, leftCount);
 	}
 
 	private Score playedScore() {
@@ -79,8 +79,8 @@ public final class NormalFrame extends BaseFrame {
 		}
 
 		return Score.miss(pitches().stream()
-			.map(Pitch::getFalledPins)
-			.mapToInt(FalledPins::count)
+			.map(Pitch::getPins)
+			.mapToInt(Pins::count)
 			.sum());
 	}
 

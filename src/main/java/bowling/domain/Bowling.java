@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.common.FalledPins;
+import bowling.domain.common.Pins;
 import bowling.domain.exception.InvalidProgressBowlingException;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
@@ -30,11 +30,11 @@ public final class Bowling {
 				|| frames.get(FINAL_FRAME_INDEX).possiblePitch();
 	}
 
-	public Bowling pitch(final int falledPinsCount) {
-		return pitch(FalledPins.of(falledPinsCount));
+	public Bowling pitch(final int pinsCount) {
+		return pitch(Pins.of(pinsCount));
 	}
 
-	public Bowling pitch(final FalledPins falledPins) {
+	public Bowling pitch(final Pins pins) {
 		if (!possiblePitch()) {
 			throw new InvalidProgressBowlingException();
 		}
@@ -47,7 +47,7 @@ public final class Bowling {
 		}
 
 		final Frame nextFrame = nextFrame(frames, currentFrame);
-		return new Bowling(Stream.concat(frames.stream(), Stream.of(nextFrame.pitch(falledPins)))
+		return new Bowling(Stream.concat(frames.stream(), Stream.of(nextFrame.pitch(pins)))
 				.collect(Collectors.toList()));
 	}
 

@@ -52,7 +52,7 @@ public class Score {
 	}
 
 	public Score plus(final Pitch pitch) {
-		return new Score(value + pitch.getFalledPins().count(), leftCount - 1);
+		return new Score(value + pitch.getPins().count(), leftCount - 1);
 	}
 
 	public int getValue() {

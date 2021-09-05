@@ -4,20 +4,20 @@ import java.util.Objects;
 
 import bowling.domain.exception.InvalidPinCountException;
 
-public final class FalledPins {
+public final class Pins {
 
 	private static final int MIN_COUNT = 0;
 	private static final int MAX_COUNT = 10;
 
 	private final int count;
 
-	private FalledPins(final int count) {
+	private Pins(final int count) {
 		this.count = count;
 	}
 
-	public static FalledPins of(final int count) {
+	public static Pins of(final int count) {
 		validateCreate(count);
-		return new FalledPins(count);
+		return new Pins(count);
 	}
 
 	private static void validateCreate(final int count) {
@@ -34,9 +34,9 @@ public final class FalledPins {
 	public boolean equals(final Object o) {
 		if (this == o)
 			return true;
-		if (!(o instanceof FalledPins))
+		if (!(o instanceof Pins))
 			return false;
-		final FalledPins that = (FalledPins)o;
+		final Pins that = (Pins)o;
 		return count == that.count;
 	}
 

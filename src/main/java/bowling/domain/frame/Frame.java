@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import java.util.List;
 
-import bowling.domain.common.FalledPins;
+import bowling.domain.common.Pins;
 import bowling.domain.common.Score;
 import bowling.domain.pitch.Pitch;
 
@@ -10,9 +10,9 @@ public interface Frame {
 
 	boolean possiblePitch();
 
-	Frame pitch(final int falledPinsCount);
+	Frame pitch(final int pinsCount);
 
-	Frame pitch(final FalledPins falledPins);
+	Frame pitch(final Pins pins);
 
 	Frame next();
 

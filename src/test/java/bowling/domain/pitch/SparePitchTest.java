@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import bowling.domain.common.FalledPins;
+import bowling.domain.common.Pins;
 
 @DisplayName("투구 - 스페어")
 class SparePitchTest {
@@ -32,7 +32,7 @@ class SparePitchTest {
 
 		// then
 		assertThat(pitch).isInstanceOf(SparePitch.class);
-		assertThat(pitch.getFalledPins()).isEqualTo(FalledPins.of(pinCount));
+		assertThat(pitch.getPins()).isEqualTo(Pins.of(pinCount));
 	}
 
 	static Stream<Arguments> normal() {
@@ -55,6 +55,6 @@ class SparePitchTest {
 
 		// then
 		assertThat(pitch).isInstanceOf(NormalPitch.class);
-		assertThat(pitch.getFalledPins()).isEqualTo(FalledPins.of(pinCount));
+		assertThat(pitch.getPins()).isEqualTo(Pins.of(pinCount));
 	}
 }

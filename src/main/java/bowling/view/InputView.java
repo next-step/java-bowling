@@ -11,7 +11,7 @@ public final class InputView {
 		return scanner.nextLine();
 	}
 
-	public static int falledPinsCount(final int frameIndex) {
+	public static int pinsCount(final int frameIndex) {
 		System.out.printf("%d프레임 투구 : ", frameIndex);
 		return Integer.parseInt(scanner.nextLine());
 	}

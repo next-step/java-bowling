@@ -13,8 +13,8 @@ public class BowlingController {
 
 		OutputView.printFrames(player, bowling);
 		while (bowling.possiblePitch()) {
-			final int falledPinsCount = InputView.falledPinsCount(bowling.currentFrameIndex());
-			bowling = bowling.pitch(falledPinsCount);
+			final int pinsCount = InputView.pinsCount(bowling.currentFrameIndex());
+			bowling = bowling.pitch(pinsCount);
 			OutputView.printFrames(player, bowling);
 		}
 	}
