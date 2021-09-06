@@ -75,7 +75,66 @@ class NormalFrameTest {
 
     }
 
+    @Test
+    @DisplayName("첫 프레임 번호")
+    void frame_number() {
+        //given
+        int first = 0;
+        int second = 0;
 
+        //when
+        NormalFrame firstFrame = new NormalFrame(first, second);
+
+        //then
+        assertThat(firstFrame.number()).isEqualTo(1);
+
+    }
+
+    @Test
+    @DisplayName("다음 프레임 번호")
+    void next_frame_number() {
+        //given
+        int first = 5;
+        int second = 5;
+        NormalFrame firstFrame = new NormalFrame(first, second);
+
+        //when
+        NormalFrame nextFrame = firstFrame.next(first);
+
+        //then
+        assertThat(nextFrame.number()).isEqualTo(2);
+
+    }
+
+    @Test
+    @DisplayName("다음 프레임 생성")
+    void next_frame() {
+        //given
+        int first = 10;
+        NormalFrame firstFrame = new NormalFrame(first);
+
+        //when
+        NormalFrame nextFrame = firstFrame.next(first);
+
+        //then
+        assertThat(nextFrame.number()).isEqualTo(2);
+
+    }
+
+    @Test
+    @DisplayName("다음 프레임 생성 불가")
+    void next_frame_exception() {
+        //given
+        int first = 5;
+        NormalFrame firstFrame = new NormalFrame(first);
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> firstFrame.next(5)).isInstanceOf(CannotNextFrameException.class)
+                .hasMessage("모든 투구를 완료하지 않아 다음 프레임으로 진행하지 못합니다.");
+
+    }
 
 
 }
