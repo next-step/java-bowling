@@ -1,8 +1,10 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,32 @@ public class Question extends AbstractEntity {
     public Question setTitle(String title) {
         this.title = title;
         return this;
+    }
+
+
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) { // 지우기 전 검증. 작성자와 loginUser 일치 여부 확인.
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        List<Answer> answers = getAnswers();
+        for (Answer answer : answers) {
+            if (!answer.isOwner(loginUser)) { // 지우기 전 검증. loginUser 외 댓글 작성자 여부 확인.
+                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+            }
+        }
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        setDeleted(true); // 질문 삭제 처리
+        // 질문 삭제 기록 남김
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+        // 답변 삭제 및 삭제 기록 남김
+        for (Answer answer : answers) {
+            answer.setDeleted(true);
+            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        }
+
+        return deleteHistories;
     }
 
     public String getContents() {
@@ -92,4 +120,5 @@ public class Question extends AbstractEntity {
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
+
 }
