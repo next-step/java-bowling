@@ -28,11 +28,8 @@ public class Answers {
     }
 
     public List<DeleteHistory> deleteAndGenerateHistories(User loginUser) {
-        List<DeleteHistory> answerDeleteHistories = new ArrayList<>();
-        for (Answer answer : answers) {
-            DeleteHistory answerDeleteHistory = answer.deleteAndGenerateHistory(loginUser);
-            answerDeleteHistories.add(answerDeleteHistory);
-        }
-        return answerDeleteHistories;
+        return answers.stream()
+                .map(answer -> answer.deleteAndGenerateHistory(loginUser))
+                .collect(toList());
     }
 }
