@@ -34,7 +34,7 @@ public class Score {
 
   public Score sum(final int pinCount) {
     validationBallCount();
-    return new Score(this.score + pinCount, ballCount - SPARE_BALL_COUNT);
+    return new Score(score + pinCount, ballCount - SPARE_BALL_COUNT);
   }
 
   private void validationBallCount() {
@@ -47,7 +47,10 @@ public class Score {
     return ballCount == DEFAULT_BALL_COUNT;
   }
 
-  public ScoreDto scoreValue() {
+  public ScoreDto from() {
+    if(!isFinishBallCount()){
+      throw new RuntimeException();
+    }
     return ScoreDto.from(score);
   }
 

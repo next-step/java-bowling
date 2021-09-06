@@ -43,6 +43,6 @@ class SpareTest {
     Spare spare = new Spare(PinTest.from(1), PinTest.from(9));
     Score score = spare.calculateScore(Score.strike());
 
-    assertThat(score.scoreValue().getScore()).isEqualTo(20);
+    assertThat(score.from().getScore()).isEqualTo(20);
   }
 }

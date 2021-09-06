@@ -13,21 +13,21 @@ class ScoreTest {
   @Test
   void strike() {
     Score strike = Score.strike();
-    assertThat(strike.scoreValue().getScore()).isEqualTo(10);
+    assertThat(strike.from().getScore()).isEqualTo(10);
   }
 
   @DisplayName("스페어를 쳤을때 볼카운드1에 점수 10인 스코어 객체가 생성된다.")
   @Test
   void spare() {
     Score spare = Score.spare();
-    assertThat(spare.scoreValue().getScore()).isEqualTo(10);
+    assertThat(spare.from().getScore()).isEqualTo(10);
   }
 
   @DisplayName("미스를 쳣을때 볼카운0에 점수가 할당된 스코어 객체가 생성된다.")
   @Test
   void miss() {
     Score miss = Score.miss(8);
-    assertThat(miss.scoreValue().getScore()).isEqualTo(8);
+    assertThat(miss.from().getScore()).isEqualTo(8);
   }
 
   @DisplayName("스트라이크와 스페어를 쳤을때, 각각 보너스 적용 볼카운트 만큼 값이 합산되는지 확인한다.")

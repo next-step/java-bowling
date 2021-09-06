@@ -43,7 +43,7 @@ class StrikeTest {
     strikeScore = strike.calculateScore(strikeScore);
     strikeScore = strike.calculateScore(strikeScore);
 
-    int total = strike.calculateScore(strikeScore).scoreValue().getScore();
+    int total = strike.calculateScore(strikeScore).from().getScore();
 
     assertThat(total).isEqualTo(30);
   }

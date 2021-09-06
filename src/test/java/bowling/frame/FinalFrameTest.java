@@ -70,7 +70,7 @@ class FinalFrameTest {
     Score spare = Score.spare();
     frame.play(10);
 
-    int score = frame.frameScoreAdd(spare).scoreValue().getScore();
+    int score = frame.frameScoreAdd(spare).from().getScore();
     assertThat(score).isEqualTo(20);
   }
 
@@ -79,7 +79,7 @@ class FinalFrameTest {
   void beforeStrike() {
     Score strike = Score.strike();
     frame.play(10);
-    int score = frame.frameScoreAdd(strike).scoreValue().getScore();
+    int score = frame.frameScoreAdd(strike).from().getScore();
     assertThat(score).isEqualTo(20);
   }
 
