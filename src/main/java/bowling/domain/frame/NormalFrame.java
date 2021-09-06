@@ -4,6 +4,10 @@ import java.util.Objects;
 
 public class NormalFrame {
 
+    public static final int INIT_NUMBER = 1;
+    public static final int LAST_NORMAL_NUMBER = 9;
+
+
     private final int number;
     private final Rollings rollings;
 
@@ -12,22 +16,31 @@ public class NormalFrame {
         this.number = number;
     }
 
-    public NormalFrame(int first) {
-        this(Rollings.first(first), 1);
+    public NormalFrame(Rollings rollings) {
+        this.rollings = rollings;
+        this.number = INIT_NUMBER;
     }
 
-    public NormalFrame(int first, int second) {
-        this(Rollings.first(first).second(second), 1);
+    public NormalFrame(int first) {
+        this(Rollings.first(first), INIT_NUMBER);
+    }
+
+    public NormalFrame roll(int second) {
+        return new NormalFrame(this.rollings.second(second), this.number);
     }
 
     public NormalFrame next(int first) {
         if (!rollings.allRolled()) {
             throw new CannotNextFrameException();
         }
-        if (this.number == 9) {
+        if (isLastNormalFrame()) {
             //TODO 마지막 프레임 리턴
         }
         return new NormalFrame(Rollings.first(first).second(0), this.number + 1);
+    }
+
+    private boolean isLastNormalFrame() {
+        return this.number == LAST_NORMAL_NUMBER;
     }
 
     public boolean allRolled() {

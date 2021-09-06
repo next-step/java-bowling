@@ -1,11 +1,9 @@
 package bowling.domain.frame;
 
-import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
@@ -19,13 +17,13 @@ class NormalFrameTest {
     @DisplayName("객체 생성 - 스트라이크")
     void construct_strike() {
         //given
-        NormalFrame normalFrame = new NormalFrame(10);
+        Rollings rollings = Rollings.first(10);
 
         //when
-
+        NormalFrame normalFrame = new NormalFrame(rollings);
 
         //then
-        assertThat(normalFrame).isEqualTo(new NormalFrame(10));
+        assertThat(normalFrame).isEqualTo(new NormalFrame(rollings));
 
     }
 
@@ -33,49 +31,13 @@ class NormalFrameTest {
     @DisplayName("객체 생성 - 스트라이크 아닌 경우")
     void construct_non_strike() {
         //given
-        NormalFrame normalFrame = new NormalFrame(5, 5);
+        Rollings rollings = Rollings.first(5).second(5);
 
         //when
-
-
-        //then
-        assertThat(normalFrame).isEqualTo(new NormalFrame(5, 5));
-
-    }
-
-    @ParameterizedTest(name = "잘못된 투구 {index} [{arguments}]")
-    @CsvSource(value = {
-            "10,1",//초구 스트라이크 이후 투구
-            "1,10",//2구 쓰러트린 핀 수 초과
-    })
-    @DisplayName("객체 생성 실패")
-    void construct_exception(int first, int second) {
-        //given
-
-        //when
-        ThrowableAssert.ThrowingCallable actual = () -> new NormalFrame(first, second);
-
+        NormalFrame normalFrame = new NormalFrame(rollings);
 
         //then
-        assertThatThrownBy(actual).isInstanceOf(RollingsException.class);
-
-    }
-
-    @ParameterizedTest(name = "유효범위 벗어난 투구 점수 {index} [{arguments}]")
-    @CsvSource(value = {
-            "11,1",//초구 쓰러트린 핀 수 초과
-            "-1,0"//쓰러트린 핀 수 마이너스
-    })
-    @DisplayName("객체 생성 실패")
-    void wrong_rolling(int first, int second) {
-        //given
-
-        //when
-        ThrowableAssert.ThrowingCallable actual = () -> new NormalFrame(first, second);
-
-
-        //then
-        assertThatThrownBy(actual).isInstanceOf(RollingException.class);
+        assertThat(normalFrame).isEqualTo(new NormalFrame(rollings));
 
     }
 
@@ -83,11 +45,10 @@ class NormalFrameTest {
     @DisplayName("첫 프레임 번호")
     void frame_number() {
         //given
-        int first = 0;
-        int second = 0;
+        Rollings rollings = Rollings.first(0).second(0);
 
         //when
-        NormalFrame firstFrame = new NormalFrame(first, second);
+        NormalFrame firstFrame = new NormalFrame(rollings);
 
         //then
         assertThat(firstFrame.number()).isEqualTo(1);
@@ -98,12 +59,11 @@ class NormalFrameTest {
     @DisplayName("다음 프레임 번호")
     void next_frame_number() {
         //given
-        int first = 5;
-        int second = 5;
-        NormalFrame firstFrame = new NormalFrame(first, second);
+        Rollings rollings = Rollings.first(5).second(5);
+        NormalFrame firstFrame = new NormalFrame(rollings);
 
         //when
-        NormalFrame nextFrame = firstFrame.next(first);
+        NormalFrame nextFrame = firstFrame.next(5);
 
         //then
         assertThat(nextFrame.number()).isEqualTo(2);
@@ -115,7 +75,8 @@ class NormalFrameTest {
     void next_frame() {
         //given
         int first = 10;
-        NormalFrame firstFrame = new NormalFrame(first);
+        Rollings rollings = Rollings.first(first);
+        NormalFrame firstFrame = new NormalFrame(rollings);
 
         //when
         NormalFrame nextFrame = firstFrame.next(first);
@@ -130,12 +91,13 @@ class NormalFrameTest {
     void next_frame_exception() {
         //given
         int first = 5;
-        NormalFrame firstFrame = new NormalFrame(first);
+        Rollings rollings = Rollings.first(first);
+        NormalFrame firstFrame = new NormalFrame(rollings);
 
         //when
 
         //then
-        assertThatThrownBy(() -> firstFrame.next(5)).isInstanceOf(CannotNextFrameException.class)
+        assertThatThrownBy(() -> firstFrame.next(first)).isInstanceOf(CannotNextFrameException.class)
                 .hasMessage("모든 투구를 완료하지 않아 다음 프레임으로 진행하지 못합니다.");
 
     }
@@ -157,9 +119,9 @@ class NormalFrameTest {
     private static Stream<Arguments> all_rolled() {
         return Stream.of(
                 Arguments.of(new NormalFrame(10), true),//strike
-                Arguments.of(new NormalFrame(0, 10), true),//spare
-                Arguments.of(new NormalFrame(1, 1), true),//miss
-                Arguments.of(new NormalFrame(0, 0), true),//gutter
+                Arguments.of(new NormalFrame(0).roll(10), true),//spare
+                Arguments.of(new NormalFrame(1).roll(1), true),//miss
+                Arguments.of(new NormalFrame(0).roll( 0), true),//gutter
                 Arguments.of(new NormalFrame(0), false),
                 Arguments.of(new NormalFrame(9), false)
         );
