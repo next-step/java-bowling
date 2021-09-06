@@ -62,8 +62,9 @@ public class NormalFrame implements Frame {
   }
 
   @Override
-  public Score frameScoreAdd(final Score before) {
-    Score score = state.calculateScore(before);
+  public Score frameScoreAdd(final Score beforeScore) {
+    Score score = state.calculateScore(beforeScore);
+
     if (score.isFinishBallCount()) {
       return score;
     }
@@ -73,7 +74,7 @@ public class NormalFrame implements Frame {
   @Override
   public int scoreValue() {
     try {
-      return score().scoreValue().getScore();
+      return score().from().getScore();
 
     } catch (RuntimeException e) {
       return DEFAULT_SCORE;
@@ -104,7 +105,7 @@ public class NormalFrame implements Frame {
   public void addScoreResult(final ScoreBoard scoreBoard) {
     scoreBoard.addScoreResult(createScoreResult());
 
-    if(nextFrame !=null){
+    if (nextFrame != null) {
       nextFrame.addScoreResult(scoreBoard);
     }
   }
