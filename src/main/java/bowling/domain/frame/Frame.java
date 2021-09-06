@@ -20,7 +20,7 @@ public interface Frame {
 
 	List<Pitch> pitches();
 
-	Score caculateScore(List<Frame> frames);
+	Score caculateScore(Frames frames);
 
-	Score additionalScore(Score beforeScore, List<Frame> frames);
+	Score additionalScore(Score beforeScore, Frames frames);
 }

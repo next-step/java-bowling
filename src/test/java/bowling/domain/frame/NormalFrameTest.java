@@ -110,7 +110,8 @@ class NormalFrameTest {
 			.pitch(2);
 
 		// then
-		assertThat(frame.caculateScore(Collections.singletonList(frame)))
+		final Frames frames = new Frames(Collections.singletonList(frame));
+		assertThat(frame.caculateScore(frames))
 			.isEqualTo(new Score(9, 0));
 	}
 
@@ -126,7 +127,9 @@ class NormalFrameTest {
 		final Frame next = frame.next()
 			.pitch(7);
 
-		assertThat(frame.caculateScore(Arrays.asList(frame, next)))
+		// then
+		final Frames frames = new Frames(Arrays.asList(frame, next));
+		assertThat(frame.caculateScore(frames))
 			.isEqualTo(new Score(17, 0));
 	}
 
@@ -144,7 +147,9 @@ class NormalFrameTest {
 		final Frame next2 = next1.next()
 			.pitch(10);
 
-		assertThat(frame.caculateScore(Arrays.asList(frame, next1, next2)))
+		// then
+		final Frames frames = new Frames(Arrays.asList(frame, next1, next2));
+		assertThat(frame.caculateScore(frames))
 			.isEqualTo(new Score(30, 0));
 	}
 
@@ -161,7 +166,8 @@ class NormalFrameTest {
 			.pitch(10);
 
 		// then
-		assertThat(frame.caculateScore(Arrays.asList(frame, last)))
+		final Frames frames = new Frames(Arrays.asList(frame, last));
+		assertThat(frame.caculateScore(frames))
 			.isEqualTo(new Score(20, 0));
 	}
 
@@ -178,7 +184,8 @@ class NormalFrameTest {
 			.pitch(10);
 
 		// then
-		assertThat(frame.caculateScore(Arrays.asList(frame, last)))
+		final Frames frames = new Frames(Arrays.asList(frame, last));
+		assertThat(frame.caculateScore(frames))
 			.isEqualTo(new Score(30, 0));
 	}
 }

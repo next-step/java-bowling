@@ -46,7 +46,7 @@ public final class NormalFrame extends BaseFrame {
 	}
 
 	@Override
-	public Score caculateScore(final List<Frame> frames) {
+	public Score caculateScore(final Frames frames) {
 		if (possiblePitch()) {
 			return playingScore();
 		}
@@ -85,7 +85,7 @@ public final class NormalFrame extends BaseFrame {
 	}
 
 	@Override
-	public Score additionalScore(Score beforeScore, final List<Frame> frames) {
+	public Score additionalScore(Score beforeScore, final Frames frames) {
 		final List<Pitch> limitedPitches = pitches().stream()
 			.limit(beforeScore.getLeftCount())
 			.collect(Collectors.toList());
@@ -101,7 +101,7 @@ public final class NormalFrame extends BaseFrame {
 		return nextCalculatedScore(beforeScore, frames);
 	}
 
-	private Score nextCalculatedScore(final Score score, final List<Frame> frames) {
+	private Score nextCalculatedScore(final Score score, final Frames frames) {
 		final Frame nextFrame = nextFrame(frames);
 
 		if (nextFrame == null) {
@@ -111,7 +111,7 @@ public final class NormalFrame extends BaseFrame {
 		return nextFrame.additionalScore(score, frames);
 	}
 
-	private Frame nextFrame(final List<Frame> frames) {
+	private Frame nextFrame(final Frames frames) {
 		try {
 			return frames.get(frames.indexOf(this) + 1);
 		} catch (final IndexOutOfBoundsException e) {

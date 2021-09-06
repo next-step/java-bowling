@@ -150,7 +150,8 @@ class FinalFrameTest {
 			.pitch(2);
 
 		// then
-		assertThat(frame.caculateScore(Collections.singletonList(frame)))
+		final Frames frames = new Frames(Collections.singletonList(frame));
+		assertThat(frame.caculateScore(frames))
 			.isEqualTo(new Score(9, 0));
 	}
 
@@ -166,7 +167,8 @@ class FinalFrameTest {
 			.pitch(7);
 
 		// then
-		assertThat(frame.caculateScore(Collections.singletonList(frame)))
+		final Frames frames = new Frames(Collections.singletonList(frame));
+		assertThat(frame.caculateScore(frames))
 			.isEqualTo(new Score(17, 0));
 	}
 
@@ -182,7 +184,8 @@ class FinalFrameTest {
 			.pitch(10);
 
 		// then
-		assertThat(frame.caculateScore(Collections.singletonList(frame)))
+		final Frames frames = new Frames(Collections.singletonList(frame));
+		assertThat(frame.caculateScore(frames))
 			.isEqualTo(new Score(30, 0));
 	}
 }

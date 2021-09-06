@@ -41,7 +41,7 @@ public final class FinalFrame extends BaseFrame {
 	}
 
 	@Override
-	public Score caculateScore(final List<Frame> frames) {
+	public Score caculateScore(final Frames frames) {
 		final int pinsCountSum = pitches().stream()
 			.map(Pitch::getPins)
 			.mapToInt(Pins::count)
@@ -52,7 +52,7 @@ public final class FinalFrame extends BaseFrame {
 	}
 
 	@Override
-	public Score additionalScore(Score beforeScore, final List<Frame> frames) {
+	public Score additionalScore(Score beforeScore, final Frames frames) {
 		final List<Pitch> limitedPitches = pitches().stream()
 			.limit(beforeScore.getLeftCount())
 			.collect(Collectors.toList());
