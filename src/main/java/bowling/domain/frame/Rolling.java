@@ -2,21 +2,21 @@ package bowling.domain.frame;
 
 import java.util.Objects;
 
-public class SinglePitching {
+public class Rolling {
 
     public static final int MIN_FALLEN_PIN = 0;
     public static final int MAX_FALLEN_PIN = 10;
 
     private final int fallenPin;
 
-    public SinglePitching(int fallenPin) {
+    public Rolling(int fallenPin) {
         validate(fallenPin);
         this.fallenPin = fallenPin;
     }
 
     private void validate(int fallenPin) {
         if (fallenPin < MIN_FALLEN_PIN || fallenPin > MAX_FALLEN_PIN) {
-            throw new SinglePitchingException(fallenPin);
+            throw new RollingException(fallenPin);
         }
     }
 
@@ -24,16 +24,16 @@ public class SinglePitching {
         return this.fallenPin == MAX_FALLEN_PIN;
     }
 
-    public boolean isSpare(SinglePitching firstPitching) {
-        return !firstPitching.isStrike() && sumIsMax(firstPitching);
+    public boolean isSpare(Rolling firstRolling) {
+        return !firstRolling.isStrike() && sumIsMax(firstRolling);
     }
 
-    private boolean sumIsMax(SinglePitching singlePitching) {
-        return sum(singlePitching) == MAX_FALLEN_PIN;
+    private boolean sumIsMax(Rolling rolling) {
+        return sum(rolling) == MAX_FALLEN_PIN;
     }
 
-    public int sum(SinglePitching singlePitching) {
-        return this.fallenPin + singlePitching.fallenPin();
+    public int sum(Rolling rolling) {
+        return this.fallenPin + rolling.fallenPin();
     }
 
     public int fallenPin() {
@@ -44,7 +44,7 @@ public class SinglePitching {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SinglePitching that = (SinglePitching) o;
+        Rolling that = (Rolling) o;
         return fallenPin == that.fallenPin;
     }
 

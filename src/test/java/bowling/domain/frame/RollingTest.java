@@ -8,20 +8,20 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class SinglePitchingTest {
+class RollingTest {
 
     @ParameterizedTest(name = "객체 생성 정상 범위 {index} [{arguments}]")
     @ValueSource(ints = {0, 10})
     @DisplayName("객체 생성 성공")
     void construct(int fallenPin) {
         //given
-        SinglePitching singlePitching = new SinglePitching(fallenPin);
+        Rolling rolling = new Rolling(fallenPin);
 
         //when
 
 
         //then
-        assertThat(singlePitching).isEqualTo(new SinglePitching(fallenPin));
+        assertThat(rolling).isEqualTo(new Rolling(fallenPin));
 
     }
 
@@ -34,7 +34,7 @@ class SinglePitchingTest {
         //when
 
         //then
-        assertThatThrownBy(() -> new SinglePitching(fallenPin)).isInstanceOf(SinglePitchingException.class)
+        assertThatThrownBy(() -> new Rolling(fallenPin)).isInstanceOf(RollingException.class)
                 .hasMessage("1회 투구 점수 범위를 벗어났습니다. 유효범위 0 ~ 10. 현재 점수 : " + fallenPin);
 
     }
@@ -47,10 +47,10 @@ class SinglePitchingTest {
     @DisplayName("스트라이크 여부")
     void strike(int fallenPin, boolean expected) {
         //given
-        SinglePitching singlePitching = new SinglePitching(fallenPin);
+        Rolling rolling = new Rolling(fallenPin);
 
         //when
-        boolean actual = singlePitching.isStrike();
+        boolean actual = rolling.isStrike();
 
         //then
         assertThat(actual).isEqualTo(expected);
@@ -68,10 +68,10 @@ class SinglePitchingTest {
     @DisplayName("스페어 여부")
     void spare(int first, int second, boolean expected) {
         //given
-        SinglePitching singlePitching = new SinglePitching(second);
+        Rolling rolling = new Rolling(second);
 
         //when
-        boolean actual = singlePitching.isSpare(new SinglePitching(first));
+        boolean actual = rolling.isSpare(new Rolling(first));
 
         //then
         assertThat(actual).isEqualTo(expected);
@@ -89,10 +89,10 @@ class SinglePitchingTest {
     @DisplayName("두번의 투구 합산")
     void sum(int first, int second, int expected) {
         //given
-        SinglePitching singlePitching = new SinglePitching(first);
+        Rolling rolling = new Rolling(first);
 
         //when
-        int actual = singlePitching.sum(new SinglePitching(second));
+        int actual = rolling.sum(new Rolling(second));
 
         //then
         assertThat(actual).isEqualTo(expected);

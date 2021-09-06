@@ -53,7 +53,7 @@ class NormalFrameTest {
 
 
         //then
-        assertThatThrownBy(actual).isInstanceOf(PitchingException.class);
+        assertThatThrownBy(actual).isInstanceOf(RollingsException.class);
 
     }
 
@@ -63,7 +63,7 @@ class NormalFrameTest {
             "-1,0"//쓰러트린 핀 수 마이너스
     })
     @DisplayName("객체 생성 실패")
-    void wrong_pitching(int first, int second) {
+    void wrong_rolling(int first, int second) {
         //given
 
         //when
@@ -71,7 +71,7 @@ class NormalFrameTest {
 
 
         //then
-        assertThatThrownBy(actual).isInstanceOf(SinglePitchingException.class);
+        assertThatThrownBy(actual).isInstanceOf(RollingException.class);
 
     }
 

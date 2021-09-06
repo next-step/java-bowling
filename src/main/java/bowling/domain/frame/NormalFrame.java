@@ -5,29 +5,29 @@ import java.util.Objects;
 public class NormalFrame {
 
     private final int number;
-    private final Pitching pitching;
+    private final Rollings rollings;
 
-    public NormalFrame(Pitching pitching, int number) {
-        this.pitching = pitching;
+    public NormalFrame(Rollings rollings, int number) {
+        this.rollings = rollings;
         this.number = number;
     }
 
     public NormalFrame(int first) {
-        this(Pitching.first(first), 1);
+        this(Rollings.first(first), 1);
     }
 
     public NormalFrame(int first, int second) {
-        this(Pitching.first(first).second(second), 1);
+        this(Rollings.first(first).second(second), 1);
     }
 
     public NormalFrame next(int first) {
-        if (!pitching.allPitched()) {
+        if (!rollings.allRolled()) {
             throw new CannotNextFrameException();
         }
         if (this.number == 9) {
             //TODO 마지막 프레임 리턴
         }
-        return new NormalFrame(Pitching.first(first).second(0), this.number + 1);
+        return new NormalFrame(Rollings.first(first).second(0), this.number + 1);
     }
 
     public int number() {
@@ -39,11 +39,11 @@ public class NormalFrame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(pitching, that.pitching);
+        return Objects.equals(rollings, that.rollings);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pitching);
+        return Objects.hash(rollings);
     }
 }

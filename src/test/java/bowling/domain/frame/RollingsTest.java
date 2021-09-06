@@ -7,26 +7,24 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PitchingTest {
+class RollingsTest {
 
     @Test
     @DisplayName("초구 스트라이크")
     void strike() {
         //given
-        Pitching pitching = Pitching.first(10);
+        Rollings rollings = Rollings.first(10);
 
         //when
 
         //then
-        assertThat(pitching.isStrike()).isTrue();
+        assertThat(rollings.isStrike()).isTrue();
 
     }
 
@@ -39,12 +37,12 @@ class PitchingTest {
     @DisplayName("스페어 처리")
     void spare(int first, int second) {
         //given
-        Pitching pitching = Pitching.first(first).second(second);
+        Rollings rollings = Rollings.first(first).second(second);
 
         //when
 
         //then
-        assertThat(pitching.isSpare()).isTrue();
+        assertThat(rollings.isSpare()).isTrue();
 
     }
 
@@ -57,12 +55,12 @@ class PitchingTest {
     @DisplayName("두 번의 투구 점수 합계")
     void sum(int first, int second, int expected) {
         //given
-        Pitching pitching = Pitching.first(first).second(second);
+        Rollings rollings = Rollings.first(first).second(second);
 
         //when
 
         //then
-        assertThat(pitching.sum()).isEqualTo(expected);
+        assertThat(rollings.sum()).isEqualTo(expected);
 
     }
 
@@ -70,21 +68,21 @@ class PitchingTest {
     @MethodSource("invalid")
     void invalid(int first, int second, String expected) {
         //given
-        Pitching pitching = Pitching.first(first);
+        Rollings rollings = Rollings.first(first);
 
         //when
-        ThrowableAssert.ThrowingCallable actual = () -> pitching.second(second);
+        ThrowableAssert.ThrowingCallable actual = () -> rollings.second(second);
 
         //then
-        assertThatThrownBy(actual).isInstanceOf(PitchingException.class)
+        assertThatThrownBy(actual).isInstanceOf(RollingsException.class)
                 .hasMessage(expected);
 
     }
 
     private static Stream<Arguments> invalid() {
         return Stream.of(
-                Arguments.of(5, 6, PitchingValidation.EXCEED_LIMIT_SUM.message()),
-                Arguments.of(10, 1, PitchingValidation.POST_STRIKE_PITCHING.message())
+                Arguments.of(5, 6, RollingsValidation.EXCEED_LIMIT_SUM.message()),
+                Arguments.of(10, 1, RollingsValidation.POST_STRIKE_ROLLING.message())
         );
     }
 
@@ -94,14 +92,14 @@ class PitchingTest {
             "0,false"
     })
     @DisplayName("모든 투구 완료")
-    void complete_pitching(int firstPitching, boolean expected) {
+    void complete_rollings(int firstRolling, boolean expected) {
         //given
 
         //when
-        Pitching pitching = Pitching.first(firstPitching);
+        Rollings rollings = Rollings.first(firstRolling);
 
         //then
-        assertThat(pitching.allPitched()).isEqualTo(expected);
+        assertThat(rollings.allRolled()).isEqualTo(expected);
 
     }
 
