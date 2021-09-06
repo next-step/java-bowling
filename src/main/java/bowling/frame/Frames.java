@@ -41,7 +41,7 @@ public class Frames {
   public List<FrameDto> resultList() {
     return getScoreResults()
         .stream()
-        .map(scoreResult -> FrameDto.from(scoreResult.from()))
+        .map(ScoreResult::from)
         .collect(Collectors.toList());
   }
 

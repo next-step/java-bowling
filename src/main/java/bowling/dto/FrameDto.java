@@ -8,13 +8,17 @@ public class FrameDto {
 
   private final int totalScore;
 
-  private FrameDto(final String scoreMark, final int totalScore) {
+  private final int score;
+
+  private FrameDto(final String scoreMark, final int totalScore, final int score) {
     this.scoreMark = scoreMark;
     this.totalScore = totalScore;
+    this.score = score;
   }
 
-  public static FrameDto from(final ScoreResultDto scoreBoard) {
-    return new FrameDto(scoreBoard.getScoreMessage(), scoreBoard.getTotalScore());
+  public static FrameDto of(final String scoreMessage, final int totalScore,
+      final int score) {
+    return new FrameDto(scoreMessage, totalScore, score);
   }
 
   public String getScoreMark() {
@@ -23,6 +27,10 @@ public class FrameDto {
 
   public int getTotalScore() {
     return totalScore;
+  }
+
+  public int getScore() {
+    return score;
   }
 
   @Override
