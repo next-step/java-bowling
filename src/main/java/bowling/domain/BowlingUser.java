@@ -1,13 +1,12 @@
 package bowling.domain;
 
-import bowling.util.BowlingScore;
+import bowling.view.BowlingScore;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BowlingUser {
     private PlayerName playerName;
-    private int totalScore = 0;
     private List<String> scores = new ArrayList<>();
     private static final BowlingScore bowlingScore = new BowlingScore();
 

@@ -1,19 +1,20 @@
-package bowling.domain;
+package bowling.controller;
 
+import bowling.domain.BowlingUser;
 import bowling.util.RandomScore;
 import bowling.view.ResultView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BowlingGameManager {
+public class BowlingGameController {
     private static final int BOWLING_ROUND = 10;
     private static final int MAX_BOWLING_SCORE = 10;
     private static final RandomScore randomScore = new RandomScore();
 
     private final List<BowlingUser> bowlingUsers = new ArrayList<>();
 
-    public BowlingGameManager(String name) {
+    public BowlingGameController(String name) {
         bowlingUsers.add(new BowlingUser(name));
     }
 

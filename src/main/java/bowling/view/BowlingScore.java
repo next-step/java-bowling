@@ -1,6 +1,4 @@
-package bowling.util;
-
-import java.util.Arrays;
+package bowling.view;
 
 public class BowlingScore {
     public String firstTransfer(Integer score) {
