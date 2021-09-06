@@ -3,6 +3,9 @@ package bowling;
 import java.util.Objects;
 
 public class Score {
+    private static final String GUTTER_SYMBOL = "-";
+
+    private static final int GUTTER_NUMBER = 0;
     private static final int MAX_SCORE = 10;
 
     private final int value;
@@ -19,25 +22,22 @@ public class Score {
         }
     }
 
-    public Score sum(Score score) {
-        return new Score(this.value + score.value);
-    }
-
-    public Boolean isMaxScore() {
-        return value == MAX_SCORE;
-    }
-
-    public FrameResult getSpareOrMiss() {
-        if (value == MAX_SCORE) {
-            return FrameResult.SPARE;
-        }
-
-        return FrameResult.MISS;
+    public int sum(Score score) {
+        return this.value + score.value;
     }
 
     public int toInt() {
         return value;
     }
+
+    public String getString() {
+        if (value == GUTTER_NUMBER) {
+            return GUTTER_SYMBOL;
+        }
+
+        return String.valueOf(value);
+    }
+
 
     @Override
     public boolean equals(Object o) {

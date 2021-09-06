@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalScoreFrameTest {
     @Test
-    @DisplayName("다음이 NormalScoreFrame으로 진행하는 케이스 테스트")
+    @DisplayName("다음 NormalScoreFrame으로 진행하는 케이스 테스트")
     void bowlTest1() {
         NormalScoreFrame normalScoreFrame = new NormalScoreFrame(new Turn(1), FrameResult.MISS);
 
@@ -21,7 +21,7 @@ public class NormalScoreFrameTest {
     }
 
     @Test
-    @DisplayName("다음이 FinalScoreFrame으로 진행하는 케이스 테스트")
+    @DisplayName("다음 FinalScoreFrame으로 진행하는 케이스 테스트")
     void bowlTest2() {
         NormalScoreFrame normalScoreFrame = new NormalScoreFrame(new Turn(9), FrameResult.MISS);
         ScoreFrame nextScoreFrame = normalScoreFrame.process(10);
@@ -40,7 +40,7 @@ public class NormalScoreFrameTest {
     }
 
     @Test
-    @DisplayName("다음이 ScoreFrame으로 진행하지 않는 케이스 테스트")
+    @DisplayName("다음 ScoreFrame으로 진행하지 않는 케이스 테스트")
     void bowlTest3() {
         NormalScoreFrame normalScoreFrame = new NormalScoreFrame(new Turn(1), FrameResult.MISS);
         ScoreFrame nextScoreFrame = normalScoreFrame.process(9);

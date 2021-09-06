@@ -6,7 +6,7 @@ public class ScoreFrames implements Iterable<ScoreFrame> {
     private static final int START_TURN = 1;
     private static final int END_TURN = 10;
 
-    private List<ScoreFrame> scoreFrames = new LinkedList<>();
+    private final List<ScoreFrame> scoreFrames = new LinkedList<>();
 
     public ScoreFrames() {
         scoreFrames.add(new NormalScoreFrame(new Turn(START_TURN), FrameResult.MISS));

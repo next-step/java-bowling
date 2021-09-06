@@ -11,7 +11,7 @@ public class Turn {
         this.value = value;
     }
 
-    public boolean isLastDoubleBallTurn() {
+    public boolean isLastNormalTurn() {
         return value == LAST_DOUBLE_BALL_TURN;
     }
 

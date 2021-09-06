@@ -1,44 +1,19 @@
 package bowling;
 
-import java.util.Objects;
+public class FinalScoreFrame extends ScoreFrame {
 
-public class FinalScoreFrame implements ScoreFrame {
-    private Turn turn;
-    private Score firstScore;
-    private Score secondScore;
-    private Score thirdScore;
-
-    private Scores scores = new Scores();
-
-    public FinalScoreFrame(Turn turn) {
-        this.turn = turn;
+    public FinalScoreFrame(Turn turn, FrameResult previousFrameResult) {
+        super(turn, previousFrameResult);
     }
 
     @Override
-    public ScoreFrame process(int score) {
-        return null;
-    }
+    public ScoreFrame process(int scoreValue) {
+        trial.add(new Score(scoreValue));
 
-    @Override
-    public int getTurnNumber() {
-        return turn.getNumber();
-    }
+        if (trial.isFinalEnd()) {
+            return new FinalScoreFrame(turn.getNextTurn(), FrameResult.MISS);
+        }
 
-    @Override
-    public String getScoreString() {
-        return scores.getScoresString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FinalScoreFrame that = (FinalScoreFrame) o;
-        return Objects.equals(turn, that.turn);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(turn);
+        return this;
     }
 }
