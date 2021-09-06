@@ -53,19 +53,18 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        answers.setDeleted(deleted);
-        return this;
-    }
-
-    public void delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-        deleted = true;
 
-        answers.delete(loginUser);
+        deleted = true;
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        deleteHistories.add(QUESTION_DELETE_HISTORY_INDEX, new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        deleteHistories.addAll(answers.delete(loginUser));
+
+        return deleteHistories;
     }
 
     public boolean isDeleted() {
@@ -86,14 +85,4 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> getDeleted() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-
-        if (deleted) {
-            deleteHistories = answers.getDeleted();
-            deleteHistories.add(QUESTION_DELETE_HISTORY_INDEX, new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
-        }
-
-        return deleteHistories;
-    }
 }

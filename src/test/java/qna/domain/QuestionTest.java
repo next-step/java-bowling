@@ -6,7 +6,6 @@ import qna.CannotDeleteException;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,20 +29,10 @@ public class QuestionTest {
 
     @DisplayName("Question 에 등록된 Answers 들이 Deleted 상태 인지 테스트")
     @Test
-    void setDeleted() {
-        Q1.setDeleted(true);
+    void setDeleted() throws CannotDeleteException {
+        Q1.delete(UserTest.JAVAJIGI);
 
         assertThat(AnswerTest.A1.isDeleted()).isTrue();
-    }
-
-    @DisplayName("setDeleted false 였을 때 테스트")
-    @Test
-    void getEmptyDeleted() {
-        Q1.setDeleted(false);
-
-        List<DeleteHistory> deleteHistories = Q1.getDeleted();
-
-        assertThat(deleteHistories).isEqualTo(Collections.EMPTY_LIST);
     }
 
     @DisplayName("Question 에 등록된 Answers 들이 Deleted 상태 인지 테스트")
@@ -69,9 +58,7 @@ public class QuestionTest {
     void getDeleted() throws CannotDeleteException {
         Q1.addAnswer(AnswerTest.A1);
 
-        Q1.delete(UserTest.JAVAJIGI);
-
-        List<DeleteHistory> deleteHistories = Q1.getDeleted();
+        List<DeleteHistory> deleteHistories = Q1.delete(UserTest.JAVAJIGI);
 
         assertThat(deleteHistories).isEqualTo(Arrays.asList(
                 new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now())

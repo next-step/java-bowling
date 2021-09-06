@@ -50,38 +50,12 @@ public class AnswersTest {
         assertThat(answers.isOwner(UserTest.SANJIGI)).isFalse();
     }
 
-    @DisplayName("setDeleted 테스트")
-    @Test
-    void setDeleted() {
-        Answers answers = Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
-
-        answers.setDeleted(true);
-
-        assertThat(AnswerTest.A1.isDeleted()).isTrue();
-        assertThat(AnswerTest.A2.isDeleted()).isTrue();
-    }
-
-    @DisplayName("getDeleted 테스트")
-    @Test
-    void getDeleted() {
-        Answers answers = Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A2));
-
-        AnswerTest.A1.setDeleted(false);
-        AnswerTest.A2.setDeleted(true);
-
-        List<DeleteHistory> deleteHistories = answers.getDeleted();
-
-        assertThat(deleteHistories).isEqualTo(Arrays.asList(new DeleteHistory(ContentType.ANSWER, AnswerTest.A2.getId(), AnswerTest.A2.getWriter(), LocalDateTime.now())));
-    }
-
     @DisplayName("delete 테스트")
     @Test
     void delete() throws CannotDeleteException {
         Answers answers = Answers.of(Arrays.asList(AnswerTest.A1));
 
-        answers.delete(UserTest.JAVAJIGI);
-
-        List<DeleteHistory> deleteHistories = answers.getDeleted();
+        List<DeleteHistory> deleteHistories = answers.delete(UserTest.JAVAJIGI);
 
         assertThat(deleteHistories).isEqualTo(Arrays.asList(
                 new DeleteHistory(ContentType.ANSWER, AnswerTest.A1.getId(), AnswerTest.A1.getWriter(), LocalDateTime.now())));
