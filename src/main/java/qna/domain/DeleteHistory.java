@@ -31,6 +31,13 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy) {
+        this.contentType = contentType;
+        this.contentId = contentId;
+        this.deletedBy = deletedBy;
+        this.createDate = null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
