@@ -10,6 +10,10 @@ public class Player {
         this.name = new Name(name);
     }
 
+    public String name() {
+        return name.value();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

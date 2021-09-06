@@ -40,6 +40,10 @@ public class Rolling {
         return fallenPin;
     }
 
+    public boolean isGutter() {
+        return fallenPin == MIN_FALLEN_PIN;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
