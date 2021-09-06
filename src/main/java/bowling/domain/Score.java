@@ -13,7 +13,7 @@ public enum Score {
     SEVEN(7),
     EIGHT(8),
     NINE(9),
-    TEH(10);
+    TEN(10);
 
     private final Integer numberOfPins;
 

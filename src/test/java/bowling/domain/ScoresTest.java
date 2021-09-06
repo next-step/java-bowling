@@ -31,4 +31,27 @@ class ScoresTest {
         assertThrows(AttemptsExceededException.class, () -> new Scores(Arrays.asList(Score.EIGHT, Score.EIGHT, Score.EIGHT)));
     }
 
+    @Test
+    @DisplayName("볼링공 굴리기")
+    void roll() {
+        Scores scores = new Scores();
+        assertDoesNotThrow(() -> scores.roll(Score.ONE));
+    }
+
+    @Test
+    @DisplayName("볼링공은 세번이상 굴릴 수 없다.")
+    void rollThreeTimeRoll_exception() {
+        Scores scores = new Scores();
+        scores.roll(Score.ONE);
+        scores.roll(Score.ONE);
+        assertThrows(AttemptsExceededException.class, () -> scores.roll(Score.ONE));
+    }
+
+    @Test
+    @DisplayName("볼링공을 굴려서 핀을 10개이상 굴릴 수 없다.")
+    void rollNumberOfPins_exception() {
+        Scores scores = new Scores();
+        scores.roll(Score.TEN);
+        assertThrows(IncorrectNumberOfPinsException.class, () -> scores.roll(Score.ONE));
+    }
 }
