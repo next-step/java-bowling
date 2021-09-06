@@ -22,8 +22,8 @@ public class FinalFrame implements Frame {
   }
 
   @Override
-  public Frame play(final int pinCount) {
-    if(isGameEnd()){
+  public FinalFrame play(final int pinCount) {
+    if (isGameEnd()) {
       throw new RuntimeException(MSG_ERROR_END_FRAME);
     }
 
@@ -84,7 +84,7 @@ public class FinalFrame implements Frame {
 
   @Override
   public int scoreValue() {
-    return score().scoreValue().getScore();
+    return score().from().getScore();
   }
 
   @Override
