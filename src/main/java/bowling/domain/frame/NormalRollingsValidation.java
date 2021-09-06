@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import java.util.Arrays;
 
 public enum NormalRollingsValidation {
+
     POST_STRIKE_ROLLING(Constants.STRIKE_MESSAGE, (first, second) -> first == 10 && second > 0),
     EXCEED_LIMIT_SUM(Constants.EXCEED_SUM_MESSAGE, (first, second) -> (first + second) > 10),
     NONE(Constants.NONE_MESSAGE, (first, second) -> false);

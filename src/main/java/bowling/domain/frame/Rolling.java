@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Rolling {
 
-    public static final int MIN_FALLEN_PIN = 0;
-    public static final int MAX_FALLEN_PIN = 10;
+    private static final int MIN_FALLEN_PIN = 0;
+    private static final int MAX_FALLEN_PIN = 10;
 
     private final int fallenPin;
 

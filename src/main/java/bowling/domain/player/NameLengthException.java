@@ -8,6 +8,7 @@ public class NameLengthException extends RuntimeException {
     public NameLengthException() {
         super(String.format(DEFAULT_MESSAGE, ZERO));
     }
+
     public NameLengthException(int length) {
         super(String.format(DEFAULT_MESSAGE, length));
     }

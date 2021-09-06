@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public class Name {
 
-    public static final int LENGTH = 3;
-    public static final String REG_EXP = "^[a-zA-Z]*$";
+    private static final int LENGTH = 3;
+    private static final String REG_EXP = "^[a-zA-Z]*$";
 
     private final String value;
 

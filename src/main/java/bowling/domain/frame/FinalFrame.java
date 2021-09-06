@@ -4,8 +4,6 @@ import java.util.Objects;
 
 public class FinalFrame implements Frame {
 
-
-
     private final FinalRollings finalRollings;
 
     public FinalFrame(FinalRollings finalRollings) {

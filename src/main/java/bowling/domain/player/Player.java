@@ -3,6 +3,7 @@ package bowling.domain.player;
 import java.util.Objects;
 
 public class Player {
+
     private final Name name;
 
     public Player(String name) {
