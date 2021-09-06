@@ -2,20 +2,17 @@ package bowling.view;
 
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
 
-	private static final Scanner SCANNER = new Scanner(System.in);
+	private static final Scanner scanner = new Scanner(System.in);
 
-	public static String inputPlayerName() {
-		System.out.println("플레이어 이름은(3 english letters)?: ");
-
-		return SCANNER.nextLine();
+	public static String name() {
+		System.out.print("플레이어 이름은(3 english letters)?: ");
+		return scanner.nextLine();
 	}
 
-	public static String inputPitch(final int frameIndex) {
-		final int frameCount = frameIndex + 1;
-		System.out.print(frameCount + "프레임 투구 : ");
-
-		return SCANNER.nextLine();
+	public static int pinsCount(final int frameIndex) {
+		System.out.printf("%d프레임 투구 : ", frameIndex);
+		return Integer.parseInt(scanner.nextLine());
 	}
 }

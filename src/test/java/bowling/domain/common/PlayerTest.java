@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.common;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,10 +7,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import bowling.domain.exception.NameCreateException;
+import bowling.domain.common.exception.InvalidNameException;
 
-@DisplayName("이름")
-class NameTest {
+@DisplayName("플레이어")
+class PlayerTest {
 
 	@DisplayName("[성공] 생성")
 	@ParameterizedTest
@@ -22,10 +22,10 @@ class NameTest {
 		// given
 
 		// when
-		final Name name = Name.of(input);
+		final Player player = new Player(input);
 
 		// then
-		assertThat(name).isNotNull();
+		assertThat(player.getName()).isEqualTo(input);
 	}
 
 	@DisplayName("[실패] 생성 - 유효하지 않은 이름")
@@ -37,7 +37,7 @@ class NameTest {
 		// given
 
 		// when
-		assertThrows(NameCreateException.class, () -> Name.of(input));
+		assertThrows(InvalidNameException.class, () -> new Player(input));
 
 		// then
 	}
