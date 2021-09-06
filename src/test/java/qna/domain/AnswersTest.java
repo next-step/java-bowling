@@ -3,6 +3,8 @@ package qna.domain;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -59,5 +61,41 @@ public class AnswersTest {
         assertThatThrownBy(() -> Answers.of(answer1, answer2).deleteAll(SANJIGI))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+    }
+
+    @Test
+    public void Answer로_부터_DeleteHistory_를_만들_수_있다() {
+        //given
+        Answer answer1 = new Answer(JAVAJIGI, QuestionTest.Q1, "Answers Contents").delete();
+        //when
+        DeleteHistory deleteHistory = answer1.toDeleteHistory();
+        //then
+        assertThat(deleteHistory).isEqualTo(new DeleteHistory(ContentType.ANSWER, answer1.getId(), JAVAJIGI));
+    }
+
+    @Test
+    public void Answer가_삭제되지_않았을_때_DeleteHistory_생성_시_익셉션이_발생한다() {
+        //given
+        Answer answer1 = new Answer(JAVAJIGI, QuestionTest.Q1, "Answers Contents");
+        //when
+        //then
+        assertThatThrownBy(answer1::toDeleteHistory)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("삭제 기록을 만들 수 없습니다.");
+    }
+
+    @Test
+    public void Answers로_부터_DeleteHistory_리스트를_만들_수_있다() throws CannotDeleteException {
+        //given
+        Answer answer1 = new Answer(JAVAJIGI, QuestionTest.Q1, "Answers Contents");
+        Answer answer2 = new Answer(JAVAJIGI, QuestionTest.Q2, "Answers Contents");
+        Answers answers = Answers.of(answer1, answer2).deleteAll(JAVAJIGI);
+        //when
+        List<DeleteHistory> deleteHistories = answers.toDeleteHistories();
+        //then
+        assertThat(deleteHistories).containsExactly(
+                new DeleteHistory(ContentType.ANSWER, answer1.getId(), JAVAJIGI),
+                new DeleteHistory(ContentType.ANSWER, answer2.getId(), JAVAJIGI)
+        );
     }
 }

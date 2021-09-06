@@ -4,6 +4,7 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -65,6 +66,18 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
+    public Answer delete() {
+        this.deleted = true;
+        return this;
+    }
+
+    public DeleteHistory toDeleteHistory() {
+        if (!isDeleted()) {
+            throw new IllegalStateException("삭제 기록을 만들 수 없습니다.");
+        }
+        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
+    }
+
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
@@ -82,10 +95,5 @@ public class Answer extends AbstractEntity {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), writer, question, contents, deleted);
-    }
-
-    public Answer delete() {
-        this.deleted = true;
-        return this;
     }
 }

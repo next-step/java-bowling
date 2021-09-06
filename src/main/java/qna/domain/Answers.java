@@ -5,6 +5,7 @@ import qna.CannotDeleteException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Answers {
 
@@ -51,5 +52,11 @@ public class Answers {
                 throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
             }
         }
+    }
+
+    public List<DeleteHistory> toDeleteHistories() {
+        return answers.stream()
+                .map(Answer::toDeleteHistory)
+                .collect(Collectors.toList());
     }
 }
