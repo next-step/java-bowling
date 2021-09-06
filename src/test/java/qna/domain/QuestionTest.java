@@ -31,8 +31,11 @@ public class QuestionTest {
     @Test
     void deleteMyQuestionAndOtherUserAnswerExceptionTest() {
         // given
-        Answer answer = new Answer(1L, UserTest.SANJIGI, question, "Answers Contents2");
-        question.addAnswer(answer);
+        Answer myAnswer = new Answer(1L, UserTest.JAVAJIGI, question, "Answers Contents1");
+        question.addAnswer(myAnswer);
+
+        Answer otherUserAnswer = new Answer(2L, UserTest.SANJIGI, question, "Answers Contents2");
+        question.addAnswer(otherUserAnswer);
 
         // when, then
         assertThatExceptionOfType(CannotDeleteException.class)
