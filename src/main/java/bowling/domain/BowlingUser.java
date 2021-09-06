@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BowlingUser {
-    private String name;
+    private PlayerName playerName;
     private int totalScore = 0;
     private List<String> scores = new ArrayList<>();
     private static final BowlingScore bowlingScore = new BowlingScore();
 
     public BowlingUser(String name) {
-        this.name = name;
+        this.playerName = new PlayerName(name);
     }
 
     public void addResult(Integer score) {
@@ -29,7 +29,7 @@ public class BowlingUser {
     }
 
     public String getName() {
-        return name;
+        return playerName.getName();
     }
 
     public void updateThirdResult(int thirdBowlingScore) {
