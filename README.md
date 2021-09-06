@@ -44,6 +44,4 @@
 * player
   * name : 참가자명
   * frames
-* players 일급콜렉션
-  * player list
 * 입출력 view 및 게임실행
