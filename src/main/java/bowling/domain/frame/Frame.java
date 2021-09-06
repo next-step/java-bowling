@@ -12,4 +12,8 @@ public interface Frame {
 
     int number();
 
+    Frame roll(int fallenPin);
+
+    Rollings rollings();
+
 }

@@ -54,6 +54,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public Rollings rollings() {
+        return normalRollings;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

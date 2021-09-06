@@ -23,6 +23,9 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
+        if (finalRollings == null) {
+            return false;
+        }
         return finalRollings.allRolled();
     }
 
@@ -34,6 +37,11 @@ public class FinalFrame implements Frame {
     @Override
     public int number() {
         return FINAL_NUMBER;
+    }
+
+    @Override
+    public Rollings rollings() {
+        return finalRollings;
     }
 
     @Override
