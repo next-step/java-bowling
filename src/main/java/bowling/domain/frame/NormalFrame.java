@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import java.util.Objects;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
 
     public static final int INIT_NUMBER = 1;
     public static final int LAST_NORMAL_NUMBER = 9;
@@ -25,28 +25,34 @@ public class NormalFrame {
         this(Rollings.first(first), INIT_NUMBER);
     }
 
-    public NormalFrame roll(int second) {
-        return new NormalFrame(this.rollings.second(second), this.number);
+    public NormalFrame roll(int fallenPin) {
+        if (this.rollings == null) {
+            return new NormalFrame(Rollings.first(fallenPin), this.number);
+        }
+        return new NormalFrame(this.rollings.second(fallenPin), this.number);
     }
 
-    public NormalFrame next(int first) {
+    @Override
+    public Frame next() {
         if (!rollings.allRolled()) {
             throw new CannotNextFrameException();
         }
         if (isLastNormalFrame()) {
-            //TODO 마지막 프레임 리턴
+            return new FinalFrame(null);
         }
-        return new NormalFrame(Rollings.first(first).second(0), this.number + 1);
+        return new NormalFrame(null, this.number + 1);
     }
 
     private boolean isLastNormalFrame() {
         return this.number == LAST_NORMAL_NUMBER;
     }
 
-    public boolean allRolled() {
+    @Override
+    public boolean isEnd() {
         return rollings.allRolled();
     }
 
+    @Override
     public int number() {
         return number;
     }

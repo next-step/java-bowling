@@ -8,8 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class NormalFrameTest {
 
@@ -63,7 +62,7 @@ class NormalFrameTest {
         NormalFrame firstFrame = new NormalFrame(rollings);
 
         //when
-        NormalFrame nextFrame = firstFrame.next(5);
+        Frame nextFrame = firstFrame.next();
 
         //then
         assertThat(nextFrame.number()).isEqualTo(2);
@@ -79,7 +78,7 @@ class NormalFrameTest {
         NormalFrame firstFrame = new NormalFrame(rollings);
 
         //when
-        NormalFrame nextFrame = firstFrame.next(first);
+        Frame nextFrame = firstFrame.next();
 
         //then
         assertThat(nextFrame.number()).isEqualTo(2);
@@ -97,7 +96,7 @@ class NormalFrameTest {
         //when
 
         //then
-        assertThatThrownBy(() -> firstFrame.next(first)).isInstanceOf(CannotNextFrameException.class)
+        assertThatThrownBy(firstFrame::next).isInstanceOf(CannotNextFrameException.class)
                 .hasMessage("모든 투구를 완료하지 않아 다음 프레임으로 진행하지 못합니다.");
 
     }
@@ -109,7 +108,7 @@ class NormalFrameTest {
         //given
 
         //when
-        boolean actual = normalFrame.allRolled();
+        boolean actual = normalFrame.isEnd();
 
         //then
         assertThat(actual).isEqualTo(expected);
@@ -127,4 +126,19 @@ class NormalFrameTest {
         );
     }
 
+    @Test
+    @DisplayName("9번 프레임 이후 10번 프레임")
+    void final_frame() {
+        //given
+        int numberOfFrame = 9;
+        int strike = 10;
+        NormalFrame nineFrame = new NormalFrame(Rollings.first(strike), numberOfFrame);
+
+        //when
+        Frame next = nineFrame.next();
+
+        //then
+        assertThat(next).isInstanceOf(FinalFrame.class);
+
+    }
 }

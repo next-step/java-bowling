@@ -18,7 +18,7 @@ class FinalFrameTest {
         //given
 
         //when
-        boolean actual = finalFrame.allRolled();
+        boolean actual = finalFrame.isEnd();
 
         //then
         Assertions.assertThat(actual).isEqualTo(expected);
