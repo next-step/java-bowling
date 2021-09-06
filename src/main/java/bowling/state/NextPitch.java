@@ -19,16 +19,16 @@ public class NextPitch extends Running {
   @Override
   public State nextPitch(final int fallenPin) {
     Pin currentPin = Pin.from(fallenPin);
-    totalPin = firstPin.totalDownPin(currentPin);
+    totalPin = currentPin.totalDownPin(firstPin);
 
-    if (isSpare(currentPin)) {
+    if (isSpare()) {
       return new Spare(firstPin, currentPin);
     }
     return new Miss(firstPin, currentPin);
   }
 
-  private boolean isSpare(final Pin currentPin) {
-    return currentPin.totalDownPin(firstPin).equals(Pin.from(MAX_PINS));
+  private boolean isSpare() {
+    return totalPin.equals(Pin.from(MAX_PINS));
   }
 
   @Override
