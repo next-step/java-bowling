@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import java.util.Objects;
 
-public class FinalRollings extends AbstractRollings {
+public class FinalRollings extends Rollings {
 
     private final Rolling third;
 
@@ -30,8 +30,6 @@ public class FinalRollings extends AbstractRollings {
         return new FinalRollings(first(), second(), new Rolling(fallenPin));
     }
 
-
-
     @Override
     public boolean allRolled() {
         if (third != null) {
@@ -56,4 +54,5 @@ public class FinalRollings extends AbstractRollings {
     public int hashCode() {
         return Objects.hash(super.hashCode(), third);
     }
+
 }

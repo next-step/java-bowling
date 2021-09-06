@@ -4,37 +4,33 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
-    public static final int INIT_NUMBER = 1;
-    public static final int LAST_NORMAL_NUMBER = 9;
-
-
     private final int number;
-    private final Rollings rollings;
+    private final NormalRollings normalRollings;
 
-    public NormalFrame(Rollings rollings, int number) {
-        this.rollings = rollings;
+    public NormalFrame(NormalRollings normalRollings, int number) {
+        this.normalRollings = normalRollings;
         this.number = number;
     }
 
-    public NormalFrame(Rollings rollings) {
-        this.rollings = rollings;
+    public NormalFrame(NormalRollings normalRollings) {
+        this.normalRollings = normalRollings;
         this.number = INIT_NUMBER;
     }
 
     public NormalFrame(int first) {
-        this(Rollings.first(first), INIT_NUMBER);
+        this(NormalRollings.first(first), INIT_NUMBER);
     }
 
     public NormalFrame roll(int fallenPin) {
-        if (this.rollings == null) {
-            return new NormalFrame(Rollings.first(fallenPin), this.number);
+        if (this.normalRollings == null) {
+            return new NormalFrame(NormalRollings.first(fallenPin), this.number);
         }
-        return new NormalFrame(this.rollings.second(fallenPin), this.number);
+        return new NormalFrame(this.normalRollings.second(fallenPin), this.number);
     }
 
     @Override
     public Frame next() {
-        if (!rollings.allRolled()) {
+        if (!normalRollings.allRolled()) {
             throw new CannotNextFrameException();
         }
         if (isLastNormalFrame()) {
@@ -49,7 +45,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return rollings.allRolled();
+        return normalRollings.allRolled();
     }
 
     @Override
@@ -62,11 +58,11 @@ public class NormalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(rollings, that.rollings);
+        return Objects.equals(normalRollings, that.normalRollings);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rollings);
+        return Objects.hash(normalRollings);
     }
 }

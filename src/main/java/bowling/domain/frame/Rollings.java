@@ -1,32 +1,55 @@
 package bowling.domain.frame;
 
-public class Rollings extends AbstractRollings {
+import java.util.Objects;
 
-    private Rollings(Rolling first, Rolling second) {
-        super(first, second);
+public abstract class Rollings {
+
+    private final Rolling first;
+    private final Rolling second;
+
+    protected Rollings(Rolling first, Rolling second) {
+        validateRollings(first, second);
+        this.first = first;
+        this.second = second;
+    }
+
+    protected abstract void validateRollings(Rolling first, Rolling second);
+
+    public Rolling first() {
+        return first;
+    }
+
+    public Rolling second() {
+        return second;
+    }
+
+    public boolean isStrike() {
+        return first.isStrike();
+    }
+
+    public boolean isSpare() {
+        if (second == null) {
+            return false;
+        }
+        return !isStrike() && second.isSpare(first);
+    }
+
+    public int sum() {
+        return first.plusFallenPin(second);
+    }
+
+    public abstract boolean allRolled();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rollings that = (Rollings) o;
+        return Objects.equals(first, that.first) && Objects.equals(second, that.second);
     }
 
     @Override
-    protected void validateRollings(Rolling first, Rolling second) {
-        RollingsValidation rollingsValidation = RollingsValidation.of(first, second);
-        if (rollingsValidation != RollingsValidation.NONE) {
-            throw new RollingsException(rollingsValidation.message());
-        }
-    }
-
-    public static Rollings first(int first) {
-        return new Rollings(new Rolling(first), null);
-    }
-
-    public Rollings second(int second) {
-        return new Rollings(first(), new Rolling(second));
-    }
-
-    @Override
-    public boolean allRolled() {
-        if (isStrike() || isSpare()) {
-            return true;
-        }
-        return !isStrike() && second() != null;
+    public int hashCode() {
+        return Objects.hash(first, second);
     }
 }

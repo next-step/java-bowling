@@ -16,13 +16,13 @@ class NormalFrameTest {
     @DisplayName("객체 생성 - 스트라이크")
     void construct_strike() {
         //given
-        Rollings rollings = Rollings.first(10);
+        NormalRollings normalRollings = NormalRollings.first(10);
 
         //when
-        NormalFrame normalFrame = new NormalFrame(rollings);
+        NormalFrame normalFrame = new NormalFrame(normalRollings);
 
         //then
-        assertThat(normalFrame).isEqualTo(new NormalFrame(rollings));
+        assertThat(normalFrame).isEqualTo(new NormalFrame(normalRollings));
 
     }
 
@@ -30,13 +30,13 @@ class NormalFrameTest {
     @DisplayName("객체 생성 - 스트라이크 아닌 경우")
     void construct_non_strike() {
         //given
-        Rollings rollings = Rollings.first(5).second(5);
+        NormalRollings normalRollings = NormalRollings.first(5).second(5);
 
         //when
-        NormalFrame normalFrame = new NormalFrame(rollings);
+        NormalFrame normalFrame = new NormalFrame(normalRollings);
 
         //then
-        assertThat(normalFrame).isEqualTo(new NormalFrame(rollings));
+        assertThat(normalFrame).isEqualTo(new NormalFrame(normalRollings));
 
     }
 
@@ -44,10 +44,10 @@ class NormalFrameTest {
     @DisplayName("첫 프레임 번호")
     void frame_number() {
         //given
-        Rollings rollings = Rollings.first(0).second(0);
+        NormalRollings normalRollings = NormalRollings.first(0).second(0);
 
         //when
-        NormalFrame firstFrame = new NormalFrame(rollings);
+        NormalFrame firstFrame = new NormalFrame(normalRollings);
 
         //then
         assertThat(firstFrame.number()).isEqualTo(1);
@@ -58,8 +58,8 @@ class NormalFrameTest {
     @DisplayName("다음 프레임 번호")
     void next_frame_number() {
         //given
-        Rollings rollings = Rollings.first(5).second(5);
-        NormalFrame firstFrame = new NormalFrame(rollings);
+        NormalRollings normalRollings = NormalRollings.first(5).second(5);
+        NormalFrame firstFrame = new NormalFrame(normalRollings);
 
         //when
         Frame nextFrame = firstFrame.next();
@@ -74,8 +74,8 @@ class NormalFrameTest {
     void next_frame() {
         //given
         int first = 10;
-        Rollings rollings = Rollings.first(first);
-        NormalFrame firstFrame = new NormalFrame(rollings);
+        NormalRollings normalRollings = NormalRollings.first(first);
+        NormalFrame firstFrame = new NormalFrame(normalRollings);
 
         //when
         Frame nextFrame = firstFrame.next();
@@ -90,8 +90,8 @@ class NormalFrameTest {
     void next_frame_exception() {
         //given
         int first = 5;
-        Rollings rollings = Rollings.first(first);
-        NormalFrame firstFrame = new NormalFrame(rollings);
+        NormalRollings normalRollings = NormalRollings.first(first);
+        NormalFrame firstFrame = new NormalFrame(normalRollings);
 
         //when
 
@@ -132,7 +132,7 @@ class NormalFrameTest {
         //given
         int numberOfFrame = 9;
         int strike = 10;
-        NormalFrame nineFrame = new NormalFrame(Rollings.first(strike), numberOfFrame);
+        NormalFrame nineFrame = new NormalFrame(NormalRollings.first(strike), numberOfFrame);
 
         //when
         Frame next = nineFrame.next();

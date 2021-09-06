@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-public interface RollingsOperator {
+public interface NormalRollingsOperator {
 
     boolean invalid(int first, int second);
 

@@ -13,18 +13,18 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class RollingsTest {
+class NormalRollingsTest {
 
     @Test
     @DisplayName("초구 스트라이크")
     void strike() {
         //given
-        Rollings rollings = Rollings.first(10);
+        NormalRollings normalRollings = NormalRollings.first(10);
 
         //when
 
         //then
-        assertThat(rollings.isStrike()).isTrue();
+        assertThat(normalRollings.isStrike()).isTrue();
 
     }
 
@@ -37,12 +37,12 @@ class RollingsTest {
     @DisplayName("스페어 처리")
     void spare(int first, int second) {
         //given
-        Rollings rollings = Rollings.first(first).second(second);
+        NormalRollings normalRollings = NormalRollings.first(first).second(second);
 
         //when
 
         //then
-        assertThat(rollings.isSpare()).isTrue();
+        assertThat(normalRollings.isSpare()).isTrue();
 
     }
 
@@ -55,12 +55,12 @@ class RollingsTest {
     @DisplayName("두 번의 투구 점수 합계")
     void sum(int first, int second, int expected) {
         //given
-        Rollings rollings = Rollings.first(first).second(second);
+        NormalRollings normalRollings = NormalRollings.first(first).second(second);
 
         //when
 
         //then
-        assertThat(rollings.sum()).isEqualTo(expected);
+        assertThat(normalRollings.sum()).isEqualTo(expected);
 
     }
 
@@ -68,21 +68,21 @@ class RollingsTest {
     @MethodSource("invalid")
     void invalid(int first, int second, String expected) {
         //given
-        Rollings rollings = Rollings.first(first);
+        NormalRollings normalRollings = NormalRollings.first(first);
 
         //when
-        ThrowableAssert.ThrowingCallable actual = () -> rollings.second(second);
+        ThrowableAssert.ThrowingCallable actual = () -> normalRollings.second(second);
 
         //then
-        assertThatThrownBy(actual).isInstanceOf(RollingsException.class)
+        assertThatThrownBy(actual).isInstanceOf(NormalRollingsException.class)
                 .hasMessage(expected);
 
     }
 
     private static Stream<Arguments> invalid() {
         return Stream.of(
-                Arguments.of(5, 6, RollingsValidation.EXCEED_LIMIT_SUM.message()),
-                Arguments.of(10, 1, RollingsValidation.POST_STRIKE_ROLLING.message())
+                Arguments.of(5, 6, NormalRollingsValidation.EXCEED_LIMIT_SUM.message()),
+                Arguments.of(10, 1, NormalRollingsValidation.POST_STRIKE_ROLLING.message())
         );
     }
 
@@ -96,10 +96,10 @@ class RollingsTest {
         //given
 
         //when
-        Rollings rollings = Rollings.first(firstRolling);
+        NormalRollings normalRollings = NormalRollings.first(firstRolling);
 
         //then
-        assertThat(rollings.allRolled()).isEqualTo(expected);
+        assertThat(normalRollings.allRolled()).isEqualTo(expected);
 
     }
 

@@ -2,27 +2,27 @@ package bowling.domain.frame;
 
 import java.util.Arrays;
 
-public enum RollingsValidation {
+public enum NormalRollingsValidation {
     POST_STRIKE_ROLLING(Constants.STRIKE_MESSAGE, (first, second) -> first == 10 && second > 0),
     EXCEED_LIMIT_SUM(Constants.EXCEED_SUM_MESSAGE, (first, second) -> (first + second) > 10),
     NONE(Constants.NONE_MESSAGE, (first, second) -> false);
 
     private final String message;
-    private final RollingsOperator rollingsOperator;
+    private final NormalRollingsOperator normalRollingsOperator;
 
-    RollingsValidation(String message, RollingsOperator rollingsOperator) {
+    NormalRollingsValidation(String message, NormalRollingsOperator normalRollingsOperator) {
         this.message = message;
-        this.rollingsOperator = rollingsOperator;
+        this.normalRollingsOperator = normalRollingsOperator;
     }
 
-    public static RollingsValidation of(int first, int second) {
-        return Arrays.stream(RollingsValidation.values())
-                .filter(validation -> validation.rollingsOperator.invalid(first, second))
+    public static NormalRollingsValidation of(int first, int second) {
+        return Arrays.stream(NormalRollingsValidation.values())
+                .filter(validation -> validation.normalRollingsOperator.invalid(first, second))
                 .findFirst()
                 .orElse(NONE);
     }
 
-    public static RollingsValidation of(Rolling first, Rolling second) {
+    public static NormalRollingsValidation of(Rolling first, Rolling second) {
         if (second == null) {
             return of(first.fallenPin(), 0);
         }

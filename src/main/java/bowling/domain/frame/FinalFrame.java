@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class FinalFrame implements Frame {
 
+
+
     private final FinalRollings finalRollings;
 
     public FinalFrame(FinalRollings finalRollings) {
@@ -33,7 +35,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public int number() {
-        return 10;
+        return FINAL_NUMBER;
     }
 
     @Override
@@ -48,4 +50,5 @@ public class FinalFrame implements Frame {
     public int hashCode() {
         return Objects.hash(finalRollings);
     }
+
 }
