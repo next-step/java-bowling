@@ -1,10 +1,11 @@
 package qna.domain;
 
-import qna.UnAuthorizedException;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.util.Objects;
+
+import qna.UnAuthorizedException;
 
 @Entity
 public class User extends AbstractEntity {
@@ -99,11 +100,16 @@ public class User extends AbstractEntity {
         }
 
         return name.equals(target.name) &&
-                email.equals(target.email);
+            email.equals(target.email);
     }
 
     public boolean isGuestUser() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
     }
 
     private static class GuestUser extends User {
@@ -111,10 +117,5 @@ public class User extends AbstractEntity {
         public boolean isGuestUser() {
             return true;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
     }
 }
