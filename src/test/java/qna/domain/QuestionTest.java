@@ -17,7 +17,7 @@ public class QuestionTest {
     public void 질문을_삭제할_수_있다() throws CannotDeleteException {
         //given
         //when
-        Question result = new Question("title1", "contents1").writeBy(JAVAJIGI);
+        Question result = new Question("title1", "contents1").writeBy(JAVAJIGI).delete(JAVAJIGI);
         //then
         assertThat(result.isDeleted()).isTrue();
     }
