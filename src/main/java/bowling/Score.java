@@ -38,6 +38,13 @@ public enum Score {
         return of(current);
     }
 
+    public static Score of(Score before, int current) {
+        if (before.getScore() + current == 10) {
+            return Score.SPARE;
+        }
+        return of(current);
+    }
+
     public int getScore() {
         return this.score;
     }

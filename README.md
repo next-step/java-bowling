@@ -33,28 +33,17 @@
   * add 메소드
     * 첫번째 투구면 현재점수만 저장
     * 두번째 투구면 이전점수와 현재점수로 점수 저장
-//  * 점수 계산 메소드
-//    * strike나 spare가 포함되면 바로 점수 반환
-//    * 나머지는 점수 합산
+    * 마지막 프레임은 scores 길이가 3까지 가능
 * frame
   * 프레임 번호 : frameNo (1~10)
   * 점수 리스트 : scores
   * 점수 저장 메소드
       * 현재 점수를 add
-* normalFrame (1~9)
-  * 다음 프레임 확인 메소드
-    * 현재 점수가 10이거나 score size가 2이면 다음 프레임 생성 후 반환
-    * 그 외에는 현재 프레임 번호 반환
-  * private 다음 프레임 생성 메소드
-    * frameNo가 9면 finalFrame 생성
-    * 나머지는 normalFrame 생성
-* finalFrame (10)
-  * 다음 프레임 확인 메소드
-    * score size가 3이면 11 반환
-    * score size가 2이고 strike나 spare가 포함되어있지 않으면 11 반환
-    * 그 외에는 현재 프레임 번호 반환
+* frames 일급콜렉션
+  * frame list
 * player
   * name : 참가자명
-  * frame
+  * frames
 * players 일급콜렉션
   * player list
+* 입출력 view 및 게임실행

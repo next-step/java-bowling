@@ -8,7 +8,7 @@ public class ScoreTest {
     @Test
     void create() {
         assertThat(Score.of(10)).isEqualTo(Score.STRIKE);
-        assertThat(Score.of(1,9)).isEqualTo(Score.SPARE);
+        assertThat(Score.of(1, 9)).isEqualTo(Score.SPARE);
         assertThat(Score.of(1)).isEqualTo(Score.MISS_1);
         assertThat(Score.of(9)).isEqualTo(Score.MISS_9);
         assertThat(Score.of(0)).isEqualTo(Score.GUTTER);
