@@ -31,12 +31,17 @@ public class FinalRollings extends Rollings {
     }
 
     @Override
+    public Rolling third() {
+        return third;
+    }
+
+    @Override
     public boolean allRolled() {
-        if (third != null) {
-            return true;
-        }
         if (!isStrike() && second() == null) {
             return false;
+        }
+        if ((isStrike() || isSpare()) && third != null) {
+            return true;
         }
         return !isStrike() && !isSpare();
     }

@@ -23,6 +23,11 @@ public class NormalRollings extends Rollings {
     }
 
     @Override
+    public Rolling third() {
+        return null;
+    }
+
+    @Override
     public boolean allRolled() {
         if (isStrike() || isSpare()) {
             return true;

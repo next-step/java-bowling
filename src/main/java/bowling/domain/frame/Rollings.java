@@ -23,6 +23,8 @@ public abstract class Rollings {
         return second;
     }
 
+    public abstract Rolling third();
+
     public boolean isStrike() {
         return first.isStrike();
     }
