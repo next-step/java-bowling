@@ -13,7 +13,7 @@ class NameTest {
 
     @Test
     @DisplayName("객체 생성")
-    void construct() throws Exception {
+    void construct() {
         //given
         String name = "ABC";
 
@@ -31,7 +31,7 @@ class NameTest {
             ",0"
     })
     @DisplayName("이름 길이 초과 또는 미달")
-    void length_exception(String name, int lengthOfName) throws Exception {
+    void length_exception(String name, int lengthOfName) {
         //given
 
         //when
@@ -45,7 +45,7 @@ class NameTest {
 
     @Test
     @DisplayName("이름 영문만 허용")
-    void letters_exception() throws Exception {
+    void letters_exception() {
         //given
         String name = "홍길동";
 

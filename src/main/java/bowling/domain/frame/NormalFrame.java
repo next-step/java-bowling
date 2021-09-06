@@ -30,6 +30,10 @@ public class NormalFrame {
         return new NormalFrame(Rollings.first(first).second(0), this.number + 1);
     }
 
+    public boolean allRolled() {
+        return rollings.allRolled();
+    }
+
     public int number() {
         return number;
     }

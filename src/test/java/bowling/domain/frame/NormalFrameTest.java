@@ -4,7 +4,11 @@ import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -136,5 +140,29 @@ class NormalFrameTest {
 
     }
 
+    @ParameterizedTest(name = "모든 투구 완료 여부 {index} [{arguments}]")
+    @MethodSource("all_rolled")
+    @DisplayName("모든 투구 완료여부")
+    void all_rolled(NormalFrame normalFrame, boolean expected) {
+        //given
+
+        //when
+        boolean actual = normalFrame.allRolled();
+
+        //then
+        assertThat(actual).isEqualTo(expected);
+
+    }
+
+    private static Stream<Arguments> all_rolled() {
+        return Stream.of(
+                Arguments.of(new NormalFrame(10), true),//strike
+                Arguments.of(new NormalFrame(0, 10), true),//spare
+                Arguments.of(new NormalFrame(1, 1), true),//miss
+                Arguments.of(new NormalFrame(0, 0), true),//gutter
+                Arguments.of(new NormalFrame(0), false),
+                Arguments.of(new NormalFrame(9), false)
+        );
+    }
 
 }
