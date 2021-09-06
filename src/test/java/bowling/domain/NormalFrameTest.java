@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class NormalFrameTest {
 
@@ -34,5 +35,18 @@ class NormalFrameTest {
         // Then
         assertThat(nextFrame.round()).isEqualTo(1);
         assertThat(nextFrame.pins().numberOfPinDowns()).isEqualTo(9);
+    }
+
+    @DisplayName("NormalFrame은 3라운드 진행시 throw IllegalArgument")
+    @Test
+    void roll3thRound() {
+        // Given
+        Frame frame = NormalFrame.create();
+
+        // When && Then
+        Frame nextFrame = frame.roll(5);
+        Frame nextFrame2 = nextFrame.roll(1);
+
+        assertThatIllegalArgumentException().isThrownBy(() -> nextFrame2.roll(1));
     }
 }

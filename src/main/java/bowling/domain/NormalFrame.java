@@ -2,10 +2,11 @@ package bowling.domain;
 
 public class NormalFrame implements Frame {
 
+    public static final int MAX_NORMAL_FRAME = 2;
     private final int round;
     private final Pins pins;
 
-    public NormalFrame(int round, Pins pins) {
+    private NormalFrame(int round, Pins pins) {
         this.round = round;
         this.pins = pins;
     }
@@ -16,6 +17,10 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame roll(int downPins) {
+        if (round == MAX_NORMAL_FRAME) {
+            throw new IllegalArgumentException("이번 프레임은 끝났습니다 다음 프레임을 진행해주세요.");
+        }
+
         pins.roll(downPins);
 
         if (!pins.isAllDown()) {
