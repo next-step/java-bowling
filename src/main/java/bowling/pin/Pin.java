@@ -40,7 +40,7 @@ public class Pin {
     return from(this.fallenPin + firstPin.fallenPin);
   }
 
-  public int pinCount(){
+  public int pinCount() {
     return this.fallenPin;
   }
 

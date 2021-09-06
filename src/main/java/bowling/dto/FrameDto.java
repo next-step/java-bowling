@@ -14,7 +14,7 @@ public class FrameDto {
   }
 
   public static FrameDto from(final ScoreResultDto scoreBoard) {
-    return new FrameDto(scoreBoard.getScoreMessage(),scoreBoard.getTotalScore());
+    return new FrameDto(scoreBoard.getScoreMessage(), scoreBoard.getTotalScore());
   }
 
   public String getScoreMark() {

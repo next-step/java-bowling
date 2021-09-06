@@ -45,7 +45,7 @@ public class NextPitch extends Running {
   public Score calculateScore(Score score) {
     score = firstPin.sumScore(score);
 
-    if(score.isFinishBallCount()){
+    if (score.isFinishBallCount()) {
       return score;
     }
     throw new RuntimeException(MSG_ERROR_CAN_NOT_CALCULATE);

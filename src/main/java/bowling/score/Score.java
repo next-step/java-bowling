@@ -48,7 +48,7 @@ public class Score {
   }
 
   public ScoreDto from() {
-    if(!isFinishBallCount()){
+    if (!isFinishBallCount()) {
       throw new RuntimeException();
     }
     return ScoreDto.from(score);

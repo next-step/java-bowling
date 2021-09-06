@@ -14,8 +14,8 @@ public class ScoreBoard {
     this.scoreResults = new LinkedList<>();
   }
 
-  public void addScoreResult(ScoreResult scoreResult){
-    if(!scoreResult.isNotCheckScore()){
+  public void addScoreResult(ScoreResult scoreResult) {
+    if (!scoreResult.isNotCheckScore()) {
       totalScore = scoreResult.addTotalScore(totalScore);
     }
     scoreResults.add(scoreResult);

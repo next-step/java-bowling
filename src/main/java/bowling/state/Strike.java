@@ -30,7 +30,7 @@ public class Strike extends Finish {
 
   @Override
   public Score calculateScore(final Score score) {
-    if(score.isFinishBallCount()){
+    if (score.isFinishBallCount()) {
       return score;
     }
     return score.sum(first.pinCount());
