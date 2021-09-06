@@ -25,7 +25,7 @@ public class AnswerTest {
 
     @DisplayName("내 답변을 삭제하면 정상적으로 삭제된다.")
     @Test
-    void deleteMyAnswerTest() throws CannotDeleteException {
+    void deleteMyAnswerTest() {
         // given
         Question question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         Answer answer = new Answer(1L, UserTest.SANJIGI, question, "Answers Contents1");

@@ -38,7 +38,7 @@ public class QuestionTest {
 
     @DisplayName("답변이 없는 내 질문은 정상적으로 삭제된다.")
     @Test
-    void deleteMyQuestionTest() throws CannotDeleteException {
+    void deleteMyQuestionTest() {
         // given
         Question question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
 
@@ -51,7 +51,7 @@ public class QuestionTest {
 
     @DisplayName("질문자와 답변자가 모두 자신이면 질문과 답변은 정상적으로 삭제된다.")
     @Test
-    void deleteMyQuestionAndAnswersTest() throws CannotDeleteException {
+    void deleteMyQuestionAndAnswersTest() {
         // given
         Question question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         Answer answer = new Answer(1L, UserTest.JAVAJIGI, question, "Answers Contents1");

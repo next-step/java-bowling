@@ -84,7 +84,7 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> deleteAndGenerateHistories(User loginUser, long questionId) throws CannotDeleteException {
+    public List<DeleteHistory> deleteAndGenerateHistories(User loginUser, long questionId) {
         validateIsOwner(loginUser);
         deleted = true;
 
@@ -97,7 +97,7 @@ public class Question extends AbstractEntity {
         return deleteHistories;
     }
 
-    private void validateIsOwner(User loginUser) throws CannotDeleteException {
+    private void validateIsOwner(User loginUser) {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
