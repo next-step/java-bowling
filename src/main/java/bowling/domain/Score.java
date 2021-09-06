@@ -15,13 +15,13 @@ public enum Score {
     NINE(9),
     TEH(10);
 
-    private final Integer number;
+    private final Integer numberOfPins;
 
-    Score(Integer number) {
-        this.number = number;
+    Score(final Integer numberOfPins) {
+        this.numberOfPins = numberOfPins;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getNumberOfPins() {
+        return numberOfPins;
     }
 }

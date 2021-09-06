@@ -20,7 +20,7 @@ public class Scores {
 
     private void checkValidNumberOfPins(final List<Score> scores) {
         int pins = scores.stream()
-                .map(Score::getNumber)
+                .map(Score::getNumberOfPins)
                 .reduce(0, Integer::sum);
 
         if (pins > NUMBER_OF_PINS) {
