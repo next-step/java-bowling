@@ -1,5 +1,7 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -16,11 +18,11 @@ public class Answers {
         this(Arrays.asList(answers));
     }
 
-    public static Answers of(List<Answer> answers){
+    public static Answers of(List<Answer> answers) {
         return new Answers(answers);
     }
 
-    public static Answers of(Answer... answers){
+    public static Answers of(Answer... answers) {
         return new Answers(answers);
     }
 
@@ -37,7 +39,17 @@ public class Answers {
         return Objects.hash(answers);
     }
 
-    public Answers deleteAll() {
-        return null;
+    public Answers deleteAll(User loginUser) throws CannotDeleteException {
+        validateDeletePossible(loginUser);
+        answers.forEach(Answer::delete);
+        return this;
+    }
+
+    private void validateDeletePossible(User loginUser) throws CannotDeleteException {
+        for (Answer answer : answers) {
+            if (!answer.isOwner(loginUser)) {
+                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+            }
+        }
     }
 }
