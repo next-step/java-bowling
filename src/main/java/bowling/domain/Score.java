@@ -2,7 +2,6 @@ package bowling.domain;
 
 public enum Score {
 
-    NONE(Integer.MIN_VALUE),
     ZERO(0),
     ONE(1),
     TWO(2),
@@ -23,5 +22,13 @@ public enum Score {
 
     public Integer getNumberOfPins() {
         return numberOfPins;
+    }
+
+    public int plus(final Score score) {
+        return this.numberOfPins + score.numberOfPins;
+    }
+
+    public boolean isStrike() {
+        return this.equals(Score.TEN);
     }
 }
