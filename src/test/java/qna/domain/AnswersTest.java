@@ -32,7 +32,7 @@ public class AnswersTest {
 
         Answers answers = Answers.of(Arrays.asList(answer1, answer2));
 
-        assertThatThrownBy(()-> answers.delete(UserTest.JAVAJIGI))
+        assertThatThrownBy(() -> answers.delete(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
