@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import bowling.Comparator.FrameComparator;
-import bowling.model.ScoreCalculator;
+import bowling.model.score.ScoreCalculator;
 
 public class Frames {
 
@@ -52,7 +52,7 @@ public class Frames {
 		return finalFrame;
 	}
 
-	public void playBowling(int strikeNumber) {
+	public boolean playBowling(int strikeNumber) {
 		Frame frame = frames.get(presentFrame - FRAME_INDEX_STEP);
 		if (!frame.isGameEnd()) {
 			frame.playGame(strikeNumber);
@@ -60,6 +60,7 @@ public class Frames {
 		if (presentFrame < FINAL_FRAME && frame.isGameEnd()) {
 			presentFrame = presentFrame + FRAME_INDEX_STEP;
 		}
+		return frame.isGameEnd();
 	}
 
 	public List<Frame> getFrames() {

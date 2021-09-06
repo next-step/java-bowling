@@ -1,21 +1,22 @@
 package bowling.controller;
 
-import bowling.model.Name;
-import bowling.model.Player;
-import bowling.model.frame.Frames;
+import bowling.model.BowlGame;
+import bowling.model.Count;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
 public class Controller {
 
 	public void run() {
-		Player player = new Player(new Name(InputView.inputPlayerName()));
-		Frames frames = Frames.initCreateFrames();
+		Count count = new Count(InputView.inputPlayerCount());
+		String[] players = InputView.inputPlayerName(count);
 
-		while (frames.isContinueGame()) {
-			OutputView.printScoreBoard(player, frames);
-			frames.playBowling(InputView.inputStrikeNumber(frames.getPresentFrame()));
+		BowlGame bowlGame = BowlGame.createBowlGame(players);
+
+		while (bowlGame.isContinueGame()) {
+			OutputView.printScoreBoard(bowlGame.getPlayers());
+			bowlGame.playBowling(InputView.inputStrikeNumber(bowlGame.turnPlayer()));
 		}
-		OutputView.printScoreBoard(player, frames);
+		OutputView.printScoreBoard(bowlGame.getPlayers());
 	}
 }

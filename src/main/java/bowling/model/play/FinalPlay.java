@@ -5,48 +5,42 @@ import java.util.List;
 import java.util.Objects;
 
 import bowling.model.Pin;
-import bowling.model.ScoreGenerator;
+import bowling.model.score.Score;
 
-public class Play implements Playable {
-
+public class FinalPlay implements Playable {
 	private static final String LIMIT_MAX_PIN_ERROR_MESSAGE = "최대 쓰러뜨릴 수 있는 수가 초과 하였습니다.";
-	private static final String EMPTY_VALUE = "";
 	private static final int MIN_PLAY_COUNT = 1;
 	private static final int MAX_PLAY_COUNT = 2;
-	private static final int BONUS_PLAY_COUNT = 3;
 	private static final int FIRST_INDEX = 0;
 	private static final int SECOND_INDEX = 1;
-	private static final int BONUS_INDEX = 1;
-	private static final int FINAL_FRAME_NUMBER = 10;
 
 	private final int frameNumber;
 	private final List<Pin> gameResult;
 
-	public Play(int frameNumber) {
+	public FinalPlay(int frameNumber) {
 		this.frameNumber = frameNumber;
 		this.gameResult = new ArrayList<>();
 	}
 
 	@Override
-	public Play play(Pin pin) {
+	public Score play(Pin pin) {
 		checkScore(pin);
 		gameResult.add(pin);
-		return this;
+		return createScore();
+	}
+
+	private Score createScore() {
+		if (isGameEnd()) {
+			return Score.miss(gameResult, gameResult.stream()
+				.mapToInt(Pin::getPin)
+				.sum());
+		}
+		return Score.nothing(gameResult);
 	}
 
 	@Override
-	public String getGameStatus() {
-		if (gameResult.size() == MIN_PLAY_COUNT) {
-			return ScoreGenerator.scoreGenerator(findPin(FIRST_INDEX));
-		}
-		if (gameResult.size() == MAX_PLAY_COUNT) {
-			return ScoreGenerator.scoreGenerator(findPin(FIRST_INDEX), findPin(SECOND_INDEX));
-		}
-		if (gameResult.size() == BONUS_PLAY_COUNT) {
-			return ScoreGenerator.scoreGenerator(findPin(FIRST_INDEX), findPin(SECOND_INDEX),
-				findPin(BONUS_INDEX));
-		}
-		return EMPTY_VALUE;
+	public int countGame() {
+		return gameResult.size();
 	}
 
 	@Override
@@ -92,36 +86,7 @@ public class Play implements Playable {
 
 	@Override
 	public boolean isGameEnd() {
-		if ((isMiss() && (gameResult.size() > MIN_PLAY_COUNT)) || gameResult.size() > MAX_PLAY_COUNT) {
-			return true;
-		}
-		return (frameNumber < FINAL_FRAME_NUMBER && (isStrike() || gameResult.size() > MIN_PLAY_COUNT));
-	}
-
-	@Override
-	public int calculateFrame(Playable beforeResult) {
-		if (beforeResult.isSpare() && gameResult.size() > 0) {
-			return 10 + findPin(FIRST_INDEX).getPin();
-		}
-		if (beforeResult.isStrike() && gameResult.size() > 1) {
-			return 10 + (findPin(FIRST_INDEX).getPin() + findPin(SECOND_INDEX).getPin());
-		}
-		return -1;
-	}
-
-	@Override
-	public int calculateDouble(Playable beforeResult) {
-		if (gameResult.size() > 0) {
-			return (10 + beforeResult.getTotalScore()) + findPin(FIRST_INDEX).getPin();
-		}
-		return -1;
-	}
-
-	@Override
-	public int getTotalScore() {
-		return gameResult.stream()
-			.mapToInt(Pin::getPin)
-			.sum();
+		return ((isMiss() && (gameResult.size() > MIN_PLAY_COUNT)) || gameResult.size() > MAX_PLAY_COUNT);
 	}
 
 	@Override
@@ -130,8 +95,8 @@ public class Play implements Playable {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Play play = (Play)o;
-		return frameNumber == play.frameNumber && Objects.equals(gameResult, play.gameResult);
+		FinalPlay finalPlay = (FinalPlay)o;
+		return frameNumber == finalPlay.frameNumber && Objects.equals(gameResult, finalPlay.gameResult);
 	}
 
 	@Override

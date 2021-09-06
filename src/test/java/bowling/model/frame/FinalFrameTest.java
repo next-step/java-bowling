@@ -3,10 +3,14 @@ package bowling.model.frame;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import bowling.model.score.Score;
 
 class FinalFrameTest {
 
@@ -31,8 +35,9 @@ class FinalFrameTest {
 	public void playBowlingGame() {
 		FinalFrame finalFrame = new FinalFrame(10);
 		finalFrame.playGame(5);
+		finalFrame.playGame(4);
 
-		assertThat(finalFrame.getGameScore()).isEqualTo(5);
+		assertThat(finalFrame.getGameScore()).isEqualTo(9);
 	}
 
 	@Test
@@ -58,7 +63,7 @@ class FinalFrameTest {
 
 		NormalFrame normalFrame = new NormalFrame(9, finalFrame);
 		normalFrame.playGame(10);
-		int score = finalFrame.calculateScore(normalFrame.play);
+		int score = finalFrame.calculateScore(Score.strike(new ArrayList<>()));
 
 		assertThat(score).isEqualTo(19);
 	}
@@ -73,7 +78,7 @@ class FinalFrameTest {
 		normalFrame.playGame(4);
 		normalFrame.playGame(6);
 
-		int score = finalFrame.calculateScore(normalFrame.play);
+		int score = finalFrame.calculateScore(Score.spare(new ArrayList<>()));
 
 		assertThat(score).isEqualTo(15);
 	}

@@ -1,9 +1,8 @@
-package bowling.model;
+package bowling.model.score;
+
+import bowling.model.Pin;
 
 public class ScoreGenerator {
-
-	private static final int MAX_PIN = 10;
-	private static final int MIN_PIN = 0;
 
 	public static String scoreGenerator(Pin firstPin) {
 		if (firstPin.isMaxPin()) {

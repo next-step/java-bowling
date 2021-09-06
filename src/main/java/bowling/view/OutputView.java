@@ -1,10 +1,11 @@
 package bowling.view;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import bowling.model.Player;
-import bowling.model.ScoreCalculator;
+import bowling.model.score.ScoreCalculator;
 import bowling.model.frame.Frames;
 
 public class OutputView {
@@ -17,13 +18,16 @@ public class OutputView {
 	private static final int START_INCLUSIVE = 0;
 	private static final int LIMIT_MAX_LENGTH = 5;
 
-	public static void printScoreBoard(Player player, Frames frames) {
-		System.out.print(DELIMITER + " NAME " + DELIMITER);
-		System.out.print(getFrameNumbers(frames) + DELIMITER + System.lineSeparator());
-		System.out.print(DELIMITER + printFormatter(player.getPlayerName()) + DELIMITER);
-		System.out.print(getFrameGameResult(frames) + DELIMITER + System.lineSeparator());
-		System.out.print(DELIMITER + printFormatter("SCORE") + DELIMITER);
-		System.out.print(getFrameGameScore(frames.getScoreBoard()) + DELIMITER + System.lineSeparator());
+	public static void printScoreBoard(List<Player> players) {
+		for (Player player : players) {
+			System.out.print(DELIMITER + " NAME " + DELIMITER);
+			System.out.print(getFrameNumbers(player.getFrames()) + DELIMITER + System.lineSeparator());
+			System.out.print(DELIMITER + printFormatter(player.getPlayerName()) + DELIMITER);
+			System.out.print(getFrameGameResult(player.getFrames()) + DELIMITER + System.lineSeparator());
+			System.out.print(DELIMITER + printFormatter("SCORE") + DELIMITER);
+			System.out.print(
+				getFrameGameScore(player.getFrames().getScoreBoard()) + DELIMITER + System.lineSeparator());
+		}
 	}
 
 	private static String getFrameGameScore(ScoreCalculator scoreCalculator) {
