@@ -41,48 +41,53 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) { // 지우기 전 검증. 작성자와 loginUser 일치 여부 확인.
+        validateIsOwner(loginUser);
+        validateAnswerIsOwner(loginUser);
+
+        return deleteHistories();
+    }
+
+    private void validateIsOwner(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
+    }
 
-        List<Answer> answers = getAnswers();
+    private void validateAnswerIsOwner(User loginUser) throws CannotDeleteException {
         for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) { // 지우기 전 검증. loginUser 외 댓글 작성자 여부 확인.
+            if (!answer.isOwner(loginUser)) {
                 throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
             }
         }
+    }
 
+    private List<DeleteHistory> deleteHistories() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        setDeleted(true); // 질문 삭제 처리
-        // 질문 삭제 기록 남김
+
+        deleteHistories.addAll(QuestionDeleteHistories());
+        deleteHistories.addAll(AnswersDeleteHistories());
+
+        return deleteHistories;
+    }
+
+    private List<DeleteHistory> QuestionDeleteHistories() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        setDeleted(true);
+
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
-        // 답변 삭제 및 삭제 기록 남김
+        return deleteHistories;
+    }
+
+    private List<DeleteHistory> AnswersDeleteHistories() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
         for (Answer answer : answers) {
             answer.setDeleted(true);
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
 
         return deleteHistories;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
     }
 
     public User getWriter() {
