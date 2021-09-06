@@ -1,16 +1,11 @@
 package bowling.domain;
 
-public class Frame {
+public interface Frame {
 
-    private final int round;
-    private final Pins pins;
+    Frame roll(int downPins);
 
-    public Frame(int round, Pins pins) {
-        this.round = round;
-        this.pins = pins;
-    }
+    int round();
 
-    public static Frame of() {
-        return null;
-    }
+    Pins pins();
+
 }
