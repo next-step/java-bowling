@@ -29,10 +29,10 @@ public class Rolling {
     }
 
     private boolean sumIsMax(Rolling rolling) {
-        return sum(rolling) == MAX_FALLEN_PIN;
+        return plusFallenPin(rolling) == MAX_FALLEN_PIN;
     }
 
-    public int sum(Rolling rolling) {
+    public int plusFallenPin(Rolling rolling) {
         return this.fallenPin + rolling.fallenPin();
     }
 

@@ -92,7 +92,7 @@ class RollingTest {
         Rolling rolling = new Rolling(first);
 
         //when
-        int actual = rolling.sum(new Rolling(second));
+        int actual = rolling.plusFallenPin(new Rolling(second));
 
         //then
         assertThat(actual).isEqualTo(expected);
