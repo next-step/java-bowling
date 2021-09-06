@@ -78,9 +78,10 @@ class FinalFrameTest {
   @Test
   void beforeStrike() {
     Score strike = Score.strike();
-    frame.play(10);
+    frame.play(10).play(10);
     int score = frame.frameScoreAdd(strike).from().getScore();
-    assertThat(score).isEqualTo(20);
+
+    assertThat(score).isEqualTo(30);
   }
 
   @DisplayName("2번째 공이 스페어 미만의 결과인 경우 라운드 종료가 반환 된다.")
@@ -95,17 +96,5 @@ class FinalFrameTest {
   void threePitchesFinish() {
     frame.play(1).play(9).play(1);
     assertThat(frame.isGameEnd()).isTrue();
-  }
-
-  @Test
-  void name() {
-    Frame frame = new NormalFrame(9);
-    frame.play(10)
-        .play(10)
-        .play(10)
-        .play(10);
-
-    ScoreBoard scoreBoard = frame.createScoreBoard();
-    System.out.println("scoreBoard = " + scoreBoard.toString());
   }
 }

@@ -60,7 +60,7 @@ public class PinTest {
   @Test
   void sumScore() {
     Pin pin = Pin.from(5);
-    Score score = pin.sumScore(Score.strike());
+    Score score = pin.sumScore(Score.spare());
     assertThat(score.from().getScore()).isEqualTo(15);
   }
 }

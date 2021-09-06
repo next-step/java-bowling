@@ -13,14 +13,14 @@ class ScoreTest {
   @Test
   void strike() {
     Score strike = Score.strike();
-    assertThat(strike.from().getScore()).isEqualTo(10);
+    assertThat(strike).isEqualTo(Score.strike());
   }
 
   @DisplayName("스페어를 쳤을때 볼카운드1에 점수 10인 스코어 객체가 생성된다.")
   @Test
   void spare() {
     Score spare = Score.spare();
-    assertThat(spare.from().getScore()).isEqualTo(10);
+    assertThat(spare).isEqualTo(Score.spare());
   }
 
   @DisplayName("미스를 쳣을때 볼카운0에 점수가 할당된 스코어 객체가 생성된다.")

@@ -2,9 +2,11 @@ package bowling.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowling.dto.ScoreResultDto;
+import bowling.dto.FrameDto;
 import bowling.score.Score;
 import bowling.score.ScoreBoard;
+import bowling.score.ScoreResult;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -79,10 +81,9 @@ class NormalFrameTest {
         .play(10);
 
     ScoreBoard scoreBoard = frame.createScoreBoard();
+    List<ScoreResult> scoreResults = scoreBoard.getScoreResults();
+    FrameDto frameDto = scoreResults.get(scoreResults.size() - 1).from();
 
-    ScoreResultDto scoreResultDto = scoreBoard.getScoreResults()
-        .get(scoreBoard.getScoreResults().size() - 1)
-        .from();
-    assertThat(scoreResultDto.getTotalScore()).isEqualTo(300);
+    assertThat(frameDto.getTotalScore()).isEqualTo(300);
   }
 }
