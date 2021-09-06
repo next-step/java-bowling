@@ -4,6 +4,7 @@ import bowling.dto.FrameDto;
 import bowling.dto.ResultDto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ResultView {
@@ -12,6 +13,7 @@ public class ResultView {
   private static final int END_EXCLUSIVE = 11;
   private static final int END_BLANK_MAX = 10;
   private static final int LIMIT_SCORE_LENGTH = 3;
+  private static final int VALUE_NOTHING = 0;
   private static final String VALUE_NAME_DIGITS = "|  %3s   |";
   private static final String VALUE_DIGITS_NORMAL = "  %3s   |";
   private static final String VALUE_DIGITS_FINAL = "  %3s |";
@@ -62,13 +64,13 @@ public class ResultView {
     values.add(String.format(VALUE_NAME_DIGITS, result.getName()));
 
     writeScoreMark(result, values);
-    writeBlankMark(result, values);
+    writeBlankMark(result.getFrames().size(), values);
 
     System.out.println(String.join("", values));
   }
 
-  private static void writeBlankMark(final ResultDto result, final List<String> values) {
-    IntStream.range(result.getFrames().size(), END_BLANK_MAX)
+  private static void writeBlankMark(final int startIndex, final List<String> values) {
+    IntStream.range(startIndex, END_BLANK_MAX)
         .mapToObj(i -> VALUE_BLANK)
         .forEach(values::add);
   }
@@ -76,25 +78,30 @@ public class ResultView {
   private static void writeScoreMark(final ResultDto result, final List<String> values) {
     result.getFrames()
         .stream()
-        .map((FrameDto frame) -> widthFormat(frame.getScoreMark()))
+        .map(frame -> widthFormat(frame.getScoreMark()))
         .forEach(values::add);
   }
 
   private static void printBodyScore(final ResultDto result) {
     List<String> values = new ArrayList<>();
-
     values.add(DEFAULT_BLANK);
 
-    writeScoreValue(result, values);
-    writeBlankMark(result, values);
+    writeScoreValue(getScoreTotalResult(result), values);
+    writeBlankMark(getScoreTotalResult(result).size(), values);
 
     System.out.println(String.join("", values));
   }
 
-  private static void writeScoreValue(final ResultDto result, final List<String> values) {
-    result.getFrames()
+  private static List<String> getScoreTotalResult(final ResultDto result) {
+    return  result.getFrames()
         .stream()
+        .filter(frameDto -> frameDto.getScore() != VALUE_NOTHING)
         .map((FrameDto frame) -> widthFormatScore(frame.getTotalScore()))
-        .forEach(values::add);
+        .collect(Collectors.toList());
+  }
+
+  private static void writeScoreValue(final List<String> scoreBoardResult,
+      final List<String> result) {
+    result.addAll(scoreBoardResult);
   }
 }
