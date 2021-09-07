@@ -45,7 +45,7 @@ class NextPitchTest {
     NextPitch firstBall = new NextPitch(PinTest.from(5));
     firstBall.nextPitch(5);
     Score score = firstBall.calculateScore(Score.spare());
-    assertThat(score.from().getScore()).isEqualTo(15);
+    assertThat(score.getScoreDto().getScore()).isEqualTo(15);
   }
 
   @DisplayName("이번공이 스트라이크 혹은 스페어가 아닐때 합산을 하려고 하면 에러가 발생한다.")

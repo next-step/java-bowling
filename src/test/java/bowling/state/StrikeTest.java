@@ -1,7 +1,6 @@
 package bowling.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import bowling.pin.Pin;
 import bowling.pin.PinTest;
@@ -43,7 +42,7 @@ class StrikeTest {
     strikeScore = strike.calculateScore(strikeScore);
     strikeScore = strike.calculateScore(strikeScore);
 
-    int total = strike.calculateScore(strikeScore).from().getScore();
+    int total = strike.calculateScore(strikeScore).getScoreDto().getScore();
 
     assertThat(total).isEqualTo(30);
   }

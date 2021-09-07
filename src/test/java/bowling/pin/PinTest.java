@@ -61,6 +61,6 @@ public class PinTest {
   void sumScore() {
     Pin pin = Pin.from(5);
     Score score = pin.sumScore(Score.spare());
-    assertThat(score.from().getScore()).isEqualTo(15);
+    assertThat(score.getScoreDto().getScore()).isEqualTo(15);
   }
 }

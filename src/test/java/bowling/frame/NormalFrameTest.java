@@ -49,7 +49,7 @@ class NormalFrameTest {
         .play(0);
 
     Score score = frame.frameScoreAdd(Score.strike());
-    assertThat(score.from().getScore()).isEqualTo(18);
+    assertThat(score.getScoreDto().getScore()).isEqualTo(18);
   }
 
   @DisplayName("이전 스코어가 스페어일때 보너스적용이 공 한개 만큼 반영되는지 확인한다.")
@@ -59,7 +59,7 @@ class NormalFrameTest {
     frame.play(10);
 
     Score score = frame.frameScoreAdd(Score.spare());
-    assertThat(score.from().getScore()).isEqualTo(20);
+    assertThat(score.getScoreDto().getScore()).isEqualTo(20);
   }
 
   @DisplayName("프래임별 스코어 객체생성을 하여 전체 스코어를 누적 합산하는 스코어보드 객체를 생성한다.")

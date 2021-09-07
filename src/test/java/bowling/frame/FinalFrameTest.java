@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import bowling.score.Score;
-import bowling.score.ScoreBoard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -70,7 +69,7 @@ class FinalFrameTest {
     Score spare = Score.spare();
     frame.play(10);
 
-    int score = frame.frameScoreAdd(spare).from().getScore();
+    int score = frame.frameScoreAdd(spare).getScoreDto().getScore();
     assertThat(score).isEqualTo(20);
   }
 
@@ -79,7 +78,7 @@ class FinalFrameTest {
   void beforeStrike() {
     Score strike = Score.strike();
     frame.play(10).play(10);
-    int score = frame.frameScoreAdd(strike).from().getScore();
+    int score = frame.frameScoreAdd(strike).getScoreDto().getScore();
 
     assertThat(score).isEqualTo(30);
   }

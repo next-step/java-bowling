@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import bowling.exception.ScoreCalculateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +28,7 @@ class ScoreTest {
   @Test
   void miss() {
     Score miss = Score.miss(8);
-    assertThat(miss.from().getScore()).isEqualTo(8);
+    assertThat(miss.getScoreDto().getScore()).isEqualTo(8);
   }
 
   @DisplayName("스트라이크와 스페어를 쳤을때, 각각 보너스 적용 볼카운트 만큼 값이 합산되는지 확인한다.")
@@ -48,13 +49,13 @@ class ScoreTest {
                 .sum(10)
                 .sum(10)
                 .sum(10)
-        ).isInstanceOf(IllegalArgumentException.class),
+        ).isInstanceOf(ScoreCalculateException.class),
 
         () -> assertThatThrownBy(
             () -> Score.spare()
                 .sum(10)
                 .sum(10)
-        ).isInstanceOf(IllegalArgumentException.class)
+        ).isInstanceOf(ScoreCalculateException.class)
     );
 
   }
