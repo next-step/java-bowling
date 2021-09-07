@@ -34,7 +34,7 @@ public class Miss extends Finish {
   @Override
   public Score calculateScore(Score score) {
     score = first.sumScore(score);
-    if(score.isFinishBallCount()){
+    if (score.isFinishBallCount()) {
       return score;
     }
     return second.sumScore(score);
