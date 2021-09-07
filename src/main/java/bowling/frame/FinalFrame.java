@@ -85,7 +85,7 @@ public class FinalFrame implements Frame {
 
   @Override
   public int scoreValue() {
-    return score().from().getScore();
+    return score().getScoreDto().getScore();
   }
 
   @Override

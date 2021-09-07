@@ -1,5 +1,7 @@
 package bowling.frame;
 
+import static bowling.score.Score.MSG_ERROR_LIMIT_BALL_COUNT;
+
 import bowling.exception.ScoreCalculateException;
 import bowling.score.Score;
 import bowling.score.ScoreBoard;
@@ -75,10 +77,17 @@ public class NormalFrame implements Frame {
   @Override
   public int scoreValue() {
     try {
-      return score().from().getScore();
+      validationBallCount();
+      return score().getScoreDto().getScore();
 
     } catch (ScoreCalculateException e) {
       return DEFAULT_SCORE;
+    }
+  }
+
+  private void validationBallCount() {
+    if(!score().isFinishBallCount()){
+      throw new ScoreCalculateException(MSG_ERROR_LIMIT_BALL_COUNT);
     }
   }
 
