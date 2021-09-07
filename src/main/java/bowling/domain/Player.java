@@ -3,16 +3,16 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Player {
-    private String name;
+    private Name name;
     private Frames frames;
 
     public Player(String name) {
-        this.name = name;
+        this.name = new Name(name);
         this.frames = new Frames();
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public Frames getFrames() {
