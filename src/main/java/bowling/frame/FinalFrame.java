@@ -28,16 +28,24 @@ public class FinalFrame implements Frame {
       throw new RuntimeException(MSG_ERROR_END_FRAME);
     }
 
-    State currentState = states.getLast();
-
     if (states.getLast().isFinish()) {
-      states.add(StateFactory.startPitch().nextPitch(pinCount));
-      return this;
+      return newPitch(pinCount);
     }
+
+    refreshStates(pinCount);
+    return this;
+  }
+
+  private FinalFrame newPitch(final int pinCount) {
+    states.add(StateFactory.startPitch().nextPitch(pinCount));
+    return this;
+  }
+
+  private void refreshStates(final int pinCount) {
+    State currentState = states.getLast();
 
     states.removeLast();
     states.add(currentState.nextPitch(pinCount));
-    return this;
   }
 
   public boolean isGameEnd() {
