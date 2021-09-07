@@ -15,7 +15,7 @@ public class AnswersTest {
 
     @Test
     @DisplayName("Answers 삭제 처리 후 DeleteHistory List 반환")
-    void answersDeleteHistories() throws CannotDeleteException {
+    void delete() throws CannotDeleteException {
         // given
         Answers answers = new Answers();
         answers.add(A1);
