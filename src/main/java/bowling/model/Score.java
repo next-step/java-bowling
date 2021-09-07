@@ -5,7 +5,7 @@ public class Score {
     private static final int MAX = 10;
 
     private final int first;
-    private int second;
+    private Integer second;
 
     public Score(int first) {
         validateFirstScoreRange(first);
@@ -20,7 +20,15 @@ public class Score {
     }
 
     public void setSecond(int second) {
+        validateEmptySecondScore();
         validateSecondScoreRange(second);
+        this.second = second;
+    }
+
+    private void validateEmptySecondScore() {
+        if (second != null) {
+            throw new IllegalArgumentException("두 번째 점수가 이미 존재합니다.");
+        }
     }
 
     private void validateSecondScoreRange(int second) {
