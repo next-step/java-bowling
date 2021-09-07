@@ -24,9 +24,7 @@ public class FinalFrame implements Frame {
 
   @Override
   public FinalFrame play(final int pinCount) {
-    if (isGameEnd()) {
-      throw new RuntimeException(MSG_ERROR_END_FRAME);
-    }
+    validationEndFrame();
 
     if (states.getLast().isFinish()) {
       return newPitch(pinCount);
@@ -34,6 +32,12 @@ public class FinalFrame implements Frame {
 
     refreshStates(pinCount);
     return this;
+  }
+
+  private void validationEndFrame() {
+    if (isGameEnd()) {
+      throw new RuntimeException(MSG_ERROR_END_FRAME);
+    }
   }
 
   private FinalFrame newPitch(final int pinCount) {
