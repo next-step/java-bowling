@@ -6,11 +6,12 @@ import java.util.Objects;
 
 public class Score {
 
+  public static final String MSG_ERROR_LIMIT_BALL_COUNT = "계산할 수 없습니다.";
+
   private static final int MAX_SCORE = 10;
   private static final int DEFAULT_BALL_COUNT = 0;
   private static final int SPARE_BALL_COUNT = 1;
   private static final int STRIKE_BALL_COUNT = 2;
-  private static final String MSG_ERROR_LIMIT_BALL_COUNT = "계산할 수 없습니다.";
 
   private final int score;
 
@@ -40,7 +41,7 @@ public class Score {
 
   private void validationBallCount() {
     if (isFinishBallCount()) {
-      throw new IllegalArgumentException(MSG_ERROR_LIMIT_BALL_COUNT);
+      throw new ScoreCalculateException(MSG_ERROR_LIMIT_BALL_COUNT);
     }
   }
 
@@ -48,10 +49,7 @@ public class Score {
     return ballCount == DEFAULT_BALL_COUNT;
   }
 
-  public ScoreDto from() {
-    if (!isFinishBallCount()) {
-      throw new ScoreCalculateException(MSG_ERROR_LIMIT_BALL_COUNT);
-    }
+  public ScoreDto getScoreDto(){
     return ScoreDto.from(score);
   }
 
