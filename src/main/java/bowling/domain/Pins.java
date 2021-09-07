@@ -12,9 +12,15 @@ public class Pins {
         this.pins = pins;
     }
 
+
     public static Pins create() {
         return new Pins(new ArrayList<>());
     }
+
+    public static Pins from(Pins pins) {
+        return new Pins(new ArrayList<>(pins.pins));
+    }
+
 
     public int numberOfPinDowns() {
         return pins.size();

@@ -24,7 +24,7 @@ public class NormalFrame implements Frame {
         pins.roll(downPins);
 
         if (!pins.isAllDown()) {
-            return new NormalFrame(round + 1, pins);
+            return new NormalFrame(round + 1, Pins.from(pins));
         }
 
         return this;

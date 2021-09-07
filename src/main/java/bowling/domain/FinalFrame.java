@@ -31,7 +31,7 @@ public class FinalFrame implements Frame {
         pins.roll(downPins);
 
         if (!pins.isAllDown()) {
-            return new FinalFrame(round + 1, pins, false);
+            return new FinalFrame(round + 1, Pins.from(pins), false);
         }
 
         return new FinalFrame(round + 1, Pins.create(), true);
