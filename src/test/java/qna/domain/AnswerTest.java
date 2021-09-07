@@ -13,7 +13,7 @@ public class AnswerTest {
 
     @Test
     @DisplayName("Answer 삭제 처리 후 DeleteHistory 반환")
-    void delete(){
+    void delete() throws CannotDeleteException {
         // when
         DeleteHistory deleteHistory = A1.delete(UserTest.JAVAJIGI);
 
