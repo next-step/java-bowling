@@ -2,7 +2,7 @@ package bowling.dto;
 
 import java.util.Objects;
 
-public class FrameDto {
+public class ScoreResultDto {
 
   private final String scoreMark;
 
@@ -10,15 +10,15 @@ public class FrameDto {
 
   private final int score;
 
-  private FrameDto(final String scoreMark, final int totalScore, final int score) {
+  private ScoreResultDto(final String scoreMark, final int totalScore, final int score) {
     this.scoreMark = scoreMark;
     this.totalScore = totalScore;
     this.score = score;
   }
 
-  public static FrameDto of(final String scoreMessage, final int totalScore,
+  public static ScoreResultDto of(final String scoreMessage, final int totalScore,
       final int score) {
-    return new FrameDto(scoreMessage, totalScore, score);
+    return new ScoreResultDto(scoreMessage, totalScore, score);
   }
 
   public String getScoreMark() {
@@ -41,7 +41,7 @@ public class FrameDto {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    final FrameDto frameDto = (FrameDto) o;
+    final ScoreResultDto frameDto = (ScoreResultDto) o;
     return Objects.equals(scoreMark, frameDto.scoreMark);
   }
 

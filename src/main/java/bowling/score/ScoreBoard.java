@@ -15,6 +15,7 @@ public class ScoreBoard {
   }
 
   public void addScoreResult(ScoreResult scoreResult) {
+
     if (!scoreResult.isNotCheckScore()) {
       totalScore = scoreResult.addTotalScore(totalScore);
     }

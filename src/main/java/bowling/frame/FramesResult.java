@@ -31,6 +31,6 @@ public class FramesResult {
   }
 
   public ResultDto getResult() {
-    return ResultDto.of(playerName.toString(), frames.resultList());
+    return ResultDto.of(playerName.toString(), frames.totalScoreResult());
   }
 }

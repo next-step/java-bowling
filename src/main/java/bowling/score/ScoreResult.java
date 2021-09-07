@@ -1,6 +1,6 @@
 package bowling.score;
 
-import bowling.dto.FrameDto;
+import bowling.dto.ScoreResultDto;
 import java.util.Objects;
 
 public class ScoreResult {
@@ -32,8 +32,8 @@ public class ScoreResult {
     return this.score == NOT_CHECK_SCORE;
   }
 
-  public FrameDto from() {
-    return FrameDto.of(scoreMessage, totalScore, score);
+  public ScoreResultDto from() {
+    return ScoreResultDto.of(scoreMessage, totalScore, score);
   }
 
   @Override

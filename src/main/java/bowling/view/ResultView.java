@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.dto.FrameDto;
+import bowling.dto.ScoreResultDto;
 import bowling.dto.ResultDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +96,7 @@ public class ResultView {
     return result.getFrames()
         .stream()
         .filter(frameDto -> frameDto.getScore() != VALUE_NOTHING)
-        .map((FrameDto frame) -> widthFormatScore(frame.getTotalScore()))
+        .map((ScoreResultDto frame) -> widthFormatScore(frame.getTotalScore()))
         .collect(Collectors.toList());
   }
 

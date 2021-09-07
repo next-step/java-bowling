@@ -6,14 +6,14 @@ public class ResultDto {
 
   private final String name;
 
-  private final List<FrameDto> frames;
+  private final List<ScoreResultDto> frames;
 
-  private ResultDto(final String name, final List<FrameDto> frames) {
+  private ResultDto(final String name, final List<ScoreResultDto> frames) {
     this.name = name;
     this.frames = frames;
   }
 
-  public static ResultDto of(final String name, final List<FrameDto> resultList) {
+  public static ResultDto of(final String name, final List<ScoreResultDto> resultList) {
     return new ResultDto(name, resultList);
   }
 
@@ -21,7 +21,7 @@ public class ResultDto {
     return name;
   }
 
-  public List<FrameDto> getFrames() {
+  public List<ScoreResultDto> getFrames() {
     return frames;
   }
 }

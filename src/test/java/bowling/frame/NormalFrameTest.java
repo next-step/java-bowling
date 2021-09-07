@@ -2,7 +2,7 @@ package bowling.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowling.dto.FrameDto;
+import bowling.dto.ScoreResultDto;
 import bowling.score.Score;
 import bowling.score.ScoreBoard;
 import bowling.score.ScoreResult;
@@ -82,7 +82,7 @@ class NormalFrameTest {
 
     ScoreBoard scoreBoard = frame.createScoreBoard();
     List<ScoreResult> scoreResults = scoreBoard.getScoreResults();
-    FrameDto frameDto = scoreResults.get(scoreResults.size() - 1).from();
+    ScoreResultDto frameDto = scoreResults.get(scoreResults.size() - 1).from();
 
     assertThat(frameDto.getTotalScore()).isEqualTo(300);
   }
