@@ -1,13 +1,11 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -21,10 +19,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private final List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -73,7 +69,7 @@ public class Question extends AbstractEntity {
     }
 
     public List<Answer> getAnswers() {
-        return answers;
+        return answers.value();
     }
 
     @Override
@@ -83,7 +79,7 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) {
         DeleteHistory deleteHistory = deleteQuestion(loginUser);
-        List<DeleteHistory> deleteHistories = deleteAnswers(loginUser);
+        List<DeleteHistory> deleteHistories = answers.delete(loginUser);
 
         List<DeleteHistory> result = new ArrayList<>();
         result.add(deleteHistory);
@@ -102,12 +98,6 @@ public class Question extends AbstractEntity {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-    }
-
-    private List<DeleteHistory> deleteAnswers(User loginUser) {
-        return this.answers.stream()
-                .map(answer -> answer.delete(loginUser))
-                .collect(Collectors.toList());
     }
 
 }
