@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.dto.ScoreResultDto;
 import bowling.dto.ResultDto;
+import bowling.dto.ScoreResultDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
