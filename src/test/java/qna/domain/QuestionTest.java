@@ -1,7 +1,6 @@
 package qna.domain;
 
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,5 +37,14 @@ public class QuestionTest {
     @Test
     public void owner() {
         assertThat(Q1.isOwner(UserTest.JAVAJIGI)).isTrue();
+    }
+
+
+    @DisplayName("질문자=사용자, 답변 없음: 정상적으로 삭제")
+    @Test
+    public void delete_user_is_writer() {
+        User loginUser = UserTest.JAVAJIGI;
+        Q1.delete(loginUser);
+        assertThat(Q1.isDeleted()).isTrue();
     }
 }
