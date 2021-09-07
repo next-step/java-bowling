@@ -20,10 +20,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -43,9 +41,8 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validateIsOwner(loginUser);
-        validateAnswerIsOwner(loginUser);
-
-        return deleteHistories();
+//        validateAnswerIsOwner(loginUser);
+        return deleteHistories(loginUser);
     }
 
     private void validateIsOwner(User loginUser) throws CannotDeleteException {
@@ -54,39 +51,25 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private void validateAnswerIsOwner(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
+    public boolean isOwner(User loginUser) {
+        return writer.equals(loginUser);
     }
 
-    private List<DeleteHistory> deleteHistories() {
+    private List<DeleteHistory> deleteHistories(User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-        deleteHistories.addAll(QuestionDeleteHistories());
-        deleteHistories.addAll(AnswersDeleteHistories());
+        deleteHistories.addAll(questionDeleteHistories());
+        deleteHistories.addAll(answers.delete(loginUser));
 
         return deleteHistories;
     }
 
-    private List<DeleteHistory> QuestionDeleteHistories() {
+    private List<DeleteHistory> questionDeleteHistories() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
+
         setDeleted(true);
 
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
-        return deleteHistories;
-    }
-
-    private List<DeleteHistory> AnswersDeleteHistories() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
-
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
         return deleteHistories;
     }
 
@@ -104,10 +87,6 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
-
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
@@ -115,10 +94,6 @@ public class Question extends AbstractEntity {
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
