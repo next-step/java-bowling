@@ -50,10 +50,10 @@ public class QuestionTest {
 
     @Test
     @DisplayName("삭제 히스토리 생성")
-    void createDeleteHistory() {
+    void createDeleteHistory() throws CannotDeleteException {
         Q1.addAnswer(AnswerTest.A1);
         Q1.addAnswer(AnswerTest.A3);
-        List<DeleteHistory> deleteHistories = Q1.createDeleteHistories();
+        List<DeleteHistory> deleteHistories = Q1.deleteQuestion(UserTest.JAVAJIGI);
 
         assertThat(deleteHistories.contains(
                         new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now()))
