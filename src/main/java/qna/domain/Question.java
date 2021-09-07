@@ -44,13 +44,9 @@ public class Question extends AbstractEntity {
     }
 
     private void validateIsOwner(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
+        if (!writer.equals(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-    }
-
-    private boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
     }
 
     private List<DeleteHistory> deleteHistories(User loginUser) throws CannotDeleteException {

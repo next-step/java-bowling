@@ -46,19 +46,9 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
-
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
-    }
-
 
     public DeleteHistory delete(User loginUser) throws CannotDeleteException {
         validateIsOwner(loginUser);
@@ -66,14 +56,14 @@ public class Answer extends AbstractEntity {
     }
 
     private void validateIsOwner(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
+        if (!writer.equals(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
 
     private DeleteHistory deleteHistory() {
-        setDeleted(true);
-        return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
+        deleted = true;
+        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }
 
     public User getWriter() {
@@ -94,12 +84,12 @@ public class Answer extends AbstractEntity {
         if (!(o instanceof Answer)) return false;
         if (!super.equals(o)) return false;
         Answer answer = (Answer) o;
-        return isDeleted() == answer.isDeleted() && Objects.equals(getWriter(), answer.getWriter()) && Objects.equals(question, answer.question) && Objects.equals(getContents(), answer.getContents());
+        return deleted == answer.deleted && Objects.equals(getWriter(), answer.getWriter()) && Objects.equals(question, answer.question) && Objects.equals(getContents(), answer.getContents());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getWriter(), question, getContents(), isDeleted());
+        return Objects.hash(super.hashCode(), getWriter(), question, getContents(), deleted);
     }
 
     @Override
