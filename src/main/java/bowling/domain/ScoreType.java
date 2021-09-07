@@ -7,8 +7,8 @@ import java.util.function.BiPredicate;
 
 public enum ScoreType {
     STRIKE("X", (order, score) -> order == 1 && score == 10),
-    SPARE("9 | /", (order, score) -> order == 2 && score == 10),
-    MISS("8 | 1", (order, score) -> order == 2 && score < 10 && score > 0),
+    SPARE("|/", (order, score) -> order == 2 && score == 10),
+    MISS("|", (order, score) -> order == 2 && score < 10 && score > 0),
     GUTTER("-", (order, score) -> order == 2 && score == 0);
 
     private String symbol;

@@ -1,25 +1,24 @@
 package bowling.domain;
 
+import bowling.exception.InputException;
+
 import java.util.Objects;
 
-public class FinalFrame implements Frame{
-
+public class FinalFrame implements Frame {
+    private int order = 1;
     private int countOfPoint;
 
     public FinalFrame(int countOfPin) {
-        this.countOfPoint = countOfPin;
+        countOfPin = countOfPoint;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FinalFrame that = (FinalFrame) o;
-        return countOfPoint == that.countOfPoint;
+    public Frame next(int countOfPin) {
+        return null;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(countOfPoint);
+    public String resultOfFrame() {
+        return null;
     }
 }
