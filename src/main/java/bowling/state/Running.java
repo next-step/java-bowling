@@ -1,5 +1,6 @@
 package bowling.state;
 
+import bowling.exception.ScoreCalculateException;
 import bowling.score.Score;
 
 public abstract class Running implements State {
@@ -13,6 +14,6 @@ public abstract class Running implements State {
 
   @Override
   public Score score() {
-    throw new RuntimeException(MSG_ERROR_NOT_FINISH);
+    throw new ScoreCalculateException(MSG_ERROR_NOT_FINISH);
   }
 }
