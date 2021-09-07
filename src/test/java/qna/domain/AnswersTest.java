@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class AnswersTest {
@@ -14,7 +15,7 @@ public class AnswersTest {
 
     @Test
     @DisplayName("Answers 삭제 처리 후 DeleteHistory List 반환")
-    void answersDeleteHistories() {
+    void answersDeleteHistories() throws CannotDeleteException {
         // given
         Answers answers = new Answers();
         answers.add(A1);
@@ -24,7 +25,7 @@ public class AnswersTest {
 
         //then
         Assertions.assertThat(deleteHistories.get(0))
-                .isEqualTo(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1"));
+                .isEqualTo(new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now()));
     }
 
     @Test

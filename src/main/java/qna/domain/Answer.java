@@ -4,6 +4,7 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -66,6 +67,20 @@ public class Answer extends AbstractEntity {
 
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Answer)) return false;
+        if (!super.equals(o)) return false;
+        Answer answer = (Answer) o;
+        return isDeleted() == answer.isDeleted() && Objects.equals(getWriter(), answer.getWriter()) && Objects.equals(question, answer.question) && Objects.equals(getContents(), answer.getContents());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getWriter(), question, getContents(), isDeleted());
     }
 
     @Override
