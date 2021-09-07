@@ -22,7 +22,7 @@ public class ScoreTest {
 
     @DisplayName("두 번째 볼링 점수가 0점 미만이면 예외가 발생한다.")
     @Test
-    void minSecondScoreExceptionTest() {
+    void secondScoreUnderMinExceptionTest() {
         // given
         Score score = new Score(0);
 
@@ -30,5 +30,17 @@ public class ScoreTest {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> score.setSecond(-1))
                 .withMessage("두 번째 볼링 점수가 0점 미만일 수 없습니다.");
+    }
+
+    @DisplayName("점수의 총합이 10점 초과면 예외가 발생한다.")
+    @Test
+    void sumOfScoreOverMaxExceptionTest() {
+        // given
+        Score score = new Score(5);
+
+        // when, then
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> score.setSecond(6))
+                .withMessage("총 볼링 점수가 10점을 초과할 수 없습니다.");
     }
 }
