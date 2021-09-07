@@ -16,18 +16,8 @@ public class Score {
         this.value = value;
     }
 
-    private void validate(int value) {
-        if (value > MAX_SCORE) {
-            throw new IllegalArgumentException("점수는 10점을 초과할수 없습니다.");
-        }
-    }
-
     public int sum(Score score) {
         return this.value + score.value;
-    }
-
-    public int toInt() {
-        return value;
     }
 
     public String getString() {
@@ -38,6 +28,15 @@ public class Score {
         return String.valueOf(value);
     }
 
+    public int toInt() {
+        return value;
+    }
+
+    private void validate(int value) {
+        if (value > MAX_SCORE) {
+            throw new IllegalArgumentException("점수는 10점을 초과할수 없습니다.");
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

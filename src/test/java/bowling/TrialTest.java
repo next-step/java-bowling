@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class TrialTest {
     @Test
@@ -66,5 +67,22 @@ public class TrialTest {
         Trial trial3 = new Trial();
 
         assertThat(trial3.getFrameResult()).isEqualTo(FrameResult.MISS);
+    }
+
+    @Test
+    @DisplayName("Norma")
+    void isNormalEndTest() {
+        Trial trial = new Trial();
+
+        trial.add(new Score(10));
+
+        assertThat(trial.isNormalEnd()).isTrue();
+
+        Trial trial2 = new Trial();
+
+        trial2.add(new Score(0));
+        trial2.add(new Score(0));
+
+        assertThat(trial2.isNormalEnd()).isTrue();
     }
 }

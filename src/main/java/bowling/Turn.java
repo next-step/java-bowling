@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Turn {
     private final static int LAST_DOUBLE_BALL_TURN = 9;
 
-    private int value;
+    private final int value;
 
     public Turn(int value) {
         this.value = value;
