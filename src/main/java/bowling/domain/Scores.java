@@ -1,8 +1,9 @@
-package bowling;
+package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Scores {
     private static final int NORMAL_SIZE = 2;
@@ -68,5 +69,10 @@ public class Scores {
     @Override
     public int hashCode() {
         return Objects.hash(scores);
+    }
+
+    @Override
+    public String toString() {
+        return scores.stream().map(Score::getDisplay).collect(Collectors.joining("|"));
     }
 }

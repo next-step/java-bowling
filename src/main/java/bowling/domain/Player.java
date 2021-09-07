@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 import java.util.Objects;
 
@@ -6,9 +6,17 @@ public class Player {
     private String name;
     private Frames frames;
 
-    Player(String name) {
+    public Player(String name) {
         this.name = name;
         this.frames = new Frames();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Frames getFrames() {
+        return frames;
     }
 
     @Override

@@ -1,5 +1,6 @@
-package bowling;
+package bowling.domain;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Frame {
@@ -27,8 +28,8 @@ public class Frame {
         return frameNo;
     }
 
-    public Score getScore(int index) {
-        return scores.getScores().get(index);
+    public Scores getScores() {
+        return scores;
     }
 
     @Override
