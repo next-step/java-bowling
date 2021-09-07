@@ -93,7 +93,7 @@ public class ResultView {
   }
 
   private static List<String> getScoreTotalResult(final ResultDto result) {
-    return  result.getFrames()
+    return result.getFrames()
         .stream()
         .filter(frameDto -> frameDto.getScore() != VALUE_NOTHING)
         .map((FrameDto frame) -> widthFormatScore(frame.getTotalScore()))

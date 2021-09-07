@@ -8,7 +8,7 @@ public class ScoreDto {
     this.score = score;
   }
 
-  public static ScoreDto from(int score){
+  public static ScoreDto from(int score) {
     return new ScoreDto(score);
   }
 
