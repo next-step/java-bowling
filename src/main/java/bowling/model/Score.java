@@ -1,8 +1,8 @@
 package bowling.model;
 
 public class Score {
-    private static final int MIN = 0;
-    private static final int MAX = 10;
+    static final int MIN = 0;
+    static final int MAX = 10;
 
     private final int first;
     private Integer second;
