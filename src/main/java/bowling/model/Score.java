@@ -1,43 +1,42 @@
 package bowling.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Score {
-    static final int MIN = 0;
-    static final int MAX = 10;
+    private static final int MIN = 0;
+    private static final int MAX = 10;
+    private static final Map<Integer, Score> SCORES = new HashMap<>();
 
-    private final int first;
-    private final int second;
+    private final int score;
 
-    public Score(int first, int second) {
-        validateScoreRange(first, second);
-
-        this.first = first;
-        this.second = second;
+    private Score(int score) {
+        validateRange(score);
+        this.score = score;
     }
 
-    private void validateScoreRange(int first, int second) {
-        validateFirstScoreRange(first);
-        validateSecondScoreRange(first, second);
+    public static Score of(int scoreValue) {
+        Score score = SCORES.get(scoreValue);
+        if (score != null) {
+            return score;
+        }
+
+        score = new Score(scoreValue);
+        SCORES.put(scoreValue, score);
+        return score;
     }
 
-    private void validateFirstScoreRange(int first) {
-        if (first < MIN || first > MAX) {
-            throw new IllegalArgumentException(String.format("첫 번쨰 볼링 점수는 %d점 이상 %d점 이하여야 합니다.", MIN, MAX));
+    private void validateRange(int score) {
+        if (score < MIN || score > MAX) {
+            throw new IllegalArgumentException("볼링 점수는 0점 이상 10점 이하여야 합니다.");
         }
     }
 
-    private void validateSecondScoreRange(int first, int second) {
-        if (second < MIN) {
-            throw new IllegalArgumentException(String.format("두 번째 볼링 점수가 %d점 미만일 수 없습니다.", MIN));
-        }
-
-        int sum = first + second;
-        if (sum > MAX) {
-            throw new IllegalArgumentException(String.format("총 볼링 점수가 %d점을 초과할 수 없습니다.", MAX));
-        }
+    public int getValue() {
+        return score;
     }
 
-    public boolean isStrikeOrSpare() {
-        int sum = first + second;
-        return sum == MAX;
+    public boolean isMax() {
+        return score == MAX;
     }
 }
