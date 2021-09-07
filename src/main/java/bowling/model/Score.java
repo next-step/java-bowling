@@ -9,7 +9,6 @@ public class Score {
 
     public Score(int first) {
         validateFirstScoreRange(first);
-
         this.first = first;
     }
 
