@@ -60,8 +60,8 @@ public class QuestionTest {
     @DisplayName("질문자=사용자, 타 사용자 답변 존재: 삭제 불가")
     @Test
     public void delete_answer_exist_from_other_user() {
-        Q1.addAnswer(new Answer(UserTest.SANJIGI, Q1, "co"));
-        Q1.addAnswer(new Answer(UserTest.JAVAJIGI, Q1, "co"));
+        Q1.addAnswer(new Answer(UserTest.SANJIGI, Q1, "content"));
+        Q1.addAnswer(new Answer(UserTest.JAVAJIGI, Q1, "content"));
         assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class);
     }
@@ -69,10 +69,10 @@ public class QuestionTest {
     @DisplayName("질문자=사용자, 질문자=답변자: 삭제 가능")
     @Test
     public void delete_answer_made_by_oneself() {
-        User loginUser = UserTest.JAVAJIGI;
-        Q1.addAnswer(new Answer(UserTest.JAVAJIGI, Q1, "co"));
-        Q1.delete(loginUser);
-        assertThat(Q1.isDeleted()).isTrue();
+        User loginUser = UserTest.SANJIGI;
+        Q2.addAnswer(new Answer(UserTest.SANJIGI, Q2, "content"));
+        Q2.delete(loginUser);
+        assertThat(Q2.isDeleted()).isTrue();
     }
 
     @DisplayName("삭제시 기록을 남긴다.")
