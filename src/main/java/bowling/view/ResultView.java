@@ -13,7 +13,7 @@ public class ResultView {
   private static final int END_EXCLUSIVE = 11;
   private static final int END_BLANK_MAX = 10;
   private static final int LIMIT_SCORE_LENGTH = 3;
-  private static final int VALUE_NOTHING = 0;
+  private static final int VALUE_NOTHING = -1;
   private static final String VALUE_NAME_DIGITS = "|  %3s   |";
   private static final String VALUE_DIGITS_NORMAL = "  %3s   |";
   private static final String VALUE_DIGITS_FINAL = "  %3s |";
