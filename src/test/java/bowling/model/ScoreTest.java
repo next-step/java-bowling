@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("볼링 게임 점수 테스트")
 public class ScoreTest {
@@ -32,9 +33,17 @@ public class ScoreTest {
     @DisplayName("점수의 총합이 10점을 초과면 예외가 발생한다.")
     @Test
     void sumOfScoreOverMaxExceptionTest() {
-        // gievn, when, then
+        // given, when, then
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new Score(5, 6))
                 .withMessage("총 볼링 점수가 10점을 초과할 수 없습니다.");
+    }
+
+    @DisplayName("스트라이크 혹은 스페어 여부 메소드 기능이 정상 동작해야 한다.")
+    @Test
+    void isStrikeOrSpareTest() {
+        // given, when, then
+        assertTrue(new Score(10, 0).isStrikeOrSpare());
+        assertTrue(new Score(5, 5).isStrikeOrSpare());
     }
 }
