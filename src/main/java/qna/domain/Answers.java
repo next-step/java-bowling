@@ -19,6 +19,13 @@ public class Answers {
 	@OrderBy("id ASC")
 	private List<Answer> answers = new ArrayList<>();
 
+	public Answers() {
+	}
+
+	public Answers(List<Answer> answers) {
+		this.answers = answers;
+	}
+
 	public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
 		ArrayList<DeleteHistory> deleteHistories = new ArrayList<>();
 		for (Answer answer : this.answers) {
