@@ -80,6 +80,15 @@ public class Question extends AbstractEntity {
     }
 
     public void delete(User loginUser) {
+        deleteQuestion(loginUser);
+        deleteAnswers(loginUser);
+    }
+
+    private void deleteAnswers(User loginUser) {
+        this.answers.forEach(answer -> answer.delete(loginUser));
+    }
+
+    private void deleteQuestion(User loginUser) {
         isUserValid(loginUser);
         deleted = true;
     }
