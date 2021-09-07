@@ -70,10 +70,6 @@ public class Answer extends AbstractEntity {
         return writer;
     }
 
-    public String getContents() {
-        return contents;
-    }
-
     public void toQuestion(Question question) {
         this.question = question;
     }
@@ -84,12 +80,12 @@ public class Answer extends AbstractEntity {
         if (!(o instanceof Answer)) return false;
         if (!super.equals(o)) return false;
         Answer answer = (Answer) o;
-        return deleted == answer.deleted && Objects.equals(getWriter(), answer.getWriter()) && Objects.equals(question, answer.question) && Objects.equals(getContents(), answer.getContents());
+        return deleted == answer.deleted && Objects.equals(writer, answer.writer) && Objects.equals(question, answer.question) && Objects.equals(contents, answer.contents);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getWriter(), question, getContents(), deleted);
+        return Objects.hash(super.hashCode(), writer, question, contents, deleted);
     }
 
     @Override
