@@ -8,29 +8,20 @@ public class ScoreBoard {
 
   private final LinkedList<ScoreResult> scoreResults;
 
-  private int totalScore = 0;
-
   public ScoreBoard() {
     this.scoreResults = new LinkedList<>();
   }
 
   public void addScoreResult(ScoreResult scoreResult) {
-
-    if (!scoreResult.isNotCheckScore()) {
-      totalScore = scoreResult.addTotalScore(totalScore);
-    }
     scoreResults.add(scoreResult);
+    returnTotal(scoreResult);
+  }
+
+  private void returnTotal(final ScoreResult scoreResult) {
+    scoreResult.currentTotal(ScoreCalculator.totalSum(scoreResults));
   }
 
   public List<ScoreResult> getScoreResults() {
     return Collections.unmodifiableList(scoreResults);
-  }
-
-  @Override
-  public String toString() {
-    return "ScoreBoard{" +
-        "scoreResults=" + scoreResults +
-        ", totalScore=" + totalScore +
-        '}';
   }
 }

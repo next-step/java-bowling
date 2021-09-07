@@ -18,14 +18,8 @@ public class ScoreResult {
     this.score = score;
   }
 
-  public int addTotalScore(int beforeTotalScore) {
-    if (isNotCheckScore()) {
-      this.totalScore = this.score;
-      return this.totalScore;
-    }
-
-    this.totalScore = this.score + beforeTotalScore;
-    return this.totalScore;
+  public void currentTotal(final int totalSum) {
+    this.totalScore = totalSum;
   }
 
   public boolean isNotCheckScore() {
@@ -63,4 +57,5 @@ public class ScoreResult {
         ", totalScore=" + totalScore +
         '}';
   }
+
 }
