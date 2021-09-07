@@ -38,20 +38,4 @@ public class ScoreTest {
         IntStream.rangeClosed(1, 9)
                 .forEach(i -> assertThat(new Score(i).getString()).isEqualTo(String.valueOf(i)));
     }
-
-//    @ParameterizedTest
-//    @MethodSource("scoresAndExpectedResults")
-//    @DisplayName("투구 점수로 부터 프레임의 결과를 결정")
-//    void getFrameResultTest(Score score1, Score score2, FrameResult frameResult) {
-//        assertThat(score1.getFrameResult(score2)).isEqualTo(frameResult);
-//    }
-//
-//    static Stream<Arguments> scoresAndExpectedResults() {
-//        return Stream.of(
-//                Arguments.of(new Score(10), new Score(0), FrameResult.STRIKE),
-//                Arguments.of(new Score(8), new Score(2), FrameResult.SPARE),
-//                Arguments.of(new Score(7), new Score(2), FrameResult.MISS),
-//                Arguments.of(new Score(0), new Score(0), FrameResult.MISS)
-//        );
-//    }
 }
