@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
@@ -14,12 +15,20 @@ public class QuestionTest {
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
 
+    private Question question;
+
+    @BeforeEach
+    void setUp() {
+        question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+    }
+
+
     @Test
     @DisplayName("로그인 사용자와 질문한 사람이 다른 경우 삭제할 수 없다")
     void invalidOwner() throws CannotDeleteException {
         User sanjigi = UserTest.SANJIGI;
 
-        assertThrows(CannotDeleteException.class, () -> Q1.delete(sanjigi));
+        assertThrows(CannotDeleteException.class, () -> question.delete(sanjigi));
     }
 
     @Test
@@ -27,8 +36,8 @@ public class QuestionTest {
     void validOwner() throws CannotDeleteException {
         User javajigi = UserTest.JAVAJIGI;
 
-        assertDoesNotThrow( () -> Q1.delete(javajigi));
-        assertTrue(Q1.isDeleted());
+        assertDoesNotThrow( () -> question.delete(javajigi));
+        assertTrue(question.isDeleted());
     }
 
     @Test
@@ -36,22 +45,22 @@ public class QuestionTest {
     void noAnswerDeleteSuccess() throws CannotDeleteException {
         User javajigi = UserTest.JAVAJIGI;
 
-        List<DeleteHistory> deleteHistories = assertDoesNotThrow(() -> Q1.delete(javajigi));
+        List<DeleteHistory> deleteHistories = assertDoesNotThrow(() -> question.delete(javajigi));
         assertThat(deleteHistories).hasSize(1);
         assertThat(deleteHistories).element(0)
                 .hasFieldOrPropertyWithValue("contentType", ContentType.QUESTION)
-                .hasFieldOrPropertyWithValue("contentId", Q1.getId())
+                .hasFieldOrPropertyWithValue("contentId", question.getId())
                 .hasFieldOrPropertyWithValue("deletedBy", javajigi);
-        assertTrue(Q1.isDeleted());
+        assertTrue(question.isDeleted());
     }
 
     @Test
     @DisplayName("질문자와 답글의 작성자가 다른 경우 삭제가 불가능하다")
     void invalidAnswerOwner() {
         User javajigi = UserTest.JAVAJIGI;
-        Q1.addAnswer(AnswerTest.A2);
+        question.addAnswer(AnswerTest.A2);
 
-        assertThrows(CannotDeleteException.class, () -> Q1.delete(javajigi));
+        assertThrows(CannotDeleteException.class, () -> question.delete(javajigi));
     }
 
     @Test
@@ -59,14 +68,14 @@ public class QuestionTest {
     void validAnswerOwner() {
         User javajigi = UserTest.JAVAJIGI;
         Answer answer = AnswerTest.A1;
-        Q1.addAnswer(answer);
+        question.addAnswer(answer);
 
-        List<DeleteHistory> deleteHistories = assertDoesNotThrow(() -> Q1.delete(javajigi));
+        List<DeleteHistory> deleteHistories = assertDoesNotThrow(() -> question.delete(javajigi));
 
         assertThat(deleteHistories).hasSize(2);
         assertThat(deleteHistories).element(0)
                 .hasFieldOrPropertyWithValue("contentType", ContentType.QUESTION)
-                .hasFieldOrPropertyWithValue("contentId", Q1.getId())
+                .hasFieldOrPropertyWithValue("contentId", question.getId())
                 .hasFieldOrPropertyWithValue("deletedBy", javajigi);
 
         assertThat(deleteHistories).element(1)
@@ -74,7 +83,7 @@ public class QuestionTest {
                 .hasFieldOrPropertyWithValue("contentId", answer.getId())
                 .hasFieldOrPropertyWithValue("deletedBy", javajigi);
 
-        assertTrue(Q1.isDeleted());
+        assertTrue(question.isDeleted());
         assertTrue(answer.isDeleted());
     }
 
