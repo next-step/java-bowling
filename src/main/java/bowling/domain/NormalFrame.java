@@ -12,7 +12,7 @@ public class NormalFrame implements Frame {
     }
 
     public static Frame create() {
-        return new NormalFrame(0, Pins.of());
+        return new NormalFrame(0, Pins.create());
     }
 
     @Override

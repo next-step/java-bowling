@@ -11,7 +11,7 @@ class PinsTest {
     @Test
     void pinsCreateTest() {
         // Given
-        Pins pins = Pins.of();
+        Pins pins = Pins.create();
         // When && Then
         assertThat(pins.numberOfPinDowns()).isEqualTo(0);
     }
@@ -20,7 +20,7 @@ class PinsTest {
     @Test
     void whenDownThePinsReturnDownsSize() {
         // Given
-        Pins pins = Pins.of();
+        Pins pins = Pins.create();
         assertThat(pins.roll(10)).isEqualTo(10);
     }
 }

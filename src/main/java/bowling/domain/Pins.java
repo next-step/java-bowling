@@ -12,7 +12,7 @@ public class Pins {
         this.pins = pins;
     }
 
-    public static Pins of() {
+    public static Pins create() {
         return new Pins(new ArrayList<>());
     }
 
@@ -24,12 +24,11 @@ public class Pins {
         return pins.size() == DEFAULT_PINS_SIZE;
     }
 
-
     public int roll(int down) {
         int standPinsCount = numberOfPinDowns();
 
         if (standPinsCount + down > DEFAULT_PINS_SIZE) {
-            throw new IllegalArgumentException("이미 모든 볼을 다 쓰러뜨렸습니다.");
+                throw new IllegalArgumentException("11개 이상의 볼을 쓰러뜨릴 수 없습니다.");
         }
 
         for (int i = 0; i < down; i++) {
