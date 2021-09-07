@@ -2,6 +2,7 @@ package qna.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -49,6 +50,14 @@ public class QnaServiceTest {
 
         assertThat(question.isDeleted()).isTrue();
         verifyDeleteHistories();
+    }
+
+    @Test
+    @DisplayName("로그인 사용자와 질문한 사람이 다른 경우 질문을 삭제 할 수 없다.")
+    public void delete_실패_() throws CannotDeleteException {
+        assertThatThrownBy(
+                () -> question.delete(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class
+        );
     }
 
     @Test
