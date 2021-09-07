@@ -49,7 +49,7 @@ public class Score {
     return ballCount == DEFAULT_BALL_COUNT;
   }
 
-  public ScoreDto getScoreDto(){
+  public ScoreDto getScoreDto() {
     return ScoreDto.from(score);
   }
 

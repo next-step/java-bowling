@@ -86,7 +86,7 @@ public class NormalFrame implements Frame {
   }
 
   private void validationBallCount() {
-    if(!score().isFinishBallCount()){
+    if (!score().isFinishBallCount()) {
       throw new ScoreCalculateException(MSG_ERROR_LIMIT_BALL_COUNT);
     }
   }
