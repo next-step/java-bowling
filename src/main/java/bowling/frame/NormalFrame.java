@@ -1,5 +1,6 @@
 package bowling.frame;
 
+import bowling.exception.ScoreCalculateException;
 import bowling.score.Score;
 import bowling.score.ScoreBoard;
 import bowling.score.ScoreResult;
@@ -76,7 +77,7 @@ public class NormalFrame implements Frame {
     try {
       return score().from().getScore();
 
-    } catch (RuntimeException e) {
+    } catch (ScoreCalculateException e) {
       return DEFAULT_SCORE;
     }
   }
@@ -89,7 +90,7 @@ public class NormalFrame implements Frame {
 
     try {
       return new ScoreResult(state.scoreMessage(), scoreValue());
-    } catch (RuntimeException e) {
+    } catch (ScoreCalculateException e) {
       return new ScoreResult(state.scoreMessage(), NOT_SUM_SCORE_VALUE);
     }
   }

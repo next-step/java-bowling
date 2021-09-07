@@ -1,5 +1,6 @@
 package bowling.state;
 
+import bowling.exception.ScoreCalculateException;
 import bowling.pin.Pin;
 import bowling.score.Score;
 
@@ -48,6 +49,6 @@ public class NextPitch extends Running {
     if (score.isFinishBallCount()) {
       return score;
     }
-    throw new RuntimeException(MSG_ERROR_CAN_NOT_CALCULATE);
+    throw new ScoreCalculateException(MSG_ERROR_CAN_NOT_CALCULATE);
   }
 }

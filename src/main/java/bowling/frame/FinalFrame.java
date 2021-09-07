@@ -1,5 +1,6 @@
 package bowling.frame;
 
+import bowling.exception.ScoreCalculateException;
 import bowling.score.Score;
 import bowling.score.ScoreBoard;
 import bowling.score.ScoreResult;
@@ -50,7 +51,7 @@ public class FinalFrame implements Frame {
   private boolean isFinish() {
     try {
       return score().isFinishBallCount();
-    } catch (RuntimeException e) {
+    } catch (ScoreCalculateException e) {
       return false;
     }
   }
@@ -95,7 +96,7 @@ public class FinalFrame implements Frame {
 
     try {
       return new ScoreResult(getScoreMessage(), scoreValue());
-    } catch (RuntimeException e) {
+    } catch (ScoreCalculateException e) {
       return new ScoreResult(getScoreMessage(), NOT_SUM_SCORE_VALUE);
     }
   }

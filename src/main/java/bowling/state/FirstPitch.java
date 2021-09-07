@@ -1,5 +1,6 @@
 package bowling.state;
 
+import bowling.exception.ScoreCalculateException;
 import bowling.pin.Pin;
 import bowling.score.Score;
 
@@ -39,6 +40,6 @@ public class FirstPitch extends Running {
 
   @Override
   public Score calculateScore(final Score score) {
-    throw new RuntimeException(MSG_ERROR_CAN_NOT_CALCULATE);
+    throw new ScoreCalculateException(MSG_ERROR_CAN_NOT_CALCULATE);
   }
 }

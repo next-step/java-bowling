@@ -1,6 +1,7 @@
 package bowling.score;
 
 import bowling.dto.ScoreDto;
+import bowling.exception.ScoreCalculateException;
 import java.util.Objects;
 
 public class Score {
@@ -49,7 +50,7 @@ public class Score {
 
   public ScoreDto from() {
     if (!isFinishBallCount()) {
-      throw new RuntimeException();
+      throw new ScoreCalculateException(MSG_ERROR_LIMIT_BALL_COUNT);
     }
     return ScoreDto.from(score);
   }
