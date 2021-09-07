@@ -13,7 +13,6 @@ public class NormalFrame implements Frame {
 
   private static final int LIMIT_FRAME = 9;
   private static final int INCREASE_ROUND_NUMBER = 1;
-  private static final int DEFAULT_SCORE = 0;
   private static final int NOT_SUM_SCORE_VALUE = -1;
 
   private final int roundNumber;
@@ -76,13 +75,8 @@ public class NormalFrame implements Frame {
 
   @Override
   public int scoreValue() {
-    try {
-      validationBallCount();
-      return score().getScoreDto().getScore();
-
-    } catch (ScoreCalculateException e) {
-      return DEFAULT_SCORE;
-    }
+    validationBallCount();
+    return score().getScoreDto().getScore();
   }
 
   private void validationBallCount() {
