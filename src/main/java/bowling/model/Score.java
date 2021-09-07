@@ -5,11 +5,18 @@ public class Score {
     static final int MAX = 10;
 
     private final int first;
-    private Integer second;
+    private final int second;
 
-    public Score(int first) {
-        validateFirstScoreRange(first);
+    public Score(int first, int second) {
+        validateScoreRange(first, second);
+
         this.first = first;
+        this.second = second;
+    }
+
+    private void validateScoreRange(int first, int second) {
+        validateFirstScoreRange(first);
+        validateSecondScoreRange(first, second);
     }
 
     private void validateFirstScoreRange(int first) {
@@ -18,19 +25,7 @@ public class Score {
         }
     }
 
-    public void setSecond(int second) {
-        validateEmptySecondScore();
-        validateSecondScoreRange(second);
-        this.second = second;
-    }
-
-    private void validateEmptySecondScore() {
-        if (second != null) {
-            throw new IllegalArgumentException("두 번째 점수가 이미 존재합니다.");
-        }
-    }
-
-    private void validateSecondScoreRange(int second) {
+    private void validateSecondScoreRange(int first, int second) {
         if (second < MIN) {
             throw new IllegalArgumentException(String.format("두 번째 볼링 점수가 %d점 미만일 수 없습니다.", MIN));
         }
@@ -39,5 +34,10 @@ public class Score {
         if (sum > MAX) {
             throw new IllegalArgumentException(String.format("총 볼링 점수가 %d점을 초과할 수 없습니다.", MAX));
         }
+    }
+
+    public boolean isStrikeOrSpare() {
+        int sum = first + second;
+        return sum == MAX;
     }
 }
