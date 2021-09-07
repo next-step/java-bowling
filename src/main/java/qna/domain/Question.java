@@ -40,7 +40,11 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validateIsOwner(loginUser);
-        return deleteHistories(loginUser);
+
+        deleted = true;
+        List<DeleteHistory> answersDeleteHistories = answers.delete(loginUser);
+
+        return deleteHistories(answersDeleteHistories);
     }
 
     private void validateIsOwner(User loginUser) throws CannotDeleteException {
@@ -49,22 +53,17 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private List<DeleteHistory> deleteHistories(User loginUser) throws CannotDeleteException {
+    private List<DeleteHistory> deleteHistories(List<DeleteHistory> answersDeleteHistories) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-        deleteHistories.addAll(questionDeleteHistories());
-        deleteHistories.addAll(answers.delete(loginUser));
+        deleteHistories.add(deleteHistory());
+        deleteHistories.addAll(answersDeleteHistories);
 
         return deleteHistories;
     }
 
-    private List<DeleteHistory> questionDeleteHistories() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-
-        deleted = true;
-
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
-        return deleteHistories;
+    private DeleteHistory deleteHistory() {
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 
     public User getWriter() {
