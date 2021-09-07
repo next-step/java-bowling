@@ -65,10 +65,6 @@ public class Answer extends AbstractEntity {
         return this.writer.equals(writer);
     }
 
-    public User getWriter() {
-        return writer;
-    }
-
     public String getContents() {
         return contents;
     }

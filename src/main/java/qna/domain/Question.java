@@ -74,10 +74,6 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public User getWriter() {
-        return writer;
-    }
-
     public Question writeBy(User loginUser) {
         this.writer = loginUser;
         return this;
@@ -100,9 +96,6 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
 
     @Override
     public String toString() {
