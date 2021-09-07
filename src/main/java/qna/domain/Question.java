@@ -22,6 +22,7 @@ public class Question extends AbstractEntity {
 
 	public Question(String title, String contents) {
 		this.questionContext = new QuestionContext(title, contents);
+		this.answers = new Answers();
 	}
 
 	public Question(long id, String title, String contents) {
