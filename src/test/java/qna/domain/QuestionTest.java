@@ -74,4 +74,12 @@ public class QuestionTest {
         Q1.delete(loginUser);
         assertThat(Q1.isDeleted()).isTrue();
     }
+
+    @DisplayName("삭제시 기록을 남긴다.")
+    @Test
+    public void delete_leave_history() {
+        Q1.addAnswer(AnswerTest.A1);
+        assertThat(Q1.delete(UserTest.JAVAJIGI).size()).isNotZero();
+    }
+
 }

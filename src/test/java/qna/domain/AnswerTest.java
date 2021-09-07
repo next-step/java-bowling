@@ -24,4 +24,10 @@ public class AnswerTest {
         A1.delete(UserTest.JAVAJIGI);
         assertThat(A1.isDeleted()).isTrue();
     }
+
+    @DisplayName("삭제시 기록을 남긴다.")
+    @Test
+    public void delete_leave_history() {
+        assertThat(A1.delete(UserTest.JAVAJIGI)).isInstanceOf(DeleteHistory.class);
+    }
 }

@@ -4,8 +4,10 @@ import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -79,18 +81,20 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void delete(User loginUser) {
-        deleteQuestion(loginUser);
-        deleteAnswers(loginUser);
+    public List<DeleteHistory> delete(User loginUser) {
+        DeleteHistory deleteHistory = deleteQuestion(loginUser);
+        List<DeleteHistory> deleteHistories = deleteAnswers(loginUser);
+
+        List<DeleteHistory> result = new ArrayList<>(deleteHistories);
+        result.add(deleteHistory);
+
+        return result;
     }
 
-    private void deleteAnswers(User loginUser) {
-        this.answers.forEach(answer -> answer.delete(loginUser));
-    }
-
-    private void deleteQuestion(User loginUser) {
+    private DeleteHistory deleteQuestion(User loginUser) {
         isUserValid(loginUser);
         deleted = true;
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 
     private void isUserValid(User loginUser) {
@@ -98,4 +102,11 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
+
+    private List<DeleteHistory> deleteAnswers(User loginUser) {
+        return this.answers.stream()
+                .map(answer -> answer.delete(loginUser))
+                .collect(Collectors.toList());
+    }
+
 }
