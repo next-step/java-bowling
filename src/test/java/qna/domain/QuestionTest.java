@@ -50,6 +50,13 @@ public class QuestionTest {
         assertThat(Q1.isDeleted()).isTrue();
     }
 
+    @DisplayName("질문자!=사용자, 답변 없음: 삭제 불가")
+    @Test
+    public void delete_user_is_not_writer() {
+        assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI))
+                .isInstanceOf(CannotDeleteException.class);
+    }
+
     @DisplayName("질문자=사용자, 타 사용자 답변 존재: 삭제 불가")
     @Test
     public void delete_answer_exist_from_other_user() {
