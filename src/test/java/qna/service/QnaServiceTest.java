@@ -42,15 +42,19 @@ public class QnaServiceTest {
     }
 
     @Test
-    public void delete_성공() throws Exception {
-        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
-
-        assertThat(question.isDeleted()).isFalse();
-        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
-
+    @DisplayName("로그인 사용자와 질문한 사람이 같은 경우 삭제 가능하다.")
+    public void delete_성공_1() throws CannotDeleteException {
+        question.delete(UserTest.JAVAJIGI);
         assertThat(question.isDeleted()).isTrue();
-        verifyDeleteHistories();
     }
+
+    @Test
+    @DisplayName("질문자와 답변글의 모든 답변자가 같은 경우 삭제가 가능하다.")
+    public void delete_성공_2() throws CannotDeleteException {
+        answer.delete(UserTest.JAVAJIGI);
+        assertThat(answer.isDeleted()).isTrue();
+    }
+
 
     @Test
     @DisplayName("로그인 사용자와 질문한 사람이 다른 경우 질문을 삭제 할 수 없다.")
@@ -67,36 +71,6 @@ public class QnaServiceTest {
                 () -> answer.delete(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class
         );
     }
-
-    @Test
-    public void delete_다른_사람이_쓴_글() throws Exception {
-        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
-
-        assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
-    }
-
-    @Test
-    public void delete_성공_질문자_답변자_같음() throws Exception {
-        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
-
-        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
-
-        assertThat(question.isDeleted()).isTrue();
-        assertThat(answer.isDeleted()).isTrue();
-        verifyDeleteHistories();
-    }
-
-    @Test
-    public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
-        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
-
-        assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
-    }
-
     private void verifyDeleteHistories() {
         List<DeleteHistory> deleteHistories = Arrays.asList(
                 new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),

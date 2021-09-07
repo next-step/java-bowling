@@ -58,6 +58,7 @@ public class Question extends AbstractEntity {
         for (Answer answer : answers) {
             answer.delete(loginUser);
         }
+        setDeleted(true);
     }
 
     public String getContents() {
@@ -87,9 +88,8 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
+    private void setDeleted(boolean deleted) {
         this.deleted = deleted;
-        return this;
     }
 
     public boolean isDeleted() {
