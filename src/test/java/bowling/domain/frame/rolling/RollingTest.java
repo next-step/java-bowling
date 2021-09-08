@@ -1,5 +1,7 @@
-package bowling.domain.frame;
+package bowling.domain.frame.rolling;
 
+import bowling.domain.frame.rolling.Rolling;
+import bowling.domain.frame.rolling.RollingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

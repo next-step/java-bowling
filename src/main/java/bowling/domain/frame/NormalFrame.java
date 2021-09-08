@@ -1,5 +1,8 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.rolling.NormalRollings;
+import bowling.domain.frame.rolling.Rollings;
+
 import java.util.Objects;
 
 public class NormalFrame implements Frame {

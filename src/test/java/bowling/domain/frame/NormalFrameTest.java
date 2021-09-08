@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.rolling.NormalRollings;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

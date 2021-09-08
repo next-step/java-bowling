@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.rolling.Rollings;
+
 public interface Frame {
 
     int INIT_NUMBER = 1;

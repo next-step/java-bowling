@@ -2,6 +2,9 @@ package bowling.ui;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.frame.*;
+import bowling.domain.frame.rolling.FinalRollings;
+import bowling.domain.frame.rolling.NormalRollings;
+import bowling.domain.frame.rolling.Rollings;
 
 import java.util.List;
 import java.util.stream.IntStream;

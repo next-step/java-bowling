@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.frame.rolling;
 
 public class NormalRollings extends Rollings {
 
