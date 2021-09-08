@@ -25,6 +25,9 @@ public class Question extends AbstractEntity {
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
 
+    @Embedded
+    private Answers answers1;
+
     private boolean deleted = false;
 
     public Question() {
@@ -56,12 +59,9 @@ public class Question extends AbstractEntity {
         }
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-        for (Answer answer : answers) {
-            DeleteHistory deleteHistory = answer.delete(loginUser);
-            deleteHistories.add(deleteHistory);
-        }
         setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), writer, LocalDateTime.now()));
+        deleteHistories.addAll(answers1.delete(loginUser));
         return deleteHistories;
     }
 
