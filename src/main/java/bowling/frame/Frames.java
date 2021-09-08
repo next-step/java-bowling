@@ -12,6 +12,8 @@ public class Frames {
 
   private final LinkedList<Frame> frames;
 
+  private boolean isNext;
+
   public Frames() {
     this.frames = new LinkedList<>();
     frames.add(new NormalFrame(FIRST_FRAME));
@@ -31,11 +33,8 @@ public class Frames {
   }
 
   private boolean isNotSameFrame(final Frame currentFrame) {
-    return !currentFrame.equals(frames.getLast());
-  }
-
-  public int size() {
-    return frames.size();
+    isNext = !currentFrame.equals(frames.getLast());
+    return isNext;
   }
 
   public List<ScoreResultDto> totalScoreResult() {
@@ -51,5 +50,9 @@ public class Frames {
 
   public boolean isEnd() {
     return frames.getLast().isGameEnd();
+  }
+
+  public boolean isFrameEnd() {
+    return isNext;
   }
 }
