@@ -25,10 +25,14 @@ public class NormalFrame {
 
         String shotResultString = shotResults.toString();
         if (result == FrameResult.SPARE) {
-            StringBuilder sb = new StringBuilder(shotResultString);
-            sb.setCharAt(shotResultString.length() - 1, '/');
-            return sb.toString();
+            return replaceLastWithSpare(shotResultString);
         }
         return shotResultString;
+    }
+
+    private String replaceLastWithSpare(String shotResultString) {
+        StringBuilder sb = new StringBuilder(shotResultString);
+        sb.setCharAt(shotResultString.length() - 1, '/');
+        return sb.toString();
     }
 }

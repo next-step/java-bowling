@@ -15,7 +15,6 @@ public enum ShotResult {
     NINE(9),
     TEN(10);
 
-    static final ShotResult MIN = ZERO;
     static final ShotResult MAX = TEN;
 
     private final int numOfPinDown;
