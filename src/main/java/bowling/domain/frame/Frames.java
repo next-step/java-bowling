@@ -65,10 +65,13 @@ public final class Frames {
     }
 
     public boolean isFinished() {
-        if (!frames.isEmpty() && lastFrameRoundNumber() == LAST_FRAME_NUMBER) {
-            return isLastFrameFinished();
+        if (frames.isEmpty()) {
+            return false;
         }
-        return false;
+        if(lastFrameRoundNumber() != LAST_FRAME_NUMBER) {
+            return false;
+        }
+        return isLastFrameFinished();
     }
 
     public List<Frame> getFrames() {
