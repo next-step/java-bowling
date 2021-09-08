@@ -11,6 +11,7 @@ public class Player {
 
     public Player(String name) {
         validateNamePattern(name);
+
         this.name = name;
     }
 
