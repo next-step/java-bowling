@@ -16,23 +16,29 @@ public class BowlingOutputView {
     private static final int FRAME_WIDTH = 6;
 
     public static void printFramesStatus(Player player, ScoreFrames scoreFrames) {
-        String turns = IntStream.rangeClosed(START_FRAME, END_FRAME)
-                .mapToObj(i -> String.format("%02d", i))
-                .map(s -> String.format("|%s", toCenterAlignedWithFixedPaddedString(s)))
-                .collect(Collectors.joining());
+        System.out.println("| NAME " + getScoreLabel() + "|");
+        System.out.println(getPlayerName(player) + getScores(scoreFrames) + "|");
+    }
 
-        System.out.println("| NAME " + turns + "|");
+    private static String getPlayerName(Player player) {
+        return String.format("|%s",
+                toCenterAlignedWithFixedPaddedString(player.getNameString()));
+    }
 
+    private static String getScores(ScoreFrames scoreFrames) {
         Iterator<ScoreFrame> iterator = scoreFrames.iterator();
-        String scores = IntStream.rangeClosed(START_FRAME, END_FRAME)
+
+        return IntStream.rangeClosed(START_FRAME, END_FRAME)
                 .mapToObj(i -> getNextScoreString(iterator))
                 .map(s -> String.format("|%s", toCenterAlignedWithFixedPaddedString(s)))
                 .collect(Collectors.joining());
+    }
 
-        String playerName = String.format("|%s",
-                toCenterAlignedWithFixedPaddedString(player.getNameString()));
-
-        System.out.println(playerName + scores + "|");
+    private static String getScoreLabel() {
+        return IntStream.rangeClosed(START_FRAME, END_FRAME)
+                .mapToObj(i -> String.format("%02d", i))
+                .map(s -> String.format("|%s", toCenterAlignedWithFixedPaddedString(s)))
+                .collect(Collectors.joining());
     }
 
     private static String getNextScoreString(Iterator<ScoreFrame> iterator) {
