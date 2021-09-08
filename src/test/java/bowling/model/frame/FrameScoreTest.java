@@ -1,9 +1,10 @@
-package bowling.model;
+package bowling.model.frame;
 
+import bowling.model.frame.FrameScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.model.FrameScore.EMPTY_SCORE;
+import static bowling.model.frame.FrameScore.EMPTY_SCORE;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.*;
 

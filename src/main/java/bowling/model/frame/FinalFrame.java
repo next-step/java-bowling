@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.model.frame;
 
 public class FinalFrame extends Frame {
     private static final int FINAL_FRAME_NUMBER = 10;

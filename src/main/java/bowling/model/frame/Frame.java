@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.model.frame;
 
 public abstract class Frame {
     protected FrameNumber number;

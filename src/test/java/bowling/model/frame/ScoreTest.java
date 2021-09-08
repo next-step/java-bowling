@@ -1,5 +1,6 @@
-package bowling.model;
+package bowling.model.frame;
 
+import bowling.model.frame.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

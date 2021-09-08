@@ -1,5 +1,8 @@
-package bowling.model;
+package bowling.model.frame;
 
+import bowling.model.frame.FinalFrame;
+import bowling.model.frame.Frame;
+import bowling.model.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

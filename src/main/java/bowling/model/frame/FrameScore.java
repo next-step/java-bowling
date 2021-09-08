@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.model.frame;
 
 public class FrameScore {
     private static final int MAX_TOTAL_SCORE = 10;

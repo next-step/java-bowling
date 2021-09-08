@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.model.frame;
 
 import java.util.HashMap;
 import java.util.Map;

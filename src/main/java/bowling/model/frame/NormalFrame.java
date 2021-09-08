@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.model.frame;
 
 public class NormalFrame extends Frame {
     private static final int MIN_NORMAL_NUMBER = 1;
