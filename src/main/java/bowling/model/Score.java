@@ -12,6 +12,7 @@ public class Score {
 
     private Score(int score) {
         validateRange(score);
+
         this.score = score;
     }
 
