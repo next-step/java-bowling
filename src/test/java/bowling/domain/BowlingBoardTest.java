@@ -2,27 +2,36 @@ package bowling.domain;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class BowlingBoardTest {
 
     @Test
     void write() {
         // Given
+        Person givenPerson = Person.from("Phobi");
         BowlingBoard bowlingBoard = BowlingBoard.create();
 
-        Frame round1 = NormalFrame.create();
-        Frame round2 = round1.roll(5);
-        round2.roll(5);
-        bowlingBoard.write(round1);
-        bowlingBoard.write(round2);
+        // Normal Frame
+        for (int i = 0; i < 9; i++) {
+            Frame frame = NormalFrame.create();
+            while (frame.hasNextFrame()) {
+                bowlingBoard.write(givenPerson, frame);
+                frame = frame.roll(5);
+            }
+        }
+
+        // Final Frame
+        Frame finalFrame = FinalFrame.create();
+        while (finalFrame.hasNextFrame()) {
+            bowlingBoard.write(givenPerson, finalFrame);
+            finalFrame = finalFrame.roll(5);
+        }
 
         // When
-        Frame givenFrame1 = bowlingBoard.get(0);
-        Frame givenFrame2 = bowlingBoard.get(1);
+        Frames actualFrames = bowlingBoard.get(givenPerson);
 
         // Then
-        assertThat(givenFrame1.pins().numberOfPinDowns()).isEqualTo(5);
-        assertThat(givenFrame2.pins().numberOfPinDowns()).isEqualTo(10);
+        assertThat(actualFrames.size()).isEqualTo(21);
     }
 }
