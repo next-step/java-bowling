@@ -11,8 +11,8 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    void checkNumberOfPins(final Score score) {
-        checkPossibleRoll(score);
+    void checkPossibleRoll(final Score score) {
+        checkPossibleSecondRoll(score);
     }
 
     @Override
@@ -31,6 +31,8 @@ public class NormalFrame extends Frame {
     }
 
     private boolean isStrike() {
-        return this.scores.size() == 1 && this.scores.knockedDownPins() == NUMBER_OF_PINS;
+        return this.scores.elements()
+                .stream()
+                .allMatch(Score::isStrike);
     }
 }

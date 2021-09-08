@@ -13,28 +13,32 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public void checkNumberOfPins(final Score score) {
-        checkPossibleRoll(score);
-        checkPossibleThirdRoll(score);
+    void checkPossibleRoll(final Score score) {
+        checkPossibleSecondRoll(score);
+        checkPossibleThirdRoll();
     }
 
-    private void checkPossibleThirdRoll(final Score score) {
-        int pins = this.scores.knockedDownPins() + score.getNumberOfPins();
-        if (isFinish(pins)) {
+    private void checkPossibleThirdRoll() {
+        if (isTheScoreWrongForTheThirdRoll()) {
             throw new IncorrectNumberOfPinsException();
         }
     }
 
-    private boolean isFinish(int pins) {
-        return isNotSpare(pins) && isNotTwoStrikesInARow(pins);
+    private boolean isTheScoreWrongForTheThirdRoll() {
+        if (this.scores.size() == 2) {
+            return isNotAllStrike() && isNotSpare();
+        }
+        return false;
     }
 
-    private boolean isNotSpare(final int pins) {
-        return this.scores.size() == 2 && NUMBER_OF_PINS != pins;
+    private boolean isNotSpare() {
+        return NUMBER_OF_PINS != this.scores.knockedDownPins();
     }
 
-    private boolean isNotTwoStrikesInARow(final int pins) {
-        return this.scores.size() == 2 && NUMBER_OF_PINS * 2 != pins;
+    private boolean isNotAllStrike() {
+        return this.scores.elements()
+                .stream()
+                .noneMatch(Score::isStrike);
     }
 
     @Override
@@ -42,13 +46,13 @@ public class FinalFrame extends Frame {
         if (isPossibleToAttempts()) {
             super.isFinish = true;
         }
-        if (isFinish(this.scores.knockedDownPins())) {
+        if (isTheScoreWrongForTheThirdRoll()) {
             super.isFinish = true;
         }
     }
 
     @Override
-    public boolean isPossibleToAttempts() {
+    protected boolean isPossibleToAttempts() {
         return this.scores.size() == FRAME_MAX_ATTEMPTS;
     }
 }

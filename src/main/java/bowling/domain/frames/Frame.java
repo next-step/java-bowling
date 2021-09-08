@@ -4,7 +4,6 @@ import bowling.domain.Score;
 import bowling.domain.Scores;
 import bowling.domain.exception.FinishFrameException;
 import bowling.domain.exception.IncorrectNumberOfPinsException;
-import com.sun.tools.javac.util.List;
 
 public abstract class Frame {
 
@@ -18,34 +17,33 @@ public abstract class Frame {
     }
 
     public void roll(final Score score) {
-        checkFinish();
-        checkNumberOfPins(score);
+        this.checkFinish();
+        this.checkPossibleRoll(score);
         this.scores.roll(score);
-        finish();
+        this.finish();
     }
 
-    abstract void checkNumberOfPins(final Score score);
+    abstract void checkPossibleRoll(final Score score);
 
     abstract boolean isPossibleToAttempts();
 
     abstract void finish();
 
-    protected void checkPossibleRoll(final Score score) {
-        if (isNotFirstOrSecondRoll()) {
+    public void checkPossibleSecondRoll(final Score score) {
+        if (this.scores.size() == 1) {
+            int pins = this.scores.knockedDownPins() + score.getNumberOfPins();
+            checkIncorrectNumberOfPins(pins);
+        }
+    }
+
+    private void checkIncorrectNumberOfPins(final int pins) {
+        boolean allStrike = this.scores.elements().stream().allMatch(Score::isStrike);
+        if (allStrike) {
             return;
         }
-        int pins = this.scores.knockedDownPins() + score.getNumberOfPins();
-        checkIncorrectNumberOfPins(pins);
-    }
-
-    private void checkIncorrectNumberOfPins(int pins) {
-        if (pins > 10 || pins < 0) {
+        if (pins > NUMBER_OF_PINS || pins < 0) {
             throw new IncorrectNumberOfPinsException();
         }
-    }
-
-    private boolean isNotFirstOrSecondRoll() {
-        return !List.of(0, 1).contains(this.scores.size());
     }
 
     private void checkFinish() {

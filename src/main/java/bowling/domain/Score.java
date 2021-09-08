@@ -26,6 +26,10 @@ public enum Score {
         return first.plus(second) == TEN.getNumberOfPins();
     }
 
+    public static boolean isStrike(final Score score) {
+        return Score.TEN.equals(score);
+    }
+
     public Integer getNumberOfPins() {
         return numberOfPins;
     }
@@ -38,7 +42,7 @@ public enum Score {
         return Arrays.stream(Score.values())
                 .filter(score -> score.getNumberOfPins().equals(pins))
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 투구 점수 입니다."));
     }
 
     @Override
