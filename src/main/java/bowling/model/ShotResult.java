@@ -28,7 +28,7 @@ public enum ShotResult {
         return from(shotResults.stream().mapToInt(shotResult -> shotResult.numOfPinDown).sum());
     }
 
-    private static ShotResult from(int numOfPinDown) {
+    public static ShotResult from(int numOfPinDown) {
         for (ShotResult shotResult : ShotResult.values()) {
             if (shotResult.numOfPinDown == numOfPinDown) {
                 return shotResult;
@@ -36,5 +36,10 @@ public enum ShotResult {
         }
 
         throw new IllegalArgumentException("올바르지 않은 넘어트린 핀 갯수!");
+    }
+
+    @Override
+    public String toString() {
+        return this == ZERO ? "-" : Integer.toString(numOfPinDown);
     }
 }

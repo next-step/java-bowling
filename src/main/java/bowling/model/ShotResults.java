@@ -15,16 +15,16 @@ public class ShotResults implements Iterable<ShotResult> {
         return ShotResult.fromSumOf(shotResults) == ShotResult.MAX;
     }
 
-    public boolean sumIsMin() {
-        return ShotResult.fromSumOf(shotResults) == ShotResult.MIN;
-    }
-
     public boolean firstIsMax() {
         return shotResults.get(0) == ShotResult.MAX;
     }
 
     public int size() {
         return shotResults.size();
+    }
+
+    public boolean empty() {
+        return shotResults.size() == 0;
     }
 
     @Override
@@ -34,8 +34,6 @@ public class ShotResults implements Iterable<ShotResult> {
 
     @Override
     public String toString() {
-        return "ShotResults{" +
-                "shotResults=" + shotResults +
-                '}';
+        return shotResults.stream().map(ShotResult::toString).reduce((accu, curr) -> accu + "|" + curr).orElse("");
     }
 }

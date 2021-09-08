@@ -1,8 +1,5 @@
 package bowling.model;
 
-import bowling.model.NormalFrame;
-import bowling.model.ShotResult;
-import bowling.model.ShotResults;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

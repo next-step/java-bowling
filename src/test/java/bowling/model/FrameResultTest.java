@@ -1,8 +1,5 @@
 package bowling.model;
 
-import bowling.model.FrameResult;
-import bowling.model.ShotResult;
-import bowling.model.ShotResults;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -29,10 +26,6 @@ class FrameResultTest {
         fourThree.add(ShotResult.FOUR);
         fourThree.add(ShotResult.THREE);
 
-        ShotResults zeroZero = new ShotResults();
-        zeroZero.add(ShotResult.ZERO);
-        zeroZero.add(ShotResult.ZERO);
-
         return Stream.of(
             Arguments.of(
                 ten, FrameResult.STRIKE
@@ -45,9 +38,6 @@ class FrameResultTest {
             ),
             Arguments.of(
                 fourThree, FrameResult.MISS
-            ),
-            Arguments.of(
-                zeroZero, FrameResult.GUTTER
             )
         );
     }
