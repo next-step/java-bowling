@@ -1,6 +1,7 @@
 package bowling.domain;
 
 public class FinalFrame extends Frame {
+    private static int MAX_COUNT = 3;
 
     public FinalFrame(int score) {
         super(score);
@@ -34,6 +35,6 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isNext() {
-        return scores.size() == 3 || (scores.size() == 2 && sumOfScore() < 10);
+        return scores.size() == MAX_COUNT || (scores.size() == 2 && sumOfScore() < TEN_SCORE);
     }
 }
