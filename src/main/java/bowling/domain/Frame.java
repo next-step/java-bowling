@@ -4,6 +4,7 @@ import bowling.exception.InvalidScoreException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Frame {
     private static final String INVALID_SCORE_MESSAGE = "핀의 갯수가 10을 초과할 수 없습니다.";
@@ -34,7 +35,9 @@ public abstract class Frame {
     }
 
     private void validateSumOfScore(int score) {
-        validate(sumOfScore() + score);
+        if (sumOfScore() < TEN_SCORE) {
+            validate(sumOfScore() + score);
+        }
     }
 
     public String scoreToSymbol() {
@@ -71,4 +74,17 @@ public abstract class Frame {
     }
 
     public abstract boolean isNext();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frame frame = (Frame) o;
+        return Objects.equals(scores, frame.scores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scores);
+    }
 }

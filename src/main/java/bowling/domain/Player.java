@@ -5,7 +5,7 @@ import bowling.exception.InvalidInputException;
 import java.util.Objects;
 
 public class Player {
-    private static final String INVALID_USER_NAME_MESSAGE = "이름은 3글자를 초과할 수 없습니다.";
+    private static final String INVALID_USER_NAME_MESSAGE = "이름은 3글자로 지정해주세요";
     private static int NAME_LENGTH = 3;
 
     private String name;

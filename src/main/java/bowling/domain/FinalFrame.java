@@ -7,11 +7,6 @@ public class FinalFrame extends Frame {
         super(score);
     }
 
-    public void addScore(int score) {
-        validate(score);
-        scores.add(score);
-    }
-
     public String scoreToSymbol() {
         if (scores.size() <= 2) {
             return super.scoreToSymbol();
