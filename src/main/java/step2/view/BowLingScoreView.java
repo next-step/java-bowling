@@ -1,4 +1,4 @@
-package step2.domain;
+package step2.view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
