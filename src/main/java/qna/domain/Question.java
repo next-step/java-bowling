@@ -95,7 +95,7 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
-        List<DeleteHistory> deleteHistoryList = DeleteHistory.addQuestionHistory(this);
+        List<DeleteHistory> deleteHistoryList = DeleteHistory.fromQuestion(this);
 
         deleteAnswers(deleteHistoryList, this, loginUser);
 

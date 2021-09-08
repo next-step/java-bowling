@@ -77,7 +77,7 @@ public class Answer extends AbstractEntity {
 
         this.setDeleted(true);
 
-        return DeleteHistory.answerHistory(this);
+        return DeleteHistory.fromAnswer(this);
     }
 
     @Override
