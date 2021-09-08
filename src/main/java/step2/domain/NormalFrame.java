@@ -3,13 +3,12 @@ package step2.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Frame {
+public class NormalFrame implements Frame {
     private static final int INITIAL_NUM_OF_BOWLING_PINS = 10;
-    private static final int INITIAL_SCORE = 0;
 
     private List<Integer> frame;
 
-    public Frame() {
+    public NormalFrame() {
         this.frame = new ArrayList<>();
     }
 
@@ -18,7 +17,7 @@ public class Frame {
         isPossible();
     }
 
-    private void isPossible() {
+    public void isPossible() {
         if (score() > 10) {
             throw new IllegalArgumentException("쓰러뜨린 볼린공의 개수는 10개 이하로 지정하여야 합니다.");
         }
