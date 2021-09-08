@@ -1,6 +1,10 @@
 package bowling.domain.frames;
 
 
+import bowling.domain.Score;
+import bowling.domain.exception.IncorrectNumberOfPinsException;
+import com.sun.tools.javac.util.List;
+
 public class FinalFrame extends Frame {
 
     private static final int FRAME_MAX_ATTEMPTS = 3;
@@ -9,12 +13,20 @@ public class FinalFrame extends Frame {
         super();
     }
 
-    // TODO 2번째 까지 합산이 10 (스페어)가 아니면 종료
-    // TODO 첫번째 두번째 20이거나
-
     @Override
-    public void checkNumberOfPins() {
+    public void checkNumberOfPins(final Score score) {
+        checkPossibleFirstOrSecondRoll(score);
+        checkPossibleThirdRoll(score);
+    }
 
+    private void checkPossibleThirdRoll(final Score score) {
+        if (this.scores.size() != 2) {
+            return;
+        }
+        int pins = this.scores.knockedDownPins() + score.getNumberOfPins();
+        if (!List.of(NUMBER_OF_PINS, NUMBER_OF_PINS * 2).contains(pins)) {
+            throw new IncorrectNumberOfPinsException();
+        }
     }
 
     @Override

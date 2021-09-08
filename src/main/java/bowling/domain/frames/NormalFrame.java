@@ -1,5 +1,7 @@
 package bowling.domain.frames;
 
+import bowling.domain.Score;
+
 public class NormalFrame extends Frame {
 
     private static final int FRAME_MAX_ATTEMPTS = 2;
@@ -9,9 +11,8 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    void checkNumberOfPins() {
-
-        // TODO 공 합산
+    void checkNumberOfPins(final Score score) {
+        checkPossibleFirstOrSecondRoll(score);
     }
 
     @Override
