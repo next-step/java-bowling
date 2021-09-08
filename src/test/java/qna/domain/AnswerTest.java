@@ -17,7 +17,7 @@ public class AnswerTest {
     @Test
     @DisplayName("답변 삭제")
     void deleteAnswer() throws CannotDeleteException {
-        A1.delete(UserTest.JAVAJIGI);
+        A1.deleteAndCreateDeleteHistory(UserTest.JAVAJIGI);
         assertThat(A1.isDeleted()).isTrue();
     }
 
@@ -25,14 +25,14 @@ public class AnswerTest {
     @DisplayName("답변 다른 작성자 삭제")
     void deleteAnswerAnotherUser() {
         assertThatThrownBy(() ->
-                A1.delete(UserTest.SANJIGI))
+                A1.deleteAndCreateDeleteHistory(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
     @DisplayName("삭제 히스토리 생성")
-    void createDeleteHistory() {
-        DeleteHistory deleteHistory = A1.createDeleteHistory();
+    void createDeleteHistory() throws CannotDeleteException {
+        DeleteHistory deleteHistory = A1.deleteAndCreateDeleteHistory(UserTest.JAVAJIGI);
         assertThat(deleteHistory)
                 .isEqualTo(new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now()));
     }
