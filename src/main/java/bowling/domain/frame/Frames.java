@@ -1,8 +1,4 @@
-package bowling.domain;
-
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
+package bowling.domain.frame;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,7 +8,7 @@ public class Frames {
     private static final int MAX_FRAMES_SIZE = 10;
     private static final int START_FRAME_NUMBER = 1;
 
-    private final List<Frame> frames;
+    private List<Frame> frames;
 
     public Frames(final List<Frame> frames) {
         this.frames = frames;
@@ -33,15 +29,19 @@ public class Frames {
     public Frame pitch(final int countOfPins) {
         Frame currentFrame = frames.get(currentFrameIndex());
         if (!currentFrame.isEnd()) {
+            currentFrame.pitch(countOfPins);
             return frames.get(currentFrameIndex());
         }
-        if (isFinal(currentFrameIndex() + 1)) {
-            return new FinalFrame();
+        if (isFinal(frames.size())) {
+            frames.add(new FinalFrame(Arrays.asList(countOfPins)));
+            return frames.get(currentFrameIndex());
         }
-        return new NormalFrame(currentFrameIndex() + 1);
+
+        frames.add(new NormalFrame(frames.size(), Arrays.asList(countOfPins)));
+        return frames.get(currentFrameIndex());
     }
 
     public boolean isFinal(int frameNumber) {
-        return frameNumber == 10;
+        return frameNumber == MAX_FRAMES_SIZE;
     }
 }

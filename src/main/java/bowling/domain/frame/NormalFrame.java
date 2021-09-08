@@ -4,6 +4,7 @@ import bowling.domain.Pins;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
@@ -33,5 +34,19 @@ public class NormalFrame implements Frame {
     @Override
     public String valueOfFrame() {
         return pitchPins.result();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalFrame that = (NormalFrame) o;
+        return Objects.equals(frameNumber, that.frameNumber) &&
+                Objects.equals(pitchPins, that.pitchPins);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber, pitchPins);
     }
 }

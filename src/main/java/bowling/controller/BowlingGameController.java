@@ -1,8 +1,7 @@
 package bowling.controller;
 
-import bowling.domain.Frames;
+import bowling.domain.frame.Frames;
 import bowling.domain.Name;
-import bowling.domain.frame.Frame;
 import bowling.view.InputView;
 
 public class BowlingGameController {
