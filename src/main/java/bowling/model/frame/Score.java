@@ -6,6 +6,8 @@ import java.util.Map;
 public class Score {
     private static final int MIN = 0;
     private static final int MAX = 10;
+    private static final String STRIKE_SYMBOL = "X";
+    private static final String GUTTER_SYMBOL = "-";
     private static final Map<Integer, Score> SCORES = new HashMap<>();
 
     private final int score;
@@ -39,5 +41,21 @@ public class Score {
 
     public boolean isMax() {
         return score == MAX;
+    }
+
+    public boolean isMin() {
+        return score == MIN;
+    }
+
+    @Override
+    public String toString() {
+        if (isMin()) {
+            return GUTTER_SYMBOL;
+        }
+
+        if (isMax()) {
+            return STRIKE_SYMBOL;
+        }
+        return String.valueOf(score);
     }
 }
