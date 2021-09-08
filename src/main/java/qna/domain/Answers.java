@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Embeddable
-public class Answers extends AbstractEntity {
-
+public class Answers {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
@@ -29,5 +28,9 @@ public class Answers extends AbstractEntity {
             deleteHistories.add(answer.delete(loginUser));
         }
         return deleteHistories;
+    }
+
+    public void addAnswer(Answer answer) {
+        answers.add(answer);
     }
 }

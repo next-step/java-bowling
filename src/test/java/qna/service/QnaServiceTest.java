@@ -34,12 +34,12 @@ public class QnaServiceTest {
     private Question question;
     private Answer answer;
 
-    @Before
-    public void setUp() throws Exception {
-        question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-        question.addAnswer(answer);
-    }
+//    @Before
+//    public void setUp() throws Exception {
+//        question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+//        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+//        question.addAnswer(answer);
+//    }
 
     @Test
     @DisplayName("로그인 사용자와 질문한 사람이 같은 경우 삭제 가능하다.")
