@@ -23,7 +23,7 @@ public class NormalFrame implements Frame {
 
         pins.roll(downPins);
 
-        if (!pins.isAllDown()) {
+        if (hasNextFrame()) {
             return new NormalFrame(round + 1, Pins.from(pins));
         }
 
@@ -38,6 +38,11 @@ public class NormalFrame implements Frame {
     @Override
     public Pins pins() {
         return pins;
+    }
+
+    @Override
+    public boolean hasNextFrame() {
+        return !pins.isAllDown();
     }
 
 }

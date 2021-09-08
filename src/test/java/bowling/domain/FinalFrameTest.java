@@ -12,30 +12,30 @@ class FinalFrameTest {
     @Test
     void threeRound() {
         // Given
-        Frame frame = FinalFrame.create();
+        Frame givenFinalFrame = FinalFrame.create();
 
         // When
-        Frame oneRound = frame.roll(10);
-        Frame twoRound = oneRound.roll(10);
-        Frame lastRound = twoRound.roll(10);
+        while (givenFinalFrame.hasNextFrame()) {
+            givenFinalFrame = givenFinalFrame.roll(10);
+        }
 
         // Then
-        assertThat(lastRound.round()).isEqualTo(3);
+        assertThat(givenFinalFrame.round()).isEqualTo(3);
     }
 
     @DisplayName("1,2투구 내에 스페어시 3투구 진행이 가능하다.")
     @Test
     void spare() {
         // Given
-        Frame frame = FinalFrame.create();
+        Frame givenOneRound = FinalFrame.create();
 
         // When
-        Frame oneRound = frame.roll(8);
-        Frame twoRound = oneRound.roll(2);
-        Frame lastRound = twoRound.roll(10);
+        Frame twoRound = givenOneRound.roll(8);
+        Frame threeRound = twoRound.roll(2);
+        threeRound.roll(10);
 
         // Then
-        assertThat(lastRound.round()).isEqualTo(3);
+        assertThat(threeRound.round()).isEqualTo(2);
     }
 
     @DisplayName("1,2투구 내에 스페어 처리를 못 했는데 3투구 진행시 IllegalArgumentException.")
