@@ -3,7 +3,6 @@ package bowling.domain.frames;
 
 import bowling.domain.Score;
 import bowling.domain.exception.IncorrectNumberOfPinsException;
-import com.sun.tools.javac.util.List;
 
 public class FinalFrame extends Frame {
 
@@ -15,23 +14,35 @@ public class FinalFrame extends Frame {
 
     @Override
     public void checkNumberOfPins(final Score score) {
-        checkPossibleFirstOrSecondRoll(score);
+        checkPossibleRoll(score);
         checkPossibleThirdRoll(score);
     }
 
     private void checkPossibleThirdRoll(final Score score) {
-        if (this.scores.size() != 2) {
-            return;
-        }
         int pins = this.scores.knockedDownPins() + score.getNumberOfPins();
-        if (!List.of(NUMBER_OF_PINS, NUMBER_OF_PINS * 2).contains(pins)) {
+        if (isFinish(pins)) {
             throw new IncorrectNumberOfPinsException();
         }
+    }
+
+    private boolean isFinish(int pins) {
+        return isNotSpare(pins) && isNotTwoStrikesInARow(pins);
+    }
+
+    private boolean isNotSpare(final int pins) {
+        return this.scores.size() == 2 && NUMBER_OF_PINS != pins;
+    }
+
+    private boolean isNotTwoStrikesInARow(final int pins) {
+        return this.scores.size() == 2 && NUMBER_OF_PINS * 2 != pins;
     }
 
     @Override
     public void finish() {
         if (isPossibleToAttempts()) {
+            super.isFinish = true;
+        }
+        if (isFinish(this.scores.knockedDownPins())) {
             super.isFinish = true;
         }
     }

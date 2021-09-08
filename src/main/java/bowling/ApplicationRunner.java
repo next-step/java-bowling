@@ -18,16 +18,11 @@ public class ApplicationRunner {
 
         Bowling bowling = new Bowling(playerText);
 
-        int order = 1;
-
         while (!bowling.isFinish()) {
-            bowling.roll(inputView.enterScore(order));
-
-//            for(Frame frame:bowling.getFrames().elements()){
-//                System.out.println(frame);
-//            }
+            int index = bowling.lastFinishIndex();
+            String scoreText = inputView.enterScore(index);
+            bowling.roll(scoreText);
             outputView.print(bowling);
-            order++;
         }
     }
 }

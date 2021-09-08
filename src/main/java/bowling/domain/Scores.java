@@ -12,10 +12,6 @@ public class Scores {
         this.scores = new ArrayList<>();
     }
 
-    public Scores(final List<Score> scores) {
-        this.scores = scores;
-    }
-
     public void roll(final Score score) {
         this.scores.add(score);
     }

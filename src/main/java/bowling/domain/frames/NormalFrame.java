@@ -12,7 +12,7 @@ public class NormalFrame extends Frame {
 
     @Override
     void checkNumberOfPins(final Score score) {
-        checkPossibleFirstOrSecondRoll(score);
+        checkPossibleRoll(score);
     }
 
     @Override

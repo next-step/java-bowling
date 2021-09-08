@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frames.Frame;
 import bowling.domain.frames.Frames;
 
 public class Bowling {
@@ -19,6 +20,17 @@ public class Bowling {
 
     public boolean isFinish() {
         return this.frames.isFinish();
+    }
+
+    public int lastFinishIndex() {
+        int index = 1;
+        for (Frame frame : frames.elements()) {
+            if (!frame.isFinish()) {
+                return index;
+            }
+            index++;
+        }
+        return index;
     }
 
     public Name getName() {

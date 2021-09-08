@@ -30,14 +30,22 @@ public abstract class Frame {
 
     abstract void finish();
 
-    protected void checkPossibleFirstOrSecondRoll(final Score score) {
-        if (!List.of(0, 1).contains(this.scores.size())) {
+    protected void checkPossibleRoll(final Score score) {
+        if (isNotFirstOrSecondRoll()) {
             return;
         }
         int pins = this.scores.knockedDownPins() + score.getNumberOfPins();
+        checkIncorrectNumberOfPins(pins);
+    }
+
+    private void checkIncorrectNumberOfPins(int pins) {
         if (pins > 10 || pins < 0) {
             throw new IncorrectNumberOfPinsException();
         }
+    }
+
+    private boolean isNotFirstOrSecondRoll() {
+        return !List.of(0, 1).contains(this.scores.size());
     }
 
     private void checkFinish() {

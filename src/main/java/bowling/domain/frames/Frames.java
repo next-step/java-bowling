@@ -2,7 +2,6 @@ package bowling.domain.frames;
 
 import bowling.domain.Score;
 import bowling.domain.exception.FinishGameException;
-import bowling.domain.exception.FrameSizeExceededException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,20 +9,12 @@ import java.util.List;
 
 public class Frames {
 
-    private static final int NUMBER_OF_MAX_FRAME = 10;
-
     private List<Frame> frames;
     private boolean isFinish;
-    // TODO 언제 finish?
 
     public Frames() {
         this.frames = new ArrayList<>();
         init();
-    }
-
-    public Frames(final List<Frame> frames) {
-        checkFrameSize(frames);
-        this.frames = frames;
     }
 
     private void init() {
@@ -34,24 +25,22 @@ public class Frames {
     }
 
     public void roll(final Score score) {
-        // TODO indent
-        for (Frame frame : frames) {
-            if (!frame.isFinish()) {
-                frame.roll(score);
-                return;
-            }
+        if (this.isFinish) {
+            throw new FinishGameException();
         }
-        throw new FinishGameException();
+
+        Frame frame = frames.stream()
+                .filter(f -> !f.isFinish())
+                .findFirst()
+                .orElseThrow(FinishGameException::new);
+
+        frame.roll(score);
+
+        this.isFinish = this.frames.stream().allMatch(Frame::isFinish);
     }
 
     public boolean isFinish() {
         return this.isFinish;
-    }
-
-    private void checkFrameSize(final List<Frame> frames) {
-        if (frames.size() != NUMBER_OF_MAX_FRAME) {
-            throw new FrameSizeExceededException();
-        }
     }
 
     public List<Frame> elements() {

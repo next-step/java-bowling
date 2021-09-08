@@ -22,12 +22,8 @@ public enum Score {
         this.numberOfPins = numberOfPins;
     }
 
-    public static boolean isStrike(final Score score) {
-        return Score.TEN.equals(score);
-    }
-
     public static boolean isSpare(final Score first, final Score second) {
-        return first.plus(second) == 10;
+        return first.plus(second) == TEN.getNumberOfPins();
     }
 
     public Integer getNumberOfPins() {
