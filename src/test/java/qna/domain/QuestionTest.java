@@ -1,15 +1,15 @@
 package qna.domain;
 
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+
 import qna.CannotDeleteException;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class QuestionTest {
@@ -26,7 +26,6 @@ public class QuestionTest {
         answer1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         answer2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
     }
-
 
     @DisplayName("질문_데이터를_삭제처리_하였을_때_데이터를_삭제하는_것이_아니라_데이터의_상태를_변경한다")
     @Test
@@ -92,7 +91,8 @@ public class QuestionTest {
     public void writeDeletionAboutQuestionAndAnswerToDeleteHistory() {
         question.addAnswer(answer1);
         List<DeleteHistory> deleteHistories = question.delete(UserTest.JAVAJIGI);
-        assertThat(deleteHistories.contains(DeleteHistory.newQuestion(question.getId(), question.getWriter()))).isTrue();
+        assertThat(
+            deleteHistories.contains(DeleteHistory.newQuestion(question.getId(), question.getWriter()))).isTrue();
         assertThat(deleteHistories.contains(DeleteHistory.newAnswer(answer1.getId(), answer1.getWriter()))).isTrue();
     }
 
