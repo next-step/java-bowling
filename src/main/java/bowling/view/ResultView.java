@@ -28,12 +28,11 @@ public class ResultView {
   private static final String DEFAULT_SCORE_BLANK = "  ";
 
   public static void printBoard(final ResultDto result) {
-    printHeader();
     printBody(result);
     printBodyScore(result);
   }
 
-  private static void printHeader() {
+  public static void printHeader() {
     List<String> header = new ArrayList<>();
     header.add(HEADER_NAME);
 
