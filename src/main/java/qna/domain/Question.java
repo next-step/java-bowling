@@ -92,4 +92,8 @@ public class Question extends AbstractEntity {
     }
 
 
+    public void addAnswer(Answer answer) {
+        answer.toQuestion(this);
+        answers.addAnswer(answer);
+    }
 }
