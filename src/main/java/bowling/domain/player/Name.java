@@ -3,11 +3,12 @@ package bowling.domain.player;
 import bowling.utils.StringUtil;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Name {
 
     private static final int LENGTH = 3;
-    private static final String REG_EXP = "^[a-zA-Z]*$";
+    private static final Pattern REG_EXP = Pattern.compile("^[a-zA-Z]*$");
 
     private final String value;
 
@@ -31,7 +32,7 @@ public class Name {
     }
 
     private void validateLetters(String value) {
-        if (!value.matches(REG_EXP)) {
+        if (!REG_EXP.matcher(value).matches()) {
             throw new NameLettersException();
         }
     }

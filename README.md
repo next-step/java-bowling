@@ -98,7 +98,7 @@
 
 ## 지난 피드백
 - [x] BowlingGame에서 도메인을 알지 못해도 가능하도록 생성자 메서드 추가
-- [ ] String.matches 지양 (static으로 만들어 재사용)
+- [x] String.matches 지양 (Pattern을 static으로 만들어 재사용)
 - [ ] 단일책임원칙(객체의 단위를 더 작게 더 작게)
 - [ ] 패키지 분리
 
