@@ -9,11 +9,9 @@ public class Frames {
     public static final int TOTAL_FRAME_NUMBER = 10;
 
     private final List<Frame> frames;
-    private final List<String> results;
 
     private Frames(List<Integer> scores) {
         frames = new ArrayList<>();
-        results = new ArrayList<>();
         throwBalls(scores);
     }
 
@@ -33,13 +31,9 @@ public class Frames {
         int framesIndex = frames.size() - 1;
         if (framesIndex >= 0 && !isNext()) {
             frames.get(framesIndex).addScore(score);
-            results.set(framesIndex, frames.get(framesIndex).toScoreSymbol());
             return;
         }
-
-        addFrame(score);
-        framesIndex = frames.size() - 1;
-        results.add(frames.get(framesIndex).toScoreSymbol());
+        addFrame(score);                       // first 프레임내 첫 투구
     }
 
     private void addFrame(Score score) {
@@ -62,14 +56,29 @@ public class Frames {
         return frames.get(frameNumberIndex).isNextFrame();
     }
 
-    public int nextFrameNumber() {
+    public boolean isFinish() {
+        return frames.size() == Frames.TOTAL_FRAME_NUMBER
+            && frames.get(Frames.TOTAL_FRAME_NUMBER - 1).isNextFrame();
+    }
+
+    public int frameNumber() {
+        if (frames.size() <= 0) {
+            return 1;
+        }
+
         if (isNext()) {
             return frames.size() + 1;
         }
         return frames.size();
     }
 
-    public List<String> results() {
-        return results;
+    public List<Frame> frames() {
+        return frames;
+    }
+
+    public Frame lastFrame() {
+        return frames.get(
+            frames.size() - 1
+        );
     }
 }
