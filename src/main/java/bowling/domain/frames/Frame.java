@@ -5,6 +5,8 @@ import bowling.domain.Scores;
 import bowling.domain.exception.FinishFrameException;
 import bowling.domain.exception.IncorrectNumberOfPinsException;
 
+import java.util.Objects;
+
 public abstract class Frame {
 
     public static final int NUMBER_OF_PINS = 10;
@@ -14,6 +16,10 @@ public abstract class Frame {
 
     public Frame() {
         this.scores = new Scores();
+    }
+
+    public Frame(final boolean isFinish) {
+        this.isFinish = isFinish;
     }
 
     public void roll(final Score score) {
@@ -71,5 +77,18 @@ public abstract class Frame {
                 "scores=" + scores +
                 ", isFinish=" + isFinish +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frame frame = (Frame) o;
+        return isFinish == frame.isFinish && Objects.equals(scores, frame.scores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scores, isFinish);
     }
 }

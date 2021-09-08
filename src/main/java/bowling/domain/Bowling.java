@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.exception.FinishGameException;
 import bowling.domain.frames.Frame;
 import bowling.domain.frames.Frames;
 
@@ -23,14 +24,12 @@ public class Bowling {
     }
 
     public int lastFinishIndex() {
-        int index = 1;
-        for (Frame frame : frames.elements()) {
-            if (!frame.isFinish()) {
-                return index;
-            }
-            index++;
-        }
-        return index;
+        Frame frame = frames.elements()
+                .stream()
+                .filter(f -> !f.isFinish())
+                .findFirst()
+                .orElseThrow(FinishGameException::new);
+        return frames.elements().indexOf(frame);
     }
 
     public Name getName() {

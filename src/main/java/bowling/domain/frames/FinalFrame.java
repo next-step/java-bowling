@@ -12,6 +12,10 @@ public class FinalFrame extends Frame {
         super();
     }
 
+    public FinalFrame(final boolean isFinish) {
+        super(isFinish);
+    }
+
     @Override
     void checkPossibleRoll(final Score score) {
         checkPossibleSecondRoll(score);

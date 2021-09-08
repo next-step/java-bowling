@@ -17,6 +17,10 @@ public class Frames {
         init();
     }
 
+    public Frames(final boolean isFinish) {
+        this.isFinish = isFinish;
+    }
+
     private void init() {
         for (int i = 0; i < 9; i++) {
             frames.add(new NormalFrame());

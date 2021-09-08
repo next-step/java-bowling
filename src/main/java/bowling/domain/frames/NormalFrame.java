@@ -10,6 +10,10 @@ public class NormalFrame extends Frame {
         super();
     }
 
+    public NormalFrame(final boolean isFinish) {
+        super(isFinish);
+    }
+
     @Override
     void checkPossibleRoll(final Score score) {
         checkPossibleSecondRoll(score);
