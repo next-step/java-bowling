@@ -20,7 +20,6 @@ public class PureScores {
 
     private PureScores(List<Integer> scores, int lastCalculatedIndex) {
         validate(scores, lastCalculatedIndex);
-
         this.lastCalculatedIndex = lastCalculatedIndex;
         this.scores = new ArrayList<>();
     }
