@@ -5,41 +5,41 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-class FrameTest {
+class NormalFrameTest {
     @DisplayName("넘어뜨린 볼링핀에 따른 score 결과 확인")
     @Test
     void score() {
-        Frame frame = new Frame();
-        frame.knockDown(4);
-        int actual = frame.score();
+        NormalFrame normalFrame = new NormalFrame();
+        normalFrame.knockDown(4);
+        int actual = normalFrame.score();
         assertThat(actual).isEqualTo(4);
     }
 
     @DisplayName("10점을 쓰러뜨린 경우 finish 메서드 확인")
     @Test
     void finish() {
-        Frame frame = new Frame();
-        frame.knockDown(4);
-        frame.knockDown(6);
-        assertThat(frame.isFinish()).isTrue();
+        NormalFrame normalFrame = new NormalFrame();
+        normalFrame.knockDown(4);
+        normalFrame.knockDown(6);
+        assertThat(normalFrame.isFinish()).isTrue();
     }
 
     @DisplayName("볼링핀을 10개 넘게 쓰러뜨린 경우 오류 확인")
     @Test
     void overTenScoreErrorTest() {
-        Frame frame = new Frame();
+        NormalFrame normalFrame = new NormalFrame();
         assertThatThrownBy(() -> {
-            frame.knockDown(11);
+            normalFrame.knockDown(11);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("볼링핀을 10개 넘게 쓰러뜨린 경우 오류 확인2")
     @Test
     void overTenScoreErrorTest2() {
-        Frame frame = new Frame();
-        frame.knockDown(5);
+        NormalFrame normalFrame = new NormalFrame();
+        normalFrame.knockDown(5);
         assertThatThrownBy(() -> {
-            frame.knockDown(6);
+            normalFrame.knockDown(6);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }
