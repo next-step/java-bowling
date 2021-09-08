@@ -50,7 +50,7 @@ public class Frames {
         return results.size();
     }
 
-    public boolean isNext() {
+    private boolean isNext() {
         if (frames.size() == 0) {
             return false;
         }
