@@ -7,6 +7,6 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean isNext() {
-        return super.scores.size() == 2 || scores.stream().mapToInt(Integer::intValue).sum() >= 10;
+        return scores.size() == 2 || sumOfScore() == 10;
     }
 }
