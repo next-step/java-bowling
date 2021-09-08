@@ -1,6 +1,7 @@
 package bowling.frame;
 
-import bowling.dto.FrameDto;
+import bowling.dto.ScoreResultDto;
+import bowling.score.ScoreResult;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,10 +38,15 @@ public class Frames {
     return frames.size();
   }
 
-  public List<FrameDto> resultList() {
-    return frames.stream()
-        .map(frame -> FrameDto.from(frame.getScore()))
+  public List<ScoreResultDto> totalScoreResult() {
+    return getScoreResults()
+        .stream()
+        .map(ScoreResult::from)
         .collect(Collectors.toList());
+  }
+
+  private List<ScoreResult> getScoreResults() {
+    return frames.getFirst().createScoreBoard().getScoreResults();
   }
 
   public boolean isEnd() {

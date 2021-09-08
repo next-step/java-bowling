@@ -1,6 +1,7 @@
 package bowling.state;
 
 import bowling.pin.Pin;
+import bowling.score.Score;
 
 public class Spare extends Finish {
 
@@ -17,12 +18,26 @@ public class Spare extends Finish {
   }
 
   @Override
-  public String score() {
-    return first.totalDownPin().toString() + SEPARATOR + SPARE;
+  public String scoreMessage() {
+    return first.toString() + SEPARATOR + SPARE;
   }
 
   @Override
   public Pin totalPin() {
     return second.totalDownPin(first);
+  }
+
+  @Override
+  public Score score() {
+    return Score.spare();
+  }
+
+  @Override
+  public Score calculateScore(Score score) {
+    score = first.sumScore(score);
+    if (score.isFinishBallCount()) {
+      return score;
+    }
+    return second.sumScore(score);
   }
 }

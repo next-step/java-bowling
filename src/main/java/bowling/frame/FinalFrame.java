@@ -1,25 +1,20 @@
 package bowling.frame;
 
-import bowling.pin.Pin;
+import bowling.exception.ScoreCalculateException;
+import bowling.score.Score;
+import bowling.score.ScoreBoard;
+import bowling.score.ScoreResult;
 import bowling.state.State;
 import bowling.state.StateFactory;
 import java.util.LinkedList;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 
-  private static final int MAX_LIMIT_BALL_COUNT = 2;
-  private static final int MAX_STATES_SIZE = 3;
-  private static final int MAX_PIN = 10;
+  private static final int START_STATES_INDEX = 1;
   private static final String MSG_ERROR_END_FRAME = "이미 종료된 프레임입니다.";
   private static final String SEPARATOR = "|";
-  private static final String SPARE = "/";
-  private static final String STRIKE = "X";
-
-  private boolean stop = false;
-
-  private int limitBallCount;
+  private static final int NOT_SUM_SCORE_VALUE = -1;
 
   private final LinkedList<State> states = new LinkedList<>();
 
@@ -28,77 +23,105 @@ public class FinalFrame implements Frame {
   }
 
   @Override
-  public Frame play(final int pinCount) {
-
+  public FinalFrame play(final int pinCount) {
     validationEndFrame();
 
-    State state = states.getLast();
-
-    if (state.isFinish()) {
-      validationLimitPitch(state);
-      states.add(StateFactory.startPitch().nextPitch(pinCount));
-
-      checkMaxStateSize();
-      return this;
+    if (states.getLast().isFinish()) {
+      return newPitch(pinCount);
     }
 
-    states.removeLast();
-    states.add(state.nextPitch(pinCount));
-    limitBallCount++;
-
-    checkLimitBallCount();
+    refreshStates(pinCount);
     return this;
   }
 
-  private void checkMaxStateSize() {
-    if (states.size() == MAX_STATES_SIZE || limitBallCount == MAX_LIMIT_BALL_COUNT) {
-      stop = true;
-    }
-  }
-
-  private void checkLimitBallCount() {
-    checkLimitTwoPitches();
-    checkLimitThreePitches();
-  }
-
-  private void checkLimitThreePitches() {
-    if (isTotalDownTen() && states.size() == MAX_LIMIT_BALL_COUNT) {
-      stop = true;
-    }
-  }
-
-  private void checkLimitTwoPitches() {
-    if (!isTotalDownTen() && limitBallCount == MAX_LIMIT_BALL_COUNT) {
-      stop = true;
-    }
-  }
-
-  private boolean isTotalDownTen() {
-    return Optional.ofNullable(states.getLast().totalPin())
-        .map(pin -> pin.equals(Pin.from(MAX_PIN)))
-        .orElse(false);
-  }
-
   private void validationEndFrame() {
-    if (states.size() == MAX_STATES_SIZE) {
+    if (isGameEnd()) {
       throw new RuntimeException(MSG_ERROR_END_FRAME);
     }
   }
 
-  private void validationLimitPitch(final State state) {
-    if (!state.score().contains(SPARE) && !state.score().contains(STRIKE)) {
-      throw new RuntimeException(MSG_ERROR_END_FRAME);
+  private FinalFrame newPitch(final int pinCount) {
+    states.add(StateFactory.startPitch().nextPitch(pinCount));
+    return this;
+  }
+
+  private void refreshStates(final int pinCount) {
+    State currentState = states.getLast();
+
+    states.removeLast();
+    states.add(currentState.nextPitch(pinCount));
+  }
+
+  public boolean isGameEnd() {
+
+    if (states.getFirst().isFinish()) {
+      return isFinish();
+    }
+    return false;
+  }
+
+  private boolean isFinish() {
+    try {
+      return score().isFinishBallCount();
+    } catch (ScoreCalculateException e) {
+      return false;
     }
   }
 
   @Override
-  public String getScore() {
+  public String getScoreMessage() {
     return states.stream()
-        .map(State::score)
+        .map(State::scoreMessage)
         .collect(Collectors.joining(SEPARATOR));
   }
 
-  public boolean isGameEnd() {
-    return stop;
+  @Override
+  public Score score() {
+    Score score = states.getFirst().score();
+
+    for (int i = START_STATES_INDEX; i < states.size(); i++) {
+      score = states.get(i).calculateScore(score);
+    }
+
+    return score;
+  }
+
+  @Override
+  public Score frameScoreAdd(Score score) {
+    for (State state : states) {
+      score = state.calculateScore(score);
+    }
+
+    return score;
+  }
+
+  @Override
+  public int scoreValue() {
+    return score().getScoreDto().getScore();
+  }
+
+  @Override
+  public ScoreResult createScoreResult() {
+    if (!isFinish()) {
+      return new ScoreResult(getScoreMessage(), NOT_SUM_SCORE_VALUE);
+    }
+
+    try {
+      return new ScoreResult(getScoreMessage(), scoreValue());
+    } catch (ScoreCalculateException e) {
+      return new ScoreResult(getScoreMessage(), NOT_SUM_SCORE_VALUE);
+    }
+  }
+
+  @Override
+  public ScoreBoard createScoreBoard() {
+    ScoreBoard scoreBoard = new ScoreBoard();
+    addScoreResult(scoreBoard);
+    return scoreBoard;
+  }
+
+  @Override
+  public void addScoreResult(final ScoreBoard scoreBoard) {
+    scoreBoard.addScoreResult(createScoreResult());
   }
 }
