@@ -4,6 +4,7 @@ package bowling.domain.frame;
 import bowling.domain.Pins;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NUMBER = 10;
@@ -14,6 +15,11 @@ public class FinalFrame implements Frame {
     public FinalFrame() {
         this.frameNumber = new FrameNumber(FINAL_FRAME_NUMBER);
         this.pitchPins = new Pins(new LinkedList<>());
+    }
+
+    public FinalFrame(final List<Integer> pins) {
+        this.frameNumber = new FrameNumber(FINAL_FRAME_NUMBER);
+        this.pitchPins = new Pins(pins);
     }
 
     @Override
@@ -28,6 +34,6 @@ public class FinalFrame implements Frame {
 
     @Override
     public String valueOfFrame() {
-        return null;
+        return pitchPins.result();
     }
 }
