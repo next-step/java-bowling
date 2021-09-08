@@ -22,8 +22,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public void pitch(final int countOfPins) {
-        Pins pins = pitchPins.pitch(countOfPins, frameNumber);
+    public Pins pitch(final int countOfPins) {
+        return pitchPins.pitch(countOfPins, frameNumber);
     }
 
     @Override

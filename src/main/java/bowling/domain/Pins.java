@@ -25,6 +25,9 @@ public class Pins {
     }
 
     public boolean isEnd(final FrameNumber frameNumber) {
+        if (pins.isEmpty()) {
+            return false;
+        }
         if (!frameNumber.isLastNumber()) {
             return isStrike() || isSameSize(FORMAL_SIZE);
         }
