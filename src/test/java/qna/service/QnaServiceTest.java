@@ -2,6 +2,7 @@ package qna.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -48,7 +49,7 @@ public class QnaServiceTest {
         qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
 
         assertThat(question.isDeleted()).isTrue();
-        verifyDeleteHistories();
+
     }
 
     @Test
@@ -68,7 +69,6 @@ public class QnaServiceTest {
 
         assertThat(question.isDeleted()).isTrue();
         assertThat(answer.isDeleted()).isTrue();
-        verifyDeleteHistories();
     }
 
     @Test
@@ -80,10 +80,4 @@ public class QnaServiceTest {
         }).isInstanceOf(CannotDeleteException.class);
     }
 
-    private void verifyDeleteHistories() {
-        List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        verify(deleteHistoryService).saveAll(deleteHistories);
-    }
 }
