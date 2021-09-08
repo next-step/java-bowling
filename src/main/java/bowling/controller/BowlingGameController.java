@@ -18,13 +18,13 @@ public class BowlingGameController {
         bowlingUsers.add(new BowlingUser(name));
     }
 
-    public void run() {
+    public void run(String userName) {
         for (int currentRound = 1; currentRound <= BOWLING_ROUND; currentRound++) {
-            runByRound(currentRound);
+            runByFrame(currentRound, userName);
         }
     }
 
-    private void runByRound(int currentRound) {
+    private void runByFrame(int currentRound, String userName) {
         BowlingUser bowlingUser = bowlingUsers.get(0);
 
         int firstBowlingScore = randomScore.generate(MAX_BOWLING_SCORE);
