@@ -3,7 +3,6 @@ package bowling.model;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class PlayerTest {
@@ -13,14 +12,5 @@ class PlayerTest {
         assertThatThrownBy(() -> {
             new Player("1");
         }).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("")
-    public void pitch() {
-        Player player = new Player("OSW", new TenPitchStrategy());
-        ShotResult shotResult = player.pitch();
-
-        assertThat(shotResult).isEqualTo(ShotResult.TEN);
     }
 }
