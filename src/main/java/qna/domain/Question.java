@@ -103,7 +103,7 @@ public class Question extends AbstractEntity {
         }
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        deleteHistories.add(DeleteHistory.of(ContentType.QUESTION, getId(), writer));
 
         deleteHistories.addAll(answers.stream()
                 .map((answer) -> answer.makeDeleteHistory())

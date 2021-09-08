@@ -58,7 +58,7 @@ public class Answer extends AbstractEntity {
             throw new IllegalStateException("해당 답변은 삭제 상태가 아닙니다. " + toString());
         }
 
-        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
+        return DeleteHistory.of(ContentType.ANSWER, getId(), writer);
     }
 
     public boolean isDeleted() {
