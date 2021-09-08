@@ -25,6 +25,11 @@ public class Name {
                 .count() == NAME_LENGTH;
     }
 
+
+    public String value() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,9 +41,5 @@ public class Name {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public String getName() {
-        return name;
     }
 }

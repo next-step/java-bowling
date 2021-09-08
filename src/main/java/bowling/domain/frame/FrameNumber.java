@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public class FrameNumber {
     private static final int MAX_NUMBER = 10;
-    private static final int NEXT_OPERATION = 1;
     private static final String CREATE_FRAME_NUMBER_ERROR = "프레임은 " + MAX_NUMBER + "개 입니다.";
 
     private final int frameNumber;
@@ -20,10 +19,6 @@ public class FrameNumber {
 
     public boolean isLastNumber() {
         return frameNumber == MAX_NUMBER;
-    }
-
-    public int valueOfNextNumber() {
-        return frameNumber + NEXT_OPERATION;
     }
 
     @Override

@@ -63,6 +63,7 @@ class PinsTest {
         assertThat(new Pins(Arrays.asList(2, 5)).result()).isEqualTo("2|5");
         assertThat(new Pins(Arrays.asList(5, 5)).result()).isEqualTo("5|/");
         assertThat(new Pins(Arrays.asList(5, 5, 3)).result()).isEqualTo("5|/|3");
+        assertThat(new Pins(Arrays.asList(10, 2, 8)).result()).isEqualTo("X|2|/");
     }
 
     @DisplayName("투구를 던질때 Pins 의 상태")
@@ -76,6 +77,8 @@ class PinsTest {
 
         assertThat(new Pins(Arrays.asList(2)).pitch(0, normalNumber).result()).isEqualTo("2|-");
         assertThat(new Pins(Arrays.asList(2)).pitch(0, finalNumber).result()).isEqualTo("2|-");
+
+        assertThat(new Pins(Arrays.asList(10)).pitch(2, finalNumber).result()).isEqualTo("X|2");
     }
 
     @DisplayName("투구를 던질때 Pins 의 상태")

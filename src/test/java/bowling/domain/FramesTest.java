@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,8 +22,7 @@ class FramesTest {
     @DisplayName("한 프레임의 투구가 끝나면 다음 프레임이 생성된다.")
     @Test
     void pitch() {
-        Frame testFrame = new NormalFrame(1, Arrays.asList(10));
-        assertThat(frames.pitch(10)).isEqualTo(testFrame);
+        assertThat(frames.pitch(10)).isEqualTo(new NormalFrame(1, Arrays.asList(10)));
         assertThat(frames.pitch(2)).isEqualTo(new NormalFrame(2, Arrays.asList(2)));
     }
 

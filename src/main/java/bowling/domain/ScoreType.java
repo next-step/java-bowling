@@ -9,6 +9,7 @@ public enum ScoreType {
     MISS("|", (previous, current) -> previous != -1 && previous < Pin.MAX_PINS && previous + current < Pin.MAX_PINS && current != 0),
     GUTTER("|-", (previous, current) -> previous != -1 && current == 0);
 
+    private static final String SEPARATOR = "|";
     private String symbol;
     private BiPredicate<Integer, Integer> predicate;
 
@@ -22,7 +23,8 @@ public enum ScoreType {
                 .filter(type -> type.predicate.test(previousPin, currentPin))
                 .map(ScoreType::getSymbol)
                 .findFirst()
-                .orElse(String.valueOf(currentPin));
+                .orElse(previousPin == -1 ? String.valueOf(currentPin) : SEPARATOR + currentPin);
+
         if (symbol.equals(MISS.getSymbol())) return symbol + currentPin;
         return symbol;
     }
