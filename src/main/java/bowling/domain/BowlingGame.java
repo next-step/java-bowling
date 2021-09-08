@@ -15,6 +15,11 @@ public class BowlingGame {
     public BowlingGame(Player player, Frames frames) {
         this.player = player;
         this.frames = frames;
+        frames.add(new NormalFrame(null));
+    }
+
+    public BowlingGame(String playerName) {
+        this (new Player(playerName), new Frames());
     }
 
     public String playerName() {
