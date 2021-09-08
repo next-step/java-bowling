@@ -13,11 +13,11 @@ public final class BowlingGame {
 
     public BowlingGame(final String playerName) {
         this.player = Player.valueOf(playerName);
-        this.frames = Frames.generate();
+        this.frames = Frames.of();
     }
 
-    public void input(final int score) {
-        frames.add(score);
+    public void input(final int knockDownNumber) {
+        frames.add(knockDownNumber);
     }
 
     public int nextRoundNumber() {

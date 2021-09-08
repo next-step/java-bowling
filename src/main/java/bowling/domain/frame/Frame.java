@@ -15,7 +15,7 @@ public abstract class Frame {
         this.pins = pins;
     }
 
-    public abstract void inputScore(final int score);
+    public abstract void inputKnockDownNumber(final int knockDownNumber);
 
     public abstract boolean isFinished();
 

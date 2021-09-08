@@ -43,7 +43,7 @@ public class NormalFrameTest {
     void nextFrameIsCurrentFrame() {
         // given
         Frame frame = NormalFrame.of(1);
-        frame.inputScore(5);
+        frame.inputKnockDownNumber(5);
 
         // when
         Frame nextFrame = frame.nextFrame();
@@ -56,7 +56,7 @@ public class NormalFrameTest {
     void nextFrameIsNewFrame() {
         // given
         Frame frame = NormalFrame.of(1);
-        frame.inputScore(10);
+        frame.inputKnockDownNumber(10);
 
         // when
         Frame nextFrame = frame.nextFrame();

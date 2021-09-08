@@ -13,30 +13,30 @@ public final class Frames {
         this.frames = frames;
     }
 
-    public static Frames generate() {
+    public static Frames of() {
         return new Frames(new ArrayList<>());
     }
 
-    public static Frames generate(final List<Frame> frames) {
+    public static Frames of(final List<Frame> frames) {
         return new Frames(new ArrayList<>(frames));
     }
 
-    public void add(final int score) {
+    public void add(final int knockDownCount) {
         if (frames.isEmpty()) {
-            initAndInputFirstFrame(score);
+            initAndInputFirstFrame(knockDownCount);
             return;
         }
-        inputFrame(score);
+        inputFrame(knockDownCount);
     }
 
-    private void initAndInputFirstFrame(final int score) {
-        Frame frame = NormalFrame.of(NormalFrame.DEFAULT_ROUND_NUMBER, score);
+    private void initAndInputFirstFrame(final int knockDownCount) {
+        Frame frame = NormalFrame.of(NormalFrame.DEFAULT_ROUND_NUMBER, knockDownCount);
         frames.add(frame);
     }
 
-    private void inputFrame(final int score) {
+    private void inputFrame(final int knockDownNumber) {
         Frame frame = lastFrame().nextFrame();
-        frame.inputScore(score);
+        frame.inputKnockDownNumber(knockDownNumber);
         if (!frames.contains(frame)) {
             frames.add(frame);
         }
@@ -65,7 +65,7 @@ public final class Frames {
     }
 
     public boolean isFinished() {
-        if (frames.size() > 0 && lastFrameRoundNumber() == LAST_FRAME_NUMBER) {
+        if (!frames.isEmpty() && lastFrameRoundNumber() == LAST_FRAME_NUMBER) {
             return isLastFrameFinished();
         }
         return false;

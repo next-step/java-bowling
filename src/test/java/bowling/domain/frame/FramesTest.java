@@ -31,7 +31,7 @@ public class FramesTest {
         Frame secondFrame = NormalFrame.of(roundNumber, pinNumbers);
 
         //when
-        Frames frames = Frames.generate(Collections.singletonList(secondFrame));
+        Frames frames = Frames.of(Collections.singletonList(secondFrame));
         int actual = frames.nextTurnRoundNumber();
 
         //then
@@ -60,7 +60,7 @@ public class FramesTest {
         Frame finalFrame = FinalFrame.of(pinNumbers);
 
         //when
-        Frames frames = Frames.generate(Collections.singletonList(finalFrame));
+        Frames frames = Frames.of(Collections.singletonList(finalFrame));
         boolean actual = frames.isFinished();
 
         //then

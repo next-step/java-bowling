@@ -19,8 +19,8 @@ public class BowlingApplication {
         OutputView.scoreBoard(bowlingGame.getPlayer());
 
         while (!bowlingGame.isFinished()) {
-            int inputScore = inputView.getInputScore(bowlingGame.nextRoundNumber());
-            bowlingGame.input(inputScore);
+            int knockDownNumber = inputView.getInputScore(bowlingGame.nextRoundNumber());
+            bowlingGame.input(knockDownNumber);
 
             OutputView.scoreBoardHeader();
             OutputView.scoreBoard(bowlingGame.getPlayer(), bowlingGame.getFrames());

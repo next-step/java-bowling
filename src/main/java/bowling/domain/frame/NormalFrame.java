@@ -25,8 +25,8 @@ public final class NormalFrame extends Frame {
     }
 
     @Override
-    public void inputScore(final int score) {
-        pins.add(score);
+    public void inputKnockDownNumber(final int knockDownNumber) {
+        pins.add(knockDownNumber);
     }
 
     @Override
