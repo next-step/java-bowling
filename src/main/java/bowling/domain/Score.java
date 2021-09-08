@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Arrays;
+
 public enum Score {
 
     ZERO(0),
@@ -20,6 +22,14 @@ public enum Score {
         this.numberOfPins = numberOfPins;
     }
 
+    public static boolean isStrike(final Score score) {
+        return Score.TEN.equals(score);
+    }
+
+    public static boolean isSpare(final Score first, final Score second) {
+        return first.plus(second) == 10;
+    }
+
     public Integer getNumberOfPins() {
         return numberOfPins;
     }
@@ -28,7 +38,17 @@ public enum Score {
         return this.numberOfPins + score.numberOfPins;
     }
 
-    public boolean isStrike() {
-        return this.equals(Score.TEN);
+    public static Score valueOf(final int pins) {
+        return Arrays.stream(Score.values())
+                .filter(score -> score.getNumberOfPins().equals(pins))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "numberOfPins=" + numberOfPins +
+                '}';
     }
 }

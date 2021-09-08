@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class Name {
 
+    private static final int MAX_NAME_LENGTH = 3;
+
     private String name;
 
     public Name(final String name) {
@@ -14,9 +16,13 @@ public class Name {
     }
 
     private void checkValidNameLength(String name) {
-        if (name.length() > 3) {
+        if (name.length() > MAX_NAME_LENGTH) {
             throw new NameLengthExceededException();
         }
+    }
+
+    public String value() {
+        return name;
     }
 
     @Override

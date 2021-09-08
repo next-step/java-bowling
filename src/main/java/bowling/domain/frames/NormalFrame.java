@@ -1,29 +1,35 @@
 package bowling.domain.frames;
 
-import bowling.domain.Score;
-import bowling.domain.Scores;
-import bowling.domain.exception.AttemptsExceededException;
-
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
 
     private static final int FRAME_MAX_ATTEMPTS = 2;
 
-    private Scores scores;
+    public NormalFrame() {
+        super();
+    }
 
     @Override
-    public void roll(final Score score) {
-        checkValidRoll(score);
-        this.scores.roll(score);
+    void checkNumberOfPins() {
+
+        // TODO 공 합산
     }
 
-    private void checkValidRoll(final Score score) {
-        checkValidMaxAttempts();
-        checkSecondRoll(scores, score);
-    }
-
-    private void checkValidMaxAttempts() {
-        if (this.scores.size() >= FRAME_MAX_ATTEMPTS) {
-            throw new AttemptsExceededException();
+    @Override
+    public void finish() {
+        if (isStrike()) {
+            super.isFinish = true;
         }
+        if (isPossibleToAttempts()) {
+            super.isFinish = true;
+        }
+    }
+
+    @Override
+    public boolean isPossibleToAttempts() {
+        return this.scores.size() == FRAME_MAX_ATTEMPTS;
+    }
+
+    private boolean isStrike() {
+        return this.scores.size() == 1 && this.scores.knockedDownPins() == NUMBER_OF_PINS;
     }
 }

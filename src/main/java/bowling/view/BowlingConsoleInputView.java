@@ -15,7 +15,7 @@ public class BowlingConsoleInputView {
         return scanner.nextLine();
     }
 
-    public String enterScore(int index) {
+    public String enterScore(final int index) {
         System.out.printf("%d프레임 투구 : ", index);
         return scanner.nextLine();
     }

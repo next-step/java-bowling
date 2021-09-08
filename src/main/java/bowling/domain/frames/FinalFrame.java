@@ -1,48 +1,31 @@
 package bowling.domain.frames;
 
-import bowling.domain.Score;
-import bowling.domain.Scores;
-import bowling.domain.exception.AttemptsExceededException;
-import bowling.domain.exception.InvalidFinalFrameFinalRollException;
 
-
-public class FinalFrame implements Frame {
+public class FinalFrame extends Frame {
 
     private static final int FRAME_MAX_ATTEMPTS = 3;
 
-    private Scores scores;
+    public FinalFrame() {
+        super();
+    }
+
+    // TODO 2번째 까지 합산이 10 (스페어)가 아니면 종료
+    // TODO 첫번째 두번째 20이거나
 
     @Override
-    public void roll(final Score score) {
-        checkValidRoll(score);
-        this.scores.roll(score);
+    public void checkNumberOfPins() {
+
     }
 
-    private void checkValidRoll(final Score score) {
-        checkValidMaxAttempts();
-        checkSecondRoll(scores, score);
-        checkFinalRoll();
+    @Override
+    public void finish() {
+        if (isPossibleToAttempts()) {
+            super.isFinish = true;
+        }
     }
 
-    private void checkFinalRoll() {
-        if (this.scores.size() != 2) {
-            return;
-        }
-        Score first = this.scores.first();
-        Score second = this.scores.second();
-
-        if (first.isStrike() || second.isStrike()) {
-            return;
-        }
-        if (isSpare(first.plus(second))) {
-            return;
-        }
-        throw new InvalidFinalFrameFinalRollException();
-    }
-
-    private void checkValidMaxAttempts() {
-        if (this.scores.size() >= FRAME_MAX_ATTEMPTS) {
-            throw new AttemptsExceededException();
-        }
+    @Override
+    public boolean isPossibleToAttempts() {
+        return this.scores.size() == FRAME_MAX_ATTEMPTS;
     }
 }

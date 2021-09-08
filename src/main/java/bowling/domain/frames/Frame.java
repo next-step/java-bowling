@@ -2,29 +2,52 @@ package bowling.domain.frames;
 
 import bowling.domain.Score;
 import bowling.domain.Scores;
-import bowling.domain.exception.InvalidSecondRollException;
+import bowling.domain.exception.FinishFrameException;
 
-public interface Frame {
+public abstract class Frame {
 
-    int NUMBER_OF_PINS = 10;
+    public static final int NUMBER_OF_PINS = 10;
 
-    void roll(final Score score);
+    protected Scores scores;
+    protected boolean isFinish;
 
-    default void checkSecondRoll(final Scores scores, final Score second) {
-        if (scores.size() != 1) {
-            return;
-        }
-        Score first = scores.first();
-        if (first.isStrike()) {
-            return;
-        }
-        if (isSpare(first.plus(second))) {
-            return;
-        }
-        throw new InvalidSecondRollException();
+    public Frame() {
+        this.scores = new Scores();
     }
 
-    default boolean isSpare(final int pins) {
-        return pins == NUMBER_OF_PINS;
+    public void roll(final Score score) {
+        // TODO 공 합산
+        checkFinish();
+        checkNumberOfPins();
+        this.scores.roll(score);
+        finish();
+    }
+
+    abstract void checkNumberOfPins();
+
+    abstract boolean isPossibleToAttempts();
+
+    abstract void finish();
+
+    private void checkFinish() {
+        if (this.isFinish) {
+            throw new FinishFrameException();
+        }
+    }
+
+    public Scores getScores() {
+        return scores;
+    }
+
+    public boolean isFinish() {
+        return isFinish;
+    }
+
+    @Override
+    public String toString() {
+        return "Frame{" +
+                "scores=" + scores +
+                ", isFinish=" + isFinish +
+                '}';
     }
 }

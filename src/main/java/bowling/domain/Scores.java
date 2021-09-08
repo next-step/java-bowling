@@ -20,12 +20,10 @@ public class Scores {
         this.scores.add(score);
     }
 
-    public Score first() {
-        return elements().get(0);
-    }
-
-    public Score second() {
-        return elements().get(1);
+    public int knockedDownPins() {
+        return this.scores.stream()
+                .map(Score::getNumberOfPins)
+                .reduce(0, Integer::sum);
     }
 
     public List<Score> elements() {
@@ -34,5 +32,12 @@ public class Scores {
 
     public int size() {
         return elements().size();
+    }
+
+    @Override
+    public String toString() {
+        return "Scores{" +
+                "scores=" + scores +
+                '}';
     }
 }

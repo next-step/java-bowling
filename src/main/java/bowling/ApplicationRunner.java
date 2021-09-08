@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.Bowling;
 import bowling.view.BowlingConsoleInputView;
 import bowling.view.BowlingConsoleOutputView;
 
@@ -15,9 +16,18 @@ public class ApplicationRunner {
 
         String playerText = inputView.enterPlayer();
 
-        for (int i = 1; i <= 10; i++) {
-            String scoreText = inputView.enterScore(i);
-            outputView.print(playerText);
+        Bowling bowling = new Bowling(playerText);
+
+        int order = 1;
+
+        while (!bowling.isFinish()) {
+            bowling.roll(inputView.enterScore(order));
+
+//            for(Frame frame:bowling.getFrames().elements()){
+//                System.out.println(frame);
+//            }
+            outputView.print(bowling);
+            order++;
         }
     }
 }
