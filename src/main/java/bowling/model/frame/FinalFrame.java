@@ -22,6 +22,11 @@ public class FinalFrame extends Frame {
         super(number, firstScore, secondScore);
     }
 
+    public FinalFrame(int number, int firstScore, int secondScore, int bonusScore) {
+        super(number, firstScore, secondScore);
+        this.bonusScore = Score.of(bonusScore);
+    }
+
     @Override
     protected void validateNumberRange(FrameNumber number) {
         if (!number.isEqual(FINAL_FRAME_NUMBER)) {
