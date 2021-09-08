@@ -1,15 +1,13 @@
 package bowling.domain;
 
-import bowling.exception.InputException;
-
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
 public enum ScoreType {
-    STRIKE("X", (order, score) -> order == 1 && score == 10),
-    SPARE("|/", (order, score) -> order == 2 && score == 10),
-    MISS("|", (order, score) -> order == 2 && score < 10 && score > 0),
-    GUTTER("-", (order, score) -> order == 2 && score == 0);
+    STRIKE("X", (previous, current) -> (previous == -1 || previous == Pin.MAX_PINS) && current == Pin.MAX_PINS),
+    SPARE("|/", (previous, current) -> previous != -1 && previous < Pin.MAX_PINS && previous + current == Pin.MAX_PINS),
+    MISS("|", (previous, current) -> previous != -1 && previous < Pin.MAX_PINS && previous + current < Pin.MAX_PINS && current != 0),
+    GUTTER("|-", (previous, current) -> previous != -1 && current == 0);
 
     private String symbol;
     private BiPredicate<Integer, Integer> predicate;
@@ -19,11 +17,14 @@ public enum ScoreType {
         this.predicate = predicate;
     }
 
-    static ScoreType of(int order, int score) {
-        return Arrays.stream(ScoreType.values())
-                .filter(type -> type.predicate.test(order, score))
+    static String findType(final int previousPin, final int currentPin) {
+        String symbol = Arrays.stream(ScoreType.values())
+                .filter(type -> type.predicate.test(previousPin, currentPin))
+                .map(ScoreType::getSymbol)
                 .findFirst()
-                .orElseThrow(() -> new InputException("올바르지 않는 입력값입니다."));
+                .orElse(String.valueOf(currentPin));
+        if (symbol.equals(MISS.getSymbol())) return symbol + currentPin;
+        return symbol;
     }
 
     public String getSymbol() {

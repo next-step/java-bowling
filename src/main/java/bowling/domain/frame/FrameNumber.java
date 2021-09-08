@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.exception.InputException;
 
@@ -17,7 +17,7 @@ public class FrameNumber {
     }
 
     public boolean isLastNumber() {
-        return valueOfNextNumber() == MAX_NUMBER;
+        return frameNumber == MAX_NUMBER;
     }
 
     public int valueOfNextNumber() {
