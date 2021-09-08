@@ -24,8 +24,42 @@ public final class Pins {
         return new Pins(pins);
     }
 
+    public static Pins of(List<Pin> pins) {
+        return new Pins(pins);
+    }
+
     public void add(final int knockDownNumber) {
         pins.add(Pin.valueOf(knockDownNumber));
+    }
+
+    public boolean isStrike() {
+        if (pins.isEmpty()) {
+            return false;
+        }
+        return firstPin().isMaximum();
+    }
+
+    public boolean isSecondPinNotCorrect() {
+        if (pins.size() < 2) {
+            return false;
+        }
+        if (isStrike()) {
+            return false;
+        }
+        return firstPin().sum(secondPin()) > 10;
+    }
+
+    public boolean isThirdPinWrong() {
+        if (pins.size() != 3) {
+            return false;
+        }
+        if (secondPin().isMaximum()) {
+            return false;
+        }
+        if (firstPin().sum(secondPin()) == 10) {
+            return false;
+        }
+        return secondPin().sum(thirdPin()) > 10;
     }
 
     public Pin firstPin() {

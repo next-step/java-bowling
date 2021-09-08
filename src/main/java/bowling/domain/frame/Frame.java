@@ -11,9 +11,12 @@ public abstract class Frame {
     protected final Pins pins;
 
     protected Frame(final int roundNumber, final Pins pins) {
+        validateFrame(pins);
         this.roundNumber = roundNumber;
         this.pins = pins;
     }
+
+    protected abstract void validateFrame(Pins pins);
 
     public abstract void inputKnockDownNumber(final int knockDownNumber);
 

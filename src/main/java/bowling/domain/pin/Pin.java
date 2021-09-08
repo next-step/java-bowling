@@ -25,6 +25,10 @@ public final class Pin {
             throw new PinOutOfBoundsException();
         }
     }
+    
+    public int sum(Pin pin) {
+        return knockDownNumber + pin.knockDownNumber;
+    }
 
     public boolean isMinimum() {
         return knockDownNumber == MIN;

@@ -1,11 +1,13 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
+import bowling.exception.FrameNotCorrectException;
 
 public final class NormalFrame extends Frame {
 
     public static final int DEFAULT_ROUND_NUMBER = 1;
     private static final int MAX_SIZE = 2;
+    private static final int MAX_KNOCK_DOWN_NUMBER = 10;
     private static final int ROUND_BEFORE_LAST_ROUND = 9;
 
     private NormalFrame(final int roundNumber) {
@@ -25,8 +27,16 @@ public final class NormalFrame extends Frame {
     }
 
     @Override
+    protected void validateFrame(final Pins pins) {
+        if ( pins.sumPins() > MAX_KNOCK_DOWN_NUMBER) {
+            throw new FrameNotCorrectException();
+        }
+    }
+
+    @Override
     public void inputKnockDownNumber(final int knockDownNumber) {
         pins.add(knockDownNumber);
+        validateFrame(pins);
     }
 
     @Override

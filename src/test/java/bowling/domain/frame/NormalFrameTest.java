@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.exception.FrameNotCorrectException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("NormalFrame Test")
 public class NormalFrameTest {
@@ -62,5 +64,18 @@ public class NormalFrameTest {
         Frame nextFrame = frame.nextFrame();
 
         assertThat(frame).isNotEqualTo(nextFrame);
+    }
+
+    @Test
+    @DisplayName("기본 프레임 Exception")
+    void normalFrameException() {
+        // given
+        int[] numbers = new int[]{5, 6};
+
+        // when
+        // then
+        assertThatThrownBy(() ->
+                NormalFrame.of(1, numbers)
+        ).isInstanceOf(FrameNotCorrectException.class);
     }
 }
