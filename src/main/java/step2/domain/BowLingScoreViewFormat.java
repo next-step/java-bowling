@@ -1,10 +1,10 @@
-package step2.view;
+package step2.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public enum BowLingScoreView {
+public enum BowLingScoreViewFormat {
     STRIKE ("X") { public boolean apply(int bowlingScore, int totalScore, int tryNumber) {return bowlingScore == 10 && tryNumber == 1;}},
     SPARE ("/") { public boolean apply(int bowlingScore, int totalScore, int tryNumber) {return totalScore == 10 && tryNumber >= 2;}},
     GUTTER ("-") { public boolean apply(int bowlingScore, int totalScore, int tryNumber) {return bowlingScore == 0 && tryNumber == 1;}},
@@ -13,7 +13,7 @@ public enum BowLingScoreView {
 
     private final String symbol;
 
-    BowLingScoreView(String symbol) {
+    BowLingScoreViewFormat(String symbol) {
         this.symbol = symbol;
     }
 
@@ -35,12 +35,12 @@ public enum BowLingScoreView {
     }
 
     private static String transferBowlingScoreToBowlingScoreSymbol(int bowlingScore, int totalScore, int tryNumber) {
-        BowLingScoreView bowLingScoreSymbol = Arrays.stream(values())
-                .filter(bowLingScoreView -> bowLingScoreView.apply(bowlingScore, totalScore, tryNumber))
+        BowLingScoreViewFormat bowLingScoreSymbol = Arrays.stream(values())
+                .filter(bowLingScoreViewFormat -> bowLingScoreViewFormat.apply(bowlingScore, totalScore, tryNumber))
                 .findFirst()
                 .orElse(SCORE);
 
-        if (bowLingScoreSymbol.equals(BowLingScoreView.SCORE)) {
+        if (bowLingScoreSymbol.equals(BowLingScoreViewFormat.SCORE)) {
             return Integer.toString(bowlingScore);
         }
         return bowLingScoreSymbol.toString();
