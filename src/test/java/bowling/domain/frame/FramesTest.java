@@ -13,65 +13,78 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import bowling.domain.Results;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FramesTest {
     Frames frames;
+    Results results;
 
     @BeforeEach
     void setUp() {
         frames = Frames.from(new ArrayList<>());
+        results = Results.from(frames);
     }
 
     @DisplayName("iniFrames 메서드를 호출하면, 점수판을 그리기 위한 문자열 리스트 값을 초기화한다")
     @Test
     void initFramesTest() {
-        assertThat(frames.results()).isInstanceOf(ArrayList.class);
+        assertThat(results.results()).isInstanceOf(ArrayList.class);
     }
 
     @DisplayName("투구 동작을 구현한 메서드 throwBalls에 다양한 상황을 입력하면 그에 맞는 결과를 얻을 수 있다")
     @Test
     void throwBallsTest() {
-        // frames.initFrames();
         assertAll(
             () -> {
-               frames.throwBalls(Arrays.asList(0, 9));
-               assertThat(frames.results().get(0)).isEqualTo("-|9");
+                frames.throwBalls(Arrays.asList(0, 9));
+                results.addFrame(frames.lastFrame());
+                assertThat(results.lastResult()).isEqualTo("-|9");
             },
-            () ->{
+            () -> {
                 frames.throwBalls(Arrays.asList(9, 0));
-                assertThat(frames.results().get(1)).isEqualTo("9|-");
+                results.addFrame(frames.lastFrame());
+                assertThat(results.lastResult()).isEqualTo("9|-");
             },
-            () ->{
+            () -> {
                 frames.throwBalls(Arrays.asList(1, 9));
-                assertThat(frames.results().get(2)).isEqualTo("1|/");
+                results.addFrame(frames.lastFrame());
+                assertThat(results.lastResult()).isEqualTo("1|/");
             },
-            () ->{
+            () -> {
                 frames.throwBalls(Arrays.asList(9, 1));
-                assertThat(frames.results().get(3)).isEqualTo("9|/");
+                results.addFrame(frames.lastFrame());
+                assertThat(results.lastResult()).isEqualTo("9|/");
             },
-            () ->{
+            () -> {
                 frames.throwBalls(Arrays.asList(0, 0));
-                assertThat(frames.results().get(4)).isEqualTo("-|-");
+                results.addFrame(frames.lastFrame());
+                assertThat(results.lastResult()).isEqualTo("-|-");
             },
-            () ->{
+            () -> {
                 frames.throwBalls(Collections.singletonList(10));
-                assertThat(frames.results().get(5)).isEqualTo("X");
+                results.addFrame(frames.lastFrame());
+                assertThat(results.lastResult()).isEqualTo("X");
             },
-            () ->{
+            () -> {
                 frames.throwBalls(Arrays.asList(4, 5));
-                assertThat(frames.results().get(6)).isEqualTo("4|5");
+                results.addFrame(frames.lastFrame());
+                assertThat(results.lastResult()).isEqualTo("4|5");
             },
-            () ->{
+            () -> {
                 frames.throwBalls(Arrays.asList(0, 10));
-                assertThat(frames.results().get(7)).isEqualTo("-|/");
+                results.addFrame(frames.lastFrame());
+                assertThat(results.lastResult()).isEqualTo("-|/");
             },
-            () ->{
+            () -> {
                 frames.throwBalls(Arrays.asList(4, 6));
-                assertThat(frames.results().get(8)).isEqualTo("4|/");
+                results.addFrame(frames.lastFrame());
+                assertThat(results.lastResult()).isEqualTo("4|/");
             },
-            () ->{
+            () -> {
                 frames.throwBalls(Arrays.asList(10, 10, 10));
-                assertThat(frames.results().get(9)).isEqualTo("X|X|X");
+                results.addFrame(frames.lastFrame());
+                assertThat(results.lastResult()).isEqualTo("X|X|X");
             }
         );
     }
