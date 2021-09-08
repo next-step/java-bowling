@@ -65,8 +65,4 @@ public class FrameNumber {
     public int hashCode() {
         return Objects.hash(number);
     }
-
-    public int getNumber() {
-        return number;
-    }
 }
