@@ -25,6 +25,12 @@ public abstract class Frame {
 
     public abstract Frame next(int score);
 
+    public abstract FrameNumber nextNumber();
+
+    public abstract boolean isBonusPlay();
+
+    public abstract Score getBonusScore();
+
     public static Frame first(int score) {
         return new NormalFrame(FrameNumber.first(), FrameScore.first(score));
     }
@@ -37,11 +43,31 @@ public abstract class Frame {
         return score.isStrike();
     }
 
+    protected boolean isFirstAndNotStrike() {
+        return score.isFirst() && !isStrike();
+    }
+
     protected boolean pitchTwice() {
         return score.pitchTwice();
     }
 
     private boolean isSpare() {
         return score.isSpare();
+    }
+
+    public FrameScore getScore() {
+        return score;
+    }
+
+    public Score getFirstScore() {
+        return score.getFirst();
+    }
+
+    public Score getSecondScore() {
+        return score.getSecond();
+    }
+
+    public boolean isFrameNumberEqual(Frame frame) {
+        return number.equals(frame.number);
     }
 }

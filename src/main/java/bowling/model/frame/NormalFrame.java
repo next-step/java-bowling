@@ -49,4 +49,22 @@ public class NormalFrame extends Frame {
 
         return new NormalFrame(number, this.score.second(score));
     }
+
+    @Override
+    public FrameNumber nextNumber() {
+        if (isNextFinalFrame() || needNextNumber()) {
+            return number.next();
+        }
+        return number;
+    }
+
+    @Override
+    public boolean isBonusPlay() {
+        return false;
+    }
+
+    @Override
+    public Score getBonusScore() {
+        return null;
+    }
 }

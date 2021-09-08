@@ -36,7 +36,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public Frame next(int score) {
-        if (this.score.isFirst() && !isStrike()) {
+        if (isFirstAndNotStrike()) {
             return new FinalFrame(number, this.score.second(score));
         }
 
@@ -45,5 +45,23 @@ public class FinalFrame extends Frame {
         }
 
         throw new IllegalArgumentException("마지막 프레임의 다음 번호 프레임을 만들 수 없습니다.");
+    }
+
+    @Override
+    public FrameNumber nextNumber() {
+        if (isFirstAndNotStrike() || isStrikeOrSpare()) {
+            return number;
+        }
+        throw new IllegalArgumentException("마지막 프레임의 다음 번호 프레임을 만들 수 없습니다.");
+    }
+
+    @Override
+    public boolean isBonusPlay() {
+        return bonusScore != null;
+    }
+
+    @Override
+    public Score getBonusScore() {
+        return bonusScore;
     }
 }
