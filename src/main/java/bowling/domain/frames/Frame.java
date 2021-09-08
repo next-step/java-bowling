@@ -37,8 +37,7 @@ public abstract class Frame {
     }
 
     private void checkIncorrectNumberOfPins(final int pins) {
-        boolean allStrike = this.scores.elements().stream().allMatch(Score::isStrike);
-        if (allStrike) {
+        if (isAllStrike()) {
             return;
         }
         if (pins > NUMBER_OF_PINS || pins < 0) {
@@ -58,6 +57,12 @@ public abstract class Frame {
 
     public boolean isFinish() {
         return isFinish;
+    }
+
+    public boolean isAllStrike() {
+        return this.scores.elements()
+                .stream()
+                .allMatch(Score::isStrike);
     }
 
     @Override

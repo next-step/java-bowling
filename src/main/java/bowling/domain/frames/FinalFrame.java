@@ -26,19 +26,13 @@ public class FinalFrame extends Frame {
 
     private boolean isTheScoreWrongForTheThirdRoll() {
         if (this.scores.size() == 2) {
-            return isNotAllStrike() && isNotSpare();
+            return !isAllStrike() && !isSpare();
         }
         return false;
     }
 
-    private boolean isNotSpare() {
-        return NUMBER_OF_PINS != this.scores.knockedDownPins();
-    }
-
-    private boolean isNotAllStrike() {
-        return this.scores.elements()
-                .stream()
-                .noneMatch(Score::isStrike);
+    private boolean isSpare() {
+        return NUMBER_OF_PINS == this.scores.knockedDownPins();
     }
 
     @Override

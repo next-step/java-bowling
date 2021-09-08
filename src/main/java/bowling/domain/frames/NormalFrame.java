@@ -17,7 +17,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public void finish() {
-        if (isStrike()) {
+        if (isAllStrike()) {
             super.isFinish = true;
         }
         if (isPossibleToAttempts()) {
@@ -28,11 +28,5 @@ public class NormalFrame extends Frame {
     @Override
     public boolean isPossibleToAttempts() {
         return this.scores.size() == FRAME_MAX_ATTEMPTS;
-    }
-
-    private boolean isStrike() {
-        return this.scores.elements()
-                .stream()
-                .allMatch(Score::isStrike);
     }
 }
