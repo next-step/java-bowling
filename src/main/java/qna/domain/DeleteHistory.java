@@ -33,10 +33,8 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public static List<DeleteHistory> fromQuestion(Question question) {
-        List<DeleteHistory> deleteHistoryList = new ArrayList<>();
-        deleteHistoryList.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
-        return deleteHistoryList;
+    public static DeleteHistory fromQuestion(Question question) {
+        return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
     }
 
     public static DeleteHistory fromAnswer(Answer answer) {
