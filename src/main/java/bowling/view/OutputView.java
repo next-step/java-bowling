@@ -42,6 +42,7 @@ public final class OutputView {
     public static void scoreBoard(final Player player) {
         showFirstCell(player.getName());
         showFillEmptyCells(Frame.MAX_ROUND_NUMBER);
+        System.out.println();
     }
 
     public static void scoreBoard(final Player player, final List<Frame> frames) {
