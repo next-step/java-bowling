@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import java.util.List;
 import java.util.Objects;
 
 import bowling.domain.score.Score;
@@ -20,7 +21,7 @@ public abstract class Frame {
         this.scores = Scores.of(scores);
     }
 
-    public Frame(Scores scores) {
+    protected Frame(final Scores scores) {
         this.scores = scores;
     }
 
@@ -62,6 +63,10 @@ public abstract class Frame {
         }
 
         return changeScoreToSymbol(firstTryScore) + SEPARATOR_SYMBOL + changeScoreToSymbol(secondTryScore);
+    }
+
+    public List<Score> scores() {
+        return scores.scores();
     }
 
     protected abstract void validate();
