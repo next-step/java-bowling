@@ -1,5 +1,8 @@
-package step2.domain;
+package step2.controller;
 
+import step2.domain.BowLingScoreViewFormat;
+import step2.domain.Frames;
+import step2.domain.UserName;
 import step2.view.InputView;
 import step2.view.ResultView;
 
@@ -39,7 +42,7 @@ public class BowlingGameController {
 
     private void printBowlingGameResultByFrame(Frames frames, int frameNumber) {
         for (int eachFrame = 1; eachFrame <= frameNumber; eachFrame++) {
-            ResultView.printFramesResult(BowLingScoreView.transferBowlingScoreViewFormat(frames.frameScoreInfo(eachFrame)));
+            ResultView.printFramesResult(BowLingScoreViewFormat.transferBowlingScoreViewFormat(frames.frameScoreInfo(eachFrame)));
         }
     }
 }
