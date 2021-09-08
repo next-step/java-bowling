@@ -81,6 +81,20 @@ public class FrameScoreTest {
         assertFalse(notSpareScore.isSpare());
     }
 
+    @DisplayName("isMiss() 메소드를 통해 미스 여부를 조회할 수 있다.")
+    @Test
+    void isMissFrameScoreTest() {
+        // given
+        FrameScore firstScore = FrameScore.first(5);
+        FrameScore missScore = firstScore.second(3);
+        FrameScore notMissScore = firstScore.second(5);
+
+        // when, then
+        assertFalse(firstScore.isMiss());
+        assertTrue(missScore.isMiss());
+        assertFalse(notMissScore.isMiss());
+    }
+
     @DisplayName("pitchTwice() 메소드를 통해 두 번 던진 점수 여부를 조회할 수 있다.")
     @Test
     void pitchTwiceFrameScoreTest() {
@@ -103,5 +117,17 @@ public class FrameScoreTest {
         // when, then
         assertTrue(firstScore.isFirst());
         assertFalse(secondScore.isFirst());
+    }
+
+    @DisplayName("isXXXGutter() 메소드를 통해 거터 여부를 조회할 수 있다.")
+    @Test
+    void isGutterFrameScoreTest() {
+        // given
+        FrameScore firstGutter = FrameScore.first(0);
+        FrameScore doubleGutter = firstGutter.second(0);
+
+        // when, then
+        assertTrue(firstGutter.isFirstAndGutter());
+        assertTrue(doubleGutter.isDoubleGutter());
     }
 }

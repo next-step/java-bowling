@@ -1,6 +1,7 @@
 package bowling.model.frame;
 
 public class FrameScore {
+    private static final int MIN_TOTAL_SCORE = 0;
     private static final int MAX_TOTAL_SCORE = 10;
     static final Score EMPTY_SCORE = null;
 
@@ -49,8 +50,21 @@ public class FrameScore {
         return totalScore == MAX_TOTAL_SCORE;
     }
 
+    public boolean isMiss() {
+        if (!pitchTwice()) {
+            return false;
+        }
+
+        int totalScore = first.getValue() + second.getValue();
+        return totalScore > MIN_TOTAL_SCORE && totalScore < MAX_TOTAL_SCORE;
+    }
+
     public boolean pitchTwice() {
         return first != EMPTY_SCORE && second != EMPTY_SCORE;
+    }
+
+    public boolean isEmpty() {
+        return first == EMPTY_SCORE;
     }
 
     public boolean isFirst() {
@@ -63,5 +77,19 @@ public class FrameScore {
 
     public Score getSecond() {
         return second;
+    }
+
+    public boolean isFirstAndGutter() {
+        if (first == EMPTY_SCORE) {
+            return false;
+        }
+        return first.isMin() && second == EMPTY_SCORE;
+    }
+
+    public boolean isDoubleGutter() {
+        if (first == EMPTY_SCORE || second == EMPTY_SCORE) {
+            return false;
+        }
+        return first.isMin() && second.isMin();
     }
 }
