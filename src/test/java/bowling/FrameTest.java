@@ -1,30 +1,49 @@
 package bowling;
 
+import bowling.domain.Frame;
+import bowling.domain.Status;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class FrameTest {
-    @Test
-    @DisplayName("프레임 생성")
-    void createFrame() {
-        Frame frame = new Frame(new Score(7, 2));
-        assertThat(frame.getScore()).isEqualTo(9);
+    Frame frame;
+
+    @BeforeEach
+    void init() {
+        frame = new Frame(8);
     }
 
     @Test
-    @DisplayName("프레임 상태")
-    void frameStatus() {
-        Frame frame1 = new Frame(new Score(7, 2));
-        Frame frame2 = new Frame(new Score(0, 0));
-        Frame frame3 = new Frame(new Score(10, 0));
-        Frame frame4 = new Frame(new Score(8, 2));
-        assertAll(
-                () -> assertThat(frame1.getStatus()).isEqualTo(Status.MISS),
-                () -> assertThat(frame2.getStatus()).isEqualTo(Status.GUTTER),
-                () -> assertThat(frame3.getStatus()).isEqualTo(Status.STRIKE),
-                () -> assertThat(frame4.getStatus()).isEqualTo(Status.SPARE));
+    @DisplayName("첫번째 볼")
+    void firstBall() {
+        assertThat(frame.firstScore()).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("두번째 볼")
+    void secondBall() {
+        frame.secondBall(2);
+        assertThat(frame.secondScore()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("스트라이크 확인")
+    void isStrike() {
+        Frame frame = new Frame(10);
+        assertThat(frame.isStrike()).isTrue();
+    }
+
+    @Test
+    @DisplayName("스페어 확인")
+    void isSpare() {
+        frame.secondBall(2);
+        assertThat(frame.isSpare()).isTrue();
     }
 }
