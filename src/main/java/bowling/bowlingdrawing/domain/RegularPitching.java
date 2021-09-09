@@ -46,7 +46,7 @@ public class RegularPitching {
     }
 
     public boolean done() {
-        return false;
+        return secondPitching != null;
     }
 
     @Override
