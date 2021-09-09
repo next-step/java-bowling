@@ -6,6 +6,7 @@ import java.util.List;
 public final class Frames {
 
     private static final int LAST_FRAME_NUMBER = 10;
+    private static final int NEXT_ROUND_NUMBER_DISTANCE = 1;
 
     private final List<Frame> frames;
 
@@ -47,13 +48,17 @@ public final class Frames {
             return NormalFrame.DEFAULT_ROUND_NUMBER;
         }
         if (isLastFrameFinished()) {
-            return lastFrameRoundNumber() + 1;
+            return nextFrameRoundNumber();
         }
         return lastFrameRoundNumber();
     }
 
     private boolean isLastFrameFinished() {
         return lastFrame().isFinished();
+    }
+
+    private int nextFrameRoundNumber() {
+        return lastFrameRoundNumber() + NEXT_ROUND_NUMBER_DISTANCE;
     }
 
     private int lastFrameRoundNumber() {
