@@ -1,6 +1,7 @@
 package bowling.domain.frame.rolling;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class Rolling {
 
@@ -33,7 +34,10 @@ public class Rolling {
     }
 
     public int plusFallenPin(Rolling rolling) {
-        return this.fallenPin + rolling.fallenPin();
+        int fallenPinOfRolling = Optional.ofNullable(rolling)
+                .orElse(new Rolling(0))
+                .fallenPin();
+        return this.fallenPin + fallenPinOfRolling;
     }
 
     public int fallenPin() {
