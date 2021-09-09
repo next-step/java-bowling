@@ -160,5 +160,7 @@ public class QnAService {
         - `int pins`
     2. 메서드
         - `void validateOverTen()`
+        - `boolean isTen()`
+        - `int sum(Pitching anotherPitching)`
     
 
