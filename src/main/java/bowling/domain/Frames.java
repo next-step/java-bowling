@@ -20,10 +20,6 @@ public class Frames {
         return frames.get(frameNumber);
     }
 
-    public void addFirst(Frame frame) {
-        frames.addFirst(frame);
-    }
-
     public int size() {
         return frames.size();
     }

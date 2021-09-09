@@ -2,6 +2,10 @@ package bowling.view;
 
 import bowling.domain.*;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+
 public class ResultView {
     private static final String BOUND_LINE = "|";
     private static final int FINAL_FRAME = 9;
@@ -21,20 +25,47 @@ public class ResultView {
 
         printPlayer(player);
 
-        printScore(frames);
+        printPitch(frames);
 
         printRemainBoard(frames);
+
+        printBlank();
+
+        printScore(frames);
+
+        System.out.println();
+    }
+
+    private static void printScore(Frames frames) {
+        Score resultScore = Score.of(0);
+        for (int numberOfGame = 0; numberOfGame < frames.size(); numberOfGame++) {
+            Frame currentFrame = frames.get(numberOfGame);
+            if (currentFrame.isFinish()) {
+                Score currentScore = currentFrame.getScore();
+                if(currentScore.getScore() == NormalFrame.UN_SCORE){
+                    System.out.print(BLANK_FRAME);
+                }
+                else {
+                    resultScore = resultScore.add(currentScore.getScore());
+                    System.out.print(BLANK +  resultScore.getScore() + HALF_BLANK_FRAME);
+                }
+            }
+        }
     }
 
     private static void printTitle() {
         System.out.println(TITLE);
     }
 
+    private static void printBlank() {
+        System.out.print(BOUND_LINE + BLANK + BLANK_FRAME);
+    }
+
     private static void printPlayer(String player) {
         System.out.print(BOUND_LINE + BLANK + player + BLANK + BLANK + BOUND_LINE);
     }
 
-    private static void printScore(Frames frames) {
+    private static void printPitch(Frames frames) {
         for (int numberOfGame = 0; numberOfGame < frames.size(); numberOfGame++) {
             printForPitchCondition(numberOfGame, frames);
         }

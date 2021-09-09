@@ -7,11 +7,13 @@ public class NormalPitch extends Pitch {
     public void bowl(Pins pins) {
         if (!isFirstPitchDone()) {
             firstPins = pins;
+            score = score.add(pins);
             return;
         }
         if (!isSecondPitchDone()) {
             secondPins = pins;
             validate();
+            score = score.add(pins);
         }
     }
 
@@ -28,7 +30,12 @@ public class NormalPitch extends Pitch {
         }
         return false;
     }
+    public Score getScore(){
+        if(isSpare()){
 
+        }
+        return score;
+    }
     @Override
     public State getState() {
         if (isStrike()) {

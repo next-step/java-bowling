@@ -67,3 +67,14 @@ getScore 메세지 가짐 ..
 State 가 Normal 이면 합산
 스페어나 스트라이크면 geScore 해도  비어있고 다음 프레임으로 넘김
 다음 프레임에서 getScore() 하면 스페어 스트라이크에 따라 합산..
+
+Finished true score 를 add
+getScore는 strike나 spare 일때는 안함
+
+
+
+Frames 돌면서 getScore 
+9, 8, 10 + 4,
+
+Frame Finish -> Get Score -> Spare 나 Strike 아니었으면 -> Pitch 합산
+                          -> Spare 면 Frame.next.getFirstPin 을 더함

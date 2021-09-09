@@ -16,4 +16,14 @@ public class FinalFrame extends Frame {
     public Frame next() {
         return this;
     }
+
+    @Override
+    public Score getScore() {
+        return null;
+    }
+
+    @Override
+    protected Score additionalScore(Score score) {
+        return null;
+    }
 }
