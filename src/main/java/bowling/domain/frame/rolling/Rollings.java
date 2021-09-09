@@ -1,6 +1,7 @@
 package bowling.domain.frame.rolling;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class Rollings {
 
@@ -39,7 +40,9 @@ public abstract class Rollings {
     }
 
     public int sum() {
-        return first.plusFallenPin(second);
+        Rolling rolling = Optional.ofNullable(second)
+                .orElse(new Rolling(0));
+        return first.plusFallenPin(rolling);
     }
 
     public abstract boolean allRolled();
