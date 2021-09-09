@@ -11,6 +11,9 @@ import qna.UnAuthorizedException;
 
 @Entity
 public class Answer extends AbstractEntity {
+
+    private static final String CANT_DELETE_BY_DISMATCH_WRITER_ERROR_MESSAGE = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -57,7 +60,7 @@ public class Answer extends AbstractEntity {
 
     private void checkDeleteAnswer(User writer) throws CannotDeleteException {
         if (!isOwner(writer)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+            throw new CannotDeleteException(CANT_DELETE_BY_DISMATCH_WRITER_ERROR_MESSAGE);
         }
     }
 
