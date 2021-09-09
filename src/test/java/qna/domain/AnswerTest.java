@@ -13,7 +13,8 @@ public class AnswerTest {
 
     @BeforeEach
     public void setup() {
-        answerByJavajigi = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        answerByJavajigi = new Answer(UserTest.JAVAJIGI, question, "Answers Contents1");
     }
 
     @DisplayName("답변자가 아닌 경우 답변을 삭제할 수 없다.")
