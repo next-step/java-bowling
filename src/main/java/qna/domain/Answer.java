@@ -6,14 +6,12 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import qna.CannotDeleteException;
+import qna.CannotDeleteAnswerException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 @Entity
 public class Answer extends AbstractEntity {
-
-    private static final String CANT_DELETE_BY_DISMATCH_WRITER_ERROR_MESSAGE = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
 
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
@@ -38,11 +36,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -63,7 +61,7 @@ public class Answer extends AbstractEntity {
 
     private void checkDeleteAnswer(User writer) {
         if (!isOwner(writer)) {
-            throw new CannotDeleteException(CANT_DELETE_BY_DISMATCH_WRITER_ERROR_MESSAGE);
+            throw new CannotDeleteAnswerException();
         }
     }
 

@@ -9,12 +9,10 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import qna.CannotDeleteException;
+import qna.CannotDeleteQuestionException;
 
 @Entity
 public class Question extends AbstractEntity {
-
-    private static final String CANT_DELETE_BY_DISMATCH_WRITER_ERROR_MESSAGE = "질문을 삭제할 권한이 없습니다.";
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -109,7 +107,7 @@ public class Question extends AbstractEntity {
 
     private void checkCannotDelete(User loginUser) {
         if (!isOwner(loginUser)) {
-            throw new CannotDeleteException(CANT_DELETE_BY_DISMATCH_WRITER_ERROR_MESSAGE);
+            throw new CannotDeleteQuestionException();
         }
     }
 
