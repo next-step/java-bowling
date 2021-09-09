@@ -5,21 +5,31 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 class AnswersTest {
 
+    private Answer answer1;
+    private Answer answer2;
+
+    @BeforeEach
+    void beforeEach() {
+        answer1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        answer2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
+    }
+
     @Test
     @DisplayName("답변을 모두 삭제할 수 있다.")
     void deleteAnswersTest() {
 
         // given
-        List<Answer> inputs = Arrays.asList(AnswerTest.A1);
+        List<Answer> inputs = Arrays.asList(answer1);
         Answers answers = new Answers(inputs);
         User writer = UserTest.JAVAJIGI;
-        List<DeleteHistory> expected = Arrays.asList(new DeleteHistory(AnswerTest.A1));
+        List<DeleteHistory> expected = Arrays.asList(new DeleteHistory(answer1));
 
         // when
         List<DeleteHistory> results = answers.deleteAll(writer);
@@ -33,7 +43,7 @@ class AnswersTest {
     void deleteAnswersFailTest() {
 
         // given
-        List<Answer> inputs = Arrays.asList(AnswerTest.A1, AnswerTest.A2);
+        List<Answer> inputs = Arrays.asList(answer1, answer2);
         Answers answers = new Answers(inputs);
         User writer = UserTest.JAVAJIGI;
 
