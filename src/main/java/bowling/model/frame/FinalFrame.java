@@ -5,7 +5,7 @@ public class FinalFrame extends Frame {
 
     private Score bonusScore;
 
-    protected FinalFrame(FrameNumber number, FrameScore score) {
+    public FinalFrame(FrameNumber number, FrameScore score) {
         super(number, score);
     }
 
