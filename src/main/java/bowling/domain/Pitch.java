@@ -23,6 +23,10 @@ public abstract class Pitch {
         return Objects.nonNull(firstPins);
     }
 
+    public Score getScore(){
+        return score;
+    }
+
     public boolean isSecondPitchDone() {
         return Objects.nonNull(secondPins);
     }

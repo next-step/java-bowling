@@ -15,12 +15,13 @@ public class Score {
         return new Score(score, left);
     }
 
-    public Score add(Pins pins) {
-        if(!canCalculate()){
-            new Score(pins.sumOfScore(score), 0);
+    public Score additionalScore(Pins pins) {
+        if(canCalculate()){
+            return new Score(pins.sumOfScore(score), 0);
         }
         return new Score(pins.sumOfScore(score), left - 1);
     }
+
     public Score add(int value) {
         return new Score(score + value, left);
     }

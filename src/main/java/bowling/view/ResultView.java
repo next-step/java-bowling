@@ -31,26 +31,36 @@ public class ResultView {
 
         printBlank();
 
-        printScore(frames);
+        printResultScore(frames);
 
         System.out.println();
     }
 
-    private static void printScore(Frames frames) {
+    private static void printResultScore(Frames frames) {
         Score resultScore = Score.of(0, 0);
         for (int numberOfGame = 0; numberOfGame < frames.size(); numberOfGame++) {
-            Frame currentFrame = frames.get(numberOfGame);
-            if (currentFrame.isFinish()) {
-                Score currentScore = currentFrame.getScore();
-                if(currentScore.getScore() == NormalFrame.UN_SCORE){
-                    System.out.print(BLANK_FRAME);
-                }
-                else {
-                    resultScore = resultScore.add(currentScore.getScore());
-                    System.out.print(BLANK +  resultScore.getScore() + HALF_BLANK_FRAME);
-                }
-            }
+            resultScore = getCurrentScore(frames, resultScore, numberOfGame);
         }
+    }
+
+    private static Score getCurrentScore(Frames frames, Score resultScore, int numberOfGame) {
+        Frame currentFrame = frames.get(numberOfGame);
+        if (currentFrame.isFinish()) {
+            Score currentScore = currentFrame.getScore();
+            resultScore = printScore(resultScore, currentScore);
+        }
+        return resultScore;
+    }
+
+    private static Score printScore(Score resultScore, Score currentScore) {
+        if (currentScore.getScore() == NormalFrame.UN_SCORE) {
+            System.out.print(BLANK_FRAME);
+            return resultScore;
+        }
+
+        resultScore = resultScore.add(currentScore.getScore());
+        System.out.print(BLANK + resultScore.getScore() + HALF_BLANK_FRAME);
+        return resultScore;
     }
 
     private static void printTitle() {

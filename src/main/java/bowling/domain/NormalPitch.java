@@ -7,19 +7,21 @@ public class NormalPitch extends Pitch {
     public void bowl(Pins pins) {
         if (!isFirstPitchDone()) {
             firstPins = pins;
-            score = score.add(pins);
-            if(isStrike()){
-                score = Score.of(10, 2);
-            }
+            score = score.additionalScore(pins);
+            additionalScore(isStrike(), 2);
             return;
         }
         if (!isSecondPitchDone()) {
             secondPins = pins;
             validate();
-            score = score.add(pins);
-            if(isSpare()){
-                score = Score.of(10, 1);
-            }
+            score = score.additionalScore(pins);
+            additionalScore(isSpare(), 1);
+        }
+    }
+
+    private void additionalScore(boolean additional, int left) {
+        if (additional) {
+            score = Score.of(10, left);
         }
     }
 
@@ -36,10 +38,7 @@ public class NormalPitch extends Pitch {
         }
         return false;
     }
-    public Score getScore(){
 
-        return score;
-    }
     @Override
     public State getState() {
         if (isStrike()) {

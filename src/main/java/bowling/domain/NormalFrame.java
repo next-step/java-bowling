@@ -39,18 +39,17 @@ public class NormalFrame extends Frame {
     @Override
     public Score getScore() {
         if(pitch.getState() == State.GUTTER || pitch.getState() == State.NORMAL || pitch.getState() == State.MISS){
-            return pitch.score;
+            return pitch.getScore();
         }
         if(Objects.isNull(next)){
             return Score.of(UN_SCORE, 0);
         }
 
-
-        return next.additionalScore(pitch.score);
+        return next.additionalScore(pitch.getScore());
     }
 
     public Score additionalScore(Score score) {
-        score = score.add(getFirstPin());
+        score = score.additionalScore(getFirstPin());
         if(score.canCalculate()){
             return score;
         }
@@ -59,6 +58,6 @@ public class NormalFrame extends Frame {
             return Score.of(UN_SCORE, 0);
         }
 
-        return score.add(getSecondPin());
+        return score.additionalScore(getSecondPin());
     }
 }

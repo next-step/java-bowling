@@ -60,17 +60,6 @@ public class NormalPitchTest {
 
     }
 
-    @DisplayName("스트라이크 쳤을 때는 바로 True")
-    @Test
-    void isStrike2Finish() {
-        Pitch pitch = new NormalPitch();
-
-        pitch.bowl(Pins.of(10));
-        pitch.bowl(Pins.of(10));
-        assertThat(pitch.isFinish()).isTrue();
-
-    }
-
     @DisplayName("상태 Normal")
     @Test
     void isNormal() {
