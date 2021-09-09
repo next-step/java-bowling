@@ -9,9 +9,10 @@ import bowling.domain.frame.info.FrameInfo;
 public class ResultView {
 
     public static final String SPLIT_BAR = " | ";
+    public static final int ADD_FRAME = 1;
 
     public static void showCurrentFrameInfo(FrameInfo frame) {
-        System.out.println(frame.currentFrameNumber() + "프레임 투구 ");
+        System.out.println(frame.currentFrameNumber() + ADD_FRAME + "프레임 투구 ");
     }
 
     public static void showHead() {

@@ -24,6 +24,18 @@ public class FinalFrameInfo implements FrameInfo {
         return of(LAST_FRAME_NUMBER, FIRST_ROUND, false);
     }
 
+    public boolean hasBonusRound() {
+        return bonusRound;
+    }
+
+    public boolean hasNextRound() {
+        return round < MAX_FINAL_ROUND || (round == MAX_FINAL_ROUND && bonusRound);
+    }
+
+    public FinalFrameInfo nextRoundWithBonusRound() {
+        return of(frameNumber, round + 1, true);
+    }
+
     @Override
     public FinalFrameInfo nextFrame() {
         throw new IllegalArgumentException("Final Frame의 Next Round는 없습니다.");
@@ -32,10 +44,6 @@ public class FinalFrameInfo implements FrameInfo {
     @Override
     public FinalFrameInfo nextRound() {
         return of(frameNumber, round + 1, bonusRound);
-    }
-
-    public FinalFrameInfo nextRoundWithBonusRound() {
-        return of(frameNumber, round + 1, true);
     }
 
     @Override
@@ -48,11 +56,5 @@ public class FinalFrameInfo implements FrameInfo {
         return frameNumber;
     }
 
-    public boolean hasBonusRound() {
-        return bonusRound;
-    }
 
-    public boolean hasNextRound() {
-        return round <= SECOND_ROUND || (round == 2 && bonusRound);
-    }
 }

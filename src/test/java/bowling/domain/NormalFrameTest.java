@@ -44,23 +44,27 @@ class NormalFrameTest {
 
     @DisplayName("Normal Frame은 9프레임까지 10프레임은 final Frame이다")
     @Test
-    void NormalFrame_Number() {
+    void NormalFrame() {
         // Given
         List<Frame> frames = new ArrayList<>();
 
         Frame normalFrame = NormalFrame.create();
-        frames.add(normalFrame);
 
-        for (int i = 0; i < 9; i++) {
-            normalFrame = normalFrame.roll(10);
+        for (int i = 0; i < 8; i++) {
             frames.add(normalFrame);
+            normalFrame = normalFrame.roll(10);
         }
+
+        Frame lastNormalFrame = normalFrame.roll(5);
+        frames.add(lastNormalFrame);
+        Frame lastNormalFrameRound = lastNormalFrame.roll(5);
+        frames.add(lastNormalFrameRound);
 
         // When && Then
         assertThat(frames.size()).isEqualTo(10);
         assertThat(frames.get(0)).isInstanceOf(NormalFrame.class);
         assertThat(frames.get(1)).isInstanceOf(NormalFrame.class);
-        assertThat(frames.get(9)).isInstanceOf(FinalFrame.class);
+        assertThat(frames.get(frames.size() - 1)).isInstanceOf(FinalFrame.class);
     }
 
 }

@@ -58,7 +58,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean hasNextRound() {
-        return pins.isAllDown() || frameInfo.isFirstRound();
+        return !frameInfo.isLastRound() || pins.isAllDown();
     }
 
     @Override

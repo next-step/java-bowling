@@ -22,18 +22,17 @@ public class BowlingGame {
         for (int i = 0; i < frames.size(); i++) {
             Frame frame = frames.get(i);
             ResultView.showCurrentFrameInfo(frame.frameInfo());
-            int downPinsCount = InputView.downPinsCount();
+            int downPinsCount = 0;//InputView.downPinsCount();
 
             ResultView.showHead();
 
-            Frame nextFrame = frame.roll(downPinsCount);
+            frame = frame.roll(downPinsCount);
 
             ResultView.showPersonNameOnBoard(person);
             ResultView.showScoreBoard(frames);
 
-            frames.add(nextFrame);
-
-            if (frames.isLast()) {
+            frames.add(frame);
+            if (frames.isEnd()) {
                 break;
             }
         }

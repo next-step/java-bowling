@@ -20,12 +20,12 @@ public class NormalFrameInfo implements FrameInfo {
     }
 
     public static NormalFrameInfo create() {
-        return of(0, 0);
+        return of(FIRST_ROUND, FIRST_ROUND);
     }
 
     @Override
     public NormalFrameInfo nextFrame() {
-        return of(frameNumber + 1, round);
+        return of(frameNumber + 1, FIRST_ROUND);
     }
 
     @Override
@@ -45,10 +45,6 @@ public class NormalFrameInfo implements FrameInfo {
 
     public boolean isEndFrame() {
         return frameNumber == MAX_NORMAL_FRAME;
-    }
-
-    public boolean isFirstRound() {
-        return frameNumber == FIRST_ROUND;
     }
 
     @Override
