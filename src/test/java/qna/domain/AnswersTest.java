@@ -13,7 +13,7 @@ class AnswersTest {
 
     @Test
     @DisplayName("답변을 모두 삭제할 수 있다.")
-    void deleteAnswersTest() throws CannotDeleteException {
+    void deleteAnswersTest() {
 
         // given
         List<Answer> inputs = Arrays.asList(AnswerTest.A1);
