@@ -1,5 +1,6 @@
 package qna.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.junit.jupiter.api.DisplayName;
@@ -19,4 +20,20 @@ public class QuestionTest {
             .isThrownBy(() -> Q1.deleteQuestion(UserTest.SANJIGI))
             .withMessageMatching("질문을 삭제할 권한이 없습니다.");
     }
+
+    @Test
+    @DisplayName("삭제가 가능한 상황이면 삭제 후 DeleteHistory를 반환한다.")
+    void successDeleteQuestionTest() throws CannotDeleteException {
+
+        // given
+        User writer = QuestionTest.Q1.getWriter();
+        DeleteHistory expected = new DeleteHistory(Q1);
+
+        // when
+        DeleteHistory result = Q1.deleteQuestion(writer);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }
