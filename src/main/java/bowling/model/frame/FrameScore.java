@@ -13,8 +13,13 @@ public class FrameScore {
         this.second = second;
     }
 
+    public FrameScore(Score first) {
+        this.first = first;
+        this.second = EMPTY_SCORE;
+    }
+
     public static FrameScore first(int first) {
-        return new FrameScore(Score.of(first), EMPTY_SCORE);
+        return new FrameScore(Score.of(first));
     }
 
     public FrameScore second(int second) {
