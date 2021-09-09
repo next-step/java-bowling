@@ -10,6 +10,8 @@ public final class Pins {
     private static final int FIRST_PIN_INDEX = 0;
     private static final int SECOND_PIN_INDEX = 1;
     private static final int THIRD_PIN_INDEX = 2;
+    private static final int MAX_PINS_SIZE = 3;
+    private static final int MAX_TWO_PINS_SUM_IF_NOT_STRIKE = 10;
 
     private final List<Pin> pins;
 
@@ -46,20 +48,20 @@ public final class Pins {
         if (isStrike()) {
             return false;
         }
-        return firstPin().sum(secondPin()) > 10;
+        return firstPin().sum(secondPin()) > MAX_TWO_PINS_SUM_IF_NOT_STRIKE;
     }
 
     public boolean isThirdPinWrong() {
-        if (pins.size() != 3) {
+        if (pins.size() != MAX_PINS_SIZE) {
             return false;
         }
         if (secondPin().isMaximum()) {
             return false;
         }
-        if (firstPin().sum(secondPin()) == 10) {
+        if (firstPin().sum(secondPin()) == MAX_TWO_PINS_SUM_IF_NOT_STRIKE) {
             return false;
         }
-        return secondPin().sum(thirdPin()) > 10;
+        return secondPin().sum(thirdPin()) > MAX_TWO_PINS_SUM_IF_NOT_STRIKE;
     }
 
     public Pin firstPin() {
