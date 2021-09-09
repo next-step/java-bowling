@@ -1,9 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.pins.Pins;
 import bowling.domain.Status;
 import bowling.domain.frame.info.FinalFrameInfo;
 import bowling.domain.frame.info.FrameInfo;
+import bowling.domain.pins.Pins;
 
 public class FinalFrame implements Frame {
 

@@ -1,10 +1,10 @@
 package bowling;
 
+import bowling.domain.Person;
+import bowling.domain.ScoreBoard;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.Person;
-import bowling.domain.ScoreBoard;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
