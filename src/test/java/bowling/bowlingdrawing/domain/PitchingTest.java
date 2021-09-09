@@ -29,4 +29,29 @@ class PitchingTest {
                 .isInstanceOf(CustomException.class);
     }
 
+    @Test
+    @DisplayName("pins 10개 여부 확인")
+    void isTen() {
+        // given
+        Pitching pitching1 = new Pitching(10);
+        Pitching pitching2 = new Pitching(9);
+        // when
+        boolean isTen1 = pitching1.isTen();
+        boolean isTen2 = pitching2.isTen();
+        // then
+        assertThat(isTen1).isTrue();
+        assertThat(isTen2).isFalse();
+    }
+
+    @Test
+    @DisplayName("pins 합계 계산")
+    void sum() {
+        // given
+        Pitching pitching1 = new Pitching(2);
+        Pitching pitching2 = new Pitching(7);
+        // when
+        int sumOfPins = pitching1.sum(pitching2);
+        // then
+        assertThat(sumOfPins).isEqualTo(9);
+    }
 }

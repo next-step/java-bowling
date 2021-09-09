@@ -22,6 +22,14 @@ public class Pitching {
         }
     }
 
+    public boolean isTen() {
+        return pins == MAXIMUM_OF_PINS;
+    }
+
+    public int sum(Pitching pitching) {
+        return this.pins + pitching.pins;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
