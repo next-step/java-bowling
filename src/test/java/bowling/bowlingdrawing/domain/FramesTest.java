@@ -10,7 +10,7 @@ public class FramesTest {
 
     @Test
     @DisplayName("Frame 추가")
-    void addFrame() {
+    void add_frame() {
         // given
         Frames frames = new Frames();
         // when
@@ -21,7 +21,7 @@ public class FramesTest {
 
     @Test
     @DisplayName("MaxFrame 초과 검증")
-    void validateMaxNumberOfFrames() {
+    void validate_max_number_of_frames() {
         // given
         Frames frames = new Frames();
         // when
@@ -35,8 +35,8 @@ public class FramesTest {
     }
 
     @Test
-    @DisplayName("현재 진행 Frame Number 반환")
-    void currentFrameNumber() {
+    @DisplayName("다음 Pitching Frame Number 반환")
+    void next_pitching_frame_number() {
         // given
         Frames frames = new Frames();
         // when
@@ -45,6 +45,19 @@ public class FramesTest {
             frames.pitch(2);
         }
         // then
-        assertThat(frames.currentFrameNumber()).isEqualTo(4);
+        assertThat(frames.nextPitchingFrameNumber()).isEqualTo(4);
+    }
+
+    @Test
+    @DisplayName("다음 Pitching Frame Number 반환 : strike")
+    void next_pitching_frame_number_strike() {
+        // given
+        Frames frames = new Frames();
+        // when
+        for (int i = 0; i < 3; i++) {
+            frames.pitch(10);
+        }
+        // then
+        assertThat(frames.nextPitchingFrameNumber()).isEqualTo(4);
     }
 }
