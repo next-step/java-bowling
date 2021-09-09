@@ -41,7 +41,7 @@ public final class NormalFrame extends Frame {
 
     @Override
     public boolean isFinished() {
-        if (pins.firstPin().isMaximum()) {
+        if (pins.isStrike()) {
             return true;
         }
         return pins.size() == MAX_SIZE;
@@ -53,7 +53,7 @@ public final class NormalFrame extends Frame {
             return this;
         }
 
-        if (pins.size() == 1 && !pins.firstPin().isMaximum()) {
+        if (pins.size() == 1 && !pins.isStrike()) {
             return this;
         }
 
