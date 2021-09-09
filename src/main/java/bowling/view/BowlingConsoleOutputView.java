@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
 
 public class BowlingConsoleOutputView {
 
-    // TODO 0개 치고 10개 칠경우 -|/ -> -|X
-
     public void print(final Bowling bowling) {
         printHeader();
         printName(bowling.getName());

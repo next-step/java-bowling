@@ -17,6 +17,11 @@ public class Scores {
         this.scores.add(score);
     }
 
+    public boolean isAllStrike() {
+        return this.scores.stream()
+                .allMatch(Score::isStrike);
+    }
+
     public int knockedDownPins() {
         return this.scores.stream()
                 .map(Score::getNumberOfPins)

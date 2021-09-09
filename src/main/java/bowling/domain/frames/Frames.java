@@ -6,6 +6,7 @@ import bowling.domain.exception.FinishGameException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Frames {
 
@@ -23,9 +24,9 @@ public class Frames {
 
     private void init() {
         for (int i = 0; i < 9; i++) {
-            frames.add(new NormalFrame());
+            this.frames.add(new NormalFrame());
         }
-        frames.add(new FinalFrame());
+        this.frames.add(new FinalFrame());
     }
 
     public void roll(final Score score) {
@@ -57,5 +58,18 @@ public class Frames {
                 "frames=" + frames +
                 ", isFinish=" + isFinish +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frames frames1 = (Frames) o;
+        return isFinish == frames1.isFinish && Objects.equals(frames, frames1.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames, isFinish);
     }
 }

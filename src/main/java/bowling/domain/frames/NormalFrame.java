@@ -21,7 +21,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public void finish() {
-        if (isAllStrike()) {
+        if (this.scores.isAllStrike()) {
             super.isFinish = true;
         }
         if (isPossibleToAttempts()) {

@@ -30,7 +30,7 @@ public class FinalFrame extends Frame {
 
     private boolean isTheScoreWrongForTheThirdRoll() {
         if (this.scores.size() == 2) {
-            return !isAllStrike() && !isSpare();
+            return !this.scores.isAllStrike() && !isSpare();
         }
         return false;
     }
