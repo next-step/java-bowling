@@ -15,8 +15,11 @@ public class BowlingGame {
 
         ScoreBoard scoreBoard = ScoreBoard.create();
 
-        NormalFrame firstFrame = NormalFrame.create();
-        scoreBoard.write(person, firstFrame);
+        scoreBoard.write(person, NormalFrame.create());
+        startGame(person, scoreBoard);
+    }
+
+    private static void startGame(Person person, ScoreBoard scoreBoard) {
         Frames frames = scoreBoard.framesOfPerson(person);
 
         for (int i = 0; i < frames.size(); i++) {
@@ -31,7 +34,8 @@ public class BowlingGame {
             ResultView.showPersonNameOnBoard(person);
             ResultView.showScoreBoard(frames);
 
-            frames.add(frame);
+            frames.addFrame(frame);
+
             if (frames.isGameEnd()) {
                 break;
             }
