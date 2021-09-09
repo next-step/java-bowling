@@ -89,9 +89,9 @@ public class AnswersTest {
         //given
         Answer answer1 = new Answer(JAVAJIGI, QuestionTest.Q1, "Answers Contents");
         Answer answer2 = new Answer(JAVAJIGI, QuestionTest.Q2, "Answers Contents");
-        Answers answers = Answers.of(answer1, answer2).deleteAll(JAVAJIGI);
+        Answers answers = Answers.of(answer1, answer2);
         //when
-        List<DeleteHistory> deleteHistories = answers.toDeleteHistories();
+        List<DeleteHistory> deleteHistories = answers.deleteAll(JAVAJIGI);
         //then
         assertThat(deleteHistories).containsExactly(
                 new DeleteHistory(ContentType.ANSWER, answer1.getId(), JAVAJIGI),

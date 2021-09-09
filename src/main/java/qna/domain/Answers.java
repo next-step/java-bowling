@@ -3,6 +3,7 @@ package qna.domain;
 import qna.CannotDeleteException;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -40,16 +41,18 @@ public class Answers {
         return Objects.hash(answers);
     }
 
-    public Answers deleteAll(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> deleteAll(User loginUser) throws CannotDeleteException {
         for (Answer answer : answers) {
             answer.delete(loginUser);
         }
-        return this;
+        return toDeleteHistories();
     }
 
-    public List<DeleteHistory> toDeleteHistories() {
-        return answers.stream()
-                .map(Answer::toDeleteHistory)
-                .collect(Collectors.toList());
+    private List<DeleteHistory> toDeleteHistories() {
+        return Collections.unmodifiableList(
+                answers.stream()
+                        .map(Answer::toDeleteHistory)
+                        .collect(Collectors.toList())
+        );
     }
 }

@@ -17,7 +17,8 @@ public class QuestionTest {
     public void 질문을_삭제할_수_있다() throws CannotDeleteException {
         //given
         //when
-        Question result = new Question("title1", "contents1").writeBy(JAVAJIGI).delete(JAVAJIGI);
+        Question result = new Question("title1", "contents1").writeBy(JAVAJIGI);
+        result.delete(JAVAJIGI);
         //then
         assertThat(result.isDeleted()).isTrue();
     }
@@ -35,15 +36,16 @@ public class QuestionTest {
     @Test
     public void Question으로_부터_DeleteHistory를_만들_수_있다() throws CannotDeleteException {
         //given
-        Question result = new Question("title1", "contents1").writeBy(JAVAJIGI).delete(JAVAJIGI);
+        Question result = new Question("title1", "contents1").writeBy(JAVAJIGI);
         //when
+        result.delete(JAVAJIGI);
         DeleteHistory deleteHistory = result.toDeleteHistory();
         //then
         assertThat(deleteHistory).isEqualTo(new DeleteHistory(ContentType.QUESTION, result.getId(), JAVAJIGI));
     }
 
     @Test
-    public void Question으로_부터_DeleteHistory를_만들_때_삭제된_Question이_아니면_익셉션이_발생한다(){
+    public void Question으로_부터_DeleteHistory를_만들_때_삭제된_Question이_아니면_익셉션이_발생한다() {
         //given
         Question result = new Question("title1", "contents1").writeBy(JAVAJIGI);
         //when
