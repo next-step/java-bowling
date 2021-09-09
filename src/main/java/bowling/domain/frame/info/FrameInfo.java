@@ -8,10 +8,7 @@ public interface FrameInfo {
 
     FrameInfo nextRound();
 
-    boolean isEndFrame();
-
     boolean isLastRound();
 
-    boolean isFirstRound();
-
+    int currentFrameNumber();
 }

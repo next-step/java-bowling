@@ -15,21 +15,21 @@ public class NormalFrameInfo implements FrameInfo {
         this.round = round;
     }
 
-    public static FrameInfo of(int frameNumber, int round) {
+    public static NormalFrameInfo of(int frameNumber, int round) {
         return new NormalFrameInfo(frameNumber, round);
     }
 
-    public static FrameInfo create() {
+    public static NormalFrameInfo create() {
         return of(0, 0);
     }
 
     @Override
-    public FrameInfo nextFrame() {
+    public NormalFrameInfo nextFrame() {
         return of(frameNumber + 1, round);
     }
 
     @Override
-    public FrameInfo nextRound() {
+    public NormalFrameInfo nextRound() {
         return of(frameNumber, round + 1);
     }
 
@@ -39,6 +39,10 @@ public class NormalFrameInfo implements FrameInfo {
     }
 
     @Override
+    public int currentFrameNumber() {
+        return frameNumber;
+    }
+
     public boolean isEndFrame() {
         return frameNumber == MAX_NORMAL_FRAME;
     }

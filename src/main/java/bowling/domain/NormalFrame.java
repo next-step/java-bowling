@@ -5,20 +5,20 @@ import bowling.domain.frame.info.NormalFrameInfo;
 
 public class NormalFrame implements Frame {
 
-    private final FrameInfo frameInfo;
+    private final NormalFrameInfo frameInfo;
     private final Pins pins;
 
-    private NormalFrame(FrameInfo normalFrameInfo, Pins pins) {
+    private NormalFrame(NormalFrameInfo normalFrameInfo, Pins pins) {
         this.frameInfo = normalFrameInfo;
         this.pins = pins;
     }
 
-    public static NormalFrame of(FrameInfo normalFrameInfo, Pins pins) {
+    public static NormalFrame of(NormalFrameInfo normalFrameInfo, Pins pins) {
         return new NormalFrame(normalFrameInfo, pins);
     }
 
     public static NormalFrame create() {
-        return new NormalFrame(NormalFrameInfo.create(), Pins.create());
+        return of(NormalFrameInfo.create(), Pins.create());
     }
 
     @Override

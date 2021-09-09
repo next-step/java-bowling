@@ -13,6 +13,5 @@ public interface Frame {
     int numberOfDownedPins();
 
     boolean hasNextRound();
-
-
+    
 }

@@ -2,7 +2,6 @@ package bowling.domain.frame.info;
 
 public class FinalFrameInfo implements FrameInfo {
 
-
     private static final int MAX_FINAL_ROUND = 2;
     private static final int SECOND_ROUND = 1;
     private static final int LAST_FRAME_NUMBER = 9;
@@ -22,7 +21,7 @@ public class FinalFrameInfo implements FrameInfo {
     }
 
     public static FinalFrameInfo create() {
-        return of(0, 0, false);
+        return of(LAST_FRAME_NUMBER, FIRST_ROUND, false);
     }
 
     @Override
@@ -40,18 +39,13 @@ public class FinalFrameInfo implements FrameInfo {
     }
 
     @Override
-    public boolean isEndFrame() {
-        return frameNumber == LAST_FRAME_NUMBER;
-    }
-
-    @Override
     public boolean isLastRound() {
         return round == MAX_FINAL_ROUND;
     }
 
     @Override
-    public boolean isFirstRound() {
-        return round == FIRST_ROUND;
+    public int currentFrameNumber() {
+        return frameNumber;
     }
 
     public boolean hasBonusRound() {
