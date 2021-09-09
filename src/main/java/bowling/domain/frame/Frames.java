@@ -29,7 +29,7 @@ public class Frames implements Iterable<Frame> {
         return frames.get(i);
     }
 
-    public boolean isLast() {
+    public boolean isGameEnd() {
         Frame lastFrame = frames.get(frames.size() - 1);
 
         if (lastFrame instanceof FinalFrame) {

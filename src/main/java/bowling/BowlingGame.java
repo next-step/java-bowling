@@ -32,7 +32,7 @@ public class BowlingGame {
             ResultView.showScoreBoard(frames);
 
             frames.add(frame);
-            if (frames.isEnd()) {
+            if (frames.isGameEnd()) {
                 break;
             }
         }
