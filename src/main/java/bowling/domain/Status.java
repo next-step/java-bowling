@@ -23,7 +23,7 @@ public enum Status {
             .orElse(Status.MISS);
 
         // 스페어인 경우
-        if (SPARE.equals(bowlingStatus) && spare) {
+        if (bowlingStatus == STRIKE && spare) {
             return SPARE;
         }
 

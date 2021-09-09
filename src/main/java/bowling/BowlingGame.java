@@ -22,7 +22,7 @@ public class BowlingGame {
         for (int i = 0; i < frames.size(); i++) {
             Frame frame = frames.get(i);
             ResultView.showCurrentFrameInfo(frame.frameInfo());
-            int downPinsCount = 0;//InputView.downPinsCount();
+            int downPinsCount = InputView.downPinsCount();
 
             ResultView.showHead();
 

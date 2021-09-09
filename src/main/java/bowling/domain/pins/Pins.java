@@ -7,7 +7,6 @@ import java.util.List;
 public class Pins {
 
     public static final int MAX_DOWNED_PIN_SIZE = 10;
-    public static final int GUTTER = 0;
 
     private final List<Boolean> pins;
     private Status status;
@@ -19,10 +18,6 @@ public class Pins {
 
     public static Pins create() {
         return new Pins(new ArrayList<>(), Status.MISS);
-    }
-
-    public static Pins of(Pins pins, Status status) {
-        return new Pins(new ArrayList<>(pins.pins), status);
     }
 
     public static Pins from(Pins pins) {
@@ -50,23 +45,17 @@ public class Pins {
             pins.add(true);
         }
 
-        if (down == MAX_DOWNED_PIN_SIZE) {
-            status = Status.STRIKE;
-            return Pins.of(this, Status.STRIKE);
-        }
+        changeStatus(down, standPinsCount);
+        return Pins.from(this);
+    }
 
+    private void changeStatus(int down, int standPinsCount) {
         if (standPinsCount + down == MAX_DOWNED_PIN_SIZE) {
-            status = Status.SPARE;
-            return Pins.of(this, Status.SPARE);
+            status = Status.find(MAX_DOWNED_PIN_SIZE, true);
+            return;
         }
 
-        if (down == GUTTER) {
-            status = Status.GUTTER;
-            return Pins.of(this, Status.GUTTER);
-        }
-
-        status = Status.MISS;
-        return Pins.of(this, Status.MISS);
+        status = Status.find(down, false);
     }
 
     public boolean isSpare() {
