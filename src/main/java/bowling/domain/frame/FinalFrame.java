@@ -1,7 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.rolling.FinalRollings;
-import bowling.domain.frame.rolling.Rollings;
+import bowling.domain.rolling.FinalRollings;
+import bowling.domain.rolling.Rollings;
+import bowling.domain.score.Score;
 
 import java.util.List;
 import java.util.Objects;

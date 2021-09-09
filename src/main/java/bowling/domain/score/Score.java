@@ -1,6 +1,6 @@
-package bowling.domain.frame;
+package bowling.domain.score;
 
-import bowling.domain.frame.rolling.Rollings;
+import bowling.domain.rolling.Rollings;
 
 import java.util.Objects;
 

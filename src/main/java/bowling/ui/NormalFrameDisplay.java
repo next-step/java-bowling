@@ -1,7 +1,7 @@
 package bowling.ui;
 
-import bowling.domain.frame.rolling.NormalRollings;
-import bowling.domain.frame.rolling.Rolling;
+import bowling.domain.rolling.NormalRollings;
+import bowling.domain.rolling.Rolling;
 
 import java.util.Arrays;
 import java.util.Optional;

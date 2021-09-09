@@ -1,4 +1,4 @@
-package bowling.domain.frame.rolling;
+package bowling.domain.rolling;
 
 import java.util.Objects;
 import java.util.Optional;

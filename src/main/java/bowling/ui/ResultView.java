@@ -2,9 +2,9 @@ package bowling.ui;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.frame.*;
-import bowling.domain.frame.rolling.FinalRollings;
-import bowling.domain.frame.rolling.NormalRollings;
-import bowling.domain.frame.rolling.Rollings;
+import bowling.domain.rolling.FinalRollings;
+import bowling.domain.rolling.NormalRollings;
+import bowling.domain.rolling.Rollings;
 import bowling.utils.StringUtil;
 
 import java.util.List;

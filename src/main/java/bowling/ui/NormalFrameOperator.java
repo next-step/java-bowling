@@ -1,6 +1,6 @@
 package bowling.ui;
 
-import bowling.domain.frame.rolling.Rolling;
+import bowling.domain.rolling.Rolling;
 
 @FunctionalInterface
 public interface NormalFrameOperator {

@@ -1,6 +1,8 @@
-package bowling.domain.frame;
+package bowling.domain.score;
 
-import bowling.domain.frame.rolling.NormalRollings;
+import bowling.domain.rolling.NormalRollings;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreFixedException;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

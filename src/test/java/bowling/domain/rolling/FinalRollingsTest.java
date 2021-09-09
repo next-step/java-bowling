@@ -1,7 +1,5 @@
-package bowling.domain.frame.rolling;
+package bowling.domain.rolling;
 
-import bowling.domain.frame.rolling.FinalRollings;
-import bowling.domain.frame.rolling.FinalRollingsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

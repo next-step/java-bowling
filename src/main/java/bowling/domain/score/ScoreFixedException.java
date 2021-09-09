@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.score;
 
 public class ScoreFixedException extends RuntimeException {
 
