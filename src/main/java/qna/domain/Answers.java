@@ -8,7 +8,6 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import org.hibernate.annotations.Where;
-import qna.CannotDeleteException;
 
 @Embeddable
 public class Answers {
@@ -33,7 +32,7 @@ public class Answers {
         answers.add(answer);
     }
 
-    public List<DeleteHistory> deleteAll(User writer) throws CannotDeleteException {
+    public List<DeleteHistory> deleteAll(User writer) {
         return answers.stream()
             .map(answer -> answer.deleteAnswer(writer))
             .collect(Collectors.toList());

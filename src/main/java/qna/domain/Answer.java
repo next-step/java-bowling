@@ -51,7 +51,7 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public DeleteHistory deleteAnswer(User writer) throws CannotDeleteException {
+    public DeleteHistory deleteAnswer(User writer) {
         checkDeleteAnswer(writer);
         setDeleted(true);
         return new DeleteHistory(this);
@@ -61,7 +61,7 @@ public class Answer extends AbstractEntity {
         return this.writer.equals(writer);
     }
 
-    private void checkDeleteAnswer(User writer) throws CannotDeleteException {
+    private void checkDeleteAnswer(User writer) {
         if (!isOwner(writer)) {
             throw new CannotDeleteException(CANT_DELETE_BY_DISMATCH_WRITER_ERROR_MESSAGE);
         }

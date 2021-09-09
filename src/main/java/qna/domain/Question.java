@@ -101,13 +101,13 @@ public class Question extends AbstractEntity {
         return deleteHistories;
     }
 
-    public DeleteHistory deleteQuestion(User loginUser) throws CannotDeleteException {
+    public DeleteHistory deleteQuestion(User loginUser) {
         checkCannotDelete(loginUser);
         setDeleted(true);
         return new DeleteHistory(this);
     }
 
-    private void checkCannotDelete(User loginUser) throws CannotDeleteException {
+    private void checkCannotDelete(User loginUser) {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException(CANT_DELETE_BY_DISMATCH_WRITER_ERROR_MESSAGE);
         }

@@ -38,7 +38,7 @@ public class QuestionTest {
 
     @Test
     @DisplayName("삭제가 가능한 상황이면 삭제 후 DeleteHistory를 반환한다.")
-    void successDeleteQuestionTest() throws CannotDeleteException {
+    void successDeleteQuestionTest() {
 
         // given
         User writer = question.getWriter();
