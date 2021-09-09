@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public final class Frames {
@@ -8,18 +8,18 @@ public final class Frames {
     private static final int LAST_FRAME_NUMBER = 10;
     private static final int NEXT_ROUND_NUMBER_DISTANCE = 1;
 
-    private final List<Frame> frames;
+    private final LinkedList<Frame> frames;
 
-    public Frames(List<Frame> frames) {
+    public Frames(LinkedList<Frame> frames) {
         this.frames = frames;
     }
 
     public static Frames of() {
-        return new Frames(new ArrayList<>());
+        return new Frames(new LinkedList<>());
     }
 
     public static Frames of(final List<Frame> frames) {
-        return new Frames(new ArrayList<>(frames));
+        return new Frames(new LinkedList<>(frames));
     }
 
     public void add(final int knockDownCount) {
@@ -66,7 +66,7 @@ public final class Frames {
     }
 
     private Frame lastFrame() {
-        return frames.get(frames.size() - 1);
+        return frames.getLast();
     }
 
     public boolean isFinished() {
