@@ -25,8 +25,8 @@ class FinalFrameTest {
             frames.add(frame);
             frame = frame.roll(2);
         }
-        // When & Then
 
+        // When & Then
         assertThat(frames.size()).isEqualTo(3);
         assertThat(frames.get(0).numberOfDownedPins()).isEqualTo(10);
     }
@@ -76,13 +76,10 @@ class FinalFrameTest {
     @Test
     void notSpareRoll() {
         // Given
-        List<Frame> frames = new ArrayList<>();
         Frame frame = FinalFrame.create();
-        frames.add(frame);
 
         // When
         Frame second = frame.roll(3);
-        frames.add(second);
         Frame bonusFrame = second.roll(5);
 
         // Then
