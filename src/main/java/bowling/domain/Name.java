@@ -1,0 +1,42 @@
+package bowling.domain;
+
+import bowling.exception.NameException;
+
+import java.util.Locale;
+import java.util.Objects;
+import java.util.regex.Pattern;
+
+public class Name {
+    private final String name;
+
+    public Name(String name) {
+        validateNameLength(name);
+        validateNameEng(name);
+        this.name = name.toUpperCase(Locale.ROOT);
+    }
+
+    private void validateNameLength(String name) {
+        if (name.length() != 3) {
+            throw new NameException(name);
+        }
+    }
+
+    private void validateNameEng(String name) {
+        if (!Pattern.matches("^[a-zA-Z]*$", name)) {
+            throw new NameException(name);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Name name1 = (Name) o;
+        return Objects.equals(name, name1.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+}
