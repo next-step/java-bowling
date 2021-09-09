@@ -17,12 +17,22 @@ public class Frames {
     }
 
     public List<Frame> play(int score) {
+        if (frames.isEmpty()) {
+            return playFirst(score);
+        }
+        return playNotFirst(score);
+    }
+
+    private List<Frame> playFirst(int score) {
         validateNextIsPlayable();
 
-        if (frames.isEmpty()) {
-            frames.add(Frame.first(score));
-            return frames;
-        }
+        Frame first = Frame.first(score);
+        frames.add(first);
+        return frames;
+    }
+
+    private List<Frame> playNotFirst(int score) {
+        validateNextIsPlayable();
 
         Frame next = lastFrame().next(score);
         if (next.isFrameNumberEqual(lastFrame())) {
