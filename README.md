@@ -132,7 +132,8 @@ public class QnAService {
         - `void pitch(int pins)`
 2. Frames
     1. 속성
-        - `List<Frame> frames`
+        - `List<Frame> normalFrames`
+        - `Frame lastFrame`
     2. 메서드
         - `void currentFramePitch(int pins)`
         - `void validateOverTenFrames()`
@@ -149,9 +150,11 @@ public class QnAService {
         - `Pitching secondPitching`
     2. 메서드
         - `void validateSumIsOverTen()`
+        - `void secondPitching(int pins)`
         - `int score()`
         - `boolean strike()`
         - `boolean spare()`
+        - `boolean done()`
 5. Pitching
     1. 속성
         - `int pins`
