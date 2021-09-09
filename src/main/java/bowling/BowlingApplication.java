@@ -18,7 +18,6 @@ public class BowlingApplication {
             bowlingGame.roll(fallenPin);
 
             printBowlingGame(bowlingGame);
-            nextFrame(bowlingGame);
         }
 
     }
@@ -27,12 +26,6 @@ public class BowlingApplication {
         ResultView.printFrame();
         ResultView.printFrameByPlayer(bowlingGame);
         ResultView.printScoreByPlayer(bowlingGame);
-    }
-
-    private static void nextFrame(BowlingGame bowlingGame) {
-        if (bowlingGame.isNotEnd() && bowlingGame.currentFrame().isEnd()) {
-            bowlingGame.nextFrame();
-        }
     }
 
 }
