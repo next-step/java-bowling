@@ -11,7 +11,7 @@ public class OutputView {
 
     public void printBoard(Player player) {
         System.out.println(TABLE_HEADER);
-        System.out.printf("|" + COLUMN_SEPARATOR, player.getName());
+        System.out.printf("|" + COLUMN_SEPARATOR, player.getPlayerName());
 
         List<NormalFrame> normalFrames;
         for (int i = 0; i < 9; i++) {

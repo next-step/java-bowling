@@ -5,16 +5,16 @@ import bowling.domain.frame.Frames;
 import java.util.Objects;
 
 public class Player {
-    private Name name;
+    private PlayerName playerName;
     private Frames frames;
 
     public Player(String name) {
-        this.name = new Name(name);
+        this.playerName = new PlayerName(name);
         this.frames = new Frames();
     }
 
-    public String getName() {
-        return name.getValue();
+    public String getPlayerName() {
+        return playerName.getValue();
     }
 
     public Frames getFrames() {
@@ -26,12 +26,12 @@ public class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return Objects.equals(name, player.name) &&
+        return Objects.equals(playerName, player.playerName) &&
                 Objects.equals(frames, player.frames);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, frames);
+        return Objects.hash(playerName, frames);
     }
 }
