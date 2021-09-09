@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.domain.Frame;
-import bowling.domain.Player;
+import bowling.domain.frame.NormalFrame;
+import bowling.domain.player.Player;
 
 import java.util.List;
 
@@ -13,15 +13,21 @@ public class OutputView {
         System.out.println(TABLE_HEADER);
         System.out.printf("|" + COLUMN_SEPARATOR, player.getName());
 
-        List<Frame> frames;
-        for (int i = 0; i < 10; i++) {
-            frames = player.getFrames().getFrames();
-            if (i < frames.size()
-                    && frames.get(i).getScores().getScores().size() > 0) {
-                System.out.printf(COLUMN_SEPARATOR, frames.get(i).getScores().toString());
+        List<NormalFrame> normalFrames;
+        for (int i = 0; i < 9; i++) {
+            normalFrames = player.getFrames().getNormalFrames();
+            if (i < normalFrames.size()
+                    && normalFrames.get(i).getNormalScores().getScores().size() > 0) {
+                System.out.printf(COLUMN_SEPARATOR, normalFrames.get(i).getNormalScores().toString());
             } else {
                 System.out.printf(COLUMN_SEPARATOR, "  ");
             }
+        }
+
+        if(player.getFrames().getFinalFrames().size() !=0){
+            System.out.printf(COLUMN_SEPARATOR, player.getFrames().getFinalFrames().get(0).getFinalScores().toString());
+        } else {
+            System.out.printf(COLUMN_SEPARATOR, "  ");
         }
         System.out.println();
     }

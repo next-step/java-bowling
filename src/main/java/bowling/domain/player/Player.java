@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.player;
+
+import bowling.domain.frame.Frames;
 
 import java.util.Objects;
 

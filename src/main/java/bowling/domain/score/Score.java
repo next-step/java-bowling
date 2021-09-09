@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.score;
 
 public enum Score {
     STRIKE(10, "x"),

@@ -28,17 +28,21 @@
   * 정적 팩토리 메서드
     * 이전 점수 + 현재점수가 10이면 spare
     * 나머지는 점수대로 할당
-* scores 일급콜렉션
+* scores 추상 클래스, 일급 콜렉션
   * score list
   * add 메소드
     * 첫번째 투구면 현재점수만 저장
     * 두번째 투구면 이전점수와 현재점수로 점수 저장
-    * 마지막 프레임은 scores 길이가 3까지 가능
-* frame
+  * normalScores
+    * strike 인 경우 1회 투구
+    * 2회까지 투구 가능
+  * finalScores
+    * strike 또는 spare 인 경우 3회까지 투구 가능
+    * 그 외에는 2회 투구
+* frame 추상 클래스, 일급 콜렉션
   * 프레임 번호 : frameNo (1~10)
-  * 점수 리스트 : scores
-  * 점수 저장 메소드
-      * 현재 점수를 add
+    * normalFrame : 점수리스트 normalScores
+    * finalFrame : 점수리스트 finalScores
 * frames 일급콜렉션
   * frame list
 * player

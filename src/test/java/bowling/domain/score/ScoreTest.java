@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.score;
 
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

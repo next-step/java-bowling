@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Player;
+import bowling.domain.player.Player;
 
 import java.util.Scanner;
 
