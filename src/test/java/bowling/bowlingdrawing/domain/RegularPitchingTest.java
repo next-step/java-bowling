@@ -32,7 +32,7 @@ class RegularPitchingTest {
 
         // when
         RegularPitching regularPitching = new RegularPitching(firstPitching);
-        regularPitching.secondPitch(pinsSecond);
+        regularPitching.secondPitch(secondPitching);
 
         // then
         assertThat(regularPitching).isEqualTo(new RegularPitching(firstPitching, secondPitching));

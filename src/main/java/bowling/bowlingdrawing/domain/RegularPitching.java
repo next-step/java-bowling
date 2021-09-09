@@ -1,10 +1,12 @@
 package bowling.bowlingdrawing.domain;
 
+import bowling.bowlingdrawing.exception.CustomException;
+
 import java.util.Objects;
 
 public class RegularPitching {
     private final Pitching firstPitching;
-    private final Pitching secondPitching;
+    private Pitching secondPitching;
 
     public RegularPitching(Pitching firstPitching, Pitching secondPitching) {
         this.firstPitching = firstPitching;
@@ -13,6 +15,14 @@ public class RegularPitching {
 
     public RegularPitching(Pitching firstPitching) {
         this(firstPitching, null);
+    }
+
+    public void secondPitch(Pitching secondPitching) {
+        if (this.secondPitching == null) {
+            this.secondPitching = secondPitching;
+            return;
+        }
+        throw new CustomException("이미 완료된 Pitching");
     }
 
     public boolean strike() {
@@ -25,9 +35,6 @@ public class RegularPitching {
 
     public int score() {
         return firstPitching.sum(secondPitching);
-    }
-
-    public void secondPitch(int pinsSecond) {
     }
 
     public boolean done() {
