@@ -3,7 +3,7 @@ package bowling.model.frame;
 public class FrameScore {
     private static final int MIN_TOTAL_SCORE = 0;
     private static final int MAX_TOTAL_SCORE = 10;
-    static final Score EMPTY_SCORE = null;
+    private static final Score EMPTY_SCORE = null;
 
     private final Score first;
     private final Score second;

@@ -3,7 +3,6 @@ package bowling.model.frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.model.frame.FrameScore.EMPTY_SCORE;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +16,7 @@ public class FrameScoreTest {
         FrameScore frameScoreFirst = FrameScore.first(5);
 
         // then
-        assertSame(frameScoreFirst.getSecond(), EMPTY_SCORE);
+        assertSame(frameScoreFirst.getSecond(), null);
     }
 
     @DisplayName("프레임 점수 두 번째 객체의 첫 번째 점수값이 비어있으면 안된다.")
@@ -28,7 +27,7 @@ public class FrameScoreTest {
         FrameScore frameScoreSecond = frameScoreFirst.second(5);
 
         // then
-        assertNotSame(frameScoreSecond.getFirst(), EMPTY_SCORE);
+        assertNotSame(frameScoreSecond.getFirst(), null);
     }
 
     @DisplayName("이미 스트라이크인데 두 번째 점수를 생성하려고 하면 예외가 발생한다.")
