@@ -79,7 +79,7 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public void deleteQuestion(User loginUser) {
+    public void deleteQuestion(User loginUser) throws CannotDeleteException {
         checkCannotDelete(loginUser);
     }
 
@@ -87,9 +87,9 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    private void checkCannotDelete(User loginUser) {
+    private void checkCannotDelete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
-            throw new CannotDeleteException();
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
 
