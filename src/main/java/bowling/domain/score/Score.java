@@ -1,55 +1,78 @@
 package bowling.domain.score;
 
-public enum Score {
-    STRIKE(10, "x"),
-    SPARE(10, "/"),
-    MISS_1(1, "1"),
-    MISS_2(2, "2"),
-    MISS_3(3, "3"),
-    MISS_4(4, "4"),
-    MISS_5(5, "5"),
-    MISS_6(6, "6"),
-    MISS_7(7, "7"),
-    MISS_8(8, "8"),
-    MISS_9(9, "9"),
-    GUTTER(0, "-");
+import java.util.Objects;
 
+public class Score {
+    private static final int MIN_SCORE = 0;
+    private static final int MAX_SCORE = 10;
+
+    private ScoreType scoreType;
     private int score;
     private String display;
 
-    Score(int score, String display) {
+    public Score(Score before, int current){
+        validate(before, current);
+
+        this.scoreType = ScoreType.of(before.score, current);
+        this.score = current;
+        setDisplay();
+    }
+
+    public Score(int score){
+        validate(score);
+
+        this.scoreType = ScoreType.of(score);
         this.score = score;
-        this.display = display;
+        setDisplay();
     }
 
-    public static Score of(int number) {
-        for (Score score : values()) {
-            if (score.getScore() == number) {
-                return score;
-            }
+    private void setDisplay() {
+        if (this.scoreType == ScoreType.MISS) {
+            this.display = String.valueOf(this.score);
+            return;
         }
-        throw new IllegalArgumentException("최대 투구 점수는 10점입니다.");
+        this.display = this.scoreType.getDisplay();
     }
 
-    public static Score of(int before, int current) {
-        if (before + current == 10) {
-            return Score.SPARE;
+
+    private void validate(Score before, int current){
+        if(before.getScoreType() == ScoreType.STRIKE || before.getScoreType() == ScoreType.SPARE){
+            validate(current);
+            return;
         }
-        return of(current);
+        validate(before.getScore() + current);
     }
 
-    public static Score of(Score before, int current) {
-        if (before.getScore() + current == 10) {
-            return Score.SPARE;
+    private void validate(int score){
+        if(score < MIN_SCORE || score > MAX_SCORE){
+            throw new IllegalArgumentException("최대 투구 점수는 10점입니다.");
         }
-        return of(current);
+    }
+
+    public ScoreType getScoreType() {
+        return scoreType;
     }
 
     public int getScore() {
-        return this.score;
+        return score;
     }
 
     public String getDisplay() {
-        return this.display;
+        return display;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score = (Score) o;
+        return this.score == score.score &&
+                scoreType == score.scoreType &&
+                Objects.equals(display, score.display);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scoreType, score, display);
     }
 }

@@ -18,7 +18,7 @@ public class NormalScoresTest {
     void firstTurn() {
         NormalScores normalScores = new NormalScores();
         normalScores.add(1);
-        assertThat(normalScores.getScores().get(0)).isEqualTo(Score.MISS_1);
+        assertThat(normalScores.getScores().get(0).getScoreType()).isEqualTo(ScoreType.MISS);
     }
 
     @DisplayName("miss 인 경우 2번째 투구를 한다.")
@@ -27,7 +27,7 @@ public class NormalScoresTest {
         NormalScores normalScores = new NormalScores();
         normalScores.add(1);
         normalScores.add(9);
-        assertThat(normalScores.getScores().get(1)).isEqualTo(Score.SPARE);
+        assertThat(normalScores.getScores().get(1).getScoreType()).isEqualTo(ScoreType.SPARE);
     }
 
     @DisplayName("strike 인 경우 2번째 투구를 하지 않는다.")

@@ -8,7 +8,7 @@ public class FinalScores extends Scores {
         if (firstTurn()) {
             return false;
         }
-        if (scores.contains(Score.STRIKE) || scores.contains(Score.SPARE)) {
+        if (this.contains(ScoreType.STRIKE) || this.contains(ScoreType.SPARE)) {
             return scores.size() == MAX_SIZE;
         }
         return scores.size() == MIN_SIZE;

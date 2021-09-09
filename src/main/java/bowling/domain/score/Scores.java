@@ -11,11 +11,11 @@ public abstract class Scores {
     public void add(int score) {
         validate();
         if (firstTurn()) {
-            scores.add(Score.of(score));
+            scores.add(new Score(score));
             return;
         }
         Score before = scores.get(size() - 1);
-        scores.add(Score.of(before, score));
+        scores.add(new Score(before, score));
     }
 
     private void validate() {
@@ -25,6 +25,11 @@ public abstract class Scores {
     }
 
     public abstract boolean done();
+
+    public boolean contains(ScoreType scoreType){
+        return this.scores.stream()
+                .anyMatch(i -> i.getScoreType() == scoreType);
+    }
 
     protected boolean firstTurn() {
         return size() == 0;
