@@ -6,6 +6,7 @@ import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -24,9 +25,11 @@ public class QuestionTest {
     @Test
     @DisplayName("다른 사람이 삭제시 CannotDeleteException")
     void other_delete_CannotDeleteException() {
-        assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI))
-                .isInstanceOf(CannotDeleteException.class);
-        assertThatThrownBy(() -> Q2.delete(UserTest.JAVAJIGI))
-                .isInstanceOf(CannotDeleteException.class);
+        assertAll(
+                () -> assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI))
+                        .isInstanceOf(CannotDeleteException.class),
+                () -> assertThatThrownBy(() -> Q2.delete(UserTest.JAVAJIGI))
+                            .isInstanceOf(CannotDeleteException.class)
+        );
     }
 }
