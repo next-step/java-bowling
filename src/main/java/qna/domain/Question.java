@@ -1,5 +1,7 @@
 package qna.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -90,6 +92,13 @@ public class Question extends AbstractEntity {
 
     public Answers getAnswers() {
         return answers;
+    }
+
+    public List<DeleteHistory> delete(User loginuser) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(deleteQuestion(loginuser));
+        deleteHistories.addAll(answers.deleteAll(loginuser));
+        return deleteHistories;
     }
 
     public DeleteHistory deleteQuestion(User loginUser) throws CannotDeleteException {
