@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.domain.Frame;
-import bowling.domain.Frames;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 import bowling.domain.Person;
 import bowling.domain.Status;
 import bowling.domain.frame.info.FrameInfo;

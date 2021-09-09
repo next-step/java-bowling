@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.pins.Pins;
+import bowling.domain.Status;
 import bowling.domain.frame.info.FinalFrameInfo;
 import bowling.domain.frame.info.FrameInfo;
 
@@ -38,7 +40,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean hasNextRound() {
-        return frameInfo.hasNextRound() ;
+        return frameInfo.hasNextRound();
     }
 
     @Override

@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Status;
 import bowling.domain.frame.info.FrameInfo;
 
 public interface Frame {
@@ -13,5 +14,5 @@ public interface Frame {
     int numberOfDownedPins();
 
     boolean hasNextRound();
-    
+
 }

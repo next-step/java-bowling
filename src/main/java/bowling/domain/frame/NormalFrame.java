@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.pins.Pins;
+import bowling.domain.Status;
 import bowling.domain.frame.info.FrameInfo;
 import bowling.domain.frame.info.NormalFrameInfo;
 
