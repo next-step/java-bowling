@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.Objects;
+
 import static bowling.CommonConstans.*;
 
 public class Score {
@@ -18,7 +20,7 @@ public class Score {
     }
 
     public Score add(int score) {
-        return new Score(this.score + score);
+        return Score.of(this.score + score);
     }
 
     public int score() {
@@ -35,5 +37,18 @@ public class Score {
         if (MAX_SCORE < score) {
             throw new IllegalArgumentException(MAX_OVER_SCORE);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }

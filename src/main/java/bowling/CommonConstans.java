@@ -6,7 +6,7 @@ import static java.lang.Boolean.TRUE;
 public class CommonConstans {
 
     public static final Boolean IS_FIRST = TRUE;
-    public static final boolean IS_NOT_FIRST = FALSE;
+    public static final Boolean IS_NOT_FIRST = FALSE;
 
 
     public static final int MAX_PINS = 10;

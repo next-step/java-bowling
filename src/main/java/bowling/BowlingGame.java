@@ -5,9 +5,6 @@ import bowling.view.ResultView;
 
 public class BowlingGame {
 
-
-
-
     public static void main(String[] args) {
         run();
     }
@@ -22,9 +19,7 @@ public class BowlingGame {
         resultView.bowlingBoard(frames);
 
         while (frames.isPlay()) {
-            frames = frames.play(InputView.score(frames));
-            frames.scoreInit();
-            resultView.bowlingBoard(frames);
+            resultView.bowlingBoard(frames.play(InputView.score(frames)));
         }
     }
 

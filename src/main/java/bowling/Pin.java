@@ -13,6 +13,10 @@ public class Pin {
         this.pin = pin;
     }
 
+    public static Pin of(int pin) {
+        return new Pin(pin);
+    }
+
     public boolean isStrike() {
         return ScoreRule.STRIKE == ScoreRule.of(pin, IS_FIRST);
     }
@@ -23,10 +27,6 @@ public class Pin {
 
     public int pin() {
         return pin;
-    }
-
-    public static Pin of(int pin) {
-        return new Pin(pin);
     }
 
     private static void validMinPins(int pin) {

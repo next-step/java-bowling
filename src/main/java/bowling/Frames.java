@@ -35,7 +35,11 @@ public class Frames {
             frames.set(frames.size() - MINUS_INDEX_ONE, frame);
             return new Frames(player, frames, scores);
         }
+
         frames.add(Frame.of(countOfDownPin, ofPins()));
+
+        scoreInit();
+
         return new Frames(player, frames, scores);
     }
 
@@ -65,7 +69,7 @@ public class Frames {
         return player.getName();
     }
 
-    public void scoreInit() {
+    private void scoreInit() {
         if (isLastIndexFrameEnd()) {
             scores.add(FrameScore.of(frames.get(frames.size() - MINUS_INDEX_ONE)));
         }

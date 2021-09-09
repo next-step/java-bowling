@@ -19,6 +19,4 @@ public class PlayerTest {
         Player player = Player.of("kkk");
         assertThat(player.getName()).isEqualTo("kkk");
     }
-
-
 }

@@ -13,7 +13,7 @@ public class FinalPins implements Pins {
     private final List<Pin> pins;
 
     private FinalPins() {
-        pins = new ArrayList<>();
+        this(new ArrayList<>());
     }
 
     private FinalPins(List<Pin> pins) {
@@ -25,8 +25,12 @@ public class FinalPins implements Pins {
     }
 
     public Pins first(int countOfDownPin) {
+
+        List<Pin> pinList = new ArrayList<>();
         pins.add(Pin.of(countOfDownPin));
-        return new FinalPins(pins);
+        Collections.copy(pinList, pins);
+
+        return new FinalPins(pinList);
     }
 
     public Pins next(int countOfDownPin) {
@@ -82,7 +86,6 @@ public class FinalPins implements Pins {
             if (!pins.get(result).isStrike()) {
                 break;
             }
-            ;
         }
         return result;
     }

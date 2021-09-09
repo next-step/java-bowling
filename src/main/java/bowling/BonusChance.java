@@ -27,6 +27,13 @@ public class BonusChance {
         return bonusChance > MIN_CHANCE;
     }
 
+
+    private static void validMaxBonusChance(int bonusChance) {
+        if (MAX_CHANCE < bonusChance) {
+            throw new IllegalArgumentException(MAX_OVER_CHANCE);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,9 +53,4 @@ public class BonusChance {
         }
     }
 
-    private static void validMaxBonusChance(int bonusChance) {
-        if (MAX_CHANCE < bonusChance) {
-            throw new IllegalArgumentException(MAX_OVER_CHANCE);
-        }
-    }
 }

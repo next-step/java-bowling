@@ -32,8 +32,6 @@ public class ScoreTest {
 
     @Test
     void addCheckScore() {
-        Score score = Score.of(5).add(3);
-
-        assertThat(score.score()).isEqualTo(8);
+        assertThat(Score.of(5).add(3)).isEqualTo(Score.of(8));
     }
 }

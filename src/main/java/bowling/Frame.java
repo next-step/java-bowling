@@ -24,8 +24,6 @@ public class Frame {
         return pins;
     }
 
-    ;
-
     public Score score() {
         return pins.score();
     }
