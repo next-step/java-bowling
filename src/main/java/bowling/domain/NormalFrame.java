@@ -2,47 +2,70 @@ package bowling.domain;
 
 public class NormalFrame implements Frame {
 
-    public static final int MAX_NORMAL_FRAME = 2;
+    public static final int FIRST_ROUND = 0;
+    private static final int MAX_NORMAL_FRAME = 8;
+
+
+    private final int frameNumber;
     private final int round;
     private final Pins pins;
 
-    private NormalFrame(int round, Pins pins) {
+    private NormalFrame(int frameNumber, int round, Pins pins) {
+        this.frameNumber = frameNumber;
         this.round = round;
         this.pins = pins;
     }
 
-    public static Frame create() {
-        return new NormalFrame(0, Pins.create());
+    public static NormalFrame of(int frameNumber, int round, Pins pins) {
+        return new NormalFrame(frameNumber, round, pins);
     }
+
+    public static NormalFrame create() {
+        return new NormalFrame(0, 0, Pins.create());
+    }
+
 
     @Override
     public Frame roll(int downPins) {
-        if (round == MAX_NORMAL_FRAME) {
-            throw new IllegalArgumentException("이번 프레임은 끝났습니다 다음 프레임을 진행해주세요.");
-        }
+        Pins roll = pins.roll(downPins);
 
-        pins.roll(downPins);
+        if (isLastFrame()) {
+            return new FinalFrame(0, Pins.create(), false);
+        }
 
         if (hasNextFrame()) {
-            return new NormalFrame(round + 1, Pins.from(pins));
+            return new NormalFrame(frameNumber + 1, 0, Pins.create());
         }
 
-        return this;
+        return new NormalFrame(frameNumber, round + 1, roll);
+    }
+
+    private boolean isLastFrame() {
+        return frameNumber == MAX_NORMAL_FRAME && (round == 1 || pins.numberOfPinDowns() == 10);
+    }
+
+    private boolean hasNextFrame() {
+        return round == 1 || pins.isAllDown();
     }
 
     @Override
-    public int round() {
-        return round;
+    public int numberOfDownedPins() {
+        return pins.numberOfPinDowns();
     }
 
     @Override
-    public Pins pins() {
-        return pins;
+    public int currentFrame() {
+        return frameNumber;
     }
 
     @Override
-    public boolean hasNextFrame() {
-        return !pins.isAllDown();
+    public boolean hasNextRound() {
+        return pins.isAllDown() || round == FIRST_ROUND;
+    }
+
+    @Override
+    public Status pinStatus() {
+        return pins.status();
     }
 
 }

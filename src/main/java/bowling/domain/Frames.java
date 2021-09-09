@@ -3,17 +3,18 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Frames implements Iterable<Frame> {
 
     private final List<Frame> frames;
 
-    public Frames(List<Frame> frames) {
+    private Frames(List<Frame> frames) {
         this.frames = frames;
     }
 
-    public Frames() {
-        this.frames = new ArrayList<>();
+    public static Frames create() {
+        return new Frames(new ArrayList<>());
     }
 
     public void add(Frame frame) {
@@ -24,12 +25,28 @@ public class Frames implements Iterable<Frame> {
         return frames.size();
     }
 
-    public Frame getLastFrame() {
-        return frames.get(size() - 1);
+    public Frame get(int i) {
+        return frames.get(i);
+    }
+
+    public boolean isLast() {
+        Frame lastFrame = frames.get(frames.size() - 1);
+
+        if (lastFrame instanceof FinalFrame) {
+            return !lastFrame.hasNextRound();
+        }
+
+        return false;
     }
 
     @Override
     public Iterator<Frame> iterator() {
         return frames.iterator();
     }
+
+    @Override
+    public void forEach(Consumer<? super Frame> action) {
+        frames.forEach(action);
+    }
+
 }

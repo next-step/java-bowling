@@ -2,65 +2,57 @@ package bowling.domain;
 
 public class FinalFrame implements Frame {
 
-    private static final int FINAL_ROUND = 2;
+    public static final int MAX_FINAL_ROUND = 2;
+    public static final int SECOND_ROUND = 1;
+    public static final int BOWLING_LAST_FRAME = 9;
+    public static final int NEXT_FRAME = 1;
 
     private final int round;
     private final Pins pins;
-    private final boolean bonusStage;
+    private final boolean bonusRound;
 
-    public FinalFrame(int round, Pins pins, boolean bonusStage) {
+    public FinalFrame(int round, Pins pins, boolean bonusRound) {
         this.round = round;
         this.pins = pins;
-        this.bonusStage = bonusStage;
-    }
-
-    public static Frame create() {
-        return new FinalFrame(0, Pins.create(), false);
-    }
-
-    public static Frame of(int round, Pins pins, boolean bonusStage) {
-        return new FinalFrame(round, pins, bonusStage);
+        this.bonusRound = bonusRound;
     }
 
     @Override
     public Frame roll(int downPins) {
-        if (!hasNextFrame()) {
-            throw new IllegalArgumentException("마지막 라운드가 이미 끝나서 더 이상 진행 할 수 없습니다.");
+        validate();
+        Pins downedPins = pins.roll(downPins);
+
+        if (downedPins.isStrike() || downedPins.isSpare() || bonusRound) {
+            return new FinalFrame(round + NEXT_FRAME, Pins.create(), true);
         }
 
-        if (!hasBonusFrame()) {
-            throw new IllegalArgumentException("1,2투구내에 핀을 다 쳐리 못해서 3라운드를 진행 할 수 없습니다.");
-        }
-
-        pins.roll(downPins);
-
-        if (!pins.isAllDown()) {
-            return FinalFrame.of(round + 1, Pins.from(pins), bonusStage);
-        }
-
-        return FinalFrame.of(round + 1, Pins.create(), true);
+        return new FinalFrame(round + NEXT_FRAME, Pins.from(pins), false);
     }
 
-    private boolean hasBonusFrame() {
-        return round != FINAL_ROUND || bonusStage;
+    private void validate() {
+        if (round == MAX_FINAL_ROUND && !bonusRound) {
+            throw new IllegalArgumentException("스페어처리를 못하여서 3라운드를 진행 할 수 없습니다.");
+        }
     }
 
     @Override
-    public boolean hasNextFrame() {
-        return round <= FINAL_ROUND;
+    public boolean hasNextRound() {
+        return round <= SECOND_ROUND || (round == 2 && bonusRound);
     }
 
     @Override
-    public int round() {
-        return round;
+    public Status pinStatus() {
+        return pins.status();
     }
 
     @Override
-    public Pins pins() {
-        return pins;
+    public int numberOfDownedPins() {
+        return pins.numberOfPinDowns();
     }
 
+    @Override
+    public int currentFrame() {
+        return BOWLING_LAST_FRAME;
+    }
 
 }
-
-

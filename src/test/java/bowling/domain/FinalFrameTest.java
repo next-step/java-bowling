@@ -2,55 +2,90 @@ package bowling.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class FinalFrameTest {
 
-    @DisplayName("1,2투구 스트라이크시 3투구 진행이 가능하다.")
+    @DisplayName("final Frame에서 1구에 strike이면 3구까지 던질 수 있다.")
     @Test
-    void threeRound() {
+    void firstRoundStrikeBonusRound() {
         // Given
-        Frame givenFinalFrame = FinalFrame.create();
+        List<Frame> frames = new ArrayList<>();
+        Frame frame = new FinalFrame(0, Pins.create(), false);
+        frames.add(frame);
+        frame = frame.roll(10);
 
-        // When
-        while (givenFinalFrame.hasNextFrame()) {
-            givenFinalFrame = givenFinalFrame.roll(10);
+        while (frame.hasNextRound()) {
+            frames.add(frame);
+            frame = frame.roll(2);
         }
+        // When & Then
 
-        // Then
-        assertThat(givenFinalFrame.round()).isEqualTo(3);
+        assertThat(frames.size()).isEqualTo(3);
+        assertThat(frames.get(0).numberOfDownedPins()).isEqualTo(10);
     }
 
-    @DisplayName("1,2투구 내에 스페어시 3투구 진행이 가능하다.")
+    @DisplayName("final Frame에서 1구,2구에 strike이면 3구까지 던질 수 있다.")
     @Test
-    void spare() {
+    void strikeBonusRound() {
         // Given
-        Frame givenOneRound = FinalFrame.create();
+        List<Frame> frames = new ArrayList<>();
+        Frame frame = new FinalFrame(0, Pins.create(), false);
 
-        // When
-        Frame twoRound = givenOneRound.roll(8);
-        Frame threeRound = twoRound.roll(2);
-        threeRound.roll(10);
+        while (frame.hasNextRound()) {
+            frames.add(frame);
+            frame = frame.roll(10);
+        }
+        // When & Then
 
-        // Then
-        assertThat(threeRound.round()).isEqualTo(2);
+        assertThat(frames.size()).isEqualTo(3);
+        assertThat(frames.get(0).numberOfDownedPins()).isEqualTo(10);
     }
 
-    @DisplayName("1,2투구 내에 스페어 처리를 못 했는데 3투구 진행시 IllegalArgumentException.")
+    @DisplayName("final Frame에서 1구나 2구에 spare처리하면 3구까지 던질 수 있다.")
     @Test
-    void throwIllegalArgumentWhenRoll() {
+    void spareWithBonusRound() {
         // Given
-        Frame frame = FinalFrame.create();
+        List<Frame> frames = new ArrayList<>();
+        Frame givenFirstRound = new FinalFrame(0, Pins.create(), false);
+        frames.add(givenFirstRound);
 
         // When
-        Frame twoRound = frame.roll(2);
-        Frame threeRound = twoRound.roll(1);
+        Frame secondRound = givenFirstRound.roll(8);
+        frames.add(secondRound);
+
+        Frame finalFrame = secondRound.roll(2);
+        finalFrame.roll(10);
+        frames.add(finalFrame);
+
+        // Then
+        assertThat(givenFirstRound.numberOfDownedPins()).isEqualTo(8);
+        assertThat(secondRound.numberOfDownedPins()).isEqualTo(2);
+        assertThat(finalFrame.numberOfDownedPins()).isEqualTo(10);
+
+        assertThat(frames.size()).isEqualTo(3);
+    }
+
+    @DisplayName("final Frame에서 1구나 2구만에 spare 처리를 못하면 3구까지 던질 수 없다.")
+    @Test
+    void notSpareRoll() {
+        // Given
+        List<Frame> frames = new ArrayList<>();
+        Frame frame = new FinalFrame(0, Pins.create(), false);
+        frames.add(frame);
+
+        // When
+        Frame second = frame.roll(3);
+        frames.add(second);
+        Frame bonusFrame = second.roll(5);
 
         // Then
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> threeRound.roll(2))
-            .withMessage("1,2투구내에 핀을 다 쳐리 못해서 3라운드를 진행 할 수 없습니다.");
+            .isThrownBy(() -> bonusFrame.roll(3))
+            .withMessage("스페어처리를 못하여서 3라운드를 진행 할 수 없습니다.");
     }
 }

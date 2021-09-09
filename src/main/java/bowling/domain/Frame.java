@@ -4,10 +4,11 @@ public interface Frame {
 
     Frame roll(int downPins);
 
-    int round();
+    int numberOfDownedPins();
 
-    Pins pins();
+    int currentFrame();
 
-    boolean hasNextFrame();
+    boolean hasNextRound();
 
+    Status pinStatus();
 }
