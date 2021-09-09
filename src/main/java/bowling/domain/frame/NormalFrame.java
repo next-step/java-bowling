@@ -78,6 +78,9 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score addScore(Score before, List<Frame> frames) {
+        if (normalRollings == null) {
+            return Score.ofNone();
+        }
         Score score = before.plus(normalRollings.first().fallenPin());
 
         if (score.isFixed()) {

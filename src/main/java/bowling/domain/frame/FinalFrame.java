@@ -64,6 +64,9 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score addScore(Score before, List<Frame> frames) {
+        if (finalRollings == null) {
+            return Score.ofNone();
+        }
         Score score = before.plus(finalRollings.first().fallenPin());
         if (score.isFixed()) {
             return score;
