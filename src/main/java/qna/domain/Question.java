@@ -1,95 +1,100 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
 import javax.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import qna.CannotDeleteException;
+
 @Entity
 public class Question extends AbstractEntity {
-    @Column(length = 100, nullable = false)
-    private String title;
+	public static final String NO_PERMISSION_FOR_QUESTION = "질문을 삭제할 권한이 없습니다.";
+	@Embedded
+	private QuestionContext questionContext;
 
-    @Lob
-    private String contents;
+	@Embedded
+	private Answers answers;
 
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
-    private User writer;
+	public Question() {
+	}
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+	public Question(String title, String contents) {
+		this.questionContext = new QuestionContext(title, contents);
+		this.answers = new Answers();
+	}
 
-    private boolean deleted = false;
+	public Question(long id, String title, String contents) {
+		super(id);
+		this.questionContext = new QuestionContext(title, contents);
+		this.answers = new Answers();
+	}
 
-    public Question() {
-    }
+	public String getTitle() {
+		return this.questionContext.getTitle();
+	}
 
-    public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
-    }
+	public Question setTitle(String title) {
+		this.questionContext.setTitle(title);
+		return this;
+	}
 
-    public Question(long id, String title, String contents) {
-        super(id);
-        this.title = title;
-        this.contents = contents;
-    }
+	public String getContents() {
+		return this.questionContext.getContents();
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public Question setContents(String contents) {
+		this.questionContext.setContents(contents);
+		return this;
+	}
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
+	public User getWriter() {
+		return this.questionContext.getWriter();
+	}
 
-    public String getContents() {
-        return contents;
-    }
+	public Question writeBy(User loginUser) {
+		this.questionContext.writeBy(loginUser);
+		return this;
+	}
 
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
+	public void addAnswer(Answer answer) {
+		answer.toQuestion(this);
+		this.answers.add(answer);
+	}
 
-    public User getWriter() {
-        return writer;
-    }
+	public boolean isOwner(User loginUser) {
+		return this.questionContext.isOwner(loginUser);
+	}
 
-    public Question writeBy(User loginUser) {
-        this.writer = loginUser;
-        return this;
-    }
+	public Question setDeleted(boolean deleted) {
+		this.questionContext.setDeleted(deleted);
+		return this;
+	}
 
-    public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
-    }
+	public boolean isDeleted() {
+		return this.questionContext.isDeleted();
+	}
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
+	public Answers getAnswers() {
+		return this.answers;
+	}
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
+	public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+		if (this.isOwner(loginUser)) {
+			ArrayList<DeleteHistory> deleteHistories = new ArrayList<>();
+			this.setDeleted(true);
+			deleteHistories.add(
+				new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
+			deleteHistories.addAll(answers.delete(loginUser));
+			return deleteHistories;
+		}
+		throw new CannotDeleteException(NO_PERMISSION_FOR_QUESTION);
+	}
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    @Override
-    public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
+	@Override
+	public String toString() {
+		return "Question [id=" + getId() + ", title=" + this.questionContext.getTitle() + ", contents="
+			+ this.questionContext.getContents() + ", writer=" + this.getWriter() + "]";
+	}
 }

@@ -1,5 +1,9 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -7,69 +11,69 @@ import javax.persistence.*;
 
 @Entity
 public class Answer extends AbstractEntity {
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
-    private User writer;
+	public static final String NO_PERMISSION = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
 
-    @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
-    private Question question;
+	@Embedded
+	private AnswerContext answerContext;
 
-    @Lob
-    private String contents;
+	@ManyToOne(optional = false)
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
+	private Question question;
 
-    private boolean deleted = false;
+	public Answer() {
+	}
 
-    public Answer() {
-    }
+	public Answer(User writer, Question question, String contents) {
+		this(null, writer, question, contents);
+	}
 
-    public Answer(User writer, Question question, String contents) {
-        this(null, writer, question, contents);
-    }
+	public Answer(Long id, User writer, Question question, String contents) {
+		super(id);
 
-    public Answer(Long id, User writer, Question question, String contents) {
-        super(id);
+		if (question == null) {
+			throw new NotFoundException();
+		}
 
-        if(writer == null) {
-            throw new UnAuthorizedException();
-        }
+		this.question = question;
+		this.answerContext = new AnswerContext(writer, contents);
+	}
 
-        if(question == null) {
-            throw new NotFoundException();
-        }
+	public Answer setDeleted(boolean deleted) {
+		this.answerContext.setDeleted(deleted);
+		return this;
+	}
 
-        this.writer = writer;
-        this.question = question;
-        this.contents = contents;
-    }
+	public boolean isDeleted() {
+		return this.answerContext.isDeleted();
+	}
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
+	public boolean isOwner(User writer) {
+		return this.answerContext.isOwner(writer);
+	}
 
-    public boolean isDeleted() {
-        return deleted;
-    }
+	public User getWriter() {
+		return this.answerContext.getWriter();
+	}
 
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
-    }
+	public String getContents() {
+		return this.answerContext.getContents();
+	}
 
-    public User getWriter() {
-        return writer;
-    }
+	public void toQuestion(Question question) {
+		this.question = question;
+	}
 
-    public String getContents() {
-        return contents;
-    }
+	public DeleteHistory delete(User loginUser) throws CannotDeleteException {
+		if (this.isOwner(loginUser)) {
+			this.setDeleted(true);
+			return new DeleteHistory(ContentType.ANSWER, this.getId(), this.getWriter(), LocalDateTime.now());
+		}
+		throw new CannotDeleteException(NO_PERMISSION);
+	}
 
-    public void toQuestion(Question question) {
-        this.question = question;
-    }
-
-    @Override
-    public String toString() {
-        return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
-    }
+	@Override
+	public String toString() {
+		return "Answer [id=" + getId() + ", writer=" + this.answerContext.getWriter() + ", contents="
+			+ this.answerContext.getContents() + "]";
+	}
 }
