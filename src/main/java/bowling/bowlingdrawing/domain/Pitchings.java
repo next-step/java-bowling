@@ -58,7 +58,7 @@ public class Pitchings {
     }
 
     public boolean done() {
-        return (firstPitching.score() == Pitching.MAXIMUM_OF_PINS || secondPitching != null);
+        return (strike() || secondPitching != null);
     }
 
     @Override
