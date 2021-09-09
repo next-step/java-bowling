@@ -3,9 +3,6 @@ package bowling;
 import java.util.Objects;
 
 public class Score {
-    private static final String GUTTER_SYMBOL = "-";
-
-    private static final int GUTTER_NUMBER = 0;
     private static final int MAX_SCORE = 10;
 
     private final int value;
@@ -20,11 +17,7 @@ public class Score {
         return this.value + score.value;
     }
 
-    public String getString() {
-        if (value == GUTTER_NUMBER) {
-            return GUTTER_SYMBOL;
-        }
-
+    public String getScoreString() {
         return String.valueOf(value);
     }
 

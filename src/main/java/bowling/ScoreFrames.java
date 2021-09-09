@@ -6,14 +6,14 @@ public class ScoreFrames implements Iterable<ScoreFrame> {
     private static final int START_TURN = 1;
     private static final int END_TURN = 10;
 
-    private final List<ScoreFrame> scoreFrames = new LinkedList<>();    // sequential access
+    private final LinkedList<ScoreFrame> scoreFrames = new LinkedList<>();
 
     public ScoreFrames() {
-        scoreFrames.add(new NormalScoreFrame(new Turn(START_TURN), FrameResult.MISS));
+        scoreFrames.add(new NormalScoreFrame(new Turn(START_TURN)));
     }
 
     public void bowl(int score) {
-        ScoreFrame nextScoreFrame = getLastScoreFrame().process(score);
+        ScoreFrame nextScoreFrame = getLastScoreFrame().addScore(score);
 
         if (nextScoreFrame != getLastScoreFrame()) {
             scoreFrames.add(nextScoreFrame);
@@ -29,7 +29,7 @@ public class ScoreFrames implements Iterable<ScoreFrame> {
     }
 
     private ScoreFrame getLastScoreFrame() {
-        return scoreFrames.get(scoreFrames.size() - 1);
+        return scoreFrames.getLast();
     }
 
     @Override

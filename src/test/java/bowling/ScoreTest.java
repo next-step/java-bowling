@@ -2,13 +2,8 @@ package bowling;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -32,10 +27,8 @@ public class ScoreTest {
 
     @Test
     @DisplayName("점수를 문자열로 변환")
-    void getStringTest() {
-        assertThat(new Score(0).getString()).isEqualTo("-");
-
-        IntStream.rangeClosed(1, 9)
-                .forEach(i -> assertThat(new Score(i).getString()).isEqualTo(String.valueOf(i)));
+    void getScoreStringTest() {
+        IntStream.rangeClosed(0, 9)
+                .forEach(i -> assertThat(new Score(i).getScoreString()).isEqualTo(String.valueOf(i)));
     }
 }

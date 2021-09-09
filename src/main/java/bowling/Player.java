@@ -13,8 +13,16 @@ public class Player {
     }
 
     private void validate(String name) {
-        if (name == null || !isLengthThree(name) || !isOnlyAlphabetics(name)) {
-            throw new IllegalArgumentException("플레이어의 이름은 영문자 3자리 입니다.");
+        if (name == null) {
+            throw new IllegalArgumentException("Player name null exception.");
+        }
+
+        if (!isLengthThree(name)) {
+            throw new IllegalArgumentException("플레이어의 이름은 3자리 입니다.");
+        }
+
+        if (!isOnlyAlphabetics(name)) {
+            throw new IllegalArgumentException("플레이어의 영문자 입니다.");
         }
     }
 

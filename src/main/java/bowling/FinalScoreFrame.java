@@ -2,16 +2,16 @@ package bowling;
 
 public class FinalScoreFrame extends ScoreFrame {
 
-    public FinalScoreFrame(Turn turn, FrameResult previousFrameResult) {
-        super(turn, previousFrameResult);
+    public FinalScoreFrame(Turn turn) {
+        super(turn);
     }
 
     @Override
-    public ScoreFrame process(int scoreValue) {
+    public ScoreFrame addScore(int scoreValue) {
         trial.add(new Score(scoreValue));
 
         if (trial.isFinalEnd()) {
-            return new FinalScoreFrame(turn.getNextTurn(), FrameResult.MISS);
+            return new FinalScoreFrame(turn.getNextTurn());
         }
 
         return this;

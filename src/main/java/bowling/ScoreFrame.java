@@ -4,15 +4,13 @@ import java.util.Objects;
 
 public abstract class ScoreFrame {
     final Turn turn;
-    final FrameResult previousFrameResult;
     final Trial trial = new Trial();
 
-    public ScoreFrame(Turn turn, FrameResult previousFrameResult) {
+    public ScoreFrame(Turn turn) {
         this.turn = turn;
-        this.previousFrameResult = previousFrameResult;
     }
 
-    abstract ScoreFrame process(int score);
+    abstract ScoreFrame addScore(int score);
 
     public int getTurnNumber() {
         return turn.getNumber();
