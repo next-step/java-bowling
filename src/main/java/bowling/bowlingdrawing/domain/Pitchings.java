@@ -5,10 +5,8 @@ import bowling.bowlingdrawing.exception.CustomException;
 import java.util.Objects;
 
 public class Pitchings {
-    private Pitching firstPitching;
+    private final Pitching firstPitching;
     private Pitching secondPitching;
-
-    public Pitchings() {}
 
     public Pitchings(Pitching firstPitching, Pitching secondPitching) {
         validateSumIsOverTen(firstPitching, secondPitching);
@@ -55,8 +53,12 @@ public class Pitchings {
         return firstPitching.sum(secondPitching);
     }
 
+    public int firstPitchingScore() {
+        return firstPitching.score();
+    }
+
     public boolean done() {
-        return secondPitching != null;
+        return (firstPitching.score() == Pitching.MAXIMUM_OF_PINS || secondPitching != null);
     }
 
     @Override
@@ -71,4 +73,5 @@ public class Pitchings {
     public int hashCode() {
         return Objects.hash(firstPitching, secondPitching);
     }
+
 }

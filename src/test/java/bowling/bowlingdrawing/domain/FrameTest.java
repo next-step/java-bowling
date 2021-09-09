@@ -33,12 +33,12 @@ class FrameTest {
     @DisplayName("secondPitching 점수 추가")
     void secondPitching(){
         // given
-        int pins = 3;
         Frame frame = Frame.of(6);
+        int pins = 3;
         // when
-        frame.secondPitching(pins);
+        frame.pitching(pins);
         // then
-        assertThat(frame).isEqualTo(Frame.of(3, 6));
+        assertThat(frame).isEqualTo(Frame.of(6, 3));
     }
 
     @Test
@@ -67,16 +67,32 @@ class FrameTest {
     }
 
     @Test
-    @DisplayName("Frame 총 점수(보너스 포함) 반환")
-    void score_with_bonus() {
+    @DisplayName("spare 시 점수 반환")
+    void score_spare() {
         // given
-        Frame frame = Frame.of(7, 2);
+        Frame frame = Frame.of(7, 3);
         Frame nextFrame = frame.next(8);
         // when
         int score = frame.score();
         int scoreNext = nextFrame.score();
         // then
-        assertThat(score).isEqualTo(17);
+        assertThat(score).isEqualTo(18);
         assertThat(scoreNext).isEqualTo(8);
     }
+
+    @Test
+    @DisplayName("Strike 시 점수 반환")
+    void score_strike() {
+        // given
+        Frame frame = Frame.of(10);
+        Frame nextFrame = frame.next(8);
+        nextFrame.pitching(1);
+        // when
+        int score = frame.score();
+        int scoreNext = nextFrame.score();
+        // then
+        assertThat(score).isEqualTo(19);
+        assertThat(scoreNext).isEqualTo(9);
+    }
+
 }

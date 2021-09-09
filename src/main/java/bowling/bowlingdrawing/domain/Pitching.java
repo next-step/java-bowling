@@ -33,6 +33,10 @@ public class Pitching {
         return this.pins + pitching.pins;
     }
 
+    public int score() {
+        return pins;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
