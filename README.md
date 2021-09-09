@@ -140,10 +140,11 @@ public class QnAService {
 3. Frame
     1. 속성
         - `RegularPitching regularPitching`
-        - `Pitching bonusPitching`
+        - `Frame nextFrame`
     2. 메서드
-        - `boolean isDone()`
-        - `pitching(int pins)`
+        - `boolean done()`
+        - `int score()`
+        - `void pitching(int pins)`
 4. RegularPitching
     1. 속성
         - `Pitching firstPitching`
