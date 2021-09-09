@@ -11,8 +11,7 @@ import bowling.view.ResultView;
 public class BowlingGame {
 
     public static void main(String[] args) {
-        String name = InputView.userName();
-        Person person = Person.from(name);
+        Person person = InputView.user();
 
         ScoreBoard scoreBoard = ScoreBoard.create();
 
