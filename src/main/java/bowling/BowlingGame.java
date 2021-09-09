@@ -20,15 +20,16 @@ public class BowlingGame {
         sb.write(person, firstFrame);
         Frames frames = sb.framesOfPerson(person);
 
-        for (Frame frame : frames) {
-            ResultView.showFrameInfo(frame.frameInfo());
+        for (int i = 0; i < frames.size(); i++) {
+            Frame frame = frames.get(i);
+            ResultView.showCurrentFrameInfo(frame.frameInfo());
             int downPinsCount = InputView.downPinsCount();
             ResultView.showHead();
-            Frame roll = frame.roll(downPinsCount);
+            Frame nextFrame = frame.roll(downPinsCount);
             ResultView.showPersonNameOnBoard(person);
             ResultView.showScoreBoard(frames);
 
-            frames.add(roll);
+            frames.add(nextFrame);
 
             if (frames.isLast()) {
                 break;
