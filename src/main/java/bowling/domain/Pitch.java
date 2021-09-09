@@ -9,7 +9,7 @@ public abstract class Pitch {
     protected Pins secondPins;
     protected Score score;
 
-    protected Pitch(){
+    protected Pitch() {
         this.score = Score.of(0, 0);
     }
 
@@ -23,7 +23,7 @@ public abstract class Pitch {
         return Objects.nonNull(firstPins);
     }
 
-    public Score getScore(){
+    public Score getScore() {
         return score;
     }
 

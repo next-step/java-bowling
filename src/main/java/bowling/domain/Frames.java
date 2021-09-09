@@ -31,7 +31,6 @@ public class Frames {
         }
         frames.remove(frames.size() - 1);
         frames.addLast(frame);
-
     }
 
     private boolean isNextFrame(Frame frame) {

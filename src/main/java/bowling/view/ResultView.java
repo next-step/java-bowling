@@ -2,10 +2,6 @@ package bowling.view;
 
 import bowling.domain.*;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-
 public class ResultView {
     private static final String BOUND_LINE = "|";
     private static final int FINAL_FRAME = 9;
@@ -33,34 +29,9 @@ public class ResultView {
 
         printResultScore(frames);
 
+        printRemain(frames);
+
         System.out.println();
-    }
-
-    private static void printResultScore(Frames frames) {
-        Score resultScore = Score.of(0, 0);
-        for (int numberOfGame = 0; numberOfGame < frames.size(); numberOfGame++) {
-            resultScore = getCurrentScore(frames, resultScore, numberOfGame);
-        }
-    }
-
-    private static Score getCurrentScore(Frames frames, Score resultScore, int numberOfGame) {
-        Frame currentFrame = frames.get(numberOfGame);
-        if (currentFrame.isFinish()) {
-            Score currentScore = currentFrame.getScore();
-            resultScore = printScore(resultScore, currentScore);
-        }
-        return resultScore;
-    }
-
-    private static Score printScore(Score resultScore, Score currentScore) {
-        if (currentScore.getScore() == NormalFrame.UN_SCORE) {
-            System.out.print(BLANK_FRAME);
-            return resultScore;
-        }
-
-        resultScore = resultScore.add(currentScore.getScore());
-        System.out.print(BLANK + resultScore.getScore() + HALF_BLANK_FRAME);
-        return resultScore;
     }
 
     private static void printTitle() {
@@ -187,9 +158,7 @@ public class ResultView {
     }
 
     private static void drawRemainSecondPitch(Frames frames) {
-        for (int numberOfGame = frames.size(); numberOfGame <= FINAL_FRAME; numberOfGame++) {
-            System.out.print(BLANK_FRAME);
-        }
+        printRemain(frames);
     }
 
     private static void drawRemainFirstPitch(Frames frames) {
@@ -200,6 +169,37 @@ public class ResultView {
             System.out.print(HALF_BLANK_FRAME);
         }
 
+        printRemain(frames);
+    }
+
+    private static void printResultScore(Frames frames) {
+        Score resultScore = Score.of(0, 0);
+        for (int numberOfGame = 0; numberOfGame < frames.size(); numberOfGame++) {
+            resultScore = getCurrentScore(frames, resultScore, numberOfGame);
+        }
+    }
+
+    private static Score getCurrentScore(Frames frames, Score resultScore, int numberOfGame) {
+        Frame currentFrame = frames.get(numberOfGame);
+        if (currentFrame.isFinish()) {
+            Score currentScore = currentFrame.getScore();
+            resultScore = printScore(resultScore, currentScore);
+        }
+        return resultScore;
+    }
+
+    private static Score printScore(Score resultScore, Score currentScore) {
+        if (currentScore.getScore() == NormalFrame.UN_SCORE) {
+            System.out.print(BLANK_FRAME);
+            return resultScore;
+        }
+
+        resultScore = resultScore.add(currentScore.getScore());
+        System.out.print(BLANK + resultScore.getScore() + HALF_BLANK_FRAME);
+        return resultScore;
+    }
+
+    private static void printRemain(Frames frames) {
         for (int numberOfGame = frames.size(); numberOfGame <= FINAL_FRAME; numberOfGame++) {
             System.out.print(BLANK_FRAME);
         }

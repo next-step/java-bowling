@@ -21,13 +21,14 @@ public class FinalFrame extends Frame {
     public Score getScore() {
         return pitch.getScore();
     }
-    public Score additionalScore(Score score){
+
+    public Score additionalScore(Score score) {
         score = score.additionalScore(getFirstPin());
-        if(score.canCalculate()) {
+        if (score.canCalculate()) {
             return score;
         }
 
-        if(!isSecondPitchDone()){
+        if (!isSecondPitchDone()) {
             return Score.of(NormalFrame.UN_SCORE, 0);
         }
 

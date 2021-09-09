@@ -8,19 +8,19 @@ public class NormalPitch extends Pitch {
         if (!isFirstPitchDone()) {
             firstPins = pins;
             score = score.additionalScore(pins);
-            additionalScore(isStrike(), 2);
+            additionalCalculateScore(isStrike(), 2);
             return;
         }
         if (!isSecondPitchDone()) {
             secondPins = pins;
             validate();
             score = score.additionalScore(pins);
-            additionalScore(isSpare(), 1);
+            additionalCalculateScore(isSpare(), 1);
         }
     }
 
-    private void additionalScore(boolean additional, int left) {
-        if (additional) {
+    private void additionalCalculateScore(boolean condition, int left) {
+        if (condition) {
             score = Score.of(10, left);
         }
     }

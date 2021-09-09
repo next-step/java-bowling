@@ -10,26 +10,17 @@ public class FinalPitch extends Pitch {
         if (!isFirstPitchDone()) {
             firstPins = pins;
             score = score.additionalScore(pins);
-//            additionalScore(isStrike(), 2);
             return;
         }
         if (!isSecondPitchDone()) {
             secondPins = pins;
             score = score.additionalScore(pins);
-//            additionalScore(isStrike(), 2);
-//            additionalScore(isSpare(), 1);
             validate();
             return;
         }
         if (!isBonusPitchDone()) {
             score = score.additionalScore(pins);
             bonusPins = pins;
-        }
-    }
-
-    private void additionalScore(boolean additional, int left) {
-        if (additional) {
-            score = Score.of(10, left);
         }
     }
 

@@ -6,7 +6,7 @@ public class Score {
     private final int score;
     private int left;
 
-    private Score(int score, int left){
+    private Score(int score, int left) {
         this.score = score;
         this.left = left;
     }
@@ -16,7 +16,7 @@ public class Score {
     }
 
     public Score additionalScore(Pins pins) {
-        if(canCalculate()){
+        if (canCalculate()) {
             return new Score(pins.sumOfScore(score), 0);
         }
         return new Score(pins.sumOfScore(score), left - 1);
@@ -26,11 +26,11 @@ public class Score {
         return new Score(score + value, left);
     }
 
-    public boolean canCalculate(){
+    public boolean canCalculate() {
         return left == 0;
     }
 
-    public int getScore(){
+    public int getScore() {
         return score;
     }
 

@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public abstract class Frame {
     protected Pitch pitch;
     protected States states;

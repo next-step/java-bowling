@@ -36,30 +36,36 @@ public class NormalFrame extends Frame {
         return next;
     }
 
+    public boolean hasNext() {
+        return Objects.nonNull(next);
+    }
+
+
     @Override
     public Score getScore() {
-        if(pitch.getState() == State.GUTTER || pitch.getState() == State.NORMAL || pitch.getState() == State.MISS){
+        if (pitch.getState() == State.GUTTER || pitch.getState() == State.NORMAL || pitch.getState() == State.MISS) {
             return pitch.getScore();
         }
 
-        if(Objects.isNull(next)){
+        if (!hasNext()) {
             return Score.of(UN_SCORE, 0);
         }
 
         return next.additionalScore(pitch.getScore());
     }
 
-    public Score additionalScore(Score score){
+    public Score additionalScore(Score score) {
         score = score.additionalScore(getFirstPin());
-        if(score.canCalculate()) {
+
+        if (score.canCalculate()) {
             return score;
         }
 
-        if(!isSecondPitchDone() && Objects.isNull(next)){
+        if (!isSecondPitchDone() && !hasNext()) {
             return Score.of(NormalFrame.UN_SCORE, 0);
         }
 
-        if(!isSecondPitchDone() && Objects.nonNull(next)){
+        if (hasNext()) {
             return next.additionalScore(score);
         }
 
