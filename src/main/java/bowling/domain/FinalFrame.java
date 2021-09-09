@@ -19,11 +19,18 @@ public class FinalFrame extends Frame {
 
     @Override
     public Score getScore() {
-        return null;
+        return pitch.getScore();
     }
+    public Score additionalScore(Score score){
+        score = score.additionalScore(getFirstPin());
+        if(score.canCalculate()) {
+            return score;
+        }
 
-    @Override
-    protected Score additionalScore(Score score) {
-        return null;
+        if(!isSecondPitchDone()){
+            return Score.of(NormalFrame.UN_SCORE, 0);
+        }
+
+        return score.additionalScore(getSecondPin());
     }
 }
