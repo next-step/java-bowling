@@ -3,7 +3,6 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScoreTest {
@@ -35,6 +34,7 @@ public class ScoreTest {
         assertThat(spare.additionalScore(Pins.of(4))).isEqualTo(Score.of(14, 0));
     }
 
+    @DisplayName("마지막 프레임 점수 합산 테스트")
     @Test
     void finalFrame() {
         NormalFrame frame = new NormalFrame(9);
@@ -48,8 +48,9 @@ public class ScoreTest {
         assertThat(frame.getScore()).isEqualTo(Score.of(17, 0));
     }
 
+    @DisplayName("score 가 triple strike 일때는 세번째 strike 시 첫번째 score 에 30으로 계산")
     @Test
-    void doubleStrikeFrame() {
+    void tripleStrikeFrame() {
         NormalFrame frame = new NormalFrame(1);
         frame.bowl(Pins.of(10));
         Frame secondFrame = frame.next();
