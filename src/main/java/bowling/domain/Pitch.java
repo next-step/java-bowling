@@ -10,7 +10,7 @@ public abstract class Pitch {
     protected Score score;
 
     protected Pitch(){
-        this.score = Score.of(0);
+        this.score = Score.of(0, 0);
     }
 
     protected void validate() {

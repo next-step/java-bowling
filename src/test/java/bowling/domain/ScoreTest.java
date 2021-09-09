@@ -14,6 +14,6 @@ public class ScoreTest {
         frame.bowl(Pins.of(8));
         frame.bowl(Pins.of(1));
         frame.next();
-        assertThat(frame.getScore()).isEqualTo(Score.of(9));
+        assertThat(frame.getScore()).isEqualTo(Score.of(9, 0));
     }
 }

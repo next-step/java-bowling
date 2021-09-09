@@ -42,17 +42,23 @@ public class NormalFrame extends Frame {
             return pitch.score;
         }
         if(Objects.isNull(next)){
-            return Score.of(UN_SCORE);
+            return Score.of(UN_SCORE, 0);
         }
+
 
         return next.additionalScore(pitch.score);
     }
 
     public Score additionalScore(Score score) {
-        if(isFirstPitchDone()){
-            return score.add(getFirstPin());
+        score = score.add(getFirstPin());
+        if(score.canCalculate()){
+            return score;
         }
 
-        return score.add(getFirstPin().sum(getSecondPin()));
+        if(!isSecondPitchDone()){
+            return Score.of(UN_SCORE, 0);
+        }
+
+        return score.add(getSecondPin());
     }
 }

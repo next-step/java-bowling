@@ -8,12 +8,18 @@ public class NormalPitch extends Pitch {
         if (!isFirstPitchDone()) {
             firstPins = pins;
             score = score.add(pins);
+            if(isStrike()){
+                score = Score.of(10, 2);
+            }
             return;
         }
         if (!isSecondPitchDone()) {
             secondPins = pins;
             validate();
             score = score.add(pins);
+            if(isSpare()){
+                score = Score.of(10, 1);
+            }
         }
     }
 
@@ -31,9 +37,7 @@ public class NormalPitch extends Pitch {
         return false;
     }
     public Score getScore(){
-        if(isSpare()){
 
-        }
         return score;
     }
     @Override

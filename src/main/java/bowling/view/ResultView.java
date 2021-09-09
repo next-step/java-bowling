@@ -37,7 +37,7 @@ public class ResultView {
     }
 
     private static void printScore(Frames frames) {
-        Score resultScore = Score.of(0);
+        Score resultScore = Score.of(0, 0);
         for (int numberOfGame = 0; numberOfGame < frames.size(); numberOfGame++) {
             Frame currentFrame = frames.get(numberOfGame);
             if (currentFrame.isFinish()) {
