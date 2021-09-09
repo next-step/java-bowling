@@ -7,29 +7,25 @@ public class FinalFrame extends Frame {
         super(score);
     }
 
-    public String scoreToSymbol() {
+    public String frameScoreToSymbolString() {
         if (scores.size() <= 2) {
-            return super.scoreToSymbol();
+            return super.frameScoreToSymbolString();
         }
-        int firstScore = scores.get(0);
-        int secondScore = scores.get(1);
-        int thirdScore = scores.get(2);
-
-        return changeScoreToSpareInFinalFrame(firstScore, secondScore, thirdScore);
+        return changeScoreToSpareInFinalFrame(scores.get(0), scores.get(1), scores.get(2));
     }
 
-    private String changeScoreToSpareInFinalFrame(int firstScore, int secondScore, int thirdScore) {
-        if (TEN_SCORE != firstScore && firstScore + secondScore == TEN_SCORE) {
-            return changeScoreToSpare(firstScore) + SEPARATOR_SYMBOL + changeScoreToSymbol(thirdScore);
+    private String changeScoreToSpareInFinalFrame(Score firstScore, Score secondScore, Score thirdScore) {
+        if (firstScore.compareTo(Score.valueOf(Score.TEN_SCORE)) != 0 && firstScore.sum(secondScore) == Score.TEN_SCORE) {
+            return firstScore.changeScoreToSpare() + SEPARATOR_SYMBOL + thirdScore.changeScoreToSymbol();
         }
-        if (secondScore != TEN_SCORE && secondScore + thirdScore == TEN_SCORE) {
-            return changeScoreToSymbol(firstScore) + SEPARATOR_SYMBOL + changeScoreToSpare(secondScore);
+        if (secondScore.compareTo(Score.valueOf(Score.TEN_SCORE)) != 0 && secondScore.sum(thirdScore) == Score.TEN_SCORE) {
+            return firstScore.changeScoreToSymbol() + SEPARATOR_SYMBOL + secondScore.changeScoreToSpare();
         }
-        return changeScoreToSymbol(firstScore) + SEPARATOR_SYMBOL + changeScoreToSymbol(secondScore) + SEPARATOR_SYMBOL + changeScoreToSymbol(thirdScore);
+        return firstScore.changeScoreToSymbol() + SEPARATOR_SYMBOL + secondScore.changeScoreToSymbol() + SEPARATOR_SYMBOL + thirdScore.changeScoreToSymbol();
     }
 
     @Override
     public boolean isNext() {
-        return scores.size() == MAX_COUNT || (scores.size() == 2 && sumOfScore() < TEN_SCORE);
+        return scores.size() == MAX_COUNT || (scores.size() == 2 && Score.sumOfScores(scores) < Score.TEN_SCORE);
     }
 }

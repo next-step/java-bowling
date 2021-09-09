@@ -23,13 +23,13 @@ public class Frames {
         int index = frames.size() - 1;
         if (index >= 0 && !isNext()) {
             frames.get(index).addScore(pitchingCount);
-            results.set(index, frames.get(index).scoreToSymbol());
+            results.set(index, frames.get(index).frameScoreToSymbolString());
             return;
         }
 
         addFrame(pitchingCount);
         index = frames.size() - 1;
-        results.add(frames.get(index).scoreToSymbol());
+        results.add(frames.get(index).frameScoreToSymbolString());
     }
 
     private void addFrame(int pitchingCount) {

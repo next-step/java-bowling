@@ -9,6 +9,6 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean isNext() {
-        return scores.size() == MAX_COUNT || sumOfScore() == TEN_SCORE;
+        return scores.size() == MAX_COUNT || Score.sumOfScores(scores) == Score.TEN_SCORE;
     }
 }

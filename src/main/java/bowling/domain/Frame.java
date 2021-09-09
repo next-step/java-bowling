@@ -1,76 +1,41 @@
 package bowling.domain;
 
-import bowling.exception.InvalidScoreException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Frame {
-    private static final String INVALID_SCORE_MESSAGE = "핀의 갯수가 10을 초과할 수 없습니다.";
-    protected static final int TEN_SCORE = 10;
-    protected static final int ZERO_SCORE = 0;
-    protected static final String STRIKE_SYMBOL = "X";
-    protected static final String SPARE_SYMBOL = "/";
-    protected static final String GUTTER_SYMBOL = "-";
     protected static final String SEPARATOR_SYMBOL = "|";
 
-    protected List<Integer> scores;
+    protected List<Score> scores;
 
     public Frame(int score) {
         scores = new ArrayList<>();
         addScore(score);
     }
 
-    public void addScore(int score) {
-        validate(score);
-        validateSumOfScore(score);
+    public void addScore(int scoreNumber) {
+        Score score = Score.valueOf(scoreNumber);
+        Score.validateTotalScore(scores, score);
         scores.add(score);
     }
 
-    public void validate(int score) {
-        if (score < ZERO_SCORE || score > TEN_SCORE) {
-            throw new InvalidScoreException(INVALID_SCORE_MESSAGE);
-        }
+    public int frameScoresSum() {
+        return Score.sumOfScores(scores);
     }
 
-    private void validateSumOfScore(int score) {
-        if (sumOfScore() < TEN_SCORE) {
-            validate(sumOfScore() + score);
-        }
-    }
-
-    public String scoreToSymbol() {
-        int firstScore = scores.get(0);
+    public String frameScoreToSymbolString() {
+        Score firstScore = scores.get(0);
         if (scores.size() <= 1) {
-            return changeScoreToSymbol(firstScore);
+            return firstScore.changeScoreToSymbol();
         }
 
-        int secondScore = scores.get(1);
-        if (sumOfScore() == 10) {
-            return changeScoreToSpare(firstScore);
+        Score secondScore = scores.get(1);
+        if (frameScoresSum() == 10) {
+            return firstScore.changeScoreToSpare();
         }
 
-        return changeScoreToSymbol(firstScore) + SEPARATOR_SYMBOL + changeScoreToSymbol(secondScore);
-    }
-
-    public int sumOfScore() {
-        int sumOfScore = scores.stream().mapToInt(Integer::intValue).sum();
-        return sumOfScore;
-    }
-
-    protected String changeScoreToSymbol(int score) {
-        if (score == ZERO_SCORE) {
-            return GUTTER_SYMBOL;
-        }
-        if (score == TEN_SCORE) {
-            return STRIKE_SYMBOL;
-        }
-        return score + "";
-    }
-
-    protected String changeScoreToSpare(int firstTryScore) {
-        return changeScoreToSymbol(firstTryScore) + SEPARATOR_SYMBOL + SPARE_SYMBOL;
+        return firstScore.changeScoreToSymbol() + SEPARATOR_SYMBOL + secondScore.changeScoreToSymbol();
     }
 
     public abstract boolean isNext();
