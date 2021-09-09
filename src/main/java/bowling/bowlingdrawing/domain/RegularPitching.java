@@ -9,8 +9,15 @@ public class RegularPitching {
     private Pitching secondPitching;
 
     public RegularPitching(Pitching firstPitching, Pitching secondPitching) {
+        validateSumIsOverTen(firstPitching, secondPitching);
         this.firstPitching = firstPitching;
         this.secondPitching = secondPitching;
+    }
+
+    private void validateSumIsOverTen(Pitching firstPitching, Pitching secondPitching) {
+        if (firstPitching.sum(secondPitching) > Pitching.MAXIMUM_OF_PINS) {
+            throw new CustomException("frame 최대 pins 수 초과");
+        }
     }
 
     public RegularPitching(Pitching firstPitching) {
@@ -19,6 +26,7 @@ public class RegularPitching {
 
     public void secondPitch(Pitching secondPitching) {
         if (this.secondPitching == null) {
+            validateSumIsOverTen(this.firstPitching, secondPitching);
             this.secondPitching = secondPitching;
             return;
         }

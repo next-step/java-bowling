@@ -27,6 +27,9 @@ public class Pitching {
     }
 
     public int sum(Pitching pitching) {
+        if (pitching == null) {
+            return this.pins;
+        }
         return this.pins + pitching.pins;
     }
 
