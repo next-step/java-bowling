@@ -24,6 +24,9 @@ public enum NormalFrameDisplay {
     }
 
     public static String display(NormalRollings normalRollings) {
+        if (normalRollings == null) {
+            return NONE.display;
+        }
         Rolling first = normalRollings.first();
         Rolling second = normalRollings.second();
         return Arrays.stream(NormalFrameDisplay.values())

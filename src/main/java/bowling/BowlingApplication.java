@@ -26,6 +26,7 @@ public class BowlingApplication {
     private static void printBowlingGame(BowlingGame bowlingGame) {
         ResultView.printFrame();
         ResultView.printFrameByPlayer(bowlingGame);
+        ResultView.printScoreByPlayer(bowlingGame);
     }
 
     private static void nextFrame(BowlingGame bowlingGame) {
