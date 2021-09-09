@@ -13,7 +13,7 @@ class ScoreBoardTest {
     void writeFinalFrame() {
         ScoreBoard scoreBoard = ScoreBoard.create();
         Person person = Person.from("Phobi");
-        Frame fi = new FinalFrame(0, Pins.create(), false);
+        Frame fi = FinalFrame.create();
         scoreBoard.write(person, fi);
 
         while (fi.hasNextRound()) {

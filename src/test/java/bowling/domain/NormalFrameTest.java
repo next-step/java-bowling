@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.info.NormalFrameInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ class NormalFrameTest {
     @Test
     void roll_2() {
         // Given
-        Frame givenFrame = NormalFrame.of(0, 0, Pins.create());
+        Frame givenFrame = NormalFrame.create();
         Frame round1 = givenFrame.roll(5);
         round1.roll(5);
 
@@ -26,15 +27,15 @@ class NormalFrameTest {
     @Test
     void nextFrame() {
         // Given
-        Frame givenFrame = NormalFrame.of(0, 0, Pins.create());
+        Frame givenFrame = NormalFrame.create();
         Frame nextFrame = givenFrame.roll(10);
         nextFrame.roll(5);
 
         // When && Then
-        assertThat(givenFrame.currentFrame()).isEqualTo(0);
+        assertThat(givenFrame.frameInfo()).isEqualTo(NormalFrameInfo.of(0, 0));
         assertThat(givenFrame.numberOfDownedPins()).isEqualTo(10);
 
-        assertThat(nextFrame.currentFrame()).isEqualTo(1);
+        assertThat(nextFrame.frameInfo()).isEqualTo(NormalFrameInfo.of(1, 0));
         assertThat(nextFrame.numberOfDownedPins()).isEqualTo(5);
     }
 
@@ -44,7 +45,7 @@ class NormalFrameTest {
         // Given
         List<Frame> frames = new ArrayList<>();
 
-        Frame normalFrame = NormalFrame.of(0, 0, Pins.create());
+        Frame normalFrame = NormalFrame.create();
         frames.add(normalFrame);
 
         for (int i = 0; i < 9; i++) {

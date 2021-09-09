@@ -1,51 +1,47 @@
 package bowling.domain;
 
+import bowling.domain.frame.info.FrameInfo;
+import bowling.domain.frame.info.NormalFrameInfo;
+
 public class NormalFrame implements Frame {
 
-    public static final int FIRST_ROUND = 0;
-    private static final int MAX_NORMAL_FRAME = 8;
-
-
-    private final int frameNumber;
-    private final int round;
+    private final FrameInfo frameInfo;
     private final Pins pins;
 
-    private NormalFrame(int frameNumber, int round, Pins pins) {
-        this.frameNumber = frameNumber;
-        this.round = round;
+    private NormalFrame(FrameInfo normalFrameInfo, Pins pins) {
+        this.frameInfo = normalFrameInfo;
         this.pins = pins;
     }
 
-    public static NormalFrame of(int frameNumber, int round, Pins pins) {
-        return new NormalFrame(frameNumber, round, pins);
+    public static NormalFrame of(FrameInfo normalFrameInfo, Pins pins) {
+        return new NormalFrame(normalFrameInfo, pins);
     }
 
     public static NormalFrame create() {
-        return new NormalFrame(0, 0, Pins.create());
+        return new NormalFrame(NormalFrameInfo.create(), Pins.create());
     }
-
 
     @Override
     public Frame roll(int downPins) {
         Pins roll = pins.roll(downPins);
 
         if (isLastFrame()) {
-            return new FinalFrame(0, Pins.create(), false);
+            return FinalFrame.create();
         }
 
         if (hasNextFrame()) {
-            return new NormalFrame(frameNumber + 1, 0, Pins.create());
+            return of(frameInfo.nextFrame(), Pins.create());
         }
 
-        return new NormalFrame(frameNumber, round + 1, roll);
+        return of(frameInfo.nextRound(), roll);
     }
 
     private boolean isLastFrame() {
-        return frameNumber == MAX_NORMAL_FRAME && (round == 1 || pins.numberOfPinDowns() == 10);
+        return frameInfo.isEndFrame() && (frameInfo.isLastRound() || pins.isAllDown());
     }
 
     private boolean hasNextFrame() {
-        return round == 1 || pins.isAllDown();
+        return frameInfo.isLastRound() || pins.isAllDown();
     }
 
     @Override
@@ -54,13 +50,13 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int currentFrame() {
-        return frameNumber;
+    public FrameInfo frameInfo() {
+        return frameInfo;
     }
 
     @Override
     public boolean hasNextRound() {
-        return pins.isAllDown() || round == FIRST_ROUND;
+        return pins.isAllDown() || frameInfo.isFirstRound();
     }
 
     @Override

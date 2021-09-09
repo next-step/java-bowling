@@ -1,14 +1,18 @@
 package bowling.domain;
 
+import bowling.domain.frame.info.FrameInfo;
+
 public interface Frame {
 
     Frame roll(int downPins);
 
-    int numberOfDownedPins();
+    FrameInfo frameInfo();
 
-    int currentFrame();
+    Status pinStatus();
+
+    int numberOfDownedPins();
 
     boolean hasNextRound();
 
-    Status pinStatus();
+
 }

@@ -15,7 +15,7 @@ class FinalFrameTest {
     void firstRoundStrikeBonusRound() {
         // Given
         List<Frame> frames = new ArrayList<>();
-        Frame frame = new FinalFrame(0, Pins.create(), false);
+        Frame frame = FinalFrame.create();
         frames.add(frame);
         frame = frame.roll(10);
 
@@ -34,7 +34,7 @@ class FinalFrameTest {
     void strikeBonusRound() {
         // Given
         List<Frame> frames = new ArrayList<>();
-        Frame frame = new FinalFrame(0, Pins.create(), false);
+        Frame frame = FinalFrame.create();
 
         while (frame.hasNextRound()) {
             frames.add(frame);
@@ -51,7 +51,7 @@ class FinalFrameTest {
     void spareWithBonusRound() {
         // Given
         List<Frame> frames = new ArrayList<>();
-        Frame givenFirstRound = new FinalFrame(0, Pins.create(), false);
+        Frame givenFirstRound = FinalFrame.create();
         frames.add(givenFirstRound);
 
         // When
@@ -75,7 +75,7 @@ class FinalFrameTest {
     void notSpareRoll() {
         // Given
         List<Frame> frames = new ArrayList<>();
-        Frame frame = new FinalFrame(0, Pins.create(), false);
+        Frame frame = FinalFrame.create();
         frames.add(frame);
 
         // When
