@@ -21,4 +21,11 @@ public class Player {
             throw new IllegalArgumentException(String.format("플레이어 이름은 알파벳 %d글자로 이루어져야 합니다.", NAME_LENGTH));
         }
     }
+
+    public boolean equals(String other) {
+        if (name == null || name.isEmpty()) {
+            return false;
+        }
+        return name.equals(other);
+    }
 }
