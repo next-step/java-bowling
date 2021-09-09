@@ -14,18 +14,21 @@ public class BowlingGame {
         String name = InputView.userName();
         Person person = Person.from(name);
 
-        ScoreBoard sb = ScoreBoard.create();
+        ScoreBoard scoreBoard = ScoreBoard.create();
 
         NormalFrame firstFrame = NormalFrame.create();
-        sb.write(person, firstFrame);
-        Frames frames = sb.framesOfPerson(person);
+        scoreBoard.write(person, firstFrame);
+        Frames frames = scoreBoard.framesOfPerson(person);
 
         for (int i = 0; i < frames.size(); i++) {
             Frame frame = frames.get(i);
             ResultView.showCurrentFrameInfo(frame.frameInfo());
             int downPinsCount = InputView.downPinsCount();
+
             ResultView.showHead();
+
             Frame nextFrame = frame.roll(downPinsCount);
+
             ResultView.showPersonNameOnBoard(person);
             ResultView.showScoreBoard(frames);
 
