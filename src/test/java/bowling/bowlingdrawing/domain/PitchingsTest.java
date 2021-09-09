@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-class RegularPitchingTest {
+class PitchingsTest {
 
     @Test
     @DisplayName("RegularPitching 생성")
@@ -15,10 +15,10 @@ class RegularPitchingTest {
         Pitching firstPitching = new Pitching(9);
 
         // when
-        RegularPitching regularPitching = new RegularPitching(firstPitching);
+        Pitchings pitchings = new Pitchings(firstPitching);
 
         // then
-        assertThat(regularPitching).isEqualTo(new RegularPitching(new Pitching(9)));
+        assertThat(pitchings).isEqualTo(new Pitchings(new Pitching(9)));
     }
 
     @Test
@@ -31,11 +31,11 @@ class RegularPitchingTest {
         Pitching secondPitching = new Pitching(pinsSecond);
 
         // when
-        RegularPitching regularPitching = new RegularPitching(firstPitching);
-        regularPitching.secondPitch(secondPitching);
+        Pitchings pitchings = new Pitchings(firstPitching);
+        pitchings.pitching(secondPitching);
 
         // then
-        assertThat(regularPitching).isEqualTo(new RegularPitching(firstPitching, secondPitching));
+        assertThat(pitchings).isEqualTo(new Pitchings(firstPitching, secondPitching));
     }
 
     @Test
@@ -50,7 +50,7 @@ class RegularPitchingTest {
         Pitching secondPitching = new Pitching(pinsSecond);
 
         // then
-        assertThatThrownBy(() -> new RegularPitching(firstPitching, secondPitching))
+        assertThatThrownBy(() -> new Pitchings(firstPitching, secondPitching))
                 .isInstanceOf(CustomException.class);
     }
 
@@ -58,10 +58,10 @@ class RegularPitchingTest {
     @DisplayName("score 합계 출력")
     void score() {
         // given
-        RegularPitching regularPitching = new RegularPitching(new Pitching(7), new Pitching(2));
+        Pitchings pitchings = new Pitchings(new Pitching(7), new Pitching(2));
 
         // when
-        int score = regularPitching.score();
+        int score = pitchings.score();
 
         assertThat(score).isEqualTo(9);
 
@@ -71,12 +71,12 @@ class RegularPitchingTest {
     @DisplayName("strike 여부 확인")
     void strike() {
         // given
-        RegularPitching regularPitching1 = new RegularPitching(new Pitching(10));
-        RegularPitching regularPitching2 = new RegularPitching(new Pitching(9));
+        Pitchings pitchings1 = new Pitchings(new Pitching(10));
+        Pitchings pitchings2 = new Pitchings(new Pitching(9));
 
         // when
-        boolean isStrike1 = regularPitching1.strike();
-        boolean isStrike2 = regularPitching2.strike();
+        boolean isStrike1 = pitchings1.strike();
+        boolean isStrike2 = pitchings2.strike();
 
         // then
         assertThat(isStrike1).isTrue();
@@ -87,12 +87,12 @@ class RegularPitchingTest {
     @DisplayName("spare 여부 확인")
     void spare() {
         // given
-        RegularPitching regularPitching1 = new RegularPitching(new Pitching(7), new Pitching(3));
-        RegularPitching regularPitching2 = new RegularPitching(new Pitching(7), new Pitching(2));
+        Pitchings pitchings1 = new Pitchings(new Pitching(7), new Pitching(3));
+        Pitchings pitchings2 = new Pitchings(new Pitching(7), new Pitching(2));
 
         // when
-        boolean isStrike1 = regularPitching1.spare();
-        boolean isStrike2 = regularPitching2.spare();
+        boolean isStrike1 = pitchings1.spare();
+        boolean isStrike2 = pitchings2.spare();
 
         // then
         assertThat(isStrike1).isTrue();
@@ -103,12 +103,12 @@ class RegularPitchingTest {
     @DisplayName("2번 완료 여부 확인")
     void done() {
         // given
-        RegularPitching regularPitching1 = new RegularPitching(new Pitching(7), new Pitching(3));
-        RegularPitching regularPitching2 = new RegularPitching(new Pitching(7));
+        Pitchings pitchings1 = new Pitchings(new Pitching(7), new Pitching(3));
+        Pitchings pitchings2 = new Pitchings(new Pitching(7));
 
         // when
-        boolean isStrike1 = regularPitching1.done();
-        boolean isStrike2 = regularPitching2.done();
+        boolean isStrike1 = pitchings1.done();
+        boolean isStrike2 = pitchings2.done();
 
         // then
         assertThat(isStrike1).isTrue();

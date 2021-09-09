@@ -139,7 +139,7 @@ public class QnAService {
         - `void validateOverTenFrames()`
 3. Frame
     1. 속성
-        - `RegularPitching regularPitching`
+        - `RegularPitching pitchings`
         - `Frame nextFrame`
     2. 메서드
         - `boolean done()`

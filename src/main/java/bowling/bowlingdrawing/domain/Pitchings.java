@@ -4,14 +4,20 @@ import bowling.bowlingdrawing.exception.CustomException;
 
 import java.util.Objects;
 
-public class RegularPitching {
-    private final Pitching firstPitching;
+public class Pitchings {
+    private Pitching firstPitching;
     private Pitching secondPitching;
 
-    public RegularPitching(Pitching firstPitching, Pitching secondPitching) {
+    public Pitchings() {}
+
+    public Pitchings(Pitching firstPitching, Pitching secondPitching) {
         validateSumIsOverTen(firstPitching, secondPitching);
         this.firstPitching = firstPitching;
         this.secondPitching = secondPitching;
+    }
+
+    public Pitchings(int firstPitchingPins, int secondPitchingPins) {
+        this(new Pitching(firstPitchingPins), new Pitching(secondPitchingPins));
     }
 
     private void validateSumIsOverTen(Pitching firstPitching, Pitching secondPitching) {
@@ -20,14 +26,18 @@ public class RegularPitching {
         }
     }
 
-    public RegularPitching(Pitching firstPitching) {
+    public Pitchings(Pitching firstPitching) {
         this(firstPitching, null);
     }
 
-    public void secondPitch(Pitching secondPitching) {
+    public Pitchings(int firstPitchingPins) {
+        this(new Pitching(firstPitchingPins), null);
+    }
+
+    public void pitching(Pitching pitching) {
         if (this.secondPitching == null) {
-            validateSumIsOverTen(this.firstPitching, secondPitching);
-            this.secondPitching = secondPitching;
+            validateSumIsOverTen(this.firstPitching, pitching);
+            this.secondPitching = pitching;
             return;
         }
         throw new CustomException("이미 완료된 Pitching");
@@ -52,8 +62,8 @@ public class RegularPitching {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RegularPitching)) return false;
-        RegularPitching that = (RegularPitching) o;
+        if (!(o instanceof Pitchings)) return false;
+        Pitchings that = (Pitchings) o;
         return Objects.equals(firstPitching, that.firstPitching) && Objects.equals(secondPitching, that.secondPitching);
     }
 
