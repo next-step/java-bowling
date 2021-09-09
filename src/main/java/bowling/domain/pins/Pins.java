@@ -7,6 +7,7 @@ import java.util.List;
 public class Pins {
 
     public static final int MAX_DOWNED_PIN_SIZE = 10;
+    public static final int MIN_DOWNED_PIN_SIZE = 0;
 
     private final List<Boolean> pins;
     private Status status;
@@ -50,7 +51,7 @@ public class Pins {
     }
 
     private void changeStatus(int down, int standPinsCount) {
-        if (standPinsCount + down == MAX_DOWNED_PIN_SIZE) {
+        if (standPinsCount > MIN_DOWNED_PIN_SIZE && standPinsCount + down == MAX_DOWNED_PIN_SIZE) {
             status = Status.find(MAX_DOWNED_PIN_SIZE, true);
             return;
         }
