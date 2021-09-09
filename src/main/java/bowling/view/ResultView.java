@@ -14,6 +14,7 @@ public class ResultView {
     private static final String BONUS_SCORE = "  %s   |";
     private static final String EMPTY_SECTION = "      |";
     private static final String NEW_LINE = "\n";
+    private static final String EMPTY_STRING = "";
     private static final PrintStream PRINT_STREAM = System.out;
 
     public static void printBoard(String playerName) {
@@ -29,21 +30,36 @@ public class ResultView {
         stringBuilder.append(FRAME_NAME_AND_NUMBERS);
         stringBuilder.append(String.format(PLAYER_NAME, playerName));
 
-        for (Frame frame : frames) {
-            String displayFormat = FrameScoreStatus.findDisplayFormat(frame.getScore());
-            stringBuilder.append(String.format(displayFormat, frame.getFirstScore(), frame.getSecondScore()));
-        }
-
-        int lastFrameIndex = frames.size() - GAP_BETWEEN_SIZE_AND_LAST_INDEX;
-        Frame finalFrame = frames.get(lastFrameIndex);
-        if (finalFrame.isBonusPlay()) {
-            stringBuilder.append(String.format(BONUS_SCORE, finalFrame.getBonusScore()));
-        }
+        stringBuilder.append(generateFrameScoreDisplay(frames));
+        stringBuilder.append(generateLastFrameBonusScoreDisplay(frames));
 
         int emptySectionCount = MAX_EMPTY_SECTION_COUNT - frames.size();
         stringBuilder.append(generateEmptySections(emptySectionCount));
 
         PRINT_STREAM.println(stringBuilder);
+    }
+
+    private static String generateFrameScoreDisplay(List<Frame> frames) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Frame frame : frames) {
+            String displayFormat = FrameScoreStatus.findDisplayFormat(frame.getScore());
+            stringBuilder.append(String.format(displayFormat, frame.getFirstScore(), frame.getSecondScore()));
+        }
+        return stringBuilder.toString();
+    }
+
+    private static String generateLastFrameBonusScoreDisplay(List<Frame> frames) {
+        if (frames == null || frames.isEmpty()) {
+            return EMPTY_STRING;
+        }
+
+        int lastFrameIndex = frames.size() - GAP_BETWEEN_SIZE_AND_LAST_INDEX;
+        Frame finalFrame = frames.get(lastFrameIndex);
+        if (!finalFrame.isBonusPlay()) {
+            return EMPTY_STRING;
+        }
+
+        return String.format(BONUS_SCORE, finalFrame.getBonusScore());
     }
 
     private static String generateEmptySections(int emptySectionCount) {
