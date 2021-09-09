@@ -41,17 +41,10 @@ public class Answers {
     }
 
     public Answers deleteAll(User loginUser) throws CannotDeleteException {
-        validateDeletePossible(loginUser);
-        answers.forEach(Answer::delete);
-        return this;
-    }
-
-    private void validateDeletePossible(User loginUser) throws CannotDeleteException {
         for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
+            answer.delete(loginUser);
         }
+        return this;
     }
 
     public List<DeleteHistory> toDeleteHistories() {

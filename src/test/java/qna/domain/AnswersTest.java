@@ -27,11 +27,11 @@ public class AnswersTest {
     }
 
     @Test
-    public void Answer를_삭제할_수_있다() {
+    public void Answer를_삭제할_수_있다() throws CannotDeleteException {
         //given
         Answer answer = new Answer(SANJIGI, QuestionTest.Q2, "Answers Contents3");
         //when
-        Answer deleted = answer.delete();
+        Answer deleted = answer.delete(SANJIGI);
         //then
         assertTrue(deleted.isDeleted());
     }
@@ -64,9 +64,9 @@ public class AnswersTest {
     }
 
     @Test
-    public void Answer로_부터_DeleteHistory_를_만들_수_있다() {
+    public void Answer로_부터_DeleteHistory_를_만들_수_있다() throws CannotDeleteException {
         //given
-        Answer answer1 = new Answer(JAVAJIGI, QuestionTest.Q1, "Answers Contents").delete();
+        Answer answer1 = new Answer(JAVAJIGI, QuestionTest.Q1, "Answers Contents").delete(JAVAJIGI);
         //when
         DeleteHistory deleteHistory = answer1.toDeleteHistory();
         //then
