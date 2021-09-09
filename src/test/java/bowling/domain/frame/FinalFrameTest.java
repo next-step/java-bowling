@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.pin.Pins;
 import bowling.exception.FrameNotCorrectException;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -63,5 +64,36 @@ class FinalFrameTest {
         assertThatThrownBy(() ->
                 FinalFrame.of(pins)
         ).isInstanceOf(FrameNotCorrectException.class);
+    }
+
+    @Test
+    void finalFrameException() {
+        assertThatThrownBy(() ->
+            FinalFrame.of().bowl(9).bowl(2)
+        ).isInstanceOf(FrameNotCorrectException.class);
+    }
+
+    @Test
+    void finalFrameInputFinished() {
+        //given
+        Frame finalFrame = FinalFrame.of().bowl(10).bowl(10).bowl(5);
+
+        //when
+        boolean actual = finalFrame.isFinished();
+
+        //then
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    void finalFrameInputNotFinished() {
+        //given
+        Frame finalFrame = FinalFrame.of().bowl(10).bowl(5);
+
+        //when
+        boolean actual = finalFrame.isFinished();
+
+        //then
+        assertThat(actual).isFalse();
     }
 }

@@ -6,6 +6,7 @@ import bowling.domain.pin.Pins;
 public abstract class Frame {
 
     public static final int MAX_ROUND_NUMBER = 10;
+    public static final int NEXT_ROUND_NUMBER_DISTANCE = 1;
 
     protected final int roundNumber;
     protected final Pins pins;
@@ -18,7 +19,7 @@ public abstract class Frame {
 
     protected abstract void validateFrame(Pins pins);
 
-    public abstract void inputKnockDownNumber(final int knockDownNumber);
+    public abstract Frame bowl(final int knockDownNumber);
 
     public abstract boolean isFinished();
 

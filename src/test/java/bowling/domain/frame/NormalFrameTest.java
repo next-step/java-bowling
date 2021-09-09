@@ -41,33 +41,47 @@ public class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("다음 프레임 => 현재 프레임")
+    @DisplayName("마지막 Normal 프레임이 끝나면 다음은 Final 프레임이다")
+    void normalFrameFinalNextIsFinalFrame() {
+        //given
+        Frame givenFrame = NormalFrame.of(NormalFrame.ROUND_BEFORE_LAST_ROUND).bowl(10);
+
+        // when
+        Frame nextFrame = givenFrame.nextFrame();
+
+        // then
+        assertThat(nextFrame.getClass()).isEqualTo(FinalFrame.class);
+    }
+
+    @Test
+    @DisplayName("프레임에 완료되지 않으면 현재 프레임 그대로 가져온다")
     void nextFrameIsCurrentFrame() {
         // given
-        Frame frame = NormalFrame.of(1);
-        frame.inputKnockDownNumber(5);
+        Frame givenFrame = NormalFrame.of(1).bowl(9);
 
         // when
-        Frame nextFrame = frame.nextFrame();
+        Frame actualFrame = givenFrame.nextFrame();
 
-        assertThat(frame).isEqualTo(nextFrame);
+        // then
+        assertThat(actualFrame).isEqualTo(givenFrame);
     }
 
     @Test
-    @DisplayName("다음 프레임  => 다음 프레임")
+    @DisplayName("한 프레임이 완료되면 다음 프레임을 가져온다.")
     void nextFrameIsNewFrame() {
         // given
-        Frame frame = NormalFrame.of(1);
-        frame.inputKnockDownNumber(10);
+        Frame frame = NormalFrame.first().bowl(10);
 
         // when
         Frame nextFrame = frame.nextFrame();
+        int actual = nextFrame.getRoundNumber();
 
-        assertThat(frame).isNotEqualTo(nextFrame);
+        // then
+        assertThat(actual).isEqualTo(NormalFrame.FIRST_ROUND_NUMBER + 1);
     }
 
     @Test
-    @DisplayName("기본 프레임 Exception")
+    @DisplayName("Normal 프레임 Exception")
     void normalFrameException() {
         // given
         int[] numbers = new int[]{5, 6};
