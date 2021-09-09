@@ -16,15 +16,15 @@ public class RegularPitching {
     }
 
     public boolean strike() {
-        return false;
+        return firstPitching.isTen();
     }
 
     public boolean spare() {
-        return false;
+        return firstPitching.sum(secondPitching) == Pitching.MAXIMUM_OF_PINS;
     }
 
     public int score() {
-        return 0;
+        return firstPitching.sum(secondPitching);
     }
 
     public void secondPitch(int pinsSecond) {
