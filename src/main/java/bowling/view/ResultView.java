@@ -4,15 +4,18 @@ import bowling.domain.Frame;
 import bowling.domain.Frames;
 import bowling.domain.Person;
 import bowling.domain.Status;
+import bowling.domain.frame.info.FrameInfo;
 
 public class ResultView {
 
-    public static void showFrame(Frame frame) {
-        System.out.println(frame.currentFrame() + "프레임 투구 ");
+    public static final String SPLIT_BAR = " | ";
+
+    public static void showFrameInfo(FrameInfo frame) {
+        System.out.println(frame.currentFrameNumber() + "프레임 투구 ");
     }
 
     public static void showHead() {
-        System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
+        System.out.println(SPLIT_BAR + " NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
     }
 
     public static void showScoreBoard(Frames frames) {
@@ -24,14 +27,14 @@ public class ResultView {
 
     public static void showCurrentFrameScore(Frame frame) {
         if (frame.pinStatus() == Status.MISS) {
-            System.out.print(frame.numberOfDownedPins() + " | ");
+            System.out.print(frame.numberOfDownedPins() + SPLIT_BAR);
             return;
         }
 
-        System.out.print(frame.pinStatus().getLetter() + " | ");
+        System.out.print(frame.pinStatus().getLetter() + SPLIT_BAR);
     }
 
     public static void showPersonNameOnBoard(Person person) {
-        System.out.print("|  " + person.name() + "  |");
+        System.out.print(SPLIT_BAR + person.name() + SPLIT_BAR);
     }
 }
