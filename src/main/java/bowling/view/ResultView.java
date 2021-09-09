@@ -10,7 +10,7 @@ public class ResultView {
 
     public static final String SPLIT_BAR = " | ";
 
-    public static void showFrameInfo(FrameInfo frame) {
+    public static void showCurrentFrameInfo(FrameInfo frame) {
         System.out.println(frame.currentFrameNumber() + "프레임 투구 ");
     }
 
