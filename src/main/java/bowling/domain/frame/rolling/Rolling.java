@@ -35,7 +35,7 @@ public class Rolling {
 
     public int plusFallenPin(Rolling rolling) {
         int fallenPinOfRolling = Optional.ofNullable(rolling)
-                .orElse(new Rolling(0))
+                .orElse(new Rolling(MIN_FALLEN_PIN))
                 .fallenPin();
         return this.fallenPin + fallenPinOfRolling;
     }

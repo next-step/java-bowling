@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public abstract class Rollings {
 
+    public static final int SPARE_SCORE = 10;
+
     private final Rolling first;
     private final Rolling second;
 
@@ -33,7 +35,7 @@ public abstract class Rollings {
         if (second == null) {
             return false;
         }
-        return !isStrike() && second.isSpare(first);
+        return !isStrike() && sum() == SPARE_SCORE;
     }
 
     public int sum() {
