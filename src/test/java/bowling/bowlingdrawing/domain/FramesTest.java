@@ -35,6 +35,20 @@ public class FramesTest {
     }
 
     @Test
+    @DisplayName("마지막 Frame strike 시 bonus Frame 추가 투구")
+    void pass_perfect_game() {
+        // given
+        Frames frames = new Frames();
+        // when
+        for (int i = 0; i < 12; i++) {
+            frames.pitch(10);
+        }
+
+        // then
+        assertThat(frames.frames().get(9).score()).isEqualTo(30);
+    }
+
+    @Test
     @DisplayName("다음 Pitching Frame Number 반환")
     void next_pitching_frame_number() {
         // given
