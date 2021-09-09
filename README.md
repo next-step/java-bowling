@@ -40,6 +40,6 @@
   - [x] 질문자와 답변자가 다른 경우 Exception이 발생해야 한다.
 - [x] Answers 일급 컬랙션에서 모든 Answer에 대해 질문자 답변자 다른 경우를 체크한다.
 - [x] 답변의 상태를 삭제 상태로 변경한다.
-- [ ] 삭제 시 삭제의 기록을 deletehistory에 저장한다.
-- [ ] Question을 delete하고 delete된 결과를 DeleteHistory 객체로 반환해야 한다.
-- [ ] Answer을 delete하고 delete된 결과를 DeleteHistory 객체로 반환해야 한다.
+- [x] 삭제 시 삭제의 기록을 deletehistory에 저장한다.
+- [x] Question을 delete하고 delete된 결과를 DeleteHistory 객체로 반환해야 한다.
+- [x] Answer을 delete하고 delete된 결과를 DeleteHistory 객체로 반환해야 한다.
