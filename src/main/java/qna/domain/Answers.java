@@ -20,15 +20,17 @@ public class Answers {
         return this;
     }
 
-    public boolean isDeleted(){
+    public boolean isDeleted() {
         return deleted;
     }
 
     public Answers delete(User loginUser) {
 
-        if(answers.stream().filter(answer -> !answer.isOwner(loginUser)).findFirst().isPresent()){
+        if (answers.stream().filter(answer -> !answer.isOwner(loginUser)).findFirst().isPresent()) {
             throw new ForbiddenException("본인이 작성하지 않은 답변이 있어서, 삭제할 수 없습니다");
         }
+
+        answers.stream().forEach(answer -> answer.setDeleted(true));
 
         return setDeleted(true);
     }
