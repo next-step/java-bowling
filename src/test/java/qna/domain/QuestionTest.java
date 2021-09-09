@@ -2,6 +2,7 @@ package qna.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 public class QuestionTest {
+
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
@@ -34,8 +36,10 @@ public class QuestionTest {
         DeleteHistory result = Q1.deleteQuestion(writer);
 
         // then
-        assertThat(result).isEqualTo(expected);
-        assertTrue(Q1.isDeleted());
+        assertAll(
+            () -> assertThat(result).isEqualTo(expected),
+            () -> assertTrue(Q1.isDeleted())
+        );
     }
 
 }
