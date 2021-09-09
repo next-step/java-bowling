@@ -50,8 +50,10 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public void deleteAnswer(User writer) throws CannotDeleteException {
+    public DeleteHistory deleteAnswer(User writer) throws CannotDeleteException {
         checkDeleteAnswer(writer);
+        setDeleted(true);
+        return new DeleteHistory(this);
     }
 
     public boolean isOwner(User writer) {
