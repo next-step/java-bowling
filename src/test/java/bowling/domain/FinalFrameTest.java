@@ -37,18 +37,18 @@ public class FinalFrameTest {
     @Test
     public void strike_finalFrame() {
         FinalFrame finalFrame = new FinalFrame(10);
-        assertThat(finalFrame.sumOfScore()).isEqualTo(10);
-        assertThat(finalFrame.scoreToSymbol()).isEqualTo("X");
+        assertThat(finalFrame.frameScoresSum()).isEqualTo(10);
+        assertThat(finalFrame.frameScoreToSymbolString()).isEqualTo("X");
         assertThat(finalFrame.isNext()).isEqualTo(false);
 
         finalFrame.addScore(10);
-        assertThat(finalFrame.sumOfScore()).isEqualTo(20);
-        assertThat(finalFrame.scoreToSymbol()).isEqualTo("X|X");
+        assertThat(finalFrame.frameScoresSum()).isEqualTo(20);
+        assertThat(finalFrame.frameScoreToSymbolString()).isEqualTo("X|X");
         assertThat(finalFrame.isNext()).isEqualTo(false);
 
         finalFrame.addScore(10);
-        assertThat(finalFrame.sumOfScore()).isEqualTo(30);
-        assertThat(finalFrame.scoreToSymbol()).isEqualTo("X|X|X");
+        assertThat(finalFrame.frameScoresSum()).isEqualTo(30);
+        assertThat(finalFrame.frameScoreToSymbolString()).isEqualTo("X|X|X");
         assertThat(finalFrame.isNext()).isEqualTo(true);
     }
 
@@ -56,18 +56,18 @@ public class FinalFrameTest {
     @Test
     public void spare_finalFrame() {
         FinalFrame finalFrame = new FinalFrame(9);
-        assertThat(finalFrame.sumOfScore()).isEqualTo(9);
-        assertThat(finalFrame.scoreToSymbol()).isEqualTo("9");
+        assertThat(finalFrame.frameScoresSum()).isEqualTo(9);
+        assertThat(finalFrame.frameScoreToSymbolString()).isEqualTo("9");
         assertThat(finalFrame.isNext()).isEqualTo(false);
 
         finalFrame.addScore(1);
-        assertThat(finalFrame.sumOfScore()).isEqualTo(10);
-        assertThat(finalFrame.scoreToSymbol()).isEqualTo("9|/");
+        assertThat(finalFrame.frameScoresSum()).isEqualTo(10);
+        assertThat(finalFrame.frameScoreToSymbolString()).isEqualTo("9|/");
         assertThat(finalFrame.isNext()).isEqualTo(false);
 
         finalFrame.addScore(1);
-        assertThat(finalFrame.sumOfScore()).isEqualTo(11);
-        assertThat(finalFrame.scoreToSymbol()).isEqualTo("9|/|1");
+        assertThat(finalFrame.frameScoresSum()).isEqualTo(11);
+        assertThat(finalFrame.frameScoreToSymbolString()).isEqualTo("9|/|1");
         assertThat(finalFrame.isNext()).isEqualTo(true);
     }
 
@@ -75,13 +75,13 @@ public class FinalFrameTest {
     @Test
     public void gutter_finalFrame() {
         FinalFrame finalFrame = new FinalFrame(9);
-        assertThat(finalFrame.sumOfScore()).isEqualTo(9);
-        assertThat(finalFrame.scoreToSymbol()).isEqualTo("9");
+        assertThat(finalFrame.frameScoresSum()).isEqualTo(9);
+        assertThat(finalFrame.frameScoreToSymbolString()).isEqualTo("9");
         assertThat(finalFrame.isNext()).isEqualTo(false);
 
         finalFrame.addScore(0);
-        assertThat(finalFrame.sumOfScore()).isEqualTo(9);
-        assertThat(finalFrame.scoreToSymbol()).isEqualTo("9|-");
+        assertThat(finalFrame.frameScoresSum()).isEqualTo(9);
+        assertThat(finalFrame.frameScoreToSymbolString()).isEqualTo("9|-");
         assertThat(finalFrame.isNext()).isEqualTo(true);
     }
 }

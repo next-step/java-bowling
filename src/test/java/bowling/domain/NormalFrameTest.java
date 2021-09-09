@@ -38,8 +38,8 @@ public class NormalFrameTest {
     @Test
     public void strike_normalFrame() {
         NormalFrame normalFrame = new NormalFrame(10);
-        assertThat(normalFrame.sumOfScore()).isEqualTo(10);
-        assertThat(normalFrame.scoreToSymbol()).isEqualTo("X");
+        assertThat(normalFrame.frameScoresSum()).isEqualTo(10);
+        assertThat(normalFrame.frameScoreToSymbolString()).isEqualTo("X");
         assertThat(normalFrame.isNext()).isEqualTo(true);
     }
 
@@ -47,12 +47,12 @@ public class NormalFrameTest {
     @Test
     public void spare_normalFrame() {
         NormalFrame normalFrame = new NormalFrame(1);
-        assertThat(normalFrame.sumOfScore()).isEqualTo(1);
+        assertThat(normalFrame.frameScoresSum()).isEqualTo(1);
         assertThat(normalFrame.isNext()).isEqualTo(false);
 
         normalFrame.addScore(9);
-        assertThat(normalFrame.sumOfScore()).isEqualTo(10);
-        assertThat(normalFrame.scoreToSymbol()).isEqualTo("1|/");
+        assertThat(normalFrame.frameScoresSum()).isEqualTo(10);
+        assertThat(normalFrame.frameScoreToSymbolString()).isEqualTo("1|/");
         assertThat(normalFrame.isNext()).isEqualTo(true);
     }
 
@@ -60,13 +60,13 @@ public class NormalFrameTest {
     @Test
     public void gutter_normalFrame() {
         NormalFrame normalFrame = new NormalFrame(0);
-        assertThat(normalFrame.sumOfScore()).isEqualTo(0);
+        assertThat(normalFrame.frameScoresSum()).isEqualTo(0);
         assertThat(normalFrame.isNext()).isEqualTo(false);
-        assertThat(normalFrame.scoreToSymbol()).isEqualTo("-");
+        assertThat(normalFrame.frameScoreToSymbolString()).isEqualTo("-");
 
         normalFrame.addScore(0);
-        assertThat(normalFrame.sumOfScore()).isEqualTo(0);
-        assertThat(normalFrame.scoreToSymbol()).isEqualTo("-|-");
+        assertThat(normalFrame.frameScoresSum()).isEqualTo(0);
+        assertThat(normalFrame.frameScoreToSymbolString()).isEqualTo("-|-");
         assertThat(normalFrame.isNext()).isEqualTo(true);
     }
 }
