@@ -75,20 +75,8 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public DeleteHistory deleteQuestion(User loginUser) throws CannotDeleteException {
-        checkCannotDelete(loginUser);
-        setDeleted(true);
-        return new DeleteHistory(this);
-    }
-
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
-    }
-
-    private void checkCannotDelete(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException(CANT_DELETE_BY_DISMATCH_WRITER_ERROR_MESSAGE);
-        }
     }
 
     public Question setDeleted(boolean deleted) {
@@ -102,6 +90,18 @@ public class Question extends AbstractEntity {
 
     public Answers getAnswers() {
         return answers;
+    }
+
+    public DeleteHistory deleteQuestion(User loginUser) throws CannotDeleteException {
+        checkCannotDelete(loginUser);
+        setDeleted(true);
+        return new DeleteHistory(this);
+    }
+
+    private void checkCannotDelete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(CANT_DELETE_BY_DISMATCH_WRITER_ERROR_MESSAGE);
+        }
     }
 
     @Override
