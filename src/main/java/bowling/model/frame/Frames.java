@@ -16,25 +16,25 @@ public class Frames {
         this.frames = frames;
     }
 
-    public List<Frame> play(int score) {
+    public List<Frame> play(int fallenPinCount) {
         if (frames.isEmpty()) {
-            return playFirst(score);
+            return playFirst(fallenPinCount);
         }
-        return playNotFirst(score);
+        return playNotFirst(fallenPinCount);
     }
 
-    private List<Frame> playFirst(int score) {
+    private List<Frame> playFirst(int fallenPinCount) {
         validateNextIsPlayable();
 
-        Frame first = Frame.first(score);
+        Frame first = Frame.first(fallenPinCount);
         frames.add(first);
         return frames;
     }
 
-    private List<Frame> playNotFirst(int score) {
+    private List<Frame> playNotFirst(int fallenPinCount) {
         validateNextIsPlayable();
 
-        Frame next = lastFrame().next(score);
+        Frame next = lastFrame().next(fallenPinCount);
         if (next.isFrameNumberEqual(lastFrame())) {
             int lastFrameIndex = frames.size() - GAP_BETWEEN_SIZE_AND_INDEX;
             frames.remove(lastFrameIndex);

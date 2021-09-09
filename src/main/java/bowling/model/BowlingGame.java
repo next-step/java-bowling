@@ -16,8 +16,8 @@ public class BowlingGame {
         frames = new Frames();
     }
 
-    public List<Frame> play(int score) {
-        return frames.play(score);
+    public List<Frame> play(int fallenPinCount) {
+        return frames.play(fallenPinCount);
     }
 
     public boolean canPlayNext() {

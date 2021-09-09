@@ -3,28 +3,28 @@ package bowling.model.frame;
 public class FinalFrame extends Frame {
     private static final int FINAL_FRAME_NUMBER = 10;
 
-    private Score bonusScore;
+    private FallenPin bonusFallenPin;
 
-    public FinalFrame(FrameNumber number, FrameScore score) {
-        super(number, score);
+    public FinalFrame(FrameNumber number, FrameFallenPin fallenPin) {
+        super(number, fallenPin);
     }
 
-    private FinalFrame(FrameNumber number, FrameScore score, int bonusScore) {
-        super(number, score);
-        this.bonusScore = Score.of(bonusScore);
+    private FinalFrame(FrameNumber number, FrameFallenPin fallenPin, int bonusFallenPinCount) {
+        super(number, fallenPin);
+        this.bonusFallenPin = FallenPin.of(bonusFallenPinCount);
     }
 
-    public FinalFrame(int number, int firstScore) {
-        super(new FrameNumber(number), FrameScore.first(firstScore));
+    public FinalFrame(int number, int firstFallenPinCount) {
+        super(new FrameNumber(number), FrameFallenPin.first(firstFallenPinCount));
     }
 
-    public FinalFrame(int number, int firstScore, int secondScore) {
-        super(number, firstScore, secondScore);
+    public FinalFrame(int number, int firstFallenPinCount, int secondFallenPinCount) {
+        super(number, firstFallenPinCount, secondFallenPinCount);
     }
 
-    public FinalFrame(int number, int firstScore, int secondScore, int bonusScore) {
-        super(number, firstScore, secondScore);
-        this.bonusScore = Score.of(bonusScore);
+    public FinalFrame(int number, int firstFallenPinCount, int secondFallenPinCount, int bonusFallenPinCount) {
+        super(number, firstFallenPinCount, secondFallenPinCount);
+        this.bonusFallenPin = FallenPin.of(bonusFallenPinCount);
     }
 
     @Override
@@ -36,17 +36,17 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean canPlayNext() {
-        return bonusScore == null && (score.isFirst() || isStrikeOrSpare());
+        return bonusFallenPin == null && (fallenPin.isFirst() || isStrikeOrSpare());
     }
 
     @Override
-    public Frame next(int score) {
+    public Frame next(int fallenPinCount) {
         if (isFirstAndNotStrike()) {
-            return new FinalFrame(number, this.score.second(score));
+            return new FinalFrame(number, this.fallenPin.second(fallenPinCount));
         }
 
         if (isStrikeOrSpare()) {
-            return new FinalFrame(number, this.score, score);
+            return new FinalFrame(number, this.fallenPin, fallenPinCount);
         }
 
         throw new IllegalArgumentException("마지막 프레임의 다음 번호 프레임을 만들 수 없습니다.");
@@ -62,11 +62,11 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isBonusPlay() {
-        return bonusScore != null;
+        return bonusFallenPin != null;
     }
 
     @Override
-    public Score getBonusScore() {
-        return bonusScore;
+    public FallenPin getBonusFallenPin() {
+        return bonusFallenPin;
     }
 }

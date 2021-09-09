@@ -2,37 +2,37 @@ package bowling.model.frame;
 
 public abstract class Frame {
     protected FrameNumber number;
-    protected FrameScore score;
+    protected FrameFallenPin fallenPin;
 
-    protected Frame(FrameNumber number, FrameScore score) {
+    protected Frame(FrameNumber number, FrameFallenPin fallenPin) {
         validateNumberRange(number);
 
         this.number = number;
-        this.score = score;
+        this.fallenPin = fallenPin;
     }
 
-    public Frame(int number, int firstScore, int secondScore) {
+    public Frame(int number, int firstFallenPinCount, int secondFallenPinCount) {
         FrameNumber frameNumber = new FrameNumber(number);
         validateNumberRange(frameNumber);
 
         this.number = new FrameNumber(number);
-        this.score = new FrameScore(Score.of(firstScore), Score.of(secondScore));
+        this.fallenPin = new FrameFallenPin(FallenPin.of(firstFallenPinCount), FallenPin.of(secondFallenPinCount));
     }
 
     protected abstract void validateNumberRange(FrameNumber number);
 
     public abstract boolean canPlayNext();
 
-    public abstract Frame next(int score);
+    public abstract Frame next(int fallenPinCount);
 
     public abstract FrameNumber nextNumber();
 
     public abstract boolean isBonusPlay();
 
-    public abstract Score getBonusScore();
+    public abstract FallenPin getBonusFallenPin();
 
-    public static Frame first(int score) {
-        return new NormalFrame(FrameNumber.first(), FrameScore.first(score));
+    public static Frame first(int fallenPinCount) {
+        return new NormalFrame(FrameNumber.first(), FrameFallenPin.first(fallenPinCount));
     }
 
     protected boolean isStrikeOrSpare() {
@@ -40,31 +40,31 @@ public abstract class Frame {
     }
 
     protected boolean isStrike() {
-        return score.isStrike();
+        return fallenPin.isStrike();
     }
 
     protected boolean isFirstAndNotStrike() {
-        return score.isFirst() && !isStrike();
+        return fallenPin.isFirst() && !isStrike();
     }
 
     protected boolean pitchTwice() {
-        return score.pitchTwice();
+        return fallenPin.pitchTwice();
     }
 
     private boolean isSpare() {
-        return score.isSpare();
+        return fallenPin.isSpare();
     }
 
-    public FrameScore getScore() {
-        return score;
+    public FrameFallenPin getFallenPin() {
+        return fallenPin;
     }
 
-    public Score getFirstScore() {
-        return score.getFirst();
+    public FallenPin getFirstFallenPin() {
+        return fallenPin.getFirst();
     }
 
-    public Score getSecondScore() {
-        return score.getSecond();
+    public FallenPin getSecondFallenPin() {
+        return fallenPin.getSecond();
     }
 
     public boolean isFrameNumberEqual(Frame frame) {

@@ -4,16 +4,16 @@ public class NormalFrame extends Frame {
     private static final int MIN_NORMAL_NUMBER = 1;
     private static final int MAX_NORMAL_NUMBER = 9;
 
-    public NormalFrame(FrameNumber number, FrameScore score) {
-        super(number, score);
+    public NormalFrame(FrameNumber number, FrameFallenPin fallenPin) {
+        super(number, fallenPin);
     }
 
-    public NormalFrame(int number, int firstScore, int secondScore) {
-        super(number, firstScore, secondScore);
+    public NormalFrame(int number, int firstFallenPinCount, int secondFallenPinCount) {
+        super(number, firstFallenPinCount, secondFallenPinCount);
     }
 
-    public NormalFrame(int number, int firstScore) {
-        super(new FrameNumber(number), FrameScore.first(firstScore));
+    public NormalFrame(int number, int firstFallenPinCount) {
+        super(new FrameNumber(number), FrameFallenPin.first(firstFallenPinCount));
     }
 
     private boolean isNextFinalFrame() {
@@ -34,20 +34,20 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean canPlayNext() {
-        return (score.isFirst() && !isStrike()) || number.canMakeNext();
+        return (fallenPin.isFirst() && !isStrike()) || number.canMakeNext();
     }
 
     @Override
-    public Frame next(int score) {
+    public Frame next(int fallenPinCount) {
         if (isNextFinalFrame()) {
-            return new FinalFrame(number.next(), FrameScore.first(score));
+            return new FinalFrame(number.next(), FrameFallenPin.first(fallenPinCount));
         }
 
         if (needNextNumber()) {
-            return new NormalFrame(number.next(), FrameScore.first(score));
+            return new NormalFrame(number.next(), FrameFallenPin.first(fallenPinCount));
         }
 
-        return new NormalFrame(number, this.score.second(score));
+        return new NormalFrame(number, this.fallenPin.second(fallenPinCount));
     }
 
     @Override
@@ -64,7 +64,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Score getBonusScore() {
+    public FallenPin getBonusFallenPin() {
         return null;
     }
 }

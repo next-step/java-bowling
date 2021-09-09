@@ -13,8 +13,8 @@ public class BowlingGameApp {
         BowlingGame bowlingGame = new BowlingGame(playerName);
 
         while (bowlingGame.canPlayNext()) {
-            int score = InputView.inputScore(bowlingGame.nextFrameNumber());
-            List<Frame> frames = bowlingGame.play(score);
+            int fallenPinCount = InputView.inputFallenPinCount(bowlingGame.nextFrameNumber());
+            List<Frame> frames = bowlingGame.play(fallenPinCount);
             ResultView.printFrames(playerName, frames);
         }
     }

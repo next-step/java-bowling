@@ -11,7 +11,7 @@ public class ResultView {
     private static final String FRAME_NAME_AND_NUMBERS
             = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |\n";
     private static final String PLAYER_NAME = "|  %s |";
-    private static final String BONUS_SCORE = "  %s   |";
+    private static final String BONUS_FALLEN_PIN_DISPLAY_FORMAT = "  %s   |";
     private static final String EMPTY_SECTION = "      |";
     private static final String NEW_LINE = "\n";
     private static final String EMPTY_STRING = "";
@@ -30,8 +30,8 @@ public class ResultView {
         stringBuilder.append(FRAME_NAME_AND_NUMBERS);
         stringBuilder.append(String.format(PLAYER_NAME, playerName));
 
-        stringBuilder.append(generateFrameScoreDisplay(frames));
-        stringBuilder.append(generateLastFrameBonusScoreDisplay(frames));
+        stringBuilder.append(generateFrameFallenPinDisplay(frames));
+        stringBuilder.append(generateLastFrameBonusFallenPinDisplay(frames));
 
         int emptySectionCount = MAX_EMPTY_SECTION_COUNT - frames.size();
         stringBuilder.append(generateEmptySections(emptySectionCount));
@@ -39,16 +39,16 @@ public class ResultView {
         PRINT_STREAM.println(stringBuilder);
     }
 
-    private static String generateFrameScoreDisplay(List<Frame> frames) {
+    private static String generateFrameFallenPinDisplay(List<Frame> frames) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Frame frame : frames) {
-            String displayFormat = FrameScoreStatus.findDisplayFormat(frame.getScore());
-            stringBuilder.append(String.format(displayFormat, frame.getFirstScore(), frame.getSecondScore()));
+            String displayFormat = FrameFallenPinStatus.findDisplayFormat(frame.getFallenPin());
+            stringBuilder.append(String.format(displayFormat, frame.getFirstFallenPin(), frame.getSecondFallenPin()));
         }
         return stringBuilder.toString();
     }
 
-    private static String generateLastFrameBonusScoreDisplay(List<Frame> frames) {
+    private static String generateLastFrameBonusFallenPinDisplay(List<Frame> frames) {
         if (frames == null || frames.isEmpty()) {
             return EMPTY_STRING;
         }
@@ -59,7 +59,7 @@ public class ResultView {
             return EMPTY_STRING;
         }
 
-        return String.format(BONUS_SCORE, finalFrame.getBonusScore());
+        return String.format(BONUS_FALLEN_PIN_DISPLAY_FORMAT, finalFrame.getBonusFallenPin());
     }
 
     private static String generateEmptySections(int emptySectionCount) {
