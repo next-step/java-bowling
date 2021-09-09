@@ -19,7 +19,7 @@ public class ScoreBoard {
 
     public void write(Person person, Frame frame) {
         Frames frames = board.computeIfAbsent(person, person1 -> Frames.create());
-        frames.add(frame);
+        frames.addFrame(frame);
     }
 
     public Frames framesOfPerson(Person person) {

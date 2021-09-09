@@ -17,7 +17,7 @@ public class Frames implements Iterable<Frame> {
         return new Frames(new ArrayList<>());
     }
 
-    public void add(Frame frame) {
+    public void addFrame(Frame frame) {
         frames.add(frame);
     }
 
