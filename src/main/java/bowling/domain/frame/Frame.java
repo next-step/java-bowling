@@ -10,11 +10,21 @@ public abstract class Frame {
 
     protected final int roundNumber;
     protected final Pins pins;
+    protected Frame nextFrame;
 
     protected Frame(final int roundNumber, final Pins pins) {
+        this(roundNumber, pins, null);
+    }
+
+    protected Frame(int roundNumber, Pins pins, Frame nextFrame) {
         validateFrame(pins);
         this.roundNumber = roundNumber;
         this.pins = pins;
+        this.nextFrame = nextFrame;
+    }
+
+    public void setNextFrame(Frame nextFrame) {
+        this.nextFrame = nextFrame;
     }
 
     protected abstract void validateFrame(Pins pins);

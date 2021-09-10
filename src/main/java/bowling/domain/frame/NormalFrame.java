@@ -10,8 +10,6 @@ public final class NormalFrame extends Frame {
     private static final int MAX_SIZE = 2;
     private static final int MAX_KNOCK_DOWN_NUMBER = 10;
 
-    private Frame nextFrame;
-
     private NormalFrame(final int roundNumber) {
         super(roundNumber, Pins.of());
     }
@@ -20,12 +18,20 @@ public final class NormalFrame extends Frame {
         super(roundNumber, pins);
     }
 
+    private NormalFrame(final int roundNumber, final Pins pins, final Frame frame) {
+        super(roundNumber, pins, frame);
+    }
+
     public static Frame of(final int roundNumber, final int... number) {
         return new NormalFrame(roundNumber, Pins.of(number));
     }
 
     public static Frame of(final int roundNumber, Pins pins) {
         return new NormalFrame(roundNumber, pins);
+    }
+
+    public static Frame of(final int roundNumber, Pins pins, Frame frame) {
+        return new NormalFrame(roundNumber, pins, frame);
     }
 
     public static Frame of(final int roundNumber) {
@@ -42,10 +48,6 @@ public final class NormalFrame extends Frame {
         return nextFrame;
     }
 
-    public void setNextFrame(Frame nextFrame) {
-        this.nextFrame = nextFrame;
-    }
-
     @Override
     protected void validateFrame(final Pins pins) {
         if (pins.sumPins() > MAX_KNOCK_DOWN_NUMBER) {
@@ -56,7 +58,9 @@ public final class NormalFrame extends Frame {
     @Override
     public Frame bowl(final int knockDownNumber) {
         pins.add(knockDownNumber);
-        return NormalFrame.of(roundNumber, pins);
+        Frame newFrame = NormalFrame.of(roundNumber, pins);
+        newFrame.setNextFrame(nextFrame);
+        return newFrame;
     }
 
     @Override
@@ -85,7 +89,31 @@ public final class NormalFrame extends Frame {
 
     @Override
     public boolean canCalculateScore() {
-        return isFinished();
+        if (!isFinished()) {
+            return false;
+        }
+
+        if (FrameStatus.of(pins) == FrameStatus.SPARE) {
+            if (nextFrame == null) {
+                return false;
+            }
+            if (nextFrame.pins.size() > 0) {
+                return true;
+            }
+        }
+
+        if (FrameStatus.of(pins) == FrameStatus.STRIKE) {
+            if (nextFrame != null && nextFrame.pins.size() == 2 && FrameStatus.of(nextFrame.pins) != FrameStatus.STRIKE) {
+                return true;
+            }
+
+            if (nextFrame != null && FrameStatus.of(nextFrame.pins) == FrameStatus.STRIKE) {
+                if (nextFrame.nextFrame != null && nextFrame.nextFrame.pins.size() > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
@@ -110,4 +138,5 @@ public final class NormalFrame extends Frame {
         }
         return score + pins.sumPins();
     }
+
 }

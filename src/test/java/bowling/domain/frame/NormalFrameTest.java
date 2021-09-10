@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.pin.Pins;
 import bowling.exception.FrameNotCorrectException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -138,5 +137,117 @@ public class NormalFrameTest {
 
         // then
         assertThat(actualScore).isEqualTo(25);
+    }
+
+    ////////////////////////////////////
+
+    @Test
+    @DisplayName("해당 프레임 투구가 종료되지 않았다면 계산 X")
+    void notFinishCanNotCalculate() {
+        // given
+        Frame frame = NormalFrame.first().bowl(9);
+
+        //when
+        boolean isCanCalculate = frame.canCalculateScore();
+
+        //then
+        assertThat(isCanCalculate).isFalse();
+    }
+
+    @Test
+    @DisplayName("스트라이크, 스페어가 아닐때 해당프레임 투구가 완료되면 계산 O")
+    void basicFrameCanCalculate() {
+        // given
+        Frame frame = NormalFrame.first().bowl(5).bowl(4);
+
+        //when
+        boolean isCanCalculate = frame.canCalculateScore();
+
+        //then
+        assertThat(isCanCalculate).isFalse();
+    }
+
+    @Test
+    @DisplayName("스페어일경우 다음 1번의 투구가 있다 계산 O")
+    void spareCanCalculateFrame() {
+        // given
+        Frame firstFrame = NormalFrame.first().bowl(5).bowl(5);
+        firstFrame.nextFrame().bowl(5);
+
+        //when
+        boolean isCanCalculate = firstFrame.canCalculateScore();
+
+        //then
+        assertThat(isCanCalculate).isTrue();
+    }
+
+    @Test
+    @DisplayName("스페어일경우 다음 1번의 투구가 없다면 계산 X")
+    void spareCanNotCalculateFrame() {
+        // given
+        Frame firstFrame = NormalFrame.first().bowl(5).bowl(5);
+
+        //when
+        boolean isCanCalculate = firstFrame.canCalculateScore();
+
+        //then
+        assertThat(isCanCalculate).isFalse();
+    }
+
+    @Test
+    @DisplayName("스트라이크는 다음 2번의 투구가 없으면 계산 X")
+    void strikeCanNotCalculateFrame() {
+        //given
+        Frame frame = NormalFrame.first().bowl(10);
+
+        //when
+        boolean isCanCalculate = frame.canCalculateScore();
+
+        //then
+        assertThat(isCanCalculate).isFalse();
+    }
+
+    @Test
+    @DisplayName("스트라이크 일경우 다음 2번의 투구가 있다면 계산 O")
+    void strikeCanCalculateFrame() {
+        //given
+        Frame firstFrame = NormalFrame.first().bowl(10);
+        firstFrame.nextFrame().bowl(5).bowl(5);
+
+        //when
+        boolean isCanCalculate = firstFrame.canCalculateScore();
+
+        //then
+        assertThat(isCanCalculate).isTrue();
+    }
+
+    @Test
+    @DisplayName("더블일경우 그다음 프레임에서 1번의 투구가 없다면 계산 X")
+    void test1() {
+        Frame firstFrame = NormalFrame.first().bowl(10);
+        firstFrame.nextFrame().bowl(10);
+
+        //when
+        boolean isCanCalculate = firstFrame.canCalculateScore();
+
+        //then
+        assertThat(isCanCalculate).isFalse();
+    }
+
+    @Test
+    @DisplayName("더블일경우 그다음 프레임에서 1번의 투구가 있다면 계산 0")
+    void test2() {
+        // given
+        Frame firstFrame = NormalFrame.first().bowl(10);
+        Frame secondFrame = firstFrame.nextFrame();
+        secondFrame.bowl(10);
+        Frame thirdFrame = secondFrame.nextFrame();
+        thirdFrame.bowl(5);
+
+        //when
+        boolean isCanCalculate = firstFrame.canCalculateScore();
+
+        //then
+        assertThat(isCanCalculate).isTrue();
     }
 }
