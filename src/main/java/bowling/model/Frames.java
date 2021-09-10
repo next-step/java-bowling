@@ -5,12 +5,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Frames implements Iterable<NormalFrame> {
-    private static final int FRAME_SIZE = 10;
+public class Frames implements Iterable<Frame> {
+    private static final int NORMAL_FRAME_SIZE = 9;
 
-    private final List<NormalFrame> frames = IntStream.range(0, FRAME_SIZE).mapToObj(i -> new NormalFrame()).collect(Collectors.toList());
+    private final List<Frame> frames;
 
-    private NormalFrame currentPlayingFrame() {
+    public Frames() {
+        List<Frame> frames = IntStream.range(0, NORMAL_FRAME_SIZE).mapToObj(i -> new NormalFrame()).collect(Collectors.toList());
+        frames.add(new FinalFrame());
+        this.frames = frames;
+    }
+
+    private Frame currentPlayingFrame() {
         return frames.stream().filter(frame -> !frame.isOver()).findFirst().orElse(null);
     }
 
@@ -19,7 +25,7 @@ public class Frames implements Iterable<NormalFrame> {
     }
 
     public boolean isOver() {
-        return frames.stream().allMatch(NormalFrame::isOver);
+        return frames.stream().allMatch(Frame::isOver);
     }
 
     public int currentPlayingFrameIndex() {
@@ -27,7 +33,7 @@ public class Frames implements Iterable<NormalFrame> {
     }
 
     @Override
-    public Iterator<NormalFrame> iterator() {
+    public Iterator<Frame> iterator() {
         return frames.iterator();
     }
 }

@@ -11,20 +11,12 @@ public class ShotResults implements Iterable<ShotResult> {
         shotResults.add(shotResult);
     }
 
-    public boolean sumIsMax() {
-        return ShotResult.fromSumOf(shotResults) == ShotResult.MAX;
-    }
-
-    public boolean firstIsMax() {
-        return shotResults.get(0) == ShotResult.MAX;
+    public int sumOfPinDown() {
+        return shotResults.stream().mapToInt(ShotResult::getNumOfPinDown).sum();
     }
 
     public int size() {
         return shotResults.size();
-    }
-
-    public boolean empty() {
-        return shotResults.size() == 0;
     }
 
     @Override

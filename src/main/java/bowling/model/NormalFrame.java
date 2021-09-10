@@ -1,30 +1,31 @@
 package bowling.model;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
     private static final int NUMBER_OF_SHOTS = 2;
 
-    private final ShotResults shotResults = new ShotResults();
+    ShotResults shotResults = new ShotResults();
 
+    @Override
     public void record(ShotResult shotResult) {
-        if (!isOver()) {
-            shotResults.add(shotResult);
+        if (isOver()) {
+            return;
         }
+        shotResults.add(shotResult);
     }
 
+    @Override
     public boolean isOver() {
-        return shotResults.sumIsMax() || shotResults.size() == NUMBER_OF_SHOTS;
+        return sumIsMax() || shotResults.size() == NUMBER_OF_SHOTS;
+    }
+
+    private boolean sumIsMax() {
+        return shotResults.sumOfPinDown() == ShotResult.MAX.getNumOfPinDown();
     }
 
     @Override
     public String toString() {
-        FrameResult result = FrameResult.fromShotResults(shotResults);
-
-        if (result == FrameResult.STRIKE) {
-            return "X";
-        }
-
         String shotResultString = shotResults.toString();
-        if (result == FrameResult.SPARE) {
+        if (sumIsMax()) {
             return replaceLastWithSpare(shotResultString);
         }
         return shotResultString;

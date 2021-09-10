@@ -1,7 +1,5 @@
 package bowling.model;
 
-import java.util.List;
-
 public enum ShotResult {
     ZERO(0),
     ONE(1),
@@ -23,10 +21,6 @@ public enum ShotResult {
         this.numOfPinDown = numOfPinDown;
     }
 
-    public static ShotResult fromSumOf(List<ShotResult> shotResults) {
-        return from(shotResults.stream().mapToInt(shotResult -> shotResult.numOfPinDown).sum());
-    }
-
     public static ShotResult from(int numOfPinDown) {
         for (ShotResult shotResult : ShotResult.values()) {
             if (shotResult.numOfPinDown == numOfPinDown) {
@@ -37,8 +31,19 @@ public enum ShotResult {
         throw new IllegalArgumentException("올바르지 않은 넘어트린 핀 갯수!");
     }
 
+    public int getNumOfPinDown() {
+        return numOfPinDown;
+    }
+
     @Override
     public String toString() {
-        return this == ZERO ? "-" : Integer.toString(numOfPinDown);
+        if (this == ZERO) {
+            return "-";
+        }
+        if (this == TEN) {
+            return "X";
+        }
+
+        return Integer.toString(numOfPinDown);
     }
 }
