@@ -127,25 +127,22 @@ public class QnAService {
 1. Player
     1. 속성
         - `String name`
-        - `Frames frames`
+        - `Game game`
     2. 메서드
         - `void pitch(int pins)`
-2. Frames
+2. Game
+   1. 속성
+        - `Frames frames`
+        - `Pitchings pitchings`
+   2. 메서드
+        - `void pitch(int pins)`
+3. Frames
     1. 속성
-        - `List<Frame> normalFrames`
-        - `Frame lastFrame`
+        - `List<Frame> frames`
     2. 메서드
-        - `void currentFramePitch(int pins)`
+        - `void pitch(int pins)`
         - `void validateOverTenFrames()`
-3. Frame
-    1. 속성
-        - `RegularPitching pitchings`
-        - `Frame nextFrame`
-    2. 메서드
-        - `boolean done()`
-        - `int score()`
-        - `void pitching(int pins)`
-4. RegularPitching
+4. Frame
     1. 속성
         - `Pitching firstPitching`
         - `Pitching secondPitching`
@@ -156,12 +153,23 @@ public class QnAService {
         - `boolean strike()`
         - `boolean spare()`
         - `boolean done()`
-5. Pitching
+5. Pitchings
+    1. 속성
+        - `List<Pitching> pitchings`
+    2. 메서드
+        - `Pitching nextPitching(int pins)`
+6. Pitching
+    1. 속성
+        - `Pins pins`
+        - `Pitching nextPitching`
+    2. 메서드
+        - `boolean isTen()`
+        - `int sum(Pitching anotherPitching)`
+7. Pins
     1. 속성
         - `int pins`
     2. 메서드
         - `void validateOverTen()`
-        - `boolean isTen()`
-        - `int sum(Pitching anotherPitching)`
+
     
 
