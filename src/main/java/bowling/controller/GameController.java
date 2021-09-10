@@ -2,36 +2,29 @@ package bowling.controller;
 
 import bowling.domain.Game;
 import bowling.domain.Shot;
+import bowling.domain.User;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
 public class GameController {
-    private final InputView inputView;
-    private final OutputView outputView;
-
-    public GameController() {
-        this.inputView = new InputView();
-        this.outputView = new OutputView();
-    }
-
     public void run() {
         Game game = makeGame();
 
         showCurrentGameFrame(game);
         while(game.isNotFinished()) {
-            int downCount = inputView.extractFrameResult(game.getCurrentFrameIndex());
+            int downCount = InputView.extractFrameResult(game.getCurrentFrameIndex());
             game.play(new Shot(downCount));
             showCurrentGameFrame(game);
         }
     }
 
     public Game makeGame() {
-        String username = inputView.extractUsername();
-        return new Game(username);
+        String username = InputView.extractUsername();
+        return Game.of(new User(username));
     }
 
     public void showCurrentGameFrame(Game game) {
-        outputView.showFrames();
-        outputView.showGameFrames(game);
+        OutputView.showFrames();
+        OutputView.showGameFrames(game);
     }
 }
