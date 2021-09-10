@@ -8,6 +8,7 @@ public abstract class Frame {
 
     protected static final int ATTEMPTS_TO_BOWL = 2;
     protected static final int ATTEMPTS_TO_BOWL_WITH_BONUS = 3;
+    protected static final int MIN_FRAME_NUMBER = 1;
     protected static final int MAX_FRAME_NUMBER = 10;
     protected static final int MAX_PINS_COUNT = 10;
 

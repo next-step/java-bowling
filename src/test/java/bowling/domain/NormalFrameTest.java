@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -15,7 +16,15 @@ class NormalFrameTest {
 
     @BeforeEach
     void setUp() {
-        frame = new NormalFrame(1);
+        frame = NormalFrame.of(1);
+    }
+
+    @DisplayName("마지막 프레임이 아닌 경우, 프레임의 번호는 1 ~ 9 사이여야 한다.")
+    @ValueSource(ints = {0, 10, 11})
+    @ParameterizedTest
+    void invalidFrameNumber(int number) {
+        assertThatThrownBy(() -> NormalFrame.of(number))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("첫 번째 투구로 10개의 핀을 모두 쓰러뜨리면 스트라이크이다.")

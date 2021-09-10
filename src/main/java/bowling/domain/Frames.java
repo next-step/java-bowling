@@ -17,7 +17,7 @@ public class Frames {
     private List<Frame> initFrames() {
         List<Frame> frames = new ArrayList<>();
         for (int number = FIRST; number <= NINTH; number++) {
-            frames.add(new NormalFrame(number));
+            frames.add(NormalFrame.of(number));
         }
         frames.add(new LastFrame());
         return frames;

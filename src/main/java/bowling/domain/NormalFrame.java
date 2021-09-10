@@ -4,8 +4,19 @@ import java.util.Objects;
 
 public class NormalFrame extends Frame {
 
-    public NormalFrame(int number) {
+    private NormalFrame(int number) {
         super(number);
+    }
+
+    public static NormalFrame of(int number) {
+        validateFrameNumber(number);
+        return new NormalFrame(number);
+    }
+
+    private static void validateFrameNumber(int number) {
+        if (number < MIN_FRAME_NUMBER || number > MAX_FRAME_NUMBER - 1) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
