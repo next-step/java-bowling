@@ -6,6 +6,7 @@ import java.util.List;
 
 public class LastFrame implements Frame {
 
+    private static final int FRAME_NUMBER = 10;
     private static final int MAX_PINS_COUNT = 10;
     private static final int AVAILABLE_COUNT_WITHOUT_BONUS = 2;
     private static final int AVAILABLE_COUNT_WITH_BONUS = 3;
@@ -54,6 +55,11 @@ public class LastFrame implements Frame {
     @Override
     public List<PitchResult> results() {
         return Collections.unmodifiableList(results);
+    }
+
+    @Override
+    public int number() {
+        return FRAME_NUMBER;
     }
 
     private boolean isBonusChance() {

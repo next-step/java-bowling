@@ -45,6 +45,11 @@ public class NormalFrame implements Frame {
         return Collections.unmodifiableList(results);
     }
 
+    @Override
+    public int number() {
+        return number;
+    }
+
     private boolean isTotalPinsMoreThan10With(int fallenPins) {
         return totalPins() + fallenPins > MAX_PINS_COUNT;
     }

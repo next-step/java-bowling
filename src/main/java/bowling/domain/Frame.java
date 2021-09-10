@@ -10,4 +10,6 @@ public interface Frame {
 
     List<PitchResult> results();
 
+    int number();
+
 }
