@@ -13,7 +13,7 @@ public enum  LastFrameString {
             Shot firstShot = shots.get(FIRST);
 
             if (isFirstStrike(shots)) {
-                return OutputView.STRIKE;
+                return STRIKE;
             }
 
             return firstShot.toString();
