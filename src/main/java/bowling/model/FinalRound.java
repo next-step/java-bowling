@@ -1,6 +1,6 @@
 package bowling.model;
 
-public class FinalRound implements bowling.model.Round {
+public class FinalRound implements Round {
     private Point point;
 
     @Override
@@ -10,7 +10,7 @@ public class FinalRound implements bowling.model.Round {
     }
 
     @Override
-    public bowling.model.Round next(BowlingResult roundResult, int index, int tryCount) {
+    public Round next(BowlingResult roundResult, int index, int tryCount) {
         return new FinalRound();
     }
 

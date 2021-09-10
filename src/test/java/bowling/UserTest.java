@@ -1,34 +1,35 @@
 package bowling;
 
 import bowling.model.User;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class UserTest {
     @Test
     public void 플레이어_이름_빈값() {
-        Assertions.assertThatThrownBy(() -> new User(null))
+        assertThatThrownBy(() -> new User(null))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        Assertions.assertThatThrownBy(() -> new User(""))
+        assertThatThrownBy(() -> new User(""))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void 플레이어_이름_영어아님() {
-        Assertions.assertThatThrownBy(() -> new User("123"))
+        assertThatThrownBy(() -> new User("123"))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        Assertions.assertThatThrownBy(() -> new User("우경서"))
+        assertThatThrownBy(() -> new User("우경서"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void 플레이어님_이름_길이_3자아님() {
-        Assertions.assertThatThrownBy(() -> new User("ab "))
+        assertThatThrownBy(() -> new User("ab "))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        Assertions.assertThatThrownBy(() -> new User("abcd"))
+        assertThatThrownBy(() -> new User("abcd"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

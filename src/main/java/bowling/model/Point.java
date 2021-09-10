@@ -8,7 +8,6 @@ import static bowling.model.BowlingValidator.isBlank;
 public class Point {
     private static final int MAX_POINT = 10;
     private static final int MIN_POINT = 0;
-    private static final int DEFAULT_POINT = 0;
 
     private final int point;
 

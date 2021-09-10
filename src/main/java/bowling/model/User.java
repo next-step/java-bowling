@@ -3,8 +3,6 @@ package bowling.model;
 import static bowling.model.BowlingValidator.isBlank;
 
 public class User {
-    private static final int USER_NAME_LENGTH = 3;
-
     private final String name;
 
     public String getName() {

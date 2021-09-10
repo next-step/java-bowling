@@ -1,19 +1,19 @@
 package bowling.model;
 
-public class NormalRound implements bowling.model.Round {
-    private bowling.model.Point point;
+public class NormalRound implements Round {
+    private Point point;
 
     @Override
-    public bowling.model.BowlingResult play(int totalPoint, int tryCount) {
-        this.point = new bowling.model.Point(totalPoint);
-        return bowling.model.BowlingResult.findBowlingResult(point, tryCount);
+    public BowlingResult play(int totalPoint, int tryCount) {
+        this.point = new Point(totalPoint);
+        return BowlingResult.findBowlingResult(point, tryCount);
     }
 
     @Override
-    public bowling.model.Round next(bowling.model.BowlingResult roundResult, int index, int tryCount) {
+    public Round next(BowlingResult roundResult, int index, int tryCount) {
         if (isBeforeFinalRound(index) && isStrike(roundResult) ||
                 isBeforeFinalRound(index) && isSecondTry(tryCount)) {
-            return new bowling.model.FinalRound();
+            return new FinalRound();
         }
 
         return new NormalRound();
@@ -23,8 +23,8 @@ public class NormalRound implements bowling.model.Round {
         return tryCount == SECOND_TRY;
     }
 
-    private boolean isStrike(bowling.model.BowlingResult roundResult) {
-        return roundResult == bowling.model.BowlingResult.STRIKE;
+    private boolean isStrike(BowlingResult roundResult) {
+        return roundResult == BowlingResult.STRIKE;
     }
 
     private boolean isBeforeFinalRound(int index) {
@@ -32,7 +32,7 @@ public class NormalRound implements bowling.model.Round {
     }
 
     @Override
-    public boolean isSkipNextRound(int tryCount, bowling.model.BowlingResult roundResult, boolean isBonus) {
+    public boolean isSkipNextRound(int tryCount, BowlingResult roundResult, boolean isBonus) {
         if (isStrike(roundResult)) {
             return true;
         }
@@ -41,7 +41,7 @@ public class NormalRound implements bowling.model.Round {
     }
 
     @Override
-    public boolean isBonus(boolean isBonus, bowling.model.BowlingResult roundResult) {
+    public boolean isBonus(boolean isBonus, BowlingResult roundResult) {
         return false;
     }
 }
