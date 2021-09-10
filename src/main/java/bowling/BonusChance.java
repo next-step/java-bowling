@@ -34,6 +34,12 @@ public class BonusChance {
         }
     }
 
+    private static void validMinBonusChance(int bonusChance) {
+        if (MIN_CHANCE > bonusChance) {
+            throw new IllegalArgumentException(MIN_UNDER_CHANCE);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,10 +53,5 @@ public class BonusChance {
         return Objects.hash(bonusChance);
     }
 
-    private static void validMinBonusChance(int bonusChance) {
-        if (MIN_CHANCE > bonusChance) {
-            throw new IllegalArgumentException(MIN_UNDER_CHANCE);
-        }
-    }
 
 }

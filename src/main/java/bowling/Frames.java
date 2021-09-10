@@ -3,7 +3,6 @@ package bowling;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Frames {
 
@@ -29,7 +28,9 @@ public class Frames {
     }
 
     public Frames play(int countOfDownPin) {
-        List<FrameScore> scores = addScore(countOfDownPin);
+
+        List<FrameScore> scores = FrameScore.addFrameScoreList(countOfDownPin);
+
         if (!isPitch()) {
             Frame frame = frames.get(frames.size() - MINUS_INDEX_ONE).next(countOfDownPin);
             frames.set(frames.size() - MINUS_INDEX_ONE, frame);
@@ -73,12 +74,6 @@ public class Frames {
         if (isLastIndexFrameEnd()) {
             scores.add(FrameScore.of(frames.get(frames.size() - MINUS_INDEX_ONE)));
         }
-    }
-
-    private List<FrameScore> addScore(int countOfDownPin) {
-        return scores.stream()
-                .map(score -> score.addScore(countOfDownPin))
-                .collect(Collectors.toList());
     }
 
     private Pins ofPins() {

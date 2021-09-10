@@ -1,5 +1,9 @@
 package bowling;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static bowling.CommonConstans.IS_NOT_END;
 
 public class FrameScore {
@@ -36,5 +40,14 @@ public class FrameScore {
         if (!frame.isEnd()) {
             throw new IllegalArgumentException(IS_NOT_END);
         }
+    }
+
+    public static List<FrameScore> addFrameScoreList(int countOfDownPin) {
+
+        List<FrameScore> scores = new ArrayList<>();
+
+        return scores.stream()
+                .map(score -> score.addScore(countOfDownPin))
+                .collect(Collectors.toList());
     }
 }

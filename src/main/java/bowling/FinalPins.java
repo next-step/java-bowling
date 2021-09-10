@@ -17,7 +17,7 @@ public class FinalPins implements Pins {
     }
 
     private FinalPins(List<Pin> pins) {
-        this.pins = pins;
+        this.pins = new ArrayList<>(pins);
     }
 
     public static Pins init() {
@@ -25,17 +25,13 @@ public class FinalPins implements Pins {
     }
 
     public Pins first(int countOfDownPin) {
-
-        List<Pin> pinList = new ArrayList<>();
         pins.add(Pin.of(countOfDownPin));
-        Collections.copy(pinList, pins);
-
-        return new FinalPins(pinList);
+        return new FinalPins(pins);
     }
 
     public Pins next(int countOfDownPin) {
         pins.add(Pin.of(countOfDownPin));
-        validMaxPins();
+        Pin.accumulatedPins(pins);
         return new FinalPins(pins);
     }
 
@@ -44,7 +40,7 @@ public class FinalPins implements Pins {
     }
 
     public ScoreRule scoreRule() {
-        return ScoreRule.of(accumulatedPins(), (pins.size() < NORMAL_PINS_MAX_SIZE));
+        return ScoreRule.of(Pin.accumulatedPins(pins), (pins.size() < NORMAL_PINS_MAX_SIZE));
     }
 
     @Override
@@ -64,30 +60,6 @@ public class FinalPins implements Pins {
     @Override
     public BonusChance bonusChance() {
         return BonusChance.of(CommonConstans.ZERO);
-    }
-
-    private void validMaxPins() {
-        if (accumulatedPins() > MAX_PINS) {
-            throw new IllegalArgumentException(MAX_OVER_PINS);
-        }
-    }
-
-    private int accumulatedPins() {
-        return pins.stream()
-                .skip(skipSize())
-                .limit(NORMAL_PINS_MAX_SIZE)
-                .mapToInt(Pin::pin)
-                .sum();
-    }
-
-    private long skipSize() {
-        int result;
-        for (result = ZERO; result < pins.size() - MINUS_SIZE_ONE; result++) {
-            if (!pins.get(result).isStrike()) {
-                break;
-            }
-        }
-        return result;
     }
 
     private int finalSize() {
