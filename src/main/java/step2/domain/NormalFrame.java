@@ -2,6 +2,7 @@ package step2.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import step2.exceptions.BowlingPintNumberError;
 
 public class NormalFrame implements Frame {
@@ -41,5 +42,22 @@ public class NormalFrame implements Frame {
     @Override
     public List<Integer> scoreInfo() {
         return frame;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        NormalFrame that = (NormalFrame) o;
+        return Objects.equals(frame, that.frame);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frame);
     }
 }
