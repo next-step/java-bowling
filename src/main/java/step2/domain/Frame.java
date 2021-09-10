@@ -3,14 +3,14 @@ package step2.domain;
 import java.util.List;
 
 public interface Frame {
-    void knockDown(int numOfPin);
+    abstract void knockDown(int numOfPin);
 
-    void isPossible();
+    abstract void isPossible();
 
-    int score();
+    abstract int score();
 
-    boolean isFinish();
+    abstract boolean isFinish();
 
-    List<Integer> scoreInfo();
+    abstract List<Integer> scoreInfo();
 }
 
