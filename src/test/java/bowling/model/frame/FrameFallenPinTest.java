@@ -9,25 +9,25 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("볼링 프레임에서 쓰러진 핀 테스트")
 public class FrameFallenPinTest {
 
-    @DisplayName("프레임이 가지고 있는 쓰러진 핀의 첫 번째 객체의 두 번째 쓰러진 핀은 비어있어야 한다.")
+    @DisplayName("프레임의 첫 투구 후에 두 번째 FallenPin 객체는 비어있어야 한다.")
     @Test
-    void emptySecondFallenPinOfFrameFallenPinFirstTest() {
+    void emptySecondFallenPinOfFrameFirstFallenPinTest() {
         // given, when
-        FrameFallenPin frameFallenPinFirst = FrameFallenPin.first(5);
+        FrameFallenPin frameFirstFallenPin = FrameFallenPin.first(5);
 
         // then
-        assertSame(frameFallenPinFirst.getSecond(), null);
+        assertSame(frameFirstFallenPin.getSecond(), null);
     }
 
-    @DisplayName("프레임이 가지고 있는 쓰러진 핀의 두 번째 객체의 첫 번째 쓰러진 핀이 비어있으면 안된다.")
+    @DisplayName("프레임을 두 번 투구 후에 첫 번째 FallenPin 객체는 비어있으면 안된다.")
     @Test
-    void notEmptyFirstFallenPinOfFrameFallenPinSecondTest() {
+    void notEmptyFirstFallenPinOfFrameSecondFallenPinTest() {
         // given, when
-        FrameFallenPin frameFallenPinFirst = FrameFallenPin.first(5);
-        FrameFallenPin frameFallenPinSecond = frameFallenPinFirst.second(5);
+        FrameFallenPin frameFirstFallenPin = FrameFallenPin.first(5);
+        FrameFallenPin frameSecondFallenPin = frameFirstFallenPin.second(5);
 
         // then
-        assertNotSame(frameFallenPinSecond.getFirst(), null);
+        assertNotSame(frameSecondFallenPin.getFirst(), null);
     }
 
     @DisplayName("이미 스트라이크인데 두 번째 쓰러진 핀을 생성하려고 하면 예외가 발생한다.")
@@ -58,75 +58,87 @@ public class FrameFallenPinTest {
     @Test
     void isStrikeFrameFallenPinTest() {
         // given
-        FrameFallenPin strike = FrameFallenPin.first(10);
-        FrameFallenPin notStrike = FrameFallenPin.first(9);
+        FrameFallenPin strikeFrameFallenPin = FrameFallenPin.first(10);
+        FrameFallenPin notStrikeFrameFallenPin = FrameFallenPin.first(9);
 
         // when, then
-        assertTrue(strike.isStrike());
-        assertFalse(notStrike.isStrike());
+        assertTrue(strikeFrameFallenPin.isStrike());
+        assertFalse(notStrikeFrameFallenPin.isStrike());
     }
 
     @DisplayName("isSpare() 메소드를 통해 스페어 여부를 조회할 수 있다.")
     @Test
     void isSpareFrameFallenPinTest() {
         // given
-        FrameFallenPin first = FrameFallenPin.first(8);
-        FrameFallenPin spare = first.second(2);
-        FrameFallenPin notSpare = first.second(1);
+        FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(8);
+        FrameFallenPin spareFrameFallenPin = firstFrameFallenPin.second(2);
+        FrameFallenPin notSpareFrameFallenPin = firstFrameFallenPin.second(1);
 
         // when, then
-        assertFalse(first.isSpare());
-        assertTrue(spare.isSpare());
-        assertFalse(notSpare.isSpare());
+        assertFalse(firstFrameFallenPin.isSpare());
+        assertTrue(spareFrameFallenPin.isSpare());
+        assertFalse(notSpareFrameFallenPin.isSpare());
     }
 
     @DisplayName("isMiss() 메소드를 통해 미스 여부를 조회할 수 있다.")
     @Test
     void isMissFrameFallenPinTest() {
         // given
-        FrameFallenPin first = FrameFallenPin.first(5);
-        FrameFallenPin miss = first.second(3);
-        FrameFallenPin notMiss = first.second(5);
+        FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(5);
+        FrameFallenPin missFrameFallenPin = firstFrameFallenPin.second(3);
+        FrameFallenPin notMissFrameFallenPin = firstFrameFallenPin.second(5);
 
         // when, then
-        assertFalse(first.isMiss());
-        assertTrue(miss.isMiss());
-        assertFalse(notMiss.isMiss());
+        assertFalse(firstFrameFallenPin.isMiss());
+        assertTrue(missFrameFallenPin.isMiss());
+        assertFalse(notMissFrameFallenPin.isMiss());
     }
 
     @DisplayName("pitchTwice() 메소드를 통해 핀이 두 번 쓰러졌는지 여부를 조회할 수 있다.")
     @Test
     void pitchTwiceFrameFallenPinTest() {
         // given
-        FrameFallenPin first = FrameFallenPin.first(5);
-        FrameFallenPin second = first.second(5);
+        FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(5);
+        FrameFallenPin secondFrameFallenPin = firstFrameFallenPin.second(5);
 
         // when, then
-        assertFalse(first.pitchTwice());
-        assertTrue(second.pitchTwice());
+        assertFalse(firstFrameFallenPin.pitchTwice());
+        assertTrue(secondFrameFallenPin.pitchTwice());
     }
 
     @DisplayName("isFirst() 메소드를 통해 핀이 한 번 쓰러졌는지 여부를 조회할 수 있다.")
     @Test
     void isFirstFrameFallenPinTest() {
         // given
-        FrameFallenPin first = FrameFallenPin.first(5);
-        FrameFallenPin second = first.second(5);
+        FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(5);
+        FrameFallenPin secondFrameFallenPin = firstFrameFallenPin.second(5);
 
         // when, then
-        assertTrue(first.isFirst());
-        assertFalse(second.isFirst());
+        assertTrue(firstFrameFallenPin.isFirst());
+        assertFalse(secondFrameFallenPin.isFirst());
     }
 
     @DisplayName("isXXXGutter() 메소드를 통해 거터 여부를 조회할 수 있다.")
     @Test
     void isGutterFrameFallenPinTest() {
         // given
-        FrameFallenPin firstGutter = FrameFallenPin.first(0);
-        FrameFallenPin doubleGutter = firstGutter.second(0);
+        FrameFallenPin firstGutterFrameFallenPin = FrameFallenPin.first(0);
+        FrameFallenPin doubleGutterFrameFallenPin = firstGutterFrameFallenPin.second(0);
 
         // when, then
-        assertTrue(firstGutter.isFirstAndGutter());
-        assertTrue(doubleGutter.isDoubleGutter());
+        assertTrue(firstGutterFrameFallenPin.isFirstAndGutter());
+        assertTrue(doubleGutterFrameFallenPin.isDoubleGutter());
+    }
+
+    @DisplayName("countTotal() 메소드를 통해 쓰러뜨린 핀 개수의 총합을 구할 수 있다.")
+    @Test
+    void countTotalOfFrameFallenPinTest() {
+        // given
+        FrameFallenPin frameFirstFallenPin = FrameFallenPin.first(5);
+        FrameFallenPin frameSecondFallenPin = frameFirstFallenPin.second(5);
+
+        // when, then
+        assertSame(frameFirstFallenPin.countTotal(), 5);
+        assertSame(frameSecondFallenPin.countTotal(), 10);
     }
 }
