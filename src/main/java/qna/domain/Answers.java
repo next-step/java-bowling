@@ -24,7 +24,7 @@ public class Answers {
         return deleted;
     }
 
-    public Answers delete(User loginUser) {
+    public void delete(User loginUser) {
 
         if (answers.stream().filter(answer -> !answer.isOwner(loginUser)).findFirst().isPresent()) {
             throw new ForbiddenException("본인이 작성하지 않은 답변이 있어서, 삭제할 수 없습니다");
@@ -32,6 +32,6 @@ public class Answers {
 
         answers.stream().forEach(answer -> answer.setDeleted(true));
 
-        return setDeleted(true);
+        setDeleted(true);
     }
 }

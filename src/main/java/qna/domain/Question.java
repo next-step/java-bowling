@@ -89,16 +89,26 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public Question delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
-        if(answers.stream().filter(answer -> !answer.isOwner(loginUser)).findFirst().isPresent()){
+        if (answers.stream().filter(answer -> !answer.isOwner(loginUser)).findFirst().isPresent()) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
 
-        return setDeleted(true);
+        Answers answers = new Answers(this.answers);
+        answers.delete(loginUser);
+        setDeleted(true);
+        return makeDeleteHistories();
+    }
+
+    private List<DeleteHistory> makeDeleteHistories() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(this));
+        answers.stream().forEach(answer -> deleteHistories.add(new DeleteHistory(answer)));
+        return deleteHistories;
     }
 
     @Override
