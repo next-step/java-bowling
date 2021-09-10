@@ -24,4 +24,8 @@ public class ResultDto {
   public List<ScoreResultDto> getFrames() {
     return frames;
   }
+
+  public int frameCount() {
+    return frames.size();
+  }
 }
