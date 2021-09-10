@@ -73,7 +73,7 @@ public final class NormalFrame extends Frame {
             return this;
         }
 
-        if (pins.size() == 1 && !pins.isStrike()) {
+        if (pins.size() == 1 && FrameStatus.of(pins) != FrameStatus.STRIKE) {
             return this;
         }
 
@@ -90,23 +90,23 @@ public final class NormalFrame extends Frame {
 
     @Override
     public int getScore() {
-        if (!pins.isStrike() && pins.sumPins() == 10) {
-            return nextFrame.addScore(pins.sumPins(), 1);
+        if (FrameStatus.of(pins) == FrameStatus.STRIKE) {
+            return nextFrame.addScore(pins.sumPins(), 2);
         }
 
-        if (pins.isStrike()) {
-            return nextFrame.addScore(pins.sumPins(), 2);
+        if (FrameStatus.of(pins) == FrameStatus.SPARE) {
+            return nextFrame.addScore(pins.sumPins(), 1);
         }
         return pins.sumPins();
     }
 
     @Override
     public int addScore(int score, int count) {
+        if (count == 2 && FrameStatus.of(pins) == FrameStatus.STRIKE) {
+            return nextFrame.addScore(score + firstPin().getKnockDownNumber(), 1);
+        }
         if (count == 1) {
             return score + firstPin().getKnockDownNumber();
-        }
-        if (pins.isStrike()) {
-            return nextFrame.addScore(score + firstPin().getKnockDownNumber(), 1);
         }
         return score + pins.sumPins();
     }
