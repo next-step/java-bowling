@@ -17,8 +17,9 @@ public class Score {
         this.waitingFrameCount = NO_WAITING_FRAME_COUNT;
     }
 
-    private Score(int score, int waitingFrameCount) {
+    public Score(int score, int waitingFrameCount) {
         validateScoreRange(score);
+        validateWaitingFrameCountRange(waitingFrameCount);
 
         this.score = score;
         this.waitingFrameCount = waitingFrameCount;
@@ -37,8 +38,15 @@ public class Score {
     }
 
     private void validateScoreRange(int score) {
-        if (score < MIN || score > 300) {
+        if (score < MIN || score > MAX) {
             throw new IllegalArgumentException(String.format("볼링 점수는 %d점 이상 %d점 이하이어야 합니다.", MIN, MAX));
+        }
+    }
+
+    private void validateWaitingFrameCountRange(int waitingFrameCount) {
+        if (waitingFrameCount < NO_WAITING_FRAME_COUNT || waitingFrameCount > WAITING_FRAME_COUNT_OF_STRIKE) {
+            throw new IllegalArgumentException(String.format("기다리고 있는 프레임 개수는 %d개 이상 %d개 이하이어야 합니다.",
+                    NO_WAITING_FRAME_COUNT, WAITING_FRAME_COUNT_OF_STRIKE));
         }
     }
 }
