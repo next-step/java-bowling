@@ -11,14 +11,13 @@ public class NormalFrame implements Frame {
     private final FrameNumber frameNumber;
     private final Pins pitchPins;
 
-    public NormalFrame(final int frameNumber) {
-        this.frameNumber = new FrameNumber(frameNumber);
-        this.pitchPins = new Pins(new LinkedList<>());
-    }
-
     public NormalFrame(final int frameNumber, final List<Integer> pins) {
         this.frameNumber = new FrameNumber(frameNumber);
-        this.pitchPins = new Pins(pins);
+        this.pitchPins = Pins.normalPins(pins);
+    }
+
+    public static NormalFrame of(final int frameNumber) {
+        return new NormalFrame(frameNumber, new LinkedList<>());
     }
 
     @Override

@@ -10,14 +10,14 @@ public class Frames {
     private static final int START_FRAME_NUMBER = 1;
     private static final int NEXT_NUMBER = 1;
 
-    private List<Frame> frames;
+    private LinkedList<Frame> frames;
 
-    public Frames(final List<Frame> frames) {
+    public Frames(final LinkedList<Frame> frames) {
         this.frames = frames;
     }
 
     public static Frames init() {
-        return new Frames(new LinkedList<>(Arrays.asList(new NormalFrame(START_FRAME_NUMBER))));
+        return new Frames(new LinkedList<>(Arrays.asList(NormalFrame.of(START_FRAME_NUMBER))));
     }
 
     public boolean isFramesEnd() {
@@ -59,4 +59,5 @@ public class Frames {
                 .map(Frame::valueOfFrame)
                 .collect(Collectors.toList());
     }
+
 }

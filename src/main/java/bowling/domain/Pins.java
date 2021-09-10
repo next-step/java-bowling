@@ -3,6 +3,7 @@ package bowling.domain;
 import bowling.domain.frame.FrameNumber;
 import bowling.exception.BusinessException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -16,6 +17,49 @@ public class Pins {
     private static final String EXCESS_PIN_COUNTS_ERROR = "한 노멀 프레임에서 쓰러트릴 수 있는 핀의 갯수를 초과했습니다.";
 
     private List<Pin> pins;
+
+    private Pin firstPin;
+    private Pin secondPin;
+    private Pin bonusPin;
+
+    public Pins(Pin firstPin) {
+        this.firstPin = firstPin;
+    }
+
+    public Pins(Pin firstPin, Pin secondPin) {
+        this.firstPin = firstPin;
+        this.secondPin = secondPin;
+    }
+
+    public Pins(Pin firstPin, Pin secondPin, Pin bonusPin) {
+        this.firstPin = firstPin;
+        this.secondPin = secondPin;
+        this.bonusPin = bonusPin;
+    }
+
+    public static Pins normalPins(List<Integer> pins) {
+        if (pins.size() >= 1 && pins.get(0) == 10) {
+            return new Pins(new Pin(10), null, null);
+        }
+        if (pins.size() >= 2 && pins.get(0) + pins.get(1) == 10) {
+            return new Pins(new Pin(pins.get(0)), new Pin(pins.get(1)), null);
+        }
+        if (pins.size() >= 2 && pins.get(0) + pins.get(1) <= 10) {
+            return new Pins(new Pin(pins.get(0)), new Pin(pins.get(1)), null);
+        }
+        return null;
+    }
+
+    public static Pins finalPins(List<Integer> pins) {
+        if (pins.get(0) + pins.get(1) < 10) {
+            return new Pins(new Pin(pins.get(0)), new Pin(pins.get(1)), null);
+        }
+        if (pins.get(0) == 10 || pins.get(0) + pins.get(1) == 10) {
+            return new Pins(new Pin(pins.get(0)), new Pin(pins.get(1)), new Pin(pins.get(2)));
+        }
+        return null;
+    }
+
 
     public Pins(final List<Integer> pins) {
         if (pins.size() > MAX_SIZE) {
@@ -65,17 +109,9 @@ public class Pins {
         return sum() + countOfPins > Pin.MAX_PINS;
     }
 
-
     public String result() {
         StringBuilder stringBuilder = new StringBuilder();
         for (int index = FIRST_INDEX; index < pins.size(); index++) {
-
-            int previous = index - OPERATION;
-            if (index > FIRST_INDEX){
-                previous = pins.get(index - OPERATION).value();
-            }
-
-            stringBuilder.append(ScoreType.findType(previous, pins.get(index).value()));
         }
         return stringBuilder.toString();
     }
@@ -84,16 +120,4 @@ public class Pins {
         return pins.stream().map(Pin::value).reduce(0, Integer::sum);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pins pins1 = (Pins) o;
-        return Objects.equals(pins, pins1.pins);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(pins);
-    }
 }

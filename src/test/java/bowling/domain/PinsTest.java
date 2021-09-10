@@ -57,8 +57,8 @@ class PinsTest {
     @Test
     void result() {
         assertThat(new Pins(Arrays.asList(10)).result()).isEqualTo("X");
-        assertThat(new Pins(Arrays.asList(10, 10)).result()).isEqualTo("XX");
-        assertThat(new Pins(Arrays.asList(10, 10, 10)).result()).isEqualTo("XXX");
+        assertThat(new Pins(Arrays.asList(10, 10)).result()).isEqualTo("X|X");
+        assertThat(new Pins(Arrays.asList(10, 10, 10)).result()).isEqualTo("X|X|X");
         assertThat(new Pins(Arrays.asList(0, 10)).result()).isEqualTo("0|/");
         assertThat(new Pins(Arrays.asList(2, 5)).result()).isEqualTo("2|5");
         assertThat(new Pins(Arrays.asList(5, 5)).result()).isEqualTo("5|/");

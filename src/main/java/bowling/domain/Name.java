@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class Name {
     private static final int NAME_LENGTH = 3;
     private static final String CREATE_NAME_ERROR = "플레이어 이름은 " + NAME_LENGTH + "글자의 영문자여야 합니다.";
-    private static final Pattern ENGLISH = Pattern.compile("/^[a-zA-Z]*$/");
+    private static final Pattern ENGLISH = Pattern.compile("^[a-zA-Z]*$");
 
     private final String name;
 
@@ -20,7 +20,7 @@ public class Name {
     }
 
     private boolean isAlphabet(final String name) {
-        return ENGLISH.matcher(name).matches() && name.length() <= NAME_LENGTH;
+        return ENGLISH.matcher(name).matches() && name.length() == NAME_LENGTH;
     }
 
 

@@ -62,4 +62,5 @@ class NormalFrameTest {
         assertThat(new NormalFrame(1, Arrays.asList(10)).isEnd()).isTrue();
         assertThat(new NormalFrame(1, Arrays.asList(5,5)).isEnd()).isTrue();
     }
+
 }
