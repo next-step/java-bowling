@@ -19,14 +19,8 @@ public class LastFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        if (shots.size() == 2 && remainPins() != 0) {
-            return true;
-        }
-
-        if (shots.size() == MAXIMUM_SHOT_COUNT) {
-            return true;
-        }
-        return false;
+        return !LastFrameState.getState(shots)
+                .isPresent();
     }
 
     @Override
@@ -36,7 +30,7 @@ public class LastFrame implements Frame {
 
     @Override
     public String toResultString() {
-        if (shots.size() == 0) {
+        if (shots.isEmpty()) {
             return "";
         }
         return LastFrameString.getString(shots);
