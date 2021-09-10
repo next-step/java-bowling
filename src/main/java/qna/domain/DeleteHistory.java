@@ -33,12 +33,16 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+    private static DeleteHistory fromContent(AbstractEntity entity, ContentType contentType, User deletedBy) {
+        return new DeleteHistory(contentType, entity.getId(), deletedBy, LocalDateTime.now());
+    }
+
     public static DeleteHistory fromQuestion(Question question) {
-        return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
+        return fromContent(question, ContentType.QUESTION, question.getWriter());
     }
 
     public static DeleteHistory fromAnswer(Answer answer) {
-        return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
+        return fromContent(answer, ContentType.ANSWER, answer.getWriter());
     }
 
     @Override
