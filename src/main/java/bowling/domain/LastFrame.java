@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class LastFrame {
+public class LastFrame implements Frame {
 
     private static final int MAX_PINS_COUNT = 10;
     private static final int AVAILABLE_COUNT_WITHOUT_BONUS = 2;
@@ -16,6 +16,7 @@ public class LastFrame {
         this.results = new ArrayList<>();
     }
 
+    @Override
     public void bowl(int fallenPins) {
         if (isEnd()) {
             throw new IllegalArgumentException();
@@ -38,19 +39,25 @@ public class LastFrame {
         results.add(PitchResult.of(fallenPins));
     }
 
-    private boolean isTotalPinsMoreThan10With(int fallenPins) {
-        return totalPins() + fallenPins > MAX_PINS_COUNT;
-    }
-
-    private boolean isBonusChance() {
-        return results.size() < 3 && (hasStrike() || hasSpare());
-    }
-
+    @Override
     public boolean isEnd() {
         if (hasStrike() || hasSpare()) {
             return results.size() == AVAILABLE_COUNT_WITH_BONUS;
         }
         return results.size() == AVAILABLE_COUNT_WITHOUT_BONUS;
+    }
+
+    private boolean isTotalPinsMoreThan10With(int fallenPins) {
+        return totalPins() + fallenPins > MAX_PINS_COUNT;
+    }
+
+    @Override
+    public List<PitchResult> results() {
+        return Collections.unmodifiableList(results);
+    }
+
+    private boolean isBonusChance() {
+        return results.size() < 3 && (hasStrike() || hasSpare());
     }
 
     private boolean isSpare(int fallenPins) {
@@ -69,10 +76,6 @@ public class LastFrame {
         return results.stream()
                 .mapToInt(PitchResult::fallenPins)
                 .sum();
-    }
-
-    public List<PitchResult> results() {
-        return Collections.unmodifiableList(results);
     }
 
 }

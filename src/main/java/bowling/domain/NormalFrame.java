@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
 
     private static final int MAX_PINS_COUNT = 10;
 
@@ -17,6 +17,7 @@ public class NormalFrame {
         this.results = new ArrayList<>();
     }
 
+    @Override
     public void bowl(int fallenPins) {
         if (isEnd()) {
             throw new IllegalArgumentException();
@@ -34,12 +35,18 @@ public class NormalFrame {
         results.add(PitchResult.of(fallenPins));
     }
 
-    private boolean isTotalPinsMoreThan10With(int fallenPins) {
-        return totalPins() + fallenPins > MAX_PINS_COUNT;
-    }
-
+    @Override
     public boolean isEnd() {
         return hasStrike() || results.size() == 2;
+    }
+
+    @Override
+    public List<PitchResult> results() {
+        return Collections.unmodifiableList(results);
+    }
+
+    private boolean isTotalPinsMoreThan10With(int fallenPins) {
+        return totalPins() + fallenPins > MAX_PINS_COUNT;
     }
 
     private boolean isSpare(int fallenPins) {
@@ -54,10 +61,6 @@ public class NormalFrame {
         return results.stream()
                 .mapToInt(PitchResult::fallenPins)
                 .sum();
-    }
-
-    public List<PitchResult> results() {
-        return Collections.unmodifiableList(results);
     }
 
     @Override
