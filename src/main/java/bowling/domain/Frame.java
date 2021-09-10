@@ -37,7 +37,7 @@ public abstract class Frame {
     }
 
     public boolean isEnd() {
-        return hasStrike() || results.size() == 2;
+        return hasStrike() || results.size() == ATTEMPTS_TO_BOWL;
     }
 
     public List<PitchResult> results() {

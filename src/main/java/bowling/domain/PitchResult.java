@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class PitchResult {
 
-    private static final int MIN_COUNT = 0;
-    private static final int MAX_COUNT = 10;
+    private static final int MIN_PINS = 0;
+    private static final int MAX_PINS = 10;
 
     private final int fallenPins;
     private final boolean isSpare;
@@ -21,7 +21,7 @@ public class PitchResult {
     }
 
     public static PitchResult spare(int fallenPins) {
-        if (fallenPins == MIN_COUNT) {
+        if (fallenPins == MIN_PINS) {
             throw new IllegalArgumentException();
         }
         return new PitchResult(fallenPins, true);
@@ -32,7 +32,7 @@ public class PitchResult {
     }
 
     private void validateFallenPins(int fallenPins) {
-        if (fallenPins < MIN_COUNT || fallenPins > MAX_COUNT) {
+        if (fallenPins < MIN_PINS || fallenPins > MAX_PINS) {
             throw new IllegalArgumentException();
         }
     }
