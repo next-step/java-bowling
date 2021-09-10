@@ -1,5 +1,7 @@
 package bowling.model.frame;
 
+import java.util.Objects;
+
 public class Score {
     private static final int MIN = 0;
     private static final int MAX = 300;
@@ -24,5 +26,18 @@ public class Score {
 
     public Score plus(int other) {
         return Score.of(score + other);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Score)) return false;
+        Score score1 = (Score) o;
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }

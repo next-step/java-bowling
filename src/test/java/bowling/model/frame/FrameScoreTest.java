@@ -3,6 +3,7 @@ package bowling.model.frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 @DisplayName("볼링 프레임 점수 테스트")
@@ -43,5 +44,21 @@ public class FrameScoreTest {
 
         // then
         assertSame(initialFrameScore.waitingPitchingCount(), 1);
+    }
+
+    @DisplayName("스트라이크와 스페어가 아니라면 다음 프레임 점수는 이전 프레임 점수에 현재 쓰러뜨린 볼링 핀의 합이다.")
+    @Test
+    void nextFrameScoreTest() {
+        // given, when
+        FrameScore initialFrameScore = FrameScore.initial(new FrameFallenPin(5));
+        FrameScore secondFrameScore = initialFrameScore.nextSecond(new FrameFallenPin(4));
+        FrameScore thirdFrameScore = secondFrameScore.nextFirst(new FrameFallenPin(4));
+        FrameScore fourthFrameScore = thirdFrameScore.nextSecond(new FrameFallenPin(3));
+
+        // then
+        assertEquals(initialFrameScore.score(), Score.of(5));
+        assertEquals(secondFrameScore.score(), Score.of(9));
+        assertEquals(thirdFrameScore.score(), Score.of(13));
+        assertEquals(fourthFrameScore.score(), Score.of(16));
     }
 }

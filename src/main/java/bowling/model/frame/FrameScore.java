@@ -46,4 +46,8 @@ public class FrameScore {
     public int waitingPitchingCount() {
         return waitingPitchingCount.count();
     }
+
+    public Score score() {
+        return score;
+    }
 }
