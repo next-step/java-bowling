@@ -27,6 +27,10 @@ public class PitchResult {
         return new PitchResult(fallenPins, true);
     }
 
+    public int fallenPins() {
+        return fallenPins;
+    }
+
     private void validateFallenPins(int fallenPins) {
         if (fallenPins < MIN_COUNT || fallenPins > MAX_COUNT) {
             throw new IllegalArgumentException();
