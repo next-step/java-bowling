@@ -2,19 +2,19 @@ package bowling.model.frame;
 
 public class FrameScore {
     private final Score score;
-    private final WaitingPitchingCount count;
+    private final WaitingPitchingCount waitingPitchingCount;
 
-    private FrameScore(Score score, WaitingPitchingCount count) {
+    private FrameScore(Score score, WaitingPitchingCount waitingPitchingCount) {
         this.score = score;
-        this.count = count;
+        this.waitingPitchingCount = waitingPitchingCount;
     }
 
     public FrameScore(int score, int waitingPitchingCount) {
         this.score = Score.of(score);
-        this.count = new WaitingPitchingCount(waitingPitchingCount);
+        this.waitingPitchingCount = new WaitingPitchingCount(waitingPitchingCount);
     }
 
-    public static FrameScore ofInitialFallenPin(FrameFallenPin fallenPin) {
+    public static FrameScore initial(FrameFallenPin fallenPin) {
         int initialFallenPinCount = fallenPin.countTotal();
         return new FrameScore(Score.of(initialFallenPinCount), findWaitingPitchingCountOfFirstFallenPin(fallenPin));
     }
@@ -29,21 +29,21 @@ public class FrameScore {
         return new FrameScore(score.plus(fallenPinCountTotal), findWaitingPitchingCountOfSecondFallenPin(fallenPinTotal));
     }
 
-    private static WaitingPitchingCount findWaitingPitchingCountOfFirstFallenPin(FrameFallenPin fallenPin) {
-        if (fallenPin.isStrike()) {
+    private static WaitingPitchingCount findWaitingPitchingCountOfFirstFallenPin(FrameFallenPin firstFallenPin) {
+        if (firstFallenPin.isStrike()) {
             return WaitingPitchingCount.ofStrike();
         }
-        return WaitingPitchingCount.oneCount();
+        return WaitingPitchingCount.ofFirstAndNotStrike();
     }
 
     private WaitingPitchingCount findWaitingPitchingCountOfSecondFallenPin(FrameFallenPin secondFallenPin) {
         if (secondFallenPin.isSpare()) {
             return WaitingPitchingCount.ofSpare();
         }
-        return WaitingPitchingCount.noCount();
+        return WaitingPitchingCount.ofSecondAndNotSpare();
     }
 
     public int waitingPitchingCount() {
-        return count.count();
+        return waitingPitchingCount.count();
     }
 }

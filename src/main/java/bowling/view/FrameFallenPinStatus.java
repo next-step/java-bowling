@@ -26,10 +26,10 @@ public enum FrameFallenPinStatus {
                 .filter(frameFallenPinStatus -> frameFallenPinStatus.operator.apply(fallenPin))
                 .findFirst()
                 .orElse(NONE)
-                .getDisplayFormat();
+                .displayFormat();
     }
 
-    private String getDisplayFormat() {
+    private String displayFormat() {
         return displayFormat;
     }
 }

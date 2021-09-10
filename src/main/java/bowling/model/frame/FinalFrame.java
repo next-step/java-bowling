@@ -14,14 +14,14 @@ public class FinalFrame extends Frame {
         this.bonusFallenPin = FallenPin.of(bonusFallenPin);
     }
 
-    public FinalFrame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount,
-                      int score, int waitingPitchingCount, int bonusFallenPin) {
+    public FinalFrame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount, int score,
+                      int waitingPitchingCount, int bonusFallenPin) {
         super(frameNumber, firstFallenPinCount, secondFallenPinCount, score, waitingPitchingCount);
         this.bonusFallenPin = FallenPin.of(bonusFallenPin);
     }
 
-    public FinalFrame(int frameNumber, int firstFallenPinCount,
-                      int score, int waitingPitchingCount, int bonusFallenPin) {
+    public FinalFrame(int frameNumber, int firstFallenPinCount, int score, int waitingPitchingCount,
+                      int bonusFallenPin) {
         super(frameNumber, firstFallenPinCount, score, waitingPitchingCount);
         this.bonusFallenPin = FallenPin.of(bonusFallenPin);
     }
@@ -67,7 +67,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public FallenPin getBonusFallenPin() {
+    public FallenPin bonusFallenPin() {
         return bonusFallenPin;
     }
 }

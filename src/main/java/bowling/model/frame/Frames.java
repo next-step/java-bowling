@@ -20,7 +20,7 @@ public class Frames {
         if (frames.isEmpty()) {
             return initialPlay(fallenPinCount);
         }
-        return notInitialPlay(fallenPinCount);
+        return nextPlay(fallenPinCount);
     }
 
     private List<Frame> initialPlay(int fallenPinCount) {
@@ -31,7 +31,7 @@ public class Frames {
         return frames;
     }
 
-    private List<Frame> notInitialPlay(int fallenPinCount) {
+    private List<Frame> nextPlay(int fallenPinCount) {
         validateNextIsPlayable();
 
         Frame next = lastFrame().next(fallenPinCount);

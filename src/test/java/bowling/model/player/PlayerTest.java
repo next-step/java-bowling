@@ -28,6 +28,6 @@ public class PlayerTest {
         Player player = new Player("abc");
 
         // when, then
-        assertEquals(player.getName(), "abc");
+        assertEquals(player.name(), "abc");
     }
 }

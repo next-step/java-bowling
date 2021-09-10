@@ -14,10 +14,10 @@ public class WaitingPitchingCountTest {
     @DisplayName("기다리고 있는 투구 개수가 0개 미만 2개 초과면 예외가 발생한다")
     @ParameterizedTest
     @ValueSource(ints = {-1, 3})
-    void outOfRangeWaitingPitchingCountExceptionTest(int count) {
+    void outOfRangeWaitingPitchingCountExceptionTest(int waitingPitchingCount) {
         // given, when, then
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new WaitingPitchingCount(count))
+                .isThrownBy(() -> new WaitingPitchingCount(waitingPitchingCount))
                 .withMessage("기다리고 있는 투구 개수는 0개 이상 2개 이하이어야 합니다.");
     }
 
@@ -35,10 +35,17 @@ public class WaitingPitchingCountTest {
         assertSame(WaitingPitchingCount.ofSpare().count(), 1);
     }
 
-    @DisplayName("스트라이크, 스페어가 아니면 다음 투구를 기다리지 않는다.")
+    @DisplayName("첫 번째 투구이고 스트라이크가 아니라면 1개의 다음 투구를 기다려야 한다.")
     @Test
-    void waitingPitchingCountOfNotStrikeAndNotSpareTest() {
+    void waitingPitchingCountOfFirstAndNotStrikeTest() {
         // given, when, then
-        assertSame(WaitingPitchingCount.noCount().count(), 0);
+        assertSame(WaitingPitchingCount.ofFirstAndNotStrike().count(), 1);
+    }
+
+    @DisplayName("두 번째 투구이고 스페어가 아니라면 다음 투구를 기다리지 않는다.")
+    @Test
+    void waitingPitchingCountOfSecondAndNotSpareTest() {
+        // given, when, then
+        assertSame(WaitingPitchingCount.ofSecondAndNotSpare().count(), 0);
     }
 }

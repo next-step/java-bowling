@@ -22,7 +22,7 @@ public class Player {
         }
     }
 
-    public String getName() {
+    public String name() {
         return name;
     }
 }

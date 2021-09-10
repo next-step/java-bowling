@@ -11,28 +11,28 @@ public class FrameFallenPinTest {
 
     @DisplayName("프레임의 첫 투구 후에 두 번째 FallenPin 객체는 비어있어야 한다.")
     @Test
-    void emptySecondFallenPinOfFrameFirstFallenPinTest() {
+    void emptySecondFallenPinOfFirstFrameFallenPinTest() {
         // given, when
-        FrameFallenPin frameFirstFallenPin = FrameFallenPin.first(5);
+        FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(5);
 
         // then
-        assertSame(frameFirstFallenPin.getSecond(), null);
+        assertSame(firstFrameFallenPin.second(), null);
     }
 
     @DisplayName("프레임을 두 번 투구 후에 첫 번째 FallenPin 객체는 비어있으면 안된다.")
     @Test
-    void notEmptyFirstFallenPinOfFrameSecondFallenPinTest() {
+    void notEmptyFirstFallenPinOfSecondFrameFallenPinTest() {
         // given, when
-        FrameFallenPin frameFirstFallenPin = FrameFallenPin.first(5);
-        FrameFallenPin frameSecondFallenPin = frameFirstFallenPin.second(5);
+        FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(5);
+        FrameFallenPin secondFrameFallenPin = firstFrameFallenPin.second(5);
 
         // then
-        assertNotSame(frameSecondFallenPin.getFirst(), null);
+        assertNotSame(secondFrameFallenPin.first(), null);
     }
 
     @DisplayName("이미 스트라이크인데 두 번째 쓰러진 핀을 생성하려고 하면 예외가 발생한다.")
     @Test
-    void createSecondFallenPinOfStrikeFrameExceptionTest() {
+    void createSecondFallenPinOfStrikeFrameFallenPinExceptionTest() {
         // given
         FrameFallenPin strikeFrameFallenPin = FrameFallenPin.first(10);
 
@@ -134,11 +134,11 @@ public class FrameFallenPinTest {
     @Test
     void countTotalOfFrameFallenPinTest() {
         // given
-        FrameFallenPin frameFirstFallenPin = FrameFallenPin.first(5);
-        FrameFallenPin frameSecondFallenPin = frameFirstFallenPin.second(5);
+        FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(5);
+        FrameFallenPin secondFrameFallenPin = firstFrameFallenPin.second(5);
 
         // when, then
-        assertSame(frameFirstFallenPin.countTotal(), 5);
-        assertSame(frameSecondFallenPin.countTotal(), 10);
+        assertSame(firstFrameFallenPin.countTotal(), 5);
+        assertSame(secondFrameFallenPin.countTotal(), 10);
     }
 }

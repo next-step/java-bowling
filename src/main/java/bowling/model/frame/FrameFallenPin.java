@@ -1,9 +1,9 @@
 package bowling.model.frame;
 
 public class FrameFallenPin {
-    private static final int FALLEN_PIN_COUNT_MIN_TOTAL = 0;
-    private static final int FALLEN_PIN_COUNT_MAX_TOTAL = 10;
-    private static final FallenPin EMPTY_FALLEN_PIN = null;
+    private static final int MIN_TOTAL = 0;
+    private static final int MAX_TOTAL = 10;
+    private static final FallenPin EMPTY = null;
 
     private final FallenPin first;
     private final FallenPin second;
@@ -15,12 +15,12 @@ public class FrameFallenPin {
 
     public FrameFallenPin(FallenPin first) {
         this.first = first;
-        this.second = EMPTY_FALLEN_PIN;
+        this.second = EMPTY;
     }
 
     public FrameFallenPin(int firstFallenPinCount) {
         this.first = FallenPin.of(firstFallenPinCount);
-        this.second = EMPTY_FALLEN_PIN;
+        this.second = EMPTY;
     }
 
     public FrameFallenPin(int firstFallenPinCount, int secondFallenPinCount) {
@@ -47,14 +47,13 @@ public class FrameFallenPin {
 
     private void validateSecondFallenPinCountRange(int firstFallenPinCount, int secondFallenPinCount) {
         int fallenPinCountTotal = firstFallenPinCount + secondFallenPinCount;
-        if (fallenPinCountTotal > FALLEN_PIN_COUNT_MAX_TOTAL) {
-            throw new IllegalArgumentException(String.format("총 쓰러진 핀의 개수가 %d개를 초과할 수 없습니다.",
-                    FALLEN_PIN_COUNT_MAX_TOTAL));
+        if (fallenPinCountTotal > MAX_TOTAL) {
+            throw new IllegalArgumentException(String.format("총 쓰러진 핀의 개수가 %d개를 초과할 수 없습니다.", MAX_TOTAL));
         }
     }
 
     public boolean isStrike() {
-        return first.isMax() && second == EMPTY_FALLEN_PIN;
+        return first.isMax() && second == EMPTY;
     }
 
     public boolean isSpare() {
@@ -63,7 +62,7 @@ public class FrameFallenPin {
         }
 
         int fallenPinCountTotal = first.count() + second.count();
-        return fallenPinCountTotal == FALLEN_PIN_COUNT_MAX_TOTAL;
+        return fallenPinCountTotal == MAX_TOTAL;
     }
 
     public boolean isMiss() {
@@ -72,49 +71,49 @@ public class FrameFallenPin {
         }
 
         int fallenPinCountTotal = first.count() + second.count();
-        return fallenPinCountTotal > FALLEN_PIN_COUNT_MIN_TOTAL && fallenPinCountTotal < FALLEN_PIN_COUNT_MAX_TOTAL;
+        return fallenPinCountTotal > MIN_TOTAL && fallenPinCountTotal < MAX_TOTAL;
     }
 
     public boolean pitchTwice() {
-        return first != EMPTY_FALLEN_PIN && second != EMPTY_FALLEN_PIN;
+        return first != EMPTY && second != EMPTY;
     }
 
     public boolean isEmpty() {
-        return first == EMPTY_FALLEN_PIN;
+        return first == EMPTY;
     }
 
     public boolean isFirst() {
-        return first != EMPTY_FALLEN_PIN && second == EMPTY_FALLEN_PIN;
+        return first != EMPTY && second == EMPTY;
     }
 
-    public FallenPin getFirst() {
+    public FallenPin first() {
         return first;
     }
 
-    public FallenPin getSecond() {
+    public FallenPin second() {
         return second;
     }
 
     public boolean isFirstAndGutter() {
-        if (first == EMPTY_FALLEN_PIN) {
+        if (first == EMPTY) {
             return false;
         }
-        return first.isMin() && second == EMPTY_FALLEN_PIN;
+        return first.isMin() && second == EMPTY;
     }
 
     public boolean isDoubleGutter() {
-        if (first == EMPTY_FALLEN_PIN || second == EMPTY_FALLEN_PIN) {
+        if (first == EMPTY || second == EMPTY) {
             return false;
         }
         return first.isMin() && second.isMin();
     }
 
     public int countTotal() {
-        if (first == EMPTY_FALLEN_PIN) {
-            return FALLEN_PIN_COUNT_MIN_TOTAL;
+        if (first == EMPTY) {
+            return MIN_TOTAL;
         }
 
-        if (second == EMPTY_FALLEN_PIN) {
+        if (second == EMPTY) {
             return first.count();
         }
 

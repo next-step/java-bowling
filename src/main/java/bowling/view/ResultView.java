@@ -42,8 +42,8 @@ public class ResultView {
     private static String generateFrameFallenPinDisplay(List<Frame> frames) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Frame frame : frames) {
-            String displayFormat = FrameFallenPinStatus.findDisplayFormat(frame.getFallenPin());
-            stringBuilder.append(String.format(displayFormat, frame.getFirstFallenPin(), frame.getSecondFallenPin()));
+            String displayFormat = FrameFallenPinStatus.findDisplayFormat(frame.fallenPin());
+            stringBuilder.append(String.format(displayFormat, frame.firstFallenPin(), frame.secondFallenPin()));
         }
         return stringBuilder.toString();
     }
@@ -59,7 +59,7 @@ public class ResultView {
             return EMPTY_STRING;
         }
 
-        return String.format(BONUS_FALLEN_PIN_DISPLAY_FORMAT, finalFrame.getBonusFallenPin());
+        return String.format(BONUS_FALLEN_PIN_DISPLAY_FORMAT, finalFrame.bonusFallenPin());
     }
 
     private static String generateEmptySections(int emptySectionCount) {

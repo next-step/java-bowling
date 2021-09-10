@@ -8,8 +8,8 @@ public class NormalFrame extends Frame {
         super(number, fallenPin, score);
     }
 
-    public NormalFrame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount,
-                       int score, int waitingPitchingCount) {
+    public NormalFrame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount, int score,
+                       int waitingPitchingCount) {
         super(frameNumber, firstFallenPinCount, secondFallenPinCount, score, waitingPitchingCount);
     }
 
@@ -41,17 +41,17 @@ public class NormalFrame extends Frame {
     @Override
     public Frame next(int fallenPinCount) {
         if (isNextFinalFrame()) {
-            FrameFallenPin firstFallenPin = FrameFallenPin.first(fallenPinCount);
-            return new FinalFrame(number.next(), firstFallenPin, score.nextFirst(firstFallenPin));
+            FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(fallenPinCount);
+            return new FinalFrame(number.next(), firstFrameFallenPin, score.nextFirst(firstFrameFallenPin));
         }
 
         if (needNextNumber()) {
-            FrameFallenPin firstFallenPin = FrameFallenPin.first(fallenPinCount);
-            return new NormalFrame(number.next(), FrameFallenPin.first(fallenPinCount), score.nextFirst(firstFallenPin));
+            FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(fallenPinCount);
+            return new NormalFrame(number.next(), FrameFallenPin.first(fallenPinCount), score.nextFirst(firstFrameFallenPin));
         }
 
-        FrameFallenPin fallenPinTotal = fallenPin.second(fallenPinCount);
-        return new NormalFrame(number, fallenPinTotal, score.nextSecond(fallenPinTotal));
+        FrameFallenPin secondFrameFallenPin = fallenPin.second(fallenPinCount);
+        return new NormalFrame(number, secondFrameFallenPin, score.nextSecond(secondFrameFallenPin));
     }
 
     @Override
@@ -68,7 +68,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public FallenPin getBonusFallenPin() {
+    public FallenPin bonusFallenPin() {
         return null;
     }
 }

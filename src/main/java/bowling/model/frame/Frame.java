@@ -13,8 +13,8 @@ public abstract class Frame {
         this.score = score;
     }
 
-    public Frame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount,
-                 int score, int waitingPitchingCount) {
+    public Frame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount, int score,
+                 int waitingPitchingCount) {
         FrameNumber number = new FrameNumber(frameNumber);
         validateNumberRange(number);
 
@@ -42,11 +42,11 @@ public abstract class Frame {
 
     public abstract boolean isBonusPlay();
 
-    public abstract FallenPin getBonusFallenPin();
+    public abstract FallenPin bonusFallenPin();
 
     public static Frame initial(int fallenPinCount) {
         FrameFallenPin initialFallenPin = FrameFallenPin.first(fallenPinCount);
-        return new NormalFrame(FrameNumber.initial(), initialFallenPin, FrameScore.ofInitialFallenPin(initialFallenPin));
+        return new NormalFrame(FrameNumber.initial(), initialFallenPin, FrameScore.initial(initialFallenPin));
     }
 
     protected boolean isStrikeOrSpare() {
@@ -69,16 +69,16 @@ public abstract class Frame {
         return fallenPin.isSpare();
     }
 
-    public FrameFallenPin getFallenPin() {
+    public FrameFallenPin fallenPin() {
         return fallenPin;
     }
 
-    public FallenPin getFirstFallenPin() {
-        return fallenPin.getFirst();
+    public FallenPin firstFallenPin() {
+        return fallenPin.first();
     }
 
-    public FallenPin getSecondFallenPin() {
-        return fallenPin.getSecond();
+    public FallenPin secondFallenPin() {
+        return fallenPin.second();
     }
 
     public boolean isFrameNumberEqual(Frame frame) {

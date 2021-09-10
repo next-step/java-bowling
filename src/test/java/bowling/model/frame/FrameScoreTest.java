@@ -12,9 +12,9 @@ public class FrameScoreTest {
     @Test
     void strikeFrameScoreTest() {
         // given, when
-        FrameScore initialStrikeFrameScore = FrameScore.ofInitialFallenPin(new FrameFallenPin(10));
+        FrameScore initialStrikeFrameScore = FrameScore.initial(new FrameFallenPin(10));
 
-        FrameScore frameScore = FrameScore.ofInitialFallenPin(new FrameFallenPin(5));
+        FrameScore frameScore = FrameScore.initial(new FrameFallenPin(5));
         FrameScore frameNextScore = frameScore.nextSecond(new FrameFallenPin(5));
         FrameScore strikeFrameScore = frameNextScore.nextFirst(new FrameFallenPin(10));
 
@@ -28,8 +28,8 @@ public class FrameScoreTest {
     void spareFrameScoreTest() {
         // given, when
         FrameFallenPin firstFallenPin = new FrameFallenPin(5);
-        FrameScore frameFirstScore = FrameScore.ofInitialFallenPin(firstFallenPin);
-        FrameScore spareFrameScore = frameFirstScore.nextSecond(firstFallenPin.second(5));
+        FrameScore initialFrameScore = FrameScore.initial(firstFallenPin);
+        FrameScore spareFrameScore = initialFrameScore.nextSecond(firstFallenPin.second(5));
 
         // then
         assertSame(spareFrameScore.waitingPitchingCount(), 1);
@@ -39,7 +39,7 @@ public class FrameScoreTest {
     @Test
     void frameFirstScoreTest() {
         // given, when
-        FrameScore initialFrameScore = FrameScore.ofInitialFallenPin(new FrameFallenPin(5));
+        FrameScore initialFrameScore = FrameScore.initial(new FrameFallenPin(5));
 
         // then
         assertSame(initialFrameScore.waitingPitchingCount(), 1);

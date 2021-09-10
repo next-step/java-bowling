@@ -22,11 +22,11 @@ public class WaitingPitchingCount {
         return new WaitingPitchingCount(COUNT_OF_SPARE);
     }
 
-    public static WaitingPitchingCount noCount() {
+    public static WaitingPitchingCount ofSecondAndNotSpare() {
         return new WaitingPitchingCount(NO_COUNT);
     }
 
-    public static WaitingPitchingCount oneCount() {
+    public static WaitingPitchingCount ofFirstAndNotStrike() {
         return new WaitingPitchingCount(ONE_COUNT);
     }
 

@@ -10,22 +10,22 @@ public class FallenPin {
     private static final String GUTTER_SYMBOL = "-";
     private static final Map<Integer, FallenPin> FALLEN_PINS = new HashMap<>();
 
-    private final int fallenCount;
+    private final int count;
 
-    private FallenPin(int fallenCount) {
-        validateRange(fallenCount);
+    private FallenPin(int fallenPinCount) {
+        validateRange(fallenPinCount);
 
-        this.fallenCount = fallenCount;
+        this.count = fallenPinCount;
     }
 
-    public static FallenPin of(int fallenCount) {
-        FallenPin fallenPin = FALLEN_PINS.get(fallenCount);
+    public static FallenPin of(int fallenPinCount) {
+        FallenPin fallenPin = FALLEN_PINS.get(fallenPinCount);
         if (fallenPin != null) {
             return fallenPin;
         }
 
-        fallenPin = new FallenPin(fallenCount);
-        FALLEN_PINS.put(fallenCount, fallenPin);
+        fallenPin = new FallenPin(fallenPinCount);
+        FALLEN_PINS.put(fallenPinCount, fallenPin);
         return fallenPin;
     }
 
@@ -36,15 +36,15 @@ public class FallenPin {
     }
 
     public int count() {
-        return fallenCount;
+        return count;
     }
 
     public boolean isMax() {
-        return fallenCount == MAX;
+        return count == MAX;
     }
 
     public boolean isMin() {
-        return fallenCount == MIN;
+        return count == MIN;
     }
 
     @Override
@@ -56,6 +56,6 @@ public class FallenPin {
         if (isMax()) {
             return STRIKE_SYMBOL;
         }
-        return String.valueOf(fallenCount);
+        return String.valueOf(count);
     }
 }
