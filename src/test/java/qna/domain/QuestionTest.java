@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.Collections;
@@ -8,8 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class QuestionTest {
 
-    public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-    public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    public static Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+    public static Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+
+    @BeforeEach
+    void setUp() {
+        Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    }
 
     @Test
     void deleteAnswer() {
