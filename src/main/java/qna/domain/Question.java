@@ -3,6 +3,9 @@ package qna.domain;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -52,10 +55,6 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public Answers getAnswers() {
-        return answers;
-    }
-
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
@@ -67,5 +66,15 @@ public class Question extends AbstractEntity {
         }
         answers.deleteAllBy(loginUser);
         deleted = true;
+    }
+
+    public List<DeleteHistory> toDeleteHistories() {
+        if (!this.isDeleted()) {
+            throw new IllegalStateException("삭제된 질문이 아닙니다.");
+        }
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
+        deleteHistories.addAll(answers.toDeleteHistories());
+        return deleteHistories;
     }
 }
