@@ -100,7 +100,7 @@ public class Question extends AbstractEntity {
         DeleteHistory questionDeleteHistory = DeleteHistory.fromQuestion(this);
         deleteHistoryList.add(questionDeleteHistory);
 
-        List<DeleteHistory> answerDeleteHistory = deleteAnswers(this, loginUser);
+        List<DeleteHistory> answerDeleteHistory = deleteAnswers(loginUser);
         deleteHistoryList.addAll(answerDeleteHistory);
 
         this.setDeleted(true);
@@ -108,10 +108,10 @@ public class Question extends AbstractEntity {
         return deleteHistoryList;
     }
 
-    private List<DeleteHistory> deleteAnswers(Question question, User loginUser) throws CannotDeleteException {
+    private List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistoryList = new ArrayList<>();
 
-        List<Answer> answers = question.getAnswers();
+        List<Answer> answers = this.getAnswers();
         for (Answer answer : answers) {
             DeleteHistory deleteHistory = answer.delete(loginUser);
             deleteHistoryList.add(deleteHistory);
