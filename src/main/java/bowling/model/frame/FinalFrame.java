@@ -42,12 +42,12 @@ public class FinalFrame extends Frame {
     public Frame next(int fallenPinCount) {
         if (isFirstAndNotStrike()) {
             FrameFallenPin secondFallenPin = fallenPin.second(fallenPinCount);
-            return new FinalFrame(number, secondFallenPin, score.ofSecondFallenPin(secondFallenPin));
+            return new FinalFrame(number, secondFallenPin, score.nextSecond(secondFallenPin));
         }
 
         if (isStrikeOrSpare()) {
             FrameFallenPin firstFallenPin = FrameFallenPin.first(fallenPinCount);
-            return new FinalFrame(number, fallenPin, score.ofFirstFallenPin(firstFallenPin), fallenPinCount);
+            return new FinalFrame(number, fallenPin, score.nextFirst(firstFallenPin), fallenPinCount);
         }
 
         throw new IllegalArgumentException("마지막 프레임의 다음 번호 프레임을 만들 수 없습니다.");

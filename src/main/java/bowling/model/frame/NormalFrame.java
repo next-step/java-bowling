@@ -42,16 +42,16 @@ public class NormalFrame extends Frame {
     public Frame next(int fallenPinCount) {
         if (isNextFinalFrame()) {
             FrameFallenPin firstFallenPin = FrameFallenPin.first(fallenPinCount);
-            return new FinalFrame(number.next(), firstFallenPin, score.ofFirstFallenPin(firstFallenPin));
+            return new FinalFrame(number.next(), firstFallenPin, score.nextFirst(firstFallenPin));
         }
 
         if (needNextNumber()) {
             FrameFallenPin firstFallenPin = FrameFallenPin.first(fallenPinCount);
-            return new NormalFrame(number.next(), FrameFallenPin.first(fallenPinCount), score.ofFirstFallenPin(firstFallenPin));
+            return new NormalFrame(number.next(), FrameFallenPin.first(fallenPinCount), score.nextFirst(firstFallenPin));
         }
 
         FrameFallenPin secondFallenPin = fallenPin.second(fallenPinCount);
-        return new NormalFrame(number, secondFallenPin, score.ofSecondFallenPin(secondFallenPin));
+        return new NormalFrame(number, secondFallenPin, score.nextSecond(secondFallenPin));
     }
 
     @Override

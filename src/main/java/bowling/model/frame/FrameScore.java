@@ -19,12 +19,12 @@ public class FrameScore {
         return new FrameScore(Score.of(initialFallenPinCount), findWaitingPitchingCountOfFirstFallenPin(fallenPin));
     }
 
-    public FrameScore ofFirstFallenPin(FrameFallenPin firstFallenPin) {
+    public FrameScore nextFirst(FrameFallenPin firstFallenPin) {
         int firstFallenPinCount = firstFallenPin.countTotal();
         return new FrameScore(score.plus(firstFallenPinCount), findWaitingPitchingCountOfFirstFallenPin(firstFallenPin));
     }
 
-    public FrameScore ofSecondFallenPin(FrameFallenPin secondFallenPin) {
+    public FrameScore nextSecond(FrameFallenPin secondFallenPin) {
         int fallenPinCountTotal = secondFallenPin.countTotal();
         return new FrameScore(score.plus(fallenPinCountTotal), findWaitingPitchingCountOfSecondFallenPin(secondFallenPin));
     }
