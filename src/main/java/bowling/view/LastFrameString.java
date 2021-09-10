@@ -1,12 +1,11 @@
 package bowling.view;
 
 import bowling.domain.Shot;
-import bowling.util.BowlingUtils;
 
 import java.util.Arrays;
 import java.util.List;
 
-public enum  LastFrameString {
+public enum LastFrameString {
     ONE(1) {
         @Override
         public String result(List<Shot> shots) {
@@ -18,8 +17,7 @@ public enum  LastFrameString {
 
             return firstShot.toString();
         }
-    }
-    , TWO(2) {
+    }, TWO(2) {
         @Override
         public String result(List<Shot> shots) {
             Shot firstShot = shots.get(FIRST);
@@ -32,7 +30,6 @@ public enum  LastFrameString {
             Shot secondShot = shots.get(SECOND);
             String second = secondShot.toString();
 
-            int sum = BowlingUtils.sum(shots);
             if (isDoubleStrike(shots)) {
                 second = STRIKE;
             }
@@ -43,8 +40,7 @@ public enum  LastFrameString {
 
             return first + SEPARATOR + second;
         }
-    }
-    , THREE(3) {
+    }, THREE(3) {
         @Override
         public String result(List<Shot> shots) {
             Shot thirdShot = shots.get(THIRD);
@@ -89,10 +85,10 @@ public enum  LastFrameString {
         this.size = size;
     }
 
-    abstract public String result(List<Shot> shots);
+    public abstract String result(List<Shot> shots);
 
     boolean isFirstStrike(List<Shot> shots) {
-        if (shots.size() == 0) {
+        if (shots.isEmpty()) {
             throw new IllegalArgumentException("this list empty or null");
         }
 

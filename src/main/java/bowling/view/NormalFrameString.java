@@ -41,7 +41,7 @@ public enum  NormalFrameString {
         this.size = size;
     }
 
-    abstract public String result(List<Shot> shots);
+    public abstract String result(List<Shot> shots);
 
     boolean isSpare(List<Shot> shots) {
         int sum = BowlingUtils.sum(shots);
