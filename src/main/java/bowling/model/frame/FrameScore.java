@@ -2,22 +2,22 @@ package bowling.model.frame;
 
 public class FrameScore {
     private final Score score;
-    private final WaitingFrameCount count;
+    private final WaitingPitchingCount count;
 
-    private FrameScore(Score score, WaitingFrameCount count) {
+    private FrameScore(Score score, WaitingPitchingCount count) {
         this.score = score;
         this.count = count;
     }
 
     public static FrameScore of(int score) {
-        return new FrameScore(Score.of(score), WaitingFrameCount.noCount());
+        return new FrameScore(Score.of(score), WaitingPitchingCount.noCount());
     }
 
     public static FrameScore strike(int score) {
-        return new FrameScore(Score.of(score), WaitingFrameCount.ofStrike());
+        return new FrameScore(Score.of(score), WaitingPitchingCount.ofStrike());
     }
 
     public static FrameScore spare(int score) {
-        return new FrameScore(Score.of(score), WaitingFrameCount.ofSpare());
+        return new FrameScore(Score.of(score), WaitingPitchingCount.ofSpare());
     }
 }
