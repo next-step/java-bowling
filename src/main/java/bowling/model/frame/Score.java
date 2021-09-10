@@ -1,6 +1,8 @@
 package bowling.model.frame;
 
 public class Score {
+    private static final int STRIKE_SCORE = 10;
+    private static final int SPARE_SCORE = 10;
     private static final int WAITING_FRAME_COUNT_OF_STRIKE = 2;
     private static final int WAITING_FRAME_COUNT_OF_SPARE = 1;
     private static final int NO_WAITING_FRAME_COUNT = 0;
@@ -9,13 +11,6 @@ public class Score {
 
     private int score;
     private int waitingFrameCount;
-
-    private Score(int score) {
-        validateScoreRange(score);
-
-        this.score = score;
-        this.waitingFrameCount = NO_WAITING_FRAME_COUNT;
-    }
 
     public Score(int score, int waitingFrameCount) {
         validateScoreRange(score);
@@ -26,15 +21,15 @@ public class Score {
     }
 
     public static Score of(int score) {
-        return new Score(score);
+        return new Score(score, NO_WAITING_FRAME_COUNT);
     }
 
-    public static Score strike(int score) {
-        return new Score(score, WAITING_FRAME_COUNT_OF_STRIKE);
+    public static Score strike() {
+        return new Score(STRIKE_SCORE, WAITING_FRAME_COUNT_OF_STRIKE);
     }
 
-    public static Score spare(int score) {
-        return new Score(score, WAITING_FRAME_COUNT_OF_SPARE);
+    public static Score spare() {
+        return new Score(SPARE_SCORE, WAITING_FRAME_COUNT_OF_SPARE);
     }
 
     private void validateScoreRange(int score) {
