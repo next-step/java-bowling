@@ -6,7 +6,7 @@ import java.util.List;
 
 public class FramesResults {
 
-  private List<FramesResult> framesResults;
+  private final List<FramesResult> framesResults;
 
   public FramesResults() {
     this.framesResults = new ArrayList<>();
