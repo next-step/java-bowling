@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.rolling;
 
 public class RollingException extends RuntimeException {
 

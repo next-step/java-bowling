@@ -1,5 +1,10 @@
 package bowling.domain.frame;
 
+import bowling.domain.rolling.Rollings;
+import bowling.domain.score.Score;
+
+import java.util.List;
+
 public interface Frame {
 
     int INIT_NUMBER = 1;
@@ -15,5 +20,11 @@ public interface Frame {
     Frame roll(int fallenPin);
 
     Rollings rollings();
+
+    Score score(List<Frame> frames);
+
+    Score addScore(Score before, List<Frame> frames);
+
+
 
 }

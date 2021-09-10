@@ -1,5 +1,10 @@
 package bowling.domain.frame;
 
+import bowling.domain.rolling.FinalRollings;
+import bowling.domain.rolling.Rollings;
+import bowling.domain.score.Score;
+
+import java.util.List;
 import java.util.Objects;
 
 public class FinalFrame implements Frame {
@@ -42,6 +47,35 @@ public class FinalFrame implements Frame {
     @Override
     public Rollings rollings() {
         return finalRollings;
+    }
+
+    @Override
+    public Score score(List<Frame> frames) {
+        if (finalRollings == null) {
+            return Score.ofNone();
+        }
+        Score score = Score.of(finalRollings);
+        if (score.isFixed()) {
+            return score;
+        }
+
+        return Score.ofNone();
+    }
+
+    @Override
+    public Score addScore(Score before, List<Frame> frames) {
+        if (finalRollings == null) {
+            return Score.ofNone();
+        }
+        Score score = before.plus(finalRollings.first().fallenPin());
+        if (score.isFixed()) {
+            return score;
+        }
+        if (finalRollings.second() == null) {
+            return score;
+        }
+
+        return score.plus(finalRollings.second().fallenPin());
     }
 
     @Override

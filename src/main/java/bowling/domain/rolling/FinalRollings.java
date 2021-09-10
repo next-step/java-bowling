@@ -1,6 +1,7 @@
-package bowling.domain.frame;
+package bowling.domain.rolling;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class FinalRollings extends Rollings {
 
@@ -33,6 +34,13 @@ public class FinalRollings extends Rollings {
     @Override
     public Rolling third() {
         return third;
+    }
+
+    @Override
+    public int sum() {
+        Rolling rolling = Optional.ofNullable(third())
+                .orElse(new Rolling(0));
+        return super.sum() + rolling.fallenPin();
     }
 
     @Override

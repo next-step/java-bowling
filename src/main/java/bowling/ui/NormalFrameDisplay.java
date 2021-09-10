@@ -1,7 +1,7 @@
 package bowling.ui;
 
-import bowling.domain.frame.NormalRollings;
-import bowling.domain.frame.Rolling;
+import bowling.domain.rolling.NormalRollings;
+import bowling.domain.rolling.Rolling;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -24,6 +24,9 @@ public enum NormalFrameDisplay {
     }
 
     public static String display(NormalRollings normalRollings) {
+        if (normalRollings == null) {
+            return NONE.display;
+        }
         Rolling first = normalRollings.first();
         Rolling second = normalRollings.second();
         return Arrays.stream(NormalFrameDisplay.values())

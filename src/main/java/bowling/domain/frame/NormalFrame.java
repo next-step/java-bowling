@@ -1,5 +1,10 @@
 package bowling.domain.frame;
 
+import bowling.domain.rolling.NormalRollings;
+import bowling.domain.rolling.Rollings;
+import bowling.domain.score.Score;
+
+import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
@@ -56,6 +61,52 @@ public class NormalFrame implements Frame {
     @Override
     public Rollings rollings() {
         return normalRollings;
+    }
+
+    @Override
+    public Score score(List<Frame> frames) {
+        if (normalRollings == null) {
+            return Score.ofNone();
+        }
+        Score score = Score.of(normalRollings);
+        if (score.isFixed()) {
+            return score;
+        }
+
+        return nextScore(score, frames);
+    }
+
+    @Override
+    public Score addScore(Score before, List<Frame> frames) {
+        if (normalRollings == null) {
+            return Score.ofNone();
+        }
+        Score score = before.plus(normalRollings.first().fallenPin());
+
+        if (score.isFixed()) {
+            return score;
+        }
+
+        if (normalRollings.second() == null) {
+            return nextScore(score, frames);
+        }
+
+        return score.plus(normalRollings.second().fallenPin());
+    }
+
+    private Score nextScore(Score score, List<Frame> frames) {
+        Frame nextFrame = nextFrame(frames, number);
+        if (nextFrame == null) {
+            return score;
+        }
+
+        return nextFrame.addScore(score, frames);
+    }
+
+    private Frame nextFrame(List<Frame> frames, int number) {
+        return frames.stream().filter(frame -> frame.number() == number + 1)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

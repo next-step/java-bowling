@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.rolling;
 
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;

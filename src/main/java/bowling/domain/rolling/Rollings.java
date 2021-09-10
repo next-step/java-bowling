@@ -1,8 +1,11 @@
-package bowling.domain.frame;
+package bowling.domain.rolling;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class Rollings {
+
+    public static final int SPARE_SCORE = 10;
 
     private final Rolling first;
     private final Rolling second;
@@ -33,11 +36,13 @@ public abstract class Rollings {
         if (second == null) {
             return false;
         }
-        return !isStrike() && second.isSpare(first);
+        return !isStrike() && sum() == SPARE_SCORE;
     }
 
     public int sum() {
-        return first.plusFallenPin(second);
+        Rolling rolling = Optional.ofNullable(second)
+                .orElse(new Rolling(0));
+        return first.plusFallenPin(rolling);
     }
 
     public abstract boolean allRolled();
