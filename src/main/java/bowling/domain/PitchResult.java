@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.exception.InvalidFallenPinsException;
+import bowling.exception.InvalidSpareException;
+
 import java.util.Objects;
 
 public class PitchResult {
@@ -22,7 +25,7 @@ public class PitchResult {
 
     public static PitchResult spare(int fallenPins) {
         if (fallenPins == MIN_PINS) {
-            throw new IllegalArgumentException();
+            throw new InvalidSpareException();
         }
         return new PitchResult(fallenPins, true);
     }
@@ -33,7 +36,7 @@ public class PitchResult {
 
     private void validateFallenPins(int fallenPins) {
         if (fallenPins < MIN_PINS || fallenPins > MAX_PINS) {
-            throw new IllegalArgumentException();
+            throw new InvalidFallenPinsException(fallenPins);
         }
     }
 

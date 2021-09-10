@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.exception.EndedFrameException;
+import bowling.exception.CannotAddPinsException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,11 +25,11 @@ public abstract class Frame {
 
     public void bowl(int fallenPins) {
         if (isEnd()) {
-            throw new IllegalArgumentException();
+            throw new EndedFrameException();
         }
 
         if (isTotalPinsMoreThan10With(fallenPins)) {
-            throw new IllegalArgumentException();
+            throw new CannotAddPinsException(totalPins(), fallenPins);
         }
 
         if (isSpare(fallenPins)) {

@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.CannotAddPinsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ class LastFrameTest {
     void invalidTotalPins() {
         frame.bowl(7);
         assertThatThrownBy(() -> frame.bowl(4))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(CannotAddPinsException.class);
     }
 
     @DisplayName("두 번의 투구 내에 스트라이크 또는 스페어를 치지 못한 경우, 프레임은 종료된다.")

@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.InvalidPlayerNameLengthException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -13,7 +14,7 @@ class PlayerTest {
     @ParameterizedTest
     void invalidNameLength(String name) {
         assertThatThrownBy(() -> new Player(name))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidPlayerNameLengthException.class);
     }
 
 }

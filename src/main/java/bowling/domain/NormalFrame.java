@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.InvalidFrameNumberException;
+
 import java.util.Objects;
 
 public class NormalFrame extends Frame {
@@ -15,7 +17,7 @@ public class NormalFrame extends Frame {
 
     private static void validateFrameNumber(int number) {
         if (number < MIN_FRAME_NUMBER || number > MAX_FRAME_NUMBER - 1) {
-            throw new IllegalArgumentException();
+            throw new InvalidFrameNumberException(number);
         }
     }
 

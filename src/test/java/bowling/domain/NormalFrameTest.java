@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.exception.CannotAddPinsException;
+import bowling.exception.EndedFrameException;
+import bowling.exception.InvalidFrameNumberException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +27,7 @@ class NormalFrameTest {
     @ParameterizedTest
     void invalidFrameNumber(int number) {
         assertThatThrownBy(() -> NormalFrame.of(number))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(InvalidFrameNumberException.class);
     }
 
     @DisplayName("첫 번째 투구로 10개의 핀을 모두 쓰러뜨리면 스트라이크이다.")
@@ -63,7 +66,7 @@ class NormalFrameTest {
     void invalidTotalPins() {
         frame.bowl(3);
         assertThatThrownBy(() -> frame.bowl(8))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(CannotAddPinsException.class);
     }
 
     @DisplayName("스트라이크를 친 경우, 해당 프레임은 종료된다.")
@@ -88,7 +91,7 @@ class NormalFrameTest {
     void cannotBowlAfterStrike() {
         frame.bowl(10);
         assertThatThrownBy(() -> frame.bowl(1))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(EndedFrameException.class);
     }
 
     @DisplayName("스페어를 친 경우, 해당 프레임에서 더 이상 투구를 할 수 없다.")
@@ -98,7 +101,7 @@ class NormalFrameTest {
         frame.bowl(firstPins);
         frame.bowl(secondPins);
         assertThatThrownBy(() -> frame.bowl(2))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(EndedFrameException.class);
     }
 
 }

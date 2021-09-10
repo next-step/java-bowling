@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.InvalidFallenPinsException;
+import bowling.exception.InvalidSpareException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +23,7 @@ class PitchResultTest {
     @ParameterizedTest
     void invalid(int fallenPins) {
         assertThatThrownBy(() -> PitchResult.of(fallenPins))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidFallenPinsException.class);
     }
 
     @DisplayName("스페어 결과를 생성한다.")
@@ -34,7 +36,7 @@ class PitchResultTest {
     @Test
     void invalidSpare() {
         assertThatThrownBy(() -> PitchResult.spare(0))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidSpareException.class);
     }
 
 }

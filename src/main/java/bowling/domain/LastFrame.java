@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.EndedFrameException;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class LastFrame extends Frame {
     @Override
     public void bowl(int fallenPins) {
         if (isEnd()) {
-            throw new IllegalArgumentException();
+            throw new EndedFrameException();
         }
 
         if (isNotBonusChance()) {
