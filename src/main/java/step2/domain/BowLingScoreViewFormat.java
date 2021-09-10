@@ -23,13 +23,14 @@ public enum BowLingScoreViewFormat {
         List<String> result = new ArrayList<>();
         int totalScore = 0;
         int tryNumber = 0;
-        int bowlingScore = 0;
-        for (int i = 0; i < frame.size(); i++) {
+        int bowlingScore;
+        for (Integer integer : frame) {
             tryNumber++;
-            bowlingScore = frame.get(i);
+            bowlingScore = integer;
             totalScore += bowlingScore;
 
-            result.add(transferBowlingScoreToBowlingScoreSymbol(bowlingScore, totalScore, tryNumber));
+            result
+                .add(transferBowlingScoreToBowlingScoreSymbol(bowlingScore, totalScore, tryNumber));
         }
         return result;
     }

@@ -18,7 +18,6 @@ public class Frames {
         int frameIndex = frames.size() - 1;
         if (frameIndex >= 0) {
             frames.get(frameIndex).knockDown(numOfPin);
-            return;
         }
     }
 
