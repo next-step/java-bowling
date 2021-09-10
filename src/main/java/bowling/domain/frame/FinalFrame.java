@@ -33,7 +33,7 @@ public final class FinalFrame extends Frame {
 
     @Override
     protected void validateFrame(final Pins pins) {
-        if (pins.isSecondPinNotCorrect()) {
+        if (pins.isSecondPinWrong()) {
             throw new FrameNotCorrectException();
         }
         if (pins.isThirdPinWrong()) {

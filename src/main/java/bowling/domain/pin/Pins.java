@@ -41,7 +41,14 @@ public final class Pins {
         return firstPin().isMaximum();
     }
 
-    public boolean isSecondPinNotCorrect() {
+    public boolean isSpare() {
+        if (pins.size() < 2) {
+            return false;
+        }
+        return firstPin().sum(secondPin()) == MAX_TWO_PINS_SUM_IF_NOT_STRIKE;
+     }
+
+    public boolean isSecondPinWrong() {
         if (pins.size() < 2) {
             return false;
         }
