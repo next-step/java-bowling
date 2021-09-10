@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.exception.InputException;
+import bowling.exception.BusinessException;
 
 import java.util.Objects;
 
@@ -12,7 +12,7 @@ public class FrameNumber {
 
     public FrameNumber(final int frameNumber) {
         if (frameNumber > MAX_NUMBER) {
-            throw new InputException(CREATE_FRAME_NUMBER_ERROR);
+            throw new BusinessException(CREATE_FRAME_NUMBER_ERROR);
         }
         this.frameNumber = frameNumber;
     }

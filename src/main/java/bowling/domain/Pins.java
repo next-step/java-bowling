@@ -1,7 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.frame.FrameNumber;
-import bowling.exception.InputException;
+import bowling.exception.BusinessException;
 
 import java.util.List;
 import java.util.Objects;
@@ -19,7 +19,7 @@ public class Pins {
 
     public Pins(final List<Integer> pins) {
         if (pins.size() > MAX_SIZE) {
-            throw new InputException(EXCESS_PITCH_COUNT_ERROR);
+            throw new BusinessException(EXCESS_PITCH_COUNT_ERROR);
         }
         this.pins = pins.stream()
                 .map(Pin::new)
@@ -52,11 +52,11 @@ public class Pins {
 
     public Pins pitch(final int countOfPins, final FrameNumber frameNumber) {
         if (isEnd(frameNumber)) {
-            throw new InputException(EXCESS_PITCH_COUNT_ERROR);
+            throw new BusinessException(EXCESS_PITCH_COUNT_ERROR);
         }
 
         if (!frameNumber.isLastNumber() && isOverPins(countOfPins)) {
-            throw new InputException(EXCESS_PIN_COUNTS_ERROR);
+            throw new BusinessException(EXCESS_PIN_COUNTS_ERROR);
         }
         pins.add(new Pin(countOfPins));
         return this;

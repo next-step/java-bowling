@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.exception.InputException;
+import bowling.exception.BusinessException;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -13,7 +13,7 @@ public class Name {
 
     public Name(final String name) {
         if (name == null || name.isEmpty() || name.length() != NAME_LENGTH || !isAlphabet(name)) {
-            throw new InputException(CREATE_NAME_ERROR);
+            throw new BusinessException(CREATE_NAME_ERROR);
         }
         this.name = name;
     }
