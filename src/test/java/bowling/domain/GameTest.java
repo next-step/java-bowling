@@ -6,27 +6,16 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class GameTest {
-    @DisplayName("유효하지 않는 이름 테스트")
-    @Test
-    public void invalidNameTest() {
-        //given
-        String name = "1234";
-
-        //then
-        assertThatIllegalArgumentException().isThrownBy(() -> new Game(name));
-    }
-
     @DisplayName("정상 종료 테스트")
     @Test
     public void finishTest() {
         //given
-        List<Shot> shotList = Arrays.asList(new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10));
-        Game game = new Game("abc");
+        List<Shot> shotList = Arrays.asList(new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10));
+        Game game = Game.of(new User("abc"));
         //when
         shotList.stream().forEach((shot) -> game.play(shot));
 
@@ -38,8 +27,8 @@ public class GameTest {
     @Test
     public void playAfterFinishGameTest() {
         //given
-        List<Shot> shotList = Arrays.asList(new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10));
-        Game game = new Game("abc");
+        List<Shot> shotList = Arrays.asList(new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10), new Shot(10));
+        Game game = Game.of(new User("abc"));
         //when
         shotList.stream().forEach((shot) -> game.play(shot));
 

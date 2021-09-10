@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.view.LastFrameString;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -102,4 +103,173 @@ public class LastFrameTest {
         //then
         assertThat(remain).isEqualTo(10);
     }
+
+    @DisplayName("스페어도 못 쳤을 시 테스트.")
+    @Test
+    public void NotSpareTest() {
+        //given
+        LastFrame lastFrame = new LastFrame();
+        lastFrame.playShot(new Shot(1));
+        lastFrame.playShot(new Shot(7));
+
+        //when
+        boolean isFinished = lastFrame.isFinished();
+
+        //then
+        assertThat(isFinished).isEqualTo(true);
+
+    }
+
+    @DisplayName("스페어 쳤을 때 테스트")
+    @Test
+    public void spareTest() {
+        //given
+        LastFrame lastFrame = new LastFrame();
+        lastFrame.playShot(new Shot(1));
+        lastFrame.playShot(new Shot(9));
+
+        //when
+        boolean isFinished = lastFrame.isFinished();
+
+        //then
+        assertThat(isFinished).isEqualTo(false);
+    }
+
+    @DisplayName("스페어 치고 한번 더 던졌을때")
+    @Test
+    public void spareAndOneShotTest() {
+        LastFrame lastFrame = new LastFrame();
+
+        lastFrame.playShot(new Shot(1));
+        lastFrame.playShot(new Shot(9));
+        lastFrame.playShot(new Shot(8));
+
+        //when
+        boolean isFinished = lastFrame.isFinished();
+
+        //then
+        assertThat(isFinished).isEqualTo(true);
+    }
+
+    @DisplayName("스페어 치고 스트라이크 일때")
+    @Test
+    public void spareAndStrikeTest() {
+        LastFrame lastFrame = new LastFrame();
+
+        lastFrame.playShot(new Shot(1));
+        lastFrame.playShot(new Shot(9));
+        lastFrame.playShot(new Shot(8));
+
+        //when
+        boolean isFinished = lastFrame.isFinished();
+
+        //then
+        assertThat(isFinished).isEqualTo(true);
+    }
+
+    @DisplayName("원스트라이크 일때")
+    @Test
+    public void oneStrikeTest() {
+        LastFrame lastFrame = new LastFrame();
+
+        lastFrame.playShot(new Shot(10));
+
+        //when
+        boolean isFinished = lastFrame.isFinished();
+
+        //then
+        assertThat(isFinished).isEqualTo(false);
+    }
+
+    @DisplayName("원스트라이크하고 한번더 던졌을때 일때")
+    @Test
+    public void oneStrikeAndOneShotTest() {
+        LastFrame lastFrame = new LastFrame();
+
+        lastFrame.playShot(new Shot(10));
+        lastFrame.playShot(new Shot(4));
+        //when
+        boolean isFinished = lastFrame.isFinished();
+
+        //then
+        assertThat(isFinished).isEqualTo(false);
+    }
+
+    @DisplayName("원스트라이크하고 두번 더 던졌을때 일때")
+    @Test
+    public void oneStrikeAndTwoShotTest() {
+        LastFrame lastFrame = new LastFrame();
+
+        lastFrame.playShot(new Shot(10));
+        lastFrame.playShot(new Shot(4));
+        lastFrame.playShot(new Shot(4));
+        //when
+        boolean isFinished = lastFrame.isFinished();
+
+        //then
+        assertThat(isFinished).isEqualTo(true);
+    }
+
+    @DisplayName("원스트라이크하고 스페어 던졌을때 일때")
+    @Test
+    public void oneStrikeAndSpareTest() {
+        LastFrame lastFrame = new LastFrame();
+
+        lastFrame.playShot(new Shot(10));
+        lastFrame.playShot(new Shot(4));
+        lastFrame.playShot(new Shot(6));
+        //when
+        boolean isFinished = lastFrame.isFinished();
+
+        //then
+        assertThat(isFinished).isEqualTo(true);
+    }
+
+    @DisplayName("더블 스트라이크 했을 때 테스트.")
+    @Test
+    public void doubleStrikeTest() {
+        LastFrame lastFrame = new LastFrame();
+
+        lastFrame.playShot(new Shot(10));
+        lastFrame.playShot(new Shot(10));
+
+        //when
+        boolean isFinished = lastFrame.isFinished();
+
+        //then
+        assertThat(isFinished).isEqualTo(false);
+    }
+
+    @DisplayName("더블 스트라이크하고 샷한번 더 던졌을 때 테스트.")
+    @Test
+    public void doubleStrikeAndOneShotTest() {
+        LastFrame lastFrame = new LastFrame();
+
+        lastFrame.playShot(new Shot(10));
+        lastFrame.playShot(new Shot(10));
+        lastFrame.playShot(new Shot(5));
+
+        //when
+        boolean isFinished = lastFrame.isFinished();
+
+        //then
+        assertThat(isFinished).isEqualTo(true);
+    }
+
+    @DisplayName("트리플 스트라이크 테스트")
+    @Test
+    public void tripleStrikeTest() {
+        LastFrame lastFrame = new LastFrame();
+
+        lastFrame.playShot(new Shot(10));
+        lastFrame.playShot(new Shot(10));
+        lastFrame.playShot(new Shot(10));
+
+        //when
+        boolean isFinished = lastFrame.isFinished();
+
+        //then
+        assertThat(isFinished).isEqualTo(true);
+    }
+
 }
