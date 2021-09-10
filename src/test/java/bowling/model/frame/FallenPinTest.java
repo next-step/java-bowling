@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-@DisplayName("쓰러진 핀 테스트")
+@DisplayName("볼링 쓰러진 핀 테스트")
 public class FallenPinTest {
 
     @DisplayName("쓰러진 핀 개수가 0개 이상 10개 이하가 아니면 예외가 발생한다.")

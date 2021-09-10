@@ -9,7 +9,7 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("프레임 컬렉션 테스트")
+@DisplayName("볼링 프레임 컬렉션 테스트")
 public class FramesTest {
     private Frames firstEndedFrames;
     private Frames secondEndedFrames;
