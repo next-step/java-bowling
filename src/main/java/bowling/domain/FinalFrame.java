@@ -7,8 +7,9 @@ public class FinalFrame extends Frame {
         super(score);
     }
 
+    @Override
     public String frameScoreToSymbolString() {
-        if (scores.size() <= 2) {
+        if (scores.size() <= FRAME_SCORE_MAX_SIZE) {
             return super.frameScoreToSymbolString();
         }
         return changeScoreToSpareInFinalFrame(scores.get(0), scores.get(1), scores.get(2));

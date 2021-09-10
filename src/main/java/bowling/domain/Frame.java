@@ -6,7 +6,8 @@ import java.util.Objects;
 
 public abstract class Frame {
     protected static final String SEPARATOR_SYMBOL = "|";
-
+    protected static final int FRAME_SCORE_MAX_SIZE = 2;
+    protected static final int FRAME_SCORE_MAX_SCORE = 10;
     protected List<Score> scores;
 
     public Frame(int score) {
@@ -31,7 +32,7 @@ public abstract class Frame {
         }
 
         Score secondScore = scores.get(1);
-        if (frameScoresSum() == 10) {
+        if (frameScoresSum() == FRAME_SCORE_MAX_SCORE) {
             return firstScore.changeScoreToSpare();
         }
 
