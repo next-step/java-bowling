@@ -6,6 +6,7 @@ import java.util.List;
 public class Player {
     private final PlayerName playerName;
     private List<Frame> frames = new ArrayList<>();
+    private Frame currentFrame;
 
     public Player(String playerName) {
         this.playerName = new PlayerName(playerName);
@@ -23,12 +24,23 @@ public class Player {
         return frames.get(frameIndex);
     }
 
-    public void firstBall(int firstBall) {
-        frames.add(new Frame(firstBall));
+    public Frame createEmptyFrame() {
+        Frame frame = new Frame();
+        frames.add(frame);
+        return frame;
     }
 
-    public void secondBall(int secondBall) {
-        Frame currentFrame = frames.get(frames.size() - 1);
-        currentFrame.secondBall(secondBall);
+    public Frame firstBall(int hitNumberOfPin) {
+        currentFrame = frames.get(frames.size() - 1);
+        Frame nextFrame = currentFrame.nextFrame(hitNumberOfPin);
+        frames.add(nextFrame);
+        return nextFrame;
+    }
+
+    public FinalFrame finalFrame(int hitNumberOfPin) {
+        currentFrame = frames.get(frames.size() - 1);
+        FinalFrame finalFrame = currentFrame.finalFrame(hitNumberOfPin);
+        frames.add(finalFrame);
+        return finalFrame;
     }
 }
