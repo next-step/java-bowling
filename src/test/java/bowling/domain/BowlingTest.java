@@ -6,6 +6,8 @@ import bowling.domain.frames.Frames;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BowlingTest {
@@ -26,7 +28,7 @@ class BowlingTest {
     @DisplayName("생성 - 이름 확인")
     void create_name() {
         Bowling bowling = new Bowling("pjs");
-        assertEquals(bowling.getName(), new Name("pjs"));
+        assertEquals(bowling.getName(), Name.of("pjs"));
     }
 
     @Test
@@ -58,16 +60,86 @@ class BowlingTest {
     }
 
     @Test
-    @DisplayName("프레임이 끝났으면 finish")
-    void finish() {
-        Bowling bowling = new Bowling(new Name("pjs"), new Frames(true));
+    @DisplayName("마지막 프레임 - 스페어 -> 스트라이크")
+    void finish_spare_to_strike() {
+        // given
+        Bowling bowling = new Bowling(Name.of("pjs"), new Frames());
+        normalFrameRoll(bowling);
+
+        // when
+        bowling.roll("1");
+        bowling.roll("9");
+        bowling.roll("10");
+
+        // then
+        assertTrue(bowling.isFinish());
+    }
+
+    @Test
+    @DisplayName("마지막 프레임 - 스페어 -> miss")
+    void finish_spare_to_miss() {
+        // given
+        Bowling bowling = new Bowling(Name.of("pjs"), new Frames());
+        normalFrameRoll(bowling);
+
+        // when
+        bowling.roll("1");
+        bowling.roll("9");
+        bowling.roll("0");
+
+        // then
+        assertTrue(bowling.isFinish());
+    }
+
+    @Test
+    @DisplayName("마지막 프레임 - 스트라이크 -> 스트라이크-> miss")
+    void finish_two_strike_to_miss() {
+        // given
+        Bowling bowling = new Bowling(Name.of("pjs"), new Frames());
+        normalFrameRoll(bowling);
+
+        // when
+        bowling.roll("10");
+        bowling.roll("10");
+        bowling.roll("0");
+
+        // then
+        assertTrue(bowling.isFinish());
+    }
+
+    @Test
+    @DisplayName("마지막 프레임 - 스트라이크 -> 스트라이크 -> 스트라이크")
+    void finish_three_strike() {
+        // given
+        Bowling bowling = new Bowling(Name.of("pjs"), new Frames());
+        normalFrameRoll(bowling);
+
+        // when
+        bowling.roll("10");
+        bowling.roll("10");
+        bowling.roll("10");
+
+        // then
         assertTrue(bowling.isFinish());
     }
 
     @Test
     @DisplayName("프레임이 끝났을때 굴리면 에러")
     void finish_roll_exception() {
-        Bowling bowling = new Bowling(new Name("pjs"), new Frames(true));
+        Bowling bowling = new Bowling(Name.of("pjs"), new Frames());
+        normalFrameRoll(bowling);
+
+        bowling.roll("10");
+        bowling.roll("10");
+        bowling.roll("10");
+
+        // when & then
         assertThrows(FinishGameException.class, () -> bowling.roll("5"));
+    }
+
+    private void normalFrameRoll(final Bowling bowling) {
+        IntStream.range(0, 9)
+                .mapToObj(i -> "10")
+                .forEach(bowling::roll);
     }
 }

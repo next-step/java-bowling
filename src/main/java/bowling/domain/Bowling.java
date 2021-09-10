@@ -12,7 +12,7 @@ public class Bowling {
     private Frames frames;
 
     public Bowling(final String name) {
-        this(new Name(name), new Frames());
+        this(Name.of(name), new Frames());
     }
 
     public Bowling(final Name name, final Frames frames) {
@@ -39,11 +39,11 @@ public class Bowling {
     }
 
     public Name getName() {
-        return name;
+        return Name.of(name);
     }
 
     public Frames getFrames() {
-        return frames;
+        return new Frames(frames.elements(), frames.isFinish());
     }
 
     @Override

@@ -12,13 +12,13 @@ class NameTest {
     @Test
     @DisplayName("생성")
     public void create() {
-        assertDoesNotThrow(() -> new Name("PJS").equals(new Name("PJS")));
+        assertDoesNotThrow(() -> Name.of("PJS").equals(Name.of("PJS")));
     }
 
     @Test
     @DisplayName("이름 길이 초과")
     public void createNameLengthExceeded_exception() {
-        assertThrows(NameLengthExceededException.class, () -> new Name("ABCDE"));
+        assertThrows(NameLengthExceededException.class, () -> Name.of("ABCDE"));
     }
 
 }

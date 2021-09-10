@@ -10,9 +10,17 @@ public class Name {
 
     private String name;
 
-    public Name(final String name) {
+    private Name(final String name) {
         checkValidNameLength(name);
         this.name = name;
+    }
+
+    public static Name of(final Name name) {
+        return new Name(name.name);
+    }
+
+    public static Name of(final String name) {
+        return new Name(name);
     }
 
     private void checkValidNameLength(String name) {

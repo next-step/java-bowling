@@ -14,19 +14,25 @@ public class Frames {
     private boolean isFinish;
 
     public Frames() {
-        this.frames = new ArrayList<>();
-        init();
+        this(init(), false);
     }
 
     public Frames(final boolean isFinish) {
         this.isFinish = isFinish;
     }
 
-    private void init() {
+    public Frames(final List<Frame> frames, final boolean isFinish) {
+        this.frames = frames;
+        this.isFinish = isFinish;
+    }
+
+    private static List<Frame> init() {
+        List<Frame> frames = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
-            this.frames.add(new NormalFrame());
+            frames.add(new NormalFrame());
         }
-        this.frames.add(new FinalFrame());
+        frames.add(new FinalFrame());
+        return frames;
     }
 
     public void roll(final Score score) {
@@ -34,12 +40,12 @@ public class Frames {
             throw new FinishGameException();
         }
 
-        Frame frame = frames.stream()
-                .filter(f -> !f.isFinish())
+        Frame currentFrame = frames.stream()
+                .filter(frame -> !frame.isFinish())
                 .findFirst()
                 .orElseThrow(FinishGameException::new);
 
-        frame.roll(score);
+        currentFrame.roll(score);
 
         this.isFinish = this.frames.stream().allMatch(Frame::isFinish);
     }
