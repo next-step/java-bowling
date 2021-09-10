@@ -50,6 +50,4 @@ public enum BowLingScoreViewFormat {
     public String toString() {
         return symbol;
     }
-
-
 }
