@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.Player;
 import bowling.ScoreFrame;
 import bowling.ScoreFrames;
+import bowling.util.OutputStringFormatter;
 
 import java.util.Iterator;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ public class BowlingOutputView {
 
     private static String getPlayerName(Player player) {
         return String.format("|%s",
-                toCenterAlignedWithFixedPaddedString(player.getNameString()));
+                OutputStringFormatter.toCenterAlignedWithFixedPaddedString(player.getNameString(), FRAME_WIDTH));
     }
 
     private static String getScores(ScoreFrames scoreFrames) {
@@ -28,14 +29,16 @@ public class BowlingOutputView {
 
         return IntStream.rangeClosed(START_FRAME, END_FRAME)
                 .mapToObj(i -> getNextScoreString(iterator))
-                .map(s -> String.format("|%s", toCenterAlignedWithFixedPaddedString(s)))
+                .map(s -> String.format("|%s",
+                        OutputStringFormatter.toCenterAlignedWithFixedPaddedString(s, FRAME_WIDTH)))
                 .collect(Collectors.joining());
     }
 
     private static String getScoreLabel() {
         return IntStream.rangeClosed(START_FRAME, END_FRAME)
                 .mapToObj(i -> String.format("%02d", i))
-                .map(s -> String.format("|%s", toCenterAlignedWithFixedPaddedString(s)))
+                .map(s -> String.format("|%s",
+                        OutputStringFormatter.toCenterAlignedWithFixedPaddedString(s, FRAME_WIDTH)))
                 .collect(Collectors.joining());
     }
 
@@ -45,21 +48,5 @@ public class BowlingOutputView {
         }
 
         return "";
-    }
-
-    private static String toCenterAlignedWithFixedPaddedString(String value) {
-        int spaceSize = BowlingOutputView.FRAME_WIDTH - value.length();
-        int prefixSize = spaceSize / 2;
-        int suffixSize = (spaceSize + 1) / 2;
-
-        if (BowlingOutputView.FRAME_WIDTH > value.length()) {
-            return getSpace(prefixSize) + value + getSpace(suffixSize);
-        }
-
-        return value;
-    }
-
-    private static String getSpace(int prefixSize) {
-        return new String(new char[prefixSize]).replace("\0", " ");
     }
 }

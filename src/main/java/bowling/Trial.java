@@ -1,8 +1,9 @@
 package bowling;
 
 public class Trial {
-    private static final int DOUBLE_STRIKE_NUMBER = 20;
     private static final int NON_MISS_NUMBER = 10;
+    private static final int DOUBLE_STRIKE_NUMBER = 20;
+    private static final int NORMAL_MAX_SCORE_THRESHOLD = 11;
 
     private final Scores scores = new Scores();
     private ScoreString scoreString = new ScoreString();
@@ -21,11 +22,21 @@ public class Trial {
     }
 
     public boolean isNormalEnd() {
+        if (scores.isTotalScoreHigherOrEqualThan(NORMAL_MAX_SCORE_THRESHOLD)) {
+            throw new IllegalStateException("프레임 최대 점수를 초과하였습니다.");
+        }
+
         return scores.isTotalScoreHigherOrEqualThan(NON_MISS_NUMBER) || scores.isSecondScore();
     }
 
     public boolean isFinalEnd() {
-        return isFullMiss() || scores.isAfterSecondScore();
+        if (scores.isSecondScore() &&
+                scores.isTotalScoreHigherOrEqualThan(NORMAL_MAX_SCORE_THRESHOLD) &&
+                !isDoubleStrike()) {
+            throw new IllegalStateException("프레임 최대 점수를 초과하였습니다.");
+        }
+
+        return scores.isAfterSecondScore() || isFullMiss();
     }
 
     public String getScoreString() {

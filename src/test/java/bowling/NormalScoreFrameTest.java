@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class NormalScoreFrameTest {
     @Test
@@ -46,5 +47,14 @@ public class NormalScoreFrameTest {
         ScoreFrame nextScoreFrame = normalScoreFrame.addScore(9);
 
         assertThat(nextScoreFrame).isSameAs(normalScoreFrame);
+    }
+
+    @Test
+    @DisplayName("최대 점수 초과 시 예외 발생 케이스 테스트")
+    void bowlTest4() {
+        NormalScoreFrame normalScoreFrame = new NormalScoreFrame(new Turn(1));
+
+        assertThatThrownBy(() -> normalScoreFrame.addScore(9).addScore(2))
+                .isInstanceOf(IllegalStateException.class);
     }
 }

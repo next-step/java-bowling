@@ -10,7 +10,7 @@ public class ScoreString {
 
     private static final String DELIMITER = "|";
 
-    String value;
+    private final String value;
 
     public ScoreString() {
         this.value = "";
