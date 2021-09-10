@@ -5,17 +5,11 @@ import bowling.view.NormalFrameString;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class NormalFrame implements Frame {
     private static final int MAXIMUM_SHOT_COUNT = 2;
     private static final int MAXIMUM_DOWN_PINS = 10;
     private static final int ZERO = 0;
-    private static final int FIRST_SHOT_INDEX = 0;
-    private static final String STRIKE = "X";
-    private static final String SPARE = "/";
-    private static final String SCORE_SEPARATOR = "|";
-
 
     private List<Shot> shots = new ArrayList<>();
 
@@ -44,7 +38,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public String toResultString() {
-        if (shots.size() == 0) {
+        if (shots.isEmpty()) {
             return "";
         }
 
