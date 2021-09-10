@@ -25,20 +25,20 @@ public class WaitingPitchingCountTest {
     @Test
     void waitingPitchingCountOfStrikeTest() {
         // given, when, then
-        assertSame(WaitingPitchingCount.ofStrike().getCount(), 2);
+        assertSame(WaitingPitchingCount.ofStrike().count(), 2);
     }
 
     @DisplayName("스페어는 1개의 다음 투구를 기다려야 한다.")
     @Test
     void waitingPitchingCountOfSpareTest() {
         // given, when, then
-        assertSame(WaitingPitchingCount.ofSpare().getCount(), 1);
+        assertSame(WaitingPitchingCount.ofSpare().count(), 1);
     }
 
     @DisplayName("스트라이크, 스페어가 아니면 다음 투구를 기다리지 않는다.")
     @Test
     void waitingPitchingCountOfNotStrikeAndNotSpareTest() {
         // given, when, then
-        assertSame(WaitingPitchingCount.noCount().getCount(), 0);
+        assertSame(WaitingPitchingCount.noCount().count(), 0);
     }
 }

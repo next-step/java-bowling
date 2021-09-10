@@ -18,6 +18,11 @@ public class FrameFallenPin {
         this.second = EMPTY_FALLEN_PIN;
     }
 
+    public FrameFallenPin(int firstFallenPinCount) {
+        this.first = FallenPin.of(firstFallenPinCount);
+        this.second = EMPTY_FALLEN_PIN;
+    }
+
     public FrameFallenPin(int firstFallenPinCount, int secondFallenPinCount) {
         this.first = FallenPin.of(firstFallenPinCount);
         this.second = FallenPin.of(secondFallenPinCount);

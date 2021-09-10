@@ -24,16 +24,16 @@ public class FrameScore {
         return new FrameScore(score.plus(firstFallenPinCount), findWaitingPitchingCountOfFirstFallenPin(firstFallenPin));
     }
 
-    public FrameScore nextSecond(FrameFallenPin secondFallenPin) {
-        int fallenPinCountTotal = secondFallenPin.countTotal();
-        return new FrameScore(score.plus(fallenPinCountTotal), findWaitingPitchingCountOfSecondFallenPin(secondFallenPin));
+    public FrameScore nextSecond(FrameFallenPin fallenPinTotal) {
+        int fallenPinCountTotal = fallenPinTotal.countTotal();
+        return new FrameScore(score.plus(fallenPinCountTotal), findWaitingPitchingCountOfSecondFallenPin(fallenPinTotal));
     }
 
     private static WaitingPitchingCount findWaitingPitchingCountOfFirstFallenPin(FrameFallenPin fallenPin) {
         if (fallenPin.isStrike()) {
             return WaitingPitchingCount.ofStrike();
         }
-        return WaitingPitchingCount.noCount();
+        return WaitingPitchingCount.oneCount();
     }
 
     private WaitingPitchingCount findWaitingPitchingCountOfSecondFallenPin(FrameFallenPin secondFallenPin) {
@@ -41,5 +41,9 @@ public class FrameScore {
             return WaitingPitchingCount.ofSpare();
         }
         return WaitingPitchingCount.noCount();
+    }
+
+    public int waitingPitchingCount() {
+        return count.count();
     }
 }

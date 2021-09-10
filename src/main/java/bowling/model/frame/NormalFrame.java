@@ -50,8 +50,8 @@ public class NormalFrame extends Frame {
             return new NormalFrame(number.next(), FrameFallenPin.first(fallenPinCount), score.nextFirst(firstFallenPin));
         }
 
-        FrameFallenPin secondFallenPin = fallenPin.second(fallenPinCount);
-        return new NormalFrame(number, secondFallenPin, score.nextSecond(secondFallenPin));
+        FrameFallenPin fallenPinTotal = fallenPin.second(fallenPinCount);
+        return new NormalFrame(number, fallenPinTotal, score.nextSecond(fallenPinTotal));
     }
 
     @Override
