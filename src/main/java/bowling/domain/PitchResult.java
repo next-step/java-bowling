@@ -37,6 +37,18 @@ public class PitchResult {
         }
     }
 
+    public boolean isStrike() {
+        return fallenPins == MAX_PINS && !isSpare;
+    }
+
+    public boolean isSpare() {
+        return isSpare;
+    }
+
+    public boolean isGutter() {
+        return fallenPins == MIN_PINS;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,5 +61,4 @@ public class PitchResult {
     public int hashCode() {
         return Objects.hash(fallenPins, isSpare);
     }
-
 }

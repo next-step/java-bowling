@@ -15,7 +15,7 @@ public class InputView {
     }
 
     public static int fallenPins(int frameNumber) {
-        System.out.print("%d프레임 투구 : ");
+        System.out.printf("%d프레임 투구 : ", frameNumber);
         return SCANNER.nextInt();
     }
 

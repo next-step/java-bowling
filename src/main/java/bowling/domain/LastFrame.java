@@ -46,7 +46,8 @@ public class LastFrame extends Frame {
     }
 
     private boolean hasSpare() {
-        return results.size() == ATTEMPTS_TO_BOWL && totalPins() == MAX_PINS_COUNT;
+        return results.stream()
+                .anyMatch(PitchResult::isSpare);
     }
 
 }

@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Frames {
@@ -37,6 +38,15 @@ public class Frames {
 
     public Frame of(int frameNumber) {
         return frames.get(frameNumber - 1);
+    }
+
+    public boolean isEnd() {
+        return frames.stream()
+                .allMatch(Frame::isEnd);
+    }
+
+    public List<Frame> frames() {
+        return Collections.unmodifiableList(frames);
     }
 
 }
