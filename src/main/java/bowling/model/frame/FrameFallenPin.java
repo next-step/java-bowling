@@ -98,4 +98,16 @@ public class FrameFallenPin {
         }
         return first.isMin() && second.isMin();
     }
+
+    public int countTotal() {
+        if (first == EMPTY_FALLEN_PIN) {
+            return FALLEN_PIN_COUNT_MIN_TOTAL;
+        }
+
+        if (second == EMPTY_FALLEN_PIN) {
+            return first.count();
+        }
+
+        return first.count() + second.count();
+    }
 }
