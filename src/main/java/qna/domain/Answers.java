@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Embeddable
-public class Answers{
+public class Answers {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
@@ -21,6 +21,7 @@ public class Answers{
     public Answers() {
         answers = new ArrayList<>();
     }
+
     public DeleteHistories deleteAnswers(User loginUser) throws CannotDeleteException {
         DeleteHistories deleteHistories = new DeleteHistories();
         for (Answer answer : answers) {
