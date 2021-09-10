@@ -2,9 +2,11 @@ package step2.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import step2.exceptions.BowlingPintNumberError;
 
 public class FinalFrame implements Frame {
     private static final int INITIAL_NUM_OF_BOWLING_PINS = 10;
+    private static final int MAX_TURN = 3;
 
     private List<Integer> frame;
 
@@ -21,7 +23,7 @@ public class FinalFrame implements Frame {
     @Override
     public void isPossible() {
         if (score() > 10) {
-            throw new IllegalArgumentException("쓰러뜨린 볼린공의 개수는 10개 이하로 지정하여야 합니다.");
+            throw new BowlingPintNumberError();
         }
     }
 
@@ -33,7 +35,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return score() == INITIAL_NUM_OF_BOWLING_PINS || frame.size() == 3;
+        return score() == INITIAL_NUM_OF_BOWLING_PINS || frame.size() == MAX_TURN;
     }
 
     @Override
