@@ -1,4 +1,6 @@
-package bowling;
+package bowling.view;
+
+import bowling.model.BowlingResult;
 
 import java.util.List;
 

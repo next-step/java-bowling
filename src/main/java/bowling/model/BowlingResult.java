@@ -1,4 +1,4 @@
-package bowling;
+package bowling.model;
 
 import java.util.Arrays;
 import java.util.Collections;

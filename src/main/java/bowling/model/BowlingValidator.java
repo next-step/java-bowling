@@ -1,4 +1,4 @@
-package bowling;
+package bowling.model;
 
 public class BowlingValidator {
     public static void isBlank(String input) {

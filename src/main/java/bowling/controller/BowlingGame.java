@@ -1,6 +1,8 @@
-package bowling;
+package bowling.controller;
 
-import bowling.model.*;
+import bowling.model.NormalRound;
+import bowling.model.User;
+import bowling.model.BowlingResult;
 
 import java.util.ArrayList;
 import java.util.List;

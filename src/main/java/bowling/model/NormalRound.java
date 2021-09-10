@@ -1,4 +1,4 @@
-package bowling;
+package bowling.model;
 
 public class NormalRound implements bowling.model.Round {
     private bowling.model.Point point;

@@ -1,5 +1,9 @@
 package bowling;
 
+import bowling.model.BowlingResult;
+import bowling.model.FinalRound;
+import bowling.model.NormalRound;
+import bowling.model.Round;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package bowling;
+package bowling.model;
 
 import static bowling.model.BowlingValidator.isBlank;
 

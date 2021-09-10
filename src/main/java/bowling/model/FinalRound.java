@@ -1,4 +1,4 @@
-package bowling;
+package bowling.model;
 
 public class FinalRound implements bowling.model.Round {
     private Point point;

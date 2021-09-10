@@ -1,4 +1,4 @@
-package bowling;
+package bowling.model;
 
 public interface Round {
     int BEFORE_FINAL_ROUND = 9;
