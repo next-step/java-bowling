@@ -1,60 +1,75 @@
 package bowling.domain;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Frame {
     private static final int MAX_PIN_NUMBER = 10;
 
-    private final Score score;
-    private Status status;
+    protected Score score;
+    protected Status status;
     private Frame nextFrame;
 
-    public Frame(int firstBall) {
-        if (firstBall == MAX_PIN_NUMBER) {
+    public Frame(int hitNumberOfPin) {
+        if (hitNumberOfPin == MAX_PIN_NUMBER) {
             status = Status.STRIKE;
         }
-        score = new Score(firstBall);
+        score = new Score(hitNumberOfPin);
+    }
+
+    public Frame() {
     }
 
     public int firstScore() {
         return score.firstScore();
     }
 
-    public void secondBall(int secondBall) {
-        if (secondBall + score.firstScore() == MAX_PIN_NUMBER) {
-            status = Status.SPARE;
-        }
-        score.secondBall(secondBall);
+    public void secondBall(int hitNumberOfPin) {
+        score.secondBall(hitNumberOfPin);
+        status = score.frameStatus();
     }
 
     public int secondScore() {
         return score.secondScore();
     }
 
-    public Frame nextFrame(int firstBall) {
-        nextFrame = new Frame(firstBall);
+    public Frame nextFrame(int hitNumberOfPin) {
+        nextFrame = new Frame(hitNumberOfPin);
         return nextFrame;
     }
 
     public List<String> scores() {
         return score.scores()
                 .stream()
-                .map(score -> Integer.toString(score))
+                .map(pin -> Integer.toString(pin))
                 .collect(Collectors.toList());
     }
 
-    public boolean isStrike() {
-        if (Status.STRIKE.equals(status)) {
-            return true;
-        }
-        return false;
+    public boolean isSpare() {
+        return Status.SPARE.equals(status);
     }
 
-    public boolean isSpare() {
-        if (Status.SPARE.equals(status)) {
-            return true;
-        }
-        return false;
+    public boolean isStrike() {
+        return Status.STRIKE.equals(status);
+    }
+
+    public FinalFrame finalFrame(int hitNumberOfPin) {
+        FinalFrame finalFrame = new FinalFrame(hitNumberOfPin);
+        nextFrame = finalFrame;
+        return finalFrame;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frame frame = (Frame) o;
+        return Objects.equals(score, frame.score) && status == frame.status && Objects.equals(nextFrame, frame.nextFrame);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score, status, nextFrame);
     }
 }
