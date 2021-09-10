@@ -61,19 +61,23 @@ public class Game {
     public List<Integer> currentScoreList() {
         List<Integer> scores = new ArrayList<>();
 
-        int sum = 0;
 
-        for (int i = 0; i < frames.size(); i++) {
-            Frame current = frames.get(i);
-            if (!current.isScoringFinished()) {
-                break;
-            }
-
-            sum += current.getPoint();
-            scores.add(sum);
-        }
+        frames.stream()
+                .filter((frame -> frame.isScoringFinished()))
+                .forEach((frame -> {
+                    scores.add(getPreviousScore(scores) + frame.getPoint());
+                }));
 
         return scores;
+    }
+
+    private int getPreviousScore(List<Integer> scores) {
+        if (scores.isEmpty()) {
+            return 0;
+        }
+
+        int lastIndex =scores.size() - 1;
+        return scores.get(lastIndex);
     }
 
     public boolean isNotFinished() {
