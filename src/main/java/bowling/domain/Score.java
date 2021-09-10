@@ -10,10 +10,10 @@ import java.util.Objects;
 public class Score implements Comparable<Score> {
     public static final int ZERO_SCORE = 0;
     public static final int TEN_SCORE = 10;
-    protected static final String STRIKE_SYMBOL = "X";
-    protected static final String SPARE_SYMBOL = "/";
-    protected static final String GUTTER_SYMBOL = "-";
-    protected static final String SEPARATOR_SYMBOL = "|";
+    public static final String STRIKE_SYMBOL = "X";
+    public static final String SPARE_SYMBOL = "/";
+    public static final String GUTTER_SYMBOL = "-";
+    public static final String SEPARATOR_SYMBOL = "|";
 
     private static final String INVALID_SCORE_MESSAGE = "핀의 갯수가 10을 초과할 수 없습니다.";
 
@@ -63,12 +63,11 @@ public class Score implements Comparable<Score> {
         return scores.stream().mapToInt(s -> s.score).sum();
     }
 
-    public static int validateTotalScore(List<Score> scores, Score score) {
+    public static void validateTotalScore(List<Score> scores, Score score) {
         int sum = sumOfScores(scores);
         if (sum < TEN_SCORE) {
             validate(sum + score.score);
         }
-        return sum;
     }
 
     @Override
