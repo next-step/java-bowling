@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LastFrame implements Frame {
-    private static final int MAXIMUM_SHOT_COUNT = 3;
     private List<Shot> shots = new ArrayList<>();
+    private FrameScore frameScore = new FrameScore();
 
     @Override
     public void playShot(Shot shot) {
@@ -29,10 +29,25 @@ public class LastFrame implements Frame {
     }
 
     @Override
+    public int getPoint() {
+        return frameScore.calculateFrameScore();
+    }
+
+    @Override
     public String toResultString() {
         if (shots.isEmpty()) {
             return "";
         }
         return LastFrameString.getString(shots);
+    }
+
+    @Override
+    public boolean isScoringFinished() {
+        return frameScore.isFinished();
+    }
+
+    @Override
+    public void addPoint(Shot shot) {
+        frameScore.addPoint(shot);
     }
 }

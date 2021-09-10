@@ -13,6 +13,8 @@ public class NormalFrame implements Frame {
 
     private List<Shot> shots = new ArrayList<>();
 
+    private FrameScore frameScore = new FrameScore();
+
     @Override
     public void playShot(Shot shot) {
         validate(shot);
@@ -30,6 +32,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public int getPoint() {
+        return frameScore.calculateFrameScore();
+    }
+
+    @Override
     public int remainPins() {
         int downPins = BowlingUtils.sum(shots);
 
@@ -43,5 +50,15 @@ public class NormalFrame implements Frame {
         }
 
         return NormalFrameString.getString(shots);
+    }
+
+    @Override
+    public boolean isScoringFinished() {
+        return frameScore.isFinished();
+    }
+
+    @Override
+    public void addPoint(Shot shot) {
+        frameScore.addPoint(shot);
     }
 }

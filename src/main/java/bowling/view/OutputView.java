@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.Game;
-import bowling.domain.ScoreBoard;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,8 +29,8 @@ public class OutputView {
         System.out.println(usernameLabel + resultFrameLabel + emptyFrameLabel);
     }
 
-    public static void showScoreFrames(ScoreBoard scoreBoard) {
-        List<Integer> scoreList = scoreBoard.currentScoreList();
+    public static void showScoreFrames(Game game) {
+        List<Integer> scoreList = game.currentScoreList();
 
         String resultFrameLabel = scoreList.stream()
                 .map((score) -> String.format(" %-3s | ", score))
