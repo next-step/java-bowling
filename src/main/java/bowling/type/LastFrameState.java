@@ -5,12 +5,13 @@ import bowling.util.BowlingUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public enum LastFrameState {
     FIRST_SHOT {
         @Override
         public boolean isThisState(List<Shot> shots) {
-            return shots.size() == 0;
+            return shots.isEmpty();
         }
 
         @Override
@@ -31,7 +32,7 @@ public enum LastFrameState {
         @Override
         public boolean isThisState(List<Shot> shots) {
             int sum = BowlingUtils.sum(shots);
-            return shots.size() >= 1 && sum >= 10 && sum < 20;
+            return shots.size() <= 2 && sum >= 10 && sum < 20;
         }
 
         @Override
@@ -53,7 +54,7 @@ public enum LastFrameState {
         @Override
         public boolean isThisState(List<Shot> shots) {
             int sum = BowlingUtils.sum(shots);
-            return sum == 20;
+            return shots.size() == 2 && sum == 20;
         }
 
         @Override
@@ -66,6 +67,11 @@ public enum LastFrameState {
 
     public abstract int remainPins(int downPins);
 
+    public static Optional<LastFrameState> getState(List<Shot> shots) {
+        return Arrays.stream(LastFrameState.values())
+                .filter((state) -> state.isThisState(shots))
+                .findFirst();
+    }
 
     public static int calculateRemainPins(List<Shot> shots) {
         LastFrameState currentState = Arrays.stream(LastFrameState.values())
