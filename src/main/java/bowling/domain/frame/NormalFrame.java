@@ -10,6 +10,8 @@ public final class NormalFrame extends Frame {
     private static final int MAX_SIZE = 2;
     private static final int MAX_KNOCK_DOWN_NUMBER = 10;
 
+    private Frame nextFrame;
+
     private NormalFrame(final int roundNumber) {
         super(roundNumber, Pins.of());
     }
@@ -34,8 +36,14 @@ public final class NormalFrame extends Frame {
         return new NormalFrame(FIRST_ROUND_NUMBER);
     }
 
-    public static Frame next(Frame frame) {
-        return new NormalFrame(frame.roundNumber + 1);
+    public static Frame next(NormalFrame frame) {
+        NormalFrame nextFrame = new NormalFrame(frame.roundNumber + 1);
+        frame.setNextFrame(nextFrame);
+        return nextFrame;
+    }
+
+    public void setNextFrame(Frame nextFrame) {
+        this.nextFrame = nextFrame;
     }
 
     @Override
@@ -73,5 +81,33 @@ public final class NormalFrame extends Frame {
             return FinalFrame.of();
         }
         return NormalFrame.next(this);
+    }
+
+    @Override
+    public boolean canCalculateScore() {
+        return isFinished();
+    }
+
+    @Override
+    public int getScore() {
+        if (!pins.isStrike() && pins.sumPins() == 10) {
+            return nextFrame.addScore(pins.sumPins(), 1);
+        }
+
+        if (pins.isStrike()) {
+            return nextFrame.addScore(pins.sumPins(), 2);
+        }
+        return pins.sumPins();
+    }
+
+    @Override
+    public int addScore(int score, int count) {
+        if (count == 1) {
+            return score + firstPin().getKnockDownNumber();
+        }
+        if (pins.isStrike()) {
+            return nextFrame.addScore(score + firstPin().getKnockDownNumber(), 1);
+        }
+        return score + pins.sumPins();
     }
 }

@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pins;
 import bowling.exception.FrameNotCorrectException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -91,5 +92,51 @@ public class NormalFrameTest {
         assertThatThrownBy(() ->
                 NormalFrame.of(1, numbers)
         ).isInstanceOf(FrameNotCorrectException.class);
+    }
+
+    @Test
+    @DisplayName("스페어일 경우 점수 계산")
+    void spareCalculateScore() {
+        //given
+        Frame firstFrame = NormalFrame.first().bowl(9).bowl(1);
+        firstFrame.nextFrame().bowl(9);
+
+        //when
+        int actualScore = firstFrame.getScore();
+
+        //then
+        assertThat(actualScore).isEqualTo(19);
+    }
+
+    @Test
+    @DisplayName("스트라이크이고 다음 프레임이 스트라이크가 아닌 경우")
+    void strikeCalculateScore() {
+        //given
+        Frame firstFrame = NormalFrame.first().bowl(10);
+        Frame secondFrame = firstFrame.nextFrame();
+        secondFrame.bowl(9).bowl(1);
+
+        //when
+        int actualScore = firstFrame.getScore();
+
+        //then
+        assertThat(actualScore).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("프레임이 스트라이크고 다음 프레임도 스트라이크일 경우")
+    void doubleCalculateScore() {
+        // given
+        Frame givenFrame = NormalFrame.first().bowl(10);
+        Frame secondFrame = givenFrame.nextFrame();
+        secondFrame.bowl(10);
+        Frame thirdFrame = secondFrame.nextFrame();
+        thirdFrame.bowl(5);
+
+        // when
+        int actualScore = givenFrame.getScore();
+
+        // then
+        assertThat(actualScore).isEqualTo(25);
     }
 }

@@ -19,7 +19,7 @@ class FinalFrameTest {
     static Stream<Arguments> provideFinalCheckFrame() {
         return Stream.of(
                 Arguments.of(new int[]{10, 10, 10}, true),
-                Arguments.of(new int[]{10, 5 ,4}, true),
+                Arguments.of(new int[]{10, 5, 4}, true),
                 Arguments.of(new int[]{9, 1, 10}, true),
                 Arguments.of(new int[]{10, 10}, false),
                 Arguments.of(new int[]{10, 0}, false),
@@ -35,15 +35,15 @@ class FinalFrameTest {
     @ParameterizedTest(name = "{0} -> {1}")
     @MethodSource("provideFinalCheckFrame")
     @DisplayName("완료된 프레임인지 확인한다.")
-    void finalFrameCheck(int[] numbers, boolean actual) {
+    void finalFrameCheck(int[] pins, boolean expected) {
         // given
-        Frame frame = FinalFrame.of(numbers);
+        Frame frame = FinalFrame.of(pins);
 
         // when
         boolean finished = frame.isFinished();
 
         // then
-        assertThat(finished).isEqualTo(actual);
+        assertThat(finished).isEqualTo(expected);
     }
 
     static Stream<Arguments> provideFinalFrameException() {
@@ -56,7 +56,7 @@ class FinalFrameTest {
 
     @ParameterizedTest
     @MethodSource("provideFinalFrameException")
-    @DisplayName("마지막 프레임 Exception")
+    @DisplayName("프레임 Exception")
     void finalFrameException(Pins pins) {
         // given
         // when
@@ -67,33 +67,61 @@ class FinalFrameTest {
     }
 
     @Test
+    @DisplayName("프레임 진행 후 Exception")
     void finalFrameException() {
         assertThatThrownBy(() ->
-            FinalFrame.of().bowl(9).bowl(2)
+                FinalFrame.of().bowl(9).bowl(2)
         ).isInstanceOf(FrameNotCorrectException.class);
     }
 
     @Test
-    void finalFrameInputFinished() {
+    @DisplayName("프레임 진행 후 완료 확인")
+    void bowlFinalFrameFinished() {
         //given
         Frame finalFrame = FinalFrame.of().bowl(10).bowl(10).bowl(5);
 
         //when
-        boolean actual = finalFrame.isFinished();
+        boolean isFinished = finalFrame.isFinished();
 
         //then
-        assertThat(actual).isTrue();
+        assertThat(isFinished).isTrue();
     }
 
     @Test
-    void finalFrameInputNotFinished() {
+    @DisplayName("프레임 진행 후 미완료 확인")
+    void bowlFinalFrameNotFinished() {
         //given
         Frame finalFrame = FinalFrame.of().bowl(10).bowl(5);
 
         //when
-        boolean actual = finalFrame.isFinished();
+        boolean isFinished = finalFrame.isFinished();
 
         //then
-        assertThat(actual).isFalse();
+        assertThat(isFinished).isFalse();
+    }
+
+    static Stream<Arguments> provideFinalFrameCalculateScore() {
+        return Stream.of(
+                Arguments.of(Pins.of(10, 10, 10), 30),
+                Arguments.of(Pins.of(10, 10, 0), 20),
+                Arguments.of(Pins.of(10, 5, 5), 20),
+                Arguments.of(Pins.of(5, 5, 7), 17),
+                Arguments.of(Pins.of(7, 2), 9),
+                Arguments.of(Pins.of(0, 0), 0)
+        );
+    }
+
+    @ParameterizedTest(name = "{0} -> {1}")
+    @MethodSource("provideFinalFrameCalculateScore")
+    @DisplayName("마지막 프레임 점수 계산")
+    void calculateScore(Pins pins, int expectedScore) {
+        //given
+        Frame frame = FinalFrame.of(pins);
+
+        //when
+        int actualScore = frame.getScore();
+
+        //then
+        assertThat(actualScore).isEqualTo(expectedScore);
     }
 }

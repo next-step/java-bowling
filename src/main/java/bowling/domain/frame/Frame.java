@@ -25,6 +25,12 @@ public abstract class Frame {
 
     public abstract Frame nextFrame();
 
+    public abstract int getScore();
+
+    public abstract int addScore(int score, int count);
+
+    public abstract boolean canCalculateScore();
+
     public Pin firstPin() {
         return pins.firstPin();
     }
@@ -43,5 +49,10 @@ public abstract class Frame {
 
     public int getRoundNumber() {
         return roundNumber;
+    }
+
+    @Override
+    public String toString() {
+        return pins.toString() + roundNumber;
     }
 }

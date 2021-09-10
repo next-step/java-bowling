@@ -56,4 +56,19 @@ public final class FinalFrame extends Frame {
     public Frame nextFrame() {
         return this;
     }
+
+    @Override
+    public boolean canCalculateScore() {
+        return isFinished();
+    }
+
+    @Override
+    public int getScore() {
+        return pins.sumPins();
+    }
+
+    @Override
+    public int addScore(int score, int count) {
+        return score + pins.sumPins();
+    }
 }
