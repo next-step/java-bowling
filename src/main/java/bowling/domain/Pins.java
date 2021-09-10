@@ -46,8 +46,7 @@ public class Pins {
     }
 
     public boolean isSpare() {
-        return isSameSize(FORMAL_SIZE)
-                && pins.stream().map(Pin::value).reduce(0, Integer::sum) == Pin.MAX_PINS;
+        return isSameSize(FORMAL_SIZE) && sum() == Pin.MAX_PINS;
     }
 
     public Pins pitch(final int countOfPins, final FrameNumber frameNumber) {
@@ -63,19 +62,26 @@ public class Pins {
     }
 
     private boolean isOverPins(final int countOfPins) {
-        return pins.stream().map(Pin::value).reduce(0, Integer::sum) + countOfPins > Pin.MAX_PINS;
+        return sum() + countOfPins > Pin.MAX_PINS;
     }
 
 
     public String result() {
         StringBuilder stringBuilder = new StringBuilder();
         for (int index = FIRST_INDEX; index < pins.size(); index++) {
+
             int previous = index - OPERATION;
-            if (index > FIRST_INDEX) previous = pins.get(index - OPERATION).value();
+            if (index > FIRST_INDEX){
+                previous = pins.get(index - OPERATION).value();
+            }
 
             stringBuilder.append(ScoreType.findType(previous, pins.get(index).value()));
         }
         return stringBuilder.toString();
+    }
+
+    public int sum() {
+        return pins.stream().map(Pin::value).reduce(0, Integer::sum);
     }
 
     @Override
