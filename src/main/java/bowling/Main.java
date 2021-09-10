@@ -51,28 +51,17 @@ public class Main {
   private static void checkNextPitchForPlayer(final FramesResults frameResults,
       final FramesResult framesResult, final int round) {
 
-    nextPitchByPlayer(frameResults, framesResult);
-    thirdPitchByPlayer(frameResults, framesResult, round);
-  }
-
-  private static void thirdPitchByPlayer(final FramesResults frameResults,
-      final FramesResult framesResult,
-      final int round) {
-    if (round == MAX_ROUND && !framesResult.isEndOfGame()) {
+    if (round == framesResult.getResult().frameCount() && !framesResult.isFrameEnd()) {
       pitchForBowling(frameResults, framesResult);
     }
-  }
 
-  private static void nextPitchByPlayer(final FramesResults frameResults,
-      final FramesResult framesResult) {
-    if (!framesResult.isFrameEnd()) {
+    if (round == MAX_ROUND && !framesResult.isEndOfGame()) {
       pitchForBowling(frameResults, framesResult);
     }
   }
 
   private static void pitchForBowling(final FramesResults frameResults,
       final FramesResult framesResult) {
-
     framesResult.playing(InsertView.throwBall(framesResult.getResult().getName()));
     printScoreBoard(frameResults);
   }
