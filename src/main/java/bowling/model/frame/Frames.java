@@ -18,20 +18,20 @@ public class Frames {
 
     public List<Frame> play(int fallenPinCount) {
         if (frames.isEmpty()) {
-            return playFirst(fallenPinCount);
+            return initialPlay(fallenPinCount);
         }
-        return playNotFirst(fallenPinCount);
+        return notInitialPlay(fallenPinCount);
     }
 
-    private List<Frame> playFirst(int fallenPinCount) {
+    private List<Frame> initialPlay(int fallenPinCount) {
         validateNextIsPlayable();
 
-        Frame first = Frame.first(fallenPinCount);
-        frames.add(first);
+        Frame initialFrame = Frame.initial(fallenPinCount);
+        frames.add(initialFrame);
         return frames;
     }
 
-    private List<Frame> playNotFirst(int fallenPinCount) {
+    private List<Frame> notInitialPlay(int fallenPinCount) {
         validateNextIsPlayable();
 
         Frame next = lastFrame().next(fallenPinCount);
@@ -74,7 +74,7 @@ public class Frames {
         validateNextIsPlayable();
 
         if (frames.isEmpty()) {
-            return FrameNumber.first();
+            return FrameNumber.initial();
         }
         return lastFrame().nextNumber();
     }

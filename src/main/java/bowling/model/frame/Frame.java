@@ -3,20 +3,33 @@ package bowling.model.frame;
 public abstract class Frame {
     protected FrameNumber number;
     protected FrameFallenPin fallenPin;
+    protected FrameScore score;
 
-    protected Frame(FrameNumber number, FrameFallenPin fallenPin) {
+    protected Frame(FrameNumber number, FrameFallenPin fallenPin, FrameScore score) {
         validateNumberRange(number);
 
         this.number = number;
         this.fallenPin = fallenPin;
+        this.score = score;
     }
 
-    public Frame(int number, int firstFallenPinCount, int secondFallenPinCount) {
-        FrameNumber frameNumber = new FrameNumber(number);
-        validateNumberRange(frameNumber);
+    public Frame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount,
+                 int score, int waitingPitchingCount) {
+        FrameNumber number = new FrameNumber(frameNumber);
+        validateNumberRange(number);
 
-        this.number = new FrameNumber(number);
-        this.fallenPin = new FrameFallenPin(FallenPin.of(firstFallenPinCount), FallenPin.of(secondFallenPinCount));
+        this.number = number;
+        this.fallenPin = new FrameFallenPin(firstFallenPinCount, secondFallenPinCount);
+        this.score = new FrameScore(score, waitingPitchingCount);
+    }
+
+    public Frame(int frameNumber, int firstFallenPinCount, int score, int waitingPitchingCount) {
+        FrameNumber number = new FrameNumber(frameNumber);
+        validateNumberRange(number);
+
+        this.number = number;
+        this.fallenPin = FrameFallenPin.first(firstFallenPinCount);
+        this.score = new FrameScore(score, waitingPitchingCount);
     }
 
     protected abstract void validateNumberRange(FrameNumber number);
@@ -31,8 +44,9 @@ public abstract class Frame {
 
     public abstract FallenPin getBonusFallenPin();
 
-    public static Frame first(int fallenPinCount) {
-        return new NormalFrame(FrameNumber.first(), FrameFallenPin.first(fallenPinCount));
+    public static Frame initial(int fallenPinCount) {
+        FrameFallenPin initialFallenPin = FrameFallenPin.first(fallenPinCount);
+        return new NormalFrame(FrameNumber.initial(), initialFallenPin, FrameScore.ofInitialFallenPin(initialFallenPin));
     }
 
     protected boolean isStrikeOrSpare() {

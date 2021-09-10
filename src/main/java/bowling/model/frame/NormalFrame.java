@@ -4,16 +4,17 @@ public class NormalFrame extends Frame {
     private static final int MIN_NORMAL_NUMBER = 1;
     private static final int MAX_NORMAL_NUMBER = 9;
 
-    public NormalFrame(FrameNumber number, FrameFallenPin fallenPin) {
-        super(number, fallenPin);
+    public NormalFrame(FrameNumber number, FrameFallenPin fallenPin, FrameScore score) {
+        super(number, fallenPin, score);
     }
 
-    public NormalFrame(int number, int firstFallenPinCount, int secondFallenPinCount) {
-        super(number, firstFallenPinCount, secondFallenPinCount);
+    public NormalFrame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount,
+                       int score, int waitingPitchingCount) {
+        super(frameNumber, firstFallenPinCount, secondFallenPinCount, score, waitingPitchingCount);
     }
 
-    public NormalFrame(int number, int firstFallenPinCount) {
-        super(new FrameNumber(number), FrameFallenPin.first(firstFallenPinCount));
+    public NormalFrame(int frameNumber, int firstFallenPinCount, int score, int waitingPitchingCount) {
+        super(frameNumber, firstFallenPinCount, score, waitingPitchingCount);
     }
 
     private boolean isNextFinalFrame() {
@@ -40,14 +41,17 @@ public class NormalFrame extends Frame {
     @Override
     public Frame next(int fallenPinCount) {
         if (isNextFinalFrame()) {
-            return new FinalFrame(number.next(), FrameFallenPin.first(fallenPinCount));
+            FrameFallenPin firstFallenPin = FrameFallenPin.first(fallenPinCount);
+            return new FinalFrame(number.next(), firstFallenPin, score.ofFirstFallenPin(firstFallenPin));
         }
 
         if (needNextNumber()) {
-            return new NormalFrame(number.next(), FrameFallenPin.first(fallenPinCount));
+            FrameFallenPin firstFallenPin = FrameFallenPin.first(fallenPinCount);
+            return new NormalFrame(number.next(), FrameFallenPin.first(fallenPinCount), score.ofFirstFallenPin(firstFallenPin));
         }
 
-        return new NormalFrame(number, this.fallenPin.second(fallenPinCount));
+        FrameFallenPin secondFallenPin = fallenPin.second(fallenPinCount);
+        return new NormalFrame(number, secondFallenPin, score.ofSecondFallenPin(secondFallenPin));
     }
 
     @Override

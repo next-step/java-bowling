@@ -21,4 +21,8 @@ public class Score {
             throw new IllegalArgumentException(String.format("볼링 점수는 %d점 이상 %d점 이하이어야 합니다.", MIN, MAX));
         }
     }
+
+    public Score plus(int other) {
+        return Score.of(score + other);
+    }
 }

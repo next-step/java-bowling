@@ -14,7 +14,7 @@ public class FinalFrameTest {
     void outOfRangeFinalFrameNumberTest() {
         // when, then
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new FinalFrame(9, 5, 5))
+                .isThrownBy(() -> new FinalFrame(9, 5, 5, 10, 1, 0))
                 .withMessage("마지막 프레임 번호는 10 이어야 합니다.");
     }
 
@@ -22,7 +22,7 @@ public class FinalFrameTest {
     @Test
     void nextFinalFrameWhenPitchTwiceAndNotStrikeAndNotSpareExceptionTest() {
         // given
-        Frame finalFrame = new FinalFrame(10, 5, 3);
+        Frame finalFrame = new FinalFrame(10, 5, 3, 8, 0, 0);
 
         // when, then
         assertThatIllegalArgumentException()
@@ -30,12 +30,12 @@ public class FinalFrameTest {
                 .withMessage("마지막 프레임의 다음 번호 프레임을 만들 수 없습니다.");
     }
 
-    @DisplayName("두 번 공을 던지고 스트라이크나 스페어면 다음 프레임을 생성할 수 있다.")
+    @DisplayName("공을 던지고 스트라이크나 스페어면 다음 프레임을 생성할 수 있다.")
     @Test
     void nextFinalFrameWhenPitchTwiceAndStrikeOrSpareTest() {
         // given
-        Frame strikeFinalFrame = new FinalFrame(10, 10);
-        Frame spareFinalFrame = new FinalFrame(10, 5, 5);
+        Frame strikeFinalFrame = new FinalFrame(10, 10, 10, 2, 0);
+        Frame spareFinalFrame = new FinalFrame(10, 5, 5, 10, 1, 0);
 
         // when, then
         assertThat(strikeFinalFrame.next(5)).isInstanceOf(FinalFrame.class);
@@ -46,7 +46,7 @@ public class FinalFrameTest {
     @Test
     void nextFinalFrameWhenOnePitchTest() {
         // given
-        Frame finalFrame = new FinalFrame(10, 5);
+        Frame finalFrame = new FinalFrame(10, 5, 5, 0, 0);
 
         // when, then
         assertThat(finalFrame.next(5)).isInstanceOf(FinalFrame.class);

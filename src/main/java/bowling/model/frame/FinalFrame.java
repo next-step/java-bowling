@@ -5,26 +5,25 @@ public class FinalFrame extends Frame {
 
     private FallenPin bonusFallenPin;
 
-    public FinalFrame(FrameNumber number, FrameFallenPin fallenPin) {
-        super(number, fallenPin);
+    public FinalFrame(FrameNumber number, FrameFallenPin fallenPin, FrameScore score) {
+        super(number, fallenPin, score);
     }
 
-    private FinalFrame(FrameNumber number, FrameFallenPin fallenPin, int bonusFallenPinCount) {
-        super(number, fallenPin);
-        this.bonusFallenPin = FallenPin.of(bonusFallenPinCount);
+    public FinalFrame(FrameNumber number, FrameFallenPin fallenPin, FrameScore score, int bonusFallenPin) {
+        super(number, fallenPin, score);
+        this.bonusFallenPin = FallenPin.of(bonusFallenPin);
     }
 
-    public FinalFrame(int number, int firstFallenPinCount) {
-        super(new FrameNumber(number), FrameFallenPin.first(firstFallenPinCount));
+    public FinalFrame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount,
+                      int score, int waitingPitchingCount, int bonusFallenPin) {
+        super(frameNumber, firstFallenPinCount, secondFallenPinCount, score, waitingPitchingCount);
+        this.bonusFallenPin = FallenPin.of(bonusFallenPin);
     }
 
-    public FinalFrame(int number, int firstFallenPinCount, int secondFallenPinCount) {
-        super(number, firstFallenPinCount, secondFallenPinCount);
-    }
-
-    public FinalFrame(int number, int firstFallenPinCount, int secondFallenPinCount, int bonusFallenPinCount) {
-        super(number, firstFallenPinCount, secondFallenPinCount);
-        this.bonusFallenPin = FallenPin.of(bonusFallenPinCount);
+    public FinalFrame(int frameNumber, int firstFallenPinCount,
+                      int score, int waitingPitchingCount, int bonusFallenPin) {
+        super(frameNumber, firstFallenPinCount, score, waitingPitchingCount);
+        this.bonusFallenPin = FallenPin.of(bonusFallenPin);
     }
 
     @Override
@@ -42,11 +41,13 @@ public class FinalFrame extends Frame {
     @Override
     public Frame next(int fallenPinCount) {
         if (isFirstAndNotStrike()) {
-            return new FinalFrame(number, this.fallenPin.second(fallenPinCount));
+            FrameFallenPin secondFallenPin = fallenPin.second(fallenPinCount);
+            return new FinalFrame(number, secondFallenPin, score.ofSecondFallenPin(secondFallenPin));
         }
 
         if (isStrikeOrSpare()) {
-            return new FinalFrame(number, this.fallenPin, fallenPinCount);
+            FrameFallenPin firstFallenPin = FrameFallenPin.first(fallenPinCount);
+            return new FinalFrame(number, fallenPin, score.ofFirstFallenPin(firstFallenPin), fallenPinCount);
         }
 
         throw new IllegalArgumentException("마지막 프레임의 다음 번호 프레임을 만들 수 없습니다.");

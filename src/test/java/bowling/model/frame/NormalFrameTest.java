@@ -17,7 +17,7 @@ public class NormalFrameTest {
     void outOfRangeNormalFrameNumberTest() {
         // when, then
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new NormalFrame(10, 5, 5))
+                .isThrownBy(() -> new NormalFrame(10, 5, 5, 10, 1))
                 .withMessage("노말 프레임 번호는 1 이상 9 이하 이어야 합니다.");
     }
 
@@ -25,8 +25,8 @@ public class NormalFrameTest {
     @Test
     void nextFinalFrameTest() {
         // given
-        Frame strikeFrame = new NormalFrame(9, 10);
-        Frame pitchTwiceFrame = new NormalFrame(9, 5, 3);
+        Frame strikeFrame = new NormalFrame(9, 10, 10, 2);
+        Frame pitchTwiceFrame = new NormalFrame(9, 5, 5, 10, 1);
 
         // when, then
         assertThat(strikeFrame.next(5)).isInstanceOf(FinalFrame.class);
@@ -38,13 +38,13 @@ public class NormalFrameTest {
     void nextNormalFrameTest() {
         // given
         List<Frame> frames = new ArrayList<>();
-        frames.add(new NormalFrame(1, 10)); // 1번 프레임 && 스트라이크
-        frames.add(new NormalFrame(1, 5)); // 1번 프레임 && 공을 한 번 던짐
-        frames.add(new NormalFrame(1, 5, 3)); // 1번 프레임 && 공을 두 번 던짐
-        frames.add(new NormalFrame(8, 10)); // 8번 프레임 && 스트라이크
-        frames.add(new NormalFrame(8, 5)); // 8번 프레임 && 공을 한 번 던짐
-        frames.add(new NormalFrame(8, 5, 3)); // 8번 프레임 && 공을 두 번 던짐
-        frames.add(new NormalFrame(9, 5)); // 9번 프레임 && 공을 한 번 던짐
+        frames.add(new NormalFrame(1, 10, 10, 2)); // 1번 프레임 && 스트라이크
+        frames.add(new NormalFrame(1, 5, 5, 0)); // 1번 프레임 && 공을 한 번 던짐
+        frames.add(new NormalFrame(1, 5, 3, 8, 0)); // 1번 프레임 && 공을 두 번 던짐
+        frames.add(new NormalFrame(8, 10, 10, 2)); // 8번 프레임 && 스트라이크
+        frames.add(new NormalFrame(8, 5, 5, 0)); // 8번 프레임 && 공을 한 번 던짐
+        frames.add(new NormalFrame(8, 5, 3, 8, 0)); // 8번 프레임 && 공을 두 번 던짐
+        frames.add(new NormalFrame(9, 5, 5, 0)); // 9번 프레임 && 공을 한 번 던짐
 
         // when, then
         for (Frame frame : frames) {

@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("프레임 컬렉션 테스트")
 public class FramesTest {
-    private Frames firstPlayEndedFrames;
-    private Frames secondPlayEndedFrames;
+    private Frames firstEndedFrames;
+    private Frames secondEndedFrames;
 
     @BeforeEach
     void setUp() {
-        firstPlayEndedFrames = new Frames(Arrays.asList(new NormalFrame(1, 5, 5), new FinalFrame(10, 5, 4)));
-        secondPlayEndedFrames = new Frames(Arrays.asList(new NormalFrame(1, 5, 5), new FinalFrame(10, 5, 5, 5)));
+        firstEndedFrames = new Frames(Arrays.asList(new NormalFrame(1, 5, 5, 10, 1), new FinalFrame(10, 5, 4, 24, 0, 0)));
+        secondEndedFrames = new Frames(Arrays.asList(new NormalFrame(1, 5, 5, 10, 1), new FinalFrame(10, 5, 5, 25, 1, 5)));
     }
 
     @DisplayName("canPlayNext() 메소드를 통해 다음 플레이 가능 여부를 조회할 수 있다.")
@@ -28,8 +28,8 @@ public class FramesTest {
 
         // when, then
         assertTrue(emptyFrames.canPlayNext());
-        assertFalse(firstPlayEndedFrames.canPlayNext());
-        assertFalse(secondPlayEndedFrames.canPlayNext());
+        assertFalse(firstEndedFrames.canPlayNext());
+        assertFalse(secondEndedFrames.canPlayNext());
     }
 
     @DisplayName("게임을 진행할 수 없는 프레임 상태인데 play를 하면 예외가 발생한다.")
@@ -37,11 +37,11 @@ public class FramesTest {
     void playExceptionTest() {
         // when, then
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> firstPlayEndedFrames.play(5))
+                .isThrownBy(() -> firstEndedFrames.play(5))
                 .withMessage("더 이상 게임을 진행할 수 없습니다.");
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> secondPlayEndedFrames.play(5))
+                .isThrownBy(() -> secondEndedFrames.play(5))
                 .withMessage("더 이상 게임을 진행할 수 없습니다.");
     }
 
@@ -67,11 +67,11 @@ public class FramesTest {
     void nextFrameNumberExceptionTest() {
         // when, then
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> firstPlayEndedFrames.nextFrameNumber())
+                .isThrownBy(() -> firstEndedFrames.nextFrameNumber())
                 .withMessage("더 이상 게임을 진행할 수 없습니다.");
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> secondPlayEndedFrames.nextFrameNumber())
+                .isThrownBy(() -> secondEndedFrames.nextFrameNumber())
                 .withMessage("더 이상 게임을 진행할 수 없습니다.");
     }
 }
