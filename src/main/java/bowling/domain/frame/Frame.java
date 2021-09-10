@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
 public abstract class Frame {
 
@@ -37,7 +38,7 @@ public abstract class Frame {
 
     public abstract int getScore();
 
-    public abstract int addScore(int score, int count);
+    public abstract int addScore(Score score);
 
     public abstract boolean canCalculateScore();
 

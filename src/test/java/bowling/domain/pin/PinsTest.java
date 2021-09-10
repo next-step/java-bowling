@@ -43,7 +43,7 @@ public class PinsTest {
         Pins pins = Pins.of(numbers);
 
         //when
-        int sum = pins.sumPins();
+        int sum = pins.sum();
 
         //then
         assertThat(sum).isEqualTo(actual);

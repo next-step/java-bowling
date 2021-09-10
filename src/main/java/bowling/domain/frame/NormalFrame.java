@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.exception.FrameNotCorrectException;
 
 public final class NormalFrame extends Frame {
@@ -50,7 +51,7 @@ public final class NormalFrame extends Frame {
 
     @Override
     protected void validateFrame(final Pins pins) {
-        if (pins.sumPins() > MAX_KNOCK_DOWN_NUMBER) {
+        if (pins.sum() > MAX_KNOCK_DOWN_NUMBER) {
             throw new FrameNotCorrectException();
         }
     }
@@ -119,24 +120,25 @@ public final class NormalFrame extends Frame {
     @Override
     public int getScore() {
         if (FrameStatus.of(pins) == FrameStatus.STRIKE) {
-            return nextFrame.addScore(pins.sumPins(), 2);
+            return nextFrame.addScore(Score.ofRemainTwo(pins.sum()));
         }
 
         if (FrameStatus.of(pins) == FrameStatus.SPARE) {
-            return nextFrame.addScore(pins.sumPins(), 1);
+            return nextFrame.addScore(Score.ofRemainOne(pins.sum()));
         }
-        return pins.sumPins();
+        return pins.sum();
     }
 
     @Override
-    public int addScore(int score, int count) {
-        if (count == 2 && FrameStatus.of(pins) == FrameStatus.STRIKE) {
-            return nextFrame.addScore(score + firstPin().getKnockDownNumber(), 1);
+    public int addScore(Score score) {
+        if (FrameStatus.of(pins) == FrameStatus.STRIKE && score.isRemainCount(Score.BONUS_REMAIN_COUNT_TWO)) {
+            int sumScore = score.sum(firstPin().getKnockDownNumber());
+            return nextFrame.addScore(Score.ofRemainOne(sumScore));
         }
-        if (count == 1) {
-            return score + firstPin().getKnockDownNumber();
-        }
-        return score + pins.sumPins();
-    }
 
+        if (score.isRemainCount(Score.BONUS_REMAIN_COUNT_ONE)) {
+            return score.sum(firstPin().getKnockDownNumber());
+        }
+        return score.sum(pins.sum());
+    }
 }

@@ -83,7 +83,7 @@ public final class Pins {
         return pins.get(THIRD_PIN_INDEX);
     }
 
-    public int sumPins() {
+    public int sum() {
         return pins.stream()
                 .map(Pin::getKnockDownNumber)
                 .reduce(0, Integer::sum);

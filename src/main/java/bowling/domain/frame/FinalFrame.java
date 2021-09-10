@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.exception.FrameNotCorrectException;
 
 public final class FinalFrame extends Frame {
@@ -49,7 +50,7 @@ public final class FinalFrame extends Frame {
         if (pins.size() < MIN_SIZE) {
             return false;
         }
-        return pins.sumPins() < 10;
+        return pins.sum() < 10;
     }
 
     @Override
@@ -64,11 +65,11 @@ public final class FinalFrame extends Frame {
 
     @Override
     public int getScore() {
-        return pins.sumPins();
+        return pins.sum();
     }
 
     @Override
-    public int addScore(int score, int count) {
-        return score + pins.sumPins();
+    public int addScore(Score score) {
+        return score.sum(pins.sum());
     }
 }
