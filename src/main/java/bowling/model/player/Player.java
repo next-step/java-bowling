@@ -22,10 +22,7 @@ public class Player {
         }
     }
 
-    public boolean equals(String other) {
-        if (name == null || name.isEmpty()) {
-            return false;
-        }
-        return name.equals(other);
+    public String getName() {
+        return name;
     }
 }
