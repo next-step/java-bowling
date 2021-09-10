@@ -21,7 +21,7 @@ public class FrameNumber {
         }
     }
 
-    public static FrameNumber first() {
+    public static FrameNumber initial() {
         return new FrameNumber(MIN);
     }
 

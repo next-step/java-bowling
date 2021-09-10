@@ -22,18 +22,23 @@ public class FrameNumberTest {
                 .withMessage("프레임 번호는 1 이상 10 이하이어야 합니다.");
     }
 
-    @DisplayName("첫번째 프레임 번호는 1이다.")
+    @DisplayName("최초 프레임 번호는 1이다.")
     @Test
-    void firstFrameNumberTest() {
+    void initialFrameNumberTest() {
         // given, when, then
-        assertEquals(FrameNumber.first(), new FrameNumber(1));
+        assertEquals(FrameNumber.initial(), new FrameNumber(1));
     }
 
     @DisplayName("next() 메소드를 통해 다음 프레임 번호를 생성할 수 있다.")
     @Test
     void nextFrameNumberTest() {
-        // given, when, then
-        assertEquals(FrameNumber.first().next(), new FrameNumber(2));
+        // given
+        FrameNumber initialFrameNumber = FrameNumber.initial();
+        FrameNumber nextFrameNumber = initialFrameNumber.next();
+
+        // when, then
+        assertEquals(initialFrameNumber, new FrameNumber(1));
+        assertEquals(nextFrameNumber, new FrameNumber(2));
     }
 
     @DisplayName("canMakeNext() 메소드를 통해 다음 프레임 번호 생성 가능 여부를 조회할 수 있다.")
