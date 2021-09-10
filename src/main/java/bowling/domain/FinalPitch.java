@@ -9,14 +9,17 @@ public class FinalPitch extends Pitch {
     public void bowl(Pins pins) {
         if (!isFirstPitchDone()) {
             firstPins = pins;
+            score = score.additionalScore(pins);
             return;
         }
         if (!isSecondPitchDone()) {
             secondPins = pins;
+            score = score.additionalScore(pins);
             validate();
             return;
         }
         if (!isBonusPitchDone()) {
+            score = score.additionalScore(pins);
             bonusPins = pins;
         }
     }

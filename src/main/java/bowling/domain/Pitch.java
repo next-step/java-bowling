@@ -7,6 +7,11 @@ import java.util.Objects;
 public abstract class Pitch {
     protected Pins firstPins;
     protected Pins secondPins;
+    protected Score score;
+
+    protected Pitch() {
+        this.score = Score.of(0, 0);
+    }
 
     protected void validate() {
         if (!firstPins.isMax() && firstPins.isOverMax(secondPins)) {
@@ -16,6 +21,10 @@ public abstract class Pitch {
 
     public boolean isFirstPitchDone() {
         return Objects.nonNull(firstPins);
+    }
+
+    public Score getScore() {
+        return score;
     }
 
     public boolean isSecondPitchDone() {

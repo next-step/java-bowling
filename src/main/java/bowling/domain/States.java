@@ -12,7 +12,11 @@ public class States {
     private List<State> states;
 
     private States() {
-        states = new ArrayList<>();
+        this(new ArrayList<>());
+    }
+
+    private States(List<State> states) {
+        this.states = states;
     }
 
     public static States newInstance() {
@@ -20,9 +24,7 @@ public class States {
     }
 
     public static States of(List<State> states) {
-        States newStates = new States();
-        newStates.states = states;
-        return newStates;
+        return new States(states);
     }
 
     public void add(State state) {

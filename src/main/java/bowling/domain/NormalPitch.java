@@ -7,11 +7,21 @@ public class NormalPitch extends Pitch {
     public void bowl(Pins pins) {
         if (!isFirstPitchDone()) {
             firstPins = pins;
+            score = score.additionalScore(pins);
+            additionalCalculateScore(isStrike(), 2);
             return;
         }
         if (!isSecondPitchDone()) {
             secondPins = pins;
             validate();
+            score = score.additionalScore(pins);
+            additionalCalculateScore(isSpare(), 1);
+        }
+    }
+
+    private void additionalCalculateScore(boolean condition, int left) {
+        if (condition) {
+            score = Score.of(10, left);
         }
     }
 

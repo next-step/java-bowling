@@ -46,6 +46,10 @@ public class Pins {
         return fallenPins + otherPins.fallenPins > MAX;
     }
 
+    public int sumOfScore(int score) {
+        return fallenPins + score;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,4 +62,6 @@ public class Pins {
     public int hashCode() {
         return Objects.hash(fallenPins);
     }
+
+
 }

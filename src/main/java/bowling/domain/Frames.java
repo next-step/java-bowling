@@ -20,10 +20,6 @@ public class Frames {
         return frames.get(frameNumber);
     }
 
-    public void addFirst(Frame frame) {
-        frames.addFirst(frame);
-    }
-
     public int size() {
         return frames.size();
     }
@@ -35,7 +31,6 @@ public class Frames {
         }
         frames.remove(frames.size() - 1);
         frames.addLast(frame);
-
     }
 
     private boolean isNextFrame(Frame frame) {
