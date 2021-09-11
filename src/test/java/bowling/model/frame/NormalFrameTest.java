@@ -15,9 +15,12 @@ public class NormalFrameTest {
     @DisplayName("프레임 번호가 10 이상이면 예외가 발생한다.")
     @Test
     void outOfRangeNormalFrameNumberTest() {
+        // given
+        int frameNumber = 10;
+
         // when, then
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new NormalFrame(10, 5, 5, 10, 1))
+                .isThrownBy(() -> new NormalFrame(frameNumber, 5, 5, 10, 1))
                 .withMessage("노말 프레임 번호는 1 이상 9 이하 이어야 합니다.");
     }
 
