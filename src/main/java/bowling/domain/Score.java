@@ -30,6 +30,10 @@ public class Score {
         return new Score(first, score);
     }
 
+    public boolean isSpareOrStrike() {
+        return first + second >= MAX_SCORE;
+    }
+
     protected static void validateScore(int score) {
         if (outOfRange(score)) {
             throw new IllegalArgumentException("잘못된 점수를 입력하였습니다.");

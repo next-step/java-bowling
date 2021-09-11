@@ -20,7 +20,7 @@ class FrameTest {
         //given
         Frame frame = Frame.start(10);
         //when
-        frame = frame.nextTurn(9);
+        frame = frame.next(9);
         //then
         assertThat(frame).isEqualTo(Frame.of(2, Score.first(9), false));
     }
@@ -30,7 +30,7 @@ class FrameTest {
         //given
         Frame frame = Frame.start(9);
         //when
-        frame = frame.nextTurn(1);
+        frame = frame.next(1);
         //then
         assertThat(frame).isEqualTo(Frame.of(1, Score.first(9).withSecond(1), true));
     }
@@ -38,9 +38,9 @@ class FrameTest {
     @Test
     public void Frame에서_두번째_시도에서_다음시도를하면_다음Frame이_된다() {
         //given
-        Frame frame = Frame.start(9).nextTurn(0);
+        Frame frame = Frame.start(9).next(0);
         //when
-        frame = frame.nextTurn(3);
+        frame = frame.next(3);
         //then
         assertThat(frame).isEqualTo(Frame.of(2, Score.first(3).withSecond(0), false));
     }

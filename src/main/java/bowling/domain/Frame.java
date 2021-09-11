@@ -16,25 +16,29 @@ public class Frame {
         this.isSecondTry = isSecondTry;
     }
 
-    protected static Frame of(int round, Score score, boolean isSecondTry) {
-        return new Frame(round, score, isSecondTry);
-    }
-
     public static Frame start(int score) {
         return of(1, Score.first(score), false);
     }
 
-    public Frame nextTurn(int score) {
+    protected static Frame of(int round, Score score, boolean isSecondTry) {
+        return new Frame(round, score, isSecondTry);
+    }
+
+    private static Frame next(int round, Score score, boolean isSecondTry) {
+        return new Frame(round, score, isSecondTry);
+    }
+
+    public Frame next(int score) {
 
         if (isSecondTry) {
-            return of(round + 1, Score.first(score), false);
+            return next(round + 1, Score.first(score), false);
         }
 
         if (this.score.isStrike()) {
-            return of(round + 1, Score.first(score), false);
+            return next(round + 1, Score.first(score), false);
         }
 
-        return of(round, this.score.withSecond(score), true);
+        return next(round, this.score.withSecond(score), true);
 
     }
 

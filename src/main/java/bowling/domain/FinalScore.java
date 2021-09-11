@@ -18,7 +18,6 @@ public class FinalScore extends Score {
 
     public FinalScore withSecond(int score) {
         validateScore(score);
-        validateComibnedScores(score);
         return new FinalScore(getFirst(), score, 0);
     }
 
