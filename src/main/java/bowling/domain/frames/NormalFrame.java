@@ -21,12 +21,22 @@ public class NormalFrame extends Frame {
 
     @Override
     public void finish() {
-        if (this.scores.isAllStrike()) {
-            super.isFinish = true;
-        }
         if (isPossibleToAttempts()) {
             super.isFinish = true;
         }
+        if (isImPossibleNextRoll()) {
+            super.isFinish = true;
+        }
+    }
+
+    private boolean isImPossibleNextRoll() {
+        if (isSpare()) {
+            return false;
+        }
+        if (isStrike()) {
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -23,20 +23,25 @@ public class FinalFrame extends Frame {
     }
 
     private void checkPossibleThirdRoll() {
-        if (isTheScoreWrongForTheThirdRoll()) {
+        if (this.scores.size() != 2) {
+            return;
+        }
+        if (!isPossibleThirdRoll()) {
             throw new IncorrectNumberOfPinsException();
         }
     }
 
-    private boolean isTheScoreWrongForTheThirdRoll() {
-        if (this.scores.size() == 2) {
-            return !this.scores.isAllStrike() && !isSpare();
+    private boolean isPossibleThirdRoll() {
+        if (this.scores.size() != 2) {
+            return false;
+        }
+        if (isStrike()) {
+            return true;
+        }
+        if (isSpare()) {
+            return true;
         }
         return false;
-    }
-
-    private boolean isSpare() {
-        return NUMBER_OF_PINS == this.scores.knockedDownPins();
     }
 
     @Override
@@ -44,7 +49,7 @@ public class FinalFrame extends Frame {
         if (isPossibleToAttempts()) {
             super.isFinish = true;
         }
-        if (isTheScoreWrongForTheThirdRoll()) {
+        if (this.scores.size() == 2 && !isPossibleThirdRoll()) {
             super.isFinish = true;
         }
     }

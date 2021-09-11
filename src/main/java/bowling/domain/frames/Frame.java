@@ -5,6 +5,7 @@ import bowling.domain.Scores;
 import bowling.domain.exception.FinishFrameException;
 import bowling.domain.exception.IncorrectNumberOfPinsException;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Frame {
@@ -37,13 +38,13 @@ public abstract class Frame {
 
     public void checkPossibleSecondRoll(final Score score) {
         if (this.scores.size() == 1) {
-            int pins = this.scores.knockedDownPins() + score.getNumberOfPins();
+            int pins = this.scores.downPins() + score.getNumberOfPins();
             checkIncorrectNumberOfPins(pins);
         }
     }
 
     private void checkIncorrectNumberOfPins(final int pins) {
-        if (this.scores.isAllStrike()) {
+        if (isStrike()) {
             return;
         }
         if (pins > NUMBER_OF_PINS || pins < 0) {
@@ -55,6 +56,24 @@ public abstract class Frame {
         if (this.isFinish) {
             throw new FinishFrameException();
         }
+    }
+
+    public boolean isSpare() {
+        List<Score> elements = this.scores.elements();
+        if (elements.size() < 2) {
+            return false;
+        }
+        Score first = elements.get(elements.size() - 2);
+        Score second = elements.get(elements.size() - 1);
+        return Score.isSpare(first, second);
+    }
+
+    public boolean isStrike() {
+        Score lastScore = this.scores.elements()
+                .stream()
+                .reduce((first, second) -> second)
+                .orElse(Score.ZERO);
+        return Score.isStrike(lastScore);
     }
 
     public Scores getScores() {
