@@ -65,10 +65,6 @@ public abstract class Frame {
         return fallenPin.pitchTwice();
     }
 
-    protected boolean pitchOnce() {
-        return fallenPin.pitchOnce();
-    }
-
     public boolean isSpare() {
         return fallenPin.isSpare();
     }
@@ -109,5 +105,13 @@ public abstract class Frame {
 
     public int scoreValue() {
         return score.scoreValue();
+    }
+
+    public Score score() {
+        return score.score();
+    }
+
+    public boolean isWaitingNextPitching() {
+        return score.isWaitingPitching();
     }
 }

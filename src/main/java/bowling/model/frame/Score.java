@@ -5,6 +5,10 @@ import java.util.Objects;
 public class Score {
     private static final int MIN = 0;
     private static final int MAX = 300;
+    private static final int MAX_OF_ONE_DIGIT = 9;
+    private static final int MIN_OF_TWO_DIGIT = 10;
+    private static final int MAX_OF_TWO_DIGIT = 99;
+    private static final int MIN_OF_THREE_DIGIT = 100;
 
     private int score;
 
@@ -43,5 +47,17 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score);
+    }
+
+    public boolean isOneDigit() {
+        return score >= MIN && score <= MAX_OF_ONE_DIGIT;
+    }
+
+    public boolean isTwoDigit() {
+        return score >= MIN_OF_TWO_DIGIT && score <= MAX_OF_TWO_DIGIT;
+    }
+
+    public boolean isThreeDigit() {
+        return score >= MIN_OF_THREE_DIGIT && score <= MAX;
     }
 }

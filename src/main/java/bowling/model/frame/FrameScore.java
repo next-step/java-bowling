@@ -62,4 +62,8 @@ public class FrameScore {
     public void makeNoWaitingPitching() {
         waitingPitchingCount.changeToNoCount();
     }
+
+    public boolean isWaitingPitching() {
+        return !waitingPitchingCount.isNoCount();
+    }
 }

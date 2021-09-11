@@ -44,4 +44,8 @@ public class WaitingPitchingCount {
     public void changeToNoCount() {
         count = NO_COUNT;
     }
+
+    public boolean isNoCount() {
+        return count == NO_COUNT;
+    }
 }
