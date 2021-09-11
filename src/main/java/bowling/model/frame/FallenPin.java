@@ -3,8 +3,6 @@ package bowling.model.frame;
 public class FallenPin {
     private static final int MIN = 0;
     private static final int MAX = 10;
-    private static final String STRIKE_SYMBOL = "X";
-    private static final String GUTTER_SYMBOL = "-";
 
     private final int count;
 
@@ -38,13 +36,6 @@ public class FallenPin {
 
     @Override
     public String toString() {
-        if (isMin()) {
-            return GUTTER_SYMBOL;
-        }
-
-        if (isMax()) {
-            return STRIKE_SYMBOL;
-        }
         return String.valueOf(count);
     }
 }

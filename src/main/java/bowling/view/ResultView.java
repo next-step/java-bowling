@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.model.frame.FallenPin;
 import bowling.model.frame.Frame;
 
 import java.io.PrintStream;
@@ -12,6 +13,8 @@ public class ResultView {
             = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |\n";
     private static final String PLAYER_NAME = "|  %s |";
     private static final String BONUS_FALLEN_PIN_DISPLAY_FORMAT = "  %s   |";
+    private static final String STRIKE_SYMBOL = "X";
+    private static final String GUTTER_SYMBOL = "-";
     private static final String SCORE_SECTION = "|      |";
     private static final String EMPTY_SECTION = "      |";
     private static final String NEW_LINE = "\n";
@@ -50,7 +53,10 @@ public class ResultView {
         StringBuilder stringBuilder = new StringBuilder();
         for (Frame frame : frames) {
             String displayFormat = FrameFallenPinStatus.findDisplayFormat(frame.fallenPin());
-            stringBuilder.append(String.format(displayFormat, frame.firstFallenPin(), frame.secondFallenPin()));
+            String firstFallenPinSymbol = generateFallenPinSymbol(frame.firstFallenPin());
+            String secondFallenPinSymbol = generateFallenPinSymbol(frame.firstFallenPin());
+
+            stringBuilder.append(String.format(displayFormat, firstFallenPinSymbol, secondFallenPinSymbol));
         }
         return stringBuilder.toString();
     }
@@ -66,7 +72,19 @@ public class ResultView {
             return EMPTY_STRING;
         }
 
-        return String.format(BONUS_FALLEN_PIN_DISPLAY_FORMAT, finalFrame.bonusFallenPin());
+        return String.format(BONUS_FALLEN_PIN_DISPLAY_FORMAT, generateFallenPinSymbol(finalFrame.bonusFallenPin()));
+    }
+
+    private static String generateFallenPinSymbol(FallenPin fallenPin) {
+        if (fallenPin.isMax()) {
+            return STRIKE_SYMBOL;
+        }
+
+        if (fallenPin.isMin()) {
+            return GUTTER_SYMBOL;
+        }
+
+        return fallenPin.toString();
     }
 
     private static String generateEmptySectionsOfFallenPinDisplay(List<Frame> frames) {
