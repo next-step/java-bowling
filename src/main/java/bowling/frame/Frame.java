@@ -23,4 +23,6 @@ public interface Frame {
   ScoreBoard createScoreBoard();
 
   void addScoreResult(ScoreBoard scoreBoard);
+
+  boolean isHaveNextFrame();
 }

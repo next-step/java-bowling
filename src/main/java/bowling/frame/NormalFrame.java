@@ -109,8 +109,13 @@ public class NormalFrame implements Frame {
   public void addScoreResult(final ScoreBoard scoreBoard) {
     scoreBoard.addScoreResult(createScoreResult());
 
-    if (nextFrame != null) {
+    if (isHaveNextFrame()) {
       nextFrame.addScoreResult(scoreBoard);
     }
+  }
+
+  @Override
+  public boolean isHaveNextFrame() {
+    return nextFrame != null;
   }
 }

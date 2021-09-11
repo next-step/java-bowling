@@ -124,4 +124,9 @@ public class FinalFrame implements Frame {
   public void addScoreResult(final ScoreBoard scoreBoard) {
     scoreBoard.addScoreResult(createScoreResult());
   }
+
+  @Override
+  public boolean isHaveNextFrame() {
+    return false;
+  }
 }

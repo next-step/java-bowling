@@ -26,11 +26,11 @@ public class FramesResult {
     frames.pitch(pinCount);
   }
 
-  public int round() {
-    return frames.size();
-  }
-
   public ResultDto getResult() {
     return ResultDto.of(playerName.toString(), frames.totalScoreResult());
+  }
+
+  public boolean isFrameEnd() {
+    return frames.isFrameEnd();
   }
 }

@@ -25,17 +25,13 @@ public class Frames {
   }
 
   private void addNewFrame(final Frame currentFrame) {
-    if (isNotSameFrame(currentFrame)) {
+    if (checkHaveNextFrame(currentFrame)) {
       frames.add(currentFrame);
     }
   }
 
-  private boolean isNotSameFrame(final Frame currentFrame) {
+  private boolean checkHaveNextFrame(final Frame currentFrame) {
     return !currentFrame.equals(frames.getLast());
-  }
-
-  public int size() {
-    return frames.size();
   }
 
   public List<ScoreResultDto> totalScoreResult() {
@@ -51,5 +47,9 @@ public class Frames {
 
   public boolean isEnd() {
     return frames.getLast().isGameEnd();
+  }
+
+  public boolean isFrameEnd() {
+    return frames.getLast().isHaveNextFrame();
   }
 }
