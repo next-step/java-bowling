@@ -34,14 +34,24 @@ public class Frames {
     private List<Frame> nextPlay(int fallenPinCount) {
         validateNextIsPlayable();
 
-        Frame next = lastFrame().next(fallenPinCount);
-        if (next.isFrameNumberEqual(lastFrame())) {
+        Frame nextFrame = lastFrame().next(fallenPinCount);
+        if (nextFrame.isFrameNumberEqual(lastFrame())) {
             int lastFrameIndex = frames.size() - GAP_BETWEEN_SIZE_AND_INDEX;
             frames.remove(lastFrameIndex);
         }
+        calculateStrikeScoreSpare(nextFrame);
 
-        frames.add(next);
+        frames.add(nextFrame);
         return frames;
+    }
+
+    private void calculateStrikeScoreSpare(Frame nextFrame) {
+        boolean isStrikeCanBeCalculated = lastFrame().isStrike() && nextFrame.pitchTwice();
+        boolean isSpareCanBeCalculated = lastFrame().isSpare() && !nextFrame.pitchTwice();
+
+        if (isStrikeCanBeCalculated || isSpareCanBeCalculated) {
+            lastFrame().calculateStrikeOrSpareScore(nextFrame);
+        }
     }
 
     private void validateNextIsPlayable() {
@@ -77,5 +87,9 @@ public class Frames {
             return FrameNumber.initial();
         }
         return lastFrame().nextNumber();
+    }
+
+    public int scoreValue(int index) {
+        return frames.get(index).scoreValue();
     }
 }

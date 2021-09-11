@@ -74,4 +74,18 @@ public class FramesTest {
                 .isThrownBy(() -> secondEndedFrames.nextFrameNumber())
                 .withMessage("더 이상 게임을 진행할 수 없습니다.");
     }
+
+    @DisplayName("스트라이크면 다음 2번의 투구까지 점수를 합산한다.")
+    @Test
+    void strikeFrameScoreTest() {
+        // given, when
+        Frames frames = new Frames();
+        frames.play(10);
+        frames.play(5);
+        frames.play(3);
+
+        // then
+        assertSame(frames.scoreValue(0), 18);
+        assertSame(frames.scoreValue(1), 26);
+    }
 }

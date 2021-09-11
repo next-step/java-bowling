@@ -36,7 +36,7 @@ public class FrameScoreTest {
         assertSame(spareFrameScore.waitingPitchingCount(), 1);
     }
 
-    @DisplayName("프레임의 투구가 스트라이가 아닌 첫번째면 한 번의 투구(2번째 투구)를 기다려야 한다.")
+    @DisplayName("프레임의 투구가 첫 투구이고 스트라이크가 아니면 아 한 번의 투구(2번째 투구)를 기다려야 한다.")
     @Test
     void frameFirstScoreTest() {
         // given, when

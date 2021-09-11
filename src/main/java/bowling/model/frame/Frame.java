@@ -65,7 +65,11 @@ public abstract class Frame {
         return fallenPin.pitchTwice();
     }
 
-    private boolean isSpare() {
+    protected boolean pitchOnce() {
+        return fallenPin.pitchOnce();
+    }
+
+    public boolean isSpare() {
         return fallenPin.isSpare();
     }
 
@@ -83,5 +87,27 @@ public abstract class Frame {
 
     public boolean isFrameNumberEqual(Frame frame) {
         return number.equals(frame.number);
+    }
+
+    public void calculateStrikeOrSpareScore(Frame nextFrame) {
+        if (!isStrikeOrSpare()) {
+            throw new IllegalArgumentException("스트라이크 또는 스페어 점수를 계산할 수 있는 상태가 아닙니다.");
+        }
+
+        nextFrame.plusScore(nextFrame.fallenPinCountTotal());
+        score.plus(nextFrame.fallenPinCountTotal());
+        score.makeNoWaitingPitching();
+    }
+
+    private void plusScore(int other) {
+        score.plus(other);
+    }
+
+    private int fallenPinCountTotal() {
+        return fallenPin.countTotal();
+    }
+
+    public int scoreValue() {
+        return score.scoreValue();
     }
 }

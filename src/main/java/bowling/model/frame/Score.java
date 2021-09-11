@@ -28,6 +28,10 @@ public class Score {
         return Score.of(score + other);
     }
 
+    public int value() {
+        return score;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -78,6 +78,10 @@ public class FrameFallenPin {
         return first != EMPTY && second != EMPTY;
     }
 
+    public boolean pitchOnce() {
+        return first != EMPTY && second == EMPTY;
+    }
+
     public boolean isEmpty() {
         return first == EMPTY;
     }
@@ -106,6 +110,14 @@ public class FrameFallenPin {
             return false;
         }
         return first.isMin() && second.isMin();
+    }
+
+    public int firstCount() {
+        return first.count();
+    }
+
+    public int secondCount() {
+        return second.count();
     }
 
     public int countTotal() {
