@@ -52,6 +52,8 @@ public abstract class Frame {
 
     public abstract Frame next();
 
+    public abstract boolean hasNext();
+
     public abstract Score getScore();
 
     protected abstract Score additionalScore(Score score);

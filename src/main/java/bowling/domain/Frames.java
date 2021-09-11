@@ -42,6 +42,15 @@ public class Frames {
         return frames.getLast();
     }
 
+
+    public boolean isEnd() {
+        return currentFrame().isEnd();
+    }
+
+    public boolean isRoundEnd(int round) {
+        return frames.get(round).isFinish();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,5 +63,4 @@ public class Frames {
     public int hashCode() {
         return Objects.hash(frames);
     }
-
 }

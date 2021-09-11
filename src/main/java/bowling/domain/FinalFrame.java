@@ -18,6 +18,11 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    public boolean hasNext() {
+        return false;
+    }
+
+    @Override
     public Score getScore() {
         return pitch.getScore();
     }

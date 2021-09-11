@@ -18,20 +18,20 @@ public class ResultView {
     private static final String GUTTER = "- |";
     private static final String SPARE = "/ |";
 
-    public static void printBowlingGame(List<String> players, List<Frames> frames) {
+    public static void printBowlingGame(List<String> players, BowlingGame bowlingGame) {
 
-        for(int i = 0 ; i < frames.size(); i++) {
+        for(int i = 0 ; i < bowlingGame.size(); i++) {
             printPlayer(players.get(i));
 
-            printPitch(frames.get(i));
+            printPitch(bowlingGame.get(i));
 
-            printRemainBoard(frames.get(i));
+            printRemainBoard(bowlingGame.get(i));
 
             printBlank();
 
-            printResultScore(frames.get(i));
+            printResultScore(bowlingGame.get(i));
 
-            printRemain(frames.get(i));
+            printRemain(bowlingGame.get(i));
 
             System.out.println();
         }

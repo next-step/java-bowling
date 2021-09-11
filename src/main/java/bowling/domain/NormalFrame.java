@@ -51,6 +51,10 @@ public class NormalFrame extends Frame {
             return Score.unScore();
         }
 
+        if (!next.isFirstPitchDone()) {
+            return Score.unScore();
+        }
+
         return next.additionalScore(pitch.getScore());
     }
 
@@ -61,12 +65,16 @@ public class NormalFrame extends Frame {
             return score;
         }
 
-        if (!isSecondPitchDone() && !hasNext()) {
+        if (hasNext() && next.isFirstPitchDone()) {
+            return next.additionalScore(score);
+        }
+
+        if (hasNext() && !next.isFirstPitchDone()) {
             return Score.unScore();
         }
 
-        if (hasNext()) {
-            return next.additionalScore(score);
+        if (!hasNext() && !isSecondPitchDone()) {
+            return Score.unScore();
         }
 
         return score.additionalScore(getSecondPin());
@@ -74,7 +82,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean isEnd(){
-        return isFinish();
+        return false;
     }
 
 }
