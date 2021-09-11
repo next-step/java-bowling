@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreType;
+import bowling.exception.BowlingFrameException;
 import org.springframework.util.ObjectUtils;
 
 public class FinalFrame extends Frame {
@@ -19,7 +20,7 @@ public class FinalFrame extends Frame {
             this.score3 = new Score(this.score2, number);
             return this;
         }
-        throw new IllegalStateException("투구를 모두 마쳤습니다.");
+        throw new BowlingFrameException("투구를 모두 마쳤습니다.");
     }
 
     @Override

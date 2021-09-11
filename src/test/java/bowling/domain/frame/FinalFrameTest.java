@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.exception.BowlingFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ class FinalFrameTest {
     @Test
     void secondTurn_miss() {
         Frame frame = new FinalFrame().next(1).next(2);
-        assertThatThrownBy(() -> frame.next(3)).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> frame.next(3)).isInstanceOf(BowlingFrameException.class);
     }
 
     @DisplayName("spare 인 경우 3번째 투구를 한다.")
@@ -38,6 +39,6 @@ class FinalFrameTest {
     @Test
     void forthTurn_error() {
         Frame frame = new FinalFrame().next(10).next(2).next(3);
-        assertThatThrownBy(() -> frame.next(4)).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> frame.next(4)).isInstanceOf(BowlingFrameException.class);
     }
 }

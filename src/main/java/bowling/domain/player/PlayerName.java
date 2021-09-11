@@ -1,5 +1,7 @@
 package bowling.domain.player;
 
+import bowling.exception.BowlingPlayerException;
+
 import java.util.Objects;
 
 public class PlayerName {
@@ -7,7 +9,7 @@ public class PlayerName {
 
     public PlayerName(String value){
         if(value.length() > 3){
-            throw new IllegalArgumentException("이름은 3자리 이내로 입력해주세요.");
+            throw new BowlingPlayerException("이름은 3자리 이내로 입력해주세요.");
         }
         this.value = value;
     }

@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.exception.BowlingFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,6 +54,6 @@ class FramesTest {
     @Test
     void error() {
         Frames frames = new Frames(10).next(1).next(2);
-        assertThatThrownBy(() -> frames.next(1)).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> frames.next(1)).isInstanceOf(BowlingFrameException.class);
     }
 }

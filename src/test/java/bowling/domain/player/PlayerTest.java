@@ -1,6 +1,5 @@
 package bowling.domain.player;
 
-import bowling.domain.player.Player;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,5 +9,17 @@ class PlayerTest {
     void create() {
         Player player = new Player("KAJ");
         assertThat(player).isEqualTo(new Player("KAJ"));
+    }
+
+    @Test
+    void isFinish() {
+        Player player = new Player("KAJ");
+        assertThat(player.isFinish()).isFalse();
+    }
+
+    @Test
+    void nextFrameNo() {
+        Player player = new Player("KAJ");
+        assertThat(player.nextFrameNo()).isEqualTo(1);
     }
 }

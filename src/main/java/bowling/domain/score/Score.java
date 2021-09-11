@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import bowling.exception.BowlingScoreException;
+
 import java.util.Objects;
 
 public class Score {
@@ -33,7 +35,7 @@ public class Score {
 
     private void validate(int score){
         if(score < MIN_SCORE || score > MAX_SCORE){
-            throw new IllegalArgumentException("최대 투구 점수는 10점입니다.");
+            throw new BowlingScoreException("최대 투구 점수는 10점입니다.");
         }
     }
 

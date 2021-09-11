@@ -1,5 +1,6 @@
 package bowling.domain.player;
 
+import bowling.exception.BowlingPlayerException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,6 @@ class PlayerNameTest {
     @DisplayName("3자리를 초과하여 이름 입력시 에러 발생")
     @Test
     void error() {
-        assertThatThrownBy(() -> new PlayerName("ABCD")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new PlayerName("ABCD")).isInstanceOf(BowlingPlayerException.class);
     }
 }

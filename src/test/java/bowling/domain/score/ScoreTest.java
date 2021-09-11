@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.exception.BowlingScoreException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,19 +38,19 @@ public class ScoreTest {
     @DisplayName("점수가 0점 미만이면 에러")
     @Test
     void error_min() {
-        assertThatThrownBy(()->new Score(-1)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->new Score(-1)).isInstanceOf(BowlingScoreException.class);
     }
 
     @DisplayName("점수가 10점을 초과하면 에러")
     @Test
     void error_max() {
-        assertThatThrownBy(()->new Score(11)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->new Score(11)).isInstanceOf(BowlingScoreException.class);
     }
 
     @DisplayName("이전 투구와 현재 투구의 합이 10을 넘어가면 에러")
     @Test
     void error_sum() {
-        assertThatThrownBy(()->new Score(new Score(5),6)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->new Score(new Score(5),6)).isInstanceOf(BowlingScoreException.class);
     }
 
     @DisplayName("이전 투구가 strike이거나 spare였으면 이전투구와 현재 투구의 합이 10을 넘어가도 된다.")
