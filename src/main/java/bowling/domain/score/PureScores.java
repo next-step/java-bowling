@@ -11,34 +11,38 @@ import java.util.stream.IntStream;
 import bowling.domain.frame.Frames;
 
 public class PureScores {
-    private static final int MAX_SCORE_SIZE = 21;
     private static final String SCORE_DATA_MUST_NOT_BE_NULL_EXCEPTION_STATEMENT = "점수 데이터 리스트는 null이 될 수 없습니다";
-    private static final String OUT_OF_COUNT_OF_THROW_BALL_EXCEPTION_STATEMENT = "투구 횟수의 범위를 벗어났습니다";
 
     private final List<Integer> scores;
     private int lastCalculatedIndex;
 
-    private PureScores(List<Integer> scores, int lastCalculatedIndex) {
-        validate(scores, lastCalculatedIndex);
-        this.lastCalculatedIndex = lastCalculatedIndex;
+    private PureScores(List<Integer> scores) {
+        validate(scores);
+        this.lastCalculatedIndex = 0;
         this.scores = new ArrayList<>();
     }
 
-    public static PureScores from(List<Integer> scores, int lastCalculatedIndex) {
-        return new PureScores(scores, lastCalculatedIndex);
+    private PureScores(Frames frames, List<Integer> cumulativeScores) {
+        this(new ArrayList<>());
+        IntStream.range(0, frames.frames().size())
+            .forEach(i -> initFrameAsScore(frames, i, cumulativeScores));
     }
 
-    private void validate(final List<Integer> scores, final int lastCalculatedIndex) {
+    public static PureScores from(Frames frames, List<Integer> cumulativeScores) {
+        return new PureScores(frames, cumulativeScores);
+    }
+
+    public static PureScores from(List<Integer> scores) {
+        return new PureScores(scores);
+    }
+
+    private void validate(final List<Integer> scores) {
         if (Objects.isNull(scores)) {
             throw new IllegalArgumentException(SCORE_DATA_MUST_NOT_BE_NULL_EXCEPTION_STATEMENT);
         }
-
-        if (lastCalculatedIndex < 0 || lastCalculatedIndex > MAX_SCORE_SIZE - 1) {
-            throw new IllegalArgumentException(OUT_OF_COUNT_OF_THROW_BALL_EXCEPTION_STATEMENT);
-        }
     }
 
-    public void initFrameAsScore(final Frames frames, final int index, List<Integer> cumulativeScores) {
+    private void initFrameAsScore(final Frames frames, final int index, List<Integer> cumulativeScores) {
         List<Score> scores = frames.frames().get(index).scores();
         IntStream.range(0, scores.size())
             .forEach(i -> {
@@ -118,8 +122,11 @@ public class PureScores {
         cumulativeScores.set(lastIndex, cumulativeScores.get(lastIndex - 1) + cumulativeScores.get(lastIndex));
     }
 
+    public void addScore(final Score score) {
+        scores().add(score.score());
+    }
+
     public List<Integer> scores() {
         return scores;
     }
-
 }
