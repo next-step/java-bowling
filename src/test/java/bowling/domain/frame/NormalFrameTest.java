@@ -10,8 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("NormalFrame Test")
 public class NormalFrameTest {
@@ -45,7 +44,7 @@ public class NormalFrameTest {
     @DisplayName("마지막 Normal 프레임이 끝나면 다음은 Final 프레임이다")
     void normalFrameFinalNextIsFinalFrame() {
         //given
-        Frame givenFrame = NormalFrame.of(NormalFrame.ROUND_BEFORE_LAST_ROUND).bowl(10);
+        Frame givenFrame = NormalFrame.of(NormalFrame.NORMAL_LAST_ROUND).bowl(10);
 
         // when
         Frame nextFrame = givenFrame.nextFrame();
@@ -136,7 +135,7 @@ public class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("프레임이 스트라이크고 다음 프레임도 스트라이크일 경우")
+    @DisplayName("스트라이크일 때 다음 프레임도 스트라이크일 경우")
     void doubleCalculateScore() {
         // given
         Frame givenFrame = NormalFrame.first().bowl(10);
@@ -150,6 +149,35 @@ public class NormalFrameTest {
 
         // then
         assertThat(actualScore).isEqualTo(25);
+    }
+
+    @Test
+    @DisplayName("마지막 NormalFrame 이 스트라이크일때 점수 계산")
+    void scoreWhenLastNormalFrameIsStrike() {
+        //given
+        Frame lastNormalFrame = NormalFrame.of(NormalFrame.NORMAL_LAST_ROUND);
+
+        //when
+        lastNormalFrame.bowl(10).nextFrame().bowl(10).bowl(5);
+        int actual = lastNormalFrame.getScore();
+
+        //then
+        assertThat(actual).isEqualTo(25);
+    }
+
+    @Test
+    @DisplayName("마지막 NormalFrame 이 스페어일때 점수 계산")
+    void scoreWhenLastNormalFrameIsSpare() {
+        //given
+        Frame lastNormalFrame = NormalFrame.of(NormalFrame.NORMAL_LAST_ROUND).bowl(9).bowl(1);
+        Frame finalFrame = lastNormalFrame.nextFrame();
+
+        //when
+        finalFrame.bowl(10);
+        int actualScore = lastNormalFrame.getScore();
+
+        //then
+        assertThat(actualScore).isEqualTo(20);
     }
 
     @Test
@@ -222,8 +250,8 @@ public class NormalFrameTest {
     @DisplayName("스트라이크 일경우 다음 2번의 투구가 있다면 계산 O")
     void strikeCanCalculateFrame() {
         //given
-        Frame firstFrame = NormalFrame.first().bowl(10);
-        firstFrame.nextFrame().bowl(5).bowl(5);
+        Frame firstFrame = NormalFrame.first();
+        firstFrame.bowl(10).nextFrame().bowl(5).bowl(5);
 
         //when
         boolean isCanCalculate = firstFrame.canCalculateScore();
@@ -232,18 +260,19 @@ public class NormalFrameTest {
         assertThat(isCanCalculate).isTrue();
     }
 
-//    @Test
-//    @DisplayName("더블일경우 그다음 프레임에서 1번의 투구가 없다면 계산 X")
-//    void doubleAfterNextFramePinsEmptyThenCannotCalculate() {
-//        Frame firstFrame = NormalFrame.first().bowl(10);
-//        firstFrame.nextFrame().bowl(10);
-//
-//        //when
-//        boolean isCanCalculate = firstFrame.canCalculateScore();
-//
-//        //then
-//        assertThat(isCanCalculate).isFalse();
-//    }
+    @Test
+    @DisplayName("더블일경우 그다음 프레임에서 1번의 투구가 없다면 계산 X")
+    void doubleAfterNextFramePinsEmptyThenCannotCalculate() {
+        // given
+        Frame givenFrame = NormalFrame.first();
+
+        //when
+        givenFrame.bowl(10).nextFrame().bowl(10);
+        boolean isCanCalculate = givenFrame.canCalculateScore();
+
+        //then
+        assertThat(isCanCalculate).isFalse();
+    }
 
     @Test
     @DisplayName("더블일경우 그다음 프레임에서 1번의 투구가 있다면 계산 0")

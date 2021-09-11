@@ -30,7 +30,8 @@ public final class FinalFrame extends Frame {
     @Override
     public Frame bowl(final int knockDownNumber) {
         pins.add(knockDownNumber);
-        return FinalFrame.of(pins);
+        validateFrame(pins);
+        return this;
     }
 
     @Override
@@ -74,6 +75,13 @@ public final class FinalFrame extends Frame {
 
     @Override
     public int addScore(Score score) {
+        if (score.isRemainCount(Score.BONUS_REMAIN_COUNT_ONE)) {
+            return score.sum(firstPin().getKnockDownNumber());
+        }
+
+        if (score.isRemainCount(Score.BONUS_REMAIN_COUNT_TWO)) {
+            return score.sum(firstPin().sum(secondPin()));
+        }
         return score.sum(pins.sum());
     }
 }

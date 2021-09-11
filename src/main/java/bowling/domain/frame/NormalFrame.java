@@ -8,7 +8,7 @@ import bowling.exception.FrameNotCorrectException;
 public final class NormalFrame extends Frame {
 
     public static final int FIRST_ROUND_NUMBER = 1;
-    public static final int ROUND_BEFORE_LAST_ROUND = 9;
+    public static final int NORMAL_LAST_ROUND = 9;
     private static final int MAX_SIZE = 2;
     private static final int MAX_KNOCK_DOWN_NUMBER = 10;
 
@@ -45,7 +45,12 @@ public final class NormalFrame extends Frame {
     }
 
     public static Frame next(Frame frame) {
-        Frame nextFrame = new NormalFrame(frame.roundNumber + 1, Pins.of(), frame);
+        if (frame.roundNumber == NORMAL_LAST_ROUND) {
+            Frame nextFrame = FinalFrame.of();
+            frame.setNextFrame(nextFrame);
+            return nextFrame;
+        }
+        Frame nextFrame = new NormalFrame(frame.roundNumber + 1, Pins.of());
         frame.setNextFrame(nextFrame);
         return nextFrame;
     }
@@ -60,9 +65,8 @@ public final class NormalFrame extends Frame {
     @Override
     public Frame bowl(final int knockDownNumber) {
         pins.add(knockDownNumber);
-        Frame newFrame = NormalFrame.of(roundNumber, pins);
-        newFrame.setNextFrame(nextFrame);
-        return newFrame;
+        validateFrame(pins);
+        return this;
     }
 
     @Override
@@ -83,8 +87,8 @@ public final class NormalFrame extends Frame {
             return this;
         }
 
-        if (roundNumber == ROUND_BEFORE_LAST_ROUND) {
-            return FinalFrame.of();
+        if (roundNumber == NORMAL_LAST_ROUND) {
+            return NormalFrame.next(this);
         }
         return NormalFrame.next(this);
     }
@@ -99,27 +103,14 @@ public final class NormalFrame extends Frame {
             return true;
         }
 
-        if (FrameStatus.of(pins) == FrameStatus.SPARE) {
-            if (nextFrame == null) {
-                return false;
-            }
-            if (nextFrame.pins.size() > 0) {
-                return true;
-            }
+        if (FrameStatus.of(pins) == FrameStatus.SPARE && nextPinSize() > 0) {
+            return true;
         }
 
-        if (FrameStatus.of(pins) == FrameStatus.STRIKE) {
-            if (nextFrame != null && nextFrame.pins.size() == 2 && FrameStatus.of(nextFrame.pins) != FrameStatus.STRIKE) {
-                return true;
-            }
-
-            if (nextFrame != null && FrameStatus.of(nextFrame.pins) == FrameStatus.STRIKE) {
-                if (nextFrame.nextFrame != null && nextFrame.nextFrame.pins.size() > 0) {
-                    return true;
-                }
-            }
+        if (nextPinSize() >= 2) {
+            return true;
         }
-        return false;
+        return nextPinSize() == 1 && nextFrame.nextPinSize() > 0;
     }
 
     @Override
@@ -139,7 +130,7 @@ public final class NormalFrame extends Frame {
     }
 
     @Override
-    public int addScore(Score score) {
+    public int addScore(final Score score) {
         if (FrameStatus.of(pins) == FrameStatus.STRIKE && score.isRemainCount(Score.BONUS_REMAIN_COUNT_TWO)) {
             int sumScore = score.sum(firstPin().getKnockDownNumber());
             return nextFrame.addScore(Score.ofRemainOne(sumScore));

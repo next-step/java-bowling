@@ -58,12 +58,15 @@ public abstract class Frame {
         return pins.size();
     }
 
+    protected int nextPinSize() {
+        if (nextFrame == null) {
+            return 0;
+        }
+        return nextFrame.pinSize();
+    }
+
     public int getRoundNumber() {
         return roundNumber;
     }
 
-    @Override
-    public String toString() {
-        return pins.toString() + roundNumber;
-    }
 }
