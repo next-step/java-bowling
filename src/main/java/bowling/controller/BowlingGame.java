@@ -25,16 +25,17 @@ public class BowlingGame {
         String userName = ask("플레이어 이름은(3 english letters)?:");
         User user = new User(userName);
 
+        BowlingGame game = new BowlingGame();
         round = new NormalRound();
         for (int i = 1; i <= DEFAULT_ROUND_COUNT; i++) {
             List<String> pointList = new ArrayList<>();
             result.add(pointList);
-            playRound(user, i);
+            game.playRound(user, i);
         }
 
     }
 
-    private static void playRound(User user, int numberOfRound) {
+    private void playRound(User user, int numberOfRound) {
         List<String> pointList = getLastList(result);
         boolean isBonusRound = false;
         int totalPoint = 0;
@@ -62,11 +63,11 @@ public class BowlingGame {
 
     }
 
-    private static List<String> getLastList(List<List<String>> result) {
+    private List<String> getLastList(List<List<String>> result) {
         return result.get(result.size()-1);
     }
 
-    private static int changeToMaxCount(int tryCount, boolean isSkip) {
+    private int changeToMaxCount(int tryCount, boolean isSkip) {
         if (isSkip) {
             tryCount = MAX_TRY_COUNT;
         }
@@ -74,7 +75,7 @@ public class BowlingGame {
         return tryCount;
     }
 
-    private static int calcTotalPoint(boolean isBonusRound, int totalPoint, int score) {
+    private int calcTotalPoint(boolean isBonusRound, int totalPoint, int score) {
         if (isBonusRound) {
             return score;
         }
@@ -85,7 +86,7 @@ public class BowlingGame {
         return totalPoint;
     }
 
-    private static int giveBonusRound(boolean isBonusRound, int maxTryCount) {
+    private int giveBonusRound(boolean isBonusRound, int maxTryCount) {
         if (isBonusRound) {
             maxTryCount += 1;
         }
