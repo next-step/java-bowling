@@ -93,7 +93,7 @@ public class ResultView {
     }
 
     private static String generateOneSectionScoreDisplay(Frame frame) {
-        if (frame.isWaitingNextPitching()) {
+        if (!frame.isBonusPlay() && frame.isWaitingNextPitching()) {
             return EMPTY_STRING;
         }
 
