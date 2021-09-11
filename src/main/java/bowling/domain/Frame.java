@@ -9,10 +9,11 @@ import java.util.List;
 
 public abstract class Frame {
 
+    public static final int MIN_NORMAL_FRAME_NUMBER = 1;
+    public static final int MAX_NORMAL_FRAME_NUMBER = 9;
+    public static final int LAST_FRAME_NUMBER = 10;
     protected static final int ATTEMPTS_TO_BOWL = 2;
     protected static final int ATTEMPTS_TO_BOWL_WITH_BONUS = 3;
-    protected static final int MIN_FRAME_NUMBER = 1;
-    protected static final int MAX_FRAME_NUMBER = 10;
     protected static final int MAX_PINS_COUNT = 10;
 
     protected final int number;

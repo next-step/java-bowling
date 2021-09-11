@@ -16,7 +16,7 @@ public class NormalFrame extends Frame {
     }
 
     private static void validateFrameNumber(int number) {
-        if (number < MIN_FRAME_NUMBER || number > MAX_FRAME_NUMBER - 1) {
+        if (number < Frame.MIN_NORMAL_FRAME_NUMBER || number > Frame.MAX_NORMAL_FRAME_NUMBER) {
             throw new InvalidFrameNumberException(number);
         }
     }

@@ -8,7 +8,7 @@ import java.util.List;
 public class LastFrame extends Frame {
 
     protected LastFrame() {
-        super(MAX_FRAME_NUMBER);
+        super(Frame.LAST_FRAME_NUMBER);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class LastFrame extends Frame {
 
     @Override
     public int number() {
-        return MAX_FRAME_NUMBER;
+        return LAST_FRAME_NUMBER;
     }
 
     private boolean isNotBonusChance() {
