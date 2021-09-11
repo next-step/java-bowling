@@ -5,6 +5,7 @@ import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class BowlingGame {
 
@@ -24,8 +25,14 @@ public final class BowlingGame {
         return frames.nextTurnRoundNumber();
     }
 
-    public boolean isFinished() {
+    public boolean isGameOver() {
         return frames.isFinished();
+    }
+
+    public List<Frame> getCanCalculateFrames() {
+        return getFrames().stream()
+                .filter(Frame::canCalculateScore)
+                .collect(Collectors.toList());
     }
 
     public List<Frame> getFrames() {

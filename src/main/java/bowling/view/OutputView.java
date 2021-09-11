@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.BowlingGame;
 import bowling.domain.frame.Frame;
 import bowling.domain.player.Player;
 import bowling.utils.FrameViewUtil;
@@ -29,7 +30,13 @@ public final class OutputView {
     private OutputView() {
     }
 
-    public static void scoreBoardHeader() {
+    public static void scoreBoard(final BowlingGame bowlingGame) {
+        headerOfScoreBoard();
+        middleOfScoreBoard(bowlingGame.getPlayer(), bowlingGame.getFrames());
+        footerOfScoreBoard(bowlingGame.getCanCalculateFrames());
+    }
+
+    public static void headerOfScoreBoard() {
         showFirstCell(HEADER_FIRST_CELL_NAME);
         IntStream.rangeClosed(1, Frame.MAX_ROUND_NUMBER)
                 .boxed()
@@ -39,15 +46,16 @@ public final class OutputView {
         System.out.println();
     }
 
-    public static void scoreBoard(final Player player) {
+    private static void middleOfScoreBoard(final Player player, final List<Frame> frames) {
         showFirstCell(player.getName());
-        showFillEmptyCells(Frame.MAX_ROUND_NUMBER);
+        showScoreCells(frames);
+        showFillEmptyCells(Frame.MAX_ROUND_NUMBER - frames.size());
         System.out.println();
     }
 
-    public static void scoreBoard(final Player player, final List<Frame> frames) {
-        showFirstCell(player.getName());
-        showScoreCells(frames);
+    private static void footerOfScoreBoard(final List<Frame> frames) {
+        showFirstCell(BLANK);
+        showTotalCells(frames);
         showFillEmptyCells(Frame.MAX_ROUND_NUMBER - frames.size());
         System.out.println();
     }
@@ -56,16 +64,24 @@ public final class OutputView {
         System.out.print(DELIMITER + format(str));
     }
 
-    private static void showScoreCells(final List<Frame> frames) {
-        frames.stream()
-                .map((frame) -> String.join(DELIMITER, FrameViewUtil.show(frame)))
-                .map(OutputView::format)
-                .forEach(System.out::print);
+    private static void showTotalCells(final List<Frame> frames) {
+        int total = 0;
+        for (Frame frame : frames) {
+            total += frame.getScore();
+            System.out.print(format(String.valueOf(total)));
+        }
     }
 
     private static void showFillEmptyCells(final int length) {
         IntStream.rangeClosed(1, length)
                 .forEach((ignore) -> System.out.print(format(BLANK)));
+    }
+
+    private static void showScoreCells(final List<Frame> frames) {
+        frames.stream()
+                .map((frame) -> String.join(DELIMITER, FrameViewUtil.show(frame)))
+                .map(OutputView::format)
+                .forEach(System.out::print);
     }
 
     private static String format(final String string) {
