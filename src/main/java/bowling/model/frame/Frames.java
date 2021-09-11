@@ -46,6 +46,10 @@ public class Frames {
     }
 
     private void calculateStrikeScoreSpare(Frame nextFrame) {
+        if (frames.isEmpty()) {
+            return;
+        }
+
         boolean isStrikeCanBeCalculated = lastFrame().isStrike() && nextFrame.pitchTwice();
         boolean isSpareCanBeCalculated = lastFrame().isSpare() && !nextFrame.pitchTwice();
 

@@ -80,12 +80,27 @@ public class FramesTest {
     void strikeFrameScoreTest() {
         // given, when
         Frames frames = new Frames();
-        frames.play(10);
+        frames.play(10); // strike
         frames.play(5);
         frames.play(3);
 
         // then
         assertSame(frames.scoreValue(0), 18);
         assertSame(frames.scoreValue(1), 26);
+    }
+
+    @DisplayName("스페어면 다음 1번의 투구까지 점수를 합산한다.")
+    @Test
+    void spareFrameScoreTest() {
+        // given, when
+        Frames frames = new Frames();
+        frames.play(5);
+        frames.play(5); // spare
+        frames.play(3);
+        frames.play(3);
+
+        // then
+        assertSame(frames.scoreValue(0), 13);
+        assertSame(frames.scoreValue(1), 19);
     }
 }
