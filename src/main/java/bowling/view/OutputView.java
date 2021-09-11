@@ -2,10 +2,14 @@ package bowling.view;
 
 import bowling.domain.Game;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class OutputView {
+    private static final String EMPTY_FRAME = "|      | ";
+    private static final int MAX_FRAME_SIZE = 10;
+
     public static void showFrames() {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
     }
@@ -23,5 +27,19 @@ public class OutputView {
 
 
         System.out.println(usernameLabel + resultFrameLabel + emptyFrameLabel);
+    }
+
+    public static void showScoreFrames(Game game) {
+        List<Integer> scoreList = game.currentScoreList();
+
+        String resultFrameLabel = scoreList.stream()
+                .map((score) -> String.format(" %-3s | ", score))
+                .collect(Collectors.joining());
+
+        String emptyFrameLabel = Stream.generate(() -> "     | ")
+                .limit(MAX_FRAME_SIZE - scoreList.size())
+                .collect(Collectors.joining());
+
+        System.out.println(EMPTY_FRAME + resultFrameLabel + emptyFrameLabel);
     }
 }

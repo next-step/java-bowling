@@ -5,6 +5,12 @@ public interface Frame {
 
     boolean isFinished();
 
+    boolean isScoringFinished();
+
+    void addPoint(Shot shot);
+
+    int getPoint();
+
     String toResultString();
 
     int remainPins();

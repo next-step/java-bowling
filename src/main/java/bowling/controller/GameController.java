@@ -11,9 +11,11 @@ public class GameController {
         Game game = makeGame();
 
         showCurrentGameFrame(game);
-        while(game.isNotFinished()) {
+        while (game.isNotFinished()) {
             int downCount = InputView.extractFrameResult(game.getCurrentFrameIndex());
-            game.play(new Shot(downCount));
+
+            Shot shot = new Shot(downCount);
+            game.play(shot);
             showCurrentGameFrame(game);
         }
     }
@@ -26,5 +28,6 @@ public class GameController {
     public void showCurrentGameFrame(Game game) {
         OutputView.showFrames();
         OutputView.showGameFrames(game);
+        OutputView.showScoreFrames(game);
     }
 }

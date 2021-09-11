@@ -25,7 +25,7 @@ public class Game {
         int currentIndex = frames.size() - 1;
         Frame currentFrame = frames.get(currentIndex);
         currentFrame.playShot(shot);
-
+        addPoint(shot);
         prepareNext(currentFrame);
     }
 
@@ -50,6 +50,34 @@ public class Game {
         return this.frames.size() == MAX_FRAME_SIZE
                 && this.frames.get(LAST_FRAME_INDEX)
                 .isFinished();
+    }
+
+    public void addPoint(Shot shot) {
+        frames.stream()
+                .filter(frameScore -> !frameScore.isScoringFinished())
+                .forEach((frameScore -> frameScore.addPoint(shot)));
+    }
+
+    public List<Integer> currentScoreList() {
+        List<Integer> scores = new ArrayList<>();
+
+
+        frames.stream()
+                .filter((frame -> frame.isScoringFinished()))
+                .forEach((frame -> {
+                    scores.add(getPreviousScore(scores) + frame.getPoint());
+                }));
+
+        return scores;
+    }
+
+    private int getPreviousScore(List<Integer> scores) {
+        if (scores.isEmpty()) {
+            return 0;
+        }
+
+        int lastIndex =scores.size() - 1;
+        return scores.get(lastIndex);
     }
 
     public boolean isNotFinished() {
