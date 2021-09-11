@@ -103,4 +103,19 @@ public class FramesTest {
         assertSame(frames.scoreValue(0), 13);
         assertSame(frames.scoreValue(1), 19);
     }
+
+    @DisplayName("스트라이크, 스페어가 아니면 점수는 현재까지 쓰러뜨린 볼링 핀의 개수이다.")
+    @Test
+    void frameScoreTest() {
+        // given, when
+        Frames frames = new Frames();
+        frames.play(5);
+        frames.play(3);
+        frames.play(4);
+        frames.play(5);
+
+        // then
+        assertSame(frames.scoreValue(0), 8);
+        assertSame(frames.scoreValue(1), 17);
+    }
 }
