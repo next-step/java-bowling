@@ -118,4 +118,21 @@ public class FramesTest {
         assertSame(frames.scoreValue(0), 8);
         assertSame(frames.scoreValue(1), 17);
     }
+
+    @DisplayName("스트라이크, 스페어가 모두 있는 상황에서 점수는 정상적으로 계산되어야 한다.")
+    @Test
+    void frameScoreIncludingStrikeAndSpareTest() {
+        // given, when
+        Frames frames = new Frames();
+        frames.play(10); // strike
+        frames.play(8);
+        frames.play(2); // spare
+        frames.play(8);
+        frames.play(1);
+
+        // then
+        assertSame(frames.scoreValue(0), 20);
+        assertSame(frames.scoreValue(1), 38);
+        assertSame(frames.scoreValue(2), 47);
+    }
 }
