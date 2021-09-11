@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.exception.CanNotCalculateException;
 import bowling.exception.FrameNotCorrectException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -92,6 +93,18 @@ public class NormalFrameTest {
                 NormalFrame.of(1, numbers)
         ).isInstanceOf(FrameNotCorrectException.class);
     }
+    
+    @Test
+    @DisplayName("점수 계산이 안되는 상황에 점수를 가져오면 Exception")
+    void canNotGetScoreThenException() {
+        //given
+        Frame frame = NormalFrame.first().bowl(9);
+
+        //when
+        //then
+        assertThatThrownBy(frame::getScore)
+                .isInstanceOf(CanNotCalculateException.class);
+    }
 
     @Test
     @DisplayName("스페어일 경우 점수 계산")
@@ -139,8 +152,6 @@ public class NormalFrameTest {
         assertThat(actualScore).isEqualTo(25);
     }
 
-    ////////////////////////////////////
-
     @Test
     @DisplayName("해당 프레임 투구가 종료되지 않았다면 계산 X")
     void notFinishCanNotCalculate() {
@@ -164,7 +175,7 @@ public class NormalFrameTest {
         boolean isCanCalculate = frame.canCalculateScore();
 
         //then
-        assertThat(isCanCalculate).isFalse();
+        assertThat(isCanCalculate).isTrue();
     }
 
     @Test
@@ -221,22 +232,22 @@ public class NormalFrameTest {
         assertThat(isCanCalculate).isTrue();
     }
 
-    @Test
-    @DisplayName("더블일경우 그다음 프레임에서 1번의 투구가 없다면 계산 X")
-    void test1() {
-        Frame firstFrame = NormalFrame.first().bowl(10);
-        firstFrame.nextFrame().bowl(10);
-
-        //when
-        boolean isCanCalculate = firstFrame.canCalculateScore();
-
-        //then
-        assertThat(isCanCalculate).isFalse();
-    }
+//    @Test
+//    @DisplayName("더블일경우 그다음 프레임에서 1번의 투구가 없다면 계산 X")
+//    void doubleAfterNextFramePinsEmptyThenCannotCalculate() {
+//        Frame firstFrame = NormalFrame.first().bowl(10);
+//        firstFrame.nextFrame().bowl(10);
+//
+//        //when
+//        boolean isCanCalculate = firstFrame.canCalculateScore();
+//
+//        //then
+//        assertThat(isCanCalculate).isFalse();
+//    }
 
     @Test
     @DisplayName("더블일경우 그다음 프레임에서 1번의 투구가 있다면 계산 0")
-    void test2() {
+    void doubleAfterNextFramePinsNotEmptyThenCannotCalculate() {
         // given
         Frame firstFrame = NormalFrame.first().bowl(10);
         Frame secondFrame = firstFrame.nextFrame();

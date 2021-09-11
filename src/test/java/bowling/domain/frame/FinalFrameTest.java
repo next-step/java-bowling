@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
+import bowling.exception.CanNotCalculateException;
 import bowling.exception.FrameNotCorrectException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -72,6 +73,18 @@ class FinalFrameTest {
         assertThatThrownBy(() ->
                 FinalFrame.of().bowl(9).bowl(2)
         ).isInstanceOf(FrameNotCorrectException.class);
+    }
+
+    @Test
+    @DisplayName("점수 계산이 안되는 상황에 점수를 가져오면 Exception")
+    void canNotGetScoreThenException() {
+        //given
+        Frame frame = FinalFrame.of(10, 9);
+
+        //when
+        //then
+        assertThatThrownBy(frame::getScore)
+                .isInstanceOf(CanNotCalculateException.class);
     }
 
     @Test

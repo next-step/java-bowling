@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
+import bowling.exception.CanNotCalculateException;
 import bowling.exception.FrameNotCorrectException;
 
 public final class NormalFrame extends Frame {
@@ -43,8 +44,8 @@ public final class NormalFrame extends Frame {
         return new NormalFrame(FIRST_ROUND_NUMBER);
     }
 
-    public static Frame next(NormalFrame frame) {
-        NormalFrame nextFrame = new NormalFrame(frame.roundNumber + 1);
+    public static Frame next(Frame frame) {
+        Frame nextFrame = new NormalFrame(frame.roundNumber + 1, Pins.of(), frame);
         frame.setNextFrame(nextFrame);
         return nextFrame;
     }
@@ -94,6 +95,10 @@ public final class NormalFrame extends Frame {
             return false;
         }
 
+        if (FrameStatus.of(pins) == FrameStatus.NORMAL) {
+            return true;
+        }
+
         if (FrameStatus.of(pins) == FrameStatus.SPARE) {
             if (nextFrame == null) {
                 return false;
@@ -119,6 +124,10 @@ public final class NormalFrame extends Frame {
 
     @Override
     public int getScore() {
+        if (!canCalculateScore()) {
+            throw new CanNotCalculateException();
+        }
+
         if (FrameStatus.of(pins) == FrameStatus.STRIKE) {
             return nextFrame.addScore(Score.ofRemainTwo(pins.sum()));
         }

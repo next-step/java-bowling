@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
+import bowling.exception.CanNotCalculateException;
 import bowling.exception.FrameNotCorrectException;
 
 public final class FinalFrame extends Frame {
@@ -65,6 +66,9 @@ public final class FinalFrame extends Frame {
 
     @Override
     public int getScore() {
+        if (!canCalculateScore()) {
+            throw new CanNotCalculateException();
+        }
         return pins.sum();
     }
 
