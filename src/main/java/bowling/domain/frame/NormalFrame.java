@@ -1,8 +1,10 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class Frame {
+public class NormalFrame implements Frame{
 
     private final int round;
 
@@ -10,7 +12,7 @@ public class Frame {
 
     private final boolean isSecondTry;
 
-    public Frame(int round, Score score, boolean isSecondTry) {
+    private NormalFrame(int round, Score score, boolean isSecondTry) {
         this.round = round;
         this.score = score;
         this.isSecondTry = isSecondTry;
@@ -21,13 +23,10 @@ public class Frame {
     }
 
     protected static Frame of(int round, Score score, boolean isSecondTry) {
-        return new Frame(round, score, isSecondTry);
+        return new NormalFrame(round, score, isSecondTry);
     }
 
-    private static Frame next(int round, Score score, boolean isSecondTry) {
-        return new Frame(round, score, isSecondTry);
-    }
-
+    @Override
     public Frame next(int score) {
 
         if (isSecondTry) {
@@ -42,12 +41,21 @@ public class Frame {
 
     }
 
+    private static Frame next(int round, Score score, boolean isSecondTry) {
+        return new NormalFrame(round, score, isSecondTry);
+    }
+
+    @Override
+    public boolean isDone() {
+        return round == 9 && isSecondTry;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Frame frame = (Frame) o;
-        return round == frame.round && isSecondTry == frame.isSecondTry && Objects.equals(score, frame.score);
+        NormalFrame normalFrame = (NormalFrame) o;
+        return round == normalFrame.round && isSecondTry == normalFrame.isSecondTry && Objects.equals(score, normalFrame.score);
     }
 
     @Override

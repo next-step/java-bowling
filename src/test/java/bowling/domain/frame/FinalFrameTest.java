@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.FinalScore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -24,7 +25,7 @@ public class FinalFrameTest {
     @Test
     public void 첫번째_시도후_다음시도를_할_수_있다() {
         //given
-        FinalFrame frame = FinalFrame.start(10);
+        Frame frame = FinalFrame.start(10);
         //when
         frame = frame.next(2);
         //then
@@ -35,7 +36,7 @@ public class FinalFrameTest {
     @MethodSource
     public void 두번째_시도후_시도의_합이_10이상이면_세번째_시도를_할_수_있다(int first, int second) {
         //given
-        FinalFrame frame = FinalFrame.start(first).next(second);
+        Frame frame = FinalFrame.start(first).next(second);
         //when
         frame = frame.next(10);
         //then
@@ -56,7 +57,7 @@ public class FinalFrameTest {
     @MethodSource
     public void 두번째_시도후_시도의_합이_10보다_작으면_세번째_시도를_할_수_없다(int first, int second) {
         //given
-        FinalFrame frame = FinalFrame.start(first).next(second);
+        Frame frame = FinalFrame.start(first).next(second);
         //when
         frame = frame.next(1);
         //then
@@ -77,9 +78,9 @@ public class FinalFrameTest {
     @MethodSource
     public void 두번째_시도후_시도의_합이_10이상이면_세번째_시도_후_끝났음을_알_수_있다(int first, int second) {
         //given
-        FinalFrame frame = FinalFrame.start(first).next(second);
+        Frame frame = FinalFrame.start(first).next(second);
         //when
-        FinalFrame lastFrame = frame.next(10);
+        Frame lastFrame = frame.next(10);
         //then
         assertAll(
                 () -> assertFalse(frame.isDone()),
@@ -101,7 +102,7 @@ public class FinalFrameTest {
     public void 두번째_시도후_시도의_합이_10보다_작으면_두번째_시도_후_끝났음을_알_수_있다(int first, int second) {
         //given
         //when
-        FinalFrame frame = FinalFrame.start(first).next(second);
+        Frame frame = FinalFrame.start(first).next(second);
         //then
         assertTrue(frame.isDone());
     }
