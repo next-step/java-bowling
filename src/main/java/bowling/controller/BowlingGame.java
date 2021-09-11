@@ -1,9 +1,6 @@
 package bowling.controller;
 
-import bowling.model.NormalRound;
-import bowling.model.Round;
-import bowling.model.User;
-import bowling.model.BowlingResult;
+import bowling.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +47,7 @@ public class BowlingGame {
         
         while (tryCount++ < SECOND_TRY) {
             String pinCount = ask(numberOfRound + "프레임 투구 : ");
+            Point.isValid(pinCount);
             int score = changeToInt(pinCount);
 
             totalPoint = calcTotalPoint(isBonusRound, totalPoint, score);
