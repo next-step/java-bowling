@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.user;
 
 import org.apache.logging.log4j.util.Strings;
 

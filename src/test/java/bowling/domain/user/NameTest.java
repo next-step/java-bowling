@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
