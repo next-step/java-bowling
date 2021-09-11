@@ -15,8 +15,9 @@ public class FrameScoreTest {
         // given, when
         FrameScore initialStrikeFrameScore = FrameScore.initial(new FrameFallenPin(10));
 
+        FrameFallenPin firstFallenPin = new FrameFallenPin(5);
         FrameScore frameScore = FrameScore.initial(new FrameFallenPin(5));
-        FrameScore frameNextScore = frameScore.nextSecond(new FrameFallenPin(5));
+        FrameScore frameNextScore = frameScore.nextSecond(firstFallenPin.second(5));
         FrameScore strikeFrameScore = frameNextScore.nextFirst(new FrameFallenPin(10));
 
         // then
@@ -50,10 +51,13 @@ public class FrameScoreTest {
     @Test
     void nextFrameScoreTest() {
         // given, when
-        FrameScore initialFrameScore = FrameScore.initial(new FrameFallenPin(5));
-        FrameScore secondFrameScore = initialFrameScore.nextSecond(new FrameFallenPin(4));
-        FrameScore thirdFrameScore = secondFrameScore.nextFirst(new FrameFallenPin(4));
-        FrameScore fourthFrameScore = thirdFrameScore.nextSecond(new FrameFallenPin(3));
+        FrameFallenPin firstFallenPin = new FrameFallenPin(5);
+        FrameScore initialFrameScore = FrameScore.initial(firstFallenPin);
+        FrameScore secondFrameScore = initialFrameScore.nextSecond(firstFallenPin.second(4));
+
+        FrameFallenPin thirdFallenPin = new FrameFallenPin(4);
+        FrameScore thirdFrameScore = secondFrameScore.nextFirst(thirdFallenPin);
+        FrameScore fourthFrameScore = thirdFrameScore.nextSecond(thirdFallenPin.second(3));
 
         // then
         assertEquals(initialFrameScore.score(), Score.of(5));

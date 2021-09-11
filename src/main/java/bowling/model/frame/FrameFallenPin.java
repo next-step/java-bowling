@@ -3,6 +3,7 @@ package bowling.model.frame;
 public class FrameFallenPin {
     private static final int MIN_TOTAL = 0;
     private static final int MAX_TOTAL = 10;
+    private static final int NO_FALLEN_PIN = 0;
     private static final FallenPin EMPTY = null;
 
     private final FallenPin first;
@@ -78,10 +79,6 @@ public class FrameFallenPin {
         return first != EMPTY && second != EMPTY;
     }
 
-    public boolean pitchOnce() {
-        return first != EMPTY && second == EMPTY;
-    }
-
     public boolean isEmpty() {
         return first == EMPTY;
     }
@@ -113,10 +110,16 @@ public class FrameFallenPin {
     }
 
     public int firstCount() {
+        if (first == EMPTY) {
+            return NO_FALLEN_PIN;
+        }
         return first.count();
     }
 
     public int secondCount() {
+        if (second == EMPTY) {
+            return NO_FALLEN_PIN;
+        }
         return second.count();
     }
 
