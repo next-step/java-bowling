@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import bowling.exception.GameOverException;
+
 public class Frames {
 
     private static final int FIRST = 1;
@@ -28,7 +30,7 @@ public class Frames {
         return frames.stream()
                 .filter(frame -> !frame.isEnd())
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(GameOverException::new);
     }
 
     public void bowl(int fallenPins) {
