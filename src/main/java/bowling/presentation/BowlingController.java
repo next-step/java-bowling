@@ -3,6 +3,7 @@ package bowling.presentation;
 import bowling.domain.Player;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.frame.NormalFrames;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,8 @@ public class BowlingController {
 
         Player player = Player.from(PlayerInputView.create().input());
 
-        List<NormalFrame> normalFrames = new ArrayList<>();
+        NormalFrames normalFrames = NormalFrames.empty();
+
         NormalFrame normalFrame = NormalFrame.start(ScoreInputView.create().input(1));
 
         if (normalFrame.isDone()) {
