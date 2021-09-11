@@ -32,6 +32,10 @@ public class Score {
 		return of(0);
 	}
 
+	public static Score ofUnscored() {
+		return of(UNSCORED);
+	}
+
 	public Score add(Score score) {
 		if (score.value == UNSCORED) {
 			return of(UNSCORED);

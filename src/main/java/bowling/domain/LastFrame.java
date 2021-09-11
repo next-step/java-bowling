@@ -47,9 +47,4 @@ public class LastFrame extends Frame {
         return !hasStrike() && !hasSpare();
     }
 
-    private boolean hasSpare() {
-        return results.stream()
-                .anyMatch(PitchResult::isSpare);
-    }
-
 }

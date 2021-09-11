@@ -1,11 +1,11 @@
 package bowling.domain;
 
-import bowling.exception.EndedFrameException;
-import bowling.exception.CannotAddPinsException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import bowling.exception.CannotAddPinsException;
+import bowling.exception.EndedFrameException;
 
 public abstract class Frame {
 
@@ -15,6 +15,8 @@ public abstract class Frame {
     protected static final int ATTEMPTS_TO_BOWL = 2;
     protected static final int ATTEMPTS_TO_BOWL_WITH_BONUS = 3;
     protected static final int MAX_PINS_COUNT = 10;
+    private static final int INDEX_OF_1ST_RESULT = 0;
+    private static final int INDEX_OF_2ND_RESULT = 1;
 
     protected final int number;
     protected final List<PitchResult> results;
@@ -45,12 +47,31 @@ public abstract class Frame {
         return hasStrike() || results.size() == ATTEMPTS_TO_BOWL;
     }
 
+    public boolean isLast() {
+        return number == LAST_FRAME_NUMBER;
+    }
+
     public List<PitchResult> results() {
         return Collections.unmodifiableList(results);
     }
 
     public int number() {
         return number;
+    }
+
+    public Score score() {
+        if (!isEnd()) {
+            return Score.ofUnscored();
+        }
+        return Score.of(totalPins());
+    }
+
+    public PitchResult firstResult() {
+        return results.get(INDEX_OF_1ST_RESULT);
+    }
+
+    public PitchResult secondResult() {
+        return results.get(INDEX_OF_2ND_RESULT);
     }
 
     protected boolean isTotalPinsMoreThan10With(int fallenPins) {
@@ -63,6 +84,11 @@ public abstract class Frame {
 
     protected boolean hasStrike() {
         return results.contains(PitchResult.of(MAX_PINS_COUNT));
+    }
+
+    protected boolean hasSpare() {
+        return results.stream()
+                .anyMatch(PitchResult::isSpare);
     }
 
     protected int totalPins() {
