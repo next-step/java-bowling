@@ -1,13 +1,12 @@
 package bowling.domain.user;
 
+import bowling.exception.user.NameAlphabetPatternException;
+import bowling.exception.user.NameBlankException;
+import bowling.exception.user.NameLengthException;
 import java.util.regex.Pattern;
 import org.apache.logging.log4j.util.Strings;
 
 public class Name {
-
-    private static final String INVALID_NAME_NULL_AND_BLANK_ERROR_MESSAGE = "이름은 반드시 제공되어야 한다.";
-    private static final String INVALID_NAME_LENGTH_ERROR_MESSAGE = "이름은 3글자 이하로 입력되어야 한다.";
-    private static final String INVALID_NAME_ALPHABET_PATTERN_ERROR_MESSAGE = "이름은 영어로만 제공되어야 한다.";
 
     private static final String ALPHABET_REGEX = "^[a-zA-Z]*$";
 
@@ -27,19 +26,19 @@ public class Name {
 
     private static void checkNameLengthException(String name) {
         if (name.length() > 3) {
-            throw new IllegalArgumentException(INVALID_NAME_LENGTH_ERROR_MESSAGE);
+            throw new NameLengthException();
         }
     }
 
     private static void checkNameNullAndBlankException(String name) {
         if (Strings.isBlank(name)) {
-            throw new IllegalArgumentException(INVALID_NAME_NULL_AND_BLANK_ERROR_MESSAGE);
+            throw new NameBlankException();
         }
     }
 
     private static void checkNameAlphabetException(String name) {
         if (!Pattern.matches(ALPHABET_REGEX, name)){
-            throw new IllegalArgumentException(INVALID_NAME_ALPHABET_PATTERN_ERROR_MESSAGE);
+            throw new NameAlphabetPatternException();
         }
     }
 

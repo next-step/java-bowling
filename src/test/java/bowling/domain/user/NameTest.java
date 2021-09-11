@@ -2,6 +2,9 @@ package bowling.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import bowling.exception.user.NameAlphabetPatternException;
+import bowling.exception.user.NameBlankException;
+import bowling.exception.user.NameLengthException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -15,7 +18,7 @@ class NameTest {
     void nameLengthExceptionTest(String input) {
 
         // when & then
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatExceptionOfType(NameLengthException.class)
             .isThrownBy(() -> Name.of(input))
             .withMessageMatching("이름은 3글자 이하로 입력되어야 한다.");
     }
@@ -26,7 +29,7 @@ class NameTest {
     void nameNullAndEmptyExceptionTest(String input) {
 
         // when & then
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatExceptionOfType(NameBlankException.class)
             .isThrownBy(() -> Name.of(input))
             .withMessageMatching("이름은 반드시 제공되어야 한다.");
     }
@@ -37,7 +40,7 @@ class NameTest {
     void nameNotAlphabetExceptionTest(String input) {
 
         // when & then
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatExceptionOfType(NameAlphabetPatternException.class)
             .isThrownBy(() -> Name.of(input))
             .withMessageMatching("이름은 영어로만 제공되어야 한다.");
     }
