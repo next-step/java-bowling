@@ -16,12 +16,12 @@ public class Frame {
         this.isSecondTry = isSecondTry;
     }
 
-    public static Frame start(int score) {
-        return new Frame(1, Score.first(score), false);
-    }
-
     protected static Frame of(int round, Score score, boolean isSecondTry) {
         return new Frame(round, score, isSecondTry);
+    }
+
+    public static Frame start(int score) {
+        return of(1, Score.first(score), false);
     }
 
     public Frame nextTurn(int score) {

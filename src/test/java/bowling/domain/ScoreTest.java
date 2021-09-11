@@ -60,6 +60,6 @@ public class ScoreTest {
         //then
         assertThatThrownBy(() -> score.withSecond(value))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("한 프레임의 합계는 10점을 넘을 수 없습니다.");
+                .hasMessageContaining("1차시도와 2차시도의 합계는 10점을 넘을 수 없습니다.");
     }
 }

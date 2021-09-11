@@ -10,7 +10,7 @@ public class Score {
 
     private final int second;
 
-    private Score(int first, int second) {
+    protected Score(int first, int second) {
         this.first = first;
         this.second = second;
     }
@@ -30,16 +30,24 @@ public class Score {
         return new Score(first, score);
     }
 
-    private static void validateScore(int score) {
+    protected static void validateScore(int score) {
         if (outOfRange(score)) {
             throw new IllegalArgumentException("잘못된 점수를 입력하였습니다.");
         }
     }
 
-    private void validateComibnedScores(int score) {
+    protected void validateComibnedScores(int score) {
         if (first + score > MAX_SCORE) {
-            throw new IllegalArgumentException("한 프레임의 합계는 10점을 넘을 수 없습니다.");
+            throw new IllegalArgumentException("1차시도와 2차시도의 합계는 10점을 넘을 수 없습니다.");
         }
+    }
+
+    protected int getFirst() {
+        return first;
+    }
+
+    protected int getSecond() {
+        return second;
     }
 
     private static boolean outOfRange(int score) {
