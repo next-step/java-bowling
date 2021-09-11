@@ -8,14 +8,12 @@ public class Score {
 
     private ScoreType scoreType;
     private int score;
-    private String display;
 
     public Score(Score before, int current){
         validate(before, current);
 
         this.scoreType = ScoreType.of(before.score, current);
         this.score = current;
-        setDisplay();
     }
 
     public Score(int score){
@@ -23,17 +21,7 @@ public class Score {
 
         this.scoreType = ScoreType.of(score);
         this.score = score;
-        setDisplay();
     }
-
-    private void setDisplay() {
-        if (this.scoreType == ScoreType.MISS) {
-            this.display = String.valueOf(this.score);
-            return;
-        }
-        this.display = this.scoreType.getDisplay();
-    }
-
 
     private void validate(Score before, int current){
         if(before.getScoreType() == ScoreType.STRIKE || before.getScoreType() == ScoreType.SPARE){
@@ -57,22 +45,17 @@ public class Score {
         return score;
     }
 
-    public String getDisplay() {
-        return display;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Score score = (Score) o;
-        return this.score == score.score &&
-                scoreType == score.scoreType &&
-                Objects.equals(display, score.display);
+        Score score1 = (Score) o;
+        return score == score1.score &&
+                scoreType == score1.scoreType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(scoreType, score, display);
+        return Objects.hash(scoreType, score);
     }
 }

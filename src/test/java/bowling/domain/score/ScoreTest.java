@@ -34,15 +34,6 @@ public class ScoreTest {
         assertThat(new Score(0).getScoreType()).isEqualTo(ScoreType.GUTTER);
     }
 
-    @Test
-    void display() {
-        assertThat(ScoreType.STRIKE.getDisplay()).isEqualTo("x");
-        assertThat(ScoreType.SPARE.getDisplay()).isEqualTo("/");
-        assertThat(new Score(1).getDisplay()).isEqualTo("1");
-        assertThat(new Score(9).getDisplay()).isEqualTo("9");
-        assertThat(ScoreType.GUTTER.getDisplay()).isEqualTo("-");
-    }
-
     @DisplayName("점수가 0점 미만이면 에러")
     @Test
     void error_min() {
