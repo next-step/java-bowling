@@ -4,7 +4,7 @@ public class FrameFallenPin {
     private static final int MIN_TOTAL = 0;
     private static final int MAX_TOTAL = 10;
     private static final int NO_FALLEN_PIN = 0;
-    private static final FallenPin EMPTY = null;
+    private static final FallenPin EMPTY_FALLEN_PIN = null;
 
     private final FallenPin first;
     private final FallenPin second;
@@ -15,18 +15,15 @@ public class FrameFallenPin {
     }
 
     public FrameFallenPin(FallenPin first) {
-        this.first = first;
-        this.second = EMPTY;
+        this(first, EMPTY_FALLEN_PIN);
     }
 
     public FrameFallenPin(int firstFallenPinCount) {
-        this.first = FallenPin.of(firstFallenPinCount);
-        this.second = EMPTY;
+        this(FallenPin.of(firstFallenPinCount), EMPTY_FALLEN_PIN);
     }
 
     public FrameFallenPin(int firstFallenPinCount, int secondFallenPinCount) {
-        this.first = FallenPin.of(firstFallenPinCount);
-        this.second = FallenPin.of(secondFallenPinCount);
+        this(FallenPin.of(firstFallenPinCount), FallenPin.of(secondFallenPinCount));
     }
 
     public static FrameFallenPin first(int firstFallenPinCount) {
@@ -54,7 +51,7 @@ public class FrameFallenPin {
     }
 
     public boolean isStrike() {
-        return first.isMax() && second == EMPTY;
+        return first.isMax() && second == EMPTY_FALLEN_PIN;
     }
 
     public boolean isSpare() {
@@ -76,15 +73,15 @@ public class FrameFallenPin {
     }
 
     public boolean pitchTwice() {
-        return first != EMPTY && second != EMPTY;
+        return first != EMPTY_FALLEN_PIN && second != EMPTY_FALLEN_PIN;
     }
 
     public boolean isEmpty() {
-        return first == EMPTY;
+        return first == EMPTY_FALLEN_PIN;
     }
 
     public boolean isFirst() {
-        return first != EMPTY && second == EMPTY;
+        return first != EMPTY_FALLEN_PIN && second == EMPTY_FALLEN_PIN;
     }
 
     public FallenPin first() {
@@ -96,39 +93,39 @@ public class FrameFallenPin {
     }
 
     public boolean isFirstAndGutter() {
-        if (first == EMPTY) {
+        if (first == EMPTY_FALLEN_PIN) {
             return false;
         }
-        return first.isMin() && second == EMPTY;
+        return first.isMin() && second == EMPTY_FALLEN_PIN;
     }
 
     public boolean isDoubleGutter() {
-        if (first == EMPTY || second == EMPTY) {
+        if (first == EMPTY_FALLEN_PIN || second == EMPTY_FALLEN_PIN) {
             return false;
         }
         return first.isMin() && second.isMin();
     }
 
     public int firstCount() {
-        if (first == EMPTY) {
+        if (first == EMPTY_FALLEN_PIN) {
             return NO_FALLEN_PIN;
         }
         return first.count();
     }
 
     public int secondCount() {
-        if (second == EMPTY) {
+        if (second == EMPTY_FALLEN_PIN) {
             return NO_FALLEN_PIN;
         }
         return second.count();
     }
 
     public int countTotal() {
-        if (first == EMPTY) {
+        if (first == EMPTY_FALLEN_PIN) {
             return MIN_TOTAL;
         }
 
-        if (second == EMPTY) {
+        if (second == EMPTY_FALLEN_PIN) {
             return first.count();
         }
 

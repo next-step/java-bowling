@@ -10,8 +10,7 @@ public class FrameScore {
     }
 
     public FrameScore(int score, int waitingPitchingCount) {
-        this.score = Score.of(score);
-        this.waitingPitchingCount = new WaitingPitchingCount(waitingPitchingCount);
+        this(Score.of(score), new WaitingPitchingCount(waitingPitchingCount));
     }
 
     public static FrameScore initial(FrameFallenPin fallenPin) {

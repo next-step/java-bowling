@@ -10,7 +10,7 @@ public class FinalFrame extends Frame {
     }
 
     public FinalFrame(FrameNumber number, FrameFallenPin fallenPin, FrameScore score, int bonusFallenPin) {
-        super(number, fallenPin, score);
+        this(number, fallenPin, score);
         this.bonusFallenPin = FallenPin.of(bonusFallenPin);
     }
 
