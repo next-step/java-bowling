@@ -63,18 +63,18 @@ public final class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame bowl(final int knockDownNumber) {
-        pins.add(knockDownNumber);
-        validateFrame(pins);
-        return this;
-    }
-
-    @Override
     public boolean isFinished() {
         if (pins.isStrike()) {
             return true;
         }
         return pins.size() == MAX_SIZE;
+    }
+
+    @Override
+    public Frame bowl(final int knockDownNumber) {
+        pins.add(knockDownNumber);
+        validateFrame(pins);
+        return this;
     }
 
     @Override

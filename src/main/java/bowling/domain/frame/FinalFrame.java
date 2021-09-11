@@ -28,13 +28,6 @@ public final class FinalFrame extends Frame {
     }
 
     @Override
-    public Frame bowl(final int knockDownNumber) {
-        pins.add(knockDownNumber);
-        validateFrame(pins);
-        return this;
-    }
-
-    @Override
     protected void validateFrame(final Pins pins) {
         if (pins.isSecondPinWrong()) {
             throw new FrameNotCorrectException();
@@ -53,6 +46,13 @@ public final class FinalFrame extends Frame {
             return false;
         }
         return pins.sum() < 10;
+    }
+
+    @Override
+    public Frame bowl(final int knockDownNumber) {
+        pins.add(knockDownNumber);
+        validateFrame(pins);
+        return this;
     }
 
     @Override

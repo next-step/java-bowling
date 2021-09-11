@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class Frames {
 
@@ -96,5 +97,11 @@ public final class Frames {
 
     public List<Frame> getFrames() {
         return frames;
+    }
+
+    public List<Frame> getCanCalculateFrames() {
+        return frames.stream()
+                .filter(Frame::canCalculateScore)
+                .collect(Collectors.toList());
     }
 }

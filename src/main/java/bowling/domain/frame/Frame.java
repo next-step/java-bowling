@@ -24,23 +24,23 @@ public abstract class Frame {
         this.nextFrame = nextFrame;
     }
 
-    public void setNextFrame(Frame nextFrame) {
+    protected void setNextFrame(Frame nextFrame) {
         this.nextFrame = nextFrame;
     }
 
     protected abstract void validateFrame(Pins pins);
 
-    public abstract Frame bowl(final int knockDownNumber);
-
     public abstract boolean isFinished();
 
+    public abstract Frame bowl(final int knockDownNumber);
+
     public abstract Frame next();
+
+    public abstract boolean canCalculateScore();
 
     public abstract int getScore();
 
     public abstract int addScore(Score score);
-
-    public abstract boolean canCalculateScore();
 
     public Pin firstPin() {
         return pins.firstPin();
@@ -68,5 +68,4 @@ public abstract class Frame {
     public int getRoundNumber() {
         return roundNumber;
     }
-
 }

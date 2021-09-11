@@ -30,9 +30,7 @@ public final class BowlingGame {
     }
 
     public List<Frame> getCanCalculateFrames() {
-        return getFrames().stream()
-                .filter(Frame::canCalculateScore)
-                .collect(Collectors.toList());
+        return frames.getCanCalculateFrames();
     }
 
     public List<Frame> getFrames() {
