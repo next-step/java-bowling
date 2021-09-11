@@ -74,7 +74,7 @@ public final class FinalFrame extends Frame {
     }
 
     @Override
-    public int addScore(Score score) {
+    public int addScore(final Score score) {
         if (score.isRemainCount(Score.BONUS_REMAIN_COUNT_ONE)) {
             return score.sum(firstPin().getKnockDownNumber());
         }

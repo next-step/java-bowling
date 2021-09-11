@@ -5,7 +5,6 @@ import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class BowlingGame {
 

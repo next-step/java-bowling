@@ -15,7 +15,7 @@ public class PinsTest {
 
     @Test
     @DisplayName("생성")
-    void generatePins () {
+    void generatePins() {
         // given
         // when
         Pins pins = Pins.of(9, 1);

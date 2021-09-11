@@ -17,18 +17,18 @@ public abstract class Frame {
         this(roundNumber, pins, null);
     }
 
-    protected Frame(int roundNumber, Pins pins, Frame nextFrame) {
+    protected Frame(int roundNumber, Pins pins, final Frame nextFrame) {
         validateFrame(pins);
         this.roundNumber = roundNumber;
         this.pins = pins;
         this.nextFrame = nextFrame;
     }
 
-    protected void setNextFrame(Frame nextFrame) {
+    protected void setNextFrame(final Frame nextFrame) {
         this.nextFrame = nextFrame;
     }
 
-    protected abstract void validateFrame(Pins pins);
+    protected abstract void validateFrame(final Pins pins);
 
     public abstract boolean isFinished();
 
@@ -40,7 +40,7 @@ public abstract class Frame {
 
     public abstract int getScore();
 
-    public abstract int addScore(Score score);
+    public abstract int addScore(final Score score);
 
     public Pin firstPin() {
         return pins.firstPin();

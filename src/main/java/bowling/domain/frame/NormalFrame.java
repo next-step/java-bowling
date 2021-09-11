@@ -44,7 +44,7 @@ public final class NormalFrame extends Frame {
         return new NormalFrame(FIRST_ROUND_NUMBER);
     }
 
-    public static Frame next(Frame frame) {
+    public static Frame next(final Frame frame) {
         if (frame.roundNumber == NORMAL_LAST_ROUND) {
             Frame nextFrame = FinalFrame.of();
             frame.setNextFrame(nextFrame);

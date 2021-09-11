@@ -26,7 +26,7 @@ public final class Pins {
         return new Pins(pins);
     }
 
-    public static Pins of(List<Pin> pins) {
+    public static Pins of(final List<Pin> pins) {
         return new Pins(pins);
     }
 

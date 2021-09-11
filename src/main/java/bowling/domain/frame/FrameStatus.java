@@ -6,7 +6,7 @@ public enum FrameStatus {
 
     STRIKE, SPARE, NORMAL;
 
-    public static FrameStatus of(Pins pins) {
+    public static FrameStatus of(final Pins pins) {
         if (pins.isStrike()) {
             return STRIKE;
         }

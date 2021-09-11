@@ -14,6 +14,7 @@ public class BowlingApplication {
 
         String playerName = inputView.getInputPlayerName();
         BowlingGame bowlingGame = new BowlingGame(playerName);
+
         OutputView.scoreBoard(bowlingGame);
         while (!bowlingGame.isGameOver()) {
             int knockDownNumber = inputView.getInputScore(bowlingGame.nextRoundNumber());

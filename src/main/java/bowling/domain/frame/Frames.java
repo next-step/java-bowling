@@ -43,11 +43,11 @@ public final class Frames {
         inputCurrentFrame(knockDownNumber);
     }
 
-    private void inputNextFrame(int knockDownNumber) {
+    private void inputNextFrame(final int knockDownNumber) {
         frames.addLast(currentFrame().bowl(knockDownNumber));
     }
 
-    private void inputCurrentFrame(int knockDownNumber) {
+    private void inputCurrentFrame(final int knockDownNumber) {
         frames.set(getLastFameIndex(), currentFrame().bowl(knockDownNumber));
     }
 
