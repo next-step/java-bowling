@@ -40,7 +40,6 @@ public class NormalFrame extends Frame {
         return Objects.nonNull(next);
     }
 
-
     @Override
     public Score getScore() {
         if (pitch.getState() == State.GUTTER || pitch.getState() == State.NORMAL || pitch.getState() == State.MISS) {
@@ -81,7 +80,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isEnd(){
+    public boolean isEnd() {
         return false;
     }
 

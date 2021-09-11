@@ -11,7 +11,6 @@ public class BowlingApplication {
     public static void main(String args[]) {
         int count = InputView.getPlayerCount();
         Players players = Players.of(InputView.getPlayerNames(count));
-
         BowlingGame bowlingGame = BowlingGame.of(initFrames(players));
 
         int round = 0;
@@ -57,6 +56,7 @@ public class BowlingApplication {
         for (int i = 0; i < players.size(); i++) {
             frames.add(Frames.newInstance());
         }
+
         return frames;
     }
 }

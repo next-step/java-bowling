@@ -41,7 +41,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isEnd(){
+    public boolean isEnd() {
         return isFinish();
     }
 }

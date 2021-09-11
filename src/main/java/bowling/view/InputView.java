@@ -14,7 +14,7 @@ public class InputView {
 
     public static List<String> getPlayerNames(int count) {
         List<String> players = new ArrayList<>();
-        for(int i = 1 ; i <= count ; i++) {
+        for (int i = 1; i <= count; i++) {
             System.out.print(GET_PLAYER_NAMES_PREFIX + i + GET_PLAYER_NAMES_SUFFIX);
             String player = scanner.next();
             players.add(player);

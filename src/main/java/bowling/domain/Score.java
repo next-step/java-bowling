@@ -15,7 +15,7 @@ public class Score {
         return new Score(score, left);
     }
 
-    public static Score unScore(){
+    public static Score unScore() {
         return new Score(NormalFrame.UN_SCORE, 0);
     }
 
