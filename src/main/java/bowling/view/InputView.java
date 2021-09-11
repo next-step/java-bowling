@@ -15,7 +15,7 @@ public class InputView {
     }
 
     public int next(Player player) {
-        System.out.printf(FRAME_MSG, player.getFrames().currentFrameNo());
+        System.out.printf(FRAME_MSG, player.nextFrameNo());
         return scanner.nextInt();
     }
 }

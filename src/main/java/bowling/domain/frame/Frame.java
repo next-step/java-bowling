@@ -1,14 +1,52 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreType;
+import org.springframework.util.ObjectUtils;
+
 import java.util.Objects;
 
 public abstract class Frame {
-    protected int frameNo;
+    protected Score score1;
+    protected Score score2;
+    protected Score score3;
 
-    public abstract Frame next(int number);
+    public Frame next(int number) {
+        return setScore(number);
+    }
 
-    public int getFrameNo() {
-        return frameNo;
+    protected abstract Frame setScore(int number);
+
+    protected boolean isFirstTurn() {
+        return ObjectUtils.isEmpty(this.score1);
+    }
+
+    protected abstract boolean isSecondTurn();
+
+    public abstract boolean isFinish();
+
+    public Score getScore1() {
+        return score1;
+    }
+
+    public Score getScore2() {
+        return score2;
+    }
+
+    public Score getScore3() {
+        return score3;
+    }
+
+    public ScoreType getScoreType1() {
+        return score1.getScoreType();
+    }
+
+    public ScoreType getScoreType2() {
+        return score2.getScoreType();
+    }
+
+    public ScoreType getScoreType3() {
+        return score3.getScoreType();
     }
 
     @Override
@@ -16,11 +54,13 @@ public abstract class Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return frameNo == frame.frameNo;
+        return Objects.equals(score1, frame.score1) &&
+                Objects.equals(score2, frame.score2) &&
+                Objects.equals(score3, frame.score3);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameNo);
+        return Objects.hash(score1, score2, score3);
     }
 }

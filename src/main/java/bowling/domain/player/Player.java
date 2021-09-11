@@ -1,7 +1,10 @@
 package bowling.domain.player;
 
+
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Player {
@@ -14,11 +17,23 @@ public class Player {
     }
 
     public String getPlayerName() {
-        return playerName.getValue();
+        return this.playerName.getValue();
     }
 
-    public Frames getFrames() {
-        return frames;
+    public List<Frame> getFrames() {
+        return this.frames.getFrames();
+    }
+
+    public boolean isFinish() {
+        return this.frames.isFinish();
+    }
+
+    public void next(int number) {
+        this.frames.next(number);
+    }
+
+    public int nextFrameNo() {
+        return this.frames.nextFrameNo();
     }
 
     @Override

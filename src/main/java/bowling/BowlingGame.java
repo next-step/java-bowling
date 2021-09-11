@@ -14,11 +14,11 @@ public class BowlingGame {
         outputView.printBoard(player);
 
         int score;
-        for (int i = player.getFrames().currentFrameNo(); i < 11; ) {
+
+        while (!player.isFinish()) {
             score = inputView.next(player);
-            player.getFrames().next(score);
+            player.next(score);
             outputView.printBoard(player);
-            i = player.getFrames().currentFrameNo();
         }
     }
 }
