@@ -1,6 +1,7 @@
 package bowling.controller;
 
 import bowling.model.NormalRound;
+import bowling.model.Round;
 import bowling.model.User;
 import bowling.model.BowlingResult;
 
@@ -15,10 +16,13 @@ import static bowling.view.OutputView.printBowlingScore;
 
 public class BowlingGame {
     public static final int DEFAULT_ROUND_COUNT = 10;
-    private static final int MAX_TRY_COUNT = 2;
+    private static final int DEFAULT_BONUS_COUNT = 1;
+    private static final int FIRST_TRY = 1;
+    private static final int SECOND_TRY = 2;
 
     private static List<List<String>> result = new ArrayList<>();
-    private static bowling.model.Round round;
+    private static Round round;
+    private static int bonusCount;
 
 
     public static void main(String[] args) {
@@ -27,6 +31,8 @@ public class BowlingGame {
 
         BowlingGame game = new BowlingGame();
         round = new NormalRound();
+        bonusCount = DEFAULT_BONUS_COUNT;
+
         for (int i = 1; i <= DEFAULT_ROUND_COUNT; i++) {
             List<String> pointList = new ArrayList<>();
             result.add(pointList);
@@ -40,39 +46,32 @@ public class BowlingGame {
         boolean isBonusRound = false;
         int totalPoint = 0;
         int tryCount = 0;
-        int maxTryCount = MAX_TRY_COUNT;
-
-        while (tryCount++ < maxTryCount) {
+        BowlingResult beforeResult = BowlingResult.EMPTY;
+        
+        while (tryCount++ < SECOND_TRY) {
             String pinCount = ask(numberOfRound + "프레임 투구 : ");
             int score = changeToInt(pinCount);
 
             totalPoint = calcTotalPoint(isBonusRound, totalPoint, score);
 
-            BowlingResult roundResult = round.play(totalPoint, tryCount);
-            boolean isSkip = round.isSkipNextRound(tryCount, roundResult, isBonusRound);
+            BowlingResult currentResult = round.play(totalPoint, tryCount, beforeResult);
+            beforeResult = currentResult;
+            boolean isSkip = round.isSkipNextRound(tryCount, currentResult, isBonusRound);
             tryCount = changeToMaxCount(tryCount, isSkip);
 
-            isBonusRound = round.isBonus(isBonusRound, roundResult);
-            maxTryCount = giveBonusRound(isBonusRound, maxTryCount);
+            isBonusRound = round.isBonus(isBonusRound, currentResult);
+            tryCount = giveBonusRound(isBonusRound, tryCount);
 
-            pointList.add(changeScore(score, roundResult));
+            pointList.add(changeScore(score, currentResult));
             printBowlingScore(user.getName(), result);
 
-            round = round.next(roundResult, numberOfRound, tryCount);
+            round = round.next(currentResult, numberOfRound, tryCount);
         }
 
     }
 
     private List<String> getLastList(List<List<String>> result) {
         return result.get(result.size()-1);
-    }
-
-    private int changeToMaxCount(int tryCount, boolean isSkip) {
-        if (isSkip) {
-            tryCount = MAX_TRY_COUNT;
-        }
-
-        return tryCount;
     }
 
     private int calcTotalPoint(boolean isBonusRound, int totalPoint, int score) {
@@ -86,11 +85,30 @@ public class BowlingGame {
         return totalPoint;
     }
 
-    private int giveBonusRound(boolean isBonusRound, int maxTryCount) {
-        if (isBonusRound) {
-            maxTryCount += 1;
+    private int changeToMaxCount(int tryCount, boolean isSkip) {
+        if (isSkip) {
+            tryCount = SECOND_TRY;
         }
 
-        return maxTryCount;
+        return tryCount;
     }
+    
+
+    private int giveBonusRound(boolean isBonusRound, int tryCount) {
+        if (isBonusRound && bonusCount != 0) {
+            tryCount = isSecondTry(tryCount);
+            bonusCount -= 1;
+        }
+
+        return tryCount;
+    }
+
+    private int isSecondTry(int tryCount) {
+        if (tryCount == SECOND_TRY) {
+            return FIRST_TRY;
+        }
+
+        return 0;
+    }
+
 }

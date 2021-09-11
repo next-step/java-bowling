@@ -4,9 +4,9 @@ public class FinalRound implements Round {
     private Point point;
 
     @Override
-    public BowlingResult play(int totalPoint, int tryCount) {
+    public BowlingResult play(int totalPoint, int tryCount, BowlingResult beforeResult) {
         this.point = new Point(totalPoint);
-        return BowlingResult.findBowlingResult(point, tryCount);
+        return BowlingResult.findBowlingResult(point, tryCount, beforeResult);
     }
 
     @Override
@@ -16,19 +16,11 @@ public class FinalRound implements Round {
 
     @Override
     public boolean isSkipNextRound(int tryCount, BowlingResult roundResult, boolean isBonus) {
-        if (!isBonus && roundResult == BowlingResult.STRIKE) {
-            return true;
-        }
-
         return false;
     }
 
     @Override
     public boolean isBonus(boolean isBonus, BowlingResult roundResult) {
-        if (isBonus) {
-            return false;
-        }
-
         if (roundResult == BowlingResult.STRIKE || roundResult == BowlingResult.SPARE) {
             return true;
         }

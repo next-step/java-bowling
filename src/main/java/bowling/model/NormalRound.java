@@ -4,9 +4,9 @@ public class NormalRound implements Round {
     private Point point;
 
     @Override
-    public BowlingResult play(int totalPoint, int tryCount) {
+    public BowlingResult play(int totalPoint, int tryCount, BowlingResult beforeResult) {
         this.point = new Point(totalPoint);
-        return BowlingResult.findBowlingResult(point, tryCount);
+        return BowlingResult.findBowlingResult(point, tryCount, beforeResult);
     }
 
     @Override
