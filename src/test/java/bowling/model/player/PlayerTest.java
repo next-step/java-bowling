@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("볼링 게임 플레이어 테스트")
 public class PlayerTest {
@@ -28,6 +28,6 @@ public class PlayerTest {
         Player player = new Player("abc");
 
         // when, then
-        assertEquals(player.name(), "abc");
+        assertTrue(player.equals( "abc"));
     }
 }

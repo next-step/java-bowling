@@ -1,5 +1,6 @@
 package bowling.model.player;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,14 +16,29 @@ public class Player {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (name.equals(o.toString())) {
+            return true;
+        }
+
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
     private void validateNamePattern(String name) {
         Matcher matcher = NAME_PATTERN.matcher(name);
         if (!matcher.find()) {
             throw new IllegalArgumentException(String.format("플레이어 이름은 알파벳 %d글자로 이루어져야 합니다.", NAME_LENGTH));
         }
-    }
-
-    public String name() {
-        return name;
     }
 }
