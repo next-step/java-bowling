@@ -5,7 +5,7 @@ import bowling.model.FinalRound;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FinalRoundTest {
     private FinalRound finalRound;
@@ -31,5 +31,18 @@ public class FinalRoundTest {
 
         //then
         assertTrue(isBonus);
+    }
+
+    @Test
+    public void 보너스_라운드_없는_경우() {
+        //when
+        boolean isBonus = finalRound.isBonus(false, BowlingResult.MISS);
+        //then
+        assertFalse(isBonus);
+
+        //when
+        isBonus = finalRound.isBonus(false, BowlingResult.GUTTER);
+        //then
+        assertFalse(isBonus);
     }
 }
