@@ -46,6 +46,8 @@ public abstract class Frame {
         return states;
     }
 
+    public abstract boolean isEnd();
+
     public abstract int getFrameNumber();
 
     public abstract Frame next();

@@ -2,6 +2,8 @@ package bowling.view;
 
 import bowling.domain.*;
 
+import java.util.List;
+
 public class ResultView {
     private static final String BOUND_LINE = "|";
     private static final int FINAL_FRAME = 9;
@@ -16,9 +18,26 @@ public class ResultView {
     private static final String GUTTER = "- |";
     private static final String SPARE = "/ |";
 
-    public static void printFrames(String player, Frames frames) {
-        printTitle();
+    public static void printBowlingGame(List<String> players, List<Frames> frames) {
 
+        for(int i = 0 ; i < frames.size(); i++) {
+            printPlayer(players.get(i));
+
+            printPitch(frames.get(i));
+
+            printRemainBoard(frames.get(i));
+
+            printBlank();
+
+            printResultScore(frames.get(i));
+
+            printRemain(frames.get(i));
+
+            System.out.println();
+        }
+    }
+
+    public static void printFrames(String player, Frames frames) {
         printPlayer(player);
 
         printPitch(frames);
@@ -34,7 +53,9 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void printTitle() {
+
+
+    public static void printTitle() {
         System.out.println(TITLE);
     }
 
@@ -150,11 +171,8 @@ public class ResultView {
             System.out.println();
             return;
         }
-        if (currentFrame.isSecondPitchDone()) {
-            drawRemainSecondPitch(frames);
-            System.out.println();
-            return;
-        }
+        drawRemainSecondPitch(frames);
+        System.out.println();
     }
 
     private static void drawRemainSecondPitch(Frames frames) {
@@ -169,7 +187,9 @@ public class ResultView {
             System.out.print(HALF_BLANK_FRAME);
         }
 
-        printRemain(frames);
+        for (int numberOfGame = frames.size(); numberOfGame <= FINAL_FRAME; numberOfGame++) {
+            System.out.print(BLANK_FRAME);
+        }
     }
 
     private static void printResultScore(Frames frames) {
@@ -200,7 +220,7 @@ public class ResultView {
     }
 
     private static void printRemain(Frames frames) {
-        for (int numberOfGame = frames.size(); numberOfGame <= FINAL_FRAME; numberOfGame++) {
+        for (int numberOfGame = frames.size() - 1; numberOfGame <= FINAL_FRAME; numberOfGame++) {
             System.out.print(BLANK_FRAME);
         }
     }

@@ -62,7 +62,7 @@ public class NormalFrame extends Frame {
         }
 
         if (!isSecondPitchDone() && !hasNext()) {
-            Score.unScore();
+            return Score.unScore();
         }
 
         if (hasNext()) {
@@ -71,4 +71,10 @@ public class NormalFrame extends Frame {
 
         return score.additionalScore(getSecondPin());
     }
+
+    @Override
+    public boolean isEnd(){
+        return isFinish();
+    }
+
 }

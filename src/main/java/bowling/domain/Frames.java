@@ -55,5 +55,4 @@ public class Frames {
         return Objects.hash(frames);
     }
 
-
 }

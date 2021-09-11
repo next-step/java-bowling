@@ -42,4 +42,25 @@ public class FramesTest {
 
         assertThat(frames.size()).isEqualTo(2);
     }
+
+    @DisplayName("정적 팩토리 메서드 사용 시 사이즈 1")
+    @Test
+    void framesTest() {
+        Frames frames1 = Frames.newInstance();
+        Frames frames2 = Frames.newInstance();
+
+        Frame frame1 = frames1.currentFrame();
+        Frame frame2 = frames2.currentFrame();
+
+        frame1.bowl(Pins.of(10));
+        frame2.bowl(Pins.of(3));
+
+        //전체 경기는 2번째 프레임으로 가야함.
+        for(int i = 0 ; i < 10 ; i++){
+            for(int j = 0 ; j < 2; j++){
+
+            }
+        }
+
+    }
 }

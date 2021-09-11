@@ -1,21 +1,36 @@
 package bowling.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final String GET_PLAYER_NAME = "플레이어 이름은(3 english letters)?: ";
-    private static final String GET_FRAME_SCORE = "프레임 투구 : ";
+    private static final String GET_PLAYER_NAMES_PREFIX = "플레이어 이름 ";
+    private static final String GET_PLAYER_NAMES_SUFFIX = "의 이름은(3 english letters)?: ";
 
-    public static String getPlayerName() {
-        System.out.print(GET_PLAYER_NAME);
-        String player = scanner.nextLine();
-        return player;
+    private static final String GET_FRAME_SCORE = "'s turn : ";
+    private static final String GET_PLAYER_COUNT = "How many people? ";
+
+    public static List<String> getPlayerNames(int count) {
+        List<String> players = new ArrayList<>();
+        for(int i = 1 ; i <= count ; i++) {
+            System.out.print(GET_PLAYER_NAMES_PREFIX + i + GET_PLAYER_NAMES_SUFFIX);
+            String player = scanner.next();
+            players.add(player);
+        }
+        return players;
     }
 
-    public static int getFrameScore(int frameNumber) {
-        System.out.print(frameNumber + GET_FRAME_SCORE);
+    public static int getFrameScore(String player) {
+        System.out.print(player + GET_FRAME_SCORE);
         int score = scanner.nextInt();
         return score;
+    }
+
+    public static int getPlayerCount() {
+        System.out.print(GET_PLAYER_COUNT);
+        int count = scanner.nextInt();
+        return count;
     }
 }

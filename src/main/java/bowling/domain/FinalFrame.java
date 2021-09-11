@@ -34,4 +34,9 @@ public class FinalFrame extends Frame {
 
         return score.additionalScore(getSecondPin());
     }
+
+    @Override
+    public boolean isEnd(){
+        return isFinish();
+    }
 }
