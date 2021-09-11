@@ -56,7 +56,7 @@ public final class FinalFrame extends Frame {
     }
 
     @Override
-    public Frame nextFrame() {
+    public Frame next() {
         return this;
     }
 

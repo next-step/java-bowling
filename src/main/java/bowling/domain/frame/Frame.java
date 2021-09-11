@@ -34,7 +34,7 @@ public abstract class Frame {
 
     public abstract boolean isFinished();
 
-    public abstract Frame nextFrame();
+    public abstract Frame next();
 
     public abstract int getScore();
 

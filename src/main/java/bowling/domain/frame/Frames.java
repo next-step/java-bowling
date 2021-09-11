@@ -55,7 +55,7 @@ public final class Frames {
     }
 
     private Frame currentFrame() {
-        return lastFrame().nextFrame();
+        return lastFrame().next();
     }
 
     private boolean isLastFrameFinished() {

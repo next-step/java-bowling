@@ -36,7 +36,7 @@ class FinalFrameTest {
     @ParameterizedTest(name = "{0} -> {1}")
     @MethodSource("provideFinalCheckFrame")
     @DisplayName("완료된 프레임인지 확인한다.")
-    void finalFrameCheck(int[] pins, boolean expected) {
+    void checkFinishFinalFrame(int[] pins, boolean expected) {
         // given
         Frame frame = FinalFrame.of(pins);
 
@@ -57,21 +57,13 @@ class FinalFrameTest {
 
     @ParameterizedTest
     @MethodSource("provideFinalFrameException")
-    @DisplayName("프레임 Exception")
+    @DisplayName("FinalFrame Exception")
     void finalFrameException(Pins pins) {
         // given
         // when
         // then
         assertThatThrownBy(() ->
                 FinalFrame.of(pins)
-        ).isInstanceOf(FrameNotCorrectException.class);
-    }
-
-    @Test
-    @DisplayName("프레임 진행 후 Exception")
-    void finalFrameException() {
-        assertThatThrownBy(() ->
-                FinalFrame.of().bowl(9).bowl(2)
         ).isInstanceOf(FrameNotCorrectException.class);
     }
 
@@ -101,8 +93,8 @@ class FinalFrameTest {
     }
 
     @Test
-    @DisplayName("프레임 진행 후 미완료 확인")
-    void bowlFinalFrameNotFinished() {
+    @DisplayName("스페어일경우 그이후 2번의 투구가 없다면 종료 X")
+    void finalFrameNotFinished() {
         //given
         Frame finalFrame = FinalFrame.of().bowl(10).bowl(5);
 
@@ -127,7 +119,7 @@ class FinalFrameTest {
     @ParameterizedTest(name = "{0} -> {1}")
     @MethodSource("provideFinalFrameCalculateScore")
     @DisplayName("마지막 프레임 점수 계산")
-    void calculateScore(Pins pins, int expectedScore) {
+    void scoreCalculate(Pins pins, int expectedScore) {
         //given
         Frame frame = FinalFrame.of(pins);
 

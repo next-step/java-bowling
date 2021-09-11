@@ -78,17 +78,13 @@ public final class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame nextFrame() {
+    public Frame next() {
         if (pins.size() == 0) {
             return this;
         }
 
         if (pins.size() == 1 && FrameStatus.of(pins) != FrameStatus.STRIKE) {
             return this;
-        }
-
-        if (roundNumber == NORMAL_LAST_ROUND) {
-            return NormalFrame.next(this);
         }
         return NormalFrame.next(this);
     }

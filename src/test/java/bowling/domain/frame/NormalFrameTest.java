@@ -29,55 +29,55 @@ public class NormalFrameTest {
     @ParameterizedTest(name = "{0} -> {1}")
     @MethodSource("provideFinishCheckFrame")
     @DisplayName("완료된 프레임인지 확인한다.")
-    void finishFrameCheck(int[] numbers, boolean actual) {
+    void checkFinishFrame(int[] numbers, boolean actual) {
         // given
-        Frame frame = NormalFrame.of(1, numbers);
+        Frame givenFrame = NormalFrame.of(1, numbers);
 
         // when
-        boolean finished = frame.isFinished();
+        boolean finished = givenFrame.isFinished();
 
         // then
         assertThat(finished).isEqualTo(actual);
     }
 
     @Test
-    @DisplayName("마지막 Normal 프레임이 끝나면 다음은 Final 프레임이다")
-    void normalFrameFinalNextIsFinalFrame() {
+    @DisplayName("마지막 NormalFrame 이 끝나면 다음은 FinalFrame")
+    void normalFrameFinishedThenFinalFrame() {
         //given
         Frame givenFrame = NormalFrame.of(NormalFrame.NORMAL_LAST_ROUND).bowl(10);
 
         // when
-        Frame nextFrame = givenFrame.nextFrame();
+        Frame nextFrame = givenFrame.next();
 
         // then
         assertThat(nextFrame.getClass()).isEqualTo(FinalFrame.class);
     }
 
     @Test
-    @DisplayName("프레임에 완료되지 않으면 현재 프레임 그대로 가져온다")
-    void nextFrameIsCurrentFrame() {
+    @DisplayName("프레임이 미완료 상태에서 next 호출시  현재 프레임 그대로 가져온다")
+    void nextFrameIsCurrentFrameWhenNotFinishedFrame() {
         // given
-        Frame givenFrame = NormalFrame.of(1).bowl(9);
+        Frame notFinishedFrame = NormalFrame.of(1).bowl(9);
 
         // when
-        Frame actualFrame = givenFrame.nextFrame();
+        Frame actualFrame = notFinishedFrame.next();
 
         // then
-        assertThat(actualFrame).isEqualTo(givenFrame);
+        assertThat(actualFrame).isEqualTo(notFinishedFrame);
     }
 
     @Test
-    @DisplayName("한 프레임이 완료되면 다음 프레임을 가져온다.")
-    void nextFrameIsNewFrame() {
+    @DisplayName("프레임이 완료 상태면 next 호출 시 다음 프레임을 가져온다")
+    void nextFrameIsNextFrameWhenFinishedFrame() {
         // given
-        Frame frame = NormalFrame.first().bowl(10);
+        Frame givenFrame = NormalFrame.first().bowl(10);
 
         // when
-        Frame nextFrame = frame.nextFrame();
-        int actual = nextFrame.getRoundNumber();
+        Frame nextFrame = givenFrame.next();
+        int actualRoundNumber = nextFrame.getRoundNumber();
 
         // then
-        assertThat(actual).isEqualTo(NormalFrame.FIRST_ROUND_NUMBER + 1);
+        assertThat(actualRoundNumber).isEqualTo(NormalFrame.FIRST_ROUND_NUMBER + 1);
     }
 
     @Test
@@ -97,54 +97,63 @@ public class NormalFrameTest {
     @DisplayName("점수 계산이 안되는 상황에 점수를 가져오면 Exception")
     void canNotGetScoreThenException() {
         //given
-        Frame frame = NormalFrame.first().bowl(9);
+        Frame givenFrame = NormalFrame.first().bowl(9);
 
         //when
         //then
-        assertThatThrownBy(frame::getScore)
+        assertThatThrownBy(givenFrame::getScore)
                 .isInstanceOf(CanNotCalculateException.class);
     }
 
     @Test
-    @DisplayName("스페어일 경우 점수 계산")
-    void spareCalculateScore() {
+    @DisplayName("스트라이크, 스페어가 아닐경우 점수")
+    void scoreWhenNotStrikeAndNotSpare() {
         //given
-        Frame firstFrame = NormalFrame.first().bowl(9).bowl(1);
-        firstFrame.nextFrame().bowl(9);
+        Frame givenFrame = NormalFrame.first().bowl(4).bowl(4);
 
         //when
-        int actualScore = firstFrame.getScore();
+        int actualScore = givenFrame.getScore();
+
+        //then
+        assertThat(actualScore).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("스페어일 경우 점수")
+    void scoreWhenFrameIsSpare() {
+        //given
+        Frame givenFrame = NormalFrame.first().bowl(9).bowl(1);
+
+        //when
+        givenFrame.next().bowl(9);
+        int actualScore = givenFrame.getScore();
 
         //then
         assertThat(actualScore).isEqualTo(19);
     }
 
     @Test
-    @DisplayName("스트라이크이고 다음 프레임이 스트라이크가 아닌 경우")
-    void strikeCalculateScore() {
+    @DisplayName("스트라이크이고 다음 프레임이 스트라이크가 아닐 때 점수")
+    void scoreWhenFrameIsStrikeAndNextFrameNotStrike() {
         //given
-        Frame firstFrame = NormalFrame.first().bowl(10);
-        Frame secondFrame = firstFrame.nextFrame();
-        secondFrame.bowl(9).bowl(1);
+        Frame givenFrame = NormalFrame.first().bowl(10);
 
         //when
-        int actualScore = firstFrame.getScore();
+        givenFrame.next().bowl(9).bowl(1);
+        int actualScore = givenFrame.getScore();
 
         //then
         assertThat(actualScore).isEqualTo(20);
     }
 
     @Test
-    @DisplayName("스트라이크일 때 다음 프레임도 스트라이크일 경우")
-    void doubleCalculateScore() {
+    @DisplayName("스트라이크 이고 다음 프레임도 스트라이크일떄 점수")
+    void scoreWhenFrameIsStrikeAndNextFrameIsStrike() {
         // given
         Frame givenFrame = NormalFrame.first().bowl(10);
-        Frame secondFrame = givenFrame.nextFrame();
-        secondFrame.bowl(10);
-        Frame thirdFrame = secondFrame.nextFrame();
-        thirdFrame.bowl(5);
 
         // when
+        givenFrame.next().bowl(10).next().bowl(5);
         int actualScore = givenFrame.getScore();
 
         // then
@@ -155,10 +164,10 @@ public class NormalFrameTest {
     @DisplayName("마지막 NormalFrame 이 스트라이크일때 점수 계산")
     void scoreWhenLastNormalFrameIsStrike() {
         //given
-        Frame lastNormalFrame = NormalFrame.of(NormalFrame.NORMAL_LAST_ROUND);
+        Frame lastNormalFrame = NormalFrame.of(NormalFrame.NORMAL_LAST_ROUND).bowl(10);
 
         //when
-        lastNormalFrame.bowl(10).nextFrame().bowl(10).bowl(5);
+        lastNormalFrame.next().bowl(10).bowl(5);
         int actual = lastNormalFrame.getScore();
 
         //then
@@ -170,10 +179,9 @@ public class NormalFrameTest {
     void scoreWhenLastNormalFrameIsSpare() {
         //given
         Frame lastNormalFrame = NormalFrame.of(NormalFrame.NORMAL_LAST_ROUND).bowl(9).bowl(1);
-        Frame finalFrame = lastNormalFrame.nextFrame();
 
         //when
-        finalFrame.bowl(10);
+        lastNormalFrame.next().bowl(10);
         int actualScore = lastNormalFrame.getScore();
 
         //then
@@ -182,12 +190,12 @@ public class NormalFrameTest {
 
     @Test
     @DisplayName("해당 프레임 투구가 종료되지 않았다면 계산 X")
-    void notFinishCanNotCalculate() {
+    void canNotCalculateWhenFrameIsNotFinished() {
         // given
-        Frame frame = NormalFrame.first().bowl(9);
+        Frame givenFrame = NormalFrame.first().bowl(9);
 
         //when
-        boolean isCanCalculate = frame.canCalculateScore();
+        boolean isCanCalculate = givenFrame.canCalculateScore();
 
         //then
         assertThat(isCanCalculate).isFalse();
@@ -195,12 +203,12 @@ public class NormalFrameTest {
 
     @Test
     @DisplayName("스트라이크, 스페어가 아닐때 해당프레임 투구가 완료되면 계산 O")
-    void basicFrameCanCalculate() {
+    void canCalculateWhenFrameIsFinished() {
         // given
-        Frame frame = NormalFrame.first().bowl(5).bowl(4);
+        Frame givenFrame = NormalFrame.first().bowl(5).bowl(4);
 
         //when
-        boolean isCanCalculate = frame.canCalculateScore();
+        boolean isCanCalculate = givenFrame.canCalculateScore();
 
         //then
         assertThat(isCanCalculate).isTrue();
@@ -208,13 +216,13 @@ public class NormalFrameTest {
 
     @Test
     @DisplayName("스페어일경우 다음 1번의 투구가 있다 계산 O")
-    void spareCanCalculateFrame() {
+    void canCalculateWhenFrameIsSpare() {
         // given
-        Frame firstFrame = NormalFrame.first().bowl(5).bowl(5);
-        firstFrame.nextFrame().bowl(5);
+        Frame givenFrame = NormalFrame.first().bowl(5).bowl(5);
 
         //when
-        boolean isCanCalculate = firstFrame.canCalculateScore();
+        givenFrame.next().bowl(5);
+        boolean isCanCalculate = givenFrame.canCalculateScore();
 
         //then
         assertThat(isCanCalculate).isTrue();
@@ -222,25 +230,12 @@ public class NormalFrameTest {
 
     @Test
     @DisplayName("스페어일경우 다음 1번의 투구가 없다면 계산 X")
-    void spareCanNotCalculateFrame() {
+    void canNotCalculateWhenFrameIsSpare() {
         // given
-        Frame firstFrame = NormalFrame.first().bowl(5).bowl(5);
+        Frame givenFrame = NormalFrame.first().bowl(5).bowl(5);
 
         //when
-        boolean isCanCalculate = firstFrame.canCalculateScore();
-
-        //then
-        assertThat(isCanCalculate).isFalse();
-    }
-
-    @Test
-    @DisplayName("스트라이크는 다음 2번의 투구가 없으면 계산 X")
-    void strikeCanNotCalculateFrame() {
-        //given
-        Frame frame = NormalFrame.first().bowl(10);
-
-        //when
-        boolean isCanCalculate = frame.canCalculateScore();
+        boolean isCanCalculate = givenFrame.canCalculateScore();
 
         //then
         assertThat(isCanCalculate).isFalse();
@@ -248,26 +243,39 @@ public class NormalFrameTest {
 
     @Test
     @DisplayName("스트라이크 일경우 다음 2번의 투구가 있다면 계산 O")
-    void strikeCanCalculateFrame() {
+    void canCalculateWhenFrameIsStrike() {
         //given
-        Frame firstFrame = NormalFrame.first();
-        firstFrame.bowl(10).nextFrame().bowl(5).bowl(5);
+        Frame givenFrame = NormalFrame.first().bowl(10);
 
         //when
-        boolean isCanCalculate = firstFrame.canCalculateScore();
+        givenFrame.next().bowl(5).bowl(5);
+        boolean isCanCalculate = givenFrame.canCalculateScore();
 
         //then
         assertThat(isCanCalculate).isTrue();
     }
 
     @Test
-    @DisplayName("더블일경우 그다음 프레임에서 1번의 투구가 없다면 계산 X")
-    void doubleAfterNextFramePinsEmptyThenCannotCalculate() {
-        // given
-        Frame givenFrame = NormalFrame.first();
+    @DisplayName("스트라이크는 다음 2번의 투구가 없으면 계산 X")
+    void canNotCalculateWhenFrameIsStrike() {
+        //given
+        Frame givenFrame = NormalFrame.first().bowl(10);
 
         //when
-        givenFrame.bowl(10).nextFrame().bowl(10);
+        boolean isCanCalculate = givenFrame.canCalculateScore();
+
+        //then
+        assertThat(isCanCalculate).isFalse();
+    }
+
+    @Test
+    @DisplayName("더블일경우 그다음 프레임에서 1번의 투구가 없다면 계산 X")
+    void doubleWhenNextFramePinsEmptyThenCanNotCalculate() {
+        // given
+        Frame givenFrame = NormalFrame.first().bowl(10);
+
+        //when
+        givenFrame.next().bowl(10);
         boolean isCanCalculate = givenFrame.canCalculateScore();
 
         //then
@@ -276,16 +284,13 @@ public class NormalFrameTest {
 
     @Test
     @DisplayName("더블일경우 그다음 프레임에서 1번의 투구가 있다면 계산 0")
-    void doubleAfterNextFramePinsNotEmptyThenCannotCalculate() {
+    void doubleWhenNextFramePinsNotEmptyThenCanNotCalculate() {
         // given
-        Frame firstFrame = NormalFrame.first().bowl(10);
-        Frame secondFrame = firstFrame.nextFrame();
-        secondFrame.bowl(10);
-        Frame thirdFrame = secondFrame.nextFrame();
-        thirdFrame.bowl(5);
+        Frame givenFrame = NormalFrame.first().bowl(10);
 
         //when
-        boolean isCanCalculate = firstFrame.canCalculateScore();
+        givenFrame.next().bowl(10).next().bowl(5);
+        boolean isCanCalculate = givenFrame.canCalculateScore();
 
         //then
         assertThat(isCanCalculate).isTrue();
