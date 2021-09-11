@@ -1,11 +1,13 @@
 package bowling.domain.user;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import bowling.exception.user.NameAlphabetPatternException;
 import bowling.exception.user.NameBlankException;
 import bowling.exception.user.NameLengthException;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -43,6 +45,20 @@ class NameTest {
         assertThatExceptionOfType(NameAlphabetPatternException.class)
             .isThrownBy(() -> Name.of(input))
             .withMessageMatching("이름은 영어로만 제공되어야 한다.");
+    }
+
+    @Test
+    @DisplayName("equals, hashcode test")
+    void nameEqualsHashcodeTest() {
+
+        // given
+        Name name = Name.of("PJS");
+        Name copyName = Name.of("PJS");
+
+        // when & then
+        assertThat(name)
+            .isEqualTo(copyName)
+            .hasSameHashCodeAs(copyName);
     }
 
 }
