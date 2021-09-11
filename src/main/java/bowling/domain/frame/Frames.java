@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import java.util.ArrayList;
 import java.util.List;
 
+import bowling.domain.Results;
 import bowling.domain.score.Score;
 
 public class Frames {
@@ -80,5 +81,9 @@ public class Frames {
         return frames.get(
             frames.size() - 1
         );
+    }
+
+    public List<String> results() {
+        return Results.from(this).results();
     }
 }

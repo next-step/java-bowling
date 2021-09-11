@@ -12,12 +12,8 @@ public class Results {
     private Results(Frames frames) {
         results = frames.frames()
             .stream()
-            .map(Results::toScoreSymbol)
+            .map(Frame::toScoreSymbol)
             .collect(Collectors.toList());
-    }
-
-    private static String toScoreSymbol(final Frame frame) {
-        return frame.toScoreSymbol();
     }
 
     public static Results from(Frames frames) {
@@ -25,7 +21,7 @@ public class Results {
     }
 
     public void addFrame(Frame frame) {
-        results.add(toScoreSymbol(frame));
+        results.add(frame.toScoreSymbol());
     }
 
     public String lastResult() {
@@ -37,4 +33,5 @@ public class Results {
     public List<String> results() {
         return results;
     }
+
 }
