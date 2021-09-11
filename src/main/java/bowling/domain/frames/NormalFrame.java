@@ -31,12 +31,12 @@ public class NormalFrame extends Frame {
 
     private boolean isImPossibleNextRoll() {
         if (isSpare()) {
-            return false;
+            return true;
         }
         if (isStrike()) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
