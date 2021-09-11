@@ -61,6 +61,10 @@ public abstract class Frame {
         return nextFrame.pinSize();
     }
 
+    protected boolean nextPinEmpty() {
+        return nextPinSize() == 0;
+    }
+
     public int getRoundNumber() {
         return roundNumber;
     }

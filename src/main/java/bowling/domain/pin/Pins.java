@@ -34,6 +34,10 @@ public final class Pins {
         pins.add(Pin.valueOf(knockDownNumber));
     }
 
+    public boolean isEmpty() {
+        return pins.isEmpty();
+    }
+
     public boolean isStrike() {
         if (pins.isEmpty()) {
             return false;

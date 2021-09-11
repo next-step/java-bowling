@@ -54,7 +54,7 @@ public final class NormalFrame extends Frame {
             frame.nextFrame = FinalFrame.of();
             return frame.nextFrame;
         }
-        frame.nextFrame = new NormalFrame(frame.roundNumber + 1, Pins.of());
+        frame.nextFrame = new NormalFrame(frame.roundNumber + NEXT_ROUND_NUMBER_DISTANCE, Pins.of());
         return frame.nextFrame;
     }
 
@@ -82,14 +82,10 @@ public final class NormalFrame extends Frame {
 
     @Override
     public Frame next() {
-        if (pins.size() == 0) {
-            return this;
+        if (isFinished()) {
+            return NormalFrame.next(this);
         }
-
-        if (pins.size() == 1 && FrameStatus.of(pins) != STRIKE) {
-            return this;
-        }
-        return NormalFrame.next(this);
+        return this;
     }
 
     @Override
@@ -102,14 +98,15 @@ public final class NormalFrame extends Frame {
             return true;
         }
 
-        if (FrameStatus.of(pins) == SPARE && nextPinSize() > 0) {
+        if (FrameStatus.of(pins) == SPARE && !nextPinEmpty()) {
             return true;
         }
 
-        if (nextPinSize() >= 2) {
+        if (nextPinSize() == MAX_SIZE) {
             return true;
         }
-        return nextPinSize() == 1 && nextFrame.nextPinSize() > 0;
+
+        return !nextPinEmpty() && !nextFrame.nextPinEmpty();
     }
 
     @Override

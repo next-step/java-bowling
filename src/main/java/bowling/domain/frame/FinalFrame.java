@@ -11,6 +11,7 @@ import static bowling.domain.score.Score.BONUS_REMAIN_COUNT_TWO;
 public final class FinalFrame extends Frame {
 
     private static final int FINAL_FRAME_ROUND_NUMBER = 10;
+    private static final int STRIKE_OR_SPARE_NUMBER = 10;
     private static final int MAX_SIZE = 3;
     private static final int MIN_SIZE = 2;
 
@@ -48,7 +49,7 @@ public final class FinalFrame extends Frame {
         if (pins.size() < MIN_SIZE) {
             return false;
         }
-        return pins.sum() < 10;
+        return pins.sum() < STRIKE_OR_SPARE_NUMBER;
     }
 
     @Override
