@@ -31,4 +31,15 @@ class NameTest {
             .withMessageMatching("이름은 반드시 제공되어야 한다.");
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"한국어", "+te", "t#e"})
+    @DisplayName("이름에 영어가 들어오비 않으면 Exception이 발생해야 한다.")
+    void nameNotAlphabetExceptionTest(String input) {
+
+        // when & then
+        assertThatExceptionOfType(RuntimeException.class)
+            .isThrownBy(() -> Name.of(input))
+            .withMessageMatching("이름은 영어로만 제공되어야 한다.");
+    }
+
 }
