@@ -4,7 +4,9 @@ import bowling.domain.FinalScore;
 
 import java.util.Objects;
 
-public class FinalFrame implements Frame{
+public class FinalFrame {
+
+    private static final int ROUND = 10;
 
     private final FinalScore score;
 
@@ -19,16 +21,15 @@ public class FinalFrame implements Frame{
         this.isSecondTry = isSecondTry;
     }
 
-    protected static Frame of(FinalScore score, boolean isFirstTry, boolean isSecondTry) {
+    protected static FinalFrame of(FinalScore score, boolean isFirstTry, boolean isSecondTry) {
         return new FinalFrame(score, isFirstTry, isSecondTry);
     }
 
-    public static Frame start(int score) {
+    public static FinalFrame start(int score) {
         return of(FinalScore.first(score), true, false);
     }
 
-    @Override
-    public Frame next(int score) {
+    public FinalFrame next(int score) {
         if (isFirstTry) {
             return next(this.score.withSecond(score), true);
         }
@@ -40,15 +41,14 @@ public class FinalFrame implements Frame{
         return stop(this.score);
     }
 
-    protected static Frame next(FinalScore score, boolean isSecondTry) {
+    protected static FinalFrame next(FinalScore score, boolean isSecondTry) {
         return new FinalFrame(score, false, isSecondTry);
     }
 
-    protected static Frame stop(FinalScore score) {
+    protected static FinalFrame stop(FinalScore score) {
         return new FinalFrame(score, false, false);
     }
 
-    @Override
     public boolean isDone() {
         if (score.isSpareOrStrike()) {
             return !isFirstTry && !isSecondTry;

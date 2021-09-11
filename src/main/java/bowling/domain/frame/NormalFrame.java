@@ -4,7 +4,9 @@ import bowling.domain.Score;
 
 import java.util.Objects;
 
-public class NormalFrame implements Frame{
+public class NormalFrame {
+
+    private static final int LAST_ROUND = 9;
 
     private final int round;
 
@@ -18,16 +20,28 @@ public class NormalFrame implements Frame{
         this.isSecondTry = isSecondTry;
     }
 
-    public static Frame start(int score) {
+    public static NormalFrame start(int score) {
         return of(1, Score.first(score), false);
     }
 
-    protected static Frame of(int round, Score score, boolean isSecondTry) {
+    protected static NormalFrame of(int round, Score score, boolean isSecondTry) {
         return new NormalFrame(round, score, isSecondTry);
     }
 
-    @Override
-    public Frame next(int score) {
+    public int nextTurnRound() {
+        if (isSecondTry) {
+            return round + 1;
+        }
+
+        if (score.isStrike()) {
+            return round + 1;
+        }
+
+        return round;
+
+    }
+
+    public NormalFrame next(int score) {
 
         if (isSecondTry) {
             return next(round + 1, Score.first(score), false);
@@ -41,13 +55,24 @@ public class NormalFrame implements Frame{
 
     }
 
-    private static Frame next(int round, Score score, boolean isSecondTry) {
+    private static NormalFrame next(int round, Score score, boolean isSecondTry) {
         return new NormalFrame(round, score, isSecondTry);
     }
 
-    @Override
+    public boolean isLast() {
+        if (round > LAST_ROUND) {
+            return true;
+        }
+
+        if (round == LAST_ROUND) {
+            return isDone();
+        }
+
+        return false;
+    }
+
     public boolean isDone() {
-        return round == 9 && isSecondTry;
+        return score.isStrike() || isSecondTry;
     }
 
     @Override

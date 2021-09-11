@@ -25,7 +25,7 @@ public class FinalFrameTest {
     @Test
     public void 첫번째_시도후_다음시도를_할_수_있다() {
         //given
-        Frame frame = FinalFrame.start(10);
+        FinalFrame frame = FinalFrame.start(10);
         //when
         frame = frame.next(2);
         //then
@@ -36,7 +36,7 @@ public class FinalFrameTest {
     @MethodSource
     public void 두번째_시도후_시도의_합이_10이상이면_세번째_시도를_할_수_있다(int first, int second) {
         //given
-        Frame frame = FinalFrame.start(first).next(second);
+        FinalFrame frame = FinalFrame.start(first).next(second);
         //when
         frame = frame.next(10);
         //then
@@ -57,7 +57,7 @@ public class FinalFrameTest {
     @MethodSource
     public void 두번째_시도후_시도의_합이_10보다_작으면_세번째_시도를_할_수_없다(int first, int second) {
         //given
-        Frame frame = FinalFrame.start(first).next(second);
+        FinalFrame frame = FinalFrame.start(first).next(second);
         //when
         frame = frame.next(1);
         //then
@@ -78,9 +78,9 @@ public class FinalFrameTest {
     @MethodSource
     public void 두번째_시도후_시도의_합이_10이상이면_세번째_시도_후_끝났음을_알_수_있다(int first, int second) {
         //given
-        Frame frame = FinalFrame.start(first).next(second);
+        FinalFrame frame = FinalFrame.start(first).next(second);
         //when
-        Frame lastFrame = frame.next(10);
+        FinalFrame lastFrame = frame.next(10);
         //then
         assertAll(
                 () -> assertFalse(frame.isDone()),
@@ -102,7 +102,7 @@ public class FinalFrameTest {
     public void 두번째_시도후_시도의_합이_10보다_작으면_두번째_시도_후_끝났음을_알_수_있다(int first, int second) {
         //given
         //when
-        Frame frame = FinalFrame.start(first).next(second);
+        FinalFrame frame = FinalFrame.start(first).next(second);
         //then
         assertTrue(frame.isDone());
     }
