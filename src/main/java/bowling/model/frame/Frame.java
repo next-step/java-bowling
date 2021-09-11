@@ -92,7 +92,6 @@ public abstract class Frame {
 
         nextFrame.plusScore(nextFrame.fallenPinCountTotal());
         score.plus(nextFrame.fallenPinCountTotal());
-        score.makeNoWaitingPitching();
     }
 
     private void plusScore(int other) {
@@ -113,5 +112,9 @@ public abstract class Frame {
 
     public boolean isWaitingNextPitching() {
         return score.isWaitingPitching();
+    }
+
+    public void decreaseWaitingPitchingCountOne() {
+        score.decreaseWaitingPitchingCountOne();
     }
 }

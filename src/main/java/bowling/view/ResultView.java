@@ -54,7 +54,7 @@ public class ResultView {
         for (Frame frame : frames) {
             String displayFormat = FrameFallenPinStatus.findDisplayFormat(frame.fallenPin());
             String firstFallenPinSymbol = generateFallenPinSymbol(frame.firstFallenPin());
-            String secondFallenPinSymbol = generateFallenPinSymbol(frame.firstFallenPin());
+            String secondFallenPinSymbol = generateFallenPinSymbol(frame.secondFallenPin());
 
             stringBuilder.append(String.format(displayFormat, firstFallenPinSymbol, secondFallenPinSymbol));
         }
@@ -76,6 +76,10 @@ public class ResultView {
     }
 
     private static String generateFallenPinSymbol(FallenPin fallenPin) {
+        if (fallenPin == null) {
+            return EMPTY_STRING;
+        }
+
         if (fallenPin.isMax()) {
             return STRIKE_SYMBOL;
         }

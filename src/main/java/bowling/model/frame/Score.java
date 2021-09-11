@@ -28,8 +28,12 @@ public class Score {
         }
     }
 
-    public Score plus(int other) {
+    public Score plusScore(int other) {
         return Score.of(score + other);
+    }
+
+    public void plus(int other) {
+        score += other;
     }
 
     public int value() {
