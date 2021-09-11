@@ -13,8 +13,8 @@ public enum ScoreRule {
     public String symbol;
     public int bonusChance;
 
-    ScoreRule(int score, String symbol, int bonusChance) {
-        this.pinCount = score;
+    ScoreRule(int pinCount, String symbol, int bonusChance) {
+        this.pinCount = pinCount;
         this.symbol = symbol;
         this.bonusChance = bonusChance;
     }

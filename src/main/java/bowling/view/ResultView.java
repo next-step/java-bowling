@@ -9,10 +9,15 @@ import static bowling.CommonConstans.*;
 
 public class ResultView {
 
-    public void bowlingBoard(Frames frames) {
+    public void bowlingBoard(Players players) {
         System.out.println(DEFAULT_BOARD);
-        System.out.println(frameBoardString(frames));
-        System.out.println(scoreBoardString(frames));
+
+        players.forEach(player -> {
+            System.out.print(nameToString(player.getName()));
+            System.out.println(frameBoardString(player.frames()));
+            System.out.println(scoreBoardString(player.frames()));
+        });
+
         System.out.println();
     }
 
@@ -47,12 +52,11 @@ public class ResultView {
     private boolean isEndFrameScore(int size, List<FrameScore> scores) {
         return scores.stream()
                 .limit(size)
-                .anyMatch(FrameScore::isAggregateEnd);
+                .anyMatch(score -> score.isAggregateEnd());
     }
 
     private String frameBoardString(Frames frames) {
         StringBuilder builder = new StringBuilder();
-        builder.append(nameToString(frames));
 
         IntStream.rangeClosed(DEFAULT_SIZE, FRAME_MAX_SIZE)
                 .forEach(size -> builder.append(framePins(size, frames)));
@@ -92,7 +96,7 @@ public class ResultView {
         pinsToString(pinList, builder, ZERO, maxLength);
 
         if (isSpare) {
-            builder.append(PIPE).append(scoreRule.symbol);
+            builder.append(PIPE + scoreRule.symbol);
         }
         return String.format(" %-3s  " + PIPE, builder.toString());
     }
@@ -143,8 +147,8 @@ public class ResultView {
         return result;
     }
 
-    private String nameToString(Frames frames) {
-        return String.format(PIPE + " %4s " + PIPE, frames.name());
+    private String nameToString(String name) {
+        return String.format(PIPE + " %4s " + PIPE, name);
     }
 
     private int index(int size) {
