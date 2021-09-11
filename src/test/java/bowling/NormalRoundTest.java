@@ -7,7 +7,7 @@ import bowling.model.Round;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class NormalRoundTest {
     private NormalRound normalRound;
@@ -24,6 +24,19 @@ public class NormalRoundTest {
 
         //then
         assertTrue(isSkip);
+    }
+
+    @Test
+    public void 스트라이크가_아닐_경우_다음_라운드는_스킵하지않는다() {
+        //when
+        boolean isSkip1 = normalRound.isSkipNextRound(2, BowlingResult.SPARE, false);
+        //then
+        assertFalse(isSkip1);
+
+        //when
+        boolean isSkip2 = normalRound.isSkipNextRound(1, BowlingResult.GUTTER, false);
+        //then
+        assertFalse(isSkip2);
     }
 
     @Test
