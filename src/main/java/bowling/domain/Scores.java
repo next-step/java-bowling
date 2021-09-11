@@ -12,7 +12,7 @@ public class Scores {
 		this.scores = new ArrayList<>(scores);
 	}
 
-	public static Scores of(Frames frames) {
+	public static Scores from(Frames frames) {
 		List<Score> scores = new ArrayList<>();
 		Score base = Score.ofZero();
 		for (int frameNumber = Frame.MIN_NORMAL_FRAME_NUMBER; frameNumber <= Frame.LAST_FRAME_NUMBER; frameNumber++) {
@@ -69,4 +69,7 @@ public class Scores {
 		return Score.of(nextResult);
 	}
 
+	public List<Score> scores() {
+		return Collections.unmodifiableList(scores);
+	}
 }

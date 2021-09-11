@@ -1,9 +1,9 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 import bowling.exception.InvalidFallenPinsException;
 import bowling.exception.InvalidSpareException;
-
-import java.util.Objects;
 
 public class PitchResult {
 
@@ -35,6 +35,9 @@ public class PitchResult {
     }
 
     private void validateFallenPins(int fallenPins) {
+        if (fallenPins == Score.UNSCORED) {
+            return;
+        }
         if (fallenPins < MIN_PINS || fallenPins > MAX_PINS) {
             throw new InvalidFallenPinsException(fallenPins);
         }

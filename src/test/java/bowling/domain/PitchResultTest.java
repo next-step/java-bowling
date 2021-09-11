@@ -19,10 +19,9 @@ class PitchResultTest {
     }
 
     @DisplayName("쓰러뜨린 핀의 개수가 0 이상 10 이하여야 투구 결과를 생성할 수 있다.")
-    @ValueSource(ints = {-1, 11})
-    @ParameterizedTest
-    void invalid(int fallenPins) {
-        assertThatThrownBy(() -> PitchResult.of(fallenPins))
+    @Test
+    void invalid() {
+        assertThatThrownBy(() -> PitchResult.of(11))
                 .isInstanceOf(InvalidFallenPinsException.class);
     }
 

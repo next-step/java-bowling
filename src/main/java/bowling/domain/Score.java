@@ -12,12 +12,12 @@ public class Score {
 		this.value = value;
 	}
 
-	public static Score of(int value) {
+	public static Score from(int value) {
 		return new Score(value);
 	}
 
 	public static Score of(PitchResult result) {
-		return of(result.fallenPins());
+		return from(result.fallenPins());
 	}
 
 	public static Score of(Frame frame) {
@@ -29,18 +29,26 @@ public class Score {
 	}
 
 	public static Score ofZero() {
-		return of(0);
+		return from(0);
 	}
 
 	public static Score ofUnscored() {
-		return of(UNSCORED);
+		return from(UNSCORED);
 	}
 
 	public Score add(Score score) {
 		if (score.value == UNSCORED) {
-			return of(UNSCORED);
+			return from(UNSCORED);
 		}
-		return of(value + score.value);
+		return from(value + score.value);
+	}
+
+	public boolean isUnscored() {
+		return value == UNSCORED;
+	}
+
+	public int value() {
+		return value;
 	}
 
 	@Override

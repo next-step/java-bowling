@@ -3,6 +3,8 @@ package bowling.view;
 import bowling.domain.Frames;
 import bowling.domain.PitchResult;
 import bowling.domain.Player;
+import bowling.domain.Score;
+import bowling.domain.Scores;
 
 import java.util.stream.Collectors;
 
@@ -14,6 +16,8 @@ public class ResultView {
     private static final String SYMBOL_STRIKE = "X";
     private static final String SYMBOL_SPARE = "/";
     private static final String SYMBOL_GUTTER = "-";
+    private static final String SYMBOL_UNSCORED = "";
+    private static final String BLANK_SCORE = "      ";
     private static final int MAX_WORD_LENGTH = 6;
 
     private ResultView() {
@@ -27,11 +31,17 @@ public class ResultView {
         playerName(player);
         frameResults(frames);
         blankLine();
+    }
+
+    public static void scores(Scores scores) {
+        blankScore();
+        frameScores(scores);
+        blankLine();
         blankLine();
     }
 
     private static void playerName(Player player) {
-        System.out.printf("%s  %s %s", DELIMITER, player.name(), DELIMITER);
+        System.out.printf("%s%s%s", DELIMITER, processWordLength(player.name()), DELIMITER);
     }
 
     private static void frameResults(Frames frames) {
@@ -40,6 +50,15 @@ public class ResultView {
                     .map(ResultView::resultToSymbol)
                     .collect(Collectors.joining(DELIMITER)))
             .forEach(result -> System.out.print(String.format("%s%s", processWordLength(result), DELIMITER)));
+    }
+
+    private static void blankScore() {
+        System.out.printf("%s%s%s", DELIMITER, BLANK_SCORE, DELIMITER);
+    }
+
+    private static void frameScores(Scores scores) {
+        scores.scores()
+            .forEach(score -> System.out.printf("%s%s", processWordLength(scoreToSymbol(score)), DELIMITER));
     }
 
     private static String resultToSymbol(PitchResult result) {
@@ -53,6 +72,13 @@ public class ResultView {
             return SYMBOL_GUTTER;
         }
         return String.valueOf(result.fallenPins());
+    }
+
+    private static String scoreToSymbol(Score score) {
+        if (score.isUnscored()) {
+            return SYMBOL_UNSCORED;
+        }
+        return String.valueOf(score.value());
     }
 
     private static String processWordLength(String word) {
