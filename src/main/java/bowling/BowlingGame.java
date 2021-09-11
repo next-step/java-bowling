@@ -13,10 +13,8 @@ public class BowlingGame {
         Player player = new Player(playerName);
         outputView.printBoard(player);
 
-        int score;
-
         while (!player.isFinish()) {
-            score = inputView.next(player);
+            int score = inputView.next(player);
             player.next(score);
             outputView.printBoard(player);
         }
