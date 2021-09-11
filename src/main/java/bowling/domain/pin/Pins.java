@@ -79,6 +79,10 @@ public final class Pins {
         return pins.get(FIRST_PIN_INDEX);
     }
 
+    public int firstPinNumber() {
+        return firstPin().getKnockDownNumber();
+    }
+
     public Pin secondPin() {
         return pins.get(SECOND_PIN_INDEX);
     }

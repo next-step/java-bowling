@@ -80,7 +80,7 @@ public final class FinalFrame extends Frame {
     @Override
     public int addScore(final Score score) {
         if (score.isRemainCount(BONUS_REMAIN_COUNT_ONE)) {
-            return score.sum(firstPin().getKnockDownNumber());
+            return score.sum(firstPinNumber());
         }
 
         if (score.isRemainCount(BONUS_REMAIN_COUNT_TWO)) {

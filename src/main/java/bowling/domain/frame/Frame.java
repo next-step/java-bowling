@@ -42,6 +42,10 @@ public abstract class Frame {
         return pins.firstPin();
     }
 
+    public int firstPinNumber() {
+        return pins.firstPinNumber();
+    }
+
     public Pin secondPin() {
         return pins.secondPin();
     }

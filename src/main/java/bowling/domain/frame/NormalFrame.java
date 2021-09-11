@@ -5,8 +5,7 @@ import bowling.domain.score.Score;
 import bowling.exception.CanNotCalculateException;
 import bowling.exception.FrameNotCorrectException;
 
-import static bowling.domain.frame.FrameStatus.SPARE;
-import static bowling.domain.frame.FrameStatus.STRIKE;
+import static bowling.domain.frame.FrameStatus.*;
 import static bowling.domain.score.Score.BONUS_REMAIN_COUNT_ONE;
 import static bowling.domain.score.Score.BONUS_REMAIN_COUNT_TWO;
 
@@ -94,7 +93,7 @@ public final class NormalFrame extends Frame {
             return false;
         }
 
-        if (FrameStatus.of(pins) == FrameStatus.NORMAL) {
+        if (FrameStatus.of(pins) == NORMAL) {
             return true;
         }
 
@@ -128,12 +127,12 @@ public final class NormalFrame extends Frame {
     @Override
     public int addScore(final Score score) {
         if (FrameStatus.of(pins) == STRIKE && score.isRemainCount(BONUS_REMAIN_COUNT_TWO)) {
-            int sumScore = score.sum(firstPin().getKnockDownNumber());
-            return nextFrame.addScore(Score.ofRemainOne(sumScore));
+            int addScore = score.sum(firstPinNumber());
+            return nextFrame.addScore(Score.ofRemainOne(addScore));
         }
 
         if (score.isRemainCount(BONUS_REMAIN_COUNT_ONE)) {
-            return score.sum(firstPin().getKnockDownNumber());
+            return score.sum(firstPinNumber());
         }
         return score.sum(pins.sum());
     }
