@@ -48,7 +48,7 @@ public class NormalFrame extends Frame {
         }
 
         if (!hasNext()) {
-            return Score.of(UN_SCORE, 0);
+            return Score.unScore();
         }
 
         return next.additionalScore(pitch.getScore());
@@ -62,7 +62,7 @@ public class NormalFrame extends Frame {
         }
 
         if (!isSecondPitchDone() && !hasNext()) {
-            return Score.of(NormalFrame.UN_SCORE, 0);
+            Score.unScore();
         }
 
         if (hasNext()) {

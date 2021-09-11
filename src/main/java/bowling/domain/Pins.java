@@ -33,7 +33,6 @@ public class Pins {
         return fallenPins == MIN;
     }
 
-
     public int getFallenPins() {
         return fallenPins;
     }
@@ -43,7 +42,11 @@ public class Pins {
     }
 
     public boolean isOverMax(Pins otherPins) {
-        return fallenPins + otherPins.fallenPins > MAX;
+        return totalPins(otherPins) > MAX;
+    }
+
+    public int totalPins(Pins otherPins) {
+        return fallenPins + otherPins.fallenPins;
     }
 
     public int sumOfScore(int score) {
@@ -62,6 +65,7 @@ public class Pins {
     public int hashCode() {
         return Objects.hash(fallenPins);
     }
+
 
 
 }
