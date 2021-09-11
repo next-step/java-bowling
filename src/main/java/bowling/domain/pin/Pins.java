@@ -50,7 +50,7 @@ public final class Pins {
             return false;
         }
         return firstPin().sum(secondPin()) == MAX_TWO_PINS_SUM_IF_NOT_STRIKE;
-     }
+    }
 
     public boolean isSecondPinWrong() {
         if (pins.size() < 2) {

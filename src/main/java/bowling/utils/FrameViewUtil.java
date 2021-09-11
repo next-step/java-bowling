@@ -17,7 +17,7 @@ public final class FrameViewUtil {
     }
 
     public static List<String> show(final Frame frame) {
-        if (frame.pinSize() == 3 ){
+        if (frame.pinSize() == 3) {
             return showWhenSizeThree(frame);
         }
         if (frame.pinSize() == 2) {
