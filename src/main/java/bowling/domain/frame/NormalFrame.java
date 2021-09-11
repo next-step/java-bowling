@@ -101,7 +101,7 @@ public final class NormalFrame extends Frame {
             return true;
         }
 
-        if (nextPinSize() == MAX_SIZE) {
+        if (nextPinSize() >= MAX_SIZE) {
             return true;
         }
 
