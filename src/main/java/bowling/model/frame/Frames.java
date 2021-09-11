@@ -16,22 +16,22 @@ public class Frames {
         this.frames = frames;
     }
 
-    public List<Frame> play(int fallenPinCount) {
+    public void play(int fallenPinCount) {
         if (frames.isEmpty()) {
-            return initialPlay(fallenPinCount);
+            initialPlay(fallenPinCount);
+            return;
         }
-        return nextPlay(fallenPinCount);
+        nextPlay(fallenPinCount);
     }
 
-    private List<Frame> initialPlay(int fallenPinCount) {
+    private void initialPlay(int fallenPinCount) {
         validateNextIsPlayable();
 
         Frame initialFrame = Frame.initial(fallenPinCount);
         frames.add(initialFrame);
-        return frames;
     }
 
-    private List<Frame> nextPlay(int fallenPinCount) {
+    private void nextPlay(int fallenPinCount) {
         validateNextIsPlayable();
 
         Frame nextFrame = lastFrame().next(fallenPinCount);
@@ -42,7 +42,6 @@ public class Frames {
         calculateStrikeScoreSpare(nextFrame);
 
         frames.add(nextFrame);
-        return frames;
     }
 
     private void calculateStrikeScoreSpare(Frame nextFrame) {
@@ -95,5 +94,9 @@ public class Frames {
 
     public int scoreValue(int index) {
         return frames.get(index).scoreValue();
+    }
+
+    public List<Frame> frames() {
+        return frames;
     }
 }
