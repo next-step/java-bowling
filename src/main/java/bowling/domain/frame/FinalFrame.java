@@ -5,6 +5,9 @@ import bowling.domain.score.Score;
 import bowling.exception.CanNotCalculateException;
 import bowling.exception.FrameNotCorrectException;
 
+import static bowling.domain.score.Score.BONUS_REMAIN_COUNT_ONE;
+import static bowling.domain.score.Score.BONUS_REMAIN_COUNT_TWO;
+
 public final class FinalFrame extends Frame {
 
     private static final int FINAL_FRAME_ROUND_NUMBER = 10;
@@ -75,11 +78,11 @@ public final class FinalFrame extends Frame {
 
     @Override
     public int addScore(final Score score) {
-        if (score.isRemainCount(Score.BONUS_REMAIN_COUNT_ONE)) {
+        if (score.isRemainCount(BONUS_REMAIN_COUNT_ONE)) {
             return score.sum(firstPin().getKnockDownNumber());
         }
 
-        if (score.isRemainCount(Score.BONUS_REMAIN_COUNT_TWO)) {
+        if (score.isRemainCount(BONUS_REMAIN_COUNT_TWO)) {
             return score.sum(firstPin().sum(secondPin()));
         }
         return score.sum(pins.sum());

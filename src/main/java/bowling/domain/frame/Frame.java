@@ -24,10 +24,6 @@ public abstract class Frame {
         this.nextFrame = nextFrame;
     }
 
-    protected void setNextFrame(final Frame nextFrame) {
-        this.nextFrame = nextFrame;
-    }
-
     protected abstract void validateFrame(final Pins pins);
 
     public abstract boolean isFinished();
