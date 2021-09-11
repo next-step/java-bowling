@@ -18,10 +18,9 @@ public class ResultView {
     private static final String GUTTER = "- |";
     private static final String SPARE = "/ |";
 
-    public static void printBowlingGame(List<String> players, BowlingGame bowlingGame) {
-
+    public static void printBowlingGame(Players players, BowlingGame bowlingGame) {
         for(int i = 0 ; i < bowlingGame.size(); i++) {
-            printPlayer(players.get(i));
+            printPlayer(players.name(i));
 
             printPitch(bowlingGame.get(i));
 
@@ -36,24 +35,6 @@ public class ResultView {
             System.out.println();
         }
     }
-
-    public static void printFrames(String player, Frames frames) {
-        printPlayer(player);
-
-        printPitch(frames);
-
-        printRemainBoard(frames);
-
-        printBlank();
-
-        printResultScore(frames);
-
-        printRemain(frames);
-
-        System.out.println();
-    }
-
-
 
     public static void printTitle() {
         System.out.println(TITLE);

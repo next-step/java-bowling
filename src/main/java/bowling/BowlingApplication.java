@@ -1,25 +1,18 @@
 package bowling;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.Frame;
-import bowling.domain.Frames;
-import bowling.domain.Pins;
+import bowling.domain.*;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static bowling.view.ResultView.printBowlingGame;
-
 public class BowlingApplication {
     public static void main(String args[]) {
-
         int count = InputView.getPlayerCount();
-        List<String> players = InputView.getPlayerNames(count);
-        List<Frames> frames = initFrames(players);
+        Players players = Players.of(InputView.getPlayerNames(count));
 
-        BowlingGame bowlingGame = BowlingGame.of(frames);
+        BowlingGame bowlingGame = BowlingGame.of(initFrames(players));
 
         int round = 0;
 
@@ -27,7 +20,6 @@ public class BowlingApplication {
             gamePlay(players, bowlingGame, round);
             round = getRound(bowlingGame, round);
         }
-
     }
 
     private static int getRound(BowlingGame bowlingGame, int round) {
@@ -37,25 +29,29 @@ public class BowlingApplication {
         return round;
     }
 
-    private static void gamePlay(List<String> players, BowlingGame bowlingGame, int round) {
-        for (int i = 0; i < players.size(); i++) {
-            bowlling(players, bowlingGame, round, i);
+    private static void gamePlay(Players players, BowlingGame bowlingGame, int round) {
+        for (int index = 0; index < players.size(); index++) {
+            bowling(players, bowlingGame, round, index);
         }
     }
 
-    private static void bowlling(List<String> players, BowlingGame bowlingGame, int round, int i) {
-        Frame frame = bowlingGame.currentFrame(i).next();
+    private static void bowling(Players players, BowlingGame bowlingGame, int round, int index) {
+        Frame frame = bowlingGame.currentFrame(index).next();
 
         if (!frame.isFinish() && frame.getFrameNumber() - 1 == round) {
-            frame.bowl(Pins.of(InputView.getFrameScore(players.get(i))));
-            bowlingGame.get(i).add(frame);
+            int score = InputView.getFrameScore(players.name(index));
+            Pins pins = Pins.of(score);
+            frame.bowl(pins);
+
+            Frames currentGame = bowlingGame.get(index);
+            currentGame.add(frame);
 
             ResultView.printTitle();
             ResultView.printBowlingGame(players, bowlingGame);
         }
     }
 
-    private static List<Frames> initFrames(List<String> players) {
+    private static List<Frames> initFrames(Players players) {
         List<Frames> frames = new ArrayList<>();
 
         for (int i = 0; i < players.size(); i++) {
