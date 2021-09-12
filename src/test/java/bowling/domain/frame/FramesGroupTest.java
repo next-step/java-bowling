@@ -34,10 +34,10 @@ class FramesGroupTest {
 
         //when
         framesGroup.inputNumber(10);
-        Player actualPlayer = framesGroup.nextPlayer();
+        String actualPlayer = framesGroup.getNextPlayerName();
 
         //then
-        assertThat(actualPlayer).isEqualTo(Player.valueOf("BBB"));
+        assertThat(actualPlayer).isEqualTo("BBB");
     }
 
     @Test

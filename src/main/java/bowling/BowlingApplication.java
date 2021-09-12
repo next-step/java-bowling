@@ -19,8 +19,8 @@ public class BowlingApplication {
         BowlingGame bowlingGame = new BowlingGame(playerNames);
         OutputView.scoreBoard(bowlingGame);
         while (!bowlingGame.isGameOver()) {
-            String currentTurnPlayer = bowlingGame.getCurrentTurn();
-            int knockDownNumber = inputView.getInputScore(currentTurnPlayer);
+            String nextTurnPlayer = bowlingGame.getNextTurnPlayer();
+            int knockDownNumber = inputView.getInputScore(nextTurnPlayer);
             bowlingGame.input(knockDownNumber);
             OutputView.scoreBoard(bowlingGame);
         }

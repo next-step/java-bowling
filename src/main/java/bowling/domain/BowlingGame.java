@@ -23,8 +23,8 @@ public class BowlingGame {
         return framesGroup.isFinished();
     }
 
-    public String getCurrentTurn() {
-        return framesGroup.nextPlayer().getName();
+    public String getNextTurnPlayer() {
+        return framesGroup.getNextPlayerName();
     }
 
     public Map<Player, Frames> getFramesGroup() {

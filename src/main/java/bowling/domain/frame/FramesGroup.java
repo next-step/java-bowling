@@ -30,15 +30,19 @@ public final class FramesGroup {
         return new FramesGroup(framesGroup);
     }
 
-    public void inputNumber(int number) {
-        nextFrames().add(number);
+    public void inputNumber(final int number) {
+        getNextFrames().add(number);
     }
 
-    public Frames nextFrames() {
+    private Frames getNextFrames() {
         return nextTurn().getValue();
     }
 
-    public Player nextPlayer() {
+    public String getNextPlayerName() {
+        return getNextPlayer().getName();
+    }
+
+    private Player getNextPlayer() {
         return nextTurn().getKey();
     }
 
@@ -47,7 +51,8 @@ public final class FramesGroup {
             throw new CanNotGetNextTurnException();
         }
 
-        return framesGroup.entrySet().stream()
+        return framesGroup.entrySet()
+                .stream()
                 .min(Map.Entry.comparingByValue())
                 .orElseThrow(CanNotGetNextTurnException::new);
     }
@@ -57,7 +62,8 @@ public final class FramesGroup {
     }
 
     private int notFinishedFramesCount() {
-        return (int) framesGroup.values().stream()
+        return (int) framesGroup.values()
+                .stream()
                 .filter(frames -> !frames.isFinished())
                 .count();
     }
