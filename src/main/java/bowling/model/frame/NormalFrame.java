@@ -35,23 +35,23 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean canPlayNext() {
-        return (fallenPin.isFirst() && !isStrike()) || number.canMakeNext();
+        return (result.isFirstFallenPin() && !isStrike()) || number.canMakeNext();
     }
 
     @Override
     public Frame next(int fallenPinCount) {
         if (isNextFinalFrame()) {
             FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(fallenPinCount);
-            return new FinalFrame(number.next(), firstFrameFallenPin, score.nextFirst(firstFrameFallenPin));
+            return new FinalFrame(number.next(), firstFrameFallenPin, result.nextFirstScore(firstFrameFallenPin));
         }
 
         if (needNextNumber()) {
             FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(fallenPinCount);
-            return new NormalFrame(number.next(), FrameFallenPin.first(fallenPinCount), score.nextFirst(firstFrameFallenPin));
+            return new NormalFrame(number.next(), FrameFallenPin.first(fallenPinCount), result.nextFirstScore(firstFrameFallenPin));
         }
 
-        FrameFallenPin secondFrameFallenPin = fallenPin.second(fallenPinCount);
-        return new NormalFrame(number, secondFrameFallenPin, score.nextSecond(secondFrameFallenPin));
+        FrameFallenPin secondFrameFallenPin = result.secondFallenPin(fallenPinCount);
+        return new NormalFrame(number, secondFrameFallenPin, result.nextSecondScore(secondFrameFallenPin));
     }
 
     @Override

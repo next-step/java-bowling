@@ -35,19 +35,19 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean canPlayNext() {
-        return bonusFallenPin == null && (fallenPin.isFirst() || isStrikeOrSpare());
+        return bonusFallenPin == null && (result.isFirstFallenPin() || isStrikeOrSpare());
     }
 
     @Override
     public Frame next(int fallenPinCount) {
         if (isFirstAndNotStrike()) {
-            FrameFallenPin secondFallenPin = fallenPin.second(fallenPinCount);
-            return new FinalFrame(number, secondFallenPin, score.nextSecond(secondFallenPin));
+            FrameFallenPin secondFallenPin = result.secondFallenPin(fallenPinCount);
+            return new FinalFrame(number, secondFallenPin, result.nextSecondScore(secondFallenPin));
         }
 
         if (isStrikeOrSpare()) {
             FrameFallenPin firstFallenPin = FrameFallenPin.first(fallenPinCount);
-            return new FinalFrame(number, fallenPin, score.nextFirst(firstFallenPin), fallenPinCount);
+            return new FinalFrame(number, result.fallenPin(), result.nextFirstScore(firstFallenPin), fallenPinCount);
         }
 
         throw new IllegalArgumentException("마지막 프레임의 다음 번호 프레임을 만들 수 없습니다.");

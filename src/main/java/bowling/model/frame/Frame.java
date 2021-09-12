@@ -2,15 +2,13 @@ package bowling.model.frame;
 
 public abstract class Frame {
     protected FrameNumber number;
-    protected FrameFallenPin fallenPin;
-    protected FrameScore score;
+    protected FrameResult result;
 
     protected Frame(FrameNumber number, FrameFallenPin fallenPin, FrameScore score) {
         validateNumberRange(number);
 
         this.number = number;
-        this.fallenPin = fallenPin;
-        this.score = score;
+        this.result = new FrameResult(fallenPin, score);
     }
 
     public Frame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount, int score,
@@ -19,8 +17,7 @@ public abstract class Frame {
         validateNumberRange(number);
 
         this.number = number;
-        this.fallenPin = new FrameFallenPin(firstFallenPinCount, secondFallenPinCount);
-        this.score = new FrameScore(score, remainingPitchingCount);
+        this.result = new FrameResult(firstFallenPinCount, secondFallenPinCount, score, remainingPitchingCount);
     }
 
     public Frame(int frameNumber, int firstFallenPinCount, int score, int remainingPitchingCount) {
@@ -28,8 +25,7 @@ public abstract class Frame {
         validateNumberRange(number);
 
         this.number = number;
-        this.fallenPin = FrameFallenPin.first(firstFallenPinCount);
-        this.score = new FrameScore(score, remainingPitchingCount);
+        this.result = new FrameResult(FrameFallenPin.first(firstFallenPinCount), new FrameScore(score, remainingPitchingCount));
     }
 
     protected abstract void validateNumberRange(FrameNumber number);
@@ -54,31 +50,31 @@ public abstract class Frame {
     }
 
     protected boolean isStrike() {
-        return fallenPin.isStrike();
+        return result.isStrike();
     }
 
     protected boolean isFirstAndNotStrike() {
-        return fallenPin.isFirst() && !isStrike();
+        return result.isFirstAndNotStrike();
     }
 
     protected boolean pitchTwice() {
-        return fallenPin.pitchTwice();
+        return result.pitchTwice();
     }
 
     public boolean isSpare() {
-        return fallenPin.isSpare();
+        return result.isSpare();
     }
 
     public FrameFallenPin fallenPin() {
-        return fallenPin;
+        return result.fallenPin();
     }
 
     public FallenPin firstFallenPin() {
-        return fallenPin.first();
+        return result.firstFallenPin();
     }
 
     public FallenPin secondFallenPin() {
-        return fallenPin.second();
+        return result.secondFallenPin();
     }
 
     public boolean isFrameNumberEqual(Frame frame) {
@@ -91,30 +87,30 @@ public abstract class Frame {
         }
 
         nextFrame.plusScore(nextFrame.fallenPinCountTotal());
-        score.plus(nextFrame.fallenPinCountTotal());
+        result.plusScore(nextFrame.fallenPinCountTotal());
     }
 
     private void plusScore(int other) {
-        score.plus(other);
+        result.plusScore(other);
     }
 
     private int fallenPinCountTotal() {
-        return fallenPin.countTotal();
+        return result.fallenPinCountTotal();
     }
 
     public int scoreValue() {
-        return score.scoreValue();
+        return result.scoreValue();
     }
 
     public Score score() {
-        return score.score();
+        return result.score();
     }
 
     public boolean remainsNextPitching() {
-        return score.remainsPitchingCount();
+        return result.remainsPitchingCount();
     }
 
     public void decreaseRemainingPitchingCountOne() {
-        score.decreaseRemainingPitchingCountOne();
+        result.decreaseRemainingPitchingCountOne();
     }
 }
