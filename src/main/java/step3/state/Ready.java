@@ -1,4 +1,8 @@
-package step3;
+package step3.state;
+
+import step3.FirstBowl;
+import step3.state.State;
+import step3.state.Strike;
 
 public class Ready implements State {
 

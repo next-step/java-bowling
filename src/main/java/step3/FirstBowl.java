@@ -1,6 +1,9 @@
 package step3;
 
 import java.util.Objects;
+import step3.state.Miss;
+import step3.state.Spair;
+import step3.state.State;
 
 public class FirstBowl implements State {
     private final int pins;

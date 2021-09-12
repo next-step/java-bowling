@@ -1,4 +1,4 @@
-package step3;
+package step3.state;
 
 public class Miss extends Finished {
     private int firstPins;

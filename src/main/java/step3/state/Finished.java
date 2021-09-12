@@ -1,6 +1,7 @@
-package step3;
+package step3.state;
 
 import step3.exceptions.CanNotThrowBallException;
+import step3.state.State;
 
 public class Finished implements State {
     @Override
