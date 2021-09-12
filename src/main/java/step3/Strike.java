@@ -1,6 +1,6 @@
 package step3;
 
-public class Strike implements State {
+public class Strike extends Finished {
     private Score score;
 
     public Strike() {

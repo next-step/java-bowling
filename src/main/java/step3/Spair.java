@@ -1,6 +1,6 @@
 package step3;
 
-public class Spair implements State {
+public class Spair extends Finished {
     private Score score;
 
     public Spair() {
