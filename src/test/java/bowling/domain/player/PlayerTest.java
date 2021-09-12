@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.player;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -19,18 +19,21 @@ class PlayerTest {
     @DisplayName("2자리 문자열을 입력 받으면, 예외를 던진다")
     @Test
     void exceptionTest1() {
-        assertThatThrownBy(() -> Player.from("KC", Frames.from(new ArrayList<>()))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Player.from("KC", Frames.from(new ArrayList<>()))).isInstanceOf(
+            IllegalArgumentException.class);
     }
 
     @DisplayName("빈문자를 입력 받으면, 예외를 던진다")
     @Test
     void exceptionTest2() {
-        assertThatThrownBy(() -> Player.from("", Frames.from(new ArrayList<>()))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Player.from("", Frames.from(new ArrayList<>()))).isInstanceOf(
+            IllegalArgumentException.class);
     }
 
     @DisplayName("널을 입력 받으면, 예외를 던진다")
     @Test
     void exceptionTest3() {
-        assertThatThrownBy(() -> Player.from(null, Frames.from(new ArrayList<>()))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Player.from(null, Frames.from(new ArrayList<>()))).isInstanceOf(
+            IllegalArgumentException.class);
     }
 }
