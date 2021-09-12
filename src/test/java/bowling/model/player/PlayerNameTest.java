@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName("볼링 게임 플레이어 테스트")
+@DisplayName("볼링 게임 플레이어 이름 테스트")
 public class PlayerNameTest {
 
     @DisplayName("플레이어 이름이 알파벳 3글자가 아니면 예외가 발생한다.")
