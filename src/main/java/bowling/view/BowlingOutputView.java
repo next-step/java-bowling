@@ -15,6 +15,7 @@ public class BowlingOutputView {
     public static void printFramesStatus(Player player, ScoreFrames scoreFrames) {
         System.out.println("| NAME " + getScoreLabel() + "|");
         System.out.println(getPlayerName(player) + getScores(scoreFrames) + "|");
+        System.out.println("|      " + getCalculatedScores(scoreFrames) + "|");
     }
 
     private static String getPlayerName(Player player) {
