@@ -3,130 +3,65 @@ package bowling.model.frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("볼링 프레임 점수 테스트")
 public class FrameScoreTest {
 
-    @DisplayName("프레임 점수 첫 번째 객체의 두 번째 점수값은 비어있어야 한다.")
+    @DisplayName("프레임의 첫 투구가 스트라이크면 두 번의 투구를 기다려야 한다.")
     @Test
-    void emptySecondScoreOfFrameScoreFirstTest() {
+    void strikeFrameScoreTest() {
         // given, when
-        FrameScore frameScoreFirst = FrameScore.first(5);
+        FrameScore initialStrikeFrameScore = FrameScore.initial(new FrameFallenPin(10));
+
+        FrameFallenPin firstFallenPin = new FrameFallenPin(5);
+        FrameScore frameScore = FrameScore.initial(new FrameFallenPin(5));
+        FrameScore frameNextScore = frameScore.nextSecond(firstFallenPin.second(5));
+        FrameScore strikeFrameScore = frameNextScore.nextFirst(new FrameFallenPin(10));
 
         // then
-        assertSame(frameScoreFirst.getSecond(), null);
+        assertEquals(initialStrikeFrameScore.remainingPitchingCount(), new RemainingPitchingCount(2));
+        assertEquals(strikeFrameScore.remainingPitchingCount(), new RemainingPitchingCount(2));
     }
 
-    @DisplayName("프레임 점수 두 번째 객체의 첫 번째 점수값이 비어있으면 안된다.")
+    @DisplayName("프레임의 투구가 스페어면 한 번의 투구를 기다려야 한다.")
     @Test
-    void notEmptyFirstScoreOfFrameScoreSecondTest() {
+    void spareFrameScoreTest() {
         // given, when
-        FrameScore frameScoreFirst = FrameScore.first(5);
-        FrameScore frameScoreSecond = frameScoreFirst.second(5);
+        FrameFallenPin firstFallenPin = new FrameFallenPin(5);
+        FrameScore initialFrameScore = FrameScore.initial(firstFallenPin);
+        FrameScore spareFrameScore = initialFrameScore.nextSecond(firstFallenPin.second(5));
 
         // then
-        assertNotSame(frameScoreSecond.getFirst(), null);
+        assertEquals(spareFrameScore.remainingPitchingCount(), new RemainingPitchingCount(1));
     }
 
-    @DisplayName("이미 스트라이크인데 두 번째 점수를 생성하려고 하면 예외가 발생한다.")
+    @DisplayName("프레임의 투구가 첫 투구이고 스트라이크가 아니면 아 한 번의 투구(2번째 투구)를 기다려야 한다.")
     @Test
-    void createSecondScoreOfStrikeFrameExceptionTest() {
-        // given
-        FrameScore strikeFrameScore = FrameScore.first(10);
+    void frameFirstScoreTest() {
+        // given, when
+        FrameScore initialFrameScore = FrameScore.initial(new FrameFallenPin(5));
 
-        // when, then
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> strikeFrameScore.second(0))
-                .withMessage("이미 스트라이크이기 때문에 두 번째 점수를 생성할 수 없습니다.");
+        // then
+        assertEquals(initialFrameScore.remainingPitchingCount(), new RemainingPitchingCount(1));
     }
 
-    @DisplayName("프레임 점수의 총합이 10점을 초과면 예외가 발생한다.")
+    @DisplayName("스트라이크와 스페어가 아니라면 다음 프레임 점수는 이전 프레임 점수에 현재 쓰러뜨린 볼링 핀의 합이다.")
     @Test
-    void totalScoreOverMaxExceptionTest() {
-        // given
-        FrameScore frameScore = FrameScore.first(5);
+    void nextFrameScoreTest() {
+        // given, when
+        FrameFallenPin firstFallenPin = new FrameFallenPin(5);
+        FrameScore initialFrameScore = FrameScore.initial(firstFallenPin);
+        FrameScore secondFrameScore = initialFrameScore.nextSecond(firstFallenPin.second(4));
 
-        // when, then
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> frameScore.second(6))
-                .withMessage("총 볼링 점수가 10점을 초과할 수 없습니다.");
-    }
+        FrameFallenPin thirdFallenPin = new FrameFallenPin(4);
+        FrameScore thirdFrameScore = secondFrameScore.nextFirst(thirdFallenPin);
+        FrameScore fourthFrameScore = thirdFrameScore.nextSecond(thirdFallenPin.second(3));
 
-    @DisplayName("isStrike() 메소드를 통해 스트라이크 여부를 조회할 수 있다.")
-    @Test
-    void isStrikeFrameScoreTest() {
-        // given
-        FrameScore strikeScore = FrameScore.first(10);
-        FrameScore notStrikeScore = FrameScore.first(9);
-
-        // when, then
-        assertTrue(strikeScore.isStrike());
-        assertFalse(notStrikeScore.isStrike());
-    }
-
-    @DisplayName("isSpare() 메소드를 통해 스페어 여부를 조회할 수 있다.")
-    @Test
-    void isSpareFrameScoreTest() {
-        // given
-        FrameScore firstScore = FrameScore.first(8);
-        FrameScore spareScore = firstScore.second(2);
-        FrameScore notSpareScore = firstScore.second(1);
-
-        // when, then
-        assertFalse(firstScore.isSpare());
-        assertTrue(spareScore.isSpare());
-        assertFalse(notSpareScore.isSpare());
-    }
-
-    @DisplayName("isMiss() 메소드를 통해 미스 여부를 조회할 수 있다.")
-    @Test
-    void isMissFrameScoreTest() {
-        // given
-        FrameScore firstScore = FrameScore.first(5);
-        FrameScore missScore = firstScore.second(3);
-        FrameScore notMissScore = firstScore.second(5);
-
-        // when, then
-        assertFalse(firstScore.isMiss());
-        assertTrue(missScore.isMiss());
-        assertFalse(notMissScore.isMiss());
-    }
-
-    @DisplayName("pitchTwice() 메소드를 통해 두 번 던진 점수 여부를 조회할 수 있다.")
-    @Test
-    void pitchTwiceFrameScoreTest() {
-        // given
-        FrameScore firstScore = FrameScore.first(5);
-        FrameScore secondScore = firstScore.second(5);
-
-        // when, then
-        assertFalse(firstScore.pitchTwice());
-        assertTrue(secondScore.pitchTwice());
-    }
-
-    @DisplayName("isFirst() 메소드를 통해 프레임 첫 점수인지 여부를 조회할 수 있다.")
-    @Test
-    void isFirstFrameScoreTest() {
-        // given
-        FrameScore firstScore = FrameScore.first(5);
-        FrameScore secondScore = firstScore.second(5);
-
-        // when, then
-        assertTrue(firstScore.isFirst());
-        assertFalse(secondScore.isFirst());
-    }
-
-    @DisplayName("isXXXGutter() 메소드를 통해 거터 여부를 조회할 수 있다.")
-    @Test
-    void isGutterFrameScoreTest() {
-        // given
-        FrameScore firstGutter = FrameScore.first(0);
-        FrameScore doubleGutter = firstGutter.second(0);
-
-        // when, then
-        assertTrue(firstGutter.isFirstAndGutter());
-        assertTrue(doubleGutter.isDoubleGutter());
+        // then
+        assertEquals(initialFrameScore.score(), Score.from(5));
+        assertEquals(secondFrameScore.score(), Score.from(9));
+        assertEquals(thirdFrameScore.score(), Score.from(13));
+        assertEquals(fourthFrameScore.score(), Score.from(16));
     }
 }

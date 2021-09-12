@@ -1,100 +1,70 @@
 package bowling.model.frame;
 
 public class FrameScore {
-    private static final int MIN_TOTAL_SCORE = 0;
-    private static final int MAX_TOTAL_SCORE = 10;
-    private static final Score EMPTY_SCORE = null;
+    private Score score;
+    private final RemainingPitchingCount remainingPitchingCount;
 
-    private final Score first;
-    private final Score second;
-
-    public FrameScore(Score first, Score second) {
-        this.first = first;
-        this.second = second;
+    private FrameScore(Score score, RemainingPitchingCount remainingPitchingCount) {
+        this.score = score;
+        this.remainingPitchingCount = remainingPitchingCount;
     }
 
-    public FrameScore(Score first) {
-        this.first = first;
-        this.second = EMPTY_SCORE;
+    public FrameScore(int score, int remainingPitchingCount) {
+        this(Score.from(score), new RemainingPitchingCount(remainingPitchingCount));
     }
 
-    public static FrameScore first(int first) {
-        return new FrameScore(Score.of(first));
+    public static FrameScore initial(FrameFallenPin fallenPin) {
+        int initialFallenPinCount = fallenPin.countTotal();
+        return new FrameScore(Score.from(initialFallenPinCount), findRemainingPitchingCount(fallenPin));
     }
 
-    public FrameScore second(int second) {
-        validateNotStrike();
-        validateSecondScoreRange(first.getValue(), second);
-
-        return new FrameScore(first, Score.of(second));
+    public FrameScore nextFirst(FrameFallenPin firstFallenPin) {
+        int firstFallenPinCount = firstFallenPin.firstCount();
+        return new FrameScore(score.plusScore(firstFallenPinCount), findRemainingPitchingCount(firstFallenPin));
     }
 
-    private void validateNotStrike() {
-        if (isStrike()) {
-            throw new IllegalArgumentException("이미 스트라이크이기 때문에 두 번째 점수를 생성할 수 없습니다.");
-        }
+    public FrameScore nextSecond(FrameFallenPin secondFallenPin) {
+        int secondFallenPinCount = secondFallenPin.secondCount();
+        return new FrameScore(score.plusScore(secondFallenPinCount), findRemainingPitchingCount(secondFallenPin));
     }
 
-    private void validateSecondScoreRange(int first, int second) {
-        int totalScore = first + second;
-        if (totalScore > MAX_TOTAL_SCORE) {
-            throw new IllegalArgumentException(String.format("총 볼링 점수가 %d점을 초과할 수 없습니다.", MAX_TOTAL_SCORE));
-        }
-    }
-
-    public boolean isStrike() {
-        return first.isMax() && second == EMPTY_SCORE;
-    }
-
-    public boolean isSpare() {
-        if (!pitchTwice()) {
-            return false;
+    private static RemainingPitchingCount findRemainingPitchingCount(FrameFallenPin frameFallenPin) {
+        if (frameFallenPin.isStrike()) {
+            return RemainingPitchingCount.strike();
         }
 
-        int totalScore = first.getValue() + second.getValue();
-        return totalScore == MAX_TOTAL_SCORE;
-    }
-
-    public boolean isMiss() {
-        if (!pitchTwice()) {
-            return false;
+        if (frameFallenPin.isSpare()) {
+            return RemainingPitchingCount.spare();
         }
 
-        int totalScore = first.getValue() + second.getValue();
-        return totalScore > MIN_TOTAL_SCORE && totalScore < MAX_TOTAL_SCORE;
-    }
-
-    public boolean pitchTwice() {
-        return first != EMPTY_SCORE && second != EMPTY_SCORE;
-    }
-
-    public boolean isEmpty() {
-        return first == EMPTY_SCORE;
-    }
-
-    public boolean isFirst() {
-        return first != EMPTY_SCORE && second == EMPTY_SCORE;
-    }
-
-    public Score getFirst() {
-        return first;
-    }
-
-    public Score getSecond() {
-        return second;
-    }
-
-    public boolean isFirstAndGutter() {
-        if (first == EMPTY_SCORE) {
-            return false;
+        if (frameFallenPin.pitchTwice()) {
+            return RemainingPitchingCount.secondAndNotSpare();
         }
-        return first.isMin() && second == EMPTY_SCORE;
+
+        return RemainingPitchingCount.firstAndNotStrike();
     }
 
-    public boolean isDoubleGutter() {
-        if (first == EMPTY_SCORE || second == EMPTY_SCORE) {
-            return false;
-        }
-        return first.isMin() && second.isMin();
+    public Score score() {
+        return score;
+    }
+
+    public int scoreValue() {
+        return score.value();
+    }
+
+    public void plus(int additionalScore) {
+        score.plus(additionalScore);
+    }
+
+    public boolean remainsPitchingCount() {
+        return !remainingPitchingCount.isNoCount();
+    }
+
+    public void decreaseRemainingPitchingCountOne() {
+        remainingPitchingCount.decrease();
+    }
+
+    public RemainingPitchingCount remainingPitchingCount() {
+        return remainingPitchingCount;
     }
 }

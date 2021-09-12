@@ -1,16 +1,12 @@
 package bowling.model.frame;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 public class Score {
     private static final int MIN = 0;
-    private static final int MAX = 10;
-    private static final String STRIKE_SYMBOL = "X";
-    private static final String GUTTER_SYMBOL = "-";
-    private static final Map<Integer, Score> SCORES = new HashMap<>();
+    private static final int MAX = 300;
 
-    private final int score;
+    private int score;
 
     private Score(int score) {
         validateRange(score);
@@ -18,44 +14,38 @@ public class Score {
         this.score = score;
     }
 
-    public static Score of(int scoreValue) {
-        Score score = SCORES.get(scoreValue);
-        if (score != null) {
-            return score;
-        }
-
-        score = new Score(scoreValue);
-        SCORES.put(scoreValue, score);
-        return score;
+    public static Score from(int score) {
+        return new Score(score);
     }
 
     private void validateRange(int score) {
         if (score < MIN || score > MAX) {
-            throw new IllegalArgumentException("볼링 점수는 0점 이상 10점 이하여야 합니다.");
+            throw new IllegalArgumentException(String.format("볼링 점수는 %d점 이상 %d점 이하이어야 합니다.", MIN, MAX));
         }
     }
 
-    public int getValue() {
+    public Score plusScore(int additionalScore) {
+        return Score.from(score + additionalScore);
+    }
+
+    public void plus(int additionalScore) {
+        score += additionalScore;
+    }
+
+    public int value() {
         return score;
     }
 
-    public boolean isMax() {
-        return score == MAX;
-    }
-
-    public boolean isMin() {
-        return score == MIN;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Score)) return false;
+        Score score1 = (Score) o;
+        return score == score1.score;
     }
 
     @Override
-    public String toString() {
-        if (isMin()) {
-            return GUTTER_SYMBOL;
-        }
-
-        if (isMax()) {
-            return STRIKE_SYMBOL;
-        }
-        return String.valueOf(score);
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }

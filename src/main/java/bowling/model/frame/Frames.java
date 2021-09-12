@@ -16,32 +16,54 @@ public class Frames {
         this.frames = frames;
     }
 
-    public List<Frame> play(int score) {
+    public void play(int fallenPinCount) {
         if (frames.isEmpty()) {
-            return playFirst(score);
+            initialPlay(fallenPinCount);
+            return;
         }
-        return playNotFirst(score);
+        nextPlay(fallenPinCount);
     }
 
-    private List<Frame> playFirst(int score) {
+    private void initialPlay(int fallenPinCount) {
         validateNextIsPlayable();
 
-        Frame first = Frame.first(score);
-        frames.add(first);
-        return frames;
+        Frame initialFrame = Frame.initial(fallenPinCount);
+        frames.add(initialFrame);
     }
 
-    private List<Frame> playNotFirst(int score) {
+    private void nextPlay(int fallenPinCount) {
         validateNextIsPlayable();
 
-        Frame next = lastFrame().next(score);
-        if (next.isFrameNumberEqual(lastFrame())) {
+        Frame nextFrame = lastFrame().next(fallenPinCount);
+        if (nextFrame.isFrameNumberEqual(lastFrame())) {
             int lastFrameIndex = frames.size() - GAP_BETWEEN_SIZE_AND_INDEX;
             frames.remove(lastFrameIndex);
         }
 
-        frames.add(next);
-        return frames;
+        decreaseRemainingPitchingCount();
+        calculateRemainingScore(nextFrame);
+
+        frames.add(nextFrame);
+    }
+
+    private void calculateRemainingScore(Frame nextFrame) {
+        if (frames.isEmpty()) {
+            return;
+        }
+
+        Frame lastFrame = lastFrame();
+        boolean canCalculateStrike = lastFrame.isStrike() && !lastFrame.remainsNextPitching();
+        boolean canCalculateSpare = lastFrame.isSpare() && !lastFrame.remainsNextPitching() && !nextFrame.pitchTwice();
+
+        if (canCalculateStrike || canCalculateSpare) {
+            lastFrame.calculateRemainingScore(nextFrame);
+        }
+    }
+
+    private void decreaseRemainingPitchingCount() {
+        frames.stream()
+                .filter(Frame::remainsNextPitching)
+                .forEach(Frame::decreaseRemainingPitchingCount);
     }
 
     private void validateNextIsPlayable() {
@@ -74,8 +96,16 @@ public class Frames {
         validateNextIsPlayable();
 
         if (frames.isEmpty()) {
-            return FrameNumber.first();
+            return FrameNumber.initial();
         }
         return lastFrame().nextNumber();
+    }
+
+    public int scoreValue(int index) {
+        return frames.get(index).scoreValue();
+    }
+
+    public List<Frame> frames() {
+        return frames;
     }
 }

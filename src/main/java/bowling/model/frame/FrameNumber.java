@@ -9,19 +9,19 @@ public class FrameNumber {
 
     private final int number;
 
-    public FrameNumber(int number) {
-        validateRange(number);
+    public FrameNumber(int frameNumber) {
+        validateRange(frameNumber);
 
-        this.number = number;
+        this.number = frameNumber;
     }
 
-    private void validateRange(int number) {
-        if (number < MIN || number > MAX) {
+    private void validateRange(int frameNumber) {
+        if (frameNumber < MIN || frameNumber > MAX) {
             throw new IllegalArgumentException(String.format("프레임 번호는 %d 이상 %d 이하이어야 합니다.", MIN, MAX));
         }
     }
 
-    public static FrameNumber first() {
+    public static FrameNumber initial() {
         return new FrameNumber(MIN);
     }
 
@@ -51,6 +51,10 @@ public class FrameNumber {
 
     public boolean isOver(int number) {
         return this.number > number;
+    }
+
+    public int value() {
+        return number;
     }
 
     @Override

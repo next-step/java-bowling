@@ -1,5 +1,6 @@
 package bowling.model.player;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,10 +23,22 @@ public class Player {
         }
     }
 
-    public boolean equals(String other) {
-        if (name == null || name.isEmpty()) {
-            return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
-        return name.equals(other);
+
+        if (name.equals(o.toString())) {
+            return true;
+        }
+
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

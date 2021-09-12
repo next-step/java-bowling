@@ -22,18 +22,32 @@ public class FrameNumberTest {
                 .withMessage("프레임 번호는 1 이상 10 이하이어야 합니다.");
     }
 
-    @DisplayName("첫번째 프레임 번호는 1이다.")
+    @DisplayName("프레임 번호가 1 이상 10 이하라면 정상 생성되어야 한다.")
     @Test
-    void firstFrameNumberTest() {
+    void createFrameNumberTest() {
         // given, when, then
-        assertEquals(FrameNumber.first(), new FrameNumber(1));
+        for (int number = 1; number < 10; number++) {
+            assertEquals(new FrameNumber(number).value(), number);
+        }
+    }
+
+    @DisplayName("최초 프레임 번호는 1이다.")
+    @Test
+    void initialFrameNumberTest() {
+        // given, when, then
+        assertEquals(FrameNumber.initial(), new FrameNumber(1));
     }
 
     @DisplayName("next() 메소드를 통해 다음 프레임 번호를 생성할 수 있다.")
     @Test
     void nextFrameNumberTest() {
-        // given, when, then
-        assertEquals(FrameNumber.first().next(), new FrameNumber(2));
+        // given
+        FrameNumber initialFrameNumber = FrameNumber.initial();
+        FrameNumber nextFrameNumber = initialFrameNumber.next();
+
+        // when, then
+        assertEquals(initialFrameNumber, new FrameNumber(1));
+        assertEquals(nextFrameNumber, new FrameNumber(2));
     }
 
     @DisplayName("canMakeNext() 메소드를 통해 다음 프레임 번호 생성 가능 여부를 조회할 수 있다.")
@@ -41,7 +55,7 @@ public class FrameNumberTest {
     @CsvSource(value = {"9:true", "10:false"}, delimiter = ':')
     void canMakeNextFrameNumberTest(int number, boolean result) {
         // given, when, then
-        assertSame(new FrameNumber(number).canMakeNext(), result);
+        assertEquals(new FrameNumber(number).canMakeNext(), result);
     }
 
     @DisplayName("isNextFinal() 메소드를 통해 다음 프레임 번호가 마지막 번호인지 여부를 조회할 수 있다.")
@@ -49,7 +63,7 @@ public class FrameNumberTest {
     @CsvSource(value = {"8:false", "9:true", "10:false"}, delimiter = ':')
     void isNextFinalFrameNumberTest(int number, boolean result) {
         // given, when, then
-        assertSame(new FrameNumber(number).isNextFinal(), result);
+        assertEquals(new FrameNumber(number).isNextFinal(), result);
     }
 
     @DisplayName("isUnder(), isEqual(), isOver() 메소드를 통해 숫자를 비교할 수 있다.")

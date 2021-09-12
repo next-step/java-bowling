@@ -2,37 +2,47 @@ package bowling.model.frame;
 
 public abstract class Frame {
     protected FrameNumber number;
-    protected FrameScore score;
+    protected FrameResult result;
 
-    protected Frame(FrameNumber number, FrameScore score) {
+    protected Frame(FrameNumber number, FrameFallenPin fallenPin, FrameScore score) {
         validateNumberRange(number);
 
         this.number = number;
-        this.score = score;
+        this.result = new FrameResult(fallenPin, score);
     }
 
-    public Frame(int number, int firstScore, int secondScore) {
-        FrameNumber frameNumber = new FrameNumber(number);
-        validateNumberRange(frameNumber);
+    public Frame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount, int score,
+                 int remainingPitchingCount) {
+        FrameNumber number = new FrameNumber(frameNumber);
+        validateNumberRange(number);
 
-        this.number = new FrameNumber(number);
-        this.score = new FrameScore(Score.of(firstScore), Score.of(secondScore));
+        this.number = number;
+        this.result = new FrameResult(firstFallenPinCount, secondFallenPinCount, score, remainingPitchingCount);
+    }
+
+    public Frame(int frameNumber, int firstFallenPinCount, int score, int remainingPitchingCount) {
+        FrameNumber number = new FrameNumber(frameNumber);
+        validateNumberRange(number);
+
+        this.number = number;
+        this.result = new FrameResult(FrameFallenPin.first(firstFallenPinCount), new FrameScore(score, remainingPitchingCount));
     }
 
     protected abstract void validateNumberRange(FrameNumber number);
 
     public abstract boolean canPlayNext();
 
-    public abstract Frame next(int score);
+    public abstract Frame next(int fallenPinCount);
 
     public abstract FrameNumber nextNumber();
 
     public abstract boolean isBonusPlay();
 
-    public abstract Score getBonusScore();
+    public abstract FallenPin bonusFallenPin();
 
-    public static Frame first(int score) {
-        return new NormalFrame(FrameNumber.first(), FrameScore.first(score));
+    public static Frame initial(int fallenPinCount) {
+        FrameFallenPin initialFallenPin = FrameFallenPin.first(fallenPinCount);
+        return new NormalFrame(FrameNumber.initial(), initialFallenPin, FrameScore.initial(initialFallenPin));
     }
 
     protected boolean isStrikeOrSpare() {
@@ -40,34 +50,59 @@ public abstract class Frame {
     }
 
     protected boolean isStrike() {
-        return score.isStrike();
+        return result.isStrike();
     }
 
     protected boolean isFirstAndNotStrike() {
-        return score.isFirst() && !isStrike();
+        return result.isFirstAndNotStrike();
     }
 
-    protected boolean pitchTwice() {
-        return score.pitchTwice();
+    public boolean pitchTwice() {
+        return result.pitchTwice();
     }
 
-    private boolean isSpare() {
-        return score.isSpare();
+    public boolean isSpare() {
+        return result.isSpare();
     }
 
-    public FrameScore getScore() {
-        return score;
+    public FallenPin firstFallenPin() {
+        return result.firstFallenPin();
     }
 
-    public Score getFirstScore() {
-        return score.getFirst();
-    }
-
-    public Score getSecondScore() {
-        return score.getSecond();
+    public FallenPin secondFallenPin() {
+        return result.secondFallenPin();
     }
 
     public boolean isFrameNumberEqual(Frame frame) {
         return number.equals(frame.number);
+    }
+
+    public void calculateRemainingScore(Frame nextFrame) {
+        if (!isStrikeOrSpare()) {
+            throw new IllegalArgumentException("스트라이크 또는 스페어 점수를 계산할 수 있는 상태가 아닙니다.");
+        }
+
+        nextFrame.plusScore(nextFrame.fallenPinCountTotal());
+        result.plusScore(nextFrame.fallenPinCountTotal());
+    }
+
+    private void plusScore(int additionalScore) {
+        result.plusScore(additionalScore);
+    }
+
+    private int fallenPinCountTotal() {
+        return result.fallenPinCountTotal();
+    }
+
+    public int scoreValue() {
+        return result.scoreValue();
+    }
+
+    public boolean remainsNextPitching() {
+        return result.remainsPitchingCount();
+    }
+
+    public void decreaseRemainingPitchingCount() {
+        result.decreaseRemainingPitchingCount();
     }
 }

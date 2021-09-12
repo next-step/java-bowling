@@ -4,16 +4,17 @@ public class NormalFrame extends Frame {
     private static final int MIN_NORMAL_NUMBER = 1;
     private static final int MAX_NORMAL_NUMBER = 9;
 
-    public NormalFrame(FrameNumber number, FrameScore score) {
-        super(number, score);
+    public NormalFrame(FrameNumber number, FrameFallenPin fallenPin, FrameScore score) {
+        super(number, fallenPin, score);
     }
 
-    public NormalFrame(int number, int firstScore, int secondScore) {
-        super(number, firstScore, secondScore);
+    public NormalFrame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount, int score,
+                       int remainingPitchingCount) {
+        super(frameNumber, firstFallenPinCount, secondFallenPinCount, score, remainingPitchingCount);
     }
 
-    public NormalFrame(int number, int firstScore) {
-        super(new FrameNumber(number), FrameScore.first(firstScore));
+    public NormalFrame(int frameNumber, int firstFallenPinCount, int score, int remainingPitchingCount) {
+        super(frameNumber, firstFallenPinCount, score, remainingPitchingCount);
     }
 
     private boolean isNextFinalFrame() {
@@ -34,20 +35,23 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean canPlayNext() {
-        return (score.isFirst() && !isStrike()) || number.canMakeNext();
+        return (result.isFirstFallenPin() && !isStrike()) || number.canMakeNext();
     }
 
     @Override
-    public Frame next(int score) {
+    public Frame next(int fallenPinCount) {
         if (isNextFinalFrame()) {
-            return new FinalFrame(number.next(), FrameScore.first(score));
+            FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(fallenPinCount);
+            return new FinalFrame(number.next(), firstFrameFallenPin, result.nextFirstScore(firstFrameFallenPin));
         }
 
         if (needNextNumber()) {
-            return new NormalFrame(number.next(), FrameScore.first(score));
+            FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(fallenPinCount);
+            return new NormalFrame(number.next(), FrameFallenPin.first(fallenPinCount), result.nextFirstScore(firstFrameFallenPin));
         }
 
-        return new NormalFrame(number, this.score.second(score));
+        FrameFallenPin secondFrameFallenPin = result.secondFallenPin(fallenPinCount);
+        return new NormalFrame(number, secondFrameFallenPin, result.nextSecondScore(secondFrameFallenPin));
     }
 
     @Override
@@ -64,7 +68,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Score getBonusScore() {
+    public FallenPin bonusFallenPin() {
         return null;
     }
 }
