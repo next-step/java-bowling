@@ -14,22 +14,22 @@ public abstract class Frame {
     }
 
     public Frame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount, int score,
-                 int waitingPitchingCount) {
+                 int remainingPitchingCount) {
         FrameNumber number = new FrameNumber(frameNumber);
         validateNumberRange(number);
 
         this.number = number;
         this.fallenPin = new FrameFallenPin(firstFallenPinCount, secondFallenPinCount);
-        this.score = new FrameScore(score, waitingPitchingCount);
+        this.score = new FrameScore(score, remainingPitchingCount);
     }
 
-    public Frame(int frameNumber, int firstFallenPinCount, int score, int waitingPitchingCount) {
+    public Frame(int frameNumber, int firstFallenPinCount, int score, int remainingPitchingCount) {
         FrameNumber number = new FrameNumber(frameNumber);
         validateNumberRange(number);
 
         this.number = number;
         this.fallenPin = FrameFallenPin.first(firstFallenPinCount);
-        this.score = new FrameScore(score, waitingPitchingCount);
+        this.score = new FrameScore(score, remainingPitchingCount);
     }
 
     protected abstract void validateNumberRange(FrameNumber number);
@@ -110,11 +110,11 @@ public abstract class Frame {
         return score.score();
     }
 
-    public boolean isWaitingNextPitching() {
-        return score.isWaitingPitching();
+    public boolean remainsNextPitching() {
+        return score.remainsPitchingCount();
     }
 
-    public void decreaseWaitingPitchingCountOne() {
-        score.decreaseWaitingPitchingCountOne();
+    public void decreaseRemainingPitchingCountOne() {
+        score.decreaseRemainingPitchingCountOne();
     }
 }

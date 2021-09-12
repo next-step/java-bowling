@@ -98,7 +98,7 @@ public class ResultView {
 
     private static String generateEmptySectionsOfScoreDisplay(List<Frame> frames) {
         long scoreDisplayCount = frames.stream()
-                .filter(frame -> !frame.isWaitingNextPitching())
+                .filter(frame -> !frame.remainsNextPitching())
                 .count();
 
         int emptySectionCount = MAX_EMPTY_SECTION_COUNT - (int) scoreDisplayCount;
@@ -115,7 +115,7 @@ public class ResultView {
     }
 
     private static String generateOneSectionScoreDisplay(Frame frame) {
-        if (!frame.isBonusPlay() && frame.isWaitingNextPitching()) {
+        if (!frame.isBonusPlay() && frame.remainsNextPitching()) {
             return EMPTY_STRING;
         }
 

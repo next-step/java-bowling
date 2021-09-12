@@ -21,8 +21,8 @@ public class FrameScoreTest {
         FrameScore strikeFrameScore = frameNextScore.nextFirst(new FrameFallenPin(10));
 
         // then
-        assertSame(initialStrikeFrameScore.waitingPitchingCount(), 2);
-        assertSame(strikeFrameScore.waitingPitchingCount(), 2);
+        assertSame(initialStrikeFrameScore.remainingPitchingCount(), 2);
+        assertSame(strikeFrameScore.remainingPitchingCount(), 2);
     }
 
     @DisplayName("프레임의 투구가 스페어면 한 번의 투구를 기다려야 한다.")
@@ -34,7 +34,7 @@ public class FrameScoreTest {
         FrameScore spareFrameScore = initialFrameScore.nextSecond(firstFallenPin.second(5));
 
         // then
-        assertSame(spareFrameScore.waitingPitchingCount(), 1);
+        assertSame(spareFrameScore.remainingPitchingCount(), 1);
     }
 
     @DisplayName("프레임의 투구가 첫 투구이고 스트라이크가 아니면 아 한 번의 투구(2번째 투구)를 기다려야 한다.")
@@ -44,7 +44,7 @@ public class FrameScoreTest {
         FrameScore initialFrameScore = FrameScore.initial(new FrameFallenPin(5));
 
         // then
-        assertSame(initialFrameScore.waitingPitchingCount(), 1);
+        assertSame(initialFrameScore.remainingPitchingCount(), 1);
     }
 
     @DisplayName("스트라이크와 스페어가 아니라면 다음 프레임 점수는 이전 프레임 점수에 현재 쓰러뜨린 볼링 핀의 합이다.")

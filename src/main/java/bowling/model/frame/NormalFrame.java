@@ -9,12 +9,12 @@ public class NormalFrame extends Frame {
     }
 
     public NormalFrame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount, int score,
-                       int waitingPitchingCount) {
-        super(frameNumber, firstFallenPinCount, secondFallenPinCount, score, waitingPitchingCount);
+                       int remainingPitchingCount) {
+        super(frameNumber, firstFallenPinCount, secondFallenPinCount, score, remainingPitchingCount);
     }
 
-    public NormalFrame(int frameNumber, int firstFallenPinCount, int score, int waitingPitchingCount) {
-        super(frameNumber, firstFallenPinCount, score, waitingPitchingCount);
+    public NormalFrame(int frameNumber, int firstFallenPinCount, int score, int remainingPitchingCount) {
+        super(frameNumber, firstFallenPinCount, score, remainingPitchingCount);
     }
 
     private boolean isNextFinalFrame() {

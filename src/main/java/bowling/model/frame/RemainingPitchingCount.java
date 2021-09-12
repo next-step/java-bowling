@@ -1,6 +1,6 @@
 package bowling.model.frame;
 
-public class WaitingPitchingCount {
+public class RemainingPitchingCount {
     private static final int COUNT_OF_STRIKE = 2;
     private static final int COUNT_OF_SPARE = 1;
     private static final int ONE_COUNT = 1;
@@ -8,31 +8,31 @@ public class WaitingPitchingCount {
 
     private int count;
 
-    public WaitingPitchingCount(int count) {
+    public RemainingPitchingCount(int count) {
         validateRange(count);
 
         this.count = count;
     }
 
-    public static WaitingPitchingCount ofStrike() {
-        return new WaitingPitchingCount(COUNT_OF_STRIKE);
+    public static RemainingPitchingCount ofStrike() {
+        return new RemainingPitchingCount(COUNT_OF_STRIKE);
     }
 
-    public static WaitingPitchingCount ofSpare() {
-        return new WaitingPitchingCount(COUNT_OF_SPARE);
+    public static RemainingPitchingCount ofSpare() {
+        return new RemainingPitchingCount(COUNT_OF_SPARE);
     }
 
-    public static WaitingPitchingCount ofSecondAndNotSpare() {
-        return new WaitingPitchingCount(NO_COUNT);
+    public static RemainingPitchingCount ofSecondAndNotSpare() {
+        return new RemainingPitchingCount(NO_COUNT);
     }
 
-    public static WaitingPitchingCount ofFirstAndNotStrike() {
-        return new WaitingPitchingCount(ONE_COUNT);
+    public static RemainingPitchingCount ofFirstAndNotStrike() {
+        return new RemainingPitchingCount(ONE_COUNT);
     }
 
     private void validateRange(int count) {
         if (count < NO_COUNT || count > COUNT_OF_STRIKE) {
-            throw new IllegalArgumentException(String.format("기다리고 있는 투구 개수는 %d개 이상 %d개 이하이어야 합니다.",
+            throw new IllegalArgumentException(String.format("남은 투구 개수는 %d개 이상 %d개 이하이어야 합니다.",
                     NO_COUNT, COUNT_OF_STRIKE));
         }
     }

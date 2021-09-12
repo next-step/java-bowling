@@ -15,14 +15,14 @@ public class FinalFrame extends Frame {
     }
 
     public FinalFrame(int frameNumber, int firstFallenPinCount, int secondFallenPinCount, int score,
-                      int waitingPitchingCount, int bonusFallenPin) {
-        super(frameNumber, firstFallenPinCount, secondFallenPinCount, score, waitingPitchingCount);
+                      int remainingPitchingCount, int bonusFallenPin) {
+        super(frameNumber, firstFallenPinCount, secondFallenPinCount, score, remainingPitchingCount);
         this.bonusFallenPin = FallenPin.from(bonusFallenPin);
     }
 
-    public FinalFrame(int frameNumber, int firstFallenPinCount, int score, int waitingPitchingCount,
+    public FinalFrame(int frameNumber, int firstFallenPinCount, int score, int remainingPitchingCount,
                       int bonusFallenPin) {
-        super(frameNumber, firstFallenPinCount, score, waitingPitchingCount);
+        super(frameNumber, firstFallenPinCount, score, remainingPitchingCount);
         this.bonusFallenPin = FallenPin.from(bonusFallenPin);
     }
 
