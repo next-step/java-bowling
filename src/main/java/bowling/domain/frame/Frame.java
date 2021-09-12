@@ -9,7 +9,6 @@ import java.util.Objects;
 public abstract class Frame {
     protected Score score1;
     protected Score score2;
-    protected Score score3;
 
     public Frame next(int number) {
         return setScore(number);
@@ -33,9 +32,7 @@ public abstract class Frame {
         return score2;
     }
 
-    public Score getScore3() {
-        return score3;
-    }
+    public abstract Score getScore3();
 
     public ScoreType getScoreType1() {
         return score1.getScoreType();
@@ -45,22 +42,17 @@ public abstract class Frame {
         return score2.getScoreType();
     }
 
-    public ScoreType getScoreType3() {
-        return score3.getScoreType();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
         return Objects.equals(score1, frame.score1) &&
-                Objects.equals(score2, frame.score2) &&
-                Objects.equals(score3, frame.score3);
+                Objects.equals(score2, frame.score2);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score1, score2, score3);
+        return Objects.hash(score1, score2);
     }
 }

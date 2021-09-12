@@ -6,6 +6,8 @@ import bowling.exception.BowlingFrameException;
 import org.springframework.util.ObjectUtils;
 
 public class FinalFrame extends Frame {
+    protected Score score3;
+
     @Override
     protected Frame setScore(int number) {
         if (isFirstTurn()) {
@@ -43,5 +45,14 @@ public class FinalFrame extends Frame {
         return this.score2.getScoreType().equals(ScoreType.SPARE) ||
                 this.score1.getScoreType().equals(ScoreType.STRIKE) ||
                 this.score2.getScoreType().equals(ScoreType.STRIKE);
+    }
+
+    @Override
+    public Score getScore3() {
+        return score3;
+    }
+
+    public ScoreType getScoreType3() {
+        return score3.getScoreType();
     }
 }

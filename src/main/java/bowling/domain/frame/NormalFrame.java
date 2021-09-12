@@ -33,4 +33,9 @@ public class NormalFrame extends Frame {
         }
         return ObjectUtils.isEmpty(this.score2);
     }
+
+    @Override
+    public Score getScore3() {
+        return null;
+    }
 }
