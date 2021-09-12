@@ -6,8 +6,6 @@ import java.util.Objects;
 
 public class FinalFrame {
 
-    private static final int ROUND = 10;
-
     private final FinalScore score;
 
     private final boolean isFirstTry;
@@ -35,12 +33,8 @@ public class FinalFrame {
     }
 
     public FinalFrame next(int score) {
-        if (isFirstTry && this.score.isSpareOrStrikeWhenAdd(score)) {
-            return next(this.score.next(score), true,  true, false);
-        }
-
-        if (isFirstTry && !this.score.isSpareOrStrikeWhenAdd(score)) {
-            return next(this.score.next(score), true,  false, true);
+        if (isFirstTry) {
+            return secondTry(score);
         }
 
         if (isSecondTry && isThirdAvailable) {
@@ -48,6 +42,13 @@ public class FinalFrame {
         }
 
         return stop(this.score);
+    }
+
+    private FinalFrame secondTry(int score) {
+        if (this.score.isSpareOrStrikeWhenAdd(score)) {
+            return next(this.score.next(score), true,  true, false);
+        }
+        return next(this.score.next(score), true,  false, true);
     }
 
     protected static FinalFrame next(FinalScore score, boolean isSecondTry, boolean isThirdAvailable,  boolean isDone) {

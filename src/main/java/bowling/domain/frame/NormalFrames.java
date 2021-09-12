@@ -12,6 +12,10 @@ public class NormalFrames {
         this.normalFrames = new ArrayList<>();
     }
 
+    private NormalFrames(List<NormalFrame> normalFrames) {
+        this.normalFrames = normalFrames;
+    }
+
     public static NormalFrames empty() {
         return new NormalFrames();
     }

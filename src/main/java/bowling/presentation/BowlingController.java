@@ -2,6 +2,7 @@ package bowling.presentation;
 
 import bowling.domain.Player;
 import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.FinalFrames;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.NormalFrames;
 
@@ -28,10 +29,14 @@ public class BowlingController {
             normalFrames.add(normalFrame);
         }
 
+        FinalFrames finalFrames = FinalFrames.empty();
+
         FinalFrame finalFrame = FinalFrame.start(ScoreInputView.create().input(10));
+        finalFrames.add(finalFrame);
 
         while (!finalFrame.isDone()) {
             finalFrame = finalFrame.next(ScoreInputView.create().input(10));
+            finalFrames.add(finalFrame);
         }
 
 
