@@ -9,7 +9,7 @@ public class NormalFrame extends Frame {
     private static final int TOTAL_MAX = 10;
 
     @Override
-    public boolean add(final Pitch pitch) {
+    public boolean addPitchIfPossible(final Pitch pitch) {
         if (isFull()) {
             return false;
         }

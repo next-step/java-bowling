@@ -57,9 +57,9 @@ class FinalFrameTest {
         Pitch thirdPitch = new Pitch(3);
 
         // when
-        boolean firstPitchResult = finalFrame.add(firstPitch);
-        boolean secondPitchResult = finalFrame.add(secondPitch);
-        boolean thirdPitchResult = finalFrame.add(thirdPitch);
+        boolean firstPitchResult = finalFrame.addPitchIfPossible(firstPitch);
+        boolean secondPitchResult = finalFrame.addPitchIfPossible(secondPitch);
+        boolean thirdPitchResult = finalFrame.addPitchIfPossible(thirdPitch);
 
         // then
         assertThat(firstPitchResult).isEqualTo(true);
@@ -78,10 +78,10 @@ class FinalFrameTest {
         Pitch lastPitch = new Pitch(5);
 
         // when
-        boolean firstPitchResult = finalFrame.add(firstPitch);
-        boolean secondPitchResult = finalFrame.add(secondPitch);
-        boolean thirdPitchResult = finalFrame.add(thirdPitch);
-        boolean lastPitchResult = finalFrame.add(lastPitch);
+        boolean firstPitchResult = finalFrame.addPitchIfPossible(firstPitch);
+        boolean secondPitchResult = finalFrame.addPitchIfPossible(secondPitch);
+        boolean thirdPitchResult = finalFrame.addPitchIfPossible(thirdPitch);
+        boolean lastPitchResult = finalFrame.addPitchIfPossible(lastPitch);
 
         // then
         assertThat(firstPitchResult).isEqualTo(true);
@@ -101,10 +101,10 @@ class FinalFrameTest {
         Pitch lastPitch = new Pitch(5);
 
         // when
-        boolean firstPitchResult = finalFrame.add(firstPitch);
-        boolean secondPitchResult = finalFrame.add(secondPitch);
-        boolean thirdPitchResult = finalFrame.add(thirdPitch);
-        boolean lastPitchResult = finalFrame.add(lastPitch);
+        boolean firstPitchResult = finalFrame.addPitchIfPossible(firstPitch);
+        boolean secondPitchResult = finalFrame.addPitchIfPossible(secondPitch);
+        boolean thirdPitchResult = finalFrame.addPitchIfPossible(thirdPitch);
+        boolean lastPitchResult = finalFrame.addPitchIfPossible(lastPitch);
 
         // then
         assertThat(firstPitchResult).isEqualTo(true);
@@ -122,8 +122,8 @@ class FinalFrameTest {
         Pitch secondPitch = new Pitch(10);
 
         // when
-        boolean firstPitchResult = finalFrame.add(firstPitch);
-        boolean secondPitchResult = finalFrame.add(secondPitch);
+        boolean firstPitchResult = finalFrame.addPitchIfPossible(firstPitch);
+        boolean secondPitchResult = finalFrame.addPitchIfPossible(secondPitch);
         boolean full = finalFrame.isFull();
 
         // then
@@ -142,9 +142,9 @@ class FinalFrameTest {
         Pitch thirdPitch = new Pitch(10);
 
         // when
-        boolean firstPitchResult = finalFrame.add(firstPitch);
-        boolean secondPitchResult = finalFrame.add(secondPitch);
-        boolean thirdPitchResult = finalFrame.add(thirdPitch);
+        boolean firstPitchResult = finalFrame.addPitchIfPossible(firstPitch);
+        boolean secondPitchResult = finalFrame.addPitchIfPossible(secondPitch);
+        boolean thirdPitchResult = finalFrame.addPitchIfPossible(thirdPitch);
         boolean full = finalFrame.isFull();
 
         // then

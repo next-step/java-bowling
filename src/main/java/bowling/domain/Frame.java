@@ -15,7 +15,7 @@ public abstract class Frame {
         this.pitches = new ArrayList<>();
     }
 
-    public abstract boolean add(final Pitch pitch);
+    public abstract boolean addPitchIfPossible(final Pitch pitch);
 
     public abstract boolean isFull();
 

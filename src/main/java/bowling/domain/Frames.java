@@ -19,7 +19,7 @@ public class Frames {
     }
 
     public boolean addPitch(final Pitch pitch) {
-        if (currentFrame().add(pitch)) {
+        if (currentFrame().addPitchIfPossible(pitch)) {
             return true;
         }
         if (frames.size() == SIZE) {

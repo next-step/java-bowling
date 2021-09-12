@@ -36,8 +36,8 @@ class NormalFrameTest {
         Pitch secondPitch = new Pitch(7);
 
         // when
-        boolean firstPitchResult = normalFrame.add(firstPitch);
-        boolean secondPitchResult = normalFrame.add(secondPitch);
+        boolean firstPitchResult = normalFrame.addPitchIfPossible(firstPitch);
+        boolean secondPitchResult = normalFrame.addPitchIfPossible(secondPitch);
 
         // then
         assertThat(firstPitchResult).isEqualTo(true);
@@ -54,9 +54,9 @@ class NormalFrameTest {
         Pitch thirdPitch = new Pitch(7);
 
         // when
-        boolean firstPitchResult = normalFrame.add(firstPitch);
-        boolean secondPitchResult = normalFrame.add(secondPitch);
-        boolean thirdPitchResult = normalFrame.add(secondPitch);
+        boolean firstPitchResult = normalFrame.addPitchIfPossible(firstPitch);
+        boolean secondPitchResult = normalFrame.addPitchIfPossible(secondPitch);
+        boolean thirdPitchResult = normalFrame.addPitchIfPossible(secondPitch);
 
         // then
         assertThat(firstPitchResult).isEqualTo(true);
@@ -72,7 +72,7 @@ class NormalFrameTest {
         Pitch firstPitch = new Pitch(9);
 
         // when
-        boolean firstPitchResult = normalFrame.add(firstPitch);
+        boolean firstPitchResult = normalFrame.addPitchIfPossible(firstPitch);
         boolean full = normalFrame.isFull();
 
         // then
@@ -88,7 +88,7 @@ class NormalFrameTest {
         Pitch firstPitch = new Pitch(10);
 
         // when
-        boolean firstPitchResult = normalFrame.add(firstPitch);
+        boolean firstPitchResult = normalFrame.addPitchIfPossible(firstPitch);
         boolean full = normalFrame.isFull();
 
         // then
