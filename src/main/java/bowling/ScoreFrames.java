@@ -9,7 +9,7 @@ public class ScoreFrames implements Iterable<ScoreFrame> {
     private final LinkedList<ScoreFrame> scoreFrames = new LinkedList<>();
 
     public ScoreFrames() {
-        scoreFrames.add(new NormalScoreFrame(new Turn(START_TURN)));
+        scoreFrames.addLast(new NormalScoreFrame(new Turn(START_TURN)));
     }
 
     public void bowl(int score) {
@@ -26,6 +26,10 @@ public class ScoreFrames implements Iterable<ScoreFrame> {
 
     public boolean isContinued() {
         return getCurrentTurn() <= END_TURN;
+    }
+
+    public int size() {
+        return scoreFrames.size();
     }
 
     private ScoreFrame getLastScoreFrame() {
