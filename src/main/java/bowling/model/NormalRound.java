@@ -1,21 +1,20 @@
 package bowling.model;
 
+import java.util.Objects;
+
 public class NormalRound implements Round {
     private Point point;
+    private BowlingResult result;
 
     @Override
     public BowlingResult play(int totalPoint, int tryCount, BowlingResult beforeResult) {
         this.point = new Point(totalPoint);
-        return BowlingResult.findBowlingResult(point, tryCount, beforeResult);
+        this.result = BowlingResult.findBowlingResult(point, tryCount, beforeResult);
+        return result;
     }
 
     @Override
-    public Round next(BowlingResult roundResult, int index, int tryCount) {
-        if (isBeforeFinalRound(index) && isStrike(roundResult) ||
-                isBeforeFinalRound(index) && isSecondTry(tryCount)) {
-            return new FinalRound();
-        }
-
+    public Round next() {
         return new NormalRound();
     }
 
@@ -32,8 +31,8 @@ public class NormalRound implements Round {
     }
 
     @Override
-    public boolean isSkipNextRound(int tryCount, BowlingResult roundResult, boolean isBonus) {
-        if (isStrike(roundResult)) {
+    public boolean isSkipNextRound() {
+        if (isStrike(result)) {
             return true;
         }
 
@@ -41,7 +40,20 @@ public class NormalRound implements Round {
     }
 
     @Override
-    public boolean isBonus(boolean isBonus, BowlingResult roundResult) {
+    public boolean isBonus() {
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalRound that = (NormalRound) o;
+        return Objects.equals(point, that.point) && result == that.result;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(point, result);
     }
 }

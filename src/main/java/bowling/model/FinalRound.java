@@ -1,30 +1,47 @@
 package bowling.model;
 
+import java.util.Objects;
+
 public class FinalRound implements Round {
     private Point point;
+    private BowlingResult result;
 
     @Override
     public BowlingResult play(int totalPoint, int tryCount, BowlingResult beforeResult) {
         this.point = new Point(totalPoint);
-        return BowlingResult.findBowlingResult(point, tryCount, beforeResult);
+        this.result = BowlingResult.findBowlingResult(point, tryCount, beforeResult);
+        return result;
     }
 
     @Override
-    public Round next(BowlingResult roundResult, int index, int tryCount) {
+    public Round next() {
         return new FinalRound();
     }
 
     @Override
-    public boolean isSkipNextRound(int tryCount, BowlingResult roundResult, boolean isBonus) {
+    public boolean isSkipNextRound() {
         return false;
     }
 
     @Override
-    public boolean isBonus(boolean isBonus, BowlingResult roundResult) {
-        if (roundResult == BowlingResult.STRIKE || roundResult == BowlingResult.SPARE) {
+    public boolean isBonus() {
+        if (result == BowlingResult.STRIKE || result == BowlingResult.SPARE) {
             return true;
         }
 
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FinalRound that = (FinalRound) o;
+        return Objects.equals(point, that.point) && result == that.result;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(point, result);
     }
 }
