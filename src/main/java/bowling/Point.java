@@ -4,14 +4,18 @@ import java.util.Objects;
 
 public class Point {
 
-    private static final int MAX_POINT = 10;
-    private static final int MIN_POINT = 0;
+    public static final int MAX_POINT = 10;
+    public static final int MIN_POINT = 0;
 
     private int point;
 
     public Point(int point) {
         validate(point);
         this.point = point;
+    }
+
+    public int currentPoint() {
+        return point;
     }
 
     private void validate(int point) {
