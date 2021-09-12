@@ -5,20 +5,15 @@ import bowling.exception.BusinessException;
 import java.util.Objects;
 
 public class FrameNumber {
-    private static final int MAX_NUMBER = 10;
-    private static final String CREATE_FRAME_NUMBER_ERROR = "프레임은 " + MAX_NUMBER + "개 입니다.";
+    private static final String CREATE_FRAME_NUMBER_ERROR = "프레임은 " + BowlingGame.MAX_FRAME_SIZE + "개 입니다.";
 
     private final int frameNumber;
 
     public FrameNumber(final int frameNumber) {
-        if (frameNumber > MAX_NUMBER) {
+        if (frameNumber > BowlingGame.MAX_FRAME_SIZE || frameNumber < BowlingGame.FIRST_FRAME_INDEX) {
             throw new BusinessException(CREATE_FRAME_NUMBER_ERROR);
         }
         this.frameNumber = frameNumber;
-    }
-
-    public boolean isFinalNumber() {
-        return frameNumber == MAX_NUMBER;
     }
 
     public int nextNumber() {

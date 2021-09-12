@@ -12,8 +12,7 @@ import java.util.stream.Collectors;
 public class NormalFrame implements Frame {
 
     private static final int FIRST_PITCH_INDEX = 0;
-    private static final int MAXIMUM_NORMAL_FRAME_PITCH = 2;
-    private static final String SEPARATOR = "|";
+    public static final int MAXIMUM_NORMAL_FRAME_PITCH = 2;
 
     private final FrameNumber frameNumber;
     private List<Pitch> pitches = new LinkedList<>();
@@ -61,7 +60,7 @@ public class NormalFrame implements Frame {
     public String result() {
         return pitches.stream()
                 .map(Pitch::value)
-                .collect(Collectors.joining(SEPARATOR));
+                .collect(Collectors.joining(Pitch.SEPARATOR));
     }
 
     @Override

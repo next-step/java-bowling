@@ -40,4 +40,8 @@ public class BowlingGame {
     private Frame currentFrame() {
         return frames.get(frames.size() - 1);
     }
+
+    public int currentFrameNumber() {
+        return frames.size();
+    }
 }

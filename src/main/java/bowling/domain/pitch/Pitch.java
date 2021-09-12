@@ -7,12 +7,15 @@ import java.util.Objects;
 public class Pitch {
     public static final int MINIMUM_COUNT_OF_PINS = 0;
     public static final int MAXIMUM_COUNT_OF_PINS = 10;
+    public static final String SEPARATOR = "|";
 
     private final int countOfPins;
+    private final int remains;
 
     public Pitch(final int countOfPins) {
         validate(countOfPins);
         this.countOfPins = countOfPins;
+        this.remains = MAXIMUM_COUNT_OF_PINS - countOfPins;
     }
 
     public static Pitch firstPitch(final int countOfPins) {
@@ -29,13 +32,20 @@ public class Pitch {
     }
 
     public Pitch pitch(final int countOfPins) {
-        if (this.countOfPins + countOfPins == MAXIMUM_COUNT_OF_PINS) {
+        if (!(this instanceof Strike) && this.countOfPins + countOfPins == MAXIMUM_COUNT_OF_PINS) {
             return new Spare(countOfPins);
         }
-        if (countOfPins == MINIMUM_COUNT_OF_PINS) {
+        if (!(this instanceof Strike) && countOfPins == MINIMUM_COUNT_OF_PINS) {
             return new Gutter();
         }
+        if (this.remains == MINIMUM_COUNT_OF_PINS && countOfPins == MAXIMUM_COUNT_OF_PINS) {
+            return new Strike();
+        }
         return new Pitch(countOfPins);
+    }
+
+    public int intValue() {
+        return countOfPins;
     }
 
     public String value() {
@@ -47,11 +57,12 @@ public class Pitch {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pitch pitch = (Pitch) o;
-        return countOfPins == pitch.countOfPins;
+        return countOfPins == pitch.countOfPins &&
+                remains == pitch.remains;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(countOfPins);
+        return Objects.hash(countOfPins, remains);
     }
 }

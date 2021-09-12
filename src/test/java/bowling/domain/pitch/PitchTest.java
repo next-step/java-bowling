@@ -24,6 +24,12 @@ class PitchTest {
         assertThat(Pitch.firstPitch(10)).isExactlyInstanceOf(Strike.class);
     }
 
+    @DisplayName("이전투구가 10이고 현재투구가 10이면 스트라이크다.")
+    @Test
+    void second_strike(){
+        assertThat(new Pitch(10).pitch(10)).isExactlyInstanceOf(Strike.class);
+    }
+
     @DisplayName("처음 투구할 때 10개 이하를 쓰러트리면 Pitch 타입이 된다.")
     @Test
     void firstPitch() {
@@ -44,6 +50,7 @@ class PitchTest {
     }
 
     @DisplayName("아무것도 아닌 투구의 값은 숫자(문자)이다.")
+    @Test
     void value() {
         assertThat(new Pitch(1).pitch(2).value()).isEqualTo("2");
     }

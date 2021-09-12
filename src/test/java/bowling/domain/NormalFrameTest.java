@@ -43,15 +43,20 @@ class NormalFrameTest {
     @DisplayName("노멀프레임에서 2번 투구한 결과는 다음과 같다.")
     @ParameterizedTest
     @CsvSource(value = {"2 2|2", "8 2|/", "0 2|-"}, delimiter = ' ')
-    void spare(int countOfPints, String expected) {
+    void pitch_result(int countOfPints, String expected) {
         assertThat(new NormalFrame(1).pitch(2).pitch(countOfPints).result()).isEqualTo(expected);
     }
 
     @DisplayName("투구가 끝난 프레임의 다음은 새 프레임이다.")
     @Test
-    void next_normal(){
+    void next_normal() {
         Frame normal = new NormalFrame(1);
         assertThat(normal.pitch(2).pitch(8).next()).isEqualTo(new NormalFrame(2));
     }
-    
+
+    @DisplayName("투구가 끝난 마지막 노멀 프레임의 다음은 파이널 프레임이다.")
+    @Test
+    void next_final() {
+        assertThat(new NormalFrame(9).pitch(10).next()).isEqualTo(new FinalFrame());
+    }
 }

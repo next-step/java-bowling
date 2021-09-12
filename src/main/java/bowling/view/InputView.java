@@ -18,7 +18,7 @@ public class InputView {
     }
 
     public static int inputFramePitching(final BowlingGame frames) {
-//        System.out.print(frames.valueOfCurrentFrameNumber() + INPUT_FRAME_PITCHING);
+        System.out.print(frames.currentFrameNumber() + INPUT_FRAME_PITCHING);
         return Integer.parseInt(SCANNER.nextLine());
     }
 }
