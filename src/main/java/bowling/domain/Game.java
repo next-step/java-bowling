@@ -52,7 +52,7 @@ public class Game {
                 .isFinished();
     }
 
-    public void addPoint(Shot shot) {
+    private void addPoint(Shot shot) {
         frames.stream()
                 .filter(frameScore -> !frameScore.isScoringFinished())
                 .forEach((frameScore -> frameScore.addPoint(shot)));
