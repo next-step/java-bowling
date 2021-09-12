@@ -107,4 +107,8 @@ public class Scores {
     public int numberOfTurnInFrame() {
         return scores.size();
     }
+
+    public List<Score> scores() {
+        return scores;
+    }
 }
