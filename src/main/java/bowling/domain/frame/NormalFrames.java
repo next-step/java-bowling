@@ -1,8 +1,7 @@
 package bowling.domain.frame;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class NormalFrames {
 
@@ -20,6 +19,25 @@ public class NormalFrames {
         return new NormalFrames();
     }
 
+    public static NormalFrames of(NormalFrame... normalFrames) {
+        return new NormalFrames(Arrays.asList(normalFrames));
+    }
+
+    public List<NormalFrame> getAll() {
+        return Collections.unmodifiableList(normalFrames);
+    }
+
+    public NormalFrames add(NormalFrame normalFrame) {
+        normalFrames.add(normalFrame);
+        return this;
+    }
+
+    public NormalFrames findByRound(int round) {
+        return normalFrames.stream()
+                .filter(normalFrame -> normalFrame.isRound(round))
+                .collect(Collectors.collectingAndThen(Collectors.toList(), NormalFrames::new));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,10 +49,5 @@ public class NormalFrames {
     @Override
     public int hashCode() {
         return Objects.hash(normalFrames);
-    }
-
-    public NormalFrames add(NormalFrame normalFrame) {
-        normalFrames.add(normalFrame);
-        return this;
     }
 }

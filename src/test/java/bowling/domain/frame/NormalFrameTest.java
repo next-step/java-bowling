@@ -85,4 +85,13 @@ class NormalFrameTest {
         assertThat(frame.isLast()).isFalse();
     }
 
+    @Test
+    public void 라운드를_받아서_맞는지_여부를_판단할_수_있다(){
+        //given
+        //when
+        NormalFrame frame = NormalFrame.of(8, Score.from(3), true);
+        //then
+        assertThat(frame.isRound(8)).isTrue();
+    }
+
 }

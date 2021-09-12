@@ -28,6 +28,10 @@ public class NormalFrame {
         return new NormalFrame(round, score, isSecondTry);
     }
 
+    public int score() {
+        return score.getScore();
+    }
+
     public int nextTurnRound() {
         if (isSecondTry) {
             return round + 1;
@@ -69,6 +73,10 @@ public class NormalFrame {
         }
 
         return false;
+    }
+
+    public boolean isRound(int round) {
+        return this.round == round;
     }
 
     private boolean isDone() {
