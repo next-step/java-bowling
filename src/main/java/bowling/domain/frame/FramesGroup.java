@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.player.Player;
+import bowling.exception.CanNotGetNextTurnException;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -42,9 +43,13 @@ public final class FramesGroup {
     }
 
     private Map.Entry<Player, Frames> nextTurn() {
+        if (isFinished()) {
+            throw new CanNotGetNextTurnException();
+        }
+
         return framesGroup.entrySet().stream()
                 .min(Map.Entry.comparingByValue())
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(CanNotGetNextTurnException::new);
     }
 
     public boolean isFinished() {
