@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.FinalScore;
+import bowling.domain.score.FinalScore;
 
 import java.util.Objects;
 
@@ -38,21 +38,31 @@ public class FinalFrame {
         }
 
         if (isSecondTry && isThirdAvailable) {
-            return next(this.score.next(score), false, false, true);
+            return thirdTry(this.score.next(score));
         }
 
         return stop(this.score);
     }
 
     private FinalFrame secondTry(int score) {
-        if (this.score.isSpareOrStrikeWhenAdd(score)) {
-            return next(this.score.next(score), true,  true, false);
+
+        if (this.score.isStrike()) {
+            return secondTry(this.score.next(score), true, false);
         }
-        return next(this.score.next(score), true,  false, true);
+
+        if (this.score.isSpareWhenAdd(score)) {
+            return secondTry(this.score.next(score), true, false);
+        }
+
+        return secondTry(this.score.next(score), false, true);
     }
 
-    protected static FinalFrame next(FinalScore score, boolean isSecondTry, boolean isThirdAvailable,  boolean isDone) {
-        return new FinalFrame(score, false, isSecondTry, isThirdAvailable, isDone);
+    protected static FinalFrame secondTry(FinalScore score, boolean isThirdAvailable, boolean isDone) {
+        return new FinalFrame(score, false, true, isThirdAvailable, isDone);
+    }
+
+    protected static FinalFrame thirdTry(FinalScore score) {
+        return new FinalFrame(score, false, false, false, true);
     }
 
     protected static FinalFrame stop(FinalScore score) {
@@ -61,6 +71,10 @@ public class FinalFrame {
 
     public boolean isDone() {
         return isDone;
+    }
+
+    public int score() {
+        return score.get();
     }
 
     @Override

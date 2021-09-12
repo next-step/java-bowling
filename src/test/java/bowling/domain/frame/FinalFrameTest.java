@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.FinalScore;
+import bowling.domain.score.FinalScore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -29,7 +29,7 @@ public class FinalFrameTest {
         //when
         frame = frame.next(2);
         //then
-        assertThat(frame).isEqualTo(FinalFrame.of(FinalScore.from(10).next(2), false, true,  false, false));
+        assertThat(frame).isEqualTo(FinalFrame.of(FinalScore.from(10).next(2), false, true, false, false));
     }
 
     @ParameterizedTest

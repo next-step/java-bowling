@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.frame.vo;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,9 +10,12 @@ public class NormalFrameScore {
 
     private final int second;
 
-    private NormalFrameScore(int first, int second) {
+    private final boolean isFirstTry;
+
+    private NormalFrameScore(int first, int second, boolean isFirstTry) {
         this.first = first;
         this.second = second;
+        this.isFirstTry = isFirstTry;
     }
 
     public static NormalFrameScore of(Integer... scores) {
@@ -20,14 +23,20 @@ public class NormalFrameScore {
     }
 
     public static NormalFrameScore of(List<Integer> scores) {
-        validate(scores);
-        return new NormalFrameScore(scores.get(0), scores.get(1));
+
+        validateIsNotEmpty(scores);
+        validateEachScore(scores);
+
+        if (scores.size() == 2) {
+            return new NormalFrameScore(scores.get(0), scores.get(1), false);
+        }
+        return new NormalFrameScore(scores.get(0), 0, true);
     }
 
-    private static void validate(List<Integer> scores) {
-        validateIsNotEmpty(scores);
-        validateHasTwoElements(scores);
-        validateEachScore(scores);
+    private static void validateIsNotEmpty(List<Integer> scores) {
+        if (scores == null || scores.isEmpty()) {
+            throw new IllegalArgumentException("프레임의 점수가 비어있습니다.");
+        }
     }
 
     private static void validateEachScore(List<Integer> scores) {
@@ -38,16 +47,16 @@ public class NormalFrameScore {
         });
     }
 
-    private static void validateHasTwoElements(List<Integer> scores) {
-        if (scores.size() != 2) {
-            throw new IllegalArgumentException("프레임의 점수는 2개여야 합니다.");
-        }
+    public int getFirst() {
+        return first;
     }
 
-    private static void validateIsNotEmpty(List<Integer> scores) {
-        if (scores == null || scores.isEmpty()) {
-            throw new IllegalArgumentException("프레임의 점수가 비어있습니다.");
-        }
+    public int getSecond() {
+        return second;
+    }
+
+    public boolean isFirstTry() {
+        return isFirstTry;
     }
 
     @Override

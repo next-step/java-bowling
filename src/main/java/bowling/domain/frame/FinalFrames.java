@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,10 +13,6 @@ public class FinalFrames {
         this.finalFrames = new ArrayList<>();
     }
 
-    private FinalFrames(List<FinalFrame> finalFrames) {
-        this.finalFrames = finalFrames;
-    }
-
     public static FinalFrames empty() {
         return new FinalFrames();
     }
@@ -23,6 +20,10 @@ public class FinalFrames {
     public FinalFrames add(FinalFrame finalFrame) {
         finalFrames.add(finalFrame);
         return this;
+    }
+
+    public List<FinalFrame> getAll() {
+        return Collections.unmodifiableList(finalFrames);
     }
 
     @Override

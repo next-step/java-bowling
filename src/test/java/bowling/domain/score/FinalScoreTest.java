@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.score;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,6 +27,15 @@ public class FinalScoreTest {
         FinalScore score = FinalScore.from(10);
         //then
         assertTrue(score.isStrike());
+    }
+
+    @Test
+    public void 현재_스코어에서_다음_스코어를_더했을_때_스페어인지_알_수_있다() {
+        //given
+        //when
+        FinalScore score = FinalScore.from(9);
+        //then
+        assertTrue(score.isSpareWhenAdd(1));
     }
 
     @ParameterizedTest

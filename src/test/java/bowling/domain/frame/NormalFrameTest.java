@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
+import bowling.domain.score.NormalScore;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +23,7 @@ class NormalFrameTest {
         //when
         frame = frame.next(9);
         //then
-        assertThat(frame).isEqualTo(NormalFrame.of(2, Score.from(9), false));
+        assertThat(frame).isEqualTo(NormalFrame.of(2, NormalScore.from(9), false));
     }
 
     @Test
@@ -33,7 +33,7 @@ class NormalFrameTest {
         //when
         frame = frame.next(1);
         //then
-        assertThat(frame).isEqualTo(NormalFrame.of(1, Score.from(1), true));
+        assertThat(frame).isEqualTo(NormalFrame.of(1, NormalScore.from(1), true));
     }
 
     @Test
@@ -43,13 +43,13 @@ class NormalFrameTest {
         //when
         frame = frame.next(3);
         //then
-        assertThat(frame).isEqualTo(NormalFrame.of(2, Score.from(3), false));
+        assertThat(frame).isEqualTo(NormalFrame.of(2, NormalScore.from(3), false));
     }
 
     @Test
     public void _9회차의_첫시도에서_스트라이크를_치면_끝난다() {
         //given
-        NormalFrame frame = NormalFrame.of(8, Score.from(3), true);
+        NormalFrame frame = NormalFrame.of(8, NormalScore.from(3), true);
         //when
         frame = frame.next(10);
         //then
@@ -59,7 +59,7 @@ class NormalFrameTest {
     @Test
     public void _9회차의_첫시도가_스트라이크가_아니면_끝나지_않는다() {
         //given
-        NormalFrame frame = NormalFrame.of(8, Score.from(3), true);
+        NormalFrame frame = NormalFrame.of(8, NormalScore.from(3), true);
         //when
         frame = frame.next(8);
         //then
@@ -69,7 +69,7 @@ class NormalFrameTest {
     @Test
     public void _9회차의_두번째_시도_후_끝난다() {
         //given
-        NormalFrame frame = NormalFrame.of(8, Score.from(3), true);
+        NormalFrame frame = NormalFrame.of(8, NormalScore.from(3), true);
         //when
         frame = frame.next(8).next(1);
         //then
@@ -86,10 +86,10 @@ class NormalFrameTest {
     }
 
     @Test
-    public void 라운드를_받아서_맞는지_여부를_판단할_수_있다(){
+    public void 라운드를_받아서_맞는지_여부를_판단할_수_있다() {
         //given
         //when
-        NormalFrame frame = NormalFrame.of(8, Score.from(3), true);
+        NormalFrame frame = NormalFrame.of(8, NormalScore.from(3), true);
         //then
         assertThat(frame.isRound(8)).isTrue();
     }

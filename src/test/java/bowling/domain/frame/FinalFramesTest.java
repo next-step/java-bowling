@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.FinalScore;
+import bowling.domain.score.FinalScore;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
