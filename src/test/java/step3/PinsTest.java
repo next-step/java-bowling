@@ -2,12 +2,11 @@ package step3;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import step3.exceptions.PinNumberExecption;
 
-public class pinsTest {
+public class PinsTest {
     @DisplayName("볼링핀 4개를 쓰러뜨리면, 남은 볼링핀의 개수는 6개이어야 한다.")
     @Test
     void throwBowl1() {
