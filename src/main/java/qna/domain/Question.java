@@ -1,10 +1,13 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -25,8 +28,7 @@ public class Question extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public Question() {
-    }
+    public Question() {}
 
     public Question(String title, String contents) {
         this.title = title;
@@ -37,28 +39,6 @@ public class Question extends AbstractEntity {
         super(id);
         this.title = title;
         this.contents = contents;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
-    public User getWriter() {
-        return writer;
     }
 
     public Question writeBy(User loginUser) {
@@ -75,17 +55,46 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        this.deleteInvalid(loginUser);
+
+        this.deleted = true;
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(createDeleteHistory());
+        deleteHistories.addAll(this.deleteAnswers());
+        return deleteHistories;
+    }
+
+    public DeleteHistory createDeleteHistory() {
+        return new DeleteHistory(ContentType.QUESTION, this.id, this.writer, LocalDateTime.now());
+    }
+
+    public void deleteInvalid(User loginUser) throws CannotDeleteException {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        if (this.existsAnotherUserAnswer()) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
+    public boolean existsAnotherUserAnswer() {
+        long count = this.answers.stream()
+                .filter(answer -> !answer.isOwner(this.writer))
+                .count();
+        return count > 0 ? true : false;
+
+    }
+
+    private List<DeleteHistory> deleteAnswers() {
+        return this.answers.stream()
+                .map(answer -> answer.delete())
+                .collect(Collectors.toList());
     }
 
     @Override
