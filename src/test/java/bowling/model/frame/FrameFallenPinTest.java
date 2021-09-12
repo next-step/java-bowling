@@ -64,7 +64,7 @@ public class FrameFallenPinTest {
         FrameFallenPin frameFallenPin = FrameFallenPin.first(firstFallenPinCount);
 
         // when, then
-        assertSame(frameFallenPin.isStrike(), isStrike);
+        assertEquals(frameFallenPin.isStrike(), isStrike);
     }
 
     @DisplayName("isSpare() 메소드를 통해 스페어 여부를 조회할 수 있다.")
@@ -77,8 +77,8 @@ public class FrameFallenPinTest {
         FrameFallenPin secondFrameFallenPin = firstFrameFallenPin.second(secondFallenPinCount);
 
         // when, then
-        assertSame(firstFrameFallenPin.isSpare(), isFirstFallenPinStrike);
-        assertSame(secondFrameFallenPin.isSpare(), isSecondFallenPinStrike);
+        assertEquals(firstFrameFallenPin.isSpare(), isFirstFallenPinStrike);
+        assertEquals(secondFrameFallenPin.isSpare(), isSecondFallenPinStrike);
     }
 
 
@@ -126,7 +126,7 @@ public class FrameFallenPinTest {
         FrameFallenPin secondFrameFallenPin = firstFrameFallenPin.second(5);
 
         // when, then
-        assertSame(firstFrameFallenPin.countTotal(), 5);
-        assertSame(secondFrameFallenPin.countTotal(), 10);
+        assertEquals(firstFrameFallenPin.countTotal(), 5);
+        assertEquals(secondFrameFallenPin.countTotal(), 10);
     }
 }

@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("볼링 쓰러진 핀 테스트")
 public class FallenPinTest {
@@ -26,7 +26,7 @@ public class FallenPinTest {
     void createFallenPinTest() {
         // given, when, then
         for (int fallenPinCount = 1; fallenPinCount < 10; fallenPinCount++) {
-            assertSame(FallenPin.from(fallenPinCount).count(), fallenPinCount);
+            assertEquals(FallenPin.from(fallenPinCount).count(), fallenPinCount);
         }
     }
 }

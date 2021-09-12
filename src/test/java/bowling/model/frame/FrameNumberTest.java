@@ -27,7 +27,7 @@ public class FrameNumberTest {
     void createFrameNumberTest() {
         // given, when, then
         for (int number = 1; number < 10; number++) {
-            assertSame(new FrameNumber(number).value(), number);
+            assertEquals(new FrameNumber(number).value(), number);
         }
     }
 
@@ -55,7 +55,7 @@ public class FrameNumberTest {
     @CsvSource(value = {"9:true", "10:false"}, delimiter = ':')
     void canMakeNextFrameNumberTest(int number, boolean result) {
         // given, when, then
-        assertSame(new FrameNumber(number).canMakeNext(), result);
+        assertEquals(new FrameNumber(number).canMakeNext(), result);
     }
 
     @DisplayName("isNextFinal() 메소드를 통해 다음 프레임 번호가 마지막 번호인지 여부를 조회할 수 있다.")
@@ -63,7 +63,7 @@ public class FrameNumberTest {
     @CsvSource(value = {"8:false", "9:true", "10:false"}, delimiter = ':')
     void isNextFinalFrameNumberTest(int number, boolean result) {
         // given, when, then
-        assertSame(new FrameNumber(number).isNextFinal(), result);
+        assertEquals(new FrameNumber(number).isNextFinal(), result);
     }
 
     @DisplayName("isUnder(), isEqual(), isOver() 메소드를 통해 숫자를 비교할 수 있다.")

@@ -85,8 +85,8 @@ public class FramesTest {
         frames.play(3);
 
         // then
-        assertSame(frames.scoreValue(0), 18);
-        assertSame(frames.scoreValue(1), 26);
+        assertEquals(frames.scoreValue(0), 18);
+        assertEquals(frames.scoreValue(1), 26);
     }
 
     @DisplayName("스페어면 다음 1번의 투구까지 점수를 합산한다.")
@@ -100,8 +100,8 @@ public class FramesTest {
         frames.play(3);
 
         // then
-        assertSame(frames.scoreValue(0), 13);
-        assertSame(frames.scoreValue(1), 19);
+        assertEquals(frames.scoreValue(0), 13);
+        assertEquals(frames.scoreValue(1), 19);
     }
 
     @DisplayName("스트라이크, 스페어가 아니면 점수는 현재까지 쓰러뜨린 볼링 핀의 개수이다.")
@@ -115,8 +115,8 @@ public class FramesTest {
         frames.play(5);
 
         // then
-        assertSame(frames.scoreValue(0), 8);
-        assertSame(frames.scoreValue(1), 17);
+        assertEquals(frames.scoreValue(0), 8);
+        assertEquals(frames.scoreValue(1), 17);
     }
 
     @DisplayName("스트라이크, 스페어가 모두 있는 상황에서 점수는 정상적으로 계산되어야 한다.")
@@ -131,8 +131,8 @@ public class FramesTest {
         frames.play(1);
 
         // then
-        assertSame(frames.scoreValue(0), 20);
-        assertSame(frames.scoreValue(1), 38);
-        assertSame(frames.scoreValue(2), 47);
+        assertEquals(frames.scoreValue(0), 20);
+        assertEquals(frames.scoreValue(1), 38);
+        assertEquals(frames.scoreValue(2), 47);
     }
 }
