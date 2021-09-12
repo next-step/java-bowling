@@ -108,4 +108,11 @@ public class Frames {
     public List<Frame> frames() {
         return frames;
     }
+
+    public boolean isLastFramePitchOver() {
+        if (frames.isEmpty()) {
+            return false;
+        }
+        return lastFrame().isPitchOver();
+    }
 }

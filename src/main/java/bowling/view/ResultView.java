@@ -1,7 +1,9 @@
 package bowling.view;
 
+import bowling.model.BowlingGame;
 import bowling.model.frame.FallenPin;
 import bowling.model.frame.Frame;
+import bowling.model.player.Player;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -26,17 +28,29 @@ public class ResultView {
     private static final String EMPTY_STRING = "";
     private static final PrintStream PRINT_STREAM = System.out;
 
-    public static void printBoard(String playerName) {
+    public static void printBoard(List<Player> players) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(FRAME_NAME_AND_NUMBERS);
-        stringBuilder.append(String.format(PLAYER_NAME, playerName));
-        stringBuilder.append(generateEmptySections(MAX_EMPTY_SECTION_COUNT));
-        stringBuilder.append(SCORE_SECTION);
-        stringBuilder.append(generateEmptySections(MAX_EMPTY_SECTION_COUNT));
+
+        for (Player player : players) {
+            stringBuilder.append(String.format(PLAYER_NAME, player.name()));
+            stringBuilder.append(generateEmptySections(MAX_EMPTY_SECTION_COUNT));
+            stringBuilder.append(SCORE_SECTION);
+            stringBuilder.append(generateEmptySections(MAX_EMPTY_SECTION_COUNT));
+        }
         PRINT_STREAM.println(stringBuilder);
     }
 
-    public static void printFrames(String playerName, List<Frame> frames) {
+    public static void printFrames(List<BowlingGame> bowlingGames) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (BowlingGame game : bowlingGames) {
+            String frameResult = generateFrameResult(game.playerName(), game.frames());
+            stringBuilder.append(frameResult);
+        }
+        PRINT_STREAM.println(stringBuilder);
+    }
+
+    public static String generateFrameResult(String playerName, List<Frame> frames) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(generatePlayerNameDisplay(playerName));
         stringBuilder.append(generateFramesFallenPinDisplay(frames));
@@ -44,7 +58,7 @@ public class ResultView {
         stringBuilder.append(generateEmptySectionsOfFallenPinDisplay(frames));
         stringBuilder.append(generateScoreDisplay(frames));
         stringBuilder.append(generateEmptySectionsOfScoreDisplay(frames));
-        PRINT_STREAM.println(stringBuilder);
+        return stringBuilder.toString();
     }
 
     private static String generatePlayerNameDisplay(String playerName) {

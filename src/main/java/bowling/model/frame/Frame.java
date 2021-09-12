@@ -40,6 +40,8 @@ public abstract class Frame {
 
     public abstract FallenPin bonusFallenPin();
 
+    public abstract boolean isPitchOver();
+
     public static Frame initial(int fallenPinCount) {
         FrameFallenPin initialFallenPin = FrameFallenPin.first(fallenPinCount);
         return new NormalFrame(FrameNumber.initial(), initialFallenPin, FrameScore.initial(initialFallenPin));

@@ -1,9 +1,9 @@
 package bowling.model;
 
 import bowling.model.frame.Frame;
-import bowling.model.frame.FrameNumber;
 import bowling.model.frame.Frames;
 import bowling.model.player.Player;
+import bowling.model.player.PlayerNumber;
 
 import java.util.List;
 
@@ -11,24 +11,36 @@ public class BowlingGame {
     private final Player player;
     private final Frames frames;
 
-    public BowlingGame(String playerName) {
-        player = new Player(playerName);
-        frames = new Frames();
+    public BowlingGame(Player player) {
+        this.player = player;
+        this.frames = new Frames();
     }
 
     public void play(int fallenPinCount) {
         frames.play(fallenPinCount);
     }
 
-    public boolean canPlayNext() {
+    public boolean canPlayNextFrame() {
         return frames.canPlayNext();
-    }
-
-    public FrameNumber nextFrameNumber() {
-        return frames.nextFrameNumber();
     }
 
     public List<Frame> frames() {
         return frames.frames();
+    }
+
+    public String playerName() {
+        return player.name();
+    }
+
+    public boolean isEqualPlayerNumber(PlayerNumber playerNumber) {
+        return player.isEqualNumber(playerNumber);
+    }
+
+    public PlayerNumber playerNumber() {
+        return player.number();
+    }
+
+    public boolean isLastFramePitchOver() {
+        return frames.isLastFramePitchOver();
     }
 }

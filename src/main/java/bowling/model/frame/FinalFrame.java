@@ -70,4 +70,9 @@ public class FinalFrame extends Frame {
     public FallenPin bonusFallenPin() {
         return bonusFallenPin;
     }
+
+    @Override
+    public boolean isPitchOver() {
+        return (pitchTwice() && !isSpare()) || (isStrikeOrSpare() && isBonusPlay());
+    }
 }
