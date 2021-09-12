@@ -15,15 +15,11 @@ public class BowlingApplication {
         String playerName = inputView.getInputPlayerName();
         BowlingGame bowlingGame = new BowlingGame(playerName);
 
-        OutputView.scoreBoardHeader();
-        OutputView.scoreBoard(bowlingGame.getPlayer());
-
-        while (!bowlingGame.isFinished()) {
+        OutputView.scoreBoard(bowlingGame);
+        while (!bowlingGame.isGameOver()) {
             int knockDownNumber = inputView.getInputScore(bowlingGame.nextRoundNumber());
             bowlingGame.input(knockDownNumber);
-
-            OutputView.scoreBoardHeader();
-            OutputView.scoreBoard(bowlingGame.getPlayer(), bowlingGame.getFrames());
+            OutputView.scoreBoard(bowlingGame);
         }
     }
 }

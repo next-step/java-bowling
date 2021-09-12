@@ -1,7 +1,7 @@
 package bowling.domain.player;
 
-import bowling.exception.PlayerNameNotValidException;
 import bowling.exception.PlayerNameEmptyException;
+import bowling.exception.PlayerNameNotValidException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

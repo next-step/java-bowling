@@ -15,7 +15,7 @@ public class PinsTest {
 
     @Test
     @DisplayName("생성")
-    void generatePins () {
+    void generatePins() {
         // given
         // when
         Pins pins = Pins.of(9, 1);
@@ -43,7 +43,7 @@ public class PinsTest {
         Pins pins = Pins.of(numbers);
 
         //when
-        int sum = pins.sumPins();
+        int sum = pins.sum();
 
         //then
         assertThat(sum).isEqualTo(actual);

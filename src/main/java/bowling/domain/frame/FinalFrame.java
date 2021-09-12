@@ -1,11 +1,17 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
+import bowling.exception.CanNotCalculateException;
 import bowling.exception.FrameNotCorrectException;
+
+import static bowling.domain.score.Score.BONUS_REMAIN_COUNT_ONE;
+import static bowling.domain.score.Score.BONUS_REMAIN_COUNT_TWO;
 
 public final class FinalFrame extends Frame {
 
     private static final int FINAL_FRAME_ROUND_NUMBER = 10;
+    private static final int STRIKE_OR_SPARE_NUMBER = 10;
     private static final int MAX_SIZE = 3;
     private static final int MIN_SIZE = 2;
 
@@ -26,17 +32,11 @@ public final class FinalFrame extends Frame {
     }
 
     @Override
-    public void inputKnockDownNumber(final int knockDownNumber) {
-        pins.add(knockDownNumber);
-        validateFrame(pins);
-    }
-
-    @Override
     protected void validateFrame(final Pins pins) {
-        if(pins.isSecondPinNotCorrect()) {
+        if (pins.isSecondPinWrong()) {
             throw new FrameNotCorrectException();
         }
-        if(pins.isThirdPinWrong()) {
+        if (pins.isThirdPinWrong()) {
             throw new FrameNotCorrectException();
         }
     }
@@ -49,11 +49,43 @@ public final class FinalFrame extends Frame {
         if (pins.size() < MIN_SIZE) {
             return false;
         }
-        return pins.sumPins() < 10;
+        return pins.sum() < STRIKE_OR_SPARE_NUMBER;
     }
 
     @Override
-    public Frame nextFrame() {
+    public Frame bowl(final int knockDownNumber) {
+        pins.add(knockDownNumber);
+        validateFrame(pins);
         return this;
+    }
+
+    @Override
+    public Frame next() {
+        return this;
+    }
+
+    @Override
+    public boolean canCalculateScore() {
+        return isFinished();
+    }
+
+    @Override
+    public int getScore() {
+        if (!canCalculateScore()) {
+            throw new CanNotCalculateException();
+        }
+        return pins.sum();
+    }
+
+    @Override
+    public int addScore(final Score score) {
+        if (score.isRemainCount(BONUS_REMAIN_COUNT_ONE)) {
+            return score.sum(firstPinNumber());
+        }
+
+        if (score.isRemainCount(BONUS_REMAIN_COUNT_TWO)) {
+            return score.sum(firstPin().sum(secondPin()));
+        }
+        return score.sum(pins.sum());
     }
 }

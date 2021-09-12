@@ -25,8 +25,8 @@ public final class Pin {
             throw new PinOutOfBoundsException();
         }
     }
-    
-    public int sum(Pin pin) {
+
+    public int sum(final Pin pin) {
         return knockDownNumber + pin.knockDownNumber;
     }
 

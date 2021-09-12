@@ -24,8 +24,12 @@ public final class BowlingGame {
         return frames.nextTurnRoundNumber();
     }
 
-    public boolean isFinished() {
+    public boolean isGameOver() {
         return frames.isFinished();
+    }
+
+    public List<Frame> getCanCalculateFrames() {
+        return frames.getCanCalculateFrames();
     }
 
     public List<Frame> getFrames() {
