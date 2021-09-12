@@ -14,46 +14,52 @@ public class FinalFrame {
 
     private final boolean isSecondTry;
 
+    private final boolean isThirdAvailable;
+    private final boolean isDone;
 
-    private FinalFrame(FinalScore score, boolean isFirstTry, boolean isSecondTry) {
+
+    private FinalFrame(FinalScore score, boolean isFirstTry, boolean isSecondTry, boolean isThirdAvailable, boolean isDone) {
         this.score = score;
         this.isFirstTry = isFirstTry;
         this.isSecondTry = isSecondTry;
+        this.isThirdAvailable = isThirdAvailable;
+        this.isDone = isDone;
     }
 
-    protected static FinalFrame of(FinalScore score, boolean isFirstTry, boolean isSecondTry) {
-        return new FinalFrame(score, isFirstTry, isSecondTry);
+    protected static FinalFrame of(FinalScore score, boolean isFirstTry, boolean isSecondTry, boolean isThirdAvailable, boolean isDone) {
+        return new FinalFrame(score, isFirstTry, isSecondTry, isThirdAvailable, isDone);
     }
 
     public static FinalFrame start(int score) {
-        return of(FinalScore.first(score), true, false);
+        return of(FinalScore.from(score), true, false, false, false);
     }
 
     public FinalFrame next(int score) {
-        if (isFirstTry) {
-            return next(this.score.withSecond(score), true);
+        if (isFirstTry && this.score.isSpareOrStrikeWhenAdd(score)) {
+            return next(this.score.next(score), true,  true, false);
         }
 
-        if (isSecondTry && this.score.isSpareOrStrike()) {
-            return next(this.score.withThird(score), false);
+        if (isFirstTry && !this.score.isSpareOrStrikeWhenAdd(score)) {
+            return next(this.score.next(score), true,  false, true);
+        }
+
+        if (isSecondTry && isThirdAvailable) {
+            return next(this.score.next(score), false, false, true);
         }
 
         return stop(this.score);
     }
 
-    protected static FinalFrame next(FinalScore score, boolean isSecondTry) {
-        return new FinalFrame(score, false, isSecondTry);
+    protected static FinalFrame next(FinalScore score, boolean isSecondTry, boolean isThirdAvailable,  boolean isDone) {
+        return new FinalFrame(score, false, isSecondTry, isThirdAvailable, isDone);
     }
 
     protected static FinalFrame stop(FinalScore score) {
-        return new FinalFrame(score, false, false);
+        return new FinalFrame(score, false, false, false, true);
     }
 
     public boolean isDone() {
-        if (score.isSpareOrStrike()) {
-            return !isFirstTry && !isSecondTry;
-        }
-        return !isFirstTry && isSecondTry;
+        return isDone;
     }
 
     @Override
@@ -61,11 +67,11 @@ public class FinalFrame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FinalFrame that = (FinalFrame) o;
-        return isSecondTry == that.isSecondTry && Objects.equals(score, that.score);
+        return isFirstTry == that.isFirstTry && isSecondTry == that.isSecondTry && isDone == that.isDone && Objects.equals(score, that.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, isSecondTry);
+        return Objects.hash(score, isFirstTry, isSecondTry, isDone);
     }
 }

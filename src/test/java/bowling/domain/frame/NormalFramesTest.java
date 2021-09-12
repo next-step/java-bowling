@@ -21,9 +21,9 @@ public class NormalFramesTest {
         //given
         NormalFrames normalFrames = NormalFrames.empty();
         //when
-        normalFrames.add(NormalFrame.of(1, Score.first(0).withSecond(0), true));
+        normalFrames.add(NormalFrame.of(1, Score.from(0), true));
         //then
         assertThat(normalFrames).isEqualTo(
-                NormalFrames.empty().add(NormalFrame.of(1, Score.first(0).withSecond(0), true)));
+                NormalFrames.empty().add(NormalFrame.of(1, Score.from(0), true)));
     }
 }

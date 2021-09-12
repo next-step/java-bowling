@@ -5,9 +5,6 @@ import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.NormalFrames;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BowlingController {
 
     private BowlingController() {
@@ -24,16 +21,11 @@ public class BowlingController {
         NormalFrames normalFrames = NormalFrames.empty();
 
         NormalFrame normalFrame = NormalFrame.start(ScoreInputView.create().input(1));
-
-        if (normalFrame.isDone()) {
-            normalFrames.add(normalFrame);
-        }
+        normalFrames.add(normalFrame);
 
         while (!normalFrame.isLast()) {
             normalFrame = normalFrame.next(ScoreInputView.create().input(normalFrame.nextTurnRound()));
-            if (normalFrame.isDone()) {
-                normalFrames.add(normalFrame);
-            }
+            normalFrames.add(normalFrame);
         }
 
         FinalFrame finalFrame = FinalFrame.start(ScoreInputView.create().input(10));

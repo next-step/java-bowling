@@ -4,34 +4,31 @@ import java.util.Objects;
 
 public class Score {
 
-    private static final int MAX_SCORE = 10;
+    protected static final int MAX_SCORE = 10;
 
-    private final int first;
+    private final int score;
 
-    private final int second;
-
-    protected Score(int first, int second) {
-        this.first = first;
-        this.second = second;
+    protected Score(int score) {
+        this.score = score;
     }
 
     public boolean isStrike() {
-        return first == MAX_SCORE;
+        return score == MAX_SCORE;
     }
 
-    public static Score first(int score) {
+    public static Score from(int score) {
         validateScore(score);
-        return new Score(score, 0);
+        return new Score(score);
     }
 
-    public Score withSecond(int score) {
+    public int getScore() {
+        return score;
+    }
+
+    public Score next(int score) {
         validateScore(score);
         validateComibnedScores(score);
-        return new Score(first, score);
-    }
-
-    public boolean isSpareOrStrike() {
-        return first + second >= MAX_SCORE;
+        return new Score(score);
     }
 
     protected static void validateScore(int score) {
@@ -41,17 +38,9 @@ public class Score {
     }
 
     protected void validateComibnedScores(int score) {
-        if (first + score > MAX_SCORE) {
+        if (this.score + score > MAX_SCORE) {
             throw new IllegalArgumentException("1차시도와 2차시도의 합계는 10점을 넘을 수 없습니다.");
         }
-    }
-
-    protected int getFirst() {
-        return first;
-    }
-
-    protected int getSecond() {
-        return second;
     }
 
     private static boolean outOfRange(int score) {
@@ -62,12 +51,12 @@ public class Score {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Score score = (Score) o;
-        return first == score.first && second == score.second;
+        Score score1 = (Score) o;
+        return score == score1.score;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(first, second);
+        return Objects.hash(score);
     }
 }

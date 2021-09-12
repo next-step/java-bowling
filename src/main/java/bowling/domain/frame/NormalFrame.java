@@ -21,7 +21,7 @@ public class NormalFrame {
     }
 
     public static NormalFrame start(int score) {
-        return of(1, Score.first(score), false);
+        return of(1, Score.from(score), false);
     }
 
     protected static NormalFrame of(int round, Score score, boolean isSecondTry) {
@@ -44,14 +44,14 @@ public class NormalFrame {
     public NormalFrame next(int score) {
 
         if (isSecondTry) {
-            return next(round + 1, Score.first(score), false);
+            return next(round + 1, Score.from(score), false);
         }
 
         if (this.score.isStrike()) {
-            return next(round + 1, Score.first(score), false);
+            return next(round + 1, Score.from(score), false);
         }
 
-        return next(round, this.score.withSecond(score), true);
+        return next(round, this.score.next(score), true);
 
     }
 
@@ -71,7 +71,7 @@ public class NormalFrame {
         return false;
     }
 
-    public boolean isDone() {
+    private boolean isDone() {
         return score.isStrike() || isSecondTry;
     }
 
