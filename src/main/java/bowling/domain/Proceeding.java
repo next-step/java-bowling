@@ -12,8 +12,8 @@ public class Proceeding implements FrameState {
 
     @Override
     public FrameState bowl(FallenPinCount fallenPinCount) {
-        if (fallenPinCount.cannotBeSecondBowlOf(firstFallenPinCount)) {
-            throw new IllegalArgumentException(String.format("쓰러트린 핀의 수가 유효하지 않습니다. first: %s, second: %s", firstFallenPinCount, fallenPinCount));
+        if (firstFallenPinCount.isSparedWith(fallenPinCount)) {
+            return new Spare();
         }
         return null;
     }
