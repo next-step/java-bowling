@@ -9,9 +9,6 @@ import bowling.exception.EndedFrameException;
 
 public abstract class Frame {
 
-    public static final int MIN_NORMAL_FRAME_NUMBER = 1;
-    public static final int MAX_NORMAL_FRAME_NUMBER = 9;
-    public static final int LAST_FRAME_NUMBER = 10;
     protected static final int ATTEMPTS_TO_BOWL = 2;
     protected static final int ATTEMPTS_TO_BOWL_WITH_BONUS = 3;
     protected static final int MAX_PINS_COUNT = 10;
@@ -48,7 +45,7 @@ public abstract class Frame {
     }
 
     public boolean isLast() {
-        return number == LAST_FRAME_NUMBER;
+        return number == LastFrame.FRAME_NUMBER;
     }
 
     public List<PitchResult> results() {
@@ -61,7 +58,7 @@ public abstract class Frame {
 
     public Score score() {
         if (!isEnd()) {
-            return Score.ofUnscored();
+            return Score.ofNotScored();
         }
         return Score.from(totalPins());
     }
@@ -78,7 +75,7 @@ public abstract class Frame {
         try {
             return results.get(resultIndex - 1);
         } catch (IndexOutOfBoundsException e) {
-            return PitchResult.of(Score.UNSCORED);
+            return PitchResult.of(Score.NOT_SCORED);
         }
     }
 

@@ -75,7 +75,7 @@ public class ResultView {
     }
 
     private static String scoreToSymbol(Score score) {
-        if (score.isUnscored()) {
+        if (score.isNotScored()) {
             return SYMBOL_UNSCORED;
         }
         return String.valueOf(score.value());

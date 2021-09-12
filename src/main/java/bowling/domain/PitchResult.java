@@ -35,7 +35,7 @@ public class PitchResult {
     }
 
     private void validateFallenPins(int fallenPins) {
-        if (fallenPins == Score.UNSCORED) {
+        if (fallenPins == Score.NOT_SCORED) {
             return;
         }
         if (fallenPins < MIN_PINS || fallenPins > MAX_PINS) {

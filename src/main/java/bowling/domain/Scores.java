@@ -15,7 +15,7 @@ public class Scores {
 	public static Scores from(Frames frames) {
 		List<Score> scores = new ArrayList<>();
 		Score base = Score.ofZero();
-		for (int frameNumber = Frame.MIN_NORMAL_FRAME_NUMBER; frameNumber <= Frame.LAST_FRAME_NUMBER; frameNumber++) {
+		for (int frameNumber = NormalFrame.MIN_FRAME_NUMBER; frameNumber <= NormalFrame.MAX_FRAME_NUMBER; frameNumber++) {
 			Score score = scoreOfFrame(frames, frames.of(frameNumber));
 			base = base.add(score);
 			scores.add(base);
@@ -29,7 +29,7 @@ public class Scores {
 
 	private static Score scoreOfFrame(Frames frames, Frame frame) {
 		if (!frame.isEnd()) {
-			return Score.ofUnscored();
+			return Score.ofNotScored();
 		}
 
 		Score score = frame.score();
@@ -55,7 +55,7 @@ public class Scores {
 		PitchResult next1stResult = nextFrame.firstResult();
 		PitchResult next2ndResult = nextFrame.secondResult();
 		Score next1stScore = Score.of(next1stResult);
-		if (next1stResult.isStrike() && frame.number() < Frame.MAX_NORMAL_FRAME_NUMBER) {
+		if (next1stResult.isStrike() && frame.number() < NormalFrame.MAX_FRAME_NUMBER) {
 			Frame nextAfterFrame = frames.of(frame.number() + 2);
 			PitchResult nextAfter1stResult = nextAfterFrame.firstResult();
 			return next1stScore.add(Score.of(nextAfter1stResult));

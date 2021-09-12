@@ -8,9 +8,6 @@ import bowling.exception.GameOverException;
 
 public class Frames {
 
-    private static final int FIRST = 1;
-    private static final int NINTH = 9;
-
     private final List<Frame> frames;
 
     public Frames() {
@@ -19,7 +16,7 @@ public class Frames {
 
     private List<Frame> initFrames() {
         List<Frame> frames = new ArrayList<>();
-        for (int number = FIRST; number <= NINTH; number++) {
+        for (int number = NormalFrame.MIN_FRAME_NUMBER; number <= NormalFrame.MAX_FRAME_NUMBER; number++) {
             frames.add(NormalFrame.of(number));
         }
         frames.add(new LastFrame());

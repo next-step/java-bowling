@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Score {
 
-	public static final int UNSCORED = -1;
+	public static final int NOT_SCORED = -1;
 
 	private final int value;
 
@@ -32,19 +32,19 @@ public class Score {
 		return from(0);
 	}
 
-	public static Score ofUnscored() {
-		return from(UNSCORED);
+	public static Score ofNotScored() {
+		return from(NOT_SCORED);
 	}
 
 	public Score add(Score score) {
-		if (score.value == UNSCORED) {
-			return from(UNSCORED);
+		if (score.value == NOT_SCORED) {
+			return from(NOT_SCORED);
 		}
 		return from(value + score.value);
 	}
 
-	public boolean isUnscored() {
-		return value == UNSCORED;
+	public boolean isNotScored() {
+		return value == NOT_SCORED;
 	}
 
 	public int value() {
