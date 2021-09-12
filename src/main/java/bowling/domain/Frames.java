@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Frames {
@@ -12,10 +13,12 @@ public class Frames {
     private static final int SIZE = 10;
 
     private final Stack<Frame> frames;
+    private final List<Integer> scores;
 
     public Frames() {
         frames = new Stack<>();
         frames.add(new NormalFrame());
+        scores = new ArrayList<>();
     }
 
     public boolean addPitch(final Pitch pitch) {
@@ -45,6 +48,34 @@ public class Frames {
         return currentFrameNumber() > Frames.SIZE;
     }
 
+    public List<Integer> scores() {
+        IntStream.range(scores.size(), frames.size())
+                .forEach(this::addScoreIfExist);
+        return Stream.of(scores, emptyIntList())
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+    private List<Integer> emptyIntList() {
+        return Stream.generate(() -> 0)
+                .limit(SIZE - scores.size())
+                .collect(Collectors.toList());
+    }
+
+    private void addScoreIfExist(final int index) {
+        int score = frames.get(index)
+                .score();
+        if (score > 0) {
+            scores.add(score + getPrevFrameScore());
+        }
+    }
+
+    private int getPrevFrameScore() {
+        return scores.isEmpty()
+                ? 0
+                : scores.get(scores.size() - 1);
+    }
+
     private List<List<Integer>> framePitchValues() {
         return frames.stream()
                 .map(Frame::pitchValues)
@@ -62,7 +93,9 @@ public class Frames {
     }
 
     private void addNextFrame() {
-        frames.add(nextFrame());
+        Frame nextFrame = nextFrame();
+        currentFrame().addNextFrame(nextFrame);
+        frames.add(nextFrame);
     }
 
     private Frame nextFrame() {
