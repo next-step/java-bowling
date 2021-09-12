@@ -15,7 +15,7 @@ public class PlayersTest {
     void InvalidPlayersNameExceptionTest() {
         assertThatExceptionOfType(InvalidPlayersException.class)
                 .isThrownBy(() -> {
-                    Players players = Players.of(Arrays.asList("ESE", "SYDD", "HAS", "PJS"));
+                    Players players = Players.of(Arrays.asList(Player.from("ESE"), Player.from("SYDD"), Player.from("HAS"), Player.from("PJS")));
                 }).withMessageMatching("참가자 이름은 반드시 3자 이내 이어야 합니다 : SYDD");
     }
 }

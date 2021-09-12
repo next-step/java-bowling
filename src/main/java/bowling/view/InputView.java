@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.domain.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,13 +14,14 @@ public class InputView {
     private static final String GET_FRAME_SCORE = "'s turn : ";
     private static final String GET_PLAYER_COUNT = "How many people? ";
 
-    public static List<String> getPlayerNames(int count) {
-        List<String> players = new ArrayList<>();
+    public static List<Player> getPlayerNames(int count) {
+        List<Player> players = new ArrayList<>();
         for (int i = 1; i <= count; i++) {
             System.out.print(GET_PLAYER_NAMES_PREFIX + i + GET_PLAYER_NAMES_SUFFIX);
-            String player = scanner.next();
-            players.add(player);
+            String name = scanner.next();
+            players.add(Player.from(name));
         }
+
         return players;
     }
 
