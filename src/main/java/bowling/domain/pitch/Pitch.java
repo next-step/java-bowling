@@ -2,6 +2,8 @@ package bowling.domain.pitch;
 
 import bowling.exception.BusinessException;
 
+import java.util.Objects;
+
 public class Pitch {
     public static final int MINIMUM_COUNT_OF_PINS = 0;
     public static final int MAXIMUM_COUNT_OF_PINS = 10;
@@ -38,5 +40,18 @@ public class Pitch {
 
     public String value() {
         return String.valueOf(countOfPins);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pitch pitch = (Pitch) o;
+        return countOfPins == pitch.countOfPins;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(countOfPins);
     }
 }

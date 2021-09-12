@@ -2,9 +2,11 @@ package bowling.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalFrameTest {
 
@@ -24,8 +26,24 @@ class NormalFrameTest {
         assertThat(normal.isEnd()).isTrue();
     }
 
-
+    @DisplayName("노멀 프레임에서 세번 이상 던질때 에러가 발생한다.")
     @Test
-    void sumPitches() {
+    void pitch_validate_three() {
+        assertThatThrownBy(() -> new NormalFrame(1).pitch(2).pitch(3).pitch(3))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("노멀 프레임에서 스트라이크 이후 또 투구하면 에러가 발생한다.")
+    @Test
+    void pitch_new_frame() {
+        assertThatThrownBy(() -> new NormalFrame(1).pitch(10).pitch(3).pitch(3))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("노멀프레임에서 2번 투구한 결과는 다음과 같다.")
+    @ParameterizedTest
+    @CsvSource(value = {"2 2|2", "8 2|/", "0 2|-"}, delimiter = ' ')
+    void spare(int countOfPints, String expected) {
+        assertThat(new NormalFrame(1).pitch(2).pitch(countOfPints).result()).isEqualTo(expected);
     }
 }

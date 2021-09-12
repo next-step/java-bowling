@@ -25,7 +25,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int sumPitches() {
-        return 0;
+    public String result() {
+        return null;
     }
 }

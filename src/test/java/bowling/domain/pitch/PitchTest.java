@@ -44,10 +44,8 @@ class PitchTest {
     }
 
     @DisplayName("아무것도 아닌 투구의 값은 숫자(문자)이다.")
-    @Test
     void value() {
         assertThat(new Pitch(1).pitch(2).value()).isEqualTo("2");
     }
-
 
 }

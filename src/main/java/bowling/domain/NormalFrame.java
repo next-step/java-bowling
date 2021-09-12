@@ -1,28 +1,36 @@
 package bowling.domain;
 
 import bowling.domain.pitch.Pitch;
+import bowling.domain.pitch.Strike;
 import bowling.exception.BusinessException;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class NormalFrame implements Frame {
 
+    private static final int FIRST_PITCH_INDEX = 0;
     private static final int MAXIMUM_NORMAL_FRAME_PITCH = 2;
 
     private final FrameNumber frameNumber;
     private List<Pitch> pitches = new LinkedList<>();
 
-    public NormalFrame(final int firstFrameIndex) {
-        frameNumber = new FrameNumber(firstFrameIndex);
+    public NormalFrame(final int frameNumber) {
+        this.frameNumber = new FrameNumber(frameNumber);
     }
 
     @Override
     public Frame pitch(final int countOfPins) {
-        validate();
-
+        if (isEnd()) {
+            throw new BusinessException("현재 프레임에서 투구할 수 있는 갯수를 초과했습니다.");
+        }
         addNextPitch(countOfPins);
+        return this;
+    }
 
+    public Frame next() {
         if (!isEnd()) {
             return this;
         }
@@ -31,7 +39,6 @@ public class NormalFrame implements Frame {
         }
         return new NormalFrame(frameNumber.nextNumber());
     }
-
 
     private void addNextPitch(int countOfPins) {
         if (pitches.isEmpty()) {
@@ -42,24 +49,30 @@ public class NormalFrame implements Frame {
         pitches.add(next);
     }
 
-    private void validate() {
-        if (pitches.size() >= MAXIMUM_NORMAL_FRAME_PITCH) {
-            throw new BusinessException("현재 프레임에서 투구할 수 있는 갯수를 초과했습니다.");
-        }
-    }
-
     @Override
     public boolean isEnd() {
-        // 첫번째 투구가 스트라이크 이거나
-        // 투구를 두번 했으면
-        if (pitches.size() == MAXIMUM_NORMAL_FRAME_PITCH) {
-
-        }
-        return false;
+        return pitches.size() == 1 && pitches.get(FIRST_PITCH_INDEX) instanceof Strike
+                || pitches.size() == MAXIMUM_NORMAL_FRAME_PITCH;
     }
 
     @Override
-    public int sumPitches() {
-        return 0;
+    public String result() {
+        return pitches.stream()
+                .map(Pitch::value)
+                .collect(Collectors.joining("|"));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalFrame that = (NormalFrame) o;
+        return Objects.equals(frameNumber, that.frameNumber) &&
+                Objects.equals(pitches, that.pitches);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber, pitches);
     }
 }
