@@ -5,6 +5,11 @@ import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -94,6 +99,37 @@ class NormalFrameTest {
         // then
         assertThat(firstPitchResult).isEqualTo(true);
         assertThat(full).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("score 테스트")
+    public void score() {
+        // given
+        List<NormalFrame> frames = Stream.generate(NormalFrame::new)
+                .limit(3)
+                .collect(Collectors.toList());
+        frames.get(0).addNextFrame(frames.get(1));
+        frames.get(1).addNextFrame(frames.get(2));
+        Pitch firstPitch = new Pitch(10);
+        Pitch secondPitch = new Pitch(10);
+        Pitch thirdPitch = new Pitch(8);
+        Pitch fourthPitch = new Pitch(1);
+
+        // when
+        frames.get(0)
+                .addPitchIfPossible(firstPitch);
+        frames.get(1)
+                .addPitchIfPossible(secondPitch);
+        frames.get(2)
+                .addPitchIfPossible(thirdPitch);
+        frames.get(2)
+                .addPitchIfPossible(fourthPitch);
+        List<Integer> scores = frames.stream()
+                .map(Frame::score)
+                .collect(Collectors.toList());
+
+        // then
+        assertThat(scores).containsExactly(28, 19, 9);
     }
 
 }

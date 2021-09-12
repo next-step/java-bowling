@@ -154,4 +154,27 @@ class FinalFrameTest {
         assertThat(full).isEqualTo(true);
     }
 
+    @Test
+    @DisplayName("score 테스트")
+    public void score() {
+        // given
+        FinalFrame finalFrame = new FinalFrame();
+        Pitch firstPitch = new Pitch(10);
+        Pitch secondPitch = new Pitch(10);
+        Pitch thirdPitch = new Pitch(10);
+        int expectedScore = 30;
+
+        // when
+        boolean firstPitchResult = finalFrame.addPitchIfPossible(firstPitch);
+        boolean secondPitchResult = finalFrame.addPitchIfPossible(secondPitch);
+        boolean thirdPitchResult = finalFrame.addPitchIfPossible(thirdPitch);
+        int score = finalFrame.score();
+
+        // then
+        assertThat(firstPitchResult).isEqualTo(true);
+        assertThat(secondPitchResult).isEqualTo(true);
+        assertThat(thirdPitchResult).isEqualTo(true);
+        assertThat(score).isEqualTo(expectedScore);
+    }
+
 }

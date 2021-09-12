@@ -11,6 +11,7 @@ public class FinalFrame extends Frame {
     private static final int STRIKE_PITCHES_LIMIT = 3;
     private static final int NONE_STRIKE_MAX = 10;
     private static final int SINGLE_STRIKE_MAX = 20;
+    private static final int NO_SCORE = 0;
 
     @Override
     public boolean addPitchIfPossible(final Pitch pitch) {
@@ -26,6 +27,14 @@ public class FinalFrame extends Frame {
         return isStrike(FIRST_PITCH_INDEX) || isSpare()
                 ? pitches.size() == STRIKE_PITCHES_LIMIT
                 : pitches.size() == PITCHES_LIMIT;
+    }
+
+    @Override
+    public int score() {
+        if (!isFull()) {
+            return NO_SCORE;
+        }
+        return pitchesSum();
     }
 
     private void requireValidSum(final Pitch pitch) {
