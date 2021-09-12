@@ -39,26 +39,24 @@ public class Frames {
             int lastFrameIndex = frames.size() - GAP_BETWEEN_SIZE_AND_INDEX;
             frames.remove(lastFrameIndex);
         }
-        calculateStrikeOrSpareScore(nextFrame);
+
+        decreaseRemainingPitchingCountOne();
+        calculateRemainingScore(nextFrame);
 
         frames.add(nextFrame);
     }
 
-    private void calculateStrikeOrSpareScore(Frame nextFrame) {
+    private void calculateRemainingScore(Frame nextFrame) {
         if (frames.isEmpty()) {
             return;
         }
 
-        decreaseRemainingPitchingCountOne();
-        calculateStrikeOrSpareScoreOfLastFrame(nextFrame);
-    }
-
-    private void calculateStrikeOrSpareScoreOfLastFrame(Frame nextFrame) {
-        boolean isStrikeCanBeCalculated = lastFrame().isStrike() && !lastFrame().remainsNextPitching();
-        boolean isSpareCanBeCalculated = lastFrame().isSpare() && !lastFrame().remainsNextPitching() && !nextFrame.pitchTwice();
+        Frame lastFrame = lastFrame();
+        boolean isStrikeCanBeCalculated = lastFrame.isStrike() && !lastFrame.remainsNextPitching();
+        boolean isSpareCanBeCalculated = lastFrame.isSpare() && !lastFrame.remainsNextPitching() && !nextFrame.pitchTwice();
 
         if (isStrikeCanBeCalculated || isSpareCanBeCalculated) {
-            lastFrame().calculateStrikeOrSpareScore(nextFrame);
+            lastFrame.calculateRemainingScore(nextFrame);
         }
     }
 

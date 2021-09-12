@@ -85,7 +85,7 @@ public abstract class Frame {
         return number.equals(frame.number);
     }
 
-    public void calculateStrikeOrSpareScore(Frame nextFrame) {
+    public void calculateRemainingScore(Frame nextFrame) {
         if (!isStrikeOrSpare()) {
             throw new IllegalArgumentException("스트라이크 또는 스페어 점수를 계산할 수 있는 상태가 아닙니다.");
         }
