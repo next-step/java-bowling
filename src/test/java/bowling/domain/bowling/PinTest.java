@@ -2,6 +2,8 @@ package bowling.domain.bowling;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import bowling.exception.bowling.PinSecondValueException;
+import bowling.exception.bowling.PinValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +17,7 @@ class PinTest {
     void pinSaveFailTest(int input) {
 
         // when & then
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatExceptionOfType(PinValueException.class)
             .isThrownBy(() -> Pin.of(input))
             .withMessageMatching("핀은 0~10 사이의 값만 저장할 수 있다.");
     }
@@ -29,7 +31,7 @@ class PinTest {
         int second = 3;
 
         // when & then
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatExceptionOfType(PinSecondValueException.class)
             .isThrownBy(() -> Pin.from(input, second))
             .withMessageMatching("첫번째 핀이 쓰러뜨리고 남은 핀 개수만 저장할 수 있다.");
     }
