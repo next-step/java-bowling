@@ -44,29 +44,25 @@ public final class Frames {
     }
 
     private void inputNextFrame(final int knockDownNumber) {
-        frames.addLast(currentFrame().bowl(knockDownNumber));
+        frames.addLast(nextInputFrame().bowl(knockDownNumber));
     }
 
     private void inputCurrentFrame(final int knockDownNumber) {
-        frames.set(getLastFameIndex(), currentFrame().bowl(knockDownNumber));
+        nextInputFrame().bowl(knockDownNumber);
     }
 
     private Frame lastFrame() {
         return frames.getLast();
     }
 
-    private Frame currentFrame() {
+    private Frame nextInputFrame() {
         return lastFrame().next();
     }
 
     private boolean isLastFrameFinished() {
         return lastFrame().isFinished();
     }
-
-    private int getLastFameIndex() {
-        return frames.lastIndexOf(lastFrame());
-    }
-
+    
     public int nextTurnRoundNumber() {
         if (frames.isEmpty()) {
             return NormalFrame.FIRST_ROUND_NUMBER;
