@@ -1,8 +1,9 @@
-package bowling.domain;
+package bowling.domain.player;
 
 import java.util.List;
 import java.util.Objects;
 
+import bowling.domain.Results;
 import bowling.domain.frame.Frames;
 
 public class Player {
