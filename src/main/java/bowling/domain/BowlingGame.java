@@ -21,7 +21,7 @@ public class BowlingGame {
 
 	public void play(final int pins) {
 		current.pitch(pins);
-		if (current.isBowlerChange()) {
+		if (current.needBowlerChange()) {
 			current = bowlers.changeBowler(current);
 		}
 	}

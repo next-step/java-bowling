@@ -44,7 +44,7 @@ public class Bowler {
 			.collect(Collectors.toList());
 	}
 
-	public boolean isBowlerChange() {
-		return frames.isBowlerChange();
+	public boolean needBowlerChange() {
+		return frames.currentFrame().isStart();
 	}
 }

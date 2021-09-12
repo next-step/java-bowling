@@ -45,11 +45,7 @@ public class Frames {
 		return currentFrame().isFinish();
 	}
 
-	public boolean isBowlerChange() {
-		return currentFrame().isStart();
-	}
-
-	private Frame currentFrame() {
+	public Frame currentFrame() {
 		return frames.get(frames.size() - 1);
 	}
 }
