@@ -15,4 +15,8 @@ public class InputView {
     public String getPlayerName() {
         return scanner.nextLine();
     }
+
+    public int getFallenPinCount() {
+        return Integer.parseInt(scanner.nextLine());
+    }
 }

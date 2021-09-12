@@ -1,6 +1,8 @@
 package bowling;
 
-import bowling.domain.PlayerName;
+import bowling.domain.FrameNumber;
+import bowling.domain.PinCount;
+import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
@@ -16,7 +18,14 @@ public class BowlingGame {
 
     public void run() {
         outputView.printPlayerNameInputMessage();
-        PlayerName playerName = new PlayerName(inputView.getPlayerName());
+        Player player = new Player(inputView.getPlayerName());
+        outputView.printScoreBoard(player.toRenderer());
+        FrameNumber frameNumber = FrameNumber.FIRST;
+        while (!frameNumber.isOver()) {
+            outputView.printBowlInputMessage(frameNumber.getNumber());
+            frameNumber = player.bowl(frameNumber, PinCount.valueOf(inputView.getFallenPinCount()));
+            outputView.printScoreBoard(player.toRenderer());
+        }
     }
 
     public static void main(String[] args) {

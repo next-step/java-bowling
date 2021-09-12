@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.FrameStateRenderer;
+
 import static bowling.domain.PinCount.TEN;
 
 public class Ready implements FrameState {
@@ -9,5 +11,10 @@ public class Ready implements FrameState {
             return Finished.strike();
         }
         return new Proceeding(pinCount);
+    }
+
+    @Override
+    public FrameStateRenderer toRenderer() {
+        return FrameStateRenderer.ready();
     }
 }

@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.FrameStateRenderer;
+
 import java.util.Objects;
 
 public class Finished implements FrameState {
@@ -38,5 +40,16 @@ public class Finished implements FrameState {
     @Override
     public FrameState bowl(PinCount pinCount) {
         throw new IllegalStateException("종료된 프레임입니다.");
+    }
+
+    @Override
+    public FrameStateRenderer toRenderer() {
+        if (this.isStrike()) {
+            return FrameStateRenderer.strike();
+        }
+        if (this.isSpare()) {
+            return FrameStateRenderer.spare(firstFallenPinCount);
+        }
+        return FrameStateRenderer.miss(firstFallenPinCount, secondFallenPinCount);
     }
 }
