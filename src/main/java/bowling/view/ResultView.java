@@ -13,6 +13,7 @@ public class ResultView {
             = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |\n";
     private static final String PLAYER_NAME = "|  %s |";
     private static final String BONUS_FALLEN_PIN_DISPLAY_FORMAT = "  %s   |";
+    private static final String SCORE_DISPLAY_FORMAT = "  %-3d |";
     private static final String STRIKE_SYMBOL = "X";
     private static final String GUTTER_SYMBOL = "-";
     private static final String SCORE_SECTION = "|      |";
@@ -120,8 +121,7 @@ public class ResultView {
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-        String displayFormat = FrameScoreDisplay.findDisplayFormat(frame.score());
-        stringBuilder.append(String.format(displayFormat, frame.scoreValue()));
+        stringBuilder.append(String.format(SCORE_DISPLAY_FORMAT, frame.scoreValue()));
         return stringBuilder.toString();
     }
 
