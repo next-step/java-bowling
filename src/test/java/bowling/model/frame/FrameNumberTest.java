@@ -22,6 +22,15 @@ public class FrameNumberTest {
                 .withMessage("프레임 번호는 1 이상 10 이하이어야 합니다.");
     }
 
+    @DisplayName("프레임 번호가 1 이상 10 이하라면 정상 생성되어야 한다.")
+    @Test
+    void createFrameNumberTest() {
+        // given, when, then
+        for (int number = 1; number < 10; number++) {
+            assertSame(new FrameNumber(number).value(), number);
+        }
+    }
+
     @DisplayName("최초 프레임 번호는 1이다.")
     @Test
     void initialFrameNumberTest() {

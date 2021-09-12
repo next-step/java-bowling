@@ -53,6 +53,10 @@ public class FrameNumber {
         return this.number > number;
     }
 
+    public int value() {
+        return number;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
