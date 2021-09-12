@@ -1,8 +1,8 @@
 package bowling.domain;
 
-public class Strike implements FrameState {
+public class Strike extends Finished {
     @Override
     public FrameState bowl(FallenPinCount fallenPinCount) {
-        return null;
+        return super.bowl(fallenPinCount);
     }
 }

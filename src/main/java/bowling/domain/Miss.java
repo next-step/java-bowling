@@ -1,8 +1,8 @@
 package bowling.domain;
 
-public class Miss implements FrameState {
+public class Miss extends Finished {
     @Override
     public FrameState bowl(FallenPinCount fallenPinCount) {
-        return null;
+        return super.bowl(fallenPinCount);
     }
 }
