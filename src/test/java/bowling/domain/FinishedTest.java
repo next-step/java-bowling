@@ -14,7 +14,7 @@ class FinishedTest {
     @MethodSource("provideFinishedStates")
     public void cannotBowlOfFinishedState(Finished state) {
         assertThatExceptionOfType(IllegalStateException.class)
-                .isThrownBy(() -> state.bowl(new FallenPinCount(5)));
+                .isThrownBy(() -> state.bowl(PinCount.FIVE));
     }
 
     private static Stream<Arguments> provideFinishedStates() {

@@ -1,14 +1,13 @@
 package bowling.domain;
 
+import static bowling.domain.PinCount.TEN;
+
 public class Ready implements FrameState {
-
-    private static final int STRIKE_FALLEN_PIN_COUNT = 10;
-
     @Override
-    public FrameState bowl(FallenPinCount fallenPinCount) {
-        if (fallenPinCount.count() < STRIKE_FALLEN_PIN_COUNT) {
-            return new Proceeding(fallenPinCount);
+    public FrameState bowl(PinCount pinCount) {
+        if (TEN.equals(pinCount)) {
+            return new Strike();
         }
-        return new Strike();
+        return new Proceeding(pinCount);
     }
 }

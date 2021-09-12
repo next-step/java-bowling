@@ -1,5 +1,5 @@
 package bowling.domain;
 
 public interface FrameState {
-    FrameState bowl(FallenPinCount fallenPinCount);
+    FrameState bowl(PinCount pinCount);
 }
