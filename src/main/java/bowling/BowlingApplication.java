@@ -4,6 +4,7 @@ import bowling.domain.BowlingGame;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class BowlingApplication {
@@ -12,12 +13,14 @@ public class BowlingApplication {
         Scanner scanner = new Scanner(System.in);
         InputView inputView = new InputView(scanner);
 
-        String playerName = inputView.getInputPlayerName();
-        BowlingGame bowlingGame = new BowlingGame(playerName);
+        int playerCount = inputView.getInputPlayerCount();
+        List<String> playerNames = inputView.getInputPlayerNames(playerCount);
 
+        BowlingGame bowlingGame = new BowlingGame(playerNames);
         OutputView.scoreBoard(bowlingGame);
         while (!bowlingGame.isGameOver()) {
-            int knockDownNumber = inputView.getInputScore(bowlingGame.nextRoundNumber());
+            String currentTurnPlayer = bowlingGame.getCurrentTurn();
+            int knockDownNumber = inputView.getInputScore(currentTurnPlayer);
             bowlingGame.input(knockDownNumber);
             OutputView.scoreBoard(bowlingGame);
         }

@@ -103,24 +103,6 @@ public final class Frames implements Comparable<Frames> {
 
     @Override
     public int compareTo(Frames o) {
-        if(frames.size() != o.frames.size()) {
-            return frames.size() - o.frames.size();
-        }
-
-        if(frames.isEmpty() && o.frames.isEmpty()) {
-            return 0;
-        }
-
-        if (nextTurnRoundNumber() == o.nextTurnRoundNumber()) {
-            return lastFrame().compareTo(o.lastFrame());
-        }
         return nextTurnRoundNumber() - o.nextTurnRoundNumber();
-    }
-
-    @Override
-    public String toString() {
-        return "Frames{" +
-                "frames=" + frames +
-                '}';
     }
 }

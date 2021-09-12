@@ -4,7 +4,7 @@ import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 
-public abstract class Frame implements Comparable<Frame> {
+public abstract class Frame {
 
     public static final int MAX_ROUND_NUMBER = 10;
     public static final int NEXT_ROUND_NUMBER_DISTANCE = 1;
@@ -71,20 +71,5 @@ public abstract class Frame implements Comparable<Frame> {
 
     public int getRoundNumber() {
         return roundNumber;
-    }
-
-    @Override
-    public int compareTo(Frame o) {
-        if(roundNumber == o.roundNumber) {
-            return pins.compareTo(o.pins);
-        }
-        return roundNumber - o.roundNumber;
-    }
-
-    @Override
-    public String toString() {
-        return "Frame{" +
-                "roundNumber=" + roundNumber +
-                ", pins=" + pins + '}';
     }
 }

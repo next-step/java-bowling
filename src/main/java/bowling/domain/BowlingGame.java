@@ -1,42 +1,33 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.frame.FramesGroup;
 import bowling.domain.player.Player;
 
 import java.util.List;
+import java.util.Map;
 
-public final class BowlingGame {
+public class BowlingGame {
 
-    private final Player player;
-    private final Frames frames;
+    private final FramesGroup framesGroup;
 
-    public BowlingGame(final String playerName) {
-        this.player = Player.valueOf(playerName);
-        this.frames = Frames.of();
+    public BowlingGame(final List<String> playerNames) {
+        this.framesGroup = FramesGroup.of(playerNames);
     }
 
     public void input(final int knockDownNumber) {
-        frames.add(knockDownNumber);
-    }
-
-    public int nextRoundNumber() {
-        return frames.nextTurnRoundNumber();
+        framesGroup.inputNumber(knockDownNumber);
     }
 
     public boolean isGameOver() {
-        return frames.isFinished();
+        return framesGroup.isFinished();
     }
 
-    public List<Frame> getCanCalculateFrames() {
-        return frames.getCanCalculateFrames();
+    public String getCurrentTurn() {
+        return framesGroup.nextPlayer().getName();
     }
 
-    public List<Frame> getFrames() {
-        return frames.getFrames();
-    }
-
-    public Player getPlayer() {
-        return player;
+    public Map<Player, Frames> getFramesGroup() {
+        return framesGroup.getFramesGroup();
     }
 }

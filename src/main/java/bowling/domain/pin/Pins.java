@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import static bowling.domain.frame.FrameStatus.*;
 
-public final class Pins implements Comparable<Pins> {
+public final class Pins {
 
     private static final int FIRST_PIN_INDEX = 0;
     private static final int SECOND_PIN_INDEX = 1;
@@ -113,11 +113,6 @@ public final class Pins implements Comparable<Pins> {
     }
 
     @Override
-    public int compareTo(Pins o) {
-        return pins.size() - o.pins.size();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -128,12 +123,5 @@ public final class Pins implements Comparable<Pins> {
     @Override
     public int hashCode() {
         return Objects.hash(pins);
-    }
-
-    @Override
-    public String toString() {
-        return "Pins{" +
-                "pins=" + pins +
-                '}';
     }
 }
