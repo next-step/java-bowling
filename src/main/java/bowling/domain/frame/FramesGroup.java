@@ -10,7 +10,7 @@ import java.util.Map;
 
 public final class FramesGroup {
 
-    private static final int FINISHED_CRITERIA_COUNT = 0;
+    private static final int END_CONDITION_NOT_FINISHED_FRAME_COUNT = 0;
 
     private final Map<Player, Frames> framesGroup;
 
@@ -58,7 +58,7 @@ public final class FramesGroup {
     }
 
     public boolean isFinished() {
-        return notFinishedFramesCount() == FINISHED_CRITERIA_COUNT;
+        return notFinishedFramesCount() == END_CONDITION_NOT_FINISHED_FRAME_COUNT;
     }
 
     private int notFinishedFramesCount() {
