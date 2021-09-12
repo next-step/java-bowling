@@ -15,7 +15,7 @@ public class ScoreTest {
     void outOfRangeScoreExceptionTest(int score) {
         // given, when, then
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Score.of(score))
+                .isThrownBy(() -> Score.from(score))
                 .withMessage("볼링 점수는 0점 이상 300점 이하이어야 합니다.");
     }
 }

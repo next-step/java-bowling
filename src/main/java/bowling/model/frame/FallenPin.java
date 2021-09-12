@@ -12,7 +12,7 @@ public class FallenPin {
         this.count = fallenPinCount;
     }
 
-    public static FallenPin of(int fallenPinCount) {
+    public static FallenPin from(int fallenPinCount) {
         return new FallenPin(fallenPinCount);
     }
 

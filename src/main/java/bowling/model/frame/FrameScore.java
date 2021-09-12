@@ -10,12 +10,12 @@ public class FrameScore {
     }
 
     public FrameScore(int score, int waitingPitchingCount) {
-        this(Score.of(score), new WaitingPitchingCount(waitingPitchingCount));
+        this(Score.from(score), new WaitingPitchingCount(waitingPitchingCount));
     }
 
     public static FrameScore initial(FrameFallenPin fallenPin) {
         int initialFallenPinCount = fallenPin.countTotal();
-        return new FrameScore(Score.of(initialFallenPinCount), findWaitingPitchingCountOfFirstFallenPin(fallenPin));
+        return new FrameScore(Score.from(initialFallenPinCount), findWaitingPitchingCountOfFirstFallenPin(fallenPin));
     }
 
     public FrameScore nextFirst(FrameFallenPin firstFallenPin) {

@@ -19,22 +19,22 @@ public class FrameFallenPin {
     }
 
     public FrameFallenPin(int firstFallenPinCount) {
-        this(FallenPin.of(firstFallenPinCount), EMPTY_FALLEN_PIN);
+        this(FallenPin.from(firstFallenPinCount), EMPTY_FALLEN_PIN);
     }
 
     public FrameFallenPin(int firstFallenPinCount, int secondFallenPinCount) {
-        this(FallenPin.of(firstFallenPinCount), FallenPin.of(secondFallenPinCount));
+        this(FallenPin.from(firstFallenPinCount), FallenPin.from(secondFallenPinCount));
     }
 
     public static FrameFallenPin first(int firstFallenPinCount) {
-        return new FrameFallenPin(FallenPin.of(firstFallenPinCount));
+        return new FrameFallenPin(FallenPin.from(firstFallenPinCount));
     }
 
     public FrameFallenPin second(int secondFallenPinCount) {
         validateNotStrike();
         validateSecondFallenPinCountRange(first.count(), secondFallenPinCount);
 
-        return new FrameFallenPin(first, FallenPin.of(secondFallenPinCount));
+        return new FrameFallenPin(first, FallenPin.from(secondFallenPinCount));
     }
 
     private void validateNotStrike() {

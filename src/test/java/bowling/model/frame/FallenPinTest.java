@@ -15,7 +15,7 @@ public class FallenPinTest {
     void outOfRangeFallenPinCountExceptionTest(int fallenPinCount) {
         // when, then
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> FallenPin.of(fallenPinCount))
+                .isThrownBy(() -> FallenPin.from(fallenPinCount))
                 .withMessage("쓰러진 핀은 0개 이상 10개 이하여야 합니다.");
     }
 }

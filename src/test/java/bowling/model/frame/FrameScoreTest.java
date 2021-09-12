@@ -60,9 +60,9 @@ public class FrameScoreTest {
         FrameScore fourthFrameScore = thirdFrameScore.nextSecond(thirdFallenPin.second(3));
 
         // then
-        assertEquals(initialFrameScore.score(), Score.of(5));
-        assertEquals(secondFrameScore.score(), Score.of(9));
-        assertEquals(thirdFrameScore.score(), Score.of(13));
-        assertEquals(fourthFrameScore.score(), Score.of(16));
+        assertEquals(initialFrameScore.score(), Score.from(5));
+        assertEquals(secondFrameScore.score(), Score.from(9));
+        assertEquals(thirdFrameScore.score(), Score.from(13));
+        assertEquals(fourthFrameScore.score(), Score.from(16));
     }
 }

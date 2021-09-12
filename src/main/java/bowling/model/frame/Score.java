@@ -18,7 +18,7 @@ public class Score {
         this.score = score;
     }
 
-    public static Score of(int score) {
+    public static Score from(int score) {
         return new Score(score);
     }
 
@@ -29,7 +29,7 @@ public class Score {
     }
 
     public Score plusScore(int other) {
-        return Score.of(score + other);
+        return Score.from(score + other);
     }
 
     public void plus(int other) {

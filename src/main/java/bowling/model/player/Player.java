@@ -16,6 +16,13 @@ public class Player {
         this.name = name;
     }
 
+    private void validateNamePattern(String name) {
+        Matcher matcher = NAME_PATTERN.matcher(name);
+        if (!matcher.find()) {
+            throw new IllegalArgumentException(String.format("플레이어 이름은 알파벳 %d글자로 이루어져야 합니다.", NAME_LENGTH));
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -33,12 +40,5 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    private void validateNamePattern(String name) {
-        Matcher matcher = NAME_PATTERN.matcher(name);
-        if (!matcher.find()) {
-            throw new IllegalArgumentException(String.format("플레이어 이름은 알파벳 %d글자로 이루어져야 합니다.", NAME_LENGTH));
-        }
     }
 }
