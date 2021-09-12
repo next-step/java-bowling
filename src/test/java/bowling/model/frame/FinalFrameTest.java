@@ -2,6 +2,8 @@ package bowling.model.frame;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -14,10 +16,16 @@ public class FinalFrameTest {
     void outOfRangeFinalFrameNumberTest() {
         // given
         int frameNumber = 9;
+        int firstFallenPinCount = 5;
+        int secondFallenPinCount = 5;
+        int score = 10;
+        int remainingPitchingCount = 1;
+        int bonusFallenPin = 0;
 
         // when, then
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new FinalFrame(frameNumber, 5, 5, 10, 1, 0))
+                .isThrownBy(() -> new FinalFrame(frameNumber, firstFallenPinCount, secondFallenPinCount, score,
+                        remainingPitchingCount, bonusFallenPin))
                 .withMessage("마지막 프레임 번호는 10 이어야 합니다.");
     }
 
@@ -25,7 +33,15 @@ public class FinalFrameTest {
     @Test
     void nextFinalFrameWhenPitchTwiceAndNotStrikeAndNotSpareExceptionTest() {
         // given
-        Frame notStrikeAndNotSpare = new FinalFrame(10, 5, 3, 8, 0, 0);
+        int frameNumber = 10;
+        int firstFallenPinCount = 5;
+        int secondFallenPinCount = 3;
+        int score = 8;
+        int remainingPitchingCount = 0;
+        int bonusFallenPin = 0;
+
+        Frame notStrikeAndNotSpare = new FinalFrame(frameNumber, firstFallenPinCount, secondFallenPinCount, score,
+                remainingPitchingCount, bonusFallenPin);
 
         // when, then
         assertThatIllegalArgumentException()
@@ -34,22 +50,29 @@ public class FinalFrameTest {
     }
 
     @DisplayName("공을 던지고 스트라이크나 스페어면 다음 프레임을 생성할 수 있다.")
-    @Test
-    void nextFinalFrameWhenPitchTwiceAndStrikeOrSpareTest() {
+    @ParameterizedTest
+    @CsvSource(value = {"10:10:0:10:2:0", "10:5:5:10:1:0"}, delimiter = ':')
+    void nextFinalFrameWhenPitchTwiceAndStrikeOrSpareTest(int frameNumber, int firstFallenPinCount, int secondFallenPinCount,
+                                                          int score, int remainingPitchingCount, int bonusFallenPin) {
         // given
-        Frame strikeFinalFrame = new FinalFrame(10, 10, 10, 2, 0);
-        Frame spareFinalFrame = new FinalFrame(10, 5, 5, 10, 1, 0);
+        Frame finalFrame = new FinalFrame(frameNumber, firstFallenPinCount, secondFallenPinCount, score,
+                remainingPitchingCount, bonusFallenPin);
 
         // when, then
-        assertThat(strikeFinalFrame.next(5)).isInstanceOf(FinalFrame.class);
-        assertThat(spareFinalFrame.next(5)).isInstanceOf(FinalFrame.class);
+        assertThat(finalFrame.next(5)).isInstanceOf(FinalFrame.class);
     }
 
     @DisplayName("공을 한 번 던진 상태에서 다음 프레임을 생성할 수 있다.")
     @Test
     void nextFinalFrameWhenOnePitchTest() {
         // given
-        Frame oncePitchFinalFrame = new FinalFrame(10, 5, 5, 0, 0);
+        int frameNumber = 10;
+        int firstFallenPinCount = 5;
+        int score = 5;
+        int remainingPitchingCount = 0;
+
+        Frame oncePitchFinalFrame = new FinalFrame(frameNumber, firstFallenPinCount, score, remainingPitchingCount,
+                remainingPitchingCount);
 
         // when, then
         assertThat(oncePitchFinalFrame.next(5)).isInstanceOf(FinalFrame.class);

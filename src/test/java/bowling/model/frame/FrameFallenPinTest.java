@@ -2,6 +2,8 @@ package bowling.model.frame;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +18,7 @@ public class FrameFallenPinTest {
         FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(5);
 
         // then
-        assertSame(firstFrameFallenPin.second(), null);
+        assertNull(firstFrameFallenPin.second());
     }
 
     @DisplayName("프레임을 두 번 투구 후에 첫 번째 FallenPin 객체는 비어있으면 안된다.")
@@ -55,44 +57,30 @@ public class FrameFallenPinTest {
     }
 
     @DisplayName("isStrike() 메소드를 통해 스트라이크 여부를 조회할 수 있다.")
-    @Test
-    void isStrikeFrameFallenPinTest() {
+    @ParameterizedTest
+    @CsvSource(value = {"10:true", "9:false"}, delimiter = ':')
+    void isStrikeFrameFallenPinTest(int firstFallenPinCount, boolean isStrike) {
         // given
-        FrameFallenPin strikeFrameFallenPin = FrameFallenPin.first(10);
-        FrameFallenPin notStrikeFrameFallenPin = FrameFallenPin.first(9);
+        FrameFallenPin frameFallenPin = FrameFallenPin.first(firstFallenPinCount);
 
         // when, then
-        assertTrue(strikeFrameFallenPin.isStrike());
-        assertFalse(notStrikeFrameFallenPin.isStrike());
+        assertSame(frameFallenPin.isStrike(), isStrike);
     }
 
     @DisplayName("isSpare() 메소드를 통해 스페어 여부를 조회할 수 있다.")
-    @Test
-    void isSpareFrameFallenPinTest() {
+    @ParameterizedTest
+    @CsvSource(value = {"8:2:false:true", "8:1:false:false"}, delimiter = ':')
+    void isSpareFrameFallenPinTest(int firstFallenPinCount, int secondFallenPinCount, boolean isFirstFallenPinStrike,
+                                   boolean isSecondFallenPinStrike) {
         // given
-        FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(8);
-        FrameFallenPin spareFrameFallenPin = firstFrameFallenPin.second(2);
-        FrameFallenPin notSpareFrameFallenPin = firstFrameFallenPin.second(1);
+        FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(firstFallenPinCount);
+        FrameFallenPin secondFrameFallenPin = firstFrameFallenPin.second(secondFallenPinCount);
 
         // when, then
-        assertFalse(firstFrameFallenPin.isSpare());
-        assertTrue(spareFrameFallenPin.isSpare());
-        assertFalse(notSpareFrameFallenPin.isSpare());
+        assertSame(firstFrameFallenPin.isSpare(), isFirstFallenPinStrike);
+        assertSame(secondFrameFallenPin.isSpare(), isSecondFallenPinStrike);
     }
 
-    @DisplayName("isMiss() 메소드를 통해 미스 여부를 조회할 수 있다.")
-    @Test
-    void isMissFrameFallenPinTest() {
-        // given
-        FrameFallenPin firstFrameFallenPin = FrameFallenPin.first(5);
-        FrameFallenPin missFrameFallenPin = firstFrameFallenPin.second(3);
-        FrameFallenPin notMissFrameFallenPin = firstFrameFallenPin.second(5);
-
-        // when, then
-        assertFalse(firstFrameFallenPin.isMiss());
-        assertTrue(missFrameFallenPin.isMiss());
-        assertFalse(notMissFrameFallenPin.isMiss());
-    }
 
     @DisplayName("pitchTwice() 메소드를 통해 핀이 두 번 쓰러졌는지 여부를 조회할 수 있다.")
     @Test

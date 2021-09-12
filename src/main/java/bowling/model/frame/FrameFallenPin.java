@@ -63,15 +63,6 @@ public class FrameFallenPin {
         return fallenPinCountTotal == MAX_TOTAL;
     }
 
-    public boolean isMiss() {
-        if (!pitchTwice()) {
-            return false;
-        }
-
-        int fallenPinCountTotal = first.count() + second.count();
-        return fallenPinCountTotal > MIN_TOTAL && fallenPinCountTotal < MAX_TOTAL;
-    }
-
     public boolean pitchTwice() {
         return first != EMPTY_FALLEN_PIN && second != EMPTY_FALLEN_PIN;
     }
