@@ -1,5 +1,7 @@
 package bowling.model.frame;
 
+import java.util.Objects;
+
 public class RemainingPitchingCount {
     private static final int COUNT_OF_STRIKE = 2;
     private static final int COUNT_OF_SPARE = 1;
@@ -37,15 +39,24 @@ public class RemainingPitchingCount {
         }
     }
 
-    public int count() {
-        return count;
-    }
-
     public boolean isNoCount() {
         return count == NO_COUNT;
     }
 
     public void decrease() {
         count--;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RemainingPitchingCount)) return false;
+        RemainingPitchingCount that = (RemainingPitchingCount) o;
+        return count == that.count;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(count);
     }
 }

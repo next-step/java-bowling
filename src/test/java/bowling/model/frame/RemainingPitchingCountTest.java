@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("남은 투구 개수 테스트")
 public class RemainingPitchingCountTest {
@@ -25,27 +25,27 @@ public class RemainingPitchingCountTest {
     @Test
     void remainingPitchingCountOfStrikeTest() {
         // given, when, then
-        assertSame(RemainingPitchingCount.strike().count(), 2);
+        assertEquals(RemainingPitchingCount.strike(), new RemainingPitchingCount(2));
     }
 
     @DisplayName("스페어 점수 계산을 위해서는 1개의 다음 투구가 남아있다.")
     @Test
     void remainingPitchingCountOfSpareTest() {
         // given, when, then
-        assertSame(RemainingPitchingCount.spare().count(), 1);
+        assertEquals(RemainingPitchingCount.spare(), new RemainingPitchingCount(1));
     }
 
     @DisplayName("첫 번째 투구이고 스트라이크가 아니라면 점수 계산을 위해서는 1개의 다음 투구가 남아있다.")
     @Test
     void remainingPitchingCountOfFirstAndNotStrikeTest() {
         // given, when, then
-        assertSame(RemainingPitchingCount.firstAndNotStrike().count(), 1);
+        assertEquals(RemainingPitchingCount.firstAndNotStrike(), new RemainingPitchingCount(1));
     }
 
     @DisplayName("두 번째 투구이고 스페어가 아니라면 남은 투구가 없다.")
     @Test
     void remainingPitchingCountOfSecondAndNotSpareTest() {
         // given, when, then
-        assertSame(RemainingPitchingCount.secondAndNotSpare().count(), 0);
+        assertEquals(RemainingPitchingCount.secondAndNotSpare(), new RemainingPitchingCount(0));
     }
 }

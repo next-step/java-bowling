@@ -44,10 +44,6 @@ public class FrameScore {
         return RemainingPitchingCount.firstAndNotStrike();
     }
 
-    public int remainingPitchingCount() {
-        return remainingPitchingCount.count();
-    }
-
     public Score score() {
         return score;
     }
@@ -66,5 +62,9 @@ public class FrameScore {
 
     public void decreaseRemainingPitchingCountOne() {
         remainingPitchingCount.decrease();
+    }
+
+    public RemainingPitchingCount remainingPitchingCount() {
+        return remainingPitchingCount;
     }
 }
