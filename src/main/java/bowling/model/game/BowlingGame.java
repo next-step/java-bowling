@@ -16,6 +16,11 @@ public class BowlingGame {
         this.frames = new Frames();
     }
 
+    public BowlingGame(Player player, List<Frame> frames) {
+        this.player = player;
+        this.frames = new Frames(frames);
+    }
+
     public void play(int fallenPinCount) {
         frames.play(fallenPinCount);
     }

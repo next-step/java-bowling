@@ -1,5 +1,6 @@
 package bowling.model.game;
 
+import bowling.model.frame.Frame;
 import bowling.model.player.Player;
 import bowling.model.player.PlayerNumber;
 
@@ -26,6 +27,13 @@ public class BowlingGames {
         games = players.stream()
                 .map(BowlingGame::new)
                 .collect(toList());
+    }
+
+    public BowlingGames(List<Player> players, List<Frame> frames) {
+        this(players);
+
+        games.clear();
+        players.forEach(player -> games.add(new BowlingGame(player, frames)));
     }
 
     private void validateNotEmpty(List<Player> players) {
