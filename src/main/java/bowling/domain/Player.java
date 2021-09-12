@@ -20,6 +20,7 @@ public class Player {
     private static void validate(String name) {
         checkNameIsNullOrEmpty(name);
         checkNameSize(name);
+        checkNameIsEnglish(name);
     }
 
     private static void checkNameIsNullOrEmpty(String name) {
@@ -38,8 +39,18 @@ public class Player {
         }
     }
 
+    private static void checkNameIsEnglish(String name) {
+        if (!name.matches("[a-zA-Z]+")) {
+            throw new IllegalArgumentException("이름은 영어여야 합니다.");
+        }
+    }
+
     public String getName() {
         return name;
+    }
+
+    public int nameLength() {
+        return name.length();
     }
 
     @Override

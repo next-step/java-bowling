@@ -1,4 +1,4 @@
-package bowling.presentation;
+package bowling.presentation.input;
 
 import java.util.Scanner;
 
@@ -13,9 +13,17 @@ public class ScoreInputView {
         return new ScoreInputView();
     }
 
-    public int input(int round) {
+    public int inputStart() {
+        return input(1);
+    }
+
+    public int inputLast() {
+        return input(10);
+    }
+
+    public int input(int frame) {
         Scanner sc = new Scanner(System.in);
-        System.out.printf(QUESTION, round);
+        System.out.printf(QUESTION, frame);
         return sc.nextInt();
     }
 }

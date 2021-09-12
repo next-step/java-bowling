@@ -29,7 +29,7 @@ public class FinalFrameTest {
         //when
         frame = frame.next(2);
         //then
-        assertThat(frame).isEqualTo(FinalFrame.of(FinalScore.from(10).next(2), false, true, false, false));
+        assertThat(frame).isEqualTo(FinalFrame.of(FinalScore.from(2), 2, true, false));
     }
 
     @ParameterizedTest
@@ -41,7 +41,7 @@ public class FinalFrameTest {
         frame = frame.next(10);
         //then
         assertThat(frame).isEqualTo(
-                FinalFrame.of(FinalScore.from(first).next(second).next(10), false, false, false, true));
+                FinalFrame.of(FinalScore.from(first).next(second).next(10), 3, false, true));
     }
 
     private static Stream<Arguments> 두번째_시도후_시도의_합이_10이상이면_세번째_시도를_할_수_있다() {
@@ -62,7 +62,7 @@ public class FinalFrameTest {
         frame = frame.next(1);
         //then
         assertThat(frame).isEqualTo(
-                FinalFrame.of(FinalScore.from(first).next(second), false, false, false, true));
+                FinalFrame.of(FinalScore.from(first).next(second), 2, false, true));
     }
 
     private static Stream<Arguments> 두번째_시도후_시도의_합이_10보다_작으면_세번째_시도를_할_수_없다() {

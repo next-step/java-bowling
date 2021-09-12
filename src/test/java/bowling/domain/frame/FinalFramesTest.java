@@ -19,7 +19,7 @@ public class FinalFramesTest {
     @Test
     public void FinalFrame을_추가할_수_있다() {
         //given
-        FinalFrame finalFrame = FinalFrame.of(FinalScore.from(10), true, false, false, false);
+        FinalFrame finalFrame = FinalFrame.of(FinalScore.from(10), 1, false, false);
         //when
         FinalFrames finalFrames = FinalFrames.empty().add(finalFrame);
         //then

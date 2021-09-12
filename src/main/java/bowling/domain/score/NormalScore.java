@@ -15,6 +15,14 @@ public class NormalScore extends Score {
         return new NormalScore(score);
     }
 
+    public boolean isStrike() {
+        return score == MAX_SCORE;
+    }
+
+    public int get() {
+        return score;
+    }
+
     public NormalScore next(int score) {
         validateScore(score);
         validateCombinedScores(score);
@@ -25,14 +33,6 @@ public class NormalScore extends Score {
         if (this.score + score > MAX_SCORE) {
             throw new IllegalArgumentException("1차시도와 2차시도의 합계는 10점을 넘을 수 없습니다.");
         }
-    }
-
-    public boolean isStrike() {
-        return score == MAX_SCORE;
-    }
-
-    public int get() {
-        return score;
     }
 
     @Override

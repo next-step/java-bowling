@@ -1,4 +1,4 @@
-package bowling.presentation;
+package bowling.presentation.input;
 
 import java.util.Scanner;
 

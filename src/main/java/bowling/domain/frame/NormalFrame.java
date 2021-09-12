@@ -8,14 +8,14 @@ public class NormalFrame {
 
     private static final int LAST_ROUND = 9;
 
-    private final int round;
+    private final int frame;
 
     private final NormalScore score;
 
     private final boolean isSecondTry;
 
-    private NormalFrame(int round, NormalScore score, boolean isSecondTry) {
-        this.round = round;
+    private NormalFrame(int frame, NormalScore score, boolean isSecondTry) {
+        this.frame = frame;
         this.score = score;
         this.isSecondTry = isSecondTry;
     }
@@ -24,59 +24,60 @@ public class NormalFrame {
         return of(1, NormalScore.from(score), false);
     }
 
-    protected static NormalFrame of(int round, NormalScore score, boolean isSecondTry) {
-        return new NormalFrame(round, score, isSecondTry);
+    protected static NormalFrame of(int frame, NormalScore score, boolean isSecondTry) {
+        return new NormalFrame(frame, score, isSecondTry);
     }
 
     public int score() {
         return score.get();
     }
 
-    public int nextTurnRound() {
+    public int nextFrame() {
+
         if (isSecondTry) {
-            return round + 1;
+            return frame + 1;
         }
 
         if (score.isStrike()) {
-            return round + 1;
+            return frame + 1;
         }
 
-        return round;
+        return frame;
 
     }
 
     public NormalFrame next(int score) {
 
         if (isSecondTry) {
-            return next(round + 1, NormalScore.from(score), false);
+            return next(frame + 1, NormalScore.from(score), false);
         }
 
         if (this.score.isStrike()) {
-            return next(round + 1, NormalScore.from(score), false);
+            return next(frame + 1, NormalScore.from(score), false);
         }
 
-        return next(round, this.score.next(score), true);
+        return next(frame, this.score.next(score), true);
 
     }
 
-    private static NormalFrame next(int round, NormalScore score, boolean isSecondTry) {
-        return new NormalFrame(round, score, isSecondTry);
+    private static NormalFrame next(int frame, NormalScore score, boolean isSecondTry) {
+        return new NormalFrame(frame, score, isSecondTry);
     }
 
     public boolean isLast() {
-        if (round > LAST_ROUND) {
+        if (frame > LAST_ROUND) {
             return true;
         }
 
-        if (round == LAST_ROUND) {
+        if (frame == LAST_ROUND) {
             return isDone();
         }
 
         return false;
     }
 
-    public boolean isRound(int round) {
-        return this.round == round;
+    public boolean isFrame(int frame) {
+        return this.frame == frame;
     }
 
     private boolean isDone() {
@@ -88,11 +89,11 @@ public class NormalFrame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame normalFrame = (NormalFrame) o;
-        return round == normalFrame.round && isSecondTry == normalFrame.isSecondTry && Objects.equals(score, normalFrame.score);
+        return frame == normalFrame.frame && isSecondTry == normalFrame.isSecondTry && Objects.equals(score, normalFrame.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(round, score, isSecondTry);
+        return Objects.hash(frame, score, isSecondTry);
     }
 }

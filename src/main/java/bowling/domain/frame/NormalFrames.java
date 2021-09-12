@@ -32,9 +32,9 @@ public class NormalFrames {
         return this;
     }
 
-    public NormalFrames findByRound(int round) {
+    public NormalFrames findByFrame(int frame) {
         return normalFrames.stream()
-                .filter(normalFrame -> normalFrame.isRound(round))
+                .filter(normalFrame -> normalFrame.isFrame(frame))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), NormalFrames::new));
     }
 

@@ -21,7 +21,7 @@ public class FinalScore extends Score {
     }
 
     public boolean isSpareWhenAdd(int score) {
-        return this.score != MAX_SCORE && this.score + score >= MAX_SCORE;
+        return this.score != MAX_SCORE && this.score + score == MAX_SCORE;
     }
 
     public boolean isStrike() {
@@ -30,6 +30,10 @@ public class FinalScore extends Score {
 
     public int get() {
         return score;
+    }
+
+    public int add(int score) {
+        return this.score + score;
     }
 
     protected static void validateScore(int score) {

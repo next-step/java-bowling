@@ -19,6 +19,16 @@ public class PlayerTest {
         assertThat(Player.from("SML")).isEqualTo(Player.from("SML"));
     }
 
+    @Test
+    public void 이름이_영어가_아니면_익셉션이_발생한다(){
+        //given
+        //when
+        //then
+        assertThatThrownBy(() -> Player.from("상민"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("이름은 영어여야 합니다.");
+    }
+
     @ParameterizedTest
     @NullAndEmptySource
     public void 플레이어의_이름이_null이거나_비어있으면_익셉션이_발생한다(String name) {

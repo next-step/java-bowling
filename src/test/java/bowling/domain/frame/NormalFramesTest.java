@@ -42,7 +42,7 @@ public class NormalFramesTest {
 
         //when
         //then
-        assertThat(normalFrames.findByRound(3)).isEqualTo(NormalFrames.of(
+        assertThat(normalFrames.findByFrame(3)).isEqualTo(NormalFrames.of(
                 NormalFrame.of(3, NormalScore.from(3), false),
                 NormalFrame.of(3, NormalScore.from(4), true)
         ));
