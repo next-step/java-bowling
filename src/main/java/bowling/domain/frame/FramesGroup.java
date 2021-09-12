@@ -17,6 +17,10 @@ public final class FramesGroup {
         this.framesGroup = framesGroup;
     }
 
+    public static FramesGroup of(final Map<Player, Frames> framesGroup) {
+        return new FramesGroup(framesGroup);
+    }
+
     public static FramesGroup of(final List<String> playerNames) {
         HashMap<Player, Frames> framesGroup = new LinkedHashMap<>();
         for (String playerName : playerNames) {
