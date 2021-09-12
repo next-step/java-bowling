@@ -2,8 +2,6 @@ package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -37,23 +35,6 @@ class BaseFrameTest {
 			Arguments.of(Pins.of(10), 2),
 			Arguments.of(Pins.of(9), 1)
 		);
-	}
-
-	@DisplayName("프레임 추가")
-	@ParameterizedTest
-	@MethodSource
-	void addFrame(final Pins hitPins, final int expectedFrameSize) {
-		// given
-		final List<Frame> frames = new ArrayList<>();
-		frames.add(BaseFrame.of());
-		final BaseFrame frame = BaseFrame.of();
-
-		// when
-		frame.hitPins(hitPins);
-		frame.addFrame(frames);
-
-		// then
-		assertThat(frames.size()).isEqualTo(expectedFrameSize);
 	}
 
 	@DisplayName("점수 계산 - strike")

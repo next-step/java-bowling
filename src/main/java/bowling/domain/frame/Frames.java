@@ -15,18 +15,35 @@ public class Frames {
 	private final List<Frame> frames;
 
 	private Frames() {
-		frames = new ArrayList<>(MAX_COUNT);
-		frames.add(BaseFrame.of());
+		this.frames = new ArrayList<>(MAX_COUNT);
+		this.frames.add(BaseFrame.of());
+	}
+
+	private Frames(final List<Frame> frames) {
+		this.frames = frames;
 	}
 
 	public static Frames of() {
 		return new Frames();
 	}
 
+	public static Frames of(final List<Frame> frames) {
+		return new Frames(frames);
+	}
+
 	public void hitPins(final Pins pins) {
 		final Frame frame = currentFrame();
 		frame.hitPins(pins);
-		frame.addFrame(frames);
+		if (frame instanceof BaseFrame && frame.isFinish()) {
+			addFrame((BaseFrame)frame);
+		}
+	}
+
+	private void addFrame(final BaseFrame frame) {
+		final Frame next = (frames.size() < MAX_COUNT - 1) ? BaseFrame.of() : LastFrame.of();
+		frames.remove(frame);
+		frames.add(frame.create(next));
+		frames.add(next);
 	}
 
 	public List<PitchStates> getAllPitchStates() {
@@ -47,5 +64,9 @@ public class Frames {
 
 	public Frame currentFrame() {
 		return frames.get(frames.size() - 1);
+	}
+
+	public int size() {
+		return frames.size();
 	}
 }

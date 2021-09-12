@@ -10,8 +10,6 @@ public interface Frame {
 
 	Score addScore(Score score);
 
-	void addFrame(final List<Frame> defaultFrames);
-
 	void hitPins(Pins pins);
 
 	boolean isFinish();

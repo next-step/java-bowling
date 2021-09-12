@@ -1,7 +1,5 @@
 package bowling.domain.frame;
 
-import java.util.List;
-
 import bowling.domain.common.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.state.PitchState;
@@ -10,14 +8,24 @@ import bowling.domain.state.Start;
 
 public class BaseFrame extends DefaultFrame {
 
-	private static final int MAX_BASE_FRAME_COUNT = 9;
-
-	private Frame nextFrame;
 	private PitchState pitchState;
+	private final Frame nextFrame;
 
-	private BaseFrame(final PitchState pitchState) {
+	public BaseFrame(final PitchState pitchState, final Frame nextFrame) {
 		this.pitchState = pitchState;
-		nextFrame = StartingFrame.of();
+		this.nextFrame = nextFrame;
+	}
+
+	public static BaseFrame of(final PitchState pitchState, final Frame nextFrame) {
+		return new BaseFrame(pitchState, nextFrame);
+	}
+
+	public static BaseFrame of() {
+		return new BaseFrame(Start.of(), StartingFrame.of());
+	}
+
+	public BaseFrame create(final Frame nextFrame) {
+		return new BaseFrame(pitchState, nextFrame);
 	}
 
 	@Override
@@ -27,20 +35,9 @@ public class BaseFrame extends DefaultFrame {
 		return nextFrame.addScore(addedScore);
 	}
 
-	public static BaseFrame of() {
-		return new BaseFrame(Start.of());
-	}
-
 	@Override
 	public Score getScore() {
 		return nextFrame.addScore(pitchState.score());
-	}
-
-	@Override
-	public void addFrame(final List<Frame> frames) {
-		if (pitchState.isFinish()) {
-			createNextFrame(frames);
-		}
 	}
 
 	public void hitPins(final Pins pins) {
@@ -52,15 +49,12 @@ public class BaseFrame extends DefaultFrame {
 	}
 
 	@Override
-	public boolean isStart() {
-		return pitchState.isStart();
+	public boolean isFinish() {
+		return pitchState.isFinish();
 	}
 
-	private void createNextFrame(final List<Frame> frames) {
-		this.nextFrame = (frames.size() < MAX_BASE_FRAME_COUNT)
-			? BaseFrame.of()
-			: LastFrame.of();
-
-		frames.add(nextFrame);
+	@Override
+	public boolean isStart() {
+		return pitchState.isStart();
 	}
 }

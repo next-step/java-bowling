@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -36,29 +37,6 @@ class LastFrameTest {
 
 		// then
 		assertThat(result).isTrue();
-	}
-
-	static Stream<Arguments> addFrame() {
-		return Stream.of(
-			Arguments.of(Pins.of(10), 1)
-		);
-	}
-
-	@DisplayName("프레임 추가")
-	@ParameterizedTest
-	@MethodSource
-	void addFrame(final Pins hitPins, final int expectedFrameSize) {
-		// given
-		final List<Frame> frames = new ArrayList<>();
-		frames.add(BaseFrame.of());
-		final LastFrame frame = LastFrame.of();
-
-		// when
-		frame.hitPins(hitPins);
-		frame.addFrame(frames);
-
-		// then
-		assertThat(frames.size()).isEqualTo(expectedFrameSize);
 	}
 
 	@DisplayName("hitPins - miss")
