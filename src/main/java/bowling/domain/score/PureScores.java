@@ -4,6 +4,7 @@ import static bowling.domain.frame.Frame.*;
 import static bowling.domain.frame.Frames.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -19,11 +20,11 @@ public class PureScores {
     private PureScores(List<Integer> scores) {
         validate(scores);
         this.lastCalculatedIndex = 0;
-        this.scores = new ArrayList<>();
+        this.scores = scores;
     }
 
     private PureScores(Frames frames, List<Integer> cumulativeScores) {
-        this(new ArrayList<>());
+        scores = new ArrayList<>();
         IntStream.range(0, frames.frames().size())
             .forEach(i -> initFrameAsScore(frames, i, cumulativeScores));
     }
@@ -123,10 +124,10 @@ public class PureScores {
     }
 
     public void addScore(final Score score) {
-        scores().add(score.score());
+        scores.add(score.score());
     }
 
     public List<Integer> scores() {
-        return scores;
+        return Collections.unmodifiableList(scores);
     }
 }
