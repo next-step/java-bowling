@@ -1,10 +1,11 @@
 package bowling.domain;
 
+import bowling.exception.InvalidPitchValueException;
+
 import java.util.Objects;
 
 public class Pitch {
 
-    private static final String INVALID_PITCH = "투구 값은 0 ~ 10 사이의 값이어야 합니다 -> %d";
     public static final int MIN = 0;
     public static final int MAX = 10;
 
@@ -25,7 +26,7 @@ public class Pitch {
 
     private void validatePitch(final int pitch) {
         if (pitch < MIN || pitch > MAX) {
-            throw new IllegalArgumentException(String.format(INVALID_PITCH, pitch));
+            throw new InvalidPitchValueException(MIN, MAX);
         }
     }
 

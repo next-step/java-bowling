@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.NormalFrameInvalidPitchesSumException;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,16 +17,14 @@ class NormalFrameTest {
         NormalFrame normalFrame = new NormalFrame();
         Pitch firstPitch = new Pitch(5);
         Pitch secondPitch = new Pitch(7);
-        String message = "모든 투구의 합은 10 이하여야 합니다";
 
         // when
-        normalFrame.add(firstPitch);
-        ThrowingCallable throwingCallable = () -> normalFrame.add(secondPitch);;
+        normalFrame.addPitchIfPossible(firstPitch);
+        ThrowingCallable throwingCallable = () -> normalFrame.addPitchIfPossible(secondPitch);;
 
         // then
         assertThatThrownBy(throwingCallable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(message);
+                .isInstanceOf(NormalFrameInvalidPitchesSumException.class);
     }
 
     @Test

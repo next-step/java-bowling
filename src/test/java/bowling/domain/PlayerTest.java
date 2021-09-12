@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.InvalidPlayerNameLengthException;
+import bowling.exception.NotEnglishNameException;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,15 +16,13 @@ class PlayerTest {
     @ValueSource(strings = {"", "abcd"})
     public void 플레이어생성_실패_3글자아님(String name) {
         // given
-        String message = String.format("플레이어 이름은 3글자만 가능합니다 -> %s", name);
 
         // when
         ThrowingCallable throwingCallable = () -> new Player(name);
 
         // then
         assertThatThrownBy(throwingCallable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(message);
+                .isInstanceOf(InvalidPlayerNameLengthException.class);
     }
 
     @ParameterizedTest(name = "플레이어 생성 - 영어 이름이 아닌 경우 | {arguments}")
@@ -36,8 +36,7 @@ class PlayerTest {
 
         // then
         assertThatThrownBy(throwingCallable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(message);
+                .isInstanceOf(NotEnglishNameException.class);
     }
 
     @ParameterizedTest(name = "플레이어 생성 - 정상적인 경우 | {arguments}")

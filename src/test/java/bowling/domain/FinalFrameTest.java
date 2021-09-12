@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.StrikeFinalFrameInvalidPitchesSumException;
+import bowling.exception.NoStrikeFinalFrameInvalidPitchesSumException;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,16 +18,14 @@ class FinalFrameTest {
         FinalFrame finalFrame = new FinalFrame();
         Pitch firstPitch = new Pitch(5);
         Pitch secondPitch = new Pitch(7);
-        String message = "1번째 투구가 스트라이크가 아닌 경우 모든 투구의 합은 10 이하여야 합니다";
 
         // when
-        finalFrame.add(firstPitch);
-        ThrowingCallable throwingCallable = () -> finalFrame.add(secondPitch);;
+        finalFrame.addPitchIfPossible(firstPitch);
+        ThrowingCallable throwingCallable = () -> finalFrame.addPitchIfPossible(secondPitch);;
 
         // then
         assertThatThrownBy(throwingCallable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(message);
+                .isInstanceOf(NoStrikeFinalFrameInvalidPitchesSumException.class);
     }
 
     @Test
@@ -36,17 +36,15 @@ class FinalFrameTest {
         Pitch firstPitch = new Pitch(10);
         Pitch secondPitch = new Pitch(7);
         Pitch thirdPitch = new Pitch(7);
-        String message = "1번째 투구만 스트라이크인 경우 모든 투구의 합은 10 ~ 20 의 값이어야 합니다";
 
         // when
-        finalFrame.add(firstPitch);
-        finalFrame.add(secondPitch);
-        ThrowingCallable throwingCallable = () -> finalFrame.add(thirdPitch);;
+        finalFrame.addPitchIfPossible(firstPitch);
+        finalFrame.addPitchIfPossible(secondPitch);
+        ThrowingCallable throwingCallable = () -> finalFrame.addPitchIfPossible(thirdPitch);;
 
         // then
         assertThatThrownBy(throwingCallable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(message);
+                .isInstanceOf(StrikeFinalFrameInvalidPitchesSumException.class);
     }
 
     @Test
