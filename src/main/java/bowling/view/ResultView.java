@@ -1,7 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Name;
-import bowling.domain.frame.Frames;
+import bowling.domain.BowlingGame;
 
 import java.util.stream.IntStream;
 
@@ -16,22 +15,23 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printInit(Name playerName) {
+    public static void printInit(final BowlingGame bowlingGame) {
         System.out.println(TITLE);
-        printName(playerName.value());
+        printName(bowlingGame.player());
         IntStream.range(FIRST_NUMBER, LAST_NUMBER)
                 .forEach(value -> System.out.print(String.format("%5s %s", BLANK, SEPARATOR)));
         System.out.println();
         System.out.println();
     }
 
-    public static void printResult(final Name playerName, final Frames frames) {
+    public static void printResult(final BowlingGame bowlingGame) {
         System.out.println(TITLE);
-        printName(playerName.value());
+        printName(bowlingGame.player());
 
-        IntStream.range(FIRST_NUMBER, LAST_NUMBER)
-                .mapToObj(number -> number > frames.resultsByCurrent().size() ? "" : frames.resultsByCurrent().get(number - 1))
-                .forEach(value -> System.out.print(String.format("%5s %s", value, SEPARATOR)));
+//        IntStream.range(FIRST_NUMBER, LAST_NUMBER)
+//                .mapToObj(number -> number > bowlingGame.frames().resultsByCurrent().size() ? "" : frames.resultsByCurrent().get(number - 1))
+//                .forEach(value -> System.out.print(String.format("%5s %s", value, SEPARATOR)));
+
         System.out.println();
         System.out.println();
     }

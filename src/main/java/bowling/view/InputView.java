@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.frame.Frames;
+import bowling.domain.BowlingGame;
 
 import java.util.Scanner;
 
@@ -17,8 +17,8 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static int inputFramePitching(final Frames frames) {
-        System.out.print(frames.valueOfCurrentFrameNumber() + INPUT_FRAME_PITCHING);
+    public static int inputFramePitching(final BowlingGame frames) {
+//        System.out.print(frames.valueOfCurrentFrameNumber() + INPUT_FRAME_PITCHING);
         return Integer.parseInt(SCANNER.nextLine());
     }
 }

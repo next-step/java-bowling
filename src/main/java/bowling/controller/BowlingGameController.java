@@ -1,20 +1,18 @@
 package bowling.controller;
 
-import bowling.domain.Name;
-import bowling.domain.frame.Frames;
+import bowling.domain.BowlingGame;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingGameController {
     public void startGame() {
-        Name player = new Name(InputView.inputPlayerName());
-        Frames frames = Frames.init();
+        BowlingGame bowlingGame = new BowlingGame(InputView.inputPlayerName());
 
-        ResultView.printInit(player);
-        while (!frames.isFramesEnd()) {
-            int countOfPins = InputView.inputFramePitching(frames);
-            frames.pitch(countOfPins);
-            ResultView.printResult(player, frames);
+        ResultView.printInit(bowlingGame);
+        while (!bowlingGame.isEnd()) {
+            int countOfPins = InputView.inputFramePitching(bowlingGame);
+            bowlingGame.pitch(countOfPins);
+            ResultView.printResult(bowlingGame);
         }
     }
 }

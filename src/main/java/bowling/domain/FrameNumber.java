@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain;
 
 import bowling.exception.BusinessException;
 
@@ -17,8 +17,16 @@ public class FrameNumber {
         this.frameNumber = frameNumber;
     }
 
-    public boolean isLastNumber() {
+    public boolean isFinalNumber() {
         return frameNumber == MAX_NUMBER;
+    }
+
+    public int nextNumber() {
+        return frameNumber + 1;
+    }
+
+    public boolean isLastNormalNumber() {
+        return frameNumber == BowlingGame.LAST_FRAME_INDEX;
     }
 
     @Override
