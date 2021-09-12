@@ -3,6 +3,9 @@ package bowling;
 import java.util.Objects;
 
 public class Turn {
+    private static final int START_TURN = 1;
+    private static final int END_TURN = 10;
+
     private final static int LAST_DOUBLE_BALL_TURN = 9;
 
     private final int value;
@@ -21,6 +24,14 @@ public class Turn {
 
     public int getNumber() {
         return value;
+    }
+
+    public boolean isLastTurn() {
+        return value <= END_TURN;
+    }
+
+    public static Turn ofStart() {
+        return new Turn(START_TURN);
     }
 
     @Override

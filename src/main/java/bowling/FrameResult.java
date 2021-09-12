@@ -1,5 +1,14 @@
 package bowling;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum FrameResult {
-    STRIKE, SPARE, MISS
+    NONE, STRIKE, SPARE, MISS;
+
+    private static final List<FrameResult> bonusResults = Arrays.asList(STRIKE, SPARE);
+
+    public boolean isBonusResult() {
+        return bonusResults.contains(this);
+    }
 }

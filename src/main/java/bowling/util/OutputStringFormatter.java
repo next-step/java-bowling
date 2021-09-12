@@ -15,7 +15,7 @@ public class OutputStringFormatter {
         return value;
     }
 
-    private static String getSpace(int prefixSize) {
-        return new String(new char[prefixSize]).replace("\0", SPACE);
+    private static String getSpace(int size) {
+        return new String(new char[size]).replace("\0", SPACE);
     }
 }

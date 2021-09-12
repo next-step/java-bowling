@@ -1,35 +1,43 @@
 package bowling;
 
-import java.util.Objects;
 
 public abstract class ScoreFrame {
-    final Turn turn;
-    final Trial trial = new Trial();
+    final FrameMeta frameMeta;
+    ScoreFrame next;
 
     public ScoreFrame(Turn turn) {
-        this.turn = turn;
+        this.frameMeta = new FrameMeta(turn);
     }
 
     abstract ScoreFrame addScore(int score);
 
+    abstract boolean isCalculable();
+
+    abstract Score getScore(Score previousScore);
+
     public int getTurnNumber() {
-        return turn.getNumber();
+        return frameMeta.getTurnNumber();
     }
+
+    public boolean isContinued() { return frameMeta.isLastTurn(); }
 
     public String getScoreString() {
-        return trial.getScoreString();
+        return frameMeta.getScoreString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NormalScoreFrame that = (NormalScoreFrame) o;
-        return Objects.equals(turn, that.turn);
+    public int getCount() {
+        return frameMeta.getCount();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(turn);
+    public Score getSumScore(int n) {
+        return frameMeta.getSumOfScore(n);
+    }
+
+    public boolean hasNextFrame() {
+        return next != null;
+    }
+
+    public ScoreFrame getNextFrame() {
+        return next;
     }
 }

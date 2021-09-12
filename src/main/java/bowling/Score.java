@@ -21,6 +21,10 @@ public class Score {
         return String.valueOf(value);
     }
 
+    public static Score ofZero() {
+        return new Score(0);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

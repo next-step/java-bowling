@@ -18,7 +18,11 @@ public class Trial {
             return getSpareOrStrike();
         }
 
-        return FrameResult.MISS;
+        if (scores.isSecondScore()) {
+            return FrameResult.MISS;
+        }
+
+        return FrameResult.NONE;
     }
 
     public boolean isNormalEnd() {
@@ -39,8 +43,16 @@ public class Trial {
         return scores.isAfterSecondScore() || isFullMiss();
     }
 
+    public Score getSumScore(int n) {
+        return scores.sum(n);
+    }
+
     public String getScoreString() {
         return scoreString.getOutputString();
+    }
+
+    public int getCount() {
+        return scores.getSize();
     }
 
     private FrameResult getSpareOrStrike() {

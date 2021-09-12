@@ -27,4 +27,19 @@ public class Scores {
     public boolean isSecondScore() {
         return scores.size() == SECOND_TRIAL;
     }
+
+    public Score sum(int n) {
+        return scores.stream()
+                .limit(n)
+                .reduce(Score::sum)
+                .orElse(new Score(0));
+    }
+
+    public Score totalSum() {
+        return sum(scores.size());
+    }
+
+    public int getSize() {
+        return scores.size();
+    }
 }
