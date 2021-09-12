@@ -1,6 +1,6 @@
 package step3;
 
-public class Miss implements State {
+public class Miss extends Finished {
     private int firstPins;
     private int secondPins;
 

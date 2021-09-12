@@ -1,5 +1,7 @@
 package step3;
 
+import java.util.Objects;
+
 public class FirstBowl implements State {
     private final int pins;
 
@@ -12,5 +14,22 @@ public class FirstBowl implements State {
             return new Spair();
         }
         return new Miss(pins, secondFalledPins);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        FirstBowl firstBowl = (FirstBowl) o;
+        return pins == firstBowl.pins;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pins);
     }
 }
