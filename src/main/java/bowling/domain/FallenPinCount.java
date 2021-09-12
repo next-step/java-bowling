@@ -21,4 +21,13 @@ public class FallenPinCount {
     public int count() {
         return count;
     }
+
+    public boolean cannotBeSecondBowlOf(FallenPinCount next) {
+        return (this.count + next.count) > MAXIMUM_PIN_COUNT;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(count);
+    }
 }

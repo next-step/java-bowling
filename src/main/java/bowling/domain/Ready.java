@@ -7,7 +7,7 @@ public class Ready implements FrameState {
     @Override
     public FrameState bowl(FallenPinCount fallenPinCount) {
         if (fallenPinCount.count() < STRIKE_FALLEN_PIN_COUNT) {
-            return new Proceeding();
+            return new Proceeding(fallenPinCount);
         }
         return new Strike();
     }
