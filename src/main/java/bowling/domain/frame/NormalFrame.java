@@ -48,15 +48,6 @@ public final class NormalFrame extends Frame {
         return new NormalFrame(FIRST_ROUND_NUMBER);
     }
 
-    public static Frame next(final Frame frame) {
-        if (frame.roundNumber == NORMAL_LAST_ROUND) {
-            frame.nextFrame = FinalFrame.of();
-            return frame.nextFrame;
-        }
-        frame.nextFrame = new NormalFrame(frame.roundNumber + NEXT_ROUND_NUMBER_DISTANCE, Pins.of());
-        return frame.nextFrame;
-    }
-
     @Override
     protected void validateFrame(final Pins pins) {
         if (pins.sum() > MAX_KNOCK_DOWN_NUMBER) {
@@ -82,9 +73,18 @@ public final class NormalFrame extends Frame {
     @Override
     public Frame next() {
         if (isFinished()) {
-            return NormalFrame.next(this);
+            return nextFrame();
         }
         return this;
+    }
+
+    private Frame nextFrame() {
+        if (roundNumber == NORMAL_LAST_ROUND) {
+            nextFrame = FinalFrame.of();
+            return nextFrame;
+        }
+        nextFrame = new NormalFrame(roundNumber + NEXT_ROUND_NUMBER_DISTANCE, Pins.of());
+        return nextFrame;
     }
 
     @Override
