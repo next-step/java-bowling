@@ -80,11 +80,11 @@ public class ResultView {
             return EMPTY_STRING;
         }
 
-        if (fallenPin.isMax()) {
+        if (fallenPin.isStrike()) {
             return STRIKE_SYMBOL;
         }
 
-        if (fallenPin.isMin()) {
+        if (fallenPin.isGutter()) {
             return GUTTER_SYMBOL;
         }
 

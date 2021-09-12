@@ -51,7 +51,7 @@ public class FrameFallenPin {
     }
 
     public boolean isStrike() {
-        return first.isMax() && second == EMPTY_FALLEN_PIN;
+        return first.isStrike() && second == EMPTY_FALLEN_PIN;
     }
 
     public boolean isSpare() {
@@ -96,14 +96,14 @@ public class FrameFallenPin {
         if (first == EMPTY_FALLEN_PIN) {
             return false;
         }
-        return first.isMin() && second == EMPTY_FALLEN_PIN;
+        return first.isGutter() && second == EMPTY_FALLEN_PIN;
     }
 
     public boolean isDoubleGutter() {
         if (first == EMPTY_FALLEN_PIN || second == EMPTY_FALLEN_PIN) {
             return false;
         }
-        return first.isMin() && second.isMin();
+        return first.isGutter() && second.isGutter();
     }
 
     public int firstCount() {

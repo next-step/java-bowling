@@ -26,11 +26,11 @@ public class FallenPin {
         return count;
     }
 
-    public boolean isMax() {
+    public boolean isStrike() {
         return count == MAX;
     }
 
-    public boolean isMin() {
+    public boolean isGutter() {
         return count == MIN;
     }
 
