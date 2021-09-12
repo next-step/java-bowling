@@ -28,6 +28,8 @@
 ~~- [X] 누적 점수 관리 클래스(AccumlatedScores) 작성  --> 복잡성 문제로 삭제~~
 - [X] 점수 계산을 위해 쓰러뜨린 핀의 개수만 관리하는 클래스(PureScores) 작성
 - [X] 점수 표시 문자 변환 관리 클래스(Results) 작성
+- [X] 플레이어(Player) 여러개를 가지는 일급콜렉션(Players) 작성
+- [X] 플레이어들의 누적 점수 리스트와 프레임 순수 점수 리스트를 가지는 클래스(TotalScoreBoard) 작성
 
 ### View
 - [X] 입력을 담당하는 클래스(InputView) 작성
