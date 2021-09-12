@@ -29,7 +29,7 @@ public class BowlingGameTest {
         frames2.add(notFinishFinalFrame);
 
 
-        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2));
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), 0);
 
         assertThat(bowlingGame.isEnd()).isFalse();
     }
@@ -54,7 +54,7 @@ public class BowlingGameTest {
         frames2.add(notFinishFinalFrame);
 
 
-        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2));
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2) ,0);
 
         assertThat(bowlingGame.isEnd()).isTrue();
     }
@@ -77,8 +77,8 @@ public class BowlingGameTest {
         frames2.add(normalFrame2);
 
 
-        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2));
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), 0);
 
-        assertThat(bowlingGame.isRoundEnd(1)).isFalse();
+        assertThat(bowlingGame.isRoundEnd()).isFalse();
     }
 }
