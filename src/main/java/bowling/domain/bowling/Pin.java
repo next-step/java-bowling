@@ -21,19 +21,19 @@ public class Pin {
     }
 
     public static Pin of(int pin) {
-        checkPinInputValue(pin);
+        checkPinValue(pin);
 
         return new Pin(pin);
     }
 
     public static Pin from(Pin input, int second) {
-        checkPinInputValue(second);
+        checkPinValue(second);
         checkSecondPin(input, second);
 
         return new Pin(input.first, second);
     }
 
-    private static void checkPinInputValue(int pin) {
+    private static void checkPinValue(int pin) {
         if (pin < PIN_MIN_VALUE || pin > PIN_MAX_VALUE) {
             throw new PinValueException();
         }
