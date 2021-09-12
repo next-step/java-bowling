@@ -17,9 +17,10 @@ public class Pins {
         this.remainPins = numOfPin;
     }
 
-    public void bowl(int falledPins) {
+    public Pins bowl(int falledPins) {
         this.remainPins -= falledPins;
         validPin();
+        return this;
     }
 
     private void validPin() {
