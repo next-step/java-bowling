@@ -31,6 +31,10 @@ public class Pitch {
         }
     }
 
+    public boolean isSpareOrStrike() {
+        return this instanceof Strike || this instanceof Spare;
+    }
+
     public Pitch pitch(final int countOfPins) {
         if (!(this instanceof Strike) && this.countOfPins + countOfPins == MAXIMUM_COUNT_OF_PINS) {
             return new Spare(countOfPins);
@@ -38,7 +42,7 @@ public class Pitch {
         if (!(this instanceof Strike) && countOfPins == MINIMUM_COUNT_OF_PINS) {
             return new Gutter();
         }
-        if (this.remains == MINIMUM_COUNT_OF_PINS && countOfPins == MAXIMUM_COUNT_OF_PINS) {
+        if (isSpareOrStrike() && countOfPins == MAXIMUM_COUNT_OF_PINS) {
             return new Strike();
         }
         return new Pitch(countOfPins);

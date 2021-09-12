@@ -45,7 +45,7 @@ class FinalFrameTest {
 
     @DisplayName("파이널 프레임에서 3번 투구한 결과는 다음과 같다.")
     @ParameterizedTest
-    @CsvSource(value = {"10 10 10 X|X|X", "10 2 8 X|2|/", "10 0 0 X|0|-"}, delimiter = ' ')
+    @CsvSource(value = {"10 10 10 X|X|X", "10 2 8 X|2|/", "10 0 0 X|0|-", "9 1 10 9|/|X"}, delimiter = ' ')
     void pitch_result_three(int first, int second, int bonus, String expected) {
         assertThat(new FinalFrame().pitch(first).pitch(second).pitch(bonus).result()).isEqualTo(expected);
     }

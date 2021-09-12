@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.BowlingGame;
 
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ResultView {
@@ -28,12 +29,20 @@ public class ResultView {
         System.out.println(TITLE);
         printName(bowlingGame.player());
 
-//        IntStream.range(FIRST_NUMBER, LAST_NUMBER)
-//                .mapToObj(number -> number > bowlingGame.frames().resultsByCurrent().size() ? "" : frames.resultsByCurrent().get(number - 1))
-//                .forEach(value -> System.out.print(String.format("%5s %s", value, SEPARATOR)));
+        bowlingGame.frames()
+                .forEach(frame ->
+                        System.out.print(String.format("%5s %s", frame.result(), SEPARATOR))
+                );
+        printBlock(LAST_NUMBER - bowlingGame.frames().size() - 1);
+        System.out.println();
+        System.out.println();
+    }
 
-        System.out.println();
-        System.out.println();
+    private static void printBlock(int range) {
+        String blankBlock = IntStream.range(0, range)
+                .mapToObj(index -> String.format("%5s %s", BLANK, SEPARATOR))
+                .collect(Collectors.joining());
+        System.out.println(blankBlock);
     }
 
     private static void printName(String playerName) {
