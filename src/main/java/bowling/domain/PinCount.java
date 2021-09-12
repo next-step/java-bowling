@@ -15,6 +15,8 @@ public enum PinCount {
     ONE(1),
     ZERO(0);
 
+    private static final String STRING_FOR_GUTTER = "-";
+
     private final int count;
 
     PinCount(int count) {
@@ -38,6 +40,6 @@ public enum PinCount {
 
     @Override
     public String toString() {
-        return String.valueOf(count);
+        return this == ZERO ? STRING_FOR_GUTTER : String.valueOf(count);
     }
 }
