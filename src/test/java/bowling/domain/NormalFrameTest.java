@@ -46,4 +46,12 @@ class NormalFrameTest {
     void spare(int countOfPints, String expected) {
         assertThat(new NormalFrame(1).pitch(2).pitch(countOfPints).result()).isEqualTo(expected);
     }
+
+    @DisplayName("투구가 끝난 프레임의 다음은 새 프레임이다.")
+    @Test
+    void next_normal(){
+        Frame normal = new NormalFrame(1);
+        assertThat(normal.pitch(2).pitch(8).next()).isEqualTo(new NormalFrame(2));
+    }
+    
 }

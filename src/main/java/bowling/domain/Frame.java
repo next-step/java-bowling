@@ -8,4 +8,6 @@ public interface Frame {
     boolean isEnd();
 
     String result();
+
+    Frame next();
 }

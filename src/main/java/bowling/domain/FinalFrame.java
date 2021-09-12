@@ -28,4 +28,9 @@ public class FinalFrame implements Frame {
     public String result() {
         return null;
     }
+
+    @Override
+    public Frame next() {
+        return null;
+    }
 }
