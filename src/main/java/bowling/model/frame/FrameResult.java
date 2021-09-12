@@ -54,10 +54,6 @@ public class FrameResult {
         return score.scoreValue();
     }
 
-    public Score score() {
-        return score.score();
-    }
-
     public boolean remainsPitchingCount() {
         return score.remainsPitchingCount();
     }

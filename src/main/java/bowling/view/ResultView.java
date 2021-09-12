@@ -12,12 +12,16 @@ public class ResultView {
     private static final String FRAME_NAME_AND_NUMBERS
             = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |\n";
     private static final String PLAYER_NAME = "|  %s |";
+    private static final String FIRST_FALLEN_PIN_DISPLAY_FORMAT = "  %s   |";
+    private static final String FALLEN_PIN_DISPLAY_FORMAT = "  %s%s |";
     private static final String BONUS_FALLEN_PIN_DISPLAY_FORMAT = "  %s   |";
     private static final String SCORE_DISPLAY_FORMAT = "  %-3d |";
     private static final String STRIKE_SYMBOL = "X";
     private static final String GUTTER_SYMBOL = "-";
     private static final String SCORE_SECTION = "|      |";
     private static final String EMPTY_SECTION = "      |";
+    private static final String FALLEN_PIN_DELIMITER = "|";
+    private static final String SPARE_DISPLAY = "/";
     private static final String NEW_LINE = "\n";
     private static final String EMPTY_STRING = "";
     private static final PrintStream PRINT_STREAM = System.out;
@@ -35,7 +39,7 @@ public class ResultView {
     public static void printFrames(String playerName, List<Frame> frames) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(generatePlayerNameDisplay(playerName));
-        stringBuilder.append(generateFrameFallenPinDisplay(frames));
+        stringBuilder.append(generateFramesFallenPinDisplay(frames));
         stringBuilder.append(generateLastFrameBonusFallenPinDisplay(frames));
         stringBuilder.append(generateEmptySectionsOfFallenPinDisplay(frames));
         stringBuilder.append(generateScoreDisplay(frames));
@@ -50,16 +54,26 @@ public class ResultView {
         return stringBuilder.toString();
     }
 
-    private static String generateFrameFallenPinDisplay(List<Frame> frames) {
+    private static String generateFramesFallenPinDisplay(List<Frame> frames) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Frame frame : frames) {
-            String displayFormat = FrameFallenPinStatus.findDisplayFormat(frame.fallenPin());
-            String firstFallenPinSymbol = generateFallenPinSymbol(frame.firstFallenPin());
-            String secondFallenPinSymbol = generateFallenPinSymbol(frame.secondFallenPin());
-
-            stringBuilder.append(String.format(displayFormat, firstFallenPinSymbol, secondFallenPinSymbol));
+            stringBuilder.append(generateFrameFallenPinDisplay(frame));
         }
         return stringBuilder.toString();
+    }
+
+    private static String generateFrameFallenPinDisplay(Frame frame) {
+        String firstFallenPinSymbol = generateFallenPinSymbol(frame.firstFallenPin());
+        if (!frame.pitchTwice()) {
+            return String.format(FIRST_FALLEN_PIN_DISPLAY_FORMAT, firstFallenPinSymbol);
+        }
+
+        if (frame.isSpare()) {
+            return String.format(FALLEN_PIN_DISPLAY_FORMAT, firstFallenPinSymbol, FALLEN_PIN_DELIMITER + SPARE_DISPLAY);
+        }
+
+        String secondFallenPinSymbol = generateFallenPinSymbol(frame.secondFallenPin());
+        return String.format(FALLEN_PIN_DISPLAY_FORMAT, firstFallenPinSymbol, FALLEN_PIN_DELIMITER + secondFallenPinSymbol);
     }
 
     private static String generateLastFrameBonusFallenPinDisplay(List<Frame> frames) {

@@ -76,10 +76,6 @@ public class FrameFallenPin {
         return first != EMPTY_FALLEN_PIN && second != EMPTY_FALLEN_PIN;
     }
 
-    public boolean isEmpty() {
-        return first == EMPTY_FALLEN_PIN;
-    }
-
     public boolean isFirst() {
         return first != EMPTY_FALLEN_PIN && second == EMPTY_FALLEN_PIN;
     }

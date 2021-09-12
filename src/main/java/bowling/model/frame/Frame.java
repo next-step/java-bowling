@@ -57,16 +57,12 @@ public abstract class Frame {
         return result.isFirstAndNotStrike();
     }
 
-    protected boolean pitchTwice() {
+    public boolean pitchTwice() {
         return result.pitchTwice();
     }
 
     public boolean isSpare() {
         return result.isSpare();
-    }
-
-    public FrameFallenPin fallenPin() {
-        return result.fallenPin();
     }
 
     public FallenPin firstFallenPin() {
@@ -100,10 +96,6 @@ public abstract class Frame {
 
     public int scoreValue() {
         return result.scoreValue();
-    }
-
-    public Score score() {
-        return result.score();
     }
 
     public boolean remainsNextPitching() {
