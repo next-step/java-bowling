@@ -1,16 +1,20 @@
 package bowling.domain.pin;
 
+import bowling.domain.frame.FrameStatus;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static bowling.domain.frame.FrameStatus.*;
 
 public final class Pins {
 
     private static final int FIRST_PIN_INDEX = 0;
     private static final int SECOND_PIN_INDEX = 1;
     private static final int THIRD_PIN_INDEX = 2;
-    private static final int MIN_PINS_SIZE =2;
+    private static final int MIN_PINS_SIZE = 2;
     private static final int MAX_PINS_SIZE = 3;
     private static final int MAX_TWO_PINS_SUM_IF_NOT_STRIKE = 10;
 
@@ -35,14 +39,24 @@ public final class Pins {
         pins.add(Pin.valueOf(knockDownNumber));
     }
 
-    public boolean isStrike() {
+    public FrameStatus getStatus() {
+        if (isStrike()) {
+            return STRIKE;
+        }
+        if (isSpare()) {
+            return SPARE;
+        }
+        return NORMAL;
+    }
+
+    private boolean isStrike() {
         if (pins.isEmpty()) {
             return false;
         }
         return firstPin().isMaximum();
     }
 
-    public boolean isSpare() {
+    private boolean isSpare() {
         if (pins.size() < MIN_PINS_SIZE) {
             return false;
         }
