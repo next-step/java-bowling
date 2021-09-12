@@ -2,7 +2,6 @@ package bowling;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Scores {
     private static final int SECOND_TRIAL = 2;
@@ -14,11 +13,11 @@ public class Scores {
     }
 
     public boolean isTotalScoreHigherOrEqualThan(int number) {
-        int sum = getNumbers().stream()
-                .reduce(Integer::sum)
-                .orElse(0);
+        Score scoreSum = scores.stream()
+                .reduce(Score::sum)
+                .orElse(new Score(0));
 
-        return sum >= number;
+        return scoreSum.isHigherOrEqualThan(new Score(number));
     }
 
     public boolean isAfterSecondScore() {
@@ -27,11 +26,5 @@ public class Scores {
 
     public boolean isSecondScore() {
         return scores.size() == SECOND_TRIAL;
-    }
-
-    private List<Integer> getNumbers() {
-        return scores.stream()
-                .map(Score::toInt)
-                .collect(Collectors.toList());
     }
 }
