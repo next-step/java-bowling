@@ -20,8 +20,8 @@ public class Spare extends BasePitchState {
 	}
 
 	@Override
-	public List<Integer> getHitPins() {
-		return Collections.singletonList(pins.getHitCount());
+	public List<Pins> getHitPins() {
+		return Collections.singletonList(pins);
 	}
 
 	@Override

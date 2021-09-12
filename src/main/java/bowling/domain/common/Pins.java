@@ -40,6 +40,10 @@ public class Pins {
 		return hitCount == MAX_HIT_COUNT;
 	}
 
+	public boolean isBiggerThan(final int pinCount) {
+		return hitCount > pinCount;
+	}
+
 	public Score score() {
 		return BaseScore.of(hitCount);
 	}
@@ -55,11 +59,11 @@ public class Pins {
 		if (!(o instanceof Pins))
 			return false;
 		final Pins pins = (Pins)o;
-		return getHitCount() == pins.getHitCount();
+		return hitCount == pins.hitCount;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getHitCount());
+		return Objects.hash(hitCount);
 	}
 }

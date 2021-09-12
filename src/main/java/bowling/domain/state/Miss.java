@@ -21,7 +21,7 @@ public class Miss extends BasePitchState {
 	}
 
 	private void createValidation(final Pins first, final Pins second) {
-		if (first.add(second).getHitCount() > MAX_HIT_PINS_COUNT - 1) {
+		if (first.add(second).isBiggerThan(MAX_HIT_PINS_COUNT - 1)) {
 			throw new InvalidCreateStateException();
 		}
 	}
@@ -31,8 +31,8 @@ public class Miss extends BasePitchState {
 	}
 
 	@Override
-	public List<Integer> getHitPins() {
-		return Arrays.asList(first.getHitCount(), second.getHitCount());
+	public List<Pins> getHitPins() {
+		return Arrays.asList(first, second);
 	}
 
 	@Override

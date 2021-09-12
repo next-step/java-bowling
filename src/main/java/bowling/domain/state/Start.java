@@ -34,7 +34,7 @@ public class Start extends BasePitchState {
 	}
 
 	@Override
-	public List<Integer> getHitPins() {
+	public List<Pins> getHitPins() {
 		return Collections.emptyList();
 	}
 }

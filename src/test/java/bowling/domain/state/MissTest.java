@@ -82,14 +82,15 @@ class MissTest {
 	})
 	void getHitPins(final int pinCount1, final int pinCount2) {
 		// given
-		final Miss miss = Miss.of(Pins.of(pinCount1), Pins.of(pinCount2));
+		final Pins pins1 = Pins.of(pinCount1);
+		final Pins pins2 = Pins.of(pinCount2);
+		final Miss miss = Miss.of(pins1, pins2);
 
 		// when
-		final List<Integer> hitPins = miss.getHitPins();
+		final List<Pins> hitPins = miss.getHitPins();
 
 		// then
-		assertThat(hitPins.get(0)).isEqualTo(pinCount1);
-		assertThat(hitPins.get(1)).isEqualTo(pinCount2);
+		assertThat(hitPins).contains(pins1, pins2);
 	}
 
 	static Stream<Arguments> addScore() {

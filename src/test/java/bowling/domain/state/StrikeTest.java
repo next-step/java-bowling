@@ -54,10 +54,10 @@ class StrikeTest {
 		final Strike strike = Strike.of();
 
 		// when
-		final List<Integer> hitPins = strike.getHitPins();
+		final List<Pins> hitPins = strike.getHitPins();
 
 		// then
-		assertThat(hitPins.get(0)).isEqualTo(10);
+		assertThat(hitPins).contains(Pins.of(10));
 	}
 
 	static Stream<Arguments> addScore() {

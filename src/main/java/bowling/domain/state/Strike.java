@@ -3,6 +3,7 @@ package bowling.domain.state;
 import java.util.Collections;
 import java.util.List;
 
+import bowling.domain.common.Pins;
 import bowling.domain.score.BaseScore;
 import bowling.domain.score.ProgressScore;
 import bowling.domain.score.Score;
@@ -17,8 +18,8 @@ public class Strike extends BasePitchState {
 	}
 
 	@Override
-	public List<Integer> getHitPins() {
-		return Collections.singletonList(MAX_HIT_PINS_COUNT);
+	public List<Pins> getHitPins() {
+		return Collections.singletonList(Pins.of(MAX_HIT_PINS_COUNT));
 	}
 
 	@Override

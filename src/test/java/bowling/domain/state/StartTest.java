@@ -56,7 +56,7 @@ class StartTest {
 		final Start start = Start.of();
 
 		// when
-		final List<Integer> hitPins = start.getHitPins();
+		final List<Pins> hitPins = start.getHitPins();
 
 		// then
 		assertThat(hitPins).isEmpty();

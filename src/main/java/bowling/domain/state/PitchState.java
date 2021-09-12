@@ -9,7 +9,7 @@ public interface PitchState {
 
 	PitchState hitPins(Pins pins);
 
-	List<Integer> getHitPins();
+	List<Pins> getHitPins();
 
 	Score score();
 

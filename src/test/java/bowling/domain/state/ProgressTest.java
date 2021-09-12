@@ -58,13 +58,14 @@ class ProgressTest {
 	@Test
 	void getHitPins() {
 		// given
-		final Progress progress = Progress.of(Pins.of(3));
+		final Pins pins = Pins.of(3);
+		final Progress progress = Progress.of(pins);
 
 		// when
-		final List<Integer> hitPins = progress.getHitPins();
+		final List<Pins> hitPins = progress.getHitPins();
 
 		// then
-		assertThat(hitPins.get(0)).isEqualTo(3);
+		assertThat(hitPins).contains(pins);
 	}
 
 	private static Stream<Arguments> addScore() {
