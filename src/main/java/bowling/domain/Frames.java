@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Frames {
@@ -53,8 +52,8 @@ public class Frames {
     }
 
     private List<List<Integer>> emptyLists() {
-        return IntStream.range(0, SIZE - frames.size())
-                .mapToObj(i -> new ArrayList<Integer>())
+        return Stream.generate(ArrayList<Integer>::new)
+                .limit(SIZE - frames.size())
                 .collect(Collectors.toList());
     }
 
