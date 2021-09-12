@@ -40,7 +40,7 @@ public class Frames {
             frames.remove(lastFrameIndex);
         }
 
-        decreaseRemainingPitchingCountOne();
+        decreaseRemainingPitchingCount();
         calculateRemainingScore(nextFrame);
 
         frames.add(nextFrame);
@@ -52,18 +52,18 @@ public class Frames {
         }
 
         Frame lastFrame = lastFrame();
-        boolean isStrikeCanBeCalculated = lastFrame.isStrike() && !lastFrame.remainsNextPitching();
-        boolean isSpareCanBeCalculated = lastFrame.isSpare() && !lastFrame.remainsNextPitching() && !nextFrame.pitchTwice();
+        boolean canCalculateStrike = lastFrame.isStrike() && !lastFrame.remainsNextPitching();
+        boolean canCalculateSpare = lastFrame.isSpare() && !lastFrame.remainsNextPitching() && !nextFrame.pitchTwice();
 
-        if (isStrikeCanBeCalculated || isSpareCanBeCalculated) {
+        if (canCalculateStrike || canCalculateSpare) {
             lastFrame.calculateRemainingScore(nextFrame);
         }
     }
 
-    private void decreaseRemainingPitchingCountOne() {
+    private void decreaseRemainingPitchingCount() {
         frames.stream()
                 .filter(Frame::remainsNextPitching)
-                .forEach(Frame::decreaseRemainingPitchingCountOne);
+                .forEach(Frame::decreaseRemainingPitchingCount);
     }
 
     private void validateNextIsPlayable() {

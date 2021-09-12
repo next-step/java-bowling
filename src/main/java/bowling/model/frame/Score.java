@@ -24,12 +24,12 @@ public class Score {
         }
     }
 
-    public Score plusScore(int other) {
-        return Score.from(score + other);
+    public Score plusScore(int additionalScore) {
+        return Score.from(score + additionalScore);
     }
 
-    public void plus(int other) {
-        score += other;
+    public void plus(int additionalScore) {
+        score += additionalScore;
     }
 
     public int value() {

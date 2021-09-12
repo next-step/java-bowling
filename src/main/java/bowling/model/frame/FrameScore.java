@@ -15,32 +15,33 @@ public class FrameScore {
 
     public static FrameScore initial(FrameFallenPin fallenPin) {
         int initialFallenPinCount = fallenPin.countTotal();
-        return new FrameScore(Score.from(initialFallenPinCount), findRemainingPitchingCountOfFirstFallenPin(fallenPin));
+        return new FrameScore(Score.from(initialFallenPinCount), findRemainingPitchingCount(fallenPin));
     }
 
     public FrameScore nextFirst(FrameFallenPin firstFallenPin) {
         int firstFallenPinCount = firstFallenPin.firstCount();
-        return new FrameScore(score.plusScore(firstFallenPinCount), findRemainingPitchingCountOfFirstFallenPin(firstFallenPin));
+        return new FrameScore(score.plusScore(firstFallenPinCount), findRemainingPitchingCount(firstFallenPin));
     }
 
-    public FrameScore nextSecond(FrameFallenPin fallenPinTotal) {
-        int secondFallenPinCount = fallenPinTotal.secondCount();
-        return new FrameScore(score.plusScore(secondFallenPinCount), findRemainingPitchingCountOfSecondFallenPin(fallenPinTotal));
+    public FrameScore nextSecond(FrameFallenPin secondFallenPin) {
+        int secondFallenPinCount = secondFallenPin.secondCount();
+        return new FrameScore(score.plusScore(secondFallenPinCount), findRemainingPitchingCount(secondFallenPin));
     }
 
-    private static RemainingPitchingCount findRemainingPitchingCountOfFirstFallenPin(FrameFallenPin firstFallenPin) {
-        if (firstFallenPin.isStrike()) {
+    private static RemainingPitchingCount findRemainingPitchingCount(FrameFallenPin frameFallenPin) {
+        if (frameFallenPin.isStrike()) {
             return RemainingPitchingCount.strike();
         }
-        return RemainingPitchingCount.firstAndNotStrike();
-    }
 
-    private RemainingPitchingCount
-    findRemainingPitchingCountOfSecondFallenPin(FrameFallenPin secondFallenPin) {
-        if (secondFallenPin.isSpare()) {
+        if (frameFallenPin.isSpare()) {
             return RemainingPitchingCount.spare();
         }
-        return RemainingPitchingCount.secondAndNotSpare();
+
+        if (frameFallenPin.pitchTwice()) {
+            return RemainingPitchingCount.secondAndNotSpare();
+        }
+
+        return RemainingPitchingCount.firstAndNotStrike();
     }
 
     public int remainingPitchingCount() {
@@ -55,8 +56,8 @@ public class FrameScore {
         return score.value();
     }
 
-    public void plus(int other) {
-        score.plus(other);
+    public void plus(int additionalScore) {
+        score.plus(additionalScore);
     }
 
     public boolean remainsPitchingCount() {
@@ -64,6 +65,6 @@ public class FrameScore {
     }
 
     public void decreaseRemainingPitchingCountOne() {
-        remainingPitchingCount.decreaseOne();
+        remainingPitchingCount.decrease();
     }
 }

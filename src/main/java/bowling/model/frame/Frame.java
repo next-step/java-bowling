@@ -86,8 +86,8 @@ public abstract class Frame {
         result.plusScore(nextFrame.fallenPinCountTotal());
     }
 
-    private void plusScore(int other) {
-        result.plusScore(other);
+    private void plusScore(int additionalScore) {
+        result.plusScore(additionalScore);
     }
 
     private int fallenPinCountTotal() {
@@ -102,7 +102,7 @@ public abstract class Frame {
         return result.remainsPitchingCount();
     }
 
-    public void decreaseRemainingPitchingCountOne() {
-        result.decreaseRemainingPitchingCountOne();
+    public void decreaseRemainingPitchingCount() {
+        result.decreaseRemainingPitchingCount();
     }
 }

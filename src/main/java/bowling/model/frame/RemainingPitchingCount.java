@@ -45,7 +45,7 @@ public class RemainingPitchingCount {
         return count == NO_COUNT;
     }
 
-    public void decreaseOne() {
+    public void decrease() {
         count--;
     }
 }

@@ -42,8 +42,8 @@ public class FrameResult {
         return fallenPin.second();
     }
 
-    public void plusScore(int other) {
-        score.plus(other);
+    public void plusScore(int additionalScore) {
+        score.plus(additionalScore);
     }
 
     public int fallenPinCountTotal() {
@@ -58,7 +58,7 @@ public class FrameResult {
         return score.remainsPitchingCount();
     }
 
-    public void decreaseRemainingPitchingCountOne() {
+    public void decreaseRemainingPitchingCount() {
         score.decreaseRemainingPitchingCountOne();
     }
 
@@ -66,8 +66,8 @@ public class FrameResult {
         return fallenPin.isFirst();
     }
 
-    public FrameScore nextSecondScore(FrameFallenPin fallenPinTotal) {
-        return score.nextSecond(fallenPinTotal);
+    public FrameScore nextSecondScore(FrameFallenPin secondFallenPin) {
+        return score.nextSecond(secondFallenPin);
     }
 
     public FrameScore nextFirstScore(FrameFallenPin firstFallenPin) {
