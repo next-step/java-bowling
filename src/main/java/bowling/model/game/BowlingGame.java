@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.model.game;
 
 import bowling.model.frame.Frame;
 import bowling.model.frame.Frames;

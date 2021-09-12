@@ -1,5 +1,6 @@
 package bowling.model;
 
+import bowling.model.game.BowlingGames;
 import bowling.model.player.Player;
 import bowling.view.InputView;
 import bowling.view.ResultView;

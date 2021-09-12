@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.model.BowlingGame;
+import bowling.model.game.BowlingGame;
 import bowling.model.frame.FallenPin;
 import bowling.model.frame.Frame;
 import bowling.model.player.Player;

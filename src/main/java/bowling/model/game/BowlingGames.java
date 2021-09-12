@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.model.game;
 
 import bowling.model.player.Player;
 import bowling.model.player.PlayerNumber;
