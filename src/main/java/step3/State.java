@@ -1,4 +1,4 @@
-package step3.exceptions;
+package step3;
 
 public interface State {
 
