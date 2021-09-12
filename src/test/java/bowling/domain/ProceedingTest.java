@@ -27,4 +27,13 @@ class ProceedingTest {
                 .isExactlyInstanceOf(Spare.class);
     }
 
+    @DisplayName("두번째 투구에서 첫번째 투구에서 남은 핀을 모두 쓰러트리지 못한 경우, 프레임은 Miss 상태가 된다.")
+    @Test
+    public void missTest() {
+        FrameState state = new Ready();
+        FrameState proceeding = state.bowl(new FallenPinCount(8));
+        assertThat(proceeding.bowl(new FallenPinCount(1)))
+                .isExactlyInstanceOf(Miss.class);
+    }
+
 }

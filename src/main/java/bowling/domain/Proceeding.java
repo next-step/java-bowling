@@ -15,6 +15,6 @@ public class Proceeding implements FrameState {
         if (firstFallenPinCount.isSparedWith(fallenPinCount)) {
             return new Spare();
         }
-        return null;
+        return new Miss();
     }
 }
