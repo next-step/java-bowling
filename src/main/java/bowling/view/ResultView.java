@@ -3,6 +3,8 @@ package bowling.view;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import bowling.domain.player.Players;
+
 public class ResultView {
     private static final String OUTPUT_FRAME_FORMAT = "  %02d  |";
     private static final String OUTPUT_EMPTY_FRAME = "|      |";
@@ -24,24 +26,38 @@ public class ResultView {
         System.out.printf(OUTPUT_FRAME_FORMAT, frameNumber);
     }
 
-    public void outputScores(String playerName, List<String> scores) {
+    public void outputScores(Players players) {
+        List<String> playerNames = players.names();
+        List<List<String>> scoresOfPlayers = players.results();
+        List<List<Integer>> cumulativeScoresOfPlayers = players.totalScoreBoard().cumulativeScoresOfPlayers();
+
         outputFrames();
-        System.out.printf(OUTPUT_PLAYER_NAME_FORMAT, playerName);
+        IntStream.range(0, playerNames.size())
+            .forEach(i -> {
+                    System.out.printf(OUTPUT_PLAYER_NAME_FORMAT, playerNames.get(i));
+                    outputScore(scoresOfPlayers.get(i));
+                    outputCumulativeScores(cumulativeScoresOfPlayers.get(i));
+                }
+            );
+        System.out.print(System.lineSeparator());
+    }
+
+    private void outputScore(List<String> scores) {
         if (scores.size() != FRAME_NUMBER_END) {
-            scores.forEach(this::outputScore);
+            scores.forEach(this::outputScoreUnit);
             IntStream.range(scores.size(), FRAME_NUMBER_END)
                 .forEach(i -> outputEmptyHalfFrame());
         }
 
         if (scores.size() == FRAME_NUMBER_END) {
             IntStream.range(FRAME_NUMBER_START - 1, FRAME_NUMBER_END - 1)
-                .forEach(i -> outputScore(scores.get(i)));
+                .forEach(i -> outputScoreUnit(scores.get(i)));
             System.out.printf(OUTPUT_LAST_SCORE_FORMAT, scores.get(FRAME_NUMBER_END - 1));
         }
         System.out.print(System.lineSeparator());
     }
 
-    private void outputScore(String score) {
+    private void outputScoreUnit(String score) {
         System.out.printf(OUTPUT_SCORE_FORMAT, score);
     }
 
