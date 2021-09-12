@@ -1,9 +1,6 @@
 package bowling;
 
 public class NormalScoreFrame extends ScoreFrame {
-    private static final int MISS_TRIAL_DEPTH = 0;
-    private static final int SPARE_TRIAL_DEPTH = 1;
-    private static final int STRIKE_TRIAL_DEPTH = 2;
 
     public NormalScoreFrame(Turn turn) {
         super(turn);
@@ -29,7 +26,7 @@ public class NormalScoreFrame extends ScoreFrame {
         }
 
         if (frameResult.isBonusResult() && this.hasNextFrame()) {
-            return calculable(getDepth(frameResult), this.getNextFrame());
+            return calculable(frameResult.getBonusDepth(), this.getNextFrame());
         }
 
         return false;
@@ -41,14 +38,14 @@ public class NormalScoreFrame extends ScoreFrame {
         Score currentFrameScore = previousScore.sum(frameMeta.getTotalSumScore());
 
         if (frameResult.isBonusResult()) {
-            return addScore(getDepth(frameResult), currentFrameScore, getNextFrame());
+            return addScore(frameResult.getBonusDepth(), currentFrameScore, getNextFrame());
         }
 
         return currentFrameScore;
     }
 
-    public Score addScore(int depth, Score previousScore, ScoreFrame currentScoreFrame) {
-        if (depth <= 0) {
+    private Score addScore(int depth, Score previousScore, ScoreFrame currentScoreFrame) {
+        if (isEnd(depth)) {
             return previousScore;
         }
 
@@ -59,7 +56,7 @@ public class NormalScoreFrame extends ScoreFrame {
     private boolean calculable(int depth, ScoreFrame currentScoreFrame) {
         int remainDepth = depth - currentScoreFrame.getCount();
 
-        if (remainDepth <= 0) {
+        if (isEnd(remainDepth)) {
             return true;
         }
 
@@ -70,18 +67,6 @@ public class NormalScoreFrame extends ScoreFrame {
         return false;
     }
 
-    private int getDepth(FrameResult frameResult) {
-        if (frameResult == FrameResult.SPARE) {
-            return SPARE_TRIAL_DEPTH;
-        }
-
-        if (frameResult == FrameResult.STRIKE) {
-            return STRIKE_TRIAL_DEPTH;
-        }
-
-        return MISS_TRIAL_DEPTH;
-    }
-
     private ScoreFrame createNextFrame() {
         Turn nextTurn = frameMeta.getNextTurn();
 
@@ -90,5 +75,9 @@ public class NormalScoreFrame extends ScoreFrame {
         }
 
         return new NormalScoreFrame(nextTurn);
+    }
+
+    private boolean isEnd(int depth) {
+        return depth <= 0;
     }
 }

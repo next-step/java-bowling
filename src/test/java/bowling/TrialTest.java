@@ -62,15 +62,11 @@ public class TrialTest {
         Trial trial2 = new Trial();
         trial.add(new Score(8));
 
-        assertThat(trial2.getFrameResult()).isEqualTo(FrameResult.MISS);
-
-        Trial trial3 = new Trial();
-
-        assertThat(trial3.getFrameResult()).isEqualTo(FrameResult.MISS);
+        assertThat(trial2.getFrameResult()).isEqualTo(FrameResult.NONE);
     }
 
     @Test
-    @DisplayName("Norma")
+    @DisplayName("NormalEnd 테스트")
     void isNormalEndTest() {
         Trial trial = new Trial();
 
@@ -84,5 +80,24 @@ public class TrialTest {
         trial2.add(new Score(0));
 
         assertThat(trial2.isNormalEnd()).isTrue();
+    }
+
+    @Test
+    @DisplayName("FinalEnd 테스트")
+    void isFinalEndTest() {
+        Trial trial = new Trial();
+
+        trial.add(new Score(10));
+        trial.add(new Score(10));
+        trial.add(new Score(10));
+
+        assertThat(trial.isFinalEnd()).isTrue();
+
+        Trial trial2 = new Trial();
+
+        trial2.add(new Score(0));
+        trial2.add(new Score(0));
+
+        assertThat(trial2.isFinalEnd()).isTrue();
     }
 }

@@ -12,14 +12,6 @@ public class Scores {
         scores.add(score);
     }
 
-    public boolean isTotalScoreHigherOrEqualThan(int number) {
-        Score scoreSum = scores.stream()
-                .reduce(Score::sum)
-                .orElse(new Score(0));
-
-        return scoreSum.isHigherOrEqualThan(new Score(number));
-    }
-
     public boolean isAfterSecondScore() {
         return scores.size() > SECOND_TRIAL;
     }
@@ -28,18 +20,22 @@ public class Scores {
         return scores.size() == SECOND_TRIAL;
     }
 
+    public int getSize() {
+        return scores.size();
+    }
+
+    public boolean isTotalScoreHigherOrEqualThan(int number) {
+        Score scoreSum = scores.stream()
+                .reduce(Score::sum)
+                .orElse(new Score(0));
+
+        return scoreSum.isHigherOrEqualThan(new Score(number));
+    }
+
     public Score sum(int n) {
         return scores.stream()
                 .limit(n)
                 .reduce(Score::sum)
                 .orElse(new Score(0));
-    }
-
-    public Score totalSum() {
-        return sum(scores.size());
-    }
-
-    public int getSize() {
-        return scores.size();
     }
 }

@@ -3,9 +3,6 @@ package bowling;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedList;
-import java.util.ListIterator;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -61,4 +58,80 @@ public class NormalScoreFrameTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
+    @Test
+    @DisplayName("점수 계산 가능한지 확인 - 3 스트라이크")
+    void isCalculable() {
+        NormalScoreFrame normalScoreFrame = new NormalScoreFrame(new Turn(1));
+
+        ScoreFrame nextNormalScoreFrame = normalScoreFrame.addScore(10);
+        assertThat(normalScoreFrame.isCalculable()).isFalse();
+
+        ScoreFrame nextNextNormalScoreFrame = nextNormalScoreFrame.addScore(10);
+        assertThat(normalScoreFrame.isCalculable()).isFalse();
+
+        nextNextNormalScoreFrame.addScore(10);
+        assertThat(normalScoreFrame.isCalculable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수 계산 가능한지 확인 - 1 스패어 1 투구")
+    void isCalculable2() {
+        NormalScoreFrame normalScoreFrame = new NormalScoreFrame(new Turn(1));
+
+        ScoreFrame nextNormalScoreFrame = normalScoreFrame.addScore(2);
+        assertThat(normalScoreFrame.isCalculable()).isFalse();
+
+        ScoreFrame nextNextNormalScoreFrame = nextNormalScoreFrame.addScore(8);
+        assertThat(normalScoreFrame.isCalculable()).isFalse();
+
+        nextNextNormalScoreFrame.addScore(5);
+        assertThat(normalScoreFrame.isCalculable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수 계산 가능한지 확인 - 미스")
+    void isCalculable3() {
+        NormalScoreFrame normalScoreFrame = new NormalScoreFrame(new Turn(1));
+
+        ScoreFrame nextNormalScoreFrame = normalScoreFrame.addScore(2);
+        assertThat(normalScoreFrame.isCalculable()).isFalse();
+
+        nextNormalScoreFrame.addScore(6);
+        assertThat(normalScoreFrame.isCalculable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수 계산 테스트 - 3 스트라이크")
+    void getScoreTest() {
+        NormalScoreFrame normalScoreFrame = new NormalScoreFrame(new Turn(1));
+
+        ScoreFrame nextNormalScoreFrame = normalScoreFrame.addScore(10);
+        ScoreFrame nextNextNormalScoreFrame = nextNormalScoreFrame.addScore(10);
+        nextNextNormalScoreFrame.addScore(10);
+
+        assertThat(normalScoreFrame.getScore(Score.ofZero())).isEqualTo(new Score(30));
+    }
+
+    @Test
+    @DisplayName("점수 계산 테스트 - 1 스페어 1 투구")
+    void getScoreTest2() {
+        NormalScoreFrame normalScoreFrame = new NormalScoreFrame(new Turn(1));
+
+        ScoreFrame nextNormalScoreFrame = normalScoreFrame.addScore(8);
+        ScoreFrame nextNextNormalScoreFrame = nextNormalScoreFrame.addScore(2);
+        nextNextNormalScoreFrame.addScore(1);
+
+        assertThat(normalScoreFrame.getScore(Score.ofZero())).isEqualTo(new Score(11));
+    }
+
+    @Test
+    @DisplayName("점수 계산 테스트 - 미스")
+    void getScoreTest3() {
+        NormalScoreFrame normalScoreFrame = new NormalScoreFrame(new Turn(1));
+
+        ScoreFrame nextNormalScoreFrame = normalScoreFrame.addScore(8);
+        nextNormalScoreFrame.addScore(1);
+
+        assertThat(normalScoreFrame.getScore(Score.ofZero())).isEqualTo(new Score(9));
+    }
 }

@@ -18,7 +18,7 @@ public class FinalScoreFrame extends ScoreFrame {
     }
 
     @Override
-    boolean isCalculable() {
+    public boolean isCalculable() {
         return frameMeta.isFinalEnd();
     }
 

@@ -13,6 +13,18 @@ public class Trial {
         scoreString = addScoreString(score);
     }
 
+    public Score getSumScore(int n) {
+        return scores.sum(n);
+    }
+
+    public String getScoreString() {
+        return scoreString.getOutputString();
+    }
+
+    public int getCount() {
+        return scores.getSize();
+    }
+
     public FrameResult getFrameResult() {
         if (scores.isTotalScoreHigherOrEqualThan(NON_MISS_NUMBER)) {
             return getSpareOrStrike();
@@ -41,18 +53,6 @@ public class Trial {
         }
 
         return scores.isAfterSecondScore() || isFullMiss();
-    }
-
-    public Score getSumScore(int n) {
-        return scores.sum(n);
-    }
-
-    public String getScoreString() {
-        return scoreString.getOutputString();
-    }
-
-    public int getCount() {
-        return scores.getSize();
     }
 
     private FrameResult getSpareOrStrike() {
