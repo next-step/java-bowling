@@ -14,19 +14,19 @@ public class RemainingPitchingCount {
         this.count = count;
     }
 
-    public static RemainingPitchingCount ofStrike() {
+    public static RemainingPitchingCount strike() {
         return new RemainingPitchingCount(COUNT_OF_STRIKE);
     }
 
-    public static RemainingPitchingCount ofSpare() {
+    public static RemainingPitchingCount spare() {
         return new RemainingPitchingCount(COUNT_OF_SPARE);
     }
 
-    public static RemainingPitchingCount ofSecondAndNotSpare() {
+    public static RemainingPitchingCount secondAndNotSpare() {
         return new RemainingPitchingCount(NO_COUNT);
     }
 
-    public static RemainingPitchingCount ofFirstAndNotStrike() {
+    public static RemainingPitchingCount firstAndNotStrike() {
         return new RemainingPitchingCount(ONE_COUNT);
     }
 

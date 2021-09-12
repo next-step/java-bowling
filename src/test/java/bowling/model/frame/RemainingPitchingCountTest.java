@@ -25,27 +25,27 @@ public class RemainingPitchingCountTest {
     @Test
     void remainingPitchingCountOfStrikeTest() {
         // given, when, then
-        assertSame(RemainingPitchingCount.ofStrike().count(), 2);
+        assertSame(RemainingPitchingCount.strike().count(), 2);
     }
 
     @DisplayName("스페어 점수 계산을 위해서는 1개의 다음 투구가 남아있다.")
     @Test
     void remainingPitchingCountOfSpareTest() {
         // given, when, then
-        assertSame(RemainingPitchingCount.ofSpare().count(), 1);
+        assertSame(RemainingPitchingCount.spare().count(), 1);
     }
 
     @DisplayName("첫 번째 투구이고 스트라이크가 아니라면 점수 계산을 위해서는 1개의 다음 투구가 남아있다.")
     @Test
     void remainingPitchingCountOfFirstAndNotStrikeTest() {
         // given, when, then
-        assertSame(RemainingPitchingCount.ofFirstAndNotStrike().count(), 1);
+        assertSame(RemainingPitchingCount.firstAndNotStrike().count(), 1);
     }
 
     @DisplayName("두 번째 투구이고 스페어가 아니라면 남은 투구가 없다.")
     @Test
     void remainingPitchingCountOfSecondAndNotSpareTest() {
         // given, when, then
-        assertSame(RemainingPitchingCount.ofSecondAndNotSpare().count(), 0);
+        assertSame(RemainingPitchingCount.secondAndNotSpare().count(), 0);
     }
 }

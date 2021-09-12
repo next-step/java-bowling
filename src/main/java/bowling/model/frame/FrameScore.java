@@ -30,16 +30,17 @@ public class FrameScore {
 
     private static RemainingPitchingCount findRemainingPitchingCountOfFirstFallenPin(FrameFallenPin firstFallenPin) {
         if (firstFallenPin.isStrike()) {
-            return RemainingPitchingCount.ofStrike();
+            return RemainingPitchingCount.strike();
         }
-        return RemainingPitchingCount.ofFirstAndNotStrike();
+        return RemainingPitchingCount.firstAndNotStrike();
     }
 
-    private RemainingPitchingCount findRemainingPitchingCountOfSecondFallenPin(FrameFallenPin secondFallenPin) {
+    private RemainingPitchingCount
+    findRemainingPitchingCountOfSecondFallenPin(FrameFallenPin secondFallenPin) {
         if (secondFallenPin.isSpare()) {
-            return RemainingPitchingCount.ofSpare();
+            return RemainingPitchingCount.spare();
         }
-        return RemainingPitchingCount.ofSecondAndNotSpare();
+        return RemainingPitchingCount.secondAndNotSpare();
     }
 
     public int remainingPitchingCount() {
