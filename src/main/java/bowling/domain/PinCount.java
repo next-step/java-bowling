@@ -32,8 +32,8 @@ public enum PinCount {
         return valueOf(TEN.count - this.count);
     }
 
-    public boolean lessThan(PinCount other) {
-        return this.count < other.count;
+    public boolean over(PinCount other) {
+        return this.count > other.count;
     }
 
     @Override

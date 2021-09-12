@@ -19,9 +19,9 @@ class FinishedTest {
 
     private static Stream<Arguments> provideFinishedStates() {
         return Stream.of(
-                Arguments.arguments(new Strike()),
-                Arguments.arguments(new Spare()),
-                Arguments.arguments(new Miss())
+                Arguments.arguments(Finished.strike()),
+                Arguments.arguments(new Finished(PinCount.EIGHT, PinCount.TWO)),
+                Arguments.arguments(new Finished(PinCount.EIGHT, PinCount.ZERO))
         );
     }
 }

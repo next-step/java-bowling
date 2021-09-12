@@ -18,7 +18,8 @@ class ReadyTest {
     @Test
     public void strikeStateTest() {
         FrameState next = new Ready().bowl(PinCount.TEN);
-        assertThat(next).isExactlyInstanceOf(Strike.class);
+        assertThat(next).isExactlyInstanceOf(Finished.class)
+                .matches(state -> ((Finished) state).isStrike());
     }
 
 }

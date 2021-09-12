@@ -22,7 +22,8 @@ class ProceedingTest {
     public void spareTest() {
         FrameState proceeding = new Ready().bowl(PinCount.EIGHT);
         assertThat(proceeding.bowl(PinCount.TWO))
-                .isExactlyInstanceOf(Spare.class);
+                .isExactlyInstanceOf(Finished.class)
+                .matches(state -> ((Finished) state).isSpare());
     }
 
     @DisplayName("두번째 투구에서 첫번째 투구에서 남은 핀을 모두 쓰러트리지 못한 경우, 프레임은 Miss 상태가 된다.")
@@ -30,7 +31,8 @@ class ProceedingTest {
     public void missTest() {
         FrameState proceeding = new Ready().bowl(PinCount.EIGHT);
         assertThat(proceeding.bowl(PinCount.ONE))
-                .isExactlyInstanceOf(Miss.class);
+                .isExactlyInstanceOf(Finished.class)
+                .matches(state -> ((Finished) state).isMiss());
     }
 
 }
