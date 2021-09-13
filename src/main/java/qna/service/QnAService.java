@@ -12,7 +12,8 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import qna.exception.WrongUserDeleteTryException;
+import qna.exception.NotQuestionWriterException;
+import qna.exception.OtherUserAnswerFoundException;
 
 @Service("qnaService")
 public class QnAService {
@@ -34,7 +35,9 @@ public class QnAService {
     }
 
     @Transactional
-    public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException, WrongUserDeleteTryException {
+    public void deleteQuestion(User loginUser, long questionId)
+        throws CannotDeleteException, NotQuestionWriterException, OtherUserAnswerFoundException {
+
         Question question = findQuestionById(questionId);
         question.delete(loginUser);
 

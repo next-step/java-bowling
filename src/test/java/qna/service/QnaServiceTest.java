@@ -6,14 +6,13 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import qna.exception.CannotDeleteException;
 import qna.domain.*;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import qna.exception.WrongUserDeleteTryException;
+import qna.exception.NotQuestionWriterException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -39,6 +38,7 @@ public class QnaServiceTest {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         question.addAnswer(answer);
+        question.addAnswer2(answer);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class QnaServiceTest {
 
         assertThatThrownBy(() -> {
             qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(WrongUserDeleteTryException.class);
+        }).isInstanceOf(NotQuestionWriterException.class);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class QnaServiceTest {
 
         assertThatThrownBy(() -> {
             qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        }).isInstanceOf(NotQuestionWriterException.class);
     }
 
     private void verifyDeleteHistories() {
