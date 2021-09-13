@@ -10,14 +10,22 @@ import java.util.stream.Stream;
 public abstract class Frame {
 
     protected final List<Pitch> pitches;
+    protected Frame nextFrame;
 
     public Frame() {
-        this.pitches = new ArrayList<>();
+        pitches = new ArrayList<>();
+        nextFrame = null;
     }
 
-    public abstract boolean add(final Pitch pitch);
+    public abstract boolean addPitchIfPossible(final Pitch pitch);
 
     public abstract boolean isFull();
+
+    public abstract int score();
+
+    public void addNextFrame(final Frame nextFrame) {
+        this.nextFrame = nextFrame;
+    }
 
     public List<Integer> pitchValues() {
         return pitches.stream()

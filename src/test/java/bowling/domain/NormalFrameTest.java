@@ -1,9 +1,15 @@
 package bowling.domain;
 
+import bowling.exception.NormalFrameInvalidPitchesSumException;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -16,16 +22,14 @@ class NormalFrameTest {
         NormalFrame normalFrame = new NormalFrame();
         Pitch firstPitch = new Pitch(5);
         Pitch secondPitch = new Pitch(7);
-        String message = "모든 투구의 합은 10 이하여야 합니다";
 
         // when
-        normalFrame.add(firstPitch);
-        ThrowingCallable throwingCallable = () -> normalFrame.add(secondPitch);;
+        normalFrame.addPitchIfPossible(firstPitch);
+        ThrowingCallable throwingCallable = () -> normalFrame.addPitchIfPossible(secondPitch);;
 
         // then
         assertThatThrownBy(throwingCallable)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(message);
+                .isInstanceOf(NormalFrameInvalidPitchesSumException.class);
     }
 
     @Test
@@ -37,8 +41,8 @@ class NormalFrameTest {
         Pitch secondPitch = new Pitch(7);
 
         // when
-        boolean firstPitchResult = normalFrame.add(firstPitch);
-        boolean secondPitchResult = normalFrame.add(secondPitch);
+        boolean firstPitchResult = normalFrame.addPitchIfPossible(firstPitch);
+        boolean secondPitchResult = normalFrame.addPitchIfPossible(secondPitch);
 
         // then
         assertThat(firstPitchResult).isEqualTo(true);
@@ -55,9 +59,9 @@ class NormalFrameTest {
         Pitch thirdPitch = new Pitch(7);
 
         // when
-        boolean firstPitchResult = normalFrame.add(firstPitch);
-        boolean secondPitchResult = normalFrame.add(secondPitch);
-        boolean thirdPitchResult = normalFrame.add(secondPitch);
+        boolean firstPitchResult = normalFrame.addPitchIfPossible(firstPitch);
+        boolean secondPitchResult = normalFrame.addPitchIfPossible(secondPitch);
+        boolean thirdPitchResult = normalFrame.addPitchIfPossible(secondPitch);
 
         // then
         assertThat(firstPitchResult).isEqualTo(true);
@@ -73,7 +77,7 @@ class NormalFrameTest {
         Pitch firstPitch = new Pitch(9);
 
         // when
-        boolean firstPitchResult = normalFrame.add(firstPitch);
+        boolean firstPitchResult = normalFrame.addPitchIfPossible(firstPitch);
         boolean full = normalFrame.isFull();
 
         // then
@@ -89,12 +93,43 @@ class NormalFrameTest {
         Pitch firstPitch = new Pitch(10);
 
         // when
-        boolean firstPitchResult = normalFrame.add(firstPitch);
+        boolean firstPitchResult = normalFrame.addPitchIfPossible(firstPitch);
         boolean full = normalFrame.isFull();
 
         // then
         assertThat(firstPitchResult).isEqualTo(true);
         assertThat(full).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("score 테스트")
+    public void score() {
+        // given
+        List<NormalFrame> frames = Stream.generate(NormalFrame::new)
+                .limit(3)
+                .collect(Collectors.toList());
+        frames.get(0).addNextFrame(frames.get(1));
+        frames.get(1).addNextFrame(frames.get(2));
+        Pitch firstPitch = new Pitch(10);
+        Pitch secondPitch = new Pitch(10);
+        Pitch thirdPitch = new Pitch(8);
+        Pitch fourthPitch = new Pitch(1);
+
+        // when
+        frames.get(0)
+                .addPitchIfPossible(firstPitch);
+        frames.get(1)
+                .addPitchIfPossible(secondPitch);
+        frames.get(2)
+                .addPitchIfPossible(thirdPitch);
+        frames.get(2)
+                .addPitchIfPossible(fourthPitch);
+        List<Integer> scores = frames.stream()
+                .map(Frame::score)
+                .collect(Collectors.toList());
+
+        // then
+        assertThat(scores).containsExactly(28, 19, 9);
     }
 
 }

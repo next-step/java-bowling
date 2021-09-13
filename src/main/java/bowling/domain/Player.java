@@ -1,12 +1,13 @@
 package bowling.domain;
 
+import bowling.exception.InvalidPlayerNameLengthException;
+import bowling.exception.NotEnglishNameException;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Player {
 
-    private static final String INVALID_LENTH = "플레이어 이름은 3글자만 가능합니다 -> %s";
-    private static final String NOT_ENGLISH = "플레이어 이름은 영어만 가능합니다 -> %s";
     private static final int NAME_LENGTH = 3;
     private static final String ENGLISH_PATTERN = "^[a-zA-Z]*$";
 
@@ -28,13 +29,13 @@ public class Player {
 
     private void requireEnglish(final String name) {
         if (!Pattern.matches(ENGLISH_PATTERN, name)) {
-            throw new IllegalArgumentException(String.format(NOT_ENGLISH, name));
+            throw new NotEnglishNameException(name);
         }
     }
 
     private void requireValidLength(final String name) {
         if (name.length() != NAME_LENGTH) {
-            throw new IllegalArgumentException(String.format(INVALID_LENTH, name));
+            throw new InvalidPlayerNameLengthException(name);
         }
     }
 

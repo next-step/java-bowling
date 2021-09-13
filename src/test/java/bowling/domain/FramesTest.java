@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FramesTest {
@@ -39,7 +40,7 @@ class FramesTest {
     }
 
     @Test
-    @DisplayName("addPitch,allFramePitchValues,isEnd 테스트 - 전부 거터 (점수 없음)")
+    @DisplayName("addPitch,allFramePitchValues,isEnd,scores 테스트 - 전부 거터 (점수 없음)")
     public void allGutter() {
         // given
         Frames frames = new Frames();
@@ -54,10 +55,11 @@ class FramesTest {
         assertThat(allFramePitchValues)
                 .allMatch(pitchValues -> pitchValues.equals(expectedPitchValues));
         assertThat(frames.isEnd()).isEqualTo(true);
+        assertThat(frames.scores()).allMatch(score -> score == 0);
     }
 
     @Test
-    @DisplayName("addPitch,allFramePitchValues,isEnd 테스트 - 퍼펙트 게임")
+    @DisplayName("addPitch,allFramePitchValues,isEnd,scores 테스트 - 퍼펙트 게임")
     public void perfectGame() {
         // given
         Frames frames = new Frames();
@@ -78,6 +80,7 @@ class FramesTest {
                 .allMatch(pitchValues -> pitchValues.equals(normalExpected));
         assertThat(finalFramePitchValues).isEqualTo(finalExpected);
         assertThat(frames.isEnd()).isEqualTo(true);
+        assertThat(frames.scores()).containsExactly(30, 60, 90, 120, 150, 180, 210, 240, 270, 300);
     }
 
     private List<Boolean> allGutter(final Frames frames) {
