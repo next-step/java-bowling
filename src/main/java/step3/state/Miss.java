@@ -1,11 +1,19 @@
 package step3.state;
 
-public class Miss extends Finished {
-    private int firstPins;
-    private int secondPins;
+import step3.Pins;
+import step3.Score;
 
-    public Miss(int firstPins, int secondPins) {
+public class Miss extends Finished {
+    private Pins firstPins;
+    private Pins secondPins;
+
+    public Miss(Pins firstOfPin, Pins secondOfPins) {
         this.firstPins = firstPins;
         this.secondPins = secondPins;
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        return null;
     }
 }

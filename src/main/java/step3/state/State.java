@@ -1,5 +1,11 @@
 package step3.state;
 
+import step3.Score;
+
 public interface State {
-    abstract State bowl(int falledPins);
+    State bowl(int fallenPins);
+
+    Score score();
+
+    Score calculateAdditionalScore(Score beforeScore);
 }

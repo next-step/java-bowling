@@ -7,24 +7,24 @@ public class Pins {
     private static final int MAX = 10;
     private static final int MIN = 0;
 
-    private int remainPins;
+    private int fallenPins;
 
     public Pins() {
         this(MAX);
     }
 
     public Pins(int numOfPin) {
-        this.remainPins = numOfPin;
+        this.fallenPins = numOfPin;
     }
 
-    public Pins bowl(int falledPins) {
-        this.remainPins -= falledPins;
+    public Pins bowl(int fallenPins) {
+        this.fallenPins -= fallenPins;
         validPin();
         return this;
     }
 
     private void validPin() {
-        if (remainPins < MIN || remainPins > MAX) {
+        if (fallenPins < MIN || fallenPins > MAX) {
             throw new PinNumberExecption();
         }
     }
@@ -38,11 +38,19 @@ public class Pins {
             return false;
         }
         Pins pins = (Pins) o;
-        return remainPins == pins.remainPins;
+        return fallenPins == pins.fallenPins;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(remainPins);
+        return Objects.hash(fallenPins);
+    }
+
+    public Score sumScore(Score beforeScore) {
+        return beforeScore.bowl(fallenPins);
+    }
+
+    public boolean isSpair(int secondFalledPins) {
+        return fallenPins + secondFalledPins == MAX;
     }
 }

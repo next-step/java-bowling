@@ -3,11 +3,11 @@ package step3;
 import step3.state.Ready;
 import step3.state.State;
 
-public class Frame {
-    private Frame next;
+public class FinalFrame {
+    private FinalFrame next;
     private State state;
 
-    public Frame() {
+    public FinalFrame() {
         this.state = new Ready();
     }
 

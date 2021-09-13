@@ -1,6 +1,7 @@
 package step3;
 
 import java.util.Objects;
+import step3.exceptions.CannotCalculateExceptions;
 
 public class Score {
     private int score;
@@ -13,6 +14,17 @@ public class Score {
 
     public Score bowl(int falledPins) {
         return new Score(score + falledPins, left - 1);
+    }
+
+    public int getScore() {
+        if (!canCalculateScore()) {
+            throw new CannotCalculateExceptions();
+        }
+        return score;
+    }
+
+    public boolean canCalculateScore() {
+        return left == 0;
     }
 
     @Override

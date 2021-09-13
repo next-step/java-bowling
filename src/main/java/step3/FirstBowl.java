@@ -1,22 +1,40 @@
 package step3;
 
 import java.util.Objects;
+import step3.exceptions.CanNotThrowBallException;
+import step3.exceptions.CannotCalculateExceptions;
 import step3.state.Miss;
 import step3.state.Spair;
 import step3.state.State;
 
 public class FirstBowl implements State {
-    private final int pins;
+    private Score score;
+    private final Pins firstOfPin;
 
     public FirstBowl(int firstFalledPins) {
-        pins = firstFalledPins;
+        firstOfPin = new Pins(firstFalledPins);
     }
 
     public State bowl(int secondFalledPins) {
-        if (pins + secondFalledPins == 10) {
-            return new Spair();
+        Pins secondOfPins = new Pins(secondFalledPins);
+        if (firstOfPin.isSpair(secondFalledPins)) {
+            return new Spair(firstOfPin, secondOfPins);
         }
-        return new Miss(pins, secondFalledPins);
+        return new Miss(firstOfPin, secondOfPins);
+    }
+
+    @Override
+    public Score score() {
+        return score;
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        beforeScore = firstOfPin.sumScore(beforeScore);
+        if (beforeScore.canCalculateScore()) {
+            return beforeScore;
+        }
+        throw new CanNotThrowBallException();
     }
 
     @Override
@@ -28,11 +46,11 @@ public class FirstBowl implements State {
             return false;
         }
         FirstBowl firstBowl = (FirstBowl) o;
-        return pins == firstBowl.pins;
+        return firstOfPin == firstBowl.firstOfPin;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pins);
+        return Objects.hash(firstOfPin);
     }
 }
