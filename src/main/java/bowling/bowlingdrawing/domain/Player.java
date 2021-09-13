@@ -9,6 +9,9 @@ public class Player {
         this.game = new Game();
     }
 
+    public void pitch(int pins) {
+        game.pitch(pins);
+    }
     public Game game() {
         return game;
     }
