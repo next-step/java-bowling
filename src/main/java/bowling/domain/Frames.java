@@ -15,11 +15,14 @@ public class Frames {
     }
 
     private List<Frame> initFrames() {
+        Frame frame = NormalFrame.of(NormalFrame.MIN_FRAME_NUMBER);
         List<Frame> frames = new ArrayList<>();
+        frames.add(frame);
+
         for (int number = NormalFrame.MIN_FRAME_NUMBER; number <= NormalFrame.MAX_FRAME_NUMBER; number++) {
-            frames.add(NormalFrame.of(number));
+            frame = frame.next();
+            frames.add(frame);
         }
-        frames.add(new LastFrame());
         return frames;
     }
 
@@ -46,6 +49,16 @@ public class Frames {
 
     public List<Frame> frames() {
         return Collections.unmodifiableList(frames);
+    }
+
+    public Scores scores() {
+        List<Score> scores = new ArrayList<>();
+        Score base = Score.ofZero();
+        for (Frame frame : frames) {
+            base = base.add(frame.score());
+            scores.add(base);
+        }
+        return new Scores(scores);
     }
 
 }

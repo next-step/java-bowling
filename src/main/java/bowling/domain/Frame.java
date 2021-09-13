@@ -17,10 +17,23 @@ public abstract class Frame {
 
     protected final int number;
     protected final List<PitchResult> results;
+    private Frame next;
 
     protected Frame(int number) {
         this.number = number;
         this.results = new ArrayList<>();
+    }
+
+    public Frame next() {
+        next = createNextFrame();
+        return next;
+    }
+
+    private Frame createNextFrame() {
+        if (number + 1 == LastFrame.FRAME_NUMBER) {
+            return new LastFrame();
+        }
+        return NormalFrame.of(number + 1);
     }
 
     public void bowl(int fallenPins) {
@@ -60,7 +73,39 @@ public abstract class Frame {
         if (!isEnd()) {
             return Score.ofNotScored();
         }
-        return Score.from(totalPins());
+
+        Score score = Score.from(totalPins());
+        if (isLast()) {
+            return score;
+        }
+        return score.add(bonusScore());
+    }
+
+    private Score bonusScore() {
+        if (hasStrike()) {
+            return strikeBonus();
+        }
+        if (hasSpare()) {
+            return spareBonus();
+        }
+        return Score.ofZero();
+    }
+
+    private Score strikeBonus() {
+        PitchResult next1stResult = next.firstResult();
+        PitchResult next2ndResult = next.secondResult();
+        Score next1stScore = Score.of(next1stResult);
+        if (next1stResult.isStrike() && number < NormalFrame.MAX_FRAME_NUMBER) {
+            Frame nextAfterFrame = next.next;
+            PitchResult nextAfter1stResult = nextAfterFrame.firstResult();
+            return next1stScore.add(Score.of(nextAfter1stResult));
+        }
+        return next1stScore.add(Score.of(next2ndResult));
+    }
+
+    private Score spareBonus() {
+        PitchResult nextResult = next.firstResult();
+        return Score.of(nextResult);
     }
 
     public PitchResult firstResult() {
@@ -101,5 +146,4 @@ public abstract class Frame {
                 .mapToInt(PitchResult::fallenPins)
                 .sum();
     }
-
 }
