@@ -1,21 +1,21 @@
-package bowling;
+package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame {
 
     private int index;
 
-    private List<Point> points = new ArrayList<>();
+    private Points points;
 
     private static final int START_INDEX = 0;
     private static final int NEXT_INDEX_DISTANCE = 1;
+    private static final int MAX_TRY = 2;
 
 
     private NormalFrame() {
         this.index = START_INDEX;
+        this.points = new Points();
     }
 
     public NormalFrame(int index) {
@@ -27,20 +27,29 @@ public class NormalFrame {
     }
 
     public void bowl(int hitPin) {
-        int currentPoint = points.stream()
-                .mapToInt(Point::currentPoint)
-                .sum();
+        int currentPoint = points.currentPoint();
+
         if (currentPoint + hitPin > Point.MAX_POINT) {
             throw new IllegalArgumentException("합계 점수가 10이 넘을 수 없습니다");
         }
-        points.add(new Point(hitPin));
+        points.addPoint(new Point(hitPin));
+    }
+
+    public boolean isFinished() {
+        if (points.bowlCount() == MAX_TRY) {
+            return true;
+        }
+        if (points.findFirstPoint() == 10) {
+            return true;
+        }
+        return false;
     }
 
     public NormalFrame next() {
         return new NormalFrame(this.index + NEXT_INDEX_DISTANCE);
     }
 
-    public List<Point> currentFramePoints() {
+    public Points currentFramePoints() {
         return points;
     }
 
