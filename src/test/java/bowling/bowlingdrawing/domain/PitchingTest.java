@@ -1,6 +1,6 @@
 package bowling.bowlingdrawing.domain;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -36,12 +36,10 @@ class PitchingTest {
         Pitching pitching = Pitching.first(10);
         Pitching nextPitching1 = pitching.next(10);
         Pitching nextPitching2 = nextPitching1.next(9);
-
         // when
         Integer score = pitching.score(2);
         Integer score1 = nextPitching1.score(1);
         Integer score2 = nextPitching2.score(0);
-
         // then
         assertThat(score).isEqualTo(29);
         assertThat(score1).isEqualTo(19);
