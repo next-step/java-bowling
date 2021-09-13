@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.ui.InputView;
 import bowling.ui.ResultView;
 
@@ -8,24 +9,40 @@ public class BowlingApplication {
 
     public static void main(String[] args) {
 
-        String player = InputView.inputPlayerName();
-        BowlingGame bowlingGame = new BowlingGame(player);
+        int numberOfPlayer = InputView.InputNumberOfPlayer();
 
-        printBowlingGame(bowlingGame);
+        String[] names = new String[numberOfPlayer];
+        for (int i = 0; i < numberOfPlayer; i++) {
+            names[i] = InputView.inputPlayerName(i + 1);
+        }
 
-        while (bowlingGame.isNotEnd()) {
-            int fallenPin = InputView.nextFallenPin(bowlingGame);
-            bowlingGame.roll(fallenPin);
+        BowlingGames bowlingGames = new BowlingGames(names);
 
-            printBowlingGame(bowlingGame);
+        printBowlingGame(bowlingGames);
+
+        while (bowlingGames.isNotEnd()) {
+            for (BowlingGame game : bowlingGames.games()) {
+                roll(game, bowlingGames);
+            }
         }
 
     }
 
-    private static void printBowlingGame(BowlingGame bowlingGame) {
+    private static void roll(BowlingGame game, BowlingGames bowlingGames) {
+        int fallenPin = InputView.nextFallenPin(game);
+        game.roll(fallenPin);
+        printBowlingGame(bowlingGames);
+        if (!game.currentFrameIsEnd()) {
+            roll(game, bowlingGames);
+        }
+    }
+
+    private static void printBowlingGame(BowlingGames bowlingGames) {
         ResultView.printFrame();
-        ResultView.printFrameByPlayer(bowlingGame);
-        ResultView.printScoreByPlayer(bowlingGame);
+        bowlingGames.games().forEach(game -> {
+            ResultView.printFrameByPlayer(game);
+            ResultView.printScoreByPlayer(game);
+        });
     }
 
 }

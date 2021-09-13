@@ -48,7 +48,7 @@ public class ResultView {
         }
 
         printNonFrame(frames.size());
-
+        System.out.println();
     }
 
     private static int displayScore(int totalScore, int score) {
