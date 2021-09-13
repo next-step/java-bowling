@@ -19,4 +19,12 @@ public class Player {
     public boolean end() {
         return game.end();
     }
+
+    public String name() {
+        return name;
+    }
+
+    public int currentFrame() {
+        return game.currentFrame();
+    }
 }
