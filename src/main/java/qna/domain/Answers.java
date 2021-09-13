@@ -25,9 +25,9 @@ public class Answers {
         this(new ArrayList<>());
     }
 
-    public boolean areAllWrittenByWriter(User loginUser) {
+    public boolean areAllWrittenByWriter(User writer) {
         return answers.stream()
-            .allMatch(a -> a.isOwner(loginUser));
+            .allMatch(a -> a.isOwner(writer));
     }
 
     public List<Answer> value() {

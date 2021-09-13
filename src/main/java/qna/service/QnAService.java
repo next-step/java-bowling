@@ -44,16 +44,13 @@ public class QnAService {
         //TODO: 질문을 조건을 따져가면서 삭제하기
 
         //TODO: 삭제한 질문및 답변을 삭제 기록 저장소에 저장하기.
-//        if (!question.isOwner(loginUser)) {
-//            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-//        }
 
-        List<Answer> answers = question.getAnswers();
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
+//        List<Answer> answers = question.getAnswers();
+//        for (Answer answer : answers) {
+//            if (!answer.isOwner(loginUser)) {
+//                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+//            }
+//        }
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         question.setDeleted(true);
