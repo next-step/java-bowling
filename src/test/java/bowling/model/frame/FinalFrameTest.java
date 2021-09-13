@@ -20,12 +20,12 @@ public class FinalFrameTest {
         int secondFallenPinCount = 5;
         int score = 10;
         int remainingPitchingCount = 1;
-        int bonusFallenPin = 0;
+        int bonusFallenPinCount = 0;
 
         // when, then
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new FinalFrame(frameNumber, firstFallenPinCount, secondFallenPinCount, score,
-                        remainingPitchingCount, bonusFallenPin))
+                        remainingPitchingCount, bonusFallenPinCount))
                 .withMessage("마지막 프레임 번호는 10 이어야 합니다.");
     }
 
@@ -38,10 +38,10 @@ public class FinalFrameTest {
         int secondFallenPinCount = 3;
         int score = 8;
         int remainingPitchingCount = 0;
-        int bonusFallenPin = 0;
+        int bonusFallenPinCount = 0;
 
         Frame notStrikeAndNotSpare = new FinalFrame(frameNumber, firstFallenPinCount, secondFallenPinCount, score,
-                remainingPitchingCount, bonusFallenPin);
+                remainingPitchingCount, bonusFallenPinCount);
 
         // when, then
         assertThatIllegalArgumentException()
@@ -53,10 +53,10 @@ public class FinalFrameTest {
     @ParameterizedTest
     @CsvSource(value = {"10:10:0:10:2:0", "10:5:5:10:1:0"}, delimiter = ':')
     void nextFinalFrameWhenPitchTwiceAndStrikeOrSpareTest(int frameNumber, int firstFallenPinCount, int secondFallenPinCount,
-                                                          int score, int remainingPitchingCount, int bonusFallenPin) {
+                                                          int score, int remainingPitchingCount, int bonusFallenPinCount) {
         // given
         Frame finalFrame = new FinalFrame(frameNumber, firstFallenPinCount, secondFallenPinCount, score,
-                remainingPitchingCount, bonusFallenPin);
+                remainingPitchingCount, bonusFallenPinCount);
 
         // when, then
         assertThat(finalFrame.next(5)).isInstanceOf(FinalFrame.class);

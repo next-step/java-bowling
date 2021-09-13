@@ -71,4 +71,9 @@ public class NormalFrame extends Frame {
     public FallenPin bonusFallenPin() {
         return null;
     }
+
+    @Override
+    public boolean isPitchOver() {
+        return isStrike() || pitchTwice();
+    }
 }

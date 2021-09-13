@@ -6,10 +6,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName("볼링 게임 플레이어 테스트")
-public class PlayerTest {
+@DisplayName("볼링 게임 플레이어 이름 테스트")
+public class PlayerNameTest {
 
     @DisplayName("플레이어 이름이 알파벳 3글자가 아니면 예외가 발생한다.")
     @ParameterizedTest
@@ -17,7 +17,7 @@ public class PlayerTest {
     void playerNamePatternExceptionTest(String name) {
         // when, then
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new Player(name))
+                .isThrownBy(() -> new Player(1, name))
                 .withMessage("플레이어 이름은 알파벳 3글자로 이루어져야 합니다.");
     }
 
@@ -25,9 +25,9 @@ public class PlayerTest {
     @Test
     void createPlayerNameTest() {
         // given
-        Player player = new Player("abc");
+        Player player = new Player(1, "abc");
 
         // when, then
-        assertTrue(player.equals("abc"));
+        assertEquals(player.name(), "abc");
     }
 }
