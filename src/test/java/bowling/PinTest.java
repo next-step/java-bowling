@@ -3,6 +3,9 @@ package bowling;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class PinTest {
@@ -20,5 +23,4 @@ public class PinTest {
         assertThatThrownBy(() -> Pin.of(-1))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
 }

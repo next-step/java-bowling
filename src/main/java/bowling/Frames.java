@@ -5,10 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static bowling.CommonConstans.MAX_SIZE;
+import static bowling.CommonConstans.MINUS_INDEX_ONE;
+
 public class Frames {
 
-    private static final int MAX_SIZE = 10;
-    private static final int MINUS_INDEX_ONE = 1;
 
     private final List<Frame> frames;
     private final List<FrameScore> scores;
@@ -38,6 +39,8 @@ public class Frames {
 
         frames.add(Frame.of(countOfDownPin, ofPins()));
 
+        scoreInit();
+
         return new Frames(frames, scores);
     }
 
@@ -63,7 +66,7 @@ public class Frames {
         return Collections.unmodifiableList(scores);
     }
 
-    public void scoreInit() {
+    private void scoreInit() {
         if (isFrameCompleted(frames.size() - MINUS_INDEX_ONE)) {
             scores.add(FrameScore.of(frames.get(frames.size() - MINUS_INDEX_ONE)));
         }

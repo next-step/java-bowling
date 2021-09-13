@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 public class Player {
 
     private String playerName;
-    private Pattern pattern;
+    private static Pattern pattern;
     private Frames frames;
 
 
@@ -40,6 +40,5 @@ public class Player {
 
     public void play(int score) {
         frames = frames.play(score);
-        frames.scoreInit();
     }
 }
