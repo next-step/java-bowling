@@ -7,8 +7,10 @@ import java.util.List;
 
 public class LastFrame extends Frame {
 
+    public static final int FRAME_NUMBER = 10;
+
     protected LastFrame() {
-        super(MAX_FRAME_NUMBER);
+        super(FRAME_NUMBER);
     }
 
     @Override
@@ -40,16 +42,11 @@ public class LastFrame extends Frame {
 
     @Override
     public int number() {
-        return MAX_FRAME_NUMBER;
+        return FRAME_NUMBER;
     }
 
     private boolean isNotBonusChance() {
         return !hasStrike() && !hasSpare();
-    }
-
-    private boolean hasSpare() {
-        return results.stream()
-                .anyMatch(PitchResult::isSpare);
     }
 
 }

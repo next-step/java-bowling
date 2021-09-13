@@ -1,9 +1,11 @@
 package bowling.domain;
 
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import bowling.exception.GameOverException;
 
 class FramesTest {
 
@@ -59,6 +61,18 @@ class FramesTest {
 
         Frame lastFrame = frames.of(10);
         assertThat(lastFrame.isEnd()).isFalse();
+    }
+
+    @DisplayName("마지막 프레임이 종료된 상태에서 현재 프레임 조회 시 GameOverException 예외가 발생한다.")
+    @Test
+    void gameOver() {
+        Frames frames = framesProgressedUntil9Frame();
+        frames.bowl(5);
+        frames.bowl(3);
+
+        assertThat(frames.of(10).isEnd()).isTrue();
+        assertThatThrownBy(() -> frames.current())
+            .isInstanceOf(GameOverException.class);
     }
 
     private Frames framesProgressedUntil9Frame() {

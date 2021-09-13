@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Frames {
+import bowling.exception.GameOverException;
 
-    private static final int FIRST = 1;
-    private static final int NINTH = 9;
+public class Frames {
 
     private final List<Frame> frames;
 
@@ -16,11 +15,14 @@ public class Frames {
     }
 
     private List<Frame> initFrames() {
+        Frame frame = NormalFrame.of(NormalFrame.MIN_FRAME_NUMBER);
         List<Frame> frames = new ArrayList<>();
-        for (int number = FIRST; number <= NINTH; number++) {
-            frames.add(NormalFrame.of(number));
+        frames.add(frame);
+
+        for (int number = NormalFrame.MIN_FRAME_NUMBER; number <= NormalFrame.MAX_FRAME_NUMBER; number++) {
+            frame = frame.next();
+            frames.add(frame);
         }
-        frames.add(new LastFrame());
         return frames;
     }
 
@@ -28,7 +30,7 @@ public class Frames {
         return frames.stream()
                 .filter(frame -> !frame.isEnd())
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(GameOverException::new);
     }
 
     public void bowl(int fallenPins) {
@@ -47,6 +49,16 @@ public class Frames {
 
     public List<Frame> frames() {
         return Collections.unmodifiableList(frames);
+    }
+
+    public Scores scores() {
+        List<Score> scores = new ArrayList<>();
+        Score base = Score.ofZero();
+        for (Frame frame : frames) {
+            base = base.add(frame.score());
+            scores.add(base);
+        }
+        return new Scores(scores);
     }
 
 }

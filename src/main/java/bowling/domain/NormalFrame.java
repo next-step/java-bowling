@@ -6,6 +6,9 @@ import java.util.Objects;
 
 public class NormalFrame extends Frame {
 
+    public static final int MIN_FRAME_NUMBER = 1;
+    public static final int MAX_FRAME_NUMBER = 9;
+
     private NormalFrame(int number) {
         super(number);
     }
@@ -16,7 +19,7 @@ public class NormalFrame extends Frame {
     }
 
     private static void validateFrameNumber(int number) {
-        if (number < MIN_FRAME_NUMBER || number > MAX_FRAME_NUMBER - 1) {
+        if (number < MIN_FRAME_NUMBER || number > MAX_FRAME_NUMBER) {
             throw new InvalidFrameNumberException(number);
         }
     }
