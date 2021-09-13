@@ -6,7 +6,10 @@ public class Game {
 
     public void pitch(int pins) {
         Pitching nextPitching = pitchings.nextPitching(pins);
-        frames.pitch(nextPitching);
+
+        if(!frames.fullFrame()){
+            frames.pitch(nextPitching);
+        }
     }
 
     public Frames frames() {
@@ -19,5 +22,9 @@ public class Game {
 
     public boolean end() {
         return frames.end();
+    }
+
+    public int currentFrame() {
+        return frames.currentFrame();
     }
 }
