@@ -1,19 +1,29 @@
 package step3.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import step3.state.Ready;
 import step3.state.State;
 
 public class FinalFrame implements Frame {
+
+    private int turn;
+    private List<State> states = new ArrayList<>();
     private State state;
 
     public FinalFrame() {
         this.state = new Ready();
+        turn = 0;
     }
 
     public Frame bowl(int fallenPins) {
         state = state.bowl(fallenPins);
-
+        turn++;
+        if (state.isFinish()) {
+            states.add(state);
+            state = new Ready();
+        }
         return this;
     }
 
@@ -44,17 +54,26 @@ public class FinalFrame implements Frame {
         return state.symbol();
     }
 
+    @Override
+    public Frame createFrame() {
+        return this;
+    }
+
     public boolean isGameEnd() {
-        return state.isFinish();
+        return turn == 3;
     }
 
     public State getState() {
         return state;
     }
 
+    public List<State> getStates() {
+        return states;
+    }
+
     @Override
     public boolean isFinish() {
-        return state.isFinish();
+        return turn == 3;
     }
 
     @Override

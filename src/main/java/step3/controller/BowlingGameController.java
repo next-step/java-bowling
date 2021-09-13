@@ -1,5 +1,6 @@
 package step3.controller;
 
+import step3.domain.FinalFrame;
 import step3.domain.Frame;
 import step3.domain.Frames;
 import step3.domain.NormalFrame;
@@ -15,18 +16,21 @@ public class BowlingGameController {
         while (!frame.isGameEnd()) {
             int fallenPin = InputView.requireThrowBallNum(frameNum);
             frame = frame.bowl(fallenPin);
+            frame = addFrame(frames, frame);
             frameNum = frame.number();
 
-            addFrame(frames, frame);
             ResultView.printHeader();
             ResultView.printUserName(userName);
             ResultView.printResult(frames, frame);
         }
+
     }
 
-    private void addFrame(Frames frames, Frame frame) {
-        if (frame.isFinish()) {
+    private Frame addFrame(Frames frames, Frame frame) {
+        if (frame.isFinish() && frame.number() != 10) {
             frames.add(frame);
+            frame = frame.createFrame();
         }
+        return frame;
     }
 }

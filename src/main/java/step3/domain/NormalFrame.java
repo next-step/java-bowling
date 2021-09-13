@@ -16,15 +16,11 @@ public class NormalFrame implements Frame {
 
     public Frame bowl(int fallenPins) {
         state = state.bowl(fallenPins);
-        if (state.isFinish()) {
-            next = createFrame();
-            no++;
-            return next;
-        }
+
         return this;
     }
 
-    private Frame createFrame() {
+    public Frame createFrame() {
         if (no + 1 == 10) {
             return new FinalFrame();
         }
@@ -36,7 +32,6 @@ public class NormalFrame implements Frame {
         if (score.canCalculateScore()) {
             return score;
         }
-
         return next.calculateAdditionalScore(score);
     }
 

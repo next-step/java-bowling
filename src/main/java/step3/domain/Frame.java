@@ -18,4 +18,6 @@ public interface Frame {
     int number();
 
     String getSymbol();
+
+    Frame createFrame();
 }
