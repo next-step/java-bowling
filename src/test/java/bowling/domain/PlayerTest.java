@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerTest {
+
     @ParameterizedTest
     @DisplayName("Player 생성 테스트")
     @MethodSource("createPlayerSource")
