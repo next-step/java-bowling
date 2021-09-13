@@ -4,6 +4,7 @@ import bowling.exception.Pin.PinValueException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Pin {
 
@@ -15,9 +16,8 @@ public class Pin {
     private final int pin;
 
     static {
-        for (int i = PIN_MIN_VALUE; i <= PIN_MAX_VALUE; i++) {
-            pins.put(i, new Pin(i));
-        }
+        IntStream.rangeClosed(PIN_MIN_VALUE, PIN_MAX_VALUE)
+            .forEach(number -> pins.put(number, new Pin(number)));
     }
 
     private Pin(int pin) {

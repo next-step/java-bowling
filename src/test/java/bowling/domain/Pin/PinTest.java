@@ -23,12 +23,10 @@ public class PinTest {
             .withMessageMatching("핀은 0~10 사이의 값만 저장할 수 있다.");
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 5, 10})
     @DisplayName("static 캐싱 테스트")
-    void staticCacheTest() {
-
-        // given
-        int input = 1;
+    void staticCacheTest(int input) {
 
         // when
         Pin pin = Pin.of(input);
