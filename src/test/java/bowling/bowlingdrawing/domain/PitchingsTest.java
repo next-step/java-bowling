@@ -12,11 +12,14 @@ class PitchingsTest {
     void nextPitching() {
         // given
         Pitchings pitchings = new Pitchings();
-        int pins = 9;
+        int pins1 = 9;
+        int pins2 = 10;
         // when
-        Pitching pitching = pitchings.nextPitching(pins);
+        Pitching pitching = pitchings.nextPitching(pins1);
+        Pitching nextPitching = pitchings.nextPitching(pins2);
         // then
-        assertThat(pitching).isEqualTo(Pitching.of(pins));
+        assertThat(pitching).isEqualTo(Pitching.of(pins1));
+        assertThat(nextPitching).isEqualTo(pitching.next(pins2));
     }
 
 }
