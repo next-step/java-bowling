@@ -153,6 +153,7 @@ public class QnAService {
         - `boolean strike()`
         - `boolean spare()`
         - `boolean done()`
+        - `boolean end()`
 5. Pitchings
     1. 속성
         - `List<Pitching> pitchings`
