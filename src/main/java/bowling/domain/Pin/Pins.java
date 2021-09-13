@@ -4,6 +4,8 @@ import bowling.exception.Pin.PinSecondValueException;
 
 public class Pins {
 
+    private static final int EMPTY_PIN_VALUE = 0;
+
     private final Pin first;
     private final Pin second;
 
@@ -33,7 +35,7 @@ public class Pins {
     }
 
     public boolean isRemain() {
-        return first.isRemainPin(Pin.of(0));
+        return first.isRemainPin(Pin.of(EMPTY_PIN_VALUE));
     }
 
 }
