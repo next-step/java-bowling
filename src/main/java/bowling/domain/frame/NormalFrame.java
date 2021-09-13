@@ -50,7 +50,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return normalRollings.allRolled();
+        return normalRollings != null && normalRollings.allRolled();
     }
 
     @Override
