@@ -1,8 +1,8 @@
 package bowling.bowlingdrawing.domain;
 
 public class Game {
-    private Frames frames = new Frames();
-    private Pitchings pitchings = new Pitchings();
+    private final Frames frames = new Frames();
+    private final Pitchings pitchings = new Pitchings();
 
     public void pitch(int pins) {
         Pitching nextPitching = pitchings.nextPitching(pins);
