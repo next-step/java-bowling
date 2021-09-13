@@ -1,21 +1,19 @@
 package bowling.domain;
 
-import bowling.exception.InvalidPlayersException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PlayersTest {
-
-    @DisplayName("참가자 중 3글자 이상 Exception 확인")
+    @DisplayName("Player 생성 테스트")
     @Test
-    void InvalidPlayersNameExceptionTest() {
-        assertThatExceptionOfType(InvalidPlayersException.class)
-                .isThrownBy(() -> {
-                    Players players = Players.of(Arrays.asList(Player.from("ESE"), Player.from("SYDD"), Player.from("HAS"), Player.from("PJS")));
-                }).withMessageMatching("참가자 이름은 반드시 3자 이내 이어야 합니다 : SYDD");
+    void create() {
+        Players players = Players.of(Arrays.asList(Player.from("syd"), Player.from("kjy"), Player.from("pjs")));
+
+        assertThat(players).isEqualTo(Players.of(Arrays.asList(Player.from("syd"), Player.from("kjy"), Player.from("pjs"))));
     }
+
 }

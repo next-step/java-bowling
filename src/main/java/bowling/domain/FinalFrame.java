@@ -29,6 +29,7 @@ public class FinalFrame extends Frame {
 
     public Score additionalScore(Score score) {
         score = score.additionalScore(getFirstPin());
+
         if (score.canCalculate()) {
             return score;
         }

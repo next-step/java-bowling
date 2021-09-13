@@ -20,15 +20,15 @@ public class ResultView {
         for (int i = 0; i < bowlingGame.size(); i++) {
             printPlayer(players.name(i));
 
-            printPitch(bowlingGame.get(i));
+            printPitch(bowlingGame.currentGame(i));
 
-            printRemainBoard(bowlingGame.get(i));
+            printRemainBoard(bowlingGame.currentGame(i));
 
             printBlank();
 
-            printResultScore(bowlingGame.get(i));
+            printResultScore(bowlingGame.currentGame(i));
 
-            printRemainScore(bowlingGame.get(i));
+            printRemainScore(bowlingGame.currentGame(i));
 
             System.out.println();
         }

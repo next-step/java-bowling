@@ -54,7 +54,7 @@ public class BowlingGameTest {
         frames2.add(notFinishFinalFrame);
 
 
-        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2) ,0);
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), 0);
 
         assertThat(bowlingGame.isEnd()).isTrue();
     }
@@ -80,5 +80,51 @@ public class BowlingGameTest {
         BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), 0);
 
         assertThat(bowlingGame.isRoundEnd()).isFalse();
+    }
+
+    @DisplayName("Bowling 게임에서 frames 들 저장 되는지 테스트(Strike 3번 이면 프레임이 3번 지났음으로 사이즈가 3)")
+    @Test
+    void bowl() {
+        Frames frames1 = Frames.newInstance();
+
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1), 0);
+
+        bowlingGame.bowl(0, 10);
+
+        bowlingGame.bowl(0, 10);
+
+        bowlingGame.bowl(0, 10);
+
+        assertThat(bowlingGame.currentGame(0).size()).isEqualTo(3);
+    }
+
+    @DisplayName("2경기 중 1번째 경기의 프레임이 종료 되면, 2번째 경기는 한번 더 쳐야 하기 때문에 true를 반환")
+    @Test
+    void isBowlingTest() {
+        Frames frames1 = Frames.newInstance();
+        Frames frames2 = Frames.newInstance();
+
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), 0);
+
+        bowlingGame.bowl(0, 10);
+
+        bowlingGame.bowl(1, 3);
+
+        assertThat(bowlingGame.isBowling(1)).isTrue();
+    }
+
+    @DisplayName("2경기 중 1번째 경기의 프레임이 종료 되면 false 를 반환")
+    @Test
+    void isBowlingTest2() {
+        Frames frames1 = Frames.newInstance();
+        Frames frames2 = Frames.newInstance();
+
+        BowlingGame bowlingGame = BowlingGame.of(Arrays.asList(frames1, frames2), 0);
+
+        bowlingGame.bowl(0, 10);
+
+        bowlingGame.bowl(1, 3);
+
+        assertThat(bowlingGame.isBowling(0)).isFalse();
     }
 }

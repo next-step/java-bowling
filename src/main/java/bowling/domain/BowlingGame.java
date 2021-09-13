@@ -1,12 +1,11 @@
 package bowling.domain;
 
-import bowling.view.InputView;
-import bowling.view.ResultView;
-
 import java.util.List;
 
 public class BowlingGame {
-    private final List<Frames> bowlingGame;
+    public static final int FIRST_ROUND = 0;
+
+    private List<Frames> bowlingGame;
     private int round;
 
     public BowlingGame(List<Frames> bowlingGame, int round) {
@@ -32,45 +31,35 @@ public class BowlingGame {
         return bowlingGame.size();
     }
 
-    public Frames get(int playerIndex) {
+    public Frames currentGame(int playerIndex) {
         return bowlingGame.get(playerIndex);
     }
 
-    public Frame frame(int playerIndex, int frameNumber) {
-        return get(playerIndex).get(frameNumber);
+    public Frame currentGameFrame(int playerIndex) {
+        return currentGame(playerIndex).currentFrame().next();
     }
 
-    public Frame currentFrame(int playerIndex) {
-        return get(playerIndex).currentFrame();
-    }
-
-
-    public int checkRound() {
+    public void checkRound() {
         if (isRoundEnd()) {
             round++;
         }
-        return round;
     }
 
-    public void gamePlay(Players players, BowlingGame bowlingGame) {
-        for (int index = 0; index < players.size(); index++) {
-            bowling(players, bowlingGame, index);
-        }
+    public void bowl(int index, int score) {
+        Frame frame = currentGameFrame(index);
+
+        Pins pins = Pins.of(score);
+        frame.bowl(pins);
+
+        currentGame(index).add(frame);
     }
 
-    private void bowling(Players players, BowlingGame bowlingGame, int index) {
-        Frame frame = bowlingGame.currentFrame(index).next();
+    public boolean isBowling(int index) {
+        Frame frame = currentGameFrame(index);
 
         if (!frame.isFinish() && frame.getFrameNumber() - 1 == round) {
-            int score = InputView.getFrameScore(players.name(index));
-            Pins pins = Pins.of(score);
-            frame.bowl(pins);
-
-            Frames currentGame = bowlingGame.get(index);
-            currentGame.add(frame);
-
-            ResultView.printTitle();
-            ResultView.printBowlingGame(players, bowlingGame);
+            return true;
         }
+        return false;
     }
 }
