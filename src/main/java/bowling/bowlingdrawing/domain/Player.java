@@ -15,4 +15,8 @@ public class Player {
     public Game game() {
         return game;
     }
+
+    public boolean end() {
+        return game.end();
+    }
 }

@@ -16,4 +16,8 @@ public class Game {
     public Pitchings pitchings() {
         return pitchings;
     }
+
+    public boolean end() {
+        return frames.end();
+    }
 }

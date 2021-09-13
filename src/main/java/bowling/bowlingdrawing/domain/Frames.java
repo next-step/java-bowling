@@ -29,7 +29,7 @@ public class Frames {
     }
 
     private void validateGameEnd() {
-        if (frames.size() == 10 && frames.get(frames.size()-1).end()) {
+        if (end()) {
             throw new CustomException("이미 게임이 끝났습니다.");
         }
     }
@@ -45,7 +45,13 @@ public class Frames {
         frames.add(firstFrame);
     }
 
+    public boolean end() {
+        return frames.size() == 10 && frames.get(frames.size()-1).end();
+    }
+
     public List<Frame> frames() {
         return Collections.unmodifiableList(frames);
     }
+
+
 }
