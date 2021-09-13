@@ -36,9 +36,7 @@ public class Frames {
     }
 
     public void roll(final Score score) {
-        if (this.isFinish) {
-            throw new FinishGameException();
-        }
+        checkFinishGame();
 
         Frame currentFrame = frames.stream()
                 .filter(frame -> !frame.isFinish())
@@ -48,6 +46,12 @@ public class Frames {
         currentFrame.roll(score);
 
         this.isFinish = this.frames.stream().allMatch(Frame::isFinish);
+    }
+
+    private void checkFinishGame() {
+        if (this.isFinish) {
+            throw new FinishGameException();
+        }
     }
 
     public boolean isFinish() {

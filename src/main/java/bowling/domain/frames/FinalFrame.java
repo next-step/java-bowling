@@ -33,12 +33,12 @@ public class FinalFrame extends Frame {
 
     private boolean isImPossibleNextRoll() {
         if (this.scores.size() <= 1) {
-            return true;
+            return false;
         }
         if (this.scores.size() == 2) {
-            return isPossibleThirdRoll();
+            return !isPossibleThirdRoll();
         }
-        return false;
+        return true;
     }
 
     private boolean isPossibleThirdRoll() {
@@ -59,7 +59,7 @@ public class FinalFrame extends Frame {
         if (isPossibleToAttempts()) {
             super.isFinish = true;
         }
-        if (!isImPossibleNextRoll()) {
+        if (isImPossibleNextRoll()) {
             super.isFinish = true;
         }
     }
