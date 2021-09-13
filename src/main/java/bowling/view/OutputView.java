@@ -4,9 +4,9 @@ import bowling.model.BowlingResult;
 
 import java.util.List;
 
-import static bowling.controller.BowlingGame.DEFAULT_ROUND_COUNT;
-
 public class OutputView {
+    public static final int MAX_ROUND = 10;
+    
     public static void printBowlingScore(String name, List<List<String>> scoreList) {
         printHeader();
         printAllScore(name, scoreList);
@@ -17,7 +17,7 @@ public class OutputView {
 
         stringBuilder.append("| NAME |");
 
-        for (int i = 1; i < DEFAULT_ROUND_COUNT; i++) {
+        for (int i = 1; i < MAX_ROUND; i++) {
             stringBuilder.append("  0" + i + "  |");
         }
 
@@ -43,7 +43,7 @@ public class OutputView {
 
     private static String formatEmptyScore(List<List<String>> scoreList) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = scoreList.size(); i < DEFAULT_ROUND_COUNT; i++) {
+        for (int i = scoreList.size(); i < MAX_ROUND; i++) {
             stringBuilder.append("      |");
         }
 

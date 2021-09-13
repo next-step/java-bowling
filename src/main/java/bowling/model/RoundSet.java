@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static bowling.controller.Main.bowlingResults;
 import static bowling.model.Point.isValidRange;
 
 public class RoundSet {
+    private static final int FINAL_ROUND = 10;
+    private static final int SECOND_TRY = 2;
+    private static final int FIRST_TRY = 1;
+
     private int totalPoint;
     private List<Round> rounds;
 
@@ -14,12 +19,12 @@ public class RoundSet {
         this.totalPoint = 0;
         this.rounds = new ArrayList<>();
 
-        if (index == 10) {
-            this.rounds.add(new FinalRound());
-        }else{
-            this.rounds.add(new NormalRound());
-
+        Round round = new NormalRound();
+        if (index == FINAL_ROUND) {
+            round = new FinalRound();
         }
+        this.rounds.add(round);
+
     }
 
     public RoundSet(int totalPoint, List<Round> rounds) {
@@ -27,22 +32,34 @@ public class RoundSet {
         this.rounds = rounds;
     }
 
-    public void nextRound() {
-        rounds.add(getLastRound().next());
-    }
+    public int play(int tryCount, int point) {
+        int count = tryCount;
 
-    public boolean isBonus() {
-        return getLastRound().isBonus();
-    }
+        calcTotalPoint(point);
+        BowlingResult result = getLastRound().play(totalPoint, tryCount);
+        bowlingResults.add(result);
 
-    public boolean isSkipNextRound() {
-        return getLastRound().isSkipNextRound();
-    }
+        boolean isSkip = isSkipNextRound();
+        if (isSkip) {
+            return SECOND_TRY;
+        }
 
-    public BowlingResult play(int tryCount, BowlingResult beforeResult) {
-        return getLastRound().play(totalPoint, tryCount, beforeResult);
-    }
+        boolean isBonus = giveBonus();
+        if (isBonus && tryCount == FIRST_TRY) {
+            count = 0;
+        }
 
+        if (isBonus && tryCount == SECOND_TRY) {
+            count = FIRST_TRY;
+            next(result);
+        }
+
+        if (tryCount == FIRST_TRY) {
+            next(result);
+        }
+
+        return count;
+    }
 
     private Round getLastRound() {
         return this.rounds.get(getSize() - 1);
@@ -52,16 +69,45 @@ public class RoundSet {
         return rounds.size();
     }
 
-    public int calcTotalPoint(boolean isBonusRound, int score) {
-        if (isBonusRound) {
-            totalPoint = score;
-            return totalPoint;
+    private void calcTotalPoint(int point) {
+        if (isBonusRound()) {
+            totalPoint = point;
         }
 
-        totalPoint += score;
-        isValidRange(totalPoint);
+        if (!isBonusRound()) {
+            totalPoint += point;
+            isValidRange(totalPoint);
+        }
+    }
 
-        return totalPoint;
+    private boolean isSkipNextRound() {
+        if (getLastRound().isStrike()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void next(BowlingResult currentResult) {
+        boolean isBonusRound = isBonusRound();
+
+        if (!isBonusRound) {
+            isBonusRound = giveBonus();
+        }
+
+        rounds.add(getLastRound().next(isBonusRound, currentResult));
+    }
+
+    private boolean isBonusRound() {
+        return getLastRound().isBonusRound();
+    }
+
+    private boolean giveBonus() {
+        return getLastRound().giveBonus();
+    }
+
+    public int size() {
+        return rounds.size();
     }
 
     @Override

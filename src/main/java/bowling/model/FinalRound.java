@@ -2,30 +2,51 @@ package bowling.model;
 
 import java.util.Objects;
 
-public class FinalRound implements Round {
-    private Point point;
-    private BowlingResult result;
+import static bowling.controller.Main.bowlingResults;
 
-    @Override
-    public BowlingResult play(int totalPoint, int tryCount, BowlingResult beforeResult) {
-        this.point = new Point(totalPoint);
-        this.result = BowlingResult.findBowlingResult(point, tryCount, beforeResult);
-        return result;
+public class FinalRound implements Round{
+    private final boolean isBonusRound;
+    private Result result;
+
+    public FinalRound() {
+        isBonusRound = false;
+        result = new Result(BowlingResult.EMPTY, BowlingResult.EMPTY);
+    }
+
+    public FinalRound(boolean isBonusRound, Result result) {
+        this.isBonusRound = isBonusRound;
+        this.result = result;
     }
 
     @Override
-    public Round next() {
-        return new FinalRound();
+    public BowlingResult play(int totalPoint, int tryCount) {
+        BowlingResult currentResult = BowlingResult.findBowlingResult(new Point(totalPoint), tryCount, result.getBefore());
+        this.result = new Result(result.getBefore(), currentResult);
+        return currentResult;
     }
 
     @Override
-    public boolean isSkipNextRound() {
+    public Round next(boolean isBonusRound, BowlingResult beforeResult) {
+        return new FinalRound(isBonusRound, new Result(beforeResult, BowlingResult.EMPTY));
+    }
+
+    @Override
+    public boolean isBonusRound() {
+        return isBonusRound;
+    }
+
+    @Override
+    public boolean isStrike() {
         return false;
     }
 
     @Override
-    public boolean isBonus() {
-        if (result == BowlingResult.STRIKE || result == BowlingResult.SPARE) {
+    public boolean giveBonus() {
+        if (isBonusRound) {
+            return false;
+        }
+
+        if (result.isStrike() || result.isSpare()) {
             return true;
         }
 
@@ -37,11 +58,11 @@ public class FinalRound implements Round {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FinalRound that = (FinalRound) o;
-        return Objects.equals(point, that.point) && result == that.result;
+        return isBonusRound == that.isBonusRound && Objects.equals(result, that.result);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(point, result);
+        return Objects.hash(isBonusRound, result);
     }
 }

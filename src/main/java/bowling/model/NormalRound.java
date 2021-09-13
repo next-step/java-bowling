@@ -2,45 +2,46 @@ package bowling.model;
 
 import java.util.Objects;
 
-public class NormalRound implements Round {
-    private Point point;
-    private BowlingResult result;
+import static bowling.controller.Main.bowlingResults;
 
-    @Override
-    public BowlingResult play(int totalPoint, int tryCount, BowlingResult beforeResult) {
-        this.point = new Point(totalPoint);
-        this.result = BowlingResult.findBowlingResult(point, tryCount, beforeResult);
-        return result;
+public class NormalRound implements Round{
+    private final boolean isBonusRound;
+    private Result result;
+
+    public NormalRound() {
+        isBonusRound = false;
+        result = new Result(BowlingResult.EMPTY, BowlingResult.EMPTY);
+    }
+
+    public NormalRound(boolean isBonusRound, Result result) {
+        this.isBonusRound = isBonusRound;
+        this.result = result;
     }
 
     @Override
-    public Round next() {
-        return new NormalRound();
-    }
-
-    private boolean isSecondTry(int tryCount) {
-        return tryCount == SECOND_TRY;
-    }
-
-    private boolean isStrike(BowlingResult roundResult) {
-        return roundResult == BowlingResult.STRIKE;
-    }
-
-    private boolean isBeforeFinalRound(int index) {
-        return index == BEFORE_FINAL_ROUND;
+    public BowlingResult play(int totalPoint, int tryCount) {
+        BowlingResult currentResult = BowlingResult.findBowlingResult(new Point(totalPoint), tryCount, result.getBefore());
+        result = new Result(result.getBefore(), currentResult);
+        return currentResult;
     }
 
     @Override
-    public boolean isSkipNextRound() {
-        if (isStrike(result)) {
-            return true;
-        }
-
-        return false;
+    public Round next(boolean isBonusRound, BowlingResult beforeResult) {
+        return new NormalRound(false, new Result(beforeResult, BowlingResult.EMPTY));
     }
 
     @Override
-    public boolean isBonus() {
+    public boolean isBonusRound() {
+        return isBonusRound;
+    }
+
+    @Override
+    public boolean isStrike() {
+        return result.isStrike();
+    }
+
+    @Override
+    public boolean giveBonus() {
         return false;
     }
 
@@ -49,11 +50,11 @@ public class NormalRound implements Round {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalRound that = (NormalRound) o;
-        return Objects.equals(point, that.point) && result == that.result;
+        return isBonusRound == that.isBonusRound && Objects.equals(result, that.result);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(point, result);
+        return Objects.hash(isBonusRound, result);
     }
 }

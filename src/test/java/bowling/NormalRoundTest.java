@@ -2,41 +2,60 @@ package bowling;
 
 import bowling.model.BowlingResult;
 import bowling.model.NormalRound;
-import org.junit.jupiter.api.BeforeEach;
+import bowling.model.Result;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 public class NormalRoundTest {
-    private NormalRound normalRound;
+    @Test
+    public void 스트라이크() {
+        //given
+        NormalRound expect = new NormalRound(false, new Result(BowlingResult.EMPTY, BowlingResult.STRIKE));
 
-    @BeforeEach
-    public void setUp() {
-        normalRound = new NormalRound();
+        //when
+        NormalRound normalRound = new NormalRound();
+        normalRound.play(10, 1);
+
+        //then
+        Assertions.assertThat(normalRound).isEqualTo(expect);
     }
 
     @Test
-    public void 스트라이크일_경우_바로_다음_라운드는_스킵한다() {
+    public void 스페어() {
+        //given
+        NormalRound expect = new NormalRound(false, new Result(BowlingResult.EMPTY, BowlingResult.SPARE));
+
         //when
-        normalRound.play(10, 1, BowlingResult.EMPTY);
-        boolean isSkip = normalRound.isSkipNextRound();
+        NormalRound normalRound = new NormalRound();
+        normalRound.play(10, 2);
 
         //then
-        assertTrue(isSkip);
+        Assertions.assertThat(normalRound).isEqualTo(expect);
     }
 
     @Test
-    public void 스트라이크가_아닐_경우_다음_라운드는_스킵하지않는다() {
-        //when
-        normalRound.play(0, 1, BowlingResult.EMPTY);
-        boolean isSkip1 = normalRound.isSkipNextRound();
-        //then
-        assertFalse(isSkip1);
+    public void 미스() {
+        //given
+        NormalRound expect = new NormalRound(false, new Result(BowlingResult.EMPTY, BowlingResult.MISS));
 
         //when
-        normalRound.play(3, 2, BowlingResult.GUTTER);
-        boolean isSkip2 = normalRound.isSkipNextRound();
+        NormalRound normalRound = new NormalRound();
+        normalRound.play(9, 2);
+
         //then
-        assertFalse(isSkip2);
+        Assertions.assertThat(normalRound).isEqualTo(expect);
+    }
+
+    @Test
+    public void 거터() {
+        //given
+        NormalRound expect = new NormalRound(false, new Result(BowlingResult.EMPTY, BowlingResult.GUTTER));
+
+        //when
+        NormalRound normalRound = new NormalRound();
+        normalRound.play(0, 1);
+
+        //then
+        Assertions.assertThat(normalRound).isEqualTo(expect);
     }
 }
