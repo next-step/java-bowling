@@ -31,7 +31,8 @@ public class FinalFrame extends Frame {
         }
     }
 
-    private boolean isPossibleNextRoll() {
+    @Override
+    public boolean isPossibleNextRoll() {
         if (this.scores.size() <= 1) {
             return true;
         }

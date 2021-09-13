@@ -34,6 +34,8 @@ public abstract class Frame {
 
     abstract boolean isPossibleToAttempts();
 
+    abstract boolean isPossibleNextRoll();
+
     abstract void finish();
 
     public void checkPossibleSecondRoll(final Score score) {

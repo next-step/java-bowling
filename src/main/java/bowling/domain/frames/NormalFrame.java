@@ -29,7 +29,8 @@ public class NormalFrame extends Frame {
         }
     }
 
-    private boolean isPossibleNextRoll() {
+    @Override
+    public boolean isPossibleNextRoll() {
         if (isSpare()) {
             return false;
         }
