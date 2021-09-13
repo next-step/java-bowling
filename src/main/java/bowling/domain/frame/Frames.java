@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class Frames {
+public final class Frames implements Comparable<Frames> {
 
     private static final int LAST_FRAME_NUMBER = 10;
 
@@ -44,27 +44,23 @@ public final class Frames {
     }
 
     private void inputNextFrame(final int knockDownNumber) {
-        frames.addLast(currentFrame().bowl(knockDownNumber));
+        frames.addLast(nextInputFrame().bowl(knockDownNumber));
     }
 
     private void inputCurrentFrame(final int knockDownNumber) {
-        frames.set(getLastFameIndex(), currentFrame().bowl(knockDownNumber));
+        nextInputFrame().bowl(knockDownNumber);
     }
 
     private Frame lastFrame() {
         return frames.getLast();
     }
 
-    private Frame currentFrame() {
+    private Frame nextInputFrame() {
         return lastFrame().next();
     }
 
     private boolean isLastFrameFinished() {
         return lastFrame().isFinished();
-    }
-
-    private int getLastFameIndex() {
-        return frames.lastIndexOf(lastFrame());
     }
 
     public int nextTurnRoundNumber() {
@@ -103,5 +99,10 @@ public final class Frames {
         return frames.stream()
                 .filter(Frame::canCalculateScore)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public int compareTo(Frames o) {
+        return nextTurnRoundNumber() - o.nextTurnRoundNumber();
     }
 }

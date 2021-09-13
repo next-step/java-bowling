@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.frame.Frame;
-import bowling.domain.player.Player;
 import bowling.utils.FrameViewUtil;
 
 import java.util.HashMap;
@@ -32,8 +31,10 @@ public final class OutputView {
 
     public static void scoreBoard(final BowlingGame bowlingGame) {
         headerOfScoreBoard();
-        middleOfScoreBoard(bowlingGame.getPlayer(), bowlingGame.getFrames());
-        footerOfScoreBoard(bowlingGame.getCanCalculateFrames());
+        bowlingGame.getFramesGroup().forEach((player, frames) -> {
+            middleOfScoreBoard(player.getName(), frames.getFrames());
+            footerOfScoreBoard(frames.getCanCalculateFrames());
+        });
     }
 
     public static void headerOfScoreBoard() {
@@ -46,8 +47,8 @@ public final class OutputView {
         System.out.println();
     }
 
-    private static void middleOfScoreBoard(final Player player, final List<Frame> frames) {
-        showFirstCell(player.getName());
+    private static void middleOfScoreBoard(final String playerName, final List<Frame> frames) {
+        showFirstCell(playerName);
         showScoreCells(frames);
         showFillEmptyCells(Frame.MAX_ROUND_NUMBER - frames.size());
         System.out.println();

@@ -48,15 +48,6 @@ public final class NormalFrame extends Frame {
         return new NormalFrame(FIRST_ROUND_NUMBER);
     }
 
-    public static Frame next(final Frame frame) {
-        if (frame.roundNumber == NORMAL_LAST_ROUND) {
-            frame.nextFrame = FinalFrame.of();
-            return frame.nextFrame;
-        }
-        frame.nextFrame = new NormalFrame(frame.roundNumber + NEXT_ROUND_NUMBER_DISTANCE, Pins.of());
-        return frame.nextFrame;
-    }
-
     @Override
     protected void validateFrame(final Pins pins) {
         if (pins.sum() > MAX_KNOCK_DOWN_NUMBER) {
@@ -66,7 +57,7 @@ public final class NormalFrame extends Frame {
 
     @Override
     public boolean isFinished() {
-        if (pins.isStrike()) {
+        if (pins.getStatus() == STRIKE) {
             return true;
         }
         return pins.size() == MAX_SIZE;
@@ -82,9 +73,18 @@ public final class NormalFrame extends Frame {
     @Override
     public Frame next() {
         if (isFinished()) {
-            return NormalFrame.next(this);
+            return nextFrame();
         }
         return this;
+    }
+
+    private Frame nextFrame() {
+        if (roundNumber == NORMAL_LAST_ROUND) {
+            nextFrame = FinalFrame.of();
+            return nextFrame;
+        }
+        nextFrame = new NormalFrame(roundNumber + NEXT_ROUND_NUMBER_DISTANCE, Pins.of());
+        return nextFrame;
     }
 
     @Override
@@ -93,11 +93,11 @@ public final class NormalFrame extends Frame {
             return false;
         }
 
-        if (FrameStatus.of(pins) == NORMAL) {
+        if (pins.getStatus() == NORMAL) {
             return true;
         }
 
-        if (FrameStatus.of(pins) == SPARE && !nextPinEmpty()) {
+        if (pins.getStatus() == SPARE && !nextPinEmpty()) {
             return true;
         }
 
@@ -114,11 +114,11 @@ public final class NormalFrame extends Frame {
             throw new CanNotCalculateException();
         }
 
-        if (FrameStatus.of(pins) == STRIKE) {
+        if (pins.getStatus() == STRIKE) {
             return nextFrame.addScore(Score.ofRemainTwo(pins.sum()));
         }
 
-        if (FrameStatus.of(pins) == SPARE) {
+        if (pins.getStatus() == SPARE) {
             return nextFrame.addScore(Score.ofRemainOne(pins.sum()));
         }
         return pins.sum();
@@ -126,7 +126,7 @@ public final class NormalFrame extends Frame {
 
     @Override
     public int addScore(final Score score) {
-        if (FrameStatus.of(pins) == STRIKE && score.isRemainCount(BONUS_REMAIN_COUNT_TWO)) {
+        if (pins.getStatus() == STRIKE && score.isRemainCount(BONUS_REMAIN_COUNT_TWO)) {
             int addScore = score.sum(firstPinNumber());
             return nextFrame.addScore(Score.ofRemainOne(addScore));
         }

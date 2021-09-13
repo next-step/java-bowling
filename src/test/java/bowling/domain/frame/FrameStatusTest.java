@@ -16,7 +16,7 @@ class FrameStatusTest {
         Pins pins = Pins.of(10);
 
         //when
-        FrameStatus frameStatus = FrameStatus.of(pins);
+        FrameStatus frameStatus = pins.getStatus();
 
         //then
         assertThat(frameStatus).isEqualTo(FrameStatus.STRIKE);
@@ -29,7 +29,7 @@ class FrameStatusTest {
         Pins pins = Pins.of(9, 1);
 
         //when
-        FrameStatus frameStatus = FrameStatus.of(pins);
+        FrameStatus frameStatus = pins.getStatus();
 
         //then
         assertThat(frameStatus).isEqualTo(FrameStatus.SPARE);
@@ -42,7 +42,7 @@ class FrameStatusTest {
         Pins pins = Pins.of(5, 4);
 
         //when
-        FrameStatus frameStatus = FrameStatus.of(pins);
+        FrameStatus frameStatus = pins.getStatus();
 
         //then
         assertThat(frameStatus).isEqualTo(FrameStatus.NORMAL);
