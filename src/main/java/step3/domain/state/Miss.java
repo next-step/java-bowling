@@ -1,7 +1,7 @@
-package step3.state;
+package step3.domain.state;
 
-import step3.Pins;
-import step3.Score;
+import step3.domain.Pins;
+import step3.domain.Score;
 import step3.exceptions.CanNotThrowBallException;
 
 public class Miss extends Finished {

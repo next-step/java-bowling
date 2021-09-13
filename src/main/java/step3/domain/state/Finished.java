@@ -1,8 +1,7 @@
-package step3.state;
+package step3.domain.state;
 
-import step3.Score;
+import step3.domain.Score;
 import step3.exceptions.CanNotThrowBallException;
-import step3.state.State;
 
 abstract class Finished implements State {
     private Score score;

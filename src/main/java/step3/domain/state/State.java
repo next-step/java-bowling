@@ -1,6 +1,6 @@
-package step3.state;
+package step3.domain.state;
 
-import step3.Score;
+import step3.domain.Score;
 
 public interface State {
     State bowl(int fallenPins);

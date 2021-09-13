@@ -1,32 +1,18 @@
-package step3;
+package step3.domain;
 
-import step3.state.Ready;
-import step3.state.State;
+import step3.domain.state.Ready;
+import step3.domain.state.State;
 
-public class NormalFrame implements Frame {
-    private Frame next;
+public class FinalFrame implements Frame {
     private State state;
-    private int no;
 
-    public NormalFrame(int frameNum) {
+    public FinalFrame() {
         this.state = new Ready();
-        this.no = frameNum;
     }
 
     public Frame bowl(int fallenPins) {
         state = state.bowl(fallenPins);
-        if (state.isFinish()) {
-            next = createFrame();
-            return next;
-        }
         return this;
-    }
-
-    private Frame createFrame() {
-        if (no + 1 == 10) {
-            return new FinalFrame();
-        }
-        return new NormalFrame(no + 1);
     }
 
     public Score getScore() {
@@ -35,7 +21,7 @@ public class NormalFrame implements Frame {
             return score;
         }
 
-        return next.calculateAdditionalScore(score);
+        return score;
     }
 
     public Score calculateAdditionalScore(Score beforeScore) {
@@ -43,7 +29,7 @@ public class NormalFrame implements Frame {
         if (score.canCalculateScore()) {
             return score;
         }
-        return next.calculateAdditionalScore(score);
+        return score;
     }
 
     public boolean isGameEnd() {
@@ -54,6 +40,7 @@ public class NormalFrame implements Frame {
         return state;
     }
 
+    @Override
     public boolean isFinish() {
         return state.isFinish();
     }

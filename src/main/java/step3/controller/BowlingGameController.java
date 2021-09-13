@@ -1,6 +1,6 @@
 package step3.controller;
 
-import step3.NormalFrame;
+import step3.domain.NormalFrame;
 import step3.domain.Frames;
 import step3.view.InputView;
 

@@ -1,7 +1,6 @@
-package step3;
+package step3.domain;
 
-import step3.state.Ready;
-import step3.state.State;
+import step3.domain.state.State;
 
 public interface Frame {
     public Frame bowl(int fallenPins);
