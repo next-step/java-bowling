@@ -5,6 +5,8 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import qna.CannotDeleteException;
+import qna.exception.WrongUserDeleteTryException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -91,5 +93,11 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public void delete(User loginUser) throws WrongUserDeleteTryException {
+        if (!isOwner(loginUser)) {
+            throw new WrongUserDeleteTryException("질문을 삭제할 권한이 없습니다.");
+        }
     }
 }

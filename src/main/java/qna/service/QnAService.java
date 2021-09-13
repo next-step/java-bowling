@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import qna.exception.WrongUserDeleteTryException;
 
 @Service("qnaService")
 public class QnAService {
@@ -33,11 +34,16 @@ public class QnAService {
     }
 
     @Transactional
-    public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
+    public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException, WrongUserDeleteTryException {
         Question question = findQuestionById(questionId);
-        if (!question.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
+        question.delete(loginUser);
+
+        //TODO: 질문을 조건을 따져가면서 삭제하기
+
+        //TODO: 삭제한 질문및 답변을 삭제 기록 저장소에 저장하기.
+//        if (!question.isOwner(loginUser)) {
+//            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+//        }
 
         List<Answer> answers = question.getAnswers();
         for (Answer answer : answers) {
