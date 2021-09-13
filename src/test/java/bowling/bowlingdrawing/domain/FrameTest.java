@@ -46,7 +46,7 @@ class FrameTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("점수 계산")
     void score() {
         // given
         Pitching pitching = Pitching.first(10);
@@ -60,7 +60,7 @@ class FrameTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("strike 여부 확인")
     void strike() {
         // given
         Pitching pitching1 = Pitching.first(10);
@@ -76,7 +76,7 @@ class FrameTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("spare 여부 확인")
     void spare() {
         // given
         Pitching pitching1 = Pitching.first(9);
