@@ -53,7 +53,26 @@ public class Frame {
     }
 
     public boolean spare() {
+        if (secondPitching == null) {
+            return false;
+        }
         return firstPitching.sum(secondPitching) == 10;
+    }
+
+    public boolean done() {
+        return strike() || (secondPitching != null);
+    }
+
+    public boolean end() {
+        if (strike() && firstPitching.score(2) >= 10) {
+            return true;
+        }
+
+        if (spare() && secondPitching.score(1) >= 0) {
+            return true;
+        }
+
+        return secondPitching != null;
     }
 
     @Override
