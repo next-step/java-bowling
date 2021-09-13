@@ -13,9 +13,10 @@ public class FinalScoreFrameTest {
         FinalScoreFrame finalScoreFrame = new FinalScoreFrame(new Turn(10));
 
         ScoreFrame nextScoreFrame = finalScoreFrame.addScore(10);
+        ScoreFrame nextNextScoreFrame = nextScoreFrame.addScore(10);
+
         assertThat(nextScoreFrame).isSameAs(finalScoreFrame);
 
-        ScoreFrame nextNextScoreFrame = nextScoreFrame.addScore(10);
         assertThat(nextNextScoreFrame).isSameAs(finalScoreFrame);
     }
 
@@ -25,12 +26,13 @@ public class FinalScoreFrameTest {
         FinalScoreFrame finalScoreFrame = new FinalScoreFrame(new Turn(10));
 
         ScoreFrame nextScoreFrame = finalScoreFrame.addScore(10);
-        assertThat(nextScoreFrame).isSameAs(finalScoreFrame);
-
         ScoreFrame nextNextScoreFrame = nextScoreFrame.addScore(10);
+        ScoreFrame nextNextNextScoreFrame = nextNextScoreFrame.addScore(10);
+
         assertThat(nextNextScoreFrame).isSameAs(finalScoreFrame);
 
-        ScoreFrame nextNextNextScoreFrame = nextNextScoreFrame.addScore(10);
+        assertThat(nextScoreFrame).isSameAs(finalScoreFrame);
+
         assertThat(nextNextNextScoreFrame).isNotSameAs(finalScoreFrame);
     }
 
@@ -49,13 +51,19 @@ public class FinalScoreFrameTest {
         FinalScoreFrame finalScoreFrame = new FinalScoreFrame(new Turn(10));
 
         ScoreFrame nextFinalScoreFrame = finalScoreFrame.addScore(1);
-        assertThat(finalScoreFrame.isCalculable()).isFalse();
+        boolean firstCalculable = finalScoreFrame.isCalculable();
 
         ScoreFrame nextNextFinalScoreFrame = nextFinalScoreFrame.addScore(9);
-        assertThat(finalScoreFrame.isCalculable()).isFalse();
+        boolean secondCalculable = finalScoreFrame.isCalculable();
 
         nextNextFinalScoreFrame.addScore(10);
-        assertThat(finalScoreFrame.isCalculable()).isTrue();
+        boolean thirdCalculable = finalScoreFrame.isCalculable();
+
+        assertThat(firstCalculable).isFalse();
+
+        assertThat(secondCalculable).isFalse();
+
+        assertThat(thirdCalculable).isTrue();
     }
 
     @Test

@@ -3,9 +3,12 @@ package bowling;
 import java.util.Objects;
 
 public class Score {
+
     private final int value;
 
     public Score(int value) {
+        validate(value);
+
         this.value = value;
     }
 
@@ -36,5 +39,11 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    private void validate(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("점수는 음수가 될 수 없습니다.");
+        }
     }
 }

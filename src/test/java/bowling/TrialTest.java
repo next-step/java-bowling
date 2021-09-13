@@ -2,23 +2,34 @@ package bowling;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class TrialTest {
-    @Test
+    @ParameterizedTest
+    @MethodSource("generateIsEndTest1")
     @DisplayName("isEnd 최대 점수 케이스 테스트")
-    void isEndTest1() {
+    void isEndTest1(List<Score> scores, boolean expected) {
         Trial trial = new Trial();
-        trial.add(new Score(10));
+        scores.forEach(trial::add);
 
-        assertThat(trial.isNormalEnd()).isTrue();
+        assertThat(trial.isNormalEnd()).isEqualTo(expected);
+    }
 
-        Trial trial2 = new Trial();
-        trial2.add(new Score(9));
-
-        assertThat(trial2.isNormalEnd()).isFalse();
+    private static Stream<Arguments> generateIsEndTest1() {
+        return Stream.of(
+                Arguments.of(Collections.singletonList(new Score(10)), true),
+                Arguments.of(Collections.singletonList(new Score(9)), false)
+        );
     }
 
     @Test
@@ -58,46 +69,48 @@ public class TrialTest {
         trial.add(new Score(1));
 
         assertThat(trial.getFrameResult()).isEqualTo(FrameResult.MISS);
+    }
 
+    @Test
+    @DisplayName("getFrameResult None 케이스 테스트")
+    void getFrameResultTest4() {
         Trial trial2 = new Trial();
-        trial.add(new Score(8));
+        trial2.add(new Score(8));
 
         assertThat(trial2.getFrameResult()).isEqualTo(FrameResult.NONE);
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("generateIsNormalEndTest")
     @DisplayName("NormalEnd 테스트")
-    void isNormalEndTest() {
+    void isNormalEndTest(List<Score> scores, boolean expected) {
         Trial trial = new Trial();
+        scores.forEach(trial::add);
 
-        trial.add(new Score(10));
-
-        assertThat(trial.isNormalEnd()).isTrue();
-
-        Trial trial2 = new Trial();
-
-        trial2.add(new Score(0));
-        trial2.add(new Score(0));
-
-        assertThat(trial2.isNormalEnd()).isTrue();
+        assertThat(trial.isNormalEnd()).isEqualTo(expected);
     }
 
-    @Test
+    private static Stream<Arguments> generateIsNormalEndTest() {
+        return Stream.of(
+                Arguments.of(Collections.singletonList(new Score(10)), true),
+                Arguments.of(Arrays.asList(new Score(9), new Score(1)), true)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateIsFinalEndTest")
     @DisplayName("FinalEnd 테스트")
-    void isFinalEndTest() {
+    void isFinalEndTest(List<Score> scores, boolean expected) {
         Trial trial = new Trial();
+        scores.forEach(trial::add);
 
-        trial.add(new Score(10));
-        trial.add(new Score(10));
-        trial.add(new Score(10));
+        assertThat(trial.isFinalEnd()).isEqualTo(expected);
+    }
 
-        assertThat(trial.isFinalEnd()).isTrue();
-
-        Trial trial2 = new Trial();
-
-        trial2.add(new Score(0));
-        trial2.add(new Score(0));
-
-        assertThat(trial2.isFinalEnd()).isTrue();
+    private static Stream<Arguments> generateIsFinalEndTest() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(new Score(10), new Score(10), new Score(10)), true),
+                Arguments.of(Arrays.asList(new Score(0), new Score(0)), true)
+        );
     }
 }

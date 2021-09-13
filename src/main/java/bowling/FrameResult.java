@@ -6,10 +6,10 @@ import java.util.List;
 public enum FrameResult {
     STRIKE(2), SPARE(1), MISS(0), NONE(-1);
 
-    private final int bonusDepth;
+    private final int bonusScoreCount;
 
-    FrameResult(int bonusDepth) {
-        this.bonusDepth = bonusDepth;
+    FrameResult(int bonusScoreCount) {
+        this.bonusScoreCount = bonusScoreCount;
     }
 
     private static final List<FrameResult> bonusResults = Arrays.asList(STRIKE, SPARE);
@@ -18,7 +18,7 @@ public enum FrameResult {
         return bonusResults.contains(this);
     }
 
-    public int getBonusDepth() {
-        return bonusDepth;
+    public int getBonusScoreCount() {
+        return bonusScoreCount;
     }
 }

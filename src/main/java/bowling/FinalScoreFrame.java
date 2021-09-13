@@ -11,7 +11,9 @@ public class FinalScoreFrame extends ScoreFrame {
         frameMeta.add(new Score(scoreValue));
 
         if (frameMeta.isFinalEnd()) {
-            return next = new FinalScoreFrame(frameMeta.getNextTurn());
+            next = new FinalScoreFrame(frameMeta.getNextTurn());
+            
+            return next;
         }
 
         return this;

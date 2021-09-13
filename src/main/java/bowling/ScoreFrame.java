@@ -2,8 +2,8 @@ package bowling;
 
 
 public abstract class ScoreFrame {
-    final FrameMeta frameMeta;
-    ScoreFrame next;
+    protected final FrameMeta frameMeta;
+    protected ScoreFrame next;
 
     public ScoreFrame(Turn turn) {
         this.frameMeta = new FrameMeta(turn);

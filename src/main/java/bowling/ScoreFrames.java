@@ -11,13 +11,10 @@ public class ScoreFrames {
 
     public ScoreFrames() {
         this.firstScoreFrame = new NormalScoreFrame(Turn.ofStart());
+        this.lastScoreFrame = this.firstScoreFrame;
     }
 
     public void bowl(int score) {
-        if (isBeforeStart()) {
-            lastScoreFrame = firstScoreFrame;
-        }
-
         updateLastScoreFrame(lastScoreFrame.addScore(score));
     }
 
@@ -48,24 +45,16 @@ public class ScoreFrames {
     }
 
     public int getCurrentTurn() {
-        if (isBeforeStart()) {
-            return Turn.ofStart().getNumber();
-        }
-
         return lastScoreFrame.getTurnNumber();
     }
 
     public boolean isContinued() {
-        return isBeforeStart() || lastScoreFrame.isContinued();
+        return lastScoreFrame.isContinued();
     }
 
     private void updateLastScoreFrame(ScoreFrame nextScoreFrame) {
         if (lastScoreFrame != nextScoreFrame) {
             lastScoreFrame = nextScoreFrame;
         }
-    }
-
-    private boolean isBeforeStart() {
-        return !Optional.ofNullable(lastScoreFrame).isPresent();
     }
 }

@@ -11,7 +11,9 @@ public class NormalScoreFrame extends ScoreFrame {
         frameMeta.add(new Score(scoreValue));
 
         if (frameMeta.isNormalEnd()) {
-            return next = createNextFrame();
+            next = createNextFrame();
+
+            return next;
         }
 
         return this;
@@ -26,7 +28,7 @@ public class NormalScoreFrame extends ScoreFrame {
         }
 
         if (frameResult.isBonusResult() && this.hasNextFrame()) {
-            return calculable(frameResult.getBonusDepth(), this.getNextFrame());
+            return isCalculable(frameResult.getBonusScoreCount(), this.getNextFrame());
         }
 
         return false;
@@ -38,33 +40,33 @@ public class NormalScoreFrame extends ScoreFrame {
         Score currentFrameScore = previousScore.sum(frameMeta.getTotalSumScore());
 
         if (frameResult.isBonusResult()) {
-            return addScore(frameResult.getBonusDepth(), currentFrameScore, getNextFrame());
+            return getScore(frameResult.getBonusScoreCount(), currentFrameScore, getNextFrame());
         }
 
         return currentFrameScore;
     }
 
-    private Score addScore(int depth, Score previousScore, ScoreFrame currentScoreFrame) {
-        if (isEnd(depth)) {
-            return previousScore;
-        }
+    private boolean isCalculable(int leftBonusScoreCount, ScoreFrame currentScoreFrame) {
+        int remainBonusCount = leftBonusScoreCount - currentScoreFrame.getCount();
 
-        return addScore(depth - currentScoreFrame.getCount(),
-                previousScore.sum(currentScoreFrame.getSumScore(depth)), currentScoreFrame.getNextFrame());
-    }
-
-    private boolean calculable(int depth, ScoreFrame currentScoreFrame) {
-        int remainDepth = depth - currentScoreFrame.getCount();
-
-        if (isEnd(remainDepth)) {
+        if (isEnd(remainBonusCount)) {
             return true;
         }
 
         if (currentScoreFrame.hasNextFrame()) {
-            return calculable(remainDepth, currentScoreFrame.getNextFrame());
+            return isCalculable(remainBonusCount, currentScoreFrame.getNextFrame());
         }
 
         return false;
+    }
+
+    private Score getScore(int leftBonusScoreCount, Score previousScore, ScoreFrame currentScoreFrame) {
+        if (isEnd(leftBonusScoreCount)) {
+            return previousScore;
+        }
+
+        return getScore(leftBonusScoreCount - currentScoreFrame.getCount(),
+                previousScore.sum(currentScoreFrame.getSumScore(leftBonusScoreCount)), currentScoreFrame.getNextFrame());
     }
 
     private ScoreFrame createNextFrame() {
