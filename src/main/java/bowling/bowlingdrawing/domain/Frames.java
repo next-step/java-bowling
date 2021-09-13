@@ -3,6 +3,7 @@ package bowling.bowlingdrawing.domain;
 import bowling.bowlingdrawing.exception.CustomException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Frames {
@@ -45,6 +46,6 @@ public class Frames {
     }
 
     public List<Frame> frames() {
-        return frames;
+        return Collections.unmodifiableList(frames);
     }
 }

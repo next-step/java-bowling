@@ -1,6 +1,7 @@
 package bowling.bowlingdrawing.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Pitchings {
@@ -14,4 +15,7 @@ public class Pitchings {
         return pitchings.get(pitchings.size() - 1).next(pins);
     }
 
+    public List<Pitching> pitchings() {
+        return Collections.unmodifiableList(pitchings);
+    }
 }
