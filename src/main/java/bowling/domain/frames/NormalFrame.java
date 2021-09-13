@@ -21,26 +21,26 @@ public class NormalFrame extends Frame {
 
     @Override
     public void finish() {
-        if (isPossibleToAttempts()) {
+        if (!isPossibleToAttempts()) {
             super.isFinish = true;
         }
-        if (isImPossibleNextRoll()) {
+        if (!isPossibleNextRoll()) {
             super.isFinish = true;
         }
     }
 
-    private boolean isImPossibleNextRoll() {
+    private boolean isPossibleNextRoll() {
         if (isSpare()) {
-            return true;
+            return false;
         }
         if (isStrike()) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     @Override
     public boolean isPossibleToAttempts() {
-        return this.scores.size() == FRAME_MAX_ATTEMPTS;
+        return this.scores.size() < FRAME_MAX_ATTEMPTS;
     }
 }

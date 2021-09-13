@@ -31,14 +31,14 @@ public class FinalFrame extends Frame {
         }
     }
 
-    private boolean isImPossibleNextRoll() {
+    private boolean isPossibleNextRoll() {
         if (this.scores.size() <= 1) {
-            return false;
+            return true;
         }
         if (this.scores.size() == 2) {
-            return !isPossibleThirdRoll();
+            return isPossibleThirdRoll();
         }
-        return true;
+        return false;
     }
 
     private boolean isPossibleThirdRoll() {
@@ -56,16 +56,16 @@ public class FinalFrame extends Frame {
 
     @Override
     public void finish() {
-        if (isPossibleToAttempts()) {
+        if (!isPossibleToAttempts()) {
             super.isFinish = true;
         }
-        if (isImPossibleNextRoll()) {
+        if (!isPossibleNextRoll()) {
             super.isFinish = true;
         }
     }
 
     @Override
     protected boolean isPossibleToAttempts() {
-        return this.scores.size() == FRAME_MAX_ATTEMPTS;
+        return this.scores.size() < FRAME_MAX_ATTEMPTS;
     }
 }
