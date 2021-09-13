@@ -1,5 +1,7 @@
 package bowling.bowlingdrawing.domain;
 
+import bowling.bowlingdrawing.domain.pitching.Pitching;
+import bowling.bowlingdrawing.domain.pitching.Pitchings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 

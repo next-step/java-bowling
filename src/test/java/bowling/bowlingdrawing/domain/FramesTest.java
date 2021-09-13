@@ -1,5 +1,8 @@
 package bowling.bowlingdrawing.domain;
 
+import bowling.bowlingdrawing.domain.frame.Frame;
+import bowling.bowlingdrawing.domain.frame.Frames;
+import bowling.bowlingdrawing.domain.pitching.Pitching;
 import bowling.bowlingdrawing.exception.CustomException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

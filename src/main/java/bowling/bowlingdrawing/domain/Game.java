@@ -1,5 +1,9 @@
 package bowling.bowlingdrawing.domain;
 
+import bowling.bowlingdrawing.domain.frame.Frames;
+import bowling.bowlingdrawing.domain.pitching.Pitching;
+import bowling.bowlingdrawing.domain.pitching.Pitchings;
+
 public class Game {
     private final Frames frames = new Frames();
     private final Pitchings pitchings = new Pitchings();
