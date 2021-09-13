@@ -30,9 +30,19 @@ public class Pitching {
 
     public Integer score(int level) {
         if (level == 2) {
-            return pins.pins() + nextPitching.score(1);
+            if (nextPitching == null) {
+                return -1;
+            }
+            int nextPitchingScore = nextPitching.score(1);
+            if (nextPitchingScore == -1) {
+                return -1;
+            }
+            return pins.pins() + nextPitchingScore;
         }
         if (level == 1) {
+            if (nextPitching == null) {
+                return -1;
+            }
             return pins.pins() + nextPitching.score(0);
         }
         return pins.pins();
