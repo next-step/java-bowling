@@ -163,8 +163,7 @@ public class QnAService {
         - `Pins pins`
         - `Pitching nextPitching`
     2. 메서드
-        - `boolean isTen()`
-        - `int sum(Pitching anotherPitching)`
+        - `Integer score(int levelOfRecursion)`
 7. Pins
     1. 속성
         - `int pins`
