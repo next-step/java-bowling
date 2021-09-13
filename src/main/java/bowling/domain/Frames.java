@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Frames {
@@ -60,10 +61,10 @@ public class Frames {
     }
 
     public List<String> results() {
-        return results;
+        return Collections.unmodifiableList(results);
     }
 
     public List<Frame> frames() {
-        return frames;
+        return Collections.unmodifiableList(frames);
     }
 }

@@ -71,7 +71,7 @@ public class Score implements Comparable<Score> {
     }
 
     public int score() {
-        return score;
+        return new Integer(score);
     }
 
     @Override

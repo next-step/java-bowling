@@ -25,6 +25,10 @@ public class TotalScore {
         return new TotalScore(frames, calculatedScores);
     }
 
+    public static TotalScore from(List<Integer> scores) {
+        return new TotalScore(scores);
+    }
+
     private void initTotalScores(final Frames frames, final int index, List<Integer> calculatedScores) {
         List<Score> scores = frames.frames().get(index).scores();
         IntStream.range(0, scores.size())
