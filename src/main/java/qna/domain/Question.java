@@ -1,11 +1,13 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import qna.exception.CannotDeleteException;
 import qna.exception.NotQuestionWriterException;
 import qna.exception.OtherUserAnswerFoundException;
 
@@ -102,13 +104,9 @@ public class Question extends AbstractEntity {
         return answers2;
     }
 
-    @Override
-    public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
-    }
-
-    public void delete(User loginUser)
+    public void validateDelete(User loginUser)
         throws NotQuestionWriterException, OtherUserAnswerFoundException {
+
         if (!isOwner(loginUser)) {
             throw new NotQuestionWriterException("질문을 삭제할 권한이 없습니다.");
         }
@@ -118,7 +116,27 @@ public class Question extends AbstractEntity {
         if(!answers.isDeletable(loginUser)) {
             throw new OtherUserAnswerFoundException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
+    }
 
+    @Override
+    public String toString() {
+        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
 
+    public List<DeleteHistory> delete(User loginUser) throws NotQuestionWriterException, OtherUserAnswerFoundException {
+        validateDelete(loginUser);
+        setDeleted(true);
+        List<DeleteHistory> questionDeleteHistories = createDeleteHistory();
+        List<DeleteHistory> answersDeleteHistories = answers2.deleteAll();
+
+        return Stream.of(questionDeleteHistories, answersDeleteHistories)
+            .flatMap(x -> x.stream())
+            .collect(Collectors.toList());
+    }
+
+    private List<DeleteHistory> createDeleteHistory() {
+        List<DeleteHistory> questionDeleteHistories = new ArrayList<>();
+        questionDeleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+        return questionDeleteHistories;
     }
 }

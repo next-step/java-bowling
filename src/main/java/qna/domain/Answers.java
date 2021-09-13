@@ -1,7 +1,9 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
@@ -44,5 +46,16 @@ public class Answers {
 
     public boolean isDeletable(User user) {
         return hasNoAnswers() || areAllWrittenByWriter(user);
+    }
+
+    public List<DeleteHistory> deleteAll() {
+        answers.stream().forEach(a -> a.setDeleted(true));
+        return createDeleteHistory();
+    }
+
+    private List<DeleteHistory> createDeleteHistory() {
+        return answers.stream().
+            map(a -> new DeleteHistory(ContentType.ANSWER, a.getId(), a.getWriter(), LocalDateTime.now()))
+            .collect(Collectors.toList());
     }
 }

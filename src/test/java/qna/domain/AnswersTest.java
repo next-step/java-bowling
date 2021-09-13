@@ -30,7 +30,7 @@ class AnswersTest {
     @MethodSource("provideOtherWriterAnswers")
     @DisplayName("답변들중 주어진 작성자외의 유저가 작성한 답변이 존재할경우, 삭제불가능한 상태가 된다.")
     void otherWriterAnswersAreNotDeletable(Answers answers) {
-        assertThat(answers.isDeletable(UserTest.JAVAJIGI)).isEqualTo(true);
+        assertThat(answers.isDeletable(UserTest.JAVAJIGI)).isEqualTo(false);
     }
 
     private static Stream<Arguments> provideSameWriterAnswers() {
