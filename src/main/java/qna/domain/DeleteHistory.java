@@ -47,9 +47,19 @@ public class DeleteHistory {
         return Objects.hash(id, contentType, contentId, deletedBy);
     }
 
+
     @Override
     public String toString() {
         return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
                 + deletedBy + ", createDate=" + createDate + "]";
     }
+
+    public static DeleteHistory question(Question question) {
+        return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
+    }
+
+    public static DeleteHistory answer(Answer answer) {
+        return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
+    }
+
 }
