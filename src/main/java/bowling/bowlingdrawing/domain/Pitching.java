@@ -38,6 +38,10 @@ public class Pitching {
         return pins.pins();
     }
 
+    public int sum(Pitching secondPitching) {
+        return pins.pins() + secondPitching.pins.pins();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,4 +54,6 @@ public class Pitching {
     public int hashCode() {
         return Objects.hash(pins, nextPitching);
     }
+
+
 }
