@@ -36,6 +36,10 @@ public class Pin {
         }
     }
 
+    public boolean isRemainPin(Pin pin) {
+        return Math.subtractExact(PIN_MAX_VALUE, this.pin) - pin.pin > 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
