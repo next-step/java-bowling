@@ -38,6 +38,10 @@ public class BowlingGame {
         return frames.currentFrame();
     }
 
+    public boolean currentFrameIsEnd() {
+        return currentFrame().isEnd();
+    }
+
     public void nextFrame() {
         Frame nextFrame = currentFrame().next();
         frames.add(nextFrame);
@@ -48,10 +52,9 @@ public class BowlingGame {
     }
 
     public void roll(int fallenPin) {
-        frames.roll(currentFrameNumber(), fallenPin);
-
-        if (isNotEnd() && currentFrame().isEnd()) {
+        if (isNotEnd() && currentFrameIsEnd()) {
             nextFrame();
         }
+        frames.roll(currentFrameNumber(), fallenPin);
     }
 }
