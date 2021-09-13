@@ -31,7 +31,7 @@ class PitchingTest {
 
     @Test
     @DisplayName("점수 합계 반환")
-    void score_pitching() {
+    void score() {
         // given
         Pitching pitching = Pitching.first(10);
         Pitching nextPitching1 = pitching.next(10);
@@ -46,4 +46,17 @@ class PitchingTest {
         assertThat(score2).isEqualTo(9);
     }
 
+    @Test
+    @DisplayName("점수 합계 미반환 : strike, spare 다음 Pitching 없는 경우")
+    void score_remain_next() {
+        // given
+        Pitching pitching = Pitching.first(10);
+        Pitching nextPitching1 = pitching.next(10);
+        // when
+        Integer score = pitching.score(2);
+        Integer score1 = nextPitching1.score(1);
+        // then
+        assertThat(score).isEqualTo(-1);
+        assertThat(score1).isEqualTo(-1);
+    }
 }
