@@ -1,14 +1,13 @@
 package bowling.domain;
 
+import static bowling.domain.Frame.*;
+
 import java.util.Objects;
 
 import bowling.exception.InvalidFallenPinsException;
 import bowling.exception.InvalidSpareException;
 
 public class PitchResult {
-
-    private static final int MIN_PINS = 0;
-    private static final int MAX_PINS = 10;
 
     private final int fallenPins;
     private final boolean isSpare;
@@ -24,7 +23,7 @@ public class PitchResult {
     }
 
     public static PitchResult spare(int fallenPins) {
-        if (fallenPins == MIN_PINS) {
+        if (fallenPins == MIN_PINS_COUNT) {
             throw new InvalidSpareException();
         }
         return new PitchResult(fallenPins, true);
@@ -38,13 +37,13 @@ public class PitchResult {
         if (fallenPins == Score.NOT_SCORED) {
             return;
         }
-        if (fallenPins < MIN_PINS || fallenPins > MAX_PINS) {
+        if (fallenPins < MIN_PINS_COUNT || fallenPins > MAX_PINS_COUNT) {
             throw new InvalidFallenPinsException(fallenPins);
         }
     }
 
     public boolean isStrike() {
-        return fallenPins == MAX_PINS && !isSpare;
+        return fallenPins == MAX_PINS_COUNT && !isSpare;
     }
 
     public boolean isSpare() {
@@ -52,7 +51,7 @@ public class PitchResult {
     }
 
     public boolean isGutter() {
-        return fallenPins == MIN_PINS;
+        return fallenPins == MIN_PINS_COUNT;
     }
 
     @Override
