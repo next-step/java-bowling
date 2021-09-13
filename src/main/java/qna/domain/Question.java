@@ -73,22 +73,19 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void deleteBy(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> deleteBy(User loginUser) throws CannotDeleteException {
         checkQuestionWriter(loginUser);
-        deleteAnswers(loginUser);
-
         setDeleted(true);
+
+        List<DeleteHistory> deleteHistoryList = new ArrayList<>();
+        deleteHistoryList.add(getDeleteHistory());
+        deleteHistoryList.addAll(deleteAnswers(loginUser));
+
+        return deleteHistoryList;
     }
 
-    public List<DeleteHistory> getDeleteHistory() {
-        List<DeleteHistory> deleteHistoryList = new ArrayList<>();
-        deleteHistoryList.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
-
-        for (Answer answer : answers) {
-            deleteHistoryList.add(answer.getDeleteHistory());
-        }
-
-       return deleteHistoryList;
+    private DeleteHistory getDeleteHistory() {
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 
     private void checkQuestionWriter(User loginUser) throws CannotDeleteException {
@@ -97,10 +94,14 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private void deleteAnswers(User loginUser) throws CannotDeleteException {
+    private List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistoryList = new ArrayList<>();
+
         for (Answer answer : answers) {
-            answer.deleteBy(loginUser);
+            deleteHistoryList.add(answer.deleteBy(loginUser));
         }
+
+        return deleteHistoryList;
     }
 
     public void addAnswer(Answer answer) {
