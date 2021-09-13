@@ -108,11 +108,11 @@ public abstract class Frame {
         return Score.of(nextResult);
     }
 
-    public PitchResult firstResult() {
+    private PitchResult firstResult() {
         return nthResult(INDEX_OF_1ST_RESULT);
     }
 
-    public PitchResult secondResult() {
+    private PitchResult secondResult() {
         return nthResult(INDEX_OF_2ND_RESULT);
     }
 
