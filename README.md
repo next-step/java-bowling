@@ -127,7 +127,7 @@
 
 ## 지난 피드백
 - [ ] 테스트 하나당 하나의 assertion
-- [ ] StringUtil pad() 수정
+- [x] StringUtil pad() 추상화 수정
 - [ ] 점수 유효성 검사 시점 변경
 - [ ] 상태 패턴 적용
 

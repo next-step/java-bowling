@@ -10,11 +10,10 @@ public class StringUtil {
         return text == null || text.trim().isEmpty();
     }
 
-    public static String pad(int score, int margin) {
+    public static String pad(int position, int margin, String text) {
         StringBuilder sb = new StringBuilder();
-        String s = String.valueOf(score);
-        for (int i = s.length(); i < margin; i++) {
-            sb.append(" ");
+        for (int i = position; i < margin; i++) {
+            sb.append(text);
         }
         return sb.toString();
     }

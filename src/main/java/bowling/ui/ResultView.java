@@ -54,7 +54,7 @@ public class ResultView {
     private static int displayScore(int totalScore, int score) {
         if (score > 0) {
             totalScore += score;
-            System.out.printf(SCORE, totalScore, StringUtil.pad(totalScore, 4));
+            System.out.printf(SCORE, totalScore, StringUtil.pad(String.valueOf(totalScore).length(), 4, " "));
         }
         return totalScore;
     }
