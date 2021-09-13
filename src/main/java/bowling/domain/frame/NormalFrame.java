@@ -8,14 +8,14 @@ public class NormalFrame {
 
     private static final int LAST_ROUND = 9;
 
-    private final int frame;
+    private final int index;
 
     private final NormalScore score;
 
     private final boolean isSecondTry;
 
-    private NormalFrame(int frame, NormalScore score, boolean isSecondTry) {
-        this.frame = frame;
+    private NormalFrame(int index, NormalScore score, boolean isSecondTry) {
+        this.index = index;
         this.score = score;
         this.isSecondTry = isSecondTry;
     }
@@ -24,39 +24,39 @@ public class NormalFrame {
         return of(1, NormalScore.from(score), false);
     }
 
-    protected static NormalFrame of(int frame, NormalScore score, boolean isSecondTry) {
-        return new NormalFrame(frame, score, isSecondTry);
+    protected static NormalFrame of(int index, NormalScore score, boolean isSecondTry) {
+        return new NormalFrame(index, score, isSecondTry);
     }
 
     public int score() {
         return score.get();
     }
 
-    public int nextFrame() {
+    public int nextIndex() {
 
         if (isSecondTry) {
-            return frame + 1;
+            return index + 1;
         }
 
         if (score.isStrike()) {
-            return frame + 1;
+            return index + 1;
         }
 
-        return frame;
+        return index;
 
     }
 
     public NormalFrame next(int score) {
 
         if (isSecondTry) {
-            return next(frame + 1, NormalScore.from(score), false);
+            return next(index + 1, NormalScore.from(score), false);
         }
 
         if (this.score.isStrike()) {
-            return next(frame + 1, NormalScore.from(score), false);
+            return next(index + 1, NormalScore.from(score), false);
         }
 
-        return next(frame, this.score.next(score), true);
+        return next(index, this.score.next(score), true);
 
     }
 
@@ -65,19 +65,19 @@ public class NormalFrame {
     }
 
     public boolean isLast() {
-        if (frame > LAST_ROUND) {
+        if (index > LAST_ROUND) {
             return true;
         }
 
-        if (frame == LAST_ROUND) {
+        if (index == LAST_ROUND) {
             return isDone();
         }
 
         return false;
     }
 
-    public boolean isFrame(int frame) {
-        return this.frame == frame;
+    public boolean isIndex(int index) {
+        return this.index == index;
     }
 
     private boolean isDone() {
@@ -89,11 +89,11 @@ public class NormalFrame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame normalFrame = (NormalFrame) o;
-        return frame == normalFrame.frame && isSecondTry == normalFrame.isSecondTry && Objects.equals(score, normalFrame.score);
+        return index == normalFrame.index && isSecondTry == normalFrame.isSecondTry && Objects.equals(score, normalFrame.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frame, score, isSecondTry);
+        return Objects.hash(index, score, isSecondTry);
     }
 }

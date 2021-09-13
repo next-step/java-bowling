@@ -91,7 +91,7 @@ class NormalFrameTest {
         //when
         NormalFrame frame = NormalFrame.of(8, NormalScore.from(3), true);
         //then
-        assertThat(frame.isFrame(8)).isTrue();
+        assertThat(frame.isIndex(8)).isTrue();
     }
 
 }

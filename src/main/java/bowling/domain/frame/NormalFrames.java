@@ -34,7 +34,7 @@ public class NormalFrames {
 
     public NormalFrames findByFrame(int frame) {
         return normalFrames.stream()
-                .filter(normalFrame -> normalFrame.isFrame(frame))
+                .filter(normalFrame -> normalFrame.isIndex(frame))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), NormalFrames::new));
     }
 

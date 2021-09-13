@@ -53,7 +53,7 @@ public class BowlingController {
         FrameOutputView.create().print(player, normalFrames, finalFrames);
 
         while (!normalFrame.isLast()) {
-            normalFrame = normalFrame.next(ScoreInputView.create().input(normalFrame.nextFrame()));
+            normalFrame = normalFrame.next(ScoreInputView.create().input(normalFrame.nextIndex()));
             normalFrames.add(normalFrame);
             FrameOutputView.create().print(player, normalFrames, finalFrames);
         }
