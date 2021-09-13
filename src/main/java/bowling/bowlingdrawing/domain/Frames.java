@@ -49,9 +49,27 @@ public class Frames {
         return frames.size() == 10 && frames.get(frames.size()-1).end();
     }
 
+    public int currentFrame() {
+        if (frames.isEmpty()) {
+            return 1;
+        }
+
+        if (frames.size() == 10) {
+            return frames.size();
+        }
+
+        Frame currentFrame = frames.get(frames.size() - 1);
+        if (currentFrame.done()) {
+            return frames.size() + 1;
+        }
+        return frames.size();
+    }
+
     public List<Frame> frames() {
         return Collections.unmodifiableList(frames);
     }
 
-
+    public boolean fullFrame() {
+        return frames.size() == 10;
+    }
 }
