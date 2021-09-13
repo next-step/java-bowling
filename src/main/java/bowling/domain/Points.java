@@ -36,6 +36,16 @@ public class Points {
         return points.size();
     }
 
+    public boolean canPlayBonusGame() {
+        int pointSum = points.stream()
+                .mapToInt(Point::currentPoint)
+                .sum();
+
+        int bowlCount = points.size();
+
+        return pointSum == 10 && bowlCount <= 2;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

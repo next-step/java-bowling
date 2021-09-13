@@ -2,28 +2,18 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class NormalFrame {
+public class FinalFrame {
 
     private int index;
-
     private Points points;
 
-    private static final int START_INDEX = 1;
-    private static final int NEXT_INDEX_DISTANCE = 1;
-    private static final int MAX_TRY = 2;
+    private static final int FINAL_INDEX = 10;
+    private static final int MAX_TRY = 3;
 
 
-    private NormalFrame() {
-        this.index = START_INDEX;
+    public FinalFrame() {
+        this.index = FINAL_INDEX;
         this.points = new Points();
-    }
-
-    public NormalFrame(int index) {
-        this.index = index;
-    }
-
-    public static NormalFrame first() {
-        return new NormalFrame();
     }
 
     public void bowl(int hitPin) {
@@ -36,28 +26,23 @@ public class NormalFrame {
     }
 
     public boolean isFinished() {
+
         if (points.bowlCount() == MAX_TRY) {
             return true;
         }
-        if (points.findFirstPoint() == 10) {
+
+        if (!points.canPlayBonusGame()) {
             return true;
         }
+
         return false;
-    }
-
-    public NormalFrame next() {
-        return new NormalFrame(this.index + NEXT_INDEX_DISTANCE);
-    }
-
-    public Points currentFramePoints() {
-        return points;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NormalFrame that = (NormalFrame) o;
+        FinalFrame that = (FinalFrame) o;
         return index == that.index && Objects.equals(points, that.points);
     }
 
