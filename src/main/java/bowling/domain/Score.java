@@ -70,6 +70,10 @@ public class Score implements Comparable<Score> {
         }
     }
 
+    public int score() {
+        return score;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(score);

@@ -41,6 +41,10 @@ public abstract class Frame {
 
     public abstract boolean isNext();
 
+    public List<Score> scores() {
+        return scores;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -15,10 +15,6 @@ public class Frames {
         results = new ArrayList<>();
     }
 
-    public List<String> results() {
-        return results;
-    }
-
     public void throwBalls(int pitchingCount) {
         int index = frames.size() - 1;
         if (index >= 0 && !isNext()) {
@@ -50,11 +46,24 @@ public class Frames {
         return results.size();
     }
 
-    private boolean isNext() {
+    public boolean isNext() {
         if (frames.size() == 0) {
             return false;
         }
         int index = frames.size() - 1;
         return frames.get(index).isNext();
+    }
+
+    public boolean isFinish() {
+        return frames.size() == Frames.TOTAL_FRAME_COUNT
+                && frames.get(Frames.TOTAL_FRAME_COUNT - 1).isNext();
+    }
+
+    public List<String> results() {
+        return results;
+    }
+
+    public List<Frame> frames() {
+        return frames;
     }
 }
