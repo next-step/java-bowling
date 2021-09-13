@@ -35,6 +35,11 @@ public class Progress extends BasePitchState {
 	}
 
 	@Override
+	public boolean isFinish() {
+		return false;
+	}
+
+	@Override
 	public boolean isProgress() {
 		return true;
 	}

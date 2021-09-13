@@ -25,10 +25,6 @@ public class PitchStates {
 		return new PitchStates(pitchStates);
 	}
 
-	public List<PitchState> subList(final int from, final int to) {
-		return values.subList(from, to);
-	}
-
 	public void remove(final int index) {
 		values.remove(index);
 	}

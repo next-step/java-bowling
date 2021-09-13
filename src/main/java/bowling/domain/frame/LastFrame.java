@@ -43,7 +43,7 @@ public class LastFrame extends DefaultFrame {
 			return true;
 		}
 
-		return pitchStates.getStart().isStart();
+		return !pitchStates.getStart().isFinish();
 	}
 
 	public PitchStates getPitchStates() {

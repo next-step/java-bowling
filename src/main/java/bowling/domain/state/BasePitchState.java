@@ -29,14 +29,6 @@ public abstract class BasePitchState implements PitchState {
 		return false;
 	}
 
-	public boolean isStart() {
-		return false;
-	}
-
-	public boolean isFinish() {
-		return false;
-	}
-
 	public boolean isAllHit() {
 		return false;
 	}

@@ -24,7 +24,7 @@ class StartTest {
 		final Start start = Start.of();
 
 		// then
-		assertThat(start.isStart()).isTrue();
+		assertThat(start.isFinish()).isFalse();
 		assertThat(start.isProgress()).isTrue();
 	}
 

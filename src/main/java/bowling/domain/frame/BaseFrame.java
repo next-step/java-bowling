@@ -55,6 +55,6 @@ public class BaseFrame extends DefaultFrame {
 
 	@Override
 	public boolean isStart() {
-		return pitchState.isStart();
+		return !pitchState.isFinish();
 	}
 }

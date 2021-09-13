@@ -17,8 +17,6 @@ public interface PitchState {
 
 	boolean isProgress();
 
-	boolean isStart();
-
 	boolean isFinish();
 
 	boolean isAllHit();

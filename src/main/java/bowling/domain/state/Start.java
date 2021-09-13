@@ -24,8 +24,8 @@ public class Start extends BasePitchState {
 	}
 
 	@Override
-	public boolean isStart() {
-		return true;
+	public boolean isFinish() {
+		return false;
 	}
 
 	@Override
