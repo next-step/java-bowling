@@ -41,11 +41,6 @@ public class Miss extends BasePitchState {
 	}
 
 	@Override
-	public boolean isFinish() {
-		return true;
-	}
-
-	@Override
 	public Score addBonusScore(final Score score) {
 		final Score resultScore = score.add(first.score());
 

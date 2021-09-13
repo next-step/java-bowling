@@ -28,11 +28,6 @@ public class Strike extends BasePitchState {
 	}
 
 	@Override
-	public boolean isFinish() {
-		return true;
-	}
-
-	@Override
 	public Score addBonusScore(final Score score) {
 		return score.add(BaseScore.ofStrike());
 	}

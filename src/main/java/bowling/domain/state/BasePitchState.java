@@ -29,6 +29,10 @@ public abstract class BasePitchState implements PitchState {
 		return false;
 	}
 
+	public boolean isFinish() {
+		return true;
+	}
+
 	public Score addBonusScore(final Score score) {
 		return score;
 	}
