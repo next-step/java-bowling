@@ -11,7 +11,7 @@ public class BowlingMain {
         Player player = new Player(playerName);
         ResultView.showPlayBoard(player);
 
-        while (player.end()) {
+        while (!player.end()) {
             int pins = InputView.inputPins(player);
             player.pitch(pins);
             ResultView.showPlayBoard(player);
