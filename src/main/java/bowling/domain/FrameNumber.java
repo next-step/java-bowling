@@ -10,7 +10,7 @@ public class FrameNumber {
     private final int frameNumber;
 
     public FrameNumber(final int frameNumber) {
-        if (frameNumber > BowlingGame.MAX_FRAME_SIZE || frameNumber < BowlingGame.FIRST_FRAME_INDEX) {
+        if (frameNumber > BowlingGame.MAX_FRAME_SIZE || frameNumber < Frames.FIRST_FRAME_INDEX) {
             throw new BusinessException(CREATE_FRAME_NUMBER_ERROR);
         }
         this.frameNumber = frameNumber;
@@ -21,7 +21,7 @@ public class FrameNumber {
     }
 
     public boolean isLastNormalNumber() {
-        return frameNumber == BowlingGame.LAST_FRAME_INDEX;
+        return frameNumber == Frames.LAST_FRAME_INDEX;
     }
 
     @Override

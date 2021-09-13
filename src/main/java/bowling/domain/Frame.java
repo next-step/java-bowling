@@ -7,7 +7,9 @@ public interface Frame {
     
     boolean isEnd();
 
-    String result();
-
     Frame next();
+
+    boolean isNormal();
+
+    Pitches pitches();
 }

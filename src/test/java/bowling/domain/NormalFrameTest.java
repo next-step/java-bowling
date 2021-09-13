@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -40,11 +42,20 @@ class NormalFrameTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("노멀프레임에서 2번 투구한 결과는 다음과 같다.")
+    @DisplayName("노멀프레임에서 2번 투구한 결과: number + spare = 10")
     @ParameterizedTest
-    @CsvSource(value = {"2 2|2", "8 2|/", "0 2|-"}, delimiter = ' ')
-    void pitch_result(int countOfPints, String expected) {
-        assertThat(new NormalFrame(1).pitch(2).pitch(countOfPints).result()).isEqualTo(expected);
+    @CsvSource(value = {"8:2", "0:10"}, delimiter = ':')
+    void pitch_two_spare(int first, int second) {
+        assertThat(new NormalFrame(1).pitch(first).pitch(second).pitches().statuses())
+                .isEqualTo(Arrays.asList(Status.NUMBER, Status.SPARE));
+    }
+
+    @DisplayName("노멀프레임에서 2번 투구한 결과: number + 0 (gutter)")
+    @ParameterizedTest
+    @CsvSource(value = {"0:0", "5:0"}, delimiter = ':')
+    void pitch_two_gutter(int first) {
+        assertThat(new NormalFrame(1).pitch(first).pitch(0).pitches().statuses())
+                .isEqualTo(Arrays.asList(Status.NUMBER, Status.GUTTER));
     }
 
     @DisplayName("투구가 끝난 프레임의 다음은 새 프레임이다.")

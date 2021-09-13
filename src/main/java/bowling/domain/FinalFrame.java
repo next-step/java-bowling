@@ -1,10 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.pitch.Pitch;
 import bowling.exception.BusinessException;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -13,10 +10,11 @@ public class FinalFrame implements Frame {
     private static final int MAXIMUM_FINAL_FRAME_PITCH = 3;
 
     private final FrameNumber frameNumber;
-    private List<Pitch> pitches = new LinkedList<>();
+    private final Pitches pitches;
 
     public FinalFrame() {
         frameNumber = new FrameNumber(BowlingGame.MAX_FRAME_SIZE);
+        pitches = new Pitches();
     }
 
     @Override
@@ -39,23 +37,26 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return (pitches.size() == NormalFrame.MAXIMUM_NORMAL_FRAME_PITCH
+        return (pitches.equalsToSize(NormalFrame.MAXIMUM_NORMAL_FRAME_PITCH)
                 && sum() < Pitch.MAXIMUM_COUNT_OF_PINS)
-                || pitches.size() == MAXIMUM_FINAL_FRAME_PITCH;
+                || pitches.equalsToSize(MAXIMUM_FINAL_FRAME_PITCH);
     }
 
-    private int sum() {
-        return pitches.stream()
+
+    public int sum() {
+        return pitches.value()
+                .stream()
                 .map(Pitch::intValue)
                 .reduce(0, Integer::sum);
     }
 
-    @Override
-    public String result() {
-        return pitches.stream()
-                .map(Pitch::value)
-                .collect(Collectors.joining(Pitch.SEPARATOR));
-    }
+//    @Override
+//    public String result() {
+//        return pitches.value()
+//                .stream()
+//                .map(Pitch::value)
+//                .collect(Collectors.joining(Pitch.SEPARATOR));
+//    }
 
     @Override
     public Frame next() {
@@ -63,6 +64,16 @@ public class FinalFrame implements Frame {
             return this;
         }
         throw new BusinessException("마지막 프레임입니다.");
+    }
+
+    @Override
+    public boolean isNormal() {
+        return false;
+    }
+
+    @Override
+    public Pitches pitches() {
+        return pitches;
     }
 
     @Override

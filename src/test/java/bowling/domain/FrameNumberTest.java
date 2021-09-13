@@ -2,6 +2,8 @@ package bowling.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -9,10 +11,10 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 class FrameNumberTest {
 
     @DisplayName("볼링 넘버에 맞지않는 수로 생성하면 에러가 발생한다. ")
-    @Test
-    void validate(){
-        assertThatThrownBy(()-> new FrameNumber(11)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(()-> new FrameNumber(-1)).isInstanceOf(IllegalArgumentException.class);
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 11})
+    void validate(int number){
+        assertThatThrownBy(()-> new FrameNumber(number)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("현재 frameNumber 의 다음 번호를 int 로 반환한다.")

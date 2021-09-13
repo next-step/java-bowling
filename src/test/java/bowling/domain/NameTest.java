@@ -19,10 +19,10 @@ class NameTest {
     void create_error() {
         assertThatThrownBy(() -> new Name("ABCD"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Name.CREATE_NAME_ERROR);
+                .hasMessage("플레이어 이름은 3글자의 영문자여야 합니다.");
         assertThatThrownBy(() -> new Name("김코딩"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(Name.CREATE_NAME_ERROR);
+                .hasMessage("플레이어 이름은 3글자의 영문자여야 합니다.");
     }
 
 }

@@ -1,4 +1,4 @@
-package bowling.domain.pitch;
+package bowling.domain;
 
 import bowling.exception.BusinessException;
 
@@ -10,19 +10,16 @@ public class Pitch {
     public static final String SEPARATOR = "|";
 
     private final int countOfPins;
-    private final int remains;
+    private final Status status;
 
-    public Pitch(final int countOfPins) {
+    public Pitch(final int countOfPins, final Status status) {
         validate(countOfPins);
         this.countOfPins = countOfPins;
-        this.remains = MAXIMUM_COUNT_OF_PINS - countOfPins;
+        this.status = status;
     }
 
     public static Pitch firstPitch(final int countOfPins) {
-        if (countOfPins == MAXIMUM_COUNT_OF_PINS) {
-            return new Strike();
-        }
-        return new Pitch(countOfPins);
+        return new Pitch(countOfPins, Status.first(countOfPins));
     }
 
     private void validate(final int countOfPins) {
@@ -31,21 +28,12 @@ public class Pitch {
         }
     }
 
-    public boolean isSpareOrStrike() {
-        return this instanceof Strike || this instanceof Spare;
+    public boolean isStrike() {
+        return status.equals(Status.STRIKE);
     }
 
     public Pitch pitch(final int countOfPins) {
-        if (!(this instanceof Strike) && this.countOfPins + countOfPins == MAXIMUM_COUNT_OF_PINS) {
-            return new Spare(countOfPins);
-        }
-        if (!(this instanceof Strike) && countOfPins == MINIMUM_COUNT_OF_PINS) {
-            return new Gutter();
-        }
-        if (isSpareOrStrike() && countOfPins == MAXIMUM_COUNT_OF_PINS) {
-            return new Strike();
-        }
-        return new Pitch(countOfPins);
+        return new Pitch(countOfPins, Status.second(this, countOfPins));
     }
 
     public int intValue() {
@@ -53,7 +41,18 @@ public class Pitch {
     }
 
     public String value() {
-        return String.valueOf(countOfPins);
+        if (status.equals(Status.NUMBER)) {
+            return String.valueOf(countOfPins);
+        }
+        return status.symbol();
+    }
+
+    public boolean isStatus(Status status) {
+        return this.status.equals(status);
+    }
+
+    public Status status() {
+        return status;
     }
 
     @Override
@@ -62,11 +61,11 @@ public class Pitch {
         if (o == null || getClass() != o.getClass()) return false;
         Pitch pitch = (Pitch) o;
         return countOfPins == pitch.countOfPins &&
-                remains == pitch.remains;
+                status == pitch.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(countOfPins, remains);
+        return Objects.hash(countOfPins, status);
     }
 }

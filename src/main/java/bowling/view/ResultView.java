@@ -1,6 +1,9 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.Frame;
+import bowling.domain.Pitch;
+import bowling.domain.Pitches;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -29,10 +32,9 @@ public class ResultView {
         System.out.println(TITLE);
         printName(bowlingGame.player());
 
-        bowlingGame.frames()
-                .forEach(frame ->
-                        System.out.print(String.format("%5s %s", frame.result(), SEPARATOR))
-                );
+        for (Frame frame : bowlingGame.frames().value()) {
+            System.out.print(String.format("%5s %s", result(frame.pitches()), SEPARATOR));
+        }
         printBlock(LAST_NUMBER - bowlingGame.frames().size() - 1);
         System.out.println();
         System.out.println();
@@ -49,4 +51,10 @@ public class ResultView {
         System.out.print(String.format("%s %4s %s", SEPARATOR, playerName, SEPARATOR));
     }
 
+    private static String result(Pitches pitches) {
+        return pitches.value()
+                .stream()
+                .map(Pitch::value)
+                .collect(Collectors.joining(Pitch.SEPARATOR));
+    }
 }

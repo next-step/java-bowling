@@ -1,24 +1,20 @@
 package bowling.domain;
 
-import bowling.domain.pitch.Pitch;
-import bowling.domain.pitch.Strike;
 import bowling.exception.BusinessException;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class NormalFrame implements Frame {
 
-    private static final int FIRST_PITCH_INDEX = 0;
     public static final int MAXIMUM_NORMAL_FRAME_PITCH = 2;
 
     private final FrameNumber frameNumber;
-    private List<Pitch> pitches = new LinkedList<>();
+    private Pitches pitches;
 
     public NormalFrame(final int frameNumber) {
         this.frameNumber = new FrameNumber(frameNumber);
+        pitches = new Pitches();
     }
 
     @Override
@@ -41,6 +37,16 @@ public class NormalFrame implements Frame {
         return new NormalFrame(frameNumber.nextNumber());
     }
 
+    @Override
+    public boolean isNormal() {
+        return true;
+    }
+
+    @Override
+    public Pitches pitches() {
+        return pitches;
+    }
+
     private void addNextPitch(int countOfPins) {
         if (pitches.isEmpty()) {
             pitches.add(Pitch.firstPitch(countOfPins));
@@ -52,15 +58,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return pitches.size() == 1 && pitches.get(FIRST_PITCH_INDEX) instanceof Strike
-                || pitches.size() == MAXIMUM_NORMAL_FRAME_PITCH;
-    }
-
-    @Override
-    public String result() {
-        return pitches.stream()
-                .map(Pitch::value)
-                .collect(Collectors.joining(Pitch.SEPARATOR));
+        return pitches.firstStrike() || pitches.isMaxSize();
     }
 
     @Override
