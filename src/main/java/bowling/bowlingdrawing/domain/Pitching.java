@@ -7,7 +7,7 @@ public class Pitching {
     private final Pins pins;
     private Pitching nextPitching;
 
-    public Pitching(Pins pins) {
+    private Pitching(Pins pins) {
         this.pins = pins;
     }
 
