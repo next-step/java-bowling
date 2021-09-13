@@ -1,10 +1,7 @@
 package step3.state;
 
-import step3.FirstBowl;
 import step3.Score;
 import step3.exceptions.CannotCalculateExceptions;
-import step3.state.State;
-import step3.state.Strike;
 
 public class Ready implements State {
     private Score score;
@@ -24,5 +21,10 @@ public class Ready implements State {
     @Override
     public Score calculateAdditionalScore(Score beforeScore) {
         throw new CannotCalculateExceptions();
+    }
+
+    @Override
+    public boolean isFinish() {
+        return false;
     }
 }

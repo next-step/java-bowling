@@ -4,13 +4,14 @@ package step3;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import step3.state.FirstBowl;
 import step3.state.Strike;
 
 class FrameTest {
     @DisplayName("strike 상태 확인")
     @Test
     void strikeState() {
-        Frame frame = new Frame();
+        NormalFrame frame = new NormalFrame(1);
         frame.bowl(10);
         Assertions.assertThat(frame.getState()).isEqualTo(new Strike());
     }
@@ -18,7 +19,7 @@ class FrameTest {
     @DisplayName("firstBowl 상태 확인")
     @Test
     void firstBowlState() {
-        Frame frame = new Frame();
+        NormalFrame frame = new NormalFrame(1);
         frame.bowl(1);
         Assertions.assertThat(frame.getState()).isEqualTo(new FirstBowl(1));
     }
@@ -26,7 +27,7 @@ class FrameTest {
     @DisplayName("firstBowl 상태 확인")
     @Test
     void firstBowlState2() {
-        Frame frame = new Frame();
+        NormalFrame frame = new NormalFrame(1);
         frame.bowl(9);
         Assertions.assertThat(frame.getState()).isEqualTo(new FirstBowl(9));
     }
@@ -34,7 +35,7 @@ class FrameTest {
     @DisplayName("firstBowl 상태 확인")
     @Test
     void spairState() {
-        Frame frame = new Frame();
+        NormalFrame frame = new NormalFrame(1);
         frame.bowl(9);
         Assertions.assertThat(frame.getState()).isEqualTo(new FirstBowl(9));
     }

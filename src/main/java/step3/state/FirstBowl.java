@@ -1,11 +1,9 @@
-package step3;
+package step3.state;
 
 import java.util.Objects;
+import step3.Pins;
+import step3.Score;
 import step3.exceptions.CanNotThrowBallException;
-import step3.exceptions.CannotCalculateExceptions;
-import step3.state.Miss;
-import step3.state.Spair;
-import step3.state.State;
 
 public class FirstBowl implements State {
     private Score score;
@@ -35,6 +33,11 @@ public class FirstBowl implements State {
             return beforeScore;
         }
         throw new CanNotThrowBallException();
+    }
+
+    @Override
+    public boolean isFinish() {
+        return false;
     }
 
     @Override

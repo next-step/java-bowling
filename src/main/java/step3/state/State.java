@@ -8,4 +8,6 @@ public interface State {
     Score score();
 
     Score calculateAdditionalScore(Score beforeScore);
+
+    boolean isFinish();
 }

@@ -2,6 +2,7 @@ package step3.state;
 
 import step3.Pins;
 import step3.Score;
+import step3.exceptions.CanNotThrowBallException;
 
 public class Spair extends Finished {
     private Score score;
@@ -14,5 +15,12 @@ public class Spair extends Finished {
         this.secondOfPin = secondOfPins;
     }
 
-
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        beforeScore = firstOfPin.sumScore(beforeScore);
+        if (beforeScore.canCalculateScore()) {
+            return beforeScore;
+        }
+        throw new CanNotThrowBallException();
+    }
 }
