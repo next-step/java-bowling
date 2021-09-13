@@ -30,7 +30,7 @@ class StrikeTest {
 
 		// then
 		assertThat(strike.isFinish()).isTrue();
-		assertThat(strike.isAllHit()).isTrue();
+		assertThat(strike).isInstanceOf(Strike.class);
 	}
 
 	@DisplayName("hitPins - 불가능")

@@ -33,7 +33,7 @@ class SpareTest {
 
 		// then
 		assertThat(spare.isFinish()).isTrue();
-		assertThat(spare.isAllHit()).isTrue();
+		assertThat(spare).isInstanceOf(Spare.class);
 	}
 
 	@DisplayName("hitPins - 불가능")

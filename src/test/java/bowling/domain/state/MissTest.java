@@ -38,7 +38,7 @@ class MissTest {
 		final PitchState pitchState = Miss.of(pins1, pins2);
 
 		// then
-		assertThat(pitchState.isMiss()).isTrue();
+		assertThat(pitchState).isInstanceOf(Miss.class);
 		assertThat(pitchState.isFinish()).isTrue();
 		assertThat(pitchState.score()).isInstanceOf(ComputableScore.class);
 	}

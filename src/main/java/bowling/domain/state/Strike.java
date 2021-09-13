@@ -33,11 +33,6 @@ public class Strike extends BasePitchState {
 	}
 
 	@Override
-	public boolean isAllHit() {
-		return true;
-	}
-
-	@Override
 	public Score addBonusScore(final Score score) {
 		return score.add(BaseScore.ofStrike());
 	}

@@ -35,11 +35,6 @@ public class Spare extends BasePitchState {
 	}
 
 	@Override
-	public boolean isAllHit() {
-		return true;
-	}
-
-	@Override
 	public Score addBonusScore(final Score score) {
 		final Score resultScore = score.add(pins.score());
 

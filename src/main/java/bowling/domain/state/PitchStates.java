@@ -47,11 +47,11 @@ public class PitchStates {
 	}
 
 	public boolean isLastAllHit() {
-		return getLast().isAllHit();
+		return getLast() instanceof Strike || getLast() instanceof Spare;
 	}
 
 	public boolean isLastMiss() {
-		return getLast().isMiss();
+		return getLast() instanceof Miss;
 	}
 
 	public PitchState getStart() {

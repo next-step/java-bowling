@@ -19,9 +19,5 @@ public interface PitchState {
 
 	boolean isFinish();
 
-	boolean isAllHit();
-
-	boolean isMiss();
-
 	Score addBonusScore(final Score score);
 }
