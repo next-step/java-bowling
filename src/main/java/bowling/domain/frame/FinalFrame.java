@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.vo.FinalFrameStatus;
 import bowling.domain.score.FinalScore;
 
 import java.util.Objects;
@@ -18,19 +19,20 @@ public class FinalFrame {
 
     private final int trial;
 
-    private final boolean isThirdAvailable;
-    private final boolean isDone;
+    private final FinalFrameStatus status;
 
-
-    private FinalFrame(FinalScore score, int trial, boolean isThirdAvailable, boolean isDone) {
+    public FinalFrame(FinalScore score, int trial, FinalFrameStatus status) {
         this.score = score;
         this.trial = trial;
-        this.isThirdAvailable = isThirdAvailable;
-        this.isDone = isDone;
+        this.status = status;
     }
 
     protected static FinalFrame of(FinalScore score, int trial, boolean isThirdAvailable, boolean isDone) {
-        return new FinalFrame(score, trial, isThirdAvailable, isDone);
+        return new FinalFrame(score, trial, FinalFrameStatus.of(isThirdAvailable, isDone));
+    }
+
+    protected static FinalFrame of(FinalScore score, int trial, FinalFrameStatus status) {
+        return new FinalFrame(score, trial, status);
     }
 
     public static FinalFrame start(int score) {
@@ -39,7 +41,7 @@ public class FinalFrame {
 
 
     public boolean isDone() {
-        return isDone;
+        return status.isDone();
     }
 
     public int score() {
@@ -51,7 +53,7 @@ public class FinalFrame {
             return secondTry(score);
         }
 
-        if (isSecondTry() && isThirdAvailable) {
+        if (isSecondTry() && status.isThirdAvailable()) {
             return thirdTry(this.score.next(score));
         }
 
@@ -82,7 +84,7 @@ public class FinalFrame {
     }
 
     private static FinalFrame secondTry(FinalScore score, boolean isThirdAvailable, boolean isDone) {
-        return new FinalFrame(score, SECOND_TRIAL, isThirdAvailable, isDone);
+        return new FinalFrame(score, SECOND_TRIAL, FinalFrameStatus.of(isThirdAvailable, isDone));
     }
 
     private void validateCombinedScores(int score) {
@@ -92,11 +94,11 @@ public class FinalFrame {
     }
 
     private static FinalFrame thirdTry(FinalScore score) {
-        return new FinalFrame(score, THIRD_TRIAL, false, true);
+        return new FinalFrame(score, THIRD_TRIAL, FinalFrameStatus.of(false, true));
     }
 
     private static FinalFrame stop(FinalScore score, int trial) {
-        return new FinalFrame(score, trial, false, true);
+        return new FinalFrame(score, trial, FinalFrameStatus.of(false, true));
     }
 
     @Override
@@ -104,11 +106,11 @@ public class FinalFrame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FinalFrame that = (FinalFrame) o;
-        return trial == that.trial && isThirdAvailable == that.isThirdAvailable && isDone == that.isDone && Objects.equals(score, that.score);
+        return trial == that.trial && Objects.equals(score, that.score) && Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, trial, isThirdAvailable, isDone);
+        return Objects.hash(score, trial, status);
     }
 }
