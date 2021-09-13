@@ -1,16 +1,9 @@
 package bowling.model;
 
-import static bowling.model.BowlingValidator.isBlank;
-
 public class User {
     private final String name;
 
-    public String getName() {
-        return name;
-    }
-
     public User(String name) {
-        isBlank(name);
         isValid(name);
         this.name = name.trim();
     }

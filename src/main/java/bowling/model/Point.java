@@ -2,9 +2,6 @@ package bowling.model;
 
 import java.util.Objects;
 
-import static bowling.model.BowlingValidator.changeToInt;
-import static bowling.model.BowlingValidator.isBlank;
-
 public class Point {
     private static final int MAX_POINT = 10;
     private static final int MIN_POINT = 0;
@@ -12,19 +9,8 @@ public class Point {
     private final int point;
 
     public Point(int point) {
+        isValidRange(point);
         this.point = point;
-    }
-
-    public static void isValid(String pinCount) {
-        isBlank(pinCount);
-        isDigit(pinCount);
-        isValidRange(changeToInt(pinCount));
-    }
-
-    private static void isDigit(String pinCount) {
-        if (!pinCount.trim().matches("[0-9]*")) {
-            throw new IllegalArgumentException("숫자를 입력해주세요");
-        }
     }
 
     public static void isValidRange(int pinCount) {
