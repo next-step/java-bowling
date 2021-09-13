@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Point {
 
+    public static final int FINAL_MAX_POINT = 20;
     public static final int MAX_POINT = 10;
     public static final int MIN_POINT = 0;
 

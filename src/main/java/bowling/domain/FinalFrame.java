@@ -19,8 +19,8 @@ public class FinalFrame {
     public void bowl(int hitPin) {
         int currentPoint = points.currentPoint();
 
-        if (currentPoint + hitPin > Point.MAX_POINT) {
-            throw new IllegalArgumentException("합계 점수가 10이 넘을 수 없습니다");
+        if (currentPoint + hitPin > Point.FINAL_MAX_POINT) {
+            throw new IllegalArgumentException("합계 점수가 20이 넘을 수 없습니다");
         }
         points.addPoint(new Point(hitPin));
     }
