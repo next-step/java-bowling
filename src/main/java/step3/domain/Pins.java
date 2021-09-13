@@ -29,6 +29,10 @@ public class Pins {
         }
     }
 
+    public int getFallenPins() {
+        return fallenPins;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

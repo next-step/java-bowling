@@ -4,9 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frames {
-    List<NormalFrame> frames;
+    private List<Frame> frames;
 
     public Frames() {
         this.frames = new ArrayList<>();
+    }
+
+    public void add(Frame frame) {
+        frames.add(frame);
+    }
+
+    public List<Frame> getFrames() {
+        return frames;
     }
 }

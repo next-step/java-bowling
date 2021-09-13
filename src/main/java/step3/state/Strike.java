@@ -1,4 +1,4 @@
-package step3.domain.state;
+package step3.state;
 
 import java.util.Objects;
 import step3.domain.Pins;
@@ -38,5 +38,10 @@ public class Strike extends Finished {
             return beforeScore;
         }
         throw new CanNotThrowBallException();
+    }
+
+    @Override
+    public String symbol() {
+        return "X";
     }
 }

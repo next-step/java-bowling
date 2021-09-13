@@ -1,4 +1,4 @@
-package step3.domain.state;
+package step3.state;
 
 import step3.domain.Score;
 import step3.exceptions.CanNotThrowBallException;
@@ -14,5 +14,10 @@ abstract class Finished implements State {
     @Override
     public Score score() {
         return score;
+    }
+
+    @Override
+    public boolean isFinish() {
+        return true;
     }
 }

@@ -1,7 +1,8 @@
 package step3.domain;
 
-import step3.domain.state.Ready;
-import step3.domain.state.State;
+import java.util.Objects;
+import step3.state.Ready;
+import step3.state.State;
 
 public class FinalFrame implements Frame {
     private State state;
@@ -12,6 +13,7 @@ public class FinalFrame implements Frame {
 
     public Frame bowl(int fallenPins) {
         state = state.bowl(fallenPins);
+
         return this;
     }
 
@@ -32,8 +34,18 @@ public class FinalFrame implements Frame {
         return score;
     }
 
+    @Override
+    public int number() {
+        return 10;
+    }
+
+    @Override
+    public String getSymbol() {
+        return state.symbol();
+    }
+
     public boolean isGameEnd() {
-        return false;
+        return state.isFinish();
     }
 
     public State getState() {
@@ -43,5 +55,22 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isFinish() {
         return state.isFinish();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        FinalFrame that = (FinalFrame) o;
+        return Objects.equals(state, that.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(state);
     }
 }

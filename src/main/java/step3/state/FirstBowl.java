@@ -1,4 +1,4 @@
-package step3.domain.state;
+package step3.state;
 
 import java.util.Objects;
 import step3.domain.Pins;
@@ -39,6 +39,12 @@ public class FirstBowl implements State {
     public boolean isFinish() {
         return false;
     }
+
+    @Override
+    public String symbol() {
+        return Integer.toString(firstOfPin.getFallenPins());
+    }
+
 
     @Override
     public boolean equals(Object o) {

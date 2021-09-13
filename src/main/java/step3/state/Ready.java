@@ -1,7 +1,8 @@
-package step3.domain.state;
+package step3.state;
 
 import step3.domain.Score;
 import step3.exceptions.CannotCalculateExceptions;
+import step3.exceptions.SymbolDoesNotExistException;
 
 public class Ready implements State {
     private Score score;
@@ -26,5 +27,10 @@ public class Ready implements State {
     @Override
     public boolean isFinish() {
         return false;
+    }
+
+    @Override
+    public String symbol() {
+        throw new SymbolDoesNotExistException();
     }
 }

@@ -1,4 +1,4 @@
-package step3.domain.state;
+package step3.state;
 
 import step3.domain.Pins;
 import step3.domain.Score;
@@ -20,5 +20,10 @@ public class Miss extends Finished {
             return beforeScore;
         }
         throw new CanNotThrowBallException();
+    }
+
+    @Override
+    public String symbol() {
+        return firstOfPin.getFallenPins() + "|" + secondOfPin.getFallenPins();
     }
 }

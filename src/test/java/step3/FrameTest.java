@@ -5,8 +5,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import step3.domain.NormalFrame;
-import step3.domain.state.FirstBowl;
-import step3.domain.state.Strike;
+import step3.state.FirstBowl;
+import step3.state.Strike;
 
 class FrameTest {
     @DisplayName("strike 상태 확인")

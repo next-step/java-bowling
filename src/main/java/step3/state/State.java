@@ -1,4 +1,4 @@
-package step3.domain.state;
+package step3.state;
 
 import step3.domain.Score;
 
@@ -10,4 +10,6 @@ public interface State {
     Score calculateAdditionalScore(Score beforeScore);
 
     boolean isFinish();
+
+    String symbol();
 }
