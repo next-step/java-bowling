@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class FinalFrame {
+public class FinalFrame implements Frame {
 
     private int index;
     private Points points;
@@ -16,6 +16,7 @@ public class FinalFrame {
         this.points = new Points();
     }
 
+    @Override
     public void bowl(int hitPin) {
         int currentPoint = points.currentPoint();
 
@@ -25,6 +26,7 @@ public class FinalFrame {
         points.addPoint(new Point(hitPin));
     }
 
+    @Override
     public boolean isFinished() {
 
         if (points.bowlCount() == MAX_TRY) {
