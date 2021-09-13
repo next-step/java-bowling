@@ -32,4 +32,8 @@ public class Pins {
         }
     }
 
+    public boolean isRemain() {
+        return first.isRemainPin(Pin.of(0));
+    }
+
 }

@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import bowling.exception.Pin.PinSecondValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class PinsTest {
 
@@ -36,6 +38,22 @@ class PinsTest {
         assertThatExceptionOfType(PinSecondValueException.class)
             .isThrownBy(() -> pins.ofSecond(second))
             .withMessageMatching("첫번째 핀이 쓰러뜨리고 남은 핀 개수만 저장할 수 있다.");
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"10,false", "4,true", "0,true"})
+    @DisplayName("핀이 남아있는지 확인할 수 있다.")
+    void remainPinTest(int input, boolean expected) {
+
+        // given
+        Pin pin = Pin.of(input);
+        Pins pins = Pins.ofFirst(pin);
+
+        // when
+        boolean result = pins.isRemain();
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 
 }
