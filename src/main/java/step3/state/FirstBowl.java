@@ -4,6 +4,7 @@ import java.util.Objects;
 import step3.domain.Pins;
 import step3.domain.Score;
 import step3.exceptions.CanNotThrowBallException;
+import step3.exceptions.CannotCalculateExceptions;
 
 public class FirstBowl implements State {
     private Score score;
@@ -32,7 +33,7 @@ public class FirstBowl implements State {
         if (beforeScore.canCalculateScore()) {
             return beforeScore;
         }
-        throw new CanNotThrowBallException();
+        throw new CannotCalculateExceptions();
     }
 
     @Override

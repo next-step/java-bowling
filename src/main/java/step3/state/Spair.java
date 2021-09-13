@@ -16,12 +16,18 @@ public class Spair extends Finished {
     }
 
     @Override
-    public Score calculateAdditionalScore(Score beforeScore) {
-        beforeScore = firstOfPin.sumScore(beforeScore);
-        if (beforeScore.canCalculateScore()) {
-            return beforeScore;
+    public Score score() {
+        return score;
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = firstOfPin.sumScore(score);
+        if (score.canCalculateScore()) {
+            return score;
         }
-        throw new CanNotThrowBallException();
+        score = secondOfPin.sumScore(score);
+        return score;
     }
 
     @Override

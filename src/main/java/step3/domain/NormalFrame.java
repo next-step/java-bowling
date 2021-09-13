@@ -1,6 +1,7 @@
 package step3.domain;
 
 import java.util.Objects;
+import step3.exceptions.CannotCalculateExceptions;
 import step3.state.Ready;
 import step3.state.State;
 
@@ -16,21 +17,25 @@ public class NormalFrame implements Frame {
 
     public Frame bowl(int fallenPins) {
         state = state.bowl(fallenPins);
-
         return this;
     }
 
     public Frame createFrame() {
         if (no + 1 == 10) {
-            return new FinalFrame();
+            next = new FinalFrame();
+            return next;
         }
-        return new NormalFrame(no + 1);
+        next = new NormalFrame(no + 1);
+        return next;
     }
 
     public Score getScore() {
         Score score = state.score();
         if (score.canCalculateScore()) {
             return score;
+        }
+        if (next == null) {
+            throw new CannotCalculateExceptions();
         }
         return next.calculateAdditionalScore(score);
     }

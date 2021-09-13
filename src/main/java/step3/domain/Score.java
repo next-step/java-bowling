@@ -12,8 +12,8 @@ public class Score {
         this.left = left;
     }
 
-    public Score bowl(int falledPins) {
-        return new Score(score + falledPins, left - 1);
+    public Score bowl(int fallenPin) {
+        return new Score(score + fallenPin, left - 1);
     }
 
     public int getScore() {

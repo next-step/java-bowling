@@ -3,6 +3,8 @@ package step3.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import step3.state.FinalReady;
 import step3.state.Ready;
 import step3.state.State;
 
@@ -13,17 +15,13 @@ public class FinalFrame implements Frame {
     private State state;
 
     public FinalFrame() {
-        this.state = new Ready();
+        this.state = new FinalReady();
         turn = 0;
     }
 
     public Frame bowl(int fallenPins) {
         state = state.bowl(fallenPins);
         turn++;
-        if (state.isFinish()) {
-            states.add(state);
-            state = new Ready();
-        }
         return this;
     }
 
@@ -32,14 +30,22 @@ public class FinalFrame implements Frame {
         if (score.canCalculateScore()) {
             return score;
         }
-
         return score;
     }
 
+    public int getLastFrameResult() {
+        return states.stream()
+            .map(state -> state.score().getScore())
+            .reduce(0, (x, y) -> x + y);
+    }
+
     public Score calculateAdditionalScore(Score beforeScore) {
-        Score score = state.calculateAdditionalScore(beforeScore);
-        if (score.canCalculateScore()) {
-            return score;
+        Score score = beforeScore;
+        for (State state : states) {
+            score = state.calculateAdditionalScore(score);
+            if (score.canCalculateScore()) {
+                return score;
+            }
         }
         return score;
     }
@@ -51,11 +57,16 @@ public class FinalFrame implements Frame {
 
     @Override
     public String getSymbol() {
-        return state.symbol();
+        return states.stream()
+            .map(State::symbol)
+            .collect(Collectors.joining("|"));
     }
 
     @Override
     public Frame createFrame() {
+        states.add(state);
+        state = new FinalReady();
+
         return this;
     }
 
@@ -73,7 +84,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return turn == 3;
+        return true;
     }
 
     @Override

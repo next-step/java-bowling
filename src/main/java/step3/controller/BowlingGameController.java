@@ -22,6 +22,8 @@ public class BowlingGameController {
             ResultView.printHeader();
             ResultView.printUserName(userName);
             ResultView.printResult(frames, frame);
+            ResultView.prinBlank();
+            ResultView.printScoreResult(frames, frame);
         }
 
     }
@@ -29,6 +31,10 @@ public class BowlingGameController {
     private Frame addFrame(Frames frames, Frame frame) {
         if (frame.isFinish() && frame.number() != 10) {
             frames.add(frame);
+            frame = frame.createFrame();
+            return frame;
+        }
+        if (frame.number() == 10) {
             frame = frame.createFrame();
         }
         return frame;

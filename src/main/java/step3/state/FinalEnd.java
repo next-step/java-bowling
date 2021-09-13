@@ -3,15 +3,14 @@ package step3.state;
 import java.util.Objects;
 import step3.domain.Pins;
 import step3.domain.Score;
-import step3.exceptions.CanNotThrowBallException;
 
-public class Strike extends Finished {
+public class FinalEnd extends Finished {
     private Pins pins;
     private Score score;
 
-    public Strike() {
-        this.score = new Score(10, 2);
-        pins = new Pins(10);
+    public FinalEnd(int fallenPins) {
+        this.score = new Score(fallenPins, 0);
+        pins = new Pins(fallenPins);
     }
 
     @Override
@@ -22,7 +21,7 @@ public class Strike extends Finished {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Strike strike = (Strike) o;
+        FinalEnd strike = (FinalEnd) o;
         return Objects.equals(score, strike.score);
     }
 
@@ -38,15 +37,12 @@ public class Strike extends Finished {
 
     @Override
     public Score calculateAdditionalScore(Score beforeScore) {
-        if (score.canCalculateScore()) {
-            return score;
-        }
-        return beforeScore.bowl(10);
+        return pins.sumScore(beforeScore);
     }
 
 
     @Override
     public String symbol() {
-        return "X";
+        return Integer.toString(pins.getFallenPins());
     }
 }

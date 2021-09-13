@@ -12,11 +12,6 @@ abstract class Finished implements State {
     }
 
     @Override
-    public Score score() {
-        return score;
-    }
-
-    @Override
     public boolean isFinish() {
         return true;
     }

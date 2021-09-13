@@ -5,7 +5,9 @@ import java.util.stream.Collectors;
 import step3.domain.FinalFrame;
 import step3.domain.Frame;
 import step3.domain.Frames;
+import step3.exceptions.CannotCalculateExceptions;
 import step3.exceptions.SymbolDoesNotExistException;
+import step3.state.State;
 
 public class ResultView {
 
@@ -15,20 +17,20 @@ public class ResultView {
 
     public static void printResult(Frames frames, Frame frame) {
         frames.getFrames()
-            .stream()
-            .map(frame1 -> frame1.getSymbol())
-            .forEach(s -> System.out.printf("  %-3s |", s));
+            .forEach(frame1 -> System.out.printf("  %-3s |", frame1.getSymbol()));
 
         try {
             System.out.printf("  %-3s |", frame.getSymbol());
         } catch (SymbolDoesNotExistException s) {
-
+            printRightBlank();
         }
 
-        if (frame.number() == 10) {
-            printFinalResult((FinalFrame) frame);
+        for (int i = frame.number(); i < 10; i++) {
+            printRightBlank();
         }
+
         System.out.println();
+
     }
 
     public static void printUserName(String userName) {
@@ -42,4 +44,40 @@ public class ResultView {
             .collect(Collectors.joining("|")));
     }
 
+    public static void prinBlank() {
+        System.out.print("|      |");
+    }
+
+    public static void printRightBlank() {
+        System.out.print("      |");
+    }
+
+    public static void printScoreResult(Frames frames, Frame frame) {
+        int totalScore = 0;
+        for (Frame frame1 : frames.getFrames()) {
+            int currentFrameScore = printResultScoreByFrame(frame1, totalScore);
+            if (currentFrameScore == -1) {
+                printRightBlank();
+                continue;
+            }
+            totalScore += currentFrameScore;
+            System.out.printf("  %-3s |", totalScore);
+        }
+
+        if (frame.number() == 10 && frame.isGameEnd()) {
+            FinalFrame finalFrame = (FinalFrame) frame;
+            System.out.printf("  %-3s |", finalFrame.getLastFrameResult() + totalScore);
+        }
+
+        System.out.println();
+    }
+
+    private static int printResultScoreByFrame(Frame frame1, int totalScore) {
+        try {
+            int score = frame1.getScore().getScore();
+            return score;
+        } catch (CannotCalculateExceptions c) {
+            return -1;
+        }
+    }
 }
