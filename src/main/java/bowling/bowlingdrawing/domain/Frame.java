@@ -75,6 +75,17 @@ public class Frame {
         return secondPitching != null;
     }
 
+    public Integer firstScore() {
+        return firstPitching.score(0);
+    }
+
+    public Integer secondScore() {
+        if (secondPitching == null) {
+            return -1;
+        }
+        return secondPitching.score(0);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
