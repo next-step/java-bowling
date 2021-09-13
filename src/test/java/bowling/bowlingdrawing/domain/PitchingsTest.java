@@ -17,9 +17,12 @@ class PitchingsTest {
         // when
         Pitching pitching = pitchings.nextPitching(pins1);
         Pitching nextPitching = pitchings.nextPitching(pins2);
+        Pitching checkPitching = Pitching.of(pins1);
+        Pitching checkNextPitching = checkPitching.next(pins2);
         // then
-        assertThat(pitching).isEqualTo(Pitching.of(pins1));
-        assertThat(nextPitching).isEqualTo(pitching.next(pins2));
+        assertThat(pitching).isEqualTo(checkPitching);
+        assertThat(nextPitching).isEqualTo(checkNextPitching);
+
     }
 
 }

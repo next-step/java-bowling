@@ -10,9 +10,12 @@ public class Pitchings {
 
     public Pitching nextPitching(int pins) {
         if (pitchings.isEmpty()) {
-            return Pitching.first(pins);
+            pitchings.add(Pitching.first(pins));
+            return pitchings.get(0);
         }
-        return pitchings.get(pitchings.size() - 1).next(pins);
+        Pitching nextPitching = pitchings.get(pitchings.size() - 1).next(pins);
+        pitchings.add(nextPitching);
+        return nextPitching;
     }
 
     public List<Pitching> pitchings() {

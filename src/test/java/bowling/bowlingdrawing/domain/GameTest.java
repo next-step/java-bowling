@@ -15,7 +15,7 @@ class GameTest {
         // when
         game.pitch(9);
         // then
-        assertThat(game.frames.frames().size()).isEqualTo(1);
-        assertThat(game.pitchings.pitchings().size()).isEqualTo(1);
+        assertThat(game.frames().frames().size()).isEqualTo(1);
+        assertThat(game.pitchings().pitchings().size()).isEqualTo(1);
     }
 }
