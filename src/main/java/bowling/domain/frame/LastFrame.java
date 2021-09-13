@@ -10,7 +10,7 @@ public class LastFrame extends DefaultFrame {
 
 	private static final int MAX_COUNT = 3;
 
-	private final PitchStates pitchStates;
+	private PitchStates pitchStates;
 	private int count;
 
 	protected LastFrame(final PitchState basePitchState) {

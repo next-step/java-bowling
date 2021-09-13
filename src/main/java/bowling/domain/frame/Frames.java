@@ -41,8 +41,7 @@ public class Frames {
 
 	private void addFrame(final BaseFrame frame) {
 		final Frame next = (frames.size() < MAX_COUNT - 1) ? BaseFrame.of() : LastFrame.of();
-		frames.remove(frame);
-		frames.add(frame.create(next));
+		frame.updateNext(next);
 		frames.add(next);
 	}
 

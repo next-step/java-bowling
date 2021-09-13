@@ -9,7 +9,7 @@ import bowling.domain.state.Start;
 public class BaseFrame extends DefaultFrame {
 
 	private PitchState pitchState;
-	private final Frame nextFrame;
+	private Frame nextFrame;
 
 	public BaseFrame(final PitchState pitchState, final Frame nextFrame) {
 		this.pitchState = pitchState;
@@ -35,13 +35,17 @@ public class BaseFrame extends DefaultFrame {
 		return nextFrame.addScore(addedScore);
 	}
 
-	@Override
-	public Score getScore() {
-		return nextFrame.addScore(pitchState.score());
+	public void updateNext(final Frame nextFrame) {
+		this.nextFrame = nextFrame;
 	}
 
 	public void hitPins(final Pins pins) {
 		this.pitchState = pitchState.hitPins(pins);
+	}
+
+	@Override
+	public Score getScore() {
+		return nextFrame.addScore(pitchState.score());
 	}
 
 	public PitchStates getPitchStates() {
