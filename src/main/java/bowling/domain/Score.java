@@ -5,11 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Score {
-    private static final int MAX_PIN_NUMBER = 10;
-    private static final int GUTTER_PIN_NUMBER = 0;
     private static final int FIRST_INDEX = 0;
     private static final int SECOND_INDEX = 1;
-    private static final int FINAL_INDEX = 2;
     private static final int SCORES_SECOND_SIZE = 2;
 
     private List<Integer> scores = new ArrayList<>();
@@ -21,11 +18,17 @@ public class Score {
     }
 
     public void secondBall(int second) {
-        if (scores.get(FIRST_INDEX) + second > MAX_PIN_NUMBER) {
+        if (scores.get(FIRST_INDEX) != Pin.MAX.getValue()
+                && scores.get(FIRST_INDEX) + second > Pin.MAX.getValue()) {
             throw new IllegalArgumentException("핀의 최고 갯수는 10개 입니다.");
         }
 
-        scores.add(SECOND_INDEX, second);
+        scores.add(second);
+    }
+
+    public void finalBall(int hitNumberOfPin) {
+        validateNumberOfPin(hitNumberOfPin);
+        scores.add(hitNumberOfPin);
     }
 
     public int firstScore() {
@@ -38,18 +41,13 @@ public class Score {
         return scores.get(SECOND_INDEX);
     }
 
-    public void finalScore(int hitNumberOfPin) {
-        validateNumberOfPin(hitNumberOfPin);
-        scores.add(FINAL_INDEX, hitNumberOfPin);
-    }
-
     private void validateNumberOfPin(int hitNumberOfPin) {
-        if (hitNumberOfPin > MAX_PIN_NUMBER) {
+        if (hitNumberOfPin > Pin.MAX.getValue()) {
             throw new IllegalArgumentException("핀의 최고 갯수는 10개 입니다.");
         }
     }
 
-    private void validateExistSecondScore() {
+    public void validateExistSecondScore() {
         if (scores.size() < SCORES_SECOND_SIZE) {
             throw new IllegalArgumentException("두번째 점수 입력해주세요.");
         }
@@ -60,17 +58,17 @@ public class Score {
     }
 
     public Status frameStatus() {
-        if (scores.get(FIRST_INDEX) == MAX_PIN_NUMBER) {
+        if (scores.get(FIRST_INDEX) == Pin.MAX.getValue()) {
             return Status.STRIKE;
         }
 
         validateExistSecondScore();
 
-        if (scores.get(FIRST_INDEX) + scores.get(SECOND_INDEX) == MAX_PIN_NUMBER) {
+        if (scores.get(FIRST_INDEX) + scores.get(SECOND_INDEX) == Pin.MAX.getValue()) {
             return Status.SPARE;
         }
 
-        if (scores.get(FIRST_INDEX) == GUTTER_PIN_NUMBER || scores.get(SECOND_INDEX) == GUTTER_PIN_NUMBER) {
+        if (scores.get(FIRST_INDEX) == Pin.NONE.getValue() || scores.get(SECOND_INDEX) == Pin.NONE.getValue()) {
             return Status.GUTTER;
         }
 
