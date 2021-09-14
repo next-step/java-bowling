@@ -36,7 +36,15 @@ public class FinalScore extends Score {
     }
 
     public FinalScore createBonusPin(Pin pin) {
+        checkBonusPin(this);
+
         return new FinalScore(this.first, this.second, pin);
+    }
+
+    private static void checkBonusPin(FinalScore finalScore) {
+        if (!finalScore.isBonus()) {
+            throw new RuntimeException("보너스 핀은 스페어나 스트라이크 후 칠 수 있다.");
+        }
     }
 
     public boolean isBonus() {

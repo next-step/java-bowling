@@ -131,16 +131,32 @@ class FinalScoreTest {
         Pin first = Pin.of(5);
         FinalScore firstScore = start.createFirstPin(first);
         Pin second = Pin.of(5);
-        FinalScore secondPin = firstScore.createSecondPin(second);
+        FinalScore secondScore = firstScore.createSecondPin(second);
         Pin bonus = Pin.of(3);
 
         // when
-        FinalScore result = secondPin.createBonusPin(bonus);
+        FinalScore result = secondScore.createBonusPin(bonus);
 
         // then
         assertThat(result).isInstanceOf(FinalScore.class);
     }
 
+    @Test
+    @DisplayName("두번째 핀이 스페어나 스트라이크가 아닌 경우 Exception이 발생해야 한다.")
+    void createBonusPinExceptionByNotSpare() {
 
+        // given
+        FinalScore start = FinalScore.empty();
+        Pin first = Pin.of(5);
+        FinalScore firstScore = start.createFirstPin(first);
+        Pin second = Pin.of(4);
+        FinalScore secondScore = firstScore.createSecondPin(second);
+        Pin bonus = Pin.of(3);
+
+        // when & then
+        assertThatExceptionOfType(RuntimeException.class)
+            .isThrownBy(() -> secondScore.createBonusPin(bonus))
+            .withMessageMatching("보너스 핀은 스페어나 스트라이크 후 칠 수 있다.");
+    }
 
 }
