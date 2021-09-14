@@ -9,14 +9,10 @@ public class Frame {
     private final Pitching firstPitching;
     private Pitching secondPitching;
 
-    public Frame(Pitching firstPitching, Pitching secondPitching) {
+    private Frame(Pitching firstPitching, Pitching secondPitching) {
         validateSumIsOverTen(firstPitching, secondPitching);
         this.firstPitching = firstPitching;
         this.secondPitching = secondPitching;
-    }
-
-    public Frame(Pitching firstPitching) {
-        this(firstPitching, null);
     }
 
     private void validateSumIsOverTen(Pitching firstPitching, Pitching secondPitching) {
@@ -27,6 +23,14 @@ public class Frame {
         if (firstPitching.sum(secondPitching) > 10) {
             throw new CustomException("Frame 전체 pin 개수가 10개를 초과합니다.");
         }
+    }
+
+    public static Frame of(Pitching firstPitching, Pitching secondPitching) {
+        return new Frame(firstPitching, secondPitching);
+    }
+
+    public static Frame of(Pitching firstPitching) {
+        return of(firstPitching, null);
     }
 
     public void secondPitching(Pitching secondPitching) {

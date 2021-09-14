@@ -17,9 +17,9 @@ class FrameTest {
         // given
         Pitching pitching = Pitching.of(9);
         // when
-        Frame frame = new Frame(pitching);
+        Frame frame = Frame.of(pitching);
         // then
-        assertThat(frame).isEqualTo(new Frame(Pitching.of(9)));
+        assertThat(frame).isEqualTo(Frame.of(Pitching.of(9)));
     }
 
     @ParameterizedTest(name = "SecondPitching 추가 [{index}] {0}, {1}")
@@ -27,12 +27,12 @@ class FrameTest {
     void addSecondPitching(int firstPins, int secondPins) {
         // given
         Pitching firstPitching = Pitching.of(firstPins);
-        Frame frame = new Frame(firstPitching);
+        Frame frame = Frame.of(firstPitching);
         // when
         Pitching secondPitching = firstPitching.next(secondPins);
         frame.secondPitching(secondPitching);
         // then
-        assertThat(frame).isEqualTo(new Frame(firstPitching, secondPitching));
+        assertThat(frame).isEqualTo(Frame.of(firstPitching, secondPitching));
     }
 
     @ParameterizedTest(name = "SecondPitching 추가 실패 : 합계 10 초과")
@@ -42,7 +42,7 @@ class FrameTest {
         Pitching firstPitching = Pitching.of(firstPins);
         Pitching secondPitching = firstPitching.next(secondPins);
         // when, then
-        assertThatThrownBy(() -> new Frame(firstPitching, secondPitching))
+        assertThatThrownBy(() -> Frame.of(firstPitching, secondPitching))
                 .isInstanceOf(CustomException.class);
     }
 
@@ -53,7 +53,7 @@ class FrameTest {
         Pitching pitching = Pitching.first(10);
         Pitching nextPitching1 = pitching.next(10);
         Pitching nextPitching2 = nextPitching1.next(9);
-        Frame frame = new Frame(pitching);
+        Frame frame = Frame.of(pitching);
         // when
         Integer score = frame.score();
         // then
@@ -65,9 +65,9 @@ class FrameTest {
     void strike() {
         // given
         Pitching pitching1 = Pitching.first(10);
-        Frame frame1 = new Frame(pitching1);
+        Frame frame1 = Frame.of(pitching1);
         Pitching pitching2 = pitching1.next(9);
-        Frame frame2 = new Frame(pitching2);
+        Frame frame2 = Frame.of(pitching2);
         // when
         boolean strike1 = frame1.strike();
         boolean strike2 = frame2.strike();
@@ -83,8 +83,8 @@ class FrameTest {
         Pitching pitching1 = Pitching.first(9);
         Pitching pitching2 = pitching1.next(1);
         Pitching pitching3 = pitching2.next(8);
-        Frame frame1 = new Frame(pitching1, pitching2);
-        Frame frame2 = new Frame(pitching2, pitching3);
+        Frame frame1 = Frame.of(pitching1, pitching2);
+        Frame frame2 = Frame.of(pitching2, pitching3);
         // when
         boolean spare1 = frame1.spare();
         boolean spare2 = frame2.spare();
