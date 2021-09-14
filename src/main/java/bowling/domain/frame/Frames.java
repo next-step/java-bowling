@@ -40,9 +40,17 @@ public class Frames {
 	}
 
 	private void addFrame(final BaseFrame frame) {
-		final Frame next = (frames.size() < MAX_COUNT - 1) ? BaseFrame.of() : LastFrame.of();
+		final Frame next = nextFrame();
 		frame.updateNext(next);
 		frames.add(next);
+	}
+
+	private Frame nextFrame() {
+		if (frames.size() < MAX_COUNT - 1) {
+			return BaseFrame.of();
+		}
+
+		return LastFrame.of();
 	}
 
 	public List<PitchStates> getAllPitchStates() {
