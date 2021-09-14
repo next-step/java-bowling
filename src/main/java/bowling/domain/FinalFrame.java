@@ -37,11 +37,12 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return (pitches.equalsToSize(NormalFrame.MAXIMUM_NORMAL_FRAME_PITCH)
-                && sum() < Pitch.MAXIMUM_COUNT_OF_PINS)
-                || pitches.equalsToSize(MAXIMUM_FINAL_FRAME_PITCH);
+        return isNormalEnd() || pitches.equalsToSize(MAXIMUM_FINAL_FRAME_PITCH);
     }
 
+    public boolean isNormalEnd() {
+        return pitches.equalsToSize(NormalFrame.MAXIMUM_NORMAL_FRAME_PITCH) && sum() < Pitch.MAXIMUM_COUNT_OF_PINS;
+    }
 
     public int sum() {
         return pitches.value()
@@ -49,14 +50,6 @@ public class FinalFrame implements Frame {
                 .map(Pitch::intValue)
                 .reduce(0, Integer::sum);
     }
-
-//    @Override
-//    public String result() {
-//        return pitches.value()
-//                .stream()
-//                .map(Pitch::value)
-//                .collect(Collectors.joining(Pitch.SEPARATOR));
-//    }
 
     @Override
     public Frame next() {

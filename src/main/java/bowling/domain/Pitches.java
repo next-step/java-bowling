@@ -63,4 +63,5 @@ public class Pitches {
     public int hashCode() {
         return Objects.hash(pitches);
     }
+
 }

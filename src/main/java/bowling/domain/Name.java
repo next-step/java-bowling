@@ -13,13 +13,13 @@ public class Name {
     private final String name;
 
     public Name(final String name) {
-        if (name == null || name.isEmpty() || name.length() != NAME_LENGTH || !match(name)) {
+        if (name == null || name.isEmpty() || name.length() != NAME_LENGTH || !isEnglish(name)) {
             throw new BusinessException(CREATE_NAME_ERROR);
         }
         this.name = name;
     }
 
-    private boolean match(final String name) {
+    private boolean isEnglish(final String name) {
         return ENGLISH.matcher(name).matches();
     }
 
