@@ -1,5 +1,6 @@
 package bowling.bowlingdrawing.domain.frame;
 
+import bowling.bowlingdrawing.domain.pitching.Pins;
 import bowling.bowlingdrawing.domain.pitching.Pitching;
 import bowling.bowlingdrawing.exception.CustomException;
 
@@ -24,7 +25,7 @@ public class Frame {
             return;
         }
 
-        if (firstPitching.sum(secondPitching) > 10) {
+        if (firstPitching.sum(secondPitching) > Pins.MAXIMUM_PINS) {
             throw new CustomException("Frame 전체 pin 개수가 10개를 초과합니다.");
         }
     }
@@ -36,41 +37,43 @@ public class Frame {
 
     public Integer score() {
         if (strike()) {
-            return firstPitching.score(2);
+            return firstPitching.score(Pitching.SCORE_LEVEL_OF_STRIKE);
         }
 
         if (spare()) {
-            return firstPitching.score(0) + secondPitching.score(1);
+            return firstScore() + secondPitching.score(Pitching.SCORE_LEVEL_OF_SPARE);
         }
 
-        return firstPitching.score(1);
+        return firstScore() + secondScore();
     }
 
     public boolean strike() {
-        return firstPitching.score(0) == 10;
+        return firstPitching.score(0) == Pins.MAXIMUM_PINS;
     }
 
     public boolean spare() {
         if (secondPitching == null) {
             return false;
         }
-        return firstPitching.sum(secondPitching) == 10;
+        return firstPitching.sum(secondPitching) == Pins.MAXIMUM_PINS;
+    }
+
+    public Integer firstScore() {
+        return firstPitching.score(Pitching.SCORE_LEVEL_OF_MISS);
+    }
+
+    public Integer secondScore() {
+        if (secondPitching == null) {
+            return Pitching.IS_NULL;
+        }
+        return secondPitching.score(Pitching.SCORE_LEVEL_OF_MISS);
     }
 
     public boolean done() {
         return strike() || (secondPitching != null);
     }
 
-    public Integer firstScore() {
-        return firstPitching.score(0);
-    }
 
-    public Integer secondScore() {
-        if (secondPitching == null) {
-            return -1;
-        }
-        return secondPitching.score(0);
-    }
 
     @Override
     public boolean equals(Object o) {

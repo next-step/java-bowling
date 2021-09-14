@@ -55,16 +55,16 @@ public class FinalFrame{
 
     public Integer firstBonusScore() {
         if (bonusPitching1 == null) {
-            return -1;
+            return Pitching.IS_NULL;
         }
-        return bonusPitching1.score(0);
+        return bonusPitching1.score(Pitching.SCORE_LEVEL_OF_MISS);
     }
 
     public Integer secondBonusScore() {
         if (bonusPitching2 == null) {
-            return -1;
+            return Pitching.IS_NULL;
         }
-        return bonusPitching2.score(0);
+        return bonusPitching2.score(Pitching.SCORE_LEVEL_OF_MISS);
     }
 
     @Override

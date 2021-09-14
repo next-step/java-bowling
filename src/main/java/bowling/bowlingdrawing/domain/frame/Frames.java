@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Frames {
 
+    public static final int MAXIMUM_SIZE_OF_FRAMES = 9;
+
     private final List<Frame> frames = new ArrayList<>();
     private FinalFrame finalFrame;
 
@@ -20,7 +22,7 @@ public class Frames {
             return;
         }
 
-        if (frames.size() == 9) {
+        if (frames.size() == MAXIMUM_SIZE_OF_FRAMES) {
             pitchAtFinalFrame(pitching);
             return;
         }
