@@ -1,12 +1,14 @@
 package bowling.view;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import bowling.domain.Board;
 import bowling.domain.Frames;
 import bowling.domain.PitchResult;
 import bowling.domain.Player;
 import bowling.domain.Score;
 import bowling.domain.Scores;
-
-import java.util.stream.Collectors;
 
 public class ResultView {
 
@@ -27,6 +29,15 @@ public class ResultView {
         System.out.println(HEADER);
     }
 
+    public static void board(Board board) {
+        Map<Player, Frames> playerFrames = board.value();
+        playerFrames.forEach((player, frames) -> {
+            frames(player, frames);
+            scores(frames.scores());
+        });
+        blankLine();
+    }
+
     public static void frames(Player player, Frames frames) {
         playerName(player);
         frameResults(frames);
@@ -36,7 +47,6 @@ public class ResultView {
     public static void scores(Scores scores) {
         blankScore();
         frameScores(scores);
-        blankLine();
         blankLine();
     }
 

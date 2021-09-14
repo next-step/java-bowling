@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import static bowling.domain.NormalFrame.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,11 +17,11 @@ public class Frames {
     }
 
     private List<Frame> initFrames() {
-        Frame frame = NormalFrame.of(NormalFrame.MIN_FRAME_NUMBER);
+        Frame frame = NormalFrame.of(MIN_FRAME_NUMBER);
         List<Frame> frames = new ArrayList<>();
         frames.add(frame);
 
-        for (int number = NormalFrame.MIN_FRAME_NUMBER; number <= NormalFrame.MAX_FRAME_NUMBER; number++) {
+        for (int number = MIN_FRAME_NUMBER; number <= MAX_FRAME_NUMBER; number++) {
             frame = frame.next();
             frames.add(frame);
         }

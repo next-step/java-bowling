@@ -11,6 +11,7 @@ public abstract class Frame {
 
     protected static final int ATTEMPTS_TO_BOWL = 2;
     protected static final int ATTEMPTS_TO_BOWL_WITH_BONUS = 3;
+    protected static final int MIN_PINS_COUNT = 0;
     protected static final int MAX_PINS_COUNT = 10;
     private static final int INDEX_OF_1ST_RESULT = 1;
     private static final int INDEX_OF_2ND_RESULT = 2;
@@ -51,6 +52,14 @@ public abstract class Frame {
         }
 
         results.add(PitchResult.of(fallenPins));
+    }
+
+    protected boolean isTotalPinsMoreThan10With(int fallenPins) {
+        return totalPins() + fallenPins > MAX_PINS_COUNT;
+    }
+
+    protected boolean isSpare(int fallenPins) {
+        return !results.isEmpty() && (totalPins() + fallenPins == MAX_PINS_COUNT);
     }
 
     public boolean isEnd() {
@@ -122,14 +131,6 @@ public abstract class Frame {
         } catch (IndexOutOfBoundsException e) {
             return PitchResult.of(Score.NOT_SCORED);
         }
-    }
-
-    protected boolean isTotalPinsMoreThan10With(int fallenPins) {
-        return totalPins() + fallenPins > MAX_PINS_COUNT;
-    }
-
-    protected boolean isSpare(int fallenPins) {
-        return !results.isEmpty() && (totalPins() + fallenPins == MAX_PINS_COUNT);
     }
 
     protected boolean hasStrike() {
