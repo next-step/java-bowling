@@ -10,7 +10,6 @@ public class InputView {
 
     private static final String INPUT_HOW_MANY_PEOPLE = "How many people? ";
     private static final String INPUT_PLAYER_NAME = "플레이어 %d의 이름은(3 english letters)?: ";
-    // private static final String INPUT_N_FRAME_THROW = "%d프레임 투구: ";
     private static final String INPUT_PLAYER_TURN = "%s's turn : ";
 
     private String inputStringValue() {
