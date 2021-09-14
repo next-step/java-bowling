@@ -35,6 +35,10 @@ public class FinalScore extends Score {
         }
     }
 
+    public FinalScore createBonusPin(Pin pin) {
+        return new FinalScore(this.first, this.second, pin);
+    }
+
     public boolean isBonus() {
         return (first == STRIKE && second == STRIKE) || (first.remainPin() == second.value());
     }

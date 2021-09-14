@@ -122,5 +122,25 @@ class FinalScoreTest {
         assertTrue(result);
     }
 
+    @Test
+    @DisplayName("보너스 핀을 생성할 수 있다.")
+    void createBonusPinTest() {
+
+        // given
+        FinalScore start = FinalScore.empty();
+        Pin first = Pin.of(5);
+        FinalScore firstScore = start.createFirstPin(first);
+        Pin second = Pin.of(5);
+        FinalScore secondPin = firstScore.createSecondPin(second);
+        Pin bonus = Pin.of(3);
+
+        // when
+        FinalScore result = secondPin.createBonusPin(bonus);
+
+        // then
+        assertThat(result).isInstanceOf(FinalScore.class);
+    }
+
+
 
 }
