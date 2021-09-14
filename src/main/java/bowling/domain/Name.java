@@ -7,6 +7,8 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Name {
+    private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z]*$");
+
     private final String name;
 
     public Name(String name) {
@@ -22,7 +24,7 @@ public class Name {
     }
 
     private void validateNameEng(String name) {
-        if (!Pattern.matches("^[a-zA-Z]*$", name)) {
+        if (!PATTERN.matcher(name).find()) {
             throw new NameException(name);
         }
     }
