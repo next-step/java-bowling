@@ -60,4 +60,34 @@ public class TotalScoreTest {
         assertThat(calculatedScores.size()).isEqualTo(1);
         assertThat(calculatedScores).containsExactly(10);
     }
+
+    @DisplayName("스트라이크 후 다음 2번의 투구까지 점수를 합산 했을때 총점 테스트")
+    @Test
+    public void totalStrikeTotalScore() {
+        List<Integer> calculatedScores = new ArrayList<>();
+        Frames frames = new Frames();
+
+        frames.throwBalls(10);
+        frames.throwBalls(1);
+        frames.throwBalls(2);
+        TotalScore.from(frames, calculatedScores);
+
+        assertThat(calculatedScores.size()).isEqualTo(1);
+        assertThat(calculatedScores).containsExactly(13);
+    }
+
+    @DisplayName("스페어 후 다음 1번의 투구까지 점수를 합산 했을때 총점 테스트")
+    @Test
+    public void totalSpareTotalScore() {
+        List<Integer> calculatedScores = new ArrayList<>();
+        Frames frames = new Frames();
+
+        frames.throwBalls(3);
+        frames.throwBalls(7);
+        frames.throwBalls(6);
+        TotalScore.from(frames, calculatedScores);
+
+        assertThat(calculatedScores.size()).isEqualTo(1);
+        assertThat(calculatedScores).containsExactly(16);
+    }
 }
