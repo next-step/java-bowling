@@ -14,22 +14,34 @@ public class FinalFrame{
         this.finalFrame = new Frame(pitching);
     }
 
-    public void secondPitching(Pitching pitching2) {
+    public void secondPitching(Pitching secondPitching) {
+        finalFrame.secondPitching(secondPitching);
     }
 
-    public void bonusPitch(Pitching pitching2) {
+    public void bonusPitch(Pitching bonusPitching) {
+        if (bonusPitching1 == null) {
+            bonusPitching1 = bonusPitching;
+            return;
+        }
+        bonusPitching2 = bonusPitching;
     }
 
     public boolean end() {
-        return false;
+        if(strike()) {
+            return bonusPitching2 != null;
+        }
+        if(spare()) {
+            return bonusPitching1 != null;
+        }
+        return finalFrame.done();
     }
 
     public boolean strike() {
-        return false;
+        return finalFrame.strike();
     }
 
     public boolean spare() {
-        return false;
+        return finalFrame.spare();
     }
 
     @Override
