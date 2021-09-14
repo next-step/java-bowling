@@ -13,7 +13,8 @@ public enum PinCount {
     THREE(3),
     TWO(2),
     ONE(1),
-    ZERO(0);
+    ZERO(0),
+    UNDEFINED(0);
 
     private final int count;
 
@@ -43,5 +44,9 @@ public enum PinCount {
 
     public boolean spare(PinCount first) {
         return !first.equals(TEN) && (first.count + this.count) == TEN.count;
+    }
+
+    public boolean isDefined() {
+        return !this.equals(UNDEFINED);
     }
 }
