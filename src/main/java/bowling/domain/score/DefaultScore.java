@@ -23,6 +23,10 @@ public abstract class DefaultScore implements Score {
 		}
 	}
 
+	public boolean isComputeAble() {
+		return false;
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o)

@@ -19,11 +19,6 @@ public class BaseScore extends DefaultScore {
 	}
 
 	@Override
-	public boolean isComputeAble() {
-		return false;
-	}
-
-	@Override
 	public Score add(final Score score) {
 		return new BaseScore(getValue() + score.getValue());
 	}

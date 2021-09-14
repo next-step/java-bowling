@@ -38,11 +38,6 @@ public class ProgressScore extends DefaultScore {
 	}
 
 	@Override
-	public boolean isComputeAble() {
-		return false;
-	}
-
-	@Override
 	public Score add(final Score score) {
 		final int nextValue = getValue() + score.getValue();
 		final int nextLeftCount = this.leftCount - 1;
