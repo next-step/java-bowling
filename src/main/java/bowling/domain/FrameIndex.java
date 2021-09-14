@@ -11,7 +11,7 @@ public class FrameIndex {
 
     private void validateFrameIndex(int frameIndex) {
         if (frameIndex < Frame.EMPTY_FRAME || frameIndex > Frame.LAST_FRAME) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("프레임 값이 올바르지 않습니다.");
         }
     }
 
