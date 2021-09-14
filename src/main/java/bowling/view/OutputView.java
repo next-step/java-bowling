@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class OutputView {
+
+    private static final String NAME_FRAME_STRING = "| NAME |";
     private static final String OUTPUT_FRAME_FORMAT = "  %02d  |";
     private static final String OUTPUT_SCORE_FORMAT = "  %-3s |";
-    private static final String NAME_FRAME_STRING = "| NAME |";
+    private static final String OUTPUT_EMPTY_FORMAT = "|      |";
+    private static final String OUTPUT_EMPTY_FORMAT_HALF = "      |";
     private static final int FRAME_NUMBER_START = 1;
     private static final int FRAME_NUMBER_END = 10;
 
@@ -36,4 +39,19 @@ public class OutputView {
         System.out.printf(OUTPUT_SCORE_FORMAT, score);
     }
 
+    public static void outputCalculatedScores(List<Integer> calculatedScores) {
+        System.out.print(OUTPUT_EMPTY_FORMAT);
+        calculatedScores.forEach(score -> outputTotalScoreFrame(score));
+        IntStream.range(calculatedScores.size(), FRAME_NUMBER_END)
+                 .forEach(i -> outputEmptyScoreFrame());
+        System.out.print(System.lineSeparator());
+    }
+
+    private static void outputTotalScoreFrame(Integer cumulativeScore) {
+        System.out.printf(OUTPUT_SCORE_FORMAT, cumulativeScore);
+    }
+
+    private static void outputEmptyScoreFrame() {
+        System.out.print(OUTPUT_EMPTY_FORMAT_HALF);
+    }
 }

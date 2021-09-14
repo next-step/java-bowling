@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Frames {
@@ -13,10 +14,6 @@ public class Frames {
     public Frames() {
         frames = new ArrayList<>();
         results = new ArrayList<>();
-    }
-
-    public List<String> results() {
-        return results;
     }
 
     public void throwBalls(int pitchingCount) {
@@ -50,11 +47,24 @@ public class Frames {
         return results.size();
     }
 
-    private boolean isNext() {
+    public boolean isNext() {
         if (frames.size() == 0) {
             return false;
         }
         int index = frames.size() - 1;
         return frames.get(index).isNext();
+    }
+
+    public boolean isFinish() {
+        return frames.size() == Frames.TOTAL_FRAME_COUNT
+                && frames.get(Frames.TOTAL_FRAME_COUNT - 1).isNext();
+    }
+
+    public List<String> results() {
+        return Collections.unmodifiableList(results);
+    }
+
+    public List<Frame> frames() {
+        return Collections.unmodifiableList(frames);
     }
 }

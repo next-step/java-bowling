@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,6 +41,10 @@ public abstract class Frame {
     }
 
     public abstract boolean isNext();
+
+    public List<Score> scores() {
+        return Collections.unmodifiableList(scores);
+    }
 
     @Override
     public boolean equals(Object o) {
