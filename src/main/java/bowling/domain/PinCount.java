@@ -42,6 +42,6 @@ public enum PinCount {
     }
 
     public boolean spare(PinCount first) {
-        return first.count == this.count;
+        return !first.equals(TEN) && (first.count + this.count) == TEN.count;
     }
 }

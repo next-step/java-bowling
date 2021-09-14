@@ -3,6 +3,7 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,4 +27,9 @@ class PinCountTest {
                 .withMessageContaining(String.valueOf(countInput));
     }
 
+    @ParameterizedTest(name = "스페어 테스트")
+    @CsvSource({"SEVEN, THREE, true", "SEVEN, TWO, false", "TEN, ZERO, false", "ZERO, TEN, true"})
+    public void spareTest(PinCount first, PinCount second, boolean expected) {
+        assertThat(second.spare(first)).isEqualTo(expected);
+    }
 }
