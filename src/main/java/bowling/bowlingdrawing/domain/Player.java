@@ -2,7 +2,6 @@ package bowling.bowlingdrawing.domain;
 
 import bowling.bowlingdrawing.exception.CustomException;
 
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Player {
